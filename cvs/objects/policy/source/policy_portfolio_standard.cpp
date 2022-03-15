@@ -45,8 +45,6 @@
 #include <iostream>
 #include <string>
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "containers/include/iinfo.h"
@@ -57,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -100,73 +97,6 @@ const string& PolicyPortfolioStandard::getXMLNameStatic() {
 //! Get the ghg policy name. 
 const string& PolicyPortfolioStandard::getName() const {
     return mName;
-}
-
-//! Initializes data members from XML.
-void PolicyPortfolioStandard::XMLParse( const DOMNode* node ){
-
-    /*! \pre assume we are passed a valid node.*/
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "market" ){
-            mMarket = XMLHelper<string>::getValue( curr ); // should be only one market
-        }
-        else if( nodeName == "policyType" ){
-            mPolicyType = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "isShareBased" ) {
-            mIsShareBased = XMLHelper<bool>::getValue( curr );
-        }
-        else if( nodeName == "constraint" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mConstraint, modeltime );
-        }
-        else if( nodeName == "fixedTax" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mFixedTax, modeltime );
-        }
-        else if( nodeName == "share-of-sector-output" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mShareOfSectorOutput, modeltime );
-            // Check to see if the output share is within valid range (between 0 and 1).
-            double tempShare = XMLHelper<double>::getValue( curr );
-            if ( tempShare <= 0 || tempShare > 1 ){
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::ERROR );
-                mainLog << "Output share for portfolio standard policy out of range "
-                    <<"(rate <= 0 or rate > 1)." << endl;
-            }
-        }
-        else if( nodeName == "min-price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mMinPrice, modeltime );
-        }
-        else if( nodeName == "max-price" ){
-            XMLHelper<double>::insertValueIntoVector( curr, mMaxPrice, modeltime );
-        }
-        else if( nodeName == "price-unit" ){
-            mPriceUnits = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "output-unit" ){
-            mOutputUnits = XMLHelper<string>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName 
-                 << " found while parsing portfolio standard policy." << endl;
-        }
-    }
 }
 
 //! Writes data members to data stream in XML format.

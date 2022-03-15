@@ -41,13 +41,6 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
              "L244.GlobalTechEff_bld",
              "L244.GlobalTechShrwt_bld_gcamusa",
              "L244.GlobalTechCost_bld_gcamusa",
-             "L244.Satiation_impedance_gcamusa",
-             "L244.GenericServiceImpedance_gcamusa",
-             "L244.ThermalServiceImpedance_gcamusa",
-             "L244.GenericServiceAdder_gcamusa",
-             "L244.ThermalServiceAdder_gcamusa",
-             "L244.GenericServiceCoef_gcamusa",
-             "L244.ThermalServiceCoef_gcamusa",
              "L244.GompFnParam_gcamusa",
              "L244.GlobalTechSCurve_bld"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -88,13 +81,6 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
     L244.GlobalTechCost_bld <- get_data(all_data, "L244.GlobalTechCost_bld_gcamusa")
     L244.GlobalTechSCurve_bld <- get_data(all_data, "L244.GlobalTechSCurve_bld")
     L244.GompFnParam_gcamusa<- get_data(all_data, "L244.GompFnParam_gcamusa")
-    L244.Satiation_impedance <- get_data(all_data, "L244.Satiation_impedance_gcamusa")
-    L244.GenericServiceImpedance_gcamusa<- get_data(all_data, "L244.GenericServiceImpedance_gcamusa")
-    L244.ThermalServiceImpedance_gcamusa<- get_data(all_data, "L244.ThermalServiceImpedance_gcamusa")
-    L244.GenericServiceAdder_gcamusa<- get_data(all_data, "L244.GenericServiceAdder_gcamusa")
-    L244.ThermalServiceAdder_gcamusa<- get_data(all_data, "L244.ThermalServiceAdder_gcamusa")
-    L244.GenericServiceCoef_gcamusa<- get_data(all_data, "L244.GenericServiceCoef_gcamusa")
-    L244.ThermalServiceCoef_gcamusa<- get_data(all_data, "L244.ThermalServiceCoef_gcamusa")
 
     # ===================================================
 
@@ -109,18 +95,11 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
       add_xml_data(L244.DemandFunction_flsp, "DemandFunction_flsp") %>%
       add_xml_data(L244.Satiation_flsp, "Satiation_flsp") %>%
       add_xml_data(L244.SatiationAdder, "SatiationAdder") %>%
-      add_xml_data(L244.Satiation_impedance, "SatiationImpedance") %>%
       add_xml_data(L244.GompFnParam_gcamusa, "GompFnParam")  %>%
       add_xml_data(L244.ThermalBaseService, "ThermalBaseService") %>%
       add_xml_data(L244.GenericBaseService, "GenericBaseService") %>%
       add_xml_data(L244.ThermalServiceSatiation, "ThermalServiceSatiation") %>%
       add_xml_data(L244.GenericServiceSatiation, "GenericServiceSatiation") %>%
-      add_xml_data(L244.GenericServiceImpedance_gcamusa, "GenericServiceImpedance") %>%
-      add_xml_data(L244.ThermalServiceImpedance_gcamusa, "ThermalServiceImpedance") %>%
-      add_xml_data(L244.GenericServiceAdder_gcamusa, "GenericServiceAdder") %>%
-      add_xml_data(L244.ThermalServiceAdder_gcamusa, "ThermalServiceAdder") %>%
-      add_xml_data(L244.GenericServiceCoef_gcamusa, "GenericServiceCoef") %>%
-      add_xml_data(L244.ThermalServiceCoef_gcamusa, "ThermalServiceCoef") %>%
       add_xml_data(L244.Intgains_scalar, "Intgains_scalar") %>%
       add_xml_data(L244.ShellConductance_bld, "ShellConductance") %>%
       add_logit_tables_xml(L244.Supplysector_bld, "Supplysector") %>%
@@ -166,13 +145,6 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
                      "L244.GlobalTechEff_bld",
                      "L244.GlobalTechShrwt_bld_gcamusa",
                      "L244.GlobalTechCost_bld_gcamusa",
-                     "L244.Satiation_impedance_gcamusa",
-                     "L244.GenericServiceImpedance_gcamusa",
-                     "L244.ThermalServiceImpedance_gcamusa",
-                     "L244.GenericServiceAdder_gcamusa",
-                     "L244.ThermalServiceAdder_gcamusa",
-                     "L244.GenericServiceCoef_gcamusa",
-                     "L244.ThermalServiceCoef_gcamusa",
                      "L244.GompFnParam_gcamusa",
                      "L244.GlobalTechSCurve_bld") ->
       building_USA.xml
@@ -184,7 +156,7 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
         add_xml_data(L244.SubsectorInterpTo_bld, "SubsectorInterpTo") ->
         building_USA.xml
 
-      }
+    }
 
     return_data(building_USA.xml)
   } else {

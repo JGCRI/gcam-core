@@ -39,7 +39,7 @@
 */
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNodeList.hpp>
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/fractional_secondary_output.h"
 #include "containers/include/scenario.h"
@@ -49,13 +49,11 @@
 #include "containers/include/market_dependency_finder.h"
 #include "functions/include/function_utils.h"
 #include "util/curves/include/point_set_curve.h"
-#include "util/curves/include/curve.h"
 #include "util/curves/include/explicit_point_set.h"
 #include "util/curves/include/xy_data_point.h"
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -113,6 +111,10 @@ const string& FractionalSecondaryOutput::getXMLReportingName() const{
     return getXMLNameStatic();
 }
 
+const string& FractionalSecondaryOutput::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 const string& FractionalSecondaryOutput::getXMLNameStatic()
 {
     const static string XML_NAME = "fractional-secondary-output";
@@ -124,54 +126,29 @@ bool FractionalSecondaryOutput::isSameType( const string& aType ) const
     return aType == getXMLNameStatic();
 }
 
-bool FractionalSecondaryOutput::XMLParse( const DOMNode* aNode )
-{
-    // assume we are passed a valid node.
-    assert( aNode );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-    
-    ExplicitPointSet* currPoints = new ExplicitPointSet();
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ) {
-            continue;
-        }
-        else if( nodeName == "output-ratio" ) {
-            mOutputRatio.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "calPrice" ) {
-            mCalPrice.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "market-name" ) {
-            mMarketName = XMLHelper<string>::getValue( curr );
-        }
-        else if ( nodeName == "fraction-produced" ){
-            double price = XMLHelper<double>::getAttr( curr, "price" );
-            double fraction = XMLHelper<double>::getValue( curr );
-            XYDataPoint* currPoint = new XYDataPoint( price, fraction );
-            currPoints->addPoint( currPoint );
+bool FractionalSecondaryOutput::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if(nodeName == "fraction-produced") {
+        // we need some specialized behavior to read in the point set curve
+        PointSet* curvePoints;
+        if(!mCostCurve) {
+            curvePoints = new ExplicitPointSet();
+            mCostCurve = new PointSetCurve(curvePoints);
         }
         else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
+            curvePoints = mCostCurve->getPointSet();
         }
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        double price = XMLParseHelper::getValue<double>( attrs["price"] );
+        double fraction = XMLParseHelper::getValue<double>( aNode );
+        XYDataPoint* currPoint = new XYDataPoint( price, fraction );
+        curvePoints->addPoint( currPoint );
+        return true;
     }
-    
-    // TODO: should not reset the curve everytime *anything* is parsed
-    delete mCostCurve;
-    mCostCurve = new PointSetCurve( currPoints );
-
-    // TODO: Improve error handling.
-    return true;
+    else {
+        // return false to indicate XMLParseHelper should try to parse aNode
+        return false;
+    }
 }
 
 void FractionalSecondaryOutput::toDebugXML( const int aPeriod,

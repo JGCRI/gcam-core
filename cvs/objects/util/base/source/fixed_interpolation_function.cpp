@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "util/base/include/fixed_interpolation_function.h"
 #include "util/curves/include/data_point.h"
@@ -49,7 +47,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor
 FixedInterpolationFunction::FixedInterpolationFunction() {
@@ -73,41 +70,13 @@ IInterpolationFunction* FixedInterpolationFunction::clone() const {
  * \return The string which identifies this function.
  * \see InterpolationFunctionFactory
  */
-const string& FixedInterpolationFunction::getXMLAttrNameStatic() {
+const string& FixedInterpolationFunction::getXMLNameStatic() {
     const static string XML_NAME = "fixed";
     return XML_NAME;
 }
 
-bool FixedInterpolationFunction::XMLParse( const DOMNode* aNode ) {
-    // nothing to parse but will still check to make sure there is
-    // nothing here and warn the user if any thing was found
-
-    // assume we were passed a valid node.
-    assert( aNode );
-
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLAttrNameStatic() << "." << endl;
-        }
-    }
-    return true;
-}
-
 void FixedInterpolationFunction::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {
-    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLAttrNameStatic() );
+    XMLWriteElement("", IInterpolationFunction::getXMLNameStatic(), aOut, aTabs, 0, getXMLNameStatic() );
 }
 
 double FixedInterpolationFunction::interpolate( const DataPoint* aLeftPoint, const DataPoint* aRightPoint,

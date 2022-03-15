@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 class Tabs;
 class CachedMarket;
@@ -77,6 +76,8 @@ public:
      */
     PrimaryOutput( const std::string& aSectorName );
     
+    PrimaryOutput();
+    
     virtual ~PrimaryOutput();
 
     virtual PrimaryOutput* clone() const;
@@ -85,9 +86,11 @@ public:
 
     virtual const std::string& getName() const;
 
+    static const std::string& getXMLNameStatic();
+    
     virtual const std::string& getXMLReportingName() const;
-
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual const std::string& getXMLName() const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -161,13 +164,13 @@ protected:
         IOutput,
 
         //! Physical output by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! Name of the primary output. This is the same as the sector name.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! CO2 emissions coefficient cached from the marketplace.
-        DEFINE_VARIABLE( SIMPLE, "co2-coef", mCachedCO2Coef, Value )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value )
     )
     
     //! A pre-located market which has been cached from the marketplace to add supply to.

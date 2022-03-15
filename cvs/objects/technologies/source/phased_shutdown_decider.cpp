@@ -43,14 +43,11 @@
 #include <cmath>
 
 #include "technologies/include/phased_shutdown_decider.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -98,37 +95,8 @@ const string& PhasedShutdownDecider::getXMLNameStatic() {
     return XML_NAME;
 }
 
-bool PhasedShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
-    // Assume we have a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-    if( mName.empty() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "No name specified for " << getXMLNameStatic() << endl;
-    }
-
-    const xercesc::DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const xercesc::DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "shutdown-rate" ){
-            mShutdownRate = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown tag " << nodeName << " encountered while processing "
-                    << getXMLNameStatic() << endl;
-        }
-    }
-
-    return true;
+const string& PhasedShutdownDecider::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 void PhasedShutdownDecider::toDebugXML( const int aPeriod,

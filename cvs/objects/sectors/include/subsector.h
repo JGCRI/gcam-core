@@ -49,7 +49,6 @@
 #include <vector>
 #include <map>
 #include <list>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
@@ -85,6 +84,7 @@ class NestingSubsector;
 */
 
 class Subsector: public INamed,
+                 public AParsable,
                  private boost::noncopyable
 {
     friend class XMLDBOutputter;
@@ -106,16 +106,16 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         //! region name
-        DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, std::string ),
 
         //! sector name
-        DEFINE_VARIABLE( SIMPLE, "sector-name", mSectorName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "sector-name", mSectorName, std::string ),
 
         //! Subsector logit share weights
-        DEFINE_VARIABLE( ARRAY | STATE, "share-weight", mShareWeights, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "real-share-weight", mShareWeights, objects::PeriodVector<Value> ),
 
         //! The original subsector logit share weights that were parsed
-        DEFINE_VARIABLE( ARRAY, "parsed-share-weight", mParsedShareWeights, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY, "share-weight", mParsedShareWeights, objects::PeriodVector<Value> ),
                     
         //! Fuel preference elasticity
         DEFINE_VARIABLE( ARRAY, "fuelprefElasticity", mFuelPrefElasticity, objects::PeriodVector<double> ),
@@ -140,8 +140,6 @@ protected:
 
     virtual void interpolateShareWeights( const int aPeriod );
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual const std::string& getXMLName() const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     
     virtual const std::vector<double> calcTechShares ( const GDP* gdp, const int period ) const;
@@ -150,11 +148,15 @@ protected:
     void clearInterpolationRules();
 
 public:
-    Subsector( const std::string& regionName, const std::string& sectorName );
+    Subsector();
     virtual ~Subsector();
     const std::string& getName() const;
-
-    void XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual void setNames( const std::string& aRegionName, const std::string& aSectorName );
+    
+    virtual const std::string& getXMLName() const;
+   
+    bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
     virtual void completeInit( const IInfo* aSectorInfo,
                                ILandAllocator* aLandAllocator );

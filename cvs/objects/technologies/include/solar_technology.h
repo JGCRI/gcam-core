@@ -158,11 +158,6 @@ protected :
       std::ostream& out,
       Tabs*         tabs ) const;
 
-   // Documentation is inherited
-   virtual bool XMLDerivedClassParse(
-      const std::string&      nodeName,
-      const xercesc::DOMNode* curr );
-
    static const double      kWhrtoGJ;
    static const std::string ELECTRIC_SECTOR_NAME_KEY;
    static const std::string NO_SUN_DAYS_KEY;

@@ -63,6 +63,15 @@
 #include <boost/fusion/include/join.hpp>
 #include <boost/fusion/include/list.hpp>
 
+
+#if XMLPARSE_DEBUG_ACTIVE
+// forward declare needed for debug XMLParse workaround
+template<typename SubClassFamilyVector>
+class ExpandDataVector;
+template<typename SubClassFamilyVector>
+bool callDebugXMLParse( ExpandDataVector<SubClassFamilyVector> aSubClassContainer, const rapidxml::xml_node<char>* aNode );
+#endif // XMLPARSE_DEBUG_ACTIVE
+
 // Helper meta-functions
 /*!
  * \brief A boost supplied macro that defines a meta-function in this case has_ParentClass<T>
@@ -121,6 +130,11 @@ struct get_base_class<T, typename boost::enable_if<boost::mpl::not_<has_ParentCl
  */
 template<typename SubClassFamilyVector>
 class ExpandDataVector  {
+#if XMLPARSE_DEBUG_ACTIVE
+    // Special access for debugging XML Parse
+    friend bool callDebugXMLParse<SubClassFamilyVector>( ExpandDataVector aSubClassContainer, const rapidxml::xml_node<char>* aNode );
+#endif // XMLPARSE_DEBUG_ACTIVE
+    
     public:
 
     /*!

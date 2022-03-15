@@ -42,8 +42,6 @@
 #include <string>
 #include <iostream>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/scenario.h"
 #include "resources/include/grade.h"
@@ -54,7 +52,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -65,37 +62,6 @@ mTotalCost( 0.0 )
 {
     mAvailable = 0.0;
     mExtractCost = 0.0;
-}
-
-//! Initialize data members from XML.
-void Grade::XMLParse( const DOMNode* tempNode ) {
-    /*! \pre assume we are passed a valid node. */
-    assert( tempNode );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( tempNode, "name" );
-    DOMNodeList* tempNodeLst = tempNode->getChildNodes();
-
-    for( unsigned int i = 0; i < tempNodeLst->getLength(); ++i ) {
-        DOMNode* tNode = tempNodeLst->item( i );
-        string tNodeName = XMLHelper<string>::safeTranscode( tNode->getNodeName() );
-
-        if( tNodeName == "#text" ) {
-            continue;
-        }
-
-        else if( tNodeName == "available" ){
-            mAvailable = XMLHelper<double>::getValue( tNode );
-        }
-        else if( tNodeName == "extractioncost" ){
-            mExtractCost = XMLHelper<double>::getValue( tNode );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << tNodeName << " found while parsing grade." << endl;
-        }
-    }
 }
 
 /*! \brief Complete the initialization

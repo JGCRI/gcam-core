@@ -40,9 +40,6 @@
 
 #include "util/base/include/definitions.h"
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "emissions/include/linear_control.h"
 #include "emissions/include/nonco2_emissions.h"
 #include "containers/include/scenario.h"
@@ -52,7 +49,6 @@
 #include "containers/include/iinfo.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -115,27 +111,6 @@ const string& LinearControl::getXMLName() const {
 const string& LinearControl::getXMLNameStatic(){
     static const string XML_NAME = "linear-control";
     return XML_NAME;
-}
-
-bool LinearControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    
-    if ( aNodeName == "end-year" ){
-        mTargetYear = XMLHelper<int>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "start-year" ){
-        mStartYear = XMLHelper<int>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "final-emissions-coefficient" ){
-        mFinalEmCoefficient = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "allow-ef-increase" ){
-        mAllowIncrease = XMLHelper<bool>::getValue( aCurrNode );
-    }
-    else{
-        return false;
-    }
-       
-    return true;
 }
 
 void LinearControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {

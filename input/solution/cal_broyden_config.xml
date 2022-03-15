@@ -19,8 +19,7 @@
              - ( .. ) Paranthesis to group logic as necessary
              - !( .. ) The logical NOT operator
              - || The logical OR operator
-             - && The logical AND operator (Note that & alone is an illegal XML character
-               so the XML substitue "&amp;" must be used)
+             - && The logical AND operator
          The available operands:
              - all Includes ALL markets
              - solvable If the market has been tagged solvable (see Market::shouldSolve)
@@ -45,23 +44,31 @@
         <max-model-calcs>1000</max-model-calcs>
 
         <preconditioner-solver-component>
-            <solution-info-filter>solvable &amp;&amp; !(has-market-flag="fully-calibrated")</solution-info-filter>
+            <solution-info-filter>solvable && !(has-market-flag="fully-calibrated")</solution-info-filter>
             <ftol>1.0e-2</ftol>
-            <itmax>2</itmax>
+            <max-iterations>2</max-iterations>
         </preconditioner-solver-component>
 
         <bisect-all-solver-component>
             <bracket-interval>0.5</bracket-interval>
             <max-bracket-iterations>20</max-bracket-iterations>
             <max-iterations>10</max-iterations>
-			<solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; !(has-market-flag="fully-calibrated")</solution-info-filter>
+            <use-secant-brackets>0</use-secant-brackets>
+			<solution-info-filter>unsolved && solvable && !(has-market-flag="fully-calibrated")</solution-info-filter>
+        </bisect-all-solver-component>
+        <bisect-all-solver-component>
+            <bracket-interval>0.05</bracket-interval>
+            <max-bracket-iterations>20</max-bracket-iterations>
+            <max-iterations>10</max-iterations>
+            <use-secant-brackets>1</use-secant-brackets>
+			<solution-info-filter>unsolved && solvable && market-matches="_water withdrawals"</solution-info-filter>
         </bisect-all-solver-component>
 
         <broyden-solver-component>
             <max-iterations>20</max-iterations>
             <ftol>5.0e-4</ftol>
             <linear-price/>
-            <solution-info-filter>solvable-nr &amp;&amp; !(has-market-flag="fully-calibrated")</solution-info-filter>
+            <solution-info-filter>solvable-nr && !(has-market-flag="fully-calibrated")</solution-info-filter>
         </broyden-solver-component>
     </user-configurable-solver>
     <user-configurable-solver year="2020" fillout="1">
@@ -73,14 +80,22 @@
         <preconditioner-solver-component>
             <solution-info-filter>solvable</solution-info-filter>
             <ftol>1.0e-2</ftol>
-            <itmax>2</itmax>
+            <max-iterations>2</max-iterations>
         </preconditioner-solver-component>
 
         <bisect-all-solver-component>
             <bracket-interval>0.05</bracket-interval>
             <max-bracket-iterations>20</max-bracket-iterations>
             <max-iterations>10</max-iterations>
-            <solution-info-filter>unsolved &amp;&amp; solvable &amp;&amp; price-greater-than="0"</solution-info-filter>
+            <use-secant-brackets>0</use-secant-brackets>
+            <solution-info-filter>unsolved && solvable && price-greater-than="0"</solution-info-filter>
+        </bisect-all-solver-component>
+        <bisect-all-solver-component>
+            <bracket-interval>0.05</bracket-interval>
+            <max-bracket-iterations>20</max-bracket-iterations>
+            <max-iterations>10</max-iterations>
+            <use-secant-brackets>1</use-secant-brackets>
+			<solution-info-filter>unsolved && solvable && market-matches="_water withdrawals"</solution-info-filter>
         </bisect-all-solver-component>
         
         <broyden-solver-component>

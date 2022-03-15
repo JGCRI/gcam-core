@@ -74,10 +74,9 @@ public:
     LandAllocator();
     virtual ~LandAllocator();
     static const std::string& getXMLNameStatic();
+                              
+    virtual const std::string& getXMLName() const;
 
-    // IParsable
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
     // ILandAllocator methods.
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -130,11 +129,6 @@ public:
                               
     virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName );
 protected:
-    virtual const std::string& getXMLName() const;
-
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName,
-                                       const xercesc::DOMNode* aCurr );
-
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
@@ -145,7 +139,7 @@ protected:
         LandNode,
                             
         //! Land allocated typically in thous km2.
-        DEFINE_VARIABLE( ARRAY, "land-allocation", mLandAllocation, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY, "landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
 
         //! Rate at which carbon price is expected to increase
         DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),

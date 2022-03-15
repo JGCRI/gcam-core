@@ -96,7 +96,7 @@ public:
 
     virtual const std::string& getXMLReportingName() const;
     
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
+    virtual const std::string& getXMLName() const;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -164,7 +164,11 @@ protected:
         DEFINE_VARIABLE(SIMPLE | STATE, "base-TradBio", mTradBioBase, Value),
 
 		//! Demand function coefficients to capture base year thermal characteristics.
-        DEFINE_VARIABLE(ARRAY | STATE, "bias-adder", mBiasAdderEn, objects::PeriodVector<Value>)
+        DEFINE_VARIABLE(ARRAY | STATE, "bias-adder", mBiasAdderEn, objects::PeriodVector<Value>),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "coefficient", mCoefficient, Value )
+
     )
     
     void copy( const ThermalBuildingServiceInput& aInput );

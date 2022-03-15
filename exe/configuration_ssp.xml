@@ -37,6 +37,7 @@
 		<Value name="PrintValuesOnGraphs">1</Value>
 		<Value name="ShowNullPaths">0</Value>
 		<Value name="PrintPrices">1</Value>
+		<Value name="QuitFirstFailure">0</Value>
 	</Bools>
 	<Ints>
 		<Value name="numMarketsToFindSD">10</Value>

@@ -39,15 +39,13 @@
  */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <cmath>
 
 #include "functions/include/energy_input.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "technologies/include/icapture_component.h"
 #include "functions/include/icoefficient.h"
 #include "functions/include/efficiency.h"
@@ -58,7 +56,6 @@
 #include "containers/include/market_dependency_finder.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -90,6 +87,10 @@ const string& EnergyInput::getXMLNameStatic() {
 */
 const string& EnergyInput::getXMLReportingName() const{
     return XML_REPORTING_NAME;
+}
+
+const string& EnergyInput::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 //! Constructor
@@ -152,72 +153,23 @@ bool EnergyInput::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-void EnergyInput::XMLParse( const xercesc::DOMNode* node ) {
-    // TODO: Replace this with the restructured XMLParse.
-    // Make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == Efficiency::getXMLNameStatic() ) {
-            delete mCoefficient;
-            mCoefficient = new Efficiency( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == Intensity::getXMLNameStatic() ){
-            delete mCoefficient;
-            mCoefficient = new Intensity( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "income-elasticity" ){
-            mIncomeElasticity = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "adjusted-coefficient" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mAdjustedCoefficients, scenario->getModeltime() );
-        }
-        else if( nodeName == "calibrated-value" ){
-            mCalibrationInput = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "tech-change" ){
-            mTechChange = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "price-unit-conversion" ){
-            mPriceUnitConversionFactor = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "market-name" ){
-            mMarketName = XMLHelper<string>::getValue( curr );
-        }
-        else if( nodeName == "flag" ) {
-            setFlagsByName( XMLHelper<string>::getValue( curr ) );
-        }
-        else if( nodeName == "fuel-C-coef" ) {
-            mCO2Coefficient = XMLHelper<Value>::getValue( curr );
-        }
-        else if( nodeName == "keyword" ){
-            DOMNamedNodeMap* keywordAttributes = curr->getAttributes();
-            for( unsigned int attrNum = 0; attrNum < keywordAttributes->getLength(); ++attrNum ) {
-                DOMNode* attrTemp = keywordAttributes->item( attrNum );
-                mKeywordMap[ XMLHelper<string>::safeTranscode( attrTemp->getNodeName() ) ] = 
-                    XMLHelper<string>::safeTranscode( attrTemp->getNodeValue() );
-            }
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-        }
+bool EnergyInput::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if( nodeName == Efficiency::getXMLNameStatic() ) {
+        delete mCoefficient;
+        mCoefficient = new Efficiency( XMLParseHelper::getValue<double>( aNode ) );
     }
+    else if( nodeName == Intensity::getXMLNameStatic() ){
+        delete mCoefficient;
+        mCoefficient = new Intensity( XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if( nodeName == "flag" ) {
+        setFlagsByName( XMLParseHelper::getValue<string>( aNode ) );
+    }
+    else {
+        return false;
+    }
+    return true;
 }
 
 void EnergyInput::toDebugXML( const int aPeriod,

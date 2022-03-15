@@ -500,6 +500,7 @@ land.density.param.usa<-0
 b.param.usa<-1.92066
 income.param.usa<-0.26128
 
+
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,

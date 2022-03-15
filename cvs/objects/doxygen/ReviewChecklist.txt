@@ -51,7 +51,7 @@ The name of the constant name could be any unique string; however style guidelin
 \subsection headItem2 File does not include source files (*.cpp).
 
 \subsection headItem17 Using namespace statements do not occur.
-While the use of 'using namespace std' or 'using namespace xercesc' is allowed in source files, it is considered poor style to do this in a header file. The reason for this is if any source file included the header file it would have unknowingly declared the use of that namespace.
+While the use of 'using namespace std' is allowed in source files, it is considered poor style to do this in a header file. The reason for this is if any source file included the header file it would have unknowingly declared the use of that namespace.
 This could cause future problems and can be avoided by explicitly scoping each variable which that is in a namespace. 
 Example:
 std::string or std::vector

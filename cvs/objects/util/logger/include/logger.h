@@ -49,9 +49,9 @@
 
 #include <iosfwd>
 #include <sstream>
-#include <xercesc/dom/DOMNode.hpp>
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/definitions.h"
+#include "util/base/include/data_definition_util.h"
 
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/spin_mutex.h>
@@ -118,29 +118,36 @@ public:
     bool wouldPrint(ILogger::WarningLevel aLevel) const;
     void toDebugXML( std::ostream& out, Tabs* tabs ) const;
 protected:
-	//! Logger name
-    std::string mName;
+    
+    DEFINE_DATA(
+        // InterpolationRule is the only member of this container hierarchy.
+        DEFINE_SUBCLASS_FAMILY( Logger ),
+                
+        //! Logger name
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        
+        //! Logger type
+        DEFINE_VARIABLE( SIMPLE, "type", mType, std::string ),
 
-	//! Logger type
-    std::string mType;
+        //! File name of the file it uses.
+        DEFINE_VARIABLE( SIMPLE, "FileName", mFileName, std::string ),
+        
+        //! Header message to print at the beginning of the log.
+        DEFINE_VARIABLE( SIMPLE, "headerMessage", mHeaderMessage, std::string ),
+        
+        //! Defines the minimum level of messages which should be printed.
+        DEFINE_VARIABLE( SIMPLE, "minLogWarningLevel", mMinLogWarningLevel, ILogger::WarningLevel ),
+        
+        //! Defines the minimum level of warnings to print to the console.
+        DEFINE_VARIABLE( SIMPLE, "minToScreenWarningLevel", mMinToScreenWarningLevel, ILogger::WarningLevel ),
+        
+        //! Defines the current warning level.
+        DEFINE_VARIABLE( SIMPLE, "current-warning-level", mCurrentWarningLevel, ILogger::WarningLevel ),
+        
+        //! Defines whether to print the warning level.
+        DEFINE_VARIABLE( SIMPLE, "printLogWarningLevel", mPrintLogWarningLevel, bool )
+    )
 
-	//! File name of the file it uses.
-    std::string mFileName;
-
-	//! Header message to print at the beginning of the log.
-    std::string mHeaderMessage;
-
-	//! Defines the minimum level of messages which should be printed.
-    ILogger::WarningLevel mMinLogWarningLevel;
-
-	//! Defines the minimum level of warnings to print to the console.
-	ILogger::WarningLevel mMinToScreenWarningLevel;
-
-	//! Defines the current warning level.
-    ILogger::WarningLevel mCurrentWarningLevel;
-
-	//! Defines whether to print the warning level.
-    bool mPrintLogWarningLevel;
     Logger( const std::string& aFileName = "" );
     
 	//! Log a message with the given warning level.
@@ -158,7 +165,6 @@ private:
 	 //! Underlying ofstream
     PassToParentStreamBuf mUnderStream;
 
-    void XMLParse( const xercesc::DOMNode* node );
     static const std::string getTimeString();
     static const std::string getDateString();
 };

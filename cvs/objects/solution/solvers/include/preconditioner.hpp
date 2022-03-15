@@ -77,27 +77,37 @@ class ISolutionInfoFilter;
 class Preconditioner: public SolverComponent {
 public:        
     Preconditioner( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
+    Preconditioner();
+    virtual ~Preconditioner();
     static const std::string& getXMLNameStatic();
     
     // SolverComponent methods
     virtual void init();
     virtual ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod );
     virtual const std::string& getXMLName() const;
-
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
 protected:
-    unsigned int mItmax;                  // default = 30
-    double mPriceIncreaseFac; // default = 0.25
-    double mPriceDecreaseFac; // default = 0.1
-
-    double mLargePrice;         // default = 1e6
-    double mFTOL;                // default = getSmallNumber()
-    
-    //! A filter which will be used to determine which SolutionInfos this solver component
-    //! will work on.
-    std::auto_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SolverComponent,
+        
+        // default = 30
+        DEFINE_VARIABLE( SIMPLE, "max-iterations", mItmax, unsigned int ),
+        
+        // default = 1e6
+        DEFINE_VARIABLE( SIMPLE, "large-price-thresh", mLargePrice, double ),
+        
+        // default = getSmallNumber()
+        DEFINE_VARIABLE( SIMPLE, "ftol", mFTOL, double ),
+        
+        //! A filter which will be used to determine which SolutionInfos this solver component
+        //! will work on.
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "solution-info-filter", mSolutionInfoFilter, ISolutionInfoFilter* )
+    )
     
 };
 

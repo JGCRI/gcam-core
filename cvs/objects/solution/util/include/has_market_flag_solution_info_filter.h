@@ -43,7 +43,6 @@
  * \brief Header file for the HasMarketFlagSolutionInfoFilter class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 #include "solution/util/include/isolution_info_filter.h"
@@ -68,17 +67,14 @@ class SolutionInfo;
  */
 class HasMarketFlagSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    HasMarketFlagSolutionInfoFilter();
-    ~HasMarketFlagSolutionInfoFilter();
+    HasMarketFlagSolutionInfoFilter(const std::string& aMarketInfoKey);
+    virtual ~HasMarketFlagSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     
     // ISolutionInfoFilter methods
     virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-    
+        
 private:
     //! The market info key to check.
     std::string mMarketInfoKey;

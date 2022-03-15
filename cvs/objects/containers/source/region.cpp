@@ -43,8 +43,6 @@
 #include <string>
 #include <vector>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include <algorithm>
 #include <memory>
 
@@ -76,7 +74,6 @@
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -127,67 +124,6 @@ void Region::clear(){
 */
 const string& Region::getName() const {
     return mName;
-}
-
-/*! 
-* \brief Sets the data members from the XML input.
-* \details This function parses all XML data from Region down to the lowest set
-*          of objects. As the XML data is parsed, new objects are continually
-*          added to the object container using the push_back routine.
-* \param node XML DOM node of the region
-* \todo Change the diagnostic "assert( node );" to fail with a more informative
-*       error (file, previous node?, location?)
-*/
-void Region::XMLParse( const DOMNode* node ){
-    // make sure we were passed a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-
-        else if( nodeName == Demographic::getXMLNameStatic() ){
-            parseSingleNode( curr, mDemographic, new Demographic );
-        }
-        else if( nodeName == GHGPolicy::getXMLNameStatic() ){
-            parseContainerNode( curr, mGhgPolicies, new GHGPolicy() );
-        }
-        else if( nodeName == LinkedGHGPolicy::getXMLNameStatic() ){
-            parseContainerNode( curr, mGhgPolicies, new LinkedGHGPolicy() );
-        }
-        else if( nodeName == PolicyPortfolioStandard::getXMLNameStatic() ){
-            parseContainerNode( curr, mPolicies, new PolicyPortfolioStandard() );
-        }
-        // TODO: should we create a factory for resources?
-        else if( nodeName == Resource::getXMLNameStatic() ){
-            parseContainerNode( curr, mResources, new Resource() );
-        }
-        else if( nodeName == RenewableResource::getXMLNameStatic() ){
-            parseContainerNode( curr, mResources, new RenewableResource() );
-        }
-        else if( nodeName == UnlimitedResource::getXMLNameStatic() ){
-            parseContainerNode( curr, mResources, new UnlimitedResource );
-        }
-        else if( XMLDerivedClassParse(nodeName, curr) ){
-            // Do nothing but avoid printing the error.
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing region." << endl;
-        }
-    }
 }
 
 /*! \brief Write datamembers to datastream in XML format for debugging purposes.  

@@ -46,8 +46,8 @@
  */
 
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/itechnology_container.h"
+#include "util/base/include/time_vector.h"
 
 // Forward declarations
 class InterpolationRule;
@@ -127,16 +127,14 @@ public:
     // INamed methods
     virtual const std::string& getName() const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
     // IVisitable methods
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
 protected:
     virtual ITechnologyContainer* clone() const;
-    
-    virtual void interpolateAndParse( const xercesc::DOMNode* aNode );
     
 private:
     
@@ -151,17 +149,13 @@ private:
         
         //! The map that will be the primary data structure to contain technology vintages
         //! which do not have to align to model periods
-        DEFINE_VARIABLE( CONTAINER, "period", mVintages, std::map<int, ITechnology*> ),
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "period", mVintages, std::map<int, ITechnology*> ),
                                 
         //! Optional parameter for the first year in which a vintage should exist.
         DEFINE_VARIABLE( SIMPLE, "initial-available-year", mInitialAvailableYear, int ),
         
         //! Optional parameter for the last year in which a technology can be invested in.
         DEFINE_VARIABLE( SIMPLE, "final-available-year", mFinalAvailableYear, int ),
-        
-        //! A list of technology years that were created by interpolations.  This could
-        //! be used to avoid writing them back out in toInputXML
-        DEFINE_VARIABLE( ARRAY, "interpolated-years", mInterpolatedTechYears, std::vector<int> ),
                                 
         //! Interpolation rules for technology share weight values.
         DEFINE_VARIABLE( CONTAINER, "interpolation-rule", mShareWeightInterpRules, std::vector<InterpolationRule*> )
@@ -190,9 +184,7 @@ private:
     //! The cached begin iterator returned in getVintageEnd if the period matches
     //! mCachedVintageRangePeriod.
     TechRangeIterator mCachedTechRangeEnd;
-    
-    bool createAndParseVintage( const xercesc::DOMNode* aNode, const std::string& aTechType );
-    
+        
     void interpolateShareWeights( const int aPeriod );
     
     void clearInterpolationRules();

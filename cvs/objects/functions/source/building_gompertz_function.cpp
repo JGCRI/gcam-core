@@ -86,11 +86,11 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
     const double CONV_POP_THOUS = 1e3;
     double floorspace = pcfloorspace * CONV_M2_BM2 * subregionalPopulation * CONV_POP_THOUS;
 
-    
+
     // May need to make an adjustment 
 
     double Basefloorspace = bldInput->mBasepcFlsp * CONV_M2_BM2 * subregionalPopulation * CONV_POP_THOUS;
-    
+
     if (floorspace < Basefloorspace) {
         floorspace = Basefloorspace;
     }
@@ -99,4 +99,3 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
 
     return floorspace;
 }
-

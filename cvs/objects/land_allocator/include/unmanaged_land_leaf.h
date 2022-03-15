@@ -64,8 +64,11 @@ class LandUseHistory;
 class UnmanagedLandLeaf : public LandLeaf {
 public:
     explicit UnmanagedLandLeaf( const ALandAllocatorItem* aParent );
+    explicit UnmanagedLandLeaf();
     virtual ~UnmanagedLandLeaf();
     static const std::string& getXMLNameStatic();
+    
+    virtual const std::string& getXMLName() const;
     
     virtual void setUnmanagedLandProfitRate( const std::string& aRegionName,
                                              double aAverageProfitRate,
@@ -87,10 +90,7 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         LandLeaf
     )
-    
-    virtual const std::string& getXMLName() const;
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
 };
 
 #endif // _UNMANAGED_LAND_LEAF_H_

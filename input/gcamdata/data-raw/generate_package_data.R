@@ -320,7 +320,6 @@ generate_level2_data_names <- function() {
   level2_data_names[["DeleteThermalService"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "supplysector")
   level2_data_names[["DeleteGenericService"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "supplysector")
   level2_data_names[["BldNodes"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input")
-  level2_data_names[["NegEmissFinalDemand"]] <- c("region", "negative.emissions.final.demand", "policy.name")
   level2_data_names[["DemandStapleParams"]] <- c("region", "gcam.consumer", "nodeInput", "staples.food.demand.input", "scale.param", "self.price.elasticity", "cross.price.elasticity", "income.elasticity", "income.max.term", "price.received")
   level2_data_names[["DemandNonStapleParams"]] <- c("region", "gcam.consumer", "nodeInput", "non.staples.food.demand.input", "scale.param", "self.price.elasticity", "income.elasticity")
   level2_data_names[["DemandStapleRegBias"]] <- c("region", "gcam.consumer", "nodeInput", "staples.food.demand.input", "regional.bias.year", "regional.bias")

@@ -45,7 +45,6 @@
 */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/supply_sector.h"
 
 // Forward declarations
@@ -71,7 +70,7 @@ class ILandAllocator;
  */
 class AgSupplySector : public SupplySector {
 public:
-    explicit AgSupplySector( std::string& aRegionName );
+    explicit AgSupplySector();
     virtual ~AgSupplySector();
     static const std::string& getXMLNameStatic();
     virtual void completeInit( const IInfo* aRegionInfo,
@@ -82,7 +81,6 @@ protected:
 	virtual double getPrice( const GDP* aGDP,
                              const int aPeriod ) const;
 
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const;
     virtual void setMarket();

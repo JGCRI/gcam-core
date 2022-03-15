@@ -42,8 +42,6 @@
 #include <fstream>
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "climate/include/magicc_model.h"
 #include "containers/include/scenario.h"
@@ -56,7 +54,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -219,78 +216,6 @@ void MagiccModel::overwriteMAGICCParameters( ){
     SETPARAMETERVALUES( varIndex, mBCUnitForcing );
     varIndex = 10;
     SETPARAMETERVALUES( varIndex, mOCUnitForcing );
-}
-
-//! parse MAGICC xml object
-void MagiccModel::XMLParse( const DOMNode* node ){
-    // make sure we were passed a valid node.
-    assert( node );
-
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-
-        // get the name of the node.
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        // GHG input file
-        else if ( nodeName == "ghgInputFileName" ){
-            mGHGInputFileName = XMLHelper<string>::getValue( curr );
-        }
-        // Use historical data up to this year
-        else if ( nodeName == "last-historical-year" ){
-            mLastHistoricalYear = XMLHelper<double>::getValue( curr );
-        }
-        // Climate Sensitivity
-        else if ( nodeName == "climateSensitivity" ){
-            mClimateSensitivity = XMLHelper<double>::getValue( curr );
-        }
-        // Soil Feedback Factor. 
-        else if ( nodeName == "soilTempFeedback" ){
-            mSoilTempFeedback = XMLHelper<double>::getValue( curr );
-        }
-        // Humus Feedback Factor. 
-        else if ( nodeName == "humusTempFeedback" ){
-            mHumusTempFeedback = XMLHelper<double>::getValue( curr );
-        }
-        // GPP Feedback Factor. 
-        else if ( nodeName == "GPPTempFeedback" ){
-            mGPPTempFeedback = XMLHelper<double>::getValue( curr );
-        }
-        // 1980s Ocean Uptake 
-        else if ( nodeName == "oceanFlux80s" ){
-            mOceanCarbFlux80s = XMLHelper<double>::getValue( curr );
-        }
-        // 1980s net terrestrial Deforestation 
-        else if ( nodeName == "deforestFlux80s" ){
-            mNetDeforestCarbFlux80s = XMLHelper<double>::getValue( curr );
-        }
-        // unit forcing for BC 
-        else if ( nodeName == "bc-unit-forcing" ){
-            mBCUnitForcing = XMLHelper<double>::getValue( curr );
-        }
-        // unit forcing for OC 
-        else if ( nodeName == "oc-unit-forcing" ){
-            mOCUnitForcing = XMLHelper<double>::getValue( curr );
-        }
-        // base-year direct SO2 forcing 
-        else if ( nodeName == "base-so2dir-forcing" ){
-            mSO2Dir1990 = XMLHelper<double>::getValue( curr );
-        }
-        // base-year indirect SO2 forcing 
-        else if ( nodeName == "base-so2ind-forcing" ){
-            mSO2Ind1990 = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << endl;
-        }
-    }
 }
 
 //! Writes data members to debugging data stream in XML format.

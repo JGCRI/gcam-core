@@ -44,14 +44,13 @@
 #include <cassert>
 #include <ctime>
 #include <iomanip>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/world.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "util/curves/include/curve.h"
@@ -73,7 +72,6 @@
 #endif
 
 using namespace std;
-using namespace xercesc;
 using namespace boost;
 
 extern ofstream outFile;
@@ -135,95 +133,56 @@ World* Scenario::getWorld() {
     return mWorld;
 }
 
-//! Set data members from XML input.
-bool Scenario::XMLParse( const DOMNode* node ){
-    // assume we were passed a valid node.
-    assert( node );
-
-    // set the scenario name.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get the children of the node.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if ( nodeName == Modeltime::getXMLNameStatic() ){
-            if( !mModeltime ) {
-                mModeltime = Modeltime::getInstance();
-                const_cast<Modeltime*>( mModeltime )->XMLParse( curr );
-            }
-            else {
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::WARNING );
-                mainLog << "Modeltime can only be parsed once." << endl;
-            }
-        }
-        else if ( nodeName == World::getXMLNameStatic() ){
-            parseSingleNode( curr, mWorld, new World );
-        }
-        else if( nodeName == SolutionInfoParamParser::getXMLNameStatic() ) {
-            parseSingleNode( curr, mSolutionInfoParamParser, new SolutionInfoParamParser );
-        }
-        else if ( nodeName == SupplyDemandCurveSaver::getXMLNameStatic()) {
-            parseContainerNode( curr, mModelFeedbacks, new SupplyDemandCurveSaver );
-        }
-        
-        /*!
-         * \warning Parsing of solution algorithms are a special case.  They must be 
-         *          parsed after world and modeltime have been parsed and they will never
-         *          be written out in toInputXML.  They are also not re-parsable for
-         *          example trying to overwrite a parameter in a Solver using an add on
-         *          file will not work, rather it will completely overwrite the entire
-         *          solver for that period with the latest parsed solver.
-         */
-        else if( SolverFactory::hasSolver( nodeName ) ) {
-            /*!
-             * \pre World has already been created.
-             */
-            assert( world.get() );
-            
-            boost::shared_ptr<Solver> retSolver( SolverFactory::createAndParseSolver( nodeName, mMarketplace,
-                                                                     mWorld, curr ) );
-            
-            // make sure we don't attempt to set an invalid solver
-            if( retSolver.get() ) {
-                /*!
-                 * \pre Modeltime has already been created.
-                 */
-                assert( modeltime.get() );
-                
-                // this must be done here rather than relying on XMLHelper since we require a factory
-                // to create our object
-                const int period = mModeltime->getyr_to_per( XMLHelper<int>::getAttr( curr, "year" ) );
-                const bool fillOut = XMLHelper<bool>::getAttr( curr, "fillout" );
-                // we may need to resize the mSolvers which we could do now that we know we have a
-                // modeltime
-                if( mSolvers.size() == 0 ) {
-                    mSolvers.resize( mModeltime->getmaxper() );
-                }
-                mSolvers[ period ] = retSolver;
-                
-                // TODO: I think just using the same object rather than copying should suffice here
-                for( int fillOutPeriod = period + 1; fillOut && fillOutPeriod < mModeltime->getmaxper(); ++fillOutPeriod ) {
-                    mSolvers[ fillOutPeriod ] = retSolver;
-                }
-            }
+bool Scenario::XMLParse(rapidxml::xml_node<char>* & aNode) {
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+    if ( nodeName == Modeltime::getXMLNameStatic() ){
+        if( !mModeltime ) {
+            mModeltime = Modeltime::getInstance();
+            rapidxml::xml_node<char>* firstChild = aNode->first_node();
+            const_cast<Modeltime*>( mModeltime )->XMLParse( firstChild );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing scenario." << endl;
+            mainLog << "Modeltime can only be parsed once." << endl;
         }
-    } // end for loop
-    return true;
+        return true;
+    }
+    else if( SolverFactory::hasSolver( nodeName ) ) {
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        Solver* currSolver = 0;
+        Data<Solver*, CONTAINER> currSolverData(currSolver, "");
+        XMLParseHelper::parseData(aNode, currSolverData);
+        if(currSolver) {
+            /*!
+             * \pre Modeltime has already been created.
+             */
+            assert( modeltime.get() );
+            
+            // this must be done here rather than relying on XMLHelper since we require a factory
+            // to create our object
+            const int period = mModeltime->getyr_to_per( XMLParseHelper::getValue<int>(attrs["year"]));
+            const bool fillOut = XMLParseHelper::getValue<bool>( attrs["fillout"] );
+            // we may need to resize the mSolvers which we could do now that we know we have a
+            // modeltime
+            if( mSolvers.size() == 0 ) {
+                mSolvers.resize( mModeltime->getmaxper() );
+            }
+            boost::shared_ptr<Solver> retSolver(currSolver);
+            mSolvers[ period ] = retSolver;
+            
+            // TODO: I think just using the same object rather than copying should suffice here
+            for( int fillOutPeriod = period + 1; fillOut && fillOutPeriod < mModeltime->getmaxper(); ++fillOutPeriod ) {
+                mSolvers[ fillOutPeriod ] = retSolver;
+            }
+        }
+        return true;
+    }
+    else {
+        return false;
+    }
 }
+    
 
 //! Sets the name of the scenario. 
 void Scenario::setName( string newName ) {
@@ -282,6 +241,19 @@ bool Scenario::run( const int aSinglePeriod,
                     const bool aPrintDebugging,
                     const string& aFilenameEnding )
 {
+    // If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
+    // model will exit after any failed model period (rather than running to completion).
+    const Configuration* conf = Configuration::getInstance();
+    bool quitFirstFailure = conf->getBool("QuitFirstFailure", false, false);
+    bool runTargetFinder = conf->getBool("find-path", false, false);
+    // If applicable, print a statement to the log confirming this behavior.
+    if (quitFirstFailure & !runTargetFinder) {
+        ILogger& mainLog = ILogger::getLogger("main_log");
+        mainLog.setLevel(ILogger::WARNING);
+        mainLog << "QuitFirstFailure is set to true.  GCAM will exit after first failed model period." << endl;
+    }
+
+
     // Avoid accumulating unsolved periods.
     mUnsolvedPeriods.clear();
     
@@ -309,6 +281,14 @@ bool Scenario::run( const int aSinglePeriod,
     if( aSinglePeriod == RUN_ALL_PERIODS ){
         for( int per = 0; per < mModeltime->getmaxper(); per++ ){
             success &= calculatePeriod( per, *XMLDebugFile, &tabs, aPrintDebugging );
+            // If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
+            // model will exit after any failed model period (rather than running to completion).
+            if (!success & quitFirstFailure & !runTargetFinder) {
+                ILogger& mainLog = ILogger::getLogger("main_log");
+                mainLog.setLevel(ILogger::ERROR);
+                mainLog << "Period " << per << " failed to solve. Skipping all remaining model periods." << endl;
+                break;
+            }
         }
     }
     // Check if the single period is invalid.
@@ -320,20 +300,34 @@ bool Scenario::run( const int aSinglePeriod,
     } 
     else {
         // Run all periods up to the single period which are invalid.
+        // Set up bool to skip all future periods if QuitFirstFailure bool is set to 1 and 
+        // model fails to solve.
+        bool runNextPeriod = true;
         for( int per = 0; per < aSinglePeriod; per++ ){
             if( !mIsValidPeriod[ per ] ){
                 success &= calculatePeriod( per, *XMLDebugFile, &tabs, aPrintDebugging );
+                // If QuitFirstFailure bool is set to 1 and model is not running in target finder mode,
+                // model will exit after any failed model period (rather than running to completion).
+                if (!success & quitFirstFailure & !runTargetFinder) {
+                    ILogger& mainLog = ILogger::getLogger("main_log");
+                    mainLog.setLevel(ILogger::ERROR);
+                    mainLog << "Period " << per << " failed to solve. Skipping all remaining model periods." << endl;
+                    runNextPeriod = false;
+                    break;
+                }
             }
         }
         
-        // Invalidate the period about to be run and all periods past it.
-        for( int per = aSinglePeriod; per < mModeltime->getmaxper(); ++per ){
-            mIsValidPeriod[ per ] = false;
-        }
+        if (runNextPeriod) {
+            // Invalidate the period about to be run and all periods past it.
+            for( int per = aSinglePeriod; per < mModeltime->getmaxper(); ++per ){
+                mIsValidPeriod[ per ] = false;
+            }
 
-        // Now run the requested period. Results past this period will no longer
-        // be valid. Do not attempt to use them!
-        success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, &tabs, aPrintDebugging );
+            // Now run the requested period. Results past this period will no longer
+            // be valid. Do not attempt to use them!
+            success &= calculatePeriod( aSinglePeriod, *XMLDebugFile, &tabs, aPrintDebugging );
+        }
     }
     
     // Print any unsolved periods.
@@ -478,15 +472,12 @@ bool Scenario::calculatePeriod( const int aPeriod,
     mIsValidPeriod[ aPeriod ] = true;
 
     // Run the climate model for this period (only if the solver is successful)
-    if( success ) {
-        mWorld->runClimateModel( aPeriod );
-    }
-    else {
+    if( !success ) {
         ILogger& climatelog = ILogger::getLogger( "climate-log" );
         climatelog.setLevel( ILogger::WARNING );
-        climatelog << "Solver unsuccessful for period " << aPeriod
-                   << ".  Climate model run skipped." << endl;
+        climatelog << "Solver unsuccessful for period " << aPeriod << "." << endl;
     }
+    mWorld->runClimateModel( aPeriod );
     
     // Call any model feedbacks now that we are done solving the current period and
     // the climate model has been run.
@@ -736,7 +727,7 @@ void Scenario::initSolvers() {
     
     // parse the solver config if the user specified one
     if( solverConfigFile != "" ) {
-        XMLHelper<void>::parseXML( solverConfigFile, this );
+        XMLParseHelper::parseXML( solverConfigFile, this );
     }
     
     // we may need to resize the mSolvers which we could do now that we know we have a

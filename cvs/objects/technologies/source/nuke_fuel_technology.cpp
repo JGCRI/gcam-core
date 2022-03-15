@@ -53,7 +53,6 @@
 #include "technologies/include/marginal_profit_calculator.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -71,6 +70,25 @@ NukeFuelTechnology::NukeFuelTechnology( const string& aName, const int aYear ): 
     enrichmentProd = 0.045; // fissile material enrichment 
     enrichmentFeed = 0.0071; // feed material enrichment 
     enrichmentTail = 0.003; // tails enrichment 
+    enrichmentCost = 100; // uranium enrichment cost ($/SWU)
+    fabricationCost = 200; // enriched uranium fuel fabrication cost ($/kgHM)
+    blanketFabCost = 0.0; // blanket material fabrication cost ($/kgHM)
+    interimStorageCost = 200; // interim storage cost of spent fuel ($/kgHM)
+    geologicWasteDisposalCost = 400; // cost of permenant waste disposal ($/kgHM)
+    reprocessingCost = 0; // reprocessing cost of spent fuel ($/kgHM)
+    mConversionFactor = 1;
+}
+
+NukeFuelTechnology::NukeFuelTechnology() {
+    // default values for nuclear fuel
+    fertileFuelName = "none"; // name of secondary fertile material used for making nuclear fuel
+    blanketFuelName = "none"; // name of secondary fertile material used for breeding fissile material
+    blanketFuelRatio = 0.0; // Ratio of blanket to fuel materials (kgBlanket/kgFuel)
+    burnup = 50; // designed burnup of fuel associated with nuclear plant (MWd/kgHM)
+    conversionCost = 5; // uranium ore conversion cost ($/kgU)
+    enrichmentProd = 0.045; // fissile material enrichment
+    enrichmentFeed = 0.0071; // feed material enrichment
+    enrichmentTail = 0.003; // tails enrichment
     enrichmentCost = 100; // uranium enrichment cost ($/SWU)
     fabricationCost = 200; // enriched uranium fuel fabrication cost ($/kgHM)
     blanketFabCost = 0.0; // blanket material fabrication cost ($/kgHM)
@@ -123,58 +141,6 @@ const string& NukeFuelTechnology::getXMLNameStatic() {
     const static string XML_NAME = "nuclearFuelTechnology";
     return XML_NAME;
 }
-
-bool NukeFuelTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    if( nodeName == "burnup" ){
-        burnup = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "fertileFuelName" ){
-        fertileFuelName = XMLHelper<string>::getValue( curr );
-    }
-    else if( nodeName == "blanketFuelName" ){
-        blanketFuelName = XMLHelper<string>::getValue( curr );
-    }
-    else if( nodeName == "blanketFuelRatio" ){
-        blanketFuelRatio = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "conversionCost" ){
-        conversionCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "enrichmentCost" ){
-        enrichmentCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "enrichmentProd" ){
-        enrichmentProd = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "enrichmentFeed" ){
-        enrichmentFeed = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "enrichmentTail" ){
-        enrichmentTail = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "fabricationCost" ){
-        fabricationCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "blanketFabCost" ){
-        blanketFabCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "interimStorageCost" ){
-        interimStorageCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "geologicWasteDisposalCost" ){
-        geologicWasteDisposalCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "reprocessingCost" ){
-        reprocessingCost = XMLHelper<double>::getValue( curr );
-    }
-    else if( nodeName == "fMultiplier" ){
-        mConversionFactor = XMLHelper<double>::getValue( curr );
-    }
-    else {
-        return false;
-    }
-    return true;
-}	
 
 void NukeFuelTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 
     XMLWriteElement( fertileFuelName, "fertileFuelName", out, tabs );

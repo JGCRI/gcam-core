@@ -102,7 +102,6 @@ module_energy_batch_building_det_xml <- function(command, ...) {
     L244.GenericTradBioCoef <- get_data(all_data, "L244.GenericTradBioCoef")
     L244.ThermalTradBioCoef <- get_data(all_data, "L244.ThermalTradBioCoef")
 
-
     # ===================================================
 
     # Produce outputs
@@ -159,7 +158,6 @@ module_energy_batch_building_det_xml <- function(command, ...) {
                      "L244.GenericTradBioCoef","L244.ThermalTradBioCoef",
                      "L244.GenericCoalCoef","L244.ThermalCoalCoef",
                      "L244.GenericServiceCoef","L244.ThermalServiceCoef") ->   building_det.xml
-
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
     if(nrow(L244.DeleteThermalService) > 0) {

@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
@@ -76,16 +75,17 @@ class Tabs;
  */
 class RenewableInput: public MiniCAMInput
 {
-    friend class InputFactory;
     friend class UnmanagedLandTechnology;
 public:
+    RenewableInput();
+    
     static const std::string& getXMLNameStatic();
 
     const std::string& getXMLReportingName() const;
     
+    const std::string& getXMLName() const;
+    
     virtual RenewableInput* clone() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -140,7 +140,6 @@ public:
 
 	virtual double getCalibrationQuantity( const int aPeriod ) const;
 protected:
-    RenewableInput();
 
     // Constuctor to allow internal creation of this object
     RenewableInput( const std::string& aName );
@@ -151,7 +150,7 @@ protected:
         MiniCAMInput,
 
         //! Physical Demand.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> )
     )
     
     void copy( const RenewableInput& aOther );

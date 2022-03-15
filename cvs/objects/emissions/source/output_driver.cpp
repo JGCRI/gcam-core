@@ -41,15 +41,12 @@
 #include "util/base/include/definitions.h"
 
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "emissions/include/output_driver.h"
 #include "technologies/include/ioutput.h"
 #include "util/base/include/xml_helper.h"
 
 using namespace std;
-using namespace xercesc;
 
 double OutputDriver::calcEmissionsDriver( const vector<IInput*>& aInputs,
                                          const vector<IOutput*>& aOutputs,
@@ -69,32 +66,6 @@ const string& OutputDriver::getXMLName() const {
 const string& OutputDriver::getXMLNameStatic(){
     static const string XML_NAME = "output-driver";
     return XML_NAME;
-}
-
-bool OutputDriver::XMLParse( const xercesc::DOMNode* aNode ) {
-    /*! \pre Assume we are passed a valid node. */
-    assert( aNode );
-
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    bool parsingSuccessful = true;
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == XMLHelper<void>::text() ){
-            continue;
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing" << getXMLName() << endl;
-            parsingSuccessful = false;
-        }
-    }
-    
-    return parsingSuccessful;
 }
 
 void OutputDriver::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const {

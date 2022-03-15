@@ -60,7 +60,6 @@ public:
     virtual InputDriver* clone() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     
 protected:

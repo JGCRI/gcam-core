@@ -49,6 +49,7 @@
  */
 class ITargetSolver {
 public:
+    virtual ~ITargetSolver() {}
     /*!
      * \brief A flag to indicate an undefined parameter.
      */

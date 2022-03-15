@@ -43,12 +43,10 @@
  * \brief The AFinalDemand abstract base class header file.
  * \author Josh Lurz
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iparsable.h"
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
@@ -59,7 +57,6 @@ class Tabs;
 
 // Need to forward declare the subclasses as well.
 class EnergyFinalDemand;
-class NegativeEmissionsFinalDemand;
 
 /*! 
  * \ingroup Objects
@@ -70,7 +67,6 @@ class NegativeEmissionsFinalDemand;
  */
 
 class AFinalDemand: public INamed,
-                    public IParsable,
                     public IVisitable,
                     private boost::noncopyable
 {
@@ -79,10 +75,9 @@ public:
      * \brief Destructor.
      */
     virtual ~AFinalDemand();
-
-    // Documentation is inherited
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     
+    virtual const std::string& getXMLName() const = 0;
+
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const = 0;
@@ -153,7 +148,7 @@ protected:
         /* Declare all subclasses of AFinalDemand to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( AFinalDemand, EnergyFinalDemand, NegativeEmissionsFinalDemand )
+        DEFINE_SUBCLASS_FAMILY( AFinalDemand, EnergyFinalDemand )
     )
 };
 

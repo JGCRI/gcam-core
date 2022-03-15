@@ -61,10 +61,8 @@
 #include <memory>
 #include <list>
 
-// xerces xml headers
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
-#include "util/base/include/xml_helper.h"
+// xml headers
+#include "util/base/include/xml_parse_helper.h"
 
 // include custom headers
 #include "util/base/include/configuration.h"
@@ -78,7 +76,6 @@
 #include "util/base/include/util.h"
 
 using namespace std;
-using namespace xercesc;
 
 // define file (ofstream) objects for outputs, debugging and logs
 /* \todo Finish removing globals-JPL */
@@ -109,8 +106,9 @@ int main( int argc, char *argv[] ) {
     timer.start();
 
     // Initialize the LoggerFactory
+    XMLParseHelper::initParser();
     LoggerFactoryWrapper loggerFactoryWrapper;
-    bool success = XMLHelper<void>::parseXML( loggerFileName, &loggerFactoryWrapper );
+    bool success = XMLParseHelper::parseXML( loggerFileName, &loggerFactoryWrapper );
     
     // Check if parsing succeeded. Non-zero return codes from main indicate
     // failure.
@@ -161,7 +159,7 @@ int main( int argc, char *argv[] ) {
     mainLog << "Configuration file:  " << configurationFileName << endl;
     mainLog << "Parsing input files..." << endl;
     Configuration* conf = Configuration::getInstance();
-    success = XMLHelper<void>::parseXML( configurationFileName, conf );
+    success = XMLParseHelper::parseXML( configurationFileName, conf );
     // Check if parsing succeeded. Non-zero return codes from main indicate
     // failure.
     if( !success ){
@@ -184,8 +182,9 @@ int main( int argc, char *argv[] ) {
         return 1;
     }
     
-    // Cleanup Xerces. This should be encapsulated with an initializer object to ensure against leakage.
-    XMLHelper<void>::cleanupParser();
+    // Cleanup any temporary structures that are no longer required now that no more data
+    // will be parsed.
+    XMLParseHelper::cleanupParser();
 
     // Run the scenario and print debugging information as controlled by the following
     // configuration options with the defaults being to run all periods and print debug

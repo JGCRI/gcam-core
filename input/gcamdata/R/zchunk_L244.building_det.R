@@ -215,7 +215,6 @@ module_energy_L244.building_det <- function(command, ...) {
     n_groups<-nrow(unique(get_data(all_data, "socioeconomics/income_shares") %>%
                             select(category)))
 
-
     # ===================================================
 
     # NOTES:
@@ -765,8 +764,6 @@ module_energy_L244.building_det <- function(command, ...) {
                add_title(paste0("Satiation adders in floorspace demand function: ", i)) %>%
                add_legacy_name(paste0("L244.SatiationAdder_", i)))
     }
-
-
 
 
   #================================================================
@@ -3007,6 +3004,7 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.GenericServiceCoef_SSP4,L244.GenericServiceCoef_SSP5,L244.ThermalServiceCoef,
                 L244.GenericCoalCoef,L244.ThermalCoalCoef,L244.GenericTradBioCoef,L244.ThermalTradBioCoef,
                 L244.GenericShares,L244.ThermalShares)
+
   } else {
     stop("Unknown command")
   }

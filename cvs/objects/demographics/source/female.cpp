@@ -38,13 +38,12 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
 #include "demographics/include/female.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
+
 // static initialize
 const string Female::XML_NAME = "female";
 
@@ -54,20 +53,6 @@ Female::Female() : Gender(){
     mMaleBirth = 0;
     mFemaleBirth = 0;
     mMaleBirthFrac = 0;
-}
-
-//! Parse xml file for data
-bool Female::XMLDerivedClassParse( const string &nodeName, const DOMNode* curr ) {
-    if ( nodeName == "fertilityRate" ) {
-        mFertilityRate = XMLHelper<double>::getValue( curr );
-    }
-    else if ( nodeName == "maleBirthFrac" ) {
-        mMaleBirthFrac = XMLHelper<double>::getValue( curr );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 //! Output debug info for derived class

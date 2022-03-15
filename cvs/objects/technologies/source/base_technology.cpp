@@ -43,8 +43,6 @@
 #include <iostream>
 #include <string>
 #include <vector>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "technologies/include/base_technology.h"
 #include "functions/include/iinput.h"
@@ -53,17 +51,14 @@
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
-#include "emissions/include/ghg_factory.h"
 #include "emissions/include/co2_emissions.h"
 #include "functions/include/function_utils.h"
 #include "functions/include/node_input.h"
 #include "technologies/include/icapture_component.h"
-#include "technologies/include/capture_component_factory.h"
 #include "containers/include/info_factory.h"
 
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -163,62 +158,6 @@ void BaseTechnology::clear() {
     }
     for( GHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         delete *ghg;
-    }
-}
-
-//! parse SOME xml data
-void BaseTechnology::XMLParse( const DOMNode* node ) {
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    // get the name attribute.
-    name = XMLHelper<string>::getAttr( node, "name" );
-    year = XMLHelper<int>::getAttr( node, "year" );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if ( nodeName == "categoryName" ) {
-            categoryName = XMLHelper<string>::getValue( curr );
-        }
-        else if( GHGFactory::isGHGNode( nodeName ) ){
-            parseContainerNode( curr, mGhgs, mGhgNameMap, GHGFactory::create( nodeName ).release() );
-        }
-        else if( nodeName == "share-weight" ){
-            mShareWeight = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "initial-year" ) {
-            mIsInitialYear = XMLHelper<bool>::getValue( curr );
-        }
-        else if( CaptureComponentFactory::isOfType( nodeName ) ) {
-            // Check if a new capture component needs to be created because
-            // there is not currently one or the current type does not match the
-            // new type.
-            if( !mSequestrationDevice.get() || !mSequestrationDevice->isSameType( nodeName ) ) {
-                mSequestrationDevice = CaptureComponentFactory::create( nodeName );
-            }
-            mSequestrationDevice->XMLParse( curr );
-        }
-        else if ( nodeName == NodeInput::getXMLNameStatic() ) {
-            // the root must be a node
-            // TODO: maybe I should just make mNestedInputRoot an auto_ptr
-            auto_ptr<INestedInput> tempRoot( mNestedInputRoot );
-            parseSingleNode( curr, tempRoot, new NodeInput );
-            mNestedInputRoot = tempRoot.release();
-        }
-        else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << "." << endl;
-        }
     }
 }
 

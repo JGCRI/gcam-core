@@ -41,8 +41,6 @@
 #include "util/base/include/definitions.h"
 #include <string>
 #include <cassert>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include <math.h>
 
 #include "sectors/include/capacity_limit_backup_calculator.h"
@@ -52,7 +50,6 @@
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*!
  * \brief Constructor.
@@ -101,41 +98,8 @@ const string& CapacityLimitBackupCalculator::getXMLNameStatic() {
     return XML_NAME;
 }
 
-// Documentation is inherited.
-bool CapacityLimitBackupCalculator::XMLParse( const xercesc::DOMNode* node ){
-    /*! \pre Assume we are passed a valid node. */
-    assert( node );
-
-    const xercesc::DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const xercesc::DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "capacity-limit" ){
-            mCapacityLimit = XMLHelper<double>::getValue( curr );
-            // TODO: Correct values above 1 or below 0. Need completeInit.
-        }
-        else if( nodeName == "fmax" ) {
-            mFmax = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "c" ) {
-            mC = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "tau" ) {
-            mTau = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown tag " << nodeName << " encountered while processing "
-                    << getXMLNameStatic() << endl;
-        }
-    }
-
-    // TODO: Handle success and failure better.
-    return true;
+const string& CapacityLimitBackupCalculator::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 // Documentation is inherited.

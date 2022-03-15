@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/log_newton_raphson.h"
@@ -59,7 +57,6 @@
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor. Constructs the base class. 
 LogNewtonRaphson::LogNewtonRaphson( Marketplace* aMarketplace,
@@ -92,47 +89,6 @@ const string& LogNewtonRaphson::getXMLNameStatic() {
 //! Get the name of the SolverComponent
 const string& LogNewtonRaphson::getXMLName() const {
     return getXMLNameStatic();
-}
-
-bool LogNewtonRaphson::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "delta-price" ) {
-            mDefaultDeltaPrice = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "max-iterations" ) {
-            mMaxIterations = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "max-price-change" ) {
-            mDefaultMaxPriceChange = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "solution-info-filter" ) {
-            mSolutionInfoFilter.reset(
-                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) ) );
-        }
-        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 /*! \brief Ron's version of the Newton Raphson Solution Mechanism (all markets)

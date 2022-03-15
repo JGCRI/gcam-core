@@ -44,7 +44,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
@@ -76,16 +75,16 @@ class Tabs;
  */
 class InputCapital: public MiniCAMInput
 {
-    friend class InputFactory;
 public:
+    InputCapital();
 
     static const std::string& getXMLNameStatic();
 
-    const std::string& getXMLReportingName() const;    
+    const std::string& getXMLReportingName() const;
+    
+    const std::string& getXMLName() const;
 
     InputCapital* clone() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
 
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -155,8 +154,6 @@ public:
                                    const IInput* aNextInput );
 
 protected:
-
-    InputCapital();
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -165,12 +162,12 @@ protected:
         
         //! Cost of the non-energy input adjusted for the additional costs of the
         //! capture component.
-        DEFINE_VARIABLE( ARRAY, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
         
         //! Coefficient for production or demand function. Coefficients are not
         // read in and are initialized to 1, but can increase over time with
         // technical change.
-        DEFINE_VARIABLE( ARRAY, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
         
         //! Input specific technical change.
         DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
@@ -187,11 +184,11 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "lifetime-capital", mLifetimeCapital, Value ),
         
         //! Calculated value for the levelized cost of capital.
-        DEFINE_VARIABLE( SIMPLE, "levelized-capital-cost", mLevelizedCapitalCost, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "levelized-capital-cost", mLevelizedCapitalCost, Value ),
         
         //! Technology capacity factor.
         // TODO: create one in technology and use that instead.
-        DEFINE_VARIABLE( SIMPLE, "capacity-factor", mCapacityFactor, double )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "capacity-factor", mCapacityFactor, double )
     )
     
     void copy( const InputCapital& aOther );

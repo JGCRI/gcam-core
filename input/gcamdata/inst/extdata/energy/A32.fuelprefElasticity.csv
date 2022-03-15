@@ -7,4 +7,8 @@
 subsector,criteria,share,fuelprefElasticity
 biomass,greater than,0.15,-0.1
 biomass,greater than,0.3,-0.4
-gas,lesser than,0.1,0.1
+biomass,greater than,0.5,-0.7
+gas,lesser than,0.2,0.1
+gas,lesser than,0.1,0.3
+electricity,lesser than,0.2,0.1
+electricity,lesser than,0.1,0.3

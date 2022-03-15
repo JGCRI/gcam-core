@@ -1,5 +1,5 @@
-#ifndef _INTERPOLATION_FUNCTION_FACTORY_H_
-#define _INTERPOLATION_FUNCTION_FACTORY_H_
+#ifndef _MARKET_MATCHES_SOLUTION_INFO_FILTER_H_
+#define _MARKET_MATCHES_SOLUTION_INFO_FILTER_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
@@ -38,34 +38,50 @@
 
 
 /*! 
- * \file interpolation_function_factory.h
+ * \file market_matches_solution_info_filter.h  
  * \ingroup Objects
- * \brief Header file for the InterpolationFunctionFactory class.
+ * \brief Header file for the MarketMatchesSolutionInfoFilter class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
+#include <regex>
 
-class IInterpolationFunction;
+#include "solution/util/include/isolution_info_filter.h"
+
+class SolutionInfo;
 
 /*!
  * \ingroup Objects
- * \brief A factory which can be used to create instances of an interpolation function.
- * \details There are two static methods to determine if this factory can create an
- *          interpolation function.  The XML setup for an interpolation function is
- *          a little different so that generating the XML tags would be easier.  The
- *          node name will always be "interpolation-function" and the name attribute
- *          will be used to determine which function should be created by this factory.
+ * \brief A solution info filter which will accept any solution info which
+ *        regular expression matches the read in market name.
+ * \details Note that it is generally recommended that the user avoid using
+ *          this filter in the general case since it would be possible that
+ *          market names could get out of sync with the names used in the
+ *          dataset.
+ *          <b>XML specification for MarketMatchesSolutionInfoFilter</b>
+ *          - XML name: \c market-matches-solution-info-filter
+ *          - Contained by:
+ *          - Parsing inherited from class: None.
+ *          - Elements:
+ *              - \c market-matches string MarketMatchesSolutionInfoFilter::mAcceptMarketMatches
+ *                      The name that will be compared using regular expressions 
+ *                      against the market name.
  *
  * \author Pralit Patel
- * \author Sonny Kim
  */
-class InterpolationFunctionFactory {
+class MarketMatchesSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    static bool hasInterpolationFunction( const std::string& aXMLAttrNameValue );
+    MarketMatchesSolutionInfoFilter(const std::string& aMarketMatches);
+    virtual ~MarketMatchesSolutionInfoFilter();
     
-    static IInterpolationFunction* createAndParseFunction( const std::string& aXMLAttrNameValue,
-        const xercesc::DOMNode* aNode );
+    static const std::string& getXMLNameStatic();
+    
+    // ISolutionInfoFilter methods
+    virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
+    
+private:
+    //! The name of the market which will be accepted
+    const std::regex mAcceptMarketMatches;
 };
 
-#endif // _INTERPOLATION_FUNCTION_FACTORY_H_
+#endif // _MARKET_MATCHES_SOLUTION_INFO_FILTER_H_

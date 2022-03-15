@@ -45,11 +45,9 @@
 #include "ccarbon_model/include/land_carbon_densities.h"
 #include "emissions/include/aghg.h"
 #include "util/base/include/ivisitor.h"
-#include "emissions/include/ghg_factory.h"
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -64,14 +62,13 @@ LandLeaf( aParent, "" )
 {
 }
 
-//! Destructor
-UnmanagedLandLeaf::~UnmanagedLandLeaf() {
+UnmanagedLandLeaf::UnmanagedLandLeaf():
+LandLeaf()
+{
 }
 
-bool UnmanagedLandLeaf::XMLDerivedClassParse( const std::string& aNodeName,
-                                              const xercesc::DOMNode* aCurr )
-{
-    return true;
+//! Destructor
+UnmanagedLandLeaf::~UnmanagedLandLeaf() {
 }
 
 const string& UnmanagedLandLeaf::getXMLName() const {

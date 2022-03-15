@@ -66,6 +66,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     income_shares<-get_data(all_data, "socioeconomics/income_shares")
     n_groups<-nrow(unique(get_data(all_data, "socioeconomics/income_shares") %>%
                             select(category)))
+
     # ===================================================
 
     # Silence package notes
@@ -349,7 +350,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       bind_rows(L144.flsp_bm2_R_res_Yh_pre %>%
                   left_join_error_no_match(GCAM_region_names, by="GCAM_region_ID") %>%
                   filter(region %notin% regions_with_obs_data,
-                          year<=avg_fin_obs_year)) %>%
+                         year<=avg_fin_obs_year)) %>%
       rename(flps_bm2 = value) %>%
       #add GDP
       left_join_error_no_match(L102.pcgdp_thous90USD_Scen_R_Y %>% filter(scenario == socioeconomics.BASE_GDP_SCENARIO), by = c("GCAM_region_ID", "year")) %>%
@@ -364,7 +365,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
                                  mutate(value=if_else(is.na(value),approx_fun(year,value,rule = 2),value)) %>%
                                  ungroup() %>%
                                  select(-Units),
-                              by = c("year", "region")) %>%
+                               by = c("year", "region")) %>%
       rename(area_thous_km2 = value) %>%
       mutate(tot_dens = pop/(area_thous_km2* 1E3))
 
@@ -394,9 +395,9 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       filter(region != "USA") %>%
       arrange(region) %>%
       mutate(unadjust.satiation = obs_UnadjSat,
-      land.density.param = coef(fit.gomp)[1],
-      b.param = coef(fit.gomp)[2],
-      income.param = coef(fit.gomp)[3]) %>%
+             land.density.param = coef(fit.gomp)[1],
+             b.param = coef(fit.gomp)[2],
+             income.param = coef(fit.gomp)[3]) %>%
       mutate(year = if_else(region %in% regions_with_obs_data, MODEL_FINAL_BASE_YEAR, avg_fin_obs_year)) %>%
       left_join_error_no_match(L144.flsp_param_pre %>% select(region,tot_dens,year), by = c("region", "year")) %>%
       select(-year) %>%
@@ -424,7 +425,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
              pop_gr = pop/n_groups,
              pc_gdp_thous_gr = (gdp_gr/pop_gr)/1E3) %>%
       mutate(flsp_pc_est=(`unadjust.satiation` +(-`land.density.param`*log(tot_dens)))*exp(-`b.param`
-                                                                                        *exp(-`income.param`*log(pc_gdp_thous_gr)))) %>%
+                                                                                           *exp(-`income.param`*log(pc_gdp_thous_gr)))) %>%
       mutate(flsp_est = flsp_pc_est * pop_gr / 1E9) %>%
       group_by(GCAM_region_ID) %>%
       summarise(flsp_est=sum(flsp_est)) %>%

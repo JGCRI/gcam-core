@@ -47,7 +47,6 @@
 
 #include <vector>
 #include <map>
-#include <xercesc/dom/DOMNode.hpp>
 #include "sectors/include/subsector.h"
 
 // Forward declarations
@@ -65,8 +64,9 @@ class Tabs;
 class SubsectorAddTechCosts : public Subsector
 {
 public:
-    SubsectorAddTechCosts( const std::string& aRegionName, const std::string& aSectorName );
+    SubsectorAddTechCosts();
     static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const;
 	virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
 protected:
     
@@ -75,8 +75,5 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         Subsector
     )
-
-    virtual bool XMLDerivedClassParse( const std::string nodeName, const xercesc::DOMNode* curr );
-    virtual const std::string& getXMLName() const;
 };
 #endif // _SUBSECTOR_ADD_TECH_COSTS_H_

@@ -45,12 +45,12 @@
 * \author Sonny Kim
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/time_vector.h"
+#include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 
 /*! 
@@ -65,7 +65,6 @@ public:
     const std::string& getName() const;
     const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void completeInit( const std::string& aRegionName );
     void initCalc( const std::string& aRegionName, const int aPeriod );

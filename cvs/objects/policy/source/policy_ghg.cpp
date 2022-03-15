@@ -46,8 +46,6 @@
 #include <string>
 #include <algorithm>
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "containers/include/iinfo.h"
@@ -57,7 +55,6 @@
 #include "sectors/include/sector_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -134,43 +131,6 @@ const string& GHGPolicy::getXMLNameStatic() {
 //! Get the ghg policy name. 
 const string& GHGPolicy::getName() const {
     return mName;
-}
-
-//! Initializes data members from XML.
-void GHGPolicy::XMLParse( const DOMNode* node ){
-
-    /*! \pre assume we are passed a valid node.*/
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-    const Modeltime* modeltime = scenario->getModeltime();
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "market" ){
-            mMarket = XMLHelper<string>::getValue( curr ); // should be only one market
-        }
-        else if( nodeName == "constraint" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mConstraint, modeltime );
-        }
-        else if( nodeName == "fixedTax" ){
-            XMLHelper<Value>::insertValueIntoVector( curr, mFixedTax, modeltime );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing ghgmarket." << endl;
-        }
-    }
 }
 
 //! Writes data members to data stream in XML format.

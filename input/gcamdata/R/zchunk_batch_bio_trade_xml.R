@@ -17,7 +17,7 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
              "L243.Supplysector_Bio",
              "L243.SectorUseTrialMarket_Bio",
              "L243.SubsectorLogit_Bio",
-             "L243.SubsectorShrwtFllt_TotBio",
+             "L243.SubsectorShrwt_TotBio",
              "L243.SubsectorShrwtFllt_TradedBio",
              "L243.GlobalTechCoef_TotBio",
              "L243.GlobalTechShrwt_TotBio",
@@ -39,7 +39,7 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
     L243.Supplysector_Bio <- get_data(all_data, "L243.Supplysector_Bio")
     L243.SectorUseTrialMarket_Bio <- get_data(all_data, "L243.SectorUseTrialMarket_Bio")
     L243.SubsectorLogit_Bio <- get_data(all_data, "L243.SubsectorLogit_Bio")
-    L243.SubsectorShrwtFllt_TotBio <- get_data(all_data, "L243.SubsectorShrwtFllt_TotBio")
+    L243.SubsectorShrwt_TotBio <- get_data(all_data, "L243.SubsectorShrwt_TotBio")
     L243.SubsectorShrwtFllt_TradedBio <- get_data(all_data, "L243.SubsectorShrwtFllt_TradedBio")
     L243.GlobalTechCoef_TotBio <- get_data(all_data, "L243.GlobalTechCoef_TotBio")
     L243.GlobalTechShrwt_TotBio <- get_data(all_data, "L243.GlobalTechShrwt_TotBio")
@@ -64,7 +64,7 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
       add_logit_tables_xml(L243.Supplysector_Bio, "Supplysector") %>%
       add_xml_data(L243.SectorUseTrialMarket_Bio, "SectorUseTrialMarket") %>%
       add_logit_tables_xml(L243.SubsectorLogit_Bio, "SubsectorLogit") %>%
-      add_xml_data(L243.SubsectorShrwtFllt_TotBio, "SubsectorShrwtFllt") %>%
+      add_xml_data(L243.SubsectorShrwt_TotBio, "SubsectorShrwt") %>%
       add_xml_data(L243.SubsectorShrwtFllt_TradedBio, "SubsectorShrwtFllt") %>%
       add_xml_data(L243.GlobalTechCoef_TotBio, "GlobalTechCoef") %>%
       add_xml_data(L243.GlobalTechShrwt_TotBio, "GlobalTechShrwt") %>%
@@ -79,7 +79,7 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
                      "L243.Supplysector_Bio",
                      "L243.SectorUseTrialMarket_Bio",
                      "L243.SubsectorLogit_Bio",
-                     "L243.SubsectorShrwtFllt_TotBio",
+                     "L243.SubsectorShrwt_TotBio",
                      "L243.SubsectorShrwtFllt_TradedBio",
                      "L243.GlobalTechCoef_TotBio",
                      "L243.GlobalTechShrwt_TotBio",

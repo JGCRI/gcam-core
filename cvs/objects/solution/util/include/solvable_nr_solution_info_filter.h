@@ -43,7 +43,6 @@
  * \brief Header file for the SolvableNRSolutionInfoFilter class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 #include "solution/util/include/isolution_info_filter.h"
@@ -65,15 +64,12 @@ class SolutionInfo;
 class SolvableNRSolutionInfoFilter : public ISolutionInfoFilter {
 public:
     SolvableNRSolutionInfoFilter();
-    ~SolvableNRSolutionInfoFilter();
+    virtual ~SolvableNRSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     
     // ISolutionInfoFilter methods
-    virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;    
 };
 
 #endif // _SOLVABLE_NR_SOLUTION_INFO_FILTER_H_

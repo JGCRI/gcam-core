@@ -149,9 +149,9 @@ public:
     virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
 
     virtual const std::string& getXMLReportingName() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
     
+    virtual const std::string& getXMLName() const;
+
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
@@ -291,7 +291,7 @@ protected:
          * Value used for initialization.  This is the same thing as the sum
          * of the children's currency demand
          */
-        DEFINE_VARIABLE( SIMPLE | STATE, "demandCurrency", mNodeCurrencyDemand, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "demandCurrency", mNodeCurrencyDemand, Value ),
                                 
         //! Sigma used to operate new capital
         DEFINE_VARIABLE( SIMPLE, "Sigma1", mSigmaNewCapital, Value ),
@@ -300,16 +300,16 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "Sigma2", mSigmaOldCapital, Value ),
 
         //! The current Sigma to use
-        DEFINE_VARIABLE( SIMPLE, "current-Sigma", mCurrentSigma, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "current-Sigma", mCurrentSigma, Value ),
 
         //! Alpha, for the root node this would be Alpha zero
-        DEFINE_VARIABLE( SIMPLE, "coefficient", mAlphaCoef, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "coefficient", mAlphaCoef, Value ),
 
         //! Price paid, for the root this would be price recieved
         DEFINE_VARIABLE( SIMPLE | STATE, "price-received", mPricePaid, Value ),
 
         //! Price paid in the base year, for the root this would be price recieved
-        DEFINE_VARIABLE( SIMPLE, "base-price-paid", mBasePricePaid, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "base-price-paid", mBasePricePaid, Value ),
 
         /*! 
          * The technical change that would get applied to the node.  Note that it
