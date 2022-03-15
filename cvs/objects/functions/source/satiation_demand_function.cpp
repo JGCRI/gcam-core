@@ -71,7 +71,6 @@ void SatiationDemandFunction::copy( const SatiationDemandFunction& aOther ) {
     mParsedSatiationAdder = aOther.mParsedSatiationAdder;
     mSatiationAdder = aOther.mSatiationAdder;
 	mParsedSatiationImpedance = aOther.mParsedSatiationImpedance;
-	mParsedBiasAdder = aOther.mParsedBiasAdder;
 }
 
 const string& SatiationDemandFunction::getXMLNameStatic() {
