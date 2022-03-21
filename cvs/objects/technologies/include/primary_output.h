@@ -168,7 +168,7 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! Name of the primary output. This is the same as the sector name.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! CO2 emissions coefficient cached from the marketplace.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value )

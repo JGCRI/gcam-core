@@ -132,7 +132,7 @@ protected:
         AFinalDemand,
 
         //! Name of the final demand and the good it consumes.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Total end-use sector service which will always be demanded
         //! \note We mark this as STATE even though it will not change as it is

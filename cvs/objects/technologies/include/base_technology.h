@@ -195,7 +195,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( BaseTechnology, Consumer, GCAMConsumer ),
                 
         //! Name
-        DEFINE_VARIABLE( SIMPLE, "name", name, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", name, gcamstr ),
         
         //! The root of the nested inputs
         DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputRoot, INestedInput* ),

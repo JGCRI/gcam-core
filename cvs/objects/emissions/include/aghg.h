@@ -197,10 +197,10 @@ protected:
         DEFINE_SUBCLASS_FAMILY( AGHG, CO2Emissions, NonCO2Emissions ),
         
         //! GHG name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Unit of emissions
-        DEFINE_VARIABLE( SIMPLE, "emissions-unit", mEmissionsUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "emissions-unit", mEmissionsUnit, gcamstr ),
 
         //! Emissions (calculated)
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "emissions", mEmissions, objects::TechVintageVector<Value> )

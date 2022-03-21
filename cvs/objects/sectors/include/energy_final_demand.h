@@ -168,7 +168,7 @@ protected:
             DEFINE_SUBCLASS_FAMILY( FinalEnergyConsumer ),
             
             //! Name of the TFE market.
-            DEFINE_VARIABLE( SIMPLE, "market-name", mTFEMarketName, std::string ),
+            DEFINE_VARIABLE( SIMPLE, "market-name", mTFEMarketName, gcamstr ),
                     
             //! Autonomous end-use energy intensity parameter.
             DEFINE_VARIABLE( ARRAY, "aeei", mAEEI, objects::PeriodVector<Value> ),
@@ -184,7 +184,7 @@ protected:
         AFinalDemand,
     
         //! Name of the final demand and the good it consumes.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
                             
         DEFINE_VARIABLE( SIMPLE, "perCapitaBased", mIsPerCapBased, bool ),
         

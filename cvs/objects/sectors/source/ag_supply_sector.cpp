@@ -58,7 +58,7 @@ extern Scenario* scenario;
 */
 AgSupplySector::AgSupplySector(): SupplySector(),
    mCalPrice( -1.0 ),
-   mSubsidy( 0.0 ),
+   //mSubsidy( 0.0 ),
    // The default is to allow very negative profit rates, which implies to
    // never give a subsidy.
    mCalMinProfitRate( -util::getLargeNumber() )
@@ -98,11 +98,11 @@ void AgSupplySector::completeInit( const IInfo* aRegionInfo,
     SupplySector::completeInit( aRegionInfo, aLandAllocator );
 	
 	// Store subsidies in the marketplace so technology has access to them.
-	Marketplace* marketplace = scenario->getMarketplace();
+	/*Marketplace* marketplace = scenario->getMarketplace();
 	const Modeltime* modeltime = scenario->getModeltime();
 	for( int per = 0; per < modeltime->getmaxper(); ++per ){
-		marketplace->getMarketInfo( mName, mRegionName, per, true )->setDouble( mRegionName + "subsidy", mSubsidy[ per ] );
-	}
+		marketplace->getMarketInfo( mName, mRegionName, per, true )->setDouble( mRegionName.get() + "subsidy", mSubsidy[ per ] );
+	}*/
     
     // make available the minimum calibration profit rate to the technology through the info object
     mSectorInfo->setDouble( "cal-min-profit-rate", mCalMinProfitRate );

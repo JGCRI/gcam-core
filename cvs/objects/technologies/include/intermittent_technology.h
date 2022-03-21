@@ -136,15 +136,15 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "backup-calculator", mBackupCalculator, IBackupCalculator* ),
 
         //! Name of the electricity sector which this Technology will supply.
-        DEFINE_VARIABLE( SIMPLE, "electric-sector-name", mElectricSectorName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "electric-sector-name", mElectricSectorName, gcamstr ),
         
-        DEFINE_VARIABLE( SIMPLE, "electric-sector-market", mElectricSectorMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "electric-sector-market", mElectricSectorMarket, gcamstr ),
 
         //! Name of trial market associated with this Intermittent Technology.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "real-trial-market-name", mTrialMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "real-trial-market-name", mTrialMarketName, gcamstr ),
 
         //! Name of trial market readin for this Intermittent Technology.
-        DEFINE_VARIABLE( SIMPLE, "trial-market-name", mTrialMarketNameParsed, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "trial-market-name", mTrialMarketNameParsed, gcamstr ),
 
         //! Cached input containing the resource.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "resource-input-pointer", mResourceInput, InputIterator ),

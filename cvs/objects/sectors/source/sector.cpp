@@ -187,7 +187,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
     // Do not reset if mSectorInfo contains information from derived sector classes.
     // This assumes that info from derived sector contains region info (parent).
     if( !mSectorInfo.get() ){
-        mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo, mRegionName + "-" + mName ) );
+        mSectorInfo.reset( InfoFactory::constructInfo( aRegionInfo, /*mRegionName.get() + "-" +*/ mName ) );
     }
 
     // Set output and price unit of sector into sector info.

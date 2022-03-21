@@ -69,7 +69,7 @@ protected:
         IEmissionsDriver,
         
         //! The name of the input which should be the driver
-        DEFINE_VARIABLE( SIMPLE, "input-name", mInputName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "input-name", mInputName, gcamstr )
     )
 };
 

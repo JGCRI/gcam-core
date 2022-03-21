@@ -142,7 +142,7 @@ protected :
         DEFINE_SUBCLASS_FAMILY( TObjectMetaInfo ),
 
         //! Sector name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
     
         DEFINE_VARIABLE( SIMPLE, "value", mValue, value_type )
     )

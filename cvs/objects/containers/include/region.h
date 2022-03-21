@@ -110,7 +110,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Region, RegionMiniCAM ),
                 
         /*! \brief Region name */
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
         /*! \brief Population object */
         DEFINE_VARIABLE( CONTAINER, "demographic", mDemographic, Demographic* ),

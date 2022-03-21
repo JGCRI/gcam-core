@@ -119,7 +119,7 @@ protected:
         AgProductionTechnology,
 
         //! Name of leaf or node to use as driver for this technology
-        DEFINE_VARIABLE( SIMPLE, "itemName", mLandItemName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "itemName", mLandItemName, gcamstr )
     )
 
 

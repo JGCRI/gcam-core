@@ -106,19 +106,19 @@ protected:
                                 TrialValueResource ),
 
         //! Resource name.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Unit of resource output
-        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, gcamstr ),
 
         //! Unit of resource price
-        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, gcamstr ),
 
         //! Market name.
-        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, gcamstr ),
 
         //! A map of a keyword to its keyword group
-        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> )
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<gcamstr, gcamstr> )
     )
 };
 

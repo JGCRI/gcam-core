@@ -101,13 +101,13 @@ protected:
                                 NestingSubsector ),
 
         //! subsector name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! region name
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, gcamstr ),
 
         //! sector name
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "sector-name", mSectorName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "sector-name", mSectorName, gcamstr ),
 
         //! Subsector logit share weights
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "real-share-weight", mShareWeights, objects::PeriodVector<Value> ),

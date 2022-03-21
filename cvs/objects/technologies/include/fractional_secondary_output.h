@@ -186,7 +186,7 @@ protected:
 
         //! Name of the secondary output. Corresponds to a market for this good 
         //! which must be explicitly solved for.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Ratio of the secondary output to primary output production such that
         //! primary output multiplied by the ratio is equal to secondary output.
@@ -202,7 +202,7 @@ protected:
                                 
         //! The market name in which this output is adjusting the value.  If empty
         //! the current region is assumed.
-        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, gcamstr )
     )
 };
 

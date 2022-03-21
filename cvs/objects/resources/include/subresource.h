@@ -109,7 +109,7 @@ protected:
                                 ReserveSubResource ),
         
         //! SubResource name.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
         //! total available resource
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "available", mAvailable, objects::PeriodVector<Value> ),

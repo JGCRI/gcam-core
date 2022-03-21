@@ -190,7 +190,7 @@ protected:
 
         //! The market name from which to demand.  It will default to the region
         //! in which this input is contained.
-        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, gcamstr ),
 
         //! Conversion factor to change the market price units to working units
         DEFINE_VARIABLE( SIMPLE, "price-unit-conversion", mPriceUnitConversionFactor, Value ),

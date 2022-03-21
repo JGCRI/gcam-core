@@ -151,13 +151,13 @@ protected:
         IScenarioRunner,
                             
         //! The name of the policy target runner.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
         //! The type of policy target.
-        DEFINE_VARIABLE( SIMPLE, "target-type", mTargetType, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "target-type", mTargetType, gcamstr ),
         
         //! The name of the tax.
-        DEFINE_VARIABLE( SIMPLE, "tax-name", mTaxName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "tax-name", mTaxName, gcamstr ),
         
         //! Path discount rate. This is the interest rate used to determine the
         //! Hotelling tax path.

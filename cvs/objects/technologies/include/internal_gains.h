@@ -173,10 +173,10 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! The name of the output
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Internal Gains trial market name.
-        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mTrialMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mTrialMarketName, gcamstr ),
 
         //! Ratio of the internal gains to primary output production such that
         //! primary output multiplied by the ratio is equal to internal gains.

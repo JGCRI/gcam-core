@@ -114,7 +114,7 @@ protected:
         IShutdownDecider,
 
         //! The name of this shutdown decider in case we want to stack multiple.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Parameter for max rate of shutdown (e.g. 1 means entire vintage can be shutdown)
         DEFINE_VARIABLE( SIMPLE, "max-shutdown", mMaxShutdown, double ),

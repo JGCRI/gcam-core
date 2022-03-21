@@ -310,10 +310,10 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "cost", mCosts, objects::TechVintageVector<Value> ),
 
         //! A map of a keyword to its keyword group
-        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<gcamstr, gcamstr> ),
 
         //! Name of this technology.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Logit share weight
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "real-share-weight", mShareWeight, Value ),

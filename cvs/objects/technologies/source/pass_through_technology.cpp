@@ -128,7 +128,7 @@ void PassThroughTechnology::completeInit( const string& aRegionName,
 
     // Add dependencies for a calc item to gather up the fixed demands from this
     // pass through sector and make that available for the downstream sector
-    const string fixedDemandActivityName = mPassThroughSectorName + "-fixed-output";
+    const string fixedDemandActivityName = mPassThroughSectorName.get() + "-fixed-output";
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
 
     // Ensure we gather the fixed demands after we calculate prices / before we
@@ -173,7 +173,7 @@ double PassThroughTechnology::getFixedOutput( const string& aRegionName,
 {
     // Retrieve the fixed output from the pass-through sector which will store this
     // information in a unsolved trial market.
-    const string fixedDemandActivityName = mPassThroughSectorName + "-fixed-output";
+    const string fixedDemandActivityName = mPassThroughSectorName.get() + "-fixed-output";
     const_cast<PassThroughTechnology*>( this )->mPassThroughFixedOutput = scenario->getMarketplace()->getPrice( fixedDemandActivityName, mPassThroughMarketName, aPeriod );
     return mPassThroughFixedOutput;
 }

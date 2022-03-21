@@ -227,7 +227,7 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
         abort();
     }
 
-    mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo, mRegionName + "-" + mSectorName + "-" + mName ) );
+    mSubsectorInfo.reset( InfoFactory::constructInfo( aSectorInfo, /*mRegionName.get() + "-" + mSectorName.get() + "-" +*/ mName ) );
     
     for ( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         (*techIter)->completeInit( mRegionName, mSectorName, mName, mSubsectorInfo.get(), aLandAllocator );

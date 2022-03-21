@@ -88,10 +88,10 @@ protected:
         DEFINE_SUBCLASS_FAMILY( GHGPolicy, PolicyPortfolioStandard, LinkedGHGPolicy ),
 
         //! GHG name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
                 
         //! Name of the market
-        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, gcamstr ),
                     
         //! Emissions constraint by year(tgC or MTC)
         DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<Value> ),

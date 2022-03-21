@@ -304,7 +304,7 @@ double FoodDemandInput::getSubregionalIncome( const string& aRegionName, const i
  * \brief Generates an appropriate name to use for the trial share market name.
  */
 std::string FoodDemandInput::getTrialShareMarketName() const {
-    return mName + "-budget-fraction";
+    return mName.get() + "-budget-fraction";
 }
 
 /*!

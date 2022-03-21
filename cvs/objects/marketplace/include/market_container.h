@@ -81,8 +81,9 @@ public:
     const std::vector<const objects::Atom*>& getContainedRegions() const;
     
     const std::string& getName() const;
-    const std::string& getRegionName() const;
-    const std::string& getGoodName() const;
+    const gcamstr& getNameTEMP() const;
+    const gcamstr& getRegionName() const;
+    const gcamstr& getGoodName() const;
     
     int size() const;
     
@@ -117,13 +118,13 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "market-period", mMarkets, objects::PeriodVector<Market*> ),
                 
         //! The name of the market.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
         //! The good the market represents
-        DEFINE_VARIABLE( SIMPLE, "good", mGood, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "good", mGood, gcamstr ),
         
         //! The region of the market.
-        DEFINE_VARIABLE( SIMPLE, "region", mRegion, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "region", mRegion, gcamstr ),
 
         //! serial number for putting markets into canonical order
         DEFINE_VARIABLE( SIMPLE, "serial-number", mSerialNumber, int ),

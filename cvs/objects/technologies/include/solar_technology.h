@@ -170,7 +170,7 @@ protected :
         IntermittentTechnology,
     
        //! The key used for total annual irradiance
-       DEFINE_VARIABLE( SIMPLE, "irradiance-tagname", mTotalAnnualIrradianceKey, std::string ),
+       DEFINE_VARIABLE( SIMPLE, "irradiance-tagname", mTotalAnnualIrradianceKey, gcamstr ),
 
        //! Capital cost [$/MW Capacity]
        DEFINE_VARIABLE( SIMPLE, "capital-cost", mCapitalCost, double ),
@@ -206,10 +206,10 @@ protected :
        DEFINE_VARIABLE( SIMPLE, "om", mOM, double ),
 
        //! The current region name (cached)
-       DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, std::string ),
+       DEFINE_VARIABLE( SIMPLE, "region-name", mRegionName, gcamstr ),
 
        //! The current sector name (cached)
-       DEFINE_VARIABLE( SIMPLE, "sector-name", mSectorName, std::string ),
+       DEFINE_VARIABLE( SIMPLE, "sector-name", mSectorName, gcamstr ),
 
        /*! The fraction of the resource area that is actually occupied
         *  by the solar field. [unitless]

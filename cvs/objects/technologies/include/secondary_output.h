@@ -179,7 +179,7 @@ protected:
 
         //! Name of the secondary output. Corresponds to a market for this good and
         //! a supply sector which supplies this good as its primary output.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! CO2 emissions coefficient cached from the marketplace.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value ),
@@ -193,7 +193,7 @@ protected:
         
         //! The market name in which this output is adjusting the value.  If empty
         //! the current region is assumed.
-        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, gcamstr )
     )
     
     void copy( const SecondaryOutput& aOther );

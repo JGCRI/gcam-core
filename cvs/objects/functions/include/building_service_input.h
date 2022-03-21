@@ -316,8 +316,8 @@ protected:
 	DEFINE_DATA_WITH_PARENT(
 		INestedInput,
 
-		//! The name of this input.
-		DEFINE_VARIABLE(SIMPLE, "name", mName, std::string),
+        //! The name of this input.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
 		//! Building service demand by period.
 		DEFINE_VARIABLE(ARRAY | STATE, "base-service", mServiceDemand, objects::PeriodVector<Value>),

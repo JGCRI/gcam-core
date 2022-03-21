@@ -154,7 +154,7 @@ protected:
         //! The name of the fuel to use to look up the C coef
         //! typically the name of the primary input into the
         //! containing technology
-        DEFINE_VARIABLE( SIMPLE, "fuel-name", mFuelName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "fuel-name", mFuelName, gcamstr ),
 
         //! The C coef associated with mFuelName
         DEFINE_VARIABLE( SIMPLE, "fuel-C-coef", mCachedCCoef, double ),

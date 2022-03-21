@@ -741,11 +741,11 @@ struct IsSimpleAndParsable {
 
 namespace boost {
 template<>
-inline std::map<std::string, std::string> lexical_cast<std::map<std::string, std::string>, std::string>(const std::string& aStr) {
+inline std::map<gcamstr, gcamstr> lexical_cast<std::map<gcamstr, gcamstr>, std::string>(const std::string& aStr) {
     // TODO: kind of a hack to deal with keywords and ensure everything compiles
     // we should never get here during runtime
     assert( false );
-    return std::map<std::string, std::string>();
+    return std::map<gcamstr, gcamstr>();
 }
 }
 
@@ -754,6 +754,14 @@ namespace boost {
 template<>
 inline ILogger::WarningLevel lexical_cast<ILogger::WarningLevel, std::string>(const std::string& aStr) {
     return static_cast<ILogger::WarningLevel>(boost::lexical_cast<int>(aStr));
+}
+}
+
+// ensure boost::lexical_cast knows how to parse gcamstr
+namespace boost {
+template<>
+inline gcamstr lexical_cast<gcamstr, std::string>(const std::string& aStr) {
+    return gcamstr(aStr);
 }
 }
 

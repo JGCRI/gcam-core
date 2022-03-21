@@ -303,7 +303,11 @@ const vector<const Atom*>& MarketContainer::getContainedRegions() const {
  *          name plus good name.
  * \return The market name
  */
-const string& MarketContainer::getName() const {
+const gcamstr& MarketContainer::getNameTEMP() const {
+    return mName;
+}
+
+const std::string& MarketContainer::getName() const {
     return mName;
 }
 
@@ -312,7 +316,7 @@ const string& MarketContainer::getName() const {
  *          the miniCAM regions, as a market region can contain several regions.
  * \return The market region.
  */
-const string& MarketContainer::getRegionName() const {
+const gcamstr& MarketContainer::getRegionName() const {
     return mRegion;
 }
 
@@ -320,7 +324,7 @@ const string& MarketContainer::getRegionName() const {
  * \details This function returns the good that the market represents.
  * \return The market good.
  */
-const string& MarketContainer::getGoodName() const {
+const gcamstr& MarketContainer::getGoodName() const {
     return mGood;
 }
 

@@ -160,34 +160,34 @@ void MagiccModel::completeInit( const string& aScenarioName ){
     mIsValid = false;
     
     // Set up correspondence for output gas names
-    mOutputGasNameMap[ "total" ] = 0;
-    mOutputGasNameMap[ "CO2" ] = 1;
-    mOutputGasNameMap[ "CH4" ] = 2;  // Direct CH4 only
-    mOutputGasNameMap[ "N2O" ] = 3;
-    mOutputGasNameMap[ "C2F6" ] = 4;
-    mOutputGasNameMap[ "HCFC125" ] = 5;
-    mOutputGasNameMap[ "HCFC134A" ] = 6;
-    mOutputGasNameMap[ "HCFC143A" ] = 7;
-    mOutputGasNameMap[ "HCFC245fa" ] = 8;
-    mOutputGasNameMap[ "SF6" ] = 9;
-    mOutputGasNameMap[ "CF4" ] = 10;
-    mOutputGasNameMap[ "HFC227ea" ] = 11;
-    mOutputGasNameMap[ "OtherHC" ] = 12; // Forcing of "other" halocarbons
-    mOutputGasNameMap[ "SO2" ] = 13; // Total SO2 forcing
-    mOutputGasNameMap[ "DirSO2" ] = 14; // Direct SO2 forcing
-    mOutputGasNameMap[ "TropO3" ] = 15; // TropO3 forcing, including CH4 component
-    mOutputGasNameMap[ "O3_CH4" ] = 16; // TropO3 CH4 component only
-    mOutputGasNameMap[ "H2O_CH4" ] = 17; // Stratospheric water vapor forcing from CH4
-    mOutputGasNameMap[ "Montreal" ] = 18; // Montreal Protocol Gases forcing
-    mOutputGasNameMap[ "O3_CFC" ] = 19; // Stratospheric Ozone Forcing due to CFC
-    mOutputGasNameMap[ "BioBurn" ] = 20; // Biomass burning OC + BC forcing (old magicc version only)
-    mOutputGasNameMap[ "FOC" ] = 21; // Fossil BC & OC (old magicc version only)
-    mOutputGasNameMap[ "Land" ] = 22; // Land surface albedo forcing
-    mOutputGasNameMap[ "MinNOx" ] = 23; // Mineral Dust and Nitrate forcing
-    mOutputGasNameMap[ "BC" ] = 24; // Total BC forcing (land and combustion)
-    mOutputGasNameMap[ "OC" ] = 25; // Total OC forcing(land and combustion)
-    mOutputGasNameMap[ "EXTRA" ] = 26; // Extra forcing
-    mOutputGasNameMap[ "RCP" ] = 27; // RCP radiative forcing (total - nitrate, albedo, mineral dust)
+    mOutputGasNameMap[ gcamstr("total") ] = 0;
+    mOutputGasNameMap[ gcamstr("CO2") ] = 1;
+    mOutputGasNameMap[ gcamstr("CH4") ] = 2;  // Direct CH4 only
+    mOutputGasNameMap[ gcamstr("N2O") ] = 3;
+    mOutputGasNameMap[ gcamstr("C2F6") ] = 4;
+    mOutputGasNameMap[ gcamstr("HCFC125") ] = 5;
+    mOutputGasNameMap[ gcamstr("HCFC134A") ] = 6;
+    mOutputGasNameMap[ gcamstr("HCFC143A") ] = 7;
+    mOutputGasNameMap[ gcamstr("HCFC245fa") ] = 8;
+    mOutputGasNameMap[ gcamstr("SF6") ] = 9;
+    mOutputGasNameMap[ gcamstr("CF4") ] = 10;
+    mOutputGasNameMap[ gcamstr("HFC227ea") ] = 11;
+    mOutputGasNameMap[ gcamstr("OtherHC") ] = 12; // Forcing of "other" halocarbons
+    mOutputGasNameMap[ gcamstr("SO2") ] = 13; // Total SO2 forcing
+    mOutputGasNameMap[ gcamstr("DirSO2") ] = 14; // Direct SO2 forcing
+    mOutputGasNameMap[ gcamstr("TropO3") ] = 15; // TropO3 forcing, including CH4 component
+    mOutputGasNameMap[ gcamstr("O3_CH4") ] = 16; // TropO3 CH4 component only
+    mOutputGasNameMap[ gcamstr("H2O_CH4") ] = 17; // Stratospheric water vapor forcing from CH4
+    mOutputGasNameMap[ gcamstr("Montreal") ] = 18; // Montreal Protocol Gases forcing
+    mOutputGasNameMap[ gcamstr("O3_CFC") ] = 19; // Stratospheric Ozone Forcing due to CFC
+    mOutputGasNameMap[ gcamstr("BioBurn") ] = 20; // Biomass burning OC + BC forcing (old magicc version only)
+    mOutputGasNameMap[ gcamstr("FOC") ] = 21; // Fossil BC & OC (old magicc version only)
+    mOutputGasNameMap[ gcamstr("Land") ] = 22; // Land surface albedo forcing
+    mOutputGasNameMap[ gcamstr("MinNOx") ] = 23; // Mineral Dust and Nitrate forcing
+    mOutputGasNameMap[ gcamstr("BC") ] = 24; // Total BC forcing (land and combustion)
+    mOutputGasNameMap[ gcamstr("OC") ] = 25; // Total OC forcing(land and combustion)
+    mOutputGasNameMap[ gcamstr("EXTRA") ] = 26; // Extra forcing
+    mOutputGasNameMap[ gcamstr("RCP") ] = 27; // RCP radiative forcing (total - nitrate, albedo, mineral dust)
     
     overwriteMAGICCParameters( );
 }
@@ -653,7 +653,8 @@ double MagiccModel::getConcentration( const string& aGasName,
     }
 
     int year = aYear;
-    int gasNumber = util::searchForValue( mOutputGasNameMap, aGasName );
+    auto gasNumIter = mOutputGasNameMap.find(gcamstr(aGasName));
+    int gasNumber = gasNumIter == mOutputGasNameMap.end() ? 0 : (*gasNumIter).second;//util::searchForValue( mOutputGasNameMap, aGasName );
     if ( gasNumber != 0 ) {
         return GETGHGCONC( gasNumber, year );
     }
@@ -689,7 +690,7 @@ double MagiccModel::getForcing( const string& aGasName, const int aYear ) const 
     }
 
     int year = aYear;
-    int gasNumber = util::searchForValue( mOutputGasNameMap, aGasName );
+    int gasNumber = util::searchForValue( mOutputGasNameMap, gcamstr(aGasName) );
     if ( gasNumber != 0 ) {
         return GETFORCING( gasNumber, year );
     }

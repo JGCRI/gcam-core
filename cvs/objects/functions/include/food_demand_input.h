@@ -370,7 +370,7 @@ protected:
         INestedInput,
 
         //! The name of this input
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Food demand in Pcal/year
         DEFINE_VARIABLE( ARRAY | STATE, "base-service", mFoodDemandQuantity, objects::PeriodVector<Value> ),

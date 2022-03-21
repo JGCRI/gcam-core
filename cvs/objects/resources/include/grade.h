@@ -96,7 +96,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Grade, AccumulatedGrade, AccumulatedPostGrade ),
         
         //! Grade name.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
         //! amount of Grade for each Grade
         DEFINE_VARIABLE( SIMPLE, "available", mAvailable, double ),

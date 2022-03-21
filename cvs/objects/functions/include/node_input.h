@@ -277,10 +277,10 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputs, std::vector<INestedInput*> ),
         
         //! The name of this input
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
                                 
         //! Type of function used
-        DEFINE_VARIABLE( SIMPLE, "prodDmdFnType", mProdDmdFnType, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "prodDmdFnType", mProdDmdFnType, gcamstr ),
 
         /*! 
          * Value used for initialization.  This is the same thing as the sum

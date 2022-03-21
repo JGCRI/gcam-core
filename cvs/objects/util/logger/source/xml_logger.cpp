@@ -62,7 +62,7 @@ void XMLLogger::open( const char[] ){
 		mFileName = "log.xml";
 	}
 
-    mLogFile.open( mFileName.c_str(), ios::out );
+    mLogFile.open( mFileName.get().c_str(), ios::out );
 
 	// Print the header message
 	time_t localTime;

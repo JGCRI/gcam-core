@@ -455,7 +455,7 @@ protected:
 
         //! Name of the land allocator item. This is the name of the product for
         //! leafs and name of the type of land for nodes.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         /*!
          * \brief Enum that stores the item's type.

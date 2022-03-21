@@ -55,7 +55,7 @@ using namespace std;
 * \param aParentInfo A pointer to the parent Info object of this Info object
 *        which may be null.
 */
-Info::Info( const IInfo* aParentInfo, const string& aOwnerName ) :
+Info::Info( const IInfo* aParentInfo, const gcamstr& aOwnerName ) :
 mOwnerName( aOwnerName ),
 mParentInfo( aParentInfo )
 {

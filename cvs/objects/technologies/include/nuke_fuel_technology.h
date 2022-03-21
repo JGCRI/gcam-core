@@ -95,10 +95,10 @@ protected:
         Technology,
     
         //! name of secondary fertile material used for making nuclear fuel
-        DEFINE_VARIABLE( SIMPLE, "fertileFuelName", fertileFuelName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "fertileFuelName", fertileFuelName, gcamstr ),
 
         //! name of secondary fertile material used for breeding fissile material
-        DEFINE_VARIABLE( SIMPLE, "blanketFuelName", blanketFuelName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "blanketFuelName", blanketFuelName, gcamstr ),
 
         //! Unit Conversion factor, used to be fmult.
         DEFINE_VARIABLE( SIMPLE, "fMultiplier", mConversionFactor, double ),

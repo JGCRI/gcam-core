@@ -181,6 +181,29 @@ void XMLWriteElementWithAttributes( const T value, const std::string elementName
     }
     out << ">" << value << "</" << elementName << ">" << std::endl;
 }
+//! Function to write the argument element to xml with a integer attribute in proper format.
+/*!
+* This function is used to write a single element containing a single value along with an integer attribute to the output stream
+* in XML.
+* \param value Value to print to XML.
+* \param elementName Name of the element.
+* \param out Stream to print to.
+* \param tabs A tabs object responsible for printing the correct number of tabs.
+* \param aAttrs Map of attribute name to attribute value.
+*/
+template<class T, class U>
+void XMLWriteElementWithAttributes( const T value, const std::string elementName,
+                                   std::ostream& out, const Tabs* tabs,
+                                   const std::map<gcamstr, U> aAttrs )
+{
+    tabs->writeTabs( out );
+    out << "<" << elementName;
+    typedef typename std::map<gcamstr, U>::const_iterator MapIterator;
+    for( MapIterator entry = aAttrs.begin(); entry != aAttrs.end(); ++entry ){
+        out << " " << entry->first <<"=\"" << entry->second << "\"";
+    }
+    out << ">" << value << "</" << elementName << ">" << std::endl;
+}
 
 /*! \brief Write an element XML tag.
 * \details This function is used to write an XML element tag and an optional name and tag type to the output stream.

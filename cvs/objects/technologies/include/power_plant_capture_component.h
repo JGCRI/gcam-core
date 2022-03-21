@@ -174,10 +174,10 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
 
         //! Name of the storage market.
-        DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "storage-market", mStorageMarket, gcamstr ),
 
         //! The name of the gas which will be sequestered.
-        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, gcamstr ),
 
          //! Fraction of carbon removed from the emissions stream.
         DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double ),

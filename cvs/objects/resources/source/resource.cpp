@@ -159,7 +159,7 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
         mPriceUnit = "1975$/GJ"; 
     }
     // Allocate the resource info.
-    mResourceInfo.reset( InfoFactory::constructInfo( aRegionInfo, aRegionName + "-" + mName ) );
+    mResourceInfo.reset( InfoFactory::constructInfo( aRegionInfo, /*aRegionName + "-" +*/ mName ) );
     // Set output and price unit of resource into the resource info.
     mResourceInfo->setString( "output-unit", mOutputUnit );
     mResourceInfo->setString( "price-unit", mPriceUnit );

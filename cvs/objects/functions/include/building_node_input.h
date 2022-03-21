@@ -363,10 +363,10 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "nodeInput", mNestedInputs, std::vector<INestedInput*> ),
         
         //! The name of this input
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Type of function used
-        DEFINE_VARIABLE( SIMPLE, "prodDmdFnType", mFunctionType, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "prodDmdFnType", mFunctionType, gcamstr ),
 
         //! Building size by period.
         DEFINE_VARIABLE( ARRAY | STATE, "base-building-size", mBuildingSize, objects::PeriodVector<Value> ),
@@ -387,10 +387,10 @@ protected:
         DEFINE_VARIABLE( ARRAY, "floor-to-surface-ratio", mFloorToSurfaceRatio, objects::PeriodVector<Value> ),
 
         //! Internal gains market name
-        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mInternalGainsMarketname, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mInternalGainsMarketname, gcamstr ),
 
         //! Internal gains output unit used to create the market
-        DEFINE_VARIABLE( SIMPLE, "internal-gains-unit", mInternalGainsUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-unit", mInternalGainsUnit, gcamstr ),
 
         //! Current Subregional population.  Note that this is just a
         //! temporary value used during demand calculations

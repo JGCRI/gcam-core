@@ -109,7 +109,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "mac-price-conversion", mCovertPriceValue, Value ),
         
         //! Name of market who's price is used to look up the curve.
-        DEFINE_VARIABLE( SIMPLE, "market-name", mPriceMarketName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "market-name", mPriceMarketName, gcamstr )
     )
     
     //! Technology change, % improvement rate per year

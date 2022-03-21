@@ -178,14 +178,14 @@ protected:
         DEFINE_VARIABLE( ARRAY, "landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
                             
         //! Name of land constraint policy
-        DEFINE_VARIABLE( SIMPLE, "land-constraint-policy", mLandConstraintPolicy, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "land-constraint-policy", mLandConstraintPolicy, gcamstr ),
                             
         //! State value necessary to use Marketplace::addToDemand for CO2 emissions
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "luc-state", mLastCalcCO2Value, Value ),
 
         //! The name of a negative emissions policy which may scale back
         //! carbon subsidies if there isn't a budget to support it
-        DEFINE_VARIABLE( SIMPLE, "negative-emiss-market", mNegEmissMarketName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "negative-emiss-market", mNegEmissMarketName, gcamstr )
     )
 
     double getCarbonSubsidy( const std::string& aRegionName,

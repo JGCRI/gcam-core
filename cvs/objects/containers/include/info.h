@@ -104,11 +104,11 @@ public:
 
     void toDebugXML( const int aPeriod, Tabs* aTabs, std::ostream& aOut ) const;
 protected:
-    Info( const IInfo* aParentInfo, const std::string& aOwnerName );
+    Info( const IInfo* aParentInfo, const gcamstr& aOwnerName );
 
 private:
 
-    std::string mOwnerName;
+    gcamstr mOwnerName;
 
     template<class T> bool setItemValueLocal( const std::string& aStringKey,
                                               const T& aValue );

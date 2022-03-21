@@ -176,7 +176,7 @@ const string& IntermittentTechnology::getTechCostName( ) const {
 void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
     XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
-    XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
+    XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, gcamstr("") );
     if( mBackupCapacityFactor.isInited() ){
         XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs );
     }
@@ -230,7 +230,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     }
 
     // Inititalize info object
-    mIntermittTechInfo.reset( InfoFactory::constructInfo( 0, getName() ) );
+    mIntermittTechInfo.reset( InfoFactory::constructInfo( 0, mName ) );
     // Output unit for intermittent technology to be for market.
     mIntermittTechInfo->setString( "output-unit", "share" );
 

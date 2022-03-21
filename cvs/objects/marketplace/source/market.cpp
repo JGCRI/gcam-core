@@ -102,7 +102,7 @@ extern Scenario* scenario;
  */
 Market::Market( const MarketContainer* aContainer )
 : mContainer( aContainer ),
-mMarketInfo( InfoFactory::constructInfo( 0, aContainer->getName() ) )
+mMarketInfo( InfoFactory::constructInfo( 0, aContainer->getNameTEMP() ) )
 {
     mSolveMarket = false;
     mPrice = 0.0;

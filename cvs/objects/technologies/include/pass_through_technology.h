@@ -103,10 +103,10 @@ protected:
         Technology,
 
         //! The name of the sector this technology is retrieving fixed output from (extracted from the input objects).
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-name", mPassThroughSectorName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-name", mPassThroughSectorName, gcamstr ),
 
         //! The market name in which mPassThroughSectorName exists (extracted from the input objects).
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-market-name", mPassThroughMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-market-name", mPassThroughMarketName, gcamstr ),
 
         //! The level of fixed output that exists in mPassThroughSectorName.
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "pass-through-fixed-output", mPassThroughFixedOutput, Value )

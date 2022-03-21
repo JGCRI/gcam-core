@@ -143,7 +143,7 @@ protected:
 
         //! The name of a negative emissions policy which may scale back
         //! carbon subsidies if there isn't a budget to support it
-        DEFINE_VARIABLE( SIMPLE, "negative-emiss-market", mNegEmissMarketName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "negative-emiss-market", mNegEmissMarketName, gcamstr )
     )
 
 private:

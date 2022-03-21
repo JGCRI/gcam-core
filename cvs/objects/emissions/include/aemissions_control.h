@@ -151,7 +151,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( AEmissionsControl, GDPControl, MACControl, LinearControl, ReadInControl ),
         
         //! Name of the reduction so that users can have multiple emissions reductions
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
         //! Once read in at a specific model period, emission control object would not operate for this or any future vintages (or model periods for non-vintaged technologies)
         DEFINE_VARIABLE( SIMPLE, "disable-em-control", mDisableEmControl, bool )

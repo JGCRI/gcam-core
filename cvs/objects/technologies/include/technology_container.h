@@ -145,7 +145,7 @@ private:
 
         //! The name of the technology which will be duplicated in each contained
         //! technology.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
         //! The map that will be the primary data structure to contain technology vintages
         //! which do not have to align to model periods
