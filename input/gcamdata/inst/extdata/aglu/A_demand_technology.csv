@@ -13,7 +13,7 @@ FoodDemand_NonStaples,Protein,Plant,Legumes,share-weight,final-calibration-year,
 FoodDemand_NonStaples,MiscCrop,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-year,fixed,regional misccrop,1
 FoodDemand_NonStaples,Protein,Plant,NutsSeeds,share-weight,final-calibration-year,end-year,fixed,regional nuts_seeds,1
 FoodDemand_NonStaples,Oil,OilCrop,OilCrop,share-weight,final-calibration-year,end-year,fixed,regional oilcrop,1
-FoodDemand_NonStaples,Oil,Soybean,Soybean,share-weight,final-calibration-year,end-year,fixed,regional oilcrop,1
+FoodDemand_NonStaples,Oil,Soybean,Soybean,share-weight,final-calibration-year,end-year,fixed,regional soybean,1
 FoodDemand_Staples,OtherGrain,OtherGrain,OtherGrain,share-weight,final-calibration-year,end-year,fixed,regional othergrain,1
 FoodDemand_NonStaples,Oil,OilPalm,OilPalm,share-weight,final-calibration-year,end-year,fixed,regional oilpalm,1
 FoodDemand_Staples,Rice,Rice,Rice,share-weight,final-calibration-year,end-year,fixed,regional rice,1
