@@ -217,7 +217,6 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement( mFloorToSurfaceRatio[ aPeriod ], "floor-to-surface-ratio", aOut, aTabs );
     XMLWriteElement( mPrice[ aPeriod ], "price", aOut, aTabs );
     XMLWriteElement(mUnadjustSatiation, "unadjust-satiation", aOut, aTabs);
-    XMLWriteElement(mHabitableLand, "habitable-land", aOut, aTabs);
     XMLWriteElement(mBasepcFlsp, "base-pcFlsp", aOut, aTabs);
     XMLWriteElement(mLandDensityParam, "land-density-param", aOut, aTabs);
     XMLWriteElement(mbParam, "b-param", aOut, aTabs);
