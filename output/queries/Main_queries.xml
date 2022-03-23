@@ -3646,9 +3646,9 @@ element input {
             <supplyDemandQuery title="food consumption by type (specific)">
                 <axis1 name="technology">technology</axis1>
                 <axis2 name="Year">physical-output[@vintage]</axis2>
-                <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='FoodDemand_Staples' or @name='FoodDemand_NonStaples')]/
-            *[@type='subsector']/*[@type='technology']/
-            *[@type='output']/physical-output/node()</xPath>
+                <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='FoodDemand_Staples' or @name='FoodDemand_NonStaples')]//
+            *[@type='subsector']//*[@type='technology']/
+            *[@type='output' (:collapse:)]/physical-output/node()</xPath>
                 <comments/>
             </supplyDemandQuery>
             <supplyDemandQuery title="demand balances by crop commodity">
