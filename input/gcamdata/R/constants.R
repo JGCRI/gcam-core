@@ -515,6 +515,10 @@ land.density.param.usa<-0
 b.param.usa<-3.49026
 income.param.usa<-0.4875
 
+# Constants for global detailed industry
+off_road.biomass_growth <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
+iron_steel.global_default_coef <- c("Biomass-based","scrap","H2 enduse") #assign iron & steel global technology coefficients
+
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
