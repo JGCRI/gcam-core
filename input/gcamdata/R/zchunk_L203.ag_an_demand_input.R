@@ -7,8 +7,9 @@
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
-#'   \code{command} is "MAKE") all the generated outputs: \code{L203.Supplysector_demand},
-#'   \code{L203.SubsectorAll_demand}, \code{L203.StubTech_demand}, \code{L203.SubregionalShares},
+#'   \code{command} is "MAKE") all the generated outputs: \code{L203.Supplysector_demand}, \code{L203.NestingSubsectorAll_demand_food},
+#'   \code{L203.SubsectorAll_demand_food}, \code{L203.SubsectorAll_demand_nonfood},
+#'   \code{L203.StubTech_demand_food}, \code{L203.StubTech_demand_nonfood}, \code{L203.SubregionalShares},
 #'   \code{L203.DemandFunction_food}, \code{L203.DemandStapleParams}, \code{L203.DemandNonStapleParams},
 #'   \code{L203.DemandStapleRegBias}, \code{L203.DemandNonStapleRegBias}, \code{L203.StapleBaseService},
 #'   \code{L203.NonStapleBaseService}, \code{L203.GlobalTechCoef_demand}, \code{L203.GlobalTechShrwt_demand},
@@ -29,6 +30,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
              FILE = "aglu/A_demand_food_staples",
              FILE = "aglu/A_demand_food_nonstaples",
              FILE = "aglu/A_demand_supplysector",
+             FILE = "aglu/A_demand_nesting_subsector",
              FILE = "aglu/A_demand_subsector",
              FILE = "aglu/A_demand_technology",
              FILE = "aglu/A_fuelprefElasticity_ssp1",
@@ -43,8 +45,11 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
              ))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L203.Supplysector_demand",
-             "L203.SubsectorAll_demand",
-             "L203.StubTech_demand",
+             "L203.NestingSubsectorAll_demand_food",
+             "L203.SubsectorAll_demand_food",
+             "L203.SubsectorAll_demand_nonfood",
+             "L203.StubTech_demand_food",
+             "L203.StubTech_demand_nonfood",
              "L203.SubregionalShares",
              "L203.DemandFunction_food",
              "L203.DemandStapleParams",
@@ -78,6 +83,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
     A_demand_supplysector <- get_data(all_data, "aglu/A_demand_supplysector", strip_attributes = TRUE)
+    A_demand_nesting_subsector <- get_data(all_data, "aglu/A_demand_nesting_subsector", strip_attributes = TRUE)
     A_demand_subsector <- get_data(all_data, "aglu/A_demand_subsector", strip_attributes = TRUE)
     A_demand_technology <- get_data(all_data, "aglu/A_demand_technology", strip_attributes = TRUE)
     A_fuelprefElasticity_ssp1 <- get_data(all_data, "aglu/A_fuelprefElasticity_ssp1", strip_attributes = TRUE)
@@ -98,24 +104,44 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       filter(!region %in% aglu.NO_AGLU_REGIONS) -> # Remove any regions for which agriculture and land use are not modeled
       L203.Supplysector_demand
 
+    # Build L203.NestingSubsectorAll_demand_food: generic info for food demand nesting subsectors by region
+    # Filter for food demand since we only add extra nest to food sectors
+    A_demand_nesting_subsector %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], LOGIT_TYPE_COLNAME), GCAM_region_names = GCAM_region_names) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS,
+             !grepl("NonFood", supplysector)) -> # Remove any regions for which agriculture and land use are not modeled
+      L203.NestingSubsectorAll_demand_food
+
     # Build L203.SubsectorAll_demand: generic info for demand subsectors by region
     A_demand_subsector %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], LOGIT_TYPE_COLNAME), GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(c(LEVEL2_DATA_NAMES[["SubsectorAll"]], "subsector0"), LOGIT_TYPE_COLNAME), GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) -> # Remove any regions for which agriculture and land use are not modeled
       L203.SubsectorAll_demand
 
+    # Split subsector table into food and non-food demand, because food gets extra nesting and non-food does not
+    L203.SubsectorAll_demand %>%
+      filter(grepl("NonFood", supplysector)) -> L203.SubsectorAll_demand_nonfood
+    L203.SubsectorAll_demand %>%
+      filter(!grepl("NonFood", supplysector)) -> L203.SubsectorAll_demand_food
+
     # Build L203.StubTech_demand: identification of stub technologies for demands by region
     A_demand_technology %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "subsector0"), GCAM_region_names = GCAM_region_names) %>%
       rename(stub.technology = technology) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) -> # Remove any regions for which agriculture and land use are not modeled
       L203.StubTech_demand
+
+    # Split stub technology table into food and non-food demand, because food gets extra nesting and non-food does not
+    L203.StubTech_demand %>%
+      filter(grepl("NonFood", supplysector)) -> L203.StubTech_demand_nonfood
+    L203.StubTech_demand %>%
+      filter(!grepl("NonFood", supplysector)) -> L203.StubTech_demand_food
 
     # Build L203.GlobalTechCoef_demand: input names of demand technologies
     A_demand_technology %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]]) ->
+      select(c(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) ->
       L203.GlobalTechCoef_demand
 
     # Build L203.GlobalTechShrwt_demand: shareweights of demand technologies
@@ -128,7 +154,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
     # Create table of regions, technologies and all base years
     # NOTE: Easiest if the model base years are subsetted from a full table as a last step in the construction of each of these tables
     A_demand_technology %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name"), GCAM_region_names = GCAM_region_names) %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name", "subsector0"), GCAM_region_names = GCAM_region_names) %>%
       mutate(market.name = region, stub.technology = technology) ->
       A_demand_technology_R
     # Add all base years
@@ -156,9 +182,10 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       mutate(calOutputValue = round(value, aglu.DIGITS_CALOUTPUT),
              share.weight.year = year,
              # Subsector and technology shareweights (subsector requires the year as well)
+             subs0.share.weight = if_else(calOutputValue > 0, 1, 0), # NESTING SUBSECTOR SWS??????
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) %>%
+      select(c(LEVEL2_DATA_NAMES[["StubTechProd"]]), subsector0, subs0.share.weight) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%           # Remove any regions for which agriculture and land use are not modeled
       filter(year %in% MODEL_BASE_YEARS) ->                         # Also subset the calibration tables to only the model base years
       L203.StubTechProd_food
@@ -230,7 +257,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       # Calorie content are held constant in the future, so set value for future years at the final base year value
       mutate(efficiency = replace(efficiency, year > max(MODEL_BASE_YEARS), efficiency[year == max(MODEL_BASE_YEARS)])) %>%
       ungroup() %>%
-      select(LEVEL2_DATA_NAMES[["StubTechCalorieContent"]]) %>%
+      select(c(LEVEL2_DATA_NAMES[["StubTechCalorieContent"]], "subsector0")) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->          # Remove any regions for which agriculture and land use are not modeled
       L203.StubCalorieContent
 
@@ -356,25 +383,55 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
                      "aglu/A_demand_supplysector") ->
       L203.Supplysector_demand
 
-    L203.SubsectorAll_demand %>%
-      add_title("Generic information for agriculture demand subsectors") %>%
+    L203.NestingSubsectorAll_demand_food %>%
+      add_title("Generic information for agriculture food demand sectors") %>%
       add_units("Unitless") %>%
-      add_comments("Specify generic info for demand subsectors") %>%
+      add_comments("Specify generic info for food demand sectors") %>%
+      add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
+      add_legacy_name("L203.Supplysector_demand") %>%
+      add_precursors("common/GCAM_region_names",
+                     "aglu/A_demand_supplysector") ->
+      L203.NestingSubsectorAll_demand_food
+
+    L203.SubsectorAll_demand_food %>%
+      add_title("Generic information for agriculture food demand subsectors") %>%
+      add_units("Unitless") %>%
+      add_comments("Specify generic info for food demand subsectors") %>%
       add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
       add_legacy_name("L203.SubsectorAll_demand") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_subsector") ->
-      L203.SubsectorAll_demand
+      L203.SubsectorAll_demand_food
 
-    L203.StubTech_demand %>%
-      add_title("Identification for stub technologies for agriculture demands") %>%
+    L203.SubsectorAll_demand_nonfood %>%
+      add_title("Generic information for agriculture non-food demand subsectors") %>%
       add_units("Unitless") %>%
-      add_comments("Specify identification of stub technologies for demands") %>%
+      add_comments("Specify generic info for non-food demand subsectors") %>%
+      add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
+      add_legacy_name("L203.SubsectorAll_demand") %>%
+      add_precursors("common/GCAM_region_names",
+                     "aglu/A_demand_subsector") ->
+      L203.SubsectorAll_demand_nonfood
+
+    L203.StubTech_demand_food %>%
+      add_title("Identification for stub technologies for agriculture food demands") %>%
+      add_units("Unitless") %>%
+      add_comments("Specify identification of stub technologies for food demands") %>%
       add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
       add_legacy_name("L203.StubTech_demand") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_technology") ->
-      L203.StubTech_demand
+      L203.StubTech_demand_food
+
+    L203.StubTech_demand_nonfood %>%
+      add_title("Identification for stub technologies for agriculture non-food demands") %>%
+      add_units("Unitless") %>%
+      add_comments("Specify identification of stub technologies for non-food demands") %>%
+      add_comments("Remove any regions for which agriculture and land use are not modeled") %>%
+      add_legacy_name("L203.StubTech_demand") %>%
+      add_precursors("common/GCAM_region_names",
+                     "aglu/A_demand_technology") ->
+      L203.StubTech_demand_nonfood
 
     L203.GlobalTechCoef_demand %>%
       add_title("Input names of agriculture demand technologies") %>%
@@ -562,11 +619,12 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       add_precursors("aglu/A_demand_food_nonstaples") ->
       L203.NonStapleBaseService
 
-    return_data(L203.Supplysector_demand, L203.SubsectorAll_demand, L203.StubTech_demand, L203.GlobalTechCoef_demand,
-                L203.GlobalTechShrwt_demand, L203.StubTechProd_food,
+    return_data(L203.Supplysector_demand, L203.NestingSubsectorAll_demand_food, L203.SubsectorAll_demand_food,
+                L203.SubsectorAll_demand_nonfood, L203.StubTech_demand_food, L203.StubTech_demand_nonfood,
+                L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.StubTechProd_food,
                 L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For,
-                L203.StubCalorieContent,
-                L203.PerCapitaBased, L203.BaseService, L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1,
+                L203.StubCalorieContent, L203.PerCapitaBased, L203.BaseService,
+                L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1,
                 L203.SubregionalShares, L203.DemandFunction_food, L203.DemandStapleParams, L203.DemandNonStapleParams,
                 L203.DemandStapleRegBias, L203.DemandNonStapleRegBias, L203.StapleBaseService, L203.NonStapleBaseService)
   } else {
