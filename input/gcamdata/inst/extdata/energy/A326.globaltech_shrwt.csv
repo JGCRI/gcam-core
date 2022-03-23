@@ -17,4 +17,4 @@ alumina,heat,heat,1,1,1,1,1
 alumina,coal,coal,1,1,1,1,1
 alumina,coal,coal cogen,0,0,0,0,0
 alumina,coal,coal CCS,0,0,0,1,1
-aluminum,electricity ,electricity ,1,1,1,1,1
+aluminum,electricity,electricity,1,1,1,1,1
