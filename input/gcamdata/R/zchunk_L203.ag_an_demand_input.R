@@ -12,7 +12,7 @@
 #'   \code{L203.StubTech_demand_food}, \code{L203.StubTech_demand_nonfood}, \code{L203.SubregionalShares},
 #'   \code{L203.DemandFunction_food}, \code{L203.DemandStapleParams}, \code{L203.DemandNonStapleParams},
 #'   \code{L203.DemandStapleRegBias}, \code{L203.DemandNonStapleRegBias}, \code{L203.StapleBaseService},
-#'   \code{L203.NonStapleBaseService}, \code{L203.GlobalTechCoef_demand}, \code{L203.GlobalTechShrwt_demand},
+#'   \code{L203.NonStapleBaseService}, \code{L203.GlobalTechCoef_demand}, \code{L203.GlobalTechShrwt_demand}, \code{L203.GlobalTechInterp_demand},
 #'   \code{L203.StubTechProd_food}, \code{L203.StubTechProd_nonfood_crop}, \code{L203.StubTechProd_nonfood_meat},
 #'   \code{L203.StubTechProd_For}, \code{L203.StubCalorieContent},
 #'   \code{L203.PerCapitaBased}, \code{L203.BaseService}, \code{L203.IncomeElasticity}, \code{L203.PriceElasticity}. The
@@ -69,7 +69,8 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
              "L203.BaseService",
              "L203.IncomeElasticity",
              "L203.PriceElasticity",
-             "L203.FuelPrefElast_ssp1"))
+             "L203.FuelPrefElast_ssp1",
+             "L203.GlobalTechInterp_demand"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -149,6 +150,15 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechYr"]]) %>%
       mutate(share.weight = 1) ->
       L203.GlobalTechShrwt_demand
+
+    # Build L203.GlobalTechInterp_demand: Interpolation rule to fix initial shareweights
+     A_demand_technology %>%
+      filter(subsector != technology) %>%
+      mutate(from.year = MODEL_FINAL_BASE_YEAR,
+             to.year = max(MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      rename(sector.name = supplysector, subsector.name = subsector) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechInterp"]])-> L203.GlobalTechInterp_demand
 
     # Calibrated staple and non-staple demands of crops and meat
     # Create table of regions, technologies and all base years
@@ -449,6 +459,14 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       same_precursors_as(L203.GlobalTechCoef_demand) ->
       L203.GlobalTechShrwt_demand
 
+    L203.GlobalTechInterp_demand %>%
+      add_title("Interpolation rule for demand technologies") %>%
+      add_units("Unitless") %>%
+      add_comments("Specify interpolation rule for agriculture demand technologies") %>%
+      add_legacy_name("L203.GlobalTechInterp_demand") %>%
+      same_precursors_as(L203.GlobalTechShrwt_demand) ->
+      L203.GlobalTechInterp_demand
+
     L203.StubTechProd_food %>%
       add_title("Food supply (staple and non-staple) by technology and region") %>%
       add_units("Pcal") %>%
@@ -621,7 +639,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
 
     return_data(L203.Supplysector_demand, L203.NestingSubsectorAll_demand_food, L203.SubsectorAll_demand_food,
                 L203.SubsectorAll_demand_nonfood, L203.StubTech_demand_food, L203.StubTech_demand_nonfood,
-                L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.StubTechProd_food,
+                L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.GlobalTechInterp_demand, L203.StubTechProd_food,
                 L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For,
                 L203.StubCalorieContent, L203.PerCapitaBased, L203.BaseService,
                 L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1,

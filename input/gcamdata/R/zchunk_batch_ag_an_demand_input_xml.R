@@ -36,7 +36,8 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
               "L203.DemandStapleRegBias",
               "L203.DemandNonStapleRegBias",
               "L203.StapleBaseService",
-              "L203.NonStapleBaseService"))
+              "L203.NonStapleBaseService",
+              "L203.GlobalTechInterp_demand"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ag_an_demand_input.xml"))
   } else if(command == driver.MAKE) {
@@ -52,6 +53,7 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
     L203.StubTech_demand_nonfood <- get_data(all_data, "L203.StubTech_demand_nonfood")
     L203.GlobalTechCoef_demand <- get_data(all_data, "L203.GlobalTechCoef_demand")
     L203.GlobalTechShrwt_demand <- get_data(all_data, "L203.GlobalTechShrwt_demand")
+    L203.GlobalTechInterp_demand <- get_data(all_data, "L203.GlobalTechInterp_demand")
     L203.StubTechProd_food <- get_data(all_data, "L203.StubTechProd_food")
     L203.StubTechProd_nonfood_crop <- get_data(all_data, "L203.StubTechProd_nonfood_crop")
     L203.StubTechProd_nonfood_meat <- get_data(all_data, "L203.StubTechProd_nonfood_meat")
@@ -86,6 +88,7 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
       add_xml_data(L203.StubTech_demand_nonfood, "StubTech") %>%
       add_xml_data(L203.GlobalTechCoef_demand, "GlobalTechCoef") %>%
       add_xml_data(L203.GlobalTechShrwt_demand, "GlobalTechShrwt") %>%
+      add_xml_data(L203.GlobalTechInterp_demand, "GlobalTechInterp") %>%
       add_xml_data(L203.StubTechProd_nonfood_crop, "StubTechProd") %>%
       add_xml_data(L203.StubTechProd_nonfood_meat, "StubTechProd") %>%
       add_xml_data(L203.StubTechProd_For, "StubTechProd") %>%
@@ -103,7 +106,7 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
       add_xml_data(L203.NonStapleBaseService, "NonStapleBaseService") %>%
       add_precursors("L203.Supplysector_demand","L203.NestingSubsectorAll_demand_food", "L203.SubsectorAll_demand_food",
                      "L203.SubsectorAll_demand_nonfood", "L203.StubTech_demand_food", "L203.StubTech_demand_nonfood",
-                     "L203.GlobalTechCoef_demand", "L203.GlobalTechShrwt_demand",
+                     "L203.GlobalTechCoef_demand", "L203.GlobalTechShrwt_demand", "L203.GlobalTechInterp_demand",
                      "L203.StubTechProd_food", "L203.StubTechProd_nonfood_crop", "L203.StubTechProd_nonfood_meat",
                      "L203.StubTechProd_For", "L203.StubCalorieContent", "L203.PerCapitaBased",
                      "L203.BaseService", "L203.IncomeElasticity", "L203.PriceElasticity",
