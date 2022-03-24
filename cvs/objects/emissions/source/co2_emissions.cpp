@@ -89,9 +89,6 @@ const string& CO2Emissions::getXMLNameStatic(){
     return XML_NAME;
 }
 
-bool CO2Emissions::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    return false;
-}
 
 void CO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 }
