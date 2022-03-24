@@ -574,6 +574,16 @@ PortfolioStdMinPrice,world/+{name}region,region/+{name}policy-portfolio-standard
 
 PortfolioStdMaxPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}max-price, scenario,scenario/world
 
+GHGConstrMkt, world/+{name}region, region/+{name}ghgpolicy, ghgpolicy/+market, scenario,scenario/world, world/region
+
+GHGConstr, world/+{name}region, region/+{name}ghgpolicy, ghgpolicy/+market, ghgpolicy/+{year}constraint, ghgpolicy/+constraint, scenario, scenario/world, world/region
+
+GHGConstrLink, world/+{name}region, region/+{name}linked-ghg-policy, linked-ghg-policy/+{year=1975;fillout=1}price-adjust, linked-ghg-policy/+{year=1975;fillout=1}demand-adjust, linked-ghg-policy/+market, linked-ghg-policy/+linked-policy, linked-ghg-policy/+price-unit, linked-ghg-policy/+output-unit, scenario, scenario/world, world/region
+
+GHGConstrLinkAdj, world/+{name}region, region/+{name}linked-ghg-policy, linked-ghg-policy/+{year;fillout=1}price-adjust, linked-ghg-policy/+price-adjust, linked-ghg-policy/+{year;fillout=1}demand-adjust, linked-ghg-policy/+demand-adjust, scenario, scenario/world, world/region
+
+GHGConstrLinkMkt, world/+{name}region, region/+{name}linked-ghg-policy, linked-ghg-policy/+market, linked-ghg-policy/+linked-policy, scenario, scenario, scenario/world, world/region
+
 #####, LAND ALLOCATOR
 
 
