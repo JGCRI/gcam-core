@@ -4,6 +4,7 @@
 	<target-tolerance>0.05</target-tolerance>
 	<target-type>forcing</target-type>
     <first-tax-year>2040</first-tax-year>
+    <path-discount-rate>0.03</path-discount-rate>
     <!-- Note, the value chosen here is the solved price from the last GCAM release. -->
     <initial-tax-guess>224.5</initial-tax-guess>
 	<tax-name>CO2_LTG</tax-name>

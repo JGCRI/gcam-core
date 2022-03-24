@@ -140,7 +140,6 @@
 #include "sectors/include/capacity_limit_backup_calculator.h"
 #include "sectors/include/CSP_backup_calculator.h"
 #include "sectors/include/energy_final_demand.h"
-#include "sectors/include/negative_emissions_final_demand.h"
 #include "sectors/include/ibackup_calculator.h"
 #include "sectors/include/pass_through_sector.h"
 #include "sectors/include/sector.h"

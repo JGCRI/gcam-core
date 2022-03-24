@@ -1,0 +1,8 @@
+# File: A27.rsrc_info.csv
+# Title: Information about resources in each region
+# Units: 1975$/GJ for everything else
+# Source: Assumption
+# Column types: cccccnnnnnn
+# ----------
+resource,resource_type,market,output-unit,price-unit,1971,1975,1990,2005,2010,2015
+bio_externality_cost,renewresource,global,EJ,1975$/GJ,0.1,0.1,0.1,0.1,0.1,0.1

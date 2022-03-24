@@ -77,6 +77,7 @@
 		<Value name = "nonco2_unmgd">../input/gcamdata/xml/all_unmgd_emissions.xml</Value>
 		<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT.xml</Value>
 		<Value name = "nonco2_aglu_prot">../input/gcamdata/xml/all_protected_unmgd_emissions.xml</Value>
+		<Value name = "nonco2_em_controls">../input/gcamdata/xml/emission_factor_controls.xml</Value>
 		
 		<!-- Global nonCO2 GHG MAC files -->
 		<Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions_MAC.xml</Value>
@@ -87,6 +88,7 @@
 		<Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
 		<Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
 		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>
+		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
         <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		

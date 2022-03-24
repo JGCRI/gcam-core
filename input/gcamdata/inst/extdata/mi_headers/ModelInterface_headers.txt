@@ -452,8 +452,6 @@ aeei, world/+{name}region, region/+{name}energy-final-demand, final-energy-consu
 
 DeleteFinalDemand, world/+{name}region, region/+{name; delete=1}energy-final-demand, scenario, scenario/world
 
-NegEmissFinalDemand, world/+{name}region, region/+{name}negative-emissions-final-demand, negative-emissions-final-demand/+policy-name, scenario, scenario/world
-
 #####, BUILDING FINAL DEMAND
 
 DeleteConsumer, world/+{name}region, region/+{name; delete=1}gcam-consumer, scenario, scenario/world
@@ -770,6 +768,14 @@ TrnInputEmissCoeff, world/+{name}region, region/+{name;nocreate=1}supplysector, 
 LinearCtrlInc, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}tranSubsector, tranSubsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}linear-control, linear-control/+start-year, linear-control/+end-year, linear-control/+final-emissions-coefficient, linear-control/allow-ef-increase, scenario, scenario/world
 
 ResEmissInput, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+input-emissions, Non-CO2/output-driver, scenario, scenario/world
+
+EF_Retrofit, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}linear-control, linear-control/+start-year, linear-control/+end-year, linear-control/+final-emissions-coefficient,  scenario, scenario/world
+
+RetrofitOff, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}linear-control, linear-control/+start-year, linear-control/+end-year, linear-control/+disable-em-control,  scenario, scenario/world
+
+EF_NSPS, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, scenario, scenario/world
+
+DeleteGDPControl, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name;delete=1}gdp-control, scenario, scenario/world
 
 MACPhaseIn, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+mac-phase-in-time, scenario, scenario/world
 

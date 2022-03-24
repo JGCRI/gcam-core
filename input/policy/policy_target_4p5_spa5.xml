@@ -2,6 +2,7 @@
 <policy-target-runner name="old">
 	<target-value>4.5</target-value>
 	<target-tolerance>0.05</target-tolerance>
+	<path-discount-rate>0.03</path-discount-rate>
 	<target-type>forcing</target-type>
 	<first-tax-year>2040</first-tax-year>
 	<tax-name>CO2_LTG</tax-name>

@@ -4,15 +4,9 @@
 \alias{save_chunkdata}
 \title{Write data produced by chunks to csv files.}
 \usage{
-save_chunkdata(
-  chunkdata,
-  write_inputs = FALSE,
-  create_dirs = FALSE,
-  write_outputs = TRUE,
-  write_xml = write_outputs,
-  outputs_dir = OUTPUTS_DIR,
-  xml_dir = XML_DIR
-)
+save_chunkdata(chunkdata, write_inputs = FALSE, create_dirs = FALSE,
+  write_outputs = TRUE, write_xml = write_outputs,
+  outputs_dir = OUTPUTS_DIR, xml_dir = XML_DIR)
 }
 \arguments{
 \item{chunkdata}{Named list of tibbles (data frames) to write}

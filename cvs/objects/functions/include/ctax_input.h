@@ -46,6 +46,7 @@
 
 #include <string>
 #include "functions/include/minicam_input.h"
+#include "util/base/include/value.h"
 #include <memory>
 
 class Tabs;
@@ -157,7 +158,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "fuel-name", mFuelName, std::string ),
 
         //! The C coef associated with mFuelName
-        DEFINE_VARIABLE( SIMPLE, "fuel-C-coef", mCachedCCoef, double )
+        DEFINE_VARIABLE( SIMPLE, "fuel-C-coef", mCachedCCoef, double ),
+        
+        //! State value for adding gross negative emissions value to market
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "gross-negative-value", mNetTransferAdjust, Value )
     )
 };
 

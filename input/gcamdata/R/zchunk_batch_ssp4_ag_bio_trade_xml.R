@@ -12,7 +12,7 @@
 #' original data system was \code{batch_ssp4_ag_bio_trade.xml.R} (aglu XML).
 module_aglu_batch_ssp4_ag_bio_trade_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L243.SubsectorShrwtFllt_TotBio_SSP4",
+    return(c("L243.SubsectorShrwt_TotBio_SSP4",
              "L243.SubsectorShrwtFllt_TradedBio_SSP4",
              "L243.Supplysector_reg_SSP4",
              "L243.SubsectorInterpTo_tra_SSP4"))
@@ -23,7 +23,7 @@ module_aglu_batch_ssp4_ag_bio_trade_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L243.SubsectorShrwtFllt_TotBio_SSP4 <- get_data(all_data, "L243.SubsectorShrwtFllt_TotBio_SSP4")
+    L243.SubsectorShrwt_TotBio_SSP4 <- get_data(all_data, "L243.SubsectorShrwt_TotBio_SSP4")
     L243.SubsectorShrwtFllt_TradedBio_SSP4 <- get_data(all_data, "L243.SubsectorShrwtFllt_TradedBio_SSP4")
     L243.Supplysector_reg_SSP4 <- get_data(all_data, "L243.Supplysector_reg_SSP4")
     L243.SubsectorInterpTo_tra_SSP4 <- get_data(all_data, "L243.SubsectorInterpTo_tra_SSP4")
@@ -32,11 +32,11 @@ module_aglu_batch_ssp4_ag_bio_trade_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ssp4_ag_bio_trade.xml") %>%
-      add_xml_data(L243.SubsectorShrwtFllt_TotBio_SSP4, "SubsectorShrwtFllt") %>%
+      add_xml_data(L243.SubsectorShrwt_TotBio_SSP4, "SubsectorShrwt") %>%
       add_xml_data(L243.SubsectorShrwtFllt_TradedBio_SSP4, "SubsectorShrwtFllt") %>%
       add_logit_tables_xml(L243.Supplysector_reg_SSP4, "Supplysector") %>%
       add_xml_data(L243.SubsectorInterpTo_tra_SSP4, "SubsectorInterpTo") %>%
-      add_precursors("L243.SubsectorShrwtFllt_TotBio_SSP4",
+      add_precursors("L243.SubsectorShrwt_TotBio_SSP4",
                      "L243.SubsectorShrwtFllt_TradedBio_SSP4",
                      "L243.Supplysector_reg_SSP4",
                      "L243.SubsectorInterpTo_tra_SSP4") ->

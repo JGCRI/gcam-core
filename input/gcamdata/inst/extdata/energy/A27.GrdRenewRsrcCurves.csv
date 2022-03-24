@@ -1,0 +1,10 @@
+# File: A27.GrdRenewRsrcCurves.csv
+# Title: Relates the externality cost penalty applied to purpose grown biomass at some level of production
+# Units: extractioncost 1975$/GJ; available EJ
+# Column types: cccnn
+# ----------
+resource,subresource,grade,extractioncost,available
+bio_externality_cost,bio_externality_cost,grade 1,0,0
+bio_externality_cost,bio_externality_cost,grade 2,0.01,75.0
+bio_externality_cost,bio_externality_cost,grade 3,1.5,100.0
+bio_externality_cost,bio_externality_cost,grade 4,3.0,300.0
