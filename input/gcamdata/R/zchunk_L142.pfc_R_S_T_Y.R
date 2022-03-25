@@ -402,9 +402,8 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       L142.pfc_R_S_T_Yh <- L142.EPA_PFC_R_S_T_Yh
 
 
-      # Load subregional shares:
       # ===============================================================
-      # We neeed to allocate residential energy to the diferent consumer groups using the computed shares:
+      # Need to allocate residential energy to the different consumer groups using the computed shares:
       L244.GenericShares<- get_data(all_data, "L244.GenericShares",strip_attributes = TRUE) %>%
         select(region,gcam.consumer,building.service.input,year,gen_share) %>%
         rename(supplysector=building.service.input,

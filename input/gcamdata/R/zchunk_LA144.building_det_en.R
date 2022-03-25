@@ -541,16 +541,16 @@ module_energy_LA144.building_det_en <- function(command, ...) {
 
 
     # 1G
-    # Create L144.prices_bld to calibrate satiation impedance (mu) ate region level in the DS
+    # Create L144.prices_bld to calibrate satiation impedance (mu) at region level within the DS
     L144.prices_bld<-A44.Calprice_bld %>%
       left_join_error_no_match(GCAM_region_names,by="region") %>%
       gather_years() %>%
       # Add 1975 and extrapolate prices using rule 2
       group_by(region,GCAM_region_ID,market) %>%
-      complete(nesting(year=MODEL_BASE_YEARS)) %>%
+      complete(nesting(year = MODEL_BASE_YEARS)) %>%
       mutate(value = if_else(is.na(value),approx_fun(year, value, rule = 2),value)) %>%
       # Add all historical years and linerly extrapolate (rule 1)
-      complete(nesting(year=HISTORICAL_YEARS)) %>%
+      complete(nesting(year = HISTORICAL_YEARS)) %>%
       mutate(value = if_else(is.na(value),approx_fun(year, value, rule = 2),value)) %>%
       ungroup() %>%
       rename(price = value) %>%

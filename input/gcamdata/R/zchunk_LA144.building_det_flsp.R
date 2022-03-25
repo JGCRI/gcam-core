@@ -272,8 +272,8 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       L144.pcflsp_m2_ctry_Yh
 
     # Per capita floorspace was calculated for all countries.
-    # Now we can calculate total floorspace and aggregate by GCAM region.
-    # Multiply by population, match in the region names, and aggregate by (new) GCAM region
+    # Now is possible to calculate total floorspace and aggregate by GCAM region.
+    # Multiply by population, match in the region names, and aggregate by GCAM region
     # This produces the final output table for the residential sector.
     L144.pcflsp_m2_ctry_Yh %>%
       # left_join_error_no_match cannot be used because the population file does not have all the countries
@@ -342,7 +342,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     # USA has a different unique behaviour, as observed pcap flsp is significantly higher than countries with:
     # - Similar (or higher) per capita income
     # - Similar (or lower) population density
-    # Therefore, we substitute the parameters for USA by those estimated using subregional data (not included in the DS).
+    # Therefore, substitute the parameters for USA by those estimated using subregional data (not included in the DS).
     L144.flsp_param_pre<-L144.flsp_bm2_R_res_Yh_pre %>%
       left_join_error_no_match(GCAM_region_names, by="GCAM_region_ID") %>%
       # take all periods from regions with observed data:
@@ -375,16 +375,16 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
 
     # Estimation of the parameters for non USA:
     formula.gomp<- "pc_flsp~(100 -(a*log(tot_dens)))*exp(-b*exp(-c*log(pc_gdp_thous)))"
-    start.value<-c(a=-0.5,b=0.005,c=0.05)
+    start.value<-c(a = -0.5,b = 0.005,c = 0.05)
     fit.gomp<-nls(formula.gomp, L144.flsp_param_pre_nonusa, start.value)
 
     # Tibble with the USA parameters
-    L144.flsp_param_USA<-tibble(region ="USA",
+    L144.flsp_param_USA<-tibble(region = "USA",
                                 unadjust.satiation = obs_UnadjSat_USA,
                                 land.density.param = land.density.param.usa,
                                 b.param = b.param.usa,
                                 income.param = income.param.usa) %>%
-      left_join_error_no_match(L144.flsp_param_pre %>% select(region,tot_dens,year) %>% filter(year==MODEL_FINAL_BASE_YEAR), by = "region") %>%
+      left_join_error_no_match(L144.flsp_param_pre %>% select(region,tot_dens,year) %>% filter(year == MODEL_FINAL_BASE_YEAR), by = "region") %>%
       select(-year)
 
     # Write the dataset with the fitted parameters for the 31 GCAM regions
@@ -402,8 +402,6 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       left_join_error_no_match(L144.flsp_param_pre %>% select(region,tot_dens,year), by = c("region", "year")) %>%
       select(-year) %>%
       bind_rows(L144.flsp_param_USA)
-
-
 
     # ----------------------------------
     # With all this data, estimate the per capita floorspace in the final calibration year using the Gompertz function:
