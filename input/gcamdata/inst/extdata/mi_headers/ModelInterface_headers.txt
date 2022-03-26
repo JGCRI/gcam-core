@@ -777,6 +777,8 @@ EF_NSPS, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysecto
 
 DeleteGDPControl, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name;delete=1}gdp-control, scenario, scenario/world
 
+MACPhaseIn, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+mac-phase-in-time, scenario, scenario/world
+
 AgMACPhaseIn, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+mac-phase-in-time,  scenario, scenario/world
 
 EQUIV_TABLE,NODE_EQUIVALENCE

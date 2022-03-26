@@ -5,9 +5,18 @@
 \title{Add a table to convert to XML but generate additional levels of XML nesting
 providing a special case for logit tables.}
 \usage{
-add_logit_tables_xml_generate_levels(dot, data, header, old_tag, new_tag,
-  num_levels, rename_final, column_name = old_tag,
-  column_order_lookup = header, base_logit_header = header)
+add_logit_tables_xml_generate_levels(
+  dot,
+  data,
+  header,
+  old_tag,
+  new_tag,
+  num_levels,
+  rename_final,
+  column_name = old_tag,
+  column_order_lookup = header,
+  base_logit_header = header
+)
 }
 \arguments{
 \item{dot}{The current state of the pipeline started from \code{create_xml}}
