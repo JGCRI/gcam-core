@@ -50,6 +50,7 @@ using namespace std;
 AEmissionsControl::AEmissionsControl()
 {
     mReduction = 0;
+    mDisableEmControl = false;
 }
 
 //! Destructor
@@ -73,6 +74,7 @@ AEmissionsControl& AEmissionsControl::operator=( const AEmissionsControl& aOther
 //! Copy helper function.
 void AEmissionsControl::copy( const AEmissionsControl& aOther ){
     mName = aOther.mName;
+    mDisableEmControl = aOther.mDisableEmControl;
     //mReduction = aOther.mReduction;
 }
 
@@ -83,6 +85,9 @@ void AEmissionsControl::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
 
     // write xml for data members
     XMLWriteElement( mReduction, "reduction", aOut, aTabs );
+
+    // write xml for data members
+    XMLWriteElement( mDisableEmControl, "disable-em-control", aOut, aTabs );
 
     toDebugXMLDerived( aPeriod, aOut, aTabs );
     // done writing xml for data members.
