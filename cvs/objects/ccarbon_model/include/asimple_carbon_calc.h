@@ -44,7 +44,6 @@
  * \brief The ASimpleCarbonCalc class header file.
  * \author James Blackwood
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/flyweight.hpp>
 #include <boost/flyweight/key_value.hpp>
 #include <boost/flyweight/no_tracking.hpp>
@@ -67,7 +66,6 @@ public:
     ASimpleCarbonCalc();
     virtual ~ASimpleCarbonCalc();
 
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
 
     virtual void completeInit( const double aPrivateDiscountRateLand  ) = 0;
@@ -118,22 +116,22 @@ protected:
         ICarbonCalc,
         
         //! Total emissions by year.
-        DEFINE_VARIABLE( ARRAY, "land-use-change-emissions", mTotalEmissions, objects::YearVector<double> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "land-use-change-emissions", mTotalEmissions, objects::YearVector<double> ),
         
         //! Above ground total emissions by year
-        DEFINE_VARIABLE( ARRAY, "above-ground-land-use-change-emissions", mTotalEmissionsAbove, objects::YearVector<double> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "above-ground-land-use-change-emissions", mTotalEmissionsAbove, objects::YearVector<double> ),
         
         //! Below ground total emissions by year
-        DEFINE_VARIABLE( ARRAY, "below-ground-land-use-change-emissions", mTotalEmissionsBelow, objects::YearVector<double> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "below-ground-land-use-change-emissions", mTotalEmissionsBelow, objects::YearVector<double> ),
         
         //! Above ground carbon stock
-        DEFINE_VARIABLE( ARRAY | STATE, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<Value> ),
         
         //! Time scale for soil carbon emissions
         DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int ),
         
         //! Discount rate for land related decisions
-        DEFINE_VARIABLE( SIMPLE, "private-discount-rate", mPrivateDiscountRate, double )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "private-discount-rate", mPrivateDiscountRate, double )
     )
 
     /*!

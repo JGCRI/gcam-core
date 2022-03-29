@@ -66,6 +66,10 @@ public:
     
     static const std::string& getXMLNameStatic();
     
+    virtual const std::string& getXMLName() const;
+    
+    bool XMLParse( rapidxml::xml_node<char>* & aNode );
+    
     virtual void completeInit( const std::string& aRegionName,
                                const std::string& aSectorName,
                                const IInfo* aTechIInfo );
@@ -79,8 +83,6 @@ protected:
     ReadInControl( const ReadInControl& aOther );
     ReadInControl& operator=( const ReadInControl& aOther );
     
-    virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode );
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
     virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
@@ -91,7 +93,7 @@ protected:
         AEmissionsControl,
         
         //! Technology build period -- this is the period that the vintage was constructed
-        DEFINE_VARIABLE( SIMPLE, "tech-build-period", mTechBuildPeriod, int )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "tech-build-period", mTechBuildPeriod, int )
     )
     
     //! Future emissions factors -- this vector sets future emissions factors for vintaged technologies

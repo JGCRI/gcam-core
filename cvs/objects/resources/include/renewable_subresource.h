@@ -44,7 +44,6 @@
 * \brief The SubRenewableResource class header file.
 * \author Sonny Kim
 */
-#include <xercesc/dom/DOMNode.hpp>
 #include "resources/include/subresource.h"
 
 // Forward declarations.
@@ -73,7 +72,6 @@ public:
                               double aPrice, int aPeriod );
     virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
                                int aPeriod, const GDP* aGdp, double aPrice );
-    virtual double getVariance() const;
     virtual double getMaxAnnualSubResource( const int aPeriod ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual double getLowestPrice( const int aPeriod ) const;
@@ -91,16 +89,9 @@ protected:
         DEFINE_VARIABLE( ARRAY, "maxSubResource", mMaxAnnualSubResource, objects::PeriodVector<double> ),
 
         //! elasticity on GDP growth that controls expansion of the max subresource.
-        DEFINE_VARIABLE( SIMPLE, "gdpSupplyElast", mGdpSupplyElasticity, double ),
-
-        //! subresource variance now read in rather than computed
-        DEFINE_VARIABLE( SIMPLE, "subResourceVariance", mSubResourceVariance, double ),
-
-        //! read in average capacity factor for each subresource
-        DEFINE_VARIABLE( SIMPLE, "subResourceCapacityFactor", mSubResourceCapacityFactor, double )
+        DEFINE_VARIABLE( SIMPLE, "gdpSupplyElast", mGdpSupplyElasticity, double )
     )
 
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 };
 #endif // _RENEWABLE_SUBRESOURCE_H_

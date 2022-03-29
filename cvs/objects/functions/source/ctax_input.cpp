@@ -39,9 +39,6 @@
  */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-#include <xercesc/dom/DOMNamedNodeMap.hpp>
 #include <cmath>
 
 #include "functions/include/ctax_input.h"
@@ -54,7 +51,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -81,6 +77,10 @@ const string& CTaxInput::getXMLNameStatic() {
 * \author Sonny Kim
 * \return The constant XML_NAME.
 */
+const string& CTaxInput::getXMLName() const{
+    return getXMLNameStatic();
+}
+
 const string& CTaxInput::getXMLReportingName() const{
     return getXMLNameStatic();
 }
@@ -117,39 +117,6 @@ CTaxInput* CTaxInput::clone() const {
 
 bool CTaxInput::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
-}
-
-void CTaxInput::XMLParse( const xercesc::DOMNode* aNode ) {
-    // TODO: Replace this with the restructured XMLParse.
-    // Make sure we were passed a valid node.
-    assert( aNode );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    // get all child nodes.
-    const DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        const DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() == DOMNode::TEXT_NODE ){
-            continue;
-        }
-
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-		if ( nodeName == "fuel-C-coef" ){
-			mCachedCCoef = XMLHelper<double>::getValue(curr);
-		}
-
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << getXMLNameStatic() << "." << endl;
-        }
-    }
 }
 
 void CTaxInput::toDebugXML( const int aPeriod,
@@ -210,8 +177,15 @@ void CTaxInput::setPhysicalDemand( double aPhysicalDemand,
                                      const string& aRegionName,
                                      const int aPeriod )
 {
-    // this input is used in conjunction with a negative emissions
-    // final demand to calculate the constraint demands
+    Marketplace* marketplace = scenario->getMarketplace();
+    double taxFraction = marketplace->getPrice( mName, aRegionName, aPeriod, true );
+    double ctax = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
+    double priceAdjust = 0.0;
+    if( taxFraction != Marketplace::NO_MARKET_PRICE && ctax != Marketplace::NO_MARKET_PRICE ) {
+        priceAdjust = (1.0 - std::min( taxFraction, 1.0 )) * ctax * mCachedCCoef;
+    }
+    mNetTransferAdjust = aPhysicalDemand * priceAdjust;
+    marketplace->addToDemand( mName, aRegionName, mNetTransferAdjust, aPeriod );
 }
 
 double CTaxInput::getCoefficient( const int aPeriod ) const {

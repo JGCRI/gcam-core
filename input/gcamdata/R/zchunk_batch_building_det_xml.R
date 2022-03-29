@@ -40,6 +40,7 @@ module_energy_batch_building_det_xml <- function(command, ...) {
              "L244.GlobalTechShrwt_bld",
              "L244.GlobalTechCost_bld",
              "L244.DeleteThermalService",
+             "L244.GompFnParam",
              "L244.DeleteGenericService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_det.xml"))
@@ -77,6 +78,8 @@ module_energy_batch_building_det_xml <- function(command, ...) {
     L244.GlobalTechCost_bld <- get_data(all_data, "L244.GlobalTechCost_bld")
     L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService")
     L244.DeleteGenericService <- get_data(all_data, "L244.DeleteGenericService")
+    L244.GompFnParam <- get_data(all_data, "L244.GompFnParam")
+
     # ===================================================
 
     # Produce outputs
@@ -91,6 +94,7 @@ module_energy_batch_building_det_xml <- function(command, ...) {
       add_xml_data(L244.ThermalBaseService, "ThermalBaseService") %>%
       add_xml_data(L244.SatiationAdder, "SatiationAdder") %>%
       add_xml_data(L244.Satiation_flsp, "Satiation_flsp") %>%
+      add_xml_data(L244.GompFnParam, "GompFnParam") %>%
       add_xml_data(L244.DemandFunction_flsp, "DemandFunction_flsp") %>%
       add_xml_data(L244.DemandFunction_serv, "DemandFunction_serv") %>%
       add_xml_data(L244.Floorspace, "Floorspace") %>%
@@ -108,11 +112,13 @@ module_energy_batch_building_det_xml <- function(command, ...) {
                      "L244.SubsectorShrwt_bld", "L244.FinalEnergyKeyword_bld", "L244.Supplysector_bld",
                      "L244.ShellConductance_bld", "L244.Intgains_scalar", "L244.GenericServiceSatiation",
                      "L244.ThermalServiceSatiation", "L244.GenericBaseService", "L244.ThermalBaseService", "L244.SatiationAdder",
-                     "L244.Satiation_flsp", "L244.DemandFunction_flsp", "L244.DemandFunction_serv",
+                     "L244.Satiation_flsp", "L244.GompFnParam",
+                     "L244.DemandFunction_flsp", "L244.DemandFunction_serv",
                      "L244.Floorspace", "L244.SubregionalShares", "L244.SubsectorLogit_bld",
                      "L244.FuelPrefElast_bld", "L244.StubTech_bld", "L244.StubTechEff_bld",
                      "L244.StubTechCalInput_bld", "L244.StubTechIntGainOutputRatio", "L244.GlobalTechShrwt_bld",
-                     "L244.GlobalTechCost_bld", "L244.DeleteThermalService", "L244.DeleteGenericService", "L244.PriceExp_IntGains") ->
+                     "L244.GlobalTechCost_bld", "L244.DeleteThermalService", "L244.DeleteGenericService",
+                     "L244.PriceExp_IntGains") ->
       building_det.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.

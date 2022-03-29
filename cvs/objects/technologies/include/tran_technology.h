@@ -45,7 +45,6 @@
 * \author Sonny Kim, Josh Lurz, Steve Smith
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "technologies/include/technology.h"
 
 class GDP;
@@ -61,6 +60,7 @@ class TranTechnology : public Technology
     friend class XMLDBOutputter;
 public:
     TranTechnology( const std::string& aName, const int aYear );
+    TranTechnology();
     virtual TranTechnology* clone() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
@@ -117,7 +117,6 @@ protected:
         const std::string& aSectorName,
         const int aPeriod ) const;
 
-    bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     double getNonEnergyCost( const std::string& aRegionName,
         const std::string& aSectorName,

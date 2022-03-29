@@ -14,7 +14,6 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L270.CTaxInput",
              "L270.LandRootNegEmissMkt",
-              "L270.NegEmissFinalDemand",
               "L270.NegEmissBudgetMaxPrice",
               paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5))) ))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -30,7 +29,6 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
     # Load required inputs
     L270.CTaxInput <- get_data(all_data, "L270.CTaxInput")
     L270.LandRootNegEmissMkt <- get_data(all_data, "L270.LandRootNegEmissMkt")
-    L270.NegEmissFinalDemand <- get_data(all_data, "L270.NegEmissFinalDemand")
     L270.NegEmissBudgetMaxPrice <- get_data(all_data, "L270.NegEmissBudgetMaxPrice")
 
     # ===================================================
@@ -47,10 +45,9 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
       create_xml(curr_xml_name) %>%
         add_xml_data(L270.CTaxInput, "GlobalTechCTaxInput") %>%
         add_xml_data(L270.LandRootNegEmissMkt, "LandRootNegEmissMkt") %>%
-        add_xml_data(L270.NegEmissFinalDemand, "NegEmissFinalDemand") %>%
         add_xml_data(L270.NegEmissBudgetMaxPrice, "PortfolioStdMaxPrice") %>%
         add_xml_data(get_data(all_data, curr_data_name), "PortfolioStd") %>%
-        add_precursors("L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissFinalDemand", "L270.NegEmissBudgetMaxPrice", curr_data_name) %>%
+        add_precursors("L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissBudgetMaxPrice", curr_data_name) %>%
         assign(curr_xml_name, ., envir = curr_env)
 
       ret_data <- c(ret_data, curr_xml_name)

@@ -51,8 +51,9 @@
 
 // include files ***********************************************************
 
-#include "util/base/include/xml_pair.h"
-#include <xercesc/dom/DOMNodeList.hpp>
+#include "util/base/include/xml_helper.h"
+#include "util/base/include/inamed.h"
+#include "util/base/include/data_definition_util.h"
 
 // namespaces **************************************************************
 
@@ -60,19 +61,18 @@ namespace ObjECTS {
 
 // class: TObjectMetaInfo **************************************************
 
-template <class T = double>
-class TObjectMetaInfo
+class TObjectMetaInfo : public INamed
 {
 public :
 
-   typedef T   value_type;
+   typedef double   value_type;
 
    //! Default constructor
    TObjectMetaInfo(void) : mName(), mValue() {}
    /*! Copy constructor
     *  \param other the instance to copy
     */
-   TObjectMetaInfo(const TObjectMetaInfo<T>& other)
+   TObjectMetaInfo(const TObjectMetaInfo& other)
       : mName( other.mName ), mValue( other.mValue ) {}
 
    //! Destructor
@@ -82,7 +82,7 @@ public :
     *  \param other the instance to copy
     *  \return *this
     */
-   TObjectMetaInfo<T>& operator = (const TObjectMetaInfo<T>& other)
+   TObjectMetaInfo& operator = (const TObjectMetaInfo& other)
    {
       if ( &other != this )
       {
@@ -106,6 +106,8 @@ public :
     *  \return the XML tag name
     */
    static const std::string& getXMLNameStatic( void );
+    
+    const std::string& getXMLName( void ) const;
 
    /*! Set the name
     *  \param aName the name to set
@@ -116,12 +118,6 @@ public :
     *  \param aValue the value to set
     */
    virtual void setValue( const value_type& aValue ) { mValue = aValue; }
-
-  /*! Parse XML from the specified node
-    *  \param apNode The current node of a DOM tree.
-    *  \return Whether the parse completed successfully.
-    */
-   virtual bool XMLParse( const xercesc::DOMNode* apNode );
 
    /*! \brief Serialize the object to an output stream in an XML format.
     *  \details Function which writes out all data members of an object which are
@@ -137,10 +133,19 @@ public :
       std::ostream& aOut,
       Tabs*         aTabs ) const;
 
-private :
+protected :
 
-   std::string mName;
-   value_type  mValue;
+    DEFINE_DATA(
+        /* Declare all subclasses of Sector to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( TObjectMetaInfo ),
+
+        //! Sector name
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+    
+        DEFINE_VARIABLE( SIMPLE, "value", mValue, value_type )
+    )
 };
 
 // TObjectMetaInfoGetXMLName ***********************************************
@@ -154,85 +159,22 @@ inline const std::string& TObjectMetaInfoGetXMLName( void )
    return XMLName;
 }
 
-// TObjectMetaInfo<T>::getXMLNameStatic ************************************
+// TObjectMetaInfo::getXMLNameStatic ************************************
 
 /*! Get the XML tag name
  *  \return the XML tag name
  */
-template <class T>
-inline const std::string& TObjectMetaInfo<T>::getXMLNameStatic( void )
+inline const std::string& TObjectMetaInfo::getXMLNameStatic( void )
 {
    return TObjectMetaInfoGetXMLName();
 }
 
-// TObjectMetaInfo<T>::XMLParse ********************************************
-
-/*! Parse XML from the specified node
- *  \param aNode The current node of a DOM tree.
- *  \return Whether the parse completed successfully.
- */
-template <class T>
-inline bool TObjectMetaInfo<T>::XMLParse( const xercesc::DOMNode* apNode )
+inline const std::string& TObjectMetaInfo::getXMLName( void ) const
 {
-   typedef XMLPair<T> value_pair_type;
-
-   if ( !apNode || apNode->getNodeType() != xercesc::DOMNode::ELEMENT_NODE )
-   {
-      return false;
-   }
-   XMLSize_t numParsed = 0;
-
-   // get the name attribute
-   setName( XMLHelper<std::string>::getAttr( apNode, "name" ) );
-   if ( getName().length() )
-   {
-      ++numParsed;
-   }
-
-   // get all the children.
-   xercesc::DOMNodeList* pNodeList = apNode->getChildNodes();
-   XMLSize_t             n         = pNodeList ? pNodeList->getLength() : 0;
-
-   for ( XMLSize_t i = 0; i != n; ++i )
-   {
-      const xercesc::DOMNode* pCurr = pNodeList->item( i );
-      if ( !pCurr )
-      {
-         return false;
-      }
-
-      const std::string nodeName =
-         XMLHelper<std::string>::safeTranscode( pCurr->getNodeName() );
-
-      if( nodeName == "#text" )
-      {
-         continue;
-      }
-      else if( nodeName == "value" )
-      {
-         value_pair_type np;
-         if ( !np.parse( pCurr ) )
-         {
-            return false;
-         }
-         setValue( np.getValue() );
-         ++numParsed;
-      }
-      else
-      {
-         ILogger& mainLog = ILogger::getLogger( "main_log" );
-         mainLog.setLevel( ILogger::WARNING );
-         mainLog << "Unrecognized text string: " << nodeName
-            << " found while parsing "
-            << getXMLNameStatic() << "." << std::endl;
-         return false;
-      }
-   }
-
-   return numParsed == 2;
+   return getXMLNameStatic();
 }
 
-// TObjectMetaInfo<T>::toDebugXML ******************************************
+// TObjectMetaInfo::toDebugXML ******************************************
 
 /*! \brief Serialize the object to an output stream in an XML format.
  *  \details Function which writes out all data members of an object which are
@@ -243,8 +185,7 @@ inline bool TObjectMetaInfo<T>::XMLParse( const xercesc::DOMNode* apNode )
  *  \param aOut Stream into which to write.
  *  \param aTabs Object which controls formatting of the file.
  */
-template <class T>
-inline void TObjectMetaInfo<T>::toDebugXML( const int aPeriod,
+inline void TObjectMetaInfo::toDebugXML( const int aPeriod,
    std::ostream& aOut, Tabs* aTabs ) const
 {
    XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );

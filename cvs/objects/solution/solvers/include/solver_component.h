@@ -49,12 +49,18 @@
 #include <memory>
 #include <vector>
 
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
+#include "util/base/include/data_definition_util.h"
 
 class CalcCounter; 
 class Marketplace;
 class SolutionInfoSet;
 class World;
+
+// Need to forward declare the subclasses as well.
+class BisectAll;
+class LogBroyden;
+class Preconditioner;
 
 /*! \brief An abstract class defining an interface to an independent component
 *          of a Solver.
@@ -67,7 +73,7 @@ class World;
 *           method, which attempts to clear the markets.
 * \author Josh Lurz
 */
-class SolverComponent : public IParsable {
+class SolverComponent : public AParsable {
 public:
     //! Return code of the solve method. 
     enum ReturnCode {
@@ -82,6 +88,7 @@ public:
         FAILURE_UNKNOWN
     };
    SolverComponent( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
+   SolverComponent();
    virtual ~SolverComponent();
    
    virtual void init() = 0;
@@ -91,6 +98,13 @@ public:
    virtual const std::string& getXMLName() const = 0;
 
 protected:
+    DEFINE_DATA(
+        /* Declare all subclasses of SolverComponent to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( SolverComponent, BisectAll, LogBroyden, Preconditioner )
+    )
+    
    Marketplace* marketplace; //<! The marketplace to solve. 
    World* world; //<! World to call calc on.
    CalcCounter* calcCounter; //<! Tracks the number of calls to world.calc

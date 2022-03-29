@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <iostream>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/curves/include/data_point.h"
 #include "util/curves/include/xy_data_point.h"
 #include "util/base/include/xml_helper.h"
@@ -120,42 +118,6 @@ void XYDataPoint::outputAsXML( ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( x, "x", aOut, aTabs );
     XMLWriteElement( y, "y", aOut, aTabs );
     XMLWriteClosingTag( DataPoint::getXMLNameStatic(), aOut, aTabs );
-}
-
-//! Parse the XYDataPoint from an XML DOM tree.
-void XYDataPoint::XMLParse( const xercesc::DOMNode* node ) {
-    
-    xercesc::DOMNode* curr = 0;
-    xercesc::DOMNodeList* nodeList; 
-    string nodeName;
-
-    // assume node is valid.
-    assert( node );
-
-    // get all children of the node.
-    nodeList = node->getChildNodes();
-
-    // loop through the children
-    for ( int i = 0; i < static_cast<int>( nodeList->getLength() ); i++ ){
-        curr = nodeList->item( i );
-        nodeName = XMLHelper<void>::safeTranscode( curr->getNodeName() );
-
-        // select the type of node.
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if ( nodeName == "x" ){
-            x = XMLHelper<double>::getValue( curr );
-        }
-        else if ( nodeName == "y" ){
-            y = XMLHelper<double>::getValue( curr );
-        } 
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLName() << endl;
-        }
-    }
 }
 
 //! Switch the X and Y values.

@@ -108,13 +108,10 @@ endif
 ### locations of library include files
 # BOOST_INCLUDE should be set in the user environment on Evergreen by running 'tap boost'.
 BOOSTINC	      = $(BOOST_INCLUDE)
-# Eventually we should be able to get Xerces installed and available by a tap command, 
-# but until then it will have to be set manually
-XERCESINC	      = $(XERCES_INCLUDE)
 
 #
 ### locations of libraries
-LIBDIR		= -L/usr/local/lib -L$(XERCES_LIB) -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY)
+LIBDIR		= -L/usr/local/lib -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY)
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
@@ -122,13 +119,12 @@ CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCA
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=c++14 -Wno-deprecated
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
-LDFLAGS         = $(CXXFLAGS) -Wl,-rpath,$(XERCES_LIB) $(JAVA_RPATH) $(TBB_RPATH) $(MKL_LDFLAGS)
+LDFLAGS         = $(CXXFLAGS) $(JAVA_RPATH) $(TBB_RPATH) $(MKL_LDFLAGS)
 AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
-LIB             = ${ENVLIBS} $(LIBDIR) -lxerces-c $(JAVALINK) $(HECTOR_LIB) $(TBB_LIB_IMPORT) -lm
+LIB             = ${ENVLIBS} $(LIBDIR) $(JAVALINK) $(HECTOR_LIB) $(TBB_LIB_IMPORT) -lm
 INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INC) $(HECTOR_INCLUDE) -I$(EIGEN_INCLUDE) \
-		 -I$(XERCESINC) \
 		 -I${PATHOFFSET} \
 		 -I${HOME}/include
 

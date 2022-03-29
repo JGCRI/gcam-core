@@ -23,7 +23,7 @@ alumina,heat,heat,final-calibration-year,40,,20,0.3,-0.5,6
 alumina,coal,coal,final-calibration-year,40,,20,0.3,-0.5,6
 alumina,coal,coal cogen,final-calibration-year,40,,20,0.3,-0.5,6
 alumina,coal,coal CCS,final-calibration-year,40,,20,0.3,-0.5,6
-aluminum,electricity ,electricity ,final-calibration-year,40,,20,0.3,-0.5,6
+aluminum,electricity,electricity,final-calibration-year,40,,20,0.3,-0.5,6
 alumina,refined liquids,refined liquids,initial-future-year,40,,20,0.3,-0.5,6
 alumina,refined liquids,refined liquids cogen,initial-future-year,40,,20,0.3,-0.5,6
 alumina,refined liquids,refined liquids CCS,initial-future-year,40,,20,0.3,-0.5,6
@@ -37,4 +37,4 @@ alumina,heat,heat,initial-future-year,40,,20,0.3,-0.5,6
 alumina,coal,coal,initial-future-year,40,,20,0.3,-0.5,6
 alumina,coal,coal cogen,initial-future-year,40,,20,0.3,-0.5,6
 alumina,coal,coal CCS,initial-future-year,40,,20,0.3,-0.5,6
-aluminum,electricity ,electricity ,initial-future-year,40,,20,0.3,-0.5,6
+aluminum,electricity,electricity,initial-future-year,40,,20,0.3,-0.5,6

@@ -230,7 +230,7 @@
       <AdditionalOptions>/WL /MP %(AdditionalOptions)</AdditionalOptions>
       <Optimization>Disabled</Optimization>
       <FavorSizeOrSpeed>Speed</FavorSizeOrSpeed>
-      <AdditionalIncludeDirectories>../../../../libs/xercesc/include;../../../../libs\boost-lib;..\..\..\..\libs\java\include;..\..;..\..\climate\source\hector\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <AdditionalIncludeDirectories>../../../../libs\boost-lib;..\..\..\..\libs\java\include;..\..;..\..\climate\source\hector\headers;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
       <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_MATH_TR1_NO_LIB;_DEBUG;_WINDOWS;_AFXDLL;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <BasicRuntimeChecks>Default</BasicRuntimeChecks>
       <RuntimeLibrary>MultiThreadedDebugDLL</RuntimeLibrary>
@@ -242,8 +242,8 @@
       </DebugInformationFormat>
     </ClCompile>
     <Link>
-      <AdditionalDependencies>xerces-c_3D.lib;jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>../../../../libs/xercesc/lib;..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalDependencies>jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)Object-main-d.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>
@@ -370,8 +370,8 @@
       <Optimization>MaxSpeed</Optimization>
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
-      <AdditionalIncludeDirectories>..\..\..\..\libs\xercesc\include;..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..\..\..\libs\java\include\win32;..\..;..\..\climate\source\hector\headers;..\..\..\..\libs\tbb\include;..\..\..\..\libs\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;EIGEN_MPL2_ONLY;GCAM_PARALLEL_ENABLED;_WINDOWS;_AFXDLL;NOGDI;NOMINMAX;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <AdditionalIncludeDirectories>..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..\..\..\libs\java\include\win32;..\..;..\..\climate\source\hector\headers;..\..\..\..\libs\tbb\include;..\..\..\..\libs\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_IOSTREAMS_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;EIGEN_MPL2_ONLY;GCAM_PARALLEL_ENABLED;_WINDOWS;_AFXDLL;NOGDI;NOMINMAX;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
@@ -384,12 +384,12 @@
     </ClCompile>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\..\..\..\libs\xercesc\lib;..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;..\..\..\..\libs\tbb\lib\intel64\vc14;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;..\..\..\..\libs\tbb\lib\intel64\vc14;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
-      <AdditionalDependencies>xerces-c_3.lib;jvm.lib;tbb.lib;tbbmalloc.lib;tbbmalloc_proxy.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>jvm.lib;tbb.lib;tbbmalloc.lib;tbbmalloc_proxy.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalOptions>/INCLUDE:"__TBB_malloc_proxy" %(AdditionalOptions)</AdditionalOptions>
     </Link>
   </ItemDefinitionGroup>
@@ -571,11 +571,8 @@
     <ClCompile Include="..\..\emissions\source\aemissions_control.cpp" />
     <ClCompile Include="..\..\emissions\source\aghg.cpp" />
     <ClCompile Include="..\..\emissions\source\co2_emissions.cpp" />
-    <ClCompile Include="..\..\emissions\source\emissions_control_factory.cpp" />
-    <ClCompile Include="..\..\emissions\source\emissions_driver_factory.cpp" />
     <ClCompile Include="..\..\emissions\source\emissions_summer.cpp" />
     <ClCompile Include="..\..\emissions\source\gdp_control.cpp" />
-    <ClCompile Include="..\..\emissions\source\ghg_factory.cpp" />
     <ClCompile Include="..\..\emissions\source\input_driver.cpp" />
     <ClCompile Include="..\..\emissions\source\input_output_driver.cpp" />
     <ClCompile Include="..\..\emissions\source\linear_control.cpp" />
@@ -586,11 +583,11 @@
     <ClCompile Include="..\..\emissions\source\readin_control.cpp" />
     <ClCompile Include="..\..\functions\source\absolute_cost_logit.cpp" />
     <ClCompile Include="..\..\functions\source\building_function.cpp" />
+    <ClCompile Include="..\..\functions\source\building_gompertz_function.cpp" />
     <ClCompile Include="..\..\functions\source\building_node_input.cpp" />
     <ClCompile Include="..\..\functions\source\building_service_function.cpp" />
     <ClCompile Include="..\..\functions\source\building_service_input.cpp" />
     <ClCompile Include="..\..\functions\source\ctax_input.cpp" />
-    <ClCompile Include="..\..\functions\source\discrete_choice_factory.cpp" />
     <ClCompile Include="..\..\functions\source\food_demand_function.cpp" />
     <ClCompile Include="..\..\functions\source\food_demand_input.cpp" />
     <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp" />
@@ -626,11 +623,9 @@
     <ClCompile Include="..\..\resources\source\unlimited_resource.cpp" />
     <ClCompile Include="..\..\sectors\source\ag_supply_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\ag_supply_subsector.cpp" />
-    <ClCompile Include="..\..\sectors\source\backup_calculator_factory.cpp" />
     <ClCompile Include="..\..\sectors\source\capacity_limit_backup_calculator.cpp" />
     <ClCompile Include="..\..\sectors\source\CSP_backup_calculator.cpp" />
     <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp" />
-    <ClCompile Include="..\..\sectors\source\negative_emissions_final_demand.cpp" />
     <ClCompile Include="..\..\sectors\source\nesting_subsector.cpp" />
     <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\sector.cpp" />
@@ -639,7 +634,6 @@
     <ClCompile Include="..\..\sectors\source\subsector_add_techcosts.cpp" />
     <ClCompile Include="..\..\sectors\source\supply_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp" />
-    <ClCompile Include="..\..\sectors\source\wind_backup_calculator.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_one.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy.cpp" />
@@ -650,7 +644,6 @@
     <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson_sd.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\preconditioner.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\solver_component.cpp" />
-    <ClCompile Include="..\..\solution\solvers\source\solver_component_factory.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\solver_factory.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\user_configurable_solver.cpp" />
     <ClCompile Include="..\..\solution\util\source\all_solution_info_filter.cpp" />
@@ -661,6 +654,7 @@
     <ClCompile Include="..\..\solution\util\source\has_market_flag_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\market_matches_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\market_type_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\not_solution_info_filter.cpp" />
     <ClCompile Include="..\..\solution\util\source\or_solution_info_filter.cpp" />
@@ -682,7 +676,6 @@
     <ClCompile Include="..\..\technologies\source\base_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\cal_data_output.cpp" />
     <ClCompile Include="..\..\technologies\source\cal_data_output_percap.cpp" />
-    <ClCompile Include="..\..\technologies\source\capture_component_factory.cpp" />
     <ClCompile Include="..\..\technologies\source\default_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\empty_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\expenditure.cpp" />
@@ -695,7 +688,6 @@
     <ClCompile Include="..\..\technologies\source\marginal_profit_calculator.cpp" />
     <ClCompile Include="..\..\technologies\source\non_energy_use_capture_component.cpp" />
     <ClCompile Include="..\..\technologies\source\nuke_fuel_technology.cpp" />
-    <ClCompile Include="..\..\technologies\source\output_factory.cpp" />
     <ClCompile Include="..\..\technologies\source\pass_through_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\phased_shutdown_decider.cpp" />
     <ClCompile Include="..\..\technologies\source\power_plant_capture_component.cpp" />
@@ -707,7 +699,6 @@
     <ClCompile Include="..\..\technologies\source\res_secondary_output.cpp" />
     <ClCompile Include="..\..\technologies\source\retired_production_state.cpp" />
     <ClCompile Include="..\..\technologies\source\secondary_output.cpp" />
-    <ClCompile Include="..\..\technologies\source\shutdown_decider_factory.cpp" />
     <ClCompile Include="..\..\technologies\source\solar_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\standard_capture_component.cpp" />
     <ClCompile Include="..\..\technologies\source\standard_technical_change_calc.cpp" />
@@ -729,16 +720,17 @@
     <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp" />
     <ClCompile Include="..\..\util\base\source\initialize_tech_vector_helper.cpp" />
     <ClCompile Include="..\..\util\base\source\input_finder.cpp" />
-    <ClCompile Include="..\..\util\base\source\interpolation_function_factory.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp" />
     <ClCompile Include="..\..\util\base\source\linear_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp" />
+    <ClCompile Include="..\..\util\base\source\mapped_file.cpp" />
     <ClCompile Include="..\..\util\base\source\model_time.cpp" />
     <ClCompile Include="..\..\util\base\source\supply_demand_curve_saver.cpp" />
     <ClCompile Include="..\..\util\base\source\s_curve_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\supply_demand_curve.cpp" />
     <ClCompile Include="..\..\util\base\source\timer.cpp" />
     <ClCompile Include="..\..\util\base\source\util.cpp" />
+    <ClCompile Include="..\..\util\base\source\xml_parse_helper.cpp" />
     <ClCompile Include="..\..\util\logger\source\logger.cpp" />
     <ClCompile Include="..\..\util\logger\source\logger_factory.cpp" />
     <ClCompile Include="..\..\util\logger\source\plain_text_logger.cpp" />
@@ -764,7 +756,6 @@
     <ClCompile Include="..\..\functions\source\function_manager.cpp" />
     <ClCompile Include="..\..\functions\source\function_utils.cpp" />
     <ClCompile Include="..\..\functions\source\input_capital.cpp" />
-    <ClCompile Include="..\..\technologies\source\input_factory.cpp" />
     <ClCompile Include="..\..\functions\source\input_OM_fixed.cpp" />
     <ClCompile Include="..\..\functions\source\input_OM_var.cpp" />
     <ClCompile Include="..\..\functions\source\input_subsidy.cpp" />
@@ -843,11 +834,8 @@
     <ClInclude Include="..\..\emissions\include\iemissions_driver.h" />
     <ClInclude Include="..\..\emissions\include\aghg.h" />
     <ClInclude Include="..\..\emissions\include\co2_emissions.h" />
-    <ClInclude Include="..\..\emissions\include\emissions_control_factory.h" />
-    <ClInclude Include="..\..\emissions\include\emissions_driver_factory.h" />
     <ClInclude Include="..\..\emissions\include\emissions_summer.h" />
     <ClInclude Include="..\..\emissions\include\gdp_control.h" />
-    <ClInclude Include="..\..\emissions\include\ghg_factory.h" />
     <ClInclude Include="..\..\emissions\include\input_driver.h" />
     <ClInclude Include="..\..\emissions\include\input_output_driver.h" />
     <ClInclude Include="..\..\emissions\include\linear_control.h" />
@@ -858,11 +846,11 @@
     <ClInclude Include="..\..\emissions\include\readin_control.h" />
     <ClInclude Include="..\..\functions\include\absolute_cost_logit.hpp" />
     <ClInclude Include="..\..\functions\include\building_function.h" />
+    <ClInclude Include="..\..\functions\include\building_gompertz_function.h" />
     <ClInclude Include="..\..\functions\include\building_node_input.h" />
     <ClInclude Include="..\..\functions\include\building_service_function.h" />
     <ClInclude Include="..\..\functions\include\building_service_input.h" />
     <ClInclude Include="..\..\functions\include\ctax_input.h" />
-    <ClInclude Include="..\..\functions\include\discrete_choice_factory.hpp" />
     <ClInclude Include="..\..\functions\include\food_demand_function.h" />
     <ClInclude Include="..\..\functions\include\food_demand_input.h" />
     <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp" />
@@ -910,12 +898,10 @@
     <ClInclude Include="..\..\sectors\include\afinal_demand.h" />
     <ClInclude Include="..\..\sectors\include\ag_supply_sector.h" />
     <ClInclude Include="..\..\sectors\include\ag_supply_subsector.h" />
-    <ClInclude Include="..\..\sectors\include\backup_calculator_factory.h" />
     <ClInclude Include="..\..\sectors\include\capacity_limit_backup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\CSP_backup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\energy_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
-    <ClInclude Include="..\..\sectors\include\negative_emissions_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\nesting_subsector.h" />
     <ClInclude Include="..\..\sectors\include\pass_through_sector.h" />
     <ClInclude Include="..\..\sectors\include\sector.h" />
@@ -924,7 +910,6 @@
     <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h" />
     <ClInclude Include="..\..\sectors\include\supply_sector.h" />
     <ClInclude Include="..\..\sectors\include\tran_subsector.h" />
-    <ClInclude Include="..\..\sectors\include\wind_backup_calculator.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_all.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_one.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_policy.h" />
@@ -936,7 +921,6 @@
     <ClInclude Include="..\..\solution\solvers\include\preconditioner.hpp" />
     <ClInclude Include="..\..\solution\solvers\include\solver.h" />
     <ClInclude Include="..\..\solution\solvers\include\solver_component.h" />
-    <ClInclude Include="..\..\solution\solvers\include\solver_component_factory.h" />
     <ClInclude Include="..\..\solution\solvers\include\solver_factory.h" />
     <ClInclude Include="..\..\solution\solvers\include\user_configurable_solver.h" />
     <ClInclude Include="..\..\solution\util\include\all_solution_info_filter.h" />
@@ -950,6 +934,7 @@
     <ClInclude Include="..\..\solution\util\include\jacobian-precondition.hpp" />
     <ClInclude Include="..\..\solution\util\include\linesearch.hpp" />
     <ClInclude Include="..\..\solution\util\include\market_name_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\market_matches_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\market_type_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\not_solution_info_filter.h" />
     <ClInclude Include="..\..\solution\util\include\or_solution_info_filter.h" />
@@ -964,7 +949,6 @@
     <ClInclude Include="..\..\solution\util\include\solver_library.h" />
     <ClInclude Include="..\..\solution\util\include\ublas-helpers.hpp" />
     <ClInclude Include="..\..\solution\util\include\unsolved_solution_info_filter.h" />
-    <ClInclude Include="..\..\solution\util\include\unsolved_solver_info_filter.h" />
     <ClInclude Include="..\..\target_finder\include\cumulative_emissions_target.h" />
     <ClInclude Include="..\..\target_finder\include\emissions_stabalization_target.h" />
     <ClInclude Include="..\..\target_finder\include\itarget_solver.h" />
@@ -975,7 +959,6 @@
     <ClInclude Include="..\..\technologies\include\base_technology.h" />
     <ClInclude Include="..\..\technologies\include\cal_data_output.h" />
     <ClInclude Include="..\..\technologies\include\cal_data_output_percap.h" />
-    <ClInclude Include="..\..\technologies\include\capture_component_factory.h" />
     <ClInclude Include="..\..\technologies\include\default_technology.h" />
     <ClInclude Include="..\..\technologies\include\empty_technology.h" />
     <ClInclude Include="..\..\technologies\include\expenditure.h" />
@@ -985,7 +968,6 @@
     <ClInclude Include="..\..\technologies\include\global_technology_database.h" />
     <ClInclude Include="..\..\technologies\include\ical_data.h" />
     <ClInclude Include="..\..\technologies\include\icapture_component.h" />
-    <ClInclude Include="..\..\technologies\include\input_factory.h" />
     <ClInclude Include="..\..\technologies\include\intermittent_technology.h" />
     <ClInclude Include="..\..\technologies\include\internal_gains.h" />
     <ClInclude Include="..\..\technologies\include\ioutput.h" />
@@ -997,7 +979,6 @@
     <ClInclude Include="..\..\technologies\include\marginal_profit_calculator.h" />
     <ClInclude Include="..\..\technologies\include\non_energy_use_capture_component.h" />
     <ClInclude Include="..\..\technologies\include\nuke_fuel_technology.h" />
-    <ClInclude Include="..\..\technologies\include\output_factory.h" />
     <ClInclude Include="..\..\technologies\include\pass_through_technology.h" />
     <ClInclude Include="..\..\technologies\include\phased_shutdown_decider.h" />
     <ClInclude Include="..\..\technologies\include\power_plant_capture_component.h" />
@@ -1009,7 +990,6 @@
     <ClInclude Include="..\..\technologies\include\res_secondary_output.h" />
     <ClInclude Include="..\..\technologies\include\retired_production_state.h" />
     <ClInclude Include="..\..\technologies\include\secondary_output.h" />
-    <ClInclude Include="..\..\technologies\include\shutdown_decider_factory.h" />
     <ClInclude Include="..\..\technologies\include\solar_technology.h" />
     <ClInclude Include="..\..\technologies\include\standard_capture_component.h" />
     <ClInclude Include="..\..\technologies\include\standard_technical_change_calc.h" />
@@ -1022,6 +1002,7 @@
     <ClInclude Include="..\..\technologies\include\variable_production_state.h" />
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h" />
     <ClInclude Include="..\..\technologies\include\wind_technology.h" />
+    <ClInclude Include="..\..\util\base\include\aparsable.h" />
     <ClInclude Include="..\..\util\base\include\atom.h" />
     <ClInclude Include="..\..\util\base\include\atom_registry.h" />
     <ClInclude Include="..\..\util\base\include\auto_file.h" />
@@ -1042,10 +1023,7 @@
     <ClInclude Include="..\..\util\base\include\inamed.h" />
     <ClInclude Include="..\..\util\base\include\initialize_tech_vector_helper.hpp" />
     <ClInclude Include="..\..\util\base\include\input_finder.h" />
-    <ClInclude Include="..\..\util\base\include\interpolation_function_factory.h" />
     <ClInclude Include="..\..\util\base\include\interpolation_rule.h" />
-    <ClInclude Include="..\..\util\base\include\iparsable.h" />
-    <ClInclude Include="..\..\util\base\include\istandard_component.h" />
     <ClInclude Include="..\..\util\base\include\ivisitable.h" />
     <ClInclude Include="..\..\util\base\include\ivisitor.h" />
     <ClInclude Include="..\..\util\base\include\iyeared.h" />
@@ -1064,7 +1042,7 @@
     <ClInclude Include="..\..\util\base\include\value.h" />
     <ClInclude Include="..\..\util\base\include\version.h" />
     <ClInclude Include="..\..\util\base\include\xml_helper.h" />
-    <ClInclude Include="..\..\util\base\include\xml_pair.h" />
+    <ClInclude Include="..\..\util\base\include\xml_parse_helper.h" />
     <ClInclude Include="..\..\util\logger\include\ilogger.h" />
     <ClInclude Include="..\..\util\logger\include\logger.h" />
     <ClInclude Include="..\..\util\logger\include\logger_factory.h" />

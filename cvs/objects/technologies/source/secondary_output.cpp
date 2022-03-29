@@ -39,7 +39,6 @@
 */
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/secondary_output.h"
 #include "containers/include/scenario.h"
@@ -51,7 +50,6 @@
 #include "functions/include/function_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -66,6 +64,10 @@ extern Scenario* scenario;
 const string& SecondaryOutput::getXMLReportingName() const{
     static const string XML_REPORTING_NAME = "output-secondary";
     return XML_REPORTING_NAME;
+}
+
+const string& SecondaryOutput::getXMLName() const{
+    return getXMLNameStatic();
 }
 
 const string& SecondaryOutput::getXMLNameStatic()
@@ -118,44 +120,6 @@ void SecondaryOutput::setName( const string& aName )
     assert( !aName.empty() );
 
     mName = aName;
-}
-
-bool SecondaryOutput::XMLParse( const DOMNode* aNode )
-{
-    // assume we are passed a valid node.
-    assert( aNode );
-
-    // get all the children.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( aNode, "name" );
-
-    for( unsigned int i = 0; i < nodeList->getLength(); ++i ) {
-        const DOMNode* curr = nodeList->item( i );
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "output-ratio" ) {
-            mOutputRatio.set( XMLHelper<double>::getValue( curr ) );
-        }
-        else if( nodeName == "pMultiplier" ) {
-            mPriceMult = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "market-name" ) {
-            mMarketName = XMLHelper<string>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing " << getXMLNameStatic() << "." << endl;
-        }
-    }
-
-    // TODO: Improve error handling.
-    return true;
 }
 
 void SecondaryOutput::toDebugXML( const int aPeriod,

@@ -45,7 +45,7 @@
 #include "util/base/include/initialize_tech_vector_helper.hpp"
 #include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
-#include "util/base/include/xml_helper.h"
+#include "util/base/include/tech_vector_parse_helper.h"
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
 

@@ -50,7 +50,6 @@
 #include <string>
 #include <cfloat>
 #include <functional>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/data_definition_util.h"
@@ -83,8 +82,6 @@ public:
     virtual const std::string& getXMLName() const;
     void outputAsXML( std::ostream& aOut, Tabs* aTabs ) const;
     virtual void outputAsXMLDerived( std::ostream& aOut, Tabs* aTabs ) const = 0;
-    void XMLParse( const xercesc::DOMNode* node );
-    virtual bool XMLParseDerived( const xercesc::DOMNode* node ) = 0;
     virtual void invertAxises() = 0;
     const std::string getName() const;
     const std::string getTitle() const;

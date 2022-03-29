@@ -52,7 +52,6 @@
 #include "marketplace/include/marketplace.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*! \brief Constructor.
 */
@@ -78,11 +77,6 @@ MACGeneratorScenarioRunner::~MACGeneratorScenarioRunner(){
 
 const string& MACGeneratorScenarioRunner::getName() const {
     return getXMLNameStatic();
-}
-
-bool MACGeneratorScenarioRunner::XMLParse( const xercesc::DOMNode* aRoot ){
-    // No data to parse.
-    return true;
 }
 
 /*! \brief Setup the Scenario to be run.

@@ -85,13 +85,14 @@ class IInfo;
  *
  * \author Josh Lurz, Marshall Wise
  */
-class CapacityLimitBackupCalculator: public IBackupCalculator {
-    friend class BackupCalculatorFactory;
+class CapacityLimitBackupCalculator: public IBackupCalculator { 
 public:
+    CapacityLimitBackupCalculator();
     virtual CapacityLimitBackupCalculator* clone() const;
+    static const std::string& getXMLNameStatic();
+    virtual const std::string& getXMLName() const;
     virtual bool isSameType( const std::string& aType ) const;
     virtual const std::string& getName() const;
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     virtual void initCalc( const IInfo* aTechInfo );
     
@@ -113,8 +114,6 @@ public:
                                              const double aAverageGridCapacityFactor,
                                              const int aPeriod ) const;
 protected:
-    static const std::string& getXMLNameStatic();
-    CapacityLimitBackupCalculator();
 
     double getMarginalBackupCapacityFraction( const std::string& aSector,
                                               const std::string& aElectricSector,

@@ -45,7 +45,6 @@
 #include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor
 MiniCAMInput::MiniCAMInput(): mTypeFlags( 0 )

@@ -61,6 +61,7 @@ class PassThroughTechnology: public Technology
 {
 public:
     PassThroughTechnology( const std::string& aName, const int aYear );
+    PassThroughTechnology();
     virtual ~PassThroughTechnology();
 
     static const std::string& getXMLNameStatic();
@@ -95,7 +96,6 @@ public:
                                          const int aPeriod ) const;
 
 protected:
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aNode );
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aout, Tabs* aTabs ) const;
 
     // Define data such that introspection utilities can process the data from this
@@ -104,13 +104,13 @@ protected:
         Technology,
 
         //! The name of the sector this technology is retrieving fixed output from (extracted from the input objects).
-        DEFINE_VARIABLE( SIMPLE, "pass-through-name", mPassThroughSectorName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-name", mPassThroughSectorName, std::string ),
 
         //! The market name in which mPassThroughSectorName exists (extracted from the input objects).
-        DEFINE_VARIABLE( SIMPLE, "pass-through-market-name", mPassThroughMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-market-name", mPassThroughMarketName, std::string ),
 
         //! The level of fixed output that exists in mPassThroughSectorName.
-        DEFINE_VARIABLE( SIMPLE | STATE, "pass-through-fixed-output", mPassThroughFixedOutput, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "pass-through-fixed-output", mPassThroughFixedOutput, Value )
     )
     
     void copy( const PassThroughTechnology& aOther );

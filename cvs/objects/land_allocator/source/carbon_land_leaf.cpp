@@ -49,7 +49,6 @@
 #include "util/base/include/configuration.h"
 
 using namespace std;
-using namespace xercesc;
 
 /*!
  * \brief Default constructor.
@@ -62,14 +61,13 @@ LandLeaf( aParent, "" )
 {
 }
 
-//! Destructor
-CarbonLandLeaf::~CarbonLandLeaf() {
+CarbonLandLeaf::CarbonLandLeaf():
+LandLeaf()
+{
 }
 
-bool CarbonLandLeaf::XMLDerivedClassParse( const std::string& aNodeName,
-                                              const xercesc::DOMNode* aCurr )
-{
-    return true;
+//! Destructor
+CarbonLandLeaf::~CarbonLandLeaf() {
 }
 
 const string& CarbonLandLeaf::getXMLName() const {

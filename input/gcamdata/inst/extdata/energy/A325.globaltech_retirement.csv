@@ -19,7 +19,7 @@ chemical energy use,gas,gas CCS,final-calibration-year,67,,20,0.3,-0.5,6
 chemical energy use,biomass,biomass,final-calibration-year,67,,20,0.3,-0.5,6
 chemical energy use,biomass,biomass cogen,final-calibration-year,67,,20,0.3,-0.5,6
 chemical energy use,biomass,biomass CCS,final-calibration-year,67,,20,0.3,-0.5,6
-chemical energy use,electricity ,electricity ,final-calibration-year,67,,20,0.3,-0.5,6
+chemical energy use,electricity,electricity,final-calibration-year,67,,20,0.3,-0.5,6
 chemical energy use,hydrogen,hydrogen,final-calibration-year,67,,20,0.3,-0.5,6
 chemical energy use,hydrogen,hydrogen cogen,final-calibration-year,67,,20,0.3,-0.5,6
 chemical energy use,coal,coal,final-calibration-year,67,,20,0.3,-0.5,6
@@ -36,7 +36,7 @@ chemical energy use,gas,gas CCS,initial-future-year,67,,20,0.3,-0.5,6
 chemical energy use,biomass,biomass,initial-future-year,67,,20,0.3,-0.5,6
 chemical energy use,biomass,biomass cogen,initial-future-year,67,,20,0.3,-0.5,6
 chemical energy use,biomass,biomass CCS,initial-future-year,67,,20,0.3,-0.5,6
-chemical energy use,electricity ,electricity ,initial-future-year,67,,20,0.3,-0.5,6
+chemical energy use,electricity,electricity,initial-future-year,67,,20,0.3,-0.5,6
 chemical energy use,hydrogen,hydrogen,initial-future-year,67,,20,0.3,-0.5,6
 chemical energy use,hydrogen,hydrogen cogen,initial-future-year,67,,20,0.3,-0.5,6
 chemical energy use,coal,coal,initial-future-year,67,,20,0.3,-0.5,6

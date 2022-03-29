@@ -47,8 +47,7 @@
 
 #include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/iparsable.h"
-#include "util/base/include/time_vector.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
@@ -56,6 +55,7 @@
 // Forward declarations
 class ITechnology;
 class IInfo;
+class Tabs;
 class ILandAllocator;
 class Demographic;
 class InterpolationRule;
@@ -74,12 +74,12 @@ class StubTechnologyContainer;
  *          
  * \author Pralit Patel
  */
-class ITechnologyContainer : public INamed, public IParsable, public IVisitable,
+class ITechnologyContainer : public INamed, public AParsable, public IVisitable,
                              private boost::noncopyable
 {
     friend class StubTechnologyContainer; // to be able to call clone()
 public:
-    /*! 
+    /*!
      * \brief Constructor.
      * \details Inlined constructor to avoid compiler problems with abstract
      *          base classes. 
@@ -209,15 +209,7 @@ protected:
      * \return A pointer to a copy of this technology container.
      */
     virtual ITechnologyContainer* clone() const = 0;
-    
-    /*!
-     * \brief Interpolate a technology to parse the given XML.
-     * \details This method will interpolate (if necessary) a technology
-     *          in order to parse the given XML.
-     * \ param aNode The XML to parse.
-     */
-    virtual void interpolateAndParse( const xercesc::DOMNode* aNode ) = 0;
-    
+        
     DEFINE_DATA(
         /* Declare all subclasses of ITechnologyContainer to allow automatic traversal of the
          * hierarchy under introspection.

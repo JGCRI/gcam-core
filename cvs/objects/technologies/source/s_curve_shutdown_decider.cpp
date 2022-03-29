@@ -43,14 +43,11 @@
 #include <cmath>
 
 #include "technologies/include/s_curve_shutdown_decider.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -100,40 +97,8 @@ const string& S_CurveShutdownDecider::getXMLNameStatic() {
     return XML_NAME;
 }
 
-bool S_CurveShutdownDecider::XMLParse( const xercesc::DOMNode* node ){
-    // Assume we have a valid node.
-    assert( node );
-
-    // get the name attribute.
-    mName = XMLHelper<string>::getAttr( node, "name" );
-    if( mName.empty() ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::WARNING );
-        mainLog << "No name specified for " << getXMLNameStatic() << endl;
-    }
-
-    const xercesc::DOMNodeList* nodeList = node->getChildNodes();
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ) {
-        const xercesc::DOMNode* curr = nodeList->item( i );
-        if( curr->getNodeType() != xercesc::DOMNode::ELEMENT_NODE ){
-            continue;
-        }
-        const string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "steepness" ){
-            mSteepness = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "half-life" ){
-            mHalfLife = XMLHelper<double>::getValue( curr );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Unknown tag " << nodeName << " encountered while processing "
-                    << getXMLNameStatic() << endl;
-        }
-    }
-
-    return true;
+const string& S_CurveShutdownDecider::getXMLName() const {
+    return getXMLNameStatic();
 }
 
 void S_CurveShutdownDecider::toDebugXML( const int aPeriod,

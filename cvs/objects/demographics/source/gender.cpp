@@ -38,14 +38,11 @@
 */
 
 #include "util/base/include/definitions.h"
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 #include "demographics/include/gender.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 // static initialization
 const string Gender::XML_NAME = "gender";
@@ -55,36 +52,6 @@ Gender::Gender(){
     mPopulation = -1;
     mSurvivingPop = 0;
     mSurvivalRate = 0;
-}
-
-//! parse SOME xml data for Male or Female objects
-void Gender::XMLParse( const DOMNode* node ) {
-    /*! \pre make sure we were passed a valid node. */
-    assert( node );
-
-    // get all child nodes.
-    DOMNodeList* nodeList = node->getChildNodes();
-
-    // loop through the child nodes.
-    for( unsigned int i = 0; i < nodeList->getLength(); i++ ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if ( nodeName == "population" ) {
-            mPopulation = XMLHelper<double>::getValue( curr );
-        }
-        else if (nodeName == "survivalRate" ) {
-            mSurvivalRate = XMLHelper<double>::getValue( curr );
-        }
-        else if( !XMLDerivedClassParse( nodeName, curr ) ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string " << nodeName << " encountered while parsing " << getXMLName() << endl;
-        }
-    }
 }
 
 //! Output debug info to XML data

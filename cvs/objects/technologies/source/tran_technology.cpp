@@ -55,10 +55,13 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Constructor.
 TranTechnology::TranTechnology( const string& aName, const int aYear ): Technology( aName, aYear ) {
+    mLoadFactor = 1;
+}
+
+TranTechnology::TranTechnology() {
     mLoadFactor = 1;
 }
 
@@ -90,16 +93,6 @@ const std::string& TranTechnology::getXMLName() const {
 const std::string& TranTechnology::getXMLNameStatic() {
     static const string XML_NAME = "tranTechnology";
     return XML_NAME;
-}
-
-bool TranTechnology::XMLDerivedClassParse( const string& nodeName, const DOMNode* curr ) {
-    if( nodeName == "loadFactor" ){
-        mLoadFactor = XMLHelper<double>::getValue( curr );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) const { 

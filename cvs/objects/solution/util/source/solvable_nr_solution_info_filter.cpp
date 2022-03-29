@@ -40,16 +40,11 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/util/include/solvable_nr_solution_info_filter.h"
 #include "solution/util/include/solution_info.h"
-#include "util/base/include/xml_helper.h"
-#include "util/logger/include/ilogger.h"
 
 using namespace std;
-using namespace xercesc;
 
 SolvableNRSolutionInfoFilter::SolvableNRSolutionInfoFilter() {
 }
@@ -60,34 +55,6 @@ SolvableNRSolutionInfoFilter::~SolvableNRSolutionInfoFilter() {
 const string& SolvableNRSolutionInfoFilter::getXMLNameStatic() {
     const static string XML_NAME = "solvable-nr-solution-info-filter";
     return XML_NAME;
-}
-
-bool SolvableNRSolutionInfoFilter::XMLParse( const DOMNode* aNode ) {
-    // nothing to parse but will still check to make sure there is
-    // nothing here and warn the user if any thing was found
-    
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 bool SolvableNRSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {

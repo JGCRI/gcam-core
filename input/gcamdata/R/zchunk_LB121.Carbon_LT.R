@@ -42,6 +42,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
     L120.LC_bm2_ctry_LTsage_GLU <- get_data(all_data, "L120.LC_bm2_ctry_LTsage_GLU")
     L120.LC_bm2_ctry_LTpast_GLU <- get_data(all_data, "L120.LC_bm2_ctry_LTpast_GLU")
 
+
     # Convert characteristics by land type to correct units (kgC/m2)
     Various_CarbonData_LTsage %>%
       mutate(value = if_else(unit == "tC/ha", value * CONV_THA_KGM2, value)) %>%
@@ -73,6 +74,8 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
                                by = c("Land_Type" = "LT_SAGE")) ->
       L121.CarbonContent_kgm2_R_LTmgd_GLU
 
+
+
     # Pasture carbon contents
     L120.LC_bm2_ctry_LTpast_GLU %>%
       left_join_error_no_match(L121.Various_CarbonData_LTsage, by = "LT_SAGE") %>%
@@ -94,6 +97,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
               L121.CarbonContent_kgm2_R_LTpast_GLU,
               L121.CarbonContent_kgm2_R_LTmgd_GLU) %>%
       select(GCAM_region_ID, Land_Type, GLU, `mature age`, soil_c, veg_c) %>%
+      mutate(`mature age` = round(`mature age`)) %>%
       arrange(GCAM_region_ID, GLU, Land_Type) %>%
       add_title("Natural vegetation and managed land age and carbon density") %>%
       add_units("Years (mature age) and kgC/m2 (others)") %>%

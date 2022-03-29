@@ -265,21 +265,24 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       select(state, subregion13, sector, year, value)
 
     # Final step - adjustment for AEO 2015 harmonization. NEMS residential floorspace is a lot lower than RECS.
-    AEO_2015_flsp %>%
-      gather_years() %>%
-      filter(Sector == "Residential",
-             year == max(HISTORICAL_YEARS)) %>%
-      left_join_error_no_match(L144.flsp_bm2_state_res %>%
-                                 filter(year == max(HISTORICAL_YEARS)) %>%
-                                 group_by(sector, year) %>%
-                                 summarise(RECS_flspc_2010 = sum(value)) %>%
-                                 ungroup(),
-                               by = c("year")) %>%
-      mutate(scaler = value / RECS_flspc_2010) %>%
-      select(sector, scaler) -> L144.flsp_scaler
+    L144.flsp_bm2_state_res    %>%
+      group_by(sector, year) %>%
+      summarise(RECS_flspc = sum(value)) %>%
+      ungroup() %>%
+      select(-sector) %>%
+      # use left_join due to lack of AEO data prior to 1993
+      left_join(AEO_2015_flsp %>%
+                gather_years() %>%
+                filter(Sector == "Residential") %>%
+                select(-Sector),
+              by = c("year")) %>%
+      mutate(scaler = value / RECS_flspc) %>%
+      # extrapolate the scaler to years before 1993
+      mutate(scaler =if_else(is.na(scaler),approx_fun(year, scaler, rule = 2),scaler)) %>%
+      select(year, scaler) -> L144.flsp_scaler
 
-    L144.flsp_bm2_state_res %>%
-      left_join_error_no_match(L144.flsp_scaler, by = c("sector")) %>%
+   L144.flsp_bm2_state_res %>%
+      left_join_error_no_match(L144.flsp_scaler, by = c("year")) %>%
       mutate(value = if_else(year %in% HISTORICAL_YEARS, value * scaler, value)) %>%
       select(-scaler) -> L144.flsp_bm2_state_res
 

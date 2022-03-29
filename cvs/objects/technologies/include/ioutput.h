@@ -45,7 +45,6 @@
  */
 
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
 #include <list>
 #include <boost/core/noncopyable.hpp>
 
@@ -56,7 +55,7 @@ class ILandAllocator;
 
 #include "util/base/include/inamed.h"
 #include "util/base/include/ivisitable.h"
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/data_definition_util.h"
 
 // Need to forward declare the subclasses as well.
@@ -82,7 +81,7 @@ class GenericOutput;
 *          and quantity calculations.
 * \author Josh Lurz
 */
-class IOutput : public INamed, private boost::noncopyable {
+class IOutput : public INamed, public AParsable, private boost::noncopyable {
 public:
     /*! 
      * \brief Constructor.
@@ -123,9 +122,8 @@ public:
      * \return The name of the input for reporting.
      */
     virtual const std::string& getXMLReportingName() const = 0;
-
-    // Documentation is inherited.
-    virtual bool XMLParse( const xercesc::DOMNode* aNode ) = 0;
+    
+    virtual const std::string& getXMLName() const = 0;
 
     // Documentation is inherited.
     virtual void toDebugXML( const int aPeriod,

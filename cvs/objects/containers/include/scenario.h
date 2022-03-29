@@ -50,7 +50,7 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -85,9 +85,10 @@ class ManageStateVariables;
 * \author Sonny Kim
 */
 
-class Scenario: public IParsable, public IVisitable
+class Scenario: public AParsable, public IVisitable
 {
     friend class LogEDFun;
+    friend class gcam;
 public:
     Scenario();
     ~Scenario();
@@ -96,7 +97,7 @@ public:
     Marketplace* getMarketplace();
     const World* getWorld() const;
     World* getWorld();
-    bool XMLParse( const xercesc::DOMNode* node );
+    bool XMLParse( rapidxml::xml_node<char>* & aNode );
     void completeInit();
     void setName(std::string newName);
 
@@ -127,19 +128,19 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
 
         /*! \brief The modeltime for the scenario. */
-        DEFINE_VARIABLE( SIMPLE, "modeltime", mModeltime, const Modeltime* ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "modeltime", mModeltime, const Modeltime* ),
 
         /*! \brief The goods and services marketplace. */
-        DEFINE_VARIABLE( CONTAINER, "marketplace", mMarketplace, Marketplace* ),
+        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "marketplace", mMarketplace, Marketplace* ),
                 
         /*! \brief The goods and services marketplace. */
         DEFINE_VARIABLE( CONTAINER, "world", mWorld, World* ),
                 
         /*! \brief A vector booleans, one per period, which denotes whether each period is valid. */
-        DEFINE_VARIABLE( SIMPLE, "is-valid-period", mIsValidPeriod, std::vector<bool> ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "is-valid-period", mIsValidPeriod, std::vector<bool> ),
                 
         /*! \brief Unsolved periods. */
-        DEFINE_VARIABLE( ARRAY, "unsolved-periods", mUnsolvedPeriods, std::vector<int> ),
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "unsolved-periods", mUnsolvedPeriods, std::vector<int> ),
                 
         /*! \brief A pass through object used to parse SolutionInfo parameters
          *         until markets are created.

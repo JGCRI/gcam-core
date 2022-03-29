@@ -327,12 +327,21 @@ aglu.WOOD_WATER_CONTENT <- 0.065
 aglu.MIN_VEG_CARBON_DENSITY  <- 0
 aglu.MIN_SOIL_CARBON_DENSITY <- 0
 
+
 # Define top-level (zero) land nest logit exponent and logit type
 aglu.N0_LOGIT_EXP  <- 0
 aglu.N0_LOGIT_TYPE <- NA
 
-# Fraction of land that is protected
-aglu.PROTECT_LAND_FRACT <- 0.9
+
+
+#Set the below constant to FALSE to activate the protected areas differentiated by land type and region in GCAM. Setting it to TRUE will use the default protection fraction defined in aglu.PROTECT_DEFAULT
+aglu.PROTECTION_DATA_SOURCE_DEFAULT <- TRUE
+#Un-Protected area status- This constant can be used to make more land types from the protection categories available for expansion.
+# The available options for land types are - Unknown, UnsuitableUnprotected, SuitableUnprotected, SuitableHighProtectionIntact, SuitbaleHighProtectionDeforested, SuitableLow Protection, UnsuitableHighProtection, UnsuitableLowProtection
+aglu.NONPROTECT_LAND_STATUS <- c("SuitableUnprotected","Unknown")
+
+# Default fraction for protected land. This is used if the aglu.PROTECTION_DATA_SOURCE is set to TRUE or if protection data is unavailable.
+aglu.PROTECT_DEFAULT<- 0.9
 
 # Multiplier on the ghost share for irrigated land
 aglu.IRR_GHOST_SHARE_MULT <- 0.25
@@ -372,6 +381,12 @@ aglu.DIGITS_LAND_VALUE    <- 0
 aglu.DIGITS_MATUREAGE     <- 0
 aglu.DIGITS_RES_ENERGY    <- 4
 aglu.DIGITS_WATER_CONTENT <- 2
+
+
+#Land leaf names used in the data system for different land types
+aglu.PASTURE_NODE_NAMES <- "Pasture"
+aglu.FOREST_NODE_NAMES <- "Forest"
+aglu.GRASSLAND_NODE_NAMES <- "Grassland"
 
 
 # Energy constants ======================================================================
@@ -448,7 +463,7 @@ energy.DIGITS_COST             <- 4
 energy.DIGITS_CURVE_EXPONENT   <- 3
 energy.DIGITS_RESOURCE      <- 2
 energy.DIGITS_EFFICIENCY       <- 3
-energy.DIGITS_FLOORSPACE       <- 3
+energy.DIGITS_FLOORSPACE       <- 6
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
 energy.DIGITS_HDDCDD           <- 0
 energy.DIGITS_INCELAS_IND      <- 3
@@ -491,6 +506,18 @@ energy.COSTS_LOW_CASE <- "low tech"
 energy.CAPITAL_INPUT <- "capital"
 energy.OM_FIXED_INPUT <- "OM-fixed"
 energy.OM_VAR_INPUT <- "OM-var"
+
+# Constants for the residential sector: Parameters for USA (estimated offline) and unadjusted saturation values:
+obs_UnadjSat<-100
+obs_UnadjSat_USA<-150
+
+land.density.param.usa<-0
+b.param.usa<-3.49026
+income.param.usa<-0.4875
+
+# Constants for global detailed industry
+off_road.biomass_growth <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
+iron_steel.global_default_coef <- c("Biomass-based","scrap","H2 enduse") #assign iron & steel global technology coefficients
 
 # Socioeconomics constants ======================================================================
 
@@ -677,6 +704,7 @@ emissions.DIGITS_EMISS_COEF    <- 7
 emissions.DIGITS_EMISSIONS     <- 10
 emissions.DIGITS_MACC          <- 3
 emissions.DIGITS_MACC_TC       <- 4 # tech.change rounding
+emissions.DIGITS_GFED          <- 12
 
 # GCAM-USA constants ======================================================================
 

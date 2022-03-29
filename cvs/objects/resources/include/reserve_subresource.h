@@ -45,7 +45,6 @@
 * \author Sonny Kim
 */
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "resources/include/subresource.h"
@@ -105,7 +104,6 @@ public:
     virtual double getLowestPrice( const int aPeriod ) const;
 protected:
     virtual const std::string& getXMLName() const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* node );
 
     DEFINE_DATA_WITH_PARENT(
         SubResource,

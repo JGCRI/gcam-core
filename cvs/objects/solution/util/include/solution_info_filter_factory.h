@@ -43,7 +43,6 @@
  * \brief Header file for the SolutionInfoFilterFactory class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 
 class ISolutionInfoFilter;
@@ -51,9 +50,8 @@ class ISolutionInfoFilter;
 /*!
  * \ingroup Objects
  * \brief A factory which can be used to create instances of solution info filters.
- * \details There are three static methods, one to determine if this factory can create
- *          a filter with the given xml name, one to create and parse a filter with the
- *          given xml name and xml tree, and lastly one that can create them from a syntax
+ * \details There are two static methods, one to determine if this factory can create
+ *          a filter with the given xml name, and one that can create them from a syntax
  *          string.  See documentation for createSolutionInfoFilterFromString for more
  *          details on the syntax string format.
  *
@@ -63,14 +61,13 @@ class SolutionInfoFilterFactory {
 public:
     static bool hasSolutionInfoFilter( const std::string& aXMLName );
     
-    static ISolutionInfoFilter* createAndParseSolutionInfoFilter( const std::string& aXMLName,
-                                                              const xercesc::DOMNode* aNode );
-    
     static ISolutionInfoFilter* createSolutionInfoFilterFromString( const std::string& aFilterString );
     
 private:
-    static xercesc::DOMNode* buildDOMFromFilterString( const std::string& aFilterString,
-                                                       xercesc::DOMDocument* aDocNode );
+    static ISolutionInfoFilter* buildSolutionInfoFilterString( const std::string& aFilterString );
+    
+    static ISolutionInfoFilter* createOperandFilter( const std::string& aXMLName,
+                                                     const std::string& aOperandValue );
     
     static std::string::const_iterator findCloseParentheses( const std::string& aFilterString,
                                                              const std::string::const_iterator& aOpenParen );

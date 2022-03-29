@@ -50,9 +50,6 @@
     <Filter Include="Source Files\consumers">
       <UniqueIdentifier>{ec757e25-b364-484e-b9b5-091d051710f4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\investment">
-      <UniqueIdentifier>{9e9eb599-4b5e-4b8b-bfca-3b2f7c54cb09}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\reporting">
       <UniqueIdentifier>{c7f72b39-bb21-4692-8088-f366ead86d79}</UniqueIdentifier>
     </Filter>
@@ -138,9 +135,6 @@
     <Filter Include="Header Files\land_allocator">
       <UniqueIdentifier>{1d005fc2-a6d3-411c-9c75-939b2cfcb570}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Header Files\investment">
-      <UniqueIdentifier>{e464b642-0e85-4968-85be-e6a6440a02c9}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Header Files\ccarbon_model">
       <UniqueIdentifier>{a51e5deb-af6d-4f09-a603-b8ae063e0478}</UniqueIdentifier>
     </Filter>
@@ -161,9 +155,6 @@
     <ClCompile Include="..\..\containers\source\batch_runner.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\containers\source\dependency_finder.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\containers\source\gdp.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
@@ -182,9 +173,6 @@
     <ClCompile Include="..\..\containers\source\region.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\containers\source\region_cge.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\containers\source\region_minicam.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
@@ -192,9 +180,6 @@
       <Filter>Source Files\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\containers\source\scenario_runner_factory.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\sector_cycle_breaker.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\containers\source\single_scenario_runner.cpp">
@@ -225,12 +210,6 @@
       <Filter>Source Files\demographics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\demographics\source\population_mini_cam.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\population_sgm_fixed.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\population_sgm_rate.cpp">
       <Filter>Source Files\demographics</Filter>
     </ClCompile>
     <ClCompile Include="..\..\marketplace\source\cached_market.cpp">
@@ -293,9 +272,6 @@
     <ClCompile Include="..\..\resources\source\unlimited_resource.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\backup_calculator_factory.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\sectors\source\capacity_limit_backup_calculator.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
@@ -303,21 +279,6 @@
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\export_sector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\factor_supply.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\final_demand_sector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\more_sector_info.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\production_sector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sectors\source\sector.cpp">
@@ -336,9 +297,6 @@
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\wind_backup_calculator.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
     <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp">
@@ -365,9 +323,6 @@
     <ClCompile Include="..\..\solution\solvers\source\solver_component.cpp">
       <Filter>Source Files\solution\solvers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\solver_component_factory.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\solution\solvers\source\solver_factory.cpp">
       <Filter>Source Files\solution\solvers</Filter>
     </ClCompile>
@@ -384,6 +339,9 @@
       <Filter>Source Files\solution\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp">
+      <Filter>Source Files\solution\util</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\market_matches_solution_info_filter.cpp">
       <Filter>Source Files\solution\util</Filter>
     </ClCompile>
     <ClCompile Include="..\..\solution\util\source\market_type_solution_info_filter.cpp">
@@ -428,9 +386,6 @@
     <ClCompile Include="..\..\technologies\source\cal_data_output_percap.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\technologies\source\capture_component_factory.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\technologies\source\default_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
@@ -461,9 +416,6 @@
     <ClCompile Include="..\..\technologies\source\nuke_fuel_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\technologies\source\output_factory.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\technologies\source\phased_shutdown_decider.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
@@ -476,9 +428,6 @@
     <ClCompile Include="..\..\technologies\source\production_state_factory.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\technologies\source\production_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\technologies\source\profit_shutdown_decider.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
@@ -489,12 +438,6 @@
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\technologies\source\secondary_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\sgm_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\shutdown_decider_factory.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\technologies\source\solar_technology.cpp">
@@ -513,9 +456,6 @@
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\technologies\source\technology_container.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\technology_type.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\technologies\source\tran_technology.cpp">
@@ -552,9 +492,6 @@
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\util\base\source\input_finder.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\interpolation_function_factory.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp">
@@ -608,59 +545,8 @@
     <ClCompile Include="..\..\util\curves\source\xy_data_point.cpp">
       <Filter>Source Files\util\curves</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\consumers\source\calc_capital_good_price_visitor.cpp">
-      <Filter>Source Files\consumers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\consumers\source\consumer.cpp">
       <Filter>Source Files\consumers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\consumers\source\govt_consumer.cpp">
-      <Filter>Source Files\consumers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\consumers\source\household_consumer.cpp">
-      <Filter>Source Files\consumers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\consumers\source\invest_consumer.cpp">
-      <Filter>Source Files\consumers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\consumers\source\trade_consumer.cpp">
-      <Filter>Source Files\consumers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\accelerator.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\get_distributed_investment_visitor.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\investable_counter_visitor.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\investment_growth_calculator.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\investment_utils.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\levelized_cost_calculator.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\market_based_investment.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\output_growth_calculator.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\output_share_levelized_cost_calculator.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\rate_logit_distributor.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\set_share_weight_visitor.cpp">
-      <Filter>Source Files\investment</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\investment\source\simple_expected_profit_calculator.cpp">
-      <Filter>Source Files\investment</Filter>
     </ClCompile>
     <ClCompile Include="..\..\reporting\source\batch_csv_outputter.cpp">
       <Filter>Source Files\reporting</Filter>
@@ -683,16 +569,10 @@
     <ClCompile Include="..\..\climate\source\magicc_model.cpp">
       <Filter>Source Files\climate</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\functions\source\ademand_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\functions\source\aproduction_function.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\functions\source\ces_production_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\demand_input.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\functions\source\efficiency.cpp">
@@ -707,16 +587,7 @@
     <ClCompile Include="..\..\functions\source\function_utils.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\functions\source\government_demand_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\household_demand_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\functions\source\input_capital.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\input_factory.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\functions\source\input_OM_fixed.cpp">
@@ -732,9 +603,6 @@
       <Filter>Source Files\functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\functions\source\intensity.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\investment_demand_function.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\functions\source\leaf_input_finder.cpp">
@@ -764,22 +632,7 @@
     <ClCompile Include="..\..\functions\source\non_energy_input.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\functions\source\production_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\functions\source\renewable_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\sgm_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\trade_demand_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\trade_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\utility_demand_function.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\target_finder\source\bisecter.cpp">
@@ -795,9 +648,6 @@
       <Filter>Source Files\target_finder</Filter>
     </ClCompile>
     <ClCompile Include="..\..\target_finder\source\policy_target_runner.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\simple_policy_target_runner.cpp">
       <Filter>Source Files\target_finder</Filter>
     </ClCompile>
     <ClCompile Include="..\..\target_finder\source\target_factory.cpp">
@@ -857,13 +707,7 @@
     <ClCompile Include="..\..\emissions\source\co2_emissions.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\emissions\source\emissions_driver_factory.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\emissions\source\emissions_summer.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\ghg_factory.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\emissions\source\input_driver.cpp">
@@ -932,9 +776,6 @@
     <ClCompile Include="..\..\containers\source\market_dependency_finder.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\lognrbt.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\solution\util\source\edfun.cpp">
       <Filter>Source Files\solution\util</Filter>
     </ClCompile>
@@ -971,9 +812,6 @@
     <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp">
       <Filter>Source Files\solution\util</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\svd_invert_solve.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\ccarbon_model\source\no_emiss_carbon_calc.cpp">
       <Filter>Source Files\ccarbon_model</Filter>
     </ClCompile>
@@ -992,9 +830,6 @@
     <ClCompile Include="..\..\emissions\source\aemissions_control.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\emissions\source\emissions_control_factory.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\emissions\source\gdp_control.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
@@ -1011,9 +846,6 @@
       <Filter>Source Files\target_finder</Filter>
     </ClCompile>
     <ClCompile Include="..\..\functions\source\absolute_cost_logit.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\discrete_choice_factory.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
     <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp">
@@ -1049,9 +881,6 @@
     <ClCompile Include="..\..\functions\source\ctax_input.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\negative_emissions_final_demand.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\emissions\source\readin_control.cpp">
       <Filter>Source Files\emissions</Filter>
     </ClCompile>
@@ -1079,18 +908,23 @@
     <ClCompile Include="..\..\functions\source\food_demand_input.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\solution\util\source\fdjac.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\util\base\source\mapped_file.cpp">
+      <Filter>Source Files\util\base</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\util\base\source\xml_parse_helper.cpp">
+      <Filter>Source Files\util\base</Filter>
+    <ClCompile Include="..\..\functions\source\building_gompertz_function.cpp">
+      <Filter>Source Files\functions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\containers\include\dependency_finder.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\containers\include\gdp.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\icycle_breaker.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\containers\include\iinfo.h">
@@ -1114,22 +948,13 @@
     <ClInclude Include="..\..\containers\include\region.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\containers\include\region_cge.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\containers\include\region_minicam.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\containers\include\scenario.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\containers\include\scenario_runner.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\containers\include\scenario_runner_factory.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\sector_cycle_breaker.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\containers\include\single_scenario_runner.h">
@@ -1163,12 +988,6 @@
       <Filter>Header Files\demographics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\demographics\include\population_mini_cam.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\population_sgm_fixed.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\population_sgm_rate.h">
       <Filter>Header Files\demographics</Filter>
     </ClInclude>
     <ClInclude Include="..\..\marketplace\include\cached_market.h">
@@ -1240,9 +1059,6 @@
     <ClInclude Include="..\..\sectors\include\afinal_demand.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sectors\include\backup_calculator_factory.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\sectors\include\capacity_limit_backup_calculator.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
@@ -1252,22 +1068,7 @@
     <ClInclude Include="..\..\sectors\include\energy_final_demand.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sectors\include\export_sector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\factor_supply.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\final_demand_sector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\more_sector_info.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\production_sector.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\sector.h">
@@ -1283,9 +1084,6 @@
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\tran_subsector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\wind_backup_calculator.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solution\solvers\include\bisect_all.h">
@@ -1315,9 +1113,6 @@
     <ClInclude Include="..\..\solution\solvers\include\solver_component.h">
       <Filter>Header Files\solution\solvers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\solver_component_factory.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\solution\solvers\include\solver_factory.h">
       <Filter>Header Files\solution\solvers</Filter>
     </ClInclude>
@@ -1337,6 +1132,9 @@
       <Filter>Header Files\solution\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solution\util\include\market_name_solution_info_filter.h">
+      <Filter>Header Files\solution\util</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\solution\util\include\market_matches_solution_info_filter.h">
       <Filter>Header Files\solution\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solution\util\include\market_type_solution_info_filter.h">
@@ -1372,9 +1170,6 @@
     <ClInclude Include="..\..\solution\util\include\unsolved_solution_info_filter.h">
       <Filter>Header Files\solution\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\unsolved_solver_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\technologies\include\base_technology.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
@@ -1382,9 +1177,6 @@
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\cal_data_output_percap.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\capture_component_factory.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\default_technology.h">
@@ -1406,9 +1198,6 @@
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\icapture_component.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\input_factory.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\intermittent_technology.h">
@@ -1444,9 +1233,6 @@
     <ClInclude Include="..\..\technologies\include\nuke_fuel_technology.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\technologies\include\output_factory.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\technologies\include\phased_shutdown_decider.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
@@ -1459,9 +1245,6 @@
     <ClInclude Include="..\..\technologies\include\production_state_factory.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\technologies\include\production_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\technologies\include\profit_shutdown_decider.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
@@ -1472,12 +1255,6 @@
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\secondary_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\sgm_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\shutdown_decider_factory.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\solar_technology.h">
@@ -1496,9 +1273,6 @@
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\technology_container.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\technology_type.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\tran_technology.h">
@@ -1555,16 +1329,7 @@
     <ClInclude Include="..\..\util\base\include\input_finder.h">
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\util\base\include\interpolation_function_factory.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\util\base\include\interpolation_rule.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\iparsable.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\istandard_component.h">
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\ivisitable.h">
@@ -1612,9 +1377,6 @@
     <ClInclude Include="..\..\util\base\include\xml_helper.h">
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\util\base\include\xml_pair.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\util\logger\include\ilogger.h">
       <Filter>Header Files\util\logger</Filter>
     </ClInclude>
@@ -1651,22 +1413,7 @@
     <ClInclude Include="..\..\util\curves\include\xy_data_point.h">
       <Filter>Header Files\util\curves</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\consumers\include\calc_capital_good_price_visitor.h">
-      <Filter>Header Files\consumers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\consumers\include\consumer.h">
-      <Filter>Header Files\consumers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\consumers\include\govt_consumer.h">
-      <Filter>Header Files\consumers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\consumers\include\household_consumer.h">
-      <Filter>Header Files\consumers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\consumers\include\invest_consumer.h">
-      <Filter>Header Files\consumers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\consumers\include\trade_consumer.h">
       <Filter>Header Files\consumers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\reporting\include\batch_csv_outputter.h">
@@ -1684,16 +1431,10 @@
     <ClInclude Include="..\..\reporting\include\xml_db_outputter.h">
       <Filter>Header Files\reporting</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\functions\include\ademand_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\functions\include\aproduction_function.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\functions\include\ces_production_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\demand_input.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\functions\include\efficiency.h">
@@ -1706,12 +1447,6 @@
       <Filter>Header Files\functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\functions\include\function_utils.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\government_demand_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\household_demand_function.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\functions\include\icoefficient.h">
@@ -1744,9 +1479,6 @@
     <ClInclude Include="..\..\functions\include\intensity.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\functions\include\investment_demand_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\functions\include\leaf_input_finder.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
@@ -1774,22 +1506,7 @@
     <ClInclude Include="..\..\functions\include\non_energy_input.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\functions\include\production_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\functions\include\renewable_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\sgm_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\trade_demand_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\trade_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\utility_demand_function.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\climate\include\iclimate_model.h">
@@ -1834,57 +1551,6 @@
     <ClInclude Include="..\..\land_allocator\include\unmanaged_land_leaf.h">
       <Filter>Header Files\land_allocator</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\investment\include\accelerator.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\get_distributed_investment_visitor.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\idistributor.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\iexpected_profit_calculator.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\igrowth_calculator.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\iinvestable.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\iinvestor.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\investable_counter_visitor.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\investment_growth_calculator.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\investment_utils.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\levelized_cost_calculator.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\market_based_investment.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\output_growth_calculator.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\output_share_levelized_cost_calculator.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\rate_logit_distributor.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\set_share_weight_visitor.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\investment\include\simple_expected_profit_calculator.h">
-      <Filter>Header Files\investment</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\policy\include\policy_ghg.h">
       <Filter>Header Files\policy</Filter>
     </ClInclude>
@@ -1918,13 +1584,7 @@
     <ClInclude Include="..\..\emissions\include\co2_emissions.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\emissions\include\emissions_driver_factory.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\emissions\include\emissions_summer.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\ghg_factory.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\input_driver.h">
@@ -1982,9 +1642,6 @@
       <Filter>Header Files\target_finder</Filter>
     </ClInclude>
     <ClInclude Include="..\..\target_finder\include\secanter.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\simple_policy_target_runner.h">
       <Filter>Header Files\target_finder</Filter>
     </ClInclude>
     <ClInclude Include="..\..\consumers\include\gcam_consumer.h">
@@ -2059,9 +1716,6 @@
     <ClInclude Include="..\..\parallel\include\graph-parse.hpp">
       <Filter>Header Files\parallel</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\lognrbt.hpp">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\solution\solvers\include\logbroyden.hpp">
       <Filter>Header Files\solution\solvers</Filter>
     </ClInclude>
@@ -2077,16 +1731,10 @@
     <ClInclude Include="..\..\solution\util\include\functor.hpp">
       <Filter>Header Files\solution\util</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\functor-subs.hpp">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\solution\util\include\jacobian-precondition.hpp">
       <Filter>Header Files\solution\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\solution\util\include\linesearch.hpp">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\svd_invert_solve.hpp">
       <Filter>Header Files\solution\util</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\fltcmp.hpp">
@@ -2110,9 +1758,6 @@
     <ClInclude Include="..\..\emissions\include\aemissions_control.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\emissions\include\emissions_control_factory.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\emissions\include\gdp_control.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
@@ -2129,9 +1774,6 @@
       <Filter>Header Files\target_finder</Filter>
     </ClInclude>
     <ClInclude Include="..\..\functions\include\absolute_cost_logit.hpp">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\discrete_choice_factory.hpp">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp">
@@ -2188,9 +1830,6 @@
     <ClInclude Include="..\..\functions\include\ctax_input.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\sectors\include\negative_emissions_final_demand.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\emissions\include\readin_control.h">
       <Filter>Header Files\emissions</Filter>
     </ClInclude>
@@ -2216,6 +1855,14 @@
       <Filter>Header Files\functions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\functions\include\food_demand_input.h">
+      <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\aparsable.h">
+      <Filter>Header Files\util\base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\xml_parse_helper.h">
+      <Filter>Header Files\util\base</Filter>
+    <ClInclude Include="..\..\functions\include\building_gompertz_function.h">
       <Filter>Header Files\functions</Filter>
     </ClInclude>
   </ItemGroup>

@@ -45,10 +45,17 @@
  */
 #include <list>
 #include <string>
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
+#include "util/base/include/data_definition_util.h"
 
 class Timer;
 class Scenario;
+
+// Need to forward declare the subclasses as well.
+class SingleScenarioRunner;
+class MACGeneratorScenarioRunner;
+class BatchRunner;
+class PolicyTargetRunner;
 
 /*! 
  * \ingroup Objects
@@ -60,7 +67,7 @@ class Scenario;
  *          the object, and not defined by the interface.
  * \author Josh Lurz
  */
-class IScenarioRunner: public IParsable {
+class IScenarioRunner: public AParsable {
 public:
     /*!
      * \brief Virtual destructor so that derived instances can be deleted
@@ -145,6 +152,15 @@ public:
      * \return Constant pointer to the internal scenario.
      */
     virtual const Scenario* getInternalScenario() const = 0;
+    
+protected:
+    DEFINE_DATA(
+        /* Declare all subclasses of IScenarioRunner to allow automatic traversal of the
+         * hierarchy under introspection.
+         */
+        DEFINE_SUBCLASS_FAMILY( IScenarioRunner, SingleScenarioRunner, MACGeneratorScenarioRunner, BatchRunner,
+                                PolicyTargetRunner )
+    )
 };
 
 // Inline destructor.

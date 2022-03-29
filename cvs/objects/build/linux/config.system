@@ -1,18 +1,23 @@
 ## environment for PIC systems
 ## Note you will hava to execute 'module load java' before JAVA_HOME will be set.
+ifeq (deception,$(findstring deception,$(HOSTNAME)))
+GCAMLIB_HOME    = /rcfs/projects/GCAM/GCAM-libraries
+IS_PIC          = 1
+endif
 ifeq (constance,$(findstring constance,$(HOSTNAME)))
 GCAMLIB_HOME    = /pic/projects/GCAM/GCAM-libraries
+IS_PIC          = 1
+endif
+ifeq ($(IS_PIC),1)
 BOOST_INCLUDE   = $(GCAMLIB_HOME)/include
 BOOST_LIB	    = $(GCAMLIB_HOME)/lib/boost
 BOOSTROOT	    = $(GCAMLIB_HOME)/src/boost
 EIGEN_INCLUDE   = $(GCAMLIB_HOME)/include
 TBB_INCLUDE     = $(GCAMLIB_HOME)/include/oneapi
 TBB_LIB	        = $(GCAMLIB_HOME)/lib
-XERCES_INCLUDE  = $(GCAMLIB_HOME)/include
-XERCES_LIB      = $(GCAMLIB_HOME)/lib
 JAVA_INCLUDE    = ${JAVA_HOME}/include
 JAVA_LIB        = ${JAVA_HOME}/jre/lib/amd64/server
-JARS_LIB       = $(GCAMLIB_HOME)/lib/basex-8.6.7/BaseX.jar:$(GCAMLIB_HOME)/lib/jars/*
+JARS_LIB        = $(GCAMLIB_HOME)/lib/jars/*
 ## `module load mkl/15.0.1` will get you the following variables:
 ifdef MLIB_CFLAGS
 MKL_CFLAGS      = $(MLIB_CFLAGS) -fopenmp

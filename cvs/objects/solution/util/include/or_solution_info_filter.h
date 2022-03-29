@@ -43,7 +43,6 @@
  * \brief Header file for the OrSolutionInfoFilter class.
  * \author Pralit Patel
  */
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include <vector>
 
@@ -72,16 +71,13 @@ class SolutionInfo;
  */
 class OrSolutionInfoFilter : public ISolutionInfoFilter {
 public:
-    OrSolutionInfoFilter();
-    ~OrSolutionInfoFilter();
+    OrSolutionInfoFilter(std::vector<ISolutionInfoFilter*> aFilters);
+    virtual ~OrSolutionInfoFilter();
     
     static const std::string& getXMLNameStatic();
     
     // ISolutionInfoFilter methods
     virtual bool acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const;
-    
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
     
 private:
     //! The vector of contained filters to be ored

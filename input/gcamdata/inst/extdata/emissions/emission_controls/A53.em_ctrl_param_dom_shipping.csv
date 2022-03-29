@@ -1,0 +1,28 @@
+# File: A53.em_ctrl_param_dom_shipping.csv
+# Title: SO2_em_controls_dom_shipping
+# Units: Tg/EJ_energy_in
+# Source: 2020 MARPOL SO2 controls using 2050 GCAM extrapolation for regions where this is larger in GCAM base-year (would likely be lower where low S diesel is required)
+# Description: New average fleet emission factors due to agreed limits on heavy oil sulfur contents
+# Column types: cccccnnnnnnnnc
+# ---------
+region,supplysector,subsector,stub.technology,Non.CO2,pcGDP_start_NSPS,NSPS_start_year,NSPS_em_coeff,pcGDP_start_retrofit,retrofit_start_year,retrofit_time,retrofit_vintage,retrofit_em_coeff,Notes and sources
+Africa_Eastern,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Africa_Northern,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Australia_NZ,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Brazil,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Canada,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Central America and Caribbean,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+EU-15,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Europe_Eastern,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Europe_Non_EU,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+India,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Japan,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Middle East,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Pakistan,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Russia,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+South America_Southern,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+South Asia,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+South Korea,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Southeast Asia,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Taiwan,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today
+Argentina,trn_freight,Domestic Ship,Liquids,SO2,NA,2020,0.13,NA,NA,NA,NA,-1,Bring domestic shipping down to GCAM 2050 assumed international value where is larger than this today

@@ -67,7 +67,7 @@ protected:
         Subsector,
 
         //! subsector name
-        DEFINE_VARIABLE( SIMPLE, "depth", mNestingDepth, int ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "depth", mNestingDepth, int ),
 
         //! region name
         DEFINE_VARIABLE( CONTAINER, "nested-subsector", mSubsectors, std::vector<Subsector*> )
@@ -75,15 +75,18 @@ protected:
     )
     
     const std::vector<double> calcChildShares( const GDP* aGDP, const int aPeriod ) const;
-    virtual bool XMLDerivedClassParse( const std::string& nodeName, const xercesc::DOMNode* curr );
-    virtual const std::string& getXMLName() const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 public:
-    NestingSubsector( const std::string& aRegionName, const std::string& aSectorName, const int aDepth );
+    NestingSubsector();
+
     virtual ~NestingSubsector();
 
     static const std::string& getXMLNameStatic();
+    
+    virtual void setNames( const std::string& aRegionName, const std::string& aSectorName );
+    
+    virtual const std::string& getXMLName() const;
 
     virtual void completeInit( const IInfo* aSectorInfo,
                                ILandAllocator* aLandAllocator );

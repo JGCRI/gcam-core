@@ -46,7 +46,6 @@
 
 #include <string>
 #include <memory>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
@@ -80,7 +79,6 @@ class Tabs;
  */
 class InputSubsidy: public MiniCAMInput
 {
-    friend class InputFactory;
 public:
 
     InputSubsidy();
@@ -92,8 +90,8 @@ public:
     static const std::string& getXMLNameStatic();
 
     virtual const std::string& getXMLReportingName() const;
-
-    virtual void XMLParse( const xercesc::DOMNode* aNode );
+    
+    virtual const std::string& getXMLName() const;
 
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -162,11 +160,11 @@ protected:
         MiniCAMInput,
         
         //! Physical Demand.
-        DEFINE_VARIABLE( ARRAY | STATE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
         
         //! Current coefficient after adjustments have been made by the technology's
         //! capture component.
-        DEFINE_VARIABLE( ARRAY, "current-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> )
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "current-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> )
     )
 
     //! Stash the current sector name for use in setPhysicalDemand

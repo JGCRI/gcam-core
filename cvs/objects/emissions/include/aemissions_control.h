@@ -45,10 +45,9 @@
 * \author Kate Calvin
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <string>
 #include "util/base/include/inamed.h"
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 #include "util/base/include/value.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -70,16 +69,25 @@ class ReadInControl;
  * \details The AEmissionsControl class describes a means of reducing emissions.
  * \author Kate Calvin
  */
-class AEmissionsControl: public INamed, public IParsable {
+class AEmissionsControl: public INamed, public AParsable {
 public:
     //! Virtual Destructor.
     virtual ~AEmissionsControl();
     //! Clone operator.
     virtual AEmissionsControl* clone() const = 0;
     
-    bool XMLParse( const xercesc::DOMNode* aNode );
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-    static const std::string& getXMLNameStatic();
+    
+    /*!
+     * \brief Get the XML node name for output to XML.
+     * \details This public function accesses the private constant string,
+     *          XML_NAME. This way the tag is always consistent for both read-in
+     *          and output and can be easily changed. This function may be
+     *          virtual to be overridden by derived class pointers.
+     * \author Jim Naslund
+     * \return The constant XML_NAME.
+     */
+    virtual const std::string& getXMLName() const = 0;
     
     double getEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
 
@@ -115,28 +123,6 @@ protected:
     AEmissionsControl();
     AEmissionsControl( const AEmissionsControl& aOther );
     AEmissionsControl& operator=( const AEmissionsControl& aOther );
-
-    /*!
-     * \brief Get the XML node name for output to XML.
-     * \details This public function accesses the private constant string,
-     *          XML_NAME. This way the tag is always consistent for both read-in
-     *          and output and can be easily changed. This function may be
-     *          virtual to be overridden by derived class pointers.
-     * \author Jim Naslund
-     * \return The constant XML_NAME.
-     */
-    virtual const std::string& getXMLName() const = 0;
-
-    /*!
-     * \brief Parses any child nodes specific to derived classes
-     * \details Method parses any input data from child nodes that are specific
-     *          to the classes derived from this class.
-     * \author Josh Lurz, Steve Smith
-     * \param aNodeName name of current node
-     * \param aCurrNode pointer to the current node in the XML input tree
-     * \return Whether any node was parsed.
-     */
-    virtual bool XMLDerivedClassParse( const std::string& aNodeName, const xercesc::DOMNode* aCurrNode ) = 0;
     
     /*!
      * \brief XML debug output stream for derived classes
@@ -164,7 +150,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Reduction (usually calculated)
-        DEFINE_VARIABLE( SIMPLE | STATE, "reduction", mReduction, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "reduction", mReduction, Value ),
+
+        //! Once read in at a specific model period, emission control object would not operate for this or any future vintages (or model periods for non-vintaged technologies)
+        DEFINE_VARIABLE( SIMPLE, "disable-em-control", mDisableEmControl, bool )
     )
 
 private:

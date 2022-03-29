@@ -69,9 +69,6 @@ public:
     virtual void init();
     virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
 private:
     std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
     std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.

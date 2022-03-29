@@ -45,11 +45,9 @@
  * \author Jiyong Eom
  */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include <boost/core/noncopyable.hpp>
 
 #include "util/base/include/value.h"
-#include "util/base/include/iparsable.h"
 #include "util/base/include/data_definition_util.h"
 
 /*!
@@ -98,7 +96,7 @@
  * \author Pralit Patel
  * \author Jiyong Eom
  */
-class SatiationDemandFunction : public INamed, public IParsable, private boost::noncopyable {
+class SatiationDemandFunction : public INamed, private boost::noncopyable {
 	friend class XMLDBOutputter;
 public:
     SatiationDemandFunction();
@@ -114,9 +112,6 @@ public:
     // INamed methods
     virtual const std::string& getName() const;
     
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
-
 protected:
     
     DEFINE_DATA(
@@ -128,24 +123,24 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "satiation-base-year-increase", mBaseYearSatiationMultiplier, Value ),
 
         //! The satiation level which may have been parsed directly by the user.
-        DEFINE_VARIABLE( SIMPLE, "parsed-satiation-level", mParsedSatiationLevel, Value ),
+        DEFINE_VARIABLE( SIMPLE, "satiation-level", mParsedSatiationLevel, Value ),
 
         //! The satiation level to use during calcDemand.  This could have been read
         //! in directly by the user or set as a percentage increase from the base year
         //! demand.
-        DEFINE_VARIABLE( SIMPLE | STATE, "satiation-level", mSatiationLevel, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "real-satiation-level", mSatiationLevel, Value ),
 
         //! Satiation impedance or midpoint demand driver.  Note that this value is
         //! calibrated via calibrateSatiationImpedance.
-        DEFINE_VARIABLE( SIMPLE | STATE, "satiation-impedance", mSatiationImpedance, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "satiation-impedance", mSatiationImpedance, Value ),
 
         //! Satiation adder, determines subsistence level.  This is the parsed value
         //! and will not change.
-        DEFINE_VARIABLE( SIMPLE, "parsed-satiation-adder", mParsedSatiationAdder, Value ),
+        DEFINE_VARIABLE( SIMPLE, "satiation-adder", mParsedSatiationAdder, Value ),
 
         //! Satiation adder, determines subsistence level.  This value may be adjusted
         //! from the parsed value during some calibration periods.
-        DEFINE_VARIABLE( SIMPLE | STATE, "satiation-adder", mSatiationAdder, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "real-satiation-adder", mSatiationAdder, Value )
     )
     
     void copy( const SatiationDemandFunction& aOther );

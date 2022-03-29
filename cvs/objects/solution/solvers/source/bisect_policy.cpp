@@ -40,8 +40,6 @@
 
 #include "util/base/include/definitions.h"
 #include <string>
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
 
 #include "solution/solvers/include/solver_component.h"
 #include "solution/solvers/include/bisect_policy.h"
@@ -59,7 +57,6 @@
 #include "solution/util/include/solvable_solution_info_filter.h"
 
 using namespace std;
-using namespace xercesc;
 
 //! Default Constructor. Constructs the base class. 
 BisectPolicy::BisectPolicy( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn ):SolverComponent( marketplaceIn, worldIn, calcCounterIn ),
@@ -86,47 +83,6 @@ const string& BisectPolicy::getXMLName() const {
 const string& BisectPolicy::getXMLNameStatic() {
     const static string SOLVER_NAME = "bisect-policy-solver-component";
     return SOLVER_NAME;
-}
-
-bool BisectPolicy::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the children of the node.
-    DOMNodeList* nodeList = aNode->getChildNodes();
-    
-    // loop through the children
-    for ( unsigned int i = 0; i < nodeList->getLength(); ++i ){
-        DOMNode* curr = nodeList->item( i );
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        
-        if( nodeName == "#text" ) {
-            continue;
-        }
-        else if( nodeName == "max-iterations" ) {
-            mMaxIterations = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "bracket-interval" ) {
-            mDefaultBracketInterval = XMLHelper<double>::getValue( curr );
-        }
-        else if( nodeName == "max-bracket-iterations" ) {
-            mMaxBracketIterations = XMLHelper<unsigned int>::getValue( curr );
-        }
-        else if( nodeName == "solution-info-filter" ) {
-            mSolutionInfoFilter.reset(
-                SolutionInfoFilterFactory::createSolutionInfoFilterFromString( XMLHelper<string>::getValue( curr ) ) );
-        }
-        else if( SolutionInfoFilterFactory::hasSolutionInfoFilter( nodeName ) ) {
-            mSolutionInfoFilter.reset( SolutionInfoFilterFactory::createAndParseSolutionInfoFilter( nodeName, curr ) );
-        }
-        else {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::WARNING );
-            mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                << getXMLNameStatic() << "." << endl;
-        }
-    }
-    return true;
 }
 
 /*! \brief Bisection the policy or worst market.

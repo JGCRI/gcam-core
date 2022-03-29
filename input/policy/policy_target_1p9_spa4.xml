@@ -3,6 +3,7 @@
 	<target-value>1.9</target-value>
 	<target-tolerance>0.05</target-tolerance>
 	<target-type>forcing</target-type>
+	<path-discount-rate>0.03</path-discount-rate>
     <first-tax-year>2025</first-tax-year>
 	<tax-name>CO2_LTG</tax-name>
 	<max-tax>8000</max-tax>

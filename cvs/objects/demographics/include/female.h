@@ -46,7 +46,6 @@
 * \author Katherine Chung
 */
 
-#include <xercesc/dom/DOMNode.hpp>
 #include "demographics/include/gender.h"
 
 class IVisitor;
@@ -63,7 +62,6 @@ public:
     double calcFemaleBirth();
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
-    virtual bool XMLDerivedClassParse( const std::string &nodeName, const xercesc::DOMNode* curr );
     virtual void toDebugXMLDerived( std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const;
     

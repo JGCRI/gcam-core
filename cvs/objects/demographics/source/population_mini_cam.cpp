@@ -45,7 +45,6 @@
 #include <cassert>
 #include <vector>
 #include <cmath>
-#include <xercesc/dom/DOMNode.hpp>
 
 #include "containers/include/scenario.h"
 #include "demographics/include/population_mini_cam.h"
@@ -55,7 +54,6 @@
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 // static initialize.
@@ -79,20 +77,6 @@ Population* PopulationMiniCAM::cloneAndInterpolate( const int aNewYear, const Po
                                                               this->mTotalPop, aNextPopulation->getTotal() );
     newInterpolatedPop->mIsParsed = false;
     return newInterpolatedPop;
-}
-
-//! parses the rest of PopuationMiniCAM xml object
-bool PopulationMiniCAM::XMLDerivedClassParse( const string &nodeName, const xercesc::DOMNode* curr ){
-    if ( nodeName == "totalPop" ) {
-        mTotalPop = XMLHelper<double>::getValue( curr );
-    }
-    else if ( nodeName == "fraction-working" ) {
-        mFractionWorking = XMLHelper<double>::getValue( curr );
-    }
-    else {
-        return false;
-    }
-    return true;
 }
 
 //! returns total working age population (ages 15-65)

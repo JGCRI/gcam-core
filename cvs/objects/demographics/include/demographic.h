@@ -67,7 +67,6 @@ public:
     Demographic();
     ~Demographic();
 
-    void XMLParse( const xercesc::DOMNode* node );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void completeInit();
     void initCalc();

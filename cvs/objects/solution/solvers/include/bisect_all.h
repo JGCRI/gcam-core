@@ -47,6 +47,8 @@
 */
 #include <string>
 
+#include "solution/solvers/include/solver_component.h"
+
 class CalcCounter; 
 class Marketplace;
 class World;
@@ -62,6 +64,8 @@ class ISolutionInfoFilter;
 class BisectAll: public SolverComponent {
 public:        
     BisectAll( Marketplace* marketplaceIn, World* worldIn, CalcCounter* calcCounterIn );
+    BisectAll();
+    virtual ~BisectAll();
     static const std::string& getXMLNameStatic();
     
     // SolverComponent methods
@@ -69,25 +73,34 @@ public:
     virtual ReturnCode solve( SolutionInfoSet& aSolutionSet, const int aPeriod );
     virtual const std::string& getXMLName() const;
 
-    // IParsable methods
-    virtual bool XMLParse( const xercesc::DOMNode* aNode );
+    // AParsable methods
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 
 protected:
-    //! Max iterations for this solver component
-    unsigned int mMaxIterations;
-    
-    //! Default bracket interval to use for bracketing, could be overridden by a SolutionInfo
-    double mDefaultBracketInterval;
-    
-    //! Bracket tolerance for checking left-right bracket convergence
-    double mBracketTolerance;
-
-    //! Max iterations for bracketing
-    unsigned int mMaxBracketIterations;
-    
-    //! A filter which will be used to determine which SolutionInfos this solver component
-    //! will work on.
-    std::auto_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        SolverComponent,
+        
+        //! Max iterations for this solver component
+        DEFINE_VARIABLE( SIMPLE, "max-iterations", mMaxIterations, unsigned int ),
+        
+        //! Default bracket interval to use for bracketing, could be overridden by a SolutionInfo
+        DEFINE_VARIABLE( SIMPLE, "bracket-interval", mDefaultBracketInterval, double ),
+                            
+        //! Bracket tolerance for checking left-right bracket convergence
+        DEFINE_VARIABLE( SIMPLE, "bracket-tolerance", mBracketTolerance, double ),
+        
+        //! Max iterations for bracketing
+        DEFINE_VARIABLE( SIMPLE, "max-bracket-iterations", mMaxBracketIterations, unsigned int ),
+                            
+        //! Flag to configure if we should use the secant method to find brackets (default false)
+        DEFINE_VARIABLE( SIMPLE, "use-secant-brackets", mUseSecantBrackets, bool ),
+        
+        //! A filter which will be used to determine which SolutionInfos this solver component
+        //! will work on.
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "solution-info-filter", mSolutionInfoFilter, ISolutionInfoFilter*  )
+    )
     
     bool areAllBracketsEqual( SolutionInfoSet& aSolutionSet ) const;
 };

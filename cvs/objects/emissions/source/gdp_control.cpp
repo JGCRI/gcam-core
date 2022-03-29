@@ -40,9 +40,6 @@
 
 #include "util/base/include/definitions.h"
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "emissions/include/gdp_control.h"
 #include "containers/include/scenario.h"
 #include "containers/include/gdp.h"
@@ -54,7 +51,6 @@
 //#include "functions/include/function_utils.h"
 
 using namespace std;
-using namespace xercesc;
 
 extern Scenario* scenario;
 
@@ -113,21 +109,6 @@ const string& GDPControl::getXMLNameStatic(){
     return XML_NAME;
 }
 
-bool GDPControl::XMLDerivedClassParse( const string& aNodeName, const DOMNode* aCurrNode ){
-    
-    if ( aNodeName == "max-reduction" ){
-        mMaxReduction = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else if ( aNodeName == "steepness" ){
-        mSteepness = XMLHelper<Value>::getValue( aCurrNode );
-    }
-    else{
-        return false;
-    }
-       
-    return true;
-}
-
 void GDPControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mMaxReduction, "max-reduction", aOut, aTabs);
     XMLWriteElement( mSteepness, "steepness", aOut, aTabs);
@@ -158,7 +139,7 @@ void GDPControl::calcEmissionsReduction( const std::string& aRegionName, const i
     // Calculate reduction
     // we only make adjustments in future model periods
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
-    if( aPeriod > finalCalibPer ) {
+    if( aPeriod > finalCalibPer && !mDisableEmControl ) {
         double baseGDP = aGDP->getGDPperCap( finalCalibPer );
         double currGDP = aGDP->getGDPperCap( aPeriod );
         reduction = 1 - ( 1.0 / ( 1.0 + ( currGDP - baseGDP ) / mSteepness ));

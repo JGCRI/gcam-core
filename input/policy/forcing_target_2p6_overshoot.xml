@@ -9,7 +9,7 @@
     <!-- target-tolerance | default: 0.01 | The solution tolerance -->
     <target-tolerance>0.05</target-tolerance> 
     <!-- path-discount-rate | default: 0.05 | The hotelling rate -->
-	<path-discount-rate>0.05</path-discount-rate>
+	<path-discount-rate>0.03</path-discount-rate>
     <!-- max-iterations | default: 100 | The maximum  number of attempts to
          solve any given period.
      -->
