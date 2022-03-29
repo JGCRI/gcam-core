@@ -150,6 +150,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["ResReserveTechProfitShutdown"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "median.shutdown.point", "profit.shutdown.steepness")
   level2_data_names[["ResReserveTechDeclinePhase"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "decline.phase.percent")
   level2_data_names[["ResReserveTechCoef"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "minicam.energy.input", "coefficient")
+  level2_data_names[["FuelPrefElastTech"]] <- c(level2_data_names[["Tech"]], "year.fillout", "fuelprefElasticity")
 
   # Global technologies
   level2_data_names[["GlobalTech"]] <- c("sector.name", "subsector.name", "technology")

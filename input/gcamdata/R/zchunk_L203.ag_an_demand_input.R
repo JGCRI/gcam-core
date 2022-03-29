@@ -295,7 +295,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
 
     # Fuel preference elasticity
     # Build L203.FuelPrefElast_ssp1: Fuel preference elasticities for meat in SSP1
-    names_FuelPrefElasticity <- c("region", "supplysector", "subsector", "year.fillout", "fuelprefElasticity")
+    names_FuelPrefElasticity <- c("region", "supplysector", "subsector0", "subsector", "technology", "year.fillout", "fuelprefElasticity")
     A_fuelprefElasticity_ssp1 %>%
       mutate(year.fillout = min(MODEL_BASE_YEARS)) %>%
       write_to_all_regions(names_FuelPrefElasticity, GCAM_region_names = GCAM_region_names) %>%

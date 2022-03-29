@@ -3,8 +3,8 @@
 # Unit: NA
 # Description: Fuel preference elasticities for SSP1 meat demand
 # Source: GCAM assumptions
-# Column types: cci 
+# Column types: cccci 
 # ----------
-supplysector,subsector,fuelprefElasticity
-FoodDemand_NonStaples,Beef,-1
-FoodDemand_NonStaples,SheepGoat,-1
+supplysector,subsector0,subsector,technology,fuelprefElasticity
+FoodDemand_NonStaples,Protein,Animal,Beef,-1
+FoodDemand_NonStaples,Protein,Animal,SheepGoat,-1
