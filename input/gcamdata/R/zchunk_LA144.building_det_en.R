@@ -280,7 +280,10 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       # Calculate service share
       mutate(share_serv_fuel = share_TFEbysector / fuel_share_of_TFEbysector) %>%
       # Replace NAs with 0 for regions that do not have any of a given fuel type
-      replace_na(list(share_serv_fuel = 0)) ->
+      replace_na(list(share_serv_fuel = 0)) %>%
+      # NOTE: There is coal in US in historical years (1975 and 1990), but no after that (residual EIA stopped tracking it)
+      # To keep consistency with GCAM-USA module, historical coal in the US is equally assigned to others (cooking) and heating:
+      mutate(share_serv_fuel = if_else(region_GCAM3 == "USA" & fuel == "coal" & sector == "bld_resid", 0.5, share_serv_fuel ))->
       L144.share_serv_fuel
 
     # check serv_fuel shares

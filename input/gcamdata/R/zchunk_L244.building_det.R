@@ -1035,16 +1035,24 @@ module_energy_L244.building_det <- function(command, ...) {
 
     # The service satiation in the final cal year can not be lower than the observed demand, so need to use pmax to set a floor on the quantity
     # First need to calculate the maximum quantities of demand over the historical time period, expressed per unit floorspace
-    L244.tmp <- L244.ThermalBaseService %>%
+    L244.tmp_pre <- L244.ThermalBaseService %>%
       left_join_error_no_match(L244.Floorspace %>%
                                  group_by(region, nodeInput,building.node.input,year) %>%
                                  summarise(base.building.size=sum(base.building.size)) %>%
                                  ungroup() %>%
                                  mutate(gcam.consumer= if_else(grepl("resid",nodeInput),"resid","comm"))
                                , by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
-      mutate(service.per.flsp = base.service / base.building.size) %>%
+      mutate(service.per.flsp = base.service / base.building.size)
+
+    # Adjustment for USA: need to keep coal heating, which disappears from 1990.
+    # Take the maximum service per flsp in USA (1975)
+    L244.tmp_pre_usa<-L244.tmp_pre %>% filter(region == "USA",thermal.building.service.input == "resid heating coal")
+    usa.serv.perFlsp.coal<-max(L244.tmp_pre_usa$service.per.flsp)
+
+    L244.tmp<-L244.tmp_pre %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
-      select(-base.service, - base.building.size, -year)
+      select(-base.service, - base.building.size, -year) %>%
+      mutate(service.per.flsp = if_else(region == "USA" & thermal.building.service.input == "resid heating coal",usa.serv.perFlsp.coal,service.per.flsp))
 
     # Then, match in this quantity into the thermal service satiation and take the max
     L244.ThermalServiceSatiation <- L244.ThermalServiceSatiation %>%
@@ -1400,7 +1408,8 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L244.GenericServiceImpedance<-L244.GenericServiceImpedance_allvars %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceImpedance"]]) %>%
-      filter(grepl("resid",gcam.consumer)) %>%
+      filter(grepl("resid",gcam.consumer),
+             grepl("modern",building.service.input)) %>%
       repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
       unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
       bind_rows(L244.GenericServiceImpedance_allvars %>%
@@ -1412,7 +1421,8 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L244.GenericServiceCoef<-L244.GenericServiceImpedance_allvars %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceCoef"]]) %>%
-      filter(grepl("resid",gcam.consumer)) %>%
+      filter(grepl("resid",gcam.consumer),
+             grepl("modern",building.service.input)) %>%
       repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
       unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
       bind_rows(L244.GenericServiceImpedance_allvars %>%
@@ -1473,8 +1483,6 @@ module_energy_L244.building_det <- function(command, ...) {
     L244.GenericServiceImpedance_SSPs<-L244.GenericServiceImpedance_allvars_SSPs %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceImpedance"]],SSP)  %>%
       # only commercial and residential-modern services use coef
-      #filter(!grepl("coal",building.service.input),
-      #       !grepl("TradBio",building.service.input)) %>%
       filter(grepl("resid",gcam.consumer)) %>%
       # only commercial and residential-modern services use satiation impedance
       filter(!grepl("coal",building.service.input),
@@ -1558,9 +1566,6 @@ module_energy_L244.building_det <- function(command, ...) {
 
 
     L244.ThermalServiceImpedance_allvars<-L244.ThermalServiceSatiation %>%
-      # Only modern services use impedance
-      #filter(!grepl("coal",thermal.building.service.input),
-      #       !grepl("TradBio",thermal.building.service.input)) %>%
       left_join_error_no_match(A_regions %>% select(region,GCAM_region_ID),by="region") %>%
       left_join_error_no_match(L144.base_service_EJ_serv %>%  filter(year==MODEL_FINAL_BASE_YEAR, service %in% thermal_services)
                                %>% rename(thermal.building.service.input=service),
@@ -1612,7 +1617,8 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L244.ThermalServiceImpedance<-L244.ThermalServiceImpedance_allvars %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceImpedance"]]) %>%
-      filter(grepl("resid",gcam.consumer)) %>%
+      filter(grepl("resid",gcam.consumer),
+             grepl("modern",thermal.building.service.input)) %>%
       repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
       unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
       bind_rows(L244.ThermalServiceImpedance_allvars %>%
@@ -1622,7 +1628,8 @@ module_energy_L244.building_det <- function(command, ...) {
 
     L244.ThermalServiceCoef<-L244.ThermalServiceImpedance_allvars %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceCoef"]]) %>%
-      filter(grepl("resid",gcam.consumer)) %>%
+      filter(grepl("resid",gcam.consumer),
+             grepl("modern",thermal.building.service.input)) %>%
       repeat_add_columns(tibble(group=unique(L144.income_shares$group))) %>%
       unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
       bind_rows(L244.ThermalServiceImpedance_allvars %>%
@@ -1779,6 +1786,7 @@ module_energy_L244.building_det <- function(command, ...) {
       group_by(region,nodeInput,building.node.input,thermal.building.service.input,year) %>%
       mutate(agg_thermal_share = sum(thermal_share)) %>%
       ungroup()
+
 
     L244.ThermalBaseService<-L244.ThermalBaseService_pre %>%
       select(region,gcam.consumer,nodeInput,building.node.input,thermal.building.service.input,year, base.service) %>%
