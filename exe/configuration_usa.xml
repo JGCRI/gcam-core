@@ -115,6 +115,11 @@
 		<Value name = "municipal_water_usa">../input/gcamdata/xml/water_demand_municipal_USA.xml</Value>
 		<Value name = "ind_water_usa">../input/gcamdata/xml/water_demand_industry_USA.xml</Value>
 		
+		<!--GHG EMISSIONS USA-->
+		<Value name = "ghg_usa">../input/gcamdata/xml/ghg_emissions_USA.xml</Value>
+		<Value name = "ghg_usa">../input/gcamdata/xml/elecS_ghg_emissions_water_USA.xml</Value>
+		<Value name = "ghg_usa">../input/gcamdata/xml/trn_ghg_emissions_USA.xml</Value>
+		
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		
 

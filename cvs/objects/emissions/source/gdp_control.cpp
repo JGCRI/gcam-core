@@ -139,7 +139,7 @@ void GDPControl::calcEmissionsReduction( const std::string& aRegionName, const i
     // Calculate reduction
     // we only make adjustments in future model periods
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
-    if( aPeriod > finalCalibPer ) {
+    if( aPeriod > finalCalibPer && !mDisableEmControl ) {
         double baseGDP = aGDP->getGDPperCap( finalCalibPer );
         double currGDP = aGDP->getGDPperCap( aPeriod );
         reduction = 1 - ( 1.0 / ( 1.0 + ( currGDP - baseGDP ) / mSteepness ));

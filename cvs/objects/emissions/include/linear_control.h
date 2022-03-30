@@ -104,6 +104,7 @@ private:
     void copy( const LinearControl& aOther );
 
     virtual void calcEmissionsReductionInternal( const double aBaseEmissionsCoef, const int aPeriod );
+
 };
 
 #endif // _LINEAR_CONTROL_H_

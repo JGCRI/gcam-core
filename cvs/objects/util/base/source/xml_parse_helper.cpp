@@ -370,7 +370,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
         if( deleteFlagSet ) {
             // log delete set but container not found
             ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
+            mainLog.setLevel( ILogger::WARNING );
             mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
             return;
         } else if( noCreateFlagSet ) {
@@ -466,7 +466,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
         if( deleteFlagSet ) {
             // log delete set but container not found
             ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
+            mainLog.setLevel( ILogger::WARNING);
             mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
             return;
         } else if( noCreateFlagSet ) {
@@ -564,7 +564,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
         if( deleteFlagSet ) {
             // log delete set but container not found
             ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
+            mainLog.setLevel( ILogger::WARNING);
             mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
             return;
         } else if( noCreateFlagSet ) {
