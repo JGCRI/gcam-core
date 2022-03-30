@@ -2009,14 +2009,14 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                 </supplyDemandQuery>
 
                
-                <supplyDemandQuery title="building floorspace satiation impedance">
+                <supplyDemandQuery title="building commercial floorspace satiation impedance">
                     <axis1 name="building">building-node-input[@name]</axis1>
                     <axis2 name="Year">satiation-impedance[@year]</axis2>
                     <xPath buildList="true" dataName="cost by unit floorspace" group="false" sumAll="false">gcam-consumer//building-node-input/satiation-impedance/node()</xPath>
                     <comments/>
                 </supplyDemandQuery>
 
-            <supplyDemandQuery title="building satiation adder">
+            <supplyDemandQuery title="building residential floorspace regional bias adder">
                 <axis1 name="input">input[@name]</axis1>
                 <axis2 name="Year">bias-adjust-param[@year]</axis2>
                     <xPath buildList="true" dataName="building satiation adder" group="false" sumAll="false">gcam-consumer//building-node-input/bias-adjust-param/node()</xPath>
@@ -2114,6 +2114,13 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                 </supplyDemandQuery>
 
                 <supplyDemandQuery title="building satiation impedance by energy service">
+                    <axis1 name="building">building-node-input[@name]</axis1>
+                    <axis2 name="Year">satiation-impedance[@year]</axis2>
+                    <xPath buildList="true" dataName="cost by unit floorspace" group="false" sumAll="false">gcam-consumer//building-node-input/*[@type="input"]/satiation-impedance/node()</xPath>
+                    <comments/>
+                </supplyDemandQuery>
+
+                <supplyDemandQuery title="building regional bias adder by energy service">
                     <axis1 name="building">building-node-input[@name]</axis1>
                     <axis2 name="Year">satiation-impedance[@year]</axis2>
                     <xPath buildList="true" dataName="cost by unit floorspace" group="false" sumAll="false">gcam-consumer//building-node-input/*[@type="input"]/satiation-impedance/node()</xPath>

@@ -114,6 +114,7 @@ class SatiationDemandFunction;
 class BuildingNodeInput : public INestedInput
 {
 friend class GompertzDemandFunction;
+friend class XMLDBOutputter;
 public:
     BuildingNodeInput();
     ~BuildingNodeInput();
