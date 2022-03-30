@@ -4,6 +4,6 @@
 # Column types: ccccn
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
-iron and steel,BLASTFUR,start-year,,.03
+iron and steel,BLASTFUR,start-year,,1
 iron and steel,EAF with DRI,start-year,,1
 iron and steel,EAF with scrap,start-year,,1
