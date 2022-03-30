@@ -263,7 +263,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       left_join(L203.ag_an_kcalg_R_C_Y, by = c("region", "technology" = "GCAM_commodity", "year")) %>%
       mutate(efficiency = round(value, aglu.DIGITS_CALOUTPUT)) %>%
       # For each region / commodity,
-      group_by(region, subsector) %>%
+      group_by(region, subsector0, subsector, technology) %>%
       # Calorie content are held constant in the future, so set value for future years at the final base year value
       mutate(efficiency = replace(efficiency, year > max(MODEL_BASE_YEARS), efficiency[year == max(MODEL_BASE_YEARS)])) %>%
       ungroup() %>%
