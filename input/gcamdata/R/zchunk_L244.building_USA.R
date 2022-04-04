@@ -50,6 +50,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              FILE = "gcam-usa/A44.globaltech_interp",
              FILE = "gcam-usa/A44.demand_satiation_mult",
              FILE = "gcam-usa/A44.hab_land_flsp_usa",
+             FILE = "socioeconomics/income_shares",
+             "L244.Supplysector_bld",
              "L144.flsp_param",
              "L144.flsp_bm2_state_res",
              "L144.flsp_bm2_state_comm",
@@ -145,6 +147,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state", strip_attributes = TRUE)
     L144.hab_land_flsp_usa<- get_data(all_data, "gcam-usa/A44.hab_land_flsp_usa", strip_attributes = TRUE)
     L144.flsp_param <- get_data(all_data, "L144.flsp_param", strip_attributes = TRUE)
+    income_shares<-get_data(all_data, "socioeconomics/income_shares")
+    L244.Supplysector_bld<-get_data(all_data, "L244.Supplysector_bld") %>% filter(region == gcam.USA_REGION)
 
     # ===================================================
     # Data Processing
@@ -161,8 +165,19 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
 
 
     # Need to delete the buildings sector in the USA region (gcam.consumers and supplysectors)
-    L244.DeleteConsumer_USAbld <- tibble(region = gcam.USA_REGION, gcam.consumer = A44.gcam_consumer_en$gcam.consumer)
-    L244.DeleteSupplysector_USAbld <- tibble(region = gcam.USA_REGION, supplysector = A44.sector_en$supplysector)
+
+    # For gcam-consumers: the core version  uses multiple consumers, so this needs to be considered:
+    L244.DeleteConsumer_USAbld <- tibble(region = gcam.USA_REGION, gcam.consumer = A44.gcam_consumer_en$gcam.consumer) %>%
+      filter(gcam.consumer == "resid") %>%
+      repeat_add_columns(tibble(group=unique(income_shares$category))) %>%
+      unite(gcam.consumer, c(gcam.consumer,group),sep="_") %>%
+      bind_rows(tibble(region = gcam.USA_REGION, gcam.consumer = A44.gcam_consumer_en$gcam.consumer)
+                %>% filter(gcam.consumer == "comm"))
+
+    # Multiple consumers need to be also added to supplysectors to delete:
+    L244.DeleteSupplysector_USAbld <- tibble(region = gcam.USA_REGION, supplysector = unique(L244.Supplysector_bld$supplysector))
+
+
 
     # L244.SubregionalShares_gcamusa: subregional population and income shares (not currently used)
     L244.SubregionalShares_gcamusa <- write_to_all_states(A44.gcam_consumer, c("region", "gcam.consumer")) %>%
