@@ -667,7 +667,7 @@ module_energy_L244.building_det <- function(command, ...) {
     L244.SatiationAdder<- L244.Satiation_flsp %>%
       mutate(satiation.level = satiation.level * 1E6) %>%
       left_join_error_no_match(L244.Satiation_impedance,by = c("region", "gcam.consumer", "nodeInput", "building.node.input")) %>%
-      mutate(year = 2015) %>%
+      mutate(year = max(MODEL_BASE_YEARS)) %>%
       left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by = "region") %>%
       left_join_error_no_match(L244.Floorspace,by=c("region","year","gcam.consumer", "nodeInput", "building.node.input")) %>%
       rename(observed_flsp_bm2 = base.building.size) %>%
