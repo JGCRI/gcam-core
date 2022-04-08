@@ -121,7 +121,7 @@ module_gcamusa_LA131.enduse_noEFW_USA <- function(command, ...) {
 
     L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj_bio<-L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj_bio %>%
       left_join_error_no_match(tot.value.bio, by = c("GCAM_region_ID", "sector", "year")) %>%
-      mutate(value = if_else(fuel == "biomass",0,tot.bio)) %>%
+      mutate(value = if_else(fuel == "biomass_tradbio",0,tot.bio)) %>%
       select(-tot.bio)
 
     # Need an ancilary function
