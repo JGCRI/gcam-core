@@ -29,9 +29,6 @@ iron and steel,EAF with DRI,Hydrogen-based DRI,elect_td_ind,0.001240346,0.001240
 iron and steel,EAF with scrap,EAF with scrap,refined liquids industrial,0.000562694,0.000562694,0.000562694
 iron and steel,EAF with scrap,EAF with scrap,elect_td_ind,0.00154741,0.00154741,0.00154741
 iron and steel,EAF with scrap,EAF with scrap,scrap,1.1,1.1,1.1
-iron and steel,EAF with scrap,EAF with scrap CCS,refined liquids industrial,0.000562694,0.000562694,0.000562694
-iron and steel,EAF with scrap,EAF with scrap CCS,elect_td_ind,0.00154741,0.00154741,0.00154741
-iron and steel,EAF with scrap,EAF with scrap CCS,scrap,1.1,1.1,1.1
 iron and steel,BLASTFUR,BLASTFUR with hydrogen,delivered coal,0.013657903,0.013657903,0.013657903
 iron and steel,BLASTFUR,BLASTFUR with hydrogen,refined liquids industrial,0.00001,0.00001,0.00001
 iron and steel,BLASTFUR,BLASTFUR with hydrogen,elect_td_ind,0.000548226,0.000548226,0.000548226

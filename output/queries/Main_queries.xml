@@ -1859,6 +1859,15 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                             <rewrite from="resid cooling" to="building"/>
                             <rewrite from="other industrial feedstocks" to="industry"/>
                             <rewrite from="trn_shipping_intl" to="transportation"/>
+							<rewrite from="iron and steel" to="industry"/>
+ 		           			<rewrite from="agricultural energy use" to="industry"/>
+ 		           			<rewrite from="aluminum" to="industry"/>
+							<rewrite from="alumina" to="industry"/>
+ 		           			<rewrite from="chemical energy use" to="industry"/>
+ 		           			<rewrite from="construction energy use" to="industry"/>
+							<rewrite from="chemical feedstocks" to="industry"/>
+ 		           			<rewrite from="construction feedstocks" to="industry"/>
+ 		           			<rewrite from="mining energy use" to="industry"/>
                         </level>
                     </labelRewriteList>
                 </supplyDemandQuery>
