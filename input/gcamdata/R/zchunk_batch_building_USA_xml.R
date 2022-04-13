@@ -49,7 +49,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
              "L244.GenericServiceAdder_gcamusa",
              "L244.ThermalServiceImpedance_gcamusa",
              "L244.ThermalServiceCoef_gcamusa",
-             "L244.ThermalServiceAdder_gcamusa"))
+             "L244.ThermalServiceAdder_gcamusa",
+             "L210.DeleteRsrcTradBio_gcamusa"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -95,6 +96,7 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
     L244.GlobalTechCost_bld <- get_data(all_data, "L244.GlobalTechCost_bld_gcamusa")
     L244.GlobalTechSCurve_bld <- get_data(all_data, "L244.GlobalTechSCurve_bld")
     L244.GompFnParam_gcamusa<- get_data(all_data, "L244.GompFnParam_gcamusa")
+    L210.DeleteRsrcTradBio_gcamusa<- get_data(all_data, "L210.DeleteRsrcTradBio_gcamusa")
 
     # ===================================================
 
@@ -137,6 +139,7 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
       add_xml_data(L244.GlobalTechShrwt_bld, "GlobalTechShrwt") %>%
       add_xml_data(L244.GlobalTechCost_bld, "GlobalTechCost") %>%
       add_xml_data(L244.GlobalTechSCurve_bld, "GlobalTechSCurve")  %>%
+      add_xml_data(L210.DeleteRsrcTradBio_gcamusa, "DeleteRsrc") %>%
       add_precursors("L244.DeleteConsumer_USAbld",
                      "L244.DeleteSupplysector_USAbld",
                      "L244.SubregionalShares_gcamusa",
@@ -174,7 +177,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
                      "L244.GenericServiceAdder_gcamusa",
                      "L244.ThermalServiceImpedance_gcamusa",
                      "L244.ThermalServiceCoef_gcamusa",
-                     "L244.ThermalServiceAdder_gcamusa") ->
+                     "L244.ThermalServiceAdder_gcamusa",
+                     "L210.DeleteRsrcTradBio_gcamusa") ->
       building_USA.xml
 
     # # Some data inputs may not actually contain data. If so, do not add_xml_data.

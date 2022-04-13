@@ -19,7 +19,7 @@
 #' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
 #' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.GompFnParam_gcamusa}, \code{L244.Satiation_impedance_gcamusa},
 #' \code{L244.GenericServiceImpedance_gcamusa},\code{L244.GenericServiceCoef_gcamusa},\code{L244.GenericServiceAdder_gcamusa},
-#' \code{L244.ThermalServiceImpedance_gcamusa},\code{L244.ThermalServiceCoef_gcamusa},\code{L244.ThermalServiceAdder_gcamusa},
+#' \code{L244.ThermalServiceImpedance_gcamusa},\code{L244.ThermalServiceCoef_gcamusa},\code{L244.ThermalServiceAdder_gcamusa},\code{L210.DeleteRsrcTradBio_gcamusa},
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
@@ -105,7 +105,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              "L244.GenericServiceAdder_gcamusa",
              "L244.ThermalServiceImpedance_gcamusa",
              "L244.ThermalServiceCoef_gcamusa",
-             "L244.ThermalServiceAdder_gcamusa"))
+             "L244.ThermalServiceAdder_gcamusa",
+             "L210.DeleteRsrcTradBio_gcamusa"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -825,6 +826,9 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ThermalServiceAdder"]]) %>%
       mutate(bias.adder = round(bias.adder,energy.DIGITS_BIAS_ADDER))
 
+    # Finally, need to delete the TradBio resource for the USA region to keep consistency between global GCAM and GCAM-USA:
+    L210.DeleteRsrcTradBio_gcamusa<- tibble(region = gcam.USA_REGION, resource = "traditional biomass")
+
 
     # ===================================================
     # Produce outputs
@@ -1225,6 +1229,14 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       same_precursors_as("L244.HDDCDD_A2_GFDL_USA") ->
       L244.HDDCDD_constdds_USA
 
+    L210.DeleteRsrcTradBio_gcamusa %>%
+      add_title("Delete TradBio sector in USA") %>%
+      add_units("unitless") %>%
+      add_comments("Keep consistency between CAm and GCAM-USA") %>%
+      add_legacy_name("L210.DeleteRsrcTradBio_gcamusa") %>%
+      add_precursors("gcam-usa/A44.sector") ->
+      L210.DeleteRsrcTradBio_gcamusa
+
     return_data(L244.DeleteConsumer_USAbld,
                 L244.DeleteSupplysector_USAbld,
                 L244.SubregionalShares_gcamusa,
@@ -1266,7 +1278,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                 L244.GenericServiceAdder_gcamusa,
                 L244.ThermalServiceImpedance_gcamusa,
                 L244.ThermalServiceCoef_gcamusa,
-                L244.ThermalServiceAdder_gcamusa)
+                L244.ThermalServiceAdder_gcamusa,
+                L210.DeleteRsrcTradBio_gcamusa)
   } else {
     stop("Unknown command")
   }
