@@ -277,10 +277,8 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       bind_rows(.id = "element") ->
       FAO_data_ALL
 
-    # Replace all missing values with 0
-    repl <- as.list(rep(0, ncol(FAO_data_ALL)))
-    names(repl) <- names(FAO_data_ALL)
-    FAO_data_ALL <- replace_na(FAO_data_ALL, repl)
+    # Replace all missing numeric values with 0
+    FAO_data_ALL <- dplyr::mutate_if(FAO_data_ALL, is.numeric, replace_na, replace = 0)
 
     # Match the iso names
     FAO_data_ALL %>%

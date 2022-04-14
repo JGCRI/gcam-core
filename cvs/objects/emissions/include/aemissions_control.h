@@ -150,7 +150,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Reduction (usually calculated)
-        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "reduction", mReduction, Value )
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "reduction", mReduction, Value ),
+
+        //! Once read in at a specific model period, emission control object would not operate for this or any future vintages (or model periods for non-vintaged technologies)
+        DEFINE_VARIABLE( SIMPLE, "disable-em-control", mDisableEmControl, bool )
     )
 
 private:

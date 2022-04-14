@@ -62,7 +62,8 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
              FILE = "aglu/A_LandLeaf_Unmgd3",
              FILE = "aglu/A_LandLeaf3",
              "L121.CarbonContent_kgm2_R_LT_GLU",
-             "L125.LC_bm2_R_LT_Yh_GLU"))
+             "L125.LC_bm2_R_LT_Yh_GLU",
+             "L120.LC_prot_land_frac_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2231.LN3_Logit",
              "L2231.LN3_HistUnmgdAllocation",
@@ -95,6 +96,17 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
     L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
 
+    #This chunk just deals with the unmanaged forest nodes. Therefore we filter the protected area fractions just for unmanaged forests.
+    L120.LC_prot_land_frac_GLU <- get_data(all_data, "L120.LC_prot_land_frac_GLU", strip_attributes = TRUE) %>%
+      mutate(Land_Type =if_else(Land_Type == aglu.FOREST_NODE_NAMES, "UnmanagedForest" ,Land_Type)) %>%
+      filter(Land_Type %in% c(A_LandLeaf_Unmgd3$UnmanagedLandLeaf)) %>%
+      left_join_error_no_match(basin_to_country_mapping %>%rename(GLU=GLU_code) %>%  select(GLU,GLU_name),by=c("GLU")) %>%
+      mutate(UnmanagedLandLeaf = paste0(Land_Type,"_",GLU_name)) %>%
+      filter(year==MODEL_FINAL_BASE_YEAR) %>%
+      select(-year)
+
+
+
     # silence package check notes
     GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
       LandLeaf <- Land_Type <- LandNode <- LandNode1 <- LandNode2 <- LandNode3 <- UnmanagedLandLeaf <-
@@ -103,7 +115,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       unManagedLandValue <- LandAllocatorRoot <- hist.veg.carbon.density <- hist.soil.carbon.density <-
       veg.carbon.density <- soil.carbon.density <- allocation <- Land_Type.y <- mature.age.year.fillout <-
       min.veg.carbon.density <- min.soil.carbon.density <- no.emiss.carbon.calc <- . <- min_allocation <-
-      base_allocation <- NULL
+      base_allocation <- prot_frac <- NULL
 
 
     # Process inputs
@@ -162,12 +174,14 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # Formed from filtering the master table by different years.
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
       filter(year %in% aglu.LAND_HISTORY_YEARS) %>%
-      select(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]]) ->
+      select(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]],GCAM_region_ID,GLU) %>%
+      left_join_error_no_match(basin_to_country_mapping %>%rename(GLU=GLU_name) %>%  select(GLU_code,GLU),by=c("GLU"))->
       L223.LN3_HistUnmgdAllocation
 
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      select(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]]) ->
+      select(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]],GCAM_region_ID,GLU) %>%
+      left_join_error_no_match(basin_to_country_mapping %>%rename(GLU=GLU_name) %>%  select(GLU_code,GLU),by=c("GLU"))->
       L223.LN3_UnmgdAllocation
 
 
@@ -189,12 +203,14 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # Formed from filtering the master table by different years.
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year %in% aglu.LAND_HISTORY_YEARS) %>%
-      select(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]]) ->
+      select(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]],GCAM_region_ID,GLU) %>%
+      left_join_error_no_match(basin_to_country_mapping %>%rename(GLU=GLU_name) %>%  select(GLU_code,GLU),by=c("GLU"))->
       L223.LN3_HistMgdAllocation_noncrop
 
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      select(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]]) ->
+      select(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]],GCAM_region_ID,GLU) %>%
+      left_join_error_no_match(basin_to_country_mapping %>%rename(GLU=GLU_name) %>%  select(GLU_code,GLU),by=c("GLU"))->
       L223.LN3_MgdAllocation_noncrop
 
 
@@ -262,12 +278,14 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     create_noprot_unmgd <- function(data, base_data, min_data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
-        left_join(base_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
+        left_join(base_data %>% select(-GLU_code,-GCAM_region_ID) , by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
         left_join(min_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
-        mutate(allocation = if_else(min_allocation < aglu.PROTECT_LAND_FRACT * base_allocation,
-                                    (1 - aglu.PROTECT_LAND_FRACT) * allocation,
-                                    allocation - aglu.PROTECT_LAND_FRACT * base_allocation)) %>%
-        select(-base_allocation, -min_allocation)
+        left_join(L120.LC_prot_land_frac_GLU %>%  rename(GLU_code =GLU ), by= c("GCAM_region_ID","GLU_code","UnmanagedLandLeaf")) %>%
+        mutate(prot_frac = if_else(is.na(prot_frac),aglu.PROTECT_DEFAULT,prot_frac),
+               allocation = if_else(min_allocation < prot_frac * base_allocation,
+                                    (1 - prot_frac) * allocation,
+                                    allocation - prot_frac * base_allocation))# %>%
+        #select(-base_allocation, -min_allocation)
     } # end create_noprot
 
     # Find unmanaged land allocation in the base year. This is used
@@ -310,15 +328,17 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     create_prot_unmgd <- function(data, base_data, min_data) {
       data %>%
         filter(!grepl("OtherArable", UnmanagedLandLeaf)) %>%
-        left_join(base_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
+        left_join(base_data %>%  select(-GLU_code,-GCAM_region_ID), by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
         left_join(min_data, by=c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "UnmanagedLandLeaf")) %>%
-        mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
+        left_join(L120.LC_prot_land_frac_GLU %>%  rename(GLU_code =GLU ), by= c("GCAM_region_ID","GLU_code","UnmanagedLandLeaf")) %>%
+        mutate(prot_frac = if_else(is.na(prot_frac),aglu.PROTECT_DEFAULT,prot_frac),
+               UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
                LandNode1 = UnmanagedLandLeaf,
                LandNode2 = NULL,
                LandNode3 = NULL,
-               allocation = if_else(min_allocation < aglu.PROTECT_LAND_FRACT * base_allocation,
-                                      aglu.PROTECT_LAND_FRACT * allocation,
-                                      aglu.PROTECT_LAND_FRACT * base_allocation)) %>%
+               allocation = if_else(min_allocation < prot_frac * base_allocation,
+                                    prot_frac * allocation,
+                                    prot_frac * base_allocation)) %>%
         select(-base_allocation, -min_allocation)
     }
 
@@ -366,6 +386,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L2231.LN3_Logit
 
     L223.LN3_HistUnmgdAllocation %>%
+      select(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]]) %>%
       add_title("Historical land cover for unmanaged land (LT_GLU) in the third nest by region.") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("Historical land cover for unmanaged land (LT_GLU) in the third nest, from L125 land cover data.") %>%
@@ -373,10 +394,12 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "aglu/A_LandLeaf_Unmgd3",
-                     "L125.LC_bm2_R_LT_Yh_GLU")  ->
+                     "L125.LC_bm2_R_LT_Yh_GLU",
+                     "L120.LC_prot_land_frac_GLU")  ->
       L2231.LN3_HistUnmgdAllocation
 
     L223.LN3_UnmgdAllocation %>%
+      select(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]]) %>%
       add_title("Land cover in the model base periods for unmanaged land (LT_GLU) in the third nest by region") %>%
       add_units("billion square meters (bm2) ") %>%
       add_comments("Land cover in the model base periods for unmanaged land (LT_GLU) in the third nest, from L125 land cover data.") %>%
@@ -402,6 +425,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L2231.LN3_NodeCarbon
 
     L223.LN3_HistMgdAllocation_noncrop %>%
+      select(LEVEL2_DATA_NAMES[["LN3_HistMgdAllocation"]]) %>%
       add_title("Historical land cover for non-crop (forest) managed land (LT_GLU) in the third nest by region.") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("Historical land cover for non-crop (forest) managed land (LT_GLU) in the third nest, from L125 land cover data.") %>%
@@ -413,6 +437,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L2231.LN3_HistMgdAllocation_noncrop
 
     L223.LN3_MgdAllocation_noncrop %>%
+      select(LEVEL2_DATA_NAMES[["LN3_MgdAllocation"]]) %>%
       add_title("Land cover in the model base periods for non-crop (forest) managed land (LT_GLU) in the third nest by region") %>%
       add_units("billion square meters (bm2) ") %>%
       add_comments("Land cover in the model base periods for non-crop (forest) managed land (LT_GLU) in the third nest, from L125 land cover data.") %>%
@@ -451,6 +476,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
     # Protected lands related outputs:
     L223.LN3_HistUnmgdAllocation_noprot %>%
+      select(LEVEL2_DATA_NAMES[["LN3_HistUnmgdAllocation"]]) %>%
       add_title("Unprotected historical unmanged lands in the third nest by basin.") %>%
       add_units("thou km2") %>%
       add_comments("Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied by ") %>%
@@ -460,6 +486,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L2231.LN3_HistUnmgdAllocation_noprot
 
     L223.LN3_UnmgdAllocation_noprot %>%
+      select(LEVEL2_DATA_NAMES[["LN3_UnmgdAllocation"]]) %>%
       add_title("Unprotected unmanged lands in the third nest by basin.") %>%
       add_units("thou km2") %>%
       add_comments("Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified fraction to give ") %>%
@@ -469,6 +496,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L2231.LN3_UnmgdAllocation_noprot
 
     L223.LN1_HistUnmgdAllocation_prot %>%
+      select(LEVEL2_DATA_NAMES[["LN1_HistUnmgdAllocation"]]) %>%
       add_title("Protected historical unmanged lands in the first nest by basin.") %>%
       add_units("thou km2") %>%
       add_comments("Historical unmanaged land data from L223.LN3_HistUnmgdAllocation is multiplied by ") %>%
@@ -478,6 +506,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L2231.LN1_HistUnmgdAllocation_prot
 
     L223.LN1_UnmgdAllocation_prot %>%
+      select(LEVEL2_DATA_NAMES[["LN1_UnmgdAllocation"]]) %>%
       add_title("Protected unmanged lands in the first nest by basin.") %>%
       add_units("thou km2") %>%
       add_comments("Unmanaged land data from L223.LN3_UnmgdAllocation is multiplied by specified fraction to give ") %>%

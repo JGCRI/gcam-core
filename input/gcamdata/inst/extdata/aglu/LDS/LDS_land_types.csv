@@ -6,132 +6,516 @@
 # Source: https://github.com/JGCRI/moirai
 # Column types: iccc 
 # ----------
-Category,LT_SAGE,LT_HYDE,LT_WDPA
-1,Unknown,Unmanaged,Protected
-2,Unknown,Unmanaged,Non-protected
-11,Unknown,Cropland,Protected
-12,Unknown,Cropland,Non-protected
-21,Unknown,Pasture,Protected
-22,Unknown,Pasture,Non-protected
-31,Unknown,UrbanLand,Protected
-32,Unknown,UrbanLand,Non-protected
-101,TropicalEvergreenForest/Woodland,Unmanaged,Protected
-102,TropicalEvergreenForest/Woodland,Unmanaged,Non-protected
-111,TropicalEvergreenForest/Woodland,Cropland,Protected
-112,TropicalEvergreenForest/Woodland,Cropland,Non-protected
-121,TropicalEvergreenForest/Woodland,Pasture,Protected
-122,TropicalEvergreenForest/Woodland,Pasture,Non-protected
-131,TropicalEvergreenForest/Woodland,UrbanLand,Protected
-132,TropicalEvergreenForest/Woodland,UrbanLand,Non-protected
-201,TropicalDeciduousForest/Woodland,Unmanaged,Protected
-202,TropicalDeciduousForest/Woodland,Unmanaged,Non-protected
-211,TropicalDeciduousForest/Woodland,Cropland,Protected
-212,TropicalDeciduousForest/Woodland,Cropland,Non-protected
-221,TropicalDeciduousForest/Woodland,Pasture,Protected
-222,TropicalDeciduousForest/Woodland,Pasture,Non-protected
-231,TropicalDeciduousForest/Woodland,UrbanLand,Protected
-232,TropicalDeciduousForest/Woodland,UrbanLand,Non-protected
-301,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,Protected
-302,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,Non-protected
-311,TemperateBroadleafEvergreenForest/Woodland,Cropland,Protected
-312,TemperateBroadleafEvergreenForest/Woodland,Cropland,Non-protected
-321,TemperateBroadleafEvergreenForest/Woodland,Pasture,Protected
-322,TemperateBroadleafEvergreenForest/Woodland,Pasture,Non-protected
-331,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,Protected
-332,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,Non-protected
-401,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,Protected
-402,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,Non-protected
-411,TemperateNeedleleafEvergreenForest/Woodland,Cropland,Protected
-412,TemperateNeedleleafEvergreenForest/Woodland,Cropland,Non-protected
-421,TemperateNeedleleafEvergreenForest/Woodland,Pasture,Protected
-422,TemperateNeedleleafEvergreenForest/Woodland,Pasture,Non-protected
-431,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,Protected
-432,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,Non-protected
-501,TemperateDeciduousForest/Woodland,Unmanaged,Protected
-502,TemperateDeciduousForest/Woodland,Unmanaged,Non-protected
-511,TemperateDeciduousForest/Woodland,Cropland,Protected
-512,TemperateDeciduousForest/Woodland,Cropland,Non-protected
-521,TemperateDeciduousForest/Woodland,Pasture,Protected
-522,TemperateDeciduousForest/Woodland,Pasture,Non-protected
-531,TemperateDeciduousForest/Woodland,UrbanLand,Protected
-532,TemperateDeciduousForest/Woodland,UrbanLand,Non-protected
-601,BorealEvergreenForest/Woodland,Unmanaged,Protected
-602,BorealEvergreenForest/Woodland,Unmanaged,Non-protected
-611,BorealEvergreenForest/Woodland,Cropland,Protected
-612,BorealEvergreenForest/Woodland,Cropland,Non-protected
-621,BorealEvergreenForest/Woodland,Pasture,Protected
-622,BorealEvergreenForest/Woodland,Pasture,Non-protected
-631,BorealEvergreenForest/Woodland,UrbanLand,Protected
-632,BorealEvergreenForest/Woodland,UrbanLand,Non-protected
-701,BorealDeciduousForest/Woodland,Unmanaged,Protected
-702,BorealDeciduousForest/Woodland,Unmanaged,Non-protected
-711,BorealDeciduousForest/Woodland,Cropland,Protected
-712,BorealDeciduousForest/Woodland,Cropland,Non-protected
-721,BorealDeciduousForest/Woodland,Pasture,Protected
-722,BorealDeciduousForest/Woodland,Pasture,Non-protected
-731,BorealDeciduousForest/Woodland,UrbanLand,Protected
-732,BorealDeciduousForest/Woodland,UrbanLand,Non-protected
-801,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,Protected
-802,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,Non-protected
-811,Evergreen/DeciduousMixedForest/Woodland,Cropland,Protected
-812,Evergreen/DeciduousMixedForest/Woodland,Cropland,Non-protected
-821,Evergreen/DeciduousMixedForest/Woodland,Pasture,Protected
-822,Evergreen/DeciduousMixedForest/Woodland,Pasture,Non-protected
-831,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,Protected
-832,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,Non-protected
-901,Savanna,Unmanaged,Protected
-902,Savanna,Unmanaged,Non-protected
-911,Savanna,Cropland,Protected
-912,Savanna,Cropland,Non-protected
-921,Savanna,Pasture,Protected
-922,Savanna,Pasture,Non-protected
-931,Savanna,UrbanLand,Protected
-932,Savanna,UrbanLand,Non-protected
-1001,Grassland/Steppe,Unmanaged,Protected
-1002,Grassland/Steppe,Unmanaged,Non-protected
-1011,Grassland/Steppe,Cropland,Protected
-1012,Grassland/Steppe,Cropland,Non-protected
-1021,Grassland/Steppe,Pasture,Protected
-1022,Grassland/Steppe,Pasture,Non-protected
-1031,Grassland/Steppe,UrbanLand,Protected
-1032,Grassland/Steppe,UrbanLand,Non-protected
-1101,DenseShrubland,Unmanaged,Protected
-1102,DenseShrubland,Unmanaged,Non-protected
-1111,DenseShrubland,Cropland,Protected
-1112,DenseShrubland,Cropland,Non-protected
-1121,DenseShrubland,Pasture,Protected
-1122,DenseShrubland,Pasture,Non-protected
-1131,DenseShrubland,UrbanLand,Protected
-1132,DenseShrubland,UrbanLand,Non-protected
-1201,OpenShrubland,Unmanaged,Protected
-1202,OpenShrubland,Unmanaged,Non-protected
-1211,OpenShrubland,Cropland,Protected
-1212,OpenShrubland,Cropland,Non-protected
-1221,OpenShrubland,Pasture,Protected
-1222,OpenShrubland,Pasture,Non-protected
-1231,OpenShrubland,UrbanLand,Protected
-1232,OpenShrubland,UrbanLand,Non-protected
-1301,Tundra,Unmanaged,Protected
-1302,Tundra,Unmanaged,Non-protected
-1311,Tundra,Cropland,Protected
-1312,Tundra,Cropland,Non-protected
-1321,Tundra,Pasture,Protected
-1322,Tundra,Pasture,Non-protected
-1331,Tundra,UrbanLand,Protected
-1332,Tundra,UrbanLand,Non-protected
-1401,Desert,Unmanaged,Protected
-1402,Desert,Unmanaged,Non-protected
-1411,Desert,Cropland,Protected
-1412,Desert,Cropland,Non-protected
-1421,Desert,Pasture,Protected
-1422,Desert,Pasture,Non-protected
-1431,Desert,UrbanLand,Protected
-1432,Desert,UrbanLand,Non-protected
-1501,PolarDesert/Rock/Ice,Unmanaged,Protected
-1502,PolarDesert/Rock/Ice,Unmanaged,Non-protected
-1511,PolarDesert/Rock/Ice,Cropland,Protected
-1512,PolarDesert/Rock/Ice,Cropland,Non-protected
-1521,PolarDesert/Rock/Ice,Pasture,Protected
-1522,PolarDesert/Rock/Ice,Pasture,Non-protected
-1531,PolarDesert/Rock/Ice,UrbanLand,Protected
-1532,PolarDesert/Rock/Ice,UrbanLand,Non-protected
+Category,LT_SAGE,LT_HYDE,Status
+0,Unknown,Unmanaged,Unknown
+1,Unknown,Unmanaged,UnsuitableUnprotected
+2,Unknown,Unmanaged,SuitableUnprotected
+3,Unknown,Unmanaged,SuitableHighProtectionIntact
+4,Unknown,Unmanaged,SuitbaleHighProtectionDeforested
+5,Unknown,Unmanaged,SuitableLow Protection
+6,Unknown,Unmanaged,UnsuitableHighProtection
+7,Unknown,Unmanaged,UnsuitableLowProtection
+10,Unknown,Cropland,Unknown
+11,Unknown,Cropland,UnsuitableUnprotected
+12,Unknown,Cropland,SuitableUnprotected
+13,Unknown,Cropland,SuitableHighProtectionIntact
+14,Unknown,Cropland,SuitbaleHighProtectionDeforested
+15,Unknown,Cropland,SuitableLow Protection
+16,Unknown,Cropland,UnsuitableHighProtection
+17,Unknown,Cropland,UnsuitableLowProtection
+20,Unknown,Pasture,Unknown
+21,Unknown,Pasture,UnsuitableUnprotected
+22,Unknown,Pasture,SuitableUnprotected
+23,Unknown,Pasture,SuitableHighProtectionIntact
+24,Unknown,Pasture,SuitbaleHighProtectionDeforested
+25,Unknown,Pasture,SuitableLow Protection
+26,Unknown,Pasture,UnsuitableHighProtection
+27,Unknown,Pasture,UnsuitableLowProtection
+30,Unknown,UrbanLand,Unknown
+31,Unknown,UrbanLand,UnsuitableUnprotected
+32,Unknown,UrbanLand,SuitableUnprotected
+33,Unknown,UrbanLand,SuitableHighProtectionIntact
+34,Unknown,UrbanLand,SuitbaleHighProtectionDeforested
+35,Unknown,UrbanLand,SuitableLow Protection
+36,Unknown,UrbanLand,UnsuitableHighProtection
+37,Unknown,UrbanLand,UnsuitableLowProtection
+100,TropicalEvergreenForest/Woodland,Unmanaged,Unknown
+101,TropicalEvergreenForest/Woodland,Unmanaged,UnsuitableUnprotected
+102,TropicalEvergreenForest/Woodland,Unmanaged,SuitableUnprotected
+103,TropicalEvergreenForest/Woodland,Unmanaged,SuitableHighProtectionIntact
+104,TropicalEvergreenForest/Woodland,Unmanaged,SuitbaleHighProtectionDeforested
+105,TropicalEvergreenForest/Woodland,Unmanaged,SuitableLow Protection
+106,TropicalEvergreenForest/Woodland,Unmanaged,UnsuitableHighProtection
+107,TropicalEvergreenForest/Woodland,Unmanaged,UnsuitableLowProtection
+110,TropicalEvergreenForest/Woodland,Cropland,Unknown
+111,TropicalEvergreenForest/Woodland,Cropland,UnsuitableUnprotected
+112,TropicalEvergreenForest/Woodland,Cropland,SuitableUnprotected
+113,TropicalEvergreenForest/Woodland,Cropland,SuitableHighProtectionIntact
+114,TropicalEvergreenForest/Woodland,Cropland,SuitbaleHighProtectionDeforested
+115,TropicalEvergreenForest/Woodland,Cropland,SuitableLow Protection
+116,TropicalEvergreenForest/Woodland,Cropland,UnsuitableHighProtection
+117,TropicalEvergreenForest/Woodland,Cropland,UnsuitableLowProtection
+120,TropicalEvergreenForest/Woodland,Pasture,Unknown
+121,TropicalEvergreenForest/Woodland,Pasture,UnsuitableUnprotected
+122,TropicalEvergreenForest/Woodland,Pasture,SuitableUnprotected
+123,TropicalEvergreenForest/Woodland,Pasture,SuitableHighProtectionIntact
+124,TropicalEvergreenForest/Woodland,Pasture,SuitbaleHighProtectionDeforested
+125,TropicalEvergreenForest/Woodland,Pasture,SuitableLow Protection
+126,TropicalEvergreenForest/Woodland,Pasture,UnsuitableHighProtection
+127,TropicalEvergreenForest/Woodland,Pasture,UnsuitableLowProtection
+130,TropicalEvergreenForest/Woodland,UrbanLand,Unknown
+131,TropicalEvergreenForest/Woodland,UrbanLand,UnsuitableUnprotected
+132,TropicalEvergreenForest/Woodland,UrbanLand,SuitableUnprotected
+133,TropicalEvergreenForest/Woodland,UrbanLand,SuitableHighProtectionIntact
+134,TropicalEvergreenForest/Woodland,UrbanLand,SuitbaleHighProtectionDeforested
+135,TropicalEvergreenForest/Woodland,UrbanLand,SuitableLow Protection
+136,TropicalEvergreenForest/Woodland,UrbanLand,UnsuitableHighProtection
+137,TropicalEvergreenForest/Woodland,UrbanLand,UnsuitableLowProtection
+200,TropicalDeciduousForest/Woodland,Unmanaged,Unknown
+201,TropicalDeciduousForest/Woodland,Unmanaged,UnsuitableUnprotected
+202,TropicalDeciduousForest/Woodland,Unmanaged,SuitableUnprotected
+203,TropicalDeciduousForest/Woodland,Unmanaged,SuitableHighProtectionIntact
+204,TropicalDeciduousForest/Woodland,Unmanaged,SuitbaleHighProtectionDeforested
+205,TropicalDeciduousForest/Woodland,Unmanaged,SuitableLow Protection
+206,TropicalDeciduousForest/Woodland,Unmanaged,UnsuitableHighProtection
+207,TropicalDeciduousForest/Woodland,Unmanaged,UnsuitableLowProtection
+210,TropicalDeciduousForest/Woodland,Cropland,Unknown
+211,TropicalDeciduousForest/Woodland,Cropland,UnsuitableUnprotected
+212,TropicalDeciduousForest/Woodland,Cropland,SuitableUnprotected
+213,TropicalDeciduousForest/Woodland,Cropland,SuitableHighProtectionIntact
+214,TropicalDeciduousForest/Woodland,Cropland,SuitbaleHighProtectionDeforested
+215,TropicalDeciduousForest/Woodland,Cropland,SuitableLow Protection
+216,TropicalDeciduousForest/Woodland,Cropland,UnsuitableHighProtection
+217,TropicalDeciduousForest/Woodland,Cropland,UnsuitableLowProtection
+220,TropicalDeciduousForest/Woodland,Pasture,Unknown
+221,TropicalDeciduousForest/Woodland,Pasture,UnsuitableUnprotected
+222,TropicalDeciduousForest/Woodland,Pasture,SuitableUnprotected
+223,TropicalDeciduousForest/Woodland,Pasture,SuitableHighProtectionIntact
+224,TropicalDeciduousForest/Woodland,Pasture,SuitbaleHighProtectionDeforested
+225,TropicalDeciduousForest/Woodland,Pasture,SuitableLow Protection
+226,TropicalDeciduousForest/Woodland,Pasture,UnsuitableHighProtection
+227,TropicalDeciduousForest/Woodland,Pasture,UnsuitableLowProtection
+230,TropicalDeciduousForest/Woodland,UrbanLand,Unknown
+231,TropicalDeciduousForest/Woodland,UrbanLand,UnsuitableUnprotected
+232,TropicalDeciduousForest/Woodland,UrbanLand,SuitableUnprotected
+233,TropicalDeciduousForest/Woodland,UrbanLand,SuitableHighProtectionIntact
+234,TropicalDeciduousForest/Woodland,UrbanLand,SuitbaleHighProtectionDeforested
+235,TropicalDeciduousForest/Woodland,UrbanLand,SuitableLow Protection
+236,TropicalDeciduousForest/Woodland,UrbanLand,UnsuitableHighProtection
+237,TropicalDeciduousForest/Woodland,UrbanLand,UnsuitableLowProtection
+300,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,Unknown
+301,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,UnsuitableUnprotected
+302,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,SuitableUnprotected
+303,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,SuitableHighProtectionIntact
+304,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,SuitbaleHighProtectionDeforested
+305,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,SuitableLow Protection
+306,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,UnsuitableHighProtection
+307,TemperateBroadleafEvergreenForest/Woodland,Unmanaged,UnsuitableLowProtection
+310,TemperateBroadleafEvergreenForest/Woodland,Cropland,Unknown
+311,TemperateBroadleafEvergreenForest/Woodland,Cropland,UnsuitableUnprotected
+312,TemperateBroadleafEvergreenForest/Woodland,Cropland,SuitableUnprotected
+313,TemperateBroadleafEvergreenForest/Woodland,Cropland,SuitableHighProtectionIntact
+314,TemperateBroadleafEvergreenForest/Woodland,Cropland,SuitbaleHighProtectionDeforested
+315,TemperateBroadleafEvergreenForest/Woodland,Cropland,SuitableLow Protection
+316,TemperateBroadleafEvergreenForest/Woodland,Cropland,UnsuitableHighProtection
+317,TemperateBroadleafEvergreenForest/Woodland,Cropland,UnsuitableLowProtection
+320,TemperateBroadleafEvergreenForest/Woodland,Pasture,Unknown
+321,TemperateBroadleafEvergreenForest/Woodland,Pasture,UnsuitableUnprotected
+322,TemperateBroadleafEvergreenForest/Woodland,Pasture,SuitableUnprotected
+323,TemperateBroadleafEvergreenForest/Woodland,Pasture,SuitableHighProtectionIntact
+324,TemperateBroadleafEvergreenForest/Woodland,Pasture,SuitbaleHighProtectionDeforested
+325,TemperateBroadleafEvergreenForest/Woodland,Pasture,SuitableLow Protection
+326,TemperateBroadleafEvergreenForest/Woodland,Pasture,UnsuitableHighProtection
+327,TemperateBroadleafEvergreenForest/Woodland,Pasture,UnsuitableLowProtection
+330,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,Unknown
+331,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,UnsuitableUnprotected
+332,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,SuitableUnprotected
+333,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,SuitableHighProtectionIntact
+334,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,SuitbaleHighProtectionDeforested
+335,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,SuitableLow Protection
+336,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,UnsuitableHighProtection
+337,TemperateBroadleafEvergreenForest/Woodland,UrbanLand,UnsuitableLowProtection
+400,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,Unknown
+401,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,UnsuitableUnprotected
+402,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,SuitableUnprotected
+403,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,SuitableHighProtectionIntact
+404,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,SuitbaleHighProtectionDeforested
+405,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,SuitableLow Protection
+406,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,UnsuitableHighProtection
+407,TemperateNeedleleafEvergreenForest/Woodland,Unmanaged,UnsuitableLowProtection
+410,TemperateNeedleleafEvergreenForest/Woodland,Cropland,Unknown
+411,TemperateNeedleleafEvergreenForest/Woodland,Cropland,UnsuitableUnprotected
+412,TemperateNeedleleafEvergreenForest/Woodland,Cropland,SuitableUnprotected
+413,TemperateNeedleleafEvergreenForest/Woodland,Cropland,SuitableHighProtectionIntact
+414,TemperateNeedleleafEvergreenForest/Woodland,Cropland,SuitbaleHighProtectionDeforested
+415,TemperateNeedleleafEvergreenForest/Woodland,Cropland,SuitableLow Protection
+416,TemperateNeedleleafEvergreenForest/Woodland,Cropland,UnsuitableHighProtection
+417,TemperateNeedleleafEvergreenForest/Woodland,Cropland,UnsuitableLowProtection
+420,TemperateNeedleleafEvergreenForest/Woodland,Pasture,Unknown
+421,TemperateNeedleleafEvergreenForest/Woodland,Pasture,UnsuitableUnprotected
+422,TemperateNeedleleafEvergreenForest/Woodland,Pasture,SuitableUnprotected
+423,TemperateNeedleleafEvergreenForest/Woodland,Pasture,SuitableHighProtectionIntact
+424,TemperateNeedleleafEvergreenForest/Woodland,Pasture,SuitbaleHighProtectionDeforested
+425,TemperateNeedleleafEvergreenForest/Woodland,Pasture,SuitableLow Protection
+426,TemperateNeedleleafEvergreenForest/Woodland,Pasture,UnsuitableHighProtection
+427,TemperateNeedleleafEvergreenForest/Woodland,Pasture,UnsuitableLowProtection
+430,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,Unknown
+431,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,UnsuitableUnprotected
+432,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,SuitableUnprotected
+433,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,SuitableHighProtectionIntact
+434,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,SuitbaleHighProtectionDeforested
+435,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,SuitableLow Protection
+436,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,UnsuitableHighProtection
+437,TemperateNeedleleafEvergreenForest/Woodland,UrbanLand,UnsuitableLowProtection
+500,TemperateDeciduousForest/Woodland,Unmanaged,Unknown
+501,TemperateDeciduousForest/Woodland,Unmanaged,UnsuitableUnprotected
+502,TemperateDeciduousForest/Woodland,Unmanaged,SuitableUnprotected
+503,TemperateDeciduousForest/Woodland,Unmanaged,SuitableHighProtectionIntact
+504,TemperateDeciduousForest/Woodland,Unmanaged,SuitbaleHighProtectionDeforested
+505,TemperateDeciduousForest/Woodland,Unmanaged,SuitableLow Protection
+506,TemperateDeciduousForest/Woodland,Unmanaged,UnsuitableHighProtection
+507,TemperateDeciduousForest/Woodland,Unmanaged,UnsuitableLowProtection
+510,TemperateDeciduousForest/Woodland,Cropland,Unknown
+511,TemperateDeciduousForest/Woodland,Cropland,UnsuitableUnprotected
+512,TemperateDeciduousForest/Woodland,Cropland,SuitableUnprotected
+513,TemperateDeciduousForest/Woodland,Cropland,SuitableHighProtectionIntact
+514,TemperateDeciduousForest/Woodland,Cropland,SuitbaleHighProtectionDeforested
+515,TemperateDeciduousForest/Woodland,Cropland,SuitableLow Protection
+516,TemperateDeciduousForest/Woodland,Cropland,UnsuitableHighProtection
+517,TemperateDeciduousForest/Woodland,Cropland,UnsuitableLowProtection
+520,TemperateDeciduousForest/Woodland,Pasture,Unknown
+521,TemperateDeciduousForest/Woodland,Pasture,UnsuitableUnprotected
+522,TemperateDeciduousForest/Woodland,Pasture,SuitableUnprotected
+523,TemperateDeciduousForest/Woodland,Pasture,SuitableHighProtectionIntact
+524,TemperateDeciduousForest/Woodland,Pasture,SuitbaleHighProtectionDeforested
+525,TemperateDeciduousForest/Woodland,Pasture,SuitableLow Protection
+526,TemperateDeciduousForest/Woodland,Pasture,UnsuitableHighProtection
+527,TemperateDeciduousForest/Woodland,Pasture,UnsuitableLowProtection
+530,TemperateDeciduousForest/Woodland,UrbanLand,Unknown
+531,TemperateDeciduousForest/Woodland,UrbanLand,UnsuitableUnprotected
+532,TemperateDeciduousForest/Woodland,UrbanLand,SuitableUnprotected
+533,TemperateDeciduousForest/Woodland,UrbanLand,SuitableHighProtectionIntact
+534,TemperateDeciduousForest/Woodland,UrbanLand,SuitbaleHighProtectionDeforested
+535,TemperateDeciduousForest/Woodland,UrbanLand,SuitableLow Protection
+536,TemperateDeciduousForest/Woodland,UrbanLand,UnsuitableHighProtection
+537,TemperateDeciduousForest/Woodland,UrbanLand,UnsuitableLowProtection
+600,BorealEvergreenForest/Woodland,Unmanaged,Unknown
+601,BorealEvergreenForest/Woodland,Unmanaged,UnsuitableUnprotected
+602,BorealEvergreenForest/Woodland,Unmanaged,SuitableUnprotected
+603,BorealEvergreenForest/Woodland,Unmanaged,SuitableHighProtectionIntact
+604,BorealEvergreenForest/Woodland,Unmanaged,SuitbaleHighProtectionDeforested
+605,BorealEvergreenForest/Woodland,Unmanaged,SuitableLow Protection
+606,BorealEvergreenForest/Woodland,Unmanaged,UnsuitableHighProtection
+607,BorealEvergreenForest/Woodland,Unmanaged,UnsuitableLowProtection
+610,BorealEvergreenForest/Woodland,Cropland,Unknown
+611,BorealEvergreenForest/Woodland,Cropland,UnsuitableUnprotected
+612,BorealEvergreenForest/Woodland,Cropland,SuitableUnprotected
+613,BorealEvergreenForest/Woodland,Cropland,SuitableHighProtectionIntact
+614,BorealEvergreenForest/Woodland,Cropland,SuitbaleHighProtectionDeforested
+615,BorealEvergreenForest/Woodland,Cropland,SuitableLow Protection
+616,BorealEvergreenForest/Woodland,Cropland,UnsuitableHighProtection
+617,BorealEvergreenForest/Woodland,Cropland,UnsuitableLowProtection
+620,BorealEvergreenForest/Woodland,Pasture,Unknown
+621,BorealEvergreenForest/Woodland,Pasture,UnsuitableUnprotected
+622,BorealEvergreenForest/Woodland,Pasture,SuitableUnprotected
+623,BorealEvergreenForest/Woodland,Pasture,SuitableHighProtectionIntact
+624,BorealEvergreenForest/Woodland,Pasture,SuitbaleHighProtectionDeforested
+625,BorealEvergreenForest/Woodland,Pasture,SuitableLow Protection
+626,BorealEvergreenForest/Woodland,Pasture,UnsuitableHighProtection
+627,BorealEvergreenForest/Woodland,Pasture,UnsuitableLowProtection
+630,BorealEvergreenForest/Woodland,UrbanLand,Unknown
+631,BorealEvergreenForest/Woodland,UrbanLand,UnsuitableUnprotected
+632,BorealEvergreenForest/Woodland,UrbanLand,SuitableUnprotected
+633,BorealEvergreenForest/Woodland,UrbanLand,SuitableHighProtectionIntact
+634,BorealEvergreenForest/Woodland,UrbanLand,SuitbaleHighProtectionDeforested
+635,BorealEvergreenForest/Woodland,UrbanLand,SuitableLow Protection
+636,BorealEvergreenForest/Woodland,UrbanLand,UnsuitableHighProtection
+637,BorealEvergreenForest/Woodland,UrbanLand,UnsuitableLowProtection
+700,BorealDeciduousForest/Woodland,Unmanaged,Unknown
+701,BorealDeciduousForest/Woodland,Unmanaged,UnsuitableUnprotected
+702,BorealDeciduousForest/Woodland,Unmanaged,SuitableUnprotected
+703,BorealDeciduousForest/Woodland,Unmanaged,SuitableHighProtectionIntact
+704,BorealDeciduousForest/Woodland,Unmanaged,SuitbaleHighProtectionDeforested
+705,BorealDeciduousForest/Woodland,Unmanaged,SuitableLow Protection
+706,BorealDeciduousForest/Woodland,Unmanaged,UnsuitableHighProtection
+707,BorealDeciduousForest/Woodland,Unmanaged,UnsuitableLowProtection
+710,BorealDeciduousForest/Woodland,Cropland,Unknown
+711,BorealDeciduousForest/Woodland,Cropland,UnsuitableUnprotected
+712,BorealDeciduousForest/Woodland,Cropland,SuitableUnprotected
+713,BorealDeciduousForest/Woodland,Cropland,SuitableHighProtectionIntact
+714,BorealDeciduousForest/Woodland,Cropland,SuitbaleHighProtectionDeforested
+715,BorealDeciduousForest/Woodland,Cropland,SuitableLow Protection
+716,BorealDeciduousForest/Woodland,Cropland,UnsuitableHighProtection
+717,BorealDeciduousForest/Woodland,Cropland,UnsuitableLowProtection
+720,BorealDeciduousForest/Woodland,Pasture,Unknown
+721,BorealDeciduousForest/Woodland,Pasture,UnsuitableUnprotected
+722,BorealDeciduousForest/Woodland,Pasture,SuitableUnprotected
+723,BorealDeciduousForest/Woodland,Pasture,SuitableHighProtectionIntact
+724,BorealDeciduousForest/Woodland,Pasture,SuitbaleHighProtectionDeforested
+725,BorealDeciduousForest/Woodland,Pasture,SuitableLow Protection
+726,BorealDeciduousForest/Woodland,Pasture,UnsuitableHighProtection
+727,BorealDeciduousForest/Woodland,Pasture,UnsuitableLowProtection
+730,BorealDeciduousForest/Woodland,UrbanLand,Unknown
+731,BorealDeciduousForest/Woodland,UrbanLand,UnsuitableUnprotected
+732,BorealDeciduousForest/Woodland,UrbanLand,SuitableUnprotected
+733,BorealDeciduousForest/Woodland,UrbanLand,SuitableHighProtectionIntact
+734,BorealDeciduousForest/Woodland,UrbanLand,SuitbaleHighProtectionDeforested
+735,BorealDeciduousForest/Woodland,UrbanLand,SuitableLow Protection
+736,BorealDeciduousForest/Woodland,UrbanLand,UnsuitableHighProtection
+737,BorealDeciduousForest/Woodland,UrbanLand,UnsuitableLowProtection
+800,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,Unknown
+801,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,UnsuitableUnprotected
+802,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,SuitableUnprotected
+803,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,SuitableHighProtectionIntact
+804,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,SuitbaleHighProtectionDeforested
+805,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,SuitableLow Protection
+806,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,UnsuitableHighProtection
+807,Evergreen/DeciduousMixedForest/Woodland,Unmanaged,UnsuitableLowProtection
+810,Evergreen/DeciduousMixedForest/Woodland,Cropland,Unknown
+811,Evergreen/DeciduousMixedForest/Woodland,Cropland,UnsuitableUnprotected
+812,Evergreen/DeciduousMixedForest/Woodland,Cropland,SuitableUnprotected
+813,Evergreen/DeciduousMixedForest/Woodland,Cropland,SuitableHighProtectionIntact
+814,Evergreen/DeciduousMixedForest/Woodland,Cropland,SuitbaleHighProtectionDeforested
+815,Evergreen/DeciduousMixedForest/Woodland,Cropland,SuitableLow Protection
+816,Evergreen/DeciduousMixedForest/Woodland,Cropland,UnsuitableHighProtection
+817,Evergreen/DeciduousMixedForest/Woodland,Cropland,UnsuitableLowProtection
+820,Evergreen/DeciduousMixedForest/Woodland,Pasture,Unknown
+821,Evergreen/DeciduousMixedForest/Woodland,Pasture,UnsuitableUnprotected
+822,Evergreen/DeciduousMixedForest/Woodland,Pasture,SuitableUnprotected
+823,Evergreen/DeciduousMixedForest/Woodland,Pasture,SuitableHighProtectionIntact
+824,Evergreen/DeciduousMixedForest/Woodland,Pasture,SuitbaleHighProtectionDeforested
+825,Evergreen/DeciduousMixedForest/Woodland,Pasture,SuitableLow Protection
+826,Evergreen/DeciduousMixedForest/Woodland,Pasture,UnsuitableHighProtection
+827,Evergreen/DeciduousMixedForest/Woodland,Pasture,UnsuitableLowProtection
+830,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,Unknown
+831,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,UnsuitableUnprotected
+832,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,SuitableUnprotected
+833,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,SuitableHighProtectionIntact
+834,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,SuitbaleHighProtectionDeforested
+835,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,SuitableLow Protection
+836,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,UnsuitableHighProtection
+837,Evergreen/DeciduousMixedForest/Woodland,UrbanLand,UnsuitableLowProtection
+900,Savanna,Unmanaged,Unknown
+901,Savanna,Unmanaged,UnsuitableUnprotected
+902,Savanna,Unmanaged,SuitableUnprotected
+903,Savanna,Unmanaged,SuitableHighProtectionIntact
+904,Savanna,Unmanaged,SuitbaleHighProtectionDeforested
+905,Savanna,Unmanaged,SuitableLow Protection
+906,Savanna,Unmanaged,UnsuitableHighProtection
+907,Savanna,Unmanaged,UnsuitableLowProtection
+910,Savanna,Cropland,Unknown
+911,Savanna,Cropland,UnsuitableUnprotected
+912,Savanna,Cropland,SuitableUnprotected
+913,Savanna,Cropland,SuitableHighProtectionIntact
+914,Savanna,Cropland,SuitbaleHighProtectionDeforested
+915,Savanna,Cropland,SuitableLow Protection
+916,Savanna,Cropland,UnsuitableHighProtection
+917,Savanna,Cropland,UnsuitableLowProtection
+920,Savanna,Pasture,Unknown
+921,Savanna,Pasture,UnsuitableUnprotected
+922,Savanna,Pasture,SuitableUnprotected
+923,Savanna,Pasture,SuitableHighProtectionIntact
+924,Savanna,Pasture,SuitbaleHighProtectionDeforested
+925,Savanna,Pasture,SuitableLow Protection
+926,Savanna,Pasture,UnsuitableHighProtection
+927,Savanna,Pasture,UnsuitableLowProtection
+930,Savanna,UrbanLand,Unknown
+931,Savanna,UrbanLand,UnsuitableUnprotected
+932,Savanna,UrbanLand,SuitableUnprotected
+933,Savanna,UrbanLand,SuitableHighProtectionIntact
+934,Savanna,UrbanLand,SuitbaleHighProtectionDeforested
+935,Savanna,UrbanLand,SuitableLow Protection
+936,Savanna,UrbanLand,UnsuitableHighProtection
+937,Savanna,UrbanLand,UnsuitableLowProtection
+1000,Grassland/Steppe,Unmanaged,Unknown
+1001,Grassland/Steppe,Unmanaged,UnsuitableUnprotected
+1002,Grassland/Steppe,Unmanaged,SuitableUnprotected
+1003,Grassland/Steppe,Unmanaged,SuitableHighProtectionIntact
+1004,Grassland/Steppe,Unmanaged,SuitbaleHighProtectionDeforested
+1005,Grassland/Steppe,Unmanaged,SuitableLow Protection
+1006,Grassland/Steppe,Unmanaged,UnsuitableHighProtection
+1007,Grassland/Steppe,Unmanaged,UnsuitableLowProtection
+1010,Grassland/Steppe,Cropland,Unknown
+1011,Grassland/Steppe,Cropland,UnsuitableUnprotected
+1012,Grassland/Steppe,Cropland,SuitableUnprotected
+1013,Grassland/Steppe,Cropland,SuitableHighProtectionIntact
+1014,Grassland/Steppe,Cropland,SuitbaleHighProtectionDeforested
+1015,Grassland/Steppe,Cropland,SuitableLow Protection
+1016,Grassland/Steppe,Cropland,UnsuitableHighProtection
+1017,Grassland/Steppe,Cropland,UnsuitableLowProtection
+1020,Grassland/Steppe,Pasture,Unknown
+1021,Grassland/Steppe,Pasture,UnsuitableUnprotected
+1022,Grassland/Steppe,Pasture,SuitableUnprotected
+1023,Grassland/Steppe,Pasture,SuitableHighProtectionIntact
+1024,Grassland/Steppe,Pasture,SuitbaleHighProtectionDeforested
+1025,Grassland/Steppe,Pasture,SuitableLow Protection
+1026,Grassland/Steppe,Pasture,UnsuitableHighProtection
+1027,Grassland/Steppe,Pasture,UnsuitableLowProtection
+1030,Grassland/Steppe,UrbanLand,Unknown
+1031,Grassland/Steppe,UrbanLand,UnsuitableUnprotected
+1032,Grassland/Steppe,UrbanLand,SuitableUnprotected
+1033,Grassland/Steppe,UrbanLand,SuitableHighProtectionIntact
+1034,Grassland/Steppe,UrbanLand,SuitbaleHighProtectionDeforested
+1035,Grassland/Steppe,UrbanLand,SuitableLow Protection
+1036,Grassland/Steppe,UrbanLand,UnsuitableHighProtection
+1037,Grassland/Steppe,UrbanLand,UnsuitableLowProtection
+1100,DenseShrubland,Unmanaged,Unknown
+1101,DenseShrubland,Unmanaged,UnsuitableUnprotected
+1102,DenseShrubland,Unmanaged,SuitableUnprotected
+1103,DenseShrubland,Unmanaged,SuitableHighProtectionIntact
+1104,DenseShrubland,Unmanaged,SuitbaleHighProtectionDeforested
+1105,DenseShrubland,Unmanaged,SuitableLow Protection
+1106,DenseShrubland,Unmanaged,UnsuitableHighProtection
+1107,DenseShrubland,Unmanaged,UnsuitableLowProtection
+1110,DenseShrubland,Cropland,Unknown
+1111,DenseShrubland,Cropland,UnsuitableUnprotected
+1112,DenseShrubland,Cropland,SuitableUnprotected
+1113,DenseShrubland,Cropland,SuitableHighProtectionIntact
+1114,DenseShrubland,Cropland,SuitbaleHighProtectionDeforested
+1115,DenseShrubland,Cropland,SuitableLow Protection
+1116,DenseShrubland,Cropland,UnsuitableHighProtection
+1117,DenseShrubland,Cropland,UnsuitableLowProtection
+1120,DenseShrubland,Pasture,Unknown
+1121,DenseShrubland,Pasture,UnsuitableUnprotected
+1122,DenseShrubland,Pasture,SuitableUnprotected
+1123,DenseShrubland,Pasture,SuitableHighProtectionIntact
+1124,DenseShrubland,Pasture,SuitbaleHighProtectionDeforested
+1125,DenseShrubland,Pasture,SuitableLow Protection
+1126,DenseShrubland,Pasture,UnsuitableHighProtection
+1127,DenseShrubland,Pasture,UnsuitableLowProtection
+1130,DenseShrubland,UrbanLand,Unknown
+1131,DenseShrubland,UrbanLand,UnsuitableUnprotected
+1132,DenseShrubland,UrbanLand,SuitableUnprotected
+1133,DenseShrubland,UrbanLand,SuitableHighProtectionIntact
+1134,DenseShrubland,UrbanLand,SuitbaleHighProtectionDeforested
+1135,DenseShrubland,UrbanLand,SuitableLow Protection
+1136,DenseShrubland,UrbanLand,UnsuitableHighProtection
+1137,DenseShrubland,UrbanLand,UnsuitableLowProtection
+1200,OpenShrubland,Unmanaged,Unknown
+1201,OpenShrubland,Unmanaged,UnsuitableUnprotected
+1202,OpenShrubland,Unmanaged,SuitableUnprotected
+1203,OpenShrubland,Unmanaged,SuitableHighProtectionIntact
+1204,OpenShrubland,Unmanaged,SuitbaleHighProtectionDeforested
+1205,OpenShrubland,Unmanaged,SuitableLow Protection
+1206,OpenShrubland,Unmanaged,UnsuitableHighProtection
+1207,OpenShrubland,Unmanaged,UnsuitableLowProtection
+1210,OpenShrubland,Cropland,Unknown
+1211,OpenShrubland,Cropland,UnsuitableUnprotected
+1212,OpenShrubland,Cropland,SuitableUnprotected
+1213,OpenShrubland,Cropland,SuitableHighProtectionIntact
+1214,OpenShrubland,Cropland,SuitbaleHighProtectionDeforested
+1215,OpenShrubland,Cropland,SuitableLow Protection
+1216,OpenShrubland,Cropland,UnsuitableHighProtection
+1217,OpenShrubland,Cropland,UnsuitableLowProtection
+1220,OpenShrubland,Pasture,Unknown
+1221,OpenShrubland,Pasture,UnsuitableUnprotected
+1222,OpenShrubland,Pasture,SuitableUnprotected
+1223,OpenShrubland,Pasture,SuitableHighProtectionIntact
+1224,OpenShrubland,Pasture,SuitbaleHighProtectionDeforested
+1225,OpenShrubland,Pasture,SuitableLow Protection
+1226,OpenShrubland,Pasture,UnsuitableHighProtection
+1227,OpenShrubland,Pasture,UnsuitableLowProtection
+1230,OpenShrubland,UrbanLand,Unknown
+1231,OpenShrubland,UrbanLand,UnsuitableUnprotected
+1232,OpenShrubland,UrbanLand,SuitableUnprotected
+1233,OpenShrubland,UrbanLand,SuitableHighProtectionIntact
+1234,OpenShrubland,UrbanLand,SuitbaleHighProtectionDeforested
+1235,OpenShrubland,UrbanLand,SuitableLow Protection
+1236,OpenShrubland,UrbanLand,UnsuitableHighProtection
+1237,OpenShrubland,UrbanLand,UnsuitableLowProtection
+1300,Tundra,Unmanaged,Unknown
+1301,Tundra,Unmanaged,UnsuitableUnprotected
+1302,Tundra,Unmanaged,SuitableUnprotected
+1303,Tundra,Unmanaged,SuitableHighProtectionIntact
+1304,Tundra,Unmanaged,SuitbaleHighProtectionDeforested
+1305,Tundra,Unmanaged,SuitableLow Protection
+1306,Tundra,Unmanaged,UnsuitableHighProtection
+1307,Tundra,Unmanaged,UnsuitableLowProtection
+1310,Tundra,Cropland,Unknown
+1311,Tundra,Cropland,UnsuitableUnprotected
+1312,Tundra,Cropland,SuitableUnprotected
+1313,Tundra,Cropland,SuitableHighProtectionIntact
+1314,Tundra,Cropland,SuitbaleHighProtectionDeforested
+1315,Tundra,Cropland,SuitableLow Protection
+1316,Tundra,Cropland,UnsuitableHighProtection
+1317,Tundra,Cropland,UnsuitableLowProtection
+1320,Tundra,Pasture,Unknown
+1321,Tundra,Pasture,UnsuitableUnprotected
+1322,Tundra,Pasture,SuitableUnprotected
+1323,Tundra,Pasture,SuitableHighProtectionIntact
+1324,Tundra,Pasture,SuitbaleHighProtectionDeforested
+1325,Tundra,Pasture,SuitableLow Protection
+1326,Tundra,Pasture,UnsuitableHighProtection
+1327,Tundra,Pasture,UnsuitableLowProtection
+1330,Tundra,UrbanLand,Unknown
+1331,Tundra,UrbanLand,UnsuitableUnprotected
+1332,Tundra,UrbanLand,SuitableUnprotected
+1333,Tundra,UrbanLand,SuitableHighProtectionIntact
+1334,Tundra,UrbanLand,SuitbaleHighProtectionDeforested
+1335,Tundra,UrbanLand,SuitableLow Protection
+1336,Tundra,UrbanLand,UnsuitableHighProtection
+1337,Tundra,UrbanLand,UnsuitableLowProtection
+1400,Desert,Unmanaged,Unknown
+1401,Desert,Unmanaged,UnsuitableUnprotected
+1402,Desert,Unmanaged,SuitableUnprotected
+1403,Desert,Unmanaged,SuitableHighProtectionIntact
+1404,Desert,Unmanaged,SuitbaleHighProtectionDeforested
+1405,Desert,Unmanaged,SuitableLow Protection
+1406,Desert,Unmanaged,UnsuitableHighProtection
+1407,Desert,Unmanaged,UnsuitableLowProtection
+1410,Desert,Cropland,Unknown
+1411,Desert,Cropland,UnsuitableUnprotected
+1412,Desert,Cropland,SuitableUnprotected
+1413,Desert,Cropland,SuitableHighProtectionIntact
+1414,Desert,Cropland,SuitbaleHighProtectionDeforested
+1415,Desert,Cropland,SuitableLow Protection
+1416,Desert,Cropland,UnsuitableHighProtection
+1417,Desert,Cropland,UnsuitableLowProtection
+1420,Desert,Pasture,Unknown
+1421,Desert,Pasture,UnsuitableUnprotected
+1422,Desert,Pasture,SuitableUnprotected
+1423,Desert,Pasture,SuitableHighProtectionIntact
+1424,Desert,Pasture,SuitbaleHighProtectionDeforested
+1425,Desert,Pasture,SuitableLow Protection
+1426,Desert,Pasture,UnsuitableHighProtection
+1427,Desert,Pasture,UnsuitableLowProtection
+1430,Desert,UrbanLand,Unknown
+1431,Desert,UrbanLand,UnsuitableUnprotected
+1432,Desert,UrbanLand,SuitableUnprotected
+1433,Desert,UrbanLand,SuitableHighProtectionIntact
+1434,Desert,UrbanLand,SuitbaleHighProtectionDeforested
+1435,Desert,UrbanLand,SuitableLow Protection
+1436,Desert,UrbanLand,UnsuitableHighProtection
+1437,Desert,UrbanLand,UnsuitableLowProtection
+1500,PolarDesert/Rock/Ice,Unmanaged,Unknown
+1501,PolarDesert/Rock/Ice,Unmanaged,UnsuitableUnprotected
+1502,PolarDesert/Rock/Ice,Unmanaged,SuitableUnprotected
+1503,PolarDesert/Rock/Ice,Unmanaged,SuitableHighProtectionIntact
+1504,PolarDesert/Rock/Ice,Unmanaged,SuitbaleHighProtectionDeforested
+1505,PolarDesert/Rock/Ice,Unmanaged,SuitableLow Protection
+1506,PolarDesert/Rock/Ice,Unmanaged,UnsuitableHighProtection
+1507,PolarDesert/Rock/Ice,Unmanaged,UnsuitableLowProtection
+1510,PolarDesert/Rock/Ice,Cropland,Unknown
+1511,PolarDesert/Rock/Ice,Cropland,UnsuitableUnprotected
+1512,PolarDesert/Rock/Ice,Cropland,SuitableUnprotected
+1513,PolarDesert/Rock/Ice,Cropland,SuitableHighProtectionIntact
+1514,PolarDesert/Rock/Ice,Cropland,SuitbaleHighProtectionDeforested
+1515,PolarDesert/Rock/Ice,Cropland,SuitableLow Protection
+1516,PolarDesert/Rock/Ice,Cropland,UnsuitableHighProtection
+1517,PolarDesert/Rock/Ice,Cropland,UnsuitableLowProtection
+1520,PolarDesert/Rock/Ice,Pasture,Unknown
+1521,PolarDesert/Rock/Ice,Pasture,UnsuitableUnprotected
+1522,PolarDesert/Rock/Ice,Pasture,SuitableUnprotected
+1523,PolarDesert/Rock/Ice,Pasture,SuitableHighProtectionIntact
+1524,PolarDesert/Rock/Ice,Pasture,SuitbaleHighProtectionDeforested
+1525,PolarDesert/Rock/Ice,Pasture,SuitableLow Protection
+1526,PolarDesert/Rock/Ice,Pasture,UnsuitableHighProtection
+1527,PolarDesert/Rock/Ice,Pasture,UnsuitableLowProtection
+1530,PolarDesert/Rock/Ice,UrbanLand,Unknown
+1531,PolarDesert/Rock/Ice,UrbanLand,UnsuitableUnprotected
+1532,PolarDesert/Rock/Ice,UrbanLand,SuitableUnprotected
+1533,PolarDesert/Rock/Ice,UrbanLand,SuitableHighProtectionIntact
+1534,PolarDesert/Rock/Ice,UrbanLand,SuitbaleHighProtectionDeforested
+1535,PolarDesert/Rock/Ice,UrbanLand,SuitableLow Protection
+1536,PolarDesert/Rock/Ice,UrbanLand,UnsuitableHighProtection
+1537,PolarDesert/Rock/Ice,UrbanLand,UnsuitableLowProtection
