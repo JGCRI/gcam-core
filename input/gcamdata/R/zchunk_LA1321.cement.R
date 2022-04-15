@@ -322,7 +322,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       L1321.in_EJ_R_cement_F_Y
 
     # ---------------------------------------------------------------------------------------------------------------------
-    ## 7/30/21: Temporary modification for detailed industry
+    ## 7/30/21: Modification for detailed industry
     ## Manually adjust coal use in South Korea, so there is enough left for iron and steel sector
     ## Upper bound is IEA coal consumption in non-metallic minerals
 
@@ -387,7 +387,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       L1321.cement_adj_neg
 
     L1321.cement_adj_neg %>%
-      # TEMPORARY STEEL DECARONBONIZATION MODIFICATION: add korea excess coal to biomass
+      # STEEL DECARONBONIZATION MODIFICATION: add korea excess coal to biomass
       bind_rows(korea_coal_neg_en) %>%
       mutate(fuel = "biomass") %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
