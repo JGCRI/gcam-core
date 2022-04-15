@@ -133,7 +133,7 @@ module_energy_L2324.Off_road <- function(command, ...) {
 
     #change the share weight in regions where baseyear biomass share weight is 1
     L2324.SubsectorShrwtFllt_Off_road %>%
-      filter(region %in% off_road.biomass_growth,subsector=="biomass",supplysector == "agricultural energy use") %>%
+      filter(region %in% energy.OFF_ROAD.BIOMASS_GROWTH,subsector=="biomass",supplysector == "agricultural energy use") %>%
       mutate(year.fillout = 2020,share.weight=0.15) ->
       L2324.SubsectorShrwtFllt_Off_road_add
 
@@ -151,7 +151,7 @@ module_energy_L2324.Off_road <- function(command, ...) {
 
     #change interplate for the regions where baseyear biomass share weight is 1
     L2324.SubsectorInterp_Off_road %>%
-      filter(region %in% off_road.biomass_growth,subsector=="biomass",supplysector == "agricultural energy use") %>%
+      filter(region %in% energy.OFF_ROAD.BIOMASS_GROWTH,subsector=="biomass",supplysector == "agricultural energy use") %>%
       mutate(from.year=2015,to.year = 2020,interpolation.function="linear") ->
       L2324.SubsectorInterp_Off_road_add
 
