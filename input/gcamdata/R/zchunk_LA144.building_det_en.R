@@ -9,7 +9,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L144.end_use_eff}, \code{L144.shell_eff_R_Y}, \code{L144.in_EJ_R_bld_serv_F_Yh}, \code{L144.NEcost_75USDGJ},
-#'  \code{L144.internal_gains}, \code{L144.base_service_EJ_serv}, \code{L144.prices_bld}.
+#'  \code{L144.internal_gains}, \code{L144.base_service_EJ_serv},\code{L144.base_service_EJ_serv_fuel}, \code{L144.prices_bld}.
 #'  The corresponding file in the original data system was \code{LA144.building_det_en.R} (energy level1).
 #' @details Calculates building energy consumption, non-energy costs, energy output by service, internal gains, and end-use technology and shell efficiency
 #' @importFrom assertthat assert_that
@@ -40,6 +40,7 @@ module_energy_LA144.building_det_en <- function(command, ...) {
              "L144.NEcost_75USDGJ",
              "L144.internal_gains",
              "L144.base_service_EJ_serv",
+             "L144.base_service_EJ_serv_fuel",
              "L144.prices_bld"))
   } else if(command == driver.MAKE) {
 
@@ -513,6 +514,13 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       ungroup() ->
       L144.base_service_EJ_serv # This is a final output table.
 
+    # Finally, write out the service output by fuel, to estimate parameters used in the demand for traditional services (in L244.building_det)
+    L144.in_EJ_R_bld_serv_F_Yh %>%
+      left_join_error_no_match(L144.end_use_eff_2f, by = c("GCAM_region_ID", "sector", "fuel", "service", "year")) %>%
+      mutate(value = value * value_eff) %>%
+      select(GCAM_region_ID, sector, fuel, service, year, value)->
+      L144.base_service_EJ_serv_fuel
+
 
     # 1F
     # Internal gains: internal gain energy released, divided by efficiency of each technology
@@ -610,13 +618,22 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.internal_gains
 
     L144.base_service_EJ_serv %>%
-      add_title("Building energy output by each service by GCAM region ID / sector / service / fuel / historical year") %>%
+      add_title("Building energy output by each service by GCAM region ID / sector / service  / historical year") %>%
       add_units("EJ/yr") %>%
       add_comments("Product of energy consumption and efficiency aggregated by region, sector, service") %>%
       add_legacy_name("L144.base_service_EJ_serv") %>%
       add_precursors("energy/A44.USA_TechChange", "energy/calibrated_techs_bld_det", "common/iso_GCAM_regID", "energy/A44.tech_eff_mult_RG3",
                      "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") ->
       L144.base_service_EJ_serv
+
+    L144.base_service_EJ_serv_fuel %>%
+      add_title("Building energy output by each service by GCAM region ID / sector / service / fuel / historical year") %>%
+      add_units("EJ/yr") %>%
+      add_comments("Product of energy consumption and efficiency aggregated by region, sector, service") %>%
+      add_legacy_name("L144.base_service_EJ_serv_fuel") %>%
+      add_precursors("energy/A44.USA_TechChange", "energy/calibrated_techs_bld_det", "common/iso_GCAM_regID", "energy/A44.tech_eff_mult_RG3",
+                     "energy/A_regions", "energy/A44.cost_efficiency", "common/GCAM_region_names") ->
+      L144.base_service_EJ_serv_fuel
 
 
     L144.prices_bld %>%
@@ -629,7 +646,8 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       L144.prices_bld
 
 
-    return_data(L144.end_use_eff, L144.shell_eff_R_Y, L144.in_EJ_R_bld_serv_F_Yh, L144.NEcost_75USDGJ, L144.internal_gains, L144.base_service_EJ_serv,L144.prices_bld)
+    return_data(L144.end_use_eff, L144.shell_eff_R_Y, L144.in_EJ_R_bld_serv_F_Yh, L144.NEcost_75USDGJ, L144.internal_gains,
+                L144.base_service_EJ_serv,L144.base_service_EJ_serv_fuel,L144.prices_bld)
   } else {
     stop("Unknown command")
   }

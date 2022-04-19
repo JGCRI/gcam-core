@@ -58,6 +58,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L144.flsp_bm2_R_res_Yh",
              "L144.flsp_bm2_R_comm_Yh",
              "L144.base_service_EJ_serv",
+             "L144.base_service_EJ_serv_fuel",
              "L144.in_EJ_R_bld_serv_F_Yh",
              "L144.end_use_eff",
              "L144.shell_eff_R_Y",
@@ -201,6 +202,7 @@ module_energy_L244.building_det <- function(command, ...) {
     L144.flsp_bm2_R_res_Yh <- get_data(all_data, "L144.flsp_bm2_R_res_Yh", strip_attributes = TRUE)
     L144.flsp_bm2_R_comm_Yh <- get_data(all_data, "L144.flsp_bm2_R_comm_Yh", strip_attributes = TRUE)
     L144.base_service_EJ_serv <- get_data(all_data, "L144.base_service_EJ_serv", strip_attributes = TRUE)
+    L144.base_service_EJ_serv_fuel <- get_data(all_data, "L144.base_service_EJ_serv_fuel", strip_attributes = TRUE)
     L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "L144.in_EJ_R_bld_serv_F_Yh")
     L144.end_use_eff <- get_data(all_data, "L144.end_use_eff", strip_attributes = TRUE)
     L144.shell_eff_R_Y <- get_data(all_data, "L144.shell_eff_R_Y", strip_attributes = TRUE)
@@ -1317,7 +1319,7 @@ module_energy_L244.building_det <- function(command, ...) {
     # The parameters to define the functional form are estimated in the following lines:
 
     # First, estimate the parameters for the function to estimate coal demand:
-    serv_coal<-L144.in_EJ_R_bld_serv_F_Yh %>%
+    serv_coal<-L144.base_service_EJ_serv_fuel %>%
       rename(en_EJ = value) %>%
       filter(grepl("resid",service),
              fuel == "coal") %>%
@@ -1338,7 +1340,7 @@ module_energy_L244.building_det <- function(command, ...) {
     k_coal<-coef(fit_coal)[2]
 
     # Same for traditional biomass:
-    serv_TradBio<-L144.in_EJ_R_bld_serv_F_Yh %>%
+    serv_TradBio<-L144.base_service_EJ_serv_fuel %>%
       rename(en_EJ = value) %>%
       filter(grepl("resid",service),
              fuel == "traditional biomass") %>%
