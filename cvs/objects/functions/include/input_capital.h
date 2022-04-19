@@ -99,14 +99,14 @@ public:
     virtual void copyParamsInto( InputCapital& aInput,
                                  const int aPeriod ) const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const std::string& aTechName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo );
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
@@ -115,13 +115,13 @@ public:
     double getPhysicalDemand( const int aPeriod ) const;
 
     void setPhysicalDemand( const double aPhysicalDemand,
-                            const std::string& aRegionName,
+                            const gcamstr& aRegionName,
                             const int aPeriod );
 
-    double getPrice( const std::string& aRegionName,
+    double getPrice( const gcamstr& aRegionName,
                      const int aPeriod ) const;
     
-    virtual void setPrice( const std::string& aRegionName,
+    virtual void setPrice( const gcamstr& aRegionName,
                            const double aPrice,
                            const int aPeriod );
 
@@ -133,7 +133,7 @@ public:
     void setCoefficient( const double aCoefficient,
                          const int aPeriod );
 
-    void tabulateFixedQuantity( const std::string& aRegionName,
+    void tabulateFixedQuantity( const gcamstr& aRegionName,
                                 const double aFixedOutput,
                                 const bool aIsInvestmentPeriod,
                                 const int aPeriod );
@@ -195,7 +195,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "capital-value", mCapitalValue, Value ),
                             
         //! The market name to which to add the capital investment value
-        DEFINE_VARIABLE( SIMPLE, "tracking-market", mTrackingMarketName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "tracking-market", mTrackingMarketName, gcamstr )
     )
 
     // We need a flag to let us know if we are in a new vintage tech in which case we

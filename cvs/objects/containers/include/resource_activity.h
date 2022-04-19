@@ -57,7 +57,7 @@ class AResource;
 class ResourceActivity : public IActivity
 {
 public:
-    ResourceActivity( AResource* aResource, const std::string& aRegionName );
+    ResourceActivity( AResource* aResource, const gcamstr& aRegionName );
     virtual ~ResourceActivity();
     
     // IActivity methods
@@ -69,7 +69,7 @@ private:
     AResource* mResource;
     
     //! The name of the region this resource is contained in.
-    const std::string& mRegionName;
+    const gcamstr& mRegionName;
 };
 
 #endif // _RESOURCE_ACTIVITY_H_

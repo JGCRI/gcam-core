@@ -149,7 +149,7 @@ const string& LandNode::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void LandNode::completeInit( const string& aRegionName,
+void LandNode::completeInit( const gcamstr& aRegionName,
                              const IInfo* aRegionInfo )
 {
     if( !mChoiceFn ) {
@@ -169,7 +169,7 @@ void LandNode::completeInit( const string& aRegionName,
     }
 }
 
-void LandNode::initCalc( const string& aRegionName, const int aPeriod )
+void LandNode::initCalc( const gcamstr& aRegionName, const int aPeriod )
 {
     mChoiceFn->initCalc( aRegionName, mName, true, aPeriod );
     
@@ -200,7 +200,7 @@ void LandNode::initCalc( const string& aRegionName, const int aPeriod )
 * \param aLandAllocationAbove Land allocation of the parent node
 * \param aPeriod Model period
 */
-void LandNode::setInitShares( const string& aRegionName,
+void LandNode::setInitShares( const gcamstr& aRegionName,
                                 const double aLandAllocationAbove,
                                 const int aPeriod )
 {
@@ -235,7 +235,7 @@ void LandNode::setInitShares( const string& aRegionName,
 * \param aProfitRate Profit rate passed in from ag food production technology
 * \param aPeriod Period.
 */
-void LandNode::setProfitRate( const string& aRegionName,
+void LandNode::setProfitRate( const gcamstr& aRegionName,
                                  const string& aProductName,
                                  const double aProfitRate,
                                  const int aPeriod )
@@ -275,7 +275,7 @@ void LandNode::setSoilTimeScale( const int aTimeScale ) {
 * \param aChoiceFnAbove The discrete choice function from the level above.
 * \param aPeriod Period.
 */
-double LandNode::calcLandShares( const string& aRegionName,
+double LandNode::calcLandShares( const gcamstr& aRegionName,
                                  IDiscreteChoice* aChoiceFnAbove,
                                  const int aPeriod )
 {
@@ -313,7 +313,7 @@ double LandNode::calcLandShares( const string& aRegionName,
     return unnormalizedShareAbove; // the unnormalized share of this node.
 }
 
-void LandNode::calculateShareWeights( const string& aRegionName, 
+void LandNode::calculateShareWeights( const gcamstr& aRegionName, 
                                       IDiscreteChoice* aChoiceFnAbove,
                                       const int aPeriod,
                                       const bool aCalcFutureSW )
@@ -338,7 +338,7 @@ void LandNode::calculateShareWeights( const string& aRegionName,
  * \param aAverageProfitRate Average profit rate of region or subregion.
  * \param aPeriod model period.
  */
-void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
+void LandNode::setUnmanagedLandProfitRate( const gcamstr& aRegionName,
                                            double aAverageProfitRate,
                                            const int aPeriod )
 {
@@ -359,7 +359,7 @@ void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
 }
 
 
-void LandNode::calculateNodeProfitRates( const string& aRegionName,
+void LandNode::calculateNodeProfitRates( const gcamstr& aRegionName,
                                          const int aPeriod )
 {
     // trigger the calculation for the children
@@ -394,7 +394,7 @@ void LandNode::calculateNodeProfitRates( const string& aRegionName,
  * \param aLandAllocationAbove Land allocation of parent.
  * \param aPeriod model period.
  */
-void LandNode::calcLandAllocation( const string& aRegionName,
+void LandNode::calcLandAllocation( const gcamstr& aRegionName,
                                    const double aLandAllocationAbove,
                                    const int aPeriod )
 {
@@ -420,7 +420,7 @@ void LandNode::calcLandAllocation( const string& aRegionName,
  * \param aStoreFullEmiss Flag to pass on to the carbon calc used as an optimization
  *                        to avoid store full LUC emissins during World.calc.
  */
-void LandNode::calcLUCEmissions( const string& aRegionName,
+void LandNode::calcLUCEmissions( const gcamstr& aRegionName,
                                  const int aPeriod, const int aEndYear,
                                  const bool aStoreFullEmiss )
 {

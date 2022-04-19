@@ -57,8 +57,8 @@ using namespace std;
 
 extern Scenario* scenario;
 
-double BuildingFunction::calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
-                            const std::string& sectorName, int period, double sigma, double IBT,
+double BuildingFunction::calcCoefficient( InputSet& input, double consumption, const gcamstr& aRegionName,
+                            const gcamstr& sectorName, int period, double sigma, double IBT,
                             double capitalStock, const IInput* aParentInput ) const
 {
     // TODO: for SGM which should be converted to use the aParentInput approach;
@@ -74,8 +74,8 @@ double BuildingFunction::calcCoefficient( InputSet& input, double consumption, c
     return 1;
 }
 
-double BuildingFunction::calcDemand( InputSet& input, double income, const std::string& regionName,
-                       const std::string& sectorName, const double aShutdownCoef, int period,
+double BuildingFunction::calcDemand( InputSet& input, double income, const gcamstr& aRegionName,
+                       const gcamstr& sectorName, const double aShutdownCoef, int period,
                        double capitalStock, double alphaZero, double sigma, double IBT, const IInput* aParentInput ) const
 {
     double totalDemand = 0;
@@ -84,28 +84,28 @@ double BuildingFunction::calcDemand( InputSet& input, double income, const std::
         BuildingNodeInput* buildingNodeInput = static_cast<BuildingNodeInput*>( *inputIter );
         // Compute energy service price change and raise it to the price exponenet.
         double priceRatio = period > modeltime->getFinalCalibrationPeriod() ?
-            buildingNodeInput->getPricePaid( regionName, period ) / buildingNodeInput->getPricePaid( regionName, modeltime->getFinalCalibrationPeriod() )
+            buildingNodeInput->getPricePaid( aRegionName, period ) / buildingNodeInput->getPricePaid( aRegionName, modeltime->getFinalCalibrationPeriod() )
             : 1;
         double cappedPriceRatio = max( priceRatio, SectorUtils::getDemandPriceThreshold() );
         double priceTerm = pow( cappedPriceRatio, buildingNodeInput->getPriceElasticity( period ) );
         // Use the satiation demand function to calculate per capita demand.
         double perCapitaDemand =
-            buildingNodeInput->getSatiationDemandFunction()->calcDemand( buildingNodeInput->getSubregionalIncome(regionName, period) * priceTerm );
+            buildingNodeInput->getSatiationDemandFunction()->calcDemand( buildingNodeInput->getSubregionalIncome(aRegionName, period) * priceTerm );
         // May need to make an adjustment in case of negative prices.
         if( priceRatio < cappedPriceRatio && buildingNodeInput->getPriceElasticity( period ) != 0 ) {
             perCapitaDemand = SectorUtils::adjustDemandForNegativePrice( perCapitaDemand, priceRatio );
         }
         // Multiply by population to get total demand.
         double demand = perCapitaDemand * buildingNodeInput->getSubregionalPopulation();
-        (*inputIter)->setPhysicalDemand( demand, regionName, period );
+        (*inputIter)->setPhysicalDemand( demand, aRegionName, period );
         totalDemand += demand;
     }
 
     return totalDemand;
 }
 
-double BuildingFunction::calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                         const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+double BuildingFunction::calcLevelizedCost( const InputSet& aInputs, const gcamstr& aRegionName,
+                         const gcamstr& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                          const IInput* aParentInput ) const
 {
     double price = 0;

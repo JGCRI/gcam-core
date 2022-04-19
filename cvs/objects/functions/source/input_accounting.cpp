@@ -113,7 +113,7 @@ InputAccounting* InputAccounting::clone() const {
 }
 
 void InputAccounting::setPhysicalDemand( double aPhysicalDemand,
-                                     const string& aRegionName,
+                                     const gcamstr& aRegionName,
                                      const int aPeriod )
 {
     EnergyInput::setPhysicalDemand( aPhysicalDemand, aRegionName, aPeriod );

@@ -104,7 +104,7 @@ const string& LinkedGHGPolicy::getXMLNameStatic() {
 }
 
 //! Get the linked ghg policy name. 
-const string& LinkedGHGPolicy::getName() const {
+const gcamstr& LinkedGHGPolicy::getName() const {
     return mName;
 }
 
@@ -138,7 +138,7 @@ void LinkedGHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) c
  * the market prices.
  * \param aRegionName The name of the region the policy controls. 
  */
-void LinkedGHGPolicy::completeInit( const string& aRegionName ) {
+void LinkedGHGPolicy::completeInit( const gcamstr& aRegionName ) {
     if( mPolicyName.empty() ) {
         mPolicyName = mName;
     }

@@ -77,9 +77,8 @@ BuildingNodeInput::~BuildingNodeInput() {
     delete mSatiationDemandFunction;
 }
 
-
-void BuildingNodeInput::completeInit( const string& aRegionName, const string& aSectorName,
-                                      const string& aSubsectorName, const string& aTechName,
+void BuildingNodeInput::completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
+                                      const gcamstr& aSubsectorName, const gcamstr& aTechName,
                                       const IInfo* aTechInfo)
 {
     // create internal gains market for this type of building
@@ -88,7 +87,7 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
     if( SectorUtils::createTrialSupplyMarket( aRegionName, mInternalGainsMarketname, internalGainsInfo.get() ) ){
         // set initial trial supplies from the parsed vector
         Marketplace* marketplace = scenario->getMarketplace();
-        const string trialMarketName = SectorUtils::getTrialMarketName( mInternalGainsMarketname );
+        const gcamstr trialMarketName = SectorUtils::getTrialMarketName( mInternalGainsMarketname );
         // Note tech name is the name of the consumer which in GCAM is called
         // directly and so should be the name used in dependency tracking.
         marketplace->getDependencyFinder()->addDependency( aTechName, aRegionName, trialMarketName, aRegionName );
@@ -124,8 +123,8 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
     SectorUtils::fillMissingPeriodVectorInterpolated( mFloorToSurfaceRatio );
 }
 
-void BuildingNodeInput::initCalc( const string& aRegionName,
-                                  const string& aSectorName,
+void BuildingNodeInput::initCalc( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const bool aIsNewInvestmentPeriod,
                                   const bool aIsTrade,
                                   const IInfo* aTechInfo,
@@ -267,7 +266,7 @@ const string& BuildingNodeInput::getXMLNameStatic() {
 }
 
 //! Get the name of the NodeInput
-const string& BuildingNodeInput::getName() const {
+const gcamstr& BuildingNodeInput::getName() const {
     return mName;
 }
 
@@ -288,7 +287,7 @@ Value BuildingNodeInput::getSubregionalPopulation() const {
  * \return Subregional income that has been set from
  *           the consumer.
  */
-double BuildingNodeInput::getSubregionalIncome( const string& aRegionName, const int aPeriod ) const {
+double BuildingNodeInput::getSubregionalIncome( const gcamstr& aRegionName, const int aPeriod ) const {
     return mCurrentSubregionalIncomeShare * SectorUtils::getGDP( aRegionName, aPeriod ) / mCurrentSubregionalPopulation;
 }
 
@@ -316,7 +315,7 @@ Value BuildingNodeInput::getFloorToSurfaceRatio( const int aPeriod ) const {
  * \param aPeriod Model period.
  * \return Internal gains in the given period.
  */
-double BuildingNodeInput::getInternalGains( const string& aRegionName, const int aPeriod ) const {
+double BuildingNodeInput::getInternalGains( const gcamstr& aRegionName, const int aPeriod ) const {
     return SectorUtils::getTrialSupply( aRegionName, mInternalGainsMarketname, aPeriod );
 }
 
@@ -336,7 +335,7 @@ void BuildingNodeInput::removeEmptyInputs() {
 void BuildingNodeInput::initialize() {
 }
 
-void BuildingNodeInput::calcCoefficient( const std::string& aRegionName, const std::string& aSectorName,
+void BuildingNodeInput::calcCoefficient( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aTechPeriod )
 {
     // have child inputs calculate their children's coefficients first
@@ -349,7 +348,7 @@ void BuildingNodeInput::calcCoefficient( const std::string& aRegionName, const s
         0, aRegionName, aSectorName, aTechPeriod, 0, 0, 0, this );
 }
 
-void BuildingNodeInput::changeElasticity( const std::string& aRegionName, const int aPeriod, const double aAlphaZero ) {
+void BuildingNodeInput::changeElasticity( const gcamstr& aRegionName, const int aPeriod, const double aAlphaZero ) {
     // have children adjust their children's coefficients first
     for( NestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
         (*it)->changeElasticity( aRegionName, aPeriod, aAlphaZero );
@@ -360,7 +359,7 @@ void BuildingNodeInput::changeElasticity( const std::string& aRegionName, const 
         0, 0 );
 }
 
-void BuildingNodeInput::calcLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+void BuildingNodeInput::calcLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero ) 
 {
     // have children calculate their levelized costs first
@@ -376,7 +375,7 @@ void BuildingNodeInput::calcLevelizedCost( const std::string& aRegionName, const
     setPricePaid( weightedEnergyPrice, aPeriod );
 }
 
-double BuildingNodeInput::calcInputDemand( const std::string& aRegionName, const std::string& aSectorName,
+double BuildingNodeInput::calcInputDemand( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aPhysicalOutput, const double aUtilityParameterA,
         const double aAlphaZero )
 {
@@ -398,7 +397,7 @@ const IFunction* BuildingNodeInput::getFunction() const {
     return mFunction;
 }
 
-double BuildingNodeInput::getLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+double BuildingNodeInput::getLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod ) const
 {
     return mPrice[ aPeriod ];
@@ -409,7 +408,7 @@ double BuildingNodeInput::getPhysicalDemand( const int aPeriod ) const {
 }
     
 void BuildingNodeInput::setPhysicalDemand( const double aPhysicalDemand,
-                                    const std::string& aRegionName, 
+                                    const gcamstr& aRegionName, 
                                     const int aPeriod )
 {
     // We are storing the results in the same vector as the calibration data
@@ -425,20 +424,20 @@ void BuildingNodeInput::setPhysicalDemand( const double aPhysicalDemand,
     }
 }
 
-double BuildingNodeInput::getPrice( const std::string& aRegionName,
+double BuildingNodeInput::getPrice( const gcamstr& aRegionName,
                              const int aPeriod ) const
 {
     return mPrice[ aPeriod ];
 }
 
-void BuildingNodeInput::setPrice( const std::string& aRegionName,
+void BuildingNodeInput::setPrice( const gcamstr& aRegionName,
                            const double aPrice,
                            const int aPeriod )
 {
     mPrice[ aPeriod ] = aPrice;
 }
 
-double BuildingNodeInput::getPricePaid( const std::string& aRegionName,
+double BuildingNodeInput::getPricePaid( const gcamstr& aRegionName,
                                  const int aPeriod ) const
 {
     return mPrice[ aPeriod ];

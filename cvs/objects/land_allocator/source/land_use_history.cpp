@@ -87,8 +87,9 @@ bool LandUseHistory::XMLParse(rapidxml::xml_node<char>* & aNode) {
     }
 }
 
-const string& LandUseHistory::getName() const {
-    return getXMLNameStatic();
+const gcamstr& LandUseHistory::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 void LandUseHistory::toDebugXML( const int aPeriod,

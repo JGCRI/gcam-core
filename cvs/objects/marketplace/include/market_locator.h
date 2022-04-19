@@ -45,16 +45,28 @@
 * \author Josh Lurz
 */
 
-#include <string>
-#include <memory>
-#include <boost/shared_ptr.hpp>
-template <class T, class U> class HashMap;
+#include "util/base/include/definitions.h"
+#include <unordered_map>
+//#include <memory>
+//#include <boost/shared_ptr.hpp>
+//template <class T, class U> class HashMap;
 
-#include <boost/functional/hash/hash.hpp>
+//#include <boost/functional/hash/hash.hpp>
 
-#if GCAM_PARALLEL_ENABLED
+namespace std {
+template<>
+struct hash<std::pair<gcamstr, gcamstr> > {
+    size_t operator()(const std::pair<gcamstr, gcamstr>& aPair) const {
+        std::hash<const std::string*> hasher;
+        return hasher(&aPair.first.get()) ^ hasher(&aPair.second.get());
+    }
+};
+}
+
+
+/*#if GCAM_PARALLEL_ENABLED
 #include <tbb/enumerable_thread_specific.h>
-#endif
+#endif*/
 
 /*!
 * \ingroup Objects
@@ -83,77 +95,85 @@ class MarketLocator
 public:
     MarketLocator();
     ~MarketLocator();
-    int addMarket( const std::string& aMarket, const std::string& aRegion, const std::string& aGoodName,
+    int addMarket( const gcamstr& aMarket, const gcamstr& aRegion, const gcamstr& aGoodName,
         const int aUniqueNumber );
-    int getMarketNumber( const std::string& aRegion, const std::string& aGoodName ) const;
+    int getMarketNumber( const gcamstr& aRegion, const gcamstr& aGoodName ) const;
 
     //! An identifier returned by the various functions if the market does not
     //! exist.
     static const int MARKET_NOT_FOUND = -1;
 private:
-    int getMarketNumberInternal( const std::string& aRegion, const std::string& aGoodName ) const;
+    //int getMarketNumberInternal( const gcamstr& aRegion, const gcamstr& aGoodName ) const;
 
     /*! \brief A single node in a list of goods which contains the name of the
     *          good and its market location.
     */
-    class GoodNode {
+    /*class GoodNode {
     public:
-        GoodNode( const std::string& aName, int aMarketNumber );
+        GoodNode( const gcamstr& aName, int aMarketNumber );
+        GoodNode( const GoodNode& aOther) = delete;
+        ~GoodNode();
 
         //! The good name.
-        const std::string mName;
+        const gcamstr mName;
 
         //! The market number.
         const int mNumber;
-    };
+        
+        int mRefCount;
+    };*/
 
     /*! \brief A single node in a list of Regions or Markets which contains the
     *          name of the Region or Market and a list of good names and market
     *          locations. 
     */
-    class RegionOrMarketNode {
+    /*class RegionOrMarketNode {
     public:
-        RegionOrMarketNode( const std::string& aName );
+        RegionOrMarketNode( const gcamstr& aName );
         ~RegionOrMarketNode();
-        inline const std::string& getName() const;
-        int addGood( const std::string& aGoodName, const int aMarketNumber );
-        int getMarketNumber( const std::string& aGoodName ) const;
+        inline const gcamstr& getName() const;
+        int addGood( const gcamstr& aGoodName, const int aMarketNumber );
+        int getMarketNumber( const gcamstr& aGoodName ) const;
     private:
         //! The type of the list that contains the goods.
-        typedef HashMap<std::string, boost::shared_ptr<GoodNode> > SectorNodeList;
+        //typedef HashMap<std::string, boost::shared_ptr<GoodNode> > SectorNodeList;
+        std::unordered_map<gcamstr, GoodNode> SectorNodeList;
 
         //! A list of sectors contained by this market or region.
         std::unique_ptr<SectorNodeList> mSectorNodeList;
         
         //! The region or market area name.
-        const std::string mName;
-    };
+        const gcamstr mName;
+    };*/
 
     //! The type of the lists of regions or markets.
-    typedef HashMap<std::string, boost::shared_ptr<RegionOrMarketNode> > RegionMarketList;
+    //typedef HashMap<std::string, boost::shared_ptr<RegionOrMarketNode> > RegionMarketList;
+    typedef std::unordered_map<std::pair<gcamstr, gcamstr>, int> RegionMarketList;
 
     //! A pointer to the last region looked up.
-#if GCAM_PARALLEL_ENABLED
-    mutable tbb::enumerable_thread_specific<const RegionOrMarketNode*> mLastRegionLookup;
+/*#if GCAM_PARALLEL_ENABLED
+    mutable tbb::enumerable_thread_specific<RegionMarketList::const_iterator> mLastRegionLookup;
 #else
-    mutable const RegionOrMarketNode* mLastRegionLookup;
-#endif
+    mutable RegionMarketList::const_iterator mLastRegionLookup;
+#endif*/
 
     //! A list of market areas each containing a list of sectors contained by
     //! the market.
-    std::unique_ptr<RegionMarketList> mMarketList;
+    //std::auto_ptr<RegionMarketList> mMarketList;
+    RegionMarketList mMarketList;
 
     //! A list of regions each containing a list of of sectors contained by the
     //! region.
-    std::unique_ptr<RegionMarketList> mRegionList;
+    //std::auto_ptr<RegionMarketList> mRegionList;
+    RegionMarketList mRegionList;
 };
 
 // Inline definitions.
 /*! \brief Get the name of the RegionOrMarketNode.
 * \return The name of the RegionOrMarketNode.
 */
-const std::string& MarketLocator::RegionOrMarketNode::getName() const {
+/*const std::string& MarketLocator::RegionOrMarketNode::getName() const {
     return mName;
-}
+}*/
 
 #endif // _MARKET_LOCATOR_H_

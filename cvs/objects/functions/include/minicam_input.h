@@ -80,14 +80,14 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const = 0;
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const std::string& aTechName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo ) = 0;
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
@@ -97,9 +97,9 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const = 0;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
-    virtual const std::string& getMarketName( const std::string& aRegionName ) const;
+    virtual const std::string& getMarketName( const gcamstr& aRegionName ) const;
 
     virtual void initializeTypeFlags();
     
@@ -112,20 +112,20 @@ public:
     
     virtual double getTechChange( const int aPeriod ) const = 0;
 
-    virtual double getPrice( const std::string& aRegionName,
+    virtual double getPrice( const gcamstr& aRegionName,
                              const int aPeriod ) const = 0;
 
-    virtual double getPricePaid( const std::string& aRegionName,
+    virtual double getPricePaid( const gcamstr& aRegionName,
                                  const int aPeriod ) const;
 
     virtual void setPricePaid( const double aPricePaid,
                                const int aPeriod );
 
-    virtual double getPriceReceived( const std::string& aRegionName,
+    virtual double getPriceReceived( const gcamstr& aRegionName,
                                      const int aPeriod ) const;
 
     virtual void setCurrencyDemand( const double aCurrencyDemand,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod );
 
     virtual double getPhysicalDemand( const int aPeriod ) const = 0;
@@ -133,7 +133,7 @@ public:
     virtual double getCarbonContent( const int aPeriod ) const;
 
     virtual void setPhysicalDemand( const double aPhysicalDemand,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod ) = 0;
 
     virtual double getCoefficient( const int aPeriod ) const = 0;
@@ -186,8 +186,8 @@ public:
 	virtual void copyParamsInto( InputCapital& aInput,
 								const int aPeriod ) const {}
 
-    virtual void calcPricePaid( const std::string& aRegionName,
-                                const std::string& aSectorName,
+    virtual void calcPricePaid( const gcamstr& aRegionName,
+                                const gcamstr& aSectorName,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,

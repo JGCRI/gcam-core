@@ -105,7 +105,7 @@ void AgSupplySector::completeInit( const IInfo* aRegionInfo,
 	}*/
     
     // make available the minimum calibration profit rate to the technology through the info object
-    mSectorInfo->setDouble( "cal-min-profit-rate", mCalMinProfitRate );
+    mSectorInfo->setDouble( gcamstr("cal-min-profit-rate"), mCalMinProfitRate );
 }
 
 /*! \brief Calculate the sector price.
@@ -169,8 +169,8 @@ void AgSupplySector::setMarket() {
     if ( marketplace->createMarket( mRegionName, mMarketName, mName, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
         IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, 0, true );
-        marketInfo->setString( "price-unit", mPriceUnit );
-        marketInfo->setString( "output-unit", mOutputUnit );
+        marketInfo->setString( gcamstr("price-unit"), mPriceUnit );
+        marketInfo->setString( gcamstr("output-unit"), mOutputUnit );
 
         // Set market prices to initial price vector
         marketplace->setPriceVector( mName, mRegionName, mPrice );
@@ -184,8 +184,8 @@ void AgSupplySector::setMarket() {
         if ( mCalPrice > 0 ) {
             for( int per = 0; per < modeltime->getmaxper(); ++per ){
                 IInfo* marketInfo = marketplace->getMarketInfo( mName, mRegionName, per, true );
-                marketInfo->setDouble( "calPrice", mCalPrice );
-                marketInfo->setBoolean( "fully-calibrated", true );
+                marketInfo->setDouble( gcamstr("calPrice"), mCalPrice );
+                marketInfo->setBoolean( gcamstr("fully-calibrated"), true );
             }
         }
     }

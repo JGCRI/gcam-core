@@ -121,8 +121,8 @@ void GCAMConsumer::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aT
     XMLWriteElement( mSubregionalIncomeShare[ aPeriod ], "subregional-income-share", aOut, aTabs );
 }
 
-void GCAMConsumer::completeInit( const string& aRegionName, const string& aSectorName,
-                                 const string& aSubsectorName ) {
+void GCAMConsumer::completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
+                                 const gcamstr& aSubsectorName ) {
     BaseTechnology::completeInit( aRegionName, aSectorName, aSubsectorName );
     
     // Basetechnology creates a SGMOutput. This is not needed for GCAM and
@@ -148,8 +148,8 @@ void GCAMConsumer::completeInit( const string& aRegionName, const string& aSecto
     SectorUtils::addGDPDependency( aRegionName, name );
 }
 
-void GCAMConsumer::initCalc( const string& aRegionName,
-                             const string& aSectorName, NationalAccount& aNationalAccount,
+void GCAMConsumer::initCalc( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName, NationalAccount& aNationalAccount,
                              const Demographic* aDemographics,
                              const double aCapitalStock, const int aPeriod )
 {
@@ -172,8 +172,8 @@ void GCAMConsumer::initCalc( const string& aRegionName,
 }
 
 void GCAMConsumer::operate( NationalAccount& aNationalAccount, const Demographic* aDemographics,
-                            const string& aRegionName,
-                            const string& aSectorName, const bool aIsNewVintageMode, int aPeriod )
+                            const gcamstr& aRegionName,
+                            const gcamstr& aSectorName, const bool aIsNewVintageMode, int aPeriod )
 {
     // In calibration periods we will back out coefficients to reproduce the read in base year
     // values in the nested input structure.
@@ -193,7 +193,7 @@ void GCAMConsumer::operate( NationalAccount& aNationalAccount, const Demographic
     calcInputDemand( 0, aRegionName, aSectorName, aPeriod );
 }
 
-void GCAMConsumer::postCalc( const string& aRegionName, const string& aSectorName, const int aPeriod ) {
+void GCAMConsumer::postCalc( const gcamstr& aRegionName, const gcamstr& aSectorName, const int aPeriod ) {
     // nothing to do
 }
 

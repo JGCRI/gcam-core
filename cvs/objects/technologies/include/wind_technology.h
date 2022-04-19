@@ -92,8 +92,8 @@ public :
 
    // Documentation is inherited
    virtual void calcCost(
-      const std::string& aRegionName,
-      const std::string& aSectorName,
+      const gcamstr& aRegionName,
+      const gcamstr& aSectorName,
       const int          aPeriod );
 
    // Documentation is inherited
@@ -101,9 +101,9 @@ public :
 
    // Documentation is inherited
    virtual void completeInit(
-      const std::string&              aRegionName,
-      const std::string&              aSectorName,
-      const std::string&              aSubsectorName,
+      const gcamstr&              aRegionName,
+      const gcamstr&              aSectorName,
+      const gcamstr&              aSubsectorName,
       const IInfo*                    aSubsectorIInfo,
       ILandAllocator*                 aLandAllocator );
 
@@ -112,8 +112,8 @@ public :
 
    // Documentation is inherited
    virtual void initCalc(
-      const std::string& aRegionName,
-      const std::string& aSectorName,
+      const gcamstr& aRegionName,
+      const gcamstr& aSectorName,
       const IInfo*       aSubsectorIInfo,
       const Demographic* aDemographics,
       PreviousPeriodInfo& aPrevPeriodInfo,
@@ -148,8 +148,8 @@ protected :
       NUM_KEYS
    };
 
-    virtual double getResourceToEnergyRatio( const std::string& aRegionName,
-                                             const std::string& aSectorName,
+    virtual double getResourceToEnergyRatio( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
                                              const int aPeriod );
 
    static std::string sXMLTagNames[NUM_KEYS];
@@ -177,8 +177,8 @@ protected :
     *  \return the resource area
     */
    virtual double calcResourceArea(
-      const std::string& aRegionName,
-      const std::string& aSectorName,
+      const gcamstr& aRegionName,
+      const gcamstr& aSectorName,
       double             aVariableDemand,
       const int          aPeriod );
 

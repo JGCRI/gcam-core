@@ -310,7 +310,7 @@ void ManageStateVariables::setPartialDeriv( const bool aIsPartialDeriv ) {
 string ManageStateVariables::getRestartFileName() const {
     Configuration* conf = Configuration::getInstance();
     const string fileName = conf->getFile( "restart", "restart/restart" );
-    const string scnAppend = conf->shouldAppendScnToFile( "restart" ) ? "." + scenario->getName() : "";
+    const string scnAppend = conf->shouldAppendScnToFile( "restart" ) ? "." + scenario->getName().get() : "";
     const string period = util::toString( mPeriodToCollect );
     return fileName + scnAppend + "." + period;
 }

@@ -56,11 +56,11 @@ class PolicyPortfolioStandard: public GHGPolicy {
 public:
     PolicyPortfolioStandard();
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void completeInit( const std::string& aRegionName );
+    virtual void completeInit( const gcamstr& aRegionName );
 protected:
 
     DEFINE_DATA_WITH_PARENT(

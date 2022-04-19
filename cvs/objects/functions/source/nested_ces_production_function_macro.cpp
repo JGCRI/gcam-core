@@ -78,7 +78,7 @@ mOutputMrkName("energy service")
 }
 
 //! Get the name of the NodeInput
-const string& FactorInputLeaf::getName() const {
+const gcamstr& FactorInputLeaf::getName() const {
     return mName;
 }
 
@@ -106,20 +106,20 @@ bool FactorInputLeaf::isPrimaryFactor() const {
 }
 
 //! complete initializations
-void FactorInputLeaf::completeInit( const string& aRegionName, const string& aGDPActName ){
+void FactorInputLeaf::completeInit( const gcamstr& aRegionName, const gcamstr& aGDPActName ){
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
     depFinder->addDependency(aGDPActName, aRegionName, mOutputMrkName, aRegionName);
 }
 
 //! complete initializations for each period
-void FactorInputLeaf::initCalc(const string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod){
+void FactorInputLeaf::initCalc(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod){
     // do nothing
 }
 
 
 
 //! post calcualtions for each period
-void FactorInputLeaf::postCalc(const string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod){
+void FactorInputLeaf::postCalc(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod){
     // do nothing
 }
 
@@ -155,7 +155,7 @@ mFactorNodeGamma(1)
 
 
 //! Get the name of the NodeInput
-const string& FactorInputNode::getName() const {
+const gcamstr& FactorInputNode::getName() const {
     return mName;
 }
 
@@ -189,21 +189,21 @@ bool FactorInputNode::isPrimaryFactor() const {
 }
 
 //! complete initializations
-void FactorInputNode::completeInit( const string& aRegionName, const string& aGDPActName ) {
+void FactorInputNode::completeInit( const gcamstr& aRegionName, const gcamstr& aGDPActName ) {
     for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
         mFactorInputLeaf[i]->completeInit( aRegionName, aGDPActName );
     }
 }
 
 //! complete initializations for each period
-void FactorInputNode::initCalc( const string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ) {
+void FactorInputNode::initCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ) {
     for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
         mFactorInputLeaf[i]->initCalc( aRegionName, aNationalAccount, aPeriod );
     }
 }
 
 //! post calcualtions for each period
-void FactorInputNode::postCalc( const string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ){
+void FactorInputNode::postCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ){
     for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
         mFactorInputLeaf[i]->postCalc(aRegionName, aNationalAccount, aPeriod);
     }
@@ -251,8 +251,8 @@ const string& NestedCESProductionFunctionMacro::getXMLName() const {
  * \details The NestedCESProductionFunctionMacro isn't named by the user so we just return the XML name.
  * \return The name of this container.
  */
-const string& NestedCESProductionFunctionMacro::getName() const {
-    return getXMLNameStatic();
+const gcamstr& NestedCESProductionFunctionMacro::getName() const {
+    return gcamstr(getXMLNameStatic());
 }
 
 //! Writes data members to debugging data stream in XML format.
@@ -265,7 +265,7 @@ void NestedCESProductionFunctionMacro::toDebugXML( const int aPeriod, ostream& a
 }
 
 //! Complete initializations and scaler initializations
-void NestedCESProductionFunctionMacro::completeInit(const string& aRegionName, const string& aGDPActName ){
+void NestedCESProductionFunctionMacro::completeInit(const gcamstr& aRegionName, const gcamstr& aGDPActName ){
 
     // complete initialization for nodes and leaves and establish input dependencies
     for( unsigned int i = 0; i < mFactorInputNode.size(); i++ ){
@@ -274,7 +274,7 @@ void NestedCESProductionFunctionMacro::completeInit(const string& aRegionName, c
 }
 
 //! complete initializations for each period
-void NestedCESProductionFunctionMacro::initCalc( const string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ){
+void NestedCESProductionFunctionMacro::initCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ){
     
     // initialization of factor reward shares and base scalers are done in
     // postCalc as dynamic calculations of energy value are required
@@ -289,7 +289,7 @@ void NestedCESProductionFunctionMacro::setTotalFactorProductivity(const double a
 }
 
 //! calculate Gross Output
-double NestedCESProductionFunctionMacro::calcGrossOutput( const string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod, const bool aSaveResults ){
+double NestedCESProductionFunctionMacro::calcGrossOutput( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod, const bool aSaveResults ){
     const Modeltime* modeltime = scenario->getModeltime();
     const Marketplace* marketplace = scenario->getMarketplace();
     
@@ -386,7 +386,7 @@ double NestedCESProductionFunctionMacro::calcGrossOutput( const string& aRegionN
     return grossOutput;
 }
 
-void NestedCESProductionFunctionMacro::postCalc( const string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ) {
+void NestedCESProductionFunctionMacro::postCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ) {
     for( unsigned int i = 0; i < mFactorInputNode.size(); i++ ){
         mFactorInputNode[i]->postCalc(aRegionName, aNationalAccount, aPeriod);
     }

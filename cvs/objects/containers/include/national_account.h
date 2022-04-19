@@ -140,7 +140,6 @@ public:
     NationalAccount* cloneAndInterpolate( const int aNewYear ) const;
     static const std::string& getXMLNameStatic();
     int getYear() const;
-    const std::string getName() const;
     bool XMLParse( rapidxml::xml_node<char>* & aNode );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     void completeInit();
@@ -152,9 +151,8 @@ public:
     void addToAccount( const AccountType aType, const double aValue );
     void setAccount( const AccountType aType, const double aValue );
     double getAccountValue( const AccountType aType ) const;
-    const std::string& enumToXMLName( const AccountType aType ) const;
+    const gcamstr& enumToXMLName( const AccountType aType ) const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
-    const std::string& enumToName( const AccountType aType ) const;
 
 protected:
     

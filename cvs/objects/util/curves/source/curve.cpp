@@ -108,7 +108,7 @@ void Curve::outputAsXML( ostream& aOut, Tabs* aTabs ) const {
 
 //! Get the curve name.
 const std::string Curve::getName() const {
-    return name;
+    return name.get();
 }
 
 //! Get the curve title.

@@ -146,10 +146,10 @@ void InputSubsidy::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void InputSubsidy::completeInit( const string& aRegionName,
-                                 const string& aSectorName,
-                                 const string& aSubsectorName,
-                                 const string& aTechName,
+void InputSubsidy::completeInit( const gcamstr& aRegionName,
+                                 const gcamstr& aSectorName,
+                                 const gcamstr& aSubsectorName,
+                                 const gcamstr& aTechName,
                                  const IInfo* aTechInfo )
 {
 
@@ -162,8 +162,8 @@ void InputSubsidy::completeInit( const string& aRegionName,
     
 }
 
-void InputSubsidy::initCalc( const string& aRegionName,
-                             const string& aSectorName,
+void InputSubsidy::initCalc( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
                              const bool aIsNewInvestmentPeriod,
                              const bool aIsTrade,
                              const IInfo* aTechInfo,
@@ -203,7 +203,7 @@ double InputSubsidy::getCarbonContent( const int aPeriod ) const {
 }
 
 void InputSubsidy::setPhysicalDemand( double aPhysicalDemand,
-                                     const string& aRegionName,
+                                     const gcamstr& aRegionName,
                                      const int aPeriod )
 {
 
@@ -212,8 +212,9 @@ void InputSubsidy::setPhysicalDemand( double aPhysicalDemand,
 
     // If subsidy is shared based, then divide by sector output.
     // Check if marketInfo exists and has the "isShareBased" boolean.
-    if( marketInfo && marketInfo->hasValue( "isShareBased" ) ){
-        if( marketInfo->getBoolean( "isShareBased", true ) ){
+    const static gcamstr isShareKey = gcamstr("isShareBased");
+    if( marketInfo && marketInfo->hasValue( isShareKey ) ){
+        if( marketInfo->getBoolean( isShareKey, true ) ){
             // Each share is additive
             aPhysicalDemand/= marketplace->getDemand( mSectorName, aRegionName, aPeriod );
         }
@@ -243,7 +244,7 @@ void InputSubsidy::setCoefficient( const double aCoefficient,
     // Do nothing.
 }
 
-double InputSubsidy::getPrice( const string& aRegionName,
+double InputSubsidy::getPrice( const gcamstr& aRegionName,
                               const int aPeriod ) const
 {
     // Return negative of price to reflect subsidy for portfolio
@@ -252,7 +253,7 @@ double InputSubsidy::getPrice( const string& aRegionName,
     return - scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod, true );
 }
 
-void InputSubsidy::setPrice( const string& aRegionName,
+void InputSubsidy::setPrice( const gcamstr& aRegionName,
                             const double aPrice,
                             const int aPeriod )
 {

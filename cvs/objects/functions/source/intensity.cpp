@@ -88,9 +88,10 @@ bool Intensity::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& Intensity::getName() const {
+const gcamstr& Intensity::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
     // Coefficients do not have unique names.
-    return getXMLNameStatic();
+    return NAME;
 }
 
 void Intensity::toDebugXML( const int aPeriod,

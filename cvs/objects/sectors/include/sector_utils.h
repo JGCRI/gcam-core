@@ -47,7 +47,7 @@
 #include <string>
 #include <vector>
 #include <utility>
-#include "util/base/include/hash_map.h"
+//#include "util/base/include/hash_map.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 
@@ -62,29 +62,29 @@ class IInfo;
 class SectorUtils {
 public:
     
-    static void addGDPDependency( const std::string& aRegionName, const std::string& aSectorName );
-    static double getGDP( const std::string& aRegionName, const int aPeriod );
-    static double getGDPPerCap( const std::string& aRegionName, const int aPeriod );
-    static double getGDPPerCapScaled( const std::string& aRegionName, const int aPeriod );
-    static double getGDPPPP( const std::string& aRegionName, const int aPeriod );
+    static void addGDPDependency( const gcamstr& aRegionName, const gcamstr& aSectorName );
+    static double getGDP( const gcamstr& aRegionName, const int aPeriod );
+    static double getGDPPerCap( const gcamstr& aRegionName, const int aPeriod );
+    static double getGDPPerCapScaled( const gcamstr& aRegionName, const int aPeriod );
+    static double getGDPPPP( const gcamstr& aRegionName, const int aPeriod );
     
-    static bool createTrialSupplyMarket( const std::string& aRegionName,
-                                         const std::string& aSectorName,
+    static bool createTrialSupplyMarket( const gcamstr& aRegionName,
+                                         const gcamstr& aSectorName,
                                          const IInfo* aTechnologyInfo,
-                                         const std::string& aMarketName = std::string() );
+                                         const gcamstr& aMarketName = gcamstr() );
 
-    static bool createTrialSupplyMarket( const std::string& aRegionName,
-                                         const std::string& aSectorName,
-                                         const std::string& aUnitStr,
-                                         const std::string& aMarketName = std::string() );    
+    static bool createTrialSupplyMarket( const gcamstr& aRegionName,
+                                         const gcamstr& aSectorName,
+                                         const gcamstr& aUnitStr,
+                                         const gcamstr& aMarketName = gcamstr() );    
 
-    static void addToTrialDemand( const std::string& aRegionName,
-                                  const std::string& aSectorName,
+    static void addToTrialDemand( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const Value& aSupply,
                                   const int aPeriod );
 
-    static double getTrialSupply( const std::string& aRegionName,
-                                  const std::string& aSectorName,
+    static double getTrialSupply( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const int aPeriod );
 
     static double calcFixedOutputScaleFactor( const double aMarketDemand,
@@ -93,8 +93,8 @@ public:
     static double normalizeShares( std::vector<double>& aShares );
     static std::pair<double, double> normalizeLogShares( std::vector<double> & alogShares );
 
-    static double calcPriceRatio( const std::string& aRegionName,
-                                  const std::string& aSectorName,
+    static double calcPriceRatio( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const int aBasePeriod,
                                   const int aCurrentPeriod );
 
@@ -103,13 +103,13 @@ public:
     static double adjustDemandForNegativePrice( const double aDemandScalar,
                                                 const double aPrice );
 
-    static const std::string createTFEMarketName( const std::string& aSectorName );
+    static const std::string createTFEMarketName( const gcamstr& aSectorName );
 
-    static void setFinalEnergyFlag( const std::string& aRegionName,
-                                    const std::string& aSectorName );
+    static void setFinalEnergyFlag( const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName );
 
-    static bool isFinalEnergySector( const std::string& aRegionName,
-                                     const std::string& aSectorName );
+    static bool isFinalEnergySector( const gcamstr& aRegionName,
+                                     const gcamstr& aSectorName );
 
     static int getDemandNormPeriod( const int aPeriod );
 
@@ -119,9 +119,9 @@ public:
     static double convertCapacityToEnergy( const double aCapacityFactor,
                                            const double aCapacity );
 
-    static const std::string getTrialMarketName( const std::string& aSectorName );
+    static const gcamstr getTrialMarketName( const gcamstr& aSectorName );
 
-    static void setSupplyBehaviorBounds( const std::string& aGoodName, const std::string& aRegionName,
+    static void setSupplyBehaviorBounds( const gcamstr& aGoodName, const gcamstr& aRegionName,
                                          const double aLowerPriceBound, const double aUpperPriceBound,
                                          const int aPeriod );
 
@@ -145,7 +145,7 @@ public:
 
 protected:
 
-    static HashMap<std::string, std::string> sTrialMarketNames;
+    static std::map<gcamstr, gcamstr> sTrialMarketNames;
 };
 
 #endif // _SECTOR_UTILS_H_

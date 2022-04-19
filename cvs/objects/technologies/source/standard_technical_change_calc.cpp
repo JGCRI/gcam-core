@@ -87,8 +87,9 @@ const string& StandardTechnicalChangeCalc::getXMLNameStatic() {
     return XML_NAME;
 }
 
-const string& StandardTechnicalChangeCalc::getName() const {
-    return getXMLNameStatic();
+const gcamstr& StandardTechnicalChangeCalc::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 void StandardTechnicalChangeCalc::toDebugXML( const int aPeriod,
@@ -109,8 +110,8 @@ void StandardTechnicalChangeCalc::completeInit()
 double StandardTechnicalChangeCalc::calcAndAdjustForTechChange( vector<IInput*>& aInputs,
                                                                 PreviousPeriodInfo& aPreviousPeriodInfo,
                                                                 const IFunction* aProductionFunc,
-                                                                const string& aRegionName,
-                                                                const string& aSectorName,
+                                                                const gcamstr& aRegionName,
+                                                                const gcamstr& aSectorName,
                                                                 const int aPeriod ) const
 {
     // Allow the production function to adjust for technical change given the

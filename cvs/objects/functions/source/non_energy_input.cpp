@@ -148,10 +148,10 @@ void NonEnergyInput::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
-void NonEnergyInput::completeInit( const string& aRegionName,
-                                   const string& aSectorName,
-                                   const string& aSubsectorName,
-                                   const string& aTechName,
+void NonEnergyInput::completeInit( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
+                                   const gcamstr& aSubsectorName,
+                                   const gcamstr& aTechName,
                                    const IInfo* aTechInfo )
 {
     // Initialize the adjusted costs in all periods to the base read-in costs.
@@ -160,8 +160,8 @@ void NonEnergyInput::completeInit( const string& aRegionName,
     fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mCost );
 }
 
-void NonEnergyInput::initCalc( const string& aRegionName,
-                               const string& aSectorName,
+void NonEnergyInput::initCalc( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const bool aIsNewInvestmentPeriod,
                                const bool aIsTrade,
                                const IInfo* aTechInfo,
@@ -175,14 +175,14 @@ void NonEnergyInput::initCalc( const string& aRegionName,
     mAdjustedCoefficients[ aPeriod ] = 1;
 }
 
-double NonEnergyInput::getPrice( const string& aRegionName,
+double NonEnergyInput::getPrice( const gcamstr& aRegionName,
                                  const int aPeriod ) const
 {
     assert( mAdjustedCosts[ aPeriod ].isInited() );
     return mAdjustedCosts[ aPeriod ];
 }
 
-void NonEnergyInput::setPrice( const string& aRegionName,
+void NonEnergyInput::setPrice( const gcamstr& aRegionName,
                                const double aPrice,
                                const int aPeriod ) 
 {
@@ -194,7 +194,7 @@ double NonEnergyInput::getPhysicalDemand( const int aPeriod ) const {
 }
 
 void NonEnergyInput::setPhysicalDemand( double aPhysicalDemand,
-                                        const string& aRegionName,
+                                        const gcamstr& aRegionName,
                                         const int aPeriod )
 {
     // Does not add to the marketplace.
@@ -294,10 +294,10 @@ const string& TrackingNonEnergyInput::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void TrackingNonEnergyInput::completeInit( const string& aRegionName,
-                                   const string& aSectorName,
-                                   const string& aSubsectorName,
-                                   const string& aTechName,
+void TrackingNonEnergyInput::completeInit( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
+                                   const gcamstr& aSubsectorName,
+                                   const gcamstr& aTechName,
                                    const IInfo* aTechInfo )
 {
     NonEnergyInput::completeInit(aRegionName, aSectorName,
@@ -306,8 +306,8 @@ void TrackingNonEnergyInput::completeInit( const string& aRegionName,
     // on mTrackingMarketName, however if we had price feedbacks we would
 }
 
-void TrackingNonEnergyInput::initCalc( const string& aRegionName,
-                               const string& aSectorName,
+void TrackingNonEnergyInput::initCalc( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const bool aIsNewInvestmentPeriod,
                                const bool aIsTrade,
                                const IInfo* aTechInfo,
@@ -320,7 +320,7 @@ void TrackingNonEnergyInput::initCalc( const string& aRegionName,
 }
 
 void TrackingNonEnergyInput::setPhysicalDemand(const double aValue,
-        const string& aRegionName,
+        const gcamstr& aRegionName,
         const int aPeriod )
 {
     if(mIsActive) {

@@ -71,7 +71,7 @@ public:
 private:
     
     //! The name of the target gas.
-    std::string mTargetGas;
+    gcamstr mTargetGas;
     
     //! The target value.
     const double mTargetValue;

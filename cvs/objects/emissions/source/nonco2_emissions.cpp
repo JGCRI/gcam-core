@@ -198,7 +198,7 @@ void NonCO2Emissions::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs*
  * \author Pralit Patel
  * \warning Markets are not necessarily set when completeInit is called
  */
-void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSectorName,
+void NonCO2Emissions::completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                     const IInfo* aTechInfo )
 {
     AGHG::completeInit( aRegionName, aSectorName, aTechInfo );
@@ -214,7 +214,7 @@ void NonCO2Emissions::completeInit( const string& aRegionName, const string& aSe
  * \param aLocalInfo The local information object.
  * \param aPeriod Model period.
  */
-void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInfo, const int aPeriod ) {
+void NonCO2Emissions::initCalc( const gcamstr& aRegionName, const IInfo* aTechInfo, const int aPeriod ) {
     AGHG::initCalc( aRegionName, aTechInfo, aPeriod );
     
     // Recalibrate the emissions coefficient if we have input emissions and this is
@@ -244,7 +244,7 @@ void NonCO2Emissions::initCalc( const string& aRegionName, const IInfo* aTechInf
     }
 }
 
-double NonCO2Emissions::getGHGValue( const string& aRegionName,
+double NonCO2Emissions::getGHGValue( const gcamstr& aRegionName,
                                      const vector<IInput*>& aInputs,
                                      const vector<IOutput*>& aOutputs,
                                      const ICaptureComponent* aSequestrationDevice,
@@ -292,7 +292,7 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
     return generalizedCost;
 }
 
-void NonCO2Emissions::calcEmission( const string& aRegionName,
+void NonCO2Emissions::calcEmission( const gcamstr& aRegionName,
                                     const vector<IInput*>& aInputs,
                                     const vector<IOutput*>& aOutputs,
                                     ICaptureComponent* aSequestrationDevice,
@@ -321,7 +321,7 @@ void NonCO2Emissions::calcEmission( const string& aRegionName,
     addEmissionsToMarket( aRegionName, aPeriod );
 }
 
-void NonCO2Emissions::postCalc( const string& aRegionName,
+void NonCO2Emissions::postCalc( const gcamstr& aRegionName,
                                 const bool aIsInitialTechYear,
                                 const vector<IInput*>& aInputs,
                                 const vector<IOutput*>& aOutputs,

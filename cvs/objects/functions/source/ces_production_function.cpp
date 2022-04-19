@@ -66,7 +66,7 @@ extern Scenario* scenario;
 
 // Calculate CES coefficients
 double CESProductionFunction::calcCoefficient( InputSet& input, double consumption, 
-                                               const string& regionName, const string& sectorName, 
+                                               const gcamstr& aRegionName, const gcamstr& sectorName,
                                                int period, double sigma, double indBusTax, 
                                                double capitalStock, const IInput* aParentInput ) const 
 {
@@ -85,20 +85,20 @@ double CESProductionFunction::calcCoefficient( InputSet& input, double consumpti
     for ( unsigned int i = 0; i < input.size(); ++i ) {
         if( !input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
             double tempCoefficient = input[i]->getCurrencyDemand( period ) 
-                                     / input[ i ]->getPrice( regionName, period );
+                                     / input[ i ]->getPrice( aRegionName, period );
             input[i]->setCoefficient( tempCoefficient, period );
         }
     }
     // get price of the numeraireIndex.
     const IInput* numeraireInput = FunctionUtils::getNumeraireInput( input );
     assert( numeraireInput );
-    const double priceNumeraire = numeraireInput->getPrice( regionName, period );
+    const double priceNumeraire = numeraireInput->getPrice( aRegionName, period );
     const double coefNumeraire = numeraireInput->getCoefficient( period );
 
     double total = 0;
     for ( unsigned int i = 0; i < input.size(); ++i ) {
         if( !input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
-            total += input[i]->getCoefficient( period ) / coefNumeraire * input[ i ]->getPrice( regionName, period );
+            total += input[i]->getCoefficient( period ) / coefNumeraire * input[ i ]->getPrice( aRegionName, period );
         }
     }
 
@@ -117,7 +117,7 @@ double CESProductionFunction::calcCoefficient( InputSet& input, double consumpti
     for ( unsigned int i = 0; i < input.size(); ++i ) {
         if( !input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
             double tempCoefficient = pow( (input[i]->getCoefficient( period ) / coefNumeraire ),
-                ( 1 / sigma ) ) * input[ i ]->getPrice( regionName, period ) / priceNumeraire;
+                ( 1 / sigma ) ) * input[ i ]->getPrice( aRegionName, period ) / priceNumeraire;
             input[i]->setCoefficient( tempCoefficient, period );
         }
     }
@@ -164,7 +164,7 @@ double CESProductionFunction::normalizeAlphaZero( InputSet& input, double aAlpha
 * \author Sonny Kim
 * \return alpha zero.
 */
-double CESProductionFunction::changeElasticity( InputSet& input, const string& aRegionName,
+double CESProductionFunction::changeElasticity( InputSet& input, const gcamstr& aRegionName,
                                                 double priceReceived, double aProfits, double capitalStock,
                                                 const int aPeriod, double alphaZero, double sigmaNew, double sigmaOld ) const 
 {
@@ -240,8 +240,8 @@ double CESProductionFunction::calcCapitalRateScaler( const InputSet& input, doub
 
 /*! \brief Calculate profit scaler for production technology.
 */
-double CESProductionFunction::calcFinalProfitScaler( const InputSet& input, const string& regionName, 
-                                                     const string& sectorName, int period, 
+double CESProductionFunction::calcFinalProfitScaler( const InputSet& input, const gcamstr& aRegionName,
+                                                     const gcamstr& sectorName, int period, 
                                                      double alphaZero, double sigma ) const 
 {
     /*! \pre sigma is greater than 0.05, otherwise we should be using a Leontief
@@ -256,18 +256,18 @@ double CESProductionFunction::calcFinalProfitScaler( const InputSet& input, cons
         // capital contribution calculated separately, see calcCapitalScaler()
         if( !input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
             double tempCoef = pow( input[i]->getCoefficient( period ), sigma );
-            tempZ += tempCoef * pow( input[i]->getPricePaid( regionName, period ), (-rho * sigma) );
+            tempZ += tempCoef * pow( input[i]->getPricePaid( aRegionName, period ), (-rho * sigma) );
         }
     }
     // use price received for the good in the next equation
-    double priceReceived = FunctionUtils::getPriceReceived( regionName, sectorName, period );
+    double priceReceived = FunctionUtils::getPriceReceived( aRegionName, sectorName, period );
     double Z = 1 - tempZ * pow( ( priceReceived * alphaZero), (rho * sigma) );
     return ( Z > 0 ) ? pow( Z, -(1/rho) ) : 0;
 }
 
 //! Calculate Demand
 double CESProductionFunction::calcDemand( InputSet& input, double personalIncome, 
-                                          const string& regionName, const string& sectorName,
+                                          const gcamstr& aRegionName, const gcamstr& sectorName,
                                           const double aShutdownCoef, int period, double capitalStock,
                                           double alphaZero, 
                                           double sigma, double IBT, const IInput* aParentInput ) const 
@@ -278,25 +278,25 @@ double CESProductionFunction::calcDemand( InputSet& input, double personalIncome
     assert( sigma >= 0.05 );
 
     const double Z1 = calcCapitalScaler( input, alphaZero, sigma, capitalStock, period );
-    const double Z2 = calcFinalProfitScaler( input, regionName, sectorName, period, alphaZero, sigma );
+    const double Z2 = calcFinalProfitScaler( input, aRegionName, sectorName, period, alphaZero, sigma );
     const double Z = Z1 * Z2 * 
-        pow( ( FunctionUtils::getPriceReceived( regionName, sectorName, period ) * alphaZero), sigma );
+        pow( ( FunctionUtils::getPriceReceived( aRegionName, sectorName, period ) * alphaZero), sigma );
     
     
     double totalDemand = 0; // total demand used for scaling
     for ( unsigned int i = 0; i < input.size(); ++i ) {
         // capital input name should be changed to OtherValueAdded
         if( !input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
-            assert( input[i]->getPricePaid( regionName, period ) >= 0 );
-            double pricePaid = max( input[i]->getPricePaid( regionName, period ), util::getSmallNumber() );
+            assert( input[i]->getPricePaid( aRegionName, period ) >= 0 );
+            double pricePaid = max( input[i]->getPricePaid( aRegionName, period ), util::getSmallNumber() );
             double demand = pow( ( input[i]->getCoefficient( period ) / pricePaid ), sigma ) * aShutdownCoef * Z;
             if( demand < 0 ) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "Demand less than zero for region " << regionName << " sector " << sectorName 
+                mainLog << "Demand less than zero for region " << aRegionName << " sector " << sectorName
                         << " for input " << input[i]->getName() << " of " << demand << "." << endl;
             }
-            input[i]->setCurrencyDemand( demand, regionName, period );
+            input[i]->setCurrencyDemand( demand, aRegionName, period );
             totalDemand += demand;
         }
     }
@@ -306,7 +306,7 @@ double CESProductionFunction::calcDemand( InputSet& input, double personalIncome
 /*! \brief Calculate expected profit scaler for investment decision.
 */
 double CESProductionFunction::calcExpProfitScaler( const InputSet& input, double aLifetimeYears, 
-                                                   const string& regionName, const string& sectorName, 
+                                                   const gcamstr& aRegionName, const gcamstr& sectorName,
                                                    int period, double alphaZero, double sigma ) const 
 {
     /*! \pre sigma is greater than 0.05, otherwise we should be using a Leontief
@@ -316,7 +316,7 @@ double CESProductionFunction::calcExpProfitScaler( const InputSet& input, double
     const double rho = FunctionUtils::getRho( sigma );
     
     // Calculate the net present value multiplier to determine expected prices.
-    const double netPresentValueMult = FunctionUtils::getNetPresentValueMult( input, regionName, aLifetimeYears, period );
+    const double netPresentValueMult = FunctionUtils::getNetPresentValueMult( input, aRegionName, aLifetimeYears, period );
 
     // calculate tempZ for all inputs except capital
     double tempZ = 0; // temporary scaler
@@ -324,11 +324,11 @@ double CESProductionFunction::calcExpProfitScaler( const InputSet& input, double
         // capital contribution calculated separately, see calcCapitalScaler()
         if( !input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
             tempZ += pow(input[i]->getCoefficient( period ), sigma) 
-                     * pow( input[i]->getPricePaid( regionName, period ) * netPresentValueMult , ( -rho * sigma ) );
+                     * pow( input[i]->getPricePaid( aRegionName, period ) * netPresentValueMult , ( -rho * sigma ) );
         }
     }
     // Calculate the expected price received.
-    const double expPriceReceived = FunctionUtils::getExpectedPriceReceived( input, regionName,
+    const double expPriceReceived = FunctionUtils::getExpectedPriceReceived( input, aRegionName,
                                                                              sectorName,
                                                                              aLifetimeYears, period );
 
@@ -342,8 +342,8 @@ double CESProductionFunction::calcExpProfitScaler( const InputSet& input, double
 }
 
 //! Calculate Expected Profit Rate
-double CESProductionFunction::calcExpProfitRate( const InputSet& input, const string& regionName, 
-                                                 const string& sectorName, double aLifetimeYears, int period,
+double CESProductionFunction::calcExpProfitRate( const InputSet& input, const gcamstr& aRegionName,
+                                                 const gcamstr& sectorName, double aLifetimeYears, int period,
                                                  double alphaZero, double sigma ) const 
 {
     /*! \pre sigma is greater than 0.05, otherwise we should be using a Leontief
@@ -353,15 +353,15 @@ double CESProductionFunction::calcExpProfitRate( const InputSet& input, const st
 
     const double rho = FunctionUtils::getRho( sigma );
     const double Z1 = calcCapitalRateScaler( input, sigma, period );
-    const double Z2 = calcExpProfitScaler( input, aLifetimeYears, regionName, 
+    const double Z2 = calcExpProfitScaler( input, aLifetimeYears, aRegionName,
                                            sectorName, period, alphaZero, sigma );
     // Note: Dividing by the numeraire price at all here may not be correct.
     const IInput* numInput = FunctionUtils::getNumeraireInput( input );
     assert( numInput );
-    const double pricePaidNumeraire = numInput->getPricePaid( regionName, period );
+    const double pricePaidNumeraire = numInput->getPricePaid( aRegionName, period );
     assert( pricePaidNumeraire > 0 );
     // returns a rate, using price ratios
-    const double expPriceReceived = FunctionUtils::getExpectedPriceReceived( input, regionName, sectorName,
+    const double expPriceReceived = FunctionUtils::getExpectedPriceReceived( input, aRegionName, sectorName,
                                                               aLifetimeYears, period );
     double expectedProfitRate = alphaZero * ( expPriceReceived / pricePaidNumeraire ) * 
         Z1 *  pow( Z2, (1/(-rho*sigma)) );
@@ -394,8 +394,8 @@ double CESProductionFunction::calcExpProfitRate( const InputSet& input, const st
 * \return The levelized cost.
 */
 double CESProductionFunction::calcLevelizedCost( const InputSet& aInputs,
-                                                 const string& aRegionName,
-                                                 const string& aSectorName,
+                                                 const gcamstr& aRegionName,
+                                                 const gcamstr& aSectorName,
                                                  int aPeriod,
                                                  double aAlphaZero,
                                                  double aSigma,
@@ -445,8 +445,8 @@ double CESProductionFunction::calcLevelizedCost( const InputSet& aInputs,
 }
 
 //! Calculate profits
-double CESProductionFunction::calcUnscaledProfits( const InputSet& input, const string& regionName,
-                                                   const string& sectorName, const int period, 
+double CESProductionFunction::calcUnscaledProfits( const InputSet& input, const gcamstr& aRegionName,
+                                                   const gcamstr& sectorName, const int period, 
                                                    const double capitalStock, const double alphaZero, 
                                                    const double sigma ) const 
 {
@@ -457,14 +457,14 @@ double CESProductionFunction::calcUnscaledProfits( const InputSet& input, const 
 
     double rho = FunctionUtils::getRho( sigma );
     double Z1 = calcCapitalScaler( input, alphaZero, sigma, capitalStock, period );
-    double Z2 = calcFinalProfitScaler( input, regionName, sectorName, period, alphaZero, sigma );
-    double priceReceived = FunctionUtils::getPriceReceived( regionName, sectorName, period );
+    double Z2 = calcFinalProfitScaler( input, aRegionName, sectorName, period, alphaZero, sigma );
+    double priceReceived = FunctionUtils::getPriceReceived( aRegionName, sectorName, period );
     return alphaZero * priceReceived * Z1 * pow( Z2, (1 - rho) );
 }
 
 //! Calculate output
-double CESProductionFunction::calcOutput( InputSet& input, const string& regionName, 
-                                          const string& sectorName, const double aShutdownCoef,
+double CESProductionFunction::calcOutput( InputSet& input, const gcamstr& aRegionName,
+                                          const gcamstr& sectorName, const double aShutdownCoef,
                                           int period, double capitalStock, 
                                           double alphaZero, double sigma ) const 
 {
@@ -476,16 +476,16 @@ double CESProductionFunction::calcOutput( InputSet& input, const string& regionN
     return alphaZero * 
            aShutdownCoef * 
            calcCapitalScaler( input, alphaZero, sigma, capitalStock, period ) * 
-           calcFinalProfitScaler( input, regionName, sectorName, period, alphaZero, sigma );
+           calcFinalProfitScaler( input, aRegionName, sectorName, period, alphaZero, sigma );
 }
 
 //! Return the amount of output produced by one unit of capital.
-double CESProductionFunction::getCapitalOutputRatio( const InputSet& aInputs, const string& aRegionName,
-                                                     const string& aSectorName, double aLifetimeYears, int aPeriod,
+double CESProductionFunction::getCapitalOutputRatio( const InputSet& aInputs, const gcamstr& aRegionName,
+                                                     const gcamstr& aSectorName, double aLifetimeYears, int aPeriod,
                                                      double aAlphaZero, double aSigma ) const
 {
     // Calculate the expected profit rate.
-    const double profitRate = calcExpProfitRate( aInputs, aRegionName, aSectorName, aLifetimeYears, 
+    const double profitRate = calcExpProfitRate( aInputs, aRegionName, aSectorName, aLifetimeYears,
                                                  aPeriod, aAlphaZero, aSigma );
     
     // Check for negative profit rates.
@@ -515,14 +515,14 @@ double CESProductionFunction::getCapitalOutputRatio( const InputSet& aInputs, co
 * \param input Vector of inputs for the demand function.
 * \param aTechChange A structure containing the various possible types of
 *        technical change.
-* \param regionName Name of the region containing the function.
+* \param aRegionName Name of the region containing the function.
 * \param sectorName Nmae of the sector containing the function.
 * \param alphaZero The up-front scaler.
 * \param sigma Sigma coefficient.
 * \return The new alpha zero.
 */
 double CESProductionFunction::applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
-                                                    const string& regionName, const string& sectorName,
+                                                    const gcamstr& aRegionName, const gcamstr& sectorName,
                                                     const int aPeriod, double alphaZero, double sigma ) const 
 {
      /*! \pre sigma is greater than 0.05, otherwise we should be using a Leontief production function. */

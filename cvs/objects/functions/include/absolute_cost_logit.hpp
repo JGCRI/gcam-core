@@ -83,7 +83,7 @@ public:
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut,
                              Tabs *aTabs ) const;
     
-    virtual void initCalc( const std::string& aRegionName, const std::string& aContainerName,
+    virtual void initCalc( const gcamstr& aRegionName, const std::string& aContainerName,
                            const bool aShouldShareIncreaseWithValue, const int aPeriod );
 
     virtual double calcUnnormalizedShare( const double aShareWeight, const double aValue,

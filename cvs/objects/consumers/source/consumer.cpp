@@ -74,8 +74,8 @@ void Consumer::copy( const Consumer& aOther ) {
     BaseTechnology::copy( aOther );
 }
 
-void Consumer::initCalc( const string& aRegionName,
-                         const string& aSectorName,
+void Consumer::initCalc( const gcamstr& aRegionName,
+                         const gcamstr& aSectorName,
                          NationalAccount& nationalAccount,
                          const Demographic* aDemographics,
                          const double aCapitalStock,
@@ -100,8 +100,8 @@ void Consumer::initCalc( const string& aRegionName,
 }
 
 //! Calculate Demand
-void Consumer::calcInputDemand( double aConsumption, const string& aRegionName, 
-                                const string& aSectorName, int aPeriod ) 
+void Consumer::calcInputDemand( double aConsumption, const gcamstr& aRegionName, 
+                                const gcamstr& aSectorName, int aPeriod ) 
 {
     double output = mNestedInputRoot->calcInputDemand( aRegionName, aSectorName, aPeriod, 
                 aConsumption, mUtilityParameterA, mNestedInputRoot->getCoefficient( aPeriod ) ); // alpha zero is the root's alpha
@@ -110,7 +110,7 @@ void Consumer::calcInputDemand( double aConsumption, const string& aRegionName,
 
 }
 
-void Consumer::updateMarketplace( const string& aSectorName, const string& aRegionName, const int aPeriod ) {
+void Consumer::updateMarketplace( const gcamstr& aSectorName, const gcamstr& aRegionName, const int aPeriod ) {
     // need to create the list here so that marketplaces get set up correctly
     // TODO: I could just create an updateMarketplace in the node input
     Marketplace* marketplace = scenario->getMarketplace();
@@ -118,7 +118,7 @@ void Consumer::updateMarketplace( const string& aSectorName, const string& aRegi
         // don't add govement deficit to marketplace demand
         // TODO: it would be better to check the type but that will not be set until
         //  initCalc
-        if( mLeafInputs[i]->getName() != "Capital" ) {
+        if( mLeafInputs[i]->getName().get() != "Capital" ) {
             // really currency
             double tempDemand = mLeafInputs[ i ]->getPhysicalDemand( aPeriod );
             assert( util::isValidNumber( tempDemand ) );
@@ -129,7 +129,7 @@ void Consumer::updateMarketplace( const string& aSectorName, const string& aRegi
     mLeafInputs.clear();
 }
 
-void Consumer::calcEmissions( const string& aGoodName, const string& aRegionName, const int aPeriod ) {
+void Consumer::calcEmissions( const string& aGoodName, const gcamstr& aRegionName, const int aPeriod ) {
     // Loop over GHGs and calculate emissions.
     for( GHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         assert( *ghg );
@@ -138,7 +138,7 @@ void Consumer::calcEmissions( const string& aGoodName, const string& aRegionName
     }
 }
 
-void Consumer::postCalc( const string& aRegionName, const string& aSectorName, const int aPeriod ) {
+void Consumer::postCalc( const gcamstr& aRegionName, const gcamstr& aSectorName, const int aPeriod ) {
     const Modeltime* modeltime = scenario->getModeltime();
     if( year == modeltime->getper_to_yr( aPeriod ) ){
         // Account for exports and import.  We do this in postCalc because it is inconsequential to
@@ -150,8 +150,8 @@ void Consumer::postCalc( const string& aRegionName, const string& aSectorName, c
         // nominal is the current year quantity * the current year prices, real is the current year
         // quantity * base year prices
         // consumers do not import anything so just account for domestic consumption
-        double currExportsNominal = capitalMarketInfo->getDouble( "export-nominal", false );
-        double currExportsReal = capitalMarketInfo->getDouble( "export-real", false );
+        double currExportsNominal = capitalMarketInfo->getDouble( gcamstr("export-nominal"), false );
+        double currExportsReal = capitalMarketInfo->getDouble( gcamstr("export-real"), false );
 
         for( vector<IInput*>::const_iterator it = mLeafInputs.begin(); it != mLeafInputs.end(); ++it ) {
             if( !(*it)->hasTypeFlag( IInput::FACTOR ) ) {
@@ -162,8 +162,8 @@ void Consumer::postCalc( const string& aRegionName, const string& aSectorName, c
                     marketplace->getPrice( (*it)->getName(), aRegionName, 0 );
             }
         }
-        capitalMarketInfo->setDouble( "export-nominal", currExportsNominal );
-        capitalMarketInfo->setDouble( "export-real", currExportsReal );
+        capitalMarketInfo->setDouble( gcamstr("export-nominal"), currExportsNominal );
+        capitalMarketInfo->setDouble( gcamstr("export-real"), currExportsReal );
     }
 
     // make sure we clear the base year quantities that we have kept around for
@@ -191,7 +191,7 @@ void Consumer::postCalc( const string& aRegionName, const string& aSectorName, c
  * \note Since the GNP is not currently used during model operation it may be
  *          a good idea to call this during post calc to cut down run time.
  */
-double Consumer::calcRealGNP( NationalAccount& aNationalAccount, const string& aRegionName, int aPeriod) const {
+double Consumer::calcRealGNP( NationalAccount& aNationalAccount, const gcamstr& aRegionName, int aPeriod) const {
     const int basePeriod = 0;
     double realTotal = 0;
     const Marketplace* marketplace = scenario->getMarketplace();

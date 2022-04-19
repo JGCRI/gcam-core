@@ -71,20 +71,20 @@ public:
 
     virtual PassThroughTechnology* clone() const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName,
+    virtual void production( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
                              const int aPeriod );
 
-    virtual double getFixedOutput( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    virtual double getFixedOutput( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const bool aHasRequiredInput,
                                    const std::string& aRequiredInput,
                                    const double aMarginalRevenue,

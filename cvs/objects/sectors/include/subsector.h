@@ -148,9 +148,9 @@ protected:
 public:
     Subsector();
     virtual ~Subsector();
-    const std::string& getName() const;
+    const gcamstr& getName() const;
     
-    virtual void setNames( const std::string& aRegionName, const std::string& aSectorName );
+    virtual void setNames( const gcamstr& aRegionName, const gcamstr& aSectorName );
     
     virtual const std::string& getXMLName() const;
    

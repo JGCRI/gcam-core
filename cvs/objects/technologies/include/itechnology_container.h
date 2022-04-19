@@ -105,8 +105,8 @@ public:
      * \param aSubsectorInfo Subsector information object.
      * \param aLandAllocator Regional land allocator.
      */
-    virtual void completeInit( const std::string& aRegionName, const std::string& aSectorName,
-                               const std::string& aSubsectorName, const IInfo* aSubsecInfo,
+    virtual void completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName, const IInfo* aSubsecInfo,
                                ILandAllocator* aLandAllocator ) = 0;
     
     /*!
@@ -120,7 +120,7 @@ public:
      * \param aDemographics Regional demographics.
      * \param aPeriod The model period which is about to start.
      */
-    virtual void initCalc( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName, const gcamstr& aSectorName,
                            const IInfo* aSubsecInfo, const Demographic* aDemographics, const int aPeriod ) = 0;
     
     /*!
@@ -130,7 +130,7 @@ public:
      * \param aRegionName The region name.
      * \param aPeriod The model period which just finished.
      */
-    virtual void postCalc( const std::string& aRegionName, const int aPeriod ) = 0;
+    virtual void postCalc( const gcamstr& aRegionName, const int aPeriod ) = 0;
     
     /*!
      * \brief Print any useful debuging information for the given period.

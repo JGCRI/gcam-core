@@ -88,7 +88,7 @@ public:
      */
     virtual const std::string& getXMLName() const = 0;
     
-    double getEmissionsReduction( const std::string& aRegionName, const int aPeriod );
+    double getEmissionsReduction( const gcamstr& aRegionName, const int aPeriod );
     
     /*!
      * \brief Set the final emissions coefficient calculated in the given period taking into account all emissions controls which applied.
@@ -97,7 +97,7 @@ public:
      */
     virtual void setAdjustedEmissCoef( const double aAdjustedEmissCoef, const int aPeriod ) {}
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     /*!
      * \brief Complete the initialization of the ghg object.
@@ -108,8 +108,8 @@ public:
      * \author Pralit Patel
      * \warning Markets are not necessarily set when completeInit is called
      */
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const IInfo* aTechIInfo ) = 0;
 
     /*!
@@ -119,7 +119,7 @@ public:
      * \param aParentGHG The NonCO2Emissions that contains this object.
      * \param aPeriod Model period.
      */
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const IInfo* aTechInfo,
                            const NonCO2Emissions* aParentGHG,
                            const int aPeriod ) = 0;
@@ -142,7 +142,7 @@ protected:
      */
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
 
-    virtual double calcEmissionsReduction( const std::string& aRegionName, const int aPeriod ) = 0;
+    virtual double calcEmissionsReduction( const gcamstr& aRegionName, const int aPeriod ) = 0;
     
     DEFINE_DATA(
         /* Declare all subclasses of AEmissionsControl to allow automatic traversal of the

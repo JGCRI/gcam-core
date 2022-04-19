@@ -73,21 +73,21 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const = 0;
 
-    virtual const std::string& getName() const = 0;
+    virtual const gcamstr& getName() const = 0;
 
-    virtual void completeInit( const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aRegionName,
                                const IInfo* aRegionInfo ) = 0;
     
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const int aPeriod ) = 0;
 
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod ) = 0;
     
-    virtual void calcSupply( const std::string& aRegionName,
+    virtual void calcSupply( const gcamstr& aRegionName,
                              const int period ) = 0;
 
-    virtual double getAnnualProd( const std::string& aRegionName,
+    virtual double getAnnualProd( const gcamstr& aRegionName,
                                   const int aPeriod ) const = 0;
 
     virtual double getPrice( const int aPeriod ) const = 0;

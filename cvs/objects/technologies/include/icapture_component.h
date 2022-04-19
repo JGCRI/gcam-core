@@ -99,8 +99,8 @@ public:
     * \param aRegionName Region name.
     * \param aSectorName Sector name.
     */
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName ) = 0;
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName ) = 0;
     
     /*!
      * \brief Initialize the capture component for a given period.
@@ -109,8 +109,8 @@ public:
      * \param aFuelName Name of the fuel being consumed.
      * \param aPeriod Model period.
      */
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const std::string& aFuelName,
                            const int aPeriod ) = 0;
 
@@ -125,7 +125,7 @@ public:
      * \param aPeriod Period in which the carbon is being stored.
      * \return The cost of storing one unit of carbon.
      */
-    virtual double getStorageCost( const std::string& aRegionName,
+    virtual double getStorageCost( const gcamstr& aRegionName,
                                    const std::string& aGHGName,
                                    const int aPeriod ) const = 0;
     
@@ -142,7 +142,7 @@ public:
     * \param aTotalEmissions Total technology emissions before capture occurs.
     * \param aPeriod Model period.
     */
-    virtual double calcSequesteredAmount( const std::string& aRegionName,
+    virtual double calcSequesteredAmount( const gcamstr& aRegionName,
                                           const std::string& aGHGName,
                                           const double aTotalEmissions,
                                           const int aPeriod ) = 0;
@@ -166,7 +166,7 @@ public:
     * \param aInputs List of inputs to adjust.
     * \param aPeriod Model period.
     */
-    virtual void adjustInputs( const std::string& aRegionName,
+    virtual void adjustInputs( const gcamstr& aRegionName,
                                std::vector<IInput*>& aInputs,
                                const int aPeriod ) const = 0;
     

@@ -59,7 +59,7 @@ Market( marketIn.mContainer )
     // Info objects can not be copied instead we will have the original market
     // release it's info object to this market.
     mMarketInfo.reset( marketIn.releaseMarketInfo() );
-    mMarketInfo->setBoolean( "has-split-market", true );
+    mMarketInfo->setBoolean( gcamstr("has-split-market"), true );
 }
 
 void PriceMarket::toDebugXMLDerived( ostream& out, Tabs* tabs ) const {

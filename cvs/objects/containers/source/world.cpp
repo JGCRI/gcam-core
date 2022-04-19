@@ -204,8 +204,9 @@ const std::string& World::getXMLNameStatic() {
 * \note In the future World object may have read-in names.
 * \return The name of the world.
 */
-const string& World::getName() const {
-    return getXMLNameStatic();
+const gcamstr& World::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 //! initialize anything that won't change during the calculation

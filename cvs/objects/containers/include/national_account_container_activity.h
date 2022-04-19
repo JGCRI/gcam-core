@@ -57,7 +57,7 @@ class NationalAccountContainer;
 class NationalAccountContainerActivity : public IActivity
 {
 public:
-    NationalAccountContainerActivity( NationalAccountContainer* aNationalAccountContainer, const std::string& aRegionName );
+    NationalAccountContainerActivity( NationalAccountContainer* aNationalAccountContainer, const gcamstr& aRegionName );
     virtual ~NationalAccountContainerActivity();
     
     // IActivity methods
@@ -69,7 +69,7 @@ private:
     NationalAccountContainer* mNationalAccountContainer;
     
     //! The name of the region this national account container is contained in.
-    const std::string& mRegionName;
+    const gcamstr& mRegionName;
 };
 
 #endif // _NATIONAL_ACCOUNT_CONTAINER_ACTIVITY_H_

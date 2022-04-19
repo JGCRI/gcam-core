@@ -97,14 +97,14 @@ public:
     virtual void copyParam( const IInput* aInput,
                             const int aPeriod );
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const std::string& aTechName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
@@ -117,15 +117,15 @@ public:
     
     virtual double getCarbonContent( const int aPeriod ) const;
     
-    virtual double getPrice( const std::string& aRegionName,
+    virtual double getPrice( const gcamstr& aRegionName,
                              const int aPeriod ) const;
 
-    virtual void setPrice( const std::string& aRegionName,
+    virtual void setPrice( const gcamstr& aRegionName,
                            const double aPrice,
                            const int aPeriod );
 
     virtual void setPhysicalDemand( const double aPhysicalDemand,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod );
 
     virtual double getCoefficient( const int aPeriod ) const;

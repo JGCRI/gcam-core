@@ -58,9 +58,6 @@ class Market;
 class IInfo;
 class SolutionInfoSet;
 class IActivity;
-namespace objects {
-    class Atom;
-}
 
 #if GCAM_PARALLEL_ENABLED
 class GcamFlowGraph;
@@ -84,8 +81,8 @@ public:
 #endif
     bool operator==( const SolutionInfo& rhs ) const;
     bool operator!=( const SolutionInfo& rhs ) const;
-    const std::string& getName() const;
-    const std::string& getRegionName() const;
+    const gcamstr& getName() const;
+    const gcamstr& getRegionName() const;
     const IMarketType::Type getType() const;
     std::string getTypeName() const;
     void init( const double aDefaultSolutionTolerance, const double aDefaultSolutionFloor,
@@ -127,7 +124,7 @@ public:
     void setBisectedFlag();
     void unsetBisectedFlag();
     bool hasBisected() const;
-    const std::vector<const objects::Atom*>& getContainedRegions() const;
+    const std::vector<gcamstr>& getContainedRegions() const;
     const std::vector<IActivity*>& getDependencies() const;
 
     double getLowerBoundSupplyPrice() const;

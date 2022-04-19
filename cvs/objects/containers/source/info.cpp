@@ -70,23 +70,23 @@ mParentInfo( aParentInfo )
 Info::~Info(){
 }
 
-bool Info::setBoolean( const string& aStringKey, const bool aValue ){
-    return setItemValueLocal( aStringKey, aValue );
+bool Info::setBoolean( const gcamstr& aStringKey, const bool aValue ){
+    return setItemValueLocal( aStringKey, eBoolean, aValue );
 }
 
-bool Info::setInteger( const string& aStringKey, const int aValue ){
-    return setItemValueLocal( aStringKey, aValue );
+bool Info::setInteger( const gcamstr& aStringKey, const int aValue ){
+    return setItemValueLocal( aStringKey, eInteger, aValue );
 }
 
-bool Info::setDouble( const string& aStringKey, const double aValue ){
-    return setItemValueLocal( aStringKey, aValue );
+bool Info::setDouble( const gcamstr& aStringKey, const double aValue ){
+    return setItemValueLocal( aStringKey, eDouble, aValue );
 }
 
-bool Info::setString( const string& aStringKey, const string& aValue ){
-    return setItemValueLocal( aStringKey, aValue );
+bool Info::setString( const gcamstr& aStringKey, const gcamstr& aValue ){
+    return setItemValueLocal( aStringKey, eString, aValue );
 }
     
-bool Info::getBoolean( const string& aStringKey, const bool aMustExist ) const
+bool Info::getBoolean( const gcamstr& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
@@ -105,7 +105,7 @@ bool Info::getBoolean( const string& aStringKey, const bool aMustExist ) const
     return value;
 }
 
-int Info::getInteger( const string& aStringKey, const bool aMustExist ) const
+int Info::getInteger( const gcamstr& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
@@ -124,7 +124,7 @@ int Info::getInteger( const string& aStringKey, const bool aMustExist ) const
     return value;
 }
 
-double Info::getDouble( const string& aStringKey, const bool aMustExist ) const
+double Info::getDouble( const gcamstr& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
@@ -143,11 +143,11 @@ double Info::getDouble( const string& aStringKey, const bool aMustExist ) const
     return value;
 }
 
-const string Info::getString( const string& aStringKey, const bool aMustExist ) const
+const gcamstr Info::getString( const gcamstr& aStringKey, const bool aMustExist ) const
 {
     // Perform a local search.
     bool found = false;
-    const string value = getItemValueLocal<string>( aStringKey, found );
+    const gcamstr value = getItemValueLocal<gcamstr>( aStringKey, found );
     if( !found ){
         // If the item wasn't found search the parent info.
         if( mParentInfo ){
@@ -163,7 +163,7 @@ const string Info::getString( const string& aStringKey, const bool aMustExist ) 
     return value;
 }
 
-bool Info::getBooleanHelper( const string& aStringKey, bool& aFound ) const
+bool Info::getBooleanHelper( const gcamstr& aStringKey, bool& aFound ) const
 {
     // Perform a local search.
     bool value = getItemValueLocal<bool>( aStringKey, aFound );
@@ -175,7 +175,7 @@ bool Info::getBooleanHelper( const string& aStringKey, bool& aFound ) const
     return value;
 }
 
-int Info::getIntegerHelper( const string& aStringKey, bool& aFound ) const
+int Info::getIntegerHelper( const gcamstr& aStringKey, bool& aFound ) const
 {
     // Perform a local search.
     int value = getItemValueLocal<int>( aStringKey, aFound );
@@ -187,7 +187,7 @@ int Info::getIntegerHelper( const string& aStringKey, bool& aFound ) const
     return value;
 }
 
-double Info::getDoubleHelper( const string& aStringKey, bool& aFound ) const
+double Info::getDoubleHelper( const gcamstr& aStringKey, bool& aFound ) const
 {
     // Perform a local search.
     double value = getItemValueLocal<double>( aStringKey, aFound );
@@ -199,10 +199,10 @@ double Info::getDoubleHelper( const string& aStringKey, bool& aFound ) const
     return value;
 }
 
-const string Info::getStringHelper( const string& aStringKey, bool& aFound ) const
+const gcamstr Info::getStringHelper( const gcamstr& aStringKey, bool& aFound ) const
 {
     // Perform a local search.
-    const string value = getItemValueLocal<string>( aStringKey, aFound );
+    const gcamstr value = getItemValueLocal<gcamstr>( aStringKey, aFound );
     
     // If the item wasn't found and parent exists, search the parent info.
     if( !aFound && mParentInfo ){
@@ -211,7 +211,7 @@ const string Info::getStringHelper( const string& aStringKey, bool& aFound ) con
     return value;
 }
 
-bool Info::hasValue( const string& aStringKey ) const {
+bool Info::hasValue( const gcamstr& aStringKey ) const {
 #if GCAM_PARALLEL_ENABLED
     // get a read lock on the info map
     tbb::spin_rw_mutex::scoped_lock readlock(mInfoMapMutex,false);
@@ -262,7 +262,7 @@ void Info::toDebugXML( const int aperiod, Tabs* aTabs, ostream& aOut ) const {
 *          the local Info or any of its ancestors.
 * \param aStringKey The string key being searched for when the error occurred.
 */
-void Info::printItemNotFoundWarning( const string& aStringKey ) const {
+void Info::printItemNotFoundWarning( const gcamstr& aStringKey ) const {
     // Print a warning message.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
@@ -273,7 +273,7 @@ void Info::printItemNotFoundWarning( const string& aStringKey ) const {
 * \param aStringKey The key which pointed to the incorrect type.
 * \param aIsUpdate Whether the error occurred during an update.
 */
-void Info::printBadCastWarning( const string& aStringKey, bool aIsUpdate ) const {
+void Info::printBadCastWarning( const gcamstr& aStringKey, bool aIsUpdate ) const {
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::ERROR );
 
@@ -293,7 +293,7 @@ void Info::printBadCastWarning( const string& aStringKey, bool aIsUpdate ) const
 *          ancestor.
 * \param aStringKey The key which points to the variable.
 */
-void Info::printShadowWarning( const string& aStringKey ) const {
+void Info::printShadowWarning( const gcamstr& aStringKey ) const {
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::WARNING );
     mainLog << aStringKey << " from " << mOwnerName << " will shadow a variable in a parent Info." << endl;

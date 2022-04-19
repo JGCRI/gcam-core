@@ -134,7 +134,7 @@ class ExpandDataVector  {
     // Special access for debugging XML Parse
     friend bool callDebugXMLParse<SubClassFamilyVector>( ExpandDataVector aSubClassContainer, const rapidxml::xml_node<char>* aNode );
 #endif // XMLPARSE_DEBUG_ACTIVE
-    
+
     public:
 
     /*!
@@ -191,7 +191,7 @@ class ExpandDataVector  {
         } );
     }
 
-    protected:
+    public:
     //! Alias a type that adds a pointer to each type in SubClassFamilyVector
     using SubClassVecPtr = typename boost::mpl::transform<SubClassFamilyVector, boost::add_pointer<boost::mpl::_> >::type;
 

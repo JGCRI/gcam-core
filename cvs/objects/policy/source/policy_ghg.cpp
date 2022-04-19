@@ -129,7 +129,7 @@ const string& GHGPolicy::getXMLNameStatic() {
 }
 
 //! Get the ghg policy name. 
-const string& GHGPolicy::getName() const {
+const gcamstr& GHGPolicy::getName() const {
     return mName;
 }
 
@@ -161,7 +161,7 @@ void GHGPolicy::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
 * \author Sonny Kim and Josh Lurz
 * \param regionName The name of the region the policy controls. 
 */
-void GHGPolicy::completeInit( const string& aRegionName ) {
+void GHGPolicy::completeInit( const gcamstr& aRegionName ) {
     const Modeltime* modeltime = scenario->getModeltime();
     Marketplace* marketplace = scenario->getMarketplace();
     marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::TAX );
@@ -169,8 +169,8 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
     // Set price and output units for period 0 market info
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
     //TODO: read-in as data the units of tax and emissions
-    marketInfo->setString( "price-unit", "1990$/tC" );
-    marketInfo->setString( "output-unit", "MTC" );
+    marketInfo->setString( gcamstr("price-unit"), gcamstr("1990$/tC") );
+    marketInfo->setString( gcamstr("output-unit"), gcamstr("MTC") );
 
     // check for missing periods in which case interpolate
     for( int i = 1; i < modeltime->getmaxper(); ++i ) {
@@ -233,7 +233,7 @@ void GHGPolicy::completeInit( const string& aRegionName ) {
 * \todo This is not entirely correct for multiple regions within a market.
 */
 bool GHGPolicy::isApplicable( const string& aRegion ) const {
-    return mMarket == "global" || mMarket == aRegion;
+    return mMarket == gcamstr("global") || mMarket == aRegion;
 }
 
 /*!

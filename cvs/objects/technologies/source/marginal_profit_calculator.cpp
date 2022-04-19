@@ -65,8 +65,8 @@ MarginalProfitCalculator::MarginalProfitCalculator( const Technology* aTechnolog
  *       code currently assumes that all non-energy costs are fixed, which would
  *       not be true for O&M for example.
  */
-double MarginalProfitCalculator::calcShortTermMarginalProfit( const string& aRegionName,
-                                                              const string& aSectorName,
+double MarginalProfitCalculator::calcShortTermMarginalProfit( const gcamstr& aRegionName,
+                                                              const gcamstr& aSectorName,
                                                               const int aPeriod ) const
 {
     // TODO: Marginal revenue has already deducted the ghg value.  If we could avoid

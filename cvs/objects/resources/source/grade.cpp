@@ -134,7 +134,7 @@ double Grade::getExtCost() const {
 }
 
 //! Get the name.
-const string& Grade::getName() const {
+const gcamstr& Grade::getName() const {
     return mName;
 }
 
@@ -146,7 +146,7 @@ const string& Grade::getName() const {
 * \param aResourceName Resource name.
 * \param aPeriod Model period
 */
-void Grade::initCalc( const string& aRegionName, const string& aResourceName, const int aPeriod ) {
+void Grade::initCalc( const gcamstr& aRegionName, const gcamstr& aResourceName, const int aPeriod ) {
     // do nothing
 }
 
@@ -158,7 +158,7 @@ void Grade::initCalc( const string& aRegionName, const string& aResourceName, co
 * \param aResourceName Resource name.
 * \param aPeriod Model period
 */
-void Grade::postCalc( const string& aRegionName, const string& aResourceName, const int aPeriod ) {
+void Grade::postCalc( const gcamstr& aRegionName, const gcamstr& aResourceName, const int aPeriod ) {
     // do nothing
 }
 

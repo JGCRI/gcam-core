@@ -100,8 +100,8 @@ public :
 
    // Documentation is inherited
    virtual void calcCost(
-      const std::string& aRegionName,
-      const std::string& aSectorName,
+      const gcamstr& aRegionName,
+      const gcamstr& aSectorName,
       const int          aPeriod );
 
    // Documentation is inherited
@@ -109,14 +109,14 @@ public :
 
    // Documentation is inherited
    virtual void completeInit(
-      const std::string&              aRegionName,
-      const std::string&              aSectorName,
-      const std::string&              aSubsectorName,
+      const gcamstr&              aRegionName,
+      const gcamstr&              aSectorName,
+      const gcamstr&              aSubsectorName,
       const IInfo*                    aSubsectorIInfo,
       ILandAllocator*                 aLandAllocator );
 
-    virtual double getResourceToEnergyRatio( const std::string& aRegionName,
-                                             const std::string& aSectorName,
+    virtual double getResourceToEnergyRatio( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
                                              const int aPeriod );
 
    // Documentation is inherited
@@ -127,8 +127,8 @@ public :
 
    // Documentation is inherited
    virtual void initCalc(
-      const std::string& aRegionName,
-      const std::string& aSectorName,
+      const gcamstr& aRegionName,
+      const gcamstr& aSectorName,
       const IInfo*       aSubsectorIInfo,
       const Demographic* aDemographics,
       PreviousPeriodInfo& aPrevPeriodInfo,
@@ -144,8 +144,8 @@ protected :
     *  \return the resource area
     */
    virtual double calcResourceArea(
-      const std::string& aRegionName,
-      const std::string& aSectorName,
+      const gcamstr& aRegionName,
+      const gcamstr& aSectorName,
       double             aVariableDemand,
       const int          aPeriod );
 
@@ -159,8 +159,8 @@ protected :
       Tabs*         tabs ) const;
 
    static const double      kWhrtoGJ;
-   static const std::string ELECTRIC_SECTOR_NAME_KEY;
-   static const std::string NO_SUN_DAYS_KEY;
+   static const gcamstr ELECTRIC_SECTOR_NAME_KEY;
+   static const gcamstr NO_SUN_DAYS_KEY;
 
    double getSolarPenetration( const int aPeriod ) const;
     

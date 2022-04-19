@@ -62,7 +62,7 @@ extern Scenario* scenario;
  * \param aRegionName Name of the region if starting the visiting below the
  *        region level.
  */
-CalibrateResourceVisitor::CalibrateResourceVisitor( const string& aRegionName )
+CalibrateResourceVisitor::CalibrateResourceVisitor( const gcamstr& aRegionName )
 :mCurrentRegionName( aRegionName )
 {
 }
@@ -76,7 +76,7 @@ void CalibrateResourceVisitor::startVisitResource( const AResource* aResource,
 void CalibrateResourceVisitor::endVisitResource( const AResource* aResource,
                                                  const int aPeriod )
 {
-    mCurrentResourceName.clear();
+    mCurrentResourceName = "";
 }
 
 void CalibrateResourceVisitor::startVisitSubResource( const SubResource* aSubResource, const int aPeriod ) {

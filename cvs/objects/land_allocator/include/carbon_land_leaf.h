@@ -70,11 +70,11 @@ public:
     
     virtual const std::string& getXMLName() const;
 
-    virtual void setUnmanagedLandProfitRate( const std::string& aRegionName,
+    virtual void setUnmanagedLandProfitRate( const gcamstr& aRegionName,
                                              double aAverageProfitRate,
                                              const int aPeriod );
     
-    virtual void setProfitRate( const std::string& aRegionName,
+    virtual void setProfitRate( const gcamstr& aRegionName,
                                    const std::string& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );

@@ -88,7 +88,7 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -96,8 +96,8 @@ public:
     
     // IShutdownDecider methods.
     virtual double calcShutdownCoef( const double aCalculatedProfits,
-                                     const std::string& aRegionName,
-                                     const std::string& aSectorName,
+                                     const gcamstr& aRegionName,
+                                     const gcamstr& aSectorName,
                                      const int aInitialTechYear,
                                      const int aPeriod ) const;
 protected:

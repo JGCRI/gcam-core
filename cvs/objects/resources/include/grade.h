@@ -78,14 +78,14 @@ public:
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
 
-    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
-    virtual void postCalc( const std::string& aRegionName, const std::string& aResourceName, const int aPeriod );
+    virtual void initCalc( const gcamstr& aRegionName, const gcamstr& aResourceName, const int aPeriod );
+    virtual void postCalc( const gcamstr& aRegionName, const gcamstr& aResourceName, const int aPeriod );
 
     void calcCost( const double cumTechChange, const int per );
     double getAvail() const;
     double getCost( const int per ) const;
     double getExtCost() const;
-    const std::string& getName() const;
+    const gcamstr& getName() const;
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     

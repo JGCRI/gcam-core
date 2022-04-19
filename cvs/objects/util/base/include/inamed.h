@@ -45,7 +45,7 @@
  * \author Josh Lurz
  */
 
-#include <string>
+#include "util/base/include/definitions.h"
 /*! 
  * \ingroup Objects
  * \brief An interface that specifies a function to return the name of the
@@ -69,7 +69,7 @@ public:
      * \brief Get the name string from this object.
      * \return The name as a constant reference string.
      */
-    virtual const std::string& getName() const = 0;
+    virtual const gcamstr& getName() const = 0;
 };
 
 // Inline definitions.

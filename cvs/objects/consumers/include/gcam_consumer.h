@@ -92,22 +92,22 @@ public:
     virtual void copyParam( const BaseTechnology* baseTech,
                             const int aPeriod );
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName );
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName );
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            NationalAccount& nationalAccount,
                            const Demographic* aDemographics,
                            const double aCapitalStock,
                            const int aPeriod );
     
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
-                          const std::string& aRegionName, 
-                          const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
+                          const gcamstr& aRegionName, 
+                          const gcamstr& aSectorName, const bool aIsNewVintageMode, const int aPeriod );
 
-    virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName, 
+    virtual void postCalc( const gcamstr& aRegionName, const gcamstr& aSectorName, 
                            const int aPeriod );
     
     static const std::string& getXMLNameStatic();

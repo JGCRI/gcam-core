@@ -64,14 +64,14 @@ public:
     FactorInputLeaf();
     static const std::string& getXMLNameStatic();
     const std::string& getXMLName() const;
-    virtual const std::string& getName() const;
-    void completeInit( const std::string& aRegionName, const std::string& aGDPActName );
+    virtual const gcamstr& getName() const;
+    void completeInit( const gcamstr& aRegionName, const gcamstr& aGDPActName );
 
-    void initCalc( const std::string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
+    void initCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
 
     bool isPrimaryFactor() const;
 
-    void postCalc( const std::string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
+    void postCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
     void grabInputs(FactorInputLeaf*& aEnergyInput, FactorInputLeaf*& aLaborInput, FactorInputLeaf*& aCapitalInput);
@@ -85,7 +85,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( FactorInputLeaf ),
 
         //! factor input name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
     
         DEFINE_VARIABLE( SIMPLE, "is-primary-factor", mIsPrimaryFactor, bool ),
         DEFINE_VARIABLE( SIMPLE, "is-capital", mIsCapital, bool ),
@@ -97,7 +97,7 @@ protected:
         //! scaler for factor inputs
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "scaler", mScaler, Value ),
         //! market name for output
-        DEFINE_VARIABLE( SIMPLE, "output", mOutputMrkName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "output", mOutputMrkName, gcamstr )
     )
 
 };
@@ -109,13 +109,13 @@ public:
     FactorInputNode();
     static const std::string& getXMLNameStatic();
     const std::string& getXMLName() const;
-    virtual const std::string& getName() const;
-    void completeInit( const std::string& aRegionName, const std::string& aGDPActName );
-    void initCalc( const std::string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
+    virtual const gcamstr& getName() const;
+    void completeInit( const gcamstr& aRegionName, const gcamstr& aGDPActName );
+    void initCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
     
     bool isPrimaryFactor() const;
 
-    void postCalc( const std::string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
+    void postCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
     
     double getNodeGamma() const { return mFactorNodeGamma; }
@@ -134,7 +134,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( FactorInputNode ),
 
         //! factor input node name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
         //! modified elasticity for nest
         DEFINE_VARIABLE( SIMPLE, "node-gamma", mFactorNodeGamma, Value ),
@@ -153,13 +153,13 @@ public:
     NestedCESProductionFunctionMacro();
     static const std::string& getXMLNameStatic();
     const std::string& getXMLName() const;
-    const std::string& getName() const;
+    const gcamstr& getName() const;
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
-    void completeInit( const std::string& aRegionName, const std::string& aGDPActName );
-    void initCalc( const std::string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
+    void completeInit( const gcamstr& aRegionName, const gcamstr& aGDPActName );
+    void initCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
     void setTotalFactorProductivity( const double aTotalFactorProd );
-    double calcGrossOutput( const std::string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod, const bool aSaveResults );
-    void postCalc( const std::string& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
+    double calcGrossOutput( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod, const bool aSaveResults );
+    void postCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod );
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     DEFINE_DATA(

@@ -78,7 +78,7 @@ public:
     const std::string& getXMLName() const;
 
     // INamed methods
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     // AParsable methods
     bool XMLParse( rapidxml::xml_node<char>* & aNode );
@@ -101,23 +101,23 @@ public:
 private:
 
     //! The name of the object
-    std::string mName;
+    gcamstr mName;
     
     //! The mapping of GCAM sectors names to an aggregate sector by which to calculate a base price
-    std::map<std::string, std::string> mSectorNameMap;
+    std::map<gcamstr, gcamstr> mSectorNameMap;
     
     //! A mapping of aggregate sector name to a pair of currency and physical outputs which are being
     //! aggregated.
-    std::map<std::string, std::pair<double, double> > mMappedSectorOutputs;
+    std::map<gcamstr, std::pair<double, double> > mMappedSectorOutputs;
 
     //! The current model period
     int mPeriod;
 
     //! The region name which will get set as GCAMFusion searches for the data to aggregate
-    std::string mCurrRegionName;
+    gcamstr mCurrRegionName;
 
     //! The GCAM sector name which will get set as GCAMFusion searches for the data to aggregate
-    std::string mCurrSectorName;
+    gcamstr mCurrSectorName;
 
     //! The current technology which will get set as GCAMFusion searches for the data to aggregate
     const ITechnology* mCurrTech;

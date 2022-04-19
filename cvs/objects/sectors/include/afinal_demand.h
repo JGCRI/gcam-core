@@ -86,7 +86,7 @@ public:
      * \brief Get the name of the final demand.
      * \return The name of the final demand.
      */
-    virtual const std::string& getName() const = 0;
+    virtual const gcamstr& getName() const = 0;
     
     /*!
      * \brief Complete the initialization of the final demand.
@@ -95,7 +95,7 @@ public:
      * \param aRegionName Region name.
      * \param aRegionInfo Regional information container.
      */
-    virtual void completeInit( const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aRegionName,
                                const IInfo* aRegionInfo ) = 0;
 
     /*!
@@ -106,7 +106,7 @@ public:
      * \param aDemograhics Region demographics.
      * \param aPeriod Model period.
      */
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const Demographic* aDemographics,
                            const int aPeriod ) = 0;
     
@@ -121,7 +121,7 @@ public:
      * \param aGDP Regional GDP container.
      * \param aPeriod Model period.
      */
-    virtual void setFinalDemand( const std::string& aRegionName,
+    virtual void setFinalDemand( const gcamstr& aRegionName,
                                  const Demographic* aDemographics,
                                  const int aPeriod ) = 0;
 
@@ -132,7 +132,7 @@ public:
      * \param aRegionName Region name.
      * \param aPeriod Model period.
      */
-    virtual double getWeightedEnergyPrice( const std::string& aRegionName,
+    virtual double getWeightedEnergyPrice( const gcamstr& aRegionName,
                                            const int aPeriod ) const = 0;
 
     // Documentation is inherited.

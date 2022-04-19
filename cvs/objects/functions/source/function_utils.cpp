@@ -272,7 +272,7 @@ double FunctionUtils::getRho( const double aSigma )
 * \author Josh Lurz
 */
 double FunctionUtils::getNetPresentValueMult( const InputSet& aInputs,
-                                              const string& aRegionName,
+                                              const gcamstr& aRegionName,
                                               const double aLifetimeYears,
                                               const int aPeriod )
 {
@@ -317,8 +317,8 @@ double FunctionUtils::calcNetPresentValueMult( const double aDiscountRate,
 * \param aPeriod Model period in which to set the price paid.
 * \param aPricePaid The price paid.
 */
-void FunctionUtils::setPricePaid( const string& aRegionName,
-                                  const string& aGoodName,
+void FunctionUtils::setPricePaid( const gcamstr& aRegionName,
+                                  const gcamstr& aGoodName,
                                   const int aPeriod,
                                   const double aPricePaid )
 {
@@ -327,7 +327,7 @@ void FunctionUtils::setPricePaid( const string& aRegionName,
 
     /*! \invariant The market and market info must exist. */
     assert( marketInfo );
-    marketInfo->setDouble( "pricePaid", aPricePaid );
+    marketInfo->setDouble( gcamstr("pricePaid"), aPricePaid );
 }
 
 /*! \brief Gets the price paid for the good by querying the marketplace.
@@ -338,8 +338,8 @@ void FunctionUtils::setPricePaid( const string& aRegionName,
 * \param aPeriod Model period in which to get the price paid.
 * \return The price paid, 0 if there is not one set.
 */
-double FunctionUtils::getPricePaid( const string& aRegionName,
-                                    const string& aGoodName,
+double FunctionUtils::getPricePaid( const gcamstr& aRegionName,
+                                    const gcamstr& aGoodName,
                                     const int aPeriod )
 {
     assert( aGoodName != "USA" );
@@ -348,7 +348,7 @@ double FunctionUtils::getPricePaid( const string& aRegionName,
 
     /*! \invariant The market and market info must exist. */
     assert( marketInfo );
-    return marketInfo->getDouble( "pricePaid", true );
+    return marketInfo->getDouble( gcamstr("pricePaid"), true );
 }
 
 /*! \brief Set the price received for a good into the marketplace.
@@ -359,8 +359,8 @@ double FunctionUtils::getPricePaid( const string& aRegionName,
 * \param aPeriod Model period in which to set the price received.
 * \param aPriceReceived Price received to set.
 */
-void FunctionUtils::setPriceReceived( const string& aRegionName,
-                                      const string& aGoodName,
+void FunctionUtils::setPriceReceived( const gcamstr& aRegionName,
+                                      const gcamstr& aGoodName,
                                       const int aPeriod,
                                       const double aPriceReceived )
 {
@@ -370,7 +370,7 @@ void FunctionUtils::setPriceReceived( const string& aRegionName,
 
     /*! \invariant The market and market info must exist. */
     assert( marketInfo );
-    marketInfo->setDouble( "priceReceived", aPriceReceived );
+    marketInfo->setDouble( gcamstr("priceReceived"), aPriceReceived );
 }
 
 /*! \brief Gets the price received for the good by querying the marketplace.
@@ -381,8 +381,8 @@ void FunctionUtils::setPriceReceived( const string& aRegionName,
 * \param aPeriod Model period in which to get the price received.
 * \return The price received, 0 if there is not one set.
 */
-double FunctionUtils::getPriceReceived( const string& aRegionName,
-                                        const string& aGoodName,
+double FunctionUtils::getPriceReceived( const gcamstr& aRegionName,
+                                        const gcamstr& aGoodName,
                                         const int aPeriod )
 {
     assert( aGoodName != "USA" );
@@ -390,7 +390,7 @@ double FunctionUtils::getPriceReceived( const string& aRegionName,
     const IInfo* marketInfo = marketplace->getMarketInfo( aGoodName, aRegionName, aPeriod, true );
     /*! \invariant The market and market info must exist. */
     assert( marketInfo );
-    return marketInfo->getDouble( "priceReceived", true );
+    return marketInfo->getDouble( gcamstr("priceReceived"), true );
 }
 
 /*! \brief Calculate the expected price received for the good produced by the
@@ -407,8 +407,8 @@ double FunctionUtils::getPriceReceived( const string& aRegionName,
 * \author Josh Lurz
 */
 double FunctionUtils::getExpectedPriceReceived( const InputSet& aInputs,
-                                                const string& aRegionName,
-                                                const string& aGoodName,
+                                                const gcamstr& aRegionName,
+                                                const gcamstr& aGoodName,
                                                 const double aLifetimeYears,
                                                 const int aPeriod )
 {
@@ -430,8 +430,8 @@ double FunctionUtils::getExpectedPriceReceived( const InputSet& aInputs,
 */
 double FunctionUtils::applyTechnicalChangeInternal( InputSet& aInputs,
                                                     const TechChange& aTechChange,
-                                                    const string& aRegionName,
-                                                    const string& aSectorName,
+                                                    const gcamstr& aRegionName,
+                                                    const gcamstr& aSectorName,
                                                     const int aPeriod,
                                                     double aAlphaZero,
                                                     double aSigma )
@@ -499,13 +499,13 @@ double FunctionUtils::getTechChangeForInput( const IInput* aInput,
 * \param aPeriod Model period.
 * \return Whether the good is a fixed price good.
 */
-bool FunctionUtils::isFixedPrice( const string& aRegionName,
+/*bool FunctionUtils::isFixedPrice( const gcamstr& aRegionName,
                                   const string& aGoodName,
                                   const int aPeriod )
 {
     const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName, aPeriod, false );
-    return marketInfo && marketInfo->getBoolean( "IsFixedPrice", false );
-}
+    return marketInfo && marketInfo->getBoolean( gcamstr("IsFixedPrice"), false );
+}*/
 
 /*! \brief Static function which returns the conversion factor for the good
 *          which is stored in the marketplace.
@@ -515,8 +515,8 @@ bool FunctionUtils::isFixedPrice( const string& aRegionName,
 *                   for it to not exist for consumers.
 * \return The conversion factor for the good.
 */
-double FunctionUtils::getMarketConversionFactor( const string& aRegionName,
-                                                 const string& aGoodName,
+double FunctionUtils::getMarketConversionFactor( const gcamstr& aRegionName,
+                                                 const gcamstr& aGoodName,
                                                  const bool aMustExist )
 {
     assert( !aGoodName.empty() && !aRegionName.empty() );
@@ -524,7 +524,7 @@ double FunctionUtils::getMarketConversionFactor( const string& aRegionName,
 
     const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName, 0, aMustExist );
 
-    return marketInfo ? marketInfo->getDouble( "ConversionFactor", aMustExist ) : 0;
+    return marketInfo ? marketInfo->getDouble( gcamstr("ConversionFactor"), aMustExist ) : 0;
 }
 
 /*!
@@ -561,8 +561,8 @@ void FunctionUtils::copyInputParamsForward( const InputSet& aPrevInputs,
  *                   for it to not exist for consumers.
  * \return The CO2 emissions coefficient for the good.
  */
-double FunctionUtils::getCO2Coef( const string& aRegionName,
-                                  const string& aGoodName,
+double FunctionUtils::getCO2Coef( const gcamstr& aRegionName,
+                                  const gcamstr& aGoodName,
                                   const int aPeriod,
                                   const bool aMustExist )
 {
@@ -574,7 +574,8 @@ double FunctionUtils::getCO2Coef( const string& aRegionName,
     // to the primary good. The info should not be null except in cases of
     // improperly constructed input files. This function will have already
     // warned in that case.
-    return productInfo ? productInfo->getDouble( "CO2coefficient", false ) : 0;
+    static const gcamstr CO2CoefKey("CO2coefficient");
+    return productInfo ? productInfo->getDouble( CO2CoefKey, false ) : 0;
 }
 
 /*!
@@ -591,7 +592,7 @@ double FunctionUtils::getCO2Coef( const string& aRegionName,
  * \return Price ratio for the input.
  * \author Josh Lurz
  */
-double FunctionUtils::calcPriceRatio( const string& aRegionName,
+double FunctionUtils::calcPriceRatio( const gcamstr& aRegionName,
                                       const IInput* aInput,
                                       const int aBasePeriod,
                                       const int aCurrentPeriod )
@@ -635,17 +636,17 @@ InputSet FunctionUtils::getLeafInputs( const INestedInput* aNestedInput ) {
  * \param aCapitalGoodPrice The price to set.
  * \author Pralit Patel
  */
-void FunctionUtils::setCapitalGoodPrice( const string& aRegionName,
+void FunctionUtils::setCapitalGoodPrice( const gcamstr& aRegionName,
                                          const int aPeriod,
                                          const double aCapitalGoodPrice )
 {
-    static const string capitalGoodName = "Capital";
+    static const gcamstr capitalGoodName("Capital");
     Marketplace* marketplace = scenario->getMarketplace();
     IInfo* marketInfo = marketplace->getMarketInfo( capitalGoodName, aRegionName, aPeriod, true );
 
     /*! \invariant The market and market info must exist. */
     assert( marketInfo );
-    marketInfo->setDouble( "CapitalGoodPrice", aCapitalGoodPrice );
+    marketInfo->setDouble( gcamstr("CapitalGoodPrice"), aCapitalGoodPrice );
 }
 
 /*!
@@ -660,13 +661,13 @@ void FunctionUtils::setCapitalGoodPrice( const string& aRegionName,
  * \return The price of the capital good.
  * \author Pralit Patel
  */
-double FunctionUtils::getCapitalGoodPrice( const string& aRegionName,
+double FunctionUtils::getCapitalGoodPrice( const gcamstr& aRegionName,
                                            const int aPeriod )
 {
-    static const string capitalGoodName = "Capital";
+    static const gcamstr capitalGoodName("Capital");
     const Marketplace* marketplace = scenario->getMarketplace();
     const IInfo* marketInfo = marketplace->getMarketInfo( capitalGoodName, aRegionName, aPeriod, true );
     /*! \invariant The market and market info must exist. */
     assert( marketInfo );
-    return marketInfo->getDouble( "CapitalGoodPrice", true );
+    return marketInfo->getDouble( gcamstr("CapitalGoodPrice"), true );
 }

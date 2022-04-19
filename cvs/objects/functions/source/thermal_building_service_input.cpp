@@ -82,10 +82,10 @@ const string& ThermalBuildingServiceInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }
 
-void ThermalBuildingServiceInput::completeInit( const string& aRegionName,
-                                        const string& aSectorName,
-                                        const string& aSubsectorName,
-                                        const string& aTechName,
+void ThermalBuildingServiceInput::completeInit( const gcamstr& aRegionName,
+                                        const gcamstr& aSectorName,
+                                        const gcamstr& aSubsectorName,
+                                        const gcamstr& aTechName,
                                         const IInfo* aTechInfo)
 {
     BuildingServiceInput::completeInit( aRegionName, aSectorName, aSubsectorName,

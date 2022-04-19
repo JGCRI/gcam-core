@@ -56,15 +56,15 @@
 
 using namespace std;
 
-double BuildingServiceFunction::calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
-                            const std::string& sectorName, int period, double sigma, double IBT,
+double BuildingServiceFunction::calcCoefficient( InputSet& input, double consumption, const gcamstr& aRegionName,
+                            const gcamstr& sectorName, int period, double sigma, double IBT,
                             double capitalStock, const IInput* aParentInput ) const
 {
      return 1;
 }
 
-double BuildingServiceFunction::calcDemand( InputSet& input, double consumption, const std::string& regionName,
-                       const std::string& sectorName, const double population, int period,
+double BuildingServiceFunction::calcDemand( InputSet& input, double consumption, const gcamstr& aRegionName,
+                       const gcamstr& sectorName, const double population, int period,
                        double capitalStock, double alphaZero, double sigma, double IBT, const IInput* aParentInput ) const
 {
     const regex coalPattern("coal", regex::nosubs | regex::optimize | regex::egrep);
@@ -73,9 +73,9 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const BuildingNodeInput* buildingParentInput = static_cast<const BuildingNodeInput*>( aParentInput );
     // income is 1990 thousand $ and service price is 1975 $
-    double income = buildingParentInput->getSubregionalIncome(regionName, period) * 1000 / CVRT90;
+    double income = buildingParentInput->getSubregionalIncome(aRegionName, period) * 1000 / CVRT90;
     const double floorSpace = buildingParentInput->getPhysicalDemand( period );
-    const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( regionName, period )
+    const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( aRegionName, period )
         / floorSpace;
     double totalDemand = 0;
 
@@ -88,25 +88,24 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
             BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );
 
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
-
             double basePrice = buildingServiceInput->getServPriceBase();
 
             
-            if (regex_search(buildingServiceInput->getName(), coalPattern)) {
+            if (regex_search(buildingServiceInput->getName().get(), coalPattern)) {
 
-                demand = calcServiceCoal(buildingServiceInput,  income, basePrice, regionName, period);
+                demand = calcServiceCoal(buildingServiceInput,  income, basePrice, aRegionName, period);
 
                
             }
-            else if (regex_search(buildingServiceInput->getName(), TradBioPattern)) {
+            else if (regex_search(buildingServiceInput->getName().get(), TradBioPattern)) {
 
-                demand = calcServiceTradBio(buildingServiceInput, income, basePrice, regionName, period);
+                demand = calcServiceTradBio(buildingServiceInput, income, basePrice, aRegionName, period);
 
 
             }
             else {
                 
-                double serviceDensity = calcServiceDensity(buildingServiceInput, income, basePrice, regionName, period);
+                double serviceDensity = calcServiceDensity(buildingServiceInput, income, basePrice, aRegionName, period);
 
                 double biasadder = buildingServiceInput->getBiasAdder(period);
                 double adjustedServiceDensity = (buildingServiceInput->getCoef() * thermalLoad * serviceDensity) + biasadder;
@@ -115,10 +114,10 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
                 // May need to make an adjustment in case of negative prices.
                 if (adjustedServiceDensity < (buildingServiceInput->getCoef() *
                     thermalLoad *
-                    calcServiceDensity(buildingServiceInput, income, basePrice, regionName, scenario->getModeltime()->getFinalCalibrationPeriod())) +
+                    calcServiceDensity(buildingServiceInput, income, basePrice, aRegionName, scenario->getModeltime()->getFinalCalibrationPeriod())) +
                     buildingServiceInput->getBiasAdder(scenario->getModeltime()->getFinalCalibrationPeriod())) {
 
-                    adjustedServiceDensity = calcServiceDensity(buildingServiceInput, income, basePrice, regionName, scenario->getModeltime()->getFinalCalibrationPeriod()) *
+                    adjustedServiceDensity = calcServiceDensity(buildingServiceInput, income, basePrice, aRegionName, scenario->getModeltime()->getFinalCalibrationPeriod()) *
                         thermalLoad * 
                         buildingServiceInput->getCoef() +
                         buildingServiceInput->getBiasAdder(scenario->getModeltime()->getFinalCalibrationPeriod());
@@ -146,14 +145,13 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
 
 
         totalDemand += demand;
-        (*inputIter)->setPhysicalDemand( demand, regionName, period );
+        (*inputIter)->setPhysicalDemand( demand, aRegionName, period );
     }
     return totalDemand;
 }
 
-
-double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                         const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, const gcamstr& aRegionName,
+                         const gcamstr& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                          const IInput* aParentInput ) const
 {
     return 1;
@@ -172,7 +170,7 @@ double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, cons
 double BuildingServiceFunction::calcServiceDensity( BuildingServiceInput* aBuildingServiceInput,
                                                     const double aIncome,
                                                     const double aBasePrice,
-                                                    const string& aRegionName,
+                                                    const gcamstr& aRegionName,
                                                     const int aPeriod ) const
 {
     const double PriceAdjustParam = aBasePrice - aBuildingServiceInput->getPricePaid(aRegionName, scenario->getModeltime()->getFinalCalibrationPeriod());
@@ -196,7 +194,7 @@ double BuildingServiceFunction::calcServiceDensity( BuildingServiceInput* aBuild
 double BuildingServiceFunction::calcServiceCoal(BuildingServiceInput* aBuildingServiceInput,
                                                         const double aIncome,
                                                         const double aBasePrice,
-                                                        const string& aRegionName,
+                                                        const gcamstr& aRegionName,
                                                         const int aPeriod) const
 {
 
@@ -233,7 +231,7 @@ double BuildingServiceFunction::calcServiceCoal(BuildingServiceInput* aBuildingS
 double BuildingServiceFunction::calcServiceTradBio(BuildingServiceInput* aBuildingServiceInput,
                                                           const double aIncome,
                                                           const double aBasePrice,
-                                                          const string& aRegionName,
+                                                          const gcamstr& aRegionName,
                                                           const int aPeriod) const
 {
 

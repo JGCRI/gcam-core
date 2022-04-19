@@ -149,7 +149,7 @@ void Resource::toDebugXML( const int period, ostream& aOut, Tabs* aTabs ) const 
 * \warning markets are not necessarily set when completeInit is called
 */
 
-void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo ) {
+void Resource::completeInit( const gcamstr& aRegionName, const IInfo* aRegionInfo ) {
     // default unit to EJ
     if ( mOutputUnit.empty() ) {
         mOutputUnit = "EJ"; 
@@ -161,8 +161,8 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
     // Allocate the resource info.
     mResourceInfo.reset( InfoFactory::constructInfo( aRegionInfo, /*aRegionName + "-" +*/ mName ) );
     // Set output and price unit of resource into the resource info.
-    mResourceInfo->setString( "output-unit", mOutputUnit );
-    mResourceInfo->setString( "price-unit", mPriceUnit );
+    mResourceInfo->setString( gcamstr("output-unit"), mOutputUnit );
+    mResourceInfo->setString( gcamstr("price-unit"), mPriceUnit );
 
     for( vector<SubResource*>::iterator subResIter = mSubResource.begin(); subResIter != mSubResource.end(); subResIter++ ) {
         ( *subResIter )->completeInit( aRegionName, mName, mResourceInfo.get() );
@@ -179,7 +179,7 @@ void Resource::completeInit( const string& aRegionName, const IInfo* aRegionInfo
 * \param aRegionName Region name.
 * \param aPeriod Model period
 */
-void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
+void Resource::initCalc( const gcamstr& aRegionName, const int aPeriod ) {
     // call subResource initializations
     for ( unsigned int i = 0; i < mSubResource.size(); i++ ){
         mSubResource[i]->initCalc( aRegionName, mName, mResourceInfo.get(), aPeriod );
@@ -204,7 +204,7 @@ void Resource::initCalc( const string& aRegionName, const int aPeriod ) {
 * \param aRegionName Region name.
 * \param aPeriod Model period
 */
-void Resource::postCalc( const string& aRegionName, const int aPeriod ) {
+void Resource::postCalc( const gcamstr& aRegionName, const int aPeriod ) {
     // Call subResource post calculations
     for ( unsigned int i = 0; i < mSubResource.size(); i++ ) {
         mSubResource[i]->postCalc( aRegionName, mName, aPeriod);
@@ -214,7 +214,7 @@ void Resource::postCalc( const string& aRegionName, const int aPeriod ) {
 }
 
 //! Create markets
-void Resource::setMarket( const string& aRegionName ) {
+void Resource::setMarket( const gcamstr& aRegionName ) {
 
     Marketplace* pMarketplace   = scenario->getMarketplace();
     const Modeltime* pModeltime = scenario->getModeltime();
@@ -222,29 +222,25 @@ void Resource::setMarket( const string& aRegionName ) {
     if ( pMarketplace->createMarket( aRegionName, mMarket, mName, IMarketType::NORMAL ) ) {
         // Set price and output units for period 0 market info
         IInfo* pMarketInfo = pMarketplace->getMarketInfo( mName, aRegionName, 0, true );
-        pMarketInfo->setString( "price-unit", mPriceUnit );
-        pMarketInfo->setString( "output-unit", mOutputUnit );
+        pMarketInfo->setString( gcamstr("price-unit"), mPriceUnit );
+        pMarketInfo->setString( gcamstr("output-unit"), mOutputUnit );
 
         pMarketplace->setPriceVector( mName, aRegionName, mResourcePrice );
         for( int period = 0; period < pModeltime->getmaxper(); ++period ){
-            IInfo* marketInfo = pMarketplace->getMarketInfo( mName, aRegionName, period, true );
             if( period >= 1 ){
                 pMarketplace->setMarketToSolve( mName, aRegionName, period );
             }
-  
-            // Put region name in market info for error checking in renewable sub-resource
-            marketInfo->setString( "Market-Region", mMarket );
       }
     }
 }
 
 //! Return resource name.
-const string& Resource::getName() const {
+const gcamstr& Resource::getName() const {
     return mName;
 }
 
 //! Calculate total resource supply for a period.
-void Resource::calcSupply( const string& aRegionName, const int aPeriod ){
+void Resource::calcSupply( const gcamstr& aRegionName, const int aPeriod ){
     // This code is moved down from Region
     Marketplace* marketplace = scenario->getMarketplace();
 
@@ -254,7 +250,7 @@ void Resource::calcSupply( const string& aRegionName, const int aPeriod ){
     annualsupply( aRegionName, aPeriod, price );
 }
 
-void Resource::cumulsupply( const string& aRegionName, double aPrice, int aPeriod )
+void Resource::cumulsupply( const gcamstr& aRegionName, double aPrice, int aPeriod )
 {   
     int i = 0;
     mCumulProd[ aPeriod ] = 0.0;
@@ -268,7 +264,7 @@ void Resource::cumulsupply( const string& aRegionName, double aPrice, int aPerio
 }
 
 //! Calculate annual production
-void Resource::annualsupply( const string& aRegionName, int aPeriod, double aPrice )
+void Resource::annualsupply( const gcamstr& aRegionName, int aPeriod, double aPrice )
 {   
     int i = 0;
     mAnnualProd[ aPeriod ] = 0.0;
@@ -287,7 +283,7 @@ void Resource::annualsupply( const string& aRegionName, int aPeriod, double aPri
 
 
 //! Return annual production of resources.
-double Resource::getAnnualProd( const string& aRegionName, const int aPeriod ) const {
+double Resource::getAnnualProd( const gcamstr& aRegionName, const int aPeriod ) const {
     return mAnnualProd[ aPeriod ];
 }
 
@@ -358,7 +354,7 @@ const std::string& RenewableResource::getXMLNameStatic() {
 *
 * \author Steve Smith.  Mod for intermittent by Marshall Wise
 */
-void RenewableResource::annualsupply( const string& aRegionName, int aPeriod, double aPrice )
+void RenewableResource::annualsupply( const gcamstr& aRegionName, int aPeriod, double aPrice )
 {
 
     // calculate cumulative production

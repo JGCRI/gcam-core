@@ -91,7 +91,7 @@ const std::string& SmoothRenewableSubresource::getXMLNameStatic( void ){
 }
 
 // SmoothRenewableSubresource::completeInit
-void SmoothRenewableSubresource::completeInit( const std::string& aRegionName, const std::string& aResourceName,
+void SmoothRenewableSubresource::completeInit( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                                const IInfo* aSectorInfo )
 {
    SubRenewableResource::completeInit( aRegionName, aResourceName, aSectorInfo );
@@ -121,7 +121,7 @@ void SmoothRenewableSubresource::completeInit( const std::string& aRegionName, c
 * \param aResourceName Resource name.
 * \param aPeriod Model aPeriod
 */
-void SmoothRenewableSubresource::initCalc(const std::string& aRegionName, const std::string& aResourceName, 
+void SmoothRenewableSubresource::initCalc(const gcamstr& aRegionName, const gcamstr& aResourceName, 
                                           const IInfo* aSectorInfo, const int aPeriod)
 {
     SubResource::initCalc( aRegionName, aResourceName, aSectorInfo, aPeriod);
@@ -143,7 +143,7 @@ void SmoothRenewableSubresource::initCalc(const std::string& aRegionName, const 
 }
 
 // SmoothRenewableSubresource::annualsupply
-void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, const std::string& aResourceName,
+void SmoothRenewableSubresource::annualsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                                int aPeriod, double aPrice )
 {
     const Modeltime* modeltime = scenario->getModeltime();

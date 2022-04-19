@@ -75,8 +75,9 @@ MACGeneratorScenarioRunner::MACGeneratorScenarioRunner(){
 MACGeneratorScenarioRunner::~MACGeneratorScenarioRunner(){
 }
 
-const string& MACGeneratorScenarioRunner::getName() const {
-    return getXMLNameStatic();
+const gcamstr& MACGeneratorScenarioRunner::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 /*! \brief Setup the Scenario to be run.

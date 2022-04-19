@@ -61,11 +61,11 @@ void MiniCAMInput::copy( const MiniCAMInput& aOther ) {
     mTypeFlags = aOther.mTypeFlags;
 }
 
-const string& MiniCAMInput::getName() const {
+const gcamstr& MiniCAMInput::getName() const {
     return mName;
 }
 
-const string& MiniCAMInput::getMarketName( const string& aRegionName ) const {
+const string& MiniCAMInput::getMarketName( const gcamstr& aRegionName ) const {
     return aRegionName;
 }
 
@@ -138,13 +138,13 @@ double MiniCAMInput::getCarbonContent( const int aPeriod ) const {
 }
 
 void MiniCAMInput::setCurrencyDemand( double aCurrencyDemand,
-                                      const string& aRegionName,
+                                      const gcamstr& aRegionName,
                                       const int aPeriod )
 {
     // MiniCAM cannot set currency demand directly.
 }
 
-double MiniCAMInput::getPricePaid( const string& aRegionName,
+double MiniCAMInput::getPricePaid( const gcamstr& aRegionName,
                                    const int aPeriod ) const
 {
     // In MiniCAM, price, price paid, and price received are all equal.
@@ -156,7 +156,7 @@ void MiniCAMInput::setPricePaid( double aPricePaid, const int aPeriod ) {
     assert( false );
 }
 
-double MiniCAMInput::getPriceReceived( const string& aRegionName,
+double MiniCAMInput::getPriceReceived( const gcamstr& aRegionName,
                                        const int aPeriod ) const
 {
     // In MiniCAM, price, price paid, and price received are all equal.

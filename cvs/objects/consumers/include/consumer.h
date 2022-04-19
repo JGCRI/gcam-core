@@ -72,31 +72,31 @@ public:
     virtual void copyParam( const BaseTechnology* baseTech,
                             const int aPeriod ) = 0;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName ) = 0;
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName ) = 0;
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            NationalAccount& nationalAccount,
                            const Demographic* aDemographics,
                            const double aCapitalStock,
                            const int aPeriod );
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
-        const std::string& aRegionName, 
-        const std::string& aSectorName, const bool aIsNewVintageMode, const int aPeriod ) = 0;
+        const gcamstr& aRegionName, 
+        const gcamstr& aSectorName, const bool aIsNewVintageMode, const int aPeriod ) = 0;
 
-    virtual void updateMarketplace( const std::string& aSectorName, const std::string& aRegionName,
+    virtual void updateMarketplace( const gcamstr& aSectorName, const gcamstr& aRegionName,
                                     const int aPeriod );
-    virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName, 
+    virtual void postCalc( const gcamstr& aRegionName, const gcamstr& aSectorName, 
                            const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
   
     double getAnnualInvestment( const int aPeriod ) const { 
         return 0;
     }
-    double setInvestment( const std::string& aRegionName, const double aAnnualInvestment,
+    double setInvestment( const gcamstr& aRegionName, const double aAnnualInvestment,
                           const double aTotalInvestment, const int aPeriod )
     { 
         return 0; 
@@ -117,13 +117,13 @@ protected:
     )
     
     void copy( const Consumer& aOther );
-    void calcInputDemand( double aConsumption, const std::string& aRegionName,
-        const std::string& aSectorName, int aPeriod );
+    void calcInputDemand( double aConsumption, const gcamstr& aRegionName,
+        const gcamstr& aSectorName, int aPeriod );
 
-    double calcRealGNP( NationalAccount& aNationalAccount, const std::string& aRegionName,
+    double calcRealGNP( NationalAccount& aNationalAccount, const gcamstr& aRegionName,
         int aPeriod ) const;
     
-    void calcEmissions( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod );
+    void calcEmissions( const std::string& aGoodName, const gcamstr& aRegionName, const int aPeriod );
     virtual const std::string& getXMLName() const = 0;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const = 0;
     double mUtilityParameterA;

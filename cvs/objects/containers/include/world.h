@@ -90,7 +90,7 @@ public:
     void completeInit();
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
 	static const std::string& getXMLNameStatic();
-    const std::string& getName() const;
+    const gcamstr& getName() const;
     void initCalc( const int period );
     void postCalc( const int aPeriod );
 

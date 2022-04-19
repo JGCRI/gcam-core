@@ -102,8 +102,9 @@ const string& StandardCaptureComponent::getXMLName() const {
     return getXMLNameStatic();
 }
 
-const string& StandardCaptureComponent::getName() const {
-    return getXMLNameStatic();
+const gcamstr& StandardCaptureComponent::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 void StandardCaptureComponent::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
@@ -117,8 +118,8 @@ void StandardCaptureComponent::toDebugXML( const int aPeriod, ostream& aOut, Tab
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void StandardCaptureComponent::completeInit( const string& aRegionName,
-                                             const string& aSectorName )
+void StandardCaptureComponent::completeInit( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName )
 {
     // Add the storage market as a dependency of the sector. This is because
     // this sector will have to be ordered first so that the total demand and
@@ -134,8 +135,8 @@ void StandardCaptureComponent::completeInit( const string& aRegionName,
     }
 }
 
-void StandardCaptureComponent::initCalc( const string& aRegionName,
-                                           const string& aSectorName,
+void StandardCaptureComponent::initCalc( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
                                            const string& aFuelName,
                                            const int aPeriod )
 {
@@ -148,7 +149,7 @@ void StandardCaptureComponent::initCalc( const string& aRegionName,
  * \param aPeriod 
  * \return storage cost
  */
-double StandardCaptureComponent::getStorageCost( const string& aRegionName,
+double StandardCaptureComponent::getStorageCost( const gcamstr& aRegionName,
                                                  const string& aGHGName,
                                                  const int aPeriod ) const
 {
@@ -204,7 +205,7 @@ double StandardCaptureComponent::getRemoveFraction( const string& aGHGName ) con
  * \param aPeriod 
  * \return emissions sequestered
  */
-double StandardCaptureComponent::calcSequesteredAmount( const string& aRegionName,
+double StandardCaptureComponent::calcSequesteredAmount( const gcamstr& aRegionName,
                                                         const string& aGHGName,
                                                         const double aTotalEmissions,
                                                         const int aPeriod )
@@ -244,7 +245,7 @@ double StandardCaptureComponent::getSequesteredAmount( const string& aGHGName,
     return 0;
 }
 
-void StandardCaptureComponent::adjustInputs( const string& aRegionName,
+void StandardCaptureComponent::adjustInputs( const gcamstr& aRegionName,
                                              std::vector<IInput*>& aInputs,
                                              const int aPeriod ) const
 {

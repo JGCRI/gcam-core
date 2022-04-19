@@ -87,10 +87,10 @@ const string& BuildingServiceInput::getXMLReportingName() const {
     return getXMLNameStatic();
 }
 
-void BuildingServiceInput::completeInit( const string& aRegionName,
-                             const string& aSectorName,
-                             const string& aSubsectorName,
-                             const string& aTechName,
+void BuildingServiceInput::completeInit( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
+                             const gcamstr& aSubsectorName,
+                             const gcamstr& aTechName,
                              const IInfo* aTechInfo)
 {
     // Indicate that this sector depends on the service this input represents.
@@ -102,8 +102,8 @@ void BuildingServiceInput::completeInit( const string& aRegionName,
                                                                       aRegionName );
 }
 
-void BuildingServiceInput::initCalc( const string& aRegionName,
-                         const string& aSectorName,
+void BuildingServiceInput::initCalc( const gcamstr& aRegionName,
+                         const gcamstr& aSectorName,
                          const bool aIsNewInvestmentPeriod,
                          const bool aIsTrade,
                          const IInfo* aTechInfo,
@@ -200,7 +200,7 @@ SatiationDemandFunction* BuildingServiceInput::getSatiationDemandFunction() cons
 }
 
 //! Get the name of the input
-const string& BuildingServiceInput::getName() const {
+const gcamstr& BuildingServiceInput::getName() const {
     return mName;
 }
 
@@ -221,7 +221,7 @@ double BuildingServiceInput::getPhysicalDemand( const int aPeriod ) const {
 }
 
 //! Set Physical Demand.
-void BuildingServiceInput::setPhysicalDemand( double aPhysicalDemand, const string& aRegionName, const int aPeriod )
+void BuildingServiceInput::setPhysicalDemand( double aPhysicalDemand, const gcamstr& aRegionName, const int aPeriod )
 {
     // We are storing the results in the same vector as the calibration data
     // generally the calculated value should match however it may not if the
@@ -305,11 +305,11 @@ void BuildingServiceInput::setCoefficient( const double aCoefficient, const int 
  * \param aPeriod Period to find the price in.
  * \return The market or unadjusted price.
  */
-double BuildingServiceInput::getPrice( const string& aRegionName, const int aPeriod ) const {
+double BuildingServiceInput::getPrice( const gcamstr& aRegionName, const int aPeriod ) const {
     return scenario->getMarketplace()->getPrice( mName, aRegionName, aPeriod );
 }
 
-void BuildingServiceInput::setPrice( const string& aRegionName,
+void BuildingServiceInput::setPrice( const gcamstr& aRegionName,
                          const double aPrice,
                          const int aPeriod )
 {
@@ -320,7 +320,7 @@ void BuildingServiceInput::setPrice( const string& aRegionName,
 * \param aRegionName Name of the containing region.
 * \param aPeriod Model period.
 */
-double BuildingServiceInput::getPricePaid( const string& aRegionName, const int aPeriod ) const{
+double BuildingServiceInput::getPricePaid( const gcamstr& aRegionName, const int aPeriod ) const{
     return getPrice( aRegionName, aPeriod );
 }
 

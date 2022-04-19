@@ -50,7 +50,7 @@ using namespace std;
 
 extern Scenario* scenario;
 
-ResidueBiomassOutput::ResidueBiomassOutput( const std::string& sectorName )
+ResidueBiomassOutput::ResidueBiomassOutput( const gcamstr& sectorName )
 {
     mName = sectorName;
     mProductLeaf = 0;
@@ -128,7 +128,7 @@ void ResidueBiomassOutput::accept( IVisitor* aVisitor, const int aPeriod ) const
  * \return Biomass Production
  */
 IOutput::OutputList ResidueBiomassOutput::calcPhysicalOutput( const double aPrimaryOutput,
-                                                              const std::string& aRegionName,
+                                                              const gcamstr& aRegionName,
                                                               const ICaptureComponent* aCaptureComponent,
                                                               const int aPeriod ) const 
 {
@@ -211,7 +211,7 @@ IOutput::OutputList ResidueBiomassOutput::calcPhysicalOutput( const double aPrim
     return outputList;
 }
 
-void ResidueBiomassOutput::completeInit( const std::string& aSectorName, const std::string& aRegionName,
+void ResidueBiomassOutput::completeInit( const gcamstr& aSectorName, const gcamstr& aRegionName,
                                          const IInfo* aTechInfo, const bool aIsTechOperating )
 {
     // If erosion control is positive, but a land allocator
@@ -278,7 +278,7 @@ double ResidueBiomassOutput::getPhysicalOutput( const int aPeriod ) const
     return mPhysicalOutputs[ aPeriod ];
 }
 
-double ResidueBiomassOutput::getValue( const std::string& aRegionName,
+double ResidueBiomassOutput::getValue( const gcamstr& aRegionName,
                                        const ICaptureComponent* aCaptureComponent,
                                        const int aPeriod ) const
 {
@@ -294,7 +294,7 @@ const std::string& ResidueBiomassOutput::getXMLNameStatic( void )
     return XMLName;
 }
 
-void ResidueBiomassOutput::initCalc( const std::string& aRegionName, const std::string& aSectorName,
+void ResidueBiomassOutput::initCalc( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                      const int aPeriod )
 {
     assert( scenario != 0 );
@@ -304,7 +304,7 @@ void ResidueBiomassOutput::initCalc( const std::string& aRegionName, const std::
     mCachedCO2Coef.set( productInfo ? productInfo->getDouble( "CO2Coef", false ) : 0 );
 }
 
-void ResidueBiomassOutput::postCalc( const std::string& aRegionName, const int aPeriod )
+void ResidueBiomassOutput::postCalc( const gcamstr& aRegionName, const int aPeriod )
 {
    // Not used
 }
@@ -321,7 +321,7 @@ void ResidueBiomassOutput::sendLandAllocator( const ILandAllocator* aLandAllocat
     mProductLeaf = const_cast<ILandAllocator*>( aLandAllocator )->findProductLeaf( aName );
 }
 
-void ResidueBiomassOutput::setPhysicalOutput( const double aPrimaryOutput, const std::string& aRegionName,
+void ResidueBiomassOutput::setPhysicalOutput( const double aPrimaryOutput, const gcamstr& aRegionName,
                                               ICaptureComponent* aCaptureComponent, const int aPeriod )
 {
     // Set the physical output for the specified period
@@ -370,7 +370,7 @@ bool ResidueBiomassOutput::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     }
 }
 
-string ResidueBiomassOutput::getOutputUnits( const string& aRegionName ) const {
+string ResidueBiomassOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, true )
         ->getString( "output-unit", false );
 }

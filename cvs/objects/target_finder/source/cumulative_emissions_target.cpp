@@ -97,7 +97,7 @@ double CumulativeEmissionsTarget::getStatus( const int aYear ) const
     // Calculate the cumulative emissions using the trapezoidal rule for interpolation.
     const Modeltime* modeltime = scenario->getModeltime();
     const Marketplace* marketplace = scenario->getMarketplace();
-    const string gasRegion = "USA";
+    const gcamstr gasRegion("USA");
     int period = modeltime->getyr_to_per( mFirstTaxYear );
     int prevYear = mFirstTaxYear;
     int currYear = mFirstTaxYear;
@@ -133,7 +133,7 @@ int CumulativeEmissionsTarget::getYearOfMaxTargetValue() const {
     // the annual emissions switches to negative.
     const Modeltime* modeltime = scenario->getModeltime();
     const Marketplace* marketplace = scenario->getMarketplace();
-    const string gasRegion = "USA";
+    const gcamstr gasRegion = "USA";
     int period = modeltime->getyr_to_per( mFirstTaxYear );
     double prevEmissions = marketplace->getDemand( mTargetGas, gasRegion, period );
     double currEmissions = prevEmissions;

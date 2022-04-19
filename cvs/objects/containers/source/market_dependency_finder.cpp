@@ -119,10 +119,10 @@ MarketDependencyFinder::CalcVertex::~CalcVertex() {
  * \return Wether a new entry was created to by adding this dependency, in other
  *         words it wasn't duplicative.
  */
-bool MarketDependencyFinder::addDependency( const string& aDependentName,
-                                            const string& aDependentRegion,
-                                            const string& aDependencyName,
-                                            const string& aDependencyRegion,
+bool MarketDependencyFinder::addDependency( const gcamstr& aDependentName,
+                                            const gcamstr& aDependentRegion,
+                                            const gcamstr& aDependencyName,
+                                            const gcamstr& aDependencyRegion,
                                             const bool aCanBeBroken )
 {
     // Find/create a DependencyItem entry for the dependent item
@@ -166,8 +166,8 @@ bool MarketDependencyFinder::addDependency( const string& aDependentName,
  * \param aPriceActivity The optional price item to bind to a dependency name.
  *                       This class will assume ownership of this memory.
  */
-void MarketDependencyFinder::resolveActivityToDependency( const string& aRegionName,
-                                                          const string& aActivityName,
+void MarketDependencyFinder::resolveActivityToDependency( const gcamstr& aRegionName,
+                                                          const gcamstr& aActivityName,
                                                           IActivity* aDemandActivity,
                                                           IActivity* aPriceActivity )
 {
@@ -459,7 +459,7 @@ void MarketDependencyFinder::createOrdering() {
             // changes the price for this market.  We do that by adding them as
             // "implied" vertices to calculate.
             for( CItemIterator dependIt = (*it)->mDependentList.begin(); dependIt != (*it)->mDependentList.end(); ++dependIt ) {
-                if( (*dependIt)->mName == "land-allocator" ) {
+                if( (*dependIt)->mName == gcamstr("land-allocator") ) {
                     // The land allocator is a special case since it must work in conjunction
                     // with the ag supply sectors to set supplies into the marketplace.
                     // So we imply that any time the land allocator is recalculated then
@@ -539,7 +539,7 @@ void MarketDependencyFinder::createOrdering() {
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         // less than ideal but our heuristics do not properly deal with link CO2 markets
         // so explicitly avoid warning about CO2_LUC (potentially others here)
-        if( !(*it)->mHasIncomingDependency && (*it)->mDependentList.empty() && (*it)->mName != "CO2_LUC" ) {
+        if( !(*it)->mHasIncomingDependency && (*it)->mDependentList.empty() && (*it)->mName != gcamstr("CO2_LUC") ) {
             depLog.setLevel( ILogger::SEVERE );
             depLog << (*it)->mName << " in " << (*it)->mLocatedInRegion << " is not related to any other activities." << endl;
         }

@@ -114,11 +114,11 @@ void Subsector::clearInterpolationRules() {
 * \author Sonny Kim
 * \return sector name as a string
 */
-const string& Subsector::getName() const {
+const gcamstr& Subsector::getName() const {
     return mName;
 }
 
-void Subsector::setNames( const string& aRegionName, const string& aSectorName ) {
+void Subsector::setNames( const gcamstr& aRegionName, const gcamstr& aSectorName ) {
     mRegionName = aRegionName;
     mSectorName = aSectorName;
 }

@@ -159,9 +159,9 @@ protected:
 public:
     explicit Sector();
     virtual ~Sector();
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     
-    void setNames( const std::string& aRegionName );
+    void setNames( const gcamstr& aRegionName );
     
     virtual const std::string& getXMLName() const = 0;
 

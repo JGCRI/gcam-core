@@ -80,7 +80,7 @@ const string& FixedFinalDemand::getXMLNameStatic() {
     return XML_NAME;
 }
 
-const string& FixedFinalDemand::getName() const {
+const gcamstr& FixedFinalDemand::getName() const {
     return mName;
 }
 
@@ -94,14 +94,14 @@ void FixedFinalDemand::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
-void FixedFinalDemand::completeInit( const string& aRegionName,
+void FixedFinalDemand::completeInit( const gcamstr& aRegionName,
                                       const IInfo* aRegionInfo )
 {
     SectorUtils::fillMissingPeriodVectorInterpolated( mServiceDemand );
 }
 
 
-void FixedFinalDemand::initCalc( const string& aRegionName,
+void FixedFinalDemand::initCalc( const gcamstr& aRegionName,
                                   const Demographic* aDemographics,
                                   const int aPeriod )
 {
@@ -118,7 +118,7 @@ void FixedFinalDemand::initCalc( const string& aRegionName,
  * \param Demographic* aDemographicss.
  * \param aPeriod Model aPeriod
  */
-void FixedFinalDemand::setFinalDemand( const string& aRegionName,
+void FixedFinalDemand::setFinalDemand( const gcamstr& aRegionName,
                                         const Demographic* aDemographics,
                                         const int aPeriod )
 {
@@ -127,7 +127,7 @@ void FixedFinalDemand::setFinalDemand( const string& aRegionName,
     marketplace->addToDemand( mName, aRegionName, mServiceDemand[ aPeriod ], aPeriod );
 }
 
-double FixedFinalDemand::getWeightedEnergyPrice( const string& aRegionName,
+double FixedFinalDemand::getWeightedEnergyPrice( const gcamstr& aRegionName,
                                                  const int aPeriod ) const
 {
     // TODO: this method is no longer used and should be dropped

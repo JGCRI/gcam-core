@@ -78,8 +78,9 @@ const string& SatiationDemandFunction::getXMLNameStatic() {
     return XML_NAME;
 }
 
-const string& SatiationDemandFunction::getName() const {
-    return getXMLNameStatic();
+const gcamstr& SatiationDemandFunction::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 /*!

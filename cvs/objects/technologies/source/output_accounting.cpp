@@ -106,7 +106,7 @@ bool OutputAccounting::isSameType( const string& aType ) const
     return aType == getXMLNameStatic();
 }
 
-const string& OutputAccounting::getName() const
+const gcamstr& OutputAccounting::getName() const
 {
     // Make sure the name is initialized.
     assert( !mName.empty() );
@@ -134,15 +134,15 @@ void OutputAccounting::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void OutputAccounting::completeInit( const string& aSectorName,
-                                     const string& aRegionName,
+void OutputAccounting::completeInit( const gcamstr& aSectorName,
+                                     const gcamstr& aRegionName,
                                      const IInfo* aTechInfo,
                                      const bool aIsTechOperating )
 {
 }
 
-void OutputAccounting::initCalc( const string& aRegionName,
-                                 const string& aSectorName,
+void OutputAccounting::initCalc( const gcamstr& aRegionName,
+                                 const gcamstr& aSectorName,
                                  const int aPeriod )
 {
     const int finalCalPeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
@@ -160,13 +160,13 @@ void OutputAccounting::initCalc( const string& aRegionName,
 }
 
 
-void OutputAccounting::postCalc( const string& aRegionName,
+void OutputAccounting::postCalc( const gcamstr& aRegionName,
                           const int aPeriod )
 {
 }
 
 IOutput::OutputList OutputAccounting::calcPhysicalOutput( const double aPrimaryOutput,
-                                                         const string& aRegionName,
+                                                         const gcamstr& aRegionName,
                                                          const ICaptureComponent* aCaptureComponent,
                                                          const int aPeriod ) const
 {
@@ -176,7 +176,7 @@ IOutput::OutputList OutputAccounting::calcPhysicalOutput( const double aPrimaryO
 
 void OutputAccounting::setCurrencyOutput( const double aPysicalOutput,
                                           const double aCurrencyConversionPrice,
-                                          const string& aRegionName,
+                                          const gcamstr& aRegionName,
                                           const int aPeriod )
 {
     // we are expecting a currency conversion price to ultimately land us in 1975 billion dollars:
@@ -198,7 +198,7 @@ double OutputAccounting::getCurrencyOutput( const int aPeriod ) const
     return mCurrencyOutputs[ aPeriod ];
 }
 
-string OutputAccounting::getOutputUnits( const string& aRegionName ) const {
+string OutputAccounting::getOutputUnits( const gcamstr& aRegionName ) const {
     IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, false );
     return marketInfo ? marketInfo->getString( "output-unit", false ) : "";
 }

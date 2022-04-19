@@ -55,9 +55,6 @@
 #include "util/base/include/data_definition_util.h"
 
 class Market;
-namespace objects {
-    class Atom;
-}
 
 /*!
  * \brief A class which simply manages the list of markets by model period.
@@ -68,8 +65,8 @@ namespace objects {
  */
 class MarketContainer : public INamed, private boost::noncopyable {
 public:
-    MarketContainer( const IMarketType::Type aMarketType, const std::string& aGoodName, const std::string& aRegionName );
-    MarketContainer( MarketContainer* aMarketToLink, const std::string& aGoodName, const std::string& aRegionName, const int aStartPeriod );
+    MarketContainer( const IMarketType::Type aMarketType, const gcamstr& aGoodName, const gcamstr& aRegionName );
+    MarketContainer( MarketContainer* aMarketToLink, const gcamstr& aGoodName, const gcamstr& aRegionName, const int aStartPeriod );
     virtual ~MarketContainer();
     
     void changeLinkedMarket( MarketContainer* aMarketToLink, const int aStartPeriod );
@@ -77,11 +74,10 @@ public:
     
     Market* getMarket( const int aPeriod ) const;
 
-    void addRegion( const std::string& aRegion );
-    const std::vector<const objects::Atom*>& getContainedRegions() const;
+    void addRegion( const gcamstr& aRegion );
+    const std::vector<gcamstr>& getContainedRegions() const;
     
-    const std::string& getName() const;
-    const gcamstr& getNameTEMP() const;
+    const gcamstr& getName() const;
     const gcamstr& getRegionName() const;
     const gcamstr& getGoodName() const;
     
@@ -130,7 +126,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "serial-number", mSerialNumber, int ),
         
         //! Vector of atoms of all regions contained within this market.
-        DEFINE_VARIABLE( ARRAY, "contained-regions", mContainedRegions, std::vector<const objects::Atom*> )
+        DEFINE_VARIABLE( ARRAY, "contained-regions", mContainedRegions, std::vector<gcamstr> )
     )
     
     Market* createMarket( const IMarketType::Type aMarketType );

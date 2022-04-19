@@ -61,9 +61,9 @@ using namespace std;
 
 extern Scenario* scenario; // for marketplace and modeltime.
 
-HashMap<std::string, std::string> SectorUtils::sTrialMarketNames;
+std::map<gcamstr, gcamstr> SectorUtils::sTrialMarketNames;
 
-typedef HashMap<string, string>::const_iterator NameIterator;
+typedef std::map<gcamstr, gcamstr>::const_iterator NameIterator;
 
 /*!
  * \brief Find the national accounts for the given region.
@@ -92,7 +92,7 @@ NationalAccountContainer const* getNationalAccountContainer( const string& aRegi
     }
 }
 
-void SectorUtils::addGDPDependency(const string &aRegionName, const string &aSectorName) {
+void SectorUtils::addGDPDependency(const gcamstr &aRegionName, const gcamstr &aSectorName) {
     NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
     // error messages would have already been printed if not found
     if( gdp ) {
@@ -100,25 +100,25 @@ void SectorUtils::addGDPDependency(const string &aRegionName, const string &aSec
     }
 }
 
-double SectorUtils::getGDP( const string& aRegionName, const int aPeriod ) {
+double SectorUtils::getGDP( const gcamstr& aRegionName, const int aPeriod ) {
     NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
     // error messages would have already been printed if not found
     return gdp ? gdp->getMarketGDP( aPeriod ) : 0.0;
 }
 
-double SectorUtils::getGDPPerCap( const string& aRegionName, const int aPeriod ) {
+double SectorUtils::getGDPPerCap( const gcamstr& aRegionName, const int aPeriod ) {
     NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
     // error messages would have already been printed if not found
     return gdp ? gdp->getMarketGDPperCapita( aPeriod ) : 0.0;
 }
 
-double SectorUtils::getGDPPerCapScaled( const string& aRegionName, const int aPeriod ) {
+double SectorUtils::getGDPPerCapScaled( const gcamstr& aRegionName, const int aPeriod ) {
     NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
     // error messages would have already been printed if not found
     return gdp ? gdp->getMarketGDPperCapitaNorm( aPeriod ) : 0.0;
 }
 
-double SectorUtils::getGDPPPP( const string& aRegionName, const int aPeriod ) {
+double SectorUtils::getGDPPPP( const gcamstr& aRegionName, const int aPeriod ) {
     NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
     // error messages would have already been printed if not found
     return gdp ? gdp->getGDPPPP( aPeriod ) : 0.0;
@@ -133,12 +133,12 @@ double SectorUtils::getGDPPPP( const string& aRegionName, const int aPeriod ) {
  *          the unit string directly.
  * \note Deprecated
  */
-bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
-                                           const string& aSectorName,
+bool SectorUtils::createTrialSupplyMarket( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
                                            const IInfo *aTechnologyInfo,
-                                           const string& aMarketName )
+                                           const gcamstr& aMarketName )
 {
-    string unitname = aTechnologyInfo->getString( "output-unit", true );
+    gcamstr unitname = aTechnologyInfo->getString( gcamstr("output-unit"), true );
     return createTrialSupplyMarket(aRegionName, aSectorName, unitname, aMarketName);
 }
 
@@ -157,14 +157,14 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
  *                    trial value is shared amongst different regions.
  * \return Whether the market was created and did not already exist.
  */
-bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
-                                           const string& aSectorName,
-                                           const string& aUnitStr,
-                                           const string& aMarketName )
+bool SectorUtils::createTrialSupplyMarket( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
+                                           const gcamstr& aUnitStr,
+                                           const gcamstr& aMarketName )
 {
-    const string& marketName = aMarketName.empty() ? aRegionName : aMarketName;
+    const gcamstr& marketName = aMarketName.empty() ? aRegionName : aMarketName;
     // Add the trial market name to the cached list of trial names.
-    const string trialName = getTrialMarketName( aSectorName );
+    const gcamstr trialName(getTrialMarketName( aSectorName ));
     sTrialMarketNames.insert( make_pair( aSectorName, trialName ) );
 
     // Create the additional market.
@@ -177,8 +177,8 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
     // Set price and output units for period 0 market info
     // no operating trial market for base period, although vector always contains base period
     IInfo* marketInfoTrialSupplySector = marketplace->getMarketInfo( trialName, aRegionName, 0, true );
-    marketInfoTrialSupplySector->setString( "price-unit", aUnitStr );
-    marketInfoTrialSupplySector->setString( "output-unit", aUnitStr );
+    marketInfoTrialSupplySector->setString( gcamstr("price-unit"), aUnitStr );
+    marketInfoTrialSupplySector->setString( gcamstr("output-unit"), aUnitStr );
 
     // Set the market to solve.
     for( int per = 1; per < scenario->getModeltime()->getmaxper(); ++per ){
@@ -197,8 +197,8 @@ bool SectorUtils::createTrialSupplyMarket( const string& aRegionName,
  * \param aSupply Known value of supply for the iteration.
  * \param aPeriod Model period.
  */
-void SectorUtils::addToTrialDemand( const string& aRegionName,
-                                    const string& aSectorName,
+void SectorUtils::addToTrialDemand( const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName,
                                     const Value& aSupply,
                                     const int aPeriod )
 {
@@ -229,8 +229,8 @@ void SectorUtils::addToTrialDemand( const string& aRegionName,
  * \param aPeriod Model period.
  * \return Trial value of supply, -1 if the market does not exist.
  */
-double SectorUtils::getTrialSupply( const string& aRegionName,
-                                    const string& aSectorName,
+double SectorUtils::getTrialSupply( const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName,
                                     const int aPeriod )
 {
     // Market is not created yet in period 0.
@@ -391,8 +391,8 @@ int SectorUtils::getDemandNormPeriod( const int aPeriod ){
  * \param aSector Sector name.
  * \return The name of the trial supply market for the sector.
  */
-const string SectorUtils::getTrialMarketName( const string& aSectorName ){
-    return aSectorName + "-trial-supply";
+const gcamstr SectorUtils::getTrialMarketName( const gcamstr& aSectorName ){
+    return gcamstr(aSectorName.get() + "-trial-supply");
 }
 
 /*!
@@ -432,8 +432,8 @@ double SectorUtils::convertEnergyToCapacity( const double aCapacityFactor,
  * \sa adjustDemandForNegativePrice
  * \author Josh Lurz
  */
-double SectorUtils::calcPriceRatio( const string& aRegionName,
-                                    const string& aSectorName,
+double SectorUtils::calcPriceRatio( const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName,
                                     const int aBasePeriod,
                                     const int aCurrentPeriod )
 {
@@ -497,8 +497,8 @@ double SectorUtils::adjustDemandForNegativePrice( const double aDemandScalar, co
  * \return The name of the TFE market.
  * \warning Due to the string concatenation, this function is slow.
  */
-const string SectorUtils::createTFEMarketName( const string& aSectorName ){
-    return aSectorName + "-tfe";
+const string SectorUtils::createTFEMarketName( const gcamstr& aSectorName ){
+    return aSectorName.get() + "-tfe";
 }
 
 /*!
@@ -507,8 +507,8 @@ const string SectorUtils::createTFEMarketName( const string& aSectorName ){
  * \param aRegionName Region name.
  * \param aSectorName Sector name.
  */
-void SectorUtils::setFinalEnergyFlag( const string& aRegionName,
-                                      const string& aSectorName )
+void SectorUtils::setFinalEnergyFlag( const gcamstr& aRegionName,
+                                      const gcamstr& aSectorName )
 {
     IInfo* sectorInfo =
         scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0,
@@ -520,7 +520,7 @@ void SectorUtils::setFinalEnergyFlag( const string& aRegionName,
         return;
     }
 
-    sectorInfo->setBoolean( "is-final-energy", true );
+    sectorInfo->setBoolean( gcamstr("is-final-energy"), true );
 }
 
 /*! 
@@ -529,8 +529,8 @@ void SectorUtils::setFinalEnergyFlag( const string& aRegionName,
  * \param aSectorName Sector name.
  * \return Whether the given sector is a supplier of final energy.
  */
-bool SectorUtils::isFinalEnergySector( const string& aRegionName,
-                                       const string& aSectorName )
+bool SectorUtils::isFinalEnergySector( const gcamstr& aRegionName,
+                                       const gcamstr& aSectorName )
 {
     const IInfo* sectorInfo =
         scenario->getMarketplace()->getMarketInfo( aSectorName, aRegionName, 0, true );
@@ -538,7 +538,7 @@ bool SectorUtils::isFinalEnergySector( const string& aRegionName,
     assert( sectorInfo );
 
     // Check the final energy flag.
-    return sectorInfo->getBoolean( "is-final-energy", false );
+    return sectorInfo->getBoolean( gcamstr("is-final-energy"), false );
 }
 
 /*!
@@ -576,12 +576,12 @@ double SectorUtils::convertCapacityToEnergy( const double aCapacityFactor,
  * \param aUpperPriceBound The price above which no additional supply is likely.
  *\ param aPeriod The current model period.
  */
-void SectorUtils::setSupplyBehaviorBounds( const string& aGoodName, const string& aRegionName,
+void SectorUtils::setSupplyBehaviorBounds( const gcamstr& aGoodName, const gcamstr& aRegionName,
                                            const double aLowerPriceBound, const double aUpperPriceBound,
                                            const int aPeriod )
 {
-    const string LOWER_BOUND_KEY = "lower-bound-supply-price";
-    const string UPPER_BOUND_KEY = "upper-bound-supply-price";
+    const gcamstr LOWER_BOUND_KEY("lower-bound-supply-price");
+    const gcamstr UPPER_BOUND_KEY("upper-bound-supply-price");
 
     IInfo* sectorInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName, aPeriod, true );
 

@@ -200,9 +200,14 @@ void Scenario::setName( string newName ) {
     // Used to override the read-in scenario name.
     mName = newName;
 }
-
+//#include "containers/include/analyze_str.hpp"
+//#include "containers/include/analyze_tech_mem.hpp"
+//#include "containers/include/analyze_container.hpp"
 //! Finish all initializations needed before the model can run.
 void Scenario::completeInit() {
+    //mModelFeedbacks.push_back(new AnalyzeStr);
+    //mModelFeedbacks.push_back(new AnalyzeTechMem);
+    //mModelFeedbacks.push_back(new AnalyzeContainer);
     // Make sure that some name is set.
     if( mName.empty() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -236,7 +241,7 @@ void Scenario::completeInit() {
 }
 
 //! Return scenario name.
-const string& Scenario::getName() const {
+const gcamstr& Scenario::getName() const {
     return mName;
 }
 

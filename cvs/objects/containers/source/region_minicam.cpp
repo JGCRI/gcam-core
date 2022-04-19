@@ -165,13 +165,13 @@ void RegionMiniCAM::completeInit() {
 
     // Add the interest rate to the region info.
     // TODO: mInterestRate is currently not used in GCAM and could be removed
-    mRegionInfo->setDouble( "interest-rate", mInterestRate );
+    mRegionInfo->setDouble( gcamstr("interest-rate"), mInterestRate );
     
     // Add the social discount rate to the region info.
-    mRegionInfo->setDouble( "social-discount-rate", mSocialDiscountRate );
+    mRegionInfo->setDouble( gcamstr("social-discount-rate"), mSocialDiscountRate );
     
     // Add the land private discount rate to the region info.
-    mRegionInfo->setDouble( "private-discount-rate-land", mPrivateDiscountRateLand );
+    mRegionInfo->setDouble( gcamstr("private-discount-rate-land"), mPrivateDiscountRateLand );
 
     // initialize demographic
     if( mDemographic ){
@@ -386,7 +386,7 @@ void RegionMiniCAM::initCalc( const int period )
 * \param aPeriod Period.
 */
 void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
-    const static string CO2COEF = "CO2coefficient";
+    const static gcamstr CO2COEF("CO2coefficient");
     Marketplace* marketplace = scenario->getMarketplace();
     for( map<gcamstr, double>::const_iterator coef = mPrimaryFuelCO2Coef.begin();
         coef != mPrimaryFuelCO2Coef.end(); ++coef )

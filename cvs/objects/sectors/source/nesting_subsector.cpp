@@ -107,7 +107,7 @@ const string& NestingSubsector::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void NestingSubsector::setNames( const string& aRegionName, const string& aSectorName ) {
+void NestingSubsector::setNames( const gcamstr& aRegionName, const gcamstr& aSectorName ) {
     for( auto subsector : mSubsectors ) {
         subsector->setNames( aRegionName, aSectorName );
     }

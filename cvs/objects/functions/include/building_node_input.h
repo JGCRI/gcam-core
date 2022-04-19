@@ -124,13 +124,13 @@ public:
     // Building NodeInput specific methods
     Value getSubregionalPopulation() const;
 
-    double getSubregionalIncome( const std::string& aRegionName, const int aPeriod ) const;
+    double getSubregionalIncome( const gcamstr& aRegionName, const int aPeriod ) const;
 
     Value getShellConductance( const int aPeriod ) const;
 
     Value getFloorToSurfaceRatio( const int aPeriod ) const;
 
-    double getInternalGains( const std::string& aRegionName, const int aPeriod ) const;
+    double getInternalGains( const gcamstr& aRegionName, const int aPeriod ) const;
 
     SatiationDemandFunction* getSatiationDemandFunction() const;
 
@@ -139,26 +139,26 @@ public:
 
     virtual void initialize();
 
-    virtual void calcCoefficient( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void calcCoefficient( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aTechPeriod );
 
-    virtual void changeElasticity( const std::string& aRegionName, const int aPeriod,
+    virtual void changeElasticity( const gcamstr& aRegionName, const int aPeriod,
         const double aAlphaZero );
 
-    virtual void calcLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void calcLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero );
 
-    virtual double calcInputDemand( const std::string& aRegionName, const std::string& aSectorName,
+    virtual double calcInputDemand( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aPhysicalOutput, const double aUtilityParameterA,
         const double aAlphaZero );
 
     virtual const IFunction* getFunction() const;
     
-    virtual double getLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+    virtual double getLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod ) const;
 
     // INestedInput methods that will not be implemented
-    virtual void changeSigma( const std::string& aRegionName, const int aPeriod,
+    virtual void changeSigma( const gcamstr& aRegionName, const int aPeriod,
         const double aAlphaZero )
     {
         // Change sigma refers to adjusting from a new vintage technology to an old vintage
@@ -166,18 +166,18 @@ public:
         // This concept makes no sense for buildings and so it is not implemented.
     }
 
-    virtual double calcCapitalOutputRatio( const std::string& aRegionName, const std::string& aSectorName,
+    virtual double calcCapitalOutputRatio( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero )
     {
         return 0;
     }
 
-    virtual void calcVariableLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void calcVariableLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero )
     {
     }
 
-    virtual void applyTechnicalChange( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void applyTechnicalChange( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const TechChange& aTechChange )
     {
     }
@@ -192,9 +192,9 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
     
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
-    virtual const std::string& getMarketName( const std::string& aRegionName ) const { return aRegionName; }
+    virtual const std::string& getMarketName( const gcamstr& aRegionName ) const { return aRegionName; }
 
     virtual const std::string& getXMLReportingName() const;
     
@@ -206,14 +206,14 @@ public:
     
     virtual bool hasTypeFlag( const int aTypeFlag ) const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const std::string& aTechName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
@@ -222,17 +222,17 @@ public:
     virtual double getPhysicalDemand( const int aPeriod ) const;
     
     virtual void setPhysicalDemand( const double aPhysicalDemand,
-                                    const std::string& aRegionName, 
+                                    const gcamstr& aRegionName, 
                                     const int aPeriod );
 
-    virtual double getPrice( const std::string& aRegionName,
+    virtual double getPrice( const gcamstr& aRegionName,
                              const int aPeriod ) const;
 
-    virtual void setPrice( const std::string& aRegionName,
+    virtual void setPrice( const gcamstr& aRegionName,
                            const double aPrice,
                            const int aPeriod );
 
-    virtual double getPricePaid( const std::string& aRegionName,
+    virtual double getPricePaid( const gcamstr& aRegionName,
                                  const int aPeriod ) const;
 
     virtual void setPricePaid( const double aPricePaid,
@@ -247,7 +247,7 @@ public:
     }
 
     virtual void setCurrencyDemand( const double aCurrencyDemand,
-                                    const std::string& aRegionName, 
+                                    const gcamstr& aRegionName, 
                                     const int aPeriod )
     {
     }
@@ -273,7 +273,7 @@ public:
         return 0;
     }
 
-    virtual void tabulateFixedQuantity( const std::string& aRegionName,
+    virtual void tabulateFixedQuantity( const gcamstr& aRegionName,
                                         const double aFixedOutput,
                                         const bool aIsInvestmentPeriod,
                                         const int aPeriod )
@@ -309,8 +309,8 @@ public:
     {
     }
 
-    virtual void calcPricePaid( const std::string& aRegionName,
-                                const std::string& aSectorName,
+    virtual void calcPricePaid( const gcamstr& aRegionName,
+                                const gcamstr& aSectorName,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,

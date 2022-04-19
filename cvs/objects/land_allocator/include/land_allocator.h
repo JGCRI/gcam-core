@@ -87,40 +87,40 @@ public:
 
     virtual void setSoilTimeScale( const int aTimeScale );
 
-    virtual void setProfitRate( const std::string& aRegionName,
+    virtual void setProfitRate( const gcamstr& aRegionName,
                                    const std::string& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
    
-    virtual void calcFinalLandAllocation( const std::string& aRegionName, 
+    virtual void calcFinalLandAllocation( const gcamstr& aRegionName, 
                                           const int aPeriod );
 
-    virtual void completeInit( const std::string& aRegionName, 
+    virtual void completeInit( const gcamstr& aRegionName, 
                                const IInfo* aRegionInfo );
     
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const int aPeriod );
                               
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
     
     virtual void accept( IVisitor* aVisitor,
                          const int aPeriod ) const;
 
     // Land allocator node methods.
-    virtual void setInitShares( const std::string& aRegionName,
+    virtual void setInitShares( const gcamstr& aRegionName,
                                 const double aLandAllocationAbove,
                                 const int aPeriod );
 
-    virtual double calcLandShares( const std::string& aRegionName,
+    virtual double calcLandShares( const gcamstr& aRegionName,
                                    IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
-     virtual void calcLandAllocation( const std::string& aRegionName,
+     virtual void calcLandAllocation( const gcamstr& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aYear );
 
-    virtual void calcLUCEmissions( const std::string& aRegionName,
+    virtual void calcLUCEmissions( const gcamstr& aRegionName,
                                    const int aPeriod, const int aEndYear,
                                    const bool aStoreFullEmiss );
                               
@@ -147,9 +147,9 @@ protected:
     )
 
 private:
-    void calibrateLandAllocator( const std::string& aRegionName, const int aPeriod );
+    void calibrateLandAllocator( const gcamstr& aRegionName, const int aPeriod );
 
-    void checkLandArea( const std::string& aRegionName, const int aPeriod );
+    void checkLandArea( const gcamstr& aRegionName, const int aPeriod );
 };
 
 #endif // _LAND_ALLOCATOR_H_

@@ -98,31 +98,31 @@ public:
 
     virtual const std::string& getXMLName() const;
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
                                const IInfo* aSubsectorInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const IInfo* aSubsectorIInfo,
                            const Demographic* aDemographics,
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
     
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
-    virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName, 
+    virtual void production( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
                              const int aPeriod );
 
     
-    virtual void calcCost( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void calcCost( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 protected:
     typedef std::vector<IInput*>::iterator InputIterator;
@@ -180,32 +180,32 @@ protected:
     
     void copy( const IntermittentTechnology& aOther );
 
-    void setCoefficients( const std::string& aRegionName,
-                          const std::string& aSectorName,
+    void setCoefficients( const gcamstr& aRegionName,
+                          const gcamstr& aSectorName,
                           const int aPeriod );
 
-    virtual double getResourceToEnergyRatio( const std::string& aRegionName,
-                                             const std::string& aSectorName,
+    virtual double getResourceToEnergyRatio( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
                                              const int aPeriod );
 
-    double getBackupCapacityPerEnergyOutput( const std::string& aRegionName,
-                                             const std::string& aSectorName,
+    double getBackupCapacityPerEnergyOutput( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
                                              const int aPeriod ) const;
 
-    double getMarginalBackupCapCost( const std::string& aRegionName,
-                                     const std::string& aSectorName,
+    double getMarginalBackupCapCost( const gcamstr& aRegionName,
+                                     const gcamstr& aSectorName,
                                      const int aPeriod ) const;
 
-    void initializeInputLocations( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    void initializeInputLocations( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const int aPeriod );
 
-    double getMarginalBackupCapacity( const std::string& aRegionName,
-                                      const std::string& aSectorName,
+    double getMarginalBackupCapacity( const gcamstr& aRegionName,
+                                      const gcamstr& aSectorName,
                                       const int aPeriod ) const;
 
-    double getAverageBackupCapacity( const std::string& aRegionName,
-                                     const std::string& aSectorName,
+    double getAverageBackupCapacity( const gcamstr& aRegionName,
+                                     const gcamstr& aSectorName,
                                      const int aPeriod ) const;
 
     double calcEnergyFromBackup() const;

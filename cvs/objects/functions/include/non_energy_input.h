@@ -100,14 +100,14 @@ public:
     virtual void copyParamsInto( NonEnergyInput& aInput,
                                  const int aPeriod ) const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const std::string& aTechName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo );
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
@@ -116,13 +116,13 @@ public:
     double getPhysicalDemand( const int aPeriod ) const;
 
     void setPhysicalDemand( const double aPhysicalDemand,
-                            const std::string& aRegionName,
+                            const gcamstr& aRegionName,
                             const int aPeriod );
 
-    double getPrice( const std::string& aRegionName,
+    double getPrice( const gcamstr& aRegionName,
                      const int aPeriod ) const;
     
-    virtual void setPrice( const std::string& aRegionName,
+    virtual void setPrice( const gcamstr& aRegionName,
                            const double aPrice,
                            const int aPeriod );
 
@@ -193,14 +193,14 @@ public:
 
     NonEnergyInput* clone() const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const std::string& aTechName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
@@ -208,7 +208,7 @@ public:
 
 
     virtual void setPhysicalDemand( const double aPhysicalDemand,
-                            const std::string& aRegionName,
+                            const gcamstr& aRegionName,
                             const int aPeriod );
 
 protected:
@@ -216,7 +216,7 @@ protected:
         NonEnergyInput,
                          
         //! The market name to which to add the capital investment value
-        DEFINE_VARIABLE( SIMPLE, "tracking-market", mTrackingMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "tracking-market", mTrackingMarketName, gcamstr ),
 
         //! A coefficient applied to the total levelized non-energy cost, this will encompase breaking out the fraction
         //! of that total that was capital as well as dividing by the FCR to get the total capital value.

@@ -132,12 +132,12 @@ public:
 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName ) = 0;
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName ) = 0;
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            NationalAccount& nationalAccount, 
                            const Demographic* aDemographics,
                            const double aCapitalStock,
@@ -145,25 +145,25 @@ public:
 
     virtual bool isNewInvestment( const int period ) const;
 
-    const std::string& getName() const;
+    const gcamstr& getName() const;
     int getYear() const;
     void setYear( int newYear );
 
     virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographics, 
-        const std::string& aRegionName,
-        const std::string& aSectorName, const bool isNewVintageMode, const int aPeriod ) = 0;
+        const gcamstr& aRegionName,
+        const gcamstr& aSectorName, const bool isNewVintageMode, const int aPeriod ) = 0;
 
-    virtual double setInvestment( const std::string& aRegionName, const double aAnnualInvestment,
+    virtual double setInvestment( const gcamstr& aRegionName, const double aAnnualInvestment,
                                  const double aTotalInvestment, const int aPeriod ) = 0;
 
     virtual double getOutput( const int aPeriod ) const;
     virtual double getCapitalStock() const = 0;
-    void calcPricePaid( const std::string& aRegionName,
-        const std::string& aSectorName, const int aPeriod, const int aLifetimeYears ) const;
+    void calcPricePaid( const gcamstr& aRegionName,
+        const gcamstr& aSectorName, const int aPeriod, const int aLifetimeYears ) const;
 
     virtual double getAnnualInvestment( const int aPeriod ) const = 0;
     
-    virtual void updateMarketplace( const std::string& sectorName, const std::string& regionName,
+    virtual void updateMarketplace( const gcamstr& sectorName, const gcamstr& aRegionName,
                                     const int period ) = 0;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
 
@@ -171,7 +171,7 @@ public:
     static const std::string createIdentifier( const std::string& aName, int aYear );
     void removeEmptyInputs();
     virtual void setTypeHelper( TechnologyType* aTechType ) = 0;
-    virtual void postCalc( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void postCalc( const gcamstr& aRegionName, const gcamstr& aSectorName,
                            const int aPeriod ) = 0;
     bool hasCalibrationMarket() const;
     virtual double getShareWeight( const int aPeriod ) const;

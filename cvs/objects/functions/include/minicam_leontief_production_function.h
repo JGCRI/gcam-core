@@ -61,8 +61,8 @@ class MinicamLeontiefProductionFunction : public IFunction {
 public:
 
     double calcProfits( InputSet& aInputs,
-                        const std::string& aRegionName,
-                        const std::string& aSectorName,
+                        const gcamstr& aRegionName,
+                        const gcamstr& aSectorName,
 						const double aShutdownCoef,
                         int aPeriod,
                         double aCapitalStock = 0,
@@ -70,14 +70,14 @@ public:
 						double aSigma = 0 ) const;
     
     double calcCosts( const InputSet& aInputs,
-                      const std::string& aRegionName,
+                      const gcamstr& aRegionName,
                       const double aAlphaZero,
                       int aPeriod ) const;
 
 	double calcDemand( InputSet& aInputs,
                        double aConsumption,
-                       const std::string& aRegionName,
-					   const std::string& aSectorName,
+                       const gcamstr& aRegionName,
+					   const gcamstr& aSectorName,
                        const double aShutdownCoef,
                        int aPeriod,
 					   double aCapitalStock = 0,
@@ -88,8 +88,8 @@ public:
     
     double calcCoefficient( InputSet& aInputs,
                             double aConsumption,
-                            const std::string& aRegionName,
-                            const std::string& aSectorName,
+                            const gcamstr& aRegionName,
+                            const gcamstr& aSectorName,
                             int aPeriod,
                             double aSigma = 0,
                             double aIBT = 0,
@@ -97,7 +97,7 @@ public:
                             const IInput* aParentInput = 0 ) const;
 	
     double changeElasticity( InputSet& aInputs,
-                             const std::string& aRegionName,
+                             const gcamstr& aRegionName,
                              double aPriceReceived,
 							 double aProfits,
                              double aCapitalStock,
@@ -107,8 +107,8 @@ public:
                              double aSigmaOld = 0 ) const;
 	
     double calcOutput( InputSet& aInputs,
-                       const std::string& aRegionName,
-                       const std::string& aSectorName,
+                       const gcamstr& aRegionName,
+                       const gcamstr& aSectorName,
                        const double aShutdownCoef,
                        int aPeriod,
                        double aCapitalStock = 0,
@@ -116,39 +116,39 @@ public:
                        double aSigma = 0 ) const;
     
     double calcExpProfitRate( const InputSet& aInputs,
-                              const std::string& aRegionName, 
-                              const std::string& aSectorName,
+                              const gcamstr& aRegionName, 
+                              const gcamstr& aSectorName,
                               double aLifeTimeYears,
                               int aPeriod,
                               double aAlphaZero = 0,
                               double aSigma = 0 ) const;
     
     double calcLevelizedCost( const InputSet& aInputs,
-                              const std::string& aRegionName,
-                              const std::string& aSectorName,
+                              const gcamstr& aRegionName,
+                              const gcamstr& aSectorName,
                               int aPeriod,
                               double aAlphaZero,
                               double aSigma,
                               const IInput* aParentInput = 0 ) const;
 
     double getCapitalOutputRatio( const InputSet& aInputs,
-                                  const std::string& aRegionName,
-                                  const std::string& aSectorName,
+                                  const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   double aLifeTimeYears, int aPeriod,
 								  double aAlphaZero = 0,
                                   double aSigma = 0 ) const;
 
     double applyTechnicalChange( InputSet& aInputs,
                                  const TechChange& aTechChange,
-                                 const std::string& aRegionName,
-                                 const std::string& aSectorName,
+                                 const gcamstr& aRegionName,
+                                 const gcamstr& aSectorName,
                                  const int aPeriod, 
                                  double aAlphaZero = 0,
                                  double aSigma = 0 ) const;
 
     double calcUnscaledProfits( const InputSet& aInputs, 
-                                const std::string& aRegionName,
-                                const std::string& aSectorName,
+                                const gcamstr& aRegionName,
+                                const gcamstr& aSectorName,
                                 const int aPeriod,
                                 const double aCapitalStock,
                                 const double aAlphaZero,

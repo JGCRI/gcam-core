@@ -90,9 +90,9 @@ const string& PassThroughTechnology::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void PassThroughTechnology::completeInit( const string& aRegionName,
-                                          const string& aSectorName,
-                                          const string& aSubsectorName,
+void PassThroughTechnology::completeInit( const gcamstr& aRegionName,
+                                          const gcamstr& aSectorName,
+                                          const gcamstr& aSubsectorName,
                                           const IInfo* aSubsectorInfo,
                                           ILandAllocator* aLandAllocator )
 {
@@ -128,7 +128,7 @@ void PassThroughTechnology::completeInit( const string& aRegionName,
 
     // Add dependencies for a calc item to gather up the fixed demands from this
     // pass through sector and make that available for the downstream sector
-    const string fixedDemandActivityName = mPassThroughSectorName.get() + "-fixed-output";
+    const gcamstr fixedDemandActivityName(mPassThroughSectorName.get() + "-fixed-output");
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
 
     // Ensure we gather the fixed demands after we calculate prices / before we
@@ -136,8 +136,8 @@ void PassThroughTechnology::completeInit( const string& aRegionName,
     depFinder->addDependency( fixedDemandActivityName, mPassThroughMarketName, aSectorName, aRegionName );
 }
 
-void PassThroughTechnology::production( const string& aRegionName,
-                                        const string& aSectorName,
+void PassThroughTechnology::production( const gcamstr& aRegionName,
+                                        const gcamstr& aSectorName,
                                         double aVariableDemand,
                                         double aFixedOutputScaleFactor,
                                         const int aPeriod )
@@ -164,8 +164,8 @@ void PassThroughTechnology::production( const string& aRegionName,
     calcEmissionsAndOutputs( aRegionName, aSectorName, totalDemand, aPeriod );
 }
 
-double PassThroughTechnology::getFixedOutput( const string& aRegionName,
-                                              const string& aSectorName,
+double PassThroughTechnology::getFixedOutput( const gcamstr& aRegionName,
+                                              const gcamstr& aSectorName,
                                               const bool aHasRequiredInput,
                                               const string& aRequiredInput,
                                               const double aMarginalRevenue,
@@ -173,7 +173,7 @@ double PassThroughTechnology::getFixedOutput( const string& aRegionName,
 {
     // Retrieve the fixed output from the pass-through sector which will store this
     // information in a unsolved trial market.
-    const string fixedDemandActivityName = mPassThroughSectorName.get() + "-fixed-output";
+    const gcamstr fixedDemandActivityName(mPassThroughSectorName.get() + "-fixed-output");
     const_cast<PassThroughTechnology*>( this )->mPassThroughFixedOutput = scenario->getMarketplace()->getPrice( fixedDemandActivityName, mPassThroughMarketName, aPeriod );
     return mPassThroughFixedOutput;
 }

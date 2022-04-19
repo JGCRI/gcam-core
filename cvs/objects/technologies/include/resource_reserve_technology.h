@@ -88,41 +88,41 @@ public:
     static const std::string& getXMLNameStatic();
     ResourceReserveTechnology* clone() const;
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const IInfo* aSubsectorInfo,
                            const Demographic* aDemographics,
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
 
-    virtual void completeInit(const std::string& aRegionName,
-                              const std::string& aSectorName,
-                              const std::string& aSubsectorName,
+    virtual void completeInit(const gcamstr& aRegionName,
+                              const gcamstr& aSectorName,
+                              const gcamstr& aSubsectorName,
                               const IInfo* aSubsectorIInfo,
                               ILandAllocator* aLandAllocator);
 
-    virtual void production(const std::string& aRegionName,
-                            const std::string& aSectorName,
+    virtual void production(const gcamstr& aRegionName,
+                            const gcamstr& aSectorName,
                             double aVariableDemand,
                             double aFixedOutputScaleFactor,
                             const int aPeriod);
     
-    virtual double getFixedOutput(const std::string& aRegionName,
-                                  const std::string& aSectorName,
+    virtual double getFixedOutput(const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const bool aHasRequiredInput,
                                   const std::string& aRequiredInput,
                                   const double aMarginalRevenue,
                                   const int aPeriod) const;
     
-    virtual void calcCost(const std::string& aRegionName,
-                          const std::string& aSectorName,
+    virtual void calcCost(const gcamstr& aRegionName,
+                          const gcamstr& aSectorName,
                           const int aPeriod);
     
-    virtual double getEnergyCost( const std::string& aRegionName,
-                                  const std::string& aSectorName,
+    virtual double getEnergyCost( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const int aPeriod ) const;
     
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
     virtual void doInterpolations(const Technology* aPrevTech, const Technology* aNextTech);
@@ -169,8 +169,8 @@ protected:
     virtual const std::string& getXMLName() const;
     void copy( const ResourceReserveTechnology& aOther );
     virtual void setProductionState( const int aPeriod );
-    virtual double getCurrencyConversionPrice( const std::string& aRegionName,
-                                               const std::string& aSectorName,
+    virtual double getCurrencyConversionPrice( const gcamstr& aRegionName,
+                                               const gcamstr& aSectorName,
                                                const int aPeriod ) const;
 };
 

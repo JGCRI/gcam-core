@@ -45,7 +45,7 @@
 
 using namespace std;
 
-LandAllocatorActivity::LandAllocatorActivity( ILandAllocator* aLandallocator, const string& aRegionName ):
+LandAllocatorActivity::LandAllocatorActivity( ILandAllocator* aLandallocator, const gcamstr& aRegionName ):
 mLandAllocator( aLandallocator ),
 mRegionName( aRegionName )
 {
@@ -60,5 +60,5 @@ void LandAllocatorActivity::calc( const int aPeriod ) {
 }
 
 string LandAllocatorActivity::getDescription() const {
-    return mRegionName + " land-allocator";
+    return mRegionName.get() + " land-allocator";
 }

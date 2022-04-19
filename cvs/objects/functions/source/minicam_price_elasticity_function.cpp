@@ -60,7 +60,7 @@ using namespace std;
 extern Scenario* scenario;
 
 double MinicamPriceElasticityFunction::calcCosts( const InputSet& aInput,
-                                                  const string& aRegionName,
+                                                  const gcamstr& aRegionName,
                                                   const double aAlphaZero,
                                                   int aPeriod ) const
 {
@@ -78,22 +78,22 @@ double MinicamPriceElasticityFunction::calcCosts( const InputSet& aInput,
 }
 
 double MinicamPriceElasticityFunction::calcProfits( InputSet& input,
-                                                    const string& regionName,
-                                                    const string& sectorName,
+                                                    const gcamstr& aRegionName,
+                                                    const gcamstr& sectorName,
                                                     const double aShutdownCoef,
                                                     int period,
                                                     double capitalStock,
                                                     double alphaZero,
                                                     double sigma ) const
 {
-    double profits = calcUnscaledProfits( input, regionName, sectorName, period, capitalStock, alphaZero, sigma );
+    double profits = calcUnscaledProfits( input, aRegionName, sectorName, period, capitalStock, alphaZero, sigma );
     return aShutdownCoef * profits;
 }
 
 double MinicamPriceElasticityFunction::calcCoefficient( InputSet& input,
                                                         double consumption,
-                                                        const string& regionName,
-                                                        const string& sectorName,
+                                                        const gcamstr& aRegionName,
+                                                        const gcamstr& sectorName,
                                                         int period,
                                                         double sigma,
                                                         double indBusTax,
@@ -105,7 +105,7 @@ double MinicamPriceElasticityFunction::calcCoefficient( InputSet& input,
 }
 
 double MinicamPriceElasticityFunction::changeElasticity( InputSet& input,
-                                                         const string& aRegionName,
+                                                         const gcamstr& aRegionName,
                                                          double priceReceived,
                                                          double aProfits,
                                                          double capitalStock,
@@ -121,8 +121,8 @@ double MinicamPriceElasticityFunction::changeElasticity( InputSet& input,
 
 double MinicamPriceElasticityFunction::calcDemand( InputSet& aInputs,
                                                    double aConsumption,
-                                                   const string& aRegionName,
-                                                   const string& aSectorName,
+                                                   const gcamstr& aRegionName,
+                                                   const gcamstr& aSectorName,
                                                    const double aShutdownCoef,
                                                    int aPeriod,
                                                    double aCapitalStock,
@@ -151,8 +151,8 @@ double MinicamPriceElasticityFunction::calcDemand( InputSet& aInputs,
 }
 
 double MinicamPriceElasticityFunction::calcExpProfitRate( const InputSet& aInputs,
-                                                          const string& aRegionName,
-                                                          const string& aSectorName,
+                                                          const gcamstr& aRegionName,
+                                                          const gcamstr& aSectorName,
                                                           double aLifetimeYears,
                                                           int aPeriod,
                                                           double aAlphaZero,
@@ -163,8 +163,8 @@ double MinicamPriceElasticityFunction::calcExpProfitRate( const InputSet& aInput
 }
 
 double MinicamPriceElasticityFunction::calcLevelizedCost( const InputSet& aInputs,
-                                                          const string& aRegionName,
-                                                          const string& aSectorName,
+                                                          const gcamstr& aRegionName,
+                                                          const gcamstr& aSectorName,
                                                           int aPeriod,
                                                           double aAlphaZero,
                                                           double aSigma,
@@ -185,8 +185,8 @@ double MinicamPriceElasticityFunction::calcLevelizedCost( const InputSet& aInput
 }
 
 double MinicamPriceElasticityFunction::calcOutput( InputSet& aInput,
-                                                   const string& aRegionName,
-                                                   const string& aSectorName,
+                                                   const gcamstr& aRegionName,
+                                                   const gcamstr& aSectorName,
                                                    const double aShutdownCoef,
                                                    int aPeriod,
                                                    double aCapitalStock,
@@ -198,8 +198,8 @@ double MinicamPriceElasticityFunction::calcOutput( InputSet& aInput,
 }
 
 double MinicamPriceElasticityFunction::getCapitalOutputRatio( const InputSet& aInputs,
-                                                              const string& aRegionName,
-                                                              const string& aSectorName,
+                                                              const gcamstr& aRegionName,
+                                                              const gcamstr& aSectorName,
                                                               double aLifetimeYears,
                                                               int aPeriod,
                                                               double aAlphaZero,
@@ -211,8 +211,8 @@ double MinicamPriceElasticityFunction::getCapitalOutputRatio( const InputSet& aI
 
 double MinicamPriceElasticityFunction::applyTechnicalChange( InputSet& aInputs,
                                                              const TechChange& aTechChange,
-                                                             const string& aRegionName,
-                                                             const string& aSectorName,
+                                                             const gcamstr& aRegionName,
+                                                             const gcamstr& aSectorName,
                                                              const int aPeriod,
                                                              double aAlphaZero,
                                                              double aSigma ) const
@@ -222,14 +222,14 @@ double MinicamPriceElasticityFunction::applyTechnicalChange( InputSet& aInputs,
 }
 
 double MinicamPriceElasticityFunction::calcUnscaledProfits( const InputSet& input,
-                                                            const string& regionName,
-                                                            const string& sectorName,
+                                                            const gcamstr& aRegionName,
+                                                            const gcamstr& sectorName,
                                                             const int period,
                                                             const double capitalStock,
                                                             const double alphaZero,
                                                             const double sigma ) const
 {
     // Return the price of this good minus the levelized cost.
-    return scenario->getMarketplace()->getPrice( sectorName, regionName, period )
-           - calcLevelizedCost( input, regionName, sectorName, period, alphaZero, sigma );
+    return scenario->getMarketplace()->getPrice( sectorName, aRegionName, period )
+           - calcLevelizedCost( input, aRegionName, sectorName, period, alphaZero, sigma );
 }

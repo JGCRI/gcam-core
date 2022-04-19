@@ -145,16 +145,16 @@ void InputCapital::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void InputCapital::completeInit( const string& aRegionName,
-                                 const string& aSectorName,
-                                 const string& aSubsectorName,
-                                 const string& aTechName,
+void InputCapital::completeInit( const gcamstr& aRegionName,
+                                 const gcamstr& aSectorName,
+                                 const gcamstr& aSubsectorName,
+                                 const gcamstr& aTechName,
                                  const IInfo* aTechInfo )
 {   
     
     // technology capacity factor
     // capacity factor needed before levelized cost calculation
-    mCapacityFactor = aTechInfo->getDouble("tech-capacity-factor", true);
+    mCapacityFactor = aTechInfo->getDouble(gcamstr("tech-capacity-factor"), true);
                                            
     // completeInit() is called for each technology for each period
     // so levelized capital cost calculation is done here.
@@ -189,8 +189,8 @@ double InputCapital::calcLevelizedCapitalCost( void ) const
     return levelizedCapitalCost; // 1975$/GJ
 }
 
-void InputCapital::initCalc( const string& aRegionName,
-                             const string& aSectorName,
+void InputCapital::initCalc( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
                              const bool aIsNewInvestmentPeriod,
                              const bool aIsTrade,
                              const IInfo* aTechInfo,
@@ -204,14 +204,14 @@ void InputCapital::initCalc( const string& aRegionName,
     mIsActive = aTechInfo->getBoolean("new-vintage-tech", true);
 }
 
-double InputCapital::getPrice( const string& aRegionName,
+double InputCapital::getPrice( const gcamstr& aRegionName,
                                const int aPeriod ) const
 {
     assert( mAdjustedCosts[ aPeriod ].isInited() );
     return mAdjustedCosts[ aPeriod ];
 }
 
-void InputCapital::setPrice( const string& aRegionName,
+void InputCapital::setPrice( const gcamstr& aRegionName,
                              const double aPrice,
                              const int aPeriod ) 
 {
@@ -223,7 +223,7 @@ double InputCapital::getPhysicalDemand( const int aPeriod ) const {
 }
 
 void InputCapital::setPhysicalDemand( double aPhysicalDemand,
-                                      const string& aRegionName,
+                                      const gcamstr& aRegionName,
                                       const int aPeriod )
 {
     if(mIsActive) {
@@ -250,7 +250,7 @@ void InputCapital::setCoefficient( const double aCoefficient,
     mAdjustedCoefficients[ aPeriod ] = aCoefficient;
 }
 
-void InputCapital::tabulateFixedQuantity( const string& aRegionName,
+void InputCapital::tabulateFixedQuantity( const gcamstr& aRegionName,
                                           const double aFixedOutput,
                                           const bool aIsInvestmentPeriod,
                                           const int aPeriod )

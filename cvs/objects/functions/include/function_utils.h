@@ -117,7 +117,7 @@ public:
     // **** End Unit Conversions
 
     static double getNetPresentValueMult( const InputSet& aInputs,
-                                          const std::string& aRegionName,
+                                          const gcamstr& aRegionName,
                                           const double aLifetimeYears,
                                           const int aPeriod  );
     
@@ -125,33 +125,33 @@ public:
                                            const double aLifetime );
     
     static double getExpectedPriceReceived( const InputSet& aInputs,
-                                            const std::string& aRegionName,
-                                            const std::string& aGoodName,
+                                            const gcamstr& aRegionName,
+                                            const gcamstr& aGoodName,
                                             const double aLifetimeYears,
                                             const int aPeriod );
 
-    static void setPricePaid( const std::string& aRegionName,
-                              const std::string& aGoodName,
+    static void setPricePaid( const gcamstr& aRegionName,
+                              const gcamstr& aGoodName,
                               const int aPeriod,
                               const double aPricePaid );
 
-    static double getPricePaid( const std::string& aRegionName,
-                                const std::string& aGoodName,
+    static double getPricePaid( const gcamstr& aRegionName,
+                                const gcamstr& aGoodName,
                                 const int aPeriod );
 
-    static void setPriceReceived( const std::string& aRegionName,
-                                  const std::string& aGoodName,
+    static void setPriceReceived( const gcamstr& aRegionName,
+                                  const gcamstr& aGoodName,
                                   const int aPeriod,
                                   const double aPriceReceived );
 
-    static double getPriceReceived( const std::string& aRegionName,
-                                    const std::string& aGoodName,
+    static double getPriceReceived( const gcamstr& aRegionName,
+                                    const gcamstr& aGoodName,
                                     const int aPeriod );
 
     static double applyTechnicalChangeInternal( InputSet& input,
                                                 const TechChange& aTechChange, 
-                                                const std::string& regionName,
-                                                const std::string& sectorName, 
+                                                const gcamstr& aRegionName,
+                                                const gcamstr& sectorName,
                                                 const int aPeriod,
                                                 double alphaZero,
                                                 double sigma );
@@ -160,24 +160,24 @@ public:
                                          const TechChange& aTechChange,
                                          const int aPeriod );
 
-    static bool isFixedPrice( const std::string& aRegionName,
+    /*static bool isFixedPrice( const gcamstr& aRegionName,
                               const std::string& aGoodName,
-                              const int aPeriod );
+                              const int aPeriod );*/
 
-    static double getMarketConversionFactor( const std::string& aRegionName,
-                                             const std::string& aGoodName,
+    static double getMarketConversionFactor( const gcamstr& aRegionName,
+                                             const gcamstr& aGoodName,
                                              const bool aMustExist = true );
 
     static void copyInputParamsForward( const InputSet& aPrevInputs,
                                         InputSet& aCurrInputs,
                                         const int aPeriod );
 
-    static double getCO2Coef( const std::string& aRegionName,
-                              const std::string& aGoodName,
+    static double getCO2Coef( const gcamstr& aRegionName,
+                              const gcamstr& aGoodName,
                               const int aPeriod,
                               const bool aMustExist = true );
 
-    static double calcPriceRatio( const std::string& aRegionName,
+    static double calcPriceRatio( const gcamstr& aRegionName,
                                   const IInput* aInput,
                                   const int aBasePeriod,
                                   const int aCurrentPeriod );
@@ -185,11 +185,11 @@ public:
     static InputSet getLeafInputs( const INestedInput* aNestedInput );
     
     // TODO: should the following two be in another utility?
-    static void setCapitalGoodPrice( const std::string& aRegionName,
+    static void setCapitalGoodPrice( const gcamstr& aRegionName,
                                      const int aPeriod,
                                      const double aCapitalGoodPrice );
 
-    static double getCapitalGoodPrice( const std::string& aRegionName,
+    static double getCapitalGoodPrice( const gcamstr& aRegionName,
                                        const int aPeriod );
 };
 

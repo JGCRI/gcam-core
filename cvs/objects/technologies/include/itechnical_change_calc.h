@@ -104,8 +104,8 @@ public:
     virtual double calcAndAdjustForTechChange( std::vector<IInput*>& aInputs,
                                                PreviousPeriodInfo& aPreviousPeriodInfo,
                                                const IFunction* aProductionFunc,
-                                               const std::string& aRegionName,
-                                               const std::string& aSectorName,
+                                               const gcamstr& aRegionName,
+                                               const gcamstr& aSectorName,
                                                const int aPeriod ) const = 0;
     
 protected:

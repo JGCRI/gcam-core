@@ -106,8 +106,8 @@ public:
      * \param aPeriod Period for which to calculate production.
      * \return Production quantity.
      */
-    virtual double calcProduction( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    virtual double calcProduction( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const double aVariableOutput,
                                    const MarginalProfitCalculator* aMarginalProfitCalc,
                                    const double aFixedOutputScaleFactor,

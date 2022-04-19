@@ -84,7 +84,7 @@ public:
 
     static const std::string& getXMLNameStatic();
     
-    virtual void setNames( const std::string& aRegionName, const std::string& aSectorName );
+    virtual void setNames( const gcamstr& aRegionName, const gcamstr& aSectorName );
     
     virtual const std::string& getXMLName() const;
 

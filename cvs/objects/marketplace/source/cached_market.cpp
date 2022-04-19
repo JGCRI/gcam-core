@@ -66,7 +66,7 @@ CachedMarket::CachedMarket():mCachedMarket(0)
  * \param aLocatedMarket A pointer to the actual market which was located.  Note that this
  *                       parameter can be null which indicates the market was not found.
  */
-CachedMarket::CachedMarket( const string& aGoodName, const string& aRegionName,
+CachedMarket::CachedMarket( const gcamstr& aGoodName, const gcamstr& aRegionName,
                             MarketContainer* aLocatedMarket )
 :
 #ifndef NDEBUG
@@ -93,7 +93,7 @@ CachedMarket::~CachedMarket() {
  * \param aMustExist Whether it is an error for the market not to exist.
  * \see Marketplace::setPrice
  */
-void CachedMarket::setPrice( const string& aGoodName, const string& aRegionName, const double aValue,
+void CachedMarket::setPrice( const gcamstr& aGoodName, const gcamstr& aRegionName, const double aValue,
                              const int aPeriod, bool aMustExist )
 {
     /*!
@@ -135,7 +135,7 @@ void CachedMarket::setPrice( const string& aGoodName, const string& aRegionName,
  * \param aMustExist Whether it is an error for the market not to exist.
  * \see Marketplace::addToSupply
  */
-void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionName, const Value& aValue,
+void CachedMarket::addToSupply( const gcamstr& aGoodName, const gcamstr& aRegionName, const Value& aValue,
                                 const int aPeriod, bool aMustExist )
 {
     /*!
@@ -178,7 +178,7 @@ void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionNa
  * \param aMustExist Whether it is an error for the market not to exist.
  * \see Marketplace::addToDemand
  */
-void CachedMarket::addToDemand( const string& aGoodName, const string& aRegionName, const Value& aValue,
+void CachedMarket::addToDemand( const gcamstr& aGoodName, const gcamstr& aRegionName, const Value& aValue,
                                 const int aPeriod, bool aMustExist )
 {
     /*!
@@ -226,7 +226,7 @@ void CachedMarket::addToDemand( const string& aGoodName, const string& aRegionNa
  * \return The market price.
  * \see Marketplace::getPrice
  */  
-double CachedMarket::getPrice( const string& aGoodName, const string& aRegionName, const int aPeriod,
+double CachedMarket::getPrice( const gcamstr& aGoodName, const gcamstr& aRegionName, const int aPeriod,
                                bool aMustExist ) const {
     /*!
      * \invariant The given good name matches the one that was used when locating this market.
@@ -266,7 +266,7 @@ double CachedMarket::getPrice( const string& aGoodName, const string& aRegionNam
  * \return The market supply.
  * \see Marketplace::getSupply
  */
-double CachedMarket::getSupply( const string& aGoodName, const string& aRegionName, const int aPeriod ) const {
+double CachedMarket::getSupply( const gcamstr& aGoodName, const gcamstr& aRegionName, const int aPeriod ) const {
     /*!
      * \invariant The given good name matches the one that was used when locating this market.
      */
@@ -302,7 +302,7 @@ double CachedMarket::getSupply( const string& aGoodName, const string& aRegionNa
  * \return The market demand.
  * \see Marketplace::getDemand
  */
-double CachedMarket::getDemand(  const string& aGoodName, const string& aRegionName, const int aPeriod ) const {
+double CachedMarket::getDemand(  const gcamstr& aGoodName, const gcamstr& aRegionName, const int aPeriod ) const {
     /*!
      * \invariant The given good name matches the one that was used when locating this market.
      */
@@ -343,7 +343,7 @@ double CachedMarket::getDemand(  const string& aGoodName, const string& aRegionN
  *       mutable pointer.
  * \see Marketplace::getMarketInfo
  */
-const IInfo* CachedMarket::getMarketInfo( const string& aGoodName, const string& aRegionName,
+const IInfo* CachedMarket::getMarketInfo( const gcamstr& aGoodName, const gcamstr& aRegionName,
                                           const int aPeriod, const bool aMustExist ) const 
 {
     /*!
@@ -395,7 +395,7 @@ const IInfo* CachedMarket::getMarketInfo( const string& aGoodName, const string&
  *       cannot be called from constant function.
  * \see Marketplace::getMarketInfo
  */
-IInfo* CachedMarket::getMarketInfo( const string& aGoodName, const string& aRegionName,
+IInfo* CachedMarket::getMarketInfo( const gcamstr& aGoodName, const gcamstr& aRegionName,
                                     const int aPeriod, const bool aMustExist )
 {
     /*!

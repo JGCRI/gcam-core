@@ -103,7 +103,7 @@ public:
     void completeInit();
     void setName(std::string newName);
 
-    const std::string& getName() const;
+    const gcamstr& getName() const;
     bool run( const int aSinglePeriod, const bool aPrintDebugging, const std::string& aFilenameEnding = "" );
     void setTax( const GHGPolicy* aTax );
     std::map<std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;

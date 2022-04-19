@@ -64,14 +64,14 @@ public:
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const IInfo* aSubsectorInfo,
                            const Demographic* aDemographics,
                            PreviousPeriodInfo& aPrevPeriodInfo,
@@ -79,14 +79,14 @@ public:
     
     double getNonEnergyCost( const int aPeriod ) const;
 
-	virtual void production( const std::string& aRegionName,const std::string& aSectorName, 
+	virtual void production( const gcamstr& aRegionName,const gcamstr& aSectorName, 
 							 double aVariableDemand, double aFixedOutputScaleFactor, int aPeriod );
 
 protected:
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
-    virtual double getTotalInputCost( const std::string& aRegionName,
-                                      const std::string& aSectorName,
+    virtual double getTotalInputCost( const gcamstr& aRegionName,
+                                      const gcamstr& aSectorName,
                                       const int aPeriod ) const;
     
     // Define data such that introspection utilities can process the data from this

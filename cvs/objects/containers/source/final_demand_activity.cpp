@@ -46,7 +46,7 @@
 using namespace std;
 
 FinalDemandActivity::FinalDemandActivity( AFinalDemand* aFinalDemand,
-const Demographic* aDemographic, const string& aRegionName ):
+const Demographic* aDemographic, const gcamstr& aRegionName ):
 mFinalDemand( aFinalDemand ),
 mDemographic( aDemographic ),
 mRegionName( aRegionName )
@@ -62,5 +62,5 @@ void FinalDemandActivity::calc( const int aPeriod ) {
 }
 
 string FinalDemandActivity::getDescription() const {
-    return mRegionName + " " + mFinalDemand->getName();
+    return mRegionName.get() + " " + mFinalDemand->getName().get();
 }

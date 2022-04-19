@@ -76,9 +76,9 @@ bool EmptyTechnology::isVintagingActive() const {
     return false;
 }
 
-void EmptyTechnology::completeInit( const string& aRegionName,
-                              const string& aSectorName,
-                              const string& aSubsectorName,
+void EmptyTechnology::completeInit( const gcamstr& aRegionName,
+                              const gcamstr& aSectorName,
+                              const gcamstr& aSubsectorName,
                               const IInfo* aSubsectorInfo,
                               ILandAllocator* aLandAllocator )
 {
@@ -87,8 +87,8 @@ void EmptyTechnology::completeInit( const string& aRegionName,
 void EmptyTechnology::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 }
 
-void EmptyTechnology::initCalc( const string& aRegionName,
-                          const string& aSectorName,
+void EmptyTechnology::initCalc( const gcamstr& aRegionName,
+                          const gcamstr& aSectorName,
                           const IInfo* aSubsectorInfo,
                           const Demographic* aDemographics,
                           PreviousPeriodInfo& aPrevPeriodInfo,
@@ -96,25 +96,25 @@ void EmptyTechnology::initCalc( const string& aRegionName,
 {
 }
 
-void EmptyTechnology::postCalc( const string& aRegionName, const int aPeriod ) {
+void EmptyTechnology::postCalc( const gcamstr& aRegionName, const int aPeriod ) {
 }
 
-double EmptyTechnology::getTotalGHGCost( const string& aRegionName,
-                                   const string& aSectorName,
+double EmptyTechnology::getTotalGHGCost( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const int aPeriod ) const
 {
     return 0;
 }
 
-double EmptyTechnology::calcShare( const std::string& aRegionName,
+double EmptyTechnology::calcShare( const gcamstr& aRegionName,
                                    const IDiscreteChoice* aChoiceFn,
                                    int aPeriod ) const
 {
     return -numeric_limits<double>::infinity();
 }
 
-double EmptyTechnology::getFixedOutput( const string& aRegionName,
-                                  const string& aSectorName,
+double EmptyTechnology::getFixedOutput( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const bool aHasRequiredInput,
                                   const string& aRequiredInput,
                                   const double aMarginalRevenue,
@@ -123,17 +123,17 @@ double EmptyTechnology::getFixedOutput( const string& aRegionName,
     return -1;
 }
 
-void EmptyTechnology::production( const string& aRegionName,
-                            const string& aSectorName,
+void EmptyTechnology::production( const gcamstr& aRegionName,
+                            const gcamstr& aSectorName,
                             double aVariableDemand,
                             double aFixedOutputScaleFactor,
                             const int aPeriod )
 {
 }
 
-const string& EmptyTechnology::getName() const
+const gcamstr& EmptyTechnology::getName() const
 {
-    const static string name = "empty";
+    const static gcamstr name = "empty";
     return name;
 }
 
@@ -181,15 +181,15 @@ double EmptyTechnology::getOutput( const int aPeriod ) const
     return 0;
 }
 
-double EmptyTechnology::getTotalInputCost( const string& aRegionName,
-                                     const string& aSectorName,
+double EmptyTechnology::getTotalInputCost( const gcamstr& aRegionName,
+                                     const gcamstr& aSectorName,
                                      const int aPeriod ) const
 {
     return 0;
 }
 
-double EmptyTechnology::getEnergyCost( const string& aRegionName,
-                                 const string& aSectorName,
+double EmptyTechnology::getEnergyCost( const gcamstr& aRegionName,
+                                 const gcamstr& aSectorName,
                                  const int aPeriod ) const
 {
     return 0;
@@ -211,8 +211,8 @@ bool EmptyTechnology::hasCalibratedValue( const int aPeriod ) const {
     return false;
 }
 
-void EmptyTechnology::calcCost( const string& aRegionName,
-                          const string& aSectorName,
+void EmptyTechnology::calcCost( const gcamstr& aRegionName,
+                          const gcamstr& aSectorName,
                           const int aPeriod )
 {
 }
@@ -247,9 +247,9 @@ const AGHG* EmptyTechnology::getGHGPointer( const string& aGHGName ) const {
 
 bool EmptyTechnology::isAllCalibrated( const int aPeriod,
                                  double aCalAccuracy,
-                                 const string& aRegionName,
-                                 const string& aSectorName,
-                                 const string& aSubsectorName,
+                                 const gcamstr& aRegionName,
+                                 const gcamstr& aSectorName,
+                                 const gcamstr& aSubsectorName,
                                  const bool aPrintWarnings ) const
 {
     return true;

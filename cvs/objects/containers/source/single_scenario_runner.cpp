@@ -76,8 +76,9 @@ SingleScenarioRunner::~SingleScenarioRunner(){
     assert( !mXMLDBOutputter );
 }
 
-const string& SingleScenarioRunner::getName() const {
-    return getXMLNameStatic();
+const gcamstr& SingleScenarioRunner::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 bool SingleScenarioRunner::setupScenarios( Timer& timer,

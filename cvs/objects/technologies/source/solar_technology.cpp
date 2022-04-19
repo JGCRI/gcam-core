@@ -68,8 +68,8 @@ using namespace std;
 // constants ***************************************************************
 
 const double SolarTechnology::kWhrtoGJ = 0.0036;
-const std::string SolarTechnology::ELECTRIC_SECTOR_NAME_KEY = "electricSectorName";
-const std::string SolarTechnology::NO_SUN_DAYS_KEY = "no-sun-days";
+const gcamstr SolarTechnology::ELECTRIC_SECTOR_NAME_KEY = "electricSectorName";
+const gcamstr SolarTechnology::NO_SUN_DAYS_KEY = "no-sun-days";
 //const std::string SolarTechnology::TOTAL_ANNUAL_IRRADIANCE_KEY = "total-annual-irradiance";
 const double DEFAULT_TOTAL_ANNUAL_IRRADIANCE = 1000.0;
 
@@ -125,8 +125,8 @@ void SolarTechnology::copy( const SolarTechnology& aOther ) {
 
 // Documentation is inherited
 void SolarTechnology::calcCost(
-   const std::string& aRegionName,
-   const std::string& aSectorName,
+   const gcamstr& aRegionName,
+   const gcamstr& aSectorName,
    const int          aPeriod )
 {
     if( !mProductionState[ aPeriod ]->isOperating() ){
@@ -190,8 +190,8 @@ void SolarTechnology::calcCost(
  *  \return the resource area
  */
 double SolarTechnology::calcResourceArea(
-   const std::string& aRegionName,
-   const std::string& aSectorName,
+   const gcamstr& aRegionName,
+   const gcamstr& aSectorName,
    double             aVariableDemand,
    const int          aPeriod )
 {
@@ -243,9 +243,9 @@ SolarTechnology* SolarTechnology::clone( void ) const
 
 // Documentation is inherited
 void SolarTechnology::completeInit(
-   const std::string&              aRegionName,
-   const std::string&              aSectorName,
-   const std::string&              aSubsectorName,
+   const gcamstr&              aRegionName,
+   const gcamstr&              aSectorName,
+   const gcamstr&              aSubsectorName,
    const IInfo*                    aSubsectorIInfo,
    ILandAllocator*                 aLandAllocator )
 {
@@ -353,8 +353,8 @@ const std::string& SolarTechnology::getTechCostName( ) const {
 
 // Documentation is inherited
 void SolarTechnology::initCalc(
-   const std::string& aRegionName,
-   const std::string& aSectorName,
+   const gcamstr& aRegionName,
+   const gcamstr& aSectorName,
    const IInfo*       aSubsectorIInfo,
    const Demographic* aDemographics,
    PreviousPeriodInfo& aPrevPeriodInfo,
@@ -421,8 +421,8 @@ void SolarTechnology::initCalc(
 * \author Steve Smith
 * \param aPeriod Model period.
 */
-double SolarTechnology::getResourceToEnergyRatio( const std::string& aRegionName,
-                                                  const std::string& aSectorName,
+double SolarTechnology::getResourceToEnergyRatio( const gcamstr& aRegionName,
+                                                  const gcamstr& aSectorName,
                                                   const int aPeriod )
 {
     // Default assumpion is that resource is in energy units

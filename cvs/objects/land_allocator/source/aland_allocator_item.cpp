@@ -90,7 +90,7 @@ void ALandAllocatorItem::setShare( const double aShare,
     mShare[ aPeriod ] = aShare;
 }
 
-const string& ALandAllocatorItem::getName() const {
+const gcamstr& ALandAllocatorItem::getName() const {
     return mName;
 }
 
@@ -129,7 +129,7 @@ LandAllocatorItemType ALandAllocatorItem::getType() const {
     return mType;
 }
 
-void ALandAllocatorItem::calculateShareWeights( const string& aRegionName, 
+void ALandAllocatorItem::calculateShareWeights( const gcamstr& aRegionName, 
                                                 IDiscreteChoice* aChoiceFnAbove,
                                                 const int aPeriod,
                                                 const bool aCalcFutureSW )

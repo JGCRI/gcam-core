@@ -131,12 +131,12 @@ ALandAllocatorItem* LandLeaf::getChildAt( const size_t aIndex ) {
     return 0;
 }
 
-void LandLeaf::completeInit( const string& aRegionName,
+void LandLeaf::completeInit( const gcamstr& aRegionName,
                              const IInfo* aRegionInfo )
 {
     // Store the interest rate from the region.
-    mSocialDiscountRate = aRegionInfo->getDouble( "social-discount-rate", true );
-    const double privateDiscountRateLand = aRegionInfo->getDouble( "private-discount-rate-land", true );
+    mSocialDiscountRate = aRegionInfo->getDouble( gcamstr("social-discount-rate"), true );
+    const double privateDiscountRateLand = aRegionInfo->getDouble( gcamstr("private-discount-rate-land"), true );
 
     // Set the carbon cycle object if it has not already been initialized. Use a
     // virtual function so that derived leaves may use a different default type.
@@ -170,11 +170,11 @@ void LandLeaf::completeInit( const string& aRegionName,
     // if a user hasn't explicitly set a negative emissions policy 
     // the set the one from the root
     if( mNegEmissMarketName.empty() ) {
-        mNegEmissMarketName = aRegionInfo->getString( "negative-emiss-market", true );
+        mNegEmissMarketName = aRegionInfo->getString( gcamstr("negative-emiss-market"), true );
     }
     
     // Add dependency for to expansion constraint policy if it is being used.
-    if( mLandConstraintPolicy != "" ) {
+    if( !mLandConstraintPolicy.empty() ) {
         scenario->getMarketplace()->getDependencyFinder()->addDependency( "land-allocator",
                                                                          aRegionName,
                                                                          mLandConstraintPolicy,
@@ -182,7 +182,7 @@ void LandLeaf::completeInit( const string& aRegionName,
     }
 }
 
-void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
+void LandLeaf::initCalc( const gcamstr& aRegionName, const int aPeriod )
 {
     // TODO: error checking
     if ( aPeriod > 1 ) {
@@ -205,7 +205,7 @@ void LandLeaf::initCalc( const string& aRegionName, const int aPeriod )
 * \param aLandAllocationAbove Land allocation of the parent node
 * \param aPeriod Model period
 */
-void LandLeaf::setInitShares( const string& aRegionName,
+void LandLeaf::setInitShares( const gcamstr& aRegionName,
                               const double aLandAllocationAbove,
                               const int aPeriod )
 {
@@ -221,7 +221,7 @@ void LandLeaf::setInitShares( const string& aRegionName,
  * \brief Initialize the land use history for the leaf.
  * \param aRegionName Region name used for printing error messages.
  */
-void LandLeaf::initLandUseHistory( const string& aRegionName )
+void LandLeaf::initLandUseHistory( const gcamstr& aRegionName )
 {
     if( !mLandUseHistory ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -257,7 +257,7 @@ void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) c
 * \param aProfitRate Profit rate of the ag production technology
 * \param aPeriod Period.
 */
-void LandLeaf::setProfitRate( const string& aRegionName,
+void LandLeaf::setProfitRate( const gcamstr& aRegionName,
                                  const string& aProductName,
                                  const double aProfitRate,
                                  const int aPeriod )
@@ -276,7 +276,7 @@ void LandLeaf::setProfitRate( const string& aRegionName,
 * \param aRegionName Region name.
 * \param aPeriod Model period.
 */
-double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod ) const {
+double LandLeaf::getCarbonSubsidy( const gcamstr& aRegionName, const int aPeriod ) const {
     const double dollar_conversion_75_90 = 2.212;
     // Check if a carbon market exists and has a non-zero price.
     const Marketplace* marketplace = scenario->getMarketplace();
@@ -331,10 +331,10 @@ double LandLeaf::getCarbonSubsidy( const string& aRegionName, const int aPeriod 
  * \param aRegionName Region name.
  * \param aPeriod Model period.
  */
-double LandLeaf::getLandConstraintCost( const string& aRegionName, const int aPeriod ) const {
+double LandLeaf::getLandConstraintCost( const gcamstr& aRegionName, const int aPeriod ) const {
     
     // Check whether a constraint cost has been read in
-    if ( mLandConstraintPolicy == "") {
+    if ( mLandConstraintPolicy == gcamstr("")) {
         return 0.0;
     } else {
         // Get the cost from the marketplace
@@ -345,7 +345,8 @@ double LandLeaf::getLandConstraintCost( const string& aRegionName, const int aPe
         // to use the same mechanisms to implement an expansion constraint, for instance
         // Thus we always flip the sign of the price if the market is not subsidy
         // and do not enforce any further error checking
-        std::string type = marketplace->getMarketInfo( mLandConstraintPolicy, aRegionName, 0, true)->getString( "policy-type", false);
+        const static gcamstr policyTypeKey("policy-type");
+        std::string type = marketplace->getMarketInfo( mLandConstraintPolicy, aRegionName, 0, true)->getString( policyTypeKey, false);
         if ( type != "subsidy" ) {
             landPrice = -landPrice;
         }
@@ -358,20 +359,20 @@ double LandLeaf::getLandConstraintCost( const string& aRegionName, const int aPe
     }
 }
 
-void LandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,  
+void LandLeaf::setUnmanagedLandProfitRate( const gcamstr& aRegionName,  
                                            double aAverageProfitRate, const int aPeriod ) {
     // Does nothing for production (managed) leaves.
 	// Only takes action on unmanaged leaves, which is a type derived from LandLeaf
 }
 
-void LandLeaf::resetCalLandAllocation( const string& aRegionName,
+void LandLeaf::resetCalLandAllocation( const gcamstr& aRegionName,
                                           double aNewLandAllocation, const int aPeriod ) {
     mReadinLandAllocation[ aPeriod ] = aNewLandAllocation;
 }
 
 
 
-void LandLeaf::calculateNodeProfitRates( const string& aRegionName,
+void LandLeaf::calculateNodeProfitRates( const gcamstr& aRegionName,
                                          const int aPeriod ) {
     // This value is not used by the leaf, although we could calculate it for
     // comparison..
@@ -398,7 +399,7 @@ void LandLeaf::setSoilTimeScale( const int aTimeScale ) {
 * \param aChoiceFnAbove The discrete choice function from the level above.
 * \param aPeriod Model period
 */
-double LandLeaf::calcLandShares( const string& aRegionName,
+double LandLeaf::calcLandShares( const gcamstr& aRegionName,
                                  IDiscreteChoice* aChoiceFnAbove,
                                  const int aPeriod )
 {
@@ -427,7 +428,7 @@ double LandLeaf::calcLandShares( const string& aRegionName,
 * \param aLandAllocationAbove Land allocated to the parent node
 * \param aPeriod Model period
 */
-void LandLeaf::calcLandAllocation( const string& aRegionName,
+void LandLeaf::calcLandAllocation( const gcamstr& aRegionName,
                                    const double aLandAllocationAbove,
                                    const int aPeriod )
 {
@@ -442,13 +443,14 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
     }
     
     // compute any demands for land use constraint policies
-    if ( mLandConstraintPolicy != "" ) {
+    if ( !mLandConstraintPolicy.empty() ) {
         Marketplace* marketplace = scenario->getMarketplace();
         // We apply the land constraint "policy" generically so as to be able
         // to use the same mechanisms to implement an expansion constraint, for instance
         // Thus we only check the policy type for subsidy, in which case we need to add
         // to the supply, and in all other cases add to demand without further error checking
-        std::string type = marketplace->getMarketInfo( mLandConstraintPolicy, aRegionName, 0, true)->getString( "policy-type", false);
+        static const gcamstr policyTypeKey("policy-type");
+        std::string type = marketplace->getMarketInfo( mLandConstraintPolicy, aRegionName, 0, true)->getString( policyTypeKey, false);
         if ( type == "subsidy" ) {
             marketplace->addToSupply( mLandConstraintPolicy, aRegionName,
                                      mLandAllocation[ aPeriod ], aPeriod, true );
@@ -469,7 +471,7 @@ void LandLeaf::calcLandAllocation( const string& aRegionName,
 * \param aStoreFullEmiss Flag to pass on to the carbon calc used as an optimization
 *                        to avoid store full LUC emissins during World.calc.
 */
-void LandLeaf::calcLUCEmissions( const string& aRegionName,
+void LandLeaf::calcLUCEmissions( const gcamstr& aRegionName,
                                  const int aPeriod, const int aEndYear,
                                  const bool aStoreFullEmiss )
 {

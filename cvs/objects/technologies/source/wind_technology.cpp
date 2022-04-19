@@ -151,8 +151,8 @@ void WindTechnology::copy( const WindTechnology& aOther ) {
 
 // Documentation is inherited
 void WindTechnology::calcCost(
-   const std::string& aRegionName,
-   const std::string& aSectorName,
+   const gcamstr& aRegionName,
+   const gcamstr& aSectorName,
    const int          aPeriod )
 {
     if( !mProductionState[ aPeriod ]->isOperating() ){
@@ -234,14 +234,14 @@ double WindTechnology::calcRealizedTurbineOutput( const IInfo* apInfo ) const
 {
    // Equation 5:
    // aveWindSpeedAtHub = aveWindSpeed * ( turbineHubHeight / referenceHeight ) ^ windVelocityExponent
-   double aveWindSpeed = apInfo->getDouble( sXMLTagNames[ AVERAGE_WIND_SPEED_KEY ], true );
-   double referenceHeight = apInfo->getDouble( sXMLTagNames[ REFERENCE_HEIGHT_KEY ], true );
-   double windVelocityExponent = apInfo->getDouble( sXMLTagNames[ WIND_VELOCITY_EXPONENT_KEY ], true );
+   double aveWindSpeed = apInfo->getDouble( gcamstr(sXMLTagNames[ AVERAGE_WIND_SPEED_KEY ]), true );
+   double referenceHeight = apInfo->getDouble( gcamstr(sXMLTagNames[ REFERENCE_HEIGHT_KEY ]), true );
+   double windVelocityExponent = apInfo->getDouble( gcamstr(sXMLTagNames[ WIND_VELOCITY_EXPONENT_KEY ]), true );
    double aveWindSpeedAtHub = aveWindSpeed * std::pow( mTurbineHubHeight / referenceHeight, windVelocityExponent );
 
    // Equation 4:
    // RealizedTurbineOutput = ( IdealTurbineOutput / 10^6 ) * TurbineCoefficient * ( 1 - Derating ) * ( 1 - WindFarmLoss )
-   double airDensity = apInfo->getDouble( sXMLTagNames[ AIR_DENSITY_KEY ], true );
+   double airDensity = apInfo->getDouble( gcamstr(sXMLTagNames[ AIR_DENSITY_KEY ]), true );
    double realizedTurbineOutput = ( calcIdealTurbineOutput( aveWindSpeedAtHub, mRotorDiameter, airDensity ) / 1.0e6 ) * calcTurbineCoefficient( aveWindSpeedAtHub, mTurbineRating, mRotorDiameter, airDensity, mCutOutSpeed ) * ( 1.0 - mTurbineDerating ) * ( 1.0 - mWindFarmLoss );
    mWindPowerVariance = computeWindPowerVariance( aveWindSpeedAtHub, mTurbineRating, mRotorDiameter, airDensity, mCutOutSpeed );
    return realizedTurbineOutput;
@@ -259,8 +259,8 @@ double WindTechnology::calcRealizedTurbineOutput( const IInfo* apInfo ) const
  *  \return the resource area
  */
 double WindTechnology::calcResourceArea(
-   const std::string& aRegionName,
-   const std::string& aSectorName,
+   const gcamstr& aRegionName,
+   const gcamstr& aSectorName,
    double             aVariableDemand,
    const int          aPeriod )
 {
@@ -292,8 +292,8 @@ double WindTechnology::calcResourceArea(
 * \author Steve Smith
 * \param aPeriod Model period.
 */
-double WindTechnology::getResourceToEnergyRatio( const std::string& aRegionName,
-                                                 const std::string& aSectorName,
+double WindTechnology::getResourceToEnergyRatio( const gcamstr& aRegionName,
+                                                 const gcamstr& aSectorName,
                                                  const int aPeriod )
 {
     // Default assumpion is that resource is in energy units
@@ -378,9 +378,9 @@ WindTechnology* WindTechnology::clone( void ) const
 
 // Documentation is inherited
 void WindTechnology::completeInit(
-   const std::string&              aRegionName,
-   const std::string&              aSectorName,
-   const std::string&              aSubsectorName,
+   const gcamstr&              aRegionName,
+   const gcamstr&              aSectorName,
+   const gcamstr&              aSubsectorName,
    const IInfo*                    aSubsectorIInfo,
    ILandAllocator*                 aLandAllocator )
 {
@@ -460,8 +460,8 @@ const std::string& WindTechnology::getTechCostName( ) const {
 
 // Documentation is inherited
 void WindTechnology::initCalc(
-   const std::string& aRegionName,
-   const std::string& aSectorName,
+   const gcamstr& aRegionName,
+   const gcamstr& aSectorName,
    const IInfo*       aSubsectorIInfo,
    const Demographic* aDemographics,
    PreviousPeriodInfo& aPrevPeriodInfo,
@@ -491,10 +491,10 @@ void WindTechnology::initCalc(
       double           notUsed=0.0;
       validator_type   validator[] =
       {
-         validator_type( notUsed, sXMLTagNames[ AVERAGE_WIND_SPEED_KEY ], pInfo->hasValue( sXMLTagNames[ AVERAGE_WIND_SPEED_KEY ] ) ),
-         validator_type( notUsed, sXMLTagNames[ AIR_DENSITY_KEY ], pInfo->hasValue( sXMLTagNames[ AIR_DENSITY_KEY ] ) ),
-         validator_type( notUsed, sXMLTagNames[ REFERENCE_HEIGHT_KEY ], pInfo->hasValue( sXMLTagNames[ REFERENCE_HEIGHT_KEY ] ) ),
-         validator_type( notUsed, sXMLTagNames[ WIND_VELOCITY_EXPONENT_KEY ], pInfo->hasValue( sXMLTagNames[ WIND_VELOCITY_EXPONENT_KEY ] ) )
+         validator_type( notUsed, sXMLTagNames[ AVERAGE_WIND_SPEED_KEY ], pInfo->hasValue( gcamstr(sXMLTagNames[ AVERAGE_WIND_SPEED_KEY ]) ) ),
+         validator_type( notUsed, sXMLTagNames[ AIR_DENSITY_KEY ], pInfo->hasValue( gcamstr(sXMLTagNames[ AIR_DENSITY_KEY ]) ) ),
+         validator_type( notUsed, sXMLTagNames[ REFERENCE_HEIGHT_KEY ], pInfo->hasValue( gcamstr(sXMLTagNames[ REFERENCE_HEIGHT_KEY ]) ) ),
+         validator_type( notUsed, sXMLTagNames[ WIND_VELOCITY_EXPONENT_KEY ], pInfo->hasValue( gcamstr(sXMLTagNames[ WIND_VELOCITY_EXPONENT_KEY ]) ) )
       };
 
       unsigned short numParams = sizeof( validator ) / sizeof( validator[0] );

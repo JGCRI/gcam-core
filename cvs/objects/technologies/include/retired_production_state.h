@@ -64,14 +64,14 @@ public:
     // ISimpleComponent methods.
     RetiredProductionState* clone() const;
     virtual bool isSameType( const std::string& aType ) const;
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 	virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
     
     // IProductionState methods.
-    virtual double calcProduction( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    virtual double calcProduction( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const double aVariableOutput,
                                    const MarginalProfitCalculator* aMarginalProfitCalc,
                                    const double aFixedOutputScaleFactor,

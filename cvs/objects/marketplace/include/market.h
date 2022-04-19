@@ -63,9 +63,6 @@ class IInfo;
 class Tabs;
 class IVisitor;
 class MarketContainer;
-namespace objects {
-    class Atom;
-}
 
 // Need to forward declare the subclasses as well.
 class NormalMarket;
@@ -121,7 +118,7 @@ public:
 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    const std::vector<const objects::Atom*>& getContainedRegions() const;
+    const std::vector<gcamstr>& getContainedRegions() const;
 
     virtual void initPrice();
     virtual void setPrice( const double priceIn );
@@ -148,9 +145,9 @@ public:
     virtual double getSupply() const;
     virtual void addToSupply( const double supplyIn );
     
-    const std::string& getName() const;
-    const std::string& getRegionName() const;
-    const std::string& getGoodName() const;
+    const gcamstr& getName() const;
+    const gcamstr& getRegionName() const;
+    const gcamstr& getGoodName() const;
     const IInfo* getMarketInfo() const;
     IInfo* getMarketInfo();
     void store_original_price();

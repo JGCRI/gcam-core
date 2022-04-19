@@ -93,7 +93,7 @@ const string& EnergyFinalDemand::getXMLNameStatic() {
     return XML_NAME;
 }
 
-const string& EnergyFinalDemand::getName() const {
+const gcamstr& EnergyFinalDemand::getName() const {
     return mName;
 }
 
@@ -125,7 +125,7 @@ void EnergyFinalDemand::toDebugXMLDerived( const int period, std::ostream& out, 
 
 }
 
-void EnergyFinalDemand::completeInit( const string& aRegionName,
+void EnergyFinalDemand::completeInit( const gcamstr& aRegionName,
                                       const IInfo* aRegionInfo )
 {
     if(mIsPerCapBased) {
@@ -190,7 +190,7 @@ void EnergyFinalDemand::completeInit( const string& aRegionName,
 
 }
 
-void EnergyFinalDemand::initCalc( const string& aRegionName,
+void EnergyFinalDemand::initCalc( const gcamstr& aRegionName,
                                   const Demographic* aDemographics,
                                   const int aPeriod )
 {
@@ -208,7 +208,7 @@ void EnergyFinalDemand::initCalc( const string& aRegionName,
 * \param Demographic* aDemographicss.
 * \param aPeriod Model aPeriod
 */
-void EnergyFinalDemand::setFinalDemand( const string& aRegionName,
+void EnergyFinalDemand::setFinalDemand( const gcamstr& aRegionName,
                                         const Demographic* aDemographics,
                                         const int aPeriod )
 {
@@ -232,7 +232,7 @@ void EnergyFinalDemand::setFinalDemand( const string& aRegionName,
 * \param aPeriod Model aPeriod
 * \return The calculated service demand.
 */
-double EnergyFinalDemand::calcFinalDemand( const string& aRegionName,
+double EnergyFinalDemand::calcFinalDemand( const gcamstr& aRegionName,
                                            const Demographic* aDemographics,
                                            const int aPeriod )
 {
@@ -278,7 +278,7 @@ double EnergyFinalDemand::calcFinalDemand( const string& aRegionName,
 * \param aPeriod 
 * \return The macro-economic scaler.
 */
-double EnergyFinalDemand::calcMacroScaler( const string& aRegionName,
+double EnergyFinalDemand::calcMacroScaler( const gcamstr& aRegionName,
                                            const Demographic* aDemographics,
                                            const int aPeriod ) const
 {
@@ -304,7 +304,7 @@ double EnergyFinalDemand::calcMacroScaler( const string& aRegionName,
     return macroScaler;
 }
 
-double EnergyFinalDemand::getWeightedEnergyPrice( const string& aRegionName,
+double EnergyFinalDemand::getWeightedEnergyPrice( const gcamstr& aRegionName,
                                                   const int aPeriod ) const
 {
     // If this is not a final energy demand, it has no impact on the energy
@@ -348,7 +348,7 @@ void EnergyFinalDemand::acceptDerived( IVisitor* aVisitor,
 EnergyFinalDemand::FinalEnergyConsumer::FinalEnergyConsumer() {
 }
 
-double EnergyFinalDemand::PerCapitaGDPDemandFunction::calcDemand( const string& aRegionName,
+double EnergyFinalDemand::PerCapitaGDPDemandFunction::calcDemand( const gcamstr& aRegionName,
                                                            const Demographic* aDemographics,
                                                            const double aPriceElasticity,
                                                            const double aIncomeElasticity,
@@ -378,7 +378,7 @@ double EnergyFinalDemand::PerCapitaGDPDemandFunction::calcDemand( const string& 
     return macroEconomicScaler;
 }
 
-double EnergyFinalDemand::TotalGDPDemandFunction::calcDemand( const string& aRegionName,
+double EnergyFinalDemand::TotalGDPDemandFunction::calcDemand( const gcamstr& aRegionName,
                                                               const Demographic* aDemographics,
                                                               const double aPriceElasticity,
                                                               const double aIncomeElasticity,
@@ -416,8 +416,8 @@ double EnergyFinalDemand::FinalEnergyConsumer::noCalibrationValue() {
     return -1;
 }
 
-void EnergyFinalDemand::FinalEnergyConsumer::completeInit( const string& aRegionName,
-                                                           const string& aFinalDemandName )
+void EnergyFinalDemand::FinalEnergyConsumer::completeInit( const gcamstr& aRegionName,
+                                                           const gcamstr& aFinalDemandName )
 {
     mTFEMarketName = SectorUtils::createTFEMarketName( aFinalDemandName );
     // Set up demand sector calibration market.
@@ -426,8 +426,8 @@ void EnergyFinalDemand::FinalEnergyConsumer::completeInit( const string& aRegion
                                IMarketType::INVERSE_CALIBRATION );
     // Set price and output units for period 0 market info
     IInfo* marketInfo = marketplace->getMarketInfo( mTFEMarketName, aRegionName, 0, true );
-    marketInfo->setString( "price-unit", "EJ" );
-    marketInfo->setString( "output-unit", "EJ" );
+    marketInfo->setString( gcamstr("price-unit"), gcamstr("EJ") );
+    marketInfo->setString( gcamstr("output-unit"), gcamstr("EJ") );
 
     SectorUtils::setFinalEnergyFlag( aRegionName, aFinalDemandName );
     const Modeltime* modeltime = scenario->getModeltime();
@@ -473,7 +473,7 @@ double EnergyFinalDemand::FinalEnergyConsumer::getCalibratedFinalEnergy( const i
         mCalFinalEnergy[ aPeriod ].get() : noCalibrationValue();
 }
 
-void EnergyFinalDemand::FinalEnergyConsumer::updateAEEI( const string& aRegionName,
+void EnergyFinalDemand::FinalEnergyConsumer::updateAEEI( const gcamstr& aRegionName,
                                                          const int aPeriod )
 {
     // Do only if mCalFinalEnergy object exists.

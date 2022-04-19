@@ -88,7 +88,7 @@ class XMLDBOutputter;
 class SingleScenarioRunner: public IScenarioRunner {
     friend class ScenarioRunnerFactory;
 public:
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     virtual ~SingleScenarioRunner();
 

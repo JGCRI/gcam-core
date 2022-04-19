@@ -84,11 +84,11 @@ public:
     virtual ~SmoothRenewableSubresource();
     //! Return the XML tag name
     static const std::string& getXMLNameStatic();
-    virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
+    virtual void completeInit( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                const IInfo* aSectorInfo );
-    virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName,
+    virtual void initCalc( const gcamstr& aRegionName, const gcamstr& aResourceName,
                            const IInfo* aSectorInfo, const int aPeriod );
-    virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
+    virtual void annualsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                int aPeriod, double aPrice );
     virtual double getLowestPrice( const int aPeriod ) const;
     virtual double getHighestPrice( const int aPeriod ) const;

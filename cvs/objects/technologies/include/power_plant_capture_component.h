@@ -109,27 +109,27 @@ public:
         
     virtual bool isSameType( const std::string& aType ) const;
     
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName );
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName );
 
-    virtual void initCalc( const std::string& aRegionName,
-                   const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                   const gcamstr& aSectorName,
                    const std::string& aFuelName,
                    const int aPeriod );
 
-    double getStorageCost( const std::string& aRegionName,
+    double getStorageCost( const gcamstr& aRegionName,
                            const std::string& aGHGName,
                            const int aPeriod ) const;
 
     double getRemoveFraction( const std::string& aGHGNam ) const;
 
-	double calcSequesteredAmount( const std::string& aRegionName,
+	double calcSequesteredAmount( const gcamstr& aRegionName,
                                   const std::string& aGHGName,
 								  const double aTotalEmissions,
                                   const int aPeriod );
@@ -139,7 +139,7 @@ public:
                                  const int aPeriod ) const;
 
     
-    void calcSequesteredAmount( const std::string& aRegionName,
+    void calcSequesteredAmount( const gcamstr& aRegionName,
                                 const std::string& aGHGName,
                                 const double aInput,
                                 const double aOutput,
@@ -147,7 +147,7 @@ public:
                                 const double aOutputCoef,
                                 const int aPeriod );
 
-    void adjustInputs( const std::string& aRegionName,
+    void adjustInputs( const gcamstr& aRegionName,
                        std::vector<IInput*>& aInputs,
                        const int aPeriod ) const;
 
@@ -159,7 +159,7 @@ protected:
                             const int aPeriod ) const;
     
     void adjustNonEnergyInput( IInput* aNonEnergyInput,
-                               const std::string& aRegionName,
+                               const gcamstr& aRegionName,
                                const double aBaseEnergyIntensity,
                                const double aEffectiveEnergyIntensity,
                                const double aFuelEmissCoef,

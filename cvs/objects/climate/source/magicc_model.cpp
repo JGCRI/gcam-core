@@ -804,7 +804,7 @@ void MagiccModel::readFile(){
     // Open up the file with default emissions data and read it in.
     // Default to value given in config file, but use read-in value if that exists
     string gasFileName = Configuration::getInstance()->getFile( "GHGInputFileName" );
-    if ( mGHGInputFileName != "" ) {
+    if ( !mGHGInputFileName.empty() ) {
         gasFileName = mGHGInputFileName;
     }
     ifstream inputGasFile;

@@ -113,7 +113,7 @@ public:
      *                                      it is a cost).
      * \param aPeriod The model period.
      */
-    virtual void initCalc( const std::string& aRegionName, const std::string& aContainerName,
+    virtual void initCalc( const gcamstr& aRegionName, const std::string& aContainerName,
                            const bool aShouldShareIncreaseWithValue, const int aPeriod ) = 0;
   
     /*!

@@ -71,7 +71,7 @@ class IDiscreteChoice;
 class CalibrateShareWeightVisitor : public DefaultVisitor {
 public:
 
-    CalibrateShareWeightVisitor( const std::string& aRegionName );
+    CalibrateShareWeightVisitor( const gcamstr& aRegionName );
 
     // Documentation for visitor methods is inherited.
     virtual void startVisitSector( const Sector* aSector,
@@ -87,10 +87,10 @@ public:
 
 private:
     //! Name of the Region the for which we are calibrating
-    std::string mCurrentRegionName;
+    gcamstr mCurrentRegionName;
 
     //! Name of the sector currently being tabulated.
-    std::string mCurrentSectorName;
+    gcamstr mCurrentSectorName;
 
     template<typename ContainerType>
     void calibrateShareWeights( const ContainerType* aContainer, const int aPeriod ) const;

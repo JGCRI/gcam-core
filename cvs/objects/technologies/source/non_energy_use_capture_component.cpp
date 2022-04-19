@@ -95,9 +95,10 @@ const string& NonEnergyUseCaptureComponent::getXMLName() const {
     return getXMLNameStatic();
 }
 
-const string& NonEnergyUseCaptureComponent::getName() const {
+const gcamstr& NonEnergyUseCaptureComponent::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
     // Capture components are not named as only one can exist per Technology.
-    return getXMLNameStatic();
+    return NAME;
 }
 
 void NonEnergyUseCaptureComponent::toDebugXML( const int aPeriod,
@@ -110,8 +111,8 @@ void NonEnergyUseCaptureComponent::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void NonEnergyUseCaptureComponent::completeInit( const string& aRegionName,
-                                                 const string& aSectorName )
+void NonEnergyUseCaptureComponent::completeInit( const gcamstr& aRegionName,
+                                                 const gcamstr& aSectorName )
 {
     // Does not need to add any dependencies. Check that the remove fraction is
     // valid.
@@ -128,14 +129,14 @@ void NonEnergyUseCaptureComponent::completeInit( const string& aRegionName,
     }
 }
 
-void NonEnergyUseCaptureComponent::initCalc( const string& aRegionName,
-                                             const string& aSectorName,
+void NonEnergyUseCaptureComponent::initCalc( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
                                              const string& aFuelName,
                                              const int aPeriod )
 {
 }
 
-double NonEnergyUseCaptureComponent::getStorageCost( const string& aRegionName,
+double NonEnergyUseCaptureComponent::getStorageCost( const gcamstr& aRegionName,
                                                      const string& aGHGName,
                                                      const int aPeriod ) const
 {
@@ -147,7 +148,7 @@ double NonEnergyUseCaptureComponent::getRemoveFraction( const string& aGHGName )
 	return aGHGName == mTargetGas ? mRemoveFraction : 0;
 }
 
-double NonEnergyUseCaptureComponent::calcSequesteredAmount( const string& aRegionName,
+double NonEnergyUseCaptureComponent::calcSequesteredAmount( const gcamstr& aRegionName,
                                                             const string& aGHGName,
 										                    const double aTotalEmissions, const int aPeriod )
 {
@@ -170,7 +171,7 @@ double NonEnergyUseCaptureComponent::getSequesteredAmount( const string& aGHGNam
 	return 0;
 }
 
-void NonEnergyUseCaptureComponent::adjustInputs( const string& aRegionName,
+void NonEnergyUseCaptureComponent::adjustInputs( const gcamstr& aRegionName,
                                                  vector<IInput*>& aInputs,
                                                  const int aPeriod ) const
 {

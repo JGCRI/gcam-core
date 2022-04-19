@@ -106,26 +106,26 @@ public:
 
     void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const IInfo* aTechIInfo );
 
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const IInfo* aLocalInfo,
                            const int aPeriod );
 
     /*!
      * \note This is only used by SGM inputs.
      */
-    double getGHGValue( const IInput* aInput, const std::string& aRegionName, const std::string& aProdName,
+    double getGHGValue( const IInput* aInput, const gcamstr& aRegionName, const std::string& aProdName,
                         const ICaptureComponent* aSequestrationDevice, const int aPeriod ) const;
     
     /*!
      * \note This is only used by SGM outputs.
      */
-    double getGHGValue( const IOutput* aOutput, const std::string& aRegionName, const std::string& aProdName,
+    double getGHGValue( const IOutput* aOutput, const gcamstr& aRegionName, const std::string& aProdName,
                         const ICaptureComponent* aSequestrationDevice, const int aPeriod ) const;
     /*! 
      * \brief Convert GHG tax and any storage costs into energy units using GHG
@@ -141,7 +141,7 @@ public:
      * \param aPeriod The period in which this calculation is occurring.
      * \return Generalized cost or value of the GHG
      */
-    virtual double getGHGValue( const std::string& aRegionName,
+    virtual double getGHGValue( const gcamstr& aRegionName,
                                 const std::vector<IInput*>& aInputs,
                                 const std::vector<IOutput*>& aOutputs,
                                 const ICaptureComponent* aSequestrationDevice,
@@ -165,7 +165,7 @@ public:
      * \param aSequestrationDevice The object potentially capturing emissions.
      * \param aPeriod The period in which this calculation is occurring.
      */
-    virtual void calcEmission( const std::string& aRegionName, 
+    virtual void calcEmission( const gcamstr& aRegionName, 
                                const std::vector<IInput*>& aInputs,
                                const std::vector<IOutput*>& aOutputs,
                                ICaptureComponent* aSequestrationDevice,
@@ -173,7 +173,7 @@ public:
     
     double getEmission( const int aPeriod ) const;
     
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const bool aIsInitialTechYear,
                            const std::vector<IInput*>& aInputs,
                            const std::vector<IOutput*>& aOutputs,
@@ -222,7 +222,7 @@ protected:
      */
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
 
-    void addEmissionsToMarket( const std::string& aRegionName, const int aPeriod );
+    void addEmissionsToMarket( const gcamstr& aRegionName, const int aPeriod );
     
     void copy( const AGHG& other );
 };

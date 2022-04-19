@@ -101,14 +101,14 @@ public:
     static bool hasTechnologyType( const std::string& aTechNodeName );
     
     // ITechnologyContainer methods
-    virtual void completeInit( const std::string& aRegionName, const std::string& aSectorName,
-                               const std::string& aSubsectorName, const IInfo* aSubsecInfo,
+    virtual void completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName, const IInfo* aSubsecInfo,
                                ILandAllocator* aLandAllocator );
     
-    virtual void initCalc( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName, const gcamstr& aSectorName,
                            const IInfo* aSubsecInfo, const Demographic* aDemographics, const int aPeriod );
     
-    virtual void postCalc( const std::string& aRegionName, const int aPeriod );
+    virtual void postCalc( const gcamstr& aRegionName, const int aPeriod );
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     
@@ -125,7 +125,7 @@ public:
     virtual CTechRangeIterator getVintageEnd( const int aPeriod ) const;
     
     // INamed methods
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );

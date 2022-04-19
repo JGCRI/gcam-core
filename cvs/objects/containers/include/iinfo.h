@@ -75,7 +75,7 @@ public:
     * \param aStringKey The key for which to set or update the value.
     * \param aValue The new value.
     */
-    virtual bool setBoolean( const std::string& aStringKey,
+    virtual bool setBoolean( const gcamstr& aStringKey,
                              const bool aValue ) = 0;
 
     /*! \brief Set an integer value for a given key.
@@ -84,7 +84,7 @@ public:
     * \param aStringKey The key for which to set or update the value.
     * \param aValue The new value.
     */
-    virtual bool setInteger( const std::string& aStringKey,
+    virtual bool setInteger( const gcamstr& aStringKey,
                              const int aValue ) = 0;
     
     /*! \brief Set a double value for a given key.
@@ -93,7 +93,7 @@ public:
     * \param aStringKey The key for which to set or update the value.
     * \param aValue The new value.
     */
-    virtual bool setDouble( const std::string& aStringKey,
+    virtual bool setDouble( const gcamstr& aStringKey,
                             const double aValue ) = 0;
     
     /*! \brief Set a string value for a given key.
@@ -102,8 +102,8 @@ public:
     * \param aStringKey The key for which to set or update the value.
     * \param aValue The new value.
     */
-    virtual bool setString( const std::string& aStringKey,
-                            const std::string& aValue ) = 0;
+    virtual bool setString( const gcamstr& aStringKey,
+                            const gcamstr& aValue ) = 0;
 
     /*! \brief Get a boolean from the IInfo with a specified key.
     * \details Searches the key set for the given key and returns the associated
@@ -113,7 +113,7 @@ public:
     * \param aMustExist Whether the value should exist in the IInfo.
     * \return The boolean associated with the key or false if it does not exist.
     */
-    virtual bool getBoolean( const std::string& aStringKey,
+    virtual bool getBoolean( const gcamstr& aStringKey,
                                    const bool aMustExist ) const = 0;
     
     /*! \brief Get a integer from the IInfo with a specified key.
@@ -124,7 +124,7 @@ public:
     * \param aMustExist Whether the value should exist in the IInfo.
     * \return The integer associated with the key or zero if it does not exist.
     */
-    virtual int getInteger( const std::string& aStringKey,
+    virtual int getInteger( const gcamstr& aStringKey,
                                   const bool aMustExist ) const = 0;
     
     /*! \brief Get a double value from the IInfo with a specified key.
@@ -135,7 +135,7 @@ public:
     * \param aMustExist Whether the value should exist in the IInfo.
     * \return The double associated with the key or zero if it does not exist.
     */
-    virtual double getDouble( const std::string& aStringKey,
+    virtual double getDouble( const gcamstr& aStringKey,
                                     const bool aMustExist ) const = 0;
     
     /*! \brief Get a string from the IInfo with a specified key.
@@ -147,7 +147,7 @@ public:
     * \return The string(by reference) associated with the key or the empty
     *         string if it does not exist.
     */
-    const virtual std::string getString( const std::string& aStringKey,
+    const virtual gcamstr getString( const gcamstr& aStringKey,
                                           const bool aMustExist ) const = 0;
 
     /*! \brief Get a boolean from the IInfo with a specified key.
@@ -158,7 +158,7 @@ public:
     * \param aFound Whether the value is found or not.
     * \return The boolean associated with the key or false if it does not exist.
     */
-    virtual bool getBooleanHelper( const std::string& aStringKey, bool& aFound ) const = 0;
+    virtual bool getBooleanHelper( const gcamstr& aStringKey, bool& aFound ) const = 0;
 
     /*! \brief Get a integer from the IInfo with a specified key.
     * \details Searches the key set for the given key and returns the associated
@@ -168,7 +168,7 @@ public:
     * \param aFound Whether the value is found or not.
     * \return The integer associated with the key or zero if it does not exist.
     */
-    virtual int getIntegerHelper( const std::string& aStringKey, bool& aFound ) const = 0;
+    virtual int getIntegerHelper( const gcamstr& aStringKey, bool& aFound ) const = 0;
 
     /*! \brief Get a double value from the IInfo with a specified key.
     * \details Searches the key set for the given key and returns the associated
@@ -178,7 +178,7 @@ public:
     * \param aFound Whether the value is found or not.
     * \return The double associated with the key or zero if it does not exist.
     */
-    virtual double getDoubleHelper( const std::string& aStringKey, bool& aFound ) const = 0;
+    virtual double getDoubleHelper( const gcamstr& aStringKey, bool& aFound ) const = 0;
 
     /*! \brief Get a string from the IInfo with a specified key.
     * \details Searches the key set for the given key and returns the associated
@@ -189,7 +189,7 @@ public:
     * \return The string(by reference) associated with the key or the empty
     *         string if it does not exist.
     */
-    virtual const std::string getStringHelper( const std::string& aStringKey, bool& aFound ) const = 0;
+    virtual const gcamstr getStringHelper( const gcamstr& aStringKey, bool& aFound ) const = 0;
 
     /*! \brief Return whether a value exists in the IInfo.
     * \details Performs a search of the IInfo object using the same method as
@@ -199,7 +199,7 @@ public:
     * \param aStringKey The key for which to search the IInfo object.
     * \return Whether the key exists in the IInfo.
     */
-    virtual bool hasValue( const std::string& aStringKey ) const = 0;
+    virtual bool hasValue( const gcamstr& aStringKey ) const = 0;
 
     /*! \brief Write the IInfo object to an output stream as XML.
     * \details Writes the set of keys and values to an output stream as XML.

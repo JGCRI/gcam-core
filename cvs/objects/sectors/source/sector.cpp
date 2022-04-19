@@ -111,11 +111,11 @@ void Sector::clear(){
 * \author Sonny Kim
 * \return Sector name as a string
 */
-const string& Sector::getName() const {
+const gcamstr& Sector::getName() const {
     return mName;
 }
 
-void Sector::setNames( const string& aRegionName ) {
+void Sector::setNames( const gcamstr& aRegionName ) {
     mRegionName = aRegionName;
     for( vector<Subsector*>::iterator subSecIter = mSubsectors.begin(); subSecIter != mSubsectors.end(); subSecIter++ ) {
         (*subSecIter)->setNames( mRegionName, mName );
@@ -196,7 +196,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
     mSectorInfo->setString( "price-unit", mPriceUnit );
 
     for(auto metaInfo : mObjectMetaInfo) {
-        mSectorInfo->setDouble( metaInfo->getName(), metaInfo->getValue() );
+        mSectorInfo->setDouble( gcamstr(metaInfo->getName()), metaInfo->getValue() );
     }
 
     // Complete the subsector initializations.

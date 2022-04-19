@@ -67,14 +67,14 @@ public:
     virtual ~Resource();
     static const std::string& getXMLNameStatic();
     void toDebugXML( const int period, std::ostream& aOut, Tabs* aTabs ) const;
-    const std::string& getName() const; 
-    virtual void completeInit( const std::string& aRegionName, const IInfo* aRegionInfo );
+    const gcamstr& getName() const; 
+    virtual void completeInit( const gcamstr& aRegionName, const IInfo* aRegionInfo );
     
-    virtual void initCalc( const std::string& aRegionName, const int aPeriod );
-    virtual void postCalc( const std::string& aRegionName, const int aPeriod );
+    virtual void initCalc( const gcamstr& aRegionName, const int aPeriod );
+    virtual void postCalc( const gcamstr& aRegionName, const int aPeriod );
     
-    void calcSupply( const std::string& aRegionName, const int aPeriod );
-    virtual double getAnnualProd( const std::string& aRegionName, const int aPeriod ) const;
+    void calcSupply( const gcamstr& aRegionName, const int aPeriod );
+    virtual double getAnnualProd( const gcamstr& aRegionName, const int aPeriod ) const;
     virtual double getPrice( const int aPeriod ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
@@ -104,9 +104,9 @@ protected:
     std::unique_ptr<IInfo> mResourceInfo;
 
     virtual const std::string& getXMLName() const;
-    void setMarket( const std::string& aRegionName );
-    virtual void annualsupply( const std::string& aRegionName, int aPeriod, double aPrice );
-    void cumulsupply( const std::string& aRegionName, double aPrice, int aPeriod );
+    void setMarket( const gcamstr& aRegionName );
+    virtual void annualsupply( const gcamstr& aRegionName, int aPeriod, double aPrice );
+    void cumulsupply( const gcamstr& aRegionName, double aPrice, int aPeriod );
 };
 
 /*! 
@@ -127,7 +127,7 @@ protected:
     )
 
     virtual const std::string& getXMLName() const;
-    virtual void annualsupply( const std::string& aRegionName, int aPeriod, double aPrice );
+    virtual void annualsupply( const gcamstr& aRegionName, int aPeriod, double aPrice );
 };
 
 #endif // _RESOURCE_H_

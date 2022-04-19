@@ -125,24 +125,24 @@ void ReadInControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* a
 
 }
 
-void ReadInControl::completeInit( const string& aRegionName, const string& aSectorName,
+void ReadInControl::completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                const IInfo* aTechInfo )
 {
 
 }
 
-void ReadInControl::initCalc( const string& aRegionName,
+void ReadInControl::initCalc( const gcamstr& aRegionName,
                               const IInfo* aTechInfo,
                               const NonCO2Emissions* aParentGHG,
                               const int aPeriod )
 {
 
-    if ( aTechInfo->getBoolean( "new-vintage-tech", true ) ) {
+    if ( aTechInfo->getBoolean( gcamstr("new-vintage-tech"), true ) ) {
         mTechBuildPeriod = aPeriod;
     }
 }
 
-double ReadInControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod ) {
+double ReadInControl::calcEmissionsReduction( const gcamstr& aRegionName, const int aPeriod ) {
     double reduction = 0.0;
     
     if ( (*mFutureEmissionsFactors)[ mTechBuildPeriod ] != 0.0 ) {

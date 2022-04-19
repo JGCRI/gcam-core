@@ -134,9 +134,9 @@ ResourceReserveTechnology* ResourceReserveTechnology::clone() const {
     return clone;
 }
 
-void ResourceReserveTechnology::completeInit(const std::string& aRegionName,
-	const std::string& aSectorName,
-	const std::string& aSubsectorName,
+void ResourceReserveTechnology::completeInit(const gcamstr& aRegionName,
+	const gcamstr& aSectorName,
+	const gcamstr& aSubsectorName,
 	const IInfo* aSubsectorInfo,
 	ILandAllocator* aLandAllocator)
 {
@@ -161,8 +161,8 @@ void ResourceReserveTechnology::completeInit(const std::string& aRegionName,
     }
 }
 
-void ResourceReserveTechnology::initCalc( const string& aRegionName,
-                                          const string& aSectorName,
+void ResourceReserveTechnology::initCalc( const gcamstr& aRegionName,
+                                          const gcamstr& aSectorName,
                                           const IInfo* aSubsectorInfo,
                                           const Demographic* aDemographics,
                                           PreviousPeriodInfo& aPrevPeriodInfo,
@@ -201,8 +201,8 @@ void ResourceReserveTechnology::initCalc( const string& aRegionName,
  * \param aGDP Regional GDP container.
  * \param aPeriod Model period.
  */
-void ResourceReserveTechnology::production(const string& aRegionName,
-	const string& aSectorName,
+void ResourceReserveTechnology::production(const gcamstr& aRegionName,
+	const gcamstr& aSectorName,
 	const double aVariableDemand,
 	const double aFixedOutputScaleFactor,
 	const int aPeriod)
@@ -297,8 +297,8 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
  * \param aPeriod model period
  * \return Value of fixed output for this Technology
  */
-double ResourceReserveTechnology::getFixedOutput( const string& aRegionName,
-                                  const string& aSectorName,
+double ResourceReserveTechnology::getFixedOutput( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const bool aHasRequiredInput,
                                   const string& aRequiredInput,
                                   const double aMarginalRevenue,
@@ -319,8 +319,8 @@ double ResourceReserveTechnology::getFixedOutput( const string& aRegionName,
                                        margRevTest, aPeriod );
 }
 
-double ResourceReserveTechnology::getCurrencyConversionPrice( const string& aRegionName,
-                                                              const string& aSectorName,
+double ResourceReserveTechnology::getCurrencyConversionPrice( const gcamstr& aRegionName,
+                                                              const gcamstr& aSectorName,
                                                               const int aPeriod ) const
 {
     // the price will be in 1975$/GJ
@@ -333,8 +333,8 @@ double ResourceReserveTechnology::getCurrencyConversionPrice( const string& aReg
  * \param aSectorName The sector containing the Technology.
  * \param aPeriod Period in which to calculate the energy cost.
  */
-void ResourceReserveTechnology::calcCost(const string& aRegionName,
-                                         const string& aSectorName,
+void ResourceReserveTechnology::calcCost(const gcamstr& aRegionName,
+                                         const gcamstr& aSectorName,
                                          const int aPeriod)
 {
     Technology::calcCost(aRegionName, aSectorName, aPeriod);
@@ -349,8 +349,8 @@ void ResourceReserveTechnology::calcCost(const string& aRegionName,
  * \param aPeriod Period in which to calculate the energy cost.
  * \return A calculated energy cost for the Technology.
  */
-double ResourceReserveTechnology::getEnergyCost( const string& aRegionName,
-                                  const string& aSectorName,
+double ResourceReserveTechnology::getEnergyCost( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const int aPeriod ) const
 {
     // Calculates the energy cost by first calculating the total cost including
@@ -378,7 +378,7 @@ void ResourceReserveTechnology::doInterpolations(const Technology* aPrevTech, co
 	assert(nextTech);
 }
 
-void ResourceReserveTechnology::postCalc( const string& aRegionName, const int aPeriod ) {
+void ResourceReserveTechnology::postCalc( const gcamstr& aRegionName, const int aPeriod ) {
     Technology::postCalc( aRegionName, aPeriod );
     
     if( !mProductionState[ aPeriod ]->isOperating() ) {

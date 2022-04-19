@@ -92,7 +92,7 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     virtual void setName( const std::string& aName );
 
@@ -104,27 +104,27 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
 
-    virtual void completeInit( const std::string& aSectorName,
-                               const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aSectorName,
+                               const gcamstr& aRegionName,
                                const IInfo* aTechInfo,
                                const bool aIsTechOperating );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
     virtual void scaleCoefficient( const double aScaler );
 
     virtual OutputList calcPhysicalOutput( const double aPrimaryOutput,
-                                           const std::string& aRegionName,
+                                           const gcamstr& aRegionName,
                                            const ICaptureComponent* aCaptureComponent,
                                            const int aPeriod ) const;
 
     virtual void setPhysicalOutput( const double aPrimaryOutput,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     ICaptureComponent* aCaptureComponent,
                                     const int aPeriod );
 
@@ -132,7 +132,7 @@ public:
 
     virtual void setCurrencyOutput( const double aPysicalOutput,
                                     const double aCurrencyConversionPrice,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod )
     {
         // TODO: This could work by converting from physical to currency with
@@ -146,11 +146,11 @@ public:
         return 0;
     }
 
-    virtual double getValue( const std::string& aRegionName,
+    virtual double getValue( const gcamstr& aRegionName,
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
     
-    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
+    virtual std::string getOutputUnits( const gcamstr& aRegionName ) const;
 
     virtual double getEmissionsPerOutput( const std::string& aGHGName,
                                           const int aPeriod ) const;

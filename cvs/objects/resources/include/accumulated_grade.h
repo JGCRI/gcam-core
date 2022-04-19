@@ -60,12 +60,12 @@ public:
 
     static const std::string& getXMLNameStatic();
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aResourceName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aResourceName,
                            const int aPeriod );
 
-    virtual void postCalc( const std::string& aRegionName,
-                           const std::string& aResourceName,
+    virtual void postCalc( const gcamstr& aRegionName,
+                           const gcamstr& aResourceName,
                            const int aPeriod );
 protected:
     

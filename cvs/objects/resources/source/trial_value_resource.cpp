@@ -99,7 +99,7 @@ void TrialValueResource::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void TrialValueResource::completeInit( const string& aRegionName,
+void TrialValueResource::completeInit( const gcamstr& aRegionName,
                                       const IInfo* aRegionInfo )
 {
     // default unit to EJ
@@ -115,27 +115,27 @@ void TrialValueResource::completeInit( const string& aRegionName,
     setMarket( aRegionName );
 }
 
-void TrialValueResource::initCalc( const string& aRegionName,
+void TrialValueResource::initCalc( const gcamstr& aRegionName,
                                   const int aPeriod )
 {
 }
 
-void TrialValueResource::postCalc( const string& aRegionName,
+void TrialValueResource::postCalc( const gcamstr& aRegionName,
                                   const int aPeriod )
 {
 }
 
 
-const string& TrialValueResource::getName() const {
+const gcamstr& TrialValueResource::getName() const {
     return mName;
 }
 
-void TrialValueResource::calcSupply( const string& aRegionName,
+void TrialValueResource::calcSupply( const gcamstr& aRegionName,
                                     const int aPeriod )
 {
 }
 
-double TrialValueResource::getAnnualProd( const string& aRegionName,
+double TrialValueResource::getAnnualProd( const gcamstr& aRegionName,
                                          const int aPeriod ) const
 {
     // Return the market supply.
@@ -154,7 +154,7 @@ double TrialValueResource::getPrice( const int aPeriod ) const {
 *          demand.
 * \param aRegionName Region name.
 */
-void TrialValueResource::setMarket( const string& aRegionName ) {
+void TrialValueResource::setMarket( const gcamstr& aRegionName ) {
     // Setup the market for the resource. This market will not be solved. Note
     // that in a standard Resource setMarketToSolve would be called here.
     Marketplace* marketplace = scenario->getMarketplace();

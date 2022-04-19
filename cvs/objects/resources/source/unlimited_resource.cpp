@@ -100,7 +100,7 @@ void UnlimitedResource::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void UnlimitedResource::completeInit( const string& aRegionName,
+void UnlimitedResource::completeInit( const gcamstr& aRegionName,
                                       const IInfo* aRegionInfo )
 {
     // default unit to EJ
@@ -118,7 +118,7 @@ void UnlimitedResource::completeInit( const string& aRegionName,
     SectorUtils::fillMissingPeriodVectorInterpolated( mFixedPrices );
 }
 
-void UnlimitedResource::initCalc( const string& aRegionName,
+void UnlimitedResource::initCalc( const gcamstr& aRegionName,
                                   const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();
@@ -131,17 +131,17 @@ void UnlimitedResource::initCalc( const string& aRegionName,
     }
 }
 
-void UnlimitedResource::postCalc( const string& aRegionName,
+void UnlimitedResource::postCalc( const gcamstr& aRegionName,
                                   const int aPeriod )
 {
 }
 
 
-const string& UnlimitedResource::getName() const {
+const gcamstr& UnlimitedResource::getName() const {
     return mName;
 }
 
-void UnlimitedResource::calcSupply( const string& aRegionName,
+void UnlimitedResource::calcSupply( const gcamstr& aRegionName,
                                     const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();
@@ -154,7 +154,7 @@ void UnlimitedResource::calcSupply( const string& aRegionName,
     marketplace->addToSupply( mName, aRegionName, mSupplyWedge, aPeriod );
 }
 
-double UnlimitedResource::getAnnualProd( const string& aRegionName,
+double UnlimitedResource::getAnnualProd( const gcamstr& aRegionName,
                                          const int aPeriod ) const
 {
     // Return the market supply.
@@ -173,7 +173,7 @@ double UnlimitedResource::getPrice( const int aPeriod ) const {
 *          demand.
 * \param aRegionName Region name.
 */
-void UnlimitedResource::setMarket( const string& aRegionName ) {
+void UnlimitedResource::setMarket( const gcamstr& aRegionName ) {
     // Setup the market for the resource. This market will not be solved. Note
     // that in a standard Resource setMarketToSolve would be called here.
     Marketplace* marketplace = scenario->getMarketplace();
@@ -181,8 +181,8 @@ void UnlimitedResource::setMarket( const string& aRegionName ) {
 
     // Set price and output units for period 0 market info
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
-    marketInfo->setString( "price-unit", mPriceUnit );
-    marketInfo->setString( "output-unit", mOutputUnit );
+    marketInfo->setString( gcamstr("price-unit"), mPriceUnit );
+    marketInfo->setString( gcamstr("output-unit"), mOutputUnit );
 
     // UnlimitedResource markets must not be solved so reset the flag in case it
     // was set by another Resource who was just adding regions to market for instance

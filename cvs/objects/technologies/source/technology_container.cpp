@@ -258,13 +258,13 @@ void TechnologyContainer::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
     }
 }
 
-const string& TechnologyContainer::getName() const {
+const gcamstr& TechnologyContainer::getName() const {
     return mName;
 }
 
-void TechnologyContainer::completeInit( const string& aRegionName,
-                                        const string& aSectorName,
-                                        const string& aSubsectorName,
+void TechnologyContainer::completeInit( const gcamstr& aRegionName,
+                                        const gcamstr& aSectorName,
+                                        const gcamstr& aSubsectorName,
                                         const IInfo* aSubsecInfo,
                                         ILandAllocator* aLandAllocator )
 {
@@ -350,7 +350,7 @@ void TechnologyContainer::completeInit( const string& aRegionName,
     }
 }
 
-void TechnologyContainer::initCalc( const string& aRegionName, const string& aSectorName,
+void TechnologyContainer::initCalc( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                     const IInfo* aSubsecInfo, const Demographic* aDemographic,
                                     const int aPeriod )
 {
@@ -408,7 +408,7 @@ void TechnologyContainer::initCalc( const string& aRegionName, const string& aSe
     mCachedVintageRangePeriod = aPeriod;
 }
 
-void TechnologyContainer::postCalc( const string& aRegionName, const int aPeriod ) {
+void TechnologyContainer::postCalc( const gcamstr& aRegionName, const int aPeriod ) {
     for( VintageIterator vintageIt = mVintages.begin(); vintageIt != mVintages.end(); ++vintageIt ) {
         ( *vintageIt ).second->postCalc( aRegionName, aPeriod );
     }

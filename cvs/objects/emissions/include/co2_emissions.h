@@ -65,13 +65,13 @@ public:
     
     virtual const std::string& getXMLName() const;
 
-    virtual double getGHGValue( const std::string& aRegionName,
+    virtual double getGHGValue( const gcamstr& aRegionName,
                                 const std::vector<IInput*>& aInputs,
                                 const std::vector<IOutput*>& aOutputs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aPeriod ) const;
 
-	virtual void calcEmission( const std::string& aRegionName, 
+	virtual void calcEmission( const gcamstr& aRegionName, 
                                const std::vector<IInput*>& aInputs,
                                const std::vector<IOutput*>& aOutputs,
 					           ICaptureComponent* aSequestrationDevice,
@@ -91,7 +91,7 @@ private:
     double calcInputCoef( const std::vector<IInput*>& aInputs, const int aPeriod ) const;
     double calcOutputEmissions( const std::vector<IOutput*>& aOutputs,
                                 const int aPeriod ) const;
-    double calcInputCO2Emissions( const std::vector<IInput*>& aInputs, const std::string& aRegionName,
+    double calcInputCO2Emissions( const std::vector<IInput*>& aInputs, const gcamstr& aRegionName,
                                   const int aPeriod ) const;
 };
 

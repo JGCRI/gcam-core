@@ -58,7 +58,8 @@ class Demographic;
 class FinalDemandActivity : public IActivity
 {
 public:
-    FinalDemandActivity( AFinalDemand* aFinalDemand, const Demographic* aDemographic, const std::string& aRegionName );    virtual ~FinalDemandActivity();
+    FinalDemandActivity( AFinalDemand* aFinalDemand, const Demographic* aDemographic, const gcamstr& aRegionName );
+    virtual ~FinalDemandActivity();
     
     // IActivity methods
     virtual void calc( const int aPeriod );
@@ -72,7 +73,7 @@ private:
     const Demographic* mDemographic;
     
     //! The name of the region this final demand is contained in.
-    const std::string& mRegionName;
+    const gcamstr& mRegionName;
 };
 
 #endif // _FINAL_DEMAND_ACTIVITY_H_

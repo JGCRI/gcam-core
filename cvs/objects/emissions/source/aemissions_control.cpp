@@ -94,10 +94,10 @@ void AEmissionsControl::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
  * \brief Get the name fo the emissions reduction
  * \return The name of the reduction.
  */
-const string& AEmissionsControl::getName() const {
+const gcamstr& AEmissionsControl::getName() const {
     return mName;
 }
 
-double AEmissionsControl::getEmissionsReduction( const std::string& aRegionName, const int aPeriod ){
+double AEmissionsControl::getEmissionsReduction( const gcamstr& aRegionName, const int aPeriod ){
     return calcEmissionsReduction( aRegionName, aPeriod );
 }

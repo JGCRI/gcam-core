@@ -54,8 +54,8 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/info_factory.h"
-#include "util/base/include/atom_registry.h"
-#include "util/base/include/atom.h"
+//#include "util/base/include/atom_registry.h"
+//#include "util/base/include/atom.h"
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/marketplace.h"
@@ -102,7 +102,7 @@ extern Scenario* scenario;
  */
 Market::Market( const MarketContainer* aContainer )
 : mContainer( aContainer ),
-mMarketInfo( InfoFactory::constructInfo( 0, aContainer->getNameTEMP() ) )
+mMarketInfo( InfoFactory::constructInfo( 0, aContainer->getName() ) )
 {
     mSolveMarket = false;
     mPrice = 0.0;
@@ -150,9 +150,9 @@ void Market::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     XMLWriteElement( getRawDemand(), "demand", out, tabs );
     XMLWriteElement( getRawSupply(), "supply", out, tabs );
 
-    const vector<const Atom*>& containedRegions = getContainedRegions();
-    for( vector<const Atom*>::const_iterator i = containedRegions.begin(); i != containedRegions.end(); ++i ) {
-        XMLWriteElement( (*i)->getID(), "ContainedRegion", out, tabs );
+    const vector<gcamstr>& containedRegions = getContainedRegions();
+    for( vector<gcamstr>::const_iterator i = containedRegions.begin(); i != containedRegions.end(); ++i ) {
+        XMLWriteElement( (*i), "ContainedRegion", out, tabs );
     }
 
     mMarketInfo->toDebugXML( period, tabs, out );
@@ -183,7 +183,7 @@ const std::string& Market::getXMLNameStatic() {
  *          this market.
  * \return The IDs of all regions contained by this market.
  */
-const vector<const Atom*>& Market::getContainedRegions() const {
+const vector<gcamstr>& Market::getContainedRegions() const {
     return mContainer->getContainedRegions();
 }
 
@@ -458,7 +458,7 @@ void Market::addToSupply( const double supplyIn ) {
  *          name plus good name.
  * \return The market name
  */
-const string& Market::getName() const {
+const gcamstr& Market::getName() const {
     return mContainer->getName();
 }
 
@@ -467,7 +467,7 @@ const string& Market::getName() const {
  *          the miniCAM regions, as a market region can contain several regions.
  * \return The market region.
  */
-const string& Market::getRegionName() const {
+const gcamstr& Market::getRegionName() const {
     return mContainer->getRegionName();
 }
 
@@ -475,7 +475,7 @@ const string& Market::getRegionName() const {
  * \details This function returns the good that the market represents.
  * \return The market good.
  */
-const string& Market::getGoodName() const {
+const gcamstr& Market::getGoodName() const {
     return mContainer->getGoodName();
 }
 

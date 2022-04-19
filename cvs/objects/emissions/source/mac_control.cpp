@@ -166,7 +166,7 @@ void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs
 	XMLWriteElement( (*mTechChange)[ period ], "tech-change", aOut, aTabs );
 }
 
-void MACControl::completeInit( const string& aRegionName, const string& aSectorName,
+void MACControl::completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                const IInfo* aTechInfo )
 {
     scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName, aRegionName, mPriceMarketName, aRegionName );
@@ -178,14 +178,14 @@ void MACControl::completeInit( const string& aRegionName, const string& aSectorN
     }
 }
 
-void MACControl::initCalc( const string& aRegionName,
+void MACControl::initCalc( const gcamstr& aRegionName,
                            const IInfo* aTechInfo,
                            const NonCO2Emissions* aParentGHG,
                            const int aPeriod )
 {
 }
 
-double MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod ) {
+double MACControl::calcEmissionsReduction( const gcamstr& aRegionName, const int aPeriod ) {
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
     // Check first if MAC curve operation should be turned off
     // we do not apply the MAC curve in calibration model periods

@@ -122,7 +122,7 @@ SolverComponent::ReturnCode BisectPolicy::solve( SolutionInfoSet& aSolutionSet, 
                                    aSolutionSet, worstSol, calcCounter, mSolutionInfoFilter.get(), aPeriod );
         if( !worstSol->isSolved() ){
             do {
-                aSolutionSet.printMarketInfo( "BisectPolicy on " + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
+                aSolutionSet.printMarketInfo( "BisectPolicy on " + worstSol->getName().get(), calcCounter->getPeriodCount(), singleLog );
 
                 // Move the right price bracket in if Supply > Demand
                 if ( worstSol->getED() < 0 ) {

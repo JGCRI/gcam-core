@@ -63,8 +63,9 @@ bool VintageProductionState::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& VintageProductionState::getName() const {
-    return getXMLNameStatic();
+const gcamstr& VintageProductionState::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 void VintageProductionState::toDebugXML( const int aPeriod,
@@ -81,8 +82,8 @@ const string& VintageProductionState::getXMLNameStatic() {
     return XML_NAME;
 }
 
-double VintageProductionState::calcProduction( const string& aRegionName,
-                                              const string& aSectorName,
+double VintageProductionState::calcProduction( const gcamstr& aRegionName,
+                                              const gcamstr& aSectorName,
                                               const double aVariableOutput,
                                               const MarginalProfitCalculator* aMarginalProfitCalc,
                                               const double aFixedOutputScaleFactor,
@@ -118,8 +119,8 @@ double VintageProductionState::calcProduction( const string& aRegionName,
 * \param aPeriod Model period.
 * \return The aggregate shutdown coefficient.
 */
-double VintageProductionState::calcShutdownCoefficient( const string& aRegionName,
-                                                       const string& aSectorName,
+double VintageProductionState::calcShutdownCoefficient( const gcamstr& aRegionName,
+                                                       const gcamstr& aSectorName,
                                                        const vector<IShutdownDecider*>& aShutdownDeciders,
                                                        const MarginalProfitCalculator* aMarginalProfitCalc,
                                                        const int aPeriod ) const

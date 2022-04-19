@@ -91,12 +91,6 @@ int NationalAccount::getYear() const {
     return mYear;
 }
 
-//! Returns name (year as a string)
-const std::string NationalAccount::getName() const {
-    return util::toString( mYear );
-}
-
-
 bool NationalAccount::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     /*! \pre make sure we were passed a valid node. */
     assert( node );
@@ -277,13 +271,13 @@ void NationalAccount::reset() {
  * \return The XML string representation of the type
  * \author Pralit Patel
  */
-const string& NationalAccount::enumToXMLName( const AccountType aType ) const {
+const gcamstr& NationalAccount::enumToXMLName( const AccountType aType ) const {
     /*! \pre aType is a valid account type. */
     assert( aType < END );
     // Create a static array of values. This will only on the first entrance to
     // the function since this is a const static.
 
-    const static string names[] = {
+    const static gcamstr names[] = {
             "savings-rate",
             "depreciation-rate",
             "savings",

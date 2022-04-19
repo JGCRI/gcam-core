@@ -94,7 +94,7 @@ void AGHG::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
  * \brief Returns the name of ghg gas.
  * \return A string representing the name of the ghg gas.
  */
-const string& AGHG::getName() const {
+const gcamstr& AGHG::getName() const {
     return mName;
 }
 
@@ -107,7 +107,7 @@ const string& AGHG::getName() const {
  * \author Pralit Patel
  * \warning Markets are not necessarily set when completeInit is called
  */
-void AGHG::completeInit( const string& aRegionName, const string& aSectorName,
+void AGHG::completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
                          const IInfo* aTechInfo )
 {
     scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
@@ -122,7 +122,7 @@ void AGHG::completeInit( const string& aRegionName, const string& aSectorName,
  * \param aLocalInfo The local information object.
  * \param aPeriod Model period.
  */
-void AGHG::initCalc( const string& aRegionName, const IInfo* aLocalInfo, const int aPeriod ) {
+void AGHG::initCalc( const gcamstr& aRegionName, const IInfo* aLocalInfo, const int aPeriod ) {
     // Ideally we only need to locate the market once, however during completeInit
     // all markets may have not yet been set up.  So, instead we avoid re-lookups
     // if the market has been found.  Unfortunately, this means if the market will
@@ -137,7 +137,7 @@ void AGHG::initCalc( const string& aRegionName, const IInfo* aLocalInfo, const i
  * \param aRegionName the region to set
  * \param aPeriod the period
  */
-void AGHG::addEmissionsToMarket( const string& aRegionName, const int aPeriod ){
+void AGHG::addEmissionsToMarket( const gcamstr& aRegionName, const int aPeriod ){
     // set emissions as demand side of gas market
     mCachedMarket.addToDemand( getName(), aRegionName,
                                mEmissions[ aPeriod ],
@@ -157,7 +157,7 @@ void AGHG::addEmissionsToMarket( const string& aRegionName, const int aPeriod ){
 *  \todo Collapsing two methods.
 *  \note This method is only used by SGM.
 */
-double AGHG::getGHGValue( const IInput* aInput, const string& aRegionName,
+double AGHG::getGHGValue( const IInput* aInput, const gcamstr& aRegionName,
                           const string& aGoodName,
                           const ICaptureComponent* aSequestrationDevice,
                           const int aPeriod ) const
@@ -195,7 +195,7 @@ double AGHG::getGHGValue( const IInput* aInput, const string& aRegionName,
 *  \todo Collapsing two methods.
 *  \note This method is only used by SGM.
 */
-double AGHG::getGHGValue( const IOutput* aOutput, const string& aRegionName,
+double AGHG::getGHGValue( const IOutput* aOutput, const gcamstr& aRegionName,
                           const string& aGoodName,
                           const ICaptureComponent* aSequestrationDevice,
                           const int aPeriod ) const

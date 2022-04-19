@@ -95,7 +95,7 @@ public :
    /*! Get the name
     *  \return the name
     */
-   virtual const std::string& getName( void ) const { return mName; }
+   virtual const gcamstr& getName( void ) const { return mName; }
 
    /*! Get the value
     *  \return the value

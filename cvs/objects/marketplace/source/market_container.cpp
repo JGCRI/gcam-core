@@ -57,8 +57,8 @@
 #include "marketplace/include/normal_market.h"
 #include "marketplace/include/trial_value_market.h"
 #include "marketplace/include/linked_market.h"
-#include "util/base/include/atom_registry.h"
-#include "util/base/include/atom.h"
+//#include "util/base/include/atom_registry.h"
+//#include "util/base/include/atom.h"
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
 
@@ -79,13 +79,13 @@ extern Scenario* scenario;
  *        several model regions.
  */
 MarketContainer::MarketContainer( const IMarketType::Type aMarketType,
-                                  const string& aGoodName,
-                                  const string& aRegionName )
+                                  const gcamstr& aGoodName,
+                                  const gcamstr& aRegionName ):
+// Store the market name so that it can be returned without any allocations.
+mName(aRegionName.get()+aGoodName.get()),
+mGood(aGoodName),
+mRegion(aRegionName)
 {
-    // Store the market name so that it can be returned without any allocations.
-    mName = aRegionName + aGoodName;
-    mGood = aGoodName;
-    mRegion = aRegionName;
 
     // Assign a serial number that is guaranteed to be invalid.  This will help
     // us catch any failure to assign a serial number to the market.
@@ -110,14 +110,14 @@ MarketContainer::MarketContainer( const IMarketType::Type aMarketType,
  *                     override a previously set market to effectively switch markets over time.
  */
 MarketContainer::MarketContainer( MarketContainer* aMarketToLink,
-                                  const string& aGoodName,
-                                  const string& aRegionName,
-                                  const int aStartPeriod )
+                                  const gcamstr& aGoodName,
+                                  const gcamstr& aRegionName,
+                                  const int aStartPeriod ):
+// Store the market name so that it can be returned without any allocations.
+mName(aRegionName.get()+aGoodName.get()),
+mGood(aGoodName),
+mRegion(aRegionName)
 {
-    // Store the market name so that it can be returned without any allocations.
-    mName = aRegionName + aGoodName;
-    mGood = aGoodName;
-    mRegion = aRegionName;
     
     // Assign a serial number that is guaranteed to be invalid.  This will help
     // us catch any failure to assign a serial number to the market.
@@ -264,25 +264,25 @@ void MarketContainer::resetToPriceMarket( MarketContainer* aDemandMarkets ) {
  *          the list it is not added and a warning is printed.
  * \param aRegion The name of the region to add.
  */
-void MarketContainer::addRegion( const string& aRegion ) {
+void MarketContainer::addRegion( const gcamstr& aRegion ) {
     // Convert the string to an atom.
-    const Atom* regionID = AtomRegistry::getInstance()->findAtom( aRegion );
+    /*const Atom* regionID = AtomRegistry::getInstance()->findAtom( aRegion );
     
     // Could be the first request for this name.  Note the atom registry will
     // manage this memory.
     if( !regionID ) {
         regionID = new Atom( aRegion );
-    }
+    }*/
     
     /*! \invariant The ID of the found atom is the same as the name of the
      *              region, this ensures the lookup was correct.
      */
-    assert( regionID->getID() == aRegion );
+    //assert( regionID->getID() == aRegion );
     
     // Check if the region ID does not already exist in the list.
-    if( find( mContainedRegions.begin(), mContainedRegions.end(), regionID ) == mContainedRegions.end() ) {
+    if( find( mContainedRegions.begin(), mContainedRegions.end(), aRegion ) == mContainedRegions.end() ) {
         // Add the region ID.
-        mContainedRegions.push_back( regionID );
+        mContainedRegions.push_back( aRegion );
     }
 }
 
@@ -292,7 +292,7 @@ void MarketContainer::addRegion( const string& aRegion ) {
  *          this market.
  * \return The IDs of all regions contained by this market.
  */
-const vector<const Atom*>& MarketContainer::getContainedRegions() const {
+const vector<gcamstr>& MarketContainer::getContainedRegions() const {
     /*! \pre There is at least one contained region in the market. */
     assert( !mContainedRegions.empty() );
     return mContainedRegions;
@@ -303,11 +303,7 @@ const vector<const Atom*>& MarketContainer::getContainedRegions() const {
  *          name plus good name.
  * \return The market name
  */
-const gcamstr& MarketContainer::getNameTEMP() const {
-    return mName;
-}
-
-const std::string& MarketContainer::getName() const {
+const gcamstr& MarketContainer::getName() const {
     return mName;
 }
 

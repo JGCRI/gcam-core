@@ -61,7 +61,7 @@ extern Scenario* scenario;
  * \param aRegionName Name of the region if starting the visiting below the
  *        region level.
  */
-CalibrateShareWeightVisitor::CalibrateShareWeightVisitor( const string& aRegionName )
+CalibrateShareWeightVisitor::CalibrateShareWeightVisitor( const gcamstr& aRegionName )
 :mCurrentRegionName( aRegionName )
 {
 }
@@ -270,7 +270,7 @@ void CalibrateShareWeightVisitor::endVisitSector( const Sector* aSector, const i
     
     calibrateShareWeights( aSector, aPeriod );
 
-    mCurrentSectorName.clear();
+    mCurrentSectorName = "";
 }
 
 void CalibrateShareWeightVisitor::startVisitSubsector( const Subsector* aSubsector, const int aPeriod ) {

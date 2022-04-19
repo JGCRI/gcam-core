@@ -62,7 +62,7 @@ class Sector;
 class SectorActivity
 {
 public:
-    SectorActivity( Sector* aSector, const std::string& aRegionName );
+    SectorActivity( Sector* aSector, const gcamstr& aRegionName );
     ~SectorActivity();
     
     void setPrices( const int aPeriod );
@@ -79,7 +79,7 @@ private:
     Sector* mSector;
     
     //! The name of the region this sector is contained in.
-    const std::string& mRegionName;
+    const gcamstr& mRegionName;
     
     //! A pointer to the activity used to call setPrices.  Note this memory is
     //! managed by the market dependency finder.

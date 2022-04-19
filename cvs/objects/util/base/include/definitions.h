@@ -62,6 +62,8 @@ struct gcamstr : public boost::flyweight<std::string, boost::flyweights::no_trac
     using Base = boost::flyweight<std::string, boost::flyweights::no_tracking, boost::flyweights::no_locking>;
     using Base::Base;
     
+    gcamstr(const char* aStr):Base(std::string(aStr)) { }
+    
     inline gcamstr& operator=(const std::string& aStr) {
         gcamstr wrap(aStr);
         std::swap(*this, wrap);
@@ -85,6 +87,11 @@ inline bool operator<(const gcamstr& aLHS, const gcamstr& aRHS) {
 
 inline bool operator==(const gcamstr& aLHS, const gcamstr& aRHS) {
     return reinterpret_cast<const gcamstr::Base&>(aLHS) ==
+        reinterpret_cast<const gcamstr::Base&>(aRHS);
+}
+
+inline bool operator!=(const gcamstr& aLHS, const gcamstr& aRHS) {
+    return reinterpret_cast<const gcamstr::Base&>(aLHS) !=
         reinterpret_cast<const gcamstr::Base&>(aRHS);
 }
 

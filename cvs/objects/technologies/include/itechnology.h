@@ -125,40 +125,40 @@ public:
     
     virtual const std::string& getXMLName() const = 0;
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator ) = 0;
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const IInfo* aSubsectorInfo,
                            const Demographic* aDemographics,
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod ) = 0;
     
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod ) = 0;
 
-    virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName, 
+    virtual void production( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
                              const int aPeriod ) = 0;
 
-    virtual double calcShare( const std::string& aRegionName,
+    virtual double calcShare( const gcamstr& aRegionName,
                               const IDiscreteChoice* aChoiceFn,
                               int aPeriod ) const = 0;
     
-    virtual void calcCost( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void calcCost( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod ) = 0;
 
     virtual double getCost( const int aPeriod ) const = 0;
     
-    virtual double getEnergyCost( const std::string& aRegionName,
-                                  const std::string& aSectorName,
+    virtual double getEnergyCost( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const int aPeriod ) const = 0;
 
 
@@ -170,7 +170,7 @@ public:
 
     virtual bool hasCalibratedValue( const int aPeriod ) const = 0;
 
-    virtual const std::string& getName() const = 0;
+    virtual const gcamstr& getName() const = 0;
 
     virtual void setShareWeight( double shareWeightValue ) = 0;
 
@@ -182,7 +182,7 @@ public:
 
     virtual double getOutput( const int aPeriod ) const = 0;
 
-    virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
+    virtual double getTotalGHGCost( const gcamstr& aRegionName, const gcamstr& aSectorName, 
                             const int aPeriod ) const = 0;
 
     virtual double getShareWeight() const = 0;
@@ -194,8 +194,8 @@ public:
 
     virtual const std::vector<std::string> getGHGNames() const = 0;
 
-    virtual double getFixedOutput( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    virtual double getFixedOutput( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const bool aHasRequiredInput,
                                    const std::string& aRequiredInput,
                                    const double aMarginalRevenue,
@@ -203,9 +203,9 @@ public:
     
     virtual bool isAllCalibrated( const int aPeriod,
                           double aCalAccuracy,
-                          const std::string& aRegionName,
-                          const std::string& aSectorName,
-                          const std::string& aSubsectorName,
+                          const gcamstr& aRegionName,
+                          const gcamstr& aSectorName,
+                          const gcamstr& aSubsectorName,
                           const bool aPrintWarnings ) const = 0;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;
@@ -223,8 +223,8 @@ public:
 
     protected:
 
-    virtual double getTotalInputCost( const std::string& aRegionName,
-                                    const std::string& aSectorName,
+    virtual double getTotalInputCost( const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName,
                                     const int aPeriod ) const = 0;
     
     DEFINE_DATA(

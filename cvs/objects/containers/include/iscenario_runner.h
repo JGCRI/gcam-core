@@ -78,7 +78,7 @@ public:
     /*!
      * \brief Get the name of the scenario runner.
      */
-    virtual const std::string& getName() const = 0;
+    virtual const gcamstr& getName() const = 0;
 
     /*!
      * \brief Setup the ScenarioRunner before running a single or series of

@@ -65,7 +65,7 @@ IMarketType::Type TrialValueMarket::getType() const {
 void TrialValueMarket::initPrice() {
     // Note zero may be a valid price for a trial value.
     // get the minimum price from the market info
-    const string LOWER_BOUND_KEY = "lower-bound-supply-price";
+    const gcamstr LOWER_BOUND_KEY("lower-bound-supply-price");
     mMinPrice = mMarketInfo->getDouble( LOWER_BOUND_KEY, 0.0 );
 }
 

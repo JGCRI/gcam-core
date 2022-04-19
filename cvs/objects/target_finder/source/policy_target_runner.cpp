@@ -83,7 +83,7 @@ mMaxTax( 4999 )
 PolicyTargetRunner::~PolicyTargetRunner(){
 }
 
-const string& PolicyTargetRunner::getName() const {
+const gcamstr& PolicyTargetRunner::getName() const {
     return mName;
 }
 

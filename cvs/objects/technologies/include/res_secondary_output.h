@@ -93,7 +93,7 @@ public:
     virtual const std::string& getXMLName() const;
     
     virtual void setPhysicalOutput( const double aPrimaryOutput,
-                                   const std::string& aRegionName,
+                                   const gcamstr& aRegionName,
                                    ICaptureComponent* aCaptureComponent,
                                    const int aPeriod );
     

@@ -155,8 +155,8 @@ const string& AgProductionTechnology::getXMLNameStatic() {
 
 
 
-void AgProductionTechnology::initCalc( const string& aRegionName,
-                                         const string& aSectorName,
+void AgProductionTechnology::initCalc( const gcamstr& aRegionName,
+                                         const gcamstr& aSectorName,
                                          const IInfo* aSubsectorInfo,
                                          const Demographic* aDemographics,
                                          PreviousPeriodInfo& aPrevPeriodInfo,
@@ -220,9 +220,9 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
     SectorUtils::setSupplyBehaviorBounds( aSectorName, aRegionName, 0, util::getLargeNumber(), aPeriod );
 }
 
-void AgProductionTechnology::completeInit( const std::string& aRegionName,
-                                             const std::string& aSectorName,
-                                             const std::string& aSubsectorName,
+void AgProductionTechnology::completeInit( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
+                                             const gcamstr& aSubsectorName,
                                              const IInfo* aSubsectorInfo,
                                              ILandAllocator* aLandAllocator )
 {
@@ -314,7 +314,7 @@ void AgProductionTechnology::completeInit( const std::string& aRegionName,
 *
 * \author Marshall Wise
 */
-void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
+void AgProductionTechnology::setCalYields(const gcamstr& aRegionName) {
     // if a calibrated output is read in for this period, use it to compute yield	
     if ( mCalValue ) {
         // technology knows the year it started in member variable "year"
@@ -349,7 +349,7 @@ void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
 * \return The log of the technology share, always 1 for AgProductionTechnologies.
 * \author James Blackwood, Steve Smith
 */
-double AgProductionTechnology::calcShare( const std::string& aRegionName,
+double AgProductionTechnology::calcShare( const gcamstr& aRegionName,
                                           const IDiscreteChoice* aChoiceFn,
                                           int aPeriod ) const
 {
@@ -365,8 +365,8 @@ double AgProductionTechnology::calcShare( const std::string& aRegionName,
    by a calculation of technology profit which is passed to the land allocator
    where it is used for sharing land.  */
 
-void AgProductionTechnology::calcCost( const string& aRegionName,
-                                         const string& aSectorName,
+void AgProductionTechnology::calcCost( const gcamstr& aRegionName,
+                                         const gcamstr& aSectorName,
                                          const int aPeriod )
 {
 
@@ -384,7 +384,7 @@ void AgProductionTechnology::calcCost( const string& aRegionName,
     mCosts[ aPeriod ] = 1;
 }
 
-double AgProductionTechnology::getNonEnergyCost( const string& aRegionName,
+double AgProductionTechnology::getNonEnergyCost( const gcamstr& aRegionName,
                                                    const int aPeriod ) const
 {
     return 0;
@@ -399,8 +399,8 @@ double AgProductionTechnology::getNonEnergyCost( const string& aRegionName,
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 */
-void AgProductionTechnology::production( const string& aRegionName,
-                                           const string& aSectorName,
+void AgProductionTechnology::production( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
                                            const double aVariableDemand,
                                            const double aFixedOutputScaleFactor,
                                            const int aPeriod )
@@ -451,8 +451,8 @@ double AgProductionTechnology::getFixedOutput( const string& aRegionName,
 * \return The profit rate.
 \\ Profit rate is now in 1975$ per billion m2, so computation includes yield
 */
-double AgProductionTechnology::calcProfitRate( const string& aRegionName,
-                                               const string& aProductName,
+double AgProductionTechnology::calcProfitRate( const gcamstr& aRegionName,
+                                               const gcamstr& aProductName,
                                                const int aPeriod )
 {
     // Calculate profit rate.
@@ -494,8 +494,8 @@ double AgProductionTechnology::calcProfitRate( const string& aRegionName,
 * \param aPeriod Period.
 * \return The supply produced by the technology.
 */
-double AgProductionTechnology::calcSupply( const string& aRegionName,
-                                             const string& aProductName,
+double AgProductionTechnology::calcSupply( const gcamstr& aRegionName,
+                                             const gcamstr& aProductName,
                                              const int aPeriod ) const
 {
     double landAllocation = mProductLeaf->getLandAllocation( mName, aPeriod );

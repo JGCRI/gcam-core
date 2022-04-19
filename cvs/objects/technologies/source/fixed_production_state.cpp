@@ -58,8 +58,9 @@ bool FixedProductionState::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& FixedProductionState::getName() const {
-    return getXMLNameStatic();
+const gcamstr& FixedProductionState::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 void FixedProductionState::toDebugXML( const int aPeriod,
@@ -76,8 +77,8 @@ const string& FixedProductionState::getXMLNameStatic() {
     return XML_NAME;
 }
 
-double FixedProductionState::calcProduction( const string& aRegionName,
-                                             const string& aSectorName,
+double FixedProductionState::calcProduction( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
                                              const double aVariableOutput,
                                              const MarginalProfitCalculator* aMarginalProfitCalc,
                                              const double aFixedOutputScaleFactor,

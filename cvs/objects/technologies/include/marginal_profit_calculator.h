@@ -63,8 +63,8 @@ class MarginalProfitCalculator
 public:
     MarginalProfitCalculator( const Technology* aTechnology );
     
-    double calcShortTermMarginalProfit( const std::string& aRegionName,
-                                        const std::string& aSectorName,
+    double calcShortTermMarginalProfit( const gcamstr& aRegionName,
+                                        const gcamstr& aSectorName,
                                         const int aPeriod ) const;
 private:
     //! Technology for which to calculate marginal profits.
