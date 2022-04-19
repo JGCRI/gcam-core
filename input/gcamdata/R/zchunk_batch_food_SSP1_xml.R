@@ -26,7 +26,7 @@ module_aglu_batch_food_SSP1_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("food_SSP1.xml") %>%
-      add_xml_data_generate_levels(L203.FuelPrefElast_ssp1, "FuelPrefElastTech", "subsector", "nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L203.FuelPrefElast_ssp1, "FuelPrefElast", "subsector", "nesting-subsector",1,FALSE) %>%
       add_node_equiv_xml("subsector") %>%
       add_precursors("L203.FuelPrefElast_ssp1") ->
       food_SSP1.xml
