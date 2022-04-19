@@ -2859,7 +2859,7 @@ module_energy_L244.building_det <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Calculated using pc_thous") %>%
       add_legacy_name("L244.GenericCoalCoef") %>%
-      add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh") ->
+      add_precursors("common/GCAM_region_names","L144.base_service_EJ_serv_fuel") ->
       L244.GenericCoalCoef
 
     L244.ThermalCoalCoef %>%
@@ -2867,7 +2867,7 @@ module_energy_L244.building_det <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Calculated using pc_thous") %>%
       add_legacy_name("L244.ThermalCoalCoef") %>%
-      add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh") ->
+      add_precursors("common/GCAM_region_names","L144.base_service_EJ_serv_fuel") ->
       L244.ThermalCoalCoef
 
     L244.GenericTradBioCoef %>%
@@ -2875,7 +2875,7 @@ module_energy_L244.building_det <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Calculated using pc_thous") %>%
       add_legacy_name("L244.GenericTradBioCoef") %>%
-      add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh") ->
+      add_precursors("common/GCAM_region_names","L144.base_service_EJ_serv_fuel") ->
       L244.GenericTradBioCoef
 
     L244.ThermalTradBioCoef %>%
@@ -2883,7 +2883,7 @@ module_energy_L244.building_det <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Calculated using pc_thous") %>%
       add_legacy_name("L244.ThermalTradBioCoef") %>%
-      add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh") ->
+      add_precursors("common/GCAM_region_names","L144.base_service_EJ_serv_fuel") ->
       L244.ThermalTradBioCoef
 
     L244.ThermalShares %>%
