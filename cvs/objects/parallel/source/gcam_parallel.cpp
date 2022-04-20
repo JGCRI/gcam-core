@@ -33,6 +33,7 @@
 #include "util/base/include/definitions.h"
 
 #if GCAM_PARALLEL_ENABLED
+#include <cassert>
 #include <vector>
 #include <list>
 #include <Eigen/SparseCore>
@@ -73,6 +74,9 @@ GcamFlowGraph::GcamFlowGraph() : mTBBFlowGraph(), mHead( mTBBFlowGraph )
 GcamFlowGraph::~GcamFlowGraph() {
     delete mParallelismConfig;
     mParallelismConfig = 0;
+    for(auto vert : mTBBVertices) {
+        delete vert;
+    }
 }
 
 /*!
@@ -152,7 +156,7 @@ void GcamParallel::makeTBBFlowGraph( const MarketDependencyFinder& aDependencyFi
     
     // we have to take two passes, first to create each of the verticies which
     // apparently can not be copied so we hang on to them with a pointer
-    vector<continue_node<continue_msg>*> tbbVert;
+    vector<continue_node<continue_msg>*>& tbbVert = aTBBGraph.mTBBVertices;
     tbbVert.reserve( calcVertexList.size() );
     for( MarketDependencyFinder::CalcVertex* vert : calcVertexList ) {
         IActivity* activity = vert->mCalcItem;
