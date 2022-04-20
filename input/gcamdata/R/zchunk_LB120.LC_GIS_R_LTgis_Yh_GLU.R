@@ -22,20 +22,23 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "aglu/LDS/LDS_land_types",
              FILE = "aglu/SAGE_LT",
-             FILE = "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust",
-             "L100.Land_type_area_ha"))
+             "L100.Land_type_area_ha",
+             FILE = "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L120.LC_bm2_R_LT_Yh_GLU",
              "L120.LC_bm2_R_UrbanLand_Yh_GLU",
              "L120.LC_bm2_R_Tundra_Yh_GLU",
              "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
              "L120.LC_bm2_ctry_LTsage_GLU",
-             "L120.LC_bm2_ctry_LTpast_GLU"))
+             "L120.LC_bm2_ctry_LTpast_GLU",
+             "L120.LC_prot_land_frac_GLU"))
   } else if(command == driver.MAKE) {
 
     iso <- GCAM_region_ID <- Land_Type <- year <- GLU <- Area_bm2 <- LT_HYDE <-
-      land_code <- LT_SAGE <- value <- Forest <- MgdFor <- Grassland <-
-      Shrubland <- Pasture <- nonForScaler <- ForScaler <- NULL    # silence package check.
+      land_code <- LT_SAGE <- variable <- value <- Forest <- MgdFor <- Grassland <-
+      Shrubland <- Pasture <- nonForScaler <- ForScaler <- `mature age` <- Status <- prot_status <- prot_frac <-
+      non_prot_frac <- c_type <- Category <- `soil_c (0-100 cms)` <- `veg_c (above ground biomass)` <- `veg_c (below ground biomass)` <-
+      soil_c <- vegc_ag <- vegc_bg <- land_area <- veg_c <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -52,32 +55,64 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
     # Perform computations
 
     land.type <-
-        L100.Land_type_area_ha %>%
-          ## Add data for GCAM region ID and GLU
-          left_join_error_no_match(distinct(iso_GCAM_regID, iso, .keep_all = TRUE), by = "iso") %>%
-          ## Add vectors for land type (SAGE, HYDE, and WDPA)
-          left_join_error_no_match(LDS_land_types, by = c("land_code" = "Category")) %>%
-          left_join(SAGE_LT, by = "LT_SAGE") %>%  # includes NAs
-          rename(LT_SAGE_5 = Land_Type) %>%
-          ## Drop all rows with missing values (inland bodies of water)
-          na.omit
+      L100.Land_type_area_ha %>%
+      ## Add data for GCAM region ID and GLU
+      left_join_error_no_match(distinct(iso_GCAM_regID, iso, .keep_all = TRUE), by = "iso") %>%
+      ## Add vectors for land type (SAGE, HYDE, and WDPA)
+      left_join_error_no_match(LDS_land_types, by = c("land_code" = "Category")) %>%
+      left_join(SAGE_LT, by = "LT_SAGE") %>%  # includes NAs
+      rename(LT_SAGE_5 = Land_Type) %>%
+      ## Drop all rows with missing values (inland bodies of water)
+      na.omit
+
+    ##calculate protection_shares
+
+    land.type %>%
+      mutate(prot_status = if_else( Status %in% aglu.NONPROTECT_LAND_STATUS, "Non-protected" ,"Protected")) %>%
+      filter(LT_HYDE %in% c("Unmanaged","Pasture")) %>%
+      left_join(SAGE_LT, by = "LT_SAGE") %>%  # includes NAs
+      ## Drop all rows with missing values (inland bodies of water)
+      na.omit() %>%
+      # Note that Pasture is a land use type in moirai as opposed to a land cover type whereas in GCAM, it is treated as a separate land type.
+      # Therefore, we set the land type to Pasture based on the land use type so that we can map the same to the appropriate land  types in GCAM.
+      mutate(Land_Type= if_else(LT_HYDE=="Pasture","Pasture",Land_Type)) %>%
+      group_by(GCAM_region_ID, year, GLU, Land_Type) %>%
+      mutate (Tot_land = sum(value)) %>%
+      ungroup() %>%
+      filter(prot_status ==  "Protected" ) %>%
+      group_by(GCAM_region_ID, year, GLU, Land_Type) %>%
+      mutate(value= sum(value)) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, year, GLU, Tot_land, value, Land_Type) %>%
+      distinct() %>%
+      mutate(prot_frac = value/Tot_land, non_prot_frac = 1 -(value/Tot_land)) %>%
+      select(GCAM_region_ID, year, GLU,prot_frac, non_prot_frac,Land_Type) -> L120.LC_prot_land_frac_GLU
+
+    if(aglu.PROTECTION_DATA_SOURCE_DEFAULT == TRUE){
+
+      L120.LC_prot_land_frac_GLU %>%
+          mutate(prot_frac = aglu.PROTECT_DEFAULT,
+                 non_prot_frac = 1-aglu.PROTECT_DEFAULT) -> L120.LC_prot_land_frac_GLU
+    }
+
+
 
     ## Reset WDPA classification to "Non-protected" where HYDE classification
     ## is cropland, pasture, or urban land
     hyde <- land.type$LT_HYDE
     ltype <- land.type$LT_SAGE_5
 
-    land.type$LT_WDPA <- replace(hyde, hyde != "Unmanaged", "Non-protected")
+    #land.type$LT_WDPA <- replace(hyde, hyde != "Unmanaged", "Non-protected")
 
     land.type$Land_Type <-
-        ltype %>%
-          replace(hyde=='Cropland', 'Cropland') %>%
-          replace(hyde=='Pasture', 'Pasture') %>%
-          replace(hyde=='UrbanLand', 'UrbanLand')
+      ltype %>%
+      replace(hyde=='Cropland', 'Cropland') %>%
+      replace(hyde=='Pasture', 'Pasture') %>%
+      replace(hyde=='UrbanLand', 'UrbanLand')
 
     land.type$Area_bm2 <- land.type$value * CONV_HA_BM2
     L100.Land_type_area_ha <- land.type # Rename to the convention used in the
-                                        # rest of the module
+    # rest of the module
 
     # LAND COVER FOR LAND ALLOCATION
     # Aggregate into GCAM regions and land types
@@ -152,6 +187,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       ungroup ->
       L120.LC_bm2_ctry_LTpast_GLU
 
+
     # Produce outputs
     L120.LC_bm2_R_LT_Yh_GLU %>%
       add_title("Land cover by GCAM region / aggregate land type / historical year / GLU") %>%
@@ -204,7 +240,16 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
       L120.LC_bm2_ctry_LTpast_GLU
 
-    return_data(L120.LC_bm2_R_LT_Yh_GLU, L120.LC_bm2_R_UrbanLand_Yh_GLU, L120.LC_bm2_R_Tundra_Yh_GLU, L120.LC_bm2_R_RckIceDsrt_Yh_GLU, L120.LC_bm2_ctry_LTsage_GLU, L120.LC_bm2_ctry_LTpast_GLU)
+    L120.LC_prot_land_frac_GLU %>%
+      add_title("protected and unprotected fractions by year,GLU, land type.") %>%
+      add_units("fraction") %>%
+      add_comments("Land types from SAGE, HYDE, WDPA merged and reconciled; missing zeroes backfilled; interpolated to AGLU land cover years") %>%
+      add_legacy_name("L120.LC_prot_land_frac_GLU") %>%
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
+      L120.LC_prot_land_frac_GLU
+
+
+    return_data(L120.LC_bm2_R_LT_Yh_GLU, L120.LC_bm2_R_UrbanLand_Yh_GLU, L120.LC_bm2_R_Tundra_Yh_GLU, L120.LC_bm2_R_RckIceDsrt_Yh_GLU, L120.LC_bm2_ctry_LTsage_GLU, L120.LC_bm2_ctry_LTpast_GLU, L120.LC_prot_land_frac_GLU)
   } else {
     stop("Unknown command")
   }

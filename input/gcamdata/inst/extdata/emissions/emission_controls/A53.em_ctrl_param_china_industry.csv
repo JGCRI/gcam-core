@@ -1,0 +1,12 @@
+# File: A53.em_ctrl_param_china_industry.csv
+# Title: SO2_em_controls_China_Industry
+# Units: Tg/EJ_energy_in
+# Source: see notes column
+# Description: New source performance standards (NSPS) and retrofits (which can be for future and/or base-year plants) for China industrial coal consumption developed by K. Mulvaney and described in Sampedro et al. (2020) https://doi.org/10.1016/j.envint.2020.105513.
+# Column types: cccccnnnnnnnnc
+# ---------
+region,supplysector,subsector,stub.technology,Non.CO2,pcGDP_start_NSPS,NSPS_start_year,NSPS_em_coeff,pcGDP_start_retrofit,retrofit_start_year,retrofit_time,retrofit_vintage,retrofit_em_coeff,Notes and sources
+China,N fertilizer,coal,coal,SO2,NA,2020,0.0944,NA,2015,10,2015,0.1101,Current regulations in China as documented in Sampedro et al. (2020). doi 10.1016/j.envint.2020.105513. Assume conservative 10-year retrofit time (longer than initially planned)
+China,industrial energy use,coal,coal,SO2,NA,2025,0.0944,NA,NA,NA,NA,0.1101,Current regulations in China as documented in Sampedro et al. (2020). doi 10.1016/j.envint.2020.105513. Assume conservative 10-year retrofit time (longer than initially planned)
+China,district heat,coal,coal,SO2,NA,2030,0.0944,NA,NA,NA,NA,0.1101,Current regulations in China as documented in Sampedro et al. (2020). doi 10.1016/j.envint.2020.105513. Assume conservative 10-year retrofit time (longer than initially planned)
+China,process heat cement,coal,coal,SO2,NA,2035,0.1259,NA,NA,NA,NA,0.1259,Current regulations in China as documented in Sampedro et al. (2020). doi 10.1016/j.envint.2020.105513. Assume conservative 10-year retrofit time (longer than initially planned)

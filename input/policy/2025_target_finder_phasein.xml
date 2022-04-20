@@ -1,0 +1,773 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="USA">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>USA</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>USA</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Canada">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Canada</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Canada</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Africa_Eastern">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Africa_Eastern</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Africa_Eastern</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Africa_Northern">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Africa_Northern</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Africa_Northern</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Africa_Southern">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Africa_Southern</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Africa_Southern</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Africa_Western">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Africa_Western</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Africa_Western</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Australia_NZ">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Australia_NZ</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Australia_NZ</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Brazil">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Brazil</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Brazil</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Central America and Caribbean">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Central America and Caribbean</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Central America and Caribbean</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Central Asia">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Central Asia</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Central Asia</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="China">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>China</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>China</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="EU-12">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>EU-12</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>EU-12</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="EU-15">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>EU-15</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>EU-15</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Europe_Eastern">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Europe_Eastern</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Europe_Eastern</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Europe_Non_EU">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Europe_Non_EU</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Europe_Non_EU</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="European Free Trade Association">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>European Free Trade Association</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>European Free Trade Association</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="India">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>India</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>India</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Indonesia">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Indonesia</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Indonesia</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Japan">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Japan</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Japan</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Mexico">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Mexico</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Mexico</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Middle East">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Middle East</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Middle East</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Pakistan">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Pakistan</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Pakistan</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Russia">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Russia</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Russia</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="South Africa">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South Africa</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South Africa</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="South America_Northern">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South America_Northern</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South America_Northern</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="South America_Southern">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South America_Southern</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South America_Southern</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="South Asia">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South Asia</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South Asia</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="South Korea">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South Korea</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>South Korea</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Southeast Asia">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Southeast Asia</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Southeast Asia</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Taiwan">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Taiwan</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Taiwan</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Argentina">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Argentina</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Argentina</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+      <region name="Colombia">
+         <linked-ghg-policy name="CO2_NearTerm_Link">
+            <price-adjust fillout="1" year="1975">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Colombia</market>
+            <linked-policy>CO2_NearTerm</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>1975</start-year>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_LongTerm_Link">
+            <price-adjust fillout="1" year="1975">0</price-adjust>
+            <price-adjust year="2020">0</price-adjust>
+            <price-adjust year="2025">0.522878745</price-adjust>
+            <price-adjust year="2030">0.823908741</price-adjust>
+            <price-adjust fillout="1" year="2035">1</price-adjust>
+            <demand-adjust fillout="1" year="1975">1</demand-adjust>
+            <policy-name>CO2</policy-name><market>Colombia</market>
+            <linked-policy>CO2_LTG</linked-policy>
+            <price-unit>1990$/tC</price-unit>
+            <output-unit>MtC</output-unit>
+            <start-year>2025</start-year>
+         </linked-ghg-policy>
+     </region>
+ </world>
+ </scenario>
