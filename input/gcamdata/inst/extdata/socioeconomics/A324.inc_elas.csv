@@ -18,20 +18,20 @@ agricultural energy use,10,-0.01
 agricultural energy use,15,-0.01
 agricultural energy use,20,-0.01
 agricultural energy use,25,-0.01
-construction,0,0.01
-construction,1,0.05
-construction,2,0.1
+construction,0,0.1
+construction,1,0.13333
+construction,2,0.16666
 construction,3,0.2
-construction,4,0.1
-construction,5,0.05
-construction,6,0.01
-construction,7,0.01
-construction,8,-0.01
-construction,9,-0.01
-construction,10,-0.01
-construction,15,-0.01
-construction,20,-0.01
-construction,25,-0.01
+construction,4,0.16666
+construction,5,0.13333
+construction,6,0.1
+construction,7,0.1
+construction,8,0.1
+construction,9,0.1
+construction,10,0.1
+construction,15,0.1
+construction,20,0.1
+construction,25,0.1
 mining energy use,0,0.01
 mining energy use,1,0.05
 mining energy use,2,0.1
