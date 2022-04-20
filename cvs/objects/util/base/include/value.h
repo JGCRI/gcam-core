@@ -114,14 +114,57 @@ public:
     Value& operator/=( const double& aValue );
     Value& operator=( const double& aDblValue );
 
-    // XML Function here.
 private:
     void print( std::ostream& aOutputStream ) const;
     std::istream& read( std::istream& aIStream );
 
-    //! The actual underly value of this class.
+    /*!
+     * \brief The underlying value of this class which can be interpreted as potentially
+     *        the double value of this class or an index into the sCentralValue.
+     * \details We take advantage of several facts that lets us encode several pieces of information into a single block of 64 bits of memory.  In principle this class has four member variables:
+     *  - bool mIsInit If the numerical value of this class has been set in *any* way. As
+     *    soon as *any* value is set mIsInit is considered true.  Note: If a user accesses
+     *    the value while uninitialized they get a zero value.
+     *  - bool mIsStateCopy If this instance has been tagged STATE and ManageStateVariables
+     *    has determined it should now be actively managed.
+     *  - int mCentralValueIndex If mIsStateCopy is true this would be the index to use to
+     *    lookup the actual value this class represents (in the context of the current thread).
+     *    If mIsStateCopy is false the value of mCentralValueIndex is undefined.
+     *  - mValue The double value this class represents *if* mIsStateCopy is false.  Otherwise
+     *    accessing mValue is undefined.
+     *
+     *  Given the above it is clear only some of these member variables are active at any 
+     *  time.  Using this and the fact that the IEE standard for floating point numbers
+     *  allows us to encode additional information into NaN values we set up the following
+     *  scheme to condense all of these member variables into a single 64 bit value:
+     *  - We initialize mBits to UNINITIALIZED which is equivalent to -0.  Which maintains
+     *    the property that if a user accessed it they will get a zero value.  And (in
+     *    practice) a user would never attempt to actually initialize to such a value.
+     *  - If mIsStateCopy is meant to be true we set the first 32 bits to true (STATE_COPY_MASK)
+     *    which qualifies mBits as a NaN value but is distinct from any double value which
+     *    is possible as a result of any calculation.  We then encode mCentralValueIndex into
+     *    the last 32 bits (ID_MASK).  Note, this implies we can only address 2^32 values
+     *    as STATE and checks are made in ManageStateVariables accordingly (not that we are
+     *    even close to that many).
+     *  - Finally if mBits does not start with the first 32 bits as true we can assume it
+     *    is just mValue and we convert the bits in mBits to a double value (see convertToDouble).
+     *
+     * \warning The internals of this class is heavily optimized for speed and to conserve
+     *          memory.  Users should avoid accessing mBits directly and instead utilize
+     *          the public methods which will ensure the appropriate values are derived.
+     */
     uint64_t mBits;
-    //double mValue;
+
+    // some static constants that help us determine how to interpret mBits
+
+    //! The value when mBits is !isInited
+    static const uint64_t UNINITIALIZED = 0x8000000000000000;
+
+    //! The bit mask which if matches mBits indicates this is an active STATE Value
+    static const uint64_t STATE_COPY_MASK = 0xffffffff00000000;
+
+    //! A bit mask to help us extract out the look up index into sCentralValue
+    static const uint64_t ID_MASK = 0x00000000ffffffff;
 
 #if !GCAM_PARALLEL_ENABLED
     typedef double* CentralValueType;
@@ -139,54 +182,63 @@ private:
     //! A static reference into the "base" state of ManageStateVariables::mStateData
     //! mostly for convenience.
     static double* sBaseCentralValue;
-    //! The index into sCentralValue that contains the data for this instance.
-    //unsigned int mCentralValueIndex;
-    //! A flag to indicate if this instance of Value has been identified as active
-    //! state.  If so it can assume that mCentralValueIndex has been appropriately
-    //! set and mValue gets copied in/out of sBaseCentralValue at the appropriate
-    //! time.
-    //bool mIsStateCopy;
-    
-    //! A flag to indicate if this Value has been set to any value besides the default.
-    //bool mIsInit;
     
 #if DEBUG_STATE
     void doStateCheck() const;
 #endif
     double getInternal() const;
     void setInternal(double const aDblValue);
-    static double convertToDouble(uint64_t const u) {
-        static_assert(sizeof(uint64_t) == sizeof(double), "Cannot use this!");
 
-        double d;
+    /*!
+     * \brief A utility method to convert from 64 bits of data to a double.
+     * \details It is a bit more tricky than one might naively think.  Namely you can not 
+     *          just reinterpret the bits as double which is un-allowed by the C++ standard.
+     *          The reason being floating point values have different registers on the CPU
+     *          thus a register move operation may be needed. The solution from:
+     *          https://stackoverflow.com/questions/10351150/how-can-you-convert-a-stdbitset64-to-a-double
+     *          And as noted there, while it looks like a bunch of copying overhead will be
+     *          incurred in reality the compiler is going to optimize it all down to nothing.
+     * \param aBits The bits to convert to double.
+     * \return The bits converted to double.
+     */
+    static double convertToDouble(uint64_t const aBits) {
+        static_assert(sizeof(uint64_t) == sizeof(double), "Expecting size of double to be 64 bits.");
+
+        double asDouble;
 
         // Aliases to `char*` are explicitly allowed in the Standard (and only them)
-        char const* cu = reinterpret_cast<char const*>(&u);
-        char* cd = reinterpret_cast<char*>(&d);
+        char const* bitsAsChar = reinterpret_cast<char const*>(&aBits);
+        char* doubleAsChar = reinterpret_cast<char*>(&asDouble);
 
-        // Copy the bitwise representation from u to d
-        memcpy(cd, cu, sizeof(u));
+        // Copy the bitwise representation from bits to double
+        memcpy(doubleAsChar, bitsAsChar, sizeof(aBits));
 
-        return d;
+        return asDouble;
     }
-    static uint64_t convertToBits(double const d) {
-        static_assert(sizeof(uint64_t) == sizeof(double), "Cannot use this!");
 
-        uint64_t u;
+    /*!
+     * \brief convert a double to its "bits" representation.
+     * \details Converts the double to a 64 bit unsigned int.  The process is a bit
+     *          more complicated than one might expect.  See convertToDouble for
+     *          details.
+     * \param aDouble The double value to convert.
+     * \return The "bits" of the given double.
+     * \sa convertToDouble
+     */
+    static uint64_t convertToBits(double const aDouble) {
+        static_assert(sizeof(uint64_t) == sizeof(double), "Expecting size of double to be 64 bits.");
+
+        uint64_t asBits;
 
         // Aliases to `char*` are explicitly allowed in the Standard (and only them)
-        char const* cd = reinterpret_cast<char const*>(&d);
-        char* cu = reinterpret_cast<char*>(&u);
+        char const* doubleAsChar = reinterpret_cast<char const*>(&aDouble);
+        char* bitsAsChar = reinterpret_cast<char*>(&asBits);
 
-        // Copy the bitwise representation from u to d
-        memcpy(cu, cd, sizeof(d));
+        // Copy the bitwise representation from double to bits
+        memcpy(bitsAsChar, doubleAsChar, sizeof(aDouble));
 
-        return u;
+        return asBits;
     }
-    static const uint64_t UNINITIALIZED = 0x8000000000000000;
-    static const uint64_t STATE_COPY_MASK = 0xffffffff00000000;
-    static const uint64_t ID_MASK = 0x00000000ffffffff;
-    //const double& getInternal() const;
 };
 
 inline Value::Value(): mBits(UNINITIALIZED) {
@@ -195,7 +247,6 @@ inline Value::Value(): mBits(UNINITIALIZED) {
 /*! 
  * \brief Create a value from a double and a unit.
  * \param aValue Initial value.
- * \param aUnit Unit.
  */
 inline Value::Value( const double aValue ):
 mBits(convertToBits(aValue))
@@ -214,7 +265,7 @@ inline void Value::init( const double aNewValue ){
  * \brief An accessor method to get at the actual data held in this class.
  * \details This method will appropriately get the value locally or the centrally
  *          managed state if the mIsStateCopy flag is set.
- * \return A reference the the appropriate value represented by this class.
+ * \return The appropriate double value represented by this class.
  */
 inline double Value::getInternal() const {
     return (mBits & STATE_COPY_MASK) == STATE_COPY_MASK ?
@@ -226,21 +277,13 @@ inline double Value::getInternal() const {
         : convertToDouble(mBits);
 }
 
+
 /*!
- * \brief An accessor method (const) to get at the actual data held in this class.
- * \details This method will appropriately get the value locally or the centrally
+ * \brief A setter method to set the actual data held in this class.
+ * \details This method will appropriately set the value locally or the centrally
  *          managed state if the mIsStateCopy flag is set.
- * \return A const reference the the appropriate value represented by this class.
+ * \param aDblValue The double value that needs to be represented by this class.
  */
-/*inline const double& Value::getInternal() const {
-    return mIsStateCopy ?
-#if !GCAM_PARALLEL_ENABLED
-        sCentralValue[mCentralValueIndex]
-#else
-        sCentralValue.local()[mCentralValueIndex]
-#endif
-        : mValue;
-}*/
 inline void Value::setInternal(double const aDblValue) {
     if((mBits & STATE_COPY_MASK) == STATE_COPY_MASK) {
 #if !GCAM_PARALLEL_ENABLED
@@ -300,7 +343,6 @@ inline double Value::get() const {
 inline Value& Value::operator+=( const Value& aValue ){
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    //mIsInit = true;
 
     setInternal(getInternal() + aValue.getInternal());
 #if DEBUG_STATE
@@ -317,7 +359,6 @@ inline Value& Value::operator+=( const Value& aValue ){
 inline Value& Value::operator-=( const Value& aValue ){
     // Assume that if this value is not initialized that subtracting from zero
     // is correct and the new value is valid.
-    //mIsInit = true;
 
     setInternal(getInternal() - aValue.getInternal());
 #if DEBUG_STATE
@@ -333,7 +374,7 @@ inline Value& Value::operator-=( const Value& aValue ){
  */
 inline Value& Value::operator*=( const Value& aValue ){
     // If the value hasn't been initialized it should not be used.
-    assert( mIsInit );
+    assert( isInited() );
 
     setInternal(getInternal() * aValue.getInternal());
 #if DEBUG_STATE
@@ -349,7 +390,7 @@ inline Value& Value::operator*=( const Value& aValue ){
  */
 inline Value& Value::operator/=( const Value& aValue ){
     // If the value hasn't been initialized it should not be used.
-    assert( mIsInit );
+    assert( isInited() );
     assert( aValue > util::getSmallNumber() );
 
     setInternal(getInternal() / aValue.getInternal());
@@ -360,8 +401,7 @@ inline Value& Value::operator/=( const Value& aValue ){
 }
 
 inline Value& Value::operator=( const Value& aValue ) {
-    setInternal( aValue.getInternal());
-    //mIsInit = aValue.mIsInit;
+    setInternal(aValue.getInternal());
     
     return *this;
 }
@@ -369,7 +409,6 @@ inline Value& Value::operator=( const Value& aValue ) {
 inline Value& Value::operator+=( const double& aValue ) {
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    //mIsInit = true;
     
     setInternal(getInternal() + aValue);
 #if DEBUG_STATE
@@ -381,7 +420,6 @@ inline Value& Value::operator+=( const double& aValue ) {
 inline Value& Value::operator-=( const double& aValue ) {
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    //mIsInit = true;
     
     setInternal(getInternal() - aValue);
 #if DEBUG_STATE
@@ -393,7 +431,6 @@ inline Value& Value::operator-=( const double& aValue ) {
 inline Value& Value::operator*=( const double& aValue ) {
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    //mIsInit = true;
     
     setInternal(getInternal() * aValue);
 #if DEBUG_STATE
@@ -405,7 +442,6 @@ inline Value& Value::operator*=( const double& aValue ) {
 inline Value& Value::operator/=( const double& aValue ) {
     // Assume that if this value is not initialized that adding to zero is
     // correct and the new value is valid.
-    //mIsInit = true;
     
     setInternal(getInternal() / aValue);
 #if DEBUG_STATE
@@ -421,7 +457,10 @@ inline Value& Value::operator/=( const double& aValue ) {
  * \return This value by reference for chaining.
  */
 inline Value& Value::operator=( const double& aDblValue ) {
-    set( aDblValue );
+    setInternal( aDblValue );
+#if DEBUG_STATE
+    doStateCheck();
+#endif
     
     return *this;
 }
@@ -449,7 +488,6 @@ inline void Value::print( std::ostream& aOut ) const {
 inline std::istream& Value::read( std::istream& aIStream ){
     double streamValue;
     if( aIStream >> streamValue ) {
-        //mIsInit = true;
         setInternal(streamValue);
     }
     return aIStream;

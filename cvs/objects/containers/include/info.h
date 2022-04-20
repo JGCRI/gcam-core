@@ -51,8 +51,6 @@
 #include <boost/noncopyable.hpp>
 #include "containers/include/iinfo.h"
 
-// Can't forward declare because operations are used in template functions.
-//#include "util/base/include/hash_map.h"
 #include <map>
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/configuration.h"
@@ -112,30 +110,10 @@ private:
 
     std::string mOwnerName;
 
-    /*!
-     * \brief Enum representing possible types of each item.
-     */
-    enum AnyType {
-        //! Boolean
-        eBoolean,
-
-        //! Integer
-        eInteger,
-
-        //! Double
-        eDouble,
-
-        //! String
-        eString
-    };
-
     template<class T> bool setItemValueLocal( const std::string& aStringKey,
-                                              const AnyType aType,
                                               const T& aValue );
 
     template<class T> T getItemValueLocal( const std::string& aStringKey, bool& aExists ) const;
-
-    size_t getInitialSize() const;
 
     void printItemNotFoundWarning( const std::string& aStringKey ) const;
 
@@ -147,11 +125,7 @@ private:
                                       std::ostream& aOut,
                                       Tabs* aTabs ) const;
 
-    //! Type of the item stored as the value in the storage map.
-    //typedef std::pair<AnyType, boost::any> ValueType;
-
     //! Type of the internal storage map.
-    //typedef HashMap<const std::string, ValueType> InfoMap;
     typedef std::map<const std::string, boost::any> InfoMap;
 
     //! Internal storage mapping item names to item values.
@@ -175,7 +149,6 @@ private:
 * \param aValue The value to be associated with this key. 
 */
 template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
-                                                const AnyType aType,
                                                 const T& aValue )
 {
     /*! \pre A valid key was passed. */
@@ -213,7 +186,6 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
     tbb::spin_rw_mutex::scoped_lock writelock(mInfoMapMutex, true);
 #endif
     // Add the value regardless of whether a warning was printed.
-    //mInfoMap->insert( std::make_pair( aStringKey, std::make_pair( aType, boost::any( aValue ) ) ) );
     mInfoMap[ aStringKey ] = boost::any( aValue );
     return true;
 }
@@ -252,21 +224,8 @@ T Info::getItemValueLocal( const std::string& aStringKey,
         // Attempt to set the return value to the found value. This requires
         // converting the data from the actual type to the requested type.
         try {
-            // NB: By my reading of the boost docs, the pointer version of
-            // any_cast() used below will never throw an exception, so this
-            // try block is useless.  The docs don't say what WILL happen if
-            // the cast fails in the pointer version, but I'm assuming it
-            // returns a null pointer.  Thus, I've added a test that replicates
-            // the exception behavior in the event of a null pointer return.
-            // I've also left the try-catch in place, in case there are some
-            // versions of the boost libs that actually do throw an exception
-            // for the pointer version of the cast.
             const T valp = boost::any_cast<T>( curr->second );
-            //if(valp)
-                //return *valp;
             return valp;
-            /*else
-                printBadCastWarning(aStringKey, false);*/
         }
         // Catch bad data conversions and print an error.
         // See note within the try-block

@@ -57,7 +57,6 @@ using namespace std;
 */
 Info::Info( const IInfo* aParentInfo, const string& aOwnerName ) :
 mOwnerName( aOwnerName ),
-//mInfoMap( new InfoMap( getInitialSize() ) ),
 mParentInfo( aParentInfo )
 {
 }
@@ -72,19 +71,19 @@ Info::~Info(){
 }
 
 bool Info::setBoolean( const string& aStringKey, const bool aValue ){
-    return setItemValueLocal( aStringKey, eBoolean, aValue );
+    return setItemValueLocal( aStringKey, aValue );
 }
 
 bool Info::setInteger( const string& aStringKey, const int aValue ){
-    return setItemValueLocal( aStringKey, eInteger, aValue );
+    return setItemValueLocal( aStringKey, aValue );
 }
 
 bool Info::setDouble( const string& aStringKey, const double aValue ){
-    return setItemValueLocal( aStringKey, eDouble, aValue );
+    return setItemValueLocal( aStringKey, aValue );
 }
 
 bool Info::setString( const string& aStringKey, const string& aValue ){
-    return setItemValueLocal( aStringKey, eString, aValue );
+    return setItemValueLocal( aStringKey, aValue );
 }
     
 bool Info::getBoolean( const string& aStringKey, const bool aMustExist ) const
@@ -254,38 +253,9 @@ void Info::toDebugXML( const int aperiod, Tabs* aTabs, ostream& aOut ) const {
         else if(currType == typeid(string)) {
             printItem<string>( item->second, aOut, aTabs );
         }
-        /*switch( item->second.type() ){
-            case typeid(bool):
-                printItem<bool>( item->second, aOut, aTabs );
-                break;
-            case typeid(int):
-                printItem<int>( item->second, aOut, aTabs );
-                break;
-            case typeid(double):
-                printItem<double>( item->second, aOut, aTabs );
-                break;
-            case typeid(string):
-                printItem<string>( item->second, aOut, aTabs );
-                break;
-            // No default so the compiler can flag omissions.
-        }*/
         XMLWriteClosingTag( "Pair", aOut, aTabs );
     }
     XMLWriteClosingTag( "Info", aOut, aTabs );
-}
-
-/*! \brief Return the initial size for the underlying hashmap.
-* \details Returns how many slots to allocate initially for the hashmap. The
-*          hashmap will increase in size if it gets too full, but the resize
-*          operation is slow and so should be avoided if possible. This number
-*          should also be prime to reduce the number of collisions in the
-*          hashmap.
-* \return The initial size of the underlying hashmap.
-*/
-size_t Info::getInitialSize() const {
-    // Medium size prime number.
-    const size_t INITIAL_SIZE = 29;
-    return INITIAL_SIZE;
 }
 
 /*! \brief Print a warning message to the user that the item does not exist in
@@ -328,3 +298,4 @@ void Info::printShadowWarning( const string& aStringKey ) const {
     mainLog.setLevel( ILogger::WARNING );
     mainLog << aStringKey << " from " << mOwnerName << " will shadow a variable in a parent Info." << endl;
 }
+

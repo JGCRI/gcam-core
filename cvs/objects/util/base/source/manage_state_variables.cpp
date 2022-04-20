@@ -205,12 +205,10 @@ void ManageStateVariables::collectState() {
     for( auto currValue : mStateValues ) {
         double realData = Value::convertToDouble(currValue->mBits);
         currValue->mBits = currEncodedId;
-        //currValue->mIsStateCopy = true;
-        //currValue->mCentralValueIndex = mNumCollected;
         currValue->sBaseCentralValue[ mNumCollected ] = realData;
         if(mNumCollected == Value::ID_MASK) {
             mainLog.setLevel( ILogger::SEVERE );
-            mainLog << "State values exceeded reserved ID space in ManageStateVariables." << endl;
+            mainLog << "The number of STATE values exceeded reserved ID space in ManageStateVariables." << endl;
             abort();
         }
         ++mNumCollected;
@@ -251,7 +249,6 @@ void ManageStateVariables::resetState() {
     uint64_t count = Value::STATE_COPY_MASK;
 #endif
     for( auto currValue : mStateValues ) {
-        //currValue->mIsStateCopy = false;
 #if DEBUG_STATE
         if( currValue->mBits != count ) {
             cout << "Reset didn't match " << currValue->mBits << " != " << count << endl;
