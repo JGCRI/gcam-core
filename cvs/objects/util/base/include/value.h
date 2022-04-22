@@ -256,7 +256,7 @@ mBits(convertToBits(aValue))
 //! Initialize the value, can only be done once.
 inline void Value::init( const double aNewValue ){
     assert( util::isValidNumber( aNewValue ) );
-    if( isInited() ){
+    if( !isInited() ){
         mBits = convertToBits(aNewValue);
     }
 }
