@@ -28,7 +28,7 @@
 #' \code{L244.GenericServiceCoef},\code{L244.ThermalServiceCoef}, \code{L244.GenericServiceCoef_SSP1}, \code{L244.GenericServiceCoef_SSP2},
 #' \code{L244.GenericServiceCoef_SSP3}, \code{L244.GenericServiceCoef_SSP4}, \code{L244.GenericServiceCoef_SSP5},
 #'  \code{L244.ThermalCoalCoef}, \code{L244.GenericCoalCoef},\code{L244.ThermalTradBioCoef}, \code{L244.GenericTradBioCoef},
-#' \code{L244.GenericShares}, \code{L244.ThermalShares},
+#' \code{L244.GenericShares}, \code{L244.ThermalShares},\code{L244.GenericServicePrice}, \code{L244.ThermalServicePrice},
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
@@ -154,7 +154,9 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.GenericTradBioCoef",
              "L244.ThermalTradBioCoef",
              "L244.GenericShares",
-             "L244.ThermalShares"))
+             "L244.ThermalShares",
+             "L244.GenericServicePrice",
+             "L244.ThermalServicePrice"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -2511,9 +2513,51 @@ module_energy_L244.building_det <- function(command, ...) {
       bind_rows(L244.GenericServiceAdder %>%
                   filter(grepl("comm",gcam.consumer)))
 
+    #------------------------------------------------------
+    # Finally, write the service prices in final calibration year
+    # These will be used in the cpp files to compute the adjusment parameter that will account for the difference between read and calculated service prices
+
+    L244.GenericServicePrice<- L144.prices_bld %>%
+      filter(market %in% generic_services) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      rename(building.service.input = market) %>%
+      filter(grepl("resid",building.service.input)) %>%
+      repeat_add_columns(tibble(gcam.consumer = unique(A44.gcam_consumer_resid$gcam.consumer))) %>%
+      left_join_error_no_match(A44.gcam_consumer_resid %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer") %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(building.service.input = paste0(building.service.input,"_",group)) %>%
+      select(-adj,-group) %>%
+      bind_rows(L144.prices_bld %>%
+                  filter(market %in% generic_services) %>%
+                  filter(year == MODEL_FINAL_BASE_YEAR) %>%
+                  rename(building.service.input = market) %>%
+                  filter(grepl("comm",building.service.input)) %>%
+                  repeat_add_columns(tibble(gcam.consumer = unique(A44.gcam_consumer_comm$gcam.consumer))) %>%
+                  left_join_error_no_match(A44.gcam_consumer_comm %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer")) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServicePrice"]])
 
 
-    # ===================================================
+    L244.ThermalServicePrice<- L144.prices_bld %>%
+      filter(market %in% thermal_services) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      rename(thermal.building.service.input = market) %>%
+      filter(grepl("resid",thermal.building.service.input)) %>%
+      repeat_add_columns(tibble(gcam.consumer = unique(A44.gcam_consumer_resid$gcam.consumer))) %>%
+      left_join_error_no_match(A44.gcam_consumer_resid %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer") %>%
+      separate(gcam.consumer,c("adj","group"), sep = "_",remove = F) %>%
+      mutate(thermal.building.service.input = paste0(thermal.building.service.input,"_",group)) %>%
+      select(-adj,-group) %>%
+      bind_rows(L144.prices_bld %>%
+                  filter(market %in% thermal_services) %>%
+                  filter(year == MODEL_FINAL_BASE_YEAR) %>%
+                  rename(thermal.building.service.input = market) %>%
+                  filter(grepl("comm",thermal.building.service.input)) %>%
+                  repeat_add_columns(tibble(gcam.consumer = unique(A44.gcam_consumer_comm$gcam.consumer))) %>%
+                  left_join_error_no_match(A44.gcam_consumer_comm %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer")) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalServicePrice"]])
+
+
+    #===================================================
     # Produce outputs
     L244.SubregionalShares %>%
       add_title("Subregional population and income shares") %>%
@@ -2925,6 +2969,25 @@ module_energy_L244.building_det <- function(command, ...) {
       same_precursors_as(L244.ThermalBaseService) ->
       L244.DeleteThermalService
 
+
+    L244.GenericServicePrice %>%
+      add_title("Final-base-year service prices") %>%
+      add_units("$1975/GJ") %>%
+      add_comments("Prices for generic services") %>%
+      add_legacy_name("L244.GenericServicePrice") %>%
+      add_precursors("common/GCAM_region_names","L144.prices_bld") ->
+      L244.GenericServicePrice
+
+    L244.ThermalServicePrice %>%
+      add_title("Final-base-year service prices") %>%
+      add_units("$1975/GJ") %>%
+      add_comments("Prices for thermal services") %>%
+      add_legacy_name("L244.ThermalServicePrice") %>%
+      add_precursors("common/GCAM_region_names","L144.prices_bld") ->
+      L244.ThermalServicePrice
+
+
+
     return_data(L244.SubregionalShares, L244.PriceExp_IntGains, L244.Floorspace, L244.DemandFunction_serv, L244.DemandFunction_flsp,
                 L244.Satiation_flsp, L244.SatiationAdder, L244.ThermalBaseService, L244.GenericBaseService, L244.ThermalServiceSatiation,
                 L244.GenericServiceSatiation, L244.Intgains_scalar, L244.ShellConductance_bld,
@@ -2950,7 +3013,7 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.GenericServiceCoef,L244.GenericServiceCoef_SSP1,L244.GenericServiceCoef_SSP2,L244.GenericServiceCoef_SSP3,
                 L244.GenericServiceCoef_SSP4,L244.GenericServiceCoef_SSP5,L244.ThermalServiceCoef,
                 L244.GenericCoalCoef,L244.ThermalCoalCoef,L244.GenericTradBioCoef,L244.ThermalTradBioCoef,
-                L244.GenericShares,L244.ThermalShares)
+                L244.GenericShares,L244.ThermalShares,L244.GenericServicePrice,L244.ThermalServicePrice)
 
   } else {
     stop("Unknown command")

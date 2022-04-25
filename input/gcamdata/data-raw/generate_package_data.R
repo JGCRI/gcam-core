@@ -331,8 +331,11 @@ generate_level2_data_names <- function() {
   level2_data_names[["ThermalCoalCoef"]] <- c("region","gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input","A_coal","k_coal","base.coal")
   level2_data_names[["GenericTradBioCoef"]] <- c("region","gcam.consumer", "nodeInput", "building.node.input", "building.service.input","x_TradBio","y_TradBio","base.TradBio")
   level2_data_names[["ThermalTradBioCoef"]] <- c("region","gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input","x_TradBio","y_TradBio","base.TradBio")
+  level2_data_names[["GenericServicePrice"]] <- c("region","gcam.consumer","nodeInput","building.node.input","building.service.input","price")
+  level2_data_names[["ThermalServicePrice"]] <- c("region","gcam.consumer","nodeInput","building.node.input","thermal.building.service.input","price")
 
-  # Land types
+
+    # Land types
   level2_data_names[["LN0_Land"]] <- c("region", "LandAllocatorRoot", "year.fillout", "landAllocation")
   level2_data_names[["LN0_Logit"]] <- c("region", "LandAllocatorRoot", "logit.year.fillout", "logit.exponent")
   level2_data_names[["LN0_Logit_absolute-cost-logit"]] <- c("region", "LandAllocatorRoot")

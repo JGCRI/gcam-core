@@ -52,6 +52,8 @@ module_energy_batch_building_det_xml <- function(command, ...) {
              "L244.ThermalCoalCoef",
              "L244.GenericTradBioCoef",
              "L244.ThermalTradBioCoef",
+             "L244.GenericServicePrice",
+             "L244.ThermalServicePrice",
              "L244.DeleteGenericService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_det.xml"))
@@ -101,6 +103,8 @@ module_energy_batch_building_det_xml <- function(command, ...) {
     L244.ThermalCoalCoef <- get_data(all_data, "L244.ThermalCoalCoef")
     L244.GenericTradBioCoef <- get_data(all_data, "L244.GenericTradBioCoef")
     L244.ThermalTradBioCoef <- get_data(all_data, "L244.ThermalTradBioCoef")
+    L244.GenericServicePrice <- get_data(all_data, "L244.GenericServicePrice")
+    L244.ThermalServicePrice <- get_data(all_data, "L244.ThermalServicePrice")
 
     # ===================================================
 
@@ -128,6 +132,8 @@ module_energy_batch_building_det_xml <- function(command, ...) {
       add_xml_data(L244.ThermalCoalCoef, "ThermalCoalCoef") %>%
       add_xml_data(L244.GenericTradBioCoef, "GenericTradBioCoef") %>%
       add_xml_data(L244.ThermalTradBioCoef, "ThermalTradBioCoef") %>%
+      add_xml_data(L244.GenericServicePrice, "GenericServicePrice") %>%
+      add_xml_data(L244.ThermalServicePrice, "ThermalServicePrice") %>%
       add_xml_data(L244.DemandFunction_flsp, "DemandFunction_flsp") %>%
       add_xml_data(L244.DemandFunction_serv, "DemandFunction_serv") %>%
       add_xml_data(L244.Floorspace, "Floorspace") %>%
@@ -157,6 +163,7 @@ module_energy_batch_building_det_xml <- function(command, ...) {
                      "L244.GenericServiceAdder","L244.ThermalServiceAdder",
                      "L244.GenericTradBioCoef","L244.ThermalTradBioCoef",
                      "L244.GenericCoalCoef","L244.ThermalCoalCoef",
+                     "L244.GenericServicePrice","L244.ThermalServicePrice",
                      "L244.GenericServiceCoef","L244.ThermalServiceCoef") ->   building_det.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.

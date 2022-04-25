@@ -89,22 +89,24 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
 
             double thermalLoad = buildingServiceInput->calcThermalLoad( buildingParentInput, internalGainsPerSqMeter, period );
 
+            double basePrice = buildingServiceInput->getServPriceBase();
+
             
             if (regex_search(buildingServiceInput->getName(), coalPattern)) {
 
-                demand = calcServiceCoal(buildingServiceInput,  income, regionName, period);
+                demand = calcServiceCoal(buildingServiceInput,  income, basePrice, regionName, period);
 
                
             }
             else if (regex_search(buildingServiceInput->getName(), TradBioPattern)) {
 
-                demand = calcServiceTradBio(buildingServiceInput, income, regionName, period);
+                demand = calcServiceTradBio(buildingServiceInput, income, basePrice, regionName, period);
 
 
             }
             else {
                 
-                double serviceDensity = calcServiceDensity(buildingServiceInput, income, regionName, period);
+                double serviceDensity = calcServiceDensity(buildingServiceInput, income, basePrice, regionName, period);
 
                 double biasadder = buildingServiceInput->getBiasAdder(period);
                 double adjustedServiceDensity = (buildingServiceInput->getCoef() * thermalLoad * serviceDensity) + biasadder;
@@ -160,17 +162,23 @@ double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, cons
  */
 double BuildingServiceFunction::calcServiceDensity( BuildingServiceInput* aBuildingServiceInput,
                                                     const double aIncome,
+                                                    const double aBasePrice,
                                                     const string& aRegionName,
                                                     const int aPeriod ) const
 {
-    const double servicePrice = aBuildingServiceInput->getPricePaid( aRegionName, aPeriod );
-    const double cappedPrice = max( servicePrice, SectorUtils::getDemandPriceThreshold() );
+    const double PriceAdjustParam = aBasePrice - aBuildingServiceInput->getPricePaid(aRegionName, scenario->getModeltime()->getFinalCalibrationPeriod());
+
+    const double servicePrice = aBuildingServiceInput->getPricePaid(aRegionName, aPeriod);
+    const double servicePriceFin = servicePrice + PriceAdjustParam;
+
+    const double cappedPrice = max(servicePriceFin, SectorUtils::getDemandPriceThreshold());
 
     const double serviceAffordability = aIncome / cappedPrice;
+
     double serviceDensity = aBuildingServiceInput->getSatiationDemandFunction()->calcDemand( serviceAffordability );
     // May need to make an adjustment in case of negative prices.
-    if( servicePrice < cappedPrice ) {
-        serviceDensity = SectorUtils::adjustDemandForNegativePrice( serviceDensity, servicePrice );
+    if(servicePriceFin < cappedPrice ) {
+        serviceDensity = SectorUtils::adjustDemandForNegativePrice( serviceDensity, servicePriceFin);
     }
     return serviceDensity;
 
@@ -178,6 +186,7 @@ double BuildingServiceFunction::calcServiceDensity( BuildingServiceInput* aBuild
 
 double BuildingServiceFunction::calcServiceCoal(BuildingServiceInput* aBuildingServiceInput,
                                                         const double aIncome,
+                                                        const double aBasePrice,
                                                         const string& aRegionName,
                                                         const int aPeriod) const
 {
@@ -189,8 +198,12 @@ double BuildingServiceFunction::calcServiceCoal(BuildingServiceInput* aBuildingS
     double biasadder = aBuildingServiceInput->getBiasAdder(aPeriod);
 
 
+    const double PriceAdjustParam = aBasePrice - aBuildingServiceInput->getPricePaid(aRegionName, scenario->getModeltime()->getFinalCalibrationPeriod());
+
     const double servicePrice = aBuildingServiceInput->getPricePaid(aRegionName, aPeriod);
-    const double cappedPrice = max(servicePrice, SectorUtils::getDemandPriceThreshold());
+    const double servicePriceFin = servicePrice + PriceAdjustParam;
+
+    const double cappedPrice = max(servicePriceFin, SectorUtils::getDemandPriceThreshold());
 
     const double serviceAffordability = aIncome / cappedPrice;
 
@@ -210,6 +223,7 @@ double BuildingServiceFunction::calcServiceCoal(BuildingServiceInput* aBuildingS
 
 double BuildingServiceFunction::calcServiceTradBio(BuildingServiceInput* aBuildingServiceInput,
                                                           const double aIncome,
+                                                          const double aBasePrice,
                                                           const string& aRegionName,
                                                           const int aPeriod) const
 {
@@ -220,8 +234,12 @@ double BuildingServiceFunction::calcServiceTradBio(BuildingServiceInput* aBuildi
 
     double biasadder = aBuildingServiceInput->getBiasAdder(aPeriod);
 
+    const double PriceAdjustParam = aBasePrice - aBuildingServiceInput->getPricePaid(aRegionName, scenario->getModeltime()->getFinalCalibrationPeriod());
+
     const double servicePrice = aBuildingServiceInput->getPricePaid(aRegionName, aPeriod);
-    const double cappedPrice = max(servicePrice, SectorUtils::getDemandPriceThreshold());
+    const double servicePriceFin = servicePrice + PriceAdjustParam;
+
+    const double cappedPrice = max(servicePriceFin, SectorUtils::getDemandPriceThreshold());
 
     const double serviceAffordability = aIncome / cappedPrice;
 

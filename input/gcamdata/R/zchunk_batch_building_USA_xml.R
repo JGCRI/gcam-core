@@ -50,6 +50,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
              "L244.ThermalServiceImpedance_gcamusa",
              "L244.ThermalServiceCoef_gcamusa",
              "L244.ThermalServiceAdder_gcamusa",
+             "L244.GenericServicePrice_gcamusa",
+             "L244.ThermalServicePrice_gcamusa",
              "L210.DeleteRsrcTradBio_gcamusa"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_USA.xml"))
@@ -97,6 +99,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
     L244.GlobalTechSCurve_bld <- get_data(all_data, "L244.GlobalTechSCurve_bld")
     L244.GompFnParam_gcamusa<- get_data(all_data, "L244.GompFnParam_gcamusa")
     L210.DeleteRsrcTradBio_gcamusa<- get_data(all_data, "L210.DeleteRsrcTradBio_gcamusa")
+    L244.GenericServicePrice_gcamusa<- get_data(all_data, "L244.GenericServicePrice_gcamusa")
+    L244.ThermalServicePrice_gcamusa<- get_data(all_data, "L244.ThermalServicePrice_gcamusa")
 
     # ===================================================
 
@@ -140,6 +144,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
       add_xml_data(L244.GlobalTechCost_bld, "GlobalTechCost") %>%
       add_xml_data(L244.GlobalTechSCurve_bld, "GlobalTechSCurve")  %>%
       add_xml_data(L210.DeleteRsrcTradBio_gcamusa, "DeleteRsrc") %>%
+      add_xml_data(L244.GenericServicePrice_gcamusa, "GenericServicePrice") %>%
+      add_xml_data(L244.ThermalServicePrice_gcamusa, "ThermalServicePrice") %>%
       add_precursors("L244.DeleteConsumer_USAbld",
                      "L244.DeleteSupplysector_USAbld",
                      "L244.SubregionalShares_gcamusa",
@@ -178,6 +184,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
                      "L244.ThermalServiceImpedance_gcamusa",
                      "L244.ThermalServiceCoef_gcamusa",
                      "L244.ThermalServiceAdder_gcamusa",
+                     "L244.GenericServicePrice_gcamusa",
+                     "L244.ThermalServicePrice_gcamusa",
                      "L210.DeleteRsrcTradBio_gcamusa") ->
       building_USA.xml
 

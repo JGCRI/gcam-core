@@ -34,7 +34,7 @@ the generated outputs: \code{L244.SubregionalShares}, \code{L244.PriceExp_IntGai
 \code{L244.GenericServiceCoef},\code{L244.ThermalServiceCoef}, \code{L244.GenericServiceCoef_SSP1}, \code{L244.GenericServiceCoef_SSP2},
 \code{L244.GenericServiceCoef_SSP3}, \code{L244.GenericServiceCoef_SSP4}, \code{L244.GenericServiceCoef_SSP5},
  \code{L244.ThermalCoalCoef}, \code{L244.GenericCoalCoef},\code{L244.ThermalTradBioCoef}, \code{L244.GenericTradBioCoef},
-\code{L244.GenericShares}, \code{L244.ThermalShares},
+\code{L244.GenericShares}, \code{L244.ThermalShares},\code{L244.GenericServicePrice}, \code{L244.ThermalServicePrice},
 The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 }
 \description{

@@ -206,6 +206,8 @@ public:
 
     virtual double getTradBioBase() const;
 
+    virtual double getServPriceBase() const;
+
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
 
@@ -349,6 +351,9 @@ protected:
 
         //! Demand function coefficients to capture base year  characteristics.
         DEFINE_VARIABLE(SIMPLE | STATE, "base-TradBio", mTradBioBase, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "price", mServPriceBase, Value),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

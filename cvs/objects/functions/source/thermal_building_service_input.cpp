@@ -112,6 +112,7 @@ void ThermalBuildingServiceInput::copy( const ThermalBuildingServiceInput& aInpu
     mTradBioX = aInput.mTradBioX;
     mTradBioY = aInput.mTradBioY;
     mTradBioBase = aInput.mTradBioBase;
+    mServPriceBase = aInput.mServPriceBase;
 	mCoef = aInput.mCoef;
 }
 
@@ -130,6 +131,7 @@ void ThermalBuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, 
     XMLWriteElement(mTradBioX, "x-TradBio", aOut, aTabs);
     XMLWriteElement(mTradBioY, "y-TradBio", aOut, aTabs);
     XMLWriteElement(mTradBioBase, "base-TradBio", aOut, aTabs);
+    XMLWriteElement(mServPriceBase, "price", aOut, aTabs);
     XMLWriteElement( mInternalGainsScalar, "internal-gains-scalar", aOut, aTabs );
     XMLWriteElement( mDegreeDays[ aPeriod ], "degree-days", aOut, aTabs );
     

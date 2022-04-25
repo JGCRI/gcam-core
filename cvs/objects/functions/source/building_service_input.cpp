@@ -138,6 +138,7 @@ void BuildingServiceInput::copy( const BuildingServiceInput& aInput ) {
     mTradBioX = aInput.mTradBioX;
     mTradBioY = aInput.mTradBioY;
     mTradBioBase = aInput.mTradBioBase;
+    mServPriceBase = aInput.mServPriceBase;
 	mCoef = aInput.mCoef;
 
     delete mSatiationDemandFunction;
@@ -161,6 +162,7 @@ void BuildingServiceInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* a
     XMLWriteElement(mTradBioX, "x-TradBio", aOut, aTabs);
     XMLWriteElement(mTradBioY, "y-TradBio", aOut, aTabs);
     XMLWriteElement(mTradBioBase, "base-TradBio", aOut, aTabs);
+    XMLWriteElement(mServPriceBase, "price", aOut, aTabs);
 	XMLWriteElement(mCoef, "coef", aOut, aTabs);
     XMLWriteElement( mServiceDensity[ aPeriod ], "service-density", aOut, aTabs );
 
@@ -273,6 +275,10 @@ double BuildingServiceInput::getTradBioY() const {
 
 double BuildingServiceInput::getTradBioBase() const {
     return mTradBioBase;
+}
+
+double BuildingServiceInput::getServPriceBase() const {
+    return mServPriceBase;
 }
 
 double BuildingServiceInput::getBiasAdder(const int aPeriod) const {

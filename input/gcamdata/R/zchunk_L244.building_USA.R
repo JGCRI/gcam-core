@@ -19,7 +19,8 @@
 #' \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
 #' \code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.GompFnParam_gcamusa}, \code{L244.Satiation_impedance_gcamusa},
 #' \code{L244.GenericServiceImpedance_gcamusa},\code{L244.GenericServiceCoef_gcamusa},\code{L244.GenericServiceAdder_gcamusa},
-#' \code{L244.ThermalServiceImpedance_gcamusa},\code{L244.ThermalServiceCoef_gcamusa},\code{L244.ThermalServiceAdder_gcamusa},\code{L210.DeleteRsrcTradBio_gcamusa},
+#' \code{L244.ThermalServiceImpedance_gcamusa},\code{L244.ThermalServiceCoef_gcamusa},\code{L244.ThermalServiceAdder_gcamusa},
+#' \code{L210.DeleteRsrcTradBio_gcamusa}, \code{L244.GenericServicePrice_gcamusa}, \code{L244.ThermalServicePrice_gcamusa},
 #' The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 #' @details Creates GCAM-USA building output files for writing to xml.
 #' @importFrom assertthat assert_that
@@ -106,7 +107,9 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
              "L244.ThermalServiceImpedance_gcamusa",
              "L244.ThermalServiceCoef_gcamusa",
              "L244.ThermalServiceAdder_gcamusa",
-             "L210.DeleteRsrcTradBio_gcamusa"))
+             "L210.DeleteRsrcTradBio_gcamusa",
+             "L244.GenericServicePrice_gcamusa",
+             "L244.ThermalServicePrice_gcamusa"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -829,6 +832,47 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
     # Finally, need to delete the TradBio resource for the USA region to keep consistency between global GCAM and GCAM-USA:
     L210.DeleteRsrcTradBio_gcamusa<- tibble(region = gcam.USA_REGION, resource = "traditional biomass")
 
+    #------------------------------------------------------
+    # Finally, write the service prices in final calibration year
+    # These will be used in the cpp files to compute the adjusment parameter that will account for the difference between read and calculated service prices
+
+    L244.GenericServicePrice_gcamusa<- L144.prices_bld_gcamusa %>%
+      filter(sector %in% generic_services) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      rename(building.service.input = sector,
+             price = value) %>%
+      filter(grepl("resid",building.service.input)) %>%
+      mutate(gcam.consumer = "resid") %>%
+      left_join_error_no_match(A44.gcam_consumer %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer") %>%
+      bind_rows(L144.prices_bld_gcamusa %>%
+                  filter(sector %in% generic_services) %>%
+                  filter(year == MODEL_FINAL_BASE_YEAR) %>%
+                  rename(building.service.input = sector,
+                         price = value) %>%
+                  filter(grepl("comm",building.service.input)) %>%
+                  mutate(gcam.consumer = "comm") %>%
+                  left_join_error_no_match(A44.gcam_consumer %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer")) %>%
+      select(LEVEL2_DATA_NAMES[["GenericServicePrice"]])
+
+
+    L244.ThermalServicePrice_gcamusa<- L144.prices_bld_gcamusa %>%
+      filter(sector %in% thermal_services) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      rename(thermal.building.service.input = sector,
+             price = value) %>%
+      filter(grepl("resid",thermal.building.service.input)) %>%
+      mutate(gcam.consumer = "resid") %>%
+      left_join_error_no_match(A44.gcam_consumer %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer") %>%
+      bind_rows(L144.prices_bld_gcamusa %>%
+                  filter(sector %in% thermal_services) %>%
+                  filter(year == MODEL_FINAL_BASE_YEAR) %>%
+                  rename(thermal.building.service.input = sector,
+                         price = value) %>%
+                  filter(grepl("comm",thermal.building.service.input)) %>%
+                  mutate(gcam.consumer = "comm") %>%
+                  left_join_error_no_match(A44.gcam_consumer %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer")) %>%
+    select(LEVEL2_DATA_NAMES[["ThermalServicePrice"]])
+
 
     # ===================================================
     # Produce outputs
@@ -1237,6 +1281,23 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       add_precursors("gcam-usa/A44.sector") ->
       L210.DeleteRsrcTradBio_gcamusa
 
+    L244.GenericServicePrice_gcamusa %>%
+      add_title("Final-base-year service prices") %>%
+      add_units("$1975/GJ") %>%
+      add_comments("Prices for generic services") %>%
+      add_legacy_name("L244.GenericServicePrice_gcamusa") %>%
+      add_precursors("gcam-usa/A44.CalPrice_service_gcamusa") ->
+      L244.GenericServicePrice_gcamusa
+
+    L244.ThermalServicePrice_gcamusa %>%
+      add_title("Final-base-year service prices") %>%
+      add_units("$1975/GJ") %>%
+      add_comments("Prices for thermal services") %>%
+      add_legacy_name("L244.ThermalServicePrice_gcamusa") %>%
+      add_precursors("gcam-usa/A44.CalPrice_service_gcamusa") ->
+      L244.ThermalServicePrice_gcamusa
+
+
     return_data(L244.DeleteConsumer_USAbld,
                 L244.DeleteSupplysector_USAbld,
                 L244.SubregionalShares_gcamusa,
@@ -1279,7 +1340,9 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
                 L244.ThermalServiceImpedance_gcamusa,
                 L244.ThermalServiceCoef_gcamusa,
                 L244.ThermalServiceAdder_gcamusa,
-                L210.DeleteRsrcTradBio_gcamusa)
+                L210.DeleteRsrcTradBio_gcamusa,
+                L244.GenericServicePrice_gcamusa,
+                L244.ThermalServicePrice_gcamusa)
   } else {
     stop("Unknown command")
   }
