@@ -4,15 +4,15 @@
 # Column types: ccccn 
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
-industrial energy use,biomass,start-year,,1
-industrial energy use,coal,start-year,,1
-industrial energy use,district heat,start-year,,1
-industrial energy use,electricity,start-year,,1
-industrial energy use,hydrogen,start-year,,0
-industrial energy use,hydrogen,2020,,0.25
-industrial energy use,gas,start-year,,1
-industrial energy use,refined liquids,start-year,,1
-industrial feedstocks,coal,start-year,,1
-industrial feedstocks,gas,start-year,,1
-industrial feedstocks,refined liquids,start-year,,1
-industry,industry,start-year,,1
+other industrial energy use,biomass,start-year,,1
+other industrial energy use,coal,start-year,,1
+other industrial energy use,district heat,start-year,,1
+other industrial energy use,electricity,start-year,,1
+other industrial energy use,hydrogen,start-year,,0
+other industrial energy use,hydrogen,2020,,0.25
+other industrial energy use,gas,start-year,,1
+other industrial energy use,refined liquids,start-year,,1
+other industrial feedstocks,coal,start-year,,1
+other industrial feedstocks,gas,start-year,,1
+other industrial feedstocks,refined liquids,start-year,,1
+other industry,other industry,start-year,,1

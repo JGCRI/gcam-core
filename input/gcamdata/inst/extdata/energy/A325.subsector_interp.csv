@@ -1,0 +1,17 @@
+# File: A325.subsector_interp.csv
+# Title: chemical default subsector shareweight interpolation
+# Units: NA
+# Column types: ccccccc
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+chemical,chemical,share-weight,final-calibration-year,end-year,,fixed
+chemical energy use,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+chemical energy use,gas,share-weight,final-calibration-year,end-year,,fixed
+chemical energy use,biomass,share-weight,final-calibration-year,end-year,,fixed
+chemical energy use,electricity,share-weight,final-calibration-year,end-year,,fixed
+chemical energy use,hydrogen,share-weight,final-calibration-year,end-year,,linear
+chemical energy use,coal,share-weight,final-calibration-year,end-year,,fixed
+chemical energy use,heat,share-weight,final-calibration-year,end-year,,fixed
+chemical feedstocks,refined liquids,share-weight,final-calibration-year,end-year,,linear
+chemical feedstocks,gas,share-weight,final-calibration-year,end-year,,fixed
+chemical feedstocks,coal,share-weight,final-calibration-year,end-year,,fixed

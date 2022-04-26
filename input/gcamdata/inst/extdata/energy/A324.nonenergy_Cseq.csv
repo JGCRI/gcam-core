@@ -1,0 +1,8 @@
+# File: A324.nonenergy_Cseq.csv
+# Title: non-energy carbon sequestration
+# Units: unitless
+# Description: Sequestration of carbon through non-energy use. Following CDIAC method (not EPA FCCC method)
+# Column types: cccic
+# ----------
+supplysector,subsector,technology,remove.fraction,target.gas
+construction feedstocks,refined liquids,refined liquids,1,CO2

@@ -2,9 +2,9 @@
 # Title: non-energy carbon sequestration
 # Units: unitless
 # Description: Sequestration of carbon through non-energy use. Following CDIAC method (not EPA FCCC method)
-# Column types: cccic 
+# Column types: cccic
 # ----------
 supplysector,subsector,technology,remove.fraction,target.gas
-industrial feedstocks,coal,coal,0,CO2
-industrial feedstocks,gas,gas,0,CO2
-industrial feedstocks,refined liquids,refined liquids,1,CO2
+other industrial feedstocks,coal,coal,0,CO2
+other industrial feedstocks,gas,gas,0,CO2
+other industrial feedstocks,refined liquids,refined liquids,1,CO2

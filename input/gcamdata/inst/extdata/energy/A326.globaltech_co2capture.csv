@@ -1,0 +1,10 @@
+# File: A326.globaltech_co2capture.csv
+# Title: Aluminum CO2 capture rates
+# Units: Unitless
+# Column types: cccnn
+# ----------
+supplysector,subsector,technology,1971,2100
+alumina,refined liquids,refined liquids CCS,0.9,0.9
+alumina,gas,gas CCS,0.9,0.9
+alumina,biomass,biomass CCS,0.9,0.9
+alumina,coal,coal CCS,0.9,0.9

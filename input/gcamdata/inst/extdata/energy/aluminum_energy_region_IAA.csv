@@ -1,0 +1,1166 @@
+# File: aluminum_energy_region_IAA.csv
+# Title: Aluminum and alumina energy by IAA region
+# Units: EJ
+# Description: Regional aluminum energy consumption
+# Source: World aluminum Association
+# Column types: ciccnc
+# ----------
+flow,year,IAA_region,fuel,value,unit
+Aluminum,1980,Africa,electricity,0.0259524,EJ
+Aluminum,1981,Africa,electricity,0.0283752,EJ
+Aluminum,1982,Africa,electricity,0.0290088,EJ
+Aluminum,1983,Africa,electricity,0.0246672,EJ
+Aluminum,1984,Africa,electricity,0.0236196,EJ
+Aluminum,1985,Africa,electricity,0.0279972,EJ
+Aluminum,1986,Africa,electricity,0.0319752,EJ
+Aluminum,1987,Africa,electricity,0.0326952,EJ
+Aluminum,1988,Africa,electricity,0.0336276,EJ
+Aluminum,1989,Africa,electricity,0.0344052,EJ
+Aluminum,1990,Africa,electricity,0.0337536,EJ
+Aluminum,1991,Africa,electricity,0.0340776,EJ
+Aluminum,1992,Africa,electricity,0.034236,EJ
+Aluminum,1993,Africa,electricity,0.0349416,EJ
+Aluminum,1994,Africa,electricity,0.032634,EJ
+Aluminum,1995,Africa,electricity,0.0358776,EJ
+Aluminum,1996,Africa,electricity,0.0558072,EJ
+Aluminum,1997,Africa,electricity,0.0601776,EJ
+Aluminum,1998,Africa,electricity,0.0562896,EJ
+Aluminum,1999,Africa,electricity,0.0584604,EJ
+Aluminum,2000,Africa,electricity,0.0639288,EJ
+Aluminum,2001,Africa,electricity,0.0738036,EJ
+Aluminum,2002,Africa,electricity,0.0724104,EJ
+Aluminum,2003,Africa,electricity,0.07434,EJ
+Aluminum,2004,Africa,electricity,0.0885168,EJ
+Aluminum,2005,Africa,electricity,0.0893772,EJ
+Aluminum,2006,Africa,electricity,0.098172,EJ
+Aluminum,2007,Africa,electricity,0.095508,EJ
+Aluminum,2008,Africa,electricity,0.091404,EJ
+Aluminum,2009,Africa,electricity,0.0891972,EJ
+Aluminum,2010,Africa,electricity,0.07569,EJ
+Aluminum,2011,Africa,electricity,0.0766116,EJ
+Aluminum,2012,Africa,electricity,0.0704484,EJ
+Aluminum,2013,Africa,electricity,0.0832536,EJ
+Aluminum,2014,Africa,electricity,0.0736596,EJ
+Aluminum,2015,Africa,electricity,0.0838368,EJ
+Aluminum,1980,Asia (ex China),electricity,0.0886536,EJ
+Aluminum,1981,Asia (ex China),electricity,0.07542,EJ
+Aluminum,1982,Asia (ex China),electricity,0.0596196,EJ
+Aluminum,1983,Asia (ex China),electricity,0.0601704,EJ
+Aluminum,1984,Asia (ex China),electricity,0.0708012,EJ
+Aluminum,1985,Asia (ex China),electricity,0.07002,EJ
+Aluminum,1986,Asia (ex China),electricity,0.0622332,EJ
+Aluminum,1987,Asia (ex China),electricity,0.0528588,EJ
+Aluminum,1988,Asia (ex China),electricity,0.0581364,EJ
+Aluminum,1989,Asia (ex China),electricity,0.0638352,EJ
+Aluminum,1990,Asia (ex China),electricity,0.0643284,EJ
+Aluminum,1991,Asia (ex China),electricity,0.0708588,EJ
+Aluminum,1992,Asia (ex China),electricity,0.0799956,EJ
+Aluminum,1993,Asia (ex China),electricity,0.0870264,EJ
+Aluminum,1994,Asia (ex China),electricity,0.0907452,EJ
+Aluminum,1995,Asia (ex China),electricity,0.0946872,EJ
+Aluminum,1996,Asia (ex China),electricity,0.088524,EJ
+Aluminum,1997,Asia (ex China),electricity,0.0975492,EJ
+Aluminum,1998,Asia (ex China),electricity,0.0936504,EJ
+Aluminum,1999,Asia (ex China),electricity,0.0967176,EJ
+Aluminum,2000,Asia (ex China),electricity,0.1029456,EJ
+Aluminum,2001,Asia (ex China),electricity,0.1078668,EJ
+Aluminum,2002,Asia (ex China),electricity,0.106398,EJ
+Aluminum,2003,Asia (ex China),electricity,0.1067328,EJ
+Aluminum,2004,Asia (ex China),electricity,0.1320084,EJ
+Aluminum,2005,Asia (ex China),electricity,0.1447956,EJ
+Aluminum,2006,Asia (ex China),electricity,0.1682568,EJ
+Aluminum,2007,Asia (ex China),electricity,0.1750536,EJ
+Aluminum,2008,Asia (ex China),electricity,0.2032812,EJ
+Aluminum,2009,Asia (ex China),electricity,0.1993608,EJ
+Aluminum,2010,Asia (ex China),electricity,0.1030896,EJ
+Aluminum,2011,Asia (ex China),electricity,0.1711296,EJ
+Aluminum,2012,Asia (ex China),electricity,0.0329292,EJ
+Aluminum,2013,Asia (ex China),electricity,0.0490536,EJ
+Aluminum,2014,Asia (ex China),electricity,0.0588348,EJ
+Aluminum,2015,Asia (ex China),electricity,0.1184004,EJ
+Aluminum,1980,China,electricity,0,EJ
+Aluminum,1981,China,electricity,0,EJ
+Aluminum,1982,China,electricity,0,EJ
+Aluminum,1983,China,electricity,0,EJ
+Aluminum,1984,China,electricity,0,EJ
+Aluminum,1985,China,electricity,0,EJ
+Aluminum,1986,China,electricity,0,EJ
+Aluminum,1987,China,electricity,0,EJ
+Aluminum,1988,China,electricity,0,EJ
+Aluminum,1989,China,electricity,0,EJ
+Aluminum,1990,China,electricity,0,EJ
+Aluminum,1991,China,electricity,0,EJ
+Aluminum,1992,China,electricity,0,EJ
+Aluminum,1993,China,electricity,0,EJ
+Aluminum,1994,China,electricity,0,EJ
+Aluminum,1995,China,electricity,0.0946008,EJ
+Aluminum,1996,China,electricity,0.10242,EJ
+Aluminum,1997,China,electricity,0.1161756,EJ
+Aluminum,1998,China,electricity,0.1327968,EJ
+Aluminum,1999,China,electricity,0.1459332,EJ
+Aluminum,2000,China,electricity,0.1556928,EJ
+Aluminum,2001,China,electricity,0.1877364,EJ
+Aluminum,2002,China,electricity,0.2389644,EJ
+Aluminum,2003,China,electricity,0.3000564,EJ
+Aluminum,2004,China,electricity,0.3562452,EJ
+Aluminum,2005,China,electricity,0.4095504,EJ
+Aluminum,2006,China,electricity,0.4946472,EJ
+Aluminum,2007,China,electricity,0.6544188,EJ
+Aluminum,2008,China,electricity,0.6985296,EJ
+Aluminum,2009,China,electricity,0.6980976,EJ
+Aluminum,2010,China,electricity,0.872172,EJ
+Aluminum,2011,China,electricity,1.0053432,EJ
+Aluminum,2012,China,electricity,1.1729016,EJ
+Aluminum,2013,China,electricity,1.3124772,EJ
+Aluminum,2014,China,electricity,1.3859928,EJ
+Aluminum,2015,China,electricity,1.5388092,EJ
+Aluminum,1980,Europe,electricity,0.215928,EJ
+Aluminum,1981,Europe,electricity,0.2117556,EJ
+Aluminum,1982,Europe,electricity,0.1951092,EJ
+Aluminum,1983,Europe,electricity,0.1955916,EJ
+Aluminum,1984,Europe,electricity,0.2039544,EJ
+Aluminum,1985,Europe,electricity,0.1948932,EJ
+Aluminum,1986,Europe,electricity,0.1986408,EJ
+Aluminum,1987,Europe,electricity,0.1993464,EJ
+Aluminum,1988,Europe,electricity,0.2030148,EJ
+Aluminum,1989,Europe,electricity,0.2065032,EJ
+Aluminum,1990,Europe,electricity,0.203778,EJ
+Aluminum,1991,Europe,electricity,0.198288,EJ
+Aluminum,1992,Europe,electricity,0.1837404,EJ
+Aluminum,1993,Europe,electricity,0.1788012,EJ
+Aluminum,1994,Europe,electricity,0.1726452,EJ
+Aluminum,1995,Europe,electricity,0.1772676,EJ
+Aluminum,1996,Europe,electricity,0.1892916,EJ
+Aluminum,1997,Europe,electricity,0.1953756,EJ
+Aluminum,1998,Europe,electricity,0.2142684,EJ
+Aluminum,1999,Europe,electricity,0.219006,EJ
+Aluminum,2000,Europe,electricity,0.225666,EJ
+Aluminum,2001,Europe,electricity,0.2312856,EJ
+Aluminum,2002,Europe,electricity,0.2372112,EJ
+Aluminum,2003,Europe,electricity,0.243954,EJ
+Aluminum,2004,Europe,electricity,0.3106872,EJ
+Aluminum,2005,Europe,electricity,0.4542876,EJ
+Aluminum,2006,Europe,electricity,0.46854,EJ
+Aluminum,2007,Europe,electricity,0.496908,EJ
+Aluminum,2008,Europe,electricity,0.5248584,EJ
+Aluminum,2009,Europe,electricity,0.4380444,EJ
+Aluminum,2010,Europe,electricity,0.4574052,EJ
+Aluminum,2011,Europe,electricity,0.4179636,EJ
+Aluminum,2012,Europe,electricity,0.4455108,EJ
+Aluminum,2013,Europe,electricity,0.4157136,EJ
+Aluminum,2014,Europe,electricity,0.4078044,EJ
+Aluminum,2015,Europe,electricity,0.4424616,EJ
+Aluminum,1980,GCC,electricity,0,EJ
+Aluminum,1981,GCC,electricity,0,EJ
+Aluminum,1982,GCC,electricity,0,EJ
+Aluminum,1983,GCC,electricity,0,EJ
+Aluminum,1984,GCC,electricity,0,EJ
+Aluminum,1985,GCC,electricity,0,EJ
+Aluminum,1986,GCC,electricity,0,EJ
+Aluminum,1987,GCC,electricity,0,EJ
+Aluminum,1988,GCC,electricity,0,EJ
+Aluminum,1989,GCC,electricity,0,EJ
+Aluminum,1990,GCC,electricity,0,EJ
+Aluminum,1991,GCC,electricity,0,EJ
+Aluminum,1992,GCC,electricity,0,EJ
+Aluminum,1993,GCC,electricity,0,EJ
+Aluminum,1994,GCC,electricity,0,EJ
+Aluminum,1995,GCC,electricity,0,EJ
+Aluminum,1996,GCC,electricity,0,EJ
+Aluminum,1997,GCC,electricity,0,EJ
+Aluminum,1998,GCC,electricity,0,EJ
+Aluminum,1999,GCC,electricity,0,EJ
+Aluminum,2000,GCC,electricity,0,EJ
+Aluminum,2001,GCC,electricity,0,EJ
+Aluminum,2002,GCC,electricity,0,EJ
+Aluminum,2003,GCC,electricity,0,EJ
+Aluminum,2004,GCC,electricity,0,EJ
+Aluminum,2005,GCC,electricity,0,EJ
+Aluminum,2006,GCC,electricity,0,EJ
+Aluminum,2007,GCC,electricity,0,EJ
+Aluminum,2008,GCC,electricity,0,EJ
+Aluminum,2009,GCC,electricity,0,EJ
+Aluminum,2010,GCC,electricity,0,EJ
+Aluminum,2011,GCC,electricity,0,EJ
+Aluminum,2012,GCC,electricity,0.1334736,EJ
+Aluminum,2013,GCC,electricity,0.1398168,EJ
+Aluminum,2014,GCC,electricity,0.2076048,EJ
+Aluminum,2015,GCC,electricity,0.22779,EJ
+Aluminum,1980,North America,electricity,0.359892,EJ
+Aluminum,1981,North America,electricity,0.343422,EJ
+Aluminum,1982,North America,electricity,0.2655936,EJ
+Aluminum,1983,North America,electricity,0.2760228,EJ
+Aluminum,1984,North America,electricity,0.3316032,EJ
+Aluminum,1985,North America,electricity,0.2911788,EJ
+Aluminum,1986,North America,electricity,0.2665692,EJ
+Aluminum,1987,North America,electricity,0.2945304,EJ
+Aluminum,1988,North America,electricity,0.3284496,EJ
+Aluminum,1989,North America,electricity,0.3394188,EJ
+Aluminum,1990,North America,electricity,0.3330432,EJ
+Aluminum,1991,North America,electricity,0.3483468,EJ
+Aluminum,1992,North America,electricity,0.349938,EJ
+Aluminum,1993,North America,electricity,0.345852,EJ
+Aluminum,1994,North America,electricity,0.3199536,EJ
+Aluminum,1995,North America,electricity,0.3208428,EJ
+Aluminum,1996,North America,electricity,0.3373344,EJ
+Aluminum,1997,North America,electricity,0.3413304,EJ
+Aluminum,1998,North America,electricity,0.3506472,EJ
+Aluminum,1999,North America,electricity,0.313092,EJ
+Aluminum,2000,North America,electricity,0.3138444,EJ
+Aluminum,2001,North America,electricity,0.2573352,EJ
+Aluminum,2002,North America,electricity,0.2832552,EJ
+Aluminum,2003,North America,electricity,0.2921328,EJ
+Aluminum,2004,North America,electricity,0.2651616,EJ
+Aluminum,2005,North America,electricity,0.2874276,EJ
+Aluminum,2006,North America,electricity,0.2807964,EJ
+Aluminum,2007,North America,electricity,0.2952324,EJ
+Aluminum,2008,North America,electricity,0.304902,EJ
+Aluminum,2009,North America,electricity,0.2204928,EJ
+Aluminum,2010,North America,electricity,0.2415348,EJ
+Aluminum,2011,North America,electricity,0.25056,EJ
+Aluminum,2012,North America,electricity,0.243738,EJ
+Aluminum,2013,North America,electricity,0.2431116,EJ
+Aluminum,2014,North America,electricity,0.2056644,EJ
+Aluminum,2015,North America,electricity,0.2414088,EJ
+Aluminum,1980,Oceania,electricity,0.0276156,EJ
+Aluminum,1981,Oceania,electricity,0.0310644,EJ
+Aluminum,1982,Oceania,electricity,0.0324648,EJ
+Aluminum,1983,Oceania,electricity,0.0412092,EJ
+Aluminum,1984,Oceania,electricity,0.0571032,EJ
+Aluminum,1985,Oceania,electricity,0.0625896,EJ
+Aluminum,1986,Oceania,electricity,0.064062,EJ
+Aluminum,1987,Oceania,electricity,0.0718884,EJ
+Aluminum,1988,Oceania,electricity,0.0794736,EJ
+Aluminum,1989,Oceania,electricity,0.0826668,EJ
+Aluminum,1990,Oceania,electricity,0.0830772,EJ
+Aluminum,1991,Oceania,electricity,0.084114,EJ
+Aluminum,1992,Oceania,electricity,0.0826956,EJ
+Aluminum,1993,Oceania,electricity,0.091044,EJ
+Aluminum,1994,Oceania,electricity,0.08649,EJ
+Aluminum,1995,Oceania,electricity,0.0858636,EJ
+Aluminum,1996,Oceania,electricity,0.0907416,EJ
+Aluminum,1997,Oceania,electricity,0.0987084,EJ
+Aluminum,1998,Oceania,electricity,0.1070964,EJ
+Aluminum,1999,Oceania,electricity,0.1095372,EJ
+Aluminum,2000,Oceania,electricity,0.10449,EJ
+Aluminum,2001,Oceania,electricity,0.1130436,EJ
+Aluminum,2002,Oceania,electricity,0.1134,EJ
+Aluminum,2003,Oceania,electricity,0.1167912,EJ
+Aluminum,2004,Oceania,electricity,0.119376,EJ
+Aluminum,2005,Oceania,electricity,0.1198044,EJ
+Aluminum,2006,Oceania,electricity,0.1214784,EJ
+Aluminum,2007,Oceania,electricity,0.1239012,EJ
+Aluminum,2008,Oceania,electricity,0.1218528,EJ
+Aluminum,2009,Oceania,electricity,0.1154016,EJ
+Aluminum,2010,Oceania,electricity,0.0833364,EJ
+Aluminum,2011,Oceania,electricity,0.1246572,EJ
+Aluminum,2012,Oceania,electricity,0.113616,EJ
+Aluminum,2013,Oceania,electricity,0.08262,EJ
+Aluminum,2014,Oceania,electricity,0.1083024,EJ
+Aluminum,2015,Oceania,electricity,0.1046808,EJ
+Aluminum,1980,South America,electricity,0.0512604,EJ
+Aluminum,1981,South America,electricity,0.0496908,EJ
+Aluminum,1982,South America,electricity,0.0489924,EJ
+Aluminum,1983,South America,electricity,0.0576072,EJ
+Aluminum,1984,South America,electricity,0.0615528,EJ
+Aluminum,1985,South America,electricity,0.0675216,EJ
+Aluminum,1986,South America,electricity,0.0790632,EJ
+Aluminum,1987,South America,electricity,0.0855072,EJ
+Aluminum,1988,South America,electricity,0.0897624,EJ
+Aluminum,1989,South America,electricity,0.0969696,EJ
+Aluminum,1990,South America,electricity,0.1034676,EJ
+Aluminum,1991,South America,electricity,0.11457,EJ
+Aluminum,1992,South America,electricity,0.110484,EJ
+Aluminum,1993,South America,electricity,0.1085796,EJ
+Aluminum,1994,South America,electricity,0.1111824,EJ
+Aluminum,1995,South America,electricity,0.1155456,EJ
+Aluminum,1996,South America,electricity,0.1187964,EJ
+Aluminum,1997,South America,electricity,0.11898,EJ
+Aluminum,1998,South America,electricity,0.1189764,EJ
+Aluminum,1999,South America,electricity,0.1105308,EJ
+Aluminum,2000,South America,electricity,0.1196172,EJ
+Aluminum,2001,South America,electricity,0.12078,EJ
+Aluminum,2002,South America,electricity,0.12078,EJ
+Aluminum,2003,South America,electricity,0.1248084,EJ
+Aluminum,2004,South America,electricity,0.1322316,EJ
+Aluminum,2005,South America,electricity,0.1245852,EJ
+Aluminum,2006,South America,electricity,0.1363356,EJ
+Aluminum,2007,South America,electricity,0.1409904,EJ
+Aluminum,2008,South America,electricity,0.1493856,EJ
+Aluminum,2009,South America,electricity,0.1053324,EJ
+Aluminum,2010,South America,electricity,0.1250496,EJ
+Aluminum,2011,South America,electricity,0.1224936,EJ
+Aluminum,2012,South America,electricity,0.1145016,EJ
+Aluminum,2013,South America,electricity,0.0986076,EJ
+Aluminum,2014,South America,electricity,0.0758844,EJ
+Aluminum,2015,South America,electricity,0.0737604,EJ
+Alumina,2015,Africa & Asia (ex China),coal,0.054114,EJ
+Alumina,2015,Africa & Asia (ex China),refined liquids,0.013314,EJ
+Alumina,2015,Africa & Asia (ex China),gas,0.00051,EJ
+Alumina,2015,Africa & Asia (ex China),electricity,0.000106,EJ
+Alumina,2015,Africa & Asia (ex China),biomass,0.003609,EJ
+Alumina,2014,Africa & Asia (ex China),coal,0.032045,EJ
+Alumina,2014,Africa & Asia (ex China),refined liquids,0.007514,EJ
+Alumina,2014,Africa & Asia (ex China),gas,0.000361,EJ
+Alumina,2014,Africa & Asia (ex China),electricity,0.000075,EJ
+Alumina,2014,Africa & Asia (ex China),biomass,0.002988,EJ
+Alumina,2013,Africa & Asia (ex China),coal,0.0317,EJ
+Alumina,2013,Africa & Asia (ex China),refined liquids,0.007374,EJ
+Alumina,2013,Africa & Asia (ex China),gas,0.000387,EJ
+Alumina,2013,Africa & Asia (ex China),electricity,0.000155,EJ
+Alumina,2013,Africa & Asia (ex China),biomass,0.003315,EJ
+Alumina,2011,Africa & Asia (ex China),coal,0.029083,EJ
+Alumina,2011,Africa & Asia (ex China),refined liquids,0.009909,EJ
+Alumina,2011,Africa & Asia (ex China),gas,0.00059,EJ
+Alumina,2011,Africa & Asia (ex China),electricity,0.001175,EJ
+Alumina,2011,Africa & Asia (ex China),biomass,0.003563,EJ
+Alumina,2010,Africa & Asia (ex China),coal,0.012251,EJ
+Alumina,2010,Africa & Asia (ex China),refined liquids,0.01157,EJ
+Alumina,2010,Africa & Asia (ex China),gas,0.000589,EJ
+Alumina,2010,Africa & Asia (ex China),electricity,0.000404,EJ
+Alumina,2010,Africa & Asia (ex China),biomass,0.004224,EJ
+Alumina,2009,Africa & Asia (ex China),coal,0.026274,EJ
+Alumina,2009,Africa & Asia (ex China),refined liquids,0.017844,EJ
+Alumina,2009,Africa & Asia (ex China),gas,0.000044,EJ
+Alumina,2009,Africa & Asia (ex China),electricity,0.001251,EJ
+Alumina,2009,Africa & Asia (ex China),biomass,0.001965,EJ
+Alumina,2008,Africa & Asia (ex China),coal,0.03282,EJ
+Alumina,2008,Africa & Asia (ex China),refined liquids,0.017598,EJ
+Alumina,2008,Africa & Asia (ex China),gas,0.000052,EJ
+Alumina,2008,Africa & Asia (ex China),electricity,0.000924,EJ
+Alumina,2008,Africa & Asia (ex China),biomass,0.00308,EJ
+Alumina,2007,Africa & Asia (ex China),coal,0.00781,EJ
+Alumina,2007,Africa & Asia (ex China),refined liquids,0.011771,EJ
+Alumina,2007,Africa & Asia (ex China),gas,0.00084,EJ
+Alumina,2007,Africa & Asia (ex China),electricity,0.000599,EJ
+Alumina,2007,Africa & Asia (ex China),biomass,0.002905,EJ
+Alumina,2006,Africa & Asia (ex China),coal,0.027188,EJ
+Alumina,2006,Africa & Asia (ex China),refined liquids,0.017817,EJ
+Alumina,2006,Africa & Asia (ex China),gas,0.000021,EJ
+Alumina,2006,Africa & Asia (ex China),electricity,0.002298,EJ
+Alumina,2006,Africa & Asia (ex China),biomass,0.002516,EJ
+Alumina,2005,Africa & Asia (ex China),coal,0.026767,EJ
+Alumina,2005,Africa & Asia (ex China),refined liquids,0.014868,EJ
+Alumina,2005,Africa & Asia (ex China),gas,0,EJ
+Alumina,2005,Africa & Asia (ex China),electricity,0.002208,EJ
+Alumina,2005,Africa & Asia (ex China),biomass,0.000703,EJ
+Alumina,2004,Africa & Asia (ex China),coal,0.028802,EJ
+Alumina,2004,Africa & Asia (ex China),refined liquids,0.013014,EJ
+Alumina,2004,Africa & Asia (ex China),gas,0,EJ
+Alumina,2004,Africa & Asia (ex China),electricity,0.000762,EJ
+Alumina,2004,Africa & Asia (ex China),biomass,0,EJ
+Alumina,2003,Africa & Asia (ex China),coal,0.010366,EJ
+Alumina,2003,Africa & Asia (ex China),refined liquids,0.012521,EJ
+Alumina,2003,Africa & Asia (ex China),gas,0,EJ
+Alumina,2003,Africa & Asia (ex China),electricity,0.000754,EJ
+Alumina,2003,Africa & Asia (ex China),biomass,0,EJ
+Alumina,2001,Africa & Asia (ex China),coal,0.021541,EJ
+Alumina,2001,Africa & Asia (ex China),refined liquids,0.015294,EJ
+Alumina,2001,Africa & Asia (ex China),gas,0,EJ
+Alumina,2001,Africa & Asia (ex China),electricity,0.00072,EJ
+Alumina,2001,Africa & Asia (ex China),biomass,0,EJ
+Alumina,2000,Africa & Asia (ex China),coal,0.019115,EJ
+Alumina,2000,Africa & Asia (ex China),refined liquids,0.013533,EJ
+Alumina,2000,Africa & Asia (ex China),gas,0,EJ
+Alumina,2000,Africa & Asia (ex China),electricity,0.002734,EJ
+Alumina,2000,Africa & Asia (ex China),biomass,0.00032,EJ
+Alumina,1999,Africa & Asia (ex China),coal,0.020199,EJ
+Alumina,1999,Africa & Asia (ex China),refined liquids,0.016541,EJ
+Alumina,1999,Africa & Asia (ex China),gas,0,EJ
+Alumina,1999,Africa & Asia (ex China),electricity,0.00297,EJ
+Alumina,1999,Africa & Asia (ex China),biomass,0.000405,EJ
+Alumina,1998,Africa & Asia (ex China),coal,0.018462,EJ
+Alumina,1998,Africa & Asia (ex China),refined liquids,0.016838,EJ
+Alumina,1998,Africa & Asia (ex China),gas,0,EJ
+Alumina,1998,Africa & Asia (ex China),electricity,0.003215,EJ
+Alumina,1998,Africa & Asia (ex China),biomass,0.000338,EJ
+Alumina,1997,Africa & Asia (ex China),coal,0.017736,EJ
+Alumina,1997,Africa & Asia (ex China),refined liquids,0.015652,EJ
+Alumina,1997,Africa & Asia (ex China),gas,0,EJ
+Alumina,1997,Africa & Asia (ex China),electricity,0.002007,EJ
+Alumina,1997,Africa & Asia (ex China),biomass,0.000835,EJ
+Alumina,1996,Africa & Asia (ex China),coal,0.017364,EJ
+Alumina,1996,Africa & Asia (ex China),refined liquids,0.016901,EJ
+Alumina,1996,Africa & Asia (ex China),gas,0,EJ
+Alumina,1996,Africa & Asia (ex China),electricity,0.001972,EJ
+Alumina,1996,Africa & Asia (ex China),biomass,0.000385,EJ
+Alumina,1995,Africa & Asia (ex China),coal,0.016717,EJ
+Alumina,1995,Africa & Asia (ex China),refined liquids,0.01704,EJ
+Alumina,1995,Africa & Asia (ex China),gas,0,EJ
+Alumina,1995,Africa & Asia (ex China),electricity,0.001951,EJ
+Alumina,1995,Africa & Asia (ex China),biomass,0.000347,EJ
+Alumina,1994,Africa & Asia (ex China),coal,0.016092,EJ
+Alumina,1994,Africa & Asia (ex China),refined liquids,0.016402,EJ
+Alumina,1994,Africa & Asia (ex China),gas,0.000176,EJ
+Alumina,1994,Africa & Asia (ex China),electricity,0.001717,EJ
+Alumina,1994,Africa & Asia (ex China),biomass,0.000188,EJ
+Alumina,1993,Africa & Asia (ex China),coal,0.017206,EJ
+Alumina,1993,Africa & Asia (ex China),refined liquids,0.016716,EJ
+Alumina,1993,Africa & Asia (ex China),gas,0,EJ
+Alumina,1993,Africa & Asia (ex China),electricity,0.001874,EJ
+Alumina,1993,Africa & Asia (ex China),biomass,0.000116,EJ
+Alumina,1992,Africa & Asia (ex China),coal,0.015377,EJ
+Alumina,1992,Africa & Asia (ex China),refined liquids,0.015981,EJ
+Alumina,1992,Africa & Asia (ex China),gas,0,EJ
+Alumina,1992,Africa & Asia (ex China),electricity,0.00198,EJ
+Alumina,1992,Africa & Asia (ex China),biomass,0,EJ
+Alumina,1991,Africa & Asia (ex China),coal,0.015928,EJ
+Alumina,1991,Africa & Asia (ex China),refined liquids,0.015461,EJ
+Alumina,1991,Africa & Asia (ex China),gas,0.000015,EJ
+Alumina,1991,Africa & Asia (ex China),electricity,0.002085,EJ
+Alumina,1991,Africa & Asia (ex China),biomass,0,EJ
+Alumina,1990,Africa & Asia (ex China),coal,0.014956,EJ
+Alumina,1990,Africa & Asia (ex China),refined liquids,0.013896,EJ
+Alumina,1990,Africa & Asia (ex China),gas,0,EJ
+Alumina,1990,Africa & Asia (ex China),electricity,0.002094,EJ
+Alumina,1990,Africa & Asia (ex China),biomass,0.00207,EJ
+Alumina,1989,Africa & Asia (ex China),coal,0.012804,EJ
+Alumina,1989,Africa & Asia (ex China),refined liquids,0.017323,EJ
+Alumina,1989,Africa & Asia (ex China),gas,0,EJ
+Alumina,1989,Africa & Asia (ex China),electricity,0.002227,EJ
+Alumina,1989,Africa & Asia (ex China),biomass,0,EJ
+Alumina,1988,Africa & Asia (ex China),coal,0.011911,EJ
+Alumina,1988,Africa & Asia (ex China),refined liquids,0.015342,EJ
+Alumina,1988,Africa & Asia (ex China),gas,0,EJ
+Alumina,1988,Africa & Asia (ex China),electricity,0.002343,EJ
+Alumina,1988,Africa & Asia (ex China),biomass,0,EJ
+Alumina,1987,Africa & Asia (ex China),coal,0.008106,EJ
+Alumina,1987,Africa & Asia (ex China),refined liquids,0.012137,EJ
+Alumina,1987,Africa & Asia (ex China),gas,0,EJ
+Alumina,1987,Africa & Asia (ex China),electricity,0.001503,EJ
+Alumina,1987,Africa & Asia (ex China),biomass,0,EJ
+Alumina,1986,Africa & Asia (ex China),coal,0.006854,EJ
+Alumina,1986,Africa & Asia (ex China),refined liquids,0.011414,EJ
+Alumina,1986,Africa & Asia (ex China),gas,0,EJ
+Alumina,1986,Africa & Asia (ex China),electricity,0.001529,EJ
+Alumina,1986,Africa & Asia (ex China),biomass,0,EJ
+Alumina,1985,Africa & Asia (ex China),coal,0.007339,EJ
+Alumina,1985,Africa & Asia (ex China),refined liquids,0.011097,EJ
+Alumina,1985,Africa & Asia (ex China),gas,0,EJ
+Alumina,1985,Africa & Asia (ex China),electricity,0.001943,EJ
+Alumina,1985,Africa & Asia (ex China),biomass,0,EJ
+Alumina,2015,North America,coal,0,EJ
+Alumina,2015,North America,refined liquids,0,EJ
+Alumina,2015,North America,gas,0.035672,EJ
+Alumina,2015,North America,electricity,0.00198,EJ
+Alumina,2015,North America,biomass,0.013404,EJ
+Alumina,2014,North America,coal,0.000071,EJ
+Alumina,2014,North America,refined liquids,0.000025,EJ
+Alumina,2014,North America,gas,0.050384,EJ
+Alumina,2014,North America,electricity,0.003113,EJ
+Alumina,2014,North America,biomass,0.014727,EJ
+Alumina,2013,North America,coal,0.000078,EJ
+Alumina,2013,North America,refined liquids,0.000027,EJ
+Alumina,2013,North America,gas,0.045164,EJ
+Alumina,2013,North America,electricity,0.003064,EJ
+Alumina,2013,North America,biomass,0.015476,EJ
+Alumina,2011,North America,coal,0,EJ
+Alumina,2011,North America,refined liquids,0,EJ
+Alumina,2011,North America,gas,0.032296,EJ
+Alumina,2011,North America,electricity,0.001918,EJ
+Alumina,2011,North America,biomass,0.012322,EJ
+Alumina,2010,North America,coal,0,EJ
+Alumina,2010,North America,refined liquids,0,EJ
+Alumina,2010,North America,gas,0.030271,EJ
+Alumina,2010,North America,electricity,0.002079,EJ
+Alumina,2010,North America,biomass,0.010998,EJ
+Alumina,2009,North America,coal,0.000095,EJ
+Alumina,2009,North America,refined liquids,0.001324,EJ
+Alumina,2009,North America,gas,0.017369,EJ
+Alumina,2009,North America,electricity,0.002322,EJ
+Alumina,2009,North America,biomass,0.011002,EJ
+Alumina,2008,North America,coal,0.000065,EJ
+Alumina,2008,North America,refined liquids,0.003935,EJ
+Alumina,2008,North America,gas,0.038978,EJ
+Alumina,2008,North America,electricity,0.004185,EJ
+Alumina,2008,North America,biomass,0.011842,EJ
+Alumina,2007,North America,coal,0,EJ
+Alumina,2007,North America,refined liquids,0.004299,EJ
+Alumina,2007,North America,gas,0.037298,EJ
+Alumina,2007,North America,electricity,0.003432,EJ
+Alumina,2007,North America,biomass,0.011632,EJ
+Alumina,2006,North America,coal,0,EJ
+Alumina,2006,North America,refined liquids,0.003942,EJ
+Alumina,2006,North America,gas,0.058125,EJ
+Alumina,2006,North America,electricity,0.003625,EJ
+Alumina,2006,North America,biomass,0,EJ
+Alumina,2005,North America,coal,0,EJ
+Alumina,2005,North America,refined liquids,0.005827,EJ
+Alumina,2005,North America,gas,0.052919,EJ
+Alumina,2005,North America,electricity,0.003494,EJ
+Alumina,2005,North America,biomass,0,EJ
+Alumina,2004,North America,coal,0,EJ
+Alumina,2004,North America,refined liquids,0.004989,EJ
+Alumina,2004,North America,gas,0.039838,EJ
+Alumina,2004,North America,electricity,0.003182,EJ
+Alumina,2004,North America,biomass,0,EJ
+Alumina,2003,North America,coal,0,EJ
+Alumina,2003,North America,refined liquids,0.00463,EJ
+Alumina,2003,North America,gas,0.039963,EJ
+Alumina,2003,North America,electricity,0.00312,EJ
+Alumina,2003,North America,biomass,0,EJ
+Alumina,2001,North America,coal,0,EJ
+Alumina,2001,North America,refined liquids,0.003742,EJ
+Alumina,2001,North America,gas,0.031967,EJ
+Alumina,2001,North America,electricity,0.003901,EJ
+Alumina,2001,North America,biomass,0,EJ
+Alumina,2000,North America,coal,0,EJ
+Alumina,2000,North America,refined liquids,0.00184,EJ
+Alumina,2000,North America,gas,0.044983,EJ
+Alumina,2000,North America,electricity,0.004756,EJ
+Alumina,2000,North America,biomass,0,EJ
+Alumina,1999,North America,coal,0,EJ
+Alumina,1999,North America,refined liquids,0.002607,EJ
+Alumina,1999,North America,gas,0.044706,EJ
+Alumina,1999,North America,electricity,0.003872,EJ
+Alumina,1999,North America,biomass,0,EJ
+Alumina,1998,North America,coal,0,EJ
+Alumina,1998,North America,refined liquids,0.002141,EJ
+Alumina,1998,North America,gas,0.043054,EJ
+Alumina,1998,North America,electricity,0.003423,EJ
+Alumina,1998,North America,biomass,0,EJ
+Alumina,1997,North America,coal,0,EJ
+Alumina,1997,North America,refined liquids,0.001935,EJ
+Alumina,1997,North America,gas,0.046306,EJ
+Alumina,1997,North America,electricity,0.003285,EJ
+Alumina,1997,North America,biomass,0,EJ
+Alumina,1996,North America,coal,0,EJ
+Alumina,1996,North America,refined liquids,0.002948,EJ
+Alumina,1996,North America,gas,0.061924,EJ
+Alumina,1996,North America,electricity,0.002487,EJ
+Alumina,1996,North America,biomass,0,EJ
+Alumina,1995,North America,coal,0,EJ
+Alumina,1995,North America,refined liquids,0.000994,EJ
+Alumina,1995,North America,gas,0.058665,EJ
+Alumina,1995,North America,electricity,0.004952,EJ
+Alumina,1995,North America,biomass,0,EJ
+Alumina,1994,North America,coal,0,EJ
+Alumina,1994,North America,refined liquids,0.002225,EJ
+Alumina,1994,North America,gas,0.05616,EJ
+Alumina,1994,North America,electricity,0.003147,EJ
+Alumina,1994,North America,biomass,0,EJ
+Alumina,1993,North America,coal,0,EJ
+Alumina,1993,North America,refined liquids,0.002819,EJ
+Alumina,1993,North America,gas,0.063408,EJ
+Alumina,1993,North America,electricity,0.002836,EJ
+Alumina,1993,North America,biomass,0,EJ
+Alumina,1992,North America,coal,0,EJ
+Alumina,1992,North America,refined liquids,0.003426,EJ
+Alumina,1992,North America,gas,0.064018,EJ
+Alumina,1992,North America,electricity,0.001323,EJ
+Alumina,1992,North America,biomass,0,EJ
+Alumina,1991,North America,coal,0,EJ
+Alumina,1991,North America,refined liquids,0.003027,EJ
+Alumina,1991,North America,gas,0.067816,EJ
+Alumina,1991,North America,electricity,0.001293,EJ
+Alumina,1991,North America,biomass,0,EJ
+Alumina,1990,North America,coal,0,EJ
+Alumina,1990,North America,refined liquids,0.003354,EJ
+Alumina,1990,North America,gas,0.067629,EJ
+Alumina,1990,North America,electricity,0.001053,EJ
+Alumina,1990,North America,biomass,0,EJ
+Alumina,1989,North America,coal,0,EJ
+Alumina,1989,North America,refined liquids,0.003402,EJ
+Alumina,1989,North America,gas,0.069258,EJ
+Alumina,1989,North America,electricity,0.000174,EJ
+Alumina,1989,North America,biomass,0,EJ
+Alumina,1988,North America,coal,0,EJ
+Alumina,1988,North America,refined liquids,0.002992,EJ
+Alumina,1988,North America,gas,0.058466,EJ
+Alumina,1988,North America,electricity,0.000391,EJ
+Alumina,1988,North America,biomass,0,EJ
+Alumina,1987,North America,coal,0,EJ
+Alumina,1987,North America,refined liquids,0.001434,EJ
+Alumina,1987,North America,gas,0.054804,EJ
+Alumina,1987,North America,electricity,0.002142,EJ
+Alumina,1987,North America,biomass,0,EJ
+Alumina,1986,North America,coal,0,EJ
+Alumina,1986,North America,refined liquids,0.000653,EJ
+Alumina,1986,North America,gas,0.039292,EJ
+Alumina,1986,North America,electricity,0.004268,EJ
+Alumina,1986,North America,biomass,0.000451,EJ
+Alumina,1985,North America,coal,0,EJ
+Alumina,1985,North America,refined liquids,0.001533,EJ
+Alumina,1985,North America,gas,0.043329,EJ
+Alumina,1985,North America,electricity,0.004933,EJ
+Alumina,1985,North America,biomass,0,EJ
+Alumina,2015,South America,coal,0.027387,EJ
+Alumina,2015,South America,refined liquids,0.070764,EJ
+Alumina,2015,South America,gas,0.007433,EJ
+Alumina,2015,South America,electricity,0.003774,EJ
+Alumina,2015,South America,biomass,0,EJ
+Alumina,2014,South America,coal,0.028657,EJ
+Alumina,2014,South America,refined liquids,0.071672,EJ
+Alumina,2014,South America,gas,0.007838,EJ
+Alumina,2014,South America,electricity,0.004026,EJ
+Alumina,2014,South America,biomass,0,EJ
+Alumina,2013,South America,coal,0.026425,EJ
+Alumina,2013,South America,refined liquids,0.072404,EJ
+Alumina,2013,South America,gas,0.008576,EJ
+Alumina,2013,South America,electricity,0.002617,EJ
+Alumina,2013,South America,biomass,0,EJ
+Alumina,2011,South America,coal,0.029111,EJ
+Alumina,2011,South America,refined liquids,0.074634,EJ
+Alumina,2011,South America,gas,0.022078,EJ
+Alumina,2011,South America,electricity,0.007284,EJ
+Alumina,2011,South America,biomass,0,EJ
+Alumina,2010,South America,coal,0.026991,EJ
+Alumina,2010,South America,refined liquids,0.076232,EJ
+Alumina,2010,South America,gas,0.025484,EJ
+Alumina,2010,South America,electricity,0.005378,EJ
+Alumina,2010,South America,biomass,0,EJ
+Alumina,2009,South America,coal,0.019596,EJ
+Alumina,2009,South America,refined liquids,0.073842,EJ
+Alumina,2009,South America,gas,0.015032,EJ
+Alumina,2009,South America,electricity,0.005474,EJ
+Alumina,2009,South America,biomass,0,EJ
+Alumina,2008,South America,coal,0.014708,EJ
+Alumina,2008,South America,refined liquids,0.116719,EJ
+Alumina,2008,South America,gas,0.024526,EJ
+Alumina,2008,South America,electricity,0.007287,EJ
+Alumina,2008,South America,biomass,0,EJ
+Alumina,2007,South America,coal,0.005416,EJ
+Alumina,2007,South America,refined liquids,0.118037,EJ
+Alumina,2007,South America,gas,0.026496,EJ
+Alumina,2007,South America,electricity,0.010619,EJ
+Alumina,2007,South America,biomass,0.000002,EJ
+Alumina,2006,South America,coal,0.004611,EJ
+Alumina,2006,South America,refined liquids,0.124974,EJ
+Alumina,2006,South America,gas,0.02637,EJ
+Alumina,2006,South America,electricity,0.010935,EJ
+Alumina,2006,South America,biomass,0,EJ
+Alumina,2005,South America,coal,0.004568,EJ
+Alumina,2005,South America,refined liquids,0.106411,EJ
+Alumina,2005,South America,gas,0.025817,EJ
+Alumina,2005,South America,electricity,0.00868,EJ
+Alumina,2005,South America,biomass,0,EJ
+Alumina,2004,South America,coal,0.004587,EJ
+Alumina,2004,South America,refined liquids,0.080023,EJ
+Alumina,2004,South America,gas,0.022889,EJ
+Alumina,2004,South America,electricity,0.008035,EJ
+Alumina,2004,South America,biomass,0,EJ
+Alumina,2003,South America,coal,0.003824,EJ
+Alumina,2003,South America,refined liquids,0.10815,EJ
+Alumina,2003,South America,gas,0.019208,EJ
+Alumina,2003,South America,electricity,0.007279,EJ
+Alumina,2003,South America,biomass,0,EJ
+Alumina,2001,South America,coal,0.004662,EJ
+Alumina,2001,South America,refined liquids,0.097733,EJ
+Alumina,2001,South America,gas,0.021283,EJ
+Alumina,2001,South America,electricity,0.004008,EJ
+Alumina,2001,South America,biomass,0,EJ
+Alumina,2000,South America,coal,0.007636,EJ
+Alumina,2000,South America,refined liquids,0.105256,EJ
+Alumina,2000,South America,gas,0.019862,EJ
+Alumina,2000,South America,electricity,0.004123,EJ
+Alumina,2000,South America,biomass,0,EJ
+Alumina,1999,South America,coal,0.008634,EJ
+Alumina,1999,South America,refined liquids,0.09608,EJ
+Alumina,1999,South America,gas,0.017222,EJ
+Alumina,1999,South America,electricity,0.004857,EJ
+Alumina,1999,South America,biomass,0,EJ
+Alumina,1998,South America,coal,0.007756,EJ
+Alumina,1998,South America,refined liquids,0.096011,EJ
+Alumina,1998,South America,gas,0.017643,EJ
+Alumina,1998,South America,electricity,0.00682,EJ
+Alumina,1998,South America,biomass,0,EJ
+Alumina,1997,South America,coal,0.004144,EJ
+Alumina,1997,South America,refined liquids,0.089054,EJ
+Alumina,1997,South America,gas,0.019566,EJ
+Alumina,1997,South America,electricity,0.007578,EJ
+Alumina,1997,South America,biomass,0,EJ
+Alumina,1996,South America,coal,0.004081,EJ
+Alumina,1996,South America,refined liquids,0.086967,EJ
+Alumina,1996,South America,gas,0.019536,EJ
+Alumina,1996,South America,electricity,0.006526,EJ
+Alumina,1996,South America,biomass,0,EJ
+Alumina,1995,South America,coal,0.004,EJ
+Alumina,1995,South America,refined liquids,0.079106,EJ
+Alumina,1995,South America,gas,0.017334,EJ
+Alumina,1995,South America,electricity,0.004681,EJ
+Alumina,1995,South America,biomass,0,EJ
+Alumina,1994,South America,coal,0.003616,EJ
+Alumina,1994,South America,refined liquids,0.077098,EJ
+Alumina,1994,South America,gas,0.016212,EJ
+Alumina,1994,South America,electricity,0.006468,EJ
+Alumina,1994,South America,biomass,0,EJ
+Alumina,1993,South America,coal,0.003304,EJ
+Alumina,1993,South America,refined liquids,0.073905,EJ
+Alumina,1993,South America,gas,0.014741,EJ
+Alumina,1993,South America,electricity,0.007623,EJ
+Alumina,1993,South America,biomass,0,EJ
+Alumina,1992,South America,coal,0.003319,EJ
+Alumina,1992,South America,refined liquids,0.072385,EJ
+Alumina,1992,South America,gas,0.013125,EJ
+Alumina,1992,South America,electricity,0.006697,EJ
+Alumina,1992,South America,biomass,0,EJ
+Alumina,1991,South America,coal,0.003318,EJ
+Alumina,1991,South America,refined liquids,0.070877,EJ
+Alumina,1991,South America,gas,0.014961,EJ
+Alumina,1991,South America,electricity,0.00639,EJ
+Alumina,1991,South America,biomass,0,EJ
+Alumina,1990,South America,coal,0.00313,EJ
+Alumina,1990,South America,refined liquids,0.065827,EJ
+Alumina,1990,South America,gas,0.014044,EJ
+Alumina,1990,South America,electricity,0.00641,EJ
+Alumina,1990,South America,biomass,0,EJ
+Alumina,1989,South America,coal,0.002941,EJ
+Alumina,1989,South America,refined liquids,0.05614,EJ
+Alumina,1989,South America,gas,0.012628,EJ
+Alumina,1989,South America,electricity,0.004779,EJ
+Alumina,1989,South America,biomass,0,EJ
+Alumina,1988,South America,coal,0.002584,EJ
+Alumina,1988,South America,refined liquids,0.039476,EJ
+Alumina,1988,South America,gas,0.011988,EJ
+Alumina,1988,South America,electricity,0.004358,EJ
+Alumina,1988,South America,biomass,0,EJ
+Alumina,1987,South America,coal,0.002384,EJ
+Alumina,1987,South America,refined liquids,0.040786,EJ
+Alumina,1987,South America,gas,0.011365,EJ
+Alumina,1987,South America,electricity,0.003416,EJ
+Alumina,1987,South America,biomass,0,EJ
+Alumina,1986,South America,coal,0.001382,EJ
+Alumina,1986,South America,refined liquids,0.039067,EJ
+Alumina,1986,South America,gas,0.010503,EJ
+Alumina,1986,South America,electricity,0.00343,EJ
+Alumina,1986,South America,biomass,0,EJ
+Alumina,1985,South America,coal,0.001205,EJ
+Alumina,1985,South America,refined liquids,0.030895,EJ
+Alumina,1985,South America,gas,0.000001,EJ
+Alumina,1985,South America,electricity,0.003772,EJ
+Alumina,1985,South America,biomass,0,EJ
+Alumina,2015,Oceania,coal,0.056731,EJ
+Alumina,2015,Oceania,refined liquids,0.004131,EJ
+Alumina,2015,Oceania,gas,0.125744,EJ
+Alumina,2015,Oceania,electricity,0.008446,EJ
+Alumina,2015,Oceania,biomass,0.012954,EJ
+Alumina,2014,Oceania,coal,0.053153,EJ
+Alumina,2014,Oceania,refined liquids,0.015678,EJ
+Alumina,2014,Oceania,gas,0.126981,EJ
+Alumina,2014,Oceania,electricity,0.010897,EJ
+Alumina,2014,Oceania,biomass,0.011984,EJ
+Alumina,2013,Oceania,coal,0.04605,EJ
+Alumina,2013,Oceania,refined liquids,0.02354,EJ
+Alumina,2013,Oceania,gas,0.124471,EJ
+Alumina,2013,Oceania,electricity,0.008383,EJ
+Alumina,2013,Oceania,biomass,0.020722,EJ
+Alumina,2011,Oceania,coal,0.036032,EJ
+Alumina,2011,Oceania,refined liquids,0.044108,EJ
+Alumina,2011,Oceania,gas,0.115447,EJ
+Alumina,2011,Oceania,electricity,0.005868,EJ
+Alumina,2011,Oceania,biomass,0.016039,EJ
+Alumina,2010,Oceania,coal,0.019901,EJ
+Alumina,2010,Oceania,refined liquids,0.021835,EJ
+Alumina,2010,Oceania,gas,0.097061,EJ
+Alumina,2010,Oceania,electricity,0.00352,EJ
+Alumina,2010,Oceania,biomass,0.017984,EJ
+Alumina,2009,Oceania,coal,0.000018,EJ
+Alumina,2009,Oceania,refined liquids,0.026336,EJ
+Alumina,2009,Oceania,gas,0.049091,EJ
+Alumina,2009,Oceania,electricity,0.013758,EJ
+Alumina,2009,Oceania,biomass,0.030673,EJ
+Alumina,2008,Oceania,coal,0.051414,EJ
+Alumina,2008,Oceania,refined liquids,0.026379,EJ
+Alumina,2008,Oceania,gas,0.118054,EJ
+Alumina,2008,Oceania,electricity,0.019012,EJ
+Alumina,2008,Oceania,biomass,0.003416,EJ
+Alumina,2007,Oceania,coal,0.051811,EJ
+Alumina,2007,Oceania,refined liquids,0.02105,EJ
+Alumina,2007,Oceania,gas,0.123431,EJ
+Alumina,2007,Oceania,electricity,0.009826,EJ
+Alumina,2007,Oceania,biomass,0.005359,EJ
+Alumina,2006,Oceania,coal,0.048128,EJ
+Alumina,2006,Oceania,refined liquids,0.020496,EJ
+Alumina,2006,Oceania,gas,0.118034,EJ
+Alumina,2006,Oceania,electricity,0.018474,EJ
+Alumina,2006,Oceania,biomass,0.004513,EJ
+Alumina,2005,Oceania,coal,0.045481,EJ
+Alumina,2005,Oceania,refined liquids,0.018164,EJ
+Alumina,2005,Oceania,gas,0.11322,EJ
+Alumina,2005,Oceania,electricity,0.019818,EJ
+Alumina,2005,Oceania,biomass,0.005851,EJ
+Alumina,2004,Oceania,coal,0.047462,EJ
+Alumina,2004,Oceania,refined liquids,0.022603,EJ
+Alumina,2004,Oceania,gas,0.107955,EJ
+Alumina,2004,Oceania,electricity,0.014424,EJ
+Alumina,2004,Oceania,biomass,0.005559,EJ
+Alumina,2003,Oceania,coal,0.045374,EJ
+Alumina,2003,Oceania,refined liquids,0.022416,EJ
+Alumina,2003,Oceania,gas,0.107979,EJ
+Alumina,2003,Oceania,electricity,0.012959,EJ
+Alumina,2003,Oceania,biomass,0.00574,EJ
+Alumina,2001,Oceania,coal,0.04373,EJ
+Alumina,2001,Oceania,refined liquids,0.020569,EJ
+Alumina,2001,Oceania,gas,0.108019,EJ
+Alumina,2001,Oceania,electricity,0.006162,EJ
+Alumina,2001,Oceania,biomass,0,EJ
+Alumina,2000,Oceania,coal,0.042527,EJ
+Alumina,2000,Oceania,refined liquids,0.018915,EJ
+Alumina,2000,Oceania,gas,0.105766,EJ
+Alumina,2000,Oceania,electricity,0.007748,EJ
+Alumina,2000,Oceania,biomass,0,EJ
+Alumina,1999,Oceania,coal,0.042781,EJ
+Alumina,1999,Oceania,refined liquids,0.019821,EJ
+Alumina,1999,Oceania,gas,0.101736,EJ
+Alumina,1999,Oceania,electricity,0.007921,EJ
+Alumina,1999,Oceania,biomass,0,EJ
+Alumina,1998,Oceania,coal,0.04046,EJ
+Alumina,1998,Oceania,refined liquids,0.020524,EJ
+Alumina,1998,Oceania,gas,0.099703,EJ
+Alumina,1998,Oceania,electricity,0.007701,EJ
+Alumina,1998,Oceania,biomass,0,EJ
+Alumina,1997,Oceania,coal,0.039569,EJ
+Alumina,1997,Oceania,refined liquids,0.019998,EJ
+Alumina,1997,Oceania,gas,0.098841,EJ
+Alumina,1997,Oceania,electricity,0.007375,EJ
+Alumina,1997,Oceania,biomass,0,EJ
+Alumina,1996,Oceania,coal,0.040098,EJ
+Alumina,1996,Oceania,refined liquids,0.019838,EJ
+Alumina,1996,Oceania,gas,0.092564,EJ
+Alumina,1996,Oceania,electricity,0.007367,EJ
+Alumina,1996,Oceania,biomass,0,EJ
+Alumina,1995,Oceania,coal,0.040799,EJ
+Alumina,1995,Oceania,refined liquids,0.019451,EJ
+Alumina,1995,Oceania,gas,0.095068,EJ
+Alumina,1995,Oceania,electricity,0.007601,EJ
+Alumina,1995,Oceania,biomass,0,EJ
+Alumina,1994,Oceania,coal,0.039456,EJ
+Alumina,1994,Oceania,refined liquids,0.019001,EJ
+Alumina,1994,Oceania,gas,0.082009,EJ
+Alumina,1994,Oceania,electricity,0.00735,EJ
+Alumina,1994,Oceania,biomass,0,EJ
+Alumina,1993,Oceania,coal,0.037323,EJ
+Alumina,1993,Oceania,refined liquids,0.019108,EJ
+Alumina,1993,Oceania,gas,0.080311,EJ
+Alumina,1993,Oceania,electricity,0.007373,EJ
+Alumina,1993,Oceania,biomass,0,EJ
+Alumina,1992,Oceania,coal,0.03841,EJ
+Alumina,1992,Oceania,refined liquids,0.018475,EJ
+Alumina,1992,Oceania,gas,0.082964,EJ
+Alumina,1992,Oceania,electricity,0.007664,EJ
+Alumina,1992,Oceania,biomass,0,EJ
+Alumina,1991,Oceania,coal,0.036303,EJ
+Alumina,1991,Oceania,refined liquids,0.019133,EJ
+Alumina,1991,Oceania,gas,0.083355,EJ
+Alumina,1991,Oceania,electricity,0.008276,EJ
+Alumina,1991,Oceania,biomass,0,EJ
+Alumina,1990,Oceania,coal,0.036526,EJ
+Alumina,1990,Oceania,refined liquids,0.026742,EJ
+Alumina,1990,Oceania,gas,0.073029,EJ
+Alumina,1990,Oceania,electricity,0.008017,EJ
+Alumina,1990,Oceania,biomass,0,EJ
+Alumina,1989,Oceania,coal,0.03434,EJ
+Alumina,1989,Oceania,refined liquids,0.031461,EJ
+Alumina,1989,Oceania,gas,0.063656,EJ
+Alumina,1989,Oceania,electricity,0.006942,EJ
+Alumina,1989,Oceania,biomass,0,EJ
+Alumina,1988,Oceania,coal,0.033801,EJ
+Alumina,1988,Oceania,refined liquids,0.029979,EJ
+Alumina,1988,Oceania,gas,0.062067,EJ
+Alumina,1988,Oceania,electricity,0.006517,EJ
+Alumina,1988,Oceania,biomass,0,EJ
+Alumina,1987,Oceania,coal,0.033414,EJ
+Alumina,1987,Oceania,refined liquids,0.030128,EJ
+Alumina,1987,Oceania,gas,0.059014,EJ
+Alumina,1987,Oceania,electricity,0.006232,EJ
+Alumina,1987,Oceania,biomass,0,EJ
+Alumina,1986,Oceania,coal,0.038775,EJ
+Alumina,1986,Oceania,refined liquids,0.026985,EJ
+Alumina,1986,Oceania,gas,0.055,EJ
+Alumina,1986,Oceania,electricity,0.001282,EJ
+Alumina,1986,Oceania,biomass,0.000028,EJ
+Alumina,1985,Oceania,coal,0.034435,EJ
+Alumina,1985,Oceania,refined liquids,0.031296,EJ
+Alumina,1985,Oceania,gas,0.051922,EJ
+Alumina,1985,Oceania,electricity,0.005409,EJ
+Alumina,1985,Oceania,biomass,0.001578,EJ
+Alumina,2015,Europe,coal,0.016265,EJ
+Alumina,2015,Europe,refined liquids,0.000156,EJ
+Alumina,2015,Europe,gas,0.069698,EJ
+Alumina,2015,Europe,electricity,0.01111,EJ
+Alumina,2015,Europe,biomass,0.000187,EJ
+Alumina,2014,Europe,coal,0,EJ
+Alumina,2014,Europe,refined liquids,0.009728,EJ
+Alumina,2014,Europe,gas,0.056912,EJ
+Alumina,2014,Europe,electricity,0.01033,EJ
+Alumina,2014,Europe,biomass,0.015636,EJ
+Alumina,2013,Europe,coal,0,EJ
+Alumina,2013,Europe,refined liquids,0.012863,EJ
+Alumina,2013,Europe,gas,0.057264,EJ
+Alumina,2013,Europe,electricity,0.012001,EJ
+Alumina,2013,Europe,biomass,0.016787,EJ
+Alumina,2011,Europe,coal,0.000017,EJ
+Alumina,2011,Europe,refined liquids,0.019024,EJ
+Alumina,2011,Europe,gas,0.050819,EJ
+Alumina,2011,Europe,electricity,0.007532,EJ
+Alumina,2011,Europe,biomass,0.027143,EJ
+Alumina,2010,Europe,coal,0.000023,EJ
+Alumina,2010,Europe,refined liquids,0.021919,EJ
+Alumina,2010,Europe,gas,0.049963,EJ
+Alumina,2010,Europe,electricity,0.008288,EJ
+Alumina,2010,Europe,biomass,0.028132,EJ
+Alumina,2009,Europe,coal,0.032822,EJ
+Alumina,2009,Europe,refined liquids,0.023517,EJ
+Alumina,2009,Europe,gas,0.097708,EJ
+Alumina,2009,Europe,electricity,0.017096,EJ
+Alumina,2009,Europe,biomass,0.010768,EJ
+Alumina,2008,Europe,coal,0.000046,EJ
+Alumina,2008,Europe,refined liquids,0.032106,EJ
+Alumina,2008,Europe,gas,0.049634,EJ
+Alumina,2008,Europe,electricity,0.027776,EJ
+Alumina,2008,Europe,biomass,0.012837,EJ
+Alumina,2007,Europe,coal,0.000182,EJ
+Alumina,2007,Europe,refined liquids,0.042854,EJ
+Alumina,2007,Europe,gas,0.051294,EJ
+Alumina,2007,Europe,electricity,0.031051,EJ
+Alumina,2007,Europe,biomass,0,EJ
+Alumina,2006,Europe,coal,0.000273,EJ
+Alumina,2006,Europe,refined liquids,0.034769,EJ
+Alumina,2006,Europe,gas,0.063497,EJ
+Alumina,2006,Europe,electricity,0.023685,EJ
+Alumina,2006,Europe,biomass,0.011384,EJ
+Alumina,2005,Europe,coal,0,EJ
+Alumina,2005,Europe,refined liquids,0.04826,EJ
+Alumina,2005,Europe,gas,0.003749,EJ
+Alumina,2005,Europe,electricity,0.013184,EJ
+Alumina,2005,Europe,biomass,0.000476,EJ
+Alumina,2004,Europe,coal,0.009701,EJ
+Alumina,2004,Europe,refined liquids,0.04864,EJ
+Alumina,2004,Europe,gas,0.017921,EJ
+Alumina,2004,Europe,electricity,0.013516,EJ
+Alumina,2004,Europe,biomass,0.000458,EJ
+Alumina,2003,Europe,coal,0,EJ
+Alumina,2003,Europe,refined liquids,0.046642,EJ
+Alumina,2003,Europe,gas,0.003278,EJ
+Alumina,2003,Europe,electricity,0.012233,EJ
+Alumina,2003,Europe,biomass,0.000475,EJ
+Alumina,2001,Europe,coal,0,EJ
+Alumina,2001,Europe,refined liquids,0.036688,EJ
+Alumina,2001,Europe,gas,0.000329,EJ
+Alumina,2001,Europe,electricity,0.006725,EJ
+Alumina,2001,Europe,biomass,0.000454,EJ
+Alumina,2000,Europe,coal,0,EJ
+Alumina,2000,Europe,refined liquids,0.036213,EJ
+Alumina,2000,Europe,gas,0.000357,EJ
+Alumina,2000,Europe,electricity,0.006601,EJ
+Alumina,2000,Europe,biomass,0.000497,EJ
+Alumina,1999,Europe,coal,0,EJ
+Alumina,1999,Europe,refined liquids,0.035048,EJ
+Alumina,1999,Europe,gas,0.000304,EJ
+Alumina,1999,Europe,electricity,0.00639,EJ
+Alumina,1999,Europe,biomass,0.00046,EJ
+Alumina,1998,Europe,coal,0,EJ
+Alumina,1998,Europe,refined liquids,0.034359,EJ
+Alumina,1998,Europe,gas,0.000311,EJ
+Alumina,1998,Europe,electricity,0.006508,EJ
+Alumina,1998,Europe,biomass,0.000463,EJ
+Alumina,1997,Europe,coal,0,EJ
+Alumina,1997,Europe,refined liquids,0.042123,EJ
+Alumina,1997,Europe,gas,0.000305,EJ
+Alumina,1997,Europe,electricity,0.007986,EJ
+Alumina,1997,Europe,biomass,0.000933,EJ
+Alumina,1996,Europe,coal,0,EJ
+Alumina,1996,Europe,refined liquids,0.03838,EJ
+Alumina,1996,Europe,gas,0.000354,EJ
+Alumina,1996,Europe,electricity,0.007736,EJ
+Alumina,1996,Europe,biomass,0.001181,EJ
+Alumina,1995,Europe,coal,0,EJ
+Alumina,1995,Europe,refined liquids,0.040825,EJ
+Alumina,1995,Europe,gas,0.006017,EJ
+Alumina,1995,Europe,electricity,0.009572,EJ
+Alumina,1995,Europe,biomass,0.002297,EJ
+Alumina,1994,Europe,coal,0,EJ
+Alumina,1994,Europe,refined liquids,0.037924,EJ
+Alumina,1994,Europe,gas,0.006187,EJ
+Alumina,1994,Europe,electricity,0.009225,EJ
+Alumina,1994,Europe,biomass,0.001763,EJ
+Alumina,1993,Europe,coal,0,EJ
+Alumina,1993,Europe,refined liquids,0.040966,EJ
+Alumina,1993,Europe,gas,0.006624,EJ
+Alumina,1993,Europe,electricity,0.009419,EJ
+Alumina,1993,Europe,biomass,0.002099,EJ
+Alumina,1992,Europe,coal,0,EJ
+Alumina,1992,Europe,refined liquids,0.038701,EJ
+Alumina,1992,Europe,gas,0.007024,EJ
+Alumina,1992,Europe,electricity,0.00806,EJ
+Alumina,1992,Europe,biomass,0.002757,EJ
+Alumina,1991,Europe,coal,0.001776,EJ
+Alumina,1991,Europe,refined liquids,0.036943,EJ
+Alumina,1991,Europe,gas,0.006304,EJ
+Alumina,1991,Europe,electricity,0.007925,EJ
+Alumina,1991,Europe,biomass,0.000312,EJ
+Alumina,1990,Europe,coal,0,EJ
+Alumina,1990,Europe,refined liquids,0.034099,EJ
+Alumina,1990,Europe,gas,0.005074,EJ
+Alumina,1990,Europe,electricity,0.007262,EJ
+Alumina,1990,Europe,biomass,0.00063,EJ
+Alumina,1989,Europe,coal,0.001341,EJ
+Alumina,1989,Europe,refined liquids,0.032523,EJ
+Alumina,1989,Europe,gas,0.007182,EJ
+Alumina,1989,Europe,electricity,0.00787,EJ
+Alumina,1989,Europe,biomass,0.000597,EJ
+Alumina,1988,Europe,coal,0.000669,EJ
+Alumina,1988,Europe,refined liquids,0.031967,EJ
+Alumina,1988,Europe,gas,0.009547,EJ
+Alumina,1988,Europe,electricity,0.009123,EJ
+Alumina,1988,Europe,biomass,0.000469,EJ
+Alumina,1987,Europe,coal,0.001801,EJ
+Alumina,1987,Europe,refined liquids,0.030627,EJ
+Alumina,1987,Europe,gas,0.010616,EJ
+Alumina,1987,Europe,electricity,0.00904,EJ
+Alumina,1987,Europe,biomass,0.000458,EJ
+Alumina,1986,Europe,coal,0.002404,EJ
+Alumina,1986,Europe,refined liquids,0.027658,EJ
+Alumina,1986,Europe,gas,0.011405,EJ
+Alumina,1986,Europe,electricity,0.008955,EJ
+Alumina,1986,Europe,biomass,0.000522,EJ
+Alumina,1985,Europe,coal,0.002775,EJ
+Alumina,1985,Europe,refined liquids,0.025082,EJ
+Alumina,1985,Europe,gas,0.011502,EJ
+Alumina,1985,Europe,electricity,0.00883,EJ
+Alumina,1985,Europe,biomass,0.000544,EJ
+Alumina,2015,China,coal,0.535313,EJ
+Alumina,2015,China,refined liquids,0.033683,EJ
+Alumina,2015,China,gas,0.093072,EJ
+Alumina,2015,China,electricity,0.069213,EJ
+Alumina,2015,China,biomass,0.007387,EJ
+Alumina,2014,China,coal,0.543293,EJ
+Alumina,2014,China,refined liquids,0.034185,EJ
+Alumina,2014,China,gas,0.09446,EJ
+Alumina,2014,China,electricity,0.070245,EJ
+Alumina,2014,China,biomass,0.007497,EJ
+Alumina,2013,China,coal,0.521152,EJ
+Alumina,2013,China,refined liquids,0.032792,EJ
+Alumina,2013,China,gas,0.09061,EJ
+Alumina,2013,China,electricity,0.067382,EJ
+Alumina,2013,China,biomass,0.007191,EJ
+Alumina,2011,China,coal,0.4693,EJ
+Alumina,2011,China,refined liquids,0.02953,EJ
+Alumina,2011,China,gas,0.081595,EJ
+Alumina,2011,China,electricity,0.060678,EJ
+Alumina,2011,China,biomass,0.006476,EJ
+Alumina,2010,China,coal,0.418387,EJ
+Alumina,2010,China,refined liquids,0.026326,EJ
+Alumina,2010,China,gas,0.072743,EJ
+Alumina,2010,China,electricity,0.054095,EJ
+Alumina,2010,China,biomass,0.005773,EJ
+Alumina,2009,China,coal,0.335131,EJ
+Alumina,2009,China,refined liquids,0.021087,EJ
+Alumina,2009,China,gas,0.058268,EJ
+Alumina,2009,China,electricity,0.043331,EJ
+Alumina,2009,China,biomass,0.004624,EJ
+Alumina,2008,China,coal,0.384911,EJ
+Alumina,2008,China,refined liquids,0.02422,EJ
+Alumina,2008,China,gas,0.066922,EJ
+Alumina,2008,China,electricity,0.049767,EJ
+Alumina,2008,China,biomass,0.005311,EJ
+Alumina,2007,China,coal,0.370791,EJ
+Alumina,2007,China,refined liquids,0.023331,EJ
+Alumina,2007,China,gas,0.064468,EJ
+Alumina,2007,China,electricity,0.047941,EJ
+Alumina,2007,China,biomass,0.005116,EJ
+Alumina,2006,China,coal,0.220917,EJ
+Alumina,2006,China,refined liquids,0.013901,EJ
+Alumina,2006,China,gas,0.03841,EJ
+Alumina,2006,China,electricity,0.028563,EJ
+Alumina,2006,China,biomass,0.003048,EJ
+Alumina,2005,China,coal,0.159918,EJ
+Alumina,2005,China,refined liquids,0.010062,EJ
+Alumina,2005,China,gas,0.027804,EJ
+Alumina,2005,China,electricity,0.020677,EJ
+Alumina,2005,China,biomass,0.002207,EJ
+Alumina,2004,China,coal,0.138722,EJ
+Alumina,2004,China,refined liquids,0.008729,EJ
+Alumina,2004,China,gas,0.024119,EJ
+Alumina,2004,China,electricity,0.017936,EJ
+Alumina,2004,China,biomass,0.001914,EJ
+Alumina,2003,China,coal,0.131145,EJ
+Alumina,2003,China,refined liquids,0.008252,EJ
+Alumina,2003,China,gas,0.022801,EJ
+Alumina,2003,China,electricity,0.016956,EJ
+Alumina,2003,China,biomass,0.00181,EJ
+Alumina,2001,China,coal,0.116904,EJ
+Alumina,2001,China,refined liquids,0.007356,EJ
+Alumina,2001,China,gas,0.020325,EJ
+Alumina,2001,China,electricity,0.015115,EJ
+Alumina,2001,China,biomass,0.001613,EJ
+Alumina,2000,China,coal,0.111849,EJ
+Alumina,2000,China,refined liquids,0.007038,EJ
+Alumina,2000,China,gas,0.019447,EJ
+Alumina,2000,China,electricity,0.014462,EJ
+Alumina,2000,China,biomass,0.001543,EJ
+Alumina,1999,China,coal,0.106522,EJ
+Alumina,1999,China,refined liquids,0.006703,EJ
+Alumina,1999,China,gas,0.01852,EJ
+Alumina,1999,China,electricity,0.013773,EJ
+Alumina,1999,China,biomass,0.00147,EJ
+Alumina,1998,China,coal,0.098055,EJ
+Alumina,1998,China,refined liquids,0.00617,EJ
+Alumina,1998,China,gas,0.017048,EJ
+Alumina,1998,China,electricity,0.012678,EJ
+Alumina,1998,China,biomass,0.001353,EJ
+Alumina,1997,China,coal,0,EJ
+Alumina,1997,China,refined liquids,0,EJ
+Alumina,1997,China,gas,0,EJ
+Alumina,1997,China,electricity,0,EJ
+Alumina,1997,China,biomass,0,EJ
+Alumina,1996,China,coal,0,EJ
+Alumina,1996,China,refined liquids,0,EJ
+Alumina,1996,China,gas,0,EJ
+Alumina,1996,China,electricity,0,EJ
+Alumina,1996,China,biomass,0,EJ
+Alumina,1995,China,coal,0,EJ
+Alumina,1995,China,refined liquids,0,EJ
+Alumina,1995,China,gas,0,EJ
+Alumina,1995,China,electricity,0,EJ
+Alumina,1995,China,biomass,0,EJ
+Alumina,1994,China,coal,0,EJ
+Alumina,1994,China,refined liquids,0,EJ
+Alumina,1994,China,gas,0,EJ
+Alumina,1994,China,electricity,0,EJ
+Alumina,1994,China,biomass,0,EJ
+Alumina,1993,China,coal,0,EJ
+Alumina,1993,China,refined liquids,0,EJ
+Alumina,1993,China,gas,0,EJ
+Alumina,1993,China,electricity,0,EJ
+Alumina,1993,China,biomass,0,EJ
+Alumina,1992,China,coal,0,EJ
+Alumina,1992,China,refined liquids,0,EJ
+Alumina,1992,China,gas,0,EJ
+Alumina,1992,China,electricity,0,EJ
+Alumina,1992,China,biomass,0,EJ
+Alumina,1991,China,coal,0,EJ
+Alumina,1991,China,refined liquids,0,EJ
+Alumina,1991,China,gas,0,EJ
+Alumina,1991,China,electricity,0,EJ
+Alumina,1991,China,biomass,0,EJ
+Alumina,1990,China,coal,0,EJ
+Alumina,1990,China,refined liquids,0,EJ
+Alumina,1990,China,gas,0,EJ
+Alumina,1990,China,electricity,0,EJ
+Alumina,1990,China,biomass,0,EJ
+Alumina,1989,China,coal,0,EJ
+Alumina,1989,China,refined liquids,0,EJ
+Alumina,1989,China,gas,0,EJ
+Alumina,1989,China,electricity,0,EJ
+Alumina,1989,China,biomass,0,EJ
+Alumina,1988,China,coal,0,EJ
+Alumina,1988,China,refined liquids,0,EJ
+Alumina,1988,China,gas,0,EJ
+Alumina,1988,China,electricity,0,EJ
+Alumina,1988,China,biomass,0,EJ
+Alumina,1987,China,coal,0,EJ
+Alumina,1987,China,refined liquids,0,EJ
+Alumina,1987,China,gas,0,EJ
+Alumina,1987,China,electricity,0,EJ
+Alumina,1987,China,biomass,0,EJ
+Alumina,1986,China,coal,0,EJ
+Alumina,1986,China,refined liquids,0,EJ
+Alumina,1986,China,gas,0,EJ
+Alumina,1986,China,electricity,0,EJ
+Alumina,1986,China,biomass,0,EJ
+Alumina,1985,China,coal,0,EJ
+Alumina,1985,China,refined liquids,0,EJ
+Alumina,1985,China,gas,0,EJ
+Alumina,1985,China,electricity,0,EJ
+Alumina,1985,China,biomass,0,EJ

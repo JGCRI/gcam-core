@@ -25,9 +25,9 @@ AUTOHEAT,Autoproducer Heat Plants,in_heat,-0.00004186
 THEAT,Heat Pumps,net_industry_energy transformation,-0.00004186
 TBOILER,Electric Boilers,net_industry_energy transformation,-0.00004186
 TELE,Chemical heat for electricity production,,
-TBLASTFUR,Blast Furnaces,net_industry_energy transformation,-0.00004186
+TBLASTFUR,Blast Furnaces,net_industry_energy_iron and steel,-0.00004186
 TGASWKS,Gas Works,net_gas works,-0.00004186
-TCOKEOVS,Coke Ovens,net_industry_energy transformation,-0.00004186
+TCOKEOVS,Coke Ovens,net_industry_energy_iron and steel,-0.00004186
 TPATFUEL,Patent Fuel Plants,net_industry_energy transformation,-0.00004186
 TBKB,BKB Plants,net_industry_energy transformation,-0.00004186
 TREFINER,Petroleum Refineries,net_industry_oil refining,-0.00004186
@@ -40,10 +40,10 @@ TNONSPEC,Non-specified (Transformation),net_industry_energy transformation,-0.00
 TOTENGY,Energy Sector,,
 EMINES,Coal Mines,net_industry_energy transformation,-0.00004186
 EOILGASEX,Oil and Gas Extraction,net_industry_energy transformation,-0.00004186
-EBLASTFUR,Blast Furnaces,net_industry_energy transformation,-0.00004186
+EBLASTFUR,Blast Furnaces,net_industry_energy_iron and steel,-0.00004186
 EGASWKS,Gas Works,net_gas works,-0.00004186
 EBIOGAS,Gasification Plants for Biogas,net_industry_energy transformation,-0.00004186
-ECOKEOVS,Coke Ovens,net_industry_energy transformation,-0.00004186
+ECOKEOVS,Coke Ovens,net_industry_energy_iron and steel,-0.00004186
 EPATFUEL,Patent Fuel Plants,net_industry_energy transformation,-0.00004186
 EBKB,BKB Plants,net_industry_energy transformation,-0.00004186
 EREFINER,Petroleum Refineries,net_industry_oil refining,-0.00004186
@@ -59,17 +59,17 @@ DISTLOSS,Distribution Losses,in_industry_energy distribution,-0.00004186
 TFC,Total Final Consumption,,
 TOTIND,Industry Sector,in_industry_general,0.00004186
 MANUFACT,Manufacturing,,
-IRONSTL,Iron and Steel,,
-CHEMICAL,Chemical and Petrochemical,,
+IRONSTL,Iron and Steel,iron and steel,0.00004186
+CHEMICAL,Chemical and Petrochemical,chemical energy use,0.00004186
 NONFERR,Non-Ferrous Metals,,
-NONMET,Non-Metallic Minerals,,
+NONMET,Non-Metallic Minerals,cement,0.00004186
 TRANSEQ,Transport Equipment,,
 MACHINE,Machinery,,
-MINING,Mining and Quarrying,,
+MINING,Mining and Quarrying,mining energy use,0.00004186
 FOODPRO,Food and Tobacco,,
 PAPERPRO,"Paper, Pulp and Print",,
 WOODPRO,Wood and Wood Products,,
-CONSTRUC,Construction,,
+CONSTRUC,Construction,construction energy use,0.00004186
 TEXTILES,Textile and Leather,,
 INONSPEC,Non-specified (Industry),,
 TOTTRANS,Transport Sector,,
@@ -90,7 +90,7 @@ NONENUSE,Non-energy use,in_industry_feedstocks,0.00004186
 NEINTREN,Non-energy use industry/transformation/ energy,,
 NEIND,Memo: Non-energy use in industry,,
 NEIRONSTL,Memo: Non-energy use in iron and steel,,
-NECHEM,Memo: Non-energy use chemical/petrochemical,,
+NECHEM,Memo: Non-energy use chemical/petrochemical,chemical feedstocks,0.00004186
 NENONFERR,Memo: Non-energy use in non-ferrous metals,,
 NENONMET,Memo: Non-energy use in non-metallic minerals,,
 NETRANSEQ,Memo: Non-energy use in transport equipment,,
@@ -99,7 +99,7 @@ NEMINING,Memo: Non-energy use in mining and quarrying,,
 NEFOODPRO,Memo: Non-energy use in food/beverages/tobacco,,
 NEPAPERPRO,Memo: Non-energy use in paper/pulp and printing,,
 NEWOODPRO,Memo: Non-energy use in wood and wood products,,
-NECONSTRUC,Memo: Non-energy use in construction,,
+NECONSTRUC,Memo: Non-energy use in construction,construction feedstocks,0.00004186
 NETEXTILES,Memo: Non-energy use in textiles and leather,,
 NEINONSPEC,Memo: Non-energy use in non-specified industry,,
 NETRANS,Non-Energy Use in transport,,

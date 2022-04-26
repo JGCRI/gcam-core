@@ -1,0 +1,17 @@
+# File: A325.subsector_logit.csv
+# Title: chemical default subsector logit exponents
+# Units: Unitless
+# Column types: ccic
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+chemical,chemical,-6,
+chemical energy use,refined liquids,-6,
+chemical energy use,gas,-6,
+chemical energy use,biomass,-6,
+chemical energy use,electricity,-6,
+chemical energy use,hydrogen,-6,
+chemical energy use,coal,-6,
+chemical energy use,heat,-6,
+chemical feedstocks,refined liquids,-6,
+chemical feedstocks,gas,-6,
+chemical feedstocks,coal,-6,
