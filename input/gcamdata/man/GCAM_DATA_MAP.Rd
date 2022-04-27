@@ -14,17 +14,10 @@ GCAM_DATA_MAP
 \description{
 There are two levels of information available from the GCAM data system:
 chunk dependencies, which are available for "free", i.e. with a fast query to
-<<<<<<< HEAD
 each chunk on the part of \code{chunk_inputs} and \code{chunk_outputs},
 and detailed information on data object-level dependencies. This function is
 used to generate this latter data, i.e. a tibble of chunk-output-precursor information,
 which is used by \code{dstrace} and various other graphing and diagnostic utilities.
-=======
-each chunk on the part of \code{\link{chunk_inputs}} and \code{\link{chunk_outputs}},
-and detailed information on data object-level dependencies. This function is
-used to generate this latter data, i.e. a tibble of chunk-output-precursor information,
-which is used by \code{\link{dstrace}} and various other graphing and diagnostic utilities.
->>>>>>> master
 }
 \author{
 BBL
