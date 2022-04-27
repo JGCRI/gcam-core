@@ -295,7 +295,7 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       left_join_error_no_match(L244.Floorspace_full,by=c("region","year","gcam.consumer", "nodeInput", "building.node.input")) %>%
       rename(observed_flsp_bm2 = base.building.size) %>%
       left_join_error_no_match(L100.Pop_thous_state %>% rename(region = state),
-                               by = c("year", "region","region")) %>%
+                               by = c("year", "region")) %>%
       rename(pop_thous = value) %>%
       mutate(observed_pcflsp = observed_flsp_bm2*1E9 / (pop_thous*1E3)) %>%
       left_join_error_no_match(L100.pcGDP_thous90usd_state %>% rename(region = state),
