@@ -1,0 +1,10 @@
+# File: A325.globaltech_co2capture.csv
+# Title: Chemical CO2 capture rates
+# Units: Unitless
+# Column types: cccnn 
+# ----------
+supplysector,subsector,technology,1971,2100
+chemical energy use,refined liquids,refined liquids CCS,0.9,0.9
+chemical energy use,gas,gas CCS,0.9,0.9
+chemical energy use,biomass,biomass CCS,0.9,0.9
+chemical energy use,coal,coal CCS,0.9,0.9

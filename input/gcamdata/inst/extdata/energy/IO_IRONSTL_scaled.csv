@@ -1,0 +1,808 @@
+# File: IO_IRONSTL_scaled.csv
+# Title: IO in Steel production by subsector by technology
+# Units: GJ/t
+# Description: Energy coefficient in steel production
+# Source: Literature
+# Column types: cicccicn
+# ----------
+region,GCAM_region_ID,sector.name,subsector.name,technology,year,minicam.energy.input,coefficient
+Africa_Eastern,2,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0
+Africa_Eastern,2,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+Africa_Eastern,2,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001136307
+Africa_Eastern,2,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0
+Africa_Eastern,2,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0
+Africa_Eastern,2,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+Africa_Eastern,2,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001136307
+Africa_Eastern,2,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0
+Africa_Eastern,2,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Africa_Eastern,2,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+Africa_Eastern,2,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001136307
+Africa_Eastern,2,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0
+Africa_Eastern,2,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0
+Africa_Eastern,2,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+Africa_Eastern,2,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.00347849
+Africa_Eastern,2,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0
+Africa_Eastern,2,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0
+Africa_Eastern,2,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+Africa_Eastern,2,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.00347849
+Africa_Eastern,2,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0
+Africa_Eastern,2,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Africa_Eastern,2,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.00347849
+Africa_Eastern,2,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+Africa_Eastern,2,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.002550893
+Africa_Eastern,2,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Africa_Northern,3,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.032872008
+Africa_Northern,3,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+Africa_Northern,3,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.000328101
+Africa_Northern,3,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000437469
+Africa_Northern,3,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.032872008
+Africa_Northern,3,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+Africa_Northern,3,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.000328101
+Africa_Northern,3,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000437469
+Africa_Northern,3,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Africa_Northern,3,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+Africa_Northern,3,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.000328101
+Africa_Northern,3,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000437469
+Africa_Northern,3,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001741214
+Africa_Northern,3,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+Africa_Northern,3,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.001004389
+Africa_Northern,3,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.002374832
+Africa_Northern,3,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001741214
+Africa_Northern,3,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+Africa_Northern,3,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.001004389
+Africa_Northern,3,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.002374832
+Africa_Northern,3,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Africa_Northern,3,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.001004389
+Africa_Northern,3,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+Africa_Northern,3,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.000736552
+Africa_Northern,3,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Africa_Western,5,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0
+Africa_Western,5,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+Africa_Western,5,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.000328101
+Africa_Western,5,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.005041557
+Africa_Western,5,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0
+Africa_Western,5,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+Africa_Western,5,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.000328101
+Africa_Western,5,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.005041557
+Africa_Western,5,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Africa_Western,5,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+Africa_Western,5,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.000328101
+Africa_Western,5,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.005041557
+Africa_Western,5,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0
+Africa_Western,5,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+Africa_Western,5,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.00347849
+Africa_Western,5,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.027368451
+Africa_Western,5,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0
+Africa_Western,5,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+Africa_Western,5,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.00347849
+Africa_Western,5,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.027368451
+Africa_Western,5,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Africa_Western,5,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.00347849
+Africa_Western,5,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+Africa_Western,5,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.002550893
+Africa_Western,5,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Argentina,31,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.003290561
+Argentina,31,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.006970806
+Argentina,31,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0
+Argentina,31,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.003565373
+Argentina,31,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.003290561
+Argentina,31,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.006970806
+Argentina,31,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0
+Argentina,31,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.003565373
+Argentina,31,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Argentina,31,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.006970806
+Argentina,31,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0
+Argentina,31,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.003565373
+Argentina,31,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,1.74E-04
+Argentina,31,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.002987488
+Argentina,31,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0
+Argentina,31,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.01935488
+Argentina,31,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,1.74E-04
+Argentina,31,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.002987488
+Argentina,31,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0
+Argentina,31,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.01935488
+Argentina,31,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Argentina,31,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0
+Argentina,31,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.001991659
+Argentina,31,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0
+Argentina,31,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Australia_NZ,6,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.022894159
+Australia_NZ,6,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000134884
+Australia_NZ,6,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001707631
+Australia_NZ,6,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.001525722
+Australia_NZ,6,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.022894159
+Australia_NZ,6,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000134884
+Australia_NZ,6,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001707631
+Australia_NZ,6,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.001525722
+Australia_NZ,6,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Australia_NZ,6,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000134884
+Australia_NZ,6,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001707631
+Australia_NZ,6,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.001525722
+Australia_NZ,6,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001212692
+Australia_NZ,6,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,5.78E-05
+Australia_NZ,6,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.005227442
+Australia_NZ,6,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.00828249
+Australia_NZ,6,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001212692
+Australia_NZ,6,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,5.78E-05
+Australia_NZ,6,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.005227442
+Australia_NZ,6,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.00828249
+Australia_NZ,6,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Australia_NZ,6,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.005227442
+Australia_NZ,6,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,3.85E-05
+Australia_NZ,6,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.003833457
+Australia_NZ,6,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Brazil,7,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.015222387
+Brazil,7,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.001631027
+Brazil,7,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.00206222
+Brazil,7,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000620655
+Brazil,7,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.015222387
+Brazil,7,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.001631027
+Brazil,7,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.00206222
+Brazil,7,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000620655
+Brazil,7,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Brazil,7,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.001631027
+Brazil,7,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.00206222
+Brazil,7,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000620655
+Brazil,7,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.000806322
+Brazil,7,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000699011
+Brazil,7,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.00631292
+Brazil,7,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.00336927
+Brazil,7,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.000806322
+Brazil,7,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000699011
+Brazil,7,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.00631292
+Brazil,7,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.00336927
+Brazil,7,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Brazil,7,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.00631292
+Brazil,7,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.000466008
+Brazil,7,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.004629474
+Brazil,7,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Canada,8,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.015582117
+Canada,8,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+Canada,8,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001519831
+Canada,8,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.004352487
+Canada,8,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.015582117
+Canada,8,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+Canada,8,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001519831
+Canada,8,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.004352487
+Canada,8,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Canada,8,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+Canada,8,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001519831
+Canada,8,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.004352487
+Canada,8,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.000825377
+Canada,8,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+Canada,8,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.004652544
+Canada,8,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.023627789
+Canada,8,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.000825377
+Canada,8,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+Canada,8,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.004652544
+Canada,8,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.023627789
+Canada,8,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Canada,8,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.004652544
+Canada,8,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+Canada,8,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.003411866
+Canada,8,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Central America and Caribbean,9,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.059663787
+Central America and Caribbean,9,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+Central America and Caribbean,9,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0
+Central America and Caribbean,9,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.00768476
+Central America and Caribbean,9,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.059663787
+Central America and Caribbean,9,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+Central America and Caribbean,9,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0
+Central America and Caribbean,9,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.00768476
+Central America and Caribbean,9,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Central America and Caribbean,9,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+Central America and Caribbean,9,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0
+Central America and Caribbean,9,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.00768476
+Central America and Caribbean,9,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.003160361
+Central America and Caribbean,9,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+Central America and Caribbean,9,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0
+Central America and Caribbean,9,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.041717268
+Central America and Caribbean,9,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.003160361
+Central America and Caribbean,9,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+Central America and Caribbean,9,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0
+Central America and Caribbean,9,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.041717268
+Central America and Caribbean,9,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Central America and Caribbean,9,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0
+Central America and Caribbean,9,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+Central America and Caribbean,9,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0
+Central America and Caribbean,9,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Central Asia,10,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.065671743
+Central Asia,10,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.008076531
+Central Asia,10,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.011903897
+Central Asia,10,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.001399097
+Central Asia,10,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.065671743
+Central Asia,10,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.008076531
+Central Asia,10,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.011903897
+Central Asia,10,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.001399097
+Central Asia,10,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Central Asia,10,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.008076531
+Central Asia,10,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.011903897
+Central Asia,10,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.001399097
+Central Asia,10,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.0034786
+Central Asia,10,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.003461371
+Central Asia,10,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.036440501
+Central Asia,10,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.007595098
+Central Asia,10,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.0034786
+Central Asia,10,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.003461371
+Central Asia,10,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.036440501
+Central Asia,10,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.007595098
+Central Asia,10,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Central Asia,10,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.036440501
+Central Asia,10,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.00230758
+Central Asia,10,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.026723034
+Central Asia,10,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+China,11,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.023464971
+China,11,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000122184
+China,11,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.00229346
+China,11,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,1.26E-04
+China,11,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.023464971
+China,11,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000122184
+China,11,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.00229346
+China,11,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,1.26E-04
+China,11,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+China,11,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000122184
+China,11,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.00229346
+China,11,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,1.26E-04
+China,11,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001242928
+China,11,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,5.24E-05
+China,11,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.007020795
+China,11,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,6.84E-04
+China,11,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001242928
+China,11,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,5.24E-05
+China,11,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.007020795
+China,11,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,6.84E-04
+China,11,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+China,11,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.007020795
+China,11,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,3.49E-05
+China,11,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.005148583
+China,11,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Colombia,32,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.110362433
+Colombia,32,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.002981182
+Colombia,32,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.003388073
+Colombia,32,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000574682
+Colombia,32,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.110362433
+Colombia,32,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.002981182
+Colombia,32,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.003388073
+Colombia,32,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000574682
+Colombia,32,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Colombia,32,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.002981182
+Colombia,32,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.003388073
+Colombia,32,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000574682
+Colombia,32,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.005845843
+Colombia,32,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.00127765
+Colombia,32,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.010371651
+Colombia,32,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.003119702
+Colombia,32,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.005845843
+Colombia,32,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.00127765
+Colombia,32,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.010371651
+Colombia,32,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.003119702
+Colombia,32,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Colombia,32,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.010371651
+Colombia,32,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.000851766
+Colombia,32,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.007605877
+Colombia,32,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+EU-12,12,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.019695658
+EU-12,12,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,1.18E-04
+EU-12,12,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.002018066
+EU-12,12,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.001909421
+EU-12,12,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.019695658
+EU-12,12,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,1.18E-04
+EU-12,12,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.002018066
+EU-12,12,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.001909421
+EU-12,12,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+EU-12,12,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,1.18E-04
+EU-12,12,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.002018066
+EU-12,12,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.001909421
+EU-12,12,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001043269
+EU-12,12,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,5.06E-05
+EU-12,12,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.006177753
+EU-12,12,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.010365427
+EU-12,12,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001043269
+EU-12,12,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,5.06E-05
+EU-12,12,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.006177753
+EU-12,12,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.010365427
+EU-12,12,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+EU-12,12,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.006177753
+EU-12,12,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,3.37E-05
+EU-12,12,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.004530352
+EU-12,12,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+EU-15,13,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.014603658
+EU-15,13,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.001033468
+EU-15,13,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001445249
+EU-15,13,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.001237728
+EU-15,13,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.014603658
+EU-15,13,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.001033468
+EU-15,13,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001445249
+EU-15,13,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.001237728
+EU-15,13,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+EU-15,13,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.001033468
+EU-15,13,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001445249
+EU-15,13,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.001237728
+EU-15,13,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.000773548
+EU-15,13,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000442915
+EU-15,13,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.00442423
+EU-15,13,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.006719096
+EU-15,13,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.000773548
+EU-15,13,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000442915
+EU-15,13,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.00442423
+EU-15,13,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.006719096
+EU-15,13,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+EU-15,13,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.00442423
+EU-15,13,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.000295276
+EU-15,13,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.003244435
+EU-15,13,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.019488898
+Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000320754
+Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.002335626
+Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.003754289
+Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.019488898
+Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000320754
+Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.002335626
+Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.003754289
+Europe_Eastern,14,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Europe_Eastern,14,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000320754
+Europe_Eastern,14,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.002335626
+Europe_Eastern,14,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.003754289
+Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001032317
+Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000137466
+Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.007149875
+Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.020380426
+Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001032317
+Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000137466
+Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.007149875
+Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.020380426
+Europe_Eastern,14,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Europe_Eastern,14,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.007149875
+Europe_Eastern,14,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,9.16E-05
+Europe_Eastern,14,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.005243242
+Europe_Eastern,14,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.02373868
+Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000432827
+Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.000976115
+Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000347103
+Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.02373868
+Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000432827
+Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.000976115
+Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000347103
+Europe_Non_EU,15,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Europe_Non_EU,15,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000432827
+Europe_Non_EU,15,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.000976115
+Europe_Non_EU,15,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000347103
+Europe_Non_EU,15,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001257426
+Europe_Non_EU,15,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,1.85E-04
+Europe_Non_EU,15,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.002988107
+Europe_Non_EU,15,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.001884276
+Europe_Non_EU,15,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001257426
+Europe_Non_EU,15,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,1.85E-04
+Europe_Non_EU,15,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.002988107
+Europe_Non_EU,15,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.001884276
+Europe_Non_EU,15,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Europe_Non_EU,15,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.002988107
+Europe_Non_EU,15,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,1.24E-04
+Europe_Non_EU,15,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.002191278
+Europe_Non_EU,15,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+European Free Trade Association,16,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.404821726
+European Free Trade Association,16,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.001317998
+European Free Trade Association,16,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.005271792
+European Free Trade Association,16,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000697349
+European Free Trade Association,16,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.404821726
+European Free Trade Association,16,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.001317998
+European Free Trade Association,16,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.005271792
+European Free Trade Association,16,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000697349
+European Free Trade Association,16,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+European Free Trade Association,16,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.001317998
+European Free Trade Association,16,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.005271792
+European Free Trade Association,16,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000697349
+European Free Trade Association,16,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.021443205
+European Free Trade Association,16,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000564856
+European Free Trade Association,16,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.01613814
+European Free Trade Association,16,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.003785608
+European Free Trade Association,16,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.021443205
+European Free Trade Association,16,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000564856
+European Free Trade Association,16,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.01613814
+European Free Trade Association,16,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.003785608
+European Free Trade Association,16,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+European Free Trade Association,16,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.01613814
+European Free Trade Association,16,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,3.77E-04
+European Free Trade Association,16,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.011834636
+European Free Trade Association,16,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+India,17,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.067057215
+India,17,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000945489
+India,17,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001321704
+India,17,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,3.45E-06
+India,17,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.067057215
+India,17,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000945489
+India,17,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001321704
+India,17,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,3.45E-06
+India,17,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+India,17,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000945489
+India,17,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001321704
+India,17,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,3.45E-06
+India,17,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.003551987
+India,17,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000405209
+India,17,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.004046031
+India,17,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,1.87E-05
+India,17,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.003551987
+India,17,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000405209
+India,17,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.004046031
+India,17,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,1.87E-05
+India,17,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+India,17,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.004046031
+India,17,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.00027014
+India,17,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.00296709
+India,17,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Indonesia,18,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.05858642
+Indonesia,18,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.020724425
+Indonesia,18,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0
+Indonesia,18,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.001366831
+Indonesia,18,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.05858642
+Indonesia,18,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.020724425
+Indonesia,18,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0
+Indonesia,18,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.001366831
+Indonesia,18,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Indonesia,18,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.020724425
+Indonesia,18,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0
+Indonesia,18,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.001366831
+Indonesia,18,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.003103293
+Indonesia,18,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.008881896
+Indonesia,18,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0
+Indonesia,18,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.007419939
+Indonesia,18,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.003103293
+Indonesia,18,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.008881896
+Indonesia,18,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0
+Indonesia,18,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.007419939
+Indonesia,18,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Indonesia,18,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0
+Indonesia,18,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.005921264
+Indonesia,18,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0
+Indonesia,18,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Japan,19,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.018062976
+Japan,19,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.001029933
+Japan,19,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001612855
+Japan,19,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000519358
+Japan,19,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.018062976
+Japan,19,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.001029933
+Japan,19,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001612855
+Japan,19,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000519358
+Japan,19,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Japan,19,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.001029933
+Japan,19,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001612855
+Japan,19,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000519358
+Japan,19,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.000956787
+Japan,19,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.0004414
+Japan,19,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.00493731
+Japan,19,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.002819374
+Japan,19,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.000956787
+Japan,19,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.0004414
+Japan,19,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.00493731
+Japan,19,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.002819374
+Japan,19,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Japan,19,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.00493731
+Japan,19,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.000294267
+Japan,19,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.003620694
+Japan,19,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Mexico,20,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.015842042
+Mexico,20,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000906835
+Mexico,20,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.000563977
+Mexico,20,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.001980536
+Mexico,20,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.015842042
+Mexico,20,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000906835
+Mexico,20,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.000563977
+Mexico,20,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.001980536
+Mexico,20,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Mexico,20,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000906835
+Mexico,20,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.000563977
+Mexico,20,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.001980536
+Mexico,20,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.000839145
+Mexico,20,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000388644
+Mexico,20,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.00172646
+Mexico,20,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.010751482
+Mexico,20,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.000839145
+Mexico,20,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000388644
+Mexico,20,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.00172646
+Mexico,20,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.010751482
+Mexico,20,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Mexico,20,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.00172646
+Mexico,20,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.000259096
+Mexico,20,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.001266071
+Mexico,20,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Middle East,21,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.01118004
+Middle East,21,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+Middle East,21,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.000434347
+Middle East,21,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000333755
+Middle East,21,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.01118004
+Middle East,21,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+Middle East,21,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.000434347
+Middle East,21,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000333755
+Middle East,21,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Middle East,21,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+Middle East,21,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.000434347
+Middle East,21,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000333755
+Middle East,21,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,5.92E-04
+Middle East,21,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+Middle East,21,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.001329633
+Middle East,21,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.001811814
+Middle East,21,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,5.92E-04
+Middle East,21,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+Middle East,21,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.001329633
+Middle East,21,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.001811814
+Middle East,21,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Middle East,21,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.001329633
+Middle East,21,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+Middle East,21,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.000975064
+Middle East,21,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Pakistan,22,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.026776129
+Pakistan,22,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+Pakistan,22,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0
+Pakistan,22,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.002457484
+Pakistan,22,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.026776129
+Pakistan,22,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+Pakistan,22,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0
+Pakistan,22,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.002457484
+Pakistan,22,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Pakistan,22,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+Pakistan,22,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0
+Pakistan,22,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.002457484
+Pakistan,22,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001418318
+Pakistan,22,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+Pakistan,22,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0
+Pakistan,22,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.013340627
+Pakistan,22,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001418318
+Pakistan,22,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+Pakistan,22,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0
+Pakistan,22,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.013340627
+Pakistan,22,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Pakistan,22,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0
+Pakistan,22,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+Pakistan,22,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0
+Pakistan,22,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Russia,23,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.023926717
+Russia,23,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000370281
+Russia,23,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.00201789
+Russia,23,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.004786034
+Russia,23,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.023926717
+Russia,23,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000370281
+Russia,23,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.00201789
+Russia,23,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.004786034
+Russia,23,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Russia,23,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000370281
+Russia,23,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.00201789
+Russia,23,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.004786034
+Russia,23,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001267386
+Russia,23,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000158692
+Russia,23,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.006177215
+Russia,23,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.025981327
+Russia,23,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001267386
+Russia,23,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000158692
+Russia,23,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.006177215
+Russia,23,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.025981327
+Russia,23,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Russia,23,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.006177215
+Russia,23,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,1.06E-04
+Russia,23,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.004529958
+Russia,23,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+South Africa,24,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.049355418
+South Africa,24,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+South Africa,24,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.00103727
+South Africa,24,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.001503902
+South Africa,24,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.049355418
+South Africa,24,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+South Africa,24,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.00103727
+South Africa,24,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.001503902
+South Africa,24,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+South Africa,24,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+South Africa,24,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.00103727
+South Africa,24,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.001503902
+South Africa,24,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.002614332
+South Africa,24,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+South Africa,24,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.003175315
+South Africa,24,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.00816404
+South Africa,24,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.002614332
+South Africa,24,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+South Africa,24,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.003175315
+South Africa,24,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.00816404
+South Africa,24,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+South Africa,24,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.003175315
+South Africa,24,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+South Africa,24,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.002328564
+South Africa,24,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+South America_Northern,25,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0
+South America_Northern,25,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+South America_Northern,25,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0
+South America_Northern,25,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0
+South America_Northern,25,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0
+South America_Northern,25,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+South America_Northern,25,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0
+South America_Northern,25,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0
+South America_Northern,25,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+South America_Northern,25,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+South America_Northern,25,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0
+South America_Northern,25,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0
+South America_Northern,25,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0
+South America_Northern,25,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+South America_Northern,25,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0
+South America_Northern,25,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0
+South America_Northern,25,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0
+South America_Northern,25,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+South America_Northern,25,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0
+South America_Northern,25,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0
+South America_Northern,25,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+South America_Northern,25,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0
+South America_Northern,25,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+South America_Northern,25,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0
+South America_Northern,25,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+South America_Southern,26,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.022214754
+South America_Southern,26,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.013485765
+South America_Southern,26,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.005586113
+South America_Southern,26,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000486995
+South America_Southern,26,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.022214754
+South America_Southern,26,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.013485765
+South America_Southern,26,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.005586113
+South America_Southern,26,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000486995
+South America_Southern,26,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+South America_Southern,26,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.013485765
+South America_Southern,26,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.005586113
+South America_Southern,26,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000486995
+South America_Southern,26,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001176704
+South America_Southern,26,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.005779613
+South America_Southern,26,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.017100345
+South America_Southern,26,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.002643689
+South America_Southern,26,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001176704
+South America_Southern,26,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.005779613
+South America_Southern,26,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.017100345
+South America_Southern,26,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.002643689
+South America_Southern,26,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+South America_Southern,26,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.017100345
+South America_Southern,26,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.003853076
+South America_Southern,26,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.012540253
+South America_Southern,26,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+South Asia,27,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.204736405
+South Asia,27,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+South Asia,27,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0
+South Asia,27,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0
+South Asia,27,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.204736405
+South Asia,27,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+South Asia,27,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0
+South Asia,27,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0
+South Asia,27,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+South Asia,27,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+South Asia,27,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0
+South Asia,27,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0
+South Asia,27,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.010844785
+South Asia,27,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+South Asia,27,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0
+South Asia,27,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0
+South Asia,27,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.010844785
+South Asia,27,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+South Asia,27,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0
+South Asia,27,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0
+South Asia,27,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+South Asia,27,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0
+South Asia,27,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+South Asia,27,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0
+South Asia,27,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+South Korea,28,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.01849461
+South Korea,28,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000274472
+South Korea,28,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001775643
+South Korea,28,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.00066032
+South Korea,28,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.01849461
+South Korea,28,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000274472
+South Korea,28,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001775643
+South Korea,28,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.00066032
+South Korea,28,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+South Korea,28,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000274472
+South Korea,28,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001775643
+South Korea,28,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.00066032
+South Korea,28,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.00097965
+South Korea,28,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,1.18E-04
+South Korea,28,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.005435642
+South Korea,28,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.003584593
+South Korea,28,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.00097965
+South Korea,28,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,1.18E-04
+South Korea,28,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.005435642
+South Korea,28,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.003584593
+South Korea,28,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+South Korea,28,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.005435642
+South Korea,28,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,7.84E-05
+South Korea,28,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.003986137
+South Korea,28,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Southeast Asia,29,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.06348516
+Southeast Asia,29,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.003324789
+Southeast Asia,29,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001135359
+Southeast Asia,29,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000156455
+Southeast Asia,29,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.06348516
+Southeast Asia,29,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.003324789
+Southeast Asia,29,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001135359
+Southeast Asia,29,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000156455
+Southeast Asia,29,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Southeast Asia,29,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.003324789
+Southeast Asia,29,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001135359
+Southeast Asia,29,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000156455
+Southeast Asia,29,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.003362777
+Southeast Asia,29,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.00142491
+Southeast Asia,29,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.00347559
+Southeast Asia,29,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.000849326
+Southeast Asia,29,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.003362777
+Southeast Asia,29,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.00142491
+Southeast Asia,29,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.00347559
+Southeast Asia,29,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.000849326
+Southeast Asia,29,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Southeast Asia,29,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.00347559
+Southeast Asia,29,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.00094994
+Southeast Asia,29,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.002548766
+Southeast Asia,29,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Taiwan,30,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.018036657
+Taiwan,30,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.001204616
+Taiwan,30,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001441674
+Taiwan,30,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000177022
+Taiwan,30,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.018036657
+Taiwan,30,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.001204616
+Taiwan,30,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001441674
+Taiwan,30,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000177022
+Taiwan,30,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Taiwan,30,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.001204616
+Taiwan,30,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001441674
+Taiwan,30,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000177022
+Taiwan,30,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.000955393
+Taiwan,30,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000516264
+Taiwan,30,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.004413288
+Taiwan,30,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.000960978
+Taiwan,30,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.000955393
+Taiwan,30,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000516264
+Taiwan,30,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.004413288
+Taiwan,30,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.000960978
+Taiwan,30,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Taiwan,30,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.004413288
+Taiwan,30,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.000344176
+Taiwan,30,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.003236412
+Taiwan,30,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+USA,1,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.017109489
+USA,1,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000799413
+USA,1,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.001136307
+USA,1,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.003715627
+USA,1,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.017109489
+USA,1,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000799413
+USA,1,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.001136307
+USA,1,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.003715627
+USA,1,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+USA,1,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000799413
+USA,1,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.001136307
+USA,1,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.003715627
+USA,1,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.000906281
+USA,1,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000342605
+USA,1,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.00347849
+USA,1,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.020170548
+USA,1,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.000906281
+USA,1,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000342605
+USA,1,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.00347849
+USA,1,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.020170548
+USA,1,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+USA,1,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.00347849
+USA,1,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.000228404
+USA,1,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.002550893
+USA,1,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Africa_Southern,4,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.032872008
+Africa_Southern,4,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0
+Africa_Southern,4,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.000328101
+Africa_Southern,4,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.000437469
+Africa_Southern,4,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.032872008
+Africa_Southern,4,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0
+Africa_Southern,4,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.000328101
+Africa_Southern,4,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.000437469
+Africa_Southern,4,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Africa_Southern,4,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0
+Africa_Southern,4,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.000328101
+Africa_Southern,4,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.000437469
+Africa_Southern,4,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001741214
+Africa_Southern,4,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0
+Africa_Southern,4,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.001004389
+Africa_Southern,4,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.002374832
+Africa_Southern,4,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001741214
+Africa_Southern,4,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0
+Africa_Southern,4,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.001004389
+Africa_Southern,4,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.002374832
+Africa_Southern,4,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Africa_Southern,4,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.001004389
+Africa_Southern,4,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0
+Africa_Southern,4,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.000736552
+Africa_Southern,4,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1

@@ -3,7 +3,7 @@
 # Units: kg / GJ (or TgXXX / EJ, where XXX is the particular gas)
 # Description: Minimum emissions coefficient for various technologies and gases. Emissions coefficients decline with GDP until these levels are reached, after which no further declines are possible.
 # Source: GCAM3 emissions files (e.g., SO2 are from NonCO2_energy_input.xls, SO2_calcs tab, table starting at row 509)
-# Column types: cccnnnnnn 
+# Column types: cccnnnnnn
 # ----------
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
 cement,cement,cement,,,,,,
@@ -48,16 +48,16 @@ H2 forecourt production,gas,natural gas steam reforming,,0.0042,0.0004,0,0,
 industrial energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
 industrial energy use,biomass,biomass cogen,,,,,,
 industrial energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
-industrial energy use,coal,coal cogen,,,,,,
-industrial energy use,district heat,district heat,,,,,,
-industrial energy use,electricity,electricity,,,,,,
-industrial energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
-industrial energy use,gas,gas cogen,,,,,,
-industrial energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
-industrial energy use,refined liquids,refined liquids cogen,,,,,,
-industrial feedstocks,coal,coal,,,,,,
-industrial feedstocks,gas,gas,,,,,,
-industrial feedstocks,refined liquids,refined liquids,,,,,,
+other industrial energy use,coal,coal cogen,,,,,,
+other industrial energy use,district heat,district heat,,,,,,
+other industrial energy use,electricity,electricity,,,,,,
+other industrial energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
+other industrial energy use,gas,gas cogen,,,,,,
+other industrial energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+other industrial energy use,refined liquids,refined liquids cogen,,,,,,
+other industrial feedstocks,coal,coal,,,,,,
+other industrial feedstocks,gas,gas,,,,,,
+other industrial feedstocks,refined liquids,refined liquids,,,,,,
 N fertilizer,coal,coal,0,0,0,0,0,0
 N fertilizer,gas,gas,,0.0662,0.0285,0,0,
 N fertilizer,refined liquids,refined liquids,0,0,0,0,0,0
@@ -214,3 +214,65 @@ trn_shipping_intl,International Ship,Liquids,0,0,0,0.0016,0.0037,0
 out_resources,coal,coal,0,1.13E-05,0.012425745,0,0,0.048785642
 out_resources,crude oil,crude oil,0.00098976,0.000206633,0.008034038,0,0,0.080644702
 out_resources,natural gas,natural gas,0.00098976,0.000206633,0.008034038,0,0,0.080644702
+chemical energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+chemical energy use,biomass,biomass cogen,,,,,,
+chemical energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+chemical energy use,coal,coal cogen,,,,,,
+chemical energy use,district heat,district heat,,,,,,
+chemical energy use,electricity,electricity,,,,,,
+chemical energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
+chemical energy use,gas,gas cogen,,,,,,
+chemical energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+chemical energy use,refined liquids,refined liquids cogen,,,,,,
+agricultural energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+agricultural energy use,biomass,biomass cogen,,,,,,
+agricultural energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+agricultural energy use,coal,coal cogen,,,,,,
+agricultural energy use,district heat,district heat,,,,,,
+agricultural energy use,electricity,electricity,,,,,,
+agricultural energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
+agricultural energy use,gas,gas cogen,,,,,,
+agricultural energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+agricultural energy use,refined liquids,refined liquids cogen,,,,,,
+mining energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+mining energy use,biomass,biomass cogen,,,,,,
+mining energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+mining energy use,coal,coal cogen,,,,,,
+mining energy use,district heat,district heat,,,,,,
+mining energy use,electricity,electricity,,,,,,
+mining energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
+mining energy use,gas,gas cogen,,,,,,
+mining energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+mining energy use,refined liquids,refined liquids cogen,,,,,,
+construction energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+construction energy use,biomass,biomass cogen,,,,,,
+construction energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+construction energy use,coal,coal cogen,,,,,,
+construction energy use,district heat,district heat,,,,,,
+construction energy use,electricity,electricity,,,,,,
+construction energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
+construction energy use,gas,gas cogen,,,,,,
+construction energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+construction energy use,refined liquids,refined liquids cogen,,,,,,
+alumina,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+alumina,biomass,biomass cogen,,,,,,
+alumina,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+alumina,coal,coal cogen,,,,,,
+alumina,district heat,district heat,,,,,,
+alumina,electricity,electricity,,,,,,
+alumina,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
+alumina,gas,gas cogen,,,,,,
+alumina,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+alumina,refined liquids,refined liquids cogen,,,,,,
+chemical feedstocks,coal,coal,,,,,,
+chemical feedstocks,gas,gas,,,,,,
+chemical feedstocks,refined liquids,refined liquids,,,,,,
+construction feedstocks,refined liquids,refined liquids,,,,,,
+iron and steel,biomass,Biomass-based,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+iron and steel,coal,BLASTFUR,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+iron and steel,coal,EAF with DRI,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+iron and steel,gas,BLASTFUR,0.0238,0.0468,0.0067,0,0,0.0038
+iron and steel,gas,EAF with DRI,0.0238,0.0468,0.0067,0,0,0.0038
+iron and steel,refined liquids,BLASTFUR,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+iron and steel,refined liquids,EAF with DRI,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+iron and steel,refined liquids,EAF with scrap,0.0238,0.0156,0.0067,0.0092,0.001,0.0038

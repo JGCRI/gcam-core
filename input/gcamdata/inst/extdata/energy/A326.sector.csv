@@ -1,0 +1,8 @@
+# File: A326.sector.csv
+# Title:  aluminum sector default supplysector information (units and logit exponents)
+# Units: In file
+# Column types: ccccicc
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
+alumina,Mt,EJ or Mt,1975$/kg,-3,industry,
+aluminum,Mt,EJ or Mt,1975$/kg,-3,industry,

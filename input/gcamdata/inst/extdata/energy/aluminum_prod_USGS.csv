@@ -1,0 +1,1228 @@
+# File: aluminum_prod_USGS.csv
+# Title: Aluminum production by country
+# Units: Thousand tons
+# Description: National aluminum production
+# Source: USGS Mineral Yearbooks - Aluminum
+# Column types: ccinc
+# ----------
+country,iso,year,value,unit
+Argentina,arg,1990,166,Thousand metric tons
+Australia,aus,1990,1234,Thousand metric tons
+Austria,aut,1990,89,Thousand metric tons
+Bahrain,bhr,1990,213,Thousand metric tons
+Brazil,bra,1990,931,Thousand metric tons
+Cameroon,cmr,1990,93,Thousand metric tons
+Canada,can,1990,1567,Thousand metric tons
+China,chn,1990,850,Thousand metric tons
+Slovakia,svk,1990,70,Thousand metric tons
+Egypt,egy,1990,179,Thousand metric tons
+France,fra,1990,326,Thousand metric tons
+Germany,deu,1990,740,Thousand metric tons
+Ghana,gha,1990,174,Thousand metric tons
+Greece,grc,1990,150,Thousand metric tons
+Hungary,hun,1990,75,Thousand metric tons
+Iceland,isl,1990,87,Thousand metric tons
+India,ind,1990,433,Thousand metric tons
+Indonesia,idn,1990,186,Thousand metric tons
+Iran,irn,1990,60,Thousand metric tons
+Italy,ita,1990,232,Thousand metric tons
+Japan,jpn,1990,34,Thousand metric tons
+Mexico,mex,1990,68,Thousand metric tons
+Netherlands,nld,1990,270,Thousand metric tons
+New Zealand,nzl,1990,260,Thousand metric tons
+Norway,nor,1990,845,Thousand metric tons
+Poland,pol,1990,46,Thousand metric tons
+Romania,rom,1990,168,Thousand metric tons
+South Africa,zaf,1990,159,Thousand metric tons
+Spain,esp,1990,353,Thousand metric tons
+Suriname,sur,1990,32,Thousand metric tons
+Sweden,swe,1990,96,Thousand metric tons
+Switzerland,che,1990,72,Thousand metric tons
+Turkey,tur,1990,61,Thousand metric tons
+United Arab Emirates,are,1990,174,Thousand metric tons
+United Kingdom,gbr,1990,294,Thousand metric tons
+United States,usa,1990,4048,Thousand metric tons
+Venezuela,ven,1990,590,Thousand metric tons
+Argentina,arg,1991,165,Thousand metric tons
+Australia,aus,1991,1228,Thousand metric tons
+Austria,aut,1991,80,Thousand metric tons
+Bahrain,bhr,1991,227,Thousand metric tons
+Brazil,bra,1991,1140,Thousand metric tons
+Cameroon,cmr,1991,83,Thousand metric tons
+Canada,can,1991,1822,Thousand metric tons
+China,chn,1991,963,Thousand metric tons
+Slovakia,svk,1991,68,Thousand metric tons
+Egypt,egy,1991,178,Thousand metric tons
+France,fra,1991,286,Thousand metric tons
+Germany,deu,1991,690,Thousand metric tons
+Ghana,gha,1991,175,Thousand metric tons
+Greece,grc,1991,152,Thousand metric tons
+Hungary,hun,1991,63,Thousand metric tons
+Iceland,isl,1991,89,Thousand metric tons
+India,ind,1991,504,Thousand metric tons
+Indonesia,idn,1991,187,Thousand metric tons
+Iran,irn,1991,80,Thousand metric tons
+Italy,ita,1991,206,Thousand metric tons
+Japan,jpn,1991,32,Thousand metric tons
+Mexico,mex,1991,51,Thousand metric tons
+Netherlands,nld,1991,264,Thousand metric tons
+New Zealand,nzl,1991,258,Thousand metric tons
+Norway,nor,1991,833,Thousand metric tons
+Poland,pol,1991,46,Thousand metric tons
+Romania,rom,1991,113,Thousand metric tons
+South Africa,zaf,1991,169,Thousand metric tons
+Spain,esp,1991,355,Thousand metric tons
+Suriname,sur,1991,29,Thousand metric tons
+Sweden,swe,1991,97,Thousand metric tons
+Switzerland,che,1991,66,Thousand metric tons
+Turkey,tur,1991,56,Thousand metric tons
+United Arab Emirates,are,1991,239,Thousand metric tons
+United Kingdom,gbr,1991,294,Thousand metric tons
+United States,usa,1991,4121,Thousand metric tons
+Venezuela,ven,1991,601,Thousand metric tons
+Argentina,arg,1992,165,Thousand metric tons
+Australia,aus,1992,1236,Thousand metric tons
+Austria,aut,1992,33,Thousand metric tons
+Azerbaijan,aze,1992,25,Thousand metric tons
+Bahrain,bhr,1992,292,Thousand metric tons
+Bosnia and Herzegovina,bih,1992,30,Thousand metric tons
+Brazil,bra,1992,1200,Thousand metric tons
+Cameroon,cmr,1992,82,Thousand metric tons
+Canada,can,1992,1972,Thousand metric tons
+China,chn,1992,1100,Thousand metric tons
+Croatia,hrv,1992,20,Thousand metric tons
+Slovakia,svk,1992,68,Thousand metric tons
+Egypt,egy,1992,178,Thousand metric tons
+France,fra,1992,418,Thousand metric tons
+Germany,deu,1992,603,Thousand metric tons
+Ghana,gha,1992,180,Thousand metric tons
+Greece,grc,1992,153,Thousand metric tons
+Hungary,hun,1992,27,Thousand metric tons
+Iceland,isl,1992,89,Thousand metric tons
+India,ind,1992,490,Thousand metric tons
+Indonesia,idn,1992,173,Thousand metric tons
+Iran,irn,1992,92,Thousand metric tons
+Italy,ita,1992,161,Thousand metric tons
+Japan,jpn,1992,19,Thousand metric tons
+Mexico,mex,1992,25,Thousand metric tons
+Netherlands,nld,1992,235,Thousand metric tons
+New Zealand,nzl,1992,243,Thousand metric tons
+Norway,nor,1992,813,Thousand metric tons
+Poland,pol,1992,44,Thousand metric tons
+Romania,rom,1992,112,Thousand metric tons
+Russia,rus,1992,2700,Thousand metric tons
+Serbia and Montenegro,scg,1992,76,Thousand metric tons
+Slovenia,svn,1992,85,Thousand metric tons
+South Africa,zaf,1992,173,Thousand metric tons
+Spain,esp,1992,359,Thousand metric tons
+Suriname,sur,1992,32,Thousand metric tons
+Sweden,swe,1992,77,Thousand metric tons
+Switzerland,che,1992,52,Thousand metric tons
+Tajikistan,tjk,1992,400,Thousand metric tons
+Turkey,tur,1992,59,Thousand metric tons
+Ukraine,ukr,1992,90,Thousand metric tons
+United Arab Emirates,are,1992,240,Thousand metric tons
+United Kingdom,gbr,1992,244,Thousand metric tons
+United States,usa,1992,4042,Thousand metric tons
+Venezuela,ven,1992,561,Thousand metric tons
+Argentina,arg,1993,165,Thousand metric tons
+Australia,aus,1993,1345,Thousand metric tons
+Azerbaijan,aze,1993,20,Thousand metric tons
+Bahrain,bhr,1993,450,Thousand metric tons
+Bosnia and Herzegovina,bih,1993,15,Thousand metric tons
+Brazil,bra,1993,1200,Thousand metric tons
+Cameroon,cmr,1993,82,Thousand metric tons
+Canada,can,1993,2308,Thousand metric tons
+China,chn,1993,1220,Thousand metric tons
+Croatia,hrv,1993,20,Thousand metric tons
+Egypt,egy,1993,177,Thousand metric tons
+France,fra,1993,456,Thousand metric tons
+Germany,deu,1993,552,Thousand metric tons
+Ghana,gha,1993,175,Thousand metric tons
+Greece,grc,1993,145,Thousand metric tons
+Hungary,hun,1993,28,Thousand metric tons
+Iceland,isl,1993,91,Thousand metric tons
+India,ind,1993,435,Thousand metric tons
+Indonesia,idn,1993,180,Thousand metric tons
+Iran,irn,1993,100,Thousand metric tons
+Italy,ita,1993,170,Thousand metric tons
+Japan,jpn,1993,18,Thousand metric tons
+Mexico,mex,1993,26,Thousand metric tons
+Netherlands,nld,1993,229,Thousand metric tons
+New Zealand,nzl,1993,268,Thousand metric tons
+Norway,nor,1993,814,Thousand metric tons
+Poland,pol,1993,47,Thousand metric tons
+Romania,rom,1993,112,Thousand metric tons
+Russia,rus,1993,2900,Thousand metric tons
+Serbia and Montenegro,scg,1993,70,Thousand metric tons
+Slovakia,svk,1993,60,Thousand metric tons
+Slovenia,svn,1993,80,Thousand metric tons
+South Africa,zaf,1993,175,Thousand metric tons
+Spain,esp,1993,355,Thousand metric tons
+Suriname,sur,1993,30,Thousand metric tons
+Sweden,swe,1993,77,Thousand metric tons
+Switzerland,che,1993,45,Thousand metric tons
+Tajikistan,tjk,1993,300,Thousand metric tons
+Turkey,tur,1993,59,Thousand metric tons
+Ukraine,ukr,1993,90,Thousand metric tons
+United Arab Emirates,are,1993,225,Thousand metric tons
+United Kingdom,gbr,1993,235,Thousand metric tons
+United States,usa,1993,3695,Thousand metric tons
+Venezuela,ven,1993,570,Thousand metric tons
+Argentina,arg,1994,175,Thousand metric tons
+Australia,aus,1994,1317,Thousand metric tons
+Azerbaijan,aze,1994,15,Thousand metric tons
+Bahrain,bhr,1994,447,Thousand metric tons
+Bosnia and Herzegovina,bih,1994,10,Thousand metric tons
+Brazil,bra,1994,1185,Thousand metric tons
+Cameroon,cmr,1994,89,Thousand metric tons
+Canada,can,1994,2255,Thousand metric tons
+China,chn,1994,1450,Thousand metric tons
+Croatia,hrv,1994,26,Thousand metric tons
+Egypt,egy,1994,188,Thousand metric tons
+France,fra,1994,438,Thousand metric tons
+Germany,deu,1994,505,Thousand metric tons
+Ghana,gha,1994,141,Thousand metric tons
+Greece,grc,1994,144,Thousand metric tons
+Hungary,hun,1994,31,Thousand metric tons
+Iceland,isl,1994,99,Thousand metric tons
+India,ind,1994,472,Thousand metric tons
+Indonesia,idn,1994,222,Thousand metric tons
+Iran,irn,1994,116,Thousand metric tons
+Italy,ita,1994,176,Thousand metric tons
+Japan,jpn,1994,17,Thousand metric tons
+Netherlands,nld,1994,219,Thousand metric tons
+New Zealand,nzl,1994,269,Thousand metric tons
+Norway,nor,1994,857,Thousand metric tons
+Poland,pol,1994,50,Thousand metric tons
+Romania,rom,1994,120,Thousand metric tons
+Russia,rus,1994,2670,Thousand metric tons
+Serbia and Montenegro,scg,1994,7,Thousand metric tons
+Slovakia,svk,1994,33,Thousand metric tons
+Slovenia,svn,1994,77,Thousand metric tons
+South Africa,zaf,1994,172,Thousand metric tons
+Spain,esp,1994,338,Thousand metric tons
+Suriname,sur,1994,27,Thousand metric tons
+Sweden,swe,1994,84,Thousand metric tons
+Switzerland,che,1994,24,Thousand metric tons
+Tajikistan,tjk,1994,235,Thousand metric tons
+Turkey,tur,1994,60,Thousand metric tons
+Ukraine,ukr,1994,100,Thousand metric tons
+United Arab Emirates,are,1994,247,Thousand metric tons
+United Kingdom,gbr,1994,231,Thousand metric tons
+United States,usa,1994,3299,Thousand metric tons
+Venezuela,ven,1994,585,Thousand metric tons
+Argentina,arg,1995,186,Thousand metric tons
+Australia,aus,1995,1297,Thousand metric tons
+Azerbaijan,aze,1995,10,Thousand metric tons
+Bahrain,bhr,1995,451,Thousand metric tons
+Bosnia and Herzegovina,bih,1995,10,Thousand metric tons
+Brazil,bra,1995,1188,Thousand metric tons
+Cameroon,cmr,1995,79,Thousand metric tons
+Canada,can,1995,2172,Thousand metric tons
+China,chn,1995,1680,Thousand metric tons
+Croatia,hrv,1995,31,Thousand metric tons
+Egypt,egy,1995,180,Thousand metric tons
+France,fra,1995,372,Thousand metric tons
+Germany,deu,1995,575,Thousand metric tons
+Ghana,gha,1995,135,Thousand metric tons
+Greece,grc,1995,144,Thousand metric tons
+Hungary,hun,1995,25,Thousand metric tons
+Iceland,isl,1995,100,Thousand metric tons
+India,ind,1995,537,Thousand metric tons
+Indonesia,idn,1995,220,Thousand metric tons
+Iran,irn,1995,118,Thousand metric tons
+Italy,ita,1995,198,Thousand metric tons
+Japan,jpn,1995,18,Thousand metric tons
+Mexico,mex,1995,10,Thousand metric tons
+Netherlands,nld,1995,216,Thousand metric tons
+New Zealand,nzl,1995,273,Thousand metric tons
+Norway,nor,1995,847,Thousand metric tons
+Poland,pol,1995,56,Thousand metric tons
+Romania,rom,1995,141,Thousand metric tons
+Russia,rus,1995,2724,Thousand metric tons
+Serbia and Montenegro,scg,1995,17,Thousand metric tons
+Slovakia,svk,1995,31,Thousand metric tons
+Slovenia,svn,1995,58,Thousand metric tons
+South Africa,zaf,1995,195,Thousand metric tons
+Spain,esp,1995,361,Thousand metric tons
+Suriname,sur,1995,28,Thousand metric tons
+Sweden,swe,1995,95,Thousand metric tons
+Switzerland,che,1995,21,Thousand metric tons
+Tajikistan,tjk,1995,232,Thousand metric tons
+Turkey,tur,1995,62,Thousand metric tons
+Ukraine,ukr,1995,98,Thousand metric tons
+United Arab Emirates,are,1995,240,Thousand metric tons
+United Kingdom,gbr,1995,238,Thousand metric tons
+United States,usa,1995,3375,Thousand metric tons
+Venezuela,ven,1995,630,Thousand metric tons
+Argentina,arg,1996,186,Thousand metric tons
+Australia,aus,1996,1372,Thousand metric tons
+Azerbaijan,aze,1996,10,Thousand metric tons
+Bahrain,bhr,1996,461,Thousand metric tons
+Bosnia and Herzegovina,bih,1996,10,Thousand metric tons
+Brazil,bra,1996,1195,Thousand metric tons
+Cameroon,cmr,1996,82,Thousand metric tons
+Canada,can,1996,2283,Thousand metric tons
+China,chn,1996,1770,Thousand metric tons
+Croatia,hrv,1996,38,Thousand metric tons
+Egypt,egy,1996,177,Thousand metric tons
+France,fra,1996,380,Thousand metric tons
+Germany,deu,1996,576,Thousand metric tons
+Ghana,gha,1996,137,Thousand metric tons
+Greece,grc,1996,141,Thousand metric tons
+Iceland,isl,1996,104,Thousand metric tons
+India,ind,1996,531,Thousand metric tons
+Indonesia,idn,1996,225,Thousand metric tons
+Iran,irn,1996,118,Thousand metric tons
+Italy,ita,1996,184,Thousand metric tons
+Japan,jpn,1996,17,Thousand metric tons
+Mexico,mex,1996,61,Thousand metric tons
+Netherlands,nld,1996,227,Thousand metric tons
+New Zealand,nzl,1996,285,Thousand metric tons
+Norway,nor,1996,863,Thousand metric tons
+Poland,pol,1996,52,Thousand metric tons
+Romania,rom,1996,141,Thousand metric tons
+Russia,rus,1996,2874,Thousand metric tons
+Serbia and Montenegro,scg,1996,37,Thousand metric tons
+Slovakia,svk,1996,35,Thousand metric tons
+Slovenia,svn,1996,60,Thousand metric tons
+South Africa,zaf,1996,617,Thousand metric tons
+Spain,esp,1996,362,Thousand metric tons
+Suriname,sur,1996,32,Thousand metric tons
+Sweden,swe,1996,98,Thousand metric tons
+Switzerland,che,1996,27,Thousand metric tons
+Tajikistan,tjk,1996,198,Thousand metric tons
+Turkey,tur,1996,62,Thousand metric tons
+Ukraine,ukr,1996,90,Thousand metric tons
+United Arab Emirates,are,1996,251,Thousand metric tons
+United Kingdom,gbr,1996,240,Thousand metric tons
+United States,usa,1996,3577,Thousand metric tons
+Venezuela,ven,1996,635,Thousand metric tons
+Argentina,arg,1997,185,Thousand metric tons
+Australia,aus,1997,1495,Thousand metric tons
+Azerbaijan,aze,1997,10,Thousand metric tons
+Bahrain,bhr,1997,480,Thousand metric tons
+Bosnia and Herzegovina,bih,1997,15,Thousand metric tons
+Brazil,bra,1997,1200,Thousand metric tons
+Cameroon,cmr,1997,82,Thousand metric tons
+Canada,can,1997,2327,Thousand metric tons
+China,chn,1997,2000,Thousand metric tons
+Croatia,hrv,1997,35,Thousand metric tons
+Egypt,egy,1997,177,Thousand metric tons
+France,fra,1997,390,Thousand metric tons
+Germany,deu,1997,575,Thousand metric tons
+Ghana,gha,1997,152,Thousand metric tons
+Greece,grc,1997,145,Thousand metric tons
+Iceland,isl,1997,104,Thousand metric tons
+India,ind,1997,494,Thousand metric tons
+Indonesia,idn,1997,200,Thousand metric tons
+Iran,irn,1997,118,Thousand metric tons
+Italy,ita,1997,185,Thousand metric tons
+Japan,jpn,1997,17,Thousand metric tons
+Mexico,mex,1997,65,Thousand metric tons
+Netherlands,nld,1997,230,Thousand metric tons
+New Zealand,nzl,1997,305,Thousand metric tons
+Norway,nor,1997,919,Thousand metric tons
+Poland,pol,1997,55,Thousand metric tons
+Romania,rom,1997,140,Thousand metric tons
+Russia,rus,1997,2906,Thousand metric tons
+Serbia and Montenegro,scg,1997,65,Thousand metric tons
+Slovakia,svk,1997,35,Thousand metric tons
+Slovenia,svn,1997,60,Thousand metric tons
+South Africa,zaf,1997,660,Thousand metric tons
+Spain,esp,1997,362,Thousand metric tons
+Suriname,sur,1997,32,Thousand metric tons
+Sweden,swe,1997,98,Thousand metric tons
+Switzerland,che,1997,27,Thousand metric tons
+Tajikistan,tjk,1997,189,Thousand metric tons
+Turkey,tur,1997,60,Thousand metric tons
+Ukraine,ukr,1997,101,Thousand metric tons
+United Arab Emirates,are,1997,250,Thousand metric tons
+United Kingdom,gbr,1997,240,Thousand metric tons
+United States,usa,1997,3603,Thousand metric tons
+Venezuela,ven,1997,640,Thousand metric tons
+Argentina,arg,1998,187,Thousand metric tons
+Australia,aus,1998,1627,Thousand metric tons
+Bahrain,bhr,1998,501,Thousand metric tons
+Bosnia and Herzegovina,bih,1998,28,Thousand metric tons
+Brazil,bra,1998,1208,Thousand metric tons
+Cameroon,cmr,1998,82,Thousand metric tons
+Canada,can,1998,2374,Thousand metric tons
+China,chn,1998,2340,Thousand metric tons
+Croatia,hrv,1998,16,Thousand metric tons
+Egypt,egy,1998,195,Thousand metric tons
+France,fra,1998,424,Thousand metric tons
+Germany,deu,1998,612,Thousand metric tons
+Ghana,gha,1998,56,Thousand metric tons
+Greece,grc,1998,146,Thousand metric tons
+Hungary,hun,1998,35,Thousand metric tons
+Iceland,isl,1998,173,Thousand metric tons
+India,ind,1998,542,Thousand metric tons
+Indonesia,idn,1998,133,Thousand metric tons
+Iran,irn,1998,124,Thousand metric tons
+Italy,ita,1998,187,Thousand metric tons
+Japan,jpn,1998,16,Thousand metric tons
+Mexico,mex,1998,62,Thousand metric tons
+Netherlands,nld,1998,264,Thousand metric tons
+New Zealand,nzl,1998,318,Thousand metric tons
+Nigeria,nga,1998,20,Thousand metric tons
+Norway,nor,1998,996,Thousand metric tons
+Poland,pol,1998,54,Thousand metric tons
+Romania,rom,1998,174,Thousand metric tons
+Russia,rus,1998,3005,Thousand metric tons
+Serbia and Montenegro,scg,1998,60,Thousand metric tons
+Slovakia,svk,1998,108,Thousand metric tons
+Slovenia,svn,1998,74,Thousand metric tons
+South Africa,zaf,1998,677,Thousand metric tons
+Spain,esp,1998,362,Thousand metric tons
+Suriname,sur,1998,29,Thousand metric tons
+Sweden,swe,1998,96,Thousand metric tons
+Switzerland,che,1998,32,Thousand metric tons
+Tajikistan,tjk,1998,196,Thousand metric tons
+Turkey,tur,1998,62,Thousand metric tons
+Ukraine,ukr,1998,107,Thousand metric tons
+United Arab Emirates,are,1998,352,Thousand metric tons
+United Kingdom,gbr,1998,258,Thousand metric tons
+United States,usa,1998,3713,Thousand metric tons
+Venezuela,ven,1998,585,Thousand metric tons
+Argentina,arg,1999,206,Thousand metric tons
+Australia,aus,1999,1718,Thousand metric tons
+Bahrain,bhr,1999,503,Thousand metric tons
+Bosnia and Herzegovina,bih,1999,70,Thousand metric tons
+Brazil,bra,1999,1250,Thousand metric tons
+Cameroon,cmr,1999,90,Thousand metric tons
+Canada,can,1999,2390,Thousand metric tons
+China,chn,1999,2530,Thousand metric tons
+Croatia,hrv,1999,14,Thousand metric tons
+Egypt,egy,1999,193,Thousand metric tons
+France,fra,1999,455,Thousand metric tons
+Germany,deu,1999,634,Thousand metric tons
+Ghana,gha,1999,104,Thousand metric tons
+Greece,grc,1999,170,Thousand metric tons
+Hungary,hun,1999,34,Thousand metric tons
+Iceland,isl,1999,220,Thousand metric tons
+India,ind,1999,614,Thousand metric tons
+Indonesia,idn,1999,106,Thousand metric tons
+Iran,irn,1999,137,Thousand metric tons
+Italy,ita,1999,187,Thousand metric tons
+Japan,jpn,1999,11,Thousand metric tons
+Mexico,mex,1999,63,Thousand metric tons
+Netherlands,nld,1999,286,Thousand metric tons
+New Zealand,nzl,1999,327,Thousand metric tons
+Nigeria,nga,1999,16,Thousand metric tons
+Norway,nor,1999,1020,Thousand metric tons
+Poland,pol,1999,51,Thousand metric tons
+Romania,rom,1999,174,Thousand metric tons
+Russia,rus,1999,3146,Thousand metric tons
+Serbia and Montenegro,scg,1999,73,Thousand metric tons
+Slovakia,svk,1999,109,Thousand metric tons
+Slovenia,svn,1999,77,Thousand metric tons
+South Africa,zaf,1999,689,Thousand metric tons
+Spain,esp,1999,364,Thousand metric tons
+Suriname,sur,1999,6,Thousand metric tons
+Sweden,swe,1999,99,Thousand metric tons
+Switzerland,che,1999,34,Thousand metric tons
+Tajikistan,tjk,1999,229,Thousand metric tons
+Turkey,tur,1999,62,Thousand metric tons
+Ukraine,ukr,1999,115,Thousand metric tons
+United Arab Emirates,are,1999,440,Thousand metric tons
+United Kingdom,gbr,1999,272,Thousand metric tons
+United States,usa,1999,3779,Thousand metric tons
+Venezuela,ven,1999,570,Thousand metric tons
+Argentina,arg,2000,262,Thousand metric tons
+Australia,aus,2000,1769,Thousand metric tons
+Bahrain,bhr,2000,509,Thousand metric tons
+Bosnia and Herzegovina,bih,2000,95,Thousand metric tons
+Brazil,bra,2000,1271,Thousand metric tons
+Cameroon,cmr,2000,96,Thousand metric tons
+Canada,can,2000,2373,Thousand metric tons
+China,chn,2000,2800,Thousand metric tons
+Croatia,hrv,2000,14,Thousand metric tons
+Egypt,egy,2000,193,Thousand metric tons
+France,fra,2000,441,Thousand metric tons
+Germany,deu,2000,644,Thousand metric tons
+Ghana,gha,2000,156,Thousand metric tons
+Greece,grc,2000,168,Thousand metric tons
+Hungary,hun,2000,34,Thousand metric tons
+Iceland,isl,2000,224,Thousand metric tons
+India,ind,2000,644,Thousand metric tons
+Indonesia,idn,2000,160,Thousand metric tons
+Iran,irn,2000,140,Thousand metric tons
+Italy,ita,2000,189,Thousand metric tons
+Japan,jpn,2000,7,Thousand metric tons
+Mexico,mex,2000,61,Thousand metric tons
+Mozambique,moz,2000,54,Thousand metric tons
+Netherlands,nld,2000,302,Thousand metric tons
+New Zealand,nzl,2000,328,Thousand metric tons
+Norway,nor,2000,1026,Thousand metric tons
+Poland,pol,2000,47,Thousand metric tons
+Romania,rom,2000,179,Thousand metric tons
+Russia,rus,2000,3245,Thousand metric tons
+Serbia and Montenegro,scg,2000,88,Thousand metric tons
+Slovakia,svk,2000,110,Thousand metric tons
+Slovenia,svn,2000,100,Thousand metric tons
+South Africa,zaf,2000,673,Thousand metric tons
+Spain,esp,2000,366,Thousand metric tons
+Sweden,swe,2000,101,Thousand metric tons
+Switzerland,che,2000,35,Thousand metric tons
+Tajikistan,tjk,2000,300,Thousand metric tons
+Turkey,tur,2000,61,Thousand metric tons
+Ukraine,ukr,2000,119,Thousand metric tons
+United Arab Emirates,are,2000,470,Thousand metric tons
+United Kingdom,gbr,2000,305,Thousand metric tons
+United States,usa,2000,3668,Thousand metric tons
+Venezuela,ven,2000,569,Thousand metric tons
+Argentina,arg,2001,245,Thousand metric tons
+Australia,aus,2001,1798,Thousand metric tons
+Bahrain,bhr,2001,522,Thousand metric tons
+Bosnia and Herzegovina,bih,2001,96,Thousand metric tons
+Brazil,bra,2001,1131,Thousand metric tons
+Cameroon,cmr,2001,81,Thousand metric tons
+Canada,can,2001,2583,Thousand metric tons
+China,chn,2001,3250,Thousand metric tons
+Croatia,hrv,2001,15,Thousand metric tons
+Egypt,egy,2001,189,Thousand metric tons
+France,fra,2001,462,Thousand metric tons
+Germany,deu,2001,652,Thousand metric tons
+Ghana,gha,2001,162,Thousand metric tons
+Greece,grc,2001,163,Thousand metric tons
+Hungary,hun,2001,35,Thousand metric tons
+Iceland,isl,2001,243,Thousand metric tons
+India,ind,2001,624,Thousand metric tons
+Indonesia,idn,2001,180,Thousand metric tons
+Iran,irn,2001,140,Thousand metric tons
+Italy,ita,2001,187,Thousand metric tons
+Japan,jpn,2001,7,Thousand metric tons
+Mexico,mex,2001,52,Thousand metric tons
+Mozambique,moz,2001,266,Thousand metric tons
+Netherlands,nld,2001,294,Thousand metric tons
+New Zealand,nzl,2001,322,Thousand metric tons
+Norway,nor,2001,1068,Thousand metric tons
+Poland,pol,2001,45,Thousand metric tons
+Romania,rom,2001,182,Thousand metric tons
+Russia,rus,2001,3300,Thousand metric tons
+Serbia and Montenegro,scg,2001,100,Thousand metric tons
+Slovakia,svk,2001,110,Thousand metric tons
+Slovenia,svn,2001,100,Thousand metric tons
+South Africa,zaf,2001,662,Thousand metric tons
+Spain,esp,2001,376,Thousand metric tons
+Sweden,swe,2001,102,Thousand metric tons
+Switzerland,che,2001,35,Thousand metric tons
+Tajikistan,tjk,2001,289,Thousand metric tons
+Turkey,tur,2001,61,Thousand metric tons
+Ukraine,ukr,2001,106,Thousand metric tons
+United Arab Emirates,are,2001,500,Thousand metric tons
+United Kingdom,gbr,2001,341,Thousand metric tons
+United States,usa,2001,2637,Thousand metric tons
+Venezuela,ven,2001,571,Thousand metric tons
+Argentina,arg,2002,269,Thousand metric tons
+Australia,aus,2002,1836,Thousand metric tons
+Bahrain,bhr,2002,519,Thousand metric tons
+Bosnia and Herzegovina,bih,2002,102,Thousand metric tons
+Brazil,bra,2002,1318,Thousand metric tons
+Cameroon,cmr,2002,67,Thousand metric tons
+Canada,can,2002,2709,Thousand metric tons
+China,chn,2002,4300,Thousand metric tons
+Croatia,hrv,2002,15,Thousand metric tons
+Egypt,egy,2002,195,Thousand metric tons
+France,fra,2002,463,Thousand metric tons
+Germany,deu,2002,653,Thousand metric tons
+Ghana,gha,2002,117,Thousand metric tons
+Greece,grc,2002,165,Thousand metric tons
+Hungary,hun,2002,35,Thousand metric tons
+Iceland,isl,2002,285,Thousand metric tons
+India,ind,2002,671,Thousand metric tons
+Indonesia,idn,2002,160,Thousand metric tons
+Iran,irn,2002,169,Thousand metric tons
+Italy,ita,2002,190,Thousand metric tons
+Japan,jpn,2002,6,Thousand metric tons
+Mexico,mex,2002,39,Thousand metric tons
+Mozambique,moz,2002,268,Thousand metric tons
+Netherlands,nld,2002,284,Thousand metric tons
+New Zealand,nzl,2002,335,Thousand metric tons
+Norway,nor,2002,1096,Thousand metric tons
+Poland,pol,2002,49,Thousand metric tons
+Romania,rom,2002,187,Thousand metric tons
+Russia,rus,2002,3347,Thousand metric tons
+Serbia and Montenegro,scg,2002,112,Thousand metric tons
+Slovakia,svk,2002,147,Thousand metric tons
+Slovenia,svn,2002,88,Thousand metric tons
+South Africa,zaf,2002,707,Thousand metric tons
+Spain,esp,2002,380,Thousand metric tons
+Sweden,swe,2002,101,Thousand metric tons
+Switzerland,che,2002,40,Thousand metric tons
+Tajikistan,tjk,2002,308,Thousand metric tons
+Turkey,tur,2002,63,Thousand metric tons
+Ukraine,ukr,2002,112,Thousand metric tons
+United Arab Emirates,are,2002,536,Thousand metric tons
+United Kingdom,gbr,2002,344,Thousand metric tons
+United States,usa,2002,2707,Thousand metric tons
+Venezuela,ven,2002,605,Thousand metric tons
+Argentina,arg,2003,272,Thousand metric tons
+Australia,aus,2003,1857,Thousand metric tons
+Azerbaijan,aze,2003,19,Thousand metric tons
+Bahrain,bhr,2003,532,Thousand metric tons
+Bosnia and Herzegovina,bih,2003,113,Thousand metric tons
+Brazil,bra,2003,1381,Thousand metric tons
+Cameroon,cmr,2003,77,Thousand metric tons
+Canada,can,2003,2792,Thousand metric tons
+China,chn,2003,5450,Thousand metric tons
+Egypt,egy,2003,195,Thousand metric tons
+France,fra,2003,443,Thousand metric tons
+Germany,deu,2003,661,Thousand metric tons
+Ghana,gha,2003,16,Thousand metric tons
+Greece,grc,2003,165,Thousand metric tons
+Hungary,hun,2003,35,Thousand metric tons
+Iceland,isl,2003,286,Thousand metric tons
+India,ind,2003,799,Thousand metric tons
+Indonesia,idn,2003,200,Thousand metric tons
+Iran,irn,2003,182,Thousand metric tons
+Italy,ita,2003,191,Thousand metric tons
+Japan,jpn,2003,6,Thousand metric tons
+Mozambique,moz,2003,409,Thousand metric tons
+Netherlands,nld,2003,283,Thousand metric tons
+New Zealand,nzl,2003,340,Thousand metric tons
+Norway,nor,2003,1192,Thousand metric tons
+Poland,pol,2003,45,Thousand metric tons
+Romania,rom,2003,197,Thousand metric tons
+Russia,rus,2003,3478,Thousand metric tons
+Serbia and Montenegro,scg,2003,120,Thousand metric tons
+Slovakia,svk,2003,131,Thousand metric tons
+Slovenia,svn,2003,110,Thousand metric tons
+South Africa,zaf,2003,738,Thousand metric tons
+Spain,esp,2003,389,Thousand metric tons
+Sweden,swe,2003,101,Thousand metric tons
+Switzerland,che,2003,44,Thousand metric tons
+Tajikistan,tjk,2003,319,Thousand metric tons
+Turkey,tur,2003,63,Thousand metric tons
+Ukraine,ukr,2003,114,Thousand metric tons
+United Arab Emirates,are,2003,560,Thousand metric tons
+United Kingdom,gbr,2003,343,Thousand metric tons
+United States,usa,2003,2703,Thousand metric tons
+Venezuela,ven,2003,601,Thousand metric tons
+Argentina,arg,2004,272,Thousand metric tons
+Australia,aus,2004,1894,Thousand metric tons
+Azerbaijan,aze,2004,30,Thousand metric tons
+Bahrain,bhr,2004,532,Thousand metric tons
+Bosnia and Herzegovina,bih,2004,121,Thousand metric tons
+Brazil,bra,2004,1457,Thousand metric tons
+Cameroon,cmr,2004,86,Thousand metric tons
+Canada,can,2004,2592,Thousand metric tons
+China,chn,2004,6670,Thousand metric tons
+Egypt,egy,2004,216,Thousand metric tons
+France,fra,2004,451,Thousand metric tons
+Germany,deu,2004,668,Thousand metric tons
+Greece,grc,2004,167,Thousand metric tons
+Hungary,hun,2004,35,Thousand metric tons
+Iceland,isl,2004,271,Thousand metric tons
+India,ind,2004,862,Thousand metric tons
+Indonesia,idn,2004,247,Thousand metric tons
+Iran,irn,2004,213,Thousand metric tons
+Italy,ita,2004,195,Thousand metric tons
+Japan,jpn,2004,6,Thousand metric tons
+Mozambique,moz,2004,549,Thousand metric tons
+Netherlands,nld,2004,326,Thousand metric tons
+New Zealand,nzl,2004,350,Thousand metric tons
+Norway,nor,2004,1322,Thousand metric tons
+Poland,pol,2004,46,Thousand metric tons
+Romania,rom,2004,219,Thousand metric tons
+Russia,rus,2004,3592,Thousand metric tons
+Serbia and Montenegro,scg,2004,121,Thousand metric tons
+Slovakia,svk,2004,157,Thousand metric tons
+Slovenia,svn,2004,121,Thousand metric tons
+South Africa,zaf,2004,866,Thousand metric tons
+Spain,esp,2004,398,Thousand metric tons
+Sweden,swe,2004,101,Thousand metric tons
+Switzerland,che,2004,45,Thousand metric tons
+Tajikistan,tjk,2004,358,Thousand metric tons
+Turkey,tur,2004,60,Thousand metric tons
+Ukraine,ukr,2004,113,Thousand metric tons
+United Arab Emirates,are,2004,683,Thousand metric tons
+United Kingdom,gbr,2004,360,Thousand metric tons
+United States,usa,2004,2516,Thousand metric tons
+Venezuela,ven,2004,624,Thousand metric tons
+Argentina,arg,2005,272,Thousand metric tons
+Australia,aus,2005,1903,Thousand metric tons
+Azerbaijan,aze,2005,30,Thousand metric tons
+Bahrain,bhr,2005,751,Thousand metric tons
+Bosnia and Herzegovina,bih,2005,131,Thousand metric tons
+Brazil,bra,2005,1499,Thousand metric tons
+Cameroon,cmr,2005,90,Thousand metric tons
+Canada,can,2005,2894,Thousand metric tons
+China,chn,2005,7800,Thousand metric tons
+Egypt,egy,2005,244,Thousand metric tons
+France,fra,2005,442,Thousand metric tons
+Germany,deu,2005,648,Thousand metric tons
+Ghana,gha,2005,13,Thousand metric tons
+Greece,grc,2005,165,Thousand metric tons
+Hungary,hun,2005,35,Thousand metric tons
+Iceland,isl,2005,272,Thousand metric tons
+India,ind,2005,942,Thousand metric tons
+Indonesia,idn,2005,252,Thousand metric tons
+Iran,irn,2005,220,Thousand metric tons
+Italy,ita,2005,195,Thousand metric tons
+Japan,jpn,2005,7,Thousand metric tons
+Mozambique,moz,2005,555,Thousand metric tons
+Netherlands,nld,2005,325,Thousand metric tons
+New Zealand,nzl,2005,351,Thousand metric tons
+Norway,nor,2005,1372,Thousand metric tons
+Poland,pol,2005,43,Thousand metric tons
+Romania,rom,2005,244,Thousand metric tons
+Russia,rus,2005,3647,Thousand metric tons
+Serbia and Montenegro,scg,2005,120,Thousand metric tons
+Slovakia,svk,2005,158,Thousand metric tons
+Slovenia,svn,2005,139,Thousand metric tons
+South Africa,zaf,2005,846,Thousand metric tons
+Spain,esp,2005,395,Thousand metric tons
+Sweden,swe,2005,102,Thousand metric tons
+Switzerland,che,2005,45,Thousand metric tons
+Tajikistan,tjk,2005,380,Thousand metric tons
+Turkey,tur,2005,60,Thousand metric tons
+Ukraine,ukr,2005,114,Thousand metric tons
+United Arab Emirates,are,2005,722,Thousand metric tons
+United Kingdom,gbr,2005,369,Thousand metric tons
+United States,usa,2005,2481,Thousand metric tons
+Venezuela,ven,2005,615,Thousand metric tons
+Argentina,arg,2006,273,Thousand metric tons
+Australia,aus,2006,1932,Thousand metric tons
+Azerbaijan,aze,2006,32,Thousand metric tons
+Bahrain,bhr,2006,872,Thousand metric tons
+Bosnia and Herzegovina,bih,2006,121,Thousand metric tons
+Brazil,bra,2006,1605,Thousand metric tons
+Cameroon,cmr,2006,88,Thousand metric tons
+Canada,can,2006,3051,Thousand metric tons
+China,chn,2006,9360,Thousand metric tons
+Egypt,egy,2006,252,Thousand metric tons
+France,fra,2006,442,Thousand metric tons
+Germany,deu,2006,516,Thousand metric tons
+Ghana,gha,2006,8,Thousand metric tons
+Greece,grc,2006,163,Thousand metric tons
+Hungary,hun,2006,34,Thousand metric tons
+Iceland,isl,2006,320,Thousand metric tons
+India,ind,2006,1105,Thousand metric tons
+Indonesia,idn,2006,250,Thousand metric tons
+Iran,irn,2006,205,Thousand metric tons
+Italy,ita,2006,194,Thousand metric tons
+Japan,jpn,2006,7,Thousand metric tons
+Montenegro,mne,2006,122,Thousand metric tons
+Mozambique,moz,2006,564,Thousand metric tons
+Netherlands,nld,2006,312,Thousand metric tons
+New Zealand,nzl,2006,337,Thousand metric tons
+Norway,nor,2006,1331,Thousand metric tons
+Poland,pol,2006,58,Thousand metric tons
+Romania,rom,2006,256,Thousand metric tons
+Russia,rus,2006,3718,Thousand metric tons
+Slovakia,svk,2006,158,Thousand metric tons
+Slovenia,svn,2006,118,Thousand metric tons
+South Africa,zaf,2006,895,Thousand metric tons
+Spain,esp,2006,349,Thousand metric tons
+Sweden,swe,2006,101,Thousand metric tons
+Switzerland,che,2006,12,Thousand metric tons
+Tajikistan,tjk,2006,414,Thousand metric tons
+Turkey,tur,2006,60,Thousand metric tons
+Ukraine,ukr,2006,113,Thousand metric tons
+United Arab Emirates,are,2006,861,Thousand metric tons
+United Kingdom,gbr,2006,360,Thousand metric tons
+United States,usa,2006,2284,Thousand metric tons
+Venezuela,ven,2006,610,Thousand metric tons
+Argentina,arg,2007,271,Thousand metric tons
+Australia,aus,2007,1957,Thousand metric tons
+Azerbaijan,aze,2007,39,Thousand metric tons
+Bahrain,bhr,2007,865,Thousand metric tons
+Bosnia and Herzegovina,bih,2007,122,Thousand metric tons
+Brazil,bra,2007,1655,Thousand metric tons
+Cameroon,cmr,2007,87,Thousand metric tons
+Canada,can,2007,3083,Thousand metric tons
+China,chn,2007,12600,Thousand metric tons
+Egypt,egy,2007,258,Thousand metric tons
+France,fra,2007,428,Thousand metric tons
+Germany,deu,2007,551,Thousand metric tons
+Greece,grc,2007,166,Thousand metric tons
+Iceland,isl,2007,398,Thousand metric tons
+India,ind,2007,1222,Thousand metric tons
+Indonesia,idn,2007,242,Thousand metric tons
+Iran,irn,2007,216,Thousand metric tons
+Italy,ita,2007,183,Thousand metric tons
+Japan,jpn,2007,7,Thousand metric tons
+Kazakhstan,kaz,2007,12,Thousand metric tons
+Montenegro,mne,2007,124,Thousand metric tons
+Mozambique,moz,2007,564,Thousand metric tons
+Netherlands,nld,2007,301,Thousand metric tons
+New Zealand,nzl,2007,353,Thousand metric tons
+Norway,nor,2007,1357,Thousand metric tons
+Poland,pol,2007,54,Thousand metric tons
+Romania,rom,2007,283,Thousand metric tons
+Russia,rus,2007,3955,Thousand metric tons
+Slovakia,svk,2007,160,Thousand metric tons
+Slovenia,svn,2007,111,Thousand metric tons
+South Africa,zaf,2007,899,Thousand metric tons
+Spain,esp,2007,408,Thousand metric tons
+Sweden,swe,2007,98,Thousand metric tons
+Tajikistan,tjk,2007,419,Thousand metric tons
+Turkey,tur,2007,65,Thousand metric tons
+Ukraine,ukr,2007,113,Thousand metric tons
+United Arab Emirates,are,2007,890,Thousand metric tons
+United Kingdom,gbr,2007,365,Thousand metric tons
+United States,usa,2007,2554,Thousand metric tons
+Venezuela,ven,2007,610,Thousand metric tons
+Argentina,arg,2008,394,Thousand metric tons
+Australia,aus,2008,1974,Thousand metric tons
+Azerbaijan,aze,2008,62,Thousand metric tons
+Bahrain,bhr,2008,872,Thousand metric tons
+Bosnia and Herzegovina,bih,2008,123,Thousand metric tons
+Brazil,bra,2008,1661,Thousand metric tons
+Cameroon,cmr,2008,91,Thousand metric tons
+Canada,can,2008,3120,Thousand metric tons
+China,chn,2008,13200,Thousand metric tons
+Egypt,egy,2008,260,Thousand metric tons
+France,fra,2008,389,Thousand metric tons
+Germany,deu,2008,606,Thousand metric tons
+Greece,grc,2008,160,Thousand metric tons
+Iceland,isl,2008,761,Thousand metric tons
+India,ind,2008,1402,Thousand metric tons
+Indonesia,idn,2008,243,Thousand metric tons
+Iran,irn,2008,248,Thousand metric tons
+Italy,ita,2008,180,Thousand metric tons
+Japan,jpn,2008,59,Thousand metric tons
+Kazakhstan,kaz,2008,106,Thousand metric tons
+Montenegro,mne,2008,107,Thousand metric tons
+Mozambique,moz,2008,536,Thousand metric tons
+Netherlands,nld,2008,301,Thousand metric tons
+New Zealand,nzl,2008,316,Thousand metric tons
+Nigeria,nga,2008,11,Thousand metric tons
+Norway,nor,2008,1358,Thousand metric tons
+Oman,omn,2008,49,Thousand metric tons
+Poland,pol,2008,48,Thousand metric tons
+Romania,rom,2008,265,Thousand metric tons
+Russia,rus,2008,4190,Thousand metric tons
+Slovakia,svk,2008,163,Thousand metric tons
+Slovenia,svn,2008,83,Thousand metric tons
+South Africa,zaf,2008,811,Thousand metric tons
+Spain,esp,2008,408,Thousand metric tons
+Sweden,swe,2008,112,Thousand metric tons
+Tajikistan,tjk,2008,339,Thousand metric tons
+Turkey,tur,2008,65,Thousand metric tons
+Ukraine,ukr,2008,113,Thousand metric tons
+United Arab Emirates,are,2008,948,Thousand metric tons
+United Kingdom,gbr,2008,326,Thousand metric tons
+United States,usa,2008,2658,Thousand metric tons
+Venezuela,ven,2008,608,Thousand metric tons
+Argentina,arg,2009,413,Thousand metric tons
+Australia,aus,2009,1943,Thousand metric tons
+Bahrain,bhr,2009,848,Thousand metric tons
+Bosnia and Herzegovina,bih,2009,96,Thousand metric tons
+Brazil,bra,2009,1536,Thousand metric tons
+Cameroon,cmr,2009,73,Thousand metric tons
+Canada,can,2009,3030,Thousand metric tons
+China,chn,2009,12900,Thousand metric tons
+Egypt,egy,2009,265,Thousand metric tons
+France,fra,2009,345,Thousand metric tons
+Germany,deu,2009,292,Thousand metric tons
+Greece,grc,2009,130,Thousand metric tons
+Iceland,isl,2009,805,Thousand metric tons
+India,ind,2009,1598,Thousand metric tons
+Indonesia,idn,2009,258,Thousand metric tons
+Iran,irn,2009,200,Thousand metric tons
+Italy,ita,2009,171,Thousand metric tons
+Japan,jpn,2009,39,Thousand metric tons
+Kazakhstan,kaz,2009,127,Thousand metric tons
+Malaysia,mys,2009,15,Thousand metric tons
+Montenegro,mne,2009,64,Thousand metric tons
+Mozambique,moz,2009,545,Thousand metric tons
+Netherlands,nld,2009,300,Thousand metric tons
+New Zealand,nzl,2009,272,Thousand metric tons
+Nigeria,nga,2009,13,Thousand metric tons
+Norway,nor,2009,1139,Thousand metric tons
+Oman,omn,2009,351,Thousand metric tons
+Qatar,qat,2009,10,Thousand metric tons
+Romania,rom,2009,201,Thousand metric tons
+Russia,rus,2009,3815,Thousand metric tons
+Slovakia,svk,2009,150,Thousand metric tons
+Slovenia,svn,2009,35,Thousand metric tons
+South Africa,zaf,2009,809,Thousand metric tons
+Spain,esp,2009,360,Thousand metric tons
+Sweden,swe,2009,70,Thousand metric tons
+Tajikistan,tjk,2009,359,Thousand metric tons
+Turkey,tur,2009,35,Thousand metric tons
+Ukraine,ukr,2009,50,Thousand metric tons
+United Arab Emirates,are,2009,1010,Thousand metric tons
+United Kingdom,gbr,2009,253,Thousand metric tons
+United States,usa,2009,1727,Thousand metric tons
+Venezuela,ven,2009,561,Thousand metric tons
+Argentina,arg,2010,417,Thousand metric tons
+Australia,aus,2010,1928,Thousand metric tons
+Bahrain,bhr,2010,851,Thousand metric tons
+Bosnia and Herzegovina,bih,2010,118,Thousand metric tons
+Brazil,bra,2010,1536,Thousand metric tons
+Cameroon,cmr,2010,76,Thousand metric tons
+Canada,can,2010,2963,Thousand metric tons
+China,chn,2010,16200,Thousand metric tons
+Egypt,egy,2010,266,Thousand metric tons
+France,fra,2010,356,Thousand metric tons
+Germany,deu,2010,402,Thousand metric tons
+Greece,grc,2010,130,Thousand metric tons
+Iceland,isl,2010,806,Thousand metric tons
+India,ind,2010,1607,Thousand metric tons
+Indonesia,idn,2010,253,Thousand metric tons
+Iran,irn,2010,192,Thousand metric tons
+Italy,ita,2010,168,Thousand metric tons
+Japan,jpn,2010,54,Thousand metric tons
+Kazakhstan,kaz,2010,226,Thousand metric tons
+Montenegro,mne,2010,82,Thousand metric tons
+Mozambique,moz,2010,557,Thousand metric tons
+Netherlands,nld,2010,300,Thousand metric tons
+New Zealand,nzl,2010,343,Thousand metric tons
+Nigeria,nga,2010,21,Thousand metric tons
+Norway,nor,2010,1109,Thousand metric tons
+Oman,omn,2010,367,Thousand metric tons
+Qatar,qat,2010,126,Thousand metric tons
+Romania,rom,2010,241,Thousand metric tons
+Russia,rus,2010,3947,Thousand metric tons
+Slovakia,svk,2010,163,Thousand metric tons
+Slovenia,svn,2010,40,Thousand metric tons
+South Africa,zaf,2010,807,Thousand metric tons
+Spain,esp,2010,340,Thousand metric tons
+Sweden,swe,2010,93,Thousand metric tons
+Tajikistan,tjk,2010,349,Thousand metric tons
+Turkey,tur,2010,60,Thousand metric tons
+Ukraine,ukr,2010,25,Thousand metric tons
+United Arab Emirates,are,2010,1400,Thousand metric tons
+United Kingdom,gbr,2010,186,Thousand metric tons
+United States,usa,2010,1726,Thousand metric tons
+Venezuela,ven,2010,335,Thousand metric tons
+Argentina,arg,2011,416,Thousand metric tons
+Australia,aus,2011,1945,Thousand metric tons
+Azerbaijan,aze,2011,20,Thousand metric tons
+Bahrain,bhr,2011,881,Thousand metric tons
+Bosnia and Herzegovina,bih,2011,131,Thousand metric tons
+Brazil,bra,2011,1440,Thousand metric tons
+Cameroon,cmr,2011,69,Thousand metric tons
+Canada,can,2011,2988,Thousand metric tons
+China,chn,2011,20000,Thousand metric tons
+Egypt,egy,2011,265,Thousand metric tons
+France,fra,2011,334,Thousand metric tons
+Germany,deu,2011,432,Thousand metric tons
+Ghana,gha,2011,35,Thousand metric tons
+Greece,grc,2011,165,Thousand metric tons
+Iceland,isl,2011,781,Thousand metric tons
+India,ind,2011,1667,Thousand metric tons
+Indonesia,idn,2011,244,Thousand metric tons
+Iran,irn,2011,322,Thousand metric tons
+Italy,ita,2011,141,Thousand metric tons
+Japan,jpn,2011,43,Thousand metric tons
+Kazakhstan,kaz,2011,249,Thousand metric tons
+Malaysia,mys,2011,80,Thousand metric tons
+Montenegro,mne,2011,93,Thousand metric tons
+Mozambique,moz,2011,562,Thousand metric tons
+Netherlands,nld,2011,300,Thousand metric tons
+New Zealand,nzl,2011,354,Thousand metric tons
+Nigeria,nga,2011,18,Thousand metric tons
+Norway,nor,2011,1389,Thousand metric tons
+Oman,omn,2011,373,Thousand metric tons
+Qatar,qat,2011,487,Thousand metric tons
+Romania,rom,2011,260,Thousand metric tons
+Russia,rus,2011,3993,Thousand metric tons
+Slovakia,svk,2011,187,Thousand metric tons
+Slovenia,svn,2011,84,Thousand metric tons
+South Africa,zaf,2011,809,Thousand metric tons
+Spain,esp,2011,365,Thousand metric tons
+Sweden,swe,2011,111,Thousand metric tons
+Tajikistan,tjk,2011,278,Thousand metric tons
+Turkey,tur,2011,65,Thousand metric tons
+Ukraine,ukr,2011,7,Thousand metric tons
+United Arab Emirates,are,2011,1800,Thousand metric tons
+United Kingdom,gbr,2011,213,Thousand metric tons
+United States,usa,2011,1986,Thousand metric tons
+Venezuela,ven,2011,380,Thousand metric tons
+Argentina,arg,2012,413,Thousand metric tons
+Australia,aus,2012,1864,Thousand metric tons
+Azerbaijan,aze,2012,55,Thousand metric tons
+Bahrain,bhr,2012,890,Thousand metric tons
+Bosnia and Herzegovina,bih,2012,126,Thousand metric tons
+Brazil,bra,2012,1436,Thousand metric tons
+Cameroon,cmr,2012,52,Thousand metric tons
+Canada,can,2012,2781,Thousand metric tons
+China,chn,2012,23500,Thousand metric tons
+Egypt,egy,2012,265,Thousand metric tons
+France,fra,2012,349,Thousand metric tons
+Germany,deu,2012,410,Thousand metric tons
+Ghana,gha,2012,38,Thousand metric tons
+Greece,grc,2012,165,Thousand metric tons
+Iceland,isl,2012,803,Thousand metric tons
+India,ind,2012,1700,Thousand metric tons
+Indonesia,idn,2012,248,Thousand metric tons
+Iran,irn,2012,337,Thousand metric tons
+Italy,ita,2012,110,Thousand metric tons
+Japan,jpn,2012,26,Thousand metric tons
+Kazakhstan,kaz,2012,250,Thousand metric tons
+Malaysia,mys,2012,120,Thousand metric tons
+Montenegro,mne,2012,75,Thousand metric tons
+Mozambique,moz,2012,564,Thousand metric tons
+Netherlands,nld,2012,110,Thousand metric tons
+New Zealand,nzl,2012,327,Thousand metric tons
+Nigeria,nga,2012,26,Thousand metric tons
+Norway,nor,2012,1145,Thousand metric tons
+Oman,omn,2012,360,Thousand metric tons
+Qatar,qat,2012,628,Thousand metric tons
+Romania,rom,2012,249,Thousand metric tons
+Russia,rus,2012,4024,Thousand metric tons
+Slovakia,svk,2012,181,Thousand metric tons
+Slovenia,svn,2012,83,Thousand metric tons
+South Africa,zaf,2012,665,Thousand metric tons
+Spain,esp,2012,230,Thousand metric tons
+Sweden,swe,2012,129,Thousand metric tons
+Tajikistan,tjk,2012,273,Thousand metric tons
+Turkey,tur,2012,44,Thousand metric tons
+United Arab Emirates,are,2012,1820,Thousand metric tons
+United Kingdom,gbr,2012,60,Thousand metric tons
+United States,usa,2012,2070,Thousand metric tons
+Venezuela,ven,2012,203,Thousand metric tons
+Argentina,arg,2013,440,Thousand metric tons
+Australia,aus,2013,1778,Thousand metric tons
+Azerbaijan,aze,2013,53,Thousand metric tons
+Bahrain,bhr,2013,913,Thousand metric tons
+Bosnia and Herzegovina,bih,2013,110,Thousand metric tons
+Brazil,bra,2013,1304,Thousand metric tons
+Cameroon,cmr,2013,75,Thousand metric tons
+Canada,can,2013,2969,Thousand metric tons
+China,chn,2013,26500,Thousand metric tons
+Egypt,egy,2013,320,Thousand metric tons
+France,fra,2013,346,Thousand metric tons
+Germany,deu,2013,492,Thousand metric tons
+Ghana,gha,2013,37,Thousand metric tons
+Greece,grc,2013,169,Thousand metric tons
+Iceland,isl,2013,736,Thousand metric tons
+India,ind,2013,1703,Thousand metric tons
+Indonesia,idn,2013,255,Thousand metric tons
+Iran,irn,2013,295,Thousand metric tons
+Japan,jpn,2013,29,Thousand metric tons
+Kazakhstan,kaz,2013,250,Thousand metric tons
+Malaysia,mys,2013,291,Thousand metric tons
+Montenegro,mne,2013,16,Thousand metric tons
+Mozambique,moz,2013,570,Thousand metric tons
+Netherlands,nld,2013,50,Thousand metric tons
+New Zealand,nzl,2013,325,Thousand metric tons
+Nigeria,nga,2013,2,Thousand metric tons
+Norway,nor,2013,1155,Thousand metric tons
+Oman,omn,2013,354,Thousand metric tons
+Qatar,qat,2013,634,Thousand metric tons
+Romania,rom,2013,250,Thousand metric tons
+Russia,rus,2013,3601,Thousand metric tons
+Saudi Arabia,sau,2013,187,Thousand metric tons
+Slovakia,svk,2013,163,Thousand metric tons
+Slovenia,svn,2013,85,Thousand metric tons
+South Africa,zaf,2013,822,Thousand metric tons
+Spain,esp,2013,235,Thousand metric tons
+Sweden,swe,2013,131,Thousand metric tons
+Tajikistan,tjk,2013,216,Thousand metric tons
+Turkey,tur,2013,42,Thousand metric tons
+United Arab Emirates,are,2013,1864,Thousand metric tons
+United Kingdom,gbr,2013,44,Thousand metric tons
+United States,usa,2013,1946,Thousand metric tons
+Venezuela,ven,2013,171,Thousand metric tons
+Argentina,arg,2014,442,Thousand metric tons
+Australia,aus,2014,1704,Thousand metric tons
+Azerbaijan,aze,2014,50,Thousand metric tons
+Bahrain,bhr,2014,931,Thousand metric tons
+Bosnia and Herzegovina,bih,2014,126,Thousand metric tons
+Brazil,bra,2014,962,Thousand metric tons
+Cameroon,cmr,2014,93,Thousand metric tons
+Canada,can,2014,2858,Thousand metric tons
+China,chn,2014,28300,Thousand metric tons
+Egypt,egy,2014,300,Thousand metric tons
+France,fra,2014,360,Thousand metric tons
+Germany,deu,2014,531,Thousand metric tons
+Ghana,gha,2014,38,Thousand metric tons
+Greece,grc,2014,173,Thousand metric tons
+Iceland,isl,2014,845,Thousand metric tons
+India,ind,2014,1939,Thousand metric tons
+Indonesia,idn,2014,211,Thousand metric tons
+Iran,irn,2014,355,Thousand metric tons
+Japan,jpn,2014,1,Thousand metric tons
+Kazakhstan,kaz,2014,209,Thousand metric tons
+Malaysia,mys,2014,400,Thousand metric tons
+Montenegro,mne,2014,43,Thousand metric tons
+Mozambique,moz,2014,567,Thousand metric tons
+New Zealand,nzl,2014,328,Thousand metric tons
+Norway,nor,2014,1250,Thousand metric tons
+Oman,omn,2014,364,Thousand metric tons
+Qatar,qat,2014,640,Thousand metric tons
+Romania,rom,2014,263,Thousand metric tons
+Russia,rus,2014,3300,Thousand metric tons
+Saudi Arabia,sau,2014,662,Thousand metric tons
+Slovakia,svk,2014,203,Thousand metric tons
+Slovenia,svn,2014,84,Thousand metric tons
+South Africa,zaf,2014,745,Thousand metric tons
+Spain,esp,2014,350,Thousand metric tons
+Sweden,swe,2014,113,Thousand metric tons
+Tajikistan,tjk,2014,125,Thousand metric tons
+Turkey,tur,2014,30,Thousand metric tons
+United Arab Emirates,are,2014,2341,Thousand metric tons
+United Kingdom,gbr,2014,42,Thousand metric tons
+United States,usa,2014,1710,Thousand metric tons
+Venezuela,ven,2014,138,Thousand metric tons
+Argentina,arg,2015,433,Thousand metric tons
+Australia,aus,2015,1646,Thousand metric tons
+Azerbaijan,aze,2015,53,Thousand metric tons
+Bahrain,bhr,2015,961,Thousand metric tons
+Bosnia and Herzegovina,bih,2015,99,Thousand metric tons
+Brazil,bra,2015,772,Thousand metric tons
+Cameroon,cmr,2015,65,Thousand metric tons
+Canada,can,2015,2880,Thousand metric tons
+China,chn,2015,31400,Thousand metric tons
+Egypt,egy,2015,300,Thousand metric tons
+France,fra,2015,420,Thousand metric tons
+Germany,deu,2015,541,Thousand metric tons
+Ghana,gha,2015,40,Thousand metric tons
+Greece,grc,2015,179,Thousand metric tons
+Iceland,isl,2015,878,Thousand metric tons
+India,ind,2015,2355,Thousand metric tons
+Indonesia,idn,2015,168,Thousand metric tons
+Iran,irn,2015,355,Thousand metric tons
+Kazakhstan,kaz,2015,222,Thousand metric tons
+Malaysia,mys,2015,400,Thousand metric tons
+Montenegro,mne,2015,42,Thousand metric tons
+Mozambique,moz,2015,558,Thousand metric tons
+Netherlands,nld,2015,25,Thousand metric tons
+New Zealand,nzl,2015,335,Thousand metric tons
+Norway,nor,2015,1225,Thousand metric tons
+Oman,omn,2015,377,Thousand metric tons
+Qatar,qat,2015,610,Thousand metric tons
+Romania,rom,2015,271,Thousand metric tons
+Russia,rus,2015,3529,Thousand metric tons
+Saudi Arabia,sau,2015,682,Thousand metric tons
+Slovakia,svk,2015,209,Thousand metric tons
+Slovenia,svn,2015,84,Thousand metric tons
+South Africa,zaf,2015,695,Thousand metric tons
+Spain,esp,2015,350,Thousand metric tons
+Sweden,swe,2015,116,Thousand metric tons
+Tajikistan,tjk,2015,140,Thousand metric tons
+Turkey,tur,2015,46,Thousand metric tons
+United Arab Emirates,are,2015,2464,Thousand metric tons
+United Kingdom,gbr,2015,47,Thousand metric tons
+United States,usa,2015,1590,Thousand metric tons
+Venezuela,ven,2015,119,Thousand metric tons
+Argentina,arg,2016,412,Thousand metric tons
+Australia,aus,2016,1635,Thousand metric tons
+Azerbaijan,aze,2016,37,Thousand metric tons
+Bahrain,bhr,2016,971,Thousand metric tons
+Bosnia and Herzegovina,bih,2016,107,Thousand metric tons
+Brazil,bra,2016,793,Thousand metric tons
+Cameroon,cmr,2016,65,Thousand metric tons
+Canada,can,2016,3209,Thousand metric tons
+China,chn,2016,31873,Thousand metric tons
+Egypt,egy,2016,296,Thousand metric tons
+France,fra,2016,425,Thousand metric tons
+Germany,deu,2016,547,Thousand metric tons
+Ghana,gha,2016,40,Thousand metric tons
+Greece,grc,2016,181,Thousand metric tons
+Iceland,isl,2016,854,Thousand metric tons
+India,ind,2016,2723,Thousand metric tons
+Indonesia,idn,2016,200,Thousand metric tons
+Iran,irn,2016,360,Thousand metric tons
+Kazakhstan,kaz,2016,246,Thousand metric tons
+Malaysia,mys,2016,620,Thousand metric tons
+Montenegro,mne,2016,40,Thousand metric tons
+Mozambique,moz,2016,571,Thousand metric tons
+Netherlands,nld,2016,50,Thousand metric tons
+New Zealand,nzl,2016,339,Thousand metric tons
+Norway,nor,2016,1220,Thousand metric tons
+Oman,omn,2016,386,Thousand metric tons
+Qatar,qat,2016,612,Thousand metric tons
+Romania,rom,2016,273,Thousand metric tons
+Russia,rus,2016,3561,Thousand metric tons
+Saudi Arabia,sau,2016,740,Thousand metric tons
+Slovakia,svk,2016,215,Thousand metric tons
+Slovenia,svn,2016,84,Thousand metric tons
+South Africa,zaf,2016,701,Thousand metric tons
+Spain,esp,2016,350,Thousand metric tons
+Sweden,swe,2016,124,Thousand metric tons
+Tajikistan,tjk,2016,129,Thousand metric tons
+Turkey,tur,2016,79,Thousand metric tons
+United Arab Emirates,are,2016,2500,Thousand metric tons
+United Kingdom,gbr,2016,48,Thousand metric tons
+United States,usa,2016,818,Thousand metric tons
+Venezuela,ven,2016,147,Thousand metric tons
+Argentina,arg,2017,403,Thousand metric tons
+Australia,aus,2017,1487,Thousand metric tons
+Azerbaijan,aze,2017,27,Thousand metric tons
+Bahrain,bhr,2017,981,Thousand metric tons
+Bosnia and Herzegovina,bih,2017,90,Thousand metric tons
+Brazil,bra,2017,802,Thousand metric tons
+Cameroon,cmr,2017,65,Thousand metric tons
+Canada,can,2017,3212,Thousand metric tons
+China,chn,2017,32273,Thousand metric tons
+Egypt,egy,2017,300,Thousand metric tons
+France,fra,2017,429,Thousand metric tons
+Germany,deu,2017,550,Thousand metric tons
+Ghana,gha,2017,35,Thousand metric tons
+Greece,grc,2017,182,Thousand metric tons
+Iceland,isl,2017,870,Thousand metric tons
+India,ind,2017,3269,Thousand metric tons
+Indonesia,idn,2017,219,Thousand metric tons
+Iran,irn,2017,340,Thousand metric tons
+Kazakhstan,kaz,2017,262,Thousand metric tons
+Malaysia,mys,2017,700,Thousand metric tons
+Montenegro,mne,2017,50,Thousand metric tons
+Mozambique,moz,2017,577,Thousand metric tons
+Netherlands,nld,2017,50,Thousand metric tons
+New Zealand,nzl,2017,337,Thousand metric tons
+Norway,nor,2017,1230,Thousand metric tons
+Oman,omn,2017,253,Thousand metric tons
+Qatar,qat,2017,620,Thousand metric tons
+Romania,rom,2017,282,Thousand metric tons
+Russia,rus,2017,3583,Thousand metric tons
+Saudi Arabia,sau,2017,762,Thousand metric tons
+Slovakia,svk,2017,219,Thousand metric tons
+Slovenia,svn,2017,131,Thousand metric tons
+South Africa,zaf,2017,716,Thousand metric tons
+Spain,esp,2017,350,Thousand metric tons
+Sweden,swe,2017,123,Thousand metric tons
+Tajikistan,tjk,2017,103,Thousand metric tons
+Turkey,tur,2017,80,Thousand metric tons
+United Arab Emirates,are,2017,2600,Thousand metric tons
+United Kingdom,gbr,2017,48,Thousand metric tons
+United States,usa,2017,741,Thousand metric tons
+Venezuela,ven,2017,144,Thousand metric tons
+Argentina,arg,2018,419,Thousand metric tons
+Australia,aus,2018,1576,Thousand metric tons
+Azerbaijan,aze,2018,25,Thousand metric tons
+Bahrain,bhr,2018,1011,Thousand metric tons
+Bosnia and Herzegovina,bih,2018,90,Thousand metric tons
+Brazil,bra,2018,659,Thousand metric tons
+Cameroon,cmr,2018,75,Thousand metric tons
+Canada,can,2018,2924,Thousand metric tons
+China,chn,2018,35802,Thousand metric tons
+Egypt,egy,2018,300,Thousand metric tons
+France,fra,2018,380,Thousand metric tons
+Germany,deu,2018,540,Thousand metric tons
+Ghana,gha,2018,40,Thousand metric tons
+Greece,grc,2018,180,Thousand metric tons
+Iceland,isl,2018,885,Thousand metric tons
+India,ind,2018,3675,Thousand metric tons
+Indonesia,idn,2018,225,Thousand metric tons
+Iran,irn,2018,350,Thousand metric tons
+Kazakhstan,kaz,2018,265,Thousand metric tons
+Malaysia,mys,2018,750,Thousand metric tons
+Montenegro,mne,2018,50,Thousand metric tons
+Mozambique,moz,2018,571,Thousand metric tons
+Netherlands,nld,2018,100,Thousand metric tons
+New Zealand,nzl,2018,341,Thousand metric tons
+Norway,nor,2018,1300,Thousand metric tons
+Oman,omn,2018,380,Thousand metric tons
+Qatar,qat,2018,620,Thousand metric tons
+Romania,rom,2018,280,Thousand metric tons
+Russia,rus,2018,3627,Thousand metric tons
+Saudi Arabia,sau,2018,770,Thousand metric tons
+Slovakia,svk,2018,220,Thousand metric tons
+Slovenia,svn,2018,130,Thousand metric tons
+South Africa,zaf,2018,714,Thousand metric tons
+Spain,esp,2018,350,Thousand metric tons
+Sweden,swe,2018,125,Thousand metric tons
+Tajikistan,tjk,2018,100,Thousand metric tons
+Turkey,tur,2018,80,Thousand metric tons
+United Arab Emirates,are,2018,2640,Thousand metric tons
+United Kingdom,gbr,2018,48,Thousand metric tons
+United States,usa,2018,891,Thousand metric tons
+Venezuela,ven,2018,80,Thousand metric tons

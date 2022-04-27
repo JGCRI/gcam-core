@@ -1,0 +1,8 @@
+# File: A324.globaltech_coef.csv
+# Title: agriculture, construction, mining production default coefficients
+# Units: EJ/EJ
+# Column types: ccccn
+# ----------
+supplysector,subsector,technology,minicam.energy.input,terminal_coef
+construction,construction,construction,construction energy use,0.3
+construction,construction,construction,construction feedstocks,0.7

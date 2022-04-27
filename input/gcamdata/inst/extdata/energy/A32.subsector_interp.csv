@@ -1,16 +1,16 @@
 # File: A32.subsector_interp.csv
 # Title: Industry default subsector shareweight interpolation
 # Units: NA
-# Column types: ccccccc 
+# Column types: cccccnc
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
-industrial energy use,biomass,share-weight,final-calibration-year,end-year,,fixed
-industrial energy use,coal,share-weight,final-calibration-year,end-year,,fixed
-industrial energy use,district heat,share-weight,final-calibration-year,end-year,,fixed
-industrial energy use,electricity,share-weight,final-calibration-year,end-year,,fixed
-industrial energy use,gas,share-weight,final-calibration-year,end-year,,fixed
-industrial energy use,hydrogen,share-weight,final-calibration-year,2050,,linear
-industrial energy use,refined liquids,share-weight,final-calibration-year,end-year,,fixed
-industrial feedstocks,coal,share-weight,final-calibration-year,end-year,,fixed
-industrial feedstocks,gas,share-weight,final-calibration-year,end-year,,fixed
-industrial feedstocks,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+other industrial energy use,biomass,share-weight,final-calibration-year,end-year,,fixed
+other industrial energy use,coal,share-weight,final-calibration-year,end-year,,fixed
+other industrial energy use,district heat,share-weight,final-calibration-year,end-year,,fixed
+other industrial energy use,electricity,share-weight,final-calibration-year,end-year,,fixed
+other industrial energy use,gas,share-weight,final-calibration-year,end-year,,fixed
+other industrial energy use,hydrogen,share-weight,final-calibration-year,2100,,linear
+other industrial energy use,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+other industrial feedstocks,coal,share-weight,final-calibration-year,end-year,,fixed
+other industrial feedstocks,gas,share-weight,final-calibration-year,end-year,,fixed
+other industrial feedstocks,refined liquids,share-weight,final-calibration-year,end-year,,fixed

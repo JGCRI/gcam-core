@@ -4,4 +4,4 @@
 # Column types: cii 
 # ----------
 energy.final.demand,perCapitaBased,price.elasticity
-industry,1,-1
+other industry,1,-1

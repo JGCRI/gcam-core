@@ -1,0 +1,12 @@
+# File: A326.subsector_shrwt.csv
+# Title: aluminum default subsector shareweights
+# Units: Unitless
+# Column types: ccccn
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+alumina,refined liquids,start-year,,1
+alumina,coal,start-year,,1
+alumina,gas,start-year,,1
+alumina,biomass,start-year,,1
+alumina,heat,start-year,,1
+aluminum,electricity,start-year,,1

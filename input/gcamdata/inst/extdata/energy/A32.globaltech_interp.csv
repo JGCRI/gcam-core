@@ -1,14 +1,14 @@
 # File: A32.globaltech_interp.csv
 # Title: Industry technology interpolation functions
 # Units: NA
-# Column types: ccccccc 
+# Column types: ccccccc
 # ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function
-industrial energy use,biomass,biomass,share-weight,final-calibration-year,end-year,fixed
-industrial energy use,biomass,biomass cogen,share-weight,final-calibration-year,end-year,fixed
-industrial energy use,coal,coal,share-weight,final-calibration-year,end-year,fixed
-industrial energy use,coal,coal cogen,share-weight,final-calibration-year,end-year,fixed
-industrial energy use,gas,gas,share-weight,final-calibration-year,end-year,fixed
-industrial energy use,gas,gas cogen,share-weight,final-calibration-year,end-year,fixed
-industrial energy use,refined liquids,refined liquids,share-weight,final-calibration-year,end-year,fixed
-industrial energy use,refined liquids,refined liquids cogen,share-weight,final-calibration-year,end-year,fixed
+other industrial energy use,biomass,biomass,share-weight,final-calibration-year,end-year,fixed
+other industrial energy use,biomass,biomass cogen,share-weight,final-calibration-year,end-year,fixed
+other industrial energy use,coal,coal,share-weight,final-calibration-year,end-year,fixed
+other industrial energy use,coal,coal cogen,share-weight,final-calibration-year,end-year,fixed
+other industrial energy use,gas,gas,share-weight,final-calibration-year,end-year,fixed
+other industrial energy use,gas,gas cogen,share-weight,final-calibration-year,end-year,fixed
+other industrial energy use,refined liquids,refined liquids,share-weight,final-calibration-year,end-year,fixed
+other industrial energy use,refined liquids,refined liquids cogen,share-weight,final-calibration-year,end-year,fixed
