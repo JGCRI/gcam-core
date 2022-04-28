@@ -560,6 +560,10 @@ double LandLeaf::getCalLandAllocation( const LandAllocationType aType,
     return 0;
 }
 
+LandUseHistory* LandLeaf::getHistoricalLandUse() const {
+	return mLandUseHistory;
+}
+
 void LandLeaf::getObservedAverageProfitRate( double& aProfitRate, double& aShare,
                                              const int aPeriod ) const
 {
