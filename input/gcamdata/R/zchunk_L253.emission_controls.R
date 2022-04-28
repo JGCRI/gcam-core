@@ -37,7 +37,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
              user_em_control_files, # All files in user_emission_controls folder
              "L102.pcgdp_thous90USD_Scen_R_Y",
              "L223.StubTechEff_elec",
-             "L223.GlobalTechEff_elec"))
+             "L223.GlobalTechEff_elec",
+             "L224.Supplysector_heat"))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L253.EF_retrofit",
@@ -69,6 +70,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
     base_year_eff <- get_data(all_data, "L223.StubTechEff_elec", strip_attributes = TRUE)
     future_year_eff <- get_data(all_data, "L223.GlobalTechEff_elec", strip_attributes = TRUE) %>%
       filter(year %in% MODEL_FUTURE_YEARS)
+    dist_heat_regions <- get_data(all_data, "L224.Supplysector_heat", strip_attributes = TRUE) %>%
+      select(region, supplysector)
 
     # Load all inputs that contains A53. We do this to simplify the process of moving data
     # from the user drop folder to the core. To move data to the core, the user just has to
@@ -136,6 +139,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
         # Using left_join instead of left_join_error_no_match because not all regions have meta region mapping
         em_control_data %>%
           left_join(meta_region_map, by = c("region" = "meta_region")) %>%
+          filter(GCAM_region %in% dist_heat_regions$region |
+                   !supplysector %in% dist_heat_regions$supplysector) %>%
           mutate(region = ifelse(is.na(GCAM_region), region, GCAM_region)) %>%
           select(-GCAM_region) -> em_control_data
 
@@ -311,7 +316,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
                                   em_ctrl_inputs,
                                   "L102.pcgdp_thous90USD_Scen_R_Y",
                                   "L223.StubTechEff_elec",
-                                  "L223.GlobalTechEff_elec"))
+                                  "L223.GlobalTechEff_elec",
+                                  "L224.Supplysector_heat"))
           L253.EF_retrofit_precursors[precursors] <- precursors
           do.call(add_precursors, L253.EF_retrofit_precursors) -> L253.EF_retrofit
         } else {
@@ -370,7 +376,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
                                   em_ctrl_inputs,
                                   "L102.pcgdp_thous90USD_Scen_R_Y",
                                   "L223.StubTechEff_elec",
-                                  "L223.GlobalTechEff_elec"))
+                                  "L223.GlobalTechEff_elec",
+                                  "L224.Supplysector_heat"))
           L253.EF_retrofit_USA_precursors[precursors] <- precursors
           do.call(add_precursors, L253.EF_retrofit_USA_precursors) -> L253.EF_retrofit_USA
         } else {
