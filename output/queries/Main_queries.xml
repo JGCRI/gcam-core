@@ -3162,10 +3162,13 @@ element input {
                         <rewrite from="Grassland" to="grass"/>
                         <rewrite from="ProtectedUnmanagedPasture" to="pasture (other)"/>
                         <rewrite from="FodderHerb" to="crops"/>
+                        <rewrite from="FodderHerbC4" to="crops"/>
                         <rewrite from="MiscCrop" to="crops"/>
+                        <rewrite from="MiscCropTree" to="crops"/>
                         <rewrite from="PalmFruit" to="crops"/>
                         <rewrite from="FiberCrop" to="crops"/>
                         <rewrite from="OtherGrain" to="crops"/>
+                        <rewrite from="OtherGrainC4" to="crops"/>
                         <rewrite from="FodderGrass" to="crops"/>
                         <rewrite from="ProtectedGrassland" to="grass"/>
                         <rewrite from="ProtectedUnmanagedForest" to="forest (unmanaged)"/>
@@ -3176,14 +3179,21 @@ element input {
                         <rewrite from="RockIceDesert" to="rock and desert"/>
                         <rewrite from="RootTuber" to="crops"/>
                         <rewrite from="Corn" to="crops"/>
+                        <rewrite from="CornC4" to="crops"/>
                         <rewrite from="Fruits" to="crops"/>
+                        <rewrite from="FruitsTree" to="crops"/>
                         <rewrite from="Legumes" to="crops"/>
                         <rewrite from="NutsSeeds" to="crops"/>
+                        <rewrite from="NutsSeedsTree" to="crops"/>
                         <rewrite from="Soybean" to="crops"/>
                         <rewrite from="Vegetables" to="crops"/>
                         <rewrite from="OilCrop" to="crops"/>
+                        <rewrite from="OilCropTree" to="crops"/>
+                        <rewrite from="OilPalm" to="crops"/>
+                        <rewrite from="OilPalmTree" to="crops"/>
                         <rewrite from="ProtectedShrubland" to="shrubs"/>
                         <rewrite from="SugarCrop" to="crops"/>
+                        <rewrite from="SugarCropC4" to="crops"/>
                         <rewrite from="UnmanagedForest" to="forest (unmanaged)"/>
                         <rewrite from="Pasture" to="pasture (grazed)"/>
                         <rewrite from="Forest" to="forest (managed)"/>
