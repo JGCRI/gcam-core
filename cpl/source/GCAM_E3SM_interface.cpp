@@ -273,13 +273,21 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         
 }
 
-void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                         int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
+void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                                         int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
+                                          bool aWriteScalars, bool aScaleCarbon,
+                                          std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
     // Get year only of the current date
     // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
     int e3smYear = *yyyymmdd/10000;
-    int gcamPeriod = modeltime->getyr_to_per( e3smYear ) + 1;
+    // If the e3smYear is not a GCAM period end year, then GCAM runs this period
+    int gcamPeriod = modeltime->getyr_to_per( e3smYear );
+    // If the e3smYear is a GCAM model period end year, then increment the period
+    if ( modeltime->isModelYear( e3smYear ) ) {
+        gcamPeriod = gcamPeriod + 1;
+    }
+
     int gcamYear = modeltime->getper_to_yr( gcamPeriod );
     const int finalCalibrationPeriod = modeltime->getFinalCalibrationPeriod();
     const int finalCalibrationYear = modeltime->getper_to_yr(finalCalibrationPeriod);
@@ -295,7 +303,10 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     // Open the coupling log
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
-    
+   
+    coupleLog << "In setDensityGCAM, e3smYear is: " << e3smYear << endl;
+    coupleLog << "In setDensityGCAM, gcamYear is: " << gcamYear << endl; 
+
     // Only set carbon densities during GCAM model years after the first coupled year
     if( modeltime->isModelYear( gcamYear ) && e3smYear >=  *aFirstCoupledYear ) {
         coupleLog << "Setting carbon density in year: " << gcamYear << endl;
@@ -304,11 +315,11 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         // Get scaler information
         if ( aReadScalars ) {
             coupleLog << "Reading scalars from file." << endl;
-            e3sm2gcam.readScalers(scalarYears, scalarRegion, scalarLandTech, aboveScalarData);
+            e3sm2gcam.readScalers(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         } else {
             coupleLog << "Calculating scalers from data." << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
-            e3sm2gcam.calcScalers(gcamYear, aELMArea, aELMLandFract, aELMPFTFract, aELMNPP, aELMHR,
+            e3sm2gcam.calcScalers(gcamYear, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
                                   scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData,
                                   aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
         }
@@ -319,10 +330,13 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
             string fName = "./scalers_" + std::to_string(gcamYear) + ".csv";
             e3sm2gcam.writeScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, 17722);
         }
-        
+      
         // TODO: What happens if there is no scalarData or if the elements are blank?
-        SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
-        setScaler.run(runner->getInternalScenario());
+        // check and then don't call setdatahelper 
+        if( aScaleCarbon ) { 
+           SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
+           setScaler.run(runner->getInternalScenario());
+        }
     }
     
 }

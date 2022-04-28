@@ -151,8 +151,7 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 }
 
 // Calculate scalers
-// TODO: Set the data in the passed vectors
-void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                 std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
@@ -182,7 +181,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMLan
                 gridIndex = ( k - 1 ) * mNumLon + ( j - 1 );
                 valIndex = ( pft ) * mNumLon * mNumLat + ( k - 1 ) * mNumLon + ( j - 1 );
                 // Get region, subregion, and pft for this entry
-                // TODO: What to do about grid cells with multiple entries?
+                // TODO: What to do about grid cells with multiple entries? - doesn't seem like this should happen
                 string gridID = std::to_string(j) + "_" + std::to_string(k);
                 auto tempGrid = mRegionMapping.find( gridID );
                 if ( mRegionMapping.find(gridID) == mRegionMapping.end() ) {
@@ -193,22 +192,23 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMLan
                     regInGrd = (*tempGrid).second;
                     // Loop over all regions this grid is mapped to and calculate the scalars
                     for(auto regID : regInGrd) {
-                        // Calculate total as NPP of the PFT * area of the PFT
-                        // TODO: Add in HR
-                        scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * aELMLandFract[gridIndex] * aELMArea[gridIndex];
-                        base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * aELMLandFract[gridIndex] * aELMArea[gridIndex];
+                        // Calculate total as NPP/HR of the PFT * area of the PFT
+                        // pft value is fraction of grid cell
+                        scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * aELMArea[gridIndex];
+                        base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * aELMArea[gridIndex];
                        
                         // Find current PFT in the PFT2Crop map
                         auto currPFT = mPFT2GCAMCropMap.find( pft );
                         vector<string> cropsInPFT = (*currPFT).second;
                         
                         // Adjust scalars based on number of crops in PFT
+                        // this provides equal weight to each crop since they are not separate in elm
                         scalar = scalar / cropsInPFT.size();
                         base_scalar = base_scalar / cropsInPFT.size();
                         
                         // Then add the npp and area for both current and base periods to the region/crop totals
                         // Note: this assumes that if you find the pair in totalArea that it exists for the baseTotalArea,
-                        //       totalNPP and baseTotalNPP. This should be true since they are all created simultaneously.
+                        //       totalNPP/HR and baseTotalNPP/HR. This should be true since they are all created simultaneously.
                         for(auto currCrop : cropsInPFT) {
                             if( totalArea.count(std::make_pair(regID,currCrop)) > 0 ) {
                                 totalArea[std::make_pair(regID,currCrop)] += scalar;
@@ -245,7 +245,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMLan
         regID = curr.first.first;
         crop = curr.first.second;
         
-        // Calculate average NPP and average NPP in the base year
+        // Calculate average NPP and average HR for each region-crop 
         if ( totalArea[std::make_pair(regID,crop)] > 0.0 ) {
             avgNPP = totalNPP[std::make_pair(regID,crop)] / totalArea[std::make_pair(regID,crop)];
             avgHR = totalHR[std::make_pair(regID,crop)] / totalArea[std::make_pair(regID,crop)];
@@ -306,7 +306,6 @@ void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears,
         // Set values in each vector
         // Note that we need to combine the basin with the crop name for the `aLandTechs` vector
         // and separate the region from the basin for the `aRegions` vector.
-        // TODO: Set below ground scalar
         aYears[row] = aGCAMYear;
         aRegions[row] = strs[0];
         aLandTechs[row] = crop + "_" + strs[1];
@@ -318,7 +317,7 @@ void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears,
     
 }
 
-// Write scalar data to a file. This is for debugging purposes.
+// Write scalar data to a file. This is a diagnostic.
 void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, int aLength) {
     // DEBUG: Write output
     // TODO: This should be moved to a separate method that will write output (if the boolean is set)
@@ -331,11 +330,13 @@ void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears
 }
 
 // Read in scalers from a csv file
-// Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, these scalers
+// Note: this is used for diagnostics or special experiments. In fully coupled E3SM-GCAM, these scalers
 // are calculated based on data passed in code through the wrapper
-void CarbonScalers::readScalers(std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers) {
+void CarbonScalers::readScalers(std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+                                 std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers) {
     
     // TODO: Get this file name from either a configuration or passed argument
+    // TODO: Also, do we need to worry about length?
     ifstream data("../cpl/data/scaler_data.csv");
     if (!data.is_open())
     {
@@ -351,7 +352,8 @@ void CarbonScalers::readScalers(std::vector<int>& aYears, std::vector<std::strin
         int year;
         std::string region;
         std::string tech;
-        double scaler;
+        double aboveScaler;
+        double belowScaler;
         
         // Parse current year
         getline(iss, token, ',');
@@ -363,15 +365,20 @@ void CarbonScalers::readScalers(std::vector<int>& aYears, std::vector<std::strin
         // Parse ag production technology name
         getline(iss, tech, ',');
         
-        // Parse scaler
+        // Parse above scaler
         getline(iss, token, ',');
-        scaler = std::stod(token);
+        aboveScaler = std::stod(token);
+
+        // Parse below scaler
+        getline(iss, token, ',');
+        belowScaler = std::stod(token);
         
         aYears.at(row) = year;
         aRegions[row] = region;
         aLandTechs[row] = tech;
-        aScalers[row] = scaler;
-        
+        aAboveScalers[row] = aboveScaler;
+        aBelowScalers[row] = belowScaler;       
+ 
         row++;
     }
     

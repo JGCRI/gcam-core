@@ -47,8 +47,9 @@ class CarbonScalers : public ASpatialData {
 public:
     CarbonScalers(int aNumLat, int aNumLon, int aNumPFT);
     ~CarbonScalers();
-    void readScalers(std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aScalers);
-    void calcScalers(int aGCAMYear, double *aELMArea, double *aELMLandFract, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+    void readScalers(std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+                      std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers);
+    void calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                      std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
     void createScalerVectors(int aGCAMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                             std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
