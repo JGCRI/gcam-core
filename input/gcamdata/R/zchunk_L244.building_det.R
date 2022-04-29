@@ -8,7 +8,9 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L244.SubregionalShares}, \code{L244.PriceExp_IntGains}, \code{L244.Floorspace}, \code{L244.DemandFunction_serv},
+#' the generated outputs: \code{L244.SubregionalShares}, \code{L244.SubregionalShares_SSP1}, \code{L244.SubregionalShares_SSP2},\code{L244.SubregionalShares_SSP3},
+#' \code{L244.SubregionalShares_SSP4},\code{L244.SubregionalShares_SSP5},
+#' \code{L244.PriceExp_IntGains}, \code{L244.Floorspace}, \code{L244.DemandFunction_serv},
 #' \code{L244.DemandFunction_flsp}, \code{L244.Satiation_flsp}, \code{L244.SatiationAdder}, \code{L244.ThermalBaseService}, \code{L244.GenericBaseService},
 #'\code{L244.ThermalServiceSatiation}, \code{L244.GenericServiceSatiation}, \code{L244.Intgains_scalar}, \code{L244.ShellConductance_bld},
 #' \code{L244.Supplysector_bld}, \code{L244.FinalEnergyKeyword_bld}, \code{L244.SubsectorShrwt_bld}, \code{L244.SubsectorShrwtFllt_bld}, \code{L244.SubsectorInterp_bld},
@@ -73,6 +75,11 @@ module_energy_L244.building_det <- function(command, ...) {
              "L144.prices_bld"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L244.SubregionalShares",
+             "L244.SubregionalShares_SSP1",
+             "L244.SubregionalShares_SSP2",
+             "L244.SubregionalShares_SSP3",
+             "L244.SubregionalShares_SSP4",
+             "L244.SubregionalShares_SSP5",
              "L244.PriceExp_IntGains",
              "L244.Floorspace",
              "L244.DemandFunction_serv",
@@ -301,6 +308,43 @@ module_energy_L244.building_det <- function(command, ...) {
                   mutate(inc.year.fillout=pop.year.fillout) %>%
                   mutate(subregional.population.share = 1,
                          subregional.income.share = 1))
+
+    # Generate subregional shares for diferent SSP scenarios
+    L244.SubregionalShares_SSP <- write_to_all_regions(A44.gcam_consumer, LEVEL2_DATA_NAMES[["DeleteConsumer"]],
+                                                   GCAM_region_names = GCAM_region_names) %>%
+      # filter residential sector to implement multiple consumers
+      filter(grepl("resid",gcam.consumer)) %>%
+      separate(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      repeat_add_columns(tibble(pop.year.fillout=MODEL_YEARS)) %>%
+      mutate(inc.year.fillout = pop.year.fillout) %>%
+      left_join_error_no_match(A_regions %>% select(region,GCAM_region_ID), by=c("region")) %>%
+      repeat_add_columns(tibble(scen = unique(L144.income_shares$scen))) %>%
+      filter(grepl("SSP",scen)) %>%
+      filter(pop.year.fillout > MODEL_FINAL_BASE_YEAR) %>%
+      left_join_error_no_match(L144.income_shares %>%
+                                 rename(pop.year.fillout = year)
+                                    ,by=c("GCAM_region_ID","group","pop.year.fillout","scen")) %>%
+      mutate(subregional.population.share = 1/n_groups) %>%
+      unite(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      rename(subregional.income.share = share,
+             SSP = scen) %>%
+      select(-GCAM_region_ID) %>%
+      split(.$SSP) %>%
+      lapply(function(df) {
+        select(df, -SSP) %>%
+          add_units("Share") %>%
+          add_comments("GDP share for each income group within each region for all SSP scenarios") %>%
+          add_precursors("common/GCAM_region_names","energy/A_regions", "L102.pcgdp_thous90USD_Scen_R_Y",
+                         "L101.Pop_thous_R_Yh","socioeconomics/income_shares")
+      })
+
+    # Assign each tibble in list
+    for(i in names(L244.SubregionalShares_SSP)) {
+      assign(paste0("L244.SubregionalShares_", i), L244.SubregionalShares_SSP[[i]] %>%
+               add_title(paste0("GDP shares: ", i)) %>%
+               add_legacy_name(paste0("L244.SubregionalShares_", i)))
+    }
+
 
     # ===================================================
     # Using subregional population and income shares, create datasets with subregional population and per capita income for all GCAM regions:
@@ -2988,7 +3032,9 @@ module_energy_L244.building_det <- function(command, ...) {
 
 
 
-    return_data(L244.SubregionalShares, L244.PriceExp_IntGains, L244.Floorspace, L244.DemandFunction_serv, L244.DemandFunction_flsp,
+    return_data(L244.SubregionalShares, L244.SubregionalShares_SSP1,L244.SubregionalShares_SSP2,L244.SubregionalShares_SSP3,
+                L244.SubregionalShares_SSP4,L244.SubregionalShares_SSP5,
+                L244.PriceExp_IntGains, L244.Floorspace, L244.DemandFunction_serv, L244.DemandFunction_flsp,
                 L244.Satiation_flsp, L244.SatiationAdder, L244.ThermalBaseService, L244.GenericBaseService, L244.ThermalServiceSatiation,
                 L244.GenericServiceSatiation, L244.Intgains_scalar, L244.ShellConductance_bld,
                 L244.Supplysector_bld, L244.FinalEnergyKeyword_bld, L244.SubsectorShrwt_bld, L244.SubsectorShrwtFllt_bld, L244.SubsectorInterp_bld,

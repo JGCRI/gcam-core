@@ -17,7 +17,8 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(paste0("L244.Satiation_flsp_SSP", SSP_NUMS),
              paste0("L244.SatiationAdder_SSP", SSP_NUMS),
-             paste0("L244.Satiation_impedance_SSP", SSP_NUMS)))
+             paste0("L244.Satiation_impedance_SSP", SSP_NUMS),
+             paste0("L244.SubregionalShares_SSP", SSP_NUMS)))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_SSP1.xml",
@@ -38,6 +39,7 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       Satiation_flsp <- paste0("L244.Satiation_flsp_SSP", i)
       SatiationAdder <- paste0("L244.SatiationAdder_SSP", i)
       Satiation_impedance <- paste0("L244.Satiation_impedance_SSP", i)
+      Subregional_shares <- paste0("L244.SubregionalShares_SSP", i)
 
       xmlfn <- paste0("building_SSP", i, ".xml")
 
@@ -45,6 +47,7 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
       L244.Satiation_flsp_SSP <- get_data(all_data, Satiation_flsp)
       L244.SatiationAdder_SSP <- get_data(all_data, SatiationAdder)
       L244.Satiation_impedance_SSP <- get_data(all_data, Satiation_impedance)
+      L244.SubregionalShares_SSP <- get_data(all_data, Subregional_shares)
 
 
       # Produce outputs
@@ -53,14 +56,16 @@ module_energy_batch_building_SSP_xml <- function(command, ...) {
           add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
           add_xml_data(L244.Satiation_impedance_SSP, "SatiationImpedance") %>%
-          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance) -> xml_obj
+          add_xml_data(L244.SubregionalShares_SSP, "SubregionalShares") %>%
+          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance,Subregional_shares) -> xml_obj
 
       } else {
         create_xml(xmlfn) %>%
           add_xml_data(L244.Satiation_flsp_SSP, "Satiation_flsp") %>%
           add_xml_data(L244.SatiationAdder_SSP, "SatiationAdder") %>%
           add_xml_data(L244.Satiation_impedance_SSP, "SatiationImpedance") %>%
-          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance) -> xml_obj
+          add_xml_data(L244.SubregionalShares_SSP, "SubregionalShares") %>%
+          add_precursors(Satiation_flsp, SatiationAdder,Satiation_impedance,Subregional_shares) -> xml_obj
       }
 
       # Assign output to output name
