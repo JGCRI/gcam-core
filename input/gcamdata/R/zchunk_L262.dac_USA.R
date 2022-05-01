@@ -90,10 +90,10 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
     # ===================================================
     # 1. Perform computations
 
+    # currently copy the same structure to all GCAM-USA states. If users want to disable DAC in any state,
+    # then modify this dac_state list
 
-    states_subregions %>%
-      select(state) ->
-      dac_states
+    dac_states <- gcamusa.STATES
 
     # 1a. Supplysector information
     # L262.Supplysector_dac: Supply sector information for CO2 removal sector containing dac
@@ -137,7 +137,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
         data %>%
           filter(region == gcam.USA_REGION) %>%
           write_to_all_states(names = names(data)) %>%
-          filter(region %in% dac_states[["state"]]) ->
+          filter(region %in% dac_states) ->
           new_data
 
       }
@@ -157,12 +157,8 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
     L262.PriceElasticity_dac_USA <- dac_USA_processing(L262.PriceElasticity_dac, dac_states)
     L262.CarbonCoef_dac_USA <- dac_USA_processing(L202.CarbonCoef %>% filter(PrimaryFuelCO2Coef.name == "airCO2"), dac_states)
 
-
-    L262.GlobalTechCoef_dac %>%
-      mutate(region=gcam.USA_REGION) ->
-    L262.GlobalTechCoef_dac
-
-    L262.GlobalTechCoef_dac_USA <- dac_USA_processing(L262.GlobalTechCoef_dac, dac_states)
+    L262.GlobalTechCoef_dac_USA <- dac_USA_processing(L262.GlobalTechCoef_dac %>%
+                                                        mutate(region = gcam.USA_REGION), dac_states)
 
     # calibrated DAC availability based on cumulative carbon storage
     cumStorage <- Dooley_CCS_USA %>%
@@ -185,7 +181,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
       select(state, sector, year, value) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calOutputValue = signif(value, energy.DIGITS_CALOUTPUT),
-             region = state ) ->
+             region = state) ->
       L262.StubTechProd_dac_USA
 
     # Subset the calibrated intermediate sectors and fuels to supplysector / subsector / technology
@@ -229,18 +225,17 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
 
 
     L262.GlobalTechCoef_dac_USA %>%
-      rename(supplysector=sector.name,
-             subsector=subsector.name,
-             value=coefficient) %>%
+      rename(supplysector = sector.name,
+             subsector = subsector.name,
+             value = coefficient) %>%
       # Add market information. process heat are state level markets where as electricity
       # comes from the grid level.
       mutate(market.name = region,
              market.name = if_else(grepl("elec", minicam.energy.input), gcam.USA_REGION, market.name)) %>%
       # replace market name with the grid region name if the minicam.energy.input is
       # considered a regional fuel market
-      left_join(states_subregions %>%
-                  select(region = state, grid_region),
-                by = "region") %>%
+      left_join_error_no_match(states_subregions %>%
+                                 select(region = state, grid_region), by = "region") %>%
       mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
                                    grid_region, market.name)) %>%
       select(-grid_region) %>%
@@ -248,10 +243,8 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
       mutate(replace = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, 1, 0),
              market.name = if_else(replace == 1, region, market.name)) %>%
       select(-replace) %>%
-      #change market name for airCO2 to USA
-      mutate(market.name = if_else(grepl("airCO2", minicam.energy.input), market.name, market.name)) %>%
-      rename(stub.technology=technology,
-             coefficient=value) ->
+      rename(stub.technology = technology,
+             coefficient = value) ->
       L262.StubTechCoef_dac_USA
 
     # Create the base-year service output for dac final demand input table.
