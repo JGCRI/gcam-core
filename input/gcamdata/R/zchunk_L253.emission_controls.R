@@ -36,6 +36,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
              FILE = "emissions/emission_controls/A53.em_ctrl_param_dom_shipping",
              user_em_control_files, # All files in user_emission_controls folder
              "L102.pcgdp_thous90USD_Scen_R_Y",
+             "L201.nonghg_steepness",
              "L223.StubTechEff_elec",
              "L223.GlobalTechEff_elec",
              "L224.Supplysector_heat"))
@@ -67,6 +68,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
     non_co2_region_info <- get_data(all_data, "emissions/A_regions")
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     pcGDP_MER <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y", strip_attributes = TRUE)
+    L201.nonghg_steepness <- get_data(all_data, "L201.nonghg_steepness", strip_attributes = TRUE)
     base_year_eff <- get_data(all_data, "L223.StubTechEff_elec", strip_attributes = TRUE)
     future_year_eff <- get_data(all_data, "L223.GlobalTechEff_elec", strip_attributes = TRUE) %>%
       filter(year %in% MODEL_FUTURE_YEARS)
@@ -142,6 +144,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
           filter(GCAM_region %in% dist_heat_regions$region |
                    !supplysector %in% dist_heat_regions$supplysector) %>%
           mutate(region = ifelse(is.na(GCAM_region), region, GCAM_region)) %>%
+          semi_join(L201.nonghg_steepness,
+                    by = c("region", "supplysector", "subsector", "stub.technology")) %>%
           select(-GCAM_region) -> em_control_data
 
         # Stop if regions aren't valid regions
@@ -315,6 +319,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
                                   user_em_control_files,
                                   em_ctrl_inputs,
                                   "L102.pcgdp_thous90USD_Scen_R_Y",
+                                  "L201.nonghg_steepness",
                                   "L223.StubTechEff_elec",
                                   "L223.GlobalTechEff_elec",
                                   "L224.Supplysector_heat"))
@@ -375,6 +380,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
                                   user_em_control_files,
                                   em_ctrl_inputs,
                                   "L102.pcgdp_thous90USD_Scen_R_Y",
+                                  "L201.nonghg_steepness",
                                   "L223.StubTechEff_elec",
                                   "L223.GlobalTechEff_elec",
                                   "L224.Supplysector_heat"))
