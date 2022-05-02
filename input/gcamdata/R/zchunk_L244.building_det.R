@@ -31,6 +31,7 @@
 #' \code{L244.GenericServiceCoef_SSP3}, \code{L244.GenericServiceCoef_SSP4}, \code{L244.GenericServiceCoef_SSP5},
 #'  \code{L244.ThermalCoalCoef}, \code{L244.GenericCoalCoef},\code{L244.ThermalTradBioCoef}, \code{L244.GenericTradBioCoef},
 #' \code{L244.GenericShares}, \code{L244.ThermalShares},\code{L244.GenericServicePrice}, \code{L244.ThermalServicePrice},
+#' \code{L244.GenericBaseDens}, \code{L244.ThermalBaseDens},
 #' The corresponding file in the original data system was \code{L244.building_det.R} (energy level2).
 #' @details Creates level2 data for the building sector.
 #' @importFrom assertthat assert_that
@@ -163,7 +164,9 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.GenericShares",
              "L244.ThermalShares",
              "L244.GenericServicePrice",
-             "L244.ThermalServicePrice"))
+             "L244.ThermalServicePrice",
+             "L244.GenericBaseDens",
+             "L244.ThermalBaseDens"))
   } else if(command == driver.MAKE) {
 
     # Silence package checks
@@ -2558,8 +2561,8 @@ module_energy_L244.building_det <- function(command, ...) {
                   filter(grepl("comm",gcam.consumer)))
 
     #------------------------------------------------------
-    # Finally, write the service prices in final calibration year
-    # These will be used in the cpp files to compute the adjusment parameter that will account for the difference between read and calculated service prices
+    # Write the service prices in final calibration year
+    # These will be used in the cpp files to compute the adjustment parameter that will account for the difference between read and calculated service prices
 
     L244.GenericServicePrice<- L144.prices_bld %>%
       filter(market %in% generic_services) %>%
@@ -2599,6 +2602,21 @@ module_energy_L244.building_det <- function(command, ...) {
                   repeat_add_columns(tibble(gcam.consumer = unique(A44.gcam_consumer_comm$gcam.consumer))) %>%
                   left_join_error_no_match(A44.gcam_consumer_comm %>% select(gcam.consumer,nodeInput,building.node.input), by = "gcam.consumer")) %>%
       select(LEVEL2_DATA_NAMES[["ThermalServicePrice"]])
+
+    #------------------------------------------------------
+    # Finally, calculate the base year service density
+    # This density will be used in case it gets negative when adding the bias adder coefficient
+    L244.GenericBaseDens<-L244.GenericBaseService %>%
+      left_join_error_no_match(L244.Floorspace, by = c("region", "gcam.consumer", "nodeInput", "building.node.input", "year")) %>%
+      mutate(base.density = base.service / base.building.size) %>%
+      replace_na(list(base.density = 0)) %>%
+      select(LEVEL2_DATA_NAMES[["GenericBaseDens"]])
+
+    L244.ThermalBaseDens<-L244.ThermalBaseService %>%
+      left_join_error_no_match(L244.Floorspace, by = c("region", "gcam.consumer", "nodeInput", "building.node.input", "year")) %>%
+      mutate(base.density = base.service / base.building.size) %>%
+      replace_na(list(base.density = 0)) %>%
+      select(LEVEL2_DATA_NAMES[["ThermalBaseDens"]])
 
 
     #===================================================
@@ -3030,6 +3048,21 @@ module_energy_L244.building_det <- function(command, ...) {
       add_precursors("common/GCAM_region_names","L144.prices_bld") ->
       L244.ThermalServicePrice
 
+    L244.GenericBaseDens %>%
+      add_title("Final-base-year service density") %>%
+      add_units("$1975/GJ") %>%
+      add_comments("Service density for generic services") %>%
+      add_legacy_name("L244.GenericBaseDens") %>%
+      add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh","L144.flsp_bm2_R_res_Yh") ->
+      L244.GenericBaseDens
+
+    L244.ThermalBaseDens %>%
+      add_title("Final-base-year service density") %>%
+      add_units("$1975/GJ") %>%
+      add_comments("Service density for thermal services") %>%
+      add_legacy_name("L244.ThermalBaseDens") %>%
+      add_precursors("common/GCAM_region_names","L144.in_EJ_R_bld_serv_F_Yh","L144.flsp_bm2_R_res_Yh") ->
+      L244.ThermalBaseDens
 
 
     return_data(L244.SubregionalShares, L244.SubregionalShares_SSP1,L244.SubregionalShares_SSP2,L244.SubregionalShares_SSP3,
@@ -3059,7 +3092,7 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.GenericServiceCoef,L244.GenericServiceCoef_SSP1,L244.GenericServiceCoef_SSP2,L244.GenericServiceCoef_SSP3,
                 L244.GenericServiceCoef_SSP4,L244.GenericServiceCoef_SSP5,L244.ThermalServiceCoef,
                 L244.GenericCoalCoef,L244.ThermalCoalCoef,L244.GenericTradBioCoef,L244.ThermalTradBioCoef,
-                L244.GenericShares,L244.ThermalShares,L244.GenericServicePrice,L244.ThermalServicePrice)
+                L244.GenericShares,L244.ThermalShares,L244.GenericServicePrice,L244.ThermalServicePrice,L244.GenericBaseDens,L244.ThermalBaseDens)
 
   } else {
     stop("Unknown command")

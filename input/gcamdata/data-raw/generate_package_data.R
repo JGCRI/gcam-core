@@ -333,6 +333,8 @@ generate_level2_data_names <- function() {
   level2_data_names[["ThermalTradBioCoef"]] <- c("region","gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input","x_TradBio","y_TradBio","base.TradBio")
   level2_data_names[["GenericServicePrice"]] <- c("region","gcam.consumer","nodeInput","building.node.input","building.service.input","price")
   level2_data_names[["ThermalServicePrice"]] <- c("region","gcam.consumer","nodeInput","building.node.input","thermal.building.service.input","price")
+  level2_data_names[["GenericBaseDens"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "building.service.input", "base.density")
+  level2_data_names[["ThermalBaseDens"]] <- c("region", "gcam.consumer", "nodeInput", "building.node.input", "thermal.building.service.input", "base.density")
 
 
     # Land types

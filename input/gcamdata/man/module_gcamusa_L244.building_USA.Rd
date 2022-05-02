@@ -27,6 +27,7 @@ the generated outputs: \code{L244.DeleteConsumer_USAbld}, \code{L244.DeleteSuppl
 \code{L244.GenericServiceImpedance_gcamusa},\code{L244.GenericServiceCoef_gcamusa},\code{L244.GenericServiceAdder_gcamusa},
 \code{L244.ThermalServiceImpedance_gcamusa},\code{L244.ThermalServiceCoef_gcamusa},\code{L244.ThermalServiceAdder_gcamusa},
 \code{L210.DeleteRsrcTradBio_gcamusa}, \code{L244.GenericServicePrice_gcamusa}, \code{L244.ThermalServicePrice_gcamusa},
+\code{L244.GenericBaseDens_gcamusa}, \code{L244.ThermalBaseDens_gcamusa},
 The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 }
 \description{

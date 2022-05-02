@@ -208,6 +208,8 @@ public:
 
     virtual double getServPriceBase() const;
 
+    virtual double getServBaseDens() const;    
+
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
 
@@ -354,6 +356,9 @@ protected:
 
         //! Demand function coefficients to capture base year thermal characteristics.
         DEFINE_VARIABLE(SIMPLE | STATE, "price", mServPriceBase, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-density", mServBaseDens, Value),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

@@ -151,6 +151,9 @@ protected:
         DEFINE_VARIABLE(SIMPLE | STATE, "price", mServPriceBase, Value),
 
         //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-density", mServBaseDens, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
         DEFINE_VARIABLE(ARRAY | STATE, "bias-adder", mBiasAdderEn, objects::PeriodVector<Value>),
 
         //! Demand function coefficients to capture base year thermal characteristics.

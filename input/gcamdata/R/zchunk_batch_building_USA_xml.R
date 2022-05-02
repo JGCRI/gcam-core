@@ -52,6 +52,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
              "L244.ThermalServiceAdder_gcamusa",
              "L244.GenericServicePrice_gcamusa",
              "L244.ThermalServicePrice_gcamusa",
+             "L244.GenericBaseDens_gcamusa",
+             "L244.ThermalBaseDens_gcamusa",
              "L210.DeleteRsrcTradBio_gcamusa"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_USA.xml"))
@@ -101,6 +103,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
     L210.DeleteRsrcTradBio_gcamusa<- get_data(all_data, "L210.DeleteRsrcTradBio_gcamusa")
     L244.GenericServicePrice_gcamusa<- get_data(all_data, "L244.GenericServicePrice_gcamusa")
     L244.ThermalServicePrice_gcamusa<- get_data(all_data, "L244.ThermalServicePrice_gcamusa")
+    L244.GenericBaseDens_gcamusa <- get_data(all_data, "L244.GenericBaseDens_gcamusa")
+    L244.ThermalBaseDens_gcamusa <- get_data(all_data, "L244.ThermalBaseDens_gcamusa")
 
     # ===================================================
 
@@ -146,6 +150,8 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
       add_xml_data(L210.DeleteRsrcTradBio_gcamusa, "DeleteRsrc") %>%
       add_xml_data(L244.GenericServicePrice_gcamusa, "GenericServicePrice") %>%
       add_xml_data(L244.ThermalServicePrice_gcamusa, "ThermalServicePrice") %>%
+      add_xml_data(L244.GenericBaseDens_gcamusa, "GenericBaseDens") %>%
+      add_xml_data(L244.ThermalBaseDens_gcamusa, "ThermalBaseDens") %>%
       add_precursors("L244.DeleteConsumer_USAbld",
                      "L244.DeleteSupplysector_USAbld",
                      "L244.SubregionalShares_gcamusa",
@@ -186,7 +192,9 @@ module_gcamusa_batch_building_USA_xml <- function(command, ...) {
                      "L244.ThermalServiceAdder_gcamusa",
                      "L244.GenericServicePrice_gcamusa",
                      "L244.ThermalServicePrice_gcamusa",
-                     "L210.DeleteRsrcTradBio_gcamusa") ->
+                     "L210.DeleteRsrcTradBio_gcamusa",
+                     "L244.GenericBaseDens_gcamusa",
+                     "L244.ThermalBaseDens_gcamusa") ->
       building_USA.xml
 
     # # Some data inputs may not actually contain data. If so, do not add_xml_data.
