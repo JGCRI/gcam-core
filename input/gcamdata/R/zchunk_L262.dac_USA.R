@@ -90,11 +90,6 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
     # ===================================================
     # 1. Perform computations
 
-    # currently copy the same structure to all GCAM-USA states. If users want to disable DAC in any state,
-    # then modify this dac_state list
-
-    dac_states <- gcamusa.STATES
-
     # 1a. Supplysector information
     # L262.Supplysector_dac: Supply sector information for CO2 removal sector containing dac
 
@@ -115,7 +110,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
       L262.DeleteFinalDemand_USAdac
 
 
-    dac_USA_processing <- function(data, dac_states) {
+    dac_USA_processing <- function(data, gcamusa.STATES) {
 
       # Subset the input data frame for the USA region. The subsetted data will be used
       # to check to see if the data frame needs to be processed, it's assumed that if the USA
@@ -137,7 +132,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
         data %>%
           filter(region == gcam.USA_REGION) %>%
           write_to_all_states(names = names(data)) %>%
-          filter(region %in% dac_states) ->
+          filter(region %in% gcamusa.STATES) ->
           new_data
 
       }
@@ -147,18 +142,18 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
 
     # Use the dac_USA_processing function to check and or process the following data frames so that
     # all of the output data frames contain information for all states.
-    L262.Supplysector_dac_USA <- dac_USA_processing(L262.Supplysector_dac, dac_states)
-    L262.FinalEnergyKeyword_dac_USA <- dac_USA_processing(L262.FinalEnergyKeyword_dac, dac_states)
-    L262.SubsectorLogit_dac_USA <- dac_USA_processing(L262.SubsectorLogit_dac, dac_states)
-    L262.SubsectorShrwtFllt_dac_USA <- dac_USA_processing(L262.SubsectorShrwtFllt_dac, dac_states)
-    L262.SubsectorInterp_dac_USA <- dac_USA_processing(L262.SubsectorInterp_dac, dac_states)
-    L262.StubTech_dac_USA <- dac_USA_processing(L262.StubTech_dac, dac_states)
-    L262.PerCapitaBased_dac_USA <- dac_USA_processing(L262.PerCapitaBased_dac, dac_states)
-    L262.PriceElasticity_dac_USA <- dac_USA_processing(L262.PriceElasticity_dac, dac_states)
-    L262.CarbonCoef_dac_USA <- dac_USA_processing(L202.CarbonCoef %>% filter(PrimaryFuelCO2Coef.name == "airCO2"), dac_states)
+    L262.Supplysector_dac_USA <- dac_USA_processing(L262.Supplysector_dac, gcamusa.STATES)
+    L262.FinalEnergyKeyword_dac_USA <- dac_USA_processing(L262.FinalEnergyKeyword_dac, gcamusa.STATES)
+    L262.SubsectorLogit_dac_USA <- dac_USA_processing(L262.SubsectorLogit_dac, gcamusa.STATES)
+    L262.SubsectorShrwtFllt_dac_USA <- dac_USA_processing(L262.SubsectorShrwtFllt_dac, gcamusa.STATES)
+    L262.SubsectorInterp_dac_USA <- dac_USA_processing(L262.SubsectorInterp_dac, gcamusa.STATES)
+    L262.StubTech_dac_USA <- dac_USA_processing(L262.StubTech_dac, gcamusa.STATES)
+    L262.PerCapitaBased_dac_USA <- dac_USA_processing(L262.PerCapitaBased_dac, gcamusa.STATES)
+    L262.PriceElasticity_dac_USA <- dac_USA_processing(L262.PriceElasticity_dac, gcamusa.STATES)
+    L262.CarbonCoef_dac_USA <- dac_USA_processing(L202.CarbonCoef %>% filter(PrimaryFuelCO2Coef.name == "airCO2"), gcamusa.STATES)
 
     L262.GlobalTechCoef_dac_USA <- dac_USA_processing(L262.GlobalTechCoef_dac %>%
-                                                        mutate(region = gcam.USA_REGION), dac_states)
+                                                        mutate(region = gcam.USA_REGION), gcamusa.STATES)
 
     # calibrated DAC availability based on cumulative carbon storage
     cumStorage <- Dooley_CCS_USA %>%
