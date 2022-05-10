@@ -1,0 +1,17 @@
+# File: A325.subsector_shrwt.csv
+# Title: chemical default subsector shareweights
+# Units: Unitless
+# Column types: ccccn
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+chemical,chemical,start-year,,1
+chemical energy use,refined liquids,start-year,,1
+chemical energy use,gas,start-year,,1
+chemical energy use,biomass,start-year,,1
+chemical energy use,electricity,start-year,,1
+chemical energy use,hydrogen,start-year,,0.5
+chemical energy use,coal,start-year,,1
+chemical energy use,heat,start-year,,1
+chemical feedstocks,refined liquids,start-year,,1
+chemical feedstocks,gas,start-year,,1
+chemical feedstocks,coal,start-year,,1

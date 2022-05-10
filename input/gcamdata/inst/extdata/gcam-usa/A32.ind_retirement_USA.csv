@@ -10,14 +10,14 @@
 # Column types: cccinini 
 # ----------
 supplysector,subsector,stub.technology,lifetime,steepness,half.life,median.shutdown.point,profit.shutdown.steepness
-industrial energy use,biomass,biomass,60,0.3,45,-0.1,6
-industrial energy use,coal,coal,60,0.3,45,-0.1,6
-industrial energy use,electricity,electricity,60,0.3,45,-0.1,6
-industrial energy use,gas,gas,60,0.3,45,-0.1,6
-industrial energy use,hydrogen,hydrogen,60,0.3,45,-0.1,6
-industrial energy use,refined liquids,refined liquids,60,0.3,45,-0.1,6
-industrial energy use,biomass,biomass cogen,60,0.3,45,-0.1,6
-industrial energy use,coal,coal cogen,60,0.3,45,-0.1,6
-industrial energy use,gas,gas cogen,60,0.3,45,-0.1,6
-industrial energy use,hydrogen,hydrogen cogen,60,0.3,45,-0.1,6
-industrial energy use,refined liquids,refined liquids cogen,60,0.3,45,-0.1,6
+other industrial energy use,biomass,biomass,60,0.3,45,-0.1,6
+other industrial energy use,coal,coal,60,0.3,45,-0.1,6
+other industrial energy use,electricity,electricity,60,0.3,45,-0.1,6
+other industrial energy use,gas,gas,60,0.3,45,-0.1,6
+other industrial energy use,hydrogen,hydrogen,60,0.3,45,-0.1,6
+other industrial energy use,refined liquids,refined liquids,60,0.3,45,-0.1,6
+other industrial energy use,biomass,biomass cogen,60,0.3,45,-0.1,6
+other industrial energy use,coal,coal cogen,60,0.3,45,-0.1,6
+other industrial energy use,gas,gas cogen,60,0.3,45,-0.1,6
+other industrial energy use,hydrogen,hydrogen cogen,60,0.3,45,-0.1,6
+other industrial energy use,refined liquids,refined liquids cogen,60,0.3,45,-0.1,6

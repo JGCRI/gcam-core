@@ -1,0 +1,8 @@
+# File: A325.demand.csv
+# Title: chemical,  final demand perCapitaBased and price elasticity
+# Units: NA for perCapitaBased; Unitless for price.elasticity
+# Comments: perCapitaBased is a logical (Boolean) indicating whether to use a per-capita or per-GDP based demand function
+# Column types: cin
+# ----------
+energy.final.demand,perCapitaBased,price.elasticity
+chemical,1,-0.4

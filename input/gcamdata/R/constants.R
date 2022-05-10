@@ -334,8 +334,8 @@ aglu.N0_LOGIT_TYPE <- NA
 
 
 
-#Set the below constant to FALSE to activate the protected areas differentiated by land type and region in GCAM. Setting it to TRUE will use the default protection fraction defined in aglu.PROTECT_DEFAULT
-aglu.PROTECTION_DATA_SOURCE_DEFAULT <- TRUE
+#Set the below constant to TRUE to de-activate the protected areas differentiated by land type and region in GCAM. Setting it to TRUE will use the default protection fraction defined in aglu.PROTECT_DEFAULT
+aglu.PROTECTION_DATA_SOURCE_DEFAULT <- FALSE
 #Un-Protected area status- This constant can be used to make more land types from the protection categories available for expansion.
 # The available options for land types are - Unknown, UnsuitableUnprotected, SuitableUnprotected, SuitableHighProtectionIntact, SuitbaleHighProtectionDeforested, SuitableLow Protection, UnsuitableHighProtection, UnsuitableLowProtection
 aglu.NONPROTECT_LAND_STATUS <- c("SuitableUnprotected","Unknown")
@@ -514,6 +514,10 @@ obs_UnadjSat_USA<-150
 land.density.param.usa<-0
 b.param.usa<-3.49026
 income.param.usa<-0.4875
+
+# Constants for global detailed industry
+energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
+energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 enduse") #assign iron & steel global technology coefficients
 
 # Socioeconomics constants ======================================================================
 
@@ -800,7 +804,7 @@ gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale
 
 # Resources that will be modeled at the state level
 gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource", "offshore wind resource")
-gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
+gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone", "scrap")
 
 # Define sector(s) used in L222.en_transformation_USA
 # The supplysector and subsector structure in these sectors are retained

@@ -1,0 +1,29 @@
+# File: A324.globaltech_cost.csv
+# Title: agriculture, construction, mining default costs
+# Units: 1975$/GJ
+# Column types: ccccnnnn
+# ---------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2030,2100
+agricultural energy use,refined liquids,refined liquids,non-energy,3,3,3,3
+agricultural energy use,gas,gas,non-energy,3,3,3,3
+agricultural energy use,biomass,biomass,non-energy,4,4,4,4
+agricultural energy use,electricity,electricity,non-energy,3,3,3,3
+agricultural energy use,hydrogen,hydrogen,non-energy,3,3,3,3
+agricultural energy use,coal,coal,non-energy,3,3,3,3
+agricultural energy use,heat,heat,non-energy,3,3,3,3
+mining energy use,refined liquids,refined liquids,non-energy,3,3,3,3
+mining energy use,gas,gas,non-energy,3,3,3,3
+mining energy use,biomass,biomass,non-energy,4,4,4,4
+mining energy use,electricity,electricity,non-energy,3,3,3,3
+mining energy use,hydrogen,hydrogen,non-energy,3,3,3,3
+mining energy use,coal,coal,non-energy,3,3,3,3
+mining energy use,heat,heat,non-energy,3,3,3,3
+construction energy use,refined liquids,refined liquids,non-energy,3,3,3,3
+construction energy use,gas,gas,non-energy,3,3,3,3
+construction energy use,biomass,biomass,non-energy,4,4,4,4
+construction energy use,electricity,electricity,non-energy,3,3,3,3
+construction energy use,hydrogen,hydrogen,non-energy,3,3,3,3
+construction energy use,coal,coal,non-energy,3,3,3,3
+construction energy use,heat,heat,non-energy,3,3,3,3
+construction,construction,construction,non-energy,3,3,3,3
+construction feedstocks,refined liquids,refined liquids,non-energy,0,0,0,0

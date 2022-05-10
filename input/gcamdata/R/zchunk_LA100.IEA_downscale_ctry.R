@@ -87,6 +87,15 @@ module_energy_LA100.IEA_downscale_ctry <- function(command, ...) {
         L100.IEAfull[TNONSPEC_entries & L100.IEAfull$FLOW == "TNONSPEC", hy] <-
           L100.IEAfull[TNONSPEC_entries & L100.IEAfull$FLOW == "MAINCHP", hy]
         L100.IEAfull[TNONSPEC_entries & L100.IEAfull$FLOW == "MAINCHP", hy] <- 0
+
+       #UFA5. Several countries bitumen values for NECONSTRUC are misreported in the IEA energy balances 2019
+       # These values are reported in NONENUSE (non-energy use) FLOW but not assigned to NECONSTRUC (construction feedstocks)
+       # We copy NONENUSE/bitumen quantity to NECONSTRUC/bitumen for all regions to address the misreporting of data and subtract
+       # Bitumen usage in regions where it is used in NECHEM (non-energy use chemical sector)
+        NONENUSE_bitumen_entries <- L100.IEAfull$FLOW == "NONENUSE" & L100.IEAfull$PRODUCT == "Bitumen"
+        NECONSTRUC_bitumen_entries <- L100.IEAfull$FLOW == "NECONSTRUC" & L100.IEAfull$PRODUCT == "Bitumen"
+        NECHEM_bitumen_entries <- L100.IEAfull$FLOW == "NECHEM" & L100.IEAfull$PRODUCT == "Bitumen"
+        L100.IEAfull[NECONSTRUC_bitumen_entries,hy] <-  L100.IEAfull[NONENUSE_bitumen_entries,hy] - L100.IEAfull[NECHEM_bitumen_entries,hy]
       }
 
       # The basic problem below is that for the USSR and Yugoslavia, for most years between 1971 and 1989, the IEA

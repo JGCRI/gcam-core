@@ -21,6 +21,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
+             FILE = "emissions/mappings/ind_subsector_revised",
              FILE = "energy/A_regions",
              "L111.nonghg_tg_R_en_S_F_Yh",
              "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
@@ -52,7 +53,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    year <- value <- supplysector <- region <- subsector <- stub.technology <- Non.CO2 <-
+    year <- value <- supplysector <- region <- subsector <- subsector.emissions <- subsector.original<- stub.technology <- Non.CO2 <-
       input.emissions <- `2000` <- emiss.coef <- ctrl.name <- max_reduction <- variable <-
       steepness <- SO2 <- NOx <- CO <- BC <- OC <- NMVOC <- resource <- has_district_heat <-
       . <- region <- supplysector <- max.reduction <- technology <- minicam.energy.input <-
@@ -62,6 +63,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_regions.en <- get_data(all_data, "energy/A_regions")
+    ind_subsector_revised <- get_data(all_data,"emissions/mappings/ind_subsector_revised")
 
     L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tg_R_en_S_F_Yh", strip_attributes = TRUE)
     L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP", strip_attributes = TRUE)
@@ -75,14 +77,18 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     # make a complete mapping to be able to look up with sector + subsector + tech the
     # input name to use for an input-driver
     bind_rows(
-      get_data(all_data, "energy/calibrated_techs") %>% select(supplysector, subsector, technology, minicam.energy.input),
-      get_data(all_data, "energy/calibrated_techs_bld_det") %>% select(supplysector, subsector, technology, minicam.energy.input),
-      get_data(all_data, UCD_tech_map_name) %>% select(supplysector, subsector = tranSubsector, technology = tranTechnology, minicam.energy.input)
-      ) %>%
+      get_data(all_data, "energy/calibrated_techs") %>% select(supplysector, subsector, fuel, technology, minicam.energy.input),
+      get_data(all_data, "energy/calibrated_techs_bld_det") %>% select(supplysector, subsector, fuel, technology, minicam.energy.input),
+      get_data(all_data, UCD_tech_map_name) %>% select(supplysector, subsector = tranSubsector, fuel, technology = tranTechnology, minicam.energy.input)) %>%
+      left_join(ind_subsector_revised %>% select(supplysector, subsector.emissions, fuel, technology, minicam.energy.input),
+                               by=c("supplysector","fuel","technology","minicam.energy.input")) %>% #remap iron and steel subsector to match emissions data
+      mutate(subsector = if_else(!is.na(subsector.emissions),subsector.emissions,subsector)) %>%
+      select(-subsector.emissions)%>%
       rename(stub.technology = technology,
              input.name = minicam.energy.input) %>%
       distinct() ->
       EnTechInputNameMap
+
 
     # L201.en_pol_emissions: Pollutant emissions for energy technologies in all regions
     L111.nonghg_tg_R_en_S_F_Yh %>%
@@ -90,7 +96,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              year %in% emissions.MODEL_BASE_YEARS) %>%
       # add region name and round output
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
+      left_join_error_no_match(EnTechInputNameMap,by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
       L201.en_pol_emissions
@@ -101,10 +107,38 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              year %in% emissions.MODEL_BASE_YEARS) %>%
       # add region name and round output
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      left_join_error_no_match(EnTechInputNameMap, by = c("supplysector", "subsector", "stub.technology")) %>%
+      left_join_error_no_match(EnTechInputNameMap,by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
       L201.en_ghg_emissions
+
+    # Add back in correct subsector name for iron and steel sector
+    L201.en_pol_emissions %>%
+      left_join(ind_subsector_revised %>% select(supplysector,subsector.original, technology, minicam.energy.input) %>%
+                  rename(stub.technology = technology,
+                         input.name = minicam.energy.input),
+                by = c("supplysector", "stub.technology", "input.name")) %>%
+      mutate(subsector = if_else(!is.na(subsector.original),subsector.original,subsector)) %>%
+      select(-subsector.original) ->
+      L201.en_pol_emissions
+
+    L201.en_ghg_emissions %>%
+      left_join(ind_subsector_revised %>% select(supplysector,subsector.original, technology, minicam.energy.input) %>%
+                  rename(stub.technology = technology,
+                         input.name = minicam.energy.input),
+                by = c("supplysector", "stub.technology", "input.name")) %>%
+      mutate(subsector = if_else(!is.na(subsector.original),subsector.original,subsector)) %>%
+      select(-subsector.original) ->
+      L201.en_ghg_emissions
+
+    EnTechInputNameMap %>%
+      left_join(ind_subsector_revised %>% select(supplysector,subsector.original,fuel,technology, minicam.energy.input) %>%
+                  rename(stub.technology = technology,
+                         input.name = minicam.energy.input),
+                by = c("supplysector", "fuel","stub.technology", "input.name")) %>%
+      mutate(subsector = if_else(!is.na(subsector.original),subsector.original,subsector)) %>%
+      select(-subsector.original) ->
+      EnTechInputNameMap
 
     # L201.en_bcoc_emissions: BC/OC emissions factors for energy technologies in all regions
     L114.bcoc_tgej_R_en_S_F_2000 %>%
@@ -174,6 +208,15 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       na.omit %>%
       # No need to include a GDP control when the max.reduction is zero
       filter(max_reduction > 0) ->
+      L201.nonghg_gdp_control
+
+    # remap iron and steel back to correct subsector, because fuel information is now attached
+    L201.nonghg_gdp_control %>%
+      left_join(EnTechInputNameMap %>% filter(supplysector == "iron and steel") %>% select(-input.name) %>%
+                  rename(subsector_orig = subsector) %>% unique(),
+                                              by = c("supplysector", "stub.technology")) %>%
+      mutate(subsector = if_else(supplysector == "iron and steel", subsector_orig, subsector)) %>%
+      select(-subsector_orig) ->
       L201.nonghg_gdp_control
 
     L201.nonghg_max_reduction <- select(L201.nonghg_gdp_control, -steepness)
@@ -299,6 +342,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.nonghg_steepness_res <- rename_SO2(L201.nonghg_steepness_res, A_regions, FALSE)
     L201.nonghg_max_reduction_res <- rename_SO2(L201.nonghg_max_reduction_res, A_regions, FALSE)
 
+
     # Remove district heat from regions that do have have it
     A_regions.en %>%
       filter(has_district_heat == 1) %>%
@@ -338,7 +382,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "energy/calibrated_techs_bld_det",
                      UCD_tech_map_name,
                      "L111.nonghg_tg_R_en_S_F_Yh",
-                     "L244.DeleteThermalService") ->
+                     "L244.DeleteThermalService",
+                     "emissions/mappings/ind_subsector_revised") ->
       L201.en_pol_emissions
 
     L201.en_ghg_emissions %>%
@@ -354,7 +399,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "energy/calibrated_techs_bld_det",
                      UCD_tech_map_name,
                      "L112.ghg_tg_R_en_S_F_Yh",
-                     "L244.DeleteThermalService") ->
+                     "L244.DeleteThermalService",
+                     "emissions/mappings/ind_subsector_revised") ->
       L201.en_ghg_emissions
 
     L201.en_bcoc_emissions %>%

@@ -24,3 +24,4 @@ in_trn_road,in_trn_road
 in_trn_unspecified,in_trn_unspecified
 net_industry_energy transformation,in_industry_energy
 net_industry_oil refining,in_industry_energy
+net_industry_energy_iron and steel,in_industry_energy

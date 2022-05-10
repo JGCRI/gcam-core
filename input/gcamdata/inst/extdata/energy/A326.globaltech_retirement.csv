@@ -1,0 +1,40 @@
+# File: A326.globaltech_retirement.csv
+# Title: Aluminum technology lifetimes and shutdown rates
+# Units: Years for lifetime and half.life; Unitless for shutdown.rate; steepness; median.shutdown.point; profit.shutdown.steepness
+# Comments: maximum lifetime of cohort. If no retirement function is used; the entire cohort is retired in this number of years
+#           shutdown.rate: portion of cohort retired each year; used by the phased-shutdown-decider retirement function.
+#           half.life: number of years at which 50% of the cohort is retired; using the s-curve-shutdown-decider retirement function.
+#           steepness: shape parameter used by the s-curve-shutdown-decider retirement function.
+#           median.shutdown.point: profit-ratio at which 50% of the cohort is shut down for lack of profitability.
+#           profit.shutdown.steepness: shape parameter of profit-shutdown-decider function.
+# Column types: ccccicinni
+# ----------
+supplysector,subsector,technology,year,lifetime,shutdown.rate,half.life,steepness,median.shutdown.point,profit.shutdown.steepness
+alumina,refined liquids,refined liquids,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,refined liquids,refined liquids cogen,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,refined liquids,refined liquids CCS,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,gas,gas,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,gas,gas cogen,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,gas,gas CCS,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,biomass,biomass,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,biomass,biomass cogen,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,biomass,biomass CCS,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,heat,heat,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,coal,coal,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,coal,coal cogen,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,coal,coal CCS,final-calibration-year,40,,20,0.3,-0.5,6
+aluminum,electricity,electricity,final-calibration-year,40,,20,0.3,-0.5,6
+alumina,refined liquids,refined liquids,initial-future-year,40,,20,0.3,-0.5,6
+alumina,refined liquids,refined liquids cogen,initial-future-year,40,,20,0.3,-0.5,6
+alumina,refined liquids,refined liquids CCS,initial-future-year,40,,20,0.3,-0.5,6
+alumina,gas,gas,initial-future-year,40,,20,0.3,-0.5,6
+alumina,gas,gas cogen,initial-future-year,40,,20,0.3,-0.5,6
+alumina,gas,gas CCS,initial-future-year,40,,20,0.3,-0.5,6
+alumina,biomass,biomass,initial-future-year,40,,20,0.3,-0.5,6
+alumina,biomass,biomass cogen,initial-future-year,40,,20,0.3,-0.5,6
+alumina,biomass,biomass CCS,initial-future-year,40,,20,0.3,-0.5,6
+alumina,heat,heat,initial-future-year,40,,20,0.3,-0.5,6
+alumina,coal,coal,initial-future-year,40,,20,0.3,-0.5,6
+alumina,coal,coal cogen,initial-future-year,40,,20,0.3,-0.5,6
+alumina,coal,coal CCS,initial-future-year,40,,20,0.3,-0.5,6
+aluminum,electricity,electricity,initial-future-year,40,,20,0.3,-0.5,6

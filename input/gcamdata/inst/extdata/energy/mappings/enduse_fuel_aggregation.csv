@@ -1,7 +1,7 @@
 # File: enduse_fuel_aggregation.csv
 # Title: Mapping from first intermediate fuel to sector-specific intermediate fuel
 # Units: None
-# Column types: cccccc 
+# Column types: cccccc
 # ----------
 fuel,electricity,heat,bld,industry,trn
 biomass,biomass,biomass,biomass,biomass,

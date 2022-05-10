@@ -1127,7 +1127,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                     <axis1 name="region">region</axis1>
                     <axis2 name="Year">physical-output[@vintage]</axis2>
                     <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' (:collapse:)]//*[@type='technology' (:collapse:)]/
-               output-secondary[@name='electricity' and @type='output']/
+               secondary-output[@name='electricity' and @type='output']/
                physical-output/node()</xPath>
                     <comments>all techs of the same name aggregated</comments>
                 </supplyDemandQuery>
@@ -1845,7 +1845,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                             <rewrite from="trn_freight" to="transportation"/>
                             <rewrite from="comm others" to="building"/>
                             <rewrite from="comm heating" to="building"/>
-                            <rewrite from="industrial energy use" to="industry"/>
+                            <rewrite from="other industrial energy use" to="industry"/>
                             <rewrite from="comm cooling" to="building"/>
                             <rewrite from="trn_pass_road_LDV" to="transportation"/>
                             <rewrite from="trn_pass_road_bus" to="transportation"/>
@@ -1857,8 +1857,17 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                             <rewrite from="resid others" to="building"/>
                             <rewrite from="process heat cement" to="industry"/>
                             <rewrite from="resid cooling" to="building"/>
-                            <rewrite from="industrial feedstocks" to="industry"/>
+                            <rewrite from="other industrial feedstocks" to="industry"/>
                             <rewrite from="trn_shipping_intl" to="transportation"/>
+							<rewrite from="iron and steel" to="industry"/>
+ 		           			<rewrite from="agricultural energy use" to="industry"/>
+ 		           			<rewrite from="aluminum" to="industry"/>
+							<rewrite from="alumina" to="industry"/>
+ 		           			<rewrite from="chemical energy use" to="industry"/>
+ 		           			<rewrite from="construction energy use" to="industry"/>
+							<rewrite from="chemical feedstocks" to="industry"/>
+ 		           			<rewrite from="construction feedstocks" to="industry"/>
+ 		           			<rewrite from="mining energy use" to="industry"/>
                         </level>
                     </labelRewriteList>
                 </supplyDemandQuery>
@@ -2199,7 +2208,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                             </level>
                         </labelRewriteList>
                     </supplyDemandQuery>
-                    <supplyDemandQuery title="industry final energy by tech and fuel">
+				<supplyDemandQuery title="industry final energy by tech and fuel">
                         <axis1 name="technology">technology</axis1>
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]/
@@ -2226,7 +2235,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                     <supplyDemandQuery title="industry cogeneration by fuel">
                         <axis1 name="technology">technology</axis1>
                         <axis2 name="Year">physical-output[@vintage]</axis2>
-                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']//*[@type='technology']/output-secondary[@name='electricity' and @type='output']/
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']//*[@type='technology']/secondary-output[@name='electricity' and @type='output']/
                physical-output/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
@@ -2248,8 +2257,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                     <supplyDemandQuery title="industry water withdrawals and consumption">
                         <axis1 name="input">input</axis1>
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
-                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
-               *[@type='input' and contains(@name,'water_td')]/demand-physical/node()</xPath>
+                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='input' and contains(@name,'water_td_ind')]/demand-physical/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
                 </queryGroup>
@@ -2266,6 +2274,16 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                         <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='cement')]/*[@type='subsector']/*[@type='technology']/
                *[@type='output' (:collapse:)]/physical-output/node()</xPath>
                         <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="cement production by tech and vintage">
+                        <axis1 name="technology">technology</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output"
+                            group="false" sumAll="false">*[@type='sector' and (@name='cement')]/
+             			  *[@type='subsector' and not(@name='Imports')]/*[@type='technology']/
+             			  *[@type='output']/physical-output/node()</xPath>
+                        <comments/>
+                        <showAttribute attribute-name="year" level="technology"/>
                     </supplyDemandQuery>
                     <supplyDemandQuery title="inputs to cement production">
                         <axis1 name="input">input</axis1>
@@ -2313,6 +2331,129 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                         <axis1 name="sector">sector</axis1>
                         <axis2 name="Year">cost</axis2>
                         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='N fertilizer')]/cost/text()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                </queryGroup>
+                <queryGroup name="iron and steel">
+                    <supplyDemandQuery  title="iron and steel production by region">
+               			<axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath  buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='iron and steel')]/
+               *[@type='subsector' (:collapse:) and not(@name='Imports')]//
+               *[@type='output' (:collapse:)]/physical-output/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="iron and steel production by tech">
+               			<axis1 name="technology">technology</axis1>
+               			<axis2 name="Year">physical-output[@vintage]</axis2>
+               			<xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='iron and steel')]/
+               *[@type='subsector' and not(@name='Imports')]/*[@type='technology']/
+               *[@type='output']/physical-output/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="iron and steel production by tech and vintage">
+               			<axis1 name="technology">technology</axis1>
+               			<axis2 name="Year">physical-output[@vintage]</axis2>
+               			<xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='iron and steel')]/
+               *[@type='subsector' and not(@name='Imports')]/*[@type='technology']/
+               *[@type='output']/physical-output/node()</xPath>
+               			<comments/>
+               			<showAttribute attribute-name="year" level="technology"/>
+                    </supplyDemandQuery>
+            		<supplyDemandQuery title="iron and steel inputs by tech (energy and feedstocks)">
+               			<axis1 name="input">input</axis1>
+               			<axis2 name="Year">demand-physical[@vintage]</axis2>
+               			<xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='iron and steel')]//*[@type='input']/demand-physical/node()</xPath>
+               			<comments/>
+            		</supplyDemandQuery>
+                    <supplyDemandQuery title="iron and steel prices">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">cost</axis2>
+                        <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='iron and steel')]/cost/text()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                </queryGroup>
+                <queryGroup name="chemicals">
+                    <supplyDemandQuery title="chemical production by region">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='chemical')]/
+               *[@type='subsector' (:collapse:) and not(@name='Imports')]//
+               *[@type='output' (:collapse:)]/physical-output/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="chemical inputs by tech (energy and feedstocks)">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='chemical')]//*[@type='input']/demand-physical/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="chemical prices">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">cost</axis2>
+                        <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='chemical')]/cost/text()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                </queryGroup>
+                <queryGroup name="aluminum">
+                    <supplyDemandQuery title="aluminum production by region">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='aluminum')]/
+               *[@type='subsector' (:collapse:) and not(@name='Imports')]//
+               *[@type='output' (:collapse:)]/physical-output/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="aluminum production by tech">
+                        <axis1 name="technology">technology</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='aluminum')]/
+               *[@type='subsector' and not(@name='Imports')]/*[@type='technology']/
+               *[@type='output']/physical-output/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="aluminum production by tech and vintage">
+                        <axis1 name="technology">technology</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='aluminum')]/
+               *[@type='subsector' and not(@name='Imports')]/*[@type='technology']/
+               *[@type='output']/physical-output/node()</xPath>
+                        <comments/>
+                        <showAttribute attribute-name="year" level="technology"/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="aluminum inputs by tech (energy and feedstocks)">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='aluminum' or @name='alumina')]//*[@type='input']/demand-physical/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="aluminum prices">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">cost</axis2>
+                        <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='aluminum')]/cost/text()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                </queryGroup>
+                <queryGroup name="off-road sectors">
+                    <supplyDemandQuery title="construction inputs (energy and feedstocks)">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input"
+                            group="false" sumAll="false">*[@type='sector' and (@name='construction' or @name='construction energy use' or @name='construction feedstocks')]//*[@type='input']/demand-physical/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="agricultural energy use">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input"
+                            group="false" sumAll="false">*[@type='sector' and (@name='agricultural energy use')]//*[@type='input']/demand-physical/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="mining energy use">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input"
+                            group="false" sumAll="false">*[@type='sector' and (@name='mining energy use')]//*[@type='input']/demand-physical/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
                 </queryGroup>
@@ -3898,11 +4039,10 @@ element input {
                     </level>
                 </labelRewriteList>
             </supplyDemandQuery>
-            <supplyDemandQuery title="CO2 emissions by assigned sector (no bio)">
-                <axis1 name="sector">sector[@name]</axis1>
-                <axis2 name="Year">emissions[@year]</axis2>
-                <xPath buildList="true" dataName="input" group="false" sumAll="false">
-                    <![CDATA[ 
+<supplyDemandQuery title="CO2 emissions by assigned sector (no bio)">
+    <axis1 name="sector">sector[@name]</axis1>
+    <axis2 name="Year">emissions[@year]</axis2>
+    <xPath buildList="true" dataName="input" group="false" sumAll="false"><![CDATA[ 
                declare function local:append-heirarchy($parent as node(), $append as node()*) as node() {
 	       	 		 let $scn := $parent/ancestor::scenario,
 	       			   	  $rgn := $parent (: /ancestor::region :)
@@ -3924,7 +4064,7 @@ element input {
 	       	 	 }; 
 	       	 	 declare function local:generate-sector-output-coefs($inputNameQueue as xs:string*, $currTree as node(), $coefs as node()*, $is_usa as xs:boolean) as node()* {
                  if(empty($inputNameQueue)) then $coefs
-                 else if( exists($coefs[@name = $inputNameQueue[1]]) or exists(index-of(('unconventional oil production', "electricity", "cement", "N fertilizer"),
+                 else if( exists($coefs[@name = $inputNameQueue[1]]) or exists(index-of(('unconventional oil production', "electricity", "cement", "N fertilizer","iron and steel" ),
 $inputNameQueue[1])) or not($currTree/*[@type='sector' and @name=$inputNameQueue[1]]))
 then 
 local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs, $is_usa)
@@ -4011,32 +4151,38 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
 		 local:run-emiss-by-enduse((:scenarios:), (:regions:), (:collection:))
                
                ]]>
-                </xPath>
-                <comments/>
-                <labelRewriteList append-values="false">
-                    <level name="sector">
-                        <rewrite from="trn_pass_road_LDV_4W" to="transportation"/>
-                        <rewrite from="trn_pass_road" to="transportation"/>
-                        <rewrite from="trn_pass_road_LDV_2W" to="transportation"/>
-                        <rewrite from="trn_freight_road" to="transportation"/>
-                        <rewrite from="trn_passenger" to="transportation"/>
-                        <rewrite from="trn_freight" to="transportation"/>
-                        <rewrite from="comm others" to="buildings"/>
-                        <rewrite from="comm heating" to="buildings"/>
-                        <rewrite from="comm cooling" to="buildings"/>
-                        <rewrite from="trn_pass_road_LDV" to="transportation"/>
-                        <rewrite from="trn_pass_road_bus" to="transportation"/>
-                        <rewrite from="trn_aviation_intl" to="transportation"/>
-                        <rewrite from="trn_pass" to="transportation"/>
-                        <rewrite from="N fertilizer" to="industry"/>
-                        <rewrite from="resid heating" to="buildings"/>
-                        <rewrite from="resid others" to="buildings"/>
-                        <rewrite from="unconventional oil production" to="industry"/>
-                        <rewrite from="resid cooling" to="buildings"/>
-                        <rewrite from="trn_shipping_intl" to="transportation"/>
-                    </level>
-                </labelRewriteList>
-            </supplyDemandQuery>
+			   </xPath>
+			   <comments/>
+			   <labelRewriteList append-values="false">
+					<level name="sector">
+            			<rewrite from="trn_pass_road_LDV_4W" to="transportation"/>
+           			 	<rewrite from="trn_pass_road" to="transportation"/>
+            			<rewrite from="trn_pass_road_LDV_2W" to="transportation"/>
+            			<rewrite from="trn_freight_road" to="transportation"/>
+            			<rewrite from="trn_passenger" to="transportation"/>
+            			<rewrite from="trn_freight" to="transportation"/>
+            			<rewrite from="comm others" to="buildings"/>
+            			<rewrite from="comm heating" to="buildings"/>
+            			<rewrite from="comm cooling" to="buildings"/>
+            			<rewrite from="trn_pass_road_LDV" to="transportation"/>
+            			<rewrite from="trn_pass_road_bus" to="transportation"/>
+            			<rewrite from="trn_aviation_intl" to="transportation"/>
+            			<rewrite from="trn_pass" to="transportation"/>
+            			<rewrite from="N fertilizer" to="industry"/>
+            			<rewrite from="resid heating" to="buildings"/>
+            			<rewrite from="resid others" to="buildings"/>
+            			<rewrite from="unconventional oil production" to="industry"/>
+            			<rewrite from="iron and steel" to="industry"/>
+            			<rewrite from="agricultural energy use" to="industry"/>
+            			<rewrite from="aluminum" to="industry"/>
+            			<rewrite from="chemical" to="industry"/>
+            			<rewrite from="construction" to="industry"/>
+            			<rewrite from="mining energy use" to="industry"/>
+            			<rewrite from="resid cooling" to="buildings"/>
+            			<rewrite from="trn_shipping_intl" to="transportation"/>
+        			</level>
+			    </labelRewriteList>
+			</supplyDemandQuery>
             <emissionsQueryBuilder title="CO2 emissions by subsector">
                 <axis1 name="subsector">subsector</axis1>
                 <axis2 name="Year">emissions</axis2>
@@ -5343,7 +5489,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                             <rewrite from="trn_pass_road_LDV_2W" to="transportation"/>
                             <rewrite from="resid televisions" to="building"/>
                             <rewrite from="comm heating" to="building"/>
-                            <rewrite from="industrial energy use" to="industry"/>
+                            <rewrite from="other industrial energy use" to="industry"/>
                             <rewrite from="comm cooling" to="building"/>
                             <rewrite from="resid computers" to="building"/>
                             <rewrite from="trn_pass_road_LDV" to="transportation"/>
@@ -5357,7 +5503,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                             <rewrite from="resid furnace fans" to="building"/>
                             <rewrite from="comm office" to="building"/>
                             <rewrite from="comm other" to="building"/>
-                            <rewrite from="industrial feedstocks" to="industry"/>
+                            <rewrite from="other industrial feedstocks" to="industry"/>
                             <rewrite from="comm ventilation" to="building"/>
                             <rewrite from="trn_shipping_intl" to="transportation"/>
                             <rewrite from="trn_pass_road" to="transportation"/>
