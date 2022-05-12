@@ -2607,12 +2607,14 @@ module_energy_L244.building_det <- function(command, ...) {
     # Finally, calculate the base year service density
     # This density will be used in case it gets negative when adding the bias adder coefficient
     L244.GenericBaseDens<-L244.GenericBaseService %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       left_join_error_no_match(L244.Floorspace, by = c("region", "gcam.consumer", "nodeInput", "building.node.input", "year")) %>%
       mutate(base.density = base.service / base.building.size) %>%
       replace_na(list(base.density = 0)) %>%
       select(LEVEL2_DATA_NAMES[["GenericBaseDens"]])
 
     L244.ThermalBaseDens<-L244.ThermalBaseService %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       left_join_error_no_match(L244.Floorspace, by = c("region", "gcam.consumer", "nodeInput", "building.node.input", "year")) %>%
       mutate(base.density = base.service / base.building.size) %>%
       replace_na(list(base.density = 0)) %>%

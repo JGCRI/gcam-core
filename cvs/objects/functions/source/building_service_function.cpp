@@ -113,10 +113,19 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
 
 
                 // May need to make an adjustment in case of negative prices.
-                if (adjustedServiceDensity < 0) {
-                    adjustedServiceDensity = buildingServiceInput->getServBaseDens();
+                if (adjustedServiceDensity < (buildingServiceInput->getCoef() *
+                    thermalLoad *
+                    calcServiceDensity(buildingServiceInput, income, basePrice, regionName, scenario->getModeltime()->getFinalCalibrationPeriod())) +
+                    buildingServiceInput->getBiasAdder(scenario->getModeltime()->getFinalCalibrationPeriod())) {
+
+                    adjustedServiceDensity = calcServiceDensity(buildingServiceInput, income, basePrice, regionName, scenario->getModeltime()->getFinalCalibrationPeriod()) *
+                        thermalLoad * 
+                        buildingServiceInput->getCoef() +
+                        buildingServiceInput->getBiasAdder(period);
 
                 }
+
+
                     // Set the thermal load adjusted service density back into the input for reporting.
                     buildingServiceInput->setServiceDensity(adjustedServiceDensity, period);
 
