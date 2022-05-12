@@ -121,7 +121,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
                     adjustedServiceDensity = calcServiceDensity(buildingServiceInput, income, basePrice, regionName, scenario->getModeltime()->getFinalCalibrationPeriod()) *
                         thermalLoad * 
                         buildingServiceInput->getCoef() +
-                        buildingServiceInput->getBiasAdder(period);
+                        buildingServiceInput->getBiasAdder(scenario->getModeltime()->getFinalCalibrationPeriod());
 
                 }
 
