@@ -1,8 +1,8 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_energy_batch_industry_xml
+#' module_energy_batch_other_industry_xml
 #'
-#' Construct XML data structure for \code{industry.xml}.
+#' Construct XML data structure for \code{other_industry.xml}.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -10,7 +10,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{industry.xml}. The corresponding file in the
 #' original data system was \code{batch_industry_xml.R} (energy XML).
-module_energy_batch_industry_xml <- function(command, ...) {
+module_energy_batch_other_industry_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L232.SubsectorLogit_ind",
              "L232.FinalEnergyKeyword_ind",
@@ -38,7 +38,7 @@ module_energy_batch_industry_xml <- function(command, ...) {
              "L232.SubsectorShrwtFllt_ind",
              "L232.Supplysector_ind"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "industry.xml"))
+    return(c(XML = "other_industry.xml"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -73,7 +73,7 @@ module_energy_batch_industry_xml <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    create_xml("industry.xml") %>%
+    create_xml("other_industry.xml") %>%
       add_logit_tables_xml(L232.Supplysector_ind, "Supplysector") %>%
       add_logit_tables_xml(L232.SubsectorLogit_ind, "SubsectorLogit") %>%
       add_xml_data(L232.SubsectorShrwtFllt_ind, "SubsectorShrwtFllt") %>%
@@ -109,9 +109,9 @@ module_energy_batch_industry_xml <- function(command, ...) {
                      "L232.StubTechProd_industry", "L232.StubTechCoef_industry", "L232.FuelPrefElast_indenergy",
                      "L232.PerCapitaBased_ind", "L232.PriceElasticity_ind", "L232.BaseService_ind",
                      "L232.SubsectorShrwtFllt_ind", "L232.Supplysector_ind") ->
-      industry.xml
+      other_industry.xml
 
-    return_data(industry.xml)
+    return_data(other_industry.xml)
   } else {
     stop("Unknown command")
   }

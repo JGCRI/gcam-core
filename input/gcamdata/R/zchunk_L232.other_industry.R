@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_energy_L232.industry
+#' module_energy_L232.other_industry
 #'
 #' Compute a variety of final energy keyword, sector, share weight, and technology information for industry-related GCAM inputs.
 #'
@@ -31,7 +31,7 @@
 #' @importFrom dplyr anti_join arrange bind_rows distinct filter if_else group_by lag left_join mutate right_join select summarise
 #' @importFrom tidyr complete nesting
 #' @author LF October 2017
-module_energy_L232.industry <- function(command, ...) {
+module_energy_L232.other_industry <- function(command, ...) {
 
   INCOME_ELASTICITY_OUTPUTS <- c("GCAM3",
                                  paste0("gSSP", 1:5),
