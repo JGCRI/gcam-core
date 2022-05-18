@@ -10,6 +10,6 @@ gas processing,coal gasification,share-weight,final-calibration-year,end-year,,l
 nuclearFuelGenII,enrichedUranium,share-weight,final-calibration-year,end-year,,linear
 nuclearFuelGenIII,enrichedUranium,share-weight,final-calibration-year,end-year,,linear
 refining,oil refining,share-weight,final-calibration-year,end-year,,fixed
-refining,biomass liquids,share-weight,final-calibration-year,initial-future-year,,linear
+refining,biomass liquids,share-weight,final-calibration-year,2030,,linear
 refining,coal to liquids,share-weight,initial-future-year,end-year,,linear
 refining,gas to liquids,share-weight,initial-future-year,end-year,,linear
