@@ -94,19 +94,14 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
     # L262.Supplysector_dac: Supply sector information for CO2 removal sector containing dac
 
     L262.Supplysector_dac %>%
-      #filter(supplysector != 'airCO2') %>%
       filter(region == gcam.USA_REGION) %>%
-      select(region, supplysector) %>%
-      # Mutate to remove attributes.
-      mutate(region = region) ->
+      select(region, supplysector) ->
       L262.DeleteSupplysector_USAdac
 
 
     L262.PerCapitaBased_dac %>%
       filter(region == gcam.USA_REGION) %>%
-      select(region, energy.final.demand) %>%
-      # Mutate to remove attributes.
-      mutate(region = region) ->
+      select(region, energy.final.demand) ->
       L262.DeleteFinalDemand_USAdac
 
 
@@ -120,9 +115,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
 
       if(nrow(check_df) == 0) {
 
-        # This does not change the entries of the data frame but will strip the attributes
-        # from the input data frame.
-        new_data <- mutate(data, region = region)
+        new_data <- data
 
       } else {
 
@@ -235,9 +228,8 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
                                    grid_region, market.name)) %>%
       select(-grid_region) %>%
       # Change market name to reflect the fact that electricity is consumed from state markets.
-      mutate(replace = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, 1, 0),
-             market.name = if_else(replace == 1, region, market.name)) %>%
-      select(-replace) %>%
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS,
+                                   region, market.name)) %>%
       rename(stub.technology = technology,
              coefficient = value) ->
       L262.StubTechCoef_dac_USA
