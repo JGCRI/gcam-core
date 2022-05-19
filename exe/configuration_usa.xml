@@ -126,8 +126,8 @@
 		<!--GHG EMISSIONS USA-->
 		<Value name = "ghg_usa">../input/gcamdata/xml/ghg_emissions_USA.xml</Value>
 		<Value name = "ghg_usa">../input/gcamdata/xml/elecS_ghg_emissions_water_USA.xml</Value>
-		<Value name = "ghg_usa">../input/gcamdata/xml/trn_ghg_emissions_USA.xml</Value>
-		
+		<Value name = "ghg_usa">../input/gcamdata/xml/trn_ghg_emissions_USA.xml</Value>	
+	
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		
 

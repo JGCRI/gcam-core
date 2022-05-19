@@ -4,8 +4,14 @@
 \alias{write_to_all_regions}
 \title{write_to_all_regions}
 \usage{
-write_to_all_regions(data, names, GCAM_region_names, has_traded = FALSE,
-  apply_selected_only = TRUE, set_market = FALSE)
+write_to_all_regions(
+  data,
+  names,
+  GCAM_region_names,
+  has_traded = FALSE,
+  apply_selected_only = TRUE,
+  set_market = FALSE
+)
 }
 \arguments{
 \item{data}{Base tibble to start from}
