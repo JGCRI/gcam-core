@@ -1,0 +1,8 @@
+# File: A325.globaltech_coef.csv
+# Title: chemical,production default coefficients
+# Units: EJ/EJ
+# Column types: ccccn
+# ----------
+supplysector,subsector,technology,minicam.energy.input,terminal_coef
+chemical,chemical,chemical,chemical energy use,0.4
+chemical,chemical,chemical,chemical feedstocks,0.6

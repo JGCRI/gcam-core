@@ -24,6 +24,8 @@ module_energy_batch_cement_xml <- function(command, ...) {
              "L2321.GlobalTechCoef_cement",
              "L2321.GlobalTechCost_cement",
              "L2321.GlobalTechCapture_cement",
+			 "L2321.GlobalTechSCurve_en",
+             "L2321.GlobalTechProfitShutdown_en",
              "L2321.StubTechProd_cement",
              "L2321.StubTechCalInput_cement_heat",
              "L2321.StubTechCoef_cement",
@@ -49,6 +51,8 @@ module_energy_batch_cement_xml <- function(command, ...) {
     L2321.GlobalTechCoef_cement <- get_data(all_data, "L2321.GlobalTechCoef_cement")
     L2321.GlobalTechCost_cement <- get_data(all_data, "L2321.GlobalTechCost_cement")
     L2321.GlobalTechCapture_cement <- get_data(all_data, "L2321.GlobalTechCapture_cement")
+	L2321.GlobalTechSCurve_en <- get_data(all_data, "L2321.GlobalTechSCurve_en")
+    L2321.GlobalTechProfitShutdown_en <- get_data(all_data, "L2321.GlobalTechProfitShutdown_en")
     L2321.StubTechProd_cement <- get_data(all_data, "L2321.StubTechProd_cement")
     L2321.StubTechCalInput_cement_heat <- get_data(all_data, "L2321.StubTechCalInput_cement_heat")
     L2321.StubTechCoef_cement <- get_data(all_data, "L2321.StubTechCoef_cement")
@@ -70,6 +74,8 @@ module_energy_batch_cement_xml <- function(command, ...) {
       add_xml_data(L2321.StubTech_cement, "StubTech") %>%
       add_xml_data(L2321.GlobalTechShrwt_cement, "GlobalTechShrwt") %>%
       add_xml_data(L2321.GlobalTechCoef_cement, "GlobalTechCoef") %>%
+	  add_xml_data(L2321.GlobalTechSCurve_en, "GlobalTechSCurve") %>%
+      add_xml_data(L2321.GlobalTechProfitShutdown_en, "GlobalTechProfitShutdown") %>%
       add_xml_data(L2321.GlobalTechCost_cement, "GlobalTechCost") %>%
       add_xml_data(L2321.GlobalTechCapture_cement, "GlobalTechCapture") %>%
       add_xml_data(L2321.StubTechProd_cement, "StubTechProd") %>%
@@ -83,7 +89,7 @@ module_energy_batch_cement_xml <- function(command, ...) {
                      "L2321.SubsectorShrwtFllt_cement",
                      "L2321.SubsectorInterp_cement",
                      # "L2321.SubsectorInterpTo_cement",
-                     "L2321.StubTech_cement",
+                     "L2321.StubTech_cement","L2321.GlobalTechSCurve_en", "L2321.GlobalTechProfitShutdown_en",
                      "L2321.GlobalTechShrwt_cement", "L2321.GlobalTechCoef_cement", "L2321.GlobalTechCost_cement",
                      "L2321.GlobalTechCapture_cement", "L2321.StubTechProd_cement", "L2321.StubTechCalInput_cement_heat",
                      "L2321.StubTechCoef_cement", "L2321.PerCapitaBased_cement", "L2321.BaseService_cement",

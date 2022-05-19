@@ -515,6 +515,10 @@ land.density.param.usa<-0
 b.param.usa<-3.49026
 income.param.usa<-0.4875
 
+# Constants for global detailed industry
+energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
+energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 enduse") #assign iron & steel global technology coefficients
+
 # Socioeconomics constants ======================================================================
 
 # Population years - note that these sequences shouldn't have any overlap,
@@ -800,7 +804,7 @@ gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale
 
 # Resources that will be modeled at the state level
 gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource", "offshore wind resource")
-gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
+gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone", "scrap")
 
 # Define sector(s) used in L222.en_transformation_USA
 # The supplysector and subsector structure in these sectors are retained

@@ -1,0 +1,760 @@
+# File: aluminum_prod_region_IAA.csv
+# Title: Aluminum and alumina production by IAA region
+# Units: Thousand tons
+# Description: Regional aluminum production
+# Source: World aluminum Association
+# Column types: cicnc
+# ----------
+flow,year,IAA_region,value,unit
+Aluminum,1973,Africa,249,Thousand metric tons
+Aluminum,1973,Asia (ex China),1439,Thousand metric tons
+Aluminum,1973,China (Estimated),0,Thousand metric tons
+Aluminum,1973,East & Central Europe,0,Thousand metric tons
+Aluminum,1973,GCC,0,Thousand metric tons
+Aluminum,1973,North America,5039,Thousand metric tons
+Aluminum,1973,Oceania,324,Thousand metric tons
+Aluminum,1973,South America,229,Thousand metric tons
+Aluminum,1973,West Europe,2757,Thousand metric tons
+Aluminum,1974,Africa,278,Thousand metric tons
+Aluminum,1974,Asia (ex China),1463,Thousand metric tons
+Aluminum,1974,China (Estimated),0,Thousand metric tons
+Aluminum,1974,East & Central Europe,0,Thousand metric tons
+Aluminum,1974,GCC,0,Thousand metric tons
+Aluminum,1974,North America,5454,Thousand metric tons
+Aluminum,1974,Oceania,330,Thousand metric tons
+Aluminum,1974,South America,256,Thousand metric tons
+Aluminum,1974,West Europe,3150,Thousand metric tons
+Aluminum,1975,Africa,272,Thousand metric tons
+Aluminum,1975,Asia (ex China),1390,Thousand metric tons
+Aluminum,1975,China (Estimated),0,Thousand metric tons
+Aluminum,1975,East & Central Europe,0,Thousand metric tons
+Aluminum,1975,GCC,0,Thousand metric tons
+Aluminum,1975,North America,4400,Thousand metric tons
+Aluminum,1975,Oceania,323,Thousand metric tons
+Aluminum,1975,South America,275,Thousand metric tons
+Aluminum,1975,West Europe,3062,Thousand metric tons
+Aluminum,1976,Africa,337,Thousand metric tons
+Aluminum,1976,Asia (ex China),1365,Thousand metric tons
+Aluminum,1976,China (Estimated),0,Thousand metric tons
+Aluminum,1976,East & Central Europe,0,Thousand metric tons
+Aluminum,1976,GCC,0,Thousand metric tons
+Aluminum,1976,North America,4485,Thousand metric tons
+Aluminum,1976,Oceania,372,Thousand metric tons
+Aluminum,1976,South America,316,Thousand metric tons
+Aluminum,1976,West Europe,3150,Thousand metric tons
+Aluminum,1977,Africa,367,Thousand metric tons
+Aluminum,1977,Asia (ex China),1614,Thousand metric tons
+Aluminum,1977,China (Estimated),0,Thousand metric tons
+Aluminum,1977,East & Central Europe,0,Thousand metric tons
+Aluminum,1977,GCC,0,Thousand metric tons
+Aluminum,1977,North America,5093,Thousand metric tons
+Aluminum,1977,Oceania,393,Thousand metric tons
+Aluminum,1977,South America,358,Thousand metric tons
+Aluminum,1977,West Europe,3292,Thousand metric tons
+Aluminum,1978,Africa,336,Thousand metric tons
+Aluminum,1978,Asia (ex China),1511,Thousand metric tons
+Aluminum,1978,China (Estimated),0,Thousand metric tons
+Aluminum,1978,East & Central Europe,0,Thousand metric tons
+Aluminum,1978,GCC,0,Thousand metric tons
+Aluminum,1978,North America,5409,Thousand metric tons
+Aluminum,1978,Oceania,414,Thousand metric tons
+Aluminum,1978,South America,413,Thousand metric tons
+Aluminum,1978,West Europe,3345,Thousand metric tons
+Aluminum,1979,Africa,401,Thousand metric tons
+Aluminum,1979,Asia (ex China),1460,Thousand metric tons
+Aluminum,1979,China (Estimated),0,Thousand metric tons
+Aluminum,1979,East & Central Europe,0,Thousand metric tons
+Aluminum,1979,GCC,0,Thousand metric tons
+Aluminum,1979,North America,5421,Thousand metric tons
+Aluminum,1979,Oceania,425,Thousand metric tons
+Aluminum,1979,South America,668,Thousand metric tons
+Aluminum,1979,West Europe,3425,Thousand metric tons
+Aluminum,1980,Africa,437,Thousand metric tons
+Aluminum,1980,Asia (ex China),1567,Thousand metric tons
+Aluminum,1980,China (Estimated),0,Thousand metric tons
+Aluminum,1980,East & Central Europe,0,Thousand metric tons
+Aluminum,1980,GCC,0,Thousand metric tons
+Aluminum,1980,North America,5726,Thousand metric tons
+Aluminum,1980,Oceania,460,Thousand metric tons
+Aluminum,1980,South America,821,Thousand metric tons
+Aluminum,1980,West Europe,3595,Thousand metric tons
+Aluminum,1981,Africa,483,Thousand metric tons
+Aluminum,1981,Asia (ex China),1330,Thousand metric tons
+Aluminum,1981,China (Estimated),0,Thousand metric tons
+Aluminum,1981,East & Central Europe,0,Thousand metric tons
+Aluminum,1981,GCC,0,Thousand metric tons
+Aluminum,1981,North America,5603,Thousand metric tons
+Aluminum,1981,Oceania,536,Thousand metric tons
+Aluminum,1981,South America,793,Thousand metric tons
+Aluminum,1981,West Europe,3551,Thousand metric tons
+Aluminum,1982,Africa,501,Thousand metric tons
+Aluminum,1982,Asia (ex China),1003,Thousand metric tons
+Aluminum,1982,China (Estimated),0,Thousand metric tons
+Aluminum,1982,East & Central Europe,0,Thousand metric tons
+Aluminum,1982,GCC,0,Thousand metric tons
+Aluminum,1982,North America,4343,Thousand metric tons
+Aluminum,1982,Oceania,548,Thousand metric tons
+Aluminum,1982,South America,795,Thousand metric tons
+Aluminum,1982,West Europe,3306,Thousand metric tons
+Aluminum,1983,Africa,436,Thousand metric tons
+Aluminum,1983,Asia (ex China),987,Thousand metric tons
+Aluminum,1983,China (Estimated),0,Thousand metric tons
+Aluminum,1983,East & Central Europe,0,Thousand metric tons
+Aluminum,1983,GCC,0,Thousand metric tons
+Aluminum,1983,North America,4448,Thousand metric tons
+Aluminum,1983,Oceania,700,Thousand metric tons
+Aluminum,1983,South America,942,Thousand metric tons
+Aluminum,1983,West Europe,3322,Thousand metric tons
+Aluminum,1984,Africa,413,Thousand metric tons
+Aluminum,1984,Asia (ex China),1182,Thousand metric tons
+Aluminum,1984,China (Estimated),0,Thousand metric tons
+Aluminum,1984,East & Central Europe,0,Thousand metric tons
+Aluminum,1984,GCC,0,Thousand metric tons
+Aluminum,1984,North America,5327,Thousand metric tons
+Aluminum,1984,Oceania,998,Thousand metric tons
+Aluminum,1984,South America,1035,Thousand metric tons
+Aluminum,1984,West Europe,3502,Thousand metric tons
+Aluminum,1985,Africa,472,Thousand metric tons
+Aluminum,1985,Asia (ex China),1163,Thousand metric tons
+Aluminum,1985,China (Estimated),0,Thousand metric tons
+Aluminum,1985,East & Central Europe,0,Thousand metric tons
+Aluminum,1985,GCC,0,Thousand metric tons
+Aluminum,1985,North America,4781,Thousand metric tons
+Aluminum,1985,Oceania,1091,Thousand metric tons
+Aluminum,1985,South America,1160,Thousand metric tons
+Aluminum,1985,West Europe,3327,Thousand metric tons
+Aluminum,1986,Africa,556,Thousand metric tons
+Aluminum,1986,Asia (ex China),1074,Thousand metric tons
+Aluminum,1986,China (Estimated),0,Thousand metric tons
+Aluminum,1986,East & Central Europe,0,Thousand metric tons
+Aluminum,1986,GCC,0,Thousand metric tons
+Aluminum,1986,North America,4402,Thousand metric tons
+Aluminum,1986,Oceania,1119,Thousand metric tons
+Aluminum,1986,South America,1397,Thousand metric tons
+Aluminum,1986,West Europe,3399,Thousand metric tons
+Aluminum,1987,Africa,572,Thousand metric tons
+Aluminum,1987,Asia (ex China),927,Thousand metric tons
+Aluminum,1987,China (Estimated),0,Thousand metric tons
+Aluminum,1987,East & Central Europe,0,Thousand metric tons
+Aluminum,1987,GCC,0,Thousand metric tons
+Aluminum,1987,North America,4889,Thousand metric tons
+Aluminum,1987,Oceania,1273,Thousand metric tons
+Aluminum,1987,South America,1486,Thousand metric tons
+Aluminum,1987,West Europe,3462,Thousand metric tons
+Aluminum,1988,Africa,597,Thousand metric tons
+Aluminum,1988,Asia (ex China),981,Thousand metric tons
+Aluminum,1988,China (Estimated),0,Thousand metric tons
+Aluminum,1988,East & Central Europe,0,Thousand metric tons
+Aluminum,1988,GCC,0,Thousand metric tons
+Aluminum,1988,North America,5475,Thousand metric tons
+Aluminum,1988,Oceania,1407,Thousand metric tons
+Aluminum,1988,South America,1553,Thousand metric tons
+Aluminum,1988,West Europe,3488,Thousand metric tons
+Aluminum,1989,Africa,603,Thousand metric tons
+Aluminum,1989,Asia (ex China),1093,Thousand metric tons
+Aluminum,1989,China (Estimated),0,Thousand metric tons
+Aluminum,1989,East & Central Europe,0,Thousand metric tons
+Aluminum,1989,GCC,0,Thousand metric tons
+Aluminum,1989,North America,5587,Thousand metric tons
+Aluminum,1989,Oceania,1501,Thousand metric tons
+Aluminum,1989,South America,1698,Thousand metric tons
+Aluminum,1989,West Europe,3580,Thousand metric tons
+Aluminum,1990,Africa,602,Thousand metric tons
+Aluminum,1990,Asia (ex China),1118,Thousand metric tons
+Aluminum,1990,China (Estimated),0,Thousand metric tons
+Aluminum,1990,East & Central Europe,0,Thousand metric tons
+Aluminum,1990,GCC,0,Thousand metric tons
+Aluminum,1990,North America,5617,Thousand metric tons
+Aluminum,1990,Oceania,1498,Thousand metric tons
+Aluminum,1990,South America,1790,Thousand metric tons
+Aluminum,1990,West Europe,3561,Thousand metric tons
+Aluminum,1991,Africa,612,Thousand metric tons
+Aluminum,1991,Asia (ex China),1223,Thousand metric tons
+Aluminum,1991,China (Estimated),0,Thousand metric tons
+Aluminum,1991,East & Central Europe,0,Thousand metric tons
+Aluminum,1991,GCC,0,Thousand metric tons
+Aluminum,1991,North America,5947,Thousand metric tons
+Aluminum,1991,Oceania,1495,Thousand metric tons
+Aluminum,1991,South America,1996,Thousand metric tons
+Aluminum,1991,West Europe,3505,Thousand metric tons
+Aluminum,1992,Africa,617,Thousand metric tons
+Aluminum,1992,Asia (ex China),1379,Thousand metric tons
+Aluminum,1992,China (Estimated),0,Thousand metric tons
+Aluminum,1992,East & Central Europe,0,Thousand metric tons
+Aluminum,1992,GCC,0,Thousand metric tons
+Aluminum,1992,North America,6016,Thousand metric tons
+Aluminum,1992,Oceania,1483,Thousand metric tons
+Aluminum,1992,South America,1949,Thousand metric tons
+Aluminum,1992,West Europe,3319,Thousand metric tons
+Aluminum,1993,Africa,616,Thousand metric tons
+Aluminum,1993,Asia (ex China),1530,Thousand metric tons
+Aluminum,1993,China (Estimated),0,Thousand metric tons
+Aluminum,1993,East & Central Europe,0,Thousand metric tons
+Aluminum,1993,GCC,0,Thousand metric tons
+Aluminum,1993,North America,6000,Thousand metric tons
+Aluminum,1993,Oceania,1653,Thousand metric tons
+Aluminum,1993,South America,1949,Thousand metric tons
+Aluminum,1993,West Europe,3236,Thousand metric tons
+Aluminum,1994,Africa,576,Thousand metric tons
+Aluminum,1994,Asia (ex China),1585,Thousand metric tons
+Aluminum,1994,China (Estimated),0,Thousand metric tons
+Aluminum,1994,East & Central Europe,0,Thousand metric tons
+Aluminum,1994,GCC,0,Thousand metric tons
+Aluminum,1994,North America,5554,Thousand metric tons
+Aluminum,1994,Oceania,1583,Thousand metric tons
+Aluminum,1994,South America,1976,Thousand metric tons
+Aluminum,1994,West Europe,3961,Thousand metric tons
+Aluminum,1995,Africa,631,Thousand metric tons
+Aluminum,1995,Asia (ex China),1656,Thousand metric tons
+Aluminum,1995,China (Estimated),0,Thousand metric tons
+Aluminum,1995,East & Central Europe,0,Thousand metric tons
+Aluminum,1995,GCC,0,Thousand metric tons
+Aluminum,1995,North America,5546,Thousand metric tons
+Aluminum,1995,Oceania,1566,Thousand metric tons
+Aluminum,1995,South America,2058,Thousand metric tons
+Aluminum,1995,West Europe,5885,Thousand metric tons
+Aluminum,1996,Africa,1015,Thousand metric tons
+Aluminum,1996,Asia (ex China),1624,Thousand metric tons
+Aluminum,1996,China (Estimated),0,Thousand metric tons
+Aluminum,1996,East & Central Europe,3185,Thousand metric tons
+Aluminum,1996,GCC,0,Thousand metric tons
+Aluminum,1996,North America,5860,Thousand metric tons
+Aluminum,1996,Oceania,1656,Thousand metric tons
+Aluminum,1996,South America,2107,Thousand metric tons
+Aluminum,1996,West Europe,3192,Thousand metric tons
+Aluminum,1997,Africa,1106,Thousand metric tons
+Aluminum,1997,Asia (ex China),1910,Thousand metric tons
+Aluminum,1997,China (Estimated),0,Thousand metric tons
+Aluminum,1997,East & Central Europe,3316,Thousand metric tons
+Aluminum,1997,GCC,0,Thousand metric tons
+Aluminum,1997,North America,5930,Thousand metric tons
+Aluminum,1997,Oceania,1804,Thousand metric tons
+Aluminum,1997,South America,2116,Thousand metric tons
+Aluminum,1997,West Europe,3297,Thousand metric tons
+Aluminum,1998,Africa,1043,Thousand metric tons
+Aluminum,1998,Asia (ex China),1843,Thousand metric tons
+Aluminum,1998,China (Estimated),0,Thousand metric tons
+Aluminum,1998,East & Central Europe,3419,Thousand metric tons
+Aluminum,1998,GCC,0,Thousand metric tons
+Aluminum,1998,North America,6086,Thousand metric tons
+Aluminum,1998,Oceania,1934,Thousand metric tons
+Aluminum,1998,South America,2075,Thousand metric tons
+Aluminum,1998,West Europe,3549,Thousand metric tons
+Aluminum,1999,Africa,1095,Thousand metric tons
+Aluminum,1999,Asia (ex China),1966,Thousand metric tons
+Aluminum,1999,China (Estimated),2598,Thousand metric tons
+Aluminum,1999,East & Central Europe,3584,Thousand metric tons
+Aluminum,1999,GCC,0,Thousand metric tons
+Aluminum,1999,North America,6169,Thousand metric tons
+Aluminum,1999,Oceania,2028,Thousand metric tons
+Aluminum,1999,South America,2093,Thousand metric tons
+Aluminum,1999,West Europe,3720,Thousand metric tons
+Aluminum,2000,Africa,1178,Thousand metric tons
+Aluminum,2000,Asia (ex China),2221,Thousand metric tons
+Aluminum,2000,China (Estimated),2794,Thousand metric tons
+Aluminum,2000,East & Central Europe,3689,Thousand metric tons
+Aluminum,2000,GCC,0,Thousand metric tons
+Aluminum,2000,North America,6041,Thousand metric tons
+Aluminum,2000,Oceania,2094,Thousand metric tons
+Aluminum,2000,South America,2167,Thousand metric tons
+Aluminum,2000,West Europe,3801,Thousand metric tons
+Aluminum,2001,Africa,1369,Thousand metric tons
+Aluminum,2001,Asia (ex China),2234,Thousand metric tons
+Aluminum,2001,China (Estimated),3371,Thousand metric tons
+Aluminum,2001,East & Central Europe,3728,Thousand metric tons
+Aluminum,2001,GCC,0,Thousand metric tons
+Aluminum,2001,North America,5222,Thousand metric tons
+Aluminum,2001,Oceania,2122,Thousand metric tons
+Aluminum,2001,South America,1991,Thousand metric tons
+Aluminum,2001,West Europe,3885,Thousand metric tons
+Aluminum,2002,Africa,1372,Thousand metric tons
+Aluminum,2002,Asia (ex China),2261,Thousand metric tons
+Aluminum,2002,China (Estimated),4321,Thousand metric tons
+Aluminum,2002,East & Central Europe,3825,Thousand metric tons
+Aluminum,2002,GCC,0,Thousand metric tons
+Aluminum,2002,North America,5413,Thousand metric tons
+Aluminum,2002,Oceania,2170,Thousand metric tons
+Aluminum,2002,South America,2230,Thousand metric tons
+Aluminum,2002,West Europe,3928,Thousand metric tons
+Aluminum,2003,Africa,1428,Thousand metric tons
+Aluminum,2003,Asia (ex China),2475,Thousand metric tons
+Aluminum,2003,China (Estimated),5547,Thousand metric tons
+Aluminum,2003,East & Central Europe,3996,Thousand metric tons
+Aluminum,2003,GCC,0,Thousand metric tons
+Aluminum,2003,North America,5495,Thousand metric tons
+Aluminum,2003,Oceania,2198,Thousand metric tons
+Aluminum,2003,South America,2275,Thousand metric tons
+Aluminum,2003,West Europe,4068,Thousand metric tons
+Aluminum,2004,Africa,1711,Thousand metric tons
+Aluminum,2004,Asia (ex China),2735,Thousand metric tons
+Aluminum,2004,China (Estimated),6689,Thousand metric tons
+Aluminum,2004,East & Central Europe,4139,Thousand metric tons
+Aluminum,2004,GCC,0,Thousand metric tons
+Aluminum,2004,North America,5110,Thousand metric tons
+Aluminum,2004,Oceania,2246,Thousand metric tons
+Aluminum,2004,South America,2356,Thousand metric tons
+Aluminum,2004,West Europe,4295,Thousand metric tons
+Aluminum,2005,Africa,1753,Thousand metric tons
+Aluminum,2005,Asia (ex China),3139,Thousand metric tons
+Aluminum,2005,China (Estimated),7806,Thousand metric tons
+Aluminum,2005,East & Central Europe,4194,Thousand metric tons
+Aluminum,2005,GCC,0,Thousand metric tons
+Aluminum,2005,North America,5382,Thousand metric tons
+Aluminum,2005,Oceania,2252,Thousand metric tons
+Aluminum,2005,South America,2391,Thousand metric tons
+Aluminum,2005,West Europe,4352,Thousand metric tons
+Aluminum,2006,Africa,1864,Thousand metric tons
+Aluminum,2006,Asia (ex China),3493,Thousand metric tons
+Aluminum,2006,China (Estimated),9349,Thousand metric tons
+Aluminum,2006,East & Central Europe,4230,Thousand metric tons
+Aluminum,2006,GCC,0,Thousand metric tons
+Aluminum,2006,North America,5333,Thousand metric tons
+Aluminum,2006,Oceania,2274,Thousand metric tons
+Aluminum,2006,South America,2493,Thousand metric tons
+Aluminum,2006,West Europe,4182,Thousand metric tons
+Aluminum,2007,Africa,1815,Thousand metric tons
+Aluminum,2007,Asia (ex China),3717,Thousand metric tons
+Aluminum,2007,China (Estimated),12588,Thousand metric tons
+Aluminum,2007,East & Central Europe,4460,Thousand metric tons
+Aluminum,2007,GCC,0,Thousand metric tons
+Aluminum,2007,North America,5642,Thousand metric tons
+Aluminum,2007,Oceania,2315,Thousand metric tons
+Aluminum,2007,South America,2558,Thousand metric tons
+Aluminum,2007,West Europe,4305,Thousand metric tons
+Aluminum,2008,Africa,1715,Thousand metric tons
+Aluminum,2008,Asia (ex China),3923,Thousand metric tons
+Aluminum,2008,China (Estimated),13585,Thousand metric tons
+Aluminum,2008,East & Central Europe,4658,Thousand metric tons
+Aluminum,2008,GCC,0,Thousand metric tons
+Aluminum,2008,North America,5783,Thousand metric tons
+Aluminum,2008,Oceania,2297,Thousand metric tons
+Aluminum,2008,South America,2660,Thousand metric tons
+Aluminum,2008,West Europe,4618,Thousand metric tons
+Aluminum,2009,Africa,1681,Thousand metric tons
+Aluminum,2009,Asia (ex China),4400,Thousand metric tons
+Aluminum,2009,China (Estimated),13684,Thousand metric tons
+Aluminum,2009,East & Central Europe,4117,Thousand metric tons
+Aluminum,2009,GCC,0,Thousand metric tons
+Aluminum,2009,North America,4759,Thousand metric tons
+Aluminum,2009,Oceania,2211,Thousand metric tons
+Aluminum,2009,South America,2508,Thousand metric tons
+Aluminum,2009,West Europe,3722,Thousand metric tons
+Aluminum,2010,Africa,1742,Thousand metric tons
+Aluminum,2010,Asia (ex China),2500,Thousand metric tons
+Aluminum,2010,China (Estimated),17331,Thousand metric tons
+Aluminum,2010,East & Central Europe,4253,Thousand metric tons
+Aluminum,2010,GCC,2724,Thousand metric tons
+Aluminum,2010,North America,4689,Thousand metric tons
+Aluminum,2010,Oceania,2277,Thousand metric tons
+Aluminum,2010,South America,2305,Thousand metric tons
+Aluminum,2010,West Europe,3800,Thousand metric tons
+Aluminum,2011,Africa,1805,Thousand metric tons
+Aluminum,2011,Asia (ex China),2533,Thousand metric tons
+Aluminum,2011,China (Estimated),20072,Thousand metric tons
+Aluminum,2011,East & Central Europe,4319,Thousand metric tons
+Aluminum,2011,GCC,3483,Thousand metric tons
+Aluminum,2011,North America,4969,Thousand metric tons
+Aluminum,2011,Oceania,2306,Thousand metric tons
+Aluminum,2011,South America,2185,Thousand metric tons
+Aluminum,2011,West Europe,4027,Thousand metric tons
+Aluminum,2012,Africa,1639,Thousand metric tons
+Aluminum,2012,Asia (ex China),2535,Thousand metric tons
+Aluminum,2012,China (Estimated),23534,Thousand metric tons
+Aluminum,2012,East & Central Europe,4323,Thousand metric tons
+Aluminum,2012,GCC,3662,Thousand metric tons
+Aluminum,2012,North America,4851,Thousand metric tons
+Aluminum,2012,Oceania,2186,Thousand metric tons
+Aluminum,2012,South America,2052,Thousand metric tons
+Aluminum,2012,West Europe,3605,Thousand metric tons
+Aluminum,2013,Africa,1812,Thousand metric tons
+Aluminum,2013,Asia (ex China),2439,Thousand metric tons
+Aluminum,2013,China (Estimated),26534,Thousand metric tons
+Aluminum,2013,East & Central Europe,3995,Thousand metric tons
+Aluminum,2013,GCC,3887,Thousand metric tons
+Aluminum,2013,North America,4918,Thousand metric tons
+Aluminum,2013,Oceania,2104,Thousand metric tons
+Aluminum,2013,South America,1906,Thousand metric tons
+Aluminum,2013,West Europe,3616,Thousand metric tons
+Aluminum,2014,Africa,1746,Thousand metric tons
+Aluminum,2014,Asia (ex China),2429,Thousand metric tons
+Aluminum,2014,China (Estimated),28317,Thousand metric tons
+Aluminum,2014,East & Central Europe,3764,Thousand metric tons
+Aluminum,2014,GCC,4832,Thousand metric tons
+Aluminum,2014,North America,4585,Thousand metric tons
+Aluminum,2014,Oceania,2035,Thousand metric tons
+Aluminum,2014,South America,1543,Thousand metric tons
+Aluminum,2014,West Europe,3596,Thousand metric tons
+Aluminum,2015,Africa,1687,Thousand metric tons
+Aluminum,2015,Asia (ex China),3001,Thousand metric tons
+Aluminum,2015,China (Estimated),31518,Thousand metric tons
+Aluminum,2015,East & Central Europe,3829,Thousand metric tons
+Aluminum,2015,GCC,5104,Thousand metric tons
+Aluminum,2015,North America,4469,Thousand metric tons
+Aluminum,2015,Oceania,1978,Thousand metric tons
+Aluminum,2015,South America,1325,Thousand metric tons
+Aluminum,2015,West Europe,3745,Thousand metric tons
+Aluminum,2016,Africa,1691,Thousand metric tons
+Aluminum,2016,Asia (ex China),3442,Thousand metric tons
+Aluminum,2016,China (Estimated),32641,Thousand metric tons
+Aluminum,2016,East & Central Europe,3981,Thousand metric tons
+Aluminum,2016,GCC,5197,Thousand metric tons
+Aluminum,2016,North America,4027,Thousand metric tons
+Aluminum,2016,Oceania,1971,Thousand metric tons
+Aluminum,2016,South America,1361,Thousand metric tons
+Aluminum,2016,West Europe,3779,Thousand metric tons
+Aluminum,2017,Africa,1679,Thousand metric tons
+Aluminum,2017,Asia (ex China),3951,Thousand metric tons
+Aluminum,2017,China (Estimated),35905,Thousand metric tons
+Aluminum,2017,East & Central Europe,3999,Thousand metric tons
+Aluminum,2017,GCC,5149,Thousand metric tons
+Aluminum,2017,North America,3950,Thousand metric tons
+Aluminum,2017,Oceania,1817,Thousand metric tons
+Aluminum,2017,South America,1378,Thousand metric tons
+Aluminum,2017,West Europe,3776,Thousand metric tons
+Aluminum,2018,Africa,1668,Thousand metric tons
+Aluminum,2018,Asia (ex China),4415,Thousand metric tons
+Aluminum,2018,China (Estimated),36485,Thousand metric tons
+Aluminum,2018,East & Central Europe,4049,Thousand metric tons
+Aluminum,2018,GCC,5331,Thousand metric tons
+Aluminum,2018,North America,3774,Thousand metric tons
+Aluminum,2018,Oceania,1917,Thousand metric tons
+Aluminum,2018,South America,1164,Thousand metric tons
+Aluminum,2018,West Europe,3733,Thousand metric tons
+Aluminum,2019,Africa,1504,Thousand metric tons
+Aluminum,2019,Asia (ex China),4029,Thousand metric tons
+Aluminum,2019,China (Estimated),32683,Thousand metric tons
+Aluminum,2019,East & Central Europe,3800,Thousand metric tons
+Aluminum,2019,GCC,5145,Thousand metric tons
+Aluminum,2019,North America,3485,Thousand metric tons
+Aluminum,2019,Oceania,1755,Thousand metric tons
+Aluminum,2019,South America,983,Thousand metric tons
+Aluminum,2019,West Europe,3155,Thousand metric tons
+Alumina,2000,Africa & Asia (ex China),3812.01,Thousand metric tons
+Alumina,2000,China (Estimated),0,Thousand metric tons
+Alumina,2000,East & Central Europe,4144.98,Thousand metric tons
+Alumina,2000,North America,4624.98,Thousand metric tons
+Alumina,2000,Oceania,15409.02,Thousand metric tons
+Alumina,2000,South America,11256.99,Thousand metric tons
+Alumina,2000,West Europe,4528.98,Thousand metric tons
+Alumina,2001,Africa & Asia (ex China),4081.02,Thousand metric tons
+Alumina,2001,China (Estimated),0,Thousand metric tons
+Alumina,2001,East & Central Europe,4323.99,Thousand metric tons
+Alumina,2001,North America,4655.01,Thousand metric tons
+Alumina,2001,Oceania,16110,Thousand metric tons
+Alumina,2001,South America,10652.01,Thousand metric tons
+Alumina,2001,West Europe,4669.02,Thousand metric tons
+Alumina,2002,Africa & Asia (ex China),4704,Thousand metric tons
+Alumina,2002,China (Estimated),0,Thousand metric tons
+Alumina,2002,East & Central Europe,4453.98,Thousand metric tons
+Alumina,2002,North America,4612.02,Thousand metric tons
+Alumina,2002,Oceania,16179,Thousand metric tons
+Alumina,2002,South America,11012.01,Thousand metric tons
+Alumina,2002,West Europe,4859.01,Thousand metric tons
+Alumina,2003,Africa & Asia (ex China),5064,Thousand metric tons
+Alumina,2003,China (Estimated),5549.01,Thousand metric tons
+Alumina,2003,East & Central Europe,4596.99,Thousand metric tons
+Alumina,2003,North America,5204.01,Thousand metric tons
+Alumina,2003,Oceania,16550.01,Thousand metric tons
+Alumina,2003,South America,12261.99,Thousand metric tons
+Alumina,2003,West Europe,4834.02,Thousand metric tons
+Alumina,2004,Africa & Asia (ex China),5238.99,Thousand metric tons
+Alumina,2004,China (Estimated),6361.98,Thousand metric tons
+Alumina,2004,East & Central Europe,4770.99,Thousand metric tons
+Alumina,2004,North America,5894.97,Thousand metric tons
+Alumina,2004,Oceania,16746,Thousand metric tons
+Alumina,2004,South America,12824.01,Thousand metric tons
+Alumina,2004,West Europe,4982.01,Thousand metric tons
+Alumina,2005,Africa & Asia (ex China),5269.02,Thousand metric tons
+Alumina,2005,China (Estimated),7518.99,Thousand metric tons
+Alumina,2005,East & Central Europe,4833,Thousand metric tons
+Alumina,2005,North America,5945.01,Thousand metric tons
+Alumina,2005,Oceania,17684.01,Thousand metric tons
+Alumina,2005,South America,12965.01,Thousand metric tons
+Alumina,2005,West Europe,4930.98,Thousand metric tons
+Alumina,2006,Africa & Asia (ex China),5018.97,Thousand metric tons
+Alumina,2006,China (Estimated),12918,Thousand metric tons
+Alumina,2006,East & Central Europe,4853.04,Thousand metric tons
+Alumina,2006,North America,5928.99,Thousand metric tons
+Alumina,2006,Oceania,18341.01,Thousand metric tons
+Alumina,2006,South America,14667,Thousand metric tons
+Alumina,2006,West Europe,4998,Thousand metric tons
+Alumina,2007,Africa & Asia (ex China),5263.02,Thousand metric tons
+Alumina,2007,China (Estimated),20047.02,Thousand metric tons
+Alumina,2007,East & Central Europe,4920,Thousand metric tons
+Alumina,2007,North America,5289.99,Thousand metric tons
+Alumina,2007,Oceania,18987.03,Thousand metric tons
+Alumina,2007,South America,14913,Thousand metric tons
+Alumina,2007,West Europe,5111.01,Thousand metric tons
+Alumina,2008,Africa & Asia (ex China),5815.98,Thousand metric tons
+Alumina,2008,China (Estimated),22740.99,Thousand metric tons
+Alumina,2008,East & Central Europe,4770.99,Thousand metric tons
+Alumina,2008,North America,5276.97,Thousand metric tons
+Alumina,2008,Oceania,19416.03,Thousand metric tons
+Alumina,2008,South America,15589.02,Thousand metric tons
+Alumina,2008,West Europe,5089.02,Thousand metric tons
+Alumina,2009,Africa & Asia (ex China),5685,Thousand metric tons
+Alumina,2009,China (Estimated),23854.98,Thousand metric tons
+Alumina,2009,East & Central Europe,4189.02,Thousand metric tons
+Alumina,2009,North America,3540,Thousand metric tons
+Alumina,2009,Oceania,19957.98,Thousand metric tons
+Alumina,2009,South America,13161,Thousand metric tons
+Alumina,2009,West Europe,3501,Thousand metric tons
+Alumina,2010,Africa & Asia (ex China),5711.01,Thousand metric tons
+Alumina,2010,China (Estimated),31071,Thousand metric tons
+Alumina,2010,East & Central Europe,4199.04,Thousand metric tons
+Alumina,2010,North America,4446,Thousand metric tons
+Alumina,2010,Oceania,19647,Thousand metric tons
+Alumina,2010,South America,13608.99,Thousand metric tons
+Alumina,2010,West Europe,4005.03,Thousand metric tons
+Alumina,2011,Africa & Asia (ex China),5921.04,Thousand metric tons
+Alumina,2011,China (Estimated),38916,Thousand metric tons
+Alumina,2011,East & Central Europe,4310.97,Thousand metric tons
+Alumina,2011,North America,4823.01,Thousand metric tons
+Alumina,2011,Oceania,19115.01,Thousand metric tons
+Alumina,2011,South America,14823,Thousand metric tons
+Alumina,2011,West Europe,4131,Thousand metric tons
+Alumina,2012,Africa & Asia (ex China),5391,Thousand metric tons
+Alumina,2012,China (Estimated),41409,Thousand metric tons
+Alumina,2012,East & Central Europe,4057,Thousand metric tons
+Alumina,2012,North America,5226,Thousand metric tons
+Alumina,2012,Oceania,20997,Thousand metric tons
+Alumina,2012,South America,13786,Thousand metric tons
+Alumina,2012,West Europe,4106,Thousand metric tons
+Alumina,2013,Africa & Asia (ex China),4980,Thousand metric tons
+Alumina,2013,China (Estimated),46326,Thousand metric tons
+Alumina,2013,East & Central Europe,4101,Thousand metric tons
+Alumina,2013,North America,5873,Thousand metric tons
+Alumina,2013,Oceania,21240,Thousand metric tons
+Alumina,2013,South America,13069,Thousand metric tons
+Alumina,2013,West Europe,4163,Thousand metric tons
+Alumina,2014,Africa & Asia (ex China),5307,Thousand metric tons
+Alumina,2014,China (Estimated),53796,Thousand metric tons
+Alumina,2014,East & Central Europe,3982,Thousand metric tons
+Alumina,2014,North America,5551,Thousand metric tons
+Alumina,2014,Oceania,20269,Thousand metric tons
+Alumina,2014,South America,13175,Thousand metric tons
+Alumina,2014,West Europe,4197,Thousand metric tons
+Alumina,2015,Africa & Asia (ex China),5478,Thousand metric tons
+Alumina,2015,China (Estimated),56768,Thousand metric tons
+Alumina,2015,East & Central Europe,4037,Thousand metric tons
+Alumina,2015,North America,5479,Thousand metric tons
+Alumina,2015,Oceania,19916,Thousand metric tons
+Alumina,2015,South America,12701,Thousand metric tons
+Alumina,2015,West Europe,4354,Thousand metric tons
+Alumina,2016,Africa & Asia (ex China),6566,Thousand metric tons
+Alumina,2016,China (Estimated),58382,Thousand metric tons
+Alumina,2016,East & Central Europe,4154,Thousand metric tons
+Alumina,2016,North America,3300,Thousand metric tons
+Alumina,2016,Oceania,20419,Thousand metric tons
+Alumina,2016,South America,12119,Thousand metric tons
+Alumina,2016,West Europe,4271,Thousand metric tons
+Alumina,2017,Africa & Asia (ex China),8174,Thousand metric tons
+Alumina,2017,China (Estimated),67312,Thousand metric tons
+Alumina,2017,East & Central Europe,4463,Thousand metric tons
+Alumina,2017,North America,2379,Thousand metric tons
+Alumina,2017,Oceania,20335,Thousand metric tons
+Alumina,2017,South America,11993,Thousand metric tons
+Alumina,2017,West Europe,4123,Thousand metric tons
+Alumina,2018,Africa & Asia (ex China),8710,Thousand metric tons
+Alumina,2018,China (Estimated),67977,Thousand metric tons
+Alumina,2018,East & Central Europe,4441,Thousand metric tons
+Alumina,2018,North America,2171,Thousand metric tons
+Alumina,2018,Oceania,19855,Thousand metric tons
+Alumina,2018,South America,9213,Thousand metric tons
+Alumina,2018,West Europe,4060,Thousand metric tons
+Alumina,2019,Africa & Asia (ex China),9988,Thousand metric tons
+Alumina,2019,China (Estimated),67717,Thousand metric tons
+Alumina,2019,East & Central Europe,4415,Thousand metric tons
+Alumina,2019,North America,2275,Thousand metric tons
+Alumina,2019,Oceania,20010,Thousand metric tons
+Alumina,2019,South America,10050,Thousand metric tons
+Alumina,2019,West Europe,4012,Thousand metric tons
+Alumina,2020,Africa & Asia (ex China),12097,Thousand metric tons
+Alumina,2020,China (Estimated),66836,Thousand metric tons
+Alumina,2020,East & Central Europe,4537,Thousand metric tons
+Alumina,2020,North America,2090,Thousand metric tons
+Alumina,2020,Oceania,20737,Thousand metric tons
+Alumina,2020,South America,11218,Thousand metric tons
+Alumina,2020,West Europe,4128,Thousand metric tons
+Alumina,1974,Africa & Asia (ex China),2634,Thousand metric tons
+Alumina,1974,China (Estimated),0,Thousand metric tons
+Alumina,1974,East & Central Europe,0,Thousand metric tons
+Alumina,1974,North America,7332.99,Thousand metric tons
+Alumina,1974,Oceania,4918.02,Thousand metric tons
+Alumina,1974,South America,4191,Thousand metric tons
+Alumina,1974,West Europe,3255.99,Thousand metric tons
+Alumina,1975,Africa & Asia (ex China),2466,Thousand metric tons
+Alumina,1975,China (Estimated),0,Thousand metric tons
+Alumina,1975,East & Central Europe,0,Thousand metric tons
+Alumina,1975,North America,5584.02,Thousand metric tons
+Alumina,1975,Oceania,5106.99,Thousand metric tons
+Alumina,1975,South America,3901.98,Thousand metric tons
+Alumina,1975,West Europe,3335.01,Thousand metric tons
+Alumina,1976,Africa & Asia (ex China),2359.98,Thousand metric tons
+Alumina,1976,China (Estimated),0,Thousand metric tons
+Alumina,1976,East & Central Europe,0,Thousand metric tons
+Alumina,1976,North America,5628,Thousand metric tons
+Alumina,1976,Oceania,6219,Thousand metric tons
+Alumina,1976,South America,3217.02,Thousand metric tons
+Alumina,1976,West Europe,3351.99,Thousand metric tons
+Alumina,1977,Africa & Asia (ex China),2773.98,Thousand metric tons
+Alumina,1977,China (Estimated),0,Thousand metric tons
+Alumina,1977,East & Central Europe,0,Thousand metric tons
+Alumina,1977,North America,6327.99,Thousand metric tons
+Alumina,1977,Oceania,6672.99,Thousand metric tons
+Alumina,1977,South America,3783,Thousand metric tons
+Alumina,1977,West Europe,3560.01,Thousand metric tons
+Alumina,1978,Africa & Asia (ex China),2550,Thousand metric tons
+Alumina,1978,China (Estimated),0,Thousand metric tons
+Alumina,1978,East & Central Europe,0,Thousand metric tons
+Alumina,1978,North America,6357.03,Thousand metric tons
+Alumina,1978,Oceania,6765,Thousand metric tons
+Alumina,1978,South America,3897.99,Thousand metric tons
+Alumina,1978,West Europe,3470.01,Thousand metric tons
+Alumina,1979,Africa & Asia (ex China),2548.98,Thousand metric tons
+Alumina,1979,China (Estimated),0,Thousand metric tons
+Alumina,1979,East & Central Europe,0,Thousand metric tons
+Alumina,1979,North America,6419.01,Thousand metric tons
+Alumina,1979,Oceania,7386,Thousand metric tons
+Alumina,1979,South America,3891,Thousand metric tons
+Alumina,1979,West Europe,3434.01,Thousand metric tons
+Alumina,1980,Africa & Asia (ex China),3069,Thousand metric tons
+Alumina,1980,China (Estimated),0,Thousand metric tons
+Alumina,1980,East & Central Europe,0,Thousand metric tons
+Alumina,1980,North America,7261.02,Thousand metric tons
+Alumina,1980,Oceania,7254,Thousand metric tons
+Alumina,1980,South America,4500,Thousand metric tons
+Alumina,1980,West Europe,3699,Thousand metric tons
+Alumina,1981,Africa & Asia (ex China),2441.97,Thousand metric tons
+Alumina,1981,China (Estimated),0,Thousand metric tons
+Alumina,1981,East & Central Europe,0,Thousand metric tons
+Alumina,1981,North America,6359.01,Thousand metric tons
+Alumina,1981,Oceania,7086.99,Thousand metric tons
+Alumina,1981,South America,4391.01,Thousand metric tons
+Alumina,1981,West Europe,4183.02,Thousand metric tons
+Alumina,1982,Africa & Asia (ex China),1853.01,Thousand metric tons
+Alumina,1982,China (Estimated),0,Thousand metric tons
+Alumina,1982,East & Central Europe,0,Thousand metric tons
+Alumina,1982,North America,4675.98,Thousand metric tons
+Alumina,1982,Oceania,6628.98,Thousand metric tons
+Alumina,1982,South America,3405.99,Thousand metric tons
+Alumina,1982,West Europe,3696.99,Thousand metric tons
+Alumina,1983,Africa & Asia (ex China),1891.98,Thousand metric tons
+Alumina,1983,China (Estimated),0,Thousand metric tons
+Alumina,1983,East & Central Europe,0,Thousand metric tons
+Alumina,1983,North America,4403.97,Thousand metric tons
+Alumina,1983,Oceania,7305,Thousand metric tons
+Alumina,1983,South America,4100.97,Thousand metric tons
+Alumina,1983,West Europe,3581.97,Thousand metric tons
+Alumina,1984,Africa & Asia (ex China),2035.98,Thousand metric tons
+Alumina,1984,China (Estimated),0,Thousand metric tons
+Alumina,1984,East & Central Europe,0,Thousand metric tons
+Alumina,1984,North America,5012.97,Thousand metric tons
+Alumina,1984,Oceania,8799.99,Thousand metric tons
+Alumina,1984,South America,4494,Thousand metric tons
+Alumina,1984,West Europe,4399.98,Thousand metric tons
+Alumina,1985,Africa & Asia (ex China),1928.01,Thousand metric tons
+Alumina,1985,China (Estimated),0,Thousand metric tons
+Alumina,1985,East & Central Europe,0,Thousand metric tons
+Alumina,1985,North America,3912.99,Thousand metric tons
+Alumina,1985,Oceania,8804.01,Thousand metric tons
+Alumina,1985,South America,4598.97,Thousand metric tons
+Alumina,1985,West Europe,3961.02,Thousand metric tons
+Alumina,1986,Africa & Asia (ex China),1623,Thousand metric tons
+Alumina,1986,China (Estimated),0,Thousand metric tons
+Alumina,1986,East & Central Europe,0,Thousand metric tons
+Alumina,1986,North America,3390,Thousand metric tons
+Alumina,1986,Oceania,9302.01,Thousand metric tons
+Alumina,1986,South America,5224.98,Thousand metric tons
+Alumina,1986,West Europe,4184.97,Thousand metric tons
+Alumina,1987,Africa & Asia (ex China),1389.99,Thousand metric tons
+Alumina,1987,China (Estimated),0,Thousand metric tons
+Alumina,1987,East & Central Europe,0,Thousand metric tons
+Alumina,1987,North America,4413.99,Thousand metric tons
+Alumina,1987,Oceania,10011,Thousand metric tons
+Alumina,1987,South America,5680.98,Thousand metric tons
+Alumina,1987,West Europe,4167,Thousand metric tons
+Alumina,1988,Africa & Asia (ex China),1941.99,Thousand metric tons
+Alumina,1988,China (Estimated),0,Thousand metric tons
+Alumina,1988,East & Central Europe,0,Thousand metric tons
+Alumina,1988,North America,4433.01,Thousand metric tons
+Alumina,1988,Oceania,10414.02,Thousand metric tons
+Alumina,1988,South America,5592.03,Thousand metric tons
+Alumina,1988,West Europe,4084.02,Thousand metric tons
+Alumina,1989,Africa & Asia (ex China),2249.04,Thousand metric tons
+Alumina,1989,China (Estimated),0,Thousand metric tons
+Alumina,1989,East & Central Europe,0,Thousand metric tons
+Alumina,1989,North America,5129.01,Thousand metric tons
+Alumina,1989,Oceania,10668,Thousand metric tons
+Alumina,1989,South America,6329.97,Thousand metric tons
+Alumina,1989,West Europe,4013.01,Thousand metric tons
+Alumina,1990,Africa & Asia (ex China),2151.03,Thousand metric tons
+Alumina,1990,China (Estimated),0,Thousand metric tons
+Alumina,1990,East & Central Europe,0,Thousand metric tons
+Alumina,1990,North America,5298.03,Thousand metric tons
+Alumina,1990,Oceania,11000.97,Thousand metric tons
+Alumina,1990,South America,7177.98,Thousand metric tons
+Alumina,1990,West Europe,4153.02,Thousand metric tons
+Alumina,1991,Africa & Asia (ex China),2217,Thousand metric tons
+Alumina,1991,China (Estimated),0,Thousand metric tons
+Alumina,1991,East & Central Europe,0,Thousand metric tons
+Alumina,1991,North America,5217.99,Thousand metric tons
+Alumina,1991,Oceania,11475,Thousand metric tons
+Alumina,1991,South America,7548.99,Thousand metric tons
+Alumina,1991,West Europe,4532.97,Thousand metric tons
+Alumina,1992,Africa & Asia (ex China),2140.98,Thousand metric tons
+Alumina,1992,China (Estimated),0,Thousand metric tons
+Alumina,1992,East & Central Europe,0,Thousand metric tons
+Alumina,1992,North America,4990.02,Thousand metric tons
+Alumina,1992,Oceania,11580,Thousand metric tons
+Alumina,1992,South America,7378.02,Thousand metric tons
+Alumina,1992,West Europe,4668,Thousand metric tons
+Alumina,1993,Africa & Asia (ex China),2084.01,Thousand metric tons
+Alumina,1993,China (Estimated),0,Thousand metric tons
+Alumina,1993,East & Central Europe,0,Thousand metric tons
+Alumina,1993,North America,5113.02,Thousand metric tons
+Alumina,1993,Oceania,12381.99,Thousand metric tons
+Alumina,1993,South America,7646.04,Thousand metric tons
+Alumina,1993,West Europe,4768.98,Thousand metric tons
+Alumina,1994,Africa & Asia (ex China),2109.99,Thousand metric tons
+Alumina,1994,China (Estimated),0,Thousand metric tons
+Alumina,1994,East & Central Europe,0,Thousand metric tons
+Alumina,1994,North America,4594.98,Thousand metric tons
+Alumina,1994,Oceania,12517.98,Thousand metric tons
+Alumina,1994,South America,7890,Thousand metric tons
+Alumina,1994,West Europe,4879.98,Thousand metric tons
+Alumina,1995,Africa & Asia (ex China),2229.99,Thousand metric tons
+Alumina,1995,China (Estimated),0,Thousand metric tons
+Alumina,1995,East & Central Europe,0,Thousand metric tons
+Alumina,1995,North America,4770,Thousand metric tons
+Alumina,1995,Oceania,12785.01,Thousand metric tons
+Alumina,1995,South America,8189.97,Thousand metric tons
+Alumina,1995,West Europe,6446.01,Thousand metric tons
+Alumina,1996,Africa & Asia (ex China),2280,Thousand metric tons
+Alumina,1996,China (Estimated),0,Thousand metric tons
+Alumina,1996,East & Central Europe,3197.01,Thousand metric tons
+Alumina,1996,North America,4866,Thousand metric tons
+Alumina,1996,Oceania,13018.02,Thousand metric tons
+Alumina,1996,South America,9045.99,Thousand metric tons
+Alumina,1996,West Europe,4461,Thousand metric tons
+Alumina,1997,Africa & Asia (ex China),3372,Thousand metric tons
+Alumina,1997,China (Estimated),0,Thousand metric tons
+Alumina,1997,East & Central Europe,3383.01,Thousand metric tons
+Alumina,1997,North America,5209.98,Thousand metric tons
+Alumina,1997,Oceania,13156.98,Thousand metric tons
+Alumina,1997,South America,9698.97,Thousand metric tons
+Alumina,1997,West Europe,4465.98,Thousand metric tons
+Alumina,1998,Africa & Asia (ex China),3475.02,Thousand metric tons
+Alumina,1998,China (Estimated),0,Thousand metric tons
+Alumina,1998,East & Central Europe,3686.01,Thousand metric tons
+Alumina,1998,North America,5474.97,Thousand metric tons
+Alumina,1998,Oceania,13548.03,Thousand metric tons
+Alumina,1998,South America,10329.99,Thousand metric tons
+Alumina,1998,West Europe,4451.01,Thousand metric tons
+Alumina,1999,Africa & Asia (ex China),3679.98,Thousand metric tons
+Alumina,1999,China (Estimated),0,Thousand metric tons
+Alumina,1999,East & Central Europe,3795,Thousand metric tons
+Alumina,1999,North America,4946.97,Thousand metric tons
+Alumina,1999,Oceania,14121.03,Thousand metric tons
+Alumina,1999,South America,10653,Thousand metric tons
+Alumina,1999,West Europe,4582.98,Thousand metric tons

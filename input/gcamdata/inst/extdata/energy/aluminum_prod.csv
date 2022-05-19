@@ -1,0 +1,1672 @@
+# File: aluminum_prod.csv
+# Title: Aluminum production by region by sector
+# Units: Mt
+# Description: Regional aluminum production
+# Source: World aluminum Association
+# Column types: cciicn
+# ----------
+region,flow,GCAM_region_ID,year,unit_prod,value
+USA,Alumina,1,1990,Mt,3.819488057
+USA,Alumina,1,1991,Mt,3.618262963
+USA,Alumina,1,1992,Mt,3.353784643
+USA,Alumina,1,1993,Mt,3.147194553
+USA,Alumina,1,1994,Mt,2.729355243
+USA,Alumina,1,1995,Mt,2.902244456
+USA,Alumina,1,1996,Mt,2.970252901
+USA,Alumina,1,1997,Mt,3.165524105
+USA,Alumina,1,1998,Mt,3.339668738
+USA,Alumina,1,1999,Mt,3.030410055
+USA,Alumina,1,2000,Mt,2.808214971
+USA,Alumina,1,2001,Mt,2.351582638
+USA,Alumina,1,2002,Mt,2.305158445
+USA,Alumina,1,2003,Mt,2.559861516
+USA,Alumina,1,2004,Mt,2.903630486
+USA,Alumina,1,2005,Mt,2.744106011
+USA,Alumina,1,2006,Mt,2.53829675
+USA,Alumina,1,2007,Mt,2.396777445
+USA,Alumina,1,2008,Mt,2.427515794
+USA,Alumina,1,2009,Mt,1.285175531
+USA,Alumina,1,2010,Mt,1.636552783
+USA,Alumina,1,2011,Mt,1.925713281
+USA,Alumina,1,2012,Mt,2.230018553
+USA,Alumina,1,2013,Mt,2.325301729
+USA,Alumina,1,2014,Mt,2.077979422
+USA,Alumina,1,2015,Mt,1.94890604
+USA,Aluminum,1,1990,Mt,4.049441852
+USA,Aluminum,1,1991,Mt,4.123773683
+USA,Aluminum,1,1992,Mt,4.043344197
+USA,Aluminum,1,1993,Mt,3.693153423
+USA,Aluminum,1,1994,Mt,3.299
+USA,Aluminum,1,1995,Mt,3.374391563
+USA,Aluminum,1,1996,Mt,3.577
+USA,Aluminum,1,1997,Mt,3.603
+USA,Aluminum,1,1998,Mt,3.712390011
+USA,Aluminum,1,1999,Mt,3.779
+USA,Aluminum,1,2000,Mt,3.668
+USA,Aluminum,1,2001,Mt,2.638010345
+USA,Aluminum,1,2002,Mt,2.705500554
+USA,Aluminum,1,2003,Mt,2.703
+USA,Aluminum,1,2004,Mt,2.516985121
+USA,Aluminum,1,2005,Mt,2.48423107
+USA,Aluminum,1,2006,Mt,2.283143768
+USA,Aluminum,1,2007,Mt,2.556265389
+USA,Aluminum,1,2008,Mt,2.660300104
+USA,Aluminum,1,2009,Mt,1.727726088
+USA,Aluminum,1,2010,Mt,1.726
+USA,Aluminum,1,2011,Mt,1.984003619
+USA,Aluminum,1,2012,Mt,2.07
+USA,Aluminum,1,2013,Mt,1.947187792
+USA,Aluminum,1,2014,Mt,1.716363835
+USA,Aluminum,1,2015,Mt,1.589644295
+Africa_Eastern,Alumina,2,1990,Mt,0
+Africa_Eastern,Alumina,2,1991,Mt,0
+Africa_Eastern,Alumina,2,1992,Mt,0
+Africa_Eastern,Alumina,2,1993,Mt,0
+Africa_Eastern,Alumina,2,1994,Mt,0
+Africa_Eastern,Alumina,2,1995,Mt,0
+Africa_Eastern,Alumina,2,1996,Mt,0
+Africa_Eastern,Alumina,2,1997,Mt,0
+Africa_Eastern,Alumina,2,1998,Mt,0
+Africa_Eastern,Alumina,2,1999,Mt,0
+Africa_Eastern,Alumina,2,2000,Mt,0
+Africa_Eastern,Alumina,2,2001,Mt,0
+Africa_Eastern,Alumina,2,2002,Mt,0
+Africa_Eastern,Alumina,2,2003,Mt,0
+Africa_Eastern,Alumina,2,2004,Mt,0
+Africa_Eastern,Alumina,2,2005,Mt,0
+Africa_Eastern,Alumina,2,2006,Mt,0
+Africa_Eastern,Alumina,2,2007,Mt,0
+Africa_Eastern,Alumina,2,2008,Mt,0
+Africa_Eastern,Alumina,2,2009,Mt,0
+Africa_Eastern,Alumina,2,2010,Mt,0
+Africa_Eastern,Alumina,2,2011,Mt,0
+Africa_Eastern,Alumina,2,2012,Mt,0
+Africa_Eastern,Alumina,2,2013,Mt,0
+Africa_Eastern,Alumina,2,2014,Mt,0
+Africa_Eastern,Alumina,2,2015,Mt,0
+Africa_Eastern,Aluminum,2,1990,Mt,0
+Africa_Eastern,Aluminum,2,1991,Mt,0
+Africa_Eastern,Aluminum,2,1992,Mt,0
+Africa_Eastern,Aluminum,2,1993,Mt,0
+Africa_Eastern,Aluminum,2,1994,Mt,0
+Africa_Eastern,Aluminum,2,1995,Mt,0
+Africa_Eastern,Aluminum,2,1996,Mt,0
+Africa_Eastern,Aluminum,2,1997,Mt,0
+Africa_Eastern,Aluminum,2,1998,Mt,0
+Africa_Eastern,Aluminum,2,1999,Mt,0
+Africa_Eastern,Aluminum,2,2000,Mt,0
+Africa_Eastern,Aluminum,2,2001,Mt,0
+Africa_Eastern,Aluminum,2,2002,Mt,0
+Africa_Eastern,Aluminum,2,2003,Mt,0
+Africa_Eastern,Aluminum,2,2004,Mt,0
+Africa_Eastern,Aluminum,2,2005,Mt,0
+Africa_Eastern,Aluminum,2,2006,Mt,0
+Africa_Eastern,Aluminum,2,2007,Mt,0
+Africa_Eastern,Aluminum,2,2008,Mt,0
+Africa_Eastern,Aluminum,2,2009,Mt,0
+Africa_Eastern,Aluminum,2,2010,Mt,0
+Africa_Eastern,Aluminum,2,2011,Mt,0
+Africa_Eastern,Aluminum,2,2012,Mt,0
+Africa_Eastern,Aluminum,2,2013,Mt,0
+Africa_Eastern,Aluminum,2,2014,Mt,0
+Africa_Eastern,Aluminum,2,2015,Mt,0
+Africa_Northern,Alumina,3,1990,Mt,0.218026257
+Africa_Northern,Alumina,3,1991,Mt,0.20446943
+Africa_Northern,Alumina,3,1992,Mt,0.158591111
+Africa_Northern,Alumina,3,1993,Mt,0.153952325
+Africa_Northern,Alumina,3,1994,Mt,0.163848872
+Africa_Northern,Alumina,3,1995,Mt,0.162050141
+Africa_Northern,Alumina,3,1996,Mt,0.13983368
+Africa_Northern,Alumina,3,1997,Mt,0.2065919
+Africa_Northern,Alumina,3,1998,Mt,0.229238464
+Africa_Northern,Alumina,3,1999,Mt,0.222365729
+Africa_Northern,Alumina,3,2000,Mt,0.212451034
+Africa_Northern,Alumina,3,2001,Mt,0.209425137
+Africa_Northern,Alumina,3,2002,Mt,0.242282092
+Africa_Northern,Alumina,3,2003,Mt,0.239970838
+Africa_Northern,Alumina,3,2004,Mt,0.240361478
+Africa_Northern,Alumina,3,2005,Mt,0.251494695
+Africa_Northern,Alumina,3,2006,Mt,0.225330561
+Africa_Northern,Alumina,3,2007,Mt,0.234720685
+Africa_Northern,Alumina,3,2008,Mt,0.247812979
+Africa_Northern,Alumina,3,2009,Mt,0.229828375
+Africa_Northern,Alumina,3,2010,Mt,0.210639027
+Africa_Northern,Alumina,3,2011,Mt,0.189799879
+Africa_Northern,Alumina,3,2012,Mt,0.170866523
+Africa_Northern,Alumina,3,2013,Mt,0.178815081
+Africa_Northern,Alumina,3,2014,Mt,0.159194081
+Africa_Northern,Alumina,3,2015,Mt,0.156648556
+Africa_Northern,Aluminum,3,1990,Mt,0.178112397
+Africa_Northern,Aluminum,3,1991,Mt,0.180059504
+Africa_Northern,Aluminum,3,1992,Mt,0.179161501
+Africa_Northern,Aluminum,3,1993,Mt,0.179034483
+Africa_Northern,Aluminum,3,1994,Mt,0.183538983
+Africa_Northern,Aluminum,3,1995,Mt,0.192835314
+Africa_Northern,Aluminum,3,1996,Mt,0.177349457
+Africa_Northern,Aluminum,3,1997,Mt,0.182784314
+Africa_Northern,Aluminum,3,1998,Mt,0.197461165
+Africa_Northern,Aluminum,3,1999,Mt,0.19353022
+Africa_Northern,Aluminum,3,2000,Mt,0.193988055
+Africa_Northern,Aluminum,3,2001,Mt,0.190250735
+Africa_Northern,Aluminum,3,2002,Mt,0.197592319
+Africa_Northern,Aluminum,3,2003,Mt,0.19404878
+Africa_Northern,Aluminum,3,2004,Mt,0.215245195
+Africa_Northern,Aluminum,3,2005,Mt,0.244697941
+Africa_Northern,Aluminum,3,2006,Mt,0.259949087
+Africa_Northern,Aluminum,3,2007,Mt,0.258998894
+Africa_Northern,Aluminum,3,2008,Mt,0.260912815
+Africa_Northern,Aluminum,3,2009,Mt,0.261269795
+Africa_Northern,Aluminum,3,2010,Mt,0.268310365
+Africa_Northern,Aluminum,3,2011,Mt,0.272084755
+Africa_Northern,Aluminum,3,2012,Mt,0.269773292
+Africa_Northern,Aluminum,3,2013,Mt,0.31754655
+Africa_Northern,Aluminum,3,2014,Mt,0.300516351
+Africa_Northern,Aluminum,3,2015,Mt,0.305247286
+Africa_Southern,Alumina,4,1990,Mt,0
+Africa_Southern,Alumina,4,1991,Mt,0
+Africa_Southern,Alumina,4,1992,Mt,0
+Africa_Southern,Alumina,4,1993,Mt,0
+Africa_Southern,Alumina,4,1994,Mt,0
+Africa_Southern,Alumina,4,1995,Mt,0
+Africa_Southern,Alumina,4,1996,Mt,0
+Africa_Southern,Alumina,4,1997,Mt,0
+Africa_Southern,Alumina,4,1998,Mt,0
+Africa_Southern,Alumina,4,1999,Mt,0
+Africa_Southern,Alumina,4,2000,Mt,0.059442258
+Africa_Southern,Alumina,4,2001,Mt,0.294746489
+Africa_Southern,Alumina,4,2002,Mt,0.332982567
+Africa_Southern,Alumina,4,2003,Mt,0.503323451
+Africa_Southern,Alumina,4,2004,Mt,0.610918757
+Africa_Southern,Alumina,4,2005,Mt,0.572047359
+Africa_Southern,Alumina,4,2006,Mt,0.504311256
+Africa_Southern,Alumina,4,2007,Mt,0.513110334
+Africa_Southern,Alumina,4,2008,Mt,0.510875988
+Africa_Southern,Alumina,4,2009,Mt,0.472665904
+Africa_Southern,Alumina,4,2010,Mt,0.441074954
+Africa_Southern,Alumina,4,2011,Mt,0.402518989
+Africa_Southern,Alumina,4,2012,Mt,0.363655544
+Africa_Southern,Alumina,4,2013,Mt,0.318514363
+Africa_Southern,Alumina,4,2014,Mt,0.300876812
+Africa_Southern,Alumina,4,2015,Mt,0.291366314
+Africa_Southern,Aluminum,4,1990,Mt,0
+Africa_Southern,Aluminum,4,1991,Mt,0
+Africa_Southern,Aluminum,4,1992,Mt,0
+Africa_Southern,Aluminum,4,1993,Mt,0
+Africa_Southern,Aluminum,4,1994,Mt,0
+Africa_Southern,Aluminum,4,1995,Mt,0
+Africa_Southern,Aluminum,4,1996,Mt,0
+Africa_Southern,Aluminum,4,1997,Mt,0
+Africa_Southern,Aluminum,4,1998,Mt,0
+Africa_Southern,Aluminum,4,1999,Mt,0
+Africa_Southern,Aluminum,4,2000,Mt,0.054276451
+Africa_Southern,Aluminum,4,2001,Mt,0.267760294
+Africa_Southern,Aluminum,4,2002,Mt,0.271562777
+Africa_Southern,Aluminum,4,2003,Mt,0.407004878
+Africa_Southern,Aluminum,4,2004,Mt,0.547081538
+Africa_Southern,Aluminum,4,2005,Mt,0.556587529
+Africa_Southern,Aluminum,4,2006,Mt,0.581790814
+Africa_Southern,Aluminum,4,2007,Mt,0.566183628
+Africa_Southern,Aluminum,4,2008,Mt,0.537881802
+Africa_Southern,Aluminum,4,2009,Mt,0.537328446
+Africa_Southern,Aluminum,4,2010,Mt,0.561837869
+Africa_Southern,Aluminum,4,2011,Mt,0.577025028
+Africa_Southern,Aluminum,4,2012,Mt,0.574159006
+Africa_Southern,Aluminum,4,2013,Mt,0.565629792
+Africa_Southern,Aluminum,4,2014,Mt,0.567975904
+Africa_Southern,Aluminum,4,2015,Mt,0.567759952
+Africa_Western,Alumina,5,1990,Mt,0.32521235
+Africa_Western,Alumina,5,1991,Mt,0.296365803
+Africa_Western,Alumina,5,1992,Mt,0.23343186
+Africa_Western,Alumina,5,1993,Mt,0.223535296
+Africa_Western,Alumina,5,1994,Mt,0.200453408
+Africa_Western,Alumina,5,1995,Mt,0.192659612
+Africa_Western,Alumina,5,1996,Mt,0.173014553
+Africa_Western,Alumina,5,1997,Mt,0.273121495
+Africa_Western,Alumina,5,1998,Mt,0.185741935
+Africa_Western,Alumina,5,1999,Mt,0.241952348
+Africa_Western,Alumina,5,2000,Mt,0.277397205
+Africa_Western,Alumina,5,2001,Mt,0.269260891
+Africa_Western,Alumina,5,2002,Mt,0.228614897
+Africa_Western,Alumina,5,2003,Mt,0.114447631
+Africa_Western,Alumina,5,2004,Mt,0.095699477
+Africa_Western,Alumina,5,2005,Mt,0.106163744
+Africa_Western,Alumina,5,2006,Mt,0.085840214
+Africa_Western,Alumina,5,2007,Mt,0.079149998
+Africa_Western,Alumina,5,2008,Mt,0.097218938
+Africa_Western,Alumina,5,2009,Mt,0.074585812
+Africa_Western,Alumina,5,2010,Mt,0.076811976
+Africa_Western,Alumina,5,2011,Mt,0.087379567
+Africa_Western,Alumina,5,2012,Mt,0.074794403
+Africa_Western,Alumina,5,2013,Mt,0.063702873
+Africa_Western,Alumina,5,2014,Mt,0.069514749
+Africa_Western,Alumina,5,2015,Mt,0.054826995
+Africa_Western,Aluminum,5,1990,Mt,0.265676033
+Africa_Western,Aluminum,5,1991,Mt,0.260985124
+Africa_Western,Aluminum,5,1992,Mt,0.263709625
+Africa_Western,Aluminum,5,1993,Mt,0.259954023
+Africa_Western,Aluminum,5,1994,Mt,0.224542373
+Africa_Western,Aluminum,5,1995,Mt,0.229259762
+Africa_Western,Aluminum,5,1996,Mt,0.219432379
+Africa_Western,Aluminum,5,1997,Mt,0.241647059
+Africa_Western,Aluminum,5,1998,Mt,0.159994175
+Africa_Western,Aluminum,5,1999,Mt,0.210576923
+Africa_Western,Aluminum,5,2000,Mt,0.253290102
+Africa_Western,Aluminum,5,2001,Mt,0.244608088
+Africa_Western,Aluminum,5,2002,Mt,0.186446086
+Africa_Western,Aluminum,5,2003,Mt,0.092546341
+Africa_Western,Aluminum,5,2004,Mt,0.085699476
+Africa_Western,Aluminum,5,2005,Mt,0.103294622
+Africa_Western,Aluminum,5,2006,Mt,0.099028224
+Africa_Western,Aluminum,5,2007,Mt,0.087336836
+Africa_Western,Aluminum,5,2008,Mt,0.102358104
+Africa_Western,Aluminum,5,2009,Mt,0.084789443
+Africa_Western,Aluminum,5,2010,Mt,0.097842501
+Africa_Western,Aluminum,5,2011,Mt,0.125261661
+Africa_Western,Aluminum,5,2012,Mt,0.118089441
+Africa_Western,Aluminum,5,2013,Mt,0.113125958
+Africa_Western,Aluminum,5,2014,Mt,0.131225473
+Africa_Western,Aluminum,5,2015,Mt,0.10683655
+Australia_NZ,Alumina,6,1990,Mt,11.00097
+Australia_NZ,Alumina,6,1991,Mt,11.475
+Australia_NZ,Alumina,6,1992,Mt,11.58
+Australia_NZ,Alumina,6,1993,Mt,12.38199
+Australia_NZ,Alumina,6,1994,Mt,12.51798
+Australia_NZ,Alumina,6,1995,Mt,12.78501
+Australia_NZ,Alumina,6,1996,Mt,13.01802
+Australia_NZ,Alumina,6,1997,Mt,13.15698
+Australia_NZ,Alumina,6,1998,Mt,13.54803
+Australia_NZ,Alumina,6,1999,Mt,14.12103
+Australia_NZ,Alumina,6,2000,Mt,15.40902
+Australia_NZ,Alumina,6,2001,Mt,16.11
+Australia_NZ,Alumina,6,2002,Mt,16.179
+Australia_NZ,Alumina,6,2003,Mt,16.55001
+Australia_NZ,Alumina,6,2004,Mt,16.746
+Australia_NZ,Alumina,6,2005,Mt,17.68401
+Australia_NZ,Alumina,6,2006,Mt,18.34101
+Australia_NZ,Alumina,6,2007,Mt,18.98703
+Australia_NZ,Alumina,6,2008,Mt,19.41603
+Australia_NZ,Alumina,6,2009,Mt,19.95798
+Australia_NZ,Alumina,6,2010,Mt,19.647
+Australia_NZ,Alumina,6,2011,Mt,19.11501
+Australia_NZ,Alumina,6,2012,Mt,20.997
+Australia_NZ,Alumina,6,2013,Mt,21.24
+Australia_NZ,Alumina,6,2014,Mt,20.269
+Australia_NZ,Alumina,6,2015,Mt,19.916
+Australia_NZ,Aluminum,6,1990,Mt,1.498
+Australia_NZ,Aluminum,6,1991,Mt,1.495
+Australia_NZ,Aluminum,6,1992,Mt,1.483
+Australia_NZ,Aluminum,6,1993,Mt,1.653
+Australia_NZ,Aluminum,6,1994,Mt,1.583
+Australia_NZ,Aluminum,6,1995,Mt,1.566
+Australia_NZ,Aluminum,6,1996,Mt,1.656
+Australia_NZ,Aluminum,6,1997,Mt,1.804
+Australia_NZ,Aluminum,6,1998,Mt,1.934
+Australia_NZ,Aluminum,6,1999,Mt,2.028
+Australia_NZ,Aluminum,6,2000,Mt,2.094
+Australia_NZ,Aluminum,6,2001,Mt,2.122
+Australia_NZ,Aluminum,6,2002,Mt,2.17
+Australia_NZ,Aluminum,6,2003,Mt,2.198
+Australia_NZ,Aluminum,6,2004,Mt,2.246
+Australia_NZ,Aluminum,6,2005,Mt,2.252
+Australia_NZ,Aluminum,6,2006,Mt,2.274
+Australia_NZ,Aluminum,6,2007,Mt,2.315
+Australia_NZ,Aluminum,6,2008,Mt,2.297
+Australia_NZ,Aluminum,6,2009,Mt,2.211
+Australia_NZ,Aluminum,6,2010,Mt,2.277
+Australia_NZ,Aluminum,6,2011,Mt,2.306
+Australia_NZ,Aluminum,6,2012,Mt,2.186
+Australia_NZ,Aluminum,6,2013,Mt,2.104
+Australia_NZ,Aluminum,6,2014,Mt,2.035
+Australia_NZ,Aluminum,6,2015,Mt,1.978
+Brazil,Alumina,7,1990,Mt,3.739619127
+Brazil,Alumina,7,1991,Mt,4.3332571
+Brazil,Alumina,7,1992,Mt,4.464762481
+Brazil,Alumina,7,1993,Mt,4.608361627
+Brazil,Alumina,7,1994,Mt,4.741201826
+Brazil,Alumina,7,1995,Mt,4.764781763
+Brazil,Alumina,7,1996,Mt,5.125632077
+Brazil,Alumina,7,1997,Mt,5.484808671
+Brazil,Alumina,7,1998,Mt,6.02541184
+Brazil,Alumina,7,1999,Mt,6.356205251
+Brazil,Alumina,7,2000,Mt,6.614717656
+Brazil,Alumina,7,2001,Mt,6.026725018
+Brazil,Alumina,7,2002,Mt,6.505526302
+Brazil,Alumina,7,2003,Mt,7.512780918
+Brazil,Alumina,7,2004,Mt,7.940749074
+Brazil,Alumina,7,2005,Mt,8.14524308
+Brazil,Alumina,7,2006,Mt,9.461629823
+Brazil,Alumina,7,2007,Mt,9.732261435
+Brazil,Alumina,7,2008,Mt,9.723380481
+Brazil,Alumina,7,2009,Mt,8.053902789
+Brazil,Alumina,7,2010,Mt,9.136105175
+Brazil,Alumina,7,2011,Mt,9.546118068
+Brazil,Alumina,7,2012,Mt,9.647512671
+Brazil,Alumina,7,2013,Mt,8.899204178
+Brazil,Alumina,7,2014,Mt,8.219422827
+Brazil,Alumina,7,2015,Mt,7.405719033
+Brazil,Aluminum,7,1990,Mt,0.932562955
+Brazil,Aluminum,7,1991,Mt,1.145740181
+Brazil,Aluminum,7,1992,Mt,1.179425113
+Brazil,Aluminum,7,1993,Mt,1.174686087
+Brazil,Aluminum,7,1994,Mt,1.187403651
+Brazil,Aluminum,7,1995,Mt,1.197308521
+Brazil,Aluminum,7,1996,Mt,1.193866761
+Brazil,Aluminum,7,1997,Mt,1.196606975
+Brazil,Aluminum,7,1998,Mt,1.210333172
+Brazil,Aluminum,7,1999,Mt,1.248806683
+Brazil,Aluminum,7,2000,Mt,1.273350439
+Brazil,Aluminum,7,2001,Mt,1.126473737
+Brazil,Aluminum,7,2002,Mt,1.317409234
+Brazil,Aluminum,7,2003,Mt,1.39386646
+Brazil,Aluminum,7,2004,Mt,1.458857629
+Brazil,Aluminum,7,2005,Mt,1.502141241
+Brazil,Aluminum,7,2006,Mt,1.608225482
+Brazil,Aluminum,7,2007,Mt,1.669357256
+Brazil,Aluminum,7,2008,Mt,1.659128802
+Brazil,Aluminum,7,2009,Mt,1.534776096
+Brazil,Aluminum,7,2010,Mt,1.547412587
+Brazil,Aluminum,7,2011,Mt,1.407155635
+Brazil,Aluminum,7,2012,Mt,1.436
+Brazil,Aluminum,7,2013,Mt,1.29787154
+Brazil,Aluminum,7,2014,Mt,0.962623865
+Brazil,Aluminum,7,2015,Mt,0.772583082
+Canada,Alumina,8,1990,Mt,1.478541943
+Canada,Alumina,8,1991,Mt,1.599727037
+Canada,Alumina,8,1992,Mt,1.636235357
+Canada,Alumina,8,1993,Mt,1.965825447
+Canada,Alumina,8,1994,Mt,1.865624757
+Canada,Alumina,8,1995,Mt,1.867755544
+Canada,Alumina,8,1996,Mt,1.895747099
+Canada,Alumina,8,1997,Mt,2.044455895
+Canada,Alumina,8,1998,Mt,2.135301262
+Canada,Alumina,8,1999,Mt,1.916559945
+Canada,Alumina,8,2000,Mt,1.816765029
+Canada,Alumina,8,2001,Mt,2.303427362
+Canada,Alumina,8,2002,Mt,2.306861555
+Canada,Alumina,8,2003,Mt,2.644148484
+Canada,Alumina,8,2004,Mt,2.991339514
+Canada,Alumina,8,2005,Mt,3.200903989
+Canada,Alumina,8,2006,Mt,3.39069325
+Canada,Alumina,8,2007,Mt,2.893212555
+Canada,Alumina,8,2008,Mt,2.849454206
+Canada,Alumina,8,2009,Mt,2.254824469
+Canada,Alumina,8,2010,Mt,2.809447217
+Canada,Alumina,8,2011,Mt,2.897296719
+Canada,Alumina,8,2012,Mt,2.995981447
+Canada,Alumina,8,2013,Mt,3.547698271
+Canada,Alumina,8,2014,Mt,3.473020578
+Canada,Alumina,8,2015,Mt,3.53009396
+Canada,Aluminum,8,1990,Mt,1.567558148
+Canada,Aluminum,8,1991,Mt,1.823226317
+Canada,Aluminum,8,1992,Mt,1.972655803
+Canada,Aluminum,8,1993,Mt,2.306846577
+Canada,Aluminum,8,1994,Mt,2.255
+Canada,Aluminum,8,1995,Mt,2.171608437
+Canada,Aluminum,8,1996,Mt,2.283
+Canada,Aluminum,8,1997,Mt,2.327
+Canada,Aluminum,8,1998,Mt,2.373609989
+Canada,Aluminum,8,1999,Mt,2.39
+Canada,Aluminum,8,2000,Mt,2.373
+Canada,Aluminum,8,2001,Mt,2.583989655
+Canada,Aluminum,8,2002,Mt,2.707499446
+Canada,Aluminum,8,2003,Mt,2.792
+Canada,Aluminum,8,2004,Mt,2.593014879
+Canada,Aluminum,8,2005,Mt,2.89776893
+Canada,Aluminum,8,2006,Mt,3.049856232
+Canada,Aluminum,8,2007,Mt,3.085734611
+Canada,Aluminum,8,2008,Mt,3.122699896
+Canada,Aluminum,8,2009,Mt,3.031273912
+Canada,Aluminum,8,2010,Mt,2.963
+Canada,Aluminum,8,2011,Mt,2.984996381
+Canada,Aluminum,8,2012,Mt,2.781
+Canada,Aluminum,8,2013,Mt,2.970812208
+Canada,Aluminum,8,2014,Mt,2.868636165
+Canada,Aluminum,8,2015,Mt,2.879355705
+Central America and Caribbean,Alumina,9,1990,Mt,0
+Central America and Caribbean,Alumina,9,1991,Mt,0
+Central America and Caribbean,Alumina,9,1992,Mt,0
+Central America and Caribbean,Alumina,9,1993,Mt,0
+Central America and Caribbean,Alumina,9,1994,Mt,0
+Central America and Caribbean,Alumina,9,1995,Mt,0
+Central America and Caribbean,Alumina,9,1996,Mt,0
+Central America and Caribbean,Alumina,9,1997,Mt,0
+Central America and Caribbean,Alumina,9,1998,Mt,0
+Central America and Caribbean,Alumina,9,1999,Mt,0
+Central America and Caribbean,Alumina,9,2000,Mt,0
+Central America and Caribbean,Alumina,9,2001,Mt,0
+Central America and Caribbean,Alumina,9,2002,Mt,0
+Central America and Caribbean,Alumina,9,2003,Mt,0
+Central America and Caribbean,Alumina,9,2004,Mt,0
+Central America and Caribbean,Alumina,9,2005,Mt,0
+Central America and Caribbean,Alumina,9,2006,Mt,0
+Central America and Caribbean,Alumina,9,2007,Mt,0
+Central America and Caribbean,Alumina,9,2008,Mt,0
+Central America and Caribbean,Alumina,9,2009,Mt,0
+Central America and Caribbean,Alumina,9,2010,Mt,0
+Central America and Caribbean,Alumina,9,2011,Mt,0
+Central America and Caribbean,Alumina,9,2012,Mt,0
+Central America and Caribbean,Alumina,9,2013,Mt,0
+Central America and Caribbean,Alumina,9,2014,Mt,0
+Central America and Caribbean,Alumina,9,2015,Mt,0
+Central America and Caribbean,Aluminum,9,1990,Mt,0
+Central America and Caribbean,Aluminum,9,1991,Mt,0
+Central America and Caribbean,Aluminum,9,1992,Mt,0
+Central America and Caribbean,Aluminum,9,1993,Mt,0
+Central America and Caribbean,Aluminum,9,1994,Mt,0
+Central America and Caribbean,Aluminum,9,1995,Mt,0
+Central America and Caribbean,Aluminum,9,1996,Mt,0
+Central America and Caribbean,Aluminum,9,1997,Mt,0
+Central America and Caribbean,Aluminum,9,1998,Mt,0
+Central America and Caribbean,Aluminum,9,1999,Mt,0
+Central America and Caribbean,Aluminum,9,2000,Mt,0
+Central America and Caribbean,Aluminum,9,2001,Mt,0
+Central America and Caribbean,Aluminum,9,2002,Mt,0
+Central America and Caribbean,Aluminum,9,2003,Mt,0
+Central America and Caribbean,Aluminum,9,2004,Mt,0
+Central America and Caribbean,Aluminum,9,2005,Mt,0
+Central America and Caribbean,Aluminum,9,2006,Mt,0
+Central America and Caribbean,Aluminum,9,2007,Mt,0
+Central America and Caribbean,Aluminum,9,2008,Mt,0
+Central America and Caribbean,Aluminum,9,2009,Mt,0
+Central America and Caribbean,Aluminum,9,2010,Mt,0
+Central America and Caribbean,Aluminum,9,2011,Mt,0
+Central America and Caribbean,Aluminum,9,2012,Mt,0
+Central America and Caribbean,Aluminum,9,2013,Mt,0
+Central America and Caribbean,Aluminum,9,2014,Mt,0
+Central America and Caribbean,Aluminum,9,2015,Mt,0
+Central Asia,Alumina,10,1990,Mt,0
+Central Asia,Alumina,10,1991,Mt,0
+Central Asia,Alumina,10,1992,Mt,0.378658552
+Central Asia,Alumina,10,1993,Mt,0.278331886
+Central Asia,Alumina,10,1994,Mt,0.217884139
+Central Asia,Alumina,10,1995,Mt,0.217867412
+Central Asia,Alumina,10,1996,Mt,0.164324324
+Central Asia,Alumina,10,1997,Mt,0.23226999
+Central Asia,Alumina,10,1998,Mt,0.230414046
+Central Asia,Alumina,10,1999,Mt,0.263843275
+Central Asia,Alumina,10,2000,Mt,0.330234768
+Central Asia,Alumina,10,2001,Mt,0.320232088
+Central Asia,Alumina,10,2002,Mt,0.382681458
+Central Asia,Alumina,10,2003,Mt,0.415949453
+Central Asia,Alumina,10,2004,Mt,0.431760433
+Central Asia,Alumina,10,2005,Mt,0.422593545
+Central Asia,Alumina,10,2006,Mt,0.398799327
+Central Asia,Alumina,10,2007,Mt,0.427591945
+Central Asia,Alumina,10,2008,Mt,0.48323531
+Central Asia,Alumina,10,2009,Mt,0.421496568
+Central Asia,Alumina,10,2010,Mt,0.455328723
+Central Asia,Alumina,10,2011,Mt,0.391775599
+Central Asia,Alumina,10,2012,Mt,0.372682454
+Central Asia,Alumina,10,2013,Mt,0.290015709
+Central Asia,Alumina,10,2014,Mt,0.203768423
+Central Asia,Alumina,10,2015,Mt,0.216697169
+Central Asia,Aluminum,10,1990,Mt,0
+Central Asia,Aluminum,10,1991,Mt,0
+Central Asia,Aluminum,10,1992,Mt,0.465878378
+Central Asia,Aluminum,10,1993,Mt,0.44028777
+Central Asia,Aluminum,10,1994,Mt,0.348504837
+Central Asia,Aluminum,10,1995,Mt,0.334796992
+Central Asia,Aluminum,10,1996,Mt,0.290949182
+Central Asia,Aluminum,10,1997,Mt,0.349347426
+Central Asia,Aluminum,10,1998,Mt,0.336652377
+Central Asia,Aluminum,10,1999,Mt,0.388450388
+Central Asia,Aluminum,10,2000,Mt,0.50785061
+Central Asia,Aluminum,10,2001,Mt,0.496253651
+Central Asia,Aluminum,10,2002,Mt,0.505728395
+Central Asia,Aluminum,10,2003,Mt,0.52679471
+Central Asia,Aluminum,10,2004,Mt,0.597511261
+Central Asia,Aluminum,10,2005,Mt,0.680586991
+Central Asia,Aluminum,10,2006,Mt,0.751508924
+Central Asia,Aluminum,10,2007,Mt,0.786224122
+Central Asia,Aluminum,10,2008,Mt,0.788019414
+Central Asia,Aluminum,10,2009,Mt,0.81277081
+Central Asia,Aluminum,10,2010,Mt,0.524443634
+Central Asia,Aluminum,10,2011,Mt,0.466829852
+Central Asia,Aluminum,10,2012,Mt,0.479931215
+Central Asia,Aluminum,10,2013,Mt,0.403905871
+Central Asia,Aluminum,10,2014,Mt,0.280944578
+Central Asia,Aluminum,10,2015,Mt,0.333087724
+China,Alumina,11,1990,Mt,0
+China,Alumina,11,1991,Mt,0
+China,Alumina,11,1992,Mt,0
+China,Alumina,11,1993,Mt,0
+China,Alumina,11,1994,Mt,0
+China,Alumina,11,1995,Mt,0
+China,Alumina,11,1996,Mt,0
+China,Alumina,11,1997,Mt,0
+China,Alumina,11,1998,Mt,0
+China,Alumina,11,1999,Mt,0
+China,Alumina,11,2000,Mt,0
+China,Alumina,11,2001,Mt,0
+China,Alumina,11,2002,Mt,0
+China,Alumina,11,2003,Mt,5.54901
+China,Alumina,11,2004,Mt,6.36198
+China,Alumina,11,2005,Mt,7.51899
+China,Alumina,11,2006,Mt,12.918
+China,Alumina,11,2007,Mt,20.04702
+China,Alumina,11,2008,Mt,22.74099
+China,Alumina,11,2009,Mt,23.85498
+China,Alumina,11,2010,Mt,31.071
+China,Alumina,11,2011,Mt,38.916
+China,Alumina,11,2012,Mt,41.409
+China,Alumina,11,2013,Mt,46.326
+China,Alumina,11,2014,Mt,53.796
+China,Alumina,11,2015,Mt,56.768
+China,Aluminum,11,1990,Mt,0
+China,Aluminum,11,1991,Mt,0
+China,Aluminum,11,1992,Mt,0
+China,Aluminum,11,1993,Mt,0
+China,Aluminum,11,1994,Mt,0
+China,Aluminum,11,1995,Mt,0
+China,Aluminum,11,1996,Mt,0
+China,Aluminum,11,1997,Mt,0
+China,Aluminum,11,1998,Mt,0
+China,Aluminum,11,1999,Mt,2.598
+China,Aluminum,11,2000,Mt,2.794
+China,Aluminum,11,2001,Mt,3.371
+China,Aluminum,11,2002,Mt,4.321
+China,Aluminum,11,2003,Mt,5.547
+China,Aluminum,11,2004,Mt,6.689
+China,Aluminum,11,2005,Mt,7.806
+China,Aluminum,11,2006,Mt,9.349
+China,Aluminum,11,2007,Mt,12.588
+China,Aluminum,11,2008,Mt,13.585
+China,Aluminum,11,2009,Mt,13.684
+China,Aluminum,11,2010,Mt,17.331
+China,Aluminum,11,2011,Mt,20.072
+China,Aluminum,11,2012,Mt,23.534
+China,Aluminum,11,2013,Mt,26.534
+China,Aluminum,11,2014,Mt,28.317
+China,Aluminum,11,2015,Mt,31.518
+EU-12,Alumina,12,1990,Mt,0
+EU-12,Alumina,12,1991,Mt,0
+EU-12,Alumina,12,1992,Mt,0
+EU-12,Alumina,12,1993,Mt,0
+EU-12,Alumina,12,1994,Mt,0
+EU-12,Alumina,12,1995,Mt,0
+EU-12,Alumina,12,1996,Mt,0.275918154
+EU-12,Alumina,12,1997,Mt,0.28753602
+EU-12,Alumina,12,1998,Mt,0.448040003
+EU-12,Alumina,12,1999,Mt,0.43716671
+EU-12,Alumina,12,2000,Mt,0.483289655
+EU-12,Alumina,12,2001,Mt,0.499125282
+EU-12,Alumina,12,2002,Mt,0.537366209
+EU-12,Alumina,12,2003,Mt,0.548293995
+EU-12,Alumina,12,2004,Mt,0.609421485
+EU-12,Alumina,12,2005,Mt,0.646000216
+EU-12,Alumina,12,2006,Mt,0.644592797
+EU-12,Alumina,12,2007,Mt,0.607752946
+EU-12,Alumina,12,2008,Mt,0.523759507
+EU-12,Alumina,12,2009,Mt,0.366574863
+EU-12,Alumina,12,2010,Mt,0.403893795
+EU-12,Alumina,12,2011,Mt,0.481414315
+EU-12,Alumina,12,2012,Mt,0.439265724
+EU-12,Alumina,12,2013,Mt,0.483384142
+EU-12,Alumina,12,2014,Mt,0.544936551
+EU-12,Alumina,12,2015,Mt,0.537758148
+EU-12,Aluminum,12,1990,Mt,0
+EU-12,Aluminum,12,1991,Mt,0
+EU-12,Aluminum,12,1992,Mt,0
+EU-12,Aluminum,12,1993,Mt,0
+EU-12,Aluminum,12,1994,Mt,0
+EU-12,Aluminum,12,1995,Mt,0
+EU-12,Aluminum,12,1996,Mt,0.27488163
+EU-12,Aluminum,12,1997,Mt,0.281840563
+EU-12,Aluminum,12,1998,Mt,0.41558454
+EU-12,Aluminum,12,1999,Mt,0.412860471
+EU-12,Aluminum,12,2000,Mt,0.430124039
+EU-12,Aluminum,12,2001,Mt,0.430329176
+EU-12,Aluminum,12,2002,Mt,0.461480687
+EU-12,Aluminum,12,2003,Mt,0.47661248
+EU-12,Aluminum,12,2004,Mt,0.528694365
+EU-12,Aluminum,12,2005,Mt,0.560588642
+EU-12,Aluminum,12,2006,Mt,0.56183908
+EU-12,Aluminum,12,2007,Mt,0.550930516
+EU-12,Aluminum,12,2008,Mt,0.51135546
+EU-12,Aluminum,12,2009,Mt,0.360272501
+EU-12,Aluminum,12,2010,Mt,0.409084055
+EU-12,Aluminum,12,2011,Mt,0.482311041
+EU-12,Aluminum,12,2012,Mt,0.468066484
+EU-12,Aluminum,12,2013,Mt,0.470889941
+EU-12,Aluminum,12,2014,Mt,0.51510326
+EU-12,Aluminum,12,2015,Mt,0.510051016
+EU-15,Alumina,13,1990,Mt,2.979797693
+EU-15,Alumina,13,1991,Mt,3.220374936
+EU-15,Alumina,13,1992,Mt,3.2922595
+EU-15,Alumina,13,1993,Mt,3.339339419
+EU-15,Alumina,13,1994,Mt,3.344705393
+EU-15,Alumina,13,1995,Mt,4.475773915
+EU-15,Alumina,13,1996,Mt,3.076167395
+EU-15,Alumina,13,1997,Mt,3.034139084
+EU-15,Alumina,13,1998,Mt,2.945189434
+EU-15,Alumina,13,1999,Mt,3.02224316
+EU-15,Alumina,13,2000,Mt,2.997872581
+EU-15,Alumina,13,2001,Mt,3.067056982
+EU-15,Alumina,13,2002,Mt,3.13327813
+EU-15,Alumina,13,2003,Mt,3.038661669
+EU-15,Alumina,13,2004,Mt,3.085975525
+EU-15,Alumina,13,2005,Mt,3.007556162
+EU-15,Alumina,13,2006,Mt,2.970762439
+EU-15,Alumina,13,2007,Mt,3.002943596
+EU-15,Alumina,13,2008,Mt,2.745261387
+EU-15,Alumina,13,2009,Mt,1.740083053
+EU-15,Alumina,13,2010,Mt,2.033402121
+EU-15,Alumina,13,2011,Mt,2.012288112
+EU-15,Alumina,13,2012,Mt,1.827877528
+EU-15,Alumina,13,2013,Mt,1.818678082
+EU-15,Alumina,13,2014,Mt,1.797241539
+EU-15,Alumina,13,2015,Mt,1.932296218
+EU-15,Aluminum,13,1990,Mt,2.55502251
+EU-15,Aluminum,13,1991,Mt,2.49007034
+EU-15,Aluminum,13,1992,Mt,2.340833179
+EU-15,Aluminum,13,1993,Mt,2.2659148
+EU-15,Aluminum,13,1994,Mt,2.714842697
+EU-15,Aluminum,13,1995,Mt,4.086237764
+EU-15,Aluminum,13,1996,Mt,2.20110431
+EU-15,Aluminum,13,1997,Mt,2.239946565
+EU-15,Aluminum,13,1998,Mt,2.34833831
+EU-15,Aluminum,13,1999,Mt,2.453151564
+EU-15,Aluminum,13,2000,Mt,2.516
+EU-15,Aluminum,13,2001,Mt,2.552037981
+EU-15,Aluminum,13,2002,Mt,2.532926768
+EU-15,Aluminum,13,2003,Mt,2.55714202
+EU-15,Aluminum,13,2004,Mt,2.660425186
+EU-15,Aluminum,13,2005,Mt,2.654418476
+EU-15,Aluminum,13,2006,Mt,2.48574
+EU-15,Aluminum,13,2007,Mt,2.529377203
+EU-15,Aluminum,13,2008,Mt,2.491170615
+EU-15,Aluminum,13,2009,Mt,1.849925485
+EU-15,Aluminum,13,2010,Mt,1.929305913
+EU-15,Aluminum,13,2011,Mt,1.961627748
+EU-15,Aluminum,13,2012,Mt,1.604846198
+EU-15,Aluminum,13,2013,Mt,1.579711733
+EU-15,Aluminum,13,2014,Mt,1.539881004
+EU-15,Aluminum,13,2015,Mt,1.662023274
+Europe_Eastern,Alumina,14,1990,Mt,0
+Europe_Eastern,Alumina,14,1991,Mt,0
+Europe_Eastern,Alumina,14,1992,Mt,0
+Europe_Eastern,Alumina,14,1993,Mt,0
+Europe_Eastern,Alumina,14,1994,Mt,0
+Europe_Eastern,Alumina,14,1995,Mt,0
+Europe_Eastern,Alumina,14,1996,Mt,0.086224423
+Europe_Eastern,Alumina,14,1997,Mt,0.100141855
+Europe_Eastern,Alumina,14,1998,Mt,0.107730967
+Europe_Eastern,Alumina,14,1999,Mt,0.112975667
+Europe_Eastern,Alumina,14,2000,Mt,0.122364828
+Europe_Eastern,Alumina,14,2001,Mt,0.112091695
+Europe_Eastern,Alumina,14,2002,Mt,0.118942718
+Europe_Eastern,Alumina,14,2003,Mt,0.120667018
+Europe_Eastern,Alumina,14,2004,Mt,0.119142955
+Europe_Eastern,Alumina,14,2005,Mt,0.118972576
+Europe_Eastern,Alumina,14,2006,Mt,0.116729144
+Europe_Eastern,Alumina,14,2007,Mt,0.112954084
+Europe_Eastern,Alumina,14,2008,Mt,0.105876251
+Europe_Eastern,Alumina,14,2009,Mt,0.047483791
+Europe_Eastern,Alumina,14,2010,Mt,0.022741768
+Europe_Eastern,Alumina,14,2011,Mt,0.006346328
+Europe_Eastern,Alumina,14,2012,Mt,0
+Europe_Eastern,Alumina,14,2013,Mt,0
+Europe_Eastern,Alumina,14,2014,Mt,0
+Europe_Eastern,Alumina,14,2015,Mt,0
+Europe_Eastern,Aluminum,14,1990,Mt,0
+Europe_Eastern,Aluminum,14,1991,Mt,0
+Europe_Eastern,Aluminum,14,1992,Mt,0
+Europe_Eastern,Aluminum,14,1993,Mt,0
+Europe_Eastern,Aluminum,14,1994,Mt,0
+Europe_Eastern,Aluminum,14,1995,Mt,0
+Europe_Eastern,Aluminum,14,1996,Mt,0.085900509
+Europe_Eastern,Aluminum,14,1997,Mt,0.098158265
+Europe_Eastern,Aluminum,14,1998,Mt,0.099927069
+Europe_Eastern,Aluminum,14,1999,Mt,0.106694279
+Europe_Eastern,Aluminum,14,2000,Mt,0.108903746
+Europe_Eastern,Aluminum,14,2001,Mt,0.096641722
+Europe_Eastern,Aluminum,14,2002,Mt,0.102145923
+Europe_Eastern,Aluminum,14,2003,Mt,0.10489155
+Europe_Eastern,Aluminum,14,2004,Mt,0.103360663
+Europe_Eastern,Aluminum,14,2005,Mt,0.103242496
+Europe_Eastern,Aluminum,14,2006,Mt,0.101743295
+Europe_Eastern,Aluminum,14,2007,Mt,0.102393336
+Europe_Eastern,Aluminum,14,2008,Mt,0.103368814
+Europe_Eastern,Aluminum,14,2009,Mt,0.046667422
+Europe_Eastern,Aluminum,14,2010,Mt,0.023034012
+Europe_Eastern,Aluminum,14,2011,Mt,0.006358149
+Europe_Eastern,Aluminum,14,2012,Mt,0
+Europe_Eastern,Aluminum,14,2013,Mt,0
+Europe_Eastern,Aluminum,14,2014,Mt,0
+Europe_Eastern,Aluminum,14,2015,Mt,0
+Europe_Non_EU,Alumina,15,1990,Mt,0.074299451
+Europe_Non_EU,Alumina,15,1991,Mt,0.064327461
+Europe_Non_EU,Alumina,15,1992,Mt,0.052566717
+Europe_Non_EU,Alumina,15,1993,Mt,0.051317442
+Europe_Non_EU,Alumina,15,1994,Mt,0.052292193
+Europe_Non_EU,Alumina,15,1995,Mt,0.055817271
+Europe_Non_EU,Alumina,15,1996,Mt,0.130415466
+Europe_Non_EU,Alumina,15,1997,Mt,0.184054057
+Europe_Non_EU,Alumina,15,1998,Mt,0.177596548
+Europe_Non_EU,Alumina,15,1999,Mt,0.225669895
+Europe_Non_EU,Alumina,15,2000,Mt,0.269718081
+Europe_Non_EU,Alumina,15,2001,Mt,0.290718161
+Europe_Non_EU,Alumina,15,2002,Mt,0.321471132
+Europe_Non_EU,Alumina,15,2003,Mt,0.32415549
+Europe_Non_EU,Alumina,15,2004,Mt,0.321922786
+Europe_Non_EU,Alumina,15,2005,Mt,0.323791349
+Europe_Non_EU,Alumina,15,2006,Mt,0.304669444
+Europe_Non_EU,Alumina,15,2007,Mt,0.305035097
+Europe_Non_EU,Alumina,15,2008,Mt,0.277453579
+Europe_Non_EU,Alumina,15,2009,Mt,0.182302821
+Europe_Non_EU,Alumina,15,2010,Mt,0.229446705
+Europe_Non_EU,Alumina,15,2011,Mt,0.249637186
+Europe_Non_EU,Alumina,15,2012,Mt,0.200480253
+Europe_Non_EU,Alumina,15,2013,Mt,0.145771491
+Europe_Non_EU,Alumina,15,2014,Mt,0.183363548
+Europe_Non_EU,Alumina,15,2015,Mt,0.158458982
+Europe_Non_EU,Aluminum,15,1990,Mt,0.088111111
+Europe_Non_EU,Aluminum,15,1991,Mt,0.079729919
+Europe_Non_EU,Aluminum,15,1992,Mt,0.064674881
+Europe_Non_EU,Aluminum,15,1993,Mt,0.081178058
+Europe_Non_EU,Aluminum,15,1994,Mt,0.083641161
+Europe_Non_EU,Aluminum,15,1995,Mt,0.085774436
+Europe_Non_EU,Aluminum,15,1996,Mt,0.167853496
+Europe_Non_EU,Aluminum,15,1997,Mt,0.217095243
+Europe_Non_EU,Aluminum,15,1998,Mt,0.203617454
+Europe_Non_EU,Aluminum,15,1999,Mt,0.250830859
+Europe_Non_EU,Aluminum,15,2000,Mt,0.283548991
+Europe_Non_EU,Aluminum,15,2001,Mt,0.297117309
+Europe_Non_EU,Aluminum,15,2002,Mt,0.312296376
+Europe_Non_EU,Aluminum,15,2003,Mt,0.312573152
+Europe_Non_EU,Aluminum,15,2004,Mt,0.313755113
+Europe_Non_EU,Aluminum,15,2005,Mt,0.326912715
+Europe_Non_EU,Aluminum,15,2006,Mt,0.319892959
+Europe_Non_EU,Aluminum,15,2007,Mt,0.33164251
+Europe_Non_EU,Aluminum,15,2008,Mt,0.311424831
+Europe_Non_EU,Aluminum,15,2009,Mt,0.207868629
+Europe_Non_EU,Aluminum,15,2010,Mt,0.23899665
+Europe_Non_EU,Aluminum,15,2011,Mt,0.258934161
+Europe_Non_EU,Aluminum,15,2012,Mt,0.219929026
+Europe_Non_EU,Aluminum,15,2013,Mt,0.151826853
+Europe_Non_EU,Aluminum,15,2014,Mt,0.180225979
+Europe_Non_EU,Aluminum,15,2015,Mt,0.164433321
+European Free Trade Association,Alumina,16,1990,Mt,1.173222307
+European Free Trade Association,Alumina,16,1991,Mt,1.312595064
+European Free Trade Association,Alumina,16,1992,Mt,1.3757405
+European Free Trade Association,Alumina,16,1993,Mt,1.429640581
+European Free Trade Association,Alumina,16,1994,Mt,1.535274607
+European Free Trade Association,Alumina,16,1995,Mt,1.970236085
+European Free Trade Association,Alumina,16,1996,Mt,1.384832605
+European Free Trade Association,Alumina,16,1997,Mt,1.431840916
+European Free Trade Association,Alumina,16,1998,Mt,1.505820566
+European Free Trade Association,Alumina,16,1999,Mt,1.56073684
+European Free Trade Association,Alumina,16,2000,Mt,1.531107419
+European Free Trade Association,Alumina,16,2001,Mt,1.601963018
+European Free Trade Association,Alumina,16,2002,Mt,1.72573187
+European Free Trade Association,Alumina,16,2003,Mt,1.795358331
+European Free Trade Association,Alumina,16,2004,Mt,1.896034475
+European Free Trade Association,Alumina,16,2005,Mt,1.923423838
+European Free Trade Association,Alumina,16,2006,Mt,2.027237561
+European Free Trade Association,Alumina,16,2007,Mt,2.108066404
+European Free Trade Association,Alumina,16,2008,Mt,2.343758613
+European Free Trade Association,Alumina,16,2009,Mt,1.760916947
+European Free Trade Association,Alumina,16,2010,Mt,1.971627879
+European Free Trade Association,Alumina,16,2011,Mt,2.118711888
+European Free Trade Association,Alumina,16,2012,Mt,2.278122472
+European Free Trade Association,Alumina,16,2013,Mt,2.344321918
+European Free Trade Association,Alumina,16,2014,Mt,2.399758461
+European Free Trade Association,Alumina,16,2015,Mt,2.421703782
+European Free Trade Association,Aluminum,16,1990,Mt,1.00597749
+European Free Trade Association,Aluminum,16,1991,Mt,1.01492966
+European Free Trade Association,Aluminum,16,1992,Mt,0.978166821
+European Free Trade Association,Aluminum,16,1993,Mt,0.9700852
+European Free Trade Association,Aluminum,16,1994,Mt,1.246157303
+European Free Trade Association,Aluminum,16,1995,Mt,1.798762236
+European Free Trade Association,Aluminum,16,1996,Mt,0.99089569
+European Free Trade Association,Aluminum,16,1997,Mt,1.057053435
+European Free Trade Association,Aluminum,16,1998,Mt,1.20066169
+European Free Trade Association,Aluminum,16,1999,Mt,1.266848436
+European Free Trade Association,Aluminum,16,2000,Mt,1.285
+European Free Trade Association,Aluminum,16,2001,Mt,1.332962019
+European Free Trade Association,Aluminum,16,2002,Mt,1.395073232
+European Free Trade Association,Aluminum,16,2003,Mt,1.51085798
+European Free Trade Association,Aluminum,16,2004,Mt,1.634574814
+European Free Trade Association,Aluminum,16,2005,Mt,1.697581524
+European Free Trade Association,Aluminum,16,2006,Mt,1.69626
+European Free Trade Association,Aluminum,16,2007,Mt,1.775622797
+European Free Trade Association,Aluminum,16,2008,Mt,2.126829385
+European Free Trade Association,Aluminum,16,2009,Mt,1.872074515
+European Free Trade Association,Aluminum,16,2010,Mt,1.870694087
+European Free Trade Association,Aluminum,16,2011,Mt,2.065372252
+European Free Trade Association,Aluminum,16,2012,Mt,2.000153802
+European Free Trade Association,Aluminum,16,2013,Mt,2.036288267
+European Free Trade Association,Aluminum,16,2014,Mt,2.056118996
+European Free Trade Association,Aluminum,16,2015,Mt,2.082976726
+India,Alumina,17,1990,Mt,0.527404298
+India,Alumina,17,1991,Mt,0.57894715
+India,Alumina,17,1992,Mt,0.436571036
+India,Alumina,17,1993,Mt,0.378357408
+India,Alumina,17,1994,Mt,0.411365254
+India,Alumina,17,1995,Mt,0.483449588
+India,Alumina,17,1996,Mt,0.41950104
+India,Alumina,17,1997,Mt,0.576589823
+India,Alumina,17,1998,Mt,0.637165372
+India,Alumina,17,1999,Mt,0.70742258
+India,Alumina,17,2000,Mt,0.708903968
+India,Alumina,17,2001,Mt,0.691435373
+India,Alumina,17,2002,Mt,0.833698891
+India,Alumina,17,2003,Mt,0.983265128
+India,Alumina,17,2004,Mt,0.959220344
+India,Alumina,17,2005,Mt,0.970934437
+India,Alumina,17,2006,Mt,0.988056627
+India,Alumina,17,2007,Mt,1.111739056
+India,Alumina,17,2008,Mt,1.336283835
+India,Alumina,17,2009,Mt,1.385908467
+India,Alumina,17,2010,Mt,1.272544796
+India,Alumina,17,2011,Mt,1.193948673
+India,Alumina,17,2012,Mt,1.096124865
+India,Alumina,17,2013,Mt,0.951631508
+India,Alumina,17,2014,Mt,1.028924408
+India,Alumina,17,2015,Mt,1.229691164
+India,Aluminum,17,1990,Mt,0.625444444
+India,Aluminum,17,1991,Mt,0.717569267
+India,Aluminum,17,1992,Mt,0.537130366
+India,Aluminum,17,1993,Mt,0.598516187
+India,Aluminum,17,1994,Mt,0.657977133
+India,Aluminum,17,1995,Mt,0.742917293
+India,Aluminum,17,1996,Mt,0.74275969
+India,Aluminum,17,1997,Mt,0.867224265
+India,Aluminum,17,1998,Mt,0.930946878
+India,Aluminum,17,1999,Mt,1.041522002
+India,Aluminum,17,2000,Mt,1.090185976
+India,Aluminum,17,2001,Mt,1.071495772
+India,Aluminum,17,2002,Mt,1.101765432
+India,Aluminum,17,2003,Mt,1.245292821
+India,Aluminum,17,2004,Mt,1.327460586
+India,Aluminum,17,2005,Mt,1.563690111
+India,Aluminum,17,2006,Mt,1.861922335
+India,Aluminum,17,2007,Mt,2.044182718
+India,Aluminum,17,2008,Mt,2.179099049
+India,Aluminum,17,2009,Mt,2.672443938
+India,Aluminum,17,2010,Mt,1.465705947
+India,Aluminum,17,2011,Mt,1.422678908
+India,Aluminum,17,2012,Mt,1.411562398
+India,Aluminum,17,2013,Mt,1.325340459
+India,Aluminum,17,2014,Mt,1.418623795
+India,Aluminum,17,2015,Mt,1.890172506
+Indonesia,Alumina,18,1990,Mt,0.226552424
+Indonesia,Alumina,18,1991,Mt,0.214807772
+Indonesia,Alumina,18,1992,Mt,0.154136305
+Indonesia,Alumina,18,1993,Mt,0.156561686
+Indonesia,Alumina,18,1994,Mt,0.193481115
+Indonesia,Alumina,18,1995,Mt,0.198061284
+Indonesia,Alumina,18,1996,Mt,0.177754678
+Indonesia,Alumina,18,1997,Mt,0.233437175
+Indonesia,Alumina,18,1998,Mt,0.156352388
+Indonesia,Alumina,18,1999,Mt,0.122128328
+Indonesia,Alumina,18,2000,Mt,0.176125209
+Indonesia,Alumina,18,2001,Mt,0.199452512
+Indonesia,Alumina,18,2002,Mt,0.198795563
+Indonesia,Alumina,18,2003,Mt,0.246123937
+Indonesia,Alumina,18,2004,Mt,0.274857802
+Indonesia,Alumina,18,2005,Mt,0.259740423
+Indonesia,Alumina,18,2006,Mt,0.223542223
+Indonesia,Alumina,18,2007,Mt,0.220164363
+Indonesia,Alumina,18,2008,Mt,0.231609823
+Indonesia,Alumina,18,2009,Mt,0.223757437
+Indonesia,Alumina,18,2010,Mt,0.200344638
+Indonesia,Alumina,18,2011,Mt,0.174759134
+Indonesia,Alumina,18,2012,Mt,0.159905274
+Indonesia,Alumina,18,2013,Mt,0.142493268
+Indonesia,Alumina,18,2014,Mt,0.111966503
+Indonesia,Alumina,18,2015,Mt,0.087723191
+Indonesia,Aluminum,18,1990,Mt,0.268666667
+Indonesia,Aluminum,18,1991,Mt,0.266240978
+Indonesia,Aluminum,18,1992,Mt,0.189639905
+Indonesia,Aluminum,18,1993,Mt,0.247661871
+Indonesia,Aluminum,18,1994,Mt,0.309472296
+Indonesia,Aluminum,18,1995,Mt,0.304360902
+Indonesia,Aluminum,18,1996,Mt,0.314728682
+Indonesia,Aluminum,18,1997,Mt,0.351102941
+Indonesia,Aluminum,18,1998,Mt,0.228442684
+Indonesia,Aluminum,18,1999,Mt,0.17980673
+Indonesia,Aluminum,18,2000,Mt,0.270853659
+Indonesia,Aluminum,18,2001,Mt,0.309085319
+Indonesia,Aluminum,18,2002,Mt,0.262716049
+Indonesia,Aluminum,18,2003,Mt,0.311712846
+Indonesia,Aluminum,18,2004,Mt,0.380374437
+Indonesia,Aluminum,18,2005,Mt,0.418312004
+Indonesia,Aluminum,18,2006,Mt,0.421249397
+Indonesia,Aluminum,18,2007,Mt,0.404821782
+Indonesia,Aluminum,18,2008,Mt,0.377689778
+Indonesia,Aluminum,18,2009,Mt,0.431470924
+Indonesia,Aluminum,18,2010,Mt,0.230755199
+Indonesia,Aluminum,18,2011,Mt,0.208238544
+Indonesia,Aluminum,18,2012,Mt,0.205922044
+Indonesia,Aluminum,18,2013,Mt,0.198450862
+Indonesia,Aluminum,18,2014,Mt,0.154373193
+Indonesia,Aluminum,18,2015,Mt,0.134840332
+Japan,Alumina,19,1990,Mt,0.041412809
+Japan,Alumina,19,1991,Mt,0.036758549
+Japan,Alumina,19,1992,Mt,0.016928265
+Japan,Alumina,19,1993,Mt,0.015656169
+Japan,Alumina,19,1994,Mt,0.014816121
+Japan,Alumina,19,1995,Mt,0.016205014
+Japan,Alumina,19,1996,Mt,0.013430353
+Japan,Alumina,19,1997,Mt,0.01984216
+Japan,Alumina,19,1998,Mt,0.01880931
+Japan,Alumina,19,1999,Mt,0.012673694
+Japan,Alumina,19,2000,Mt,0.007705478
+Japan,Alumina,19,2001,Mt,0.007756487
+Japan,Alumina,19,2002,Mt,0.007454834
+Japan,Alumina,19,2003,Mt,0.007383718
+Japan,Alumina,19,2004,Mt,0.006676708
+Japan,Alumina,19,2005,Mt,0.007215012
+Japan,Alumina,19,2006,Mt,0.006259182
+Japan,Alumina,19,2007,Mt,0.006368391
+Japan,Alumina,19,2008,Mt,0.056234484
+Japan,Alumina,19,2009,Mt,0.033823799
+Japan,Alumina,19,2010,Mt,0.042761306
+Japan,Alumina,19,2011,Mt,0.030797716
+Japan,Alumina,19,2012,Mt,0.016764263
+Japan,Alumina,19,2013,Mt,0.016205117
+Japan,Alumina,19,2014,Mt,0.000530647
+Japan,Alumina,19,2015,Mt,0
+Japan,Aluminum,19,1990,Mt,0.049111111
+Japan,Aluminum,19,1991,Mt,0.045559953
+Japan,Aluminum,19,1992,Mt,0.020827504
+Japan,Aluminum,19,1993,Mt,0.024766187
+Japan,Aluminum,19,1994,Mt,0.023698329
+Japan,Aluminum,19,1995,Mt,0.024902256
+Japan,Aluminum,19,1996,Mt,0.0237795
+Japan,Aluminum,19,1997,Mt,0.02984375
+Japan,Aluminum,19,1998,Mt,0.027481827
+Japan,Aluminum,19,1999,Mt,0.018659189
+Japan,Aluminum,19,2000,Mt,0.011849848
+Japan,Aluminum,19,2001,Mt,0.012019985
+Japan,Aluminum,19,2002,Mt,0.009851852
+Japan,Aluminum,19,2003,Mt,0.009351385
+Japan,Aluminum,19,2004,Mt,0.009239865
+Japan,Aluminum,19,2005,Mt,0.011619778
+Japan,Aluminum,19,2006,Mt,0.011794983
+Japan,Aluminum,19,2007,Mt,0.011709721
+Japan,Aluminum,19,2008,Mt,0.091702456
+Japan,Aluminum,19,2009,Mt,0.065222349
+Japan,Aluminum,19,2010,Mt,0.049252098
+Japan,Aluminum,19,2011,Mt,0.036697776
+Japan,Aluminum,19,2012,Mt,0.021588601
+Japan,Aluminum,19,2013,Mt,0.022568922
+Japan,Aluminum,19,2014,Mt,0.000731627
+Japan,Aluminum,19,2015,Mt,0
+Mexico,Alumina,20,1990,Mt,0.273140817
+Mexico,Alumina,20,1991,Mt,0.193856239
+Mexico,Alumina,20,1992,Mt,0.093015885
+Mexico,Alumina,20,1993,Mt,0.099847835
+Mexico,Alumina,20,1994,Mt,0
+Mexico,Alumina,20,1995,Mt,0.040107591
+Mexico,Alumina,20,1996,Mt,0.261643144
+Mexico,Alumina,20,1997,Mt,0.297093803
+Mexico,Alumina,20,1998,Mt,0.30925127
+Mexico,Alumina,20,1999,Mt,0.320352745
+Mexico,Alumina,20,2000,Mt,0.317464813
+Mexico,Alumina,20,2001,Mt,0.277090805
+Mexico,Alumina,20,2002,Mt,0.192500399
+Mexico,Alumina,20,2003,Mt,0
+Mexico,Alumina,20,2004,Mt,0
+Mexico,Alumina,20,2005,Mt,0
+Mexico,Alumina,20,2006,Mt,0
+Mexico,Alumina,20,2007,Mt,0
+Mexico,Alumina,20,2008,Mt,0
+Mexico,Alumina,20,2009,Mt,0
+Mexico,Alumina,20,2010,Mt,0
+Mexico,Alumina,20,2011,Mt,0
+Mexico,Alumina,20,2012,Mt,0
+Mexico,Alumina,20,2013,Mt,0
+Mexico,Alumina,20,2014,Mt,0
+Mexico,Alumina,20,2015,Mt,0
+Mexico,Aluminum,20,1990,Mt,0.068114158
+Mexico,Aluminum,20,1991,Mt,0.051256798
+Mexico,Aluminum,20,1992,Mt,0.024571357
+Mexico,Aluminum,20,1993,Mt,0.025451532
+Mexico,Aluminum,20,1994,Mt,0
+Mexico,Aluminum,20,1995,Mt,0.010078355
+Mexico,Aluminum,20,1996,Mt,0.060942153
+Mexico,Aluminum,20,1997,Mt,0.064816211
+Mexico,Aluminum,20,1998,Mt,0.062119749
+Mexico,Aluminum,20,1999,Mt,0.062939857
+Mexico,Aluminum,20,2000,Mt,0.061112806
+Mexico,Aluminum,20,2001,Mt,0.051791896
+Mexico,Aluminum,20,2002,Mt,0.038982519
+Mexico,Aluminum,20,2003,Mt,0
+Mexico,Aluminum,20,2004,Mt,0
+Mexico,Aluminum,20,2005,Mt,0
+Mexico,Aluminum,20,2006,Mt,0
+Mexico,Aluminum,20,2007,Mt,0
+Mexico,Aluminum,20,2008,Mt,0
+Mexico,Aluminum,20,2009,Mt,0
+Mexico,Aluminum,20,2010,Mt,0
+Mexico,Aluminum,20,2011,Mt,0
+Mexico,Aluminum,20,2012,Mt,0
+Mexico,Aluminum,20,2013,Mt,0
+Mexico,Aluminum,20,2014,Mt,0
+Mexico,Aluminum,20,2015,Mt,0
+Middle East,Alumina,21,1990,Mt,0.544456631
+Middle East,Alumina,21,1991,Mt,0.627192746
+Middle East,Alumina,21,1992,Mt,0.55595985
+Middle East,Alumina,21,1993,Mt,0.674085038
+Middle East,Alumina,21,1994,Mt,0.70594461
+Middle East,Alumina,21,1995,Mt,0.728325357
+Middle East,Alumina,21,1996,Mt,0.655717256
+Middle East,Alumina,21,1997,Mt,0.989773624
+Middle East,Alumina,21,1998,Mt,1.148543484
+Middle East,Alumina,21,1999,Mt,1.244326362
+Middle East,Alumina,21,2000,Mt,1.231775683
+Middle East,Alumina,21,2001,Mt,1.287576769
+Middle East,Alumina,21,2002,Mt,1.520786054
+Middle East,Alumina,21,2003,Mt,1.567809478
+Middle East,Alumina,21,2004,Mt,1.58905644
+Middle East,Alumina,21,2005,Mt,1.745002124
+Middle East,Alumina,21,2006,Mt,1.732899316
+Middle East,Alumina,21,2007,Mt,1.793156857
+Middle East,Alumina,21,2008,Mt,2.017769528
+Middle East,Alumina,21,2009,Mt,2.097942792
+Middle East,Alumina,21,2010,Mt,2.324948053
+Middle East,Alumina,21,2011,Mt,2.766780878
+Middle East,Alumina,21,2012,Mt,2.601684607
+Middle East,Alumina,21,2013,Mt,2.3732114
+Middle East,Alumina,21,2014,Mt,2.808714229
+Middle East,Alumina,21,2015,Mt,2.845259937
+Middle East,Aluminum,21,1990,Mt,0.086666667
+Middle East,Aluminum,21,1991,Mt,0.113899884
+Middle East,Aluminum,21,1992,Mt,0.100848967
+Middle East,Aluminum,21,1993,Mt,0.137589928
+Middle East,Aluminum,21,1994,Mt,0.161706245
+Middle East,Aluminum,21,1995,Mt,0.16324812
+Middle East,Aluminum,21,1996,Mt,0.165057709
+Middle East,Aluminum,21,1997,Mt,0.207150735
+Middle East,Aluminum,21,1998,Mt,0.212984157
+Middle East,Aluminum,21,1999,Mt,0.232391717
+Middle East,Aluminum,21,2000,Mt,0.236996951
+Middle East,Aluminum,21,2001,Mt,0.240399693
+Middle East,Aluminum,21,2002,Mt,0.277493827
+Middle East,Aluminum,21,2003,Mt,0.28365869
+Middle East,Aluminum,21,2004,Mt,0.328015203
+Middle East,Aluminum,21,2005,Mt,0.36519302
+Middle East,Aluminum,21,2006,Mt,0.345424506
+Middle East,Aluminum,21,2007,Mt,0.361328533
+Middle East,Aluminum,21,2008,Mt,0.385461173
+Middle East,Aluminum,21,2009,Mt,0.334473584
+Middle East,Aluminum,21,2010,Mt,2.89911857
+Middle East,Aluminum,21,2011,Mt,3.757806604
+Middle East,Aluminum,21,2012,Mt,3.941821487
+Middle East,Aluminum,21,2013,Mt,4.116580408
+Middle East,Aluminum,21,2014,Mt,5.09172741
+Middle East,Aluminum,21,2015,Mt,5.388930463
+Pakistan,Alumina,22,1990,Mt,0
+Pakistan,Alumina,22,1991,Mt,0
+Pakistan,Alumina,22,1992,Mt,0
+Pakistan,Alumina,22,1993,Mt,0
+Pakistan,Alumina,22,1994,Mt,0
+Pakistan,Alumina,22,1995,Mt,0
+Pakistan,Alumina,22,1996,Mt,0
+Pakistan,Alumina,22,1997,Mt,0
+Pakistan,Alumina,22,1998,Mt,0
+Pakistan,Alumina,22,1999,Mt,0
+Pakistan,Alumina,22,2000,Mt,0
+Pakistan,Alumina,22,2001,Mt,0
+Pakistan,Alumina,22,2002,Mt,0
+Pakistan,Alumina,22,2003,Mt,0
+Pakistan,Alumina,22,2004,Mt,0
+Pakistan,Alumina,22,2005,Mt,0
+Pakistan,Alumina,22,2006,Mt,0
+Pakistan,Alumina,22,2007,Mt,0
+Pakistan,Alumina,22,2008,Mt,0
+Pakistan,Alumina,22,2009,Mt,0
+Pakistan,Alumina,22,2010,Mt,0
+Pakistan,Alumina,22,2011,Mt,0
+Pakistan,Alumina,22,2012,Mt,0
+Pakistan,Alumina,22,2013,Mt,0
+Pakistan,Alumina,22,2014,Mt,0
+Pakistan,Alumina,22,2015,Mt,0
+Pakistan,Aluminum,22,1990,Mt,0
+Pakistan,Aluminum,22,1991,Mt,0
+Pakistan,Aluminum,22,1992,Mt,0
+Pakistan,Aluminum,22,1993,Mt,0
+Pakistan,Aluminum,22,1994,Mt,0
+Pakistan,Aluminum,22,1995,Mt,0
+Pakistan,Aluminum,22,1996,Mt,0
+Pakistan,Aluminum,22,1997,Mt,0
+Pakistan,Aluminum,22,1998,Mt,0
+Pakistan,Aluminum,22,1999,Mt,0
+Pakistan,Aluminum,22,2000,Mt,0
+Pakistan,Aluminum,22,2001,Mt,0
+Pakistan,Aluminum,22,2002,Mt,0
+Pakistan,Aluminum,22,2003,Mt,0
+Pakistan,Aluminum,22,2004,Mt,0
+Pakistan,Aluminum,22,2005,Mt,0
+Pakistan,Aluminum,22,2006,Mt,0
+Pakistan,Aluminum,22,2007,Mt,0
+Pakistan,Aluminum,22,2008,Mt,0
+Pakistan,Aluminum,22,2009,Mt,0
+Pakistan,Aluminum,22,2010,Mt,0
+Pakistan,Aluminum,22,2011,Mt,0
+Pakistan,Aluminum,22,2012,Mt,0
+Pakistan,Aluminum,22,2013,Mt,0
+Pakistan,Aluminum,22,2014,Mt,0
+Pakistan,Aluminum,22,2015,Mt,0
+Russia,Alumina,23,1990,Mt,0
+Russia,Alumina,23,1991,Mt,0
+Russia,Alumina,23,1992,Mt,0
+Russia,Alumina,23,1993,Mt,0
+Russia,Alumina,23,1994,Mt,0
+Russia,Alumina,23,1995,Mt,0
+Russia,Alumina,23,1996,Mt,2.753433245
+Russia,Alumina,23,1997,Mt,2.88130922
+Russia,Alumina,23,1998,Mt,3.025528558
+Russia,Alumina,23,1999,Mt,3.090621279
+Russia,Alumina,23,2000,Mt,3.336755172
+Russia,Alumina,23,2001,Mt,3.489647102
+Russia,Alumina,23,2002,Mt,3.554475694
+Russia,Alumina,23,2003,Mt,3.681402537
+Russia,Alumina,23,2004,Mt,3.787269852
+Russia,Alumina,23,2005,Mt,3.806078817
+Russia,Alumina,23,2006,Mt,3.840698748
+Russia,Alumina,23,2007,Mt,3.95339293
+Russia,Alumina,23,2008,Mt,3.925853908
+Russia,Alumina,23,2009,Mt,3.623013217
+Russia,Alumina,23,2010,Mt,3.590470295
+Russia,Alumina,23,2011,Mt,3.620126858
+Russia,Alumina,23,2012,Mt,3.445624314
+Russia,Alumina,23,2013,Mt,3.495313846
+Russia,Alumina,23,2014,Mt,3.269619308
+Russia,Alumina,23,2015,Mt,3.364802315
+Russia,Aluminum,23,1990,Mt,0
+Russia,Aluminum,23,1991,Mt,0
+Russia,Aluminum,23,1992,Mt,0
+Russia,Aluminum,23,1993,Mt,0
+Russia,Aluminum,23,1994,Mt,0
+Russia,Aluminum,23,1995,Mt,0
+Russia,Aluminum,23,1996,Mt,2.743089601
+Russia,Aluminum,23,1997,Mt,2.824236811
+Russia,Aluminum,23,1998,Mt,2.806363016
+Russia,Aluminum,23,1999,Mt,2.918784364
+Russia,Aluminum,23,2000,Mt,2.969686182
+Russia,Aluminum,23,2001,Mt,3.008657373
+Russia,Aluminum,23,2002,Mt,3.052521459
+Russia,Aluminum,23,2003,Mt,3.200112365
+Russia,Aluminum,23,2004,Mt,3.285588508
+Russia,Aluminum,23,2005,Mt,3.302854243
+Russia,Aluminum,23,2006,Mt,3.347624521
+Russia,Aluminum,23,2007,Mt,3.583766761
+Russia,Aluminum,23,2008,Mt,3.832879026
+Russia,Aluminum,23,2009,Mt,3.560724326
+Russia,Aluminum,23,2010,Mt,3.636609835
+Russia,Aluminum,23,2011,Mt,3.626870032
+Russia,Aluminum,23,2012,Mt,3.671539046
+Russia,Aluminum,23,2013,Mt,3.404969231
+Russia,Aluminum,23,2014,Mt,3.090619557
+Russia,Aluminum,23,2015,Mt,3.191436231
+South Africa,Alumina,24,1990,Mt,0.193665781
+South Africa,Alumina,24,1991,Mt,0.194131088
+South Africa,Alumina,24,1992,Mt,0.154136305
+South Africa,Alumina,24,1993,Mt,0.15221275
+South Africa,Alumina,24,1994,Mt,0.149904287
+South Africa,Alumina,24,1995,Mt,0.17555432
+South Africa,Alumina,24,1996,Mt,0.487442827
+South Africa,Alumina,24,1997,Mt,0.770342679
+South Africa,Alumina,24,1998,Mt,0.795868924
+South Africa,Alumina,24,1999,Mt,0.793834133
+South Africa,Alumina,24,2000,Mt,0.740826662
+South Africa,Alumina,24,2001,Mt,0.733542015
+South Africa,Alumina,24,2002,Mt,0.878427892
+South Africa,Alumina,24,2003,Mt,0.908197327
+South Africa,Alumina,24,2004,Mt,0.963671483
+South Africa,Alumina,24,2005,Mt,0.871985704
+South Africa,Alumina,24,2006,Mt,0.80028116
+South Africa,Alumina,24,2007,Mt,0.817883315
+South Africa,Alumina,24,2008,Mt,0.77298587
+South Africa,Alumina,24,2009,Mt,0.701627002
+South Africa,Alumina,24,2010,Mt,0.639043964
+South Africa,Alumina,24,2011,Mt,0.579426801
+South Africa,Alumina,24,2012,Mt,0.428778256
+South Africa,Alumina,24,2013,Mt,0.459331239
+South Africa,Alumina,24,2014,Mt,0.395331967
+South Africa,Alumina,24,2015,Mt,0.362902488
+South Africa,Aluminum,24,1990,Mt,0.15821157
+South Africa,Aluminum,24,1991,Mt,0.170955372
+South Africa,Aluminum,24,1992,Mt,0.174128874
+South Africa,Aluminum,24,1993,Mt,0.177011494
+South Africa,Aluminum,24,1994,Mt,0.167918644
+South Africa,Aluminum,24,1995,Mt,0.208904924
+South Africa,Aluminum,24,1996,Mt,0.618218164
+South Africa,Aluminum,24,1997,Mt,0.681568627
+South Africa,Aluminum,24,1998,Mt,0.68554466
+South Africa,Aluminum,24,1999,Mt,0.690892857
+South Africa,Aluminum,24,2000,Mt,0.676445392
+South Africa,Aluminum,24,2001,Mt,0.666380882
+South Africa,Aluminum,24,2002,Mt,0.716398818
+South Africa,Aluminum,24,2003,Mt,0.7344
+South Africa,Aluminum,24,2004,Mt,0.862973791
+South Africa,Aluminum,24,2005,Mt,0.848419908
+South Africa,Aluminum,24,2006,Mt,0.923231876
+South Africa,Aluminum,24,2007,Mt,0.902480642
+South Africa,Aluminum,24,2008,Mt,0.813847279
+South Africa,Aluminum,24,2009,Mt,0.797612317
+South Africa,Aluminum,24,2010,Mt,0.814009265
+South Africa,Aluminum,24,2011,Mt,0.830628555
+South Africa,Aluminum,24,2012,Mt,0.676978261
+South Africa,Aluminum,24,2013,Mt,0.8156977
+South Africa,Aluminum,24,2014,Mt,0.746282272
+South Africa,Aluminum,24,2015,Mt,0.707156212
+South America_Northern,Alumina,25,1990,Mt,2.49843512
+South America_Northern,Alumina,25,1991,Mt,2.394694713
+South America_Northern,Alumina,25,1992,Mt,2.206336793
+South America_Northern,Alumina,25,1993,Mt,2.304180814
+South America_Northern,Alumina,25,1994,Mt,2.44862069
+South America_Northern,Alumina,25,1995,Mt,2.639079461
+South America_Northern,Alumina,25,1996,Mt,2.860917653
+South America_Northern,Alumina,25,1997,Mt,3.071492856
+South America_Northern,Alumina,25,1998,Mt,3.062585157
+South America_Northern,Alumina,25,1999,Mt,2.928939379
+South America_Northern,Alumina,25,2000,Mt,2.961270139
+South America_Northern,Alumina,25,2001,Mt,3.04267019
+South America_Northern,Alumina,25,2002,Mt,2.986224137
+South America_Northern,Alumina,25,2003,Mt,3.269501327
+South America_Northern,Alumina,25,2004,Mt,3.400842431
+South America_Northern,Alumina,25,2005,Mt,3.341777515
+South America_Northern,Alumina,25,2006,Mt,3.596008842
+South America_Northern,Alumina,25,2007,Mt,3.587117508
+South America_Northern,Alumina,25,2008,Mt,3.559190447
+South America_Northern,Alumina,25,2009,Mt,2.941562151
+South America_Northern,Alumina,25,2010,Mt,1.992575022
+South America_Northern,Alumina,25,2011,Mt,2.51911449
+South America_Northern,Alumina,25,2012,Mt,1.363819688
+South America_Northern,Alumina,25,2013,Mt,1.166996867
+South America_Northern,Alumina,25,2014,Mt,1.179085603
+South America_Northern,Alumina,25,2015,Mt,1.141555136
+South America_Northern,Aluminum,25,1990,Mt,0.623044208
+South America_Northern,Aluminum,25,1991,Mt,0.633172205
+South America_Northern,Aluminum,25,1992,Mt,0.582832577
+South America_Northern,Aluminum,25,1993,Mt,0.587343044
+South America_Northern,Aluminum,25,1994,Mt,0.613241379
+South America_Northern,Aluminum,25,1995,Mt,0.66315573
+South America_Northern,Aluminum,25,1996,Mt,0.666367473
+South America_Northern,Aluminum,25,1997,Mt,0.670099906
+South America_Northern,Aluminum,25,1998,Mt,0.615185901
+South America_Northern,Aluminum,25,1999,Mt,0.575450119
+South America_Northern,Aluminum,25,2000,Mt,0.570052242
+South America_Northern,Aluminum,25,2001,Mt,0.568714857
+South America_Northern,Aluminum,25,2002,Mt,0.604728821
+South America_Northern,Aluminum,25,2003,Mt,0.606599379
+South America_Northern,Aluminum,25,2004,Mt,0.62479558
+South America_Northern,Aluminum,25,2005,Mt,0.616288768
+South America_Northern,Aluminum,25,2006,Mt,0.611225884
+South America_Northern,Aluminum,25,2007,Mt,0.615291798
+South America_Northern,Aluminum,25,2008,Mt,0.607315058
+South America_Northern,Aluminum,25,2009,Mt,0.560552988
+South America_Northern,Aluminum,25,2010,Mt,0.337489073
+South America_Northern,Aluminum,25,2011,Mt,0.371332737
+South America_Northern,Aluminum,25,2012,Mt,0.203
+South America_Northern,Aluminum,25,2013,Mt,0.170196345
+South America_Northern,Aluminum,25,2014,Mt,0.138089494
+South America_Northern,Aluminum,25,2015,Mt,0.119089879
+South America_Southern,Alumina,26,1990,Mt,0
+South America_Southern,Alumina,26,1991,Mt,0
+South America_Southern,Alumina,26,1992,Mt,0
+South America_Southern,Alumina,26,1993,Mt,0
+South America_Southern,Alumina,26,1994,Mt,0
+South America_Southern,Alumina,26,1995,Mt,0
+South America_Southern,Alumina,26,1996,Mt,0
+South America_Southern,Alumina,26,1997,Mt,0
+South America_Southern,Alumina,26,1998,Mt,0
+South America_Southern,Alumina,26,1999,Mt,0
+South America_Southern,Alumina,26,2000,Mt,0
+South America_Southern,Alumina,26,2001,Mt,0
+South America_Southern,Alumina,26,2002,Mt,0
+South America_Southern,Alumina,26,2003,Mt,0
+South America_Southern,Alumina,26,2004,Mt,0
+South America_Southern,Alumina,26,2005,Mt,0
+South America_Southern,Alumina,26,2006,Mt,0
+South America_Southern,Alumina,26,2007,Mt,0
+South America_Southern,Alumina,26,2008,Mt,0
+South America_Southern,Alumina,26,2009,Mt,0
+South America_Southern,Alumina,26,2010,Mt,0
+South America_Southern,Alumina,26,2011,Mt,0
+South America_Southern,Alumina,26,2012,Mt,0
+South America_Southern,Alumina,26,2013,Mt,0
+South America_Southern,Alumina,26,2014,Mt,0
+South America_Southern,Alumina,26,2015,Mt,0
+South America_Southern,Aluminum,26,1990,Mt,0
+South America_Southern,Aluminum,26,1991,Mt,0
+South America_Southern,Aluminum,26,1992,Mt,0
+South America_Southern,Aluminum,26,1993,Mt,0
+South America_Southern,Aluminum,26,1994,Mt,0
+South America_Southern,Aluminum,26,1995,Mt,0
+South America_Southern,Aluminum,26,1996,Mt,0
+South America_Southern,Aluminum,26,1997,Mt,0
+South America_Southern,Aluminum,26,1998,Mt,0
+South America_Southern,Aluminum,26,1999,Mt,0
+South America_Southern,Aluminum,26,2000,Mt,0
+South America_Southern,Aluminum,26,2001,Mt,0
+South America_Southern,Aluminum,26,2002,Mt,0
+South America_Southern,Aluminum,26,2003,Mt,0
+South America_Southern,Aluminum,26,2004,Mt,0
+South America_Southern,Aluminum,26,2005,Mt,0
+South America_Southern,Aluminum,26,2006,Mt,0
+South America_Southern,Aluminum,26,2007,Mt,0
+South America_Southern,Aluminum,26,2008,Mt,0
+South America_Southern,Aluminum,26,2009,Mt,0
+South America_Southern,Aluminum,26,2010,Mt,0
+South America_Southern,Aluminum,26,2011,Mt,0
+South America_Southern,Aluminum,26,2012,Mt,0
+South America_Southern,Aluminum,26,2013,Mt,0
+South America_Southern,Aluminum,26,2014,Mt,0
+South America_Southern,Aluminum,26,2015,Mt,0
+South Asia,Alumina,27,1990,Mt,0
+South Asia,Alumina,27,1991,Mt,0
+South Asia,Alumina,27,1992,Mt,0
+South Asia,Alumina,27,1993,Mt,0
+South Asia,Alumina,27,1994,Mt,0
+South Asia,Alumina,27,1995,Mt,0
+South Asia,Alumina,27,1996,Mt,0
+South Asia,Alumina,27,1997,Mt,0
+South Asia,Alumina,27,1998,Mt,0
+South Asia,Alumina,27,1999,Mt,0
+South Asia,Alumina,27,2000,Mt,0
+South Asia,Alumina,27,2001,Mt,0
+South Asia,Alumina,27,2002,Mt,0
+South Asia,Alumina,27,2003,Mt,0
+South Asia,Alumina,27,2004,Mt,0
+South Asia,Alumina,27,2005,Mt,0
+South Asia,Alumina,27,2006,Mt,0
+South Asia,Alumina,27,2007,Mt,0
+South Asia,Alumina,27,2008,Mt,0
+South Asia,Alumina,27,2009,Mt,0
+South Asia,Alumina,27,2010,Mt,0
+South Asia,Alumina,27,2011,Mt,0
+South Asia,Alumina,27,2012,Mt,0
+South Asia,Alumina,27,2013,Mt,0
+South Asia,Alumina,27,2014,Mt,0
+South Asia,Alumina,27,2015,Mt,0
+South Asia,Aluminum,27,1990,Mt,0
+South Asia,Aluminum,27,1991,Mt,0
+South Asia,Aluminum,27,1992,Mt,0
+South Asia,Aluminum,27,1993,Mt,0
+South Asia,Aluminum,27,1994,Mt,0
+South Asia,Aluminum,27,1995,Mt,0
+South Asia,Aluminum,27,1996,Mt,0
+South Asia,Aluminum,27,1997,Mt,0
+South Asia,Aluminum,27,1998,Mt,0
+South Asia,Aluminum,27,1999,Mt,0
+South Asia,Aluminum,27,2000,Mt,0
+South Asia,Aluminum,27,2001,Mt,0
+South Asia,Aluminum,27,2002,Mt,0
+South Asia,Aluminum,27,2003,Mt,0
+South Asia,Aluminum,27,2004,Mt,0
+South Asia,Aluminum,27,2005,Mt,0
+South Asia,Aluminum,27,2006,Mt,0
+South Asia,Aluminum,27,2007,Mt,0
+South Asia,Aluminum,27,2008,Mt,0
+South Asia,Aluminum,27,2009,Mt,0
+South Asia,Aluminum,27,2010,Mt,0
+South Asia,Aluminum,27,2011,Mt,0
+South Asia,Aluminum,27,2012,Mt,0
+South Asia,Aluminum,27,2013,Mt,0
+South Asia,Aluminum,27,2014,Mt,0
+South Asia,Aluminum,27,2015,Mt,0
+South Korea,Alumina,28,1990,Mt,0
+South Korea,Alumina,28,1991,Mt,0
+South Korea,Alumina,28,1992,Mt,0
+South Korea,Alumina,28,1993,Mt,0
+South Korea,Alumina,28,1994,Mt,0
+South Korea,Alumina,28,1995,Mt,0
+South Korea,Alumina,28,1996,Mt,0
+South Korea,Alumina,28,1997,Mt,0
+South Korea,Alumina,28,1998,Mt,0
+South Korea,Alumina,28,1999,Mt,0
+South Korea,Alumina,28,2000,Mt,0
+South Korea,Alumina,28,2001,Mt,0
+South Korea,Alumina,28,2002,Mt,0
+South Korea,Alumina,28,2003,Mt,0
+South Korea,Alumina,28,2004,Mt,0
+South Korea,Alumina,28,2005,Mt,0
+South Korea,Alumina,28,2006,Mt,0
+South Korea,Alumina,28,2007,Mt,0
+South Korea,Alumina,28,2008,Mt,0
+South Korea,Alumina,28,2009,Mt,0
+South Korea,Alumina,28,2010,Mt,0
+South Korea,Alumina,28,2011,Mt,0
+South Korea,Alumina,28,2012,Mt,0
+South Korea,Alumina,28,2013,Mt,0
+South Korea,Alumina,28,2014,Mt,0
+South Korea,Alumina,28,2015,Mt,0
+South Korea,Aluminum,28,1990,Mt,0
+South Korea,Aluminum,28,1991,Mt,0
+South Korea,Aluminum,28,1992,Mt,0
+South Korea,Aluminum,28,1993,Mt,0
+South Korea,Aluminum,28,1994,Mt,0
+South Korea,Aluminum,28,1995,Mt,0
+South Korea,Aluminum,28,1996,Mt,0
+South Korea,Aluminum,28,1997,Mt,0
+South Korea,Aluminum,28,1998,Mt,0
+South Korea,Aluminum,28,1999,Mt,0
+South Korea,Aluminum,28,2000,Mt,0
+South Korea,Aluminum,28,2001,Mt,0
+South Korea,Aluminum,28,2002,Mt,0
+South Korea,Aluminum,28,2003,Mt,0
+South Korea,Aluminum,28,2004,Mt,0
+South Korea,Aluminum,28,2005,Mt,0
+South Korea,Aluminum,28,2006,Mt,0
+South Korea,Aluminum,28,2007,Mt,0
+South Korea,Aluminum,28,2008,Mt,0
+South Korea,Aluminum,28,2009,Mt,0
+South Korea,Aluminum,28,2010,Mt,0
+South Korea,Aluminum,28,2011,Mt,0
+South Korea,Aluminum,28,2012,Mt,0
+South Korea,Aluminum,28,2013,Mt,0
+South Korea,Aluminum,28,2014,Mt,0
+South Korea,Aluminum,28,2015,Mt,0
+Southeast Asia,Alumina,29,1990,Mt,0
+Southeast Asia,Alumina,29,1991,Mt,0
+Southeast Asia,Alumina,29,1992,Mt,0
+Southeast Asia,Alumina,29,1993,Mt,0
+Southeast Asia,Alumina,29,1994,Mt,0
+Southeast Asia,Alumina,29,1995,Mt,0
+Southeast Asia,Alumina,29,1996,Mt,0
+Southeast Asia,Alumina,29,1997,Mt,0
+Southeast Asia,Alumina,29,1998,Mt,0
+Southeast Asia,Alumina,29,1999,Mt,0
+Southeast Asia,Alumina,29,2000,Mt,0
+Southeast Asia,Alumina,29,2001,Mt,0
+Southeast Asia,Alumina,29,2002,Mt,0
+Southeast Asia,Alumina,29,2003,Mt,0
+Southeast Asia,Alumina,29,2004,Mt,0
+Southeast Asia,Alumina,29,2005,Mt,0
+Southeast Asia,Alumina,29,2006,Mt,0
+Southeast Asia,Alumina,29,2007,Mt,0
+Southeast Asia,Alumina,29,2008,Mt,0
+Southeast Asia,Alumina,29,2009,Mt,0.013009153
+Southeast Asia,Alumina,29,2010,Mt,0
+Southeast Asia,Alumina,29,2011,Mt,0.057298077
+Southeast Asia,Alumina,29,2012,Mt,0.07737352
+Southeast Asia,Alumina,29,2013,Mt,0.162609964
+Southeast Asia,Alumina,29,2014,Mt,0.212258774
+Southeast Asia,Alumina,29,2015,Mt,0.208864741
+Southeast Asia,Aluminum,29,1990,Mt,0
+Southeast Asia,Aluminum,29,1991,Mt,0
+Southeast Asia,Aluminum,29,1992,Mt,0
+Southeast Asia,Aluminum,29,1993,Mt,0
+Southeast Asia,Aluminum,29,1994,Mt,0
+Southeast Asia,Aluminum,29,1995,Mt,0
+Southeast Asia,Aluminum,29,1996,Mt,0
+Southeast Asia,Aluminum,29,1997,Mt,0
+Southeast Asia,Aluminum,29,1998,Mt,0
+Southeast Asia,Aluminum,29,1999,Mt,0
+Southeast Asia,Aluminum,29,2000,Mt,0
+Southeast Asia,Aluminum,29,2001,Mt,0
+Southeast Asia,Aluminum,29,2002,Mt,0
+Southeast Asia,Aluminum,29,2003,Mt,0
+Southeast Asia,Aluminum,29,2004,Mt,0
+Southeast Asia,Aluminum,29,2005,Mt,0
+Southeast Asia,Aluminum,29,2006,Mt,0
+Southeast Asia,Aluminum,29,2007,Mt,0
+Southeast Asia,Aluminum,29,2008,Mt,0
+Southeast Asia,Aluminum,29,2009,Mt,0.025085519
+Southeast Asia,Aluminum,29,2010,Mt,0
+Southeast Asia,Aluminum,29,2011,Mt,0.068274933
+Southeast Asia,Aluminum,29,2012,Mt,0.099639699
+Southeast Asia,Aluminum,29,2013,Mt,0.226467454
+Southeast Asia,Aluminum,29,2014,Mt,0.292650602
+Southeast Asia,Aluminum,29,2015,Mt,0.321048409
+Taiwan,Alumina,30,1990,Mt,0
+Taiwan,Alumina,30,1991,Mt,0
+Taiwan,Alumina,30,1992,Mt,0
+Taiwan,Alumina,30,1993,Mt,0
+Taiwan,Alumina,30,1994,Mt,0
+Taiwan,Alumina,30,1995,Mt,0
+Taiwan,Alumina,30,1996,Mt,0
+Taiwan,Alumina,30,1997,Mt,0
+Taiwan,Alumina,30,1998,Mt,0
+Taiwan,Alumina,30,1999,Mt,0
+Taiwan,Alumina,30,2000,Mt,0
+Taiwan,Alumina,30,2001,Mt,0
+Taiwan,Alumina,30,2002,Mt,0
+Taiwan,Alumina,30,2003,Mt,0
+Taiwan,Alumina,30,2004,Mt,0
+Taiwan,Alumina,30,2005,Mt,0
+Taiwan,Alumina,30,2006,Mt,0
+Taiwan,Alumina,30,2007,Mt,0
+Taiwan,Alumina,30,2008,Mt,0
+Taiwan,Alumina,30,2009,Mt,0
+Taiwan,Alumina,30,2010,Mt,0
+Taiwan,Alumina,30,2011,Mt,0
+Taiwan,Alumina,30,2012,Mt,0
+Taiwan,Alumina,30,2013,Mt,0
+Taiwan,Alumina,30,2014,Mt,0
+Taiwan,Alumina,30,2015,Mt,0
+Taiwan,Aluminum,30,1990,Mt,0
+Taiwan,Aluminum,30,1991,Mt,0
+Taiwan,Aluminum,30,1992,Mt,0
+Taiwan,Aluminum,30,1993,Mt,0
+Taiwan,Aluminum,30,1994,Mt,0
+Taiwan,Aluminum,30,1995,Mt,0
+Taiwan,Aluminum,30,1996,Mt,0
+Taiwan,Aluminum,30,1997,Mt,0
+Taiwan,Aluminum,30,1998,Mt,0
+Taiwan,Aluminum,30,1999,Mt,0
+Taiwan,Aluminum,30,2000,Mt,0
+Taiwan,Aluminum,30,2001,Mt,0
+Taiwan,Aluminum,30,2002,Mt,0
+Taiwan,Aluminum,30,2003,Mt,0
+Taiwan,Aluminum,30,2004,Mt,0
+Taiwan,Aluminum,30,2005,Mt,0
+Taiwan,Aluminum,30,2006,Mt,0
+Taiwan,Aluminum,30,2007,Mt,0
+Taiwan,Aluminum,30,2008,Mt,0
+Taiwan,Aluminum,30,2009,Mt,0
+Taiwan,Aluminum,30,2010,Mt,0
+Taiwan,Aluminum,30,2011,Mt,0
+Taiwan,Aluminum,30,2012,Mt,0
+Taiwan,Aluminum,30,2013,Mt,0
+Taiwan,Aluminum,30,2014,Mt,0
+Taiwan,Aluminum,30,2015,Mt,0
+Argentina,Alumina,31,1990,Mt,0.666784936
+Argentina,Alumina,31,1991,Mt,0.627181949
+Argentina,Alumina,31,1992,Mt,0.613904841
+Argentina,Alumina,31,1993,Mt,0.633649724
+Argentina,Alumina,31,1994,Mt,0.700177485
+Argentina,Alumina,31,1995,Mt,0.746001185
+Argentina,Alumina,31,1996,Mt,0.797797127
+Argentina,Alumina,31,1997,Mt,0.84557467
+Argentina,Alumina,31,1998,Mt,0.932741733
+Argentina,Alumina,31,1999,Mt,1.047502625
+Argentina,Alumina,31,2000,Mt,1.363537393
+Argentina,Alumina,31,2001,Mt,1.305523987
+Argentina,Alumina,31,2002,Mt,1.327759162
+Argentina,Alumina,31,2003,Mt,1.479707755
+Argentina,Alumina,31,2004,Mt,1.482418496
+Argentina,Alumina,31,2005,Mt,1.477989405
+Argentina,Alumina,31,2006,Mt,1.609361334
+Argentina,Alumina,31,2007,Mt,1.593621057
+Argentina,Alumina,31,2008,Mt,2.306449072
+Argentina,Alumina,31,2009,Mt,2.16553506
+Argentina,Alumina,31,2010,Mt,2.480309803
+Argentina,Alumina,31,2011,Mt,2.757767442
+Argentina,Alumina,31,2012,Mt,2.774667641
+Argentina,Alumina,31,2013,Mt,3.002798956
+Argentina,Alumina,31,2014,Mt,3.776491569
+Argentina,Alumina,31,2015,Mt,4.153725831
+Argentina,Aluminum,31,1990,Mt,0.166278679
+Argentina,Aluminum,31,1991,Mt,0.165830816
+Argentina,Aluminum,31,1992,Mt,0.162170953
+Argentina,Aluminum,31,1993,Mt,0.161519337
+Argentina,Aluminum,31,1994,Mt,0.17535497
+Argentina,Aluminum,31,1995,Mt,0.187457395
+Argentina,Aluminum,31,1996,Mt,0.185823613
+Argentina,Aluminum,31,1997,Mt,0.184476909
+Argentina,Aluminum,31,1998,Mt,0.187361178
+Argentina,Aluminum,31,1999,Mt,0.205803341
+Argentina,Aluminum,31,2000,Mt,0.262484512
+Argentina,Aluminum,31,2001,Mt,0.24401951
+Argentina,Aluminum,31,2002,Mt,0.268879426
+Argentina,Aluminum,31,2003,Mt,0.274534161
+Argentina,Aluminum,31,2004,Mt,0.272346791
+Argentina,Aluminum,31,2005,Mt,0.272569992
+Argentina,Aluminum,31,2006,Mt,0.273548633
+Argentina,Aluminum,31,2007,Mt,0.273350946
+Argentina,Aluminum,31,2008,Mt,0.39355614
+Argentina,Aluminum,31,2009,Mt,0.412670916
+Argentina,Aluminum,31,2010,Mt,0.420098339
+Argentina,Aluminum,31,2011,Mt,0.406511628
+Argentina,Aluminum,31,2012,Mt,0.413
+Argentina,Aluminum,31,2013,Mt,0.437932115
+Argentina,Aluminum,31,2014,Mt,0.442286641
+Argentina,Aluminum,31,2015,Mt,0.433327039
+Colombia,Alumina,32,1990,Mt,0
+Colombia,Alumina,32,1991,Mt,0
+Colombia,Alumina,32,1992,Mt,0
+Colombia,Alumina,32,1993,Mt,0
+Colombia,Alumina,32,1994,Mt,0
+Colombia,Alumina,32,1995,Mt,0
+Colombia,Alumina,32,1996,Mt,0
+Colombia,Alumina,32,1997,Mt,0
+Colombia,Alumina,32,1998,Mt,0
+Colombia,Alumina,32,1999,Mt,0
+Colombia,Alumina,32,2000,Mt,0
+Colombia,Alumina,32,2001,Mt,0
+Colombia,Alumina,32,2002,Mt,0
+Colombia,Alumina,32,2003,Mt,0
+Colombia,Alumina,32,2004,Mt,0
+Colombia,Alumina,32,2005,Mt,0
+Colombia,Alumina,32,2006,Mt,0
+Colombia,Alumina,32,2007,Mt,0
+Colombia,Alumina,32,2008,Mt,0
+Colombia,Alumina,32,2009,Mt,0
+Colombia,Alumina,32,2010,Mt,0
+Colombia,Alumina,32,2011,Mt,0
+Colombia,Alumina,32,2012,Mt,0
+Colombia,Alumina,32,2013,Mt,0
+Colombia,Alumina,32,2014,Mt,0
+Colombia,Alumina,32,2015,Mt,0
+Colombia,Aluminum,32,1990,Mt,0
+Colombia,Aluminum,32,1991,Mt,0
+Colombia,Aluminum,32,1992,Mt,0
+Colombia,Aluminum,32,1993,Mt,0
+Colombia,Aluminum,32,1994,Mt,0
+Colombia,Aluminum,32,1995,Mt,0
+Colombia,Aluminum,32,1996,Mt,0
+Colombia,Aluminum,32,1997,Mt,0
+Colombia,Aluminum,32,1998,Mt,0
+Colombia,Aluminum,32,1999,Mt,0
+Colombia,Aluminum,32,2000,Mt,0
+Colombia,Aluminum,32,2001,Mt,0
+Colombia,Aluminum,32,2002,Mt,0
+Colombia,Aluminum,32,2003,Mt,0
+Colombia,Aluminum,32,2004,Mt,0
+Colombia,Aluminum,32,2005,Mt,0
+Colombia,Aluminum,32,2006,Mt,0
+Colombia,Aluminum,32,2007,Mt,0
+Colombia,Aluminum,32,2008,Mt,0
+Colombia,Aluminum,32,2009,Mt,0
+Colombia,Aluminum,32,2010,Mt,0
+Colombia,Aluminum,32,2011,Mt,0
+Colombia,Aluminum,32,2012,Mt,0
+Colombia,Aluminum,32,2013,Mt,0
+Colombia,Aluminum,32,2014,Mt,0
+Colombia,Aluminum,32,2015,Mt,0

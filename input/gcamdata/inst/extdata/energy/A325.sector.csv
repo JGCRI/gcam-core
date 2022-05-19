@@ -1,0 +1,9 @@
+# File: A325.sector.csv
+# Title:  chemical sector default supplysector information (units and logit exponents)
+# Units: In file
+# Column types: ccccicc
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
+chemical,EJ,EJ,1975$/GJ,-3,,
+chemical energy use,EJ,EJ,1975$/GJ,-3,industry,
+chemical feedstocks,EJ,EJ,1975$/GJ,-1,industry,

@@ -1,0 +1,61 @@
+# File: IAA_ctry_region.csv
+# Title: ISO to International Aluminum Institute region mapping
+# Units: NA
+# Description: Maps iso codes to IAA regions by data type
+# Column types: ccccc
+# ----------
+iso,region_aluminum_prod,region_alumina_prod,region_aluminum_en,region_alumina_en
+arg,South America,South America,South America,South America
+aus,Oceania,Oceania,Oceania,Oceania
+aut,West Europe,West Europe,Europe,Europe
+bhr,GCC,Africa & Asia (ex China),GCC,GCC
+bra,South America,South America,South America,South America
+cmr,Africa,Africa & Asia (ex China),Africa,Africa & Asia (ex China)
+can,North America,North America,North America,North America
+chn,China (Estimated),China (Estimated),China,China
+cze,East & Central Europe,East & Central Europe,Europe,Europe
+egy,Africa,Africa & Asia (ex China),Africa,Africa & Asia (ex China)
+fra,West Europe,West Europe,Europe,Europe
+deu,West Europe,West Europe,Europe,Europe
+gha,Africa,Africa & Asia (ex China),Africa,Africa & Asia (ex China)
+grc,West Europe,West Europe,Europe,Europe
+hun,East & Central Europe,East & Central Europe,Europe,Europe
+isl,West Europe,West Europe,Europe,Europe
+ind,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+idn,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+irn,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+ita,West Europe,West Europe,Europe,Europe
+jpn,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+mex,South America,South America,South America,South America
+nld,West Europe,West Europe,Europe,Europe
+nzl,Oceania,Oceania,Oceania,Oceania
+nor,West Europe,West Europe,Europe,Europe
+pol,East & Central Europe,East & Central Europe,Europe,Europe
+rom,East & Central Europe,East & Central Europe,Europe,Europe
+zaf,Africa,Africa & Asia (ex China),Africa,Africa & Asia (ex China)
+esp,West Europe,West Europe,Europe,Europe
+sur,South America,South America,South America,South America
+swe,West Europe,West Europe,Europe,Europe
+che,West Europe,West Europe,Europe,Europe
+tur,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+are,GCC,Africa & Asia (ex China),GCC,GCC
+gbr,West Europe,West Europe,Europe,Europe
+usa,North America,North America,North America,North America
+ven,South America,South America,South America,South America
+aze,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+bih,East & Central Europe,East & Central Europe,Europe,Europe
+hrv,East & Central Europe,East & Central Europe,Europe,Europe
+rus,East & Central Europe,East & Central Europe,Europe,Europe
+scg,East & Central Europe,East & Central Europe,Europe,Europe
+svn,East & Central Europe,East & Central Europe,Europe,Europe
+tjk,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+ukr,East & Central Europe,East & Central Europe,Europe,Europe
+svk,East & Central Europe,East & Central Europe,Europe,Europe
+nga,Africa,Africa & Asia (ex China),Africa,Africa & Asia (ex China)
+moz,Africa,Africa & Asia (ex China),Africa,Africa & Asia (ex China)
+mne,East & Central Europe,East & Central Europe,Europe,Europe
+kaz,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+omn,GCC,Africa & Asia (ex China),GCC,GCC
+mys,Asia (ex China),Africa & Asia (ex China),Asia (ex China),Africa & Asia (ex China)
+qat,GCC,Africa & Asia (ex China),GCC,GCC
+sau,GCC,Africa & Asia (ex China),GCC,GCC

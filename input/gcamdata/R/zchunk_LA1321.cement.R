@@ -31,7 +31,8 @@ module_energy_LA1321.cement <- function(command, ...) {
              "L102.CO2_Mt_R_F_Yh",
              "L123.in_EJ_R_elec_F_Yh",
              "L123.out_EJ_R_elec_F_Yh",
-             "L132.in_EJ_R_indenergy_F_Yh"))
+             "L132.in_EJ_R_indenergy_F_Yh",
+             "L1011.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1321.out_Mt_R_cement_Yh",
              "L1321.IO_GJkg_R_cement_F_Yh",
@@ -63,6 +64,7 @@ module_energy_LA1321.cement <- function(command, ...) {
     L123.in_EJ_R_elec_F_Yh <- get_data(all_data, "L123.in_EJ_R_elec_F_Yh")
     L123.out_EJ_R_elec_F_Yh <- get_data(all_data, "L123.out_EJ_R_elec_F_Yh")
     L132.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L132.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
+    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
 
     # ===================================================
     # 2. Perform computations
@@ -319,6 +321,31 @@ module_energy_LA1321.cement <- function(command, ...) {
       bind_rows(L1321.in_EJ_R_cement_F_Y_base) ->
       L1321.in_EJ_R_cement_F_Y
 
+    # ---------------------------------------------------------------------------------------------------------------------
+    ## 7/30/21: Modification for detailed industry
+    ## Manually adjust coal use in South Korea, so there is enough left for iron and steel sector
+    ## Upper bound is IEA coal consumption in non-metallic minerals
+
+    L1321.in_EJ_R_cement_F_Y %>%
+      left_join(L1011.en_bal_EJ_R_Si_Fi_Yh %>% filter(sector == "cement") %>% select(-sector),
+                by = c("GCAM_region_ID", "year", "fuel")) %>%
+      mutate(value = if_else(fuel == "coal" & GCAM_region_ID == 28 & value.x > value.y, value.y, value.x),
+             neg = if_else(fuel == "coal" & GCAM_region_ID == 28 & value.x > value.y, value.y - value.x, 0)) ->
+      L1321.in_EJ_R_cement_F_Y_adj
+
+    # extra coal use will be moved to biomass
+    L1321.in_EJ_R_cement_F_Y_adj %>%
+      filter(neg < 0) %>%
+      select(GCAM_region_ID, sector, fuel, year, value=neg) ->
+      korea_coal_neg_en
+
+    # Replace cement energy data frame with adjusted version
+    L1321.in_EJ_R_cement_F_Y_adj %>%
+      select(-value.x, -value.y, -neg) ->
+      L1321.in_EJ_R_cement_F_Y
+    # ---------------------------------------------------------------------------------------------------------------------
+
+
     # Calculate remaining industrial energy use (input), subtracting cement production energy from energy balances
     # ------------------------------------------------------------------------------------------------------------
 
@@ -360,6 +387,8 @@ module_energy_LA1321.cement <- function(command, ...) {
       L1321.cement_adj_neg
 
     L1321.cement_adj_neg %>%
+      # STEEL DECARONBONIZATION MODIFICATION: add korea excess coal to biomass
+      bind_rows(korea_coal_neg_en) %>%
       mutate(fuel = "biomass") %>%
       group_by(GCAM_region_ID, sector, fuel, year) %>%
       summarise(value = sum(value) * -1) %>%
@@ -406,7 +435,7 @@ module_energy_LA1321.cement <- function(command, ...) {
       add_comments("Multiplied by raw fuel shares, all from IEA") %>%
       add_legacy_name("L1321.in_EJ_R_cement_F_Y") %>%
       add_precursors("L100.CDIAC_CO2_ctry_hist", "L102.CO2_Mt_R_F_Yh", "L123.in_EJ_R_elec_F_Yh", "L123.out_EJ_R_elec_F_Yh", "energy/IEA_cement_elec_kwht",
-                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "common/iso_GCAM_regID") ->
+                     "energy/IEA_cement_TPE_GJt", "energy/IEA_cement_fuelshares", "common/iso_GCAM_regID", "L1011.en_bal_EJ_R_Si_Fi_Yh") ->
       L1321.in_EJ_R_cement_F_Y
 
     L1321.in_EJ_R_indenergy_F_Yh %>%
