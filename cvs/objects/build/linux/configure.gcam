@@ -11,7 +11,7 @@ endif
 ifeq ($(strip $(CC)),)
 CC		= gcc
 endif
-CXXOPTIM        = -O2 -pthread
+CXXOPTIM        = -O3 -pthread
 CXXDEBUG        = -ggdb -DNDEBUG -DFUSION_MAX_VECTOR_SIZE=30
 CXXBASEOPTS     = $(CXXDEBUG)
 
@@ -58,6 +58,10 @@ ifeq ($(USE_HECTOR),1)
 
   HECTOR_INCLUDE = -I../../climate/source/hector/headers
 
+  ifeq ($(strip $(BOOST_LIB)),)
+    $(error Unable to detect Boost lib path, please set env variable BOOST_LIB)
+  endif
+
   HECTOR_LIB = -L$(BOOST_LIB) -Wl,-rpath,$(BOOST_LIB) -lhector -lboost_system -lboost_filesystem
 endif  # if(USE_HECTOR==1)
 
@@ -83,11 +87,26 @@ else
 endif
 #
 ifneq ($(USE_GCAM_PARALLEL),0) 
+ifeq ($(strip $(TBB_INC)),)
+  $(error Unable to detect TBB include path, please set env variable TBB_INCLUDE)
+endif
+ifeq ($(strip $(TBB_LIBRARY)),)
+  $(error Unable to detect TBB lib path, please set env variable TBB_LIB)
+endif
 TBB_LIB_IMPORT		= -l$(LIBTBB) -l$(LIBTBBMALLOC) -l$(LIBTBBMALLOC_PROXY)
 endif
 
 # Set up Java paths for compiling via environment variables if we are using it
 ifneq ($(HAVE_JAVA),0) 
+ifeq ($(strip $(JAVA_INCLUDE)),)
+  $(error Unable to detect Java include path, please set env variable JAVA_INCLUDE)
+endif
+ifeq ($(strip $(JAVA_LIB)),)
+  $(error Unable to detect Java lib path, please set env variable JAVA_LIB)
+endif
+ifeq ($(strip $(JARS_LIB)),)
+  $(error Unable to detect Jar lib path, please set env variable JARS_LIB)
+endif
 ## custom values set by environment variables
 OSNAME_LOWERCASE := $(shell uname -s | tr '[:upper:]' '[:lower:]')
 JAVAINC = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/$(OSNAME_LOWERCASE)
@@ -108,6 +127,14 @@ endif
 ### locations of library include files
 # BOOST_INCLUDE should be set in the user environment on Evergreen by running 'tap boost'.
 BOOSTINC	      = $(BOOST_INCLUDE)
+ifeq ($(strip $(BOOST_INCLUDE)),)
+  $(error Unable to detect Boost include path, please set env variable BOOST_INCLUDE)
+endif
+
+
+ifeq ($(strip $(EIGEN_INCLUDE)),)
+  $(error Unable to detect Eigen include path, please set env variable EIGEN_INCLUDE)
+endif
 
 #
 ### locations of libraries
