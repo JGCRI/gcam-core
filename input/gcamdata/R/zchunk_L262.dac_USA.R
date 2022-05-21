@@ -26,7 +26,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
              FILE = "gcam-usa/Dooley_CCS_USA",
              FILE = "energy/calibrated_techs_cdr",
              FILE = "energy/A62.demand",
-             "L202.CarbonCoef",
+             "L262.CarbonCoef_dac",
              "L262.GlobalTechCoef_dac",
              "L262.Supplysector_dac",
              "L262.FinalEnergyKeyword_dac",
@@ -77,7 +77,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
     L262.PerCapitaBased_dac <- get_data(all_data, "L262.PerCapitaBased_dac", strip_attributes = TRUE)
     L262.PriceElasticity_dac <- get_data(all_data, "L262.PriceElasticity_dac", strip_attributes = TRUE)
     L262.StubTechProd_dac <- get_data(all_data, "L262.StubTechProd_dac", strip_attributes = TRUE)
-    L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef", strip_attributes = TRUE)
+    L262.CarbonCoef_dac <- get_data(all_data, "L262.CarbonCoef_dac", strip_attributes = TRUE)
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline
@@ -143,7 +143,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
     L262.StubTech_dac_USA <- dac_USA_processing(L262.StubTech_dac, gcamusa.STATES)
     L262.PerCapitaBased_dac_USA <- dac_USA_processing(L262.PerCapitaBased_dac, gcamusa.STATES)
     L262.PriceElasticity_dac_USA <- dac_USA_processing(L262.PriceElasticity_dac, gcamusa.STATES)
-    L262.CarbonCoef_dac_USA <- dac_USA_processing(L202.CarbonCoef %>% filter(PrimaryFuelCO2Coef.name == "airCO2"), gcamusa.STATES)
+    L262.CarbonCoef_dac_USA <- dac_USA_processing(L262.CarbonCoef_dac, gcamusa.STATES)
 
     L262.GlobalTechCoef_dac_USA <- dac_USA_processing(L262.GlobalTechCoef_dac %>%
                                                         mutate(region = gcam.USA_REGION), gcamusa.STATES)
@@ -369,7 +369,7 @@ module_gcamdata_L262.dac_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("copy the same value 1 to all states") %>%
       add_legacy_name("L262.CarbonCoef_dac_USA") %>%
-      add_precursors("L202.CarbonCoef") ->
+      add_precursors("L262.CarbonCoef_dac") ->
       L262.CarbonCoef_dac_USA
 
 
