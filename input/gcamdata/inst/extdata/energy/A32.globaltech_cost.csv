@@ -1,22 +1,22 @@
 # File: A32.globaltech_cost.csv
 # Title: Industry default costs
 # Units: 1975$/GJ
-# Column types: ccccnn 
+# Column types: ccccnn
 # ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2100
-industrial energy use,biomass,biomass,non-energy,3,3
-industrial energy use,biomass,biomass cogen,non-energy,4.5,4.5
-industrial energy use,coal,coal,non-energy,3,3
-industrial energy use,coal,coal cogen,non-energy,4.5,4.5
-industrial energy use,district heat,district heat,non-energy,3,3
-industrial energy use,electricity,electricity,non-energy,3,3
-industrial energy use,gas,gas,non-energy,3,3
-industrial energy use,gas,gas cogen,non-energy,4.5,4.5
-industrial energy use,hydrogen,hydrogen,non-energy,3,3
-industrial energy use,hydrogen,hydrogen cogen,non-energy,4.5,4.5
-industrial energy use,refined liquids,refined liquids,non-energy,3,3
-industrial energy use,refined liquids,refined liquids cogen,non-energy,4.5,4.5
-industrial feedstocks,coal,coal,non-energy,0,0
-industrial feedstocks,gas,gas,non-energy,0,0
-industrial feedstocks,refined liquids,refined liquids,non-energy,0,0
-industry,industry,industry,non-energy,25,25
+other industrial energy use,biomass,biomass,non-energy,3,3
+other industrial energy use,biomass,biomass cogen,non-energy,4.5,4.5
+other industrial energy use,coal,coal,non-energy,3,3
+other industrial energy use,coal,coal cogen,non-energy,4.5,4.5
+other industrial energy use,district heat,district heat,non-energy,3,3
+other industrial energy use,electricity,electricity,non-energy,3,3
+other industrial energy use,gas,gas,non-energy,3,3
+other industrial energy use,gas,gas cogen,non-energy,4.5,4.5
+other industrial energy use,hydrogen,hydrogen,non-energy,3,3
+other industrial energy use,hydrogen,hydrogen cogen,non-energy,4.5,4.5
+other industrial energy use,refined liquids,refined liquids,non-energy,3,3
+other industrial energy use,refined liquids,refined liquids cogen,non-energy,4.5,4.5
+other industrial feedstocks,coal,coal,non-energy,0,0
+other industrial feedstocks,gas,gas,non-energy,0,0
+other industrial feedstocks,refined liquids,refined liquids,non-energy,0,0
+other industry,other industry,other industry,non-energy,25,25

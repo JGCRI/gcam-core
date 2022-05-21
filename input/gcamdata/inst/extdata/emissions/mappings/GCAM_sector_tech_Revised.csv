@@ -62,10 +62,10 @@ industrial processes,nitric acid,nitric acid,industrial processes,nitric acid,ni
 industrial processes,other industrial processes,other industrial processes,industrial processes,other industrial processes,other industrial processes,industry_processes,other,other,industry_processes,,,,,
 industrial processes,semiconductors,semiconductors,industrial processes,semiconductors,semiconductors,semiconductors,all,all,semiconductors,,,,Semiconductor Manufacturing,
 industrial processes,solvents,solvents,industrial processes,solvents,solvents,solvents,all,all,solvents,,,,Solvent Use,
-industry_energy,biomass,biomass,industrial energy use,biomass,biomass,industry_energy,biomass,biomass,industry_energy,ind,industry_energy,biomass,,ind_bio
-industry_energy,coal,coal,industrial energy use,coal,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,ind_coal
-industry_energy,gas,gas,industrial energy use,gas,gas,industry_energy,gas,gas,industry_energy,ind,industry_energy,gas,,ind_gas
-industry_energy,refined liquids,refined liquids,industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids,refined liquids,industry_energy,ind,industry_energy,refined liquids,,ind_oil
+industry_energy,biomass,biomass,other industrial energy use,biomass,biomass,industry_energy,biomass,biomass,industry_energy,ind,industry_energy,biomass,,ind_bio
+industry_energy,coal,coal,other industrial energy use,coal,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,ind_coal
+industry_energy,gas,gas,other industrial energy use,gas,gas,industry_energy,gas,gas,industry_energy,ind,industry_energy,gas,,ind_gas
+industry_energy,refined liquids,refined liquids,other industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids,refined liquids,industry_energy,ind,industry_energy,refined liquids,,ind_oil
 Legumes,,,Legumes,,,,,,,,,,Cropland Management,
 MiscCrop,,,MiscCrop,,,,,,,,,,Cropland Management,
 N fertilizer,coal,coal,N fertilizer,coal,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,

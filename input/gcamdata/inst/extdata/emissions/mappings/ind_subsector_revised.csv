@@ -1,0 +1,31 @@
+# File: ind_subsector_revised.csv
+# Title: Mapping from calibrated industry sectors and fuels to supplysector / subsector / technology / input in GCAM to generate non-CO2 emissions
+# Units: n/a
+# Column types: ccccccccc
+# ----------
+sector,fuel,supplysector,subsector.original,subsector.emissions,technology,minicam.energy.input,calibration,secondary.output
+iron and steel,coal,iron and steel,BLASTFUR,coal,BLASTFUR,delivered coal,output,
+iron and steel,refined liquids,iron and steel,BLASTFUR,refined liquids,BLASTFUR,refined liquids industrial,output,
+iron and steel,electricity,iron and steel,BLASTFUR,electricity,BLASTFUR,elect_td_ind,output,
+iron and steel,gas,iron and steel,BLASTFUR,gas,BLASTFUR,wholesale gas,output,
+iron and steel,coal,iron and steel,BLASTFUR,coal,BLASTFUR CCS,delivered coal,output,
+iron and steel,refined liquids,iron and steel,BLASTFUR,refined liquids,BLASTFUR CCS,refined liquids industrial,output,
+iron and steel,electricity,iron and steel,BLASTFUR,electricity,BLASTFUR CCS,elect_td_ind,output,
+iron and steel,gas,iron and steel,BLASTFUR,gas,BLASTFUR CCS,wholesale gas,output,
+iron and steel,biomass,iron and steel,BLASTFUR,biomass,Biomass-based,delivered biomass,output,
+iron and steel,refined liquids,iron and steel,BLASTFUR,refined liquids,Biomass-based,refined liquids industrial,output,
+iron and steel,electricity,iron and steel,BLASTFUR,electricity,Biomass-based,elect_td_ind,output,
+iron and steel,gas,iron and steel,BLASTFUR,gas,Biomass-based,wholesale gas,output,
+iron and steel,coal,iron and steel,EAF with DRI,coal,EAF with DRI,delivered coal,output,
+iron and steel,refined liquids,iron and steel,EAF with DRI,refined liquids,EAF with DRI,refined liquids industrial,output,
+iron and steel,electricity,iron and steel,EAF with DRI,electricity,EAF with DRI,elect_td_ind,output,
+iron and steel,gas,iron and steel,EAF with DRI,gas,EAF with DRI,wholesale gas,output,
+iron and steel,coal,iron and steel,EAF with DRI,coal,EAF with DRI CCS,delivered coal,output,
+iron and steel,refined liquids,iron and steel,EAF with DRI,refined liquids,EAF with DRI CCS,refined liquids industrial,output,
+iron and steel,electricity,iron and steel,EAF with DRI,electricity,EAF with DRI CCS,elect_td_ind,output,
+iron and steel,gas,iron and steel,EAF with DRI,gas,EAF with DRI CCS,wholesale gas,output,
+iron and steel,hydrogen,iron and steel,EAF with DRI,hydrogen,Hydrogen-based DRI,H2 enduse,output,
+iron and steel,electricity,iron and steel,EAF with DRI,electricity,Hydrogen-based DRI,elect_td_ind,output,
+iron and steel,refined liquids,iron and steel,EAF with scrap,refined liquids,EAF with scrap,refined liquids industrial,output,
+iron and steel,electricity,iron and steel,EAF with scrap,electricity,EAF with scrap,elect_td_ind,output,
+iron and steel,scrap,iron and steel,EAF with scrap,scrap,EAF with scrap,scrap,output,

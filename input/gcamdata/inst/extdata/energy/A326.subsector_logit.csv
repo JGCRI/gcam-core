@@ -1,0 +1,12 @@
+# File: A326.subsector_logit.csv
+# Title: aluminum default subsector logit exponents
+# Units: Unitless
+# Column types: ccic
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+alumina,refined liquids,-6,
+alumina,gas,-6,
+alumina,biomass,-6,
+alumina,heat,-6,
+alumina,coal,-6,
+aluminum,electricity,-6,

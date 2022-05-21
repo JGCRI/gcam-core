@@ -1,0 +1,32 @@
+# File: A325.inc_elas.csv
+# Title:  chemical demand income elasticity as a function of per-capita gdp
+# Units: inc_elas:unitless (% change in service demand / % change in income)
+# Column types: cnn
+# ----------
+sector,pcgdp_90thousUSD,inc_elas
+chemical,0,0.01
+chemical,1,0.12
+chemical,2,0.22
+chemical,3,0.31
+chemical,4,0.39
+chemical,5,0.45
+chemical,6,0.51
+chemical,7,0.55
+chemical,8,0.58
+chemical,9,0.59
+chemical,10,0.60
+chemical,11,0.59
+chemical,12,0.58
+chemical,13,0.55
+chemical,14,0.51
+chemical,15,0.45
+chemical,16,0.39
+chemical,17,0.31
+chemical,18,0.22
+chemical,19,0.12
+chemical,20,0.01
+chemical,21,-0.01
+chemical,22,-0.01
+chemical,23,-0.01
+chemical,24,-0.01
+chemical,25,-0.01

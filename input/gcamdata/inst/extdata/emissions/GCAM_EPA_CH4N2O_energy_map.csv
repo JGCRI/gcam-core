@@ -14,10 +14,10 @@ electricity,coal,coal (conv pul),Combustion_general
 electricity,gas,gas (CC),Combustion_general
 electricity,gas,gas (steam/CT),Combustion_general
 electricity,refined liquids,refined liquids (steam/CT),Combustion_general
-industrial energy use,biomass,biomass,Combustion_Bio
-industrial energy use,coal,coal,Combustion_general
-industrial energy use,gas,gas,Combustion_general
-industrial energy use,refined liquids,refined liquids,Combustion_general
+other industrial energy use,biomass,biomass,Combustion_Bio
+other industrial energy use,coal,coal,Combustion_general
+other industrial energy use,gas,gas,Combustion_general
+other industrial energy use,refined liquids,refined liquids,Combustion_general
 N fertilizer,coal,coal,Combustion_general
 N fertilizer,gas,gas,Combustion_general
 N fertilizer,refined liquids,refined liquids,Combustion_general

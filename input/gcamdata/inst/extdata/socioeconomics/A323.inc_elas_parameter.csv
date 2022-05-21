@@ -1,0 +1,38 @@
+# File: A323.inc_elas_parameter.csv
+# Title: IRONSTL demand income elasticity as a function of  per capita steel=aexp(b/per-capita gdp)(1-m)^(T-base year)+(delta-delta x exp(-Phi x exp(- miu x ( t- base year)))); delta is difference between real and project data in base year
+# Units: pcgdp_90thousUSD: Thousand 1990$; inc_elas:unitless (% change in service demand / % change in income
+# Column types: cnnnnn
+# ----------
+region,a,b,Phi,miu,m
+Africa_Eastern,100,-4882.271694,8,0.8,0.01
+Africa_Northern,1.00E+02,-2813.459331,8,0.8,0.01
+Africa_Southern,100,-11891,8,0.8,0.01
+Africa_Western,100,-8498.946643,8,0.8,0.01
+Argentina,634.7,-18506.22659,8,0.8,0.01
+Australia_NZ,270.0457832,-11891,8,0.8,0.01
+Brazil,634.7,-13251.98689,8,0.8,0.01
+Canada,475.0116069,-11891,8,0.8,0.01
+Central America and Caribbean,634.7,-14997.3906,8,0.8,0.01
+Central Asia,634.7,-10131.29061,8,0.8,0.01
+China,890,-2182.10749,8,0.8,0.01
+Colombia,634.7,-21189.7154,8,0.8,0.01
+EU-12,634.7,-11215.07512,8,0.8,0.01
+EU-15,515.7,-12141.61177,8,0.8,0.01
+Europe_Eastern,634.7,-847.3624891,8,0.8,0.01
+Europe_Non_EU,634.7,-5492.370183,8,0.8,0.01
+European Free Trade Association,634.7,-98529.42617,8,0.8,0.01
+India,634.7,-3558.315549,8,0.8,0.01
+Indonesia,634.7,-11575.21906,8,0.8,0.01
+Japan,1170.957516,-11891,8,0.8,0.01
+Mexico,634.7,-12647.87556,8,0.8,0.01
+Middle East,634.7,-14089.32426,8,0.8,0.01
+Pakistan,634.7,-3786.134582,8,0.8,0.01
+Russia,634.7,-2004.164335,8,0.8,0.01
+South Africa,634.7,-11244.86106,8,0.8,0.01
+South America_Northern,634.7,-28964.67645,8,0.8,0.01
+South America_Southern,634.7,-19118.95654,8,0.8,0.01
+South Asia,634.7,-6501.279206,8,0.8,0.01
+South Korea,1170.957516,5820.452936,8,0.8,0.01
+Southeast Asia,634.7,-9794.254108,8,0.8,0.01
+Taiwan,634.7,8040.521285,8,0.8,0.01
+USA,327.6743108,-11891,8,0.8,0.01

@@ -17,4 +17,5 @@ traditional biomass,renewresource,regional,EJ,1975$/GJ,0.25,0.25,0.25,0.25,0.25,
 global solar resource,unlimited-resource,global,EJ,1975$/GJ,0.001,0.001,0.001,0.001,0.001,0.001
 limestone,unlimited-resource,global,Mt,1975$/kg,0.001,0.001,0.001,0.001,0.001,0.001
 offshore wind resource,renewresource,regional,EJ,1975$/GJ,0.05,0.05,0.05,0.05,0.05,0.05
+scrap,unlimited-resource,global,Mt,1975$/kg,0.001,0.001,0.001,0.001,0.001,0.001
 unconventional oil upscaling,unlimited-resource,global,EJ,1975$/GJ,0.001,0.001,0.001,0.001,0.001,0.001
