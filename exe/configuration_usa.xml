@@ -113,6 +113,7 @@
 		<Value name = "no_new_coal_usa">../input/gcamdata/xml/nonewcoal_USA.xml</Value>
 		<Value name = "ITC_usa">../input/gcamdata/xml/elecS_costs_USA_itc.xml</Value>
 		<Value name = "PTC_usa">../input/gcamdata/xml/elecS_costs_USA_ptc.xml</Value>
+		<Value name = "geothermal_usa">../input/gcamdata/xml/geothermal_fixed_USA.xml</Value>
 
 		<Value name = "liq_lim_usa">../input/gcamdata/xml/liquids_limits_USA.xml</Value>
 		<Value name = "neg_emiss_usa">../input/gcamdata/xml/negative_emissions_budget_USA_gSSP2.xml</Value>
