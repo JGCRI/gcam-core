@@ -128,7 +128,7 @@ void LinearControl::completeInit( const string& aRegionName, const string& aSect
                                const IInfo* aTechInfo )
 {
 
-    if ( ( mTargetYear == 0 ) || !mFinalEmCoefficient.isInited() && !mDisableEmControl ) {
+    if ( ( ( mTargetYear == 0 ) || !mFinalEmCoefficient.isInited() ) && !mDisableEmControl ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Linear control function " << getName() << " has not been parameterized. " << endl;
