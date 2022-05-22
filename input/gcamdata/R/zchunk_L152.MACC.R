@@ -36,7 +36,8 @@ module_emissions_L152.MACC <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     #silence packages
-    cum_reduction_MtCO2e <- p <- value <- sector <- Sector <- GCAM_region_ID <- EPA_country <- iso <- EPA_sector <- NULL
+    cum_reduction_MtCO2e <- p <- value <- sector <- Sector <- GCAM_region_ID <-
+      EPA_country <- iso <- EPA_sector <- GCAM_region_ID_missing <- NULL
 
     # Load required inputs
     EPA_master <- get_data(all_data, "emissions/EPA/EPA_2019_raw")

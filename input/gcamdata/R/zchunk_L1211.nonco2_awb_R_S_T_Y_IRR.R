@@ -30,7 +30,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- Non.CO2 <-
-      value.x <- value.y <- i.value <- NULL # silence package check.
+      value.x <- value.y <- i.value <- GCAM_subsector <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -56,7 +56,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
     # Second, aggregate to get the total by region/GLU/crop
     L1211.ag_Prod_Mt_R_C_Y_GLU_irr %>%
       filter(year %in% HISTORICAL_YEARS) %>%
-      group_by(GCAM_region_ID, GCAM_commodity, GLU, year) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year) %>%
       summarise(value = sum(value)) ->
       L1211.ag_Prod_Mt_R_C_Y_GLU
 
@@ -65,7 +65,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       # Need to filter for historical years to ensure the join will work, ie. there will be a 1 to 1 match
       # Note this step was NOT in the original data system
       filter(year %in% HISTORICAL_YEARS) %>%
-      left_join_error_no_match(L1211.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      left_join_error_no_match(L1211.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU", "year")) %>%
       # value.x is irr and rfd production shares, within each region/GLU/crop
       # value.y is now the total (rfd+irr) production
       mutate(value = value.x / value.y) %>%
@@ -83,7 +83,7 @@ module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR <- function(command, ...) {
       filter(year %in% intersect(HISTORICAL_YEARS, emissions.EDGAR_YEARS)) %>%
       repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       fast_left_join(L1211.ag_irrShare_R_C_Y_GLU_irr,
-                     by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year", "Irr_Rfd")) %>%
+                     by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU", "year", "Irr_Rfd")) %>%
       rename(value.x = i.value, value.y = value) %>%
       mutate(value = value.x * value.y) %>%
       select(-value.x, -value.y) ->

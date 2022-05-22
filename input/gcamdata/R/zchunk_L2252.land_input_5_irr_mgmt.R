@@ -48,6 +48,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
              "L2242.LN4_Logit",
              "L111.ag_resbio_R_C",
              "L121.CarbonContent_kgm2_R_LT_GLU",
+             "L121.CarbonContent_kgm2_R_TreeCrop_GLU",
              "L2012.AgYield_bio_ref",
              "L2012.AgProduction_ag_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -75,6 +76,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2242.LN4_Logit <- get_data(all_data, "L2242.LN4_Logit", strip_attributes = TRUE)
     L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
     L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
+    L121.CarbonContent_kgm2_R_TreeCrop_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_TreeCrop_GLU")
     L171.ag_irrEcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L171.ag_irrEcYield_kgm2_R_C_Y_GLU", strip_attributes = TRUE)
     L171.ag_rfdEcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU", strip_attributes = TRUE)
     L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref")
@@ -92,7 +94,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       crop2 <- landshare <- lev <- . <- ghost.unnormalized.share <- HarvestIndex.x <- HarvestIndex.y <-
       Root_Shoot.x <- Root_Shoot.y <- WaterContent.x <- WaterContent.y <- yield <- HarvestIndex <-
       WaterContent <- Root_Shoot <- total_land <- gcam5_hist.veg.carbon.density <- new_hist.veg.carbon.density <-
-      gcam5_veg.carbon.density <- new_veg.carbon.density <- dif_hist.veg <- dif_veg<- id <- NULL
+      gcam5_veg.carbon.density <- new_veg.carbon.density <- dif_hist.veg <- dif_veg<- id <- GCAM_subsector <- NULL
 
     # 1. Process inputs
 
@@ -106,6 +108,12 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       replace_GLU(map = basin_to_country_mapping) ->
       L181.LC_bm2_R_C_Yh_GLU_irr_level
+
+    L121.CarbonContent_kgm2_R_TreeCrop_GLU %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      replace_GLU(map = basin_to_country_mapping) %>%
+      select(region, GCAM_commodity, GCAM_subsector, GLU, Tree_Cdensity_kgm2 = Cdensity_kgm2) ->
+      L121.CarbonContent_kgm2_R_TreeCrop_GLU
 
     L121.CarbonContent_kgm2_R_LT_GLU %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -185,7 +193,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # in each region-year. This is used for both HistMgdAllocation and MgdAllocation for crops.
     L181.LC_bm2_R_C_Yh_GLU_irr_level %>%
       mutate(Irr_Rfd = toupper(Irr_Rfd),
-             LandLeaf = paste(paste(paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
+             LandLeaf = paste(paste(paste(GCAM_subsector, GLU, sep = aglu.CROP_GLU_DELIMITER),
                                     Irr_Rfd, sep = aglu.IRR_DELIMITER),
                               level, sep = aglu.MGMT_DELIMITER),
              value = round(value, aglu.DIGITS_LAND_USE)) %>%
@@ -234,11 +242,12 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) ->
       L2252.LN5_MgdAllocation_bio
 
+
     # L2252.LN5_MgdCarbon_crop: Carbon content info, managed land in the fifth nest, cropland (no bio)
     # Soil will use default values, but vegetation will be replaced by bottom-up estimates
     L171.ag_EcYield_kgm2_R_C_Y_GLU %>%
       rename(yield = value) %>%
-      left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("GCAM_commodity" = "LandLeaf")) %>%
+      left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("GCAM_subsector" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       # Replacing missing values in places with harvested area and production but no assigned cropland
@@ -249,11 +258,13 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       mutate(soil.carbon.density = if_else(is.na(soil.carbon.density), mean(soil.carbon.density, na.rm = TRUE), soil.carbon.density),
              hist.soil.carbon.density = if_else(is.na(hist.soil.carbon.density),
                                                 mean(hist.soil.carbon.density, na.rm = TRUE), hist.soil.carbon.density),
-             mature.age = if_else(is.na(mature.age), mean(mature.age, na.rm = TRUE), mature.age)) %>%
+             mature.age = if_else(is.na(mature.age), mean(mature.age, na.rm = TRUE), mature.age),
+             mature.age = if_else(grepl("Tree", GCAM_subsector), aglu.TREECROP_MATURE_AGE, mature.age)) %>%
       # Map in yield -- this will be used to compute vegetation carbon
       # Map in information for calculation of cropland vegetation carbon; note there will be NAs since Fodder crops are missing
       left_join(L111.ag_resbio_R_C, by = c("region", "GCAM_commodity")) %>%
       left_join(A_Fodderbio_chars, by = c("GCAM_commodity")) %>%
+      left_join(L121.CarbonContent_kgm2_R_TreeCrop_GLU, by = c("region", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       mutate(HarvestIndex.x = if_else(is.na(HarvestIndex.x), HarvestIndex.y, HarvestIndex.x),
              Root_Shoot.x = if_else(is.na(Root_Shoot.x), Root_Shoot.y, Root_Shoot.x),
              WaterContent.x = if_else(is.na(WaterContent.x), WaterContent.y, WaterContent.x)) %>%
@@ -261,16 +272,19 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       # Calculate vegetation carbon density based on the yields and crop characteristics
       mutate(hist.veg.carbon.density = round( yield / (HarvestIndex.x) * (1 + Root_Shoot.x) * (1 - WaterContent.x) *
                                                 aglu.CCONTENT_CELLULOSE * aglu.CCONV_PEAK_AVG,  aglu.DIGITS_C_DENSITY_CROP),
+             # For tree crops, replace the values calculated above with tree-specific carbon contents elsewhere calculated
+             hist.veg.carbon.density = if_else(is.na(Tree_Cdensity_kgm2), hist.veg.carbon.density,
+                                               round(Tree_Cdensity_kgm2, aglu.DIGITS_C_DENSITY_CROP)),
              # Replace missing values with the default values
              hist.veg.carbon.density = if_else(is.na(hist.veg.carbon.density), veg.carbon.density,
                                                hist.veg.carbon.density),
              veg.carbon.density = hist.veg.carbon.density) %>%
-      left_join(A_LandLeaf3, by = c("GCAM_commodity" = "LandLeaf")) %>%
+      left_join(A_LandLeaf3, by = c("GCAM_subsector" = "LandLeaf")) %>%
       mutate(LandAllocatorRoot = "root",
              LandNode1 = paste(LandNode1, GLU, sep = "_"),
              LandNode2 = paste(LandNode2, GLU, sep = "_"),
              LandNode3 = paste(LandNode3, GLU, sep = "_"),
-             LandNode4 = paste(GCAM_commodity, GLU, sep = "_"),
+             LandNode4 = paste(GCAM_subsector, GLU, sep = "_"),
              LandLeaf = paste(LandNode4, Irr_Rfd, sep = "_")) %>%
       convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]]) ->
       L2252.LN5_MgdCarbon_crop
@@ -278,8 +292,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2012.AgYield_bio_ref %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       select(region, AgProductionTechnology, yield) %>%
-      separate(AgProductionTechnology, c("GCAM_commodity", "GLU", "Irr_Rfd", "level")) %>%
-      left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("GCAM_commodity" = "LandLeaf")) %>%
+      separate(AgProductionTechnology, c("GCAM_subsector", "GLU", "Irr_Rfd", "level")) %>%
+      left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("GCAM_subsector" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       # There may missing values, where the assigned land type (LT) from which to get the carbon content didn't actually exist. Re-set to defaults.
@@ -290,18 +304,18 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
              # Convert biomass yield from GJ/m2 to kg/m2
              yield = yield / (aglu.BIO_ENERGY_CONTENT_GJT * CONV_KG_T)) %>%
       # Map in the harvest index, water content, and root-shoot ratio
-      left_join(A_Fodderbio_chars, by=c("GCAM_commodity")) %>%
+      left_join(A_Fodderbio_chars, by=c(GCAM_subsector = "GCAM_commodity")) %>%
       # Calculate the veg carbon content. Assume that the crop is perennial so the root portion doesn't get multiplied by the peak->avg conversion
       mutate(hist.veg.carbon.density = yield / (HarvestIndex) * (1 - WaterContent) * aglu.CCONTENT_CELLULOSE * aglu.CCONV_PEAK_AVG +
                yield / (HarvestIndex) * (1 - WaterContent) * Root_Shoot * aglu.CCONTENT_CELLULOSE,
              hist.veg.carbon.density = round(hist.veg.carbon.density, aglu.DIGITS_C_DENSITY),
              veg.carbon.density = hist.veg.carbon.density) %>%
-      left_join(A_LandLeaf3, by = c("GCAM_commodity" = "LandLeaf")) %>%
+      left_join(A_LandLeaf3, by = c("GCAM_subsector" = "LandLeaf")) %>%
       mutate(LandAllocatorRoot = "root",
              LandNode1 = paste(LandNode1, GLU, sep = "_"),
              LandNode2 = paste(LandNode2, GLU, sep = "_"),
              LandNode3 = paste(LandNode3, GLU, sep = "_"),
-             LandNode4 = paste(GCAM_commodity, GLU, sep = "_"),
+             LandNode4 = paste(GCAM_subsector, GLU, sep = "_"),
              LandNode5 = paste(LandNode4, Irr_Rfd, sep = "_"),
              LandLeaf = paste(LandNode5, level, sep = "_")) %>%
       select(c(LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]], "GLU", "Irr_Rfd", "level")) %>%
@@ -322,8 +336,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
 
     L2252.LN5_MgdAllocation_bio %>%
       distinct(region, LandAllocatorRoot, LandNode1, LandNode2, LandNode3, LandNode4, LandNode5, LandLeaf) %>%
-      mutate(tmp = LandLeaf) %>%
-      separate(tmp, c("crop1", "GLU", "Irr_Rfd", "level")) %>%
+      separate(LandLeaf, c("crop1", "GLU", "Irr_Rfd", "level"), remove = FALSE) %>%
       select(-crop1)  %>%
       # use left_join to keep NA's for further manipulation
       left_join(L2252.LandShare_R_bio_GLU_irr, by = c("region", "GLU", "Irr_Rfd", "level")) %>%
@@ -435,7 +448,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L171.ag_irrEcYield_kgm2_R_C_Y_GLU",
                      "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU",
                      "L111.ag_resbio_R_C",
-                     "L121.CarbonContent_kgm2_R_LT_GLU") ->
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L121.CarbonContent_kgm2_R_TreeCrop_GLU") ->
       L2252.LN5_MgdCarbon_crop
 
     L2252.LN5_MgdCarbon_bio %>%
