@@ -16,11 +16,11 @@ Depends on \code{command}: either a vector of required inputs, a vector of outpu
   \code{command} is "MAKE") all the generated outputs: \code{L243.DeleteInput_RegBio}, \code{L243.SectorLogitTables[[
   curr_table ]]$data}, \code{L243.TechCoef_RegBio}, \code{L243.Supplysector_Bio},
   \code{L243.SectorUseTrialMarket_Bio}, \code{L243.SubsectorLogitTables[[ curr_table ]]$data},
-  \code{L243.SubsectorLogit_Bio}, \code{L243.SubsectorShrwtFllt_TotBio}, \code{L243.SubsectorShrwtFllt_TradedBio},
+  \code{L243.SubsectorLogit_Bio}, \code{L243.SubsectorShrwt_TotBio}, \code{L243.SubsectorShrwtFllt_TradedBio},
   \code{L243.GlobalTechCoef_TotBio}, \code{L243.GlobalTechShrwt_TotBio}, \code{L243.StubTech_TotBio},
   \code{L243.StubTechShrwt_TotBio}, \code{L243.StubTechCoef_ImportedBio}, \code{L243.StubTechCoef_DomesticBio},
-  \code{L243.TechCoef_TradedBio}, \code{L243.TechShrwt_TradedBio}, \code{L243.SubsectorShrwtFllt_TotBio_SSP4},
-  \code{L243.SubsectorShrwtFllt_TradedBio_SSP4}, \code{L243.SubsectorShrwtFllt_TotBio_SSP3},
+  \code{L243.TechCoef_TradedBio}, \code{L243.TechShrwt_TradedBio}, \code{L243.SubsectorShrwt_TotBio_SSP4},
+  \code{L243.SubsectorShrwtFllt_TradedBio_SSP4}, \code{L243.SubsectorShrwt_TotBio_SSP3},
   \code{L243.StubTechShrwt_TotBio_SSP3}, \code{L243.Supplysector_reg_SSP4}, \code{L243.SubsectorInterpTo_tra_SSP4}.
   The corresponding file in the original data system was \code{L243.bio_trade_input.R} (aglu level2).
 }

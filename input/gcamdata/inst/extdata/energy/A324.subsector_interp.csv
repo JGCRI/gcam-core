@@ -1,0 +1,29 @@
+# File: A324.subsector_interp.csv
+# Title: agriculture, construction, mining default subsector shareweight interpolation
+# Units: NA
+# Column types: ccccccc
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+agricultural energy use,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+agricultural energy use,gas,share-weight,final-calibration-year,end-year,,fixed
+agricultural energy use,biomass,share-weight,final-calibration-year,end-year,,linear
+agricultural energy use,electricity,share-weight,final-calibration-year,end-year,,fixed
+agricultural energy use,hydrogen,share-weight,final-calibration-year,end-year,,linear
+agricultural energy use,coal,share-weight,final-calibration-year,end-year,,fixed
+agricultural energy use,heat,share-weight,final-calibration-year,end-year,,fixed
+mining energy use,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+mining energy use,gas,share-weight,final-calibration-year,end-year,,fixed
+mining energy use,biomass,share-weight,final-calibration-year,end-year,,fixed
+mining energy use,electricity,share-weight,final-calibration-year,end-year,,fixed
+mining energy use,hydrogen,share-weight,final-calibration-year,end-year,,linear
+mining energy use,coal,share-weight,final-calibration-year,end-year,,fixed
+mining energy use,heat,share-weight,final-calibration-year,end-year,,fixed
+construction,construction,share-weight,final-calibration-year,end-year,,fixed
+construction energy use,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+construction energy use,gas,share-weight,final-calibration-year,end-year,,fixed
+construction energy use,biomass,share-weight,final-calibration-year,end-year,,fixed
+construction energy use,electricity,share-weight,final-calibration-year,end-year,,fixed
+construction energy use,hydrogen,share-weight,final-calibration-year,end-year,,linear
+construction energy use,coal,share-weight,final-calibration-year,end-year,,fixed
+construction energy use,heat,share-weight,final-calibration-year,end-year,,fixed
+construction feedstocks,refined liquids,share-weight,final-calibration-year,end-year,,fixed

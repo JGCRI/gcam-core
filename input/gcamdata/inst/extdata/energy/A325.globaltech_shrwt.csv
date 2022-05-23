@@ -1,0 +1,26 @@
+# File: A325.globaltech_shrwt.csv
+# Title: chemical default shareweights
+# Units: Unitless
+# Column types: cccnnnnn
+# ----------
+supplysector,subsector,technology,1971,2019,2050,2070,2100
+chemical energy use,refined liquids,refined liquids,1,1,1,1,1
+chemical energy use,refined liquids,refined liquids cogen,0,0,0,0,0
+chemical energy use,refined liquids,refined liquids CCS,0,0,1,1,1
+chemical energy use,gas,gas,1,1,1,1,1
+chemical energy use,gas,gas cogen,0,0,0,0,0
+chemical energy use,gas,gas CCS,0,0,1,1,1
+chemical energy use,biomass,biomass,1,1,1,1,1
+chemical energy use,biomass,biomass cogen,0,0,0,0,0
+chemical energy use,biomass,biomass CCS,0,0,1,1,1
+chemical energy use,electricity,electricity,1,1,1,1,1
+chemical energy use,hydrogen,hydrogen,0,0,0,1,1
+chemical energy use,hydrogen,hydrogen cogen,0,0,0,0,0
+chemical energy use,coal,coal,1,1,1,1,1
+chemical energy use,coal,coal cogen,0,0,0,0,0
+chemical energy use,coal,coal CCS,0,0,1,1,1
+chemical energy use,heat,heat,1,1,1,1,1
+chemical feedstocks,refined liquids,refined liquids,1,1,1,1,1
+chemical feedstocks,gas,gas,1,1,1,1,1
+chemical feedstocks,coal,coal,1,1,1,1,1
+chemical,chemical,chemical,1,1,1,1,1

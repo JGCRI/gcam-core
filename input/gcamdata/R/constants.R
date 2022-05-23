@@ -186,12 +186,13 @@ aglu.SSP_DEMAND_YEARS       <- seq(2015, 2100, 5) # food demand in the SSPs is c
 aglu.TRADE_CAL_YEARS        <- 2013:2017 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
 aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
-aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "RootTuber", "SugarCrop", "Wheat")
+aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "Fruits", "Legumes", "MiscCrop", "NutsSeeds", "OilCrop", "OtherGrain", "OilPalm", "Rice", "RootTuber", "Soybean", "SugarCrop", "Vegetables", "Wheat")
 aglu.TRADED_MEATS           <- c("Beef", "Dairy", "Pork", "Poultry", "SheepGoat")
 aglu.TRADED_FORESTS         <- c("Forest")
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others
+aglu.TREECROP_MATURE_AGE <- 10 # Number of years for vegetation carbon to reach peak, for tree crops
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -334,8 +335,8 @@ aglu.N0_LOGIT_TYPE <- NA
 
 
 
-#Set the below constant to FALSE to activate the protected areas differentiated by land type and region in GCAM. Setting it to TRUE will use the default protection fraction defined in aglu.PROTECT_DEFAULT
-aglu.PROTECTION_DATA_SOURCE_DEFAULT <- TRUE
+#Set the below constant to TRUE to de-activate the protected areas differentiated by land type and region in GCAM. Setting it to TRUE will use the default protection fraction defined in aglu.PROTECT_DEFAULT
+aglu.PROTECTION_DATA_SOURCE_DEFAULT <- FALSE
 #Un-Protected area status- This constant can be used to make more land types from the protection categories available for expansion.
 # The available options for land types are - Unknown, UnsuitableUnprotected, SuitableUnprotected, SuitableHighProtectionIntact, SuitbaleHighProtectionDeforested, SuitableLow Protection, UnsuitableHighProtection, UnsuitableLowProtection
 aglu.NONPROTECT_LAND_STATUS <- c("SuitableUnprotected","Unknown")
@@ -357,6 +358,13 @@ aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 # default logit exponent and type for LN5, the competition betweein high and lo management
 aglu.MGMT_LOGIT_EXP  <- 2.5
 aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
+
+# Statistical differences reconciliation: China's Vegetable production estimates are inconsistent between the PRODSTAT
+# ("Production") and SUA ("Commodity Balances"). Because the latter dataset is used for estimating food consumption in
+# GCAM, and because these SUA food consumption estimates are derived from production data that is about 20% higher than
+# PRODSTAT, this discrepancy causes very high negative "non-food" demands in this nation, which are large enough to
+# result in negative non-food demands globally.
+aglu.CHN_VEG_FOOD_MULT <- 0.8
 
 # XML-related constants
 aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
@@ -514,6 +522,10 @@ obs_UnadjSat_USA<-150
 land.density.param.usa<-0
 b.param.usa<-3.49026
 income.param.usa<-0.4875
+
+# Constants for global detailed industry
+energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
+energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 enduse") #assign iron & steel global technology coefficients
 
 # Socioeconomics constants ======================================================================
 
@@ -800,7 +812,7 @@ gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale
 
 # Resources that will be modeled at the state level
 gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource", "offshore wind resource")
-gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone")
+gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone", "scrap")
 
 # Define sector(s) used in L222.en_transformation_USA
 # The supplysector and subsector structure in these sectors are retained

@@ -1,0 +1,220 @@
+# File: pca_state.csv
+# Title: PCA state and ID number identifier
+# Units: NA
+# Comments:  This file contains state mappings to all PCA from eGRID FERC  and US EPA
+# Source: Chini  C. M.  Djehdian  L. A.  Lubega  W. N.  & Stillwell  A. S. (2018). Virtual water transfers of the US electric grid. Nature Energy  3(12)  1115-1123. https://doi.org/10.1038/s41560-018-0266-1
+# Column types: ncnc
+# ----------
+Operator Id,Plant State,respondent_id,respondent_name
+189,AL,101,"PowerSouth Energy Cooperative (Alabama Electric Cooperative, Inc.)"
+195,AL,102,Alabama Power Company
+317,NC,103,Cube Hydro Carolinas Yadkin
+12647,MN,104,Allete (Minnesota Power)
+20856,MN,105,Alliant Energy-East
+9392,WI,106,Alliant Energy-West
+9208,IL,107,Ameren (Illinois Power Co. Control Area)
+19436,IL,108,Ameren Corporation Control Area
+3252,IL,109,Ameren CILCO
+829,OH,110,"American Electric Power Company, Inc."
+40577,OH,111,"American Municipal Power-Ohio, Inc."
+599,AK,112,Anchorage Municipal Light & Power
+12698,MO,113,KCP&L Greater Missouri Operations Company (Former Aquila Networks MPS)
+3285,KS,114,Aquila Networks (West Plains Energy - Kansas)
+796,AZ,115,"Arizona Electric Power Cooperative, Inc."
+803,AZ,116,Arizona Public Service Company
+924,MO,118,"Associated Electric Cooperative, Inc."
+20169,WA,119,Avista Corporation
+1692,KY,120,Big Rivers Electric Corporation
+19545,SD,121,Black Hills Corporation
+1738,OR,122,"Bonneville Power Administration, USDOE"
+1998,MA,123,Boston Edison Company (NSTAR)
+7004,OH,124,"Buckeye Power, Inc."
+229,CA,125,California Independent System Operator
+2886,MA,126,Cambridge Electric Light Company
+40218,SC,128,"Central Electric Power Cooperative, Inc."
+3522,AK,133,"Chugach Electric Association, Inc."
+3260,NC,134,Duke Energy Corp.
+2507,CA,135,City of Burbank
+8795,FL,136,City of Homestead
+9231,MO,137,"City of Independence, MO"
+9096,LA,138,City of Lafayette Utilities System
+18429,WA,139,"City of Tacoma, Dept. of Public Utilities"
+18445,FL,140,City of Tallahassee
+17833,MO,141,"City Utilities of Springfield, MO"
+3265,LA,142,Cleco Corporation
+3989,CO,143,Colorado Springs Utilities
+4045,MO,144,Columbia (MO) Water & Light
+4089,MA,145,Commonwealth Electric Company (NSTAR)
+4226,NY,146,Consolidated Edison Co. of NY Inc.
+4254,MI,147,Consumers Energy Company
+4363,IA,148,Corn Belt Power Cooperative
+4716,WI,149,Dairyland Power Cooperative
+4922,OH,150,"Dayton Power & Light Company, The"
+4958,AL,151,Decatur Utilities
+5109,MI,152,Detroit Edison Company
+973,AZ,153,"Duke Energy Control Area Services, LLC (Arlington Valley WECC AZ)"
+55306,AZ,154,"Duke Energy Control Area Services, LLC (Gila River Maricopa Arizona)"
+55111,AZ,155,"Duke Energy Control Area Services, LLC (Vermillion)"
+13718,AR,156,City of North Little Rock
+5416,NC,157,"Duke Energy Carolinas, LLC"
+5580,KY,159,East Kentucky Power Cooperative
+5701,TX,160,El Paso Electric Company
+5748,IL,161,"Electric Energy, Inc."
+3408,TN,162,Electric Power Board of Chattanooga
+5860,MO,163,Empire District Electric Company (the)
+12506,LA,164,Entergy Corporation/Services  (Entergy System)
+5723,TX,165,ERCOT
+6022,OR,166,Eugene Water & Electric Board
+32208,OH,167,FirstEnergy Corporation
+6567,FL,169,Florida Municipal Power Agency
+14610,FL,170,Florida Municipal Power Pool
+6452,FL,171,Florida Power & Light Company
+6909,FL,172,Gainesville Regional Utilities
+7349,TX,173,"Golden Spread Electric Cooperative, Inc."
+7490,OK,174,Grand River Dam Authority
+19514,MN,175,Great River Energy
+7601,VT,176,Green Mountain Power Corporation
+7639,NC,177,Greenville Utilities Commission
+19547,HI,178,"Hawaiian Electric Company, Inc"
+9267,IN,179,"Hoosier Energy REC, Inc."
+9191,ID,180,Idaho Power Company
+9216,CA,182,Imperial Irrigation District
+9234,IN,183,Indiana Municipal Power Agency
+9273,IN,184,Indianapolis Power & Light Company
+13434,MA,185,ISO New England Inc.
+9617,FL,186,JEA
+9996,KS,187,Kansas City Board of Public Utilities & Wyandotte County
+10000,KS,188,Kansas City Power & Light Company
+10005,KS,189,Kansas Gas & Electric (KG&E) a Westar Energy company
+10015,KS,190,Westar Energy (KPL)
+10623,FL,191,Lakeland Electric
+11018,NE,193,Lincoln Electric System
+11208,CA,194,Los Angeles Department of Water and Power
+26253,LA,195,Louisiana Energy & Power Authority
+11252,LA,196,Louisiana Generating
+11249,KY,197,Louisville Gas & Electric and Kentucky Utilities
+11479,WI,198,Madison Gas & Electric Company
+11806,MA,199,Massachusetts Municipal Wholesale
+12293,TN,200,"Memphis Light, Gas and Water"
+12397,CA,201,Metropolitan Water District of Southern California
+12427,MI,202,Michigan Electric Power Coordinated Center
+12431,IA,203,MidAmerican Energy Company
+11625,NE,204,Mid-Continent Area Power Pool
+12745,CA,206,Modesto Irrigation District
+12819,MT,207,Montana-Dakota Utilities Company
+13143,IA,208,Muscatine Power & Water
+13337,NE,209,Nebraska Public Power District
+13407,NV,210,Nevada Power Company
+13501,NY,211,"New York Independent System Operator, Inc."
+13511,NY,212,New York State Electric & Gas Corporation
+13670,TX,213,Northeast Texas Electric Cooperative
+13356,MA,214,Northeast Utilities Service Company
+13756,IN,215,Northern Indiana Public Service Company
+13781,MN,216,Northern States Power Company
+12825,SD,217,NorthWestern Energy
+13994,GA,218,Oglethorpe Power Company
+14015,OH,219,Ohio Valley Electric Corporation & Indiana-Kentucky Electric Corp.
+14063,OK,220,Oklahoma Gas & Electric Company
+14077,OK,221,Oklahoma Municipal Power Authority
+40229,VA,222,"Old Dominion Elec. Coop., Inc.-Dom VA Pwr Planning"
+14127,NE,223,Omaha Public Power District
+14154,NY,224,"Orange & Rockland Utils., Inc."
+14610,FL,225,Orlando Utilities Commission
+14232,MN,226,Otter Tail Power Company
+14328,CA,227,Pacific Gas and Electric Company
+14354,UT,228,PacifiCorp - East
+14355,OR,229,PacifiCorp - West
+14725,PA,230,PJM Interconnection LLC
+15143,CO,231,Platte River Power Authority
+15248,OR,232,Portland General Electric Company
+3046,NC,233,Progress Energy (Carolina Power & Light Company)
+6455,FL,234,Progress Energy (Florida Power Corp.)
+15466,CO,235,Public Service Company of Colorado
+15473,NM,236,Public Service Company of New Mexico
+3413,WA,237,PUD No. 1 of Chelan County
+5326,WA,238,PUD No. 1 of Douglas County
+14624,WA,239,PUD No. 2 of Grant County
+15500,WA,240,"Puget Sound Energy, Inc."
+16183,NY,241,Rochester Gas and Electric Corporation
+54849,FL,242,Reedy Creek Improvement District
+16534,CA,243,Sacramento Municipal Utility District
+16572,AZ,244,Salt River Project
+40233,TX,245,Sam Rayburn G&T Electric Coop.
+16609,CA,246,San Diego Gas & Electric Company
+16868,WA,247,Seattle City Light
+21554,FL,248,"Seminole Electric Cooperative, Inc."
+17166,NV,249,Sierra Pacific Resources
+17539,SC,250,Dominion Energy South Carolina
+17543,SC,251,South Carolina Public Service Authority
+17568,MS,252,South Mississippi Electric Power Association
+18195,GA,253,Southern Company
+17632,IL,254,Southern Illinois Power Coop
+17633,IN,255,Southern Indiana Gas & Electric Company
+40580,MN,256,Southern Minnesota Municipal Power Agency
+17690,GA,257,Southwest Power Pool (SPP)
+17716,AR,258,Southwestern Power Administration (DOE)
+17718,TX,259,Southwestern Public Service Company (Xcel)
+17858,MT,260,Square Butte Electric Coop
+18315,KS,261,Sunflower Electric Power Corporation
+18454,FL,262,Tampa Electric Company
+18642,TN,263,Tennessee Valley Authority
+18679,TX,264,"Tex-La Electric Cooperative of Texas, Inc."
+30151,CO,265,"Tri-State G & T Assn., Inc."
+24211,AZ,266,Tucson Electric Power Company
+19281,CA,267,Turlock Irrigation District
+19497,CT,268,United Illuminating Company
+19578,MI,269,Upper Peninsula Power Company
+40211,IN,271,"Wabash Valley Power Association, Inc."
+28502,ND,272,Western Area Power Admin - Upper Missouri-East (Upper Great Plains Region operat
+28503,CO,273,Western Area Power Administration - Colorado-Missouri Control Area (Rocky Mtn Re
+19610,AZ,274,Western Area Power Administration - Lower Colorado control area  (Desert Southwe
+25471,ND,275,Western Area Power Administration - Upper Missouri West (Upper Great Plains Regi
+20447,OK,277,Western Farmers Electric Cooperative
+20847,WI,278,Wisconsin Electric Power Company
+20860,WI,279,Wisconsin Public Service Corporation
+20910,MI,280,"Wolverine Power Supply Coop., Inc."
+17828,IL,281,City of Springfield
+20858,WI,282,Wisconsin Public Power Inc.
+12667,MN,283,Minnesota Municipal Power Agency
+12710,SD,284,Missouri River Energy Services
+12658,ND,285,"Minnkota Power Cooperative, Inc."
+21584,WI,286,Gen-Sys Energy
+1307,ND,287,Basin Electric Power Cooperative
+9543,VA,288,Batesville Balancing Authority
+4280,AR,289,City of Conway
+16463,LA,290,City of Ruston
+55380,AR,291,Union Power Partners
+20383,TN,292,City of West Memphis
+55372,AZ,293,New Harquahala Generating Station
+1581,WA,294,City of Benton
+0,DE,295,"Old Dominion Elec. Coop., Inc.-Delmarva P&L Planning"
+7140,GA,296,Georgia Power Company
+12686,MS,297,Mississippi Power Company
+7801,FL,298,Gulf Power Company
+16687,GA,299,Southern Power Company
+13809,SD,300,NorthWestern Energy (South Dakota)
+0,NJ,301,PJM Interconnection Eastern Hub
+0,PA,302,PJM Interconnection Western Hub
+0,IL,303,PJM Interconnection Illinois Hub
+0,IL,304,PJM Interconnection North Illinois Hub
+0,VA,305,PJM Interconnection Dominion Hub
+0,OH,306,PJM Interconnection AEP-Dayton Hub
+0,OR,307,PacifiCorp - Part II Sch 2 (East & West combined)
+17867,MN,308,City of St. Cloud
+0,MI,309,Michigan Electric Powr Coor. Center - Detroit
+17609,CA,310,Southern California Edison Company
+807,AR,311,Arkansas Electric Cooperative Corporation
+0,MT,312,Glacier Wind Balancing Authority
+56456,AR,313,Plum Point Energy Associates (PLUM) -SERC REGION
+55124,AZ,315,Griffith Energy (GRIF)
+14216,AR,320,City of Osceola (OMLP) - SERC
+56669,IN,321,MISO
+2172,TX,322,Constellation Energy Control and Dispatch - for Brazos
+0,TX,323,"Gridforce Energy Management, LLC"
+57995,CA,324,"NaturEner Wind Watch, LLC"
+56152,FL,325,New Smyrna Beach Utilities Commission
+10620,FL,326,City of Lake Worth
+19804,FL,327,City of Vero Beach
+13100,GA,328,Municipal Electric Authority of Georgia
+0,TX,329,East Texas Electric Cooperative
+14369,WI,330,Avangrid Renewables

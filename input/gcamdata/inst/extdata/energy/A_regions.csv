@@ -11,29 +11,29 @@ GCAM_region_ID,region,tradbio_region,ethanol,biodiesel,biomassOil_tech,elect_td_
 4,Africa_Southern,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
 5,Africa_Western,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
 6,Australia_NZ,0,corn ethanol,biodiesel,OilCrop,0.0001,0,B
-7,Brazil,1,sugar cane ethanol,biodiesel,OilCrop,0.00075,0,D
+7,Brazil,1,sugar cane ethanol,biodiesel,Soybean,0.00075,0,D
 8,Canada,0,corn ethanol,biodiesel,OilCrop,0.0001,0,B
-9,Central America and Caribbean,1,sugar cane ethanol,biodiesel,PalmFruit,0.00075,0,D
+9,Central America and Caribbean,1,sugar cane ethanol,biodiesel,OilPalm,0.00075,0,D
 10,Central Asia,0,corn ethanol,biodiesel,OilCrop,0.0001,0,D
-11,China,1,corn ethanol,biodiesel,OilCrop,0.0001,1,D
+11,China,1,corn ethanol,biodiesel,Soybean,0.0001,1,D
 12,EU-12,0,corn ethanol,biodiesel,OilCrop,0.0001,1,C
 13,EU-15,0,corn ethanol,biodiesel,OilCrop,0.0001,0,C
 14,Europe_Eastern,0,corn ethanol,biodiesel,OilCrop,0.0002,1,D
 15,Europe_Non_EU,0,corn ethanol,biodiesel,OilCrop,0.0002,1,C
 16,European Free Trade Association,0,corn ethanol,biodiesel,OilCrop,0.0001,0,C
-17,India,1,corn ethanol,biodiesel,OilCrop,0.002,0,E
-18,Indonesia,1,sugar cane ethanol,biodiesel,PalmFruit,0.00025,0,E
-19,Japan,0,corn ethanol,biodiesel,OilCrop,0.0001,0,D
+17,India,1,corn ethanol,biodiesel,Soybean,0.002,0,E
+18,Indonesia,1,sugar cane ethanol,biodiesel,OilPalm,0.00025,0,E
+19,Japan,0,corn ethanol,biodiesel,Soybean,0.0001,0,D
 20,Mexico,1,corn ethanol,biodiesel,OilCrop,0.00075,0,D
 21,Middle East,0,corn ethanol,biodiesel,OilCrop,0.0004,0,D
 22,Pakistan,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
 23,Russia,0,corn ethanol,biodiesel,OilCrop,0.0004,1,D
 24,South Africa,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
-25,South America_Northern,1,sugar cane ethanol,biodiesel,PalmFruit,0.00075,0,D
-26,South America_Southern,1,corn ethanol,biodiesel,OilCrop,0.00075,0,D
+25,South America_Northern,1,sugar cane ethanol,biodiesel,OilPalm,0.00075,0,D
+26,South America_Southern,1,corn ethanol,biodiesel,Soybean,0.00075,0,D
 27,South Asia,1,corn ethanol,biodiesel,OilCrop,0.00025,0,E
-28,South Korea,0,corn ethanol,biodiesel,OilCrop,0.0001,0,D
-29,Southeast Asia,1,sugar cane ethanol,biodiesel,PalmFruit,0.00025,0,E
-30,Taiwan,0,sugar cane ethanol,biodiesel,PalmFruit,0.0001,0,D
-31,Argentina,1,corn ethanol,biodiesel,OilCrop,0.00075,0,D
+28,South Korea,0,corn ethanol,biodiesel,Soybean,0.0001,0,D
+29,Southeast Asia,1,sugar cane ethanol,biodiesel,OilPalm,0.00025,0,E
+30,Taiwan,0,sugar cane ethanol,biodiesel,OilPalm,0.0001,0,D
+31,Argentina,1,corn ethanol,biodiesel,Soybean,0.00075,0,D
 32,Colombia,1,sugar cane ethanol,biodiesel,OilCrop,0.00075,0,D

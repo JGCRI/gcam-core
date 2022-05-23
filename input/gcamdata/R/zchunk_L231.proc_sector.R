@@ -239,9 +239,9 @@ module_emissions_L231.proc_sector <- function(command, ...) {
 
     # Now combine input energy info and join with efficiency values
     L231.IndCoef <- bind_rows(L1322.in_EJ_R_indenergy_F_Yh %>%
-                                mutate(sector = "industrial energy use"),
+                                mutate(sector = "other industrial energy use"),
                               L1322.in_EJ_R_indfeed_F_Yh %>%
-                                mutate(sector = "industrial feedstocks")) %>%
+                                mutate(sector = "other industrial feedstocks")) %>%
       left_join_keep_first_only(Ind.globaltech_eff, by = c("sector", "fuel", "year")) %>%
       # Calculate service as energy * efficiency
       mutate(service = value * efficiency) %>%
@@ -251,9 +251,9 @@ module_emissions_L231.proc_sector <- function(command, ...) {
       ungroup() %>%
       mutate(ind_proc_input = 0.008,
              coefficient = ind_proc_input / ind_output,
-             supplysector = "industry",
-             subsector = "industry",
-             technology = "industry",
+             supplysector = "other industry",
+             subsector = "other industry",
+             technology = "other industry",
              minicam.energy.input = "industrial processes") %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID")
 

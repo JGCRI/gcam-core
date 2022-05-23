@@ -1,0 +1,466 @@
+# File: construction_feedstock.csv
+# Title: construction feedstock by region
+# Units: ktoe
+# Description: Regional construction feedstock consumption
+# Source: IEA
+# Column types: ciccnic
+# ----------
+region,GCAM_region_ID,flow,fuel,value,year,unit
+USA,1,NECONSTRUC,refined liquids,26330,1971,ktoe
+USA,1,NECONSTRUC,refined liquids,27011,1972,ktoe
+USA,1,NECONSTRUC,refined liquids,30023,1973,ktoe
+USA,1,NECONSTRUC,refined liquids,27686,1974,ktoe
+USA,1,NECONSTRUC,refined liquids,24130,1975,ktoe
+USA,1,NECONSTRUC,refined liquids,23753,1976,ktoe
+USA,1,NECONSTRUC,refined liquids,25140,1977,ktoe
+USA,1,NECONSTRUC,refined liquids,27647,1978,ktoe
+USA,1,NECONSTRUC,refined liquids,27474,1979,ktoe
+USA,1,NECONSTRUC,refined liquids,22978,1980,ktoe
+USA,1,NECONSTRUC,refined liquids,19711,1981,ktoe
+USA,1,NECONSTRUC,refined liquids,19736,1982,ktoe
+USA,1,NECONSTRUC,refined liquids,21298,1983,ktoe
+USA,1,NECONSTRUC,refined liquids,23694,1984,ktoe
+USA,1,NECONSTRUC,refined liquids,24533,1985,ktoe
+USA,1,NECONSTRUC,refined liquids,25886,1986,ktoe
+USA,1,NECONSTRUC,refined liquids,26949,1987,ktoe
+USA,1,NECONSTRUC,refined liquids,27175,1988,ktoe
+USA,1,NECONSTRUC,refined liquids,26153,1989,ktoe
+USA,1,NECONSTRUC,refined liquids,27908,1990,ktoe
+USA,1,NECONSTRUC,refined liquids,25741,1991,ktoe
+USA,1,NECONSTRUC,refined liquids,26368,1992,ktoe
+USA,1,NECONSTRUC,refined liquids,27403,1993,ktoe
+USA,1,NECONSTRUC,refined liquids,28051,1994,ktoe
+USA,1,NECONSTRUC,refined liquids,28147,1995,ktoe
+USA,1,NECONSTRUC,refined liquids,28078,1996,ktoe
+USA,1,NECONSTRUC,refined liquids,29080,1997,ktoe
+USA,1,NECONSTRUC,refined liquids,30012,1998,ktoe
+USA,1,NECONSTRUC,refined liquids,31490,1999,ktoe
+USA,1,NECONSTRUC,refined liquids,30381,2000,ktoe
+USA,1,NECONSTRUC,refined liquids,29883,2001,ktoe
+USA,1,NECONSTRUC,refined liquids,29520,2002,ktoe
+USA,1,NECONSTRUC,refined liquids,29060,2003,ktoe
+USA,1,NECONSTRUC,refined liquids,31036,2004,ktoe
+USA,1,NECONSTRUC,refined liquids,31551,2005,ktoe
+USA,1,NECONSTRUC,refined liquids,30022,2006,ktoe
+USA,1,NECONSTRUC,refined liquids,28600,2007,ktoe
+USA,1,NECONSTRUC,refined liquids,24212,2008,ktoe
+USA,1,NECONSTRUC,refined liquids,20777,2009,ktoe
+USA,1,NECONSTRUC,refined liquids,20905,2010,ktoe
+USA,1,NECONSTRUC,refined liquids,20455,2011,ktoe
+USA,1,NECONSTRUC,refined liquids,19826,2012,ktoe
+USA,1,NECONSTRUC,refined liquids,18645,2013,ktoe
+USA,1,NECONSTRUC,refined liquids,18888,2014,ktoe
+USA,1,NECONSTRUC,refined liquids,19778,2015,ktoe
+Africa_Northern,3,NECONSTRUC,refined liquids,152,2010,ktoe
+Africa_Northern,3,NECONSTRUC,refined liquids,101,2011,ktoe
+Africa_Northern,3,NECONSTRUC,refined liquids,118,2012,ktoe
+Africa_Northern,3,NECONSTRUC,refined liquids,124,2013,ktoe
+Africa_Northern,3,NECONSTRUC,refined liquids,134,2014,ktoe
+Africa_Northern,3,NECONSTRUC,refined liquids,195,2015,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,493,1971,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,532,1972,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,551,1973,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,564,1974,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,507,1975,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,566,1976,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,608,1977,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,647,1978,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,639,1979,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,641,1980,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,585,1981,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,583,1982,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,566,1983,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,660,1984,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,660,1985,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,681,1986,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,664,1987,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,662,1988,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,684,1989,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,745,1990,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,688,1991,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,696,1992,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,765,1993,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,841,1994,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,817,1995,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,822,1996,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,851,1997,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,795,1998,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,847,1999,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,894,2000,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,737,2001,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,842,2002,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,783,2003,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,842,2004,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,908,2005,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,903,2006,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,899,2007,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,878,2008,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,138,2009,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,183,2010,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,136,2011,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,121,2012,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,134,2013,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,125,2014,ktoe
+Australia_NZ,6,NECONSTRUC,refined liquids,120,2015,ktoe
+Canada,8,NECONSTRUC,refined liquids,2423,1971,ktoe
+Canada,8,NECONSTRUC,refined liquids,2677,1972,ktoe
+Canada,8,NECONSTRUC,refined liquids,3082,1973,ktoe
+Canada,8,NECONSTRUC,refined liquids,2903,1974,ktoe
+Canada,8,NECONSTRUC,refined liquids,2789,1975,ktoe
+Canada,8,NECONSTRUC,refined liquids,2767,1976,ktoe
+Canada,8,NECONSTRUC,refined liquids,3079,1977,ktoe
+Canada,8,NECONSTRUC,refined liquids,3083,1978,ktoe
+Canada,8,NECONSTRUC,refined liquids,3120,1979,ktoe
+Canada,8,NECONSTRUC,refined liquids,3123,1980,ktoe
+Canada,8,NECONSTRUC,refined liquids,2871,1981,ktoe
+Canada,8,NECONSTRUC,refined liquids,1696,1982,ktoe
+Canada,8,NECONSTRUC,refined liquids,1561,1983,ktoe
+Canada,8,NECONSTRUC,refined liquids,1584,1984,ktoe
+Canada,8,NECONSTRUC,refined liquids,2140,1985,ktoe
+Canada,8,NECONSTRUC,refined liquids,2032,1986,ktoe
+Canada,8,NECONSTRUC,refined liquids,2138,1987,ktoe
+Canada,8,NECONSTRUC,refined liquids,1977,1988,ktoe
+Canada,8,NECONSTRUC,refined liquids,2147,1989,ktoe
+Canada,8,NECONSTRUC,refined liquids,2483,1990,ktoe
+Canada,8,NECONSTRUC,refined liquids,2138,1991,ktoe
+Canada,8,NECONSTRUC,refined liquids,2134,1992,ktoe
+Canada,8,NECONSTRUC,refined liquids,2060,1993,ktoe
+Canada,8,NECONSTRUC,refined liquids,2159,1994,ktoe
+Canada,8,NECONSTRUC,refined liquids,2111,1995,ktoe
+Canada,8,NECONSTRUC,refined liquids,2189,1996,ktoe
+Canada,8,NECONSTRUC,refined liquids,2599,1997,ktoe
+Canada,8,NECONSTRUC,refined liquids,2784,1998,ktoe
+Canada,8,NECONSTRUC,refined liquids,2798,1999,ktoe
+Canada,8,NECONSTRUC,refined liquids,2418,2000,ktoe
+Canada,8,NECONSTRUC,refined liquids,2411,2001,ktoe
+Canada,8,NECONSTRUC,refined liquids,2445,2002,ktoe
+Canada,8,NECONSTRUC,refined liquids,2408,2003,ktoe
+Canada,8,NECONSTRUC,refined liquids,2319,2004,ktoe
+Canada,8,NECONSTRUC,refined liquids,2525,2005,ktoe
+Canada,8,NECONSTRUC,refined liquids,2569,2006,ktoe
+Canada,8,NECONSTRUC,refined liquids,2535,2007,ktoe
+Canada,8,NECONSTRUC,refined liquids,2473,2008,ktoe
+Canada,8,NECONSTRUC,refined liquids,2549,2009,ktoe
+Canada,8,NECONSTRUC,refined liquids,3021,2010,ktoe
+Canada,8,NECONSTRUC,refined liquids,2857,2011,ktoe
+Canada,8,NECONSTRUC,refined liquids,2132,2012,ktoe
+Canada,8,NECONSTRUC,refined liquids,2143,2013,ktoe
+Canada,8,NECONSTRUC,refined liquids,2298,2014,ktoe
+Canada,8,NECONSTRUC,refined liquids,2007,2015,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,140,1990,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,109,1991,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,85,1992,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,66,1993,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,42,1994,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,36,1995,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,23,1996,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,14,1997,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,19,1998,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,14,1999,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,17,2000,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,20,2001,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,33,2002,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,62,2003,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,75,2004,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,117,2005,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,163,2006,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,144,2007,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,199,2008,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,236,2009,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,227,2010,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,239,2011,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,290,2012,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,451,2013,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,329,2014,ktoe
+Central Asia,10,NECONSTRUC,refined liquids,269,2015,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1444,1971,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1540,1972,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1693,1973,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1849,1974,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1872,1975,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1910,1976,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2007,1977,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2172,1978,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2038,1979,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2096,1980,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1898,1981,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1906,1982,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2011,1983,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1913,1984,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1784,1985,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1986,1986,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1903,1987,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1522,1988,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1432,1989,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1507,1990,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1050,1991,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1071,1992,ktoe
+EU-12,12,NECONSTRUC,refined liquids,967,1993,ktoe
+EU-12,12,NECONSTRUC,refined liquids,972,1994,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1111,1995,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1373,1996,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1314,1997,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1682,1998,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1723,1999,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1931,2000,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1455,2001,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1669,2002,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1517,2003,ktoe
+EU-12,12,NECONSTRUC,refined liquids,1729,2004,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2536,2005,ktoe
+EU-12,12,NECONSTRUC,refined liquids,3178,2006,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2982,2007,ktoe
+EU-12,12,NECONSTRUC,refined liquids,3038,2008,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2928,2009,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2900,2010,ktoe
+EU-12,12,NECONSTRUC,refined liquids,3108,2011,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2761,2012,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2400,2013,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2494,2014,ktoe
+EU-12,12,NECONSTRUC,refined liquids,2716,2015,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15228,1971,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15900,1972,ktoe
+EU-15,13,NECONSTRUC,refined liquids,16179,1973,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15293,1974,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14671,1975,ktoe
+EU-15,13,NECONSTRUC,refined liquids,13983,1976,ktoe
+EU-15,13,NECONSTRUC,refined liquids,13533,1977,ktoe
+EU-15,13,NECONSTRUC,refined liquids,13507,1978,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14101,1979,ktoe
+EU-15,13,NECONSTRUC,refined liquids,13447,1980,ktoe
+EU-15,13,NECONSTRUC,refined liquids,12293,1981,ktoe
+EU-15,13,NECONSTRUC,refined liquids,12406,1982,ktoe
+EU-15,13,NECONSTRUC,refined liquids,11973,1983,ktoe
+EU-15,13,NECONSTRUC,refined liquids,11935,1984,ktoe
+EU-15,13,NECONSTRUC,refined liquids,11886,1985,ktoe
+EU-15,13,NECONSTRUC,refined liquids,12616,1986,ktoe
+EU-15,13,NECONSTRUC,refined liquids,12958,1987,ktoe
+EU-15,13,NECONSTRUC,refined liquids,13708,1988,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14313,1989,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14507,1990,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14947,1991,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15398,1992,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14535,1993,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14867,1994,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14443,1995,ktoe
+EU-15,13,NECONSTRUC,refined liquids,13213,1996,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14340,1997,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15122,1998,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15596,1999,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14828,2000,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14893,2001,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14957,2002,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14784,2003,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15310,2004,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15782,2005,ktoe
+EU-15,13,NECONSTRUC,refined liquids,15441,2006,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14965,2007,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14802,2008,ktoe
+EU-15,13,NECONSTRUC,refined liquids,14023,2009,ktoe
+EU-15,13,NECONSTRUC,refined liquids,13769,2010,ktoe
+EU-15,13,NECONSTRUC,refined liquids,13305,2011,ktoe
+EU-15,13,NECONSTRUC,refined liquids,11022,2012,ktoe
+EU-15,13,NECONSTRUC,refined liquids,10832,2013,ktoe
+EU-15,13,NECONSTRUC,refined liquids,9715,2014,ktoe
+EU-15,13,NECONSTRUC,refined liquids,10131,2015,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,340,1995,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,276,1996,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,311,1997,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,350,1998,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,278,1999,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,168,2000,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,229,2001,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,215,2002,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,224,2003,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,268,2004,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,262,2005,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,370,2006,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,711,2007,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,506,2008,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,366,2009,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,424,2010,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,382,2011,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,543,2012,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,458,2013,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,470,2014,ktoe
+Europe_Eastern,14,NECONSTRUC,refined liquids,356,2015,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,168,1971,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,205,1972,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,215,1973,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,218,1974,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,265,1975,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,263,1976,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,224,1977,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,399,1978,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,305,1979,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,277,1980,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,318,1981,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,323,1982,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,382,1983,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,424,1984,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,461,1985,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,583,1986,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,778,1987,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,534,1988,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,442,1989,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,709,1990,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,811,1991,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,782,1992,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1176,1993,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,808,1994,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,900,1995,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1040,1996,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1231,1997,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1581,1998,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1220,1999,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1169,2000,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1070,2001,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1171,2002,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1294,2003,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1283,2004,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,1827,2005,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,2234,2006,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,2306,2007,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,2599,2008,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,2303,2009,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,2666,2010,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,3049,2011,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,3093,2012,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,3044,2013,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,2198,2014,ktoe
+Europe_Non_EU,15,NECONSTRUC,refined liquids,3158,2015,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,622,1971,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,638,1972,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,678,1973,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,639,1974,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,586,1975,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,630,1976,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,612,1977,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,618,1978,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,606,1979,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,605,1980,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,579,1981,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,597,1982,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,589,1983,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,613,1984,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,601,1985,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,688,1986,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,667,1987,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,623,1988,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,702,1989,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,674,1990,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,717,1991,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,726,1992,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,609,1993,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,592,1994,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,782,1995,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,688,1996,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,653,1997,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,680,1998,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,687,1999,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,635,2000,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,587,2001,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,550,2002,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,568,2003,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,625,2004,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,598,2005,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,672,2006,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,710,2007,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,671,2008,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,647,2009,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,529,2010,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,557,2011,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,532,2012,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,501,2013,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,581,2014,ktoe
+European Free Trade Association,16,NECONSTRUC,refined liquids,691,2015,ktoe
+Japan,19,NECONSTRUC,refined liquids,3859,1971,ktoe
+Japan,19,NECONSTRUC,refined liquids,4285,1972,ktoe
+Japan,19,NECONSTRUC,refined liquids,4969,1973,ktoe
+Japan,19,NECONSTRUC,refined liquids,4360,1974,ktoe
+Japan,19,NECONSTRUC,refined liquids,3825,1975,ktoe
+Japan,19,NECONSTRUC,refined liquids,3862,1976,ktoe
+Japan,19,NECONSTRUC,refined liquids,4304,1977,ktoe
+Japan,19,NECONSTRUC,refined liquids,4829,1978,ktoe
+Japan,19,NECONSTRUC,refined liquids,4827,1979,ktoe
+Japan,19,NECONSTRUC,refined liquids,4467,1980,ktoe
+Japan,19,NECONSTRUC,refined liquids,4272,1981,ktoe
+Japan,19,NECONSTRUC,refined liquids,4237,1982,ktoe
+Japan,19,NECONSTRUC,refined liquids,4575,1983,ktoe
+Japan,19,NECONSTRUC,refined liquids,4066,1984,ktoe
+Japan,19,NECONSTRUC,refined liquids,3885,1985,ktoe
+Japan,19,NECONSTRUC,refined liquids,4122,1986,ktoe
+Japan,19,NECONSTRUC,refined liquids,4360,1987,ktoe
+Japan,19,NECONSTRUC,refined liquids,4674,1988,ktoe
+Japan,19,NECONSTRUC,refined liquids,4718,1989,ktoe
+Japan,19,NECONSTRUC,refined liquids,5406,1990,ktoe
+Japan,19,NECONSTRUC,refined liquids,5118,1991,ktoe
+Japan,19,NECONSTRUC,refined liquids,5374,1992,ktoe
+Japan,19,NECONSTRUC,refined liquids,5272,1993,ktoe
+Japan,19,NECONSTRUC,refined liquids,5044,1994,ktoe
+Japan,19,NECONSTRUC,refined liquids,4884,1995,ktoe
+Japan,19,NECONSTRUC,refined liquids,4938,1996,ktoe
+Japan,19,NECONSTRUC,refined liquids,4735,1997,ktoe
+Japan,19,NECONSTRUC,refined liquids,4350,1998,ktoe
+Japan,19,NECONSTRUC,refined liquids,4025,1999,ktoe
+Japan,19,NECONSTRUC,refined liquids,3877,2000,ktoe
+Japan,19,NECONSTRUC,refined liquids,3799,2001,ktoe
+Japan,19,NECONSTRUC,refined liquids,3559,2002,ktoe
+Japan,19,NECONSTRUC,refined liquids,3261,2003,ktoe
+Japan,19,NECONSTRUC,refined liquids,3109,2004,ktoe
+Japan,19,NECONSTRUC,refined liquids,2716,2005,ktoe
+Japan,19,NECONSTRUC,refined liquids,2703,2006,ktoe
+Japan,19,NECONSTRUC,refined liquids,2532,2007,ktoe
+Japan,19,NECONSTRUC,refined liquids,2102,2008,ktoe
+Japan,19,NECONSTRUC,refined liquids,2116,2009,ktoe
+Japan,19,NECONSTRUC,refined liquids,1847,2010,ktoe
+Japan,19,NECONSTRUC,refined liquids,1788,2011,ktoe
+Japan,19,NECONSTRUC,refined liquids,1846,2012,ktoe
+Japan,19,NECONSTRUC,refined liquids,1514,2013,ktoe
+Japan,19,NECONSTRUC,refined liquids,1362,2014,ktoe
+Japan,19,NECONSTRUC,refined liquids,1354,2015,ktoe
+South Korea,28,NECONSTRUC,refined liquids,151,1971,ktoe
+South Korea,28,NECONSTRUC,refined liquids,121,1972,ktoe
+South Korea,28,NECONSTRUC,refined liquids,203,1973,ktoe
+South Korea,28,NECONSTRUC,refined liquids,122,1974,ktoe
+South Korea,28,NECONSTRUC,refined liquids,176,1975,ktoe
+South Korea,28,NECONSTRUC,refined liquids,158,1976,ktoe
+South Korea,28,NECONSTRUC,refined liquids,222,1977,ktoe
+South Korea,28,NECONSTRUC,refined liquids,294,1978,ktoe
+South Korea,28,NECONSTRUC,refined liquids,300,1979,ktoe
+South Korea,28,NECONSTRUC,refined liquids,272,1980,ktoe
+South Korea,28,NECONSTRUC,refined liquids,248,1981,ktoe
+South Korea,28,NECONSTRUC,refined liquids,256,1982,ktoe
+South Korea,28,NECONSTRUC,refined liquids,250,1983,ktoe
+South Korea,28,NECONSTRUC,refined liquids,316,1984,ktoe
+South Korea,28,NECONSTRUC,refined liquids,435,1985,ktoe
+South Korea,28,NECONSTRUC,refined liquids,444,1986,ktoe
+South Korea,28,NECONSTRUC,refined liquids,428,1987,ktoe
+South Korea,28,NECONSTRUC,refined liquids,525,1988,ktoe
+South Korea,28,NECONSTRUC,refined liquids,527,1989,ktoe
+South Korea,28,NECONSTRUC,refined liquids,779,1990,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1069,1991,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1520,1992,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1441,1993,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1436,1994,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1452,1995,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1635,1996,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1841,1997,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1501,1998,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1569,1999,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1568,2000,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1682,2001,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1199,2002,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1608,2003,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1778,2004,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1215,2005,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1253,2006,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1261,2007,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1150,2008,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1447,2009,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1287,2010,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1207,2011,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1176,2012,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1237,2013,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1092,2014,ktoe
+South Korea,28,NECONSTRUC,refined liquids,1181,2015,ktoe

@@ -57,7 +57,6 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       GrossImp_Mt <- Prod_Mt <- GCAM_region_ID <- NetExp_Mt <- Prod_bm3 <-
       NetExp_bm3 <- value <- flow <- GrossExp <- NULL # silence package check notes
 
-
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector", strip_attributes = TRUE)

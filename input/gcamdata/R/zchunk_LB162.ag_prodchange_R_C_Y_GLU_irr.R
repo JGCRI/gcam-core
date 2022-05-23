@@ -43,7 +43,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       CROSIT_crop <- CROSIT_cropID <- country_ID <- crop_ID <- Prod_kt_irrigated <- HA_kha_irrigated <-
       Yield_kgHa_irrigated <- Prod_kt_rainfed <- HA_kha_rainfed <- Yield_kgHa_rainfed <- Irr_Rfd <-
       yield_kgHa <- iso <- irrHA <- rfdHA <- GTAP_crop <- HA <- Mult <- Prod_mod <- YieldRatio <-
-      timestep <- lagyear <- YieldRatio_lag <- YieldRate <- defaultRate <- NULL  # silence package check notes
+      timestep <- lagyear <- YieldRatio_lag <- YieldRate <- defaultRate <- GCAM_subsector <- NULL  # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -219,16 +219,16 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       left_join(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) %>%
       na.omit() %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-      left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity), by = "GTAP_crop") %>%
+      left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity, GCAM_subsector), by = "GTAP_crop") %>%
       # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
       mutate(Prod_mod = HA * Mult) %>%
-      group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, Irr_Rfd) %>%
       summarise(HA = sum(HA), Prod_mod = sum(Prod_mod)) %>%
       ungroup() %>%
       # Calculate YieldRatio = Prod_mod/HA by region-commodity-glu-irrigation-year; subset and output the YieldRatios
       mutate(YieldRatio = Prod_mod / HA) %>%
       na.omit() %>%
-      select(GCAM_region_ID, GCAM_commodity, year, GLU, Irr_Rfd, YieldRatio) ->
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, Irr_Rfd, YieldRatio) ->
       L162.ag_YieldRatio_R_C_Ysy_GLU_irr
 
     # Create a comparable table of YieldRatio for each year by GCAM region / commodity / GLU for biomass.
@@ -239,6 +239,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       summarise(YieldRatio = median(YieldRatio)) %>%
       ungroup() %>%
       mutate(GCAM_commodity = "biomass") %>%
+      repeat_add_columns(tibble(GCAM_subsector = c("biomassGrass", "biomassTree"))) %>%
       bind_rows(L162.ag_YieldRatio_R_C_Ysy_GLU_irr) ->
       L162.agBio_YieldRatio_R_C_Ysy_GLU_irr
 
@@ -278,7 +279,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     # Join the YieldRatio_lag table to the YieldRatio table to calculate the annual rates.
     L162.agBio_YieldRatio_R_C_Ysy_GLU_irr %>%
-      left_join_error_no_match(L162.agBio_YieldRatio_lag, by = c("GCAM_region_ID", "GLU", "Irr_Rfd", "GCAM_commodity", "year" = "lagyear")) %>%
+      left_join_error_no_match(L162.agBio_YieldRatio_lag, by = c("GCAM_region_ID", "GLU", "Irr_Rfd", "GCAM_commodity", "GCAM_subsector", "year" = "lagyear")) %>%
       mutate(YieldRate = (YieldRatio / YieldRatio_lag) ^ (1 / timestep) - 1) %>%
       select(-YieldRatio, -YieldRatio_lag, -timestep) ->
       L162.agBio_YieldRate_R_C_Ysy_GLU_irr
@@ -308,7 +309,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     L161.ag_irrProd_Mt_R_C_Y_GLU %>%
       mutate(Irr_Rfd = "IRR") %>%
       bind_rows(mutate(L161.ag_rfdProd_Mt_R_C_Y_GLU, Irr_Rfd = "RFD")) %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd) %>%
       dplyr::distinct() ->
       L162.ag_Prod_Mt_R_C_Y_GLU_irr
 
@@ -318,11 +319,12 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       select(GCAM_region_ID, GLU, Irr_Rfd) %>%
       dplyr::distinct() %>%
       mutate(GCAM_commodity = "biomass") %>%
+      repeat_add_columns(tibble(GCAM_subsector = c("biomassGrass", "biomassTree"))) %>%
       bind_rows(L162.ag_Prod_Mt_R_C_Y_GLU_irr) %>%
       # Join the agBio Yield Rates
-      left_join(L162.agBio_YieldRate_R_C_Ysy_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "Irr_Rfd")) %>%
+      left_join(L162.agBio_YieldRate_R_C_Ysy_GLU_irr, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU", "Irr_Rfd")) %>%
       # NA's include NA years, address
-      tidyr::complete(year = aglu.SPEC_AG_PROD_YEARS, nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
+      tidyr::complete(year = aglu.SPEC_AG_PROD_YEARS, nesting(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd)) %>%
       filter(!is.na(year)) ->
       # store in a table for further processing
       L162.agbio_YieldRate_R_C_Y_GLU_irr
@@ -334,7 +336,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # for every year
     L162.agbio_YieldRate_R_C_Y_GLU_irr %>%
       # isolate the incomplete rows, wipe out their existing data, and pull in default yield rates
-      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd) %>%
       filter(!any(is.na(YieldRate))) %>%
       ungroup() ->
       L162.agbio_YieldRate_R_C_Y_GLU_irr_completecases
@@ -342,7 +344,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # Isolate the incomplete cases, fill in default yield rates for each year, and join to the complete cases
     L162.agbio_YieldRate_R_C_Y_GLU_irr %>%
       # isolate the incomplete rows, wipe out their existing data, and pull in default yield rates
-      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd) %>%
       filter(any(is.na(YieldRate))) %>%
       ungroup() %>%
       select(-YieldRate) %>%
@@ -354,10 +356,10 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     # Step 4: Expand to future years by applying the default rate in each year
     L162.agbio_YieldRate_R_C_Y_GLU_irr %>%
-      complete(year = c(max(HISTORICAL_YEARS),FUTURE_YEARS), nesting(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd)) %>%
+      complete(year = c(max(HISTORICAL_YEARS),FUTURE_YEARS), nesting(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd)) %>%
       left_join_error_no_match(L162.defaultYieldRate, by = c("year", "GCAM_commodity")) %>%
       # replace NA's - which correspond to years we just filled in - with the default yield for that year we just joined
-      group_by(GCAM_region_ID, GCAM_commodity, GLU, Irr_Rfd, year) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd, year) %>%
       mutate(YieldRate = replace(YieldRate,
                                  is.na(YieldRate),
                                  defaultRate)) %>%

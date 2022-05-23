@@ -108,7 +108,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
 
     # silence package check notes
-    GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
+    GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
       LandLeaf <- Land_Type <- LandNode <- LandNode1 <- LandNode2 <- LandNode3 <- UnmanagedLandLeaf <-
       logit.year.fillout <- logit.exponent <- logit.type <- soilTimeScale <- `mature age` <- mature.age <-
       soil_c <- veg_c <- LC_bm2 <- LV_milUSD75 <- LV_USD75_bm2 <- LV_USD75_m2 <- HarvCropLand_bm2 <-

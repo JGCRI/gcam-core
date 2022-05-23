@@ -1,0 +1,33 @@
+# File: steel_intensity.csv
+# Title: IO in steel production by subsector and technology
+# Units: GJ/t
+# Description: Energy coefficient in steel production
+# Source: Literature
+# Column types: cccnc
+# ----------
+subsector,technology,fuel,value,Unit
+BLASTFUR,Biomass-based,biomass,16.777903,GJ/t
+BLASTFUR,Biomass-based,refined liquids,0.01,GJ/t
+BLASTFUR,Biomass-based,electricity,0.548226,GJ/t
+BLASTFUR,Biomass-based,gas,0.01,GJ/t
+BLASTFUR,BLASTFUR,coal,16.777903,GJ/t
+BLASTFUR,BLASTFUR,refined liquids,0.01,GJ/t
+BLASTFUR,BLASTFUR,electricity,0.548226,GJ/t
+BLASTFUR,BLASTFUR,gas,0.01,GJ/t
+BLASTFUR,BLASTFUR CCS,coal,13.390014,GJ/t
+BLASTFUR,BLASTFUR CCS,refined liquids,0.01,GJ/t
+BLASTFUR,BLASTFUR CCS,electricity,1.061098,GJ/t
+BLASTFUR,BLASTFUR CCS,gas,0.01,GJ/t
+EAF with DRI,EAF with DRI,coal,2.3401,GJ/t
+EAF with DRI,EAF with DRI,refined liquids,2.5312,GJ/t
+EAF with DRI,EAF with DRI,electricity,1.315008,GJ/t
+EAF with DRI,EAF with DRI,gas,14.36931,GJ/t
+EAF with DRI,EAF with DRI CCS,coal,2.3401,GJ/t
+EAF with DRI,EAF with DRI CCS,refined liquids,2.5312,GJ/t
+EAF with DRI,EAF with DRI CCS,electricity,1.315008,GJ/t
+EAF with DRI,EAF with DRI CCS,gas,14.36931,GJ/t
+EAF with DRI,Hydrogen-based DRI,Hydrogen,14.36931,GJ/t
+EAF with DRI,Hydrogen-based DRI,electricity,1.240346,GJ/t
+EAF with scrap,EAF with scrap,refined liquids,0.562694,GJ/t
+EAF with scrap,EAF with scrap,electricity,1.54741,GJ/t
+EAF with scrap,EAF with scrap,scrap,1.1,GJ/t
