@@ -48,6 +48,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
              "L2242.LN4_Logit",
              "L111.ag_resbio_R_C",
              "L121.CarbonContent_kgm2_R_LT_GLU",
+             "L120.LC_soil_veg_carbon_GLU",
              "L121.CarbonContent_kgm2_R_TreeCrop_GLU",
              "L2012.AgYield_bio_ref",
              "L2012.AgProduction_ag_irr_mgmt"))
@@ -97,6 +98,14 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       gcam5_veg.carbon.density <- new_veg.carbon.density <- dif_hist.veg <- dif_veg<- id <- GCAM_subsector <- NULL
 
     # 1. Process inputs
+
+    if(aglu.CARBON_DATA_SOURCE=="moirai"){
+
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L120.LC_soil_veg_carbon_GLU")
+    }else{
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
+
+    }
 
     # Replace GLU names and Add region names
     L181.LandShare_R_bio_GLU_irr %>%
@@ -449,6 +458,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
                      "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU",
                      "L111.ag_resbio_R_C",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L120.LC_soil_veg_carbon_GLU",
                      "L121.CarbonContent_kgm2_R_TreeCrop_GLU") ->
       L2252.LN5_MgdCarbon_crop
 

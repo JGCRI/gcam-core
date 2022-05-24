@@ -301,7 +301,7 @@ aglu.AVG_WOOD_DENSITY_KGCM3 <- 250 # In kg carbon per m3
 aglu.CVEG_MULT_UNMGDFOR_MGDFOR <- 0.5
 aglu.CSOIL_MULT_UNMGDFOR_MGDFOR <- 0.87      #source: Guo and Gifford 2002; https://doi.org/10.1046/j.1354-1013.2002.00486.x
 aglu.CVEG_MULT_UNMGDPAST_MGDPAST <- 0.5
-aglu.CSOIL_MULT_UNMGDPAST_MGDPAST <- 0.9     # stay conservative here b/c no data source
+aglu.CSOIL_MULT_UNMGDPAST_MGDPAST <- 0.8     # stay conservative here b/c no data source
 
 # Average Agriculture Density kg/m^3 for mass conversion
 # Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
@@ -328,6 +328,26 @@ aglu.WOOD_WATER_CONTENT <- 0.065
 aglu.MIN_VEG_CARBON_DENSITY  <- 0
 aglu.MIN_SOIL_CARBON_DENSITY <- 0
 
+#This is the model carbon year. Carbon outputs are scaled to this year
+MODEL_CARBON_YEAR <- 2010
+
+# These are the default values of carbon desnities from Houghton (in MgC/ha) by land type. moirai only outputs carbon for unmanaged land. Therefore, we need default values for other land types.
+#Moreover we do not have data on carbon for Polar deserts and Tundra. So we use default values for those as well.
+aglu.DEFAULT_SOIL_CARBON_PASTURE <- 13
+aglu.DEFAULT_VEG_CARBON_PASTURE <- 0.7
+aglu.DEFAULT_SOIL_CARBON_CROPLAND <- 9
+aglu.DEFAULT_VEG_CARBON_CROPLAND <- 0.3
+aglu.DEFAULT_SOIL_CARBON_URBANLAND <- 5.8
+aglu.DEFAULT_VEG_CARBON_URBANLAND <- 0.3
+aglu.DEFAULT_SOIL_CARBON_TUNDRA <- 22
+aglu.DEFAULT_VEG_CARBON_TUNDRA <- 0.9
+
+# This is the default maturity age from Houghton.
+aglu.DEFAULT_MATURITY_AGE_PASTURE <- 10
+aglu.DEFAULT_TUNDRA_AGE <- 50
+
+# We may not have maturity age for some land types. If this arises, set it to the below (mean of all LT)
+aglu.DEFAULT_MATURITY_AGE_ALL_LAND <- 35
 
 # Define top-level (zero) land nest logit exponent and logit type
 aglu.N0_LOGIT_EXP  <- 0
@@ -343,6 +363,15 @@ aglu.NONPROTECT_LAND_STATUS <- c("SuitableUnprotected","Unknown")
 
 # Default fraction for protected land. This is used if the aglu.PROTECTION_DATA_SOURCE is set to TRUE or if protection data is unavailable.
 aglu.PROTECT_DEFAULT<- 0.9
+
+#Set the constants below to select the data source for carbon initialization. Currently set to `houghton`. Alternatively, this can be set to 'moirai'
+aglu.CARBON_DATA_SOURCE <- "moirai"
+
+# Available options for aglu.CARBON_STATE are median_value (median of all available grid cells), min_value (minimum of all available grid cells), max_value (maximum of all available grid cells),
+# weighted_average (weighted average of all available grid cells using the land area as a weight), q1_value (first quartile of all available grid cells) and q3_value (3rd quartile of all available grid cells).
+# Default recommended for GCAM is the q3_value. Note that these states can be selected only when using moirai as the carbon data source.
+aglu.CARBON_STATE <- c("q3_value")
+
 
 # Multiplier on the ghost share for irrigated land
 aglu.IRR_GHOST_SHARE_MULT <- 0.25
