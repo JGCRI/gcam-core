@@ -6,17 +6,29 @@
 # Column types: ccici 
 # ----------
 AgSupplySector,AgSupplySubsector,logit.exponent,year.fillout,share.weight
-Corn,Corn,-6,start-year,1
+Corn,CornC4,-6,start-year,1
 FiberCrop,FiberCrop,-6,start-year,1
 FodderGrass,FodderGrass,-6,start-year,1
 FodderHerb,FodderHerb,-6,start-year,1
+FodderHerb,FodderHerbC4,-6,start-year,1
+Fruits,Fruits,-6,start-year,1
+Fruits,FruitsTree,-6,start-year,1
+Legumes,Legumes,-6,start-year,1
 MiscCrop,MiscCrop,-6,start-year,1
+MiscCrop,MiscCropTree,-6,start-year,1
+NutsSeeds,NutsSeeds,-6,start-year,1
+NutsSeeds,NutsSeedsTree,-6,start-year,1
 OilCrop,OilCrop,-6,start-year,1
+OilCrop,OilCropTree,-6,start-year,1
 OtherGrain,OtherGrain,-6,start-year,1
-PalmFruit,PalmFruit,-6,start-year,1
+OtherGrain,OtherGrainC4,-6,start-year,1
+OilPalm,OilPalmTree,-6,start-year,1
 Rice,Rice,-6,start-year,1
 RootTuber,RootTuber,-6,start-year,1
+Soybean,Soybean,-6,start-year,1
 SugarCrop,SugarCrop,-6,start-year,1
+SugarCrop,SugarCropC4,-6,start-year,1
+Vegetables,Vegetables,-6,start-year,1
 Wheat,Wheat,-6,start-year,1
 Forest,Forest,-6,start-year,1
 biomass,biomassGrass,-6,start-year,1

@@ -48,7 +48,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
     year <- value <- GCAM_commodity <- AgSupplySector <- GLU <- AgSupplySubsector <-
       input.emissions <- region <- AgProductionTechnology <- Non.CO2 <- nonLandVariableCost <-
       bio_N2O_coef <- supplysector <- subsector <- stub.technology <- emfact <-
-      emiss.coef <- max.reduction <- NULL
+      emiss.coef <- max.reduction <- GCAM_subsector <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -76,7 +76,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(input.emissions = value,
              AgSupplySector = GCAM_commodity) %>%
-      mutate(AgSupplySubsector = paste(AgSupplySector, GLU, sep = "_"),
+      mutate(AgSupplySubsector = paste(GCAM_subsector, GLU, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector,
              input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2, input.emissions) %>%
@@ -90,7 +90,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(input.emissions = value,
              AgSupplySector = GCAM_commodity) %>%
-      mutate(AgSupplySubsector = paste(AgSupplySector, GLU, sep = "_"),
+      mutate(AgSupplySubsector = paste(GCAM_subsector, GLU, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector,
              input.emissions = round(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
       select(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology, year, Non.CO2, input.emissions)
@@ -133,7 +133,7 @@ module_emissions_L211.ag_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       rename(AgSupplySector = GCAM_commodity,
              emiss.coef = emfact) %>%
-      mutate(AgSupplySubsector = paste(AgSupplySector, GLU, sep = "_"),
+      mutate(AgSupplySubsector = paste(GCAM_subsector, GLU, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector,
              emiss.coef = round(emiss.coef, emissions.DIGITS_EMISSIONS)) %>%
       # Repeat for model base years

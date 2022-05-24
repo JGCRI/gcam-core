@@ -13,8 +13,11 @@
 module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L203.Supplysector_demand",
-              "L203.SubsectorAll_demand",
-              "L203.StubTech_demand",
+              "L203.NestingSubsectorAll_demand_food",
+              "L203.SubsectorAll_demand_food",
+              "L203.SubsectorAll_demand_nonfood",
+              "L203.StubTech_demand_food",
+              "L203.StubTech_demand_nonfood",
               "L203.GlobalTechCoef_demand",
               "L203.GlobalTechShrwt_demand",
               "L203.StubTechProd_food",
@@ -33,7 +36,8 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
               "L203.DemandStapleRegBias",
               "L203.DemandNonStapleRegBias",
               "L203.StapleBaseService",
-              "L203.NonStapleBaseService"))
+              "L203.NonStapleBaseService",
+              "L203.GlobalTechInterp_demand"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ag_an_demand_input.xml"))
   } else if(command == driver.MAKE) {
@@ -42,10 +46,14 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
 
     # Load required inputs
     L203.Supplysector_demand <- get_data(all_data, "L203.Supplysector_demand")
-    L203.SubsectorAll_demand <- get_data(all_data, "L203.SubsectorAll_demand")
-    L203.StubTech_demand <- get_data(all_data, "L203.StubTech_demand")
+    L203.NestingSubsectorAll_demand_food <- get_data(all_data, "L203.NestingSubsectorAll_demand_food")
+    L203.SubsectorAll_demand_food <- get_data(all_data, "L203.SubsectorAll_demand_food")
+    L203.SubsectorAll_demand_nonfood <- get_data(all_data, "L203.SubsectorAll_demand_nonfood")
+    L203.StubTech_demand_food <- get_data(all_data, "L203.StubTech_demand_food")
+    L203.StubTech_demand_nonfood <- get_data(all_data, "L203.StubTech_demand_nonfood")
     L203.GlobalTechCoef_demand <- get_data(all_data, "L203.GlobalTechCoef_demand")
     L203.GlobalTechShrwt_demand <- get_data(all_data, "L203.GlobalTechShrwt_demand")
+    L203.GlobalTechInterp_demand <- get_data(all_data, "L203.GlobalTechInterp_demand")
     L203.StubTechProd_food <- get_data(all_data, "L203.StubTechProd_food")
     L203.StubTechProd_nonfood_crop <- get_data(all_data, "L203.StubTechProd_nonfood_crop")
     L203.StubTechProd_nonfood_meat <- get_data(all_data, "L203.StubTechProd_nonfood_meat")
@@ -69,15 +77,21 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
     # Produce outputs
     create_xml("ag_an_demand_input.xml") %>%
       add_logit_tables_xml(L203.Supplysector_demand, "Supplysector") %>%
-      add_logit_tables_xml(L203.SubsectorAll_demand, "SubsectorAll", "SubsectorLogit") %>%
-      add_xml_data(L203.StubTech_demand, "StubTech") %>%
+      add_logit_tables_xml_generate_levels(L203.SubsectorAll_demand_food,
+                                           "SubsectorLogit","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L203.StubTech_demand_food, "StubTech","subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L203.StubTechProd_food, "StubTechProd", "subsector","nesting-subsector",1,FALSE) %>%
+      add_xml_data_generate_levels(L203.StubCalorieContent, "StubCalorieContent", "subsector","nesting-subsector",1,FALSE) %>%
+      add_node_equiv_xml("subsector") %>%
+      add_logit_tables_xml(L203.NestingSubsectorAll_demand_food, "SubsectorAll", "SubsectorLogit") %>%
+      add_logit_tables_xml(L203.SubsectorAll_demand_nonfood, "SubsectorAll", "SubsectorLogit") %>%
+      add_xml_data(L203.StubTech_demand_nonfood, "StubTech") %>%
       add_xml_data(L203.GlobalTechCoef_demand, "GlobalTechCoef") %>%
       add_xml_data(L203.GlobalTechShrwt_demand, "GlobalTechShrwt") %>%
-      add_xml_data(L203.StubTechProd_food, "StubTechProd") %>%
+      add_xml_data(L203.GlobalTechInterp_demand, "GlobalTechInterp") %>%
       add_xml_data(L203.StubTechProd_nonfood_crop, "StubTechProd") %>%
       add_xml_data(L203.StubTechProd_nonfood_meat, "StubTechProd") %>%
       add_xml_data(L203.StubTechProd_For, "StubTechProd") %>%
-      add_xml_data(L203.StubCalorieContent, "StubCalorieContent") %>%
       add_xml_data(L203.PerCapitaBased, "PerCapitaBased") %>%
       add_xml_data(L203.BaseService, "BaseService") %>%
       add_xml_data(L203.IncomeElasticity, "IncomeElasticity") %>%
@@ -90,9 +104,10 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
       add_xml_data(L203.DemandNonStapleRegBias, "DemandNonStapleRegBias") %>%
       add_xml_data(L203.StapleBaseService, "StapleBaseService") %>%
       add_xml_data(L203.NonStapleBaseService, "NonStapleBaseService") %>%
-      add_precursors("L203.Supplysector_demand", "L203.SubsectorAll_demand", "L203.StubTech_demand",
-                     "L203.GlobalTechCoef_demand", "L203.GlobalTechShrwt_demand", "L203.StubTechProd_food",
-                     "L203.StubTechProd_nonfood_crop", "L203.StubTechProd_nonfood_meat",
+      add_precursors("L203.Supplysector_demand","L203.NestingSubsectorAll_demand_food", "L203.SubsectorAll_demand_food",
+                     "L203.SubsectorAll_demand_nonfood", "L203.StubTech_demand_food", "L203.StubTech_demand_nonfood",
+                     "L203.GlobalTechCoef_demand", "L203.GlobalTechShrwt_demand", "L203.GlobalTechInterp_demand",
+                     "L203.StubTechProd_food", "L203.StubTechProd_nonfood_crop", "L203.StubTechProd_nonfood_meat",
                      "L203.StubTechProd_For", "L203.StubCalorieContent", "L203.PerCapitaBased",
                      "L203.BaseService", "L203.IncomeElasticity", "L203.PriceElasticity",
                      "L203.SubregionalShares", "L203.DemandFunction_food", "L203.DemandStapleParams",

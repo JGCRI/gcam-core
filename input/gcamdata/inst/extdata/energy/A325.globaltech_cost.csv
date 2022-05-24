@@ -1,0 +1,26 @@
+# File: A325.globaltech_cost.csv
+# Title: chemical, default costs
+# Units: 1975$/GJ
+# Column types: ccccnnnn
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2050,2100
+chemical energy use,refined liquids,refined liquids,non-energy,3,3,3,3
+chemical energy use,refined liquids,refined liquids cogen,non-energy,4.5,4.5,4.5,4.5
+chemical energy use,refined liquids,refined liquids CCS,non-energy,3.5,3.5,3.5,3.5
+chemical energy use,gas,gas,non-energy,3,3,3,3
+chemical energy use,gas,gas cogen,non-energy,3,3,3,3
+chemical energy use,gas,gas CCS,non-energy,3.5,3.5,3.5,3.5
+chemical energy use,biomass,biomass,non-energy,3,3,3,3
+chemical energy use,biomass,biomass cogen,non-energy,4.5,4.5,4.5,4.5
+chemical energy use,biomass,biomass CCS,non-energy,3.5,3.5,3.5,3.5
+chemical energy use,electricity,electricity,non-energy,3,3,3,3
+chemical energy use,hydrogen,hydrogen,non-energy,3,3,3,3
+chemical energy use,hydrogen,hydrogen cogen,non-energy,4.5,4.5,4.5,4.5
+chemical energy use,coal,coal,non-energy,3,3,3,3
+chemical energy use,coal,coal cogen,non-energy,4.5,4.5,4.5,4.5
+chemical energy use,coal,coal CCS,non-energy,3.5,3.5,3.5,3.5
+chemical energy use,heat,heat,non-energy,3,3,3,3
+chemical feedstocks,refined liquids,refined liquids,non-energy,0,0,0,0
+chemical feedstocks,gas,gas,non-energy,0,0,0,0
+chemical feedstocks,coal,coal,non-energy,0,0,0,0
+chemical,chemical,chemical,non-energy,25,25,25,25

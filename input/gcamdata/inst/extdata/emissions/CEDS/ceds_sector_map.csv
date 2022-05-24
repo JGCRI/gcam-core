@@ -13,15 +13,15 @@ CEDS_sector,CEDS_agg_sector
 1A1a_Electricity-public,elec_heat
 1A1a_Heat-production,elec_heat
 1A1bc_Other-transformation,industry_energy
-1A2a_Ind-Comb-Iron-steel,industry_energy
+1A2a_Ind-Comb-Iron-steel,iron and steel
 1A2b_Ind-Comb-Non-ferrous-metals,industry_energy
-1A2c_Ind-Comb-Chemicals,industry_energy
+1A2c_Ind-Comb-Chemicals,chemical energy use
 1A2d_Ind-Comb-Pulp-paper,industry_energy
 1A2e_Ind-Comb-Food-tobacco,industry_energy
 1A2f_Ind-Comb-Non-metalic-minerals,cement
-1A2g_Ind-Comb-Construction,industry_energy
+1A2g_Ind-Comb-Construction,construction energy use
 1A2g_Ind-Comb-machinery,industry_energy
-1A2g_Ind-Comb-mining-quarying,industry_energy
+1A2g_Ind-Comb-mining-quarying,mining energy use
 1A2g_Ind-Comb-other,industry_energy
 1A2g_Ind-Comb-textile-leather,industry_energy
 1A2g_Ind-Comb-transpequip,industry_energy
@@ -36,7 +36,7 @@ CEDS_sector,CEDS_agg_sector
 1A3eii_Other-transp,trn_other
 1A4a_Commercial-institutional,bld_comm
 1A4b_Residential,bld_resid
-1A4c_Agriculture-forestry-fishing,industry_energy
+1A4c_Agriculture-forestry-fishing,agricultural energy use
 1A5_Other-unspecified,industry_energy
 1B1_Fugitive-solid-fuels,coal
 1B2d_Fugitive-other-energy,unmatched

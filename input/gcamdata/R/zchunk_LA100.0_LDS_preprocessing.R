@@ -182,6 +182,51 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
       L100.LDS_ag_prod_t<-add_row(L100.LDS_ag_prod_t,iso="twn",GLU="GLU103",GTAP_crop='FlaxFibr_Tow',value=1000)
     }
 
+    #3. Adjustment for Rapeseed and Barley
+    # Move all harvested area and production from GLU078 to GLU103
+    L100.LDS_ag_HA_ha$GLU[L100.LDS_ag_HA_ha$iso == "twn" &
+                            L100.LDS_ag_HA_ha$GTAP_crop == "Rapeseed"] <- "GLU103"
+    L100.LDS_ag_prod_t$GLU[L100.LDS_ag_prod_t$iso == "twn" &
+                             L100.LDS_ag_prod_t$GTAP_crop == "Rapeseed"] <- "GLU103"
+
+    L100.LDS_ag_HA_ha$GLU[L100.LDS_ag_HA_ha$iso == "twn" &
+                            L100.LDS_ag_HA_ha$GTAP_crop == "Barley"] <- "GLU103"
+    L100.LDS_ag_prod_t$GLU[L100.LDS_ag_prod_t$iso == "twn" &
+                             L100.LDS_ag_prod_t$GTAP_crop == "Barley"] <- "GLU103"
+
+    #4. Adjustment for Soybean (production in the 1970's was >100x the production in ~2000; using the 2000-era GLU shares leads to too much land required in GLU078)
+    # Soybean: move nearly all harvested area and production from GLU078 to GLU103, by setting the production and harvested area in GLU078 to a nominal value.
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                          L100.LDS_ag_HA_ha$GTAP_crop == "Soybeans" &
+                          L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                           L100.LDS_ag_prod_t$GTAP_crop == "Soybeans" &
+                           L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    #5. Adjustment for Sweet potatoes (production in the 1970's was >20x the production in ~2000. GLU-wise allocation from ~2000 causes issues in GLU078
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "SweetPotato" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "SweetPotato" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    #6. Adjustment for GrndntWShll
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "GrndntWShll" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "GrndntWShll" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    #6. Adjustment for VgtbFrshNES
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "VgtbFrshNES" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "VgtbFrshNES" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+
     # And we're done
     return_data(L100.Land_type_area_ha,
                 L100.LDS_ag_HA_ha,

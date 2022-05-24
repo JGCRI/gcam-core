@@ -11,11 +11,11 @@ test_that("error with bad input", {
 
 test_that("handle empty input", {
   d <- chunk_inputs(character(0))
-  expect_true(tibble::is.tibble(d))
+  expect_true(tibble::is_tibble(d))
   expect_equal(nrow(d), 0)
 
   d <- chunk_outputs(character(0))
-  expect_true(tibble::is.tibble(d))
+  expect_true(tibble::is_tibble(d))
   expect_equal(nrow(d), 0)
 })
 

@@ -155,6 +155,8 @@ PassThroughSector, world/+{name}region, region/+{name}pass-through-sector, pass-
 
 DeleteSubsector, world/+{name}region, region/+{name}supplysector, supplysector/+{name;delete=1}subsector, scenario, scenario/world
 
+DeleteNestingSubsector1, world/+{name}region, region/+{name}supplysector, supplysector/+{name;delete=1}nesting-subsector, scenario, scenario/world
+
 Subsector, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, scenario, scenario/world
 
 SubsectorAll, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, subsector/+{year;fillout=1}share-weight, subsector/+share-weight, subsector/+{apply-to}interpolation-rule, subsector/+{from-year}interpolation-rule, subsector/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, subsector/dummy-logit-tag, scenario/world, scenario
@@ -310,6 +312,8 @@ GlobalPassThroughTech, global-technology-database/+{sector-name}location-info, g
 GlobalTechCTaxInput,global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name}ctax-input, ctax-input/+fuel-C-coef, scenario, scenario/world, world/global-technology-database
 
 DeleteGlobalTechInput, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name}technology, technology/+{year}period, period/+{name;delete=1}minicam-energy-input, scenario, scenario/world, world/global-technology-database
+
+DeleteGlobalTech, global-technology-database/+{sector-name}location-info, global-technology-database/+{subsector-name}location-info, location-info/+{name;delete=1}technology, scenario, scenario/world, world/global-technology-database
 
 
 #####, GLOBAL INTERMITTENT TECHNOLOGY

@@ -1,0 +1,21 @@
+# File: A326.globaltech_coef.csv
+# Title: aluminum production default coefficients
+# Units:  alumina input is unitless (Mt alumina per Mt aluminum); all others are GJ per kg (EJ of energy per Mt of alumina/aluminum)
+# Column types: cccccnn
+# ----------
+supplysector,subsector,technology,minicam.energy.input,secondary.output,1975,2100
+alumina,refined liquids,refined liquids,refined liquids industrial,,0.003024746,0.003024746
+alumina,refined liquids,refined liquids cogen,refined liquids industrial,electricity,0.004446377,0.004446377
+alumina,refined liquids,refined liquids CCS,refined liquids industrial,,0.00342029,0.00342029
+alumina,gas,gas,wholesale gas,,0.000571806,0.000571806
+alumina,gas,gas cogen,wholesale gas,electricity,0.000840555,0.000840555
+alumina,gas,gas CCS,wholesale gas,,0.000646581,0.000646581
+alumina,biomass,biomass,delivered biomass,,0.004114244,0.004114244
+alumina,biomass,biomass cogen,delivered biomass,electricity,0.006047938,0.006047938
+alumina,biomass,biomass CCS,delivered biomass,,0.00465226,0.00465226
+alumina,heat,heat,district heat,,1,1
+alumina,coal,coal,delivered coal,,0.004255112,0.004255112
+alumina,coal,coal cogen,delivered coal,electricity,0.006255015,0.006255015
+alumina,coal,coal CCS,delivered coal,,0.00481155,0.00481155
+aluminum,electricity,electricity,elect_td_ind,,0.053262,0.053262
+aluminum,electricity,electricity,alumina,,1.888888889,1.888888889
