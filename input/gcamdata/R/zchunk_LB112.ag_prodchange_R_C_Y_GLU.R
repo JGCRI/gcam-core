@@ -38,7 +38,8 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     Prod_kt_rainfed <- HA_kha_irrigated <- Yield_kgHa_irrigated <-
         Prod_kt_irrigated <- NULL
     Yield_base <- iso <- GTAP_crop <- . <- GLU <- value <- CROSIT <- Mult <-
-        GCAM_region_ID <- GCAM_commodity <- Prod_mod <- YieldRatio <- NULL # silence package check.
+        GCAM_region_ID <- GCAM_commodity <- Prod_mod <- YieldRatio <-
+        GCAM_subsector <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -190,18 +191,18 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       # Match in GCAM regions
       left_join_error_no_match(select(iso_GCAM_regID, GCAM_region_ID, iso), by = "iso") %>%
       # Match in GCAM commodities
-      left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GCAM_commodity, GTAP_crop), by = "GTAP_crop") %>%
+      left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GCAM_commodity, GCAM_subsector, GTAP_crop), by = "GTAP_crop") %>%
       # Multiply base-year harvested area by the future productivity multipliers to approximate future production change
       mutate(Prod_mod = value * Mult) %>%
       # Aggregate by GCAM region / zone / commodity / year
-      group_by(GCAM_region_ID, GCAM_commodity, year, GLU) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU) %>%
       # Aggregate future production change and base-year harvest area (to approxinate base-year production)
       summarise(value = sum(value), Prod_mod = sum(Prod_mod)) %>%
       ungroup() %>%
       # Calculate the yield ratio as future production divided by base-year production to calculate change in productivity from the base year
       mutate(YieldRatio = Prod_mod / value,
              year = as.integer(year)) %>%
-      select(GCAM_region_ID, GCAM_commodity, year, GLU, YieldRatio) ->
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, YieldRatio) ->
       L112.ag_YieldRatio_R_C_Ysy_GLU
 
     # Reference bioenergy scenario: using median improvement rates from main agricultural crops
@@ -212,13 +213,14 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       ungroup() %>%
       # Use as the default rate for biomass
       mutate(GCAM_commodity = "biomass") %>%
+      repeat_add_columns(tibble(GCAM_subsector = c("biomassGrass", "biomassTree"))) %>%
       bind_rows(L112.ag_YieldRatio_R_C_Ysy_GLU) ->
       L112.agBio_YieldRatio
 
     # Calculate the yield change rates for all specified ag productivity years
     # First prepare a yield rate table of 2010 values for binding rows in the loop
     L112.agBio_YieldRatio %>%
-      filter(year == 2010) %>%
+      filter(year == min(aglu.SPEC_AG_PROD_YEARS)) %>%
       rename(value = YieldRatio) -> L112.agBio_YieldRate
 
     # For each model timestep between 2010 to 2050, calculate the annual yield change rate based on the yield ratios
@@ -237,7 +239,7 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
         # Yield ratios in this model time period
         filter(year == aglu.SPEC_AG_PROD_YEARS[i]) %>%
         # Join the last period ratios
-        full_join(YieldRatio.last, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+        full_join(YieldRatio.last, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
         # Translate from yield ratios to annual improvement rates for this period
         mutate(value = (YieldRatio / YieldRatio.last) ^ (1 / timestep) - 1) %>%
         select(-YieldRatio, -YieldRatio.last) %>%
@@ -273,14 +275,14 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     # First, incomplete cases of ag commodities, use default yield change rates across 2010-2100
     # Get all GCAM region x commodity x GLU combinations in the production table
     L101.ag_Prod_Mt_R_C_Y_GLU %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique() %>%
       # Join the yield change rates of all specified ag productivity years 2010-2050 (this creates NAs, use left_join instead of left_join_error_no_match)
-      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Find the missing cases
       filter(is.na(value)) %>%
       # Identify the imcomplete cases, will use the default yield rates across 2010-2100
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique() %>%
       # Join the default ag producivity improvement assumptions
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
@@ -291,18 +293,18 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
 
     # Second, complete cases of ag commodities, yield change rates based on FAO estimates for 2010-2050
     L101.ag_Prod_Mt_R_C_Y_GLU %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique() %>%
       # Join the yield change rates for all specified ag productivity years from 2010 to 2050 (this creates NAs, use left_join instead of left_join_error_no_match)
-      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Drop all the incomplete region-commodity-GLU combinations
-      anti_join(ag_YieldRate_incomplete.cases, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      anti_join(ag_YieldRate_incomplete.cases, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       mutate(year = as.integer(year)) ->
       ag_YieldRate_complete.cases
 
     # Third, complete cases of ag commodities, use default yield rates beyond 2050 only
     ag_YieldRate_complete.cases %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique() %>%
       # Join the default ag producivity improvement assumptions for 2050 beyond
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
@@ -321,13 +323,13 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       select(GCAM_region_ID, GLU) %>%
       unique() %>%
       mutate(GCAM_commodity = "biomass") %>%
+      repeat_add_columns(tibble(GCAM_subsector = c("biomassGrass", "biomassTree"))) %>%
       # Join the yield change rates for all specified ag productivity years from 2010 to 2050 (this creates NAs, use left_join instead of left_join_error_no_match)
-      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Find the missing cases
       filter(is.na(value)) %>%
       # Identify the imcomplete cases, will use the default yield rates across 2010-2100
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
-      unique() %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       # Join the default ag producivity improvement assumptions
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
       # Keep future years (2015-2100) and 2010
@@ -340,16 +342,17 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
       select(GCAM_region_ID, GLU) %>%
       unique() %>%
       mutate(GCAM_commodity = "biomass") %>%
+      repeat_add_columns(tibble(GCAM_subsector = c("biomassGrass", "biomassTree"))) %>%
       # Join the yield change rates for all specified ag productivity years from 2010 to 2050 (this creates NAs, use left_join instead of left_join_error_no_match)
-      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join(L112.agBio_YieldRate, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Drop all the incomplete region-commodity-GLU combinations
-      anti_join(bio_YieldRate_incomplete.cases, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      anti_join(bio_YieldRate_incomplete.cases, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       mutate(year = as.integer(year)) ->
       bio_YieldRate_complete.cases
 
     # Third, complete cases of biomass, use default yield rates beyond 2050 only
     bio_YieldRate_complete.cases %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique() %>%
       # Join the default ag producivity improvement assumptions for 2050 beyond
       left_join(L112.defaultYieldRate, by = c("GCAM_commodity")) %>%
@@ -400,6 +403,3 @@ module_aglu_LB112.ag_prodchange_R_C_Y_GLU <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-
-

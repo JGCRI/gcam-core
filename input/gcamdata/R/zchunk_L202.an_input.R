@@ -181,7 +181,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(-GCAM_region_ID)
 
     A_agUnlimitedRsrcCurves %>%
-      select(unlimited.resource, year, price) %>%
+      select(unlimited.resource, price) %>%
       repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["UnlimitRsrcPrice"]], GCAM_region_names) %>%
       # replace these default prices with the prices calculated in L1321
@@ -373,13 +373,18 @@ module_aglu_L202.an_input <- function(command, ...) {
                              PrP * (1 - ImpShare) + tradedP * ImpShare)) %>%
       select(GCAM_region_ID, GCAM_commodity, value)
 
-    L202.prP_R_C_75USDkg <- bind_rows(L202.ag_consP_R_C_75USDkg, L1321.an_prP_R_C_75USDkg) %>%
+    # Remove meat prices here since meat is not used as feed. And even if it does, regional prices should be used!
+    # This will need to be udpated if meat outputs are included in the feed.
+    #L202.prP_R_C_75USDkg <- bind_rows(L202.ag_consP_R_C_75USDkg, L1321.an_prP_R_C_75USDkg) %>%
+    L202.prP_R_C_75USDkg <- bind_rows(L202.ag_consP_R_C_75USDkg) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(region, GCAM_commodity, price = value)
     L202.rsrcP_R_C_75USDkg <- filter(A_agRsrcCurves, grade == "grade 2") %>%
       select(GCAM_commodity = sub.renewable.resource, calPrice = extractioncost)
 
+    # Here we are using USA prices for all regions for FodderHerb, Residue, Scavenging_Other
     L202.ag_Feed_Prices <- L132.ag_an_For_Prices %>%
+      filter(GCAM_commodity %in% unique(L202.ag_Feed_P_share_R_C$subsector)) %>%
       bind_rows(L202.rsrcP_R_C_75USDkg) %>%
       write_to_all_regions(c("region", "GCAM_commodity", "calPrice"), GCAM_region_names) %>%
       rename(default_price = calPrice) %>%
@@ -464,7 +469,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     # Also, remove DDGS and feedcake subsectors and technologies in regions where these commodities are not available
     # First need to figure out what the names of these subsectors are, and which regions to exclude
     A_regions %>%
-      filter(ethanol != "corn ethanol", paste(biomassOil_tech, biodiesel) != "OilCrop biodiesel") %>%
+      filter(ethanol != "corn ethanol",
+             !paste(biomassOil_tech, biodiesel) %in% c("OilCrop biodiesel", "Soybean biodiesel" )) %>%
       select(-region) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(region) ->

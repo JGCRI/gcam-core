@@ -4,10 +4,11 @@
 #Source: Fine et al 2015. Food losses and waste in the french oilcrops sector. OCL.22.A302.10.1051/ocl/2015012
 # Column types: ccccnnn 
 # ----------
-supplysector,subsector,technology,minicam.energy.input,1971,2010,2100
+supplysector,subsector,technology,minicam.energy.input,1971,2015,2100
 regional biomass,regional biomass,regional biomass,biomass,1,1,1
 regional corn for ethanol,regional corn for ethanol,regional corn for ethanol,regional corn,111.79,111.79,111.79
 regional sugar for ethanol,regional sugar for ethanol,regional sugar for ethanol,regional sugarcrop,582.48,582.48,582.48
 regional biomassOil,regional biomassOil,biomassOil,biomassOil,1,1,1
-regional biomassOil,regional biomassOil,OilCrop,regional oilcrop,84,84,84
-regional biomassOil,regional biomassOil,PalmFruit,regional palmfruit,128,128,128
+regional biomassOil,regional biomassOil,OilCrop,regional oilcrop,61.3,61.3,61.3
+regional biomassOil,regional biomassOil,OilPalm,regional oilpalm,128,128,128
+regional biomassOil,regional biomassOil,Soybean,regional soybean,142.57,142.57,142.57

@@ -1,0 +1,57 @@
+# File: Various_Tree_C_yield_ratios.csv
+# Title: Ratios of carbon stock in tree to mass of product harvested each year
+# Units: tonnes of carbon per tonne of product harvested. Max_veg_c is in tonnes per hectare
+# Descroption: Used for estimating vegetation carbon stock of tree crops
+# Source: Various (indicated in Source column)
+# Column types: cnnc
+# ----------
+GTAP_crop,C_per_output,max_veg_c_tha,Source
+Almonds,2.3,10,"E. Marvinney, A. Kendall, S. Brodt. 2014. A comparative assessment of greenhouse gas emissions in California almond, pistachio, and walnut production. R. Schenck, D. Huizen (Eds.), Proceedings of the 9th international conference on life cycle assessment in the agri-food sector (LCA Food 2014), October 8Ð10. San Francisco (CA, USA) (2014), pp. 761-771"
+Apples,0.23,10,http://dx.doi.org/10.17660/eJHS.2016/81.2.4
+Apricots,1.2,15,https://doi.org/10.1016/j.jclepro.2016.10.030
+ArcNtBtl,14,55,https://doi.org/10.1016/j.indic.2021.100115
+Avocados,1,15,Approximated from orange
+Bananas,0.1,5,http://dx.doi.org/10.11598/btb.2015.22.2.376
+BrazilNuts,200,100,Own estimate
+Carobs,2,10,"Geraldo et al. 2010. Carob tree as CO2 sink in the carbon market. ADVANCES in CLIMATE CHANGES, GLOBAL WARMING, BIOLOGICAL PROBLEMS and NATURAL HAZARDS. https://www.researchgate.net/publication/234136843_Carob-tree_as_CO2_Sink_in_the_Carbon_Market"
+Cashewapple,10,130,Daouda et al. 2019. ASSESSMENT OF ORGANIC CARBON STOCK IN CASHEW PLANTATIONS (Anacardium occidentale L.) IN BENIN (WEST AFRICA). https://ijaer.in/more2.php?id=252
+CashewNuts,200,130,Daouda et al. 2019. ASSESSMENT OF ORGANIC CARBON STOCK IN CASHEW PLANTATIONS (Anacardium occidentale L.) IN BENIN (WEST AFRICA). https://ijaer.in/more2.php?id=252
+Cherries,1.7,15,https://doi.org/10.1186/s40663-016-0063-x
+Chestnuts,2.5,20,https://core.ac.uk/download/pdf/230486708.pdf
+CitrusFrtNES,1.1,25,http://dx.doi.org/10.17660/eJHS.2016/81.2.4
+cloves,120,50,https://doi.org/10.1088/1755-1315/399/1/012063
+CnnmnCnlla,16,25,Ginoga et al. Economic performance of common agroforestry systems in Southern Sumatra: implications for carbon sequestration services
+CocoaBeans,100,75,https://doi.org/10.1016/j.agee.2013.04.013; https://doi.org/10.1186/s13021-016-0045-x
+Coconuts,4.9,65,Mitra et al. 2018. Biomass and Stored Carbon in the Above Ground Structures of Coconut tree.
+CoffeeGreen,2.7,10,https://doi.org/10.1007/s10457-015-9865-z
+Dates,2,65,https://doi.org/10.1016/j.jaridenv.2020.104264
+Figs,0.5,10,Approximated from peaches
+FrtFrshNES,0.25,10,Approximated from apple
+FrtTrpFrNES,10,100,Approximated from mango
+Grpfrt_Pmlos,1,30,Approximated from orange
+HzlntFlbrt,2.3,10,Approximated from almond and pistachio
+KapksdShell,20,75,Approximated from Brazil nut
+KiwiFruit,1.3,25,http://dx.doi.org/10.13140/2.1.2793.7928
+Kolanuts,75,75,Approximated from cocoa beans
+KrtNtSheant,20,75,https://doi.org/10.1007/s10457-018-0213-y
+Lmn_Lme,1,20,Approximated from orange
+Mangoes,10,100,Chavan and Rasal. 2012. Total Sequestered Carbon Stock of Mangifera indica. Journal of Environment and Earth Science 2(1).
+Mate,10,100,http://dx.doi.org/10.19182/bft2011.308.a20475
+Ntmg_Mc_Crdm,30,30,https://doi.org/10.1088/1755-1315/399/1/012063
+Nutsnes,2,10,Approximated from almond and pistachio
+OilPalmFruit,2.2,60,http://dx.doi.org/10.5897/AJAR2015.9582
+Olives,3,20,http://dx.doi.org/10.17660/eJHS.2016/81.2.4
+Oranges,1.1,30,http://dx.doi.org/10.17660/eJHS.2016/81.2.4
+Papayas,0.1,10,Estimated from https://www.icia.es/icia/download/Presentaciones/EcofisiologiaPapaya.pdf
+Peach_Nctrn,0.5,10,http://dx.doi.org/10.17660/eJHS.2016/81.2.4
+Pears,0.23,10,http://dx.doi.org/10.17660/eJHS.2016/81.2.4
+Persimmons,0.25,10,Approximated from apple
+Pistachios,2.4,10,"E. Marvinney, A. Kendall, S. Brodt. 2014. A comparative assessment of greenhouse gas emissions in California almond, pistachio, and walnut production. R. Schenck, D. Huizen (Eds.), Proceedings of the 9th international conference on life cycle assessment in the agri-food sector (LCA Food 2014), October 8Ð10. San Francisco (CA, USA) (2014), pp. 761-771"
+Plantains,0.1,5,http://dx.doi.org/10.11598/btb.2015.22.2.376
+Plums,0.5,10,Approximated from peaches
+Quinces,0.25,10,Approximated from apple
+SourCherries,1.7,15,https://doi.org/10.1186/s40663-016-0063-x
+StnFrtNESFrh,0.5,10,Approximated from peach
+TngMndClmnt,1,25,Approximated from orange
+TungNuts,5.2,20,Approximated from shea
+Walnuts,1.8,15,"E. Marvinney, A. Kendall, S. Brodt. 2014. A comparative assessment of greenhouse gas emissions in California almond, pistachio, and walnut production. R. Schenck, D. Huizen (Eds.), Proceedings of the 9th international conference on life cycle assessment in the agri-food sector (LCA Food 2014), October 8Ð10. San Francisco (CA, USA) (2014), pp. 761-771"
