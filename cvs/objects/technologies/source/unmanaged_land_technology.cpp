@@ -196,6 +196,7 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
                               aLandAllocator );
     
+    delete *mOutputs.begin();
     mOutputs.erase( mOutputs.begin() );
 	
 
