@@ -22,7 +22,7 @@ Downscale emissions to irrigated/rainfed technologies on the basis of production
 }
 \details{
 Downscales emissions to irrigated/rainfed technologies by production share.
-Multiply total ag emissions (\code{L122.ghg_tg_R_agr_C_Y_GLU}) by production share by irr/rfd (\code{L1211.ag_irrShare_R_C_Y_GLU_irr})
+Multiply total ag emissions (\code{module_emissions_L112.ceds_ghg_en_R_S_T_Y}) by production share by irr/rfd (\code{L1211.ag_irrShare_R_C_Y_GLU_irr})
 which are both calculated in \code{\link{module_emissions_L122.ghg_agr_R_S_T_Y}} and
 \code{\link{module_emissions_L1211.nonco2_awb_R_S_T_Y_IRR}}.
 }

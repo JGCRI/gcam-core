@@ -4,8 +4,13 @@
 \alias{extract_header_info}
 \title{extract_header_info}
 \usage{
-extract_header_info(header_lines, label, filename, required = FALSE,
-  multiline = FALSE)
+extract_header_info(
+  header_lines,
+  label,
+  filename,
+  required = FALSE,
+  multiline = FALSE
+)
 }
 \arguments{
 \item{header_lines}{Character vector holding raw header lines}

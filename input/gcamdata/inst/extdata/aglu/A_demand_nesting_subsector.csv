@@ -1,0 +1,43 @@
+# File: A_demand_nesting_subsector.csv
+# Title: Nesting subsectors of agricultural production
+# Unit: NA
+# Description: Generic information for nesting subsectors of agricultural production
+# Source: GCAM assumptions
+# Column types: cciciccccc 
+# ----------
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
+FoodDemand_Staples,Corn,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,OtherGrain,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,Rice,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,RootTuber,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,Wheat,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,FiberCrop,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,FruitsVeg,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,Protein,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,MiscCrop,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,Oil,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,SugarCrop,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,Corn,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,FiberCrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,FodderGrass,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,FodderHerb,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,Fruits,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,Legumes,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,MiscCrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,NutsSeeds,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,OilCrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,OtherGrain,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,OilPalm,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,Rice,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,RootTuber,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,Soybean,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,SugarCrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,Vegetables,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Crops,Wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Meat,Beef,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Meat,Dairy,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Meat,Pork,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Meat,Poultry,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Meat,SheepGoat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Meat,OtherMeat_Fish,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+NonFoodDemand_Forest,Forest,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,

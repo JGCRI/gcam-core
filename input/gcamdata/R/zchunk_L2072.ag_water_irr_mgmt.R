@@ -52,7 +52,8 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       Prod_Mt <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <- minicam.energy.input <-
       field.eff <- blue_fract <- conveyance.eff <- WaterPrice <- calPrice <- WaterCost <- nonLandVariableCost <-
       biomass <- type <- region <- GCAM_region_ID <- year <- value <- GCAM_commodity <- GLU <- GLU_name <-
-      IRR_RFD <- MGMT <- coefficient <- Profit <- fuel <- elec_GJm3 <- input.cost <- minicam.non.energy.input <- . <- NULL  # silence package check notes
+      IRR_RFD <- MGMT <- coefficient <- Profit <- fuel <- elec_GJm3 <- input.cost <- minicam.non.energy.input <-
+      . <- GCAM_subsector <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -73,7 +74,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     # Compute irrigation water consumption IO coefficients (km3/Mt crop = m3/kg) by region / irrigated crop / year / GLU / management level
     L165.BlueIrr_m3kg_R_C_GLU %>%
       # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
-      semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       mutate(IRR_RFD = "IRR", water_type = "water consumption") %>%
       rename(value = BlueIrr_m3kg) ->
       L2072.Blue_IRR_IO_R_C_GLU
@@ -81,7 +82,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     # Compute biophysical water consumption IO coefficients (km3/Mt crop = m3/kg) by region / irrigated crop / year / GLU / management level
     L165.TotIrr_m3kg_R_C_GLU %>%
       # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
-      semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       mutate(IRR_RFD = "IRR", water_type = "biophysical water consumption") %>%
       rename(value = TotIrr_m3kg) ->
       L2072.Bio_IRR_IO_R_C_GLU
@@ -89,7 +90,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     # Compute biophysical water consumption IO coefficients (km3/Mt crop = m3/kg) by region / rainfed crop / year / GLU / management level
     L165.GreenRfd_m3kg_R_C_GLU %>%
       # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
-      semi_join(L161.ag_rfdProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      semi_join(L161.ag_rfdProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       mutate(IRR_RFD = "RFD", water_type = "biophysical water consumption") %>%
       rename(value = GreenRfd_m3kg) ->
       L2072.Bio_RFD_IO_R_C_GLU
@@ -103,8 +104,9 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_"),
+             AgSupplySubsector = paste(GCAM_subsector, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
+             AgProductionTechnology = paste(paste(AgSupplySubsector, IRR_RFD, sep = aglu.IRR_DELIMITER),
+                                            MGMT, sep = aglu.MGMT_DELIMITER),
              coefficient = round(value, aglu.DIGITS_CALOUTPUT)) %>%
       filter(coefficient > 0) %>%
       # Assume coefs stay constant, copy to all model years
@@ -151,12 +153,12 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
     # First compute % of blue water for irrigated bioenergy crops
     # Match in green and blue water for existing crops in 2005 -- note for this we are only using blue & green from irrigated crops
     L165.BlueIrr_m3kg_R_C_GLU %>%
-      full_join(L165.TotIrr_m3kg_R_C_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      full_join(L165.TotIrr_m3kg_R_C_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Initial adjustment: drop any water coefs for region/crop/GLU combinations that aren't written out
-      semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      semi_join(L161.ag_irrProd_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Match in 2010 irrigated crop production
       left_join_error_no_match(filter(L161.ag_irrProd_Mt_R_C_Y_GLU, year == max(HISTORICAL_YEARS)),
-                               by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+                               by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Use crop prodcution for weighting
       mutate(BlueIrr_km3 = BlueIrr_m3kg * value, TotIrr_km3 = TotIrr_m3kg * value) %>%
       group_by(GCAM_region_ID, GLU) %>%

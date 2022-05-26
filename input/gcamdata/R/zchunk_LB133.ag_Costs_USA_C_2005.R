@@ -268,7 +268,7 @@ module_aglu_LB133.ag_Costs_USA_C_2005 <- function(command, ...) {
 
     # Lines 109-126 in original file
     # Finish calculating Cost = Price - (Profit / Yield) for each GCAM_commodity in 1975 USD/kg. There are
-    # commodities not yet considered, such as PalmFruit, Fodders, etc. The data for these in the US is missing
+    # commodities not yet considered, such as OilPalm, Fodders, etc. The data for these in the US is missing
     # from at least one input source used to calculate Costs so far.
 
     # get the LDS information for USA crops not covered so far:

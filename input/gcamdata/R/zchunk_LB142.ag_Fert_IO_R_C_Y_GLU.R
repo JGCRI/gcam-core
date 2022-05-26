@@ -35,7 +35,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
 
     Fert_Cons_MtN <- Fert_Cons_MtN_unscaled <- Fert_IO <- Fert_IO_unscaled <- Prod_share <-
       prod <- cons <- total <- adj <- scaler <- GCAM_commodity <- GCAM_region_ID <- GTAP_crop <-
-      GLU <- iso <- value <- year <- NULL   # silence package checks
+      GLU <- iso <- value <- year <- GCAM_subsector <- NULL   # silence package checks
 
     all_data <- list(...)[[1]]
 
@@ -127,17 +127,18 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       # Drop crops not belong to GCAM commodity
       filter(!is.na(GCAM_commodity)) %>%
       # Aggregate fertilizer demands by GCAM region, commodity, and GLU
-      group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       summarise(Fert_Cons_MtN = sum(Fert_Cons_MtN)) %>%
       ungroup() %>%
       # Match in agricultural production by GCAM region / commodity / GLU in the base year; this creates NAs
-      left_join(filter(L101.ag_Prod_Mt_R_C_Y_GLU, year %in% aglu.BASE_YEAR_IFA), by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      left_join(filter(L101.ag_Prod_Mt_R_C_Y_GLU, year %in% aglu.BASE_YEAR_IFA),
+                by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Calculate unscaled input-output coefficients as unscaled fertilizer demands divided by agricultural production
       mutate(Fert_IO_unscaled = Fert_Cons_MtN / value,
              Fert_IO_unscaled = replace(Fert_IO_unscaled, Fert_IO_unscaled == Inf, 0)) %>%
       select(-year, -value, -Fert_Cons_MtN) %>%
       # Match these coefficients into historical agricultural production (right_join: same coefficients for all years)
-      right_join(L101.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) %>%
+      right_join(L101.ag_Prod_Mt_R_C_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) %>%
       # Calculate unscaled fertilizer consumption by year as production multiplied by input-output coefficients
       # GPK note 09/2018 - moving the replace_na() command from a few lines up to here, in order to accommodate missing
       # values which can occur from country/crop observations in FAOSTAT but not Monfreda/LDS (e.g., Puerto Rico rice)
@@ -163,12 +164,12 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       mutate(Fert_Cons_MtN = Fert_Cons_MtN_unscaled * scaler,
              # Calculate the scalced input-output coefficient
              Fert_IO = Fert_IO_unscaled * scaler) %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU, year, value = Fert_IO) ->
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year, value = Fert_IO) ->
       L142.ag_Fert_IO_R_C_Y_GLU
 
     # Check to make sure that the fertilizer inputs do not blink in and out (if present in any year, need to be present in all years)
     L142.ag_Fert_IO_R_C_Y_GLU %>%
-      group_by(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       summarise(value = sum(value)) %>%                 # Get the total of all years
       ungroup() %>%
       filter(value != 0) %>%                            # Filter the region/commodity/GLU that are not completely missing for all years
@@ -177,7 +178,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       L142.Fert_IO_check
     L142.ag_Fert_IO_R_C_Y_GLU %>%
       # Filter the observations with the selected region/commodity/GLU combinations
-      semi_join(L142.Fert_IO_check, by = c("GCAM_region_ID", "GCAM_commodity", "GLU")) ->
+      semi_join(L142.Fert_IO_check, by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU")) ->
       L142.Fert_IO_check
 
     # For those region/commodity/GLU that are not completely missing for all years, no missing for any year

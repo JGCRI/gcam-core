@@ -98,7 +98,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       emiss_share <- prod_share <- total_prod <- crop_area_share <- prod_share_GLU <- GLU <- Prod_R_C <- crop_area_total <- scalar <- EPA_emissions <-
       CEDS_emissions <- epa_emissions <-  ch4_em_factor <- production <- feed <- GCAM_commodity <- input.emissions <- EPA_agg_fuel_ghg <- EPA_agg_sector <-
       EDGAR_agg_sector <- globalemfact <- emfact <- value <- em_fact <- . <- FF_driver <- natural_gas <- UCD_category <- Non.co2 <-
-      quantile <- upper <- value_median <- NULL
+      quantile <- upper <- GCAM_subsector <- value_median <- NULL
 
 
     #Get CEDS_GFED data
@@ -717,7 +717,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     # Emissions shares: product of region/crop shares and region/crop/glu shares
     L122.EmissShare_R_C_Y_GLU <- L122.ProdGLUshare_R_C_Y_GLU %>%
       left_join_error_no_match(L122.CropAreaShare_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
-      transmute(GCAM_region_ID, GCAM_commodity, year, GLU, emiss_share = prod_share_GLU * crop_area_share)
+      transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, emiss_share = prod_share_GLU * crop_area_share)
 
     # Match emissions to drivers
     # --------------------------
@@ -740,14 +740,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # Total production by region, commodity, and year for calculating share
       mutate(total_prod = sum(value)) %>%
       ungroup() %>%
-      transmute(GCAM_region_ID, GCAM_commodity, GLU, year, prod_share = value / total_prod) ->
+      transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year, prod_share = value / total_prod) ->
       L122.ag_Prod_Mt_R_rice_Y_GLU
 
     # Multiply total emissions by production share
     L122.ag_Prod_Mt_R_rice_Y_GLU %>%
       repeat_add_columns(tibble(Non.CO2 = unique(L112.CEDS_GCAM_rice$Non.CO2))) %>%
       left_join_error_no_match(L112.CEDS_GCAM_rice, by = c("GCAM_region_ID", "Non.CO2", "year")) %>%
-      transmute(GCAM_region_ID, GCAM_commodity, year, GLU, Non.CO2,
+      transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, Non.CO2,
                 emissions = emissions * prod_share, type = "Rice") ->
       L122.ghg_tg_R_rice_Y_GLU
 
@@ -761,14 +761,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       filter(year %in% emissions.CEDS_YEARS) %>%
       repeat_add_columns(tibble(Non.CO2 = unique(L112.CEDS_GCAM_soil$Non.CO2))) %>%
       left_join_error_no_match(L112.CEDS_GCAM_soil, by = c("GCAM_region_ID", "year", "Non.CO2")) %>%
-      transmute(GCAM_region_ID, GCAM_commodity, year, GLU, Non.CO2,
+      transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, Non.CO2,
                 emissions = emissions * emiss_share, type = "Soil") ->
       L122.ghgsoil_tg_R_C_Y_GLU
 
     # Bind together dataframes & aggregate
     L122.ghg_tg_R_agr_C_Y_GLU_full <- bind_rows( L122.ghg_tg_R_rice_Y_GLU, L122.ghgsoil_tg_R_C_Y_GLU#, L122.ghgfert_tg_R_C_Y_GLU
     ) %>%
-      group_by(GCAM_region_ID, GCAM_commodity, year, GLU, Non.CO2) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, Non.CO2) %>%
       summarise(value = sum(emissions)) %>%
       ungroup()
 
@@ -823,7 +823,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       rename(total_excess_bio = value) %>%
       left_join(L112.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn, by = c("GCAM_region_ID", "year")) %>%
       mutate(AWB_emiss_share = burnable / total_excess_bio) %>%
-      select(GCAM_region_ID, GCAM_commodity, year, GLU, AWB_emiss_share) ->
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, AWB_emiss_share) ->
       L112.AWBshare_R_C_GLU
 
     # Calculate AWB Emissions
@@ -848,14 +848,15 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     # Subset only the historical years in CEDS, and reshape for write-out
     L112.nonco2_tg_R_awb_C_Y_GLU_total %>%
       filter(year %in% emissions.CEDS_YEARS) %>%
-      select(GCAM_region_ID, Non.CO2, GCAM_commodity, GLU, year, value = emissions) ->
+      select(GCAM_region_ID, Non.CO2, GCAM_commodity, GCAM_subsector, GLU, year, value = emissions) ->
       L112.nonco2_tg_R_awb_C_Y_GLU
 
     # Calculates BC/OC emissions factors for a separate data frame output. bc-oc emissions / ag residue
     L112.nonco2_tg_R_awb_C_Y_GLU %>%
       filter(Non.CO2 %in% c("BC_AWB", "OC_AWB")) %>%
       rename(awb_emission = value) %>%
-      left_join_error_no_match(L112.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn, by = c("GCAM_region_ID", "GCAM_commodity", "GLU", "year")) %>%
+      left_join_error_no_match(L112.ag_ExcessDryBiomass_Mt_R_C_Y_GLU_burn,
+                               by = c("GCAM_region_ID", "GCAM_commodity", "GCAM_subsector", "GLU", "year")) %>%
       # Calculate emission factor, which is
       mutate(emfact = awb_emission / burnable) %>%
       select(GCAM_region_ID, Non.CO2, GCAM_commodity, GLU, year, emfact) %>%

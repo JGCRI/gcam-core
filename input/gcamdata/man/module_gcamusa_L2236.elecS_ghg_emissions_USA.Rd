@@ -18,12 +18,12 @@ the generated outputs:  \code{L2236.elecS_ghg_emissions_USA}, \code{L2236.elecS_
 The corresponding file in the original data system was \code{L2236.elecS_ghg_emissions_USA} (gcam-usa level2).
 }
 \description{
-U.S. electricity non CO2 and GHG emission coefficients by technology sector
+U.S. electricity non CO2 GHG emission and future emission coefficients by sector, fuel and cooling techs
 }
 \details{
 Write electricity emission coefficients to multiple load segments and cooling technology then compute state
 shares for each category in the fuel input table.
 }
 \author{
-KD August 2018 / YO December 2021
+KD August 2018 / YO March 2022
 }
