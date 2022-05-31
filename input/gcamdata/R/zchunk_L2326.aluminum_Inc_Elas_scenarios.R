@@ -118,8 +118,8 @@ module_socioeconomics_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...
       filter(year %in%  MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(L101.Pop_thous_Scen_R_Yfut, by = c("scenario", "GCAM_region_ID", "year", "region")) %>%
       left_join_error_no_match(A326.inc_elas_parameter, by = c( "region")) %>%
-      mutate(per_capita_aluminum = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- 2015) ) %>%
-      mutate(aluminum_pro = per_capita_aluminum * population*0.000001)
+      mutate(per_capita_aluminum = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- 2015),
+             aluminum_pro = per_capita_aluminum * population*0.000001)
 
 
     #Rebuild a new tibble save the previous year value
@@ -135,15 +135,15 @@ module_socioeconomics_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...
       left_join(population_2015, by = c("scenario", "GCAM_region_ID", "year")) %>%
       mutate(pcgdp_90thousUSD_before = replace_na(pcgdp_90thousUSD_before,0),aluminum_pro_before  = replace_na(aluminum_pro_before ,0),population_before  = replace_na(population ,0),
              aluminum_hist  = replace_na(aluminum_hist,0),pcgdp_90thousUSD_2015 = replace_na(pcgdp_90thousUSD_2015,0),population_2015 = replace_na(population_2015,0),
-             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, aluminum_pro_before = aluminum_pro_before + aluminum_hist, population_before = population_before + population_2015) %>%
-      #cal
-      mutate(inc_elas = log((aluminum_pro/population) / (aluminum_pro_before/population_before)) /log(pcgdp_90thousUSD/pcgdp_90thousUSD_before)) %>%
-      mutate(income.elasticity = inc_elas,energy.final.demand = "aluminum") %>%
+             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, aluminum_pro_before = aluminum_pro_before + aluminum_hist, population_before = population_before + population_2015,
+             #cal
+             inc_elas = log((aluminum_pro/population) / (aluminum_pro_before/population_before)) /log(pcgdp_90thousUSD/pcgdp_90thousUSD_before),
+             income.elasticity = inc_elas,energy.final.demand = "aluminum") %>%
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       arrange(year) %>%
       #replace those huge number
-      mutate(income.elasticity = replace(income.elasticity,income.elasticity > 3 , 3)) %>%
-      mutate(income.elasticity = replace(income.elasticity,income.elasticity < -3,-3))
+      mutate(income.elasticity = replace(income.elasticity,income.elasticity > 3 , 3),
+             income.elasticity = replace(income.elasticity,income.elasticity < -3,-3))
 
     # Split by scenario and remove scenario column from each tibble
     L2326.pcgdp_thous90USD_Scen_R_Y <- L2326.pcgdp_thous90USD_Scen_R_Y %>%
@@ -161,8 +161,8 @@ module_socioeconomics_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...
       filter(year %in%  MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("GCAM_region_ID", "year", "region")) %>%
       left_join_error_no_match(A326.inc_elas_parameter, by = c( "region")) %>%
-      mutate(per_capita_aluminum = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- 2015) ) %>%
-      mutate(aluminum_pro = per_capita_aluminum * population*0.000001)
+      mutate(per_capita_aluminum = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- 2015),
+             aluminum_pro = per_capita_aluminum * population*0.000001)
 
 
     #Rebuild a new tibble save the previous year value
@@ -178,15 +178,15 @@ module_socioeconomics_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...
       left_join(population_2015_GCAM3, by = c( "GCAM_region_ID", "year")) %>%
       mutate(pcgdp_90thousUSD_before = replace_na(pcgdp_90thousUSD_before,0),aluminum_pro_before  = replace_na(aluminum_pro_before ,0),population_before  = replace_na(population ,0),
              aluminum_hist  = replace_na(aluminum_hist,0),pcgdp_90thousUSD_2015 = replace_na(pcgdp_90thousUSD_2015,0),population_2015 = replace_na(population_2015,0),
-             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, aluminum_pro_before = aluminum_pro_before + aluminum_hist) %>%
-      #cal
-      mutate(inc_elas = log((aluminum_pro/population) / (aluminum_pro_before/population_before)) /log(pcgdp_90thousUSD/pcgdp_90thousUSD_before)) %>%
-      mutate(income.elasticity = inc_elas,energy.final.demand = "aluminum") %>%
+             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, aluminum_pro_before = aluminum_pro_before + aluminum_hist,
+             #cal
+             inc_elas = log((aluminum_pro/population) / (aluminum_pro_before/population_before)) /log(pcgdp_90thousUSD/pcgdp_90thousUSD_before),
+             income.elasticity = inc_elas,energy.final.demand = "aluminum") %>%
       select(region, energy.final.demand, year, income.elasticity) %>%
       arrange(year) %>%
       #replace those huge number
-      mutate(income.elasticity = replace(income.elasticity,income.elasticity > 3 , 3)) %>%
-      mutate(income.elasticity = replace(income.elasticity,income.elasticity < -3,-3))
+      mutate(income.elasticity = replace(income.elasticity,income.elasticity > 3 , 3),
+             income.elasticity = replace(income.elasticity,income.elasticity < -3,-3))
 
     # ===================================================
 

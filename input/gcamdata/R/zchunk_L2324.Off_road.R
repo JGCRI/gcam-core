@@ -333,8 +333,8 @@ module_energy_L2324.Off_road <- function(command, ...) {
     L2324.Off_road_tmp %>%
       left_join(L2324.StubTechCalInput_Off_road_tmp,
                 by = c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input")) %>%
-      mutate(fuel = NULL,sector = NULL, value = NULL,GCAM_region_ID  = NULL,calibrated.value = replace_na(calibrated.value,0)) %>%
-      mutate(share.weight.year = year,
+      mutate(fuel = NULL,sector = NULL, value = NULL,GCAM_region_ID  = NULL,calibrated.value = replace_na(calibrated.value,0),
+             share.weight.year = year,
              subs.share.weight = if_else(calibrated.value > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCalInput"]]) ->

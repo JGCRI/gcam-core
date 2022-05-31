@@ -72,7 +72,7 @@ module_energy_LA1326.aluminum <- function(command, ...) {
       left_join(IAA_ctry_region_full, by = "iso") %>%
       group_by(year, flow, var, IAA_region) %>%
       mutate(region_total = sum(value),
-                    share = value / region_total) %>%
+             share = value / region_total) %>%
       ungroup %>%
       select(iso, year, flow, var, IAA_region, share)
 
@@ -167,8 +167,8 @@ module_energy_LA1326.aluminum <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value , raw = NULL) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value , raw = NULL) ->
       L1326.in_EJ_R_indenergy_F_Yh_tmp
 
 
@@ -192,8 +192,8 @@ module_energy_LA1326.aluminum <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value, raw = NULL) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value, raw = NULL) ->
       L1326.in_EJ_R_indenergy_F_Yh
 
 

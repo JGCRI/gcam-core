@@ -277,17 +277,17 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       rename(pop_thous=value) %>%
       left_join_error_no_match(L144.flsp_bm2_state_res %>% rename(region=state), by=c("region","year")) %>%
       rename(flsp=value) %>%
-      mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
-      mutate(base_flsp=flsp_pc) %>%
-      mutate(tot.dens=round(pop_thous/area_thouskm2,0)) %>%
-      #correct 0 population density to avoid NaN
-      mutate(tot.dens=if_else(tot.dens==0,1,tot.dens)) %>%
-      mutate(flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
-                                                                                        *exp(-`income.param`*log(gdp_pc)))) %>%
-      mutate(`bias.adjust.param`=flsp_pc-flsp_est) %>%
-      mutate(base_flsp=round(base_flsp,energy.DIGITS_FLOORSPACE),
-             bias.adjust.param=round(bias.adjust.param,energy.DIGITS_FLOORSPACE)) %>%
-      mutate(gcam.consumer="resid",
+      mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3),
+             base_flsp=flsp_pc,
+             tot.dens=round(pop_thous/area_thouskm2,0),
+             #correct 0 population density to avoid NaN
+             tot.dens=if_else(tot.dens==0,1,tot.dens),
+             flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
+                                                                                        *exp(-`income.param`*log(gdp_pc))),
+             `bias.adjust.param`=flsp_pc-flsp_est,
+             base_flsp=round(base_flsp,energy.DIGITS_FLOORSPACE),
+             bias.adjust.param=round(bias.adjust.param,energy.DIGITS_FLOORSPACE),
+             gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
       rename(pop.dens=tot.dens,

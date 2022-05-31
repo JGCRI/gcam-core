@@ -99,7 +99,7 @@ module_socioeconomics_L2324.Off_road_Inc_Elas_scenarios <- function(command, ...
       arrange(year) ->
       mining
 
-    L2324.pcgdp_thous90USD_Scen_R_Y <- rbind(agriculture,construction,mining)
+    L2324.pcgdp_thous90USD_Scen_R_Y <- bind_rows(agriculture,construction,mining)
 
     # Split by scenario and remove scenario column from each tibble
 
@@ -159,7 +159,7 @@ module_socioeconomics_L2324.Off_road_Inc_Elas_scenarios <- function(command, ...
       select(region, energy.final.demand, year, income.elasticity) ->
       mining_gcam3
 
-    L2324.Off_road_incelas_gcam3 <- rbind(agriculture_gcam3,construction_gcam3,mining_gcam3)
+    L2324.Off_road_incelas_gcam3 <- bind_rows(agriculture_gcam3,construction_gcam3,mining_gcam3)
     # ===================================================
 
     # Produce outputs

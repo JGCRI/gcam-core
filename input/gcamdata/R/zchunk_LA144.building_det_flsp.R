@@ -153,9 +153,9 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       # left_join_error_no_match cannot be used because joining table does not contain every year, which will introduce NAs
       left_join(A44.HouseholdSize_long, by = "year") %>%
       # Extrapolate, using rule 2 so years outside of min-max range are assigned values from closest data, as opposed to NAs
-      mutate(value_pcdwelling = approx_fun(year, value_pcdwelling, rule = 2)) %>%
-      # Calculate per capita floorspace
-      mutate(value_pcflsp = value_phflsp / value_pcdwelling) %>%
+      mutate(value_pcdwelling = approx_fun(year, value_pcdwelling, rule = 2),
+             # Calculate per capita floorspace
+             value_pcflsp = value_phflsp / value_pcdwelling) %>%
       select(iso, year, value_pcflsp) ->
       L144.Odyssee_pcflsp_Yh
 
@@ -388,9 +388,9 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       filter(region != "USA") %>%
       arrange(region) %>%
       mutate(unadjust.satiation = obs_UnadjSat,
-      land.density.param = coef(fit.gomp)[1],
-      b.param = coef(fit.gomp)[2],
-      income.param = coef(fit.gomp)[3]) %>%
+             land.density.param = coef(fit.gomp)[1],
+             b.param = coef(fit.gomp)[2],
+             income.param = coef(fit.gomp)[3]) %>%
       bind_rows(L144.flsp_param_USA)
 
 
@@ -410,10 +410,10 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       left_join_error_no_match(L144.flsp_param, by = "region") %>%
       left_join_error_no_match(L144.hab_land_flsp_fin %>% filter(year==MODEL_FINAL_BASE_YEAR),by=c("region","year")) %>%
       rename(area_thouskm2=value) %>%
-      mutate(tot.dens=(pop/1E3)/area_thouskm2) %>%
-      mutate(flsp_pc_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
-                                                                                        *exp(-`income.param`*log(pc_gdp_thous)))) %>%
-      mutate(flsp_est = flsp_pc_est * pop / 1E9) %>%
+      mutate(tot.dens=(pop/1E3)/area_thouskm2,
+             flsp_pc_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
+                                                                                        *exp(-`income.param`*log(pc_gdp_thous))),
+             flsp_est = flsp_pc_est * pop / 1E9) %>%
       select(GCAM_region_ID,flsp_est) %>%
       mutate(year = MODEL_FINAL_BASE_YEAR)
 
