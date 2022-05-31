@@ -375,10 +375,10 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
 
     # Tibble with the USA parameters
     L144.flsp_param_USA<-tibble(region ="USA",
-                                unadjust.satiation = obs_UnadjSat_USA,
-                                land.density.param = land.density.param.usa,
-                                b.param = b.param.usa,
-                                income.param = income.param.usa)
+                                unadjust.satiation = gcamusa.OBS_UNADJ_SAT,
+                                land.density.param = gcamusa.LAND_DENSITY_PARAM,
+                                b.param = gcamusa.B_PARAM,
+                                income.param = gcamusa.INCOME_PARAM)
 
     # Write the dataset with the fitted parameters for the 31 GCAM regions
     # Add the tibble with USA-specific parameters
@@ -387,7 +387,7 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
       distinct() %>%
       filter(region != "USA") %>%
       arrange(region) %>%
-      mutate(unadjust.satiation = obs_UnadjSat,
+      mutate(unadjust.satiation = energy.OBS_UNADJ_SAT,
              land.density.param = coef(fit.gomp)[1],
              b.param = coef(fit.gomp)[2],
              income.param = coef(fit.gomp)[3]) %>%

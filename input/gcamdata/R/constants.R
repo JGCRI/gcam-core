@@ -516,12 +516,12 @@ energy.OM_FIXED_INPUT <- "OM-fixed"
 energy.OM_VAR_INPUT <- "OM-var"
 
 # Constants for the residential sector: Parameters for USA (estimated offline) and unadjusted saturation values:
-obs_UnadjSat<-100
-obs_UnadjSat_USA<-150
+energy.OBS_UNADJ_SAT <- 100
+gcamusa.OBS_UNADJ_SAT <- 150
 
-land.density.param.usa<-0
-b.param.usa<-3.49026
-income.param.usa<-0.4875
+gcamusa.LAND_DENSITY_PARAM <- 0
+gcamusa.B_PARAM <- 3.49026
+gcamusa.INCOME_PARAM <- 0.4875
 
 # Constants for global detailed industry
 energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
