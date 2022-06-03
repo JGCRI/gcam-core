@@ -205,13 +205,27 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
 
     #5. Adjustment for Sweet potatoes (production in the 1970's was >20x the production in ~2000. GLU-wise allocation from ~2000 causes issues in GLU078
     L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
-                              L100.LDS_ag_HA_ha$GTAP_crop == "SweetPotato" & L100.LDS_ag_HA_ha$GLU == "GLU078"] <-
-      L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
-                                L100.LDS_ag_HA_ha$GTAP_crop == "SweetPotato" & L100.LDS_ag_HA_ha$GLU == "GLU078"] / 10
+                              L100.LDS_ag_HA_ha$GTAP_crop == "SweetPotato" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
     L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
-                               L100.LDS_ag_prod_t$GTAP_crop == "SweetPotato" & L100.LDS_ag_HA_ha$GLU == "GLU078"] <-
-      L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
-                                 L100.LDS_ag_prod_t$GTAP_crop == "SweetPotato" & L100.LDS_ag_HA_ha$GLU == "GLU078"] / 10
+                               L100.LDS_ag_prod_t$GTAP_crop == "SweetPotato" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    #6. Adjustment for GrndntWShll
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "GrndntWShll" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "GrndntWShll" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    #6. Adjustment for VgtbFrshNES
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "VgtbFrshNES" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "VgtbFrshNES" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
 
     # And we're done
     return_data(L100.Land_type_area_ha,

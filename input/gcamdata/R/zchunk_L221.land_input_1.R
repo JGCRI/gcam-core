@@ -45,7 +45,8 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
              "L121.CarbonContent_kgm2_R_LT_GLU",
              "L125.LC_bm2_R_LT_Yh_GLU",
              "L125.LC_bm2_R",
-             "L131.LV_USD75_m2_R_GLU"))
+             "L131.LV_USD75_m2_R_GLU",
+             "L120.LC_soil_veg_carbon_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L221.LN0_Logit",
              "L221.LN0_Land",
@@ -66,7 +67,17 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     A_LandLeaf_Unmgd1 <- get_data(all_data, "aglu/A_LandLeaf_Unmgd1")
     A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
     A_soil_time_scale_R <- get_data(all_data, "aglu/A_soil_time_scale_R", strip_attributes = TRUE)
-    L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
+
+
+    # If the carbon data source is set to moirai, use the spatially distinct carbon values. If not, use the Houghton values.
+    if(aglu.CARBON_DATA_SOURCE =="moirai"){
+
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L120.LC_soil_veg_carbon_GLU")
+    }else{
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
+
+    }
+
 
     L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
     L125.LC_bm2_R <- get_data(all_data, "L125.LC_bm2_R", strip_attributes = TRUE)
@@ -296,6 +307,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "aglu/A_LandLeaf_Unmgd1",
                      "aglu/GCAMLandLeaf_CdensityLT",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L120.LC_soil_veg_carbon_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU",
                      "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_UnmgdCarbon

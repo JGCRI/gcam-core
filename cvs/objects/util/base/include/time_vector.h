@@ -677,7 +677,7 @@ namespace objects {
         
         TechVintageVector();
         TechVintageVector( const unsigned int aStartPeriod, const unsigned int aSize, const T aDefaultValue );
-        virtual ~TechVintageVector();
+        ~TechVintageVector();
         TechVintageVector( const TechVintageVector& aOther );
         TechVintageVector& operator=( const TechVintageVector& aOther );
         

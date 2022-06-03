@@ -28,7 +28,8 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
              "L100.LDS_ag_prod_t",
              "L120.LC_bm2_R_LT_Yh_GLU",
              "L120.LC_bm2_ctry_LTsage_GLU",
-             "L120.LC_bm2_ctry_LTpast_GLU"))
+             "L120.LC_bm2_ctry_LTpast_GLU",
+             "L120.LC_soil_veg_carbon_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L121.CarbonContent_kgm2_R_LT_GLU",
              "L121.Yield_kgm2_R_Past_GLU",
@@ -52,6 +53,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
     L120.LC_bm2_ctry_LTsage_GLU <- get_data(all_data, "L120.LC_bm2_ctry_LTsage_GLU")
     L120.LC_bm2_ctry_LTpast_GLU <- get_data(all_data, "L120.LC_bm2_ctry_LTpast_GLU")
+    L120.LC_soil_veg_carbon_GLU <- get_data(all_data, "L120.LC_soil_veg_carbon_GLU", strip_attributes = TRUE)
 
 
     # Convert characteristics by land type to correct units (kgC/m2)
@@ -85,7 +87,17 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
                                by = c("Land_Type" = "LT_SAGE")) ->
       L121.CarbonContent_kgm2_R_LTmgd_GLU
 
+    #If using moirai as carbon data source use the moirai carbon data to get pasture carbon.Set the pasture yield here equal to vegetative carbon content.
+    #This will be divided by the cellulose content below to get the true pasture yield.
+    if(aglu.CARBON_DATA_SOURCE == "moirai"){
 
+      L120.LC_soil_veg_carbon_GLU %>%
+        filter(Land_Type == "Pasture") %>%
+        mutate(pasture_yield = 0.6,
+               )->L121.CarbonContent_kgm2_R_LTpast_GLU
+
+
+    }else{
 
     # Pasture carbon contents
     L120.LC_bm2_ctry_LTpast_GLU %>%
@@ -101,7 +113,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
                 soil_c = weighted.mean(soil_c, Area_bm2),
                 pasture_yield = weighted.mean(pasture_yield, Area_bm2)) %>%
       ungroup ->
-      L121.CarbonContent_kgm2_R_LTpast_GLU
+      L121.CarbonContent_kgm2_R_LTpast_GLU}
 
     # Tree crop carbon contents: estimate from the yield
     L100.LDS_ag_prod_t %>%
@@ -149,7 +161,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
       add_comments("From matching Houghton (1999) and SAGE data by GCAM region and land use type") %>%
       add_legacy_name("L121.Yield_kgm2_R_Past_GLU") %>%
       add_precursors("aglu/SAGE_LT", "aglu/Various_CarbonData_LTsage",
-                     "L120.LC_bm2_R_LT_Yh_GLU", "L120.LC_bm2_ctry_LTsage_GLU", "L120.LC_bm2_ctry_LTpast_GLU") ->
+                     "L120.LC_bm2_R_LT_Yh_GLU", "L120.LC_bm2_ctry_LTsage_GLU", "L120.LC_bm2_ctry_LTpast_GLU","L120.LC_soil_veg_carbon_GLU") ->
       L121.Yield_kgm2_R_Past_GLU
 
     L121.CarbonContent_kgm2_R_TreeCrop_GLU %>%

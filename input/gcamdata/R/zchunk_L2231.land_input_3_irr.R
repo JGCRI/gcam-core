@@ -63,7 +63,8 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
              FILE = "aglu/A_LandLeaf3",
              "L121.CarbonContent_kgm2_R_LT_GLU",
              "L125.LC_bm2_R_LT_Yh_GLU",
-             "L120.LC_prot_land_frac_GLU"))
+             "L120.LC_prot_land_frac_GLU",
+             "L120.LC_soil_veg_carbon_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2231.LN3_Logit",
              "L2231.LN3_HistUnmgdAllocation",
@@ -105,7 +106,13 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       filter(year==MODEL_FINAL_BASE_YEAR) %>%
       select(-year)
 
+    if(aglu.CARBON_DATA_SOURCE=="moirai"){
 
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L120.LC_soil_veg_carbon_GLU")
+    }else{
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
+
+    }
 
     # silence package check notes
     GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
@@ -456,6 +463,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
                      "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandLeaf_Unmgd3",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L120.LC_soil_veg_carbon_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L2231.LN3_UnmgdCarbon
 
@@ -470,6 +478,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
                      "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandLeaf3",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L120.LC_soil_veg_carbon_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L2231.LN3_MgdCarbon_noncrop
 

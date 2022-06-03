@@ -65,6 +65,10 @@ private:
     
     //! The broadcast node which can be used to kick off calculations.
     tbb::flow::broadcast_node<tbb::flow::continue_msg> mHead;
+
+    //! It does not appear that the flow graph manages this memory so we
+    //! need to keep track of it explicitly
+    std::vector<tbb::flow::continue_node<tbb::flow::continue_msg>*> mTBBVertices;
     
     static tbb::global_control* mParallelismConfig;
 
