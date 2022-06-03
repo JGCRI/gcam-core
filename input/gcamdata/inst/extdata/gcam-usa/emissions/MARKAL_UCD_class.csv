@@ -1,0 +1,17 @@
+# File: MARKAL_UCD_class.csv
+# Title: mapping file for MARKAL and UCD vehicle classes
+# Units: NA
+# Source: NA - Mapping file
+# Column types: ccc
+# ----------
+MARKAL_class,UCD_class_old,UCD_class
+Bus,Bus,Bus
+Compact car,Compact Car,Car
+Full size car,Midsize Car,Car
+Small SUV,Large Car,Large Car and Truck
+Pickup,Light Truck and SUV,Large Car and Truck
+Pickup,Truck (0-2.7t),Light truck
+Commercial truck,Truck (2.7-4.5t),Medium truck
+Heavy duty short haul truck,Truck (4.5-12t),Medium truck
+Heavy duty long haul truck,Truck (>12t),Heavy truck
+Motorcycle,None,2W and 3W

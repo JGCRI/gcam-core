@@ -93,7 +93,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
              "L254.StubTranTechCalInput_USA",
              "L254.StubTranTechProd_nonmotor_USA",
              "L254.StubTranTechCalInput_passthru_USA",
-             "L254.BaseService_trn_USA"))
+             "L254.BaseService_trn_USA",
+             "L254.StubTranTechOutput_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -602,6 +603,16 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
                      "energy/mappings/UCD_size_class_revisions") ->
       L254.BaseService_trn_USA
 
+    L254.StubTranTechOutput_USA %>%
+      add_title("service output for all tranTechnologies") %>%
+      add_units("Million pass-km and million ton-km") %>%
+      add_comments("Service outputs of all motorized technologies are calculated as calInput * loadFactor / coefficient") %>%
+      add_legacy_name("L254.StubTranTechOutput_USA") %>%
+      same_precursors_as("L254.StubTranTechCalInput_USA") %>%
+      same_precursors_as("L254.StubTranTechLoadFactor_USA") %>%
+      same_precursors_as("L254.StubTranTechCoef_USA") ->
+      L254.StubTranTechOutput_USA
+
     return_data(L254.DeleteSupplysector_USAtrn, L254.DeleteFinalDemand_USAtrn,
                 L254.Supplysector_trn_USA,
                 L254.FinalEnergyKeyword_trn_USA,
@@ -624,7 +635,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
                 L254.PriceElasticity_trn_USA,
                 L254.IncomeElasticity_trn_USA,
                 L254.StubTranTechCalInput_USA, L254.StubTranTechProd_nonmotor_USA,
-                L254.StubTranTechCalInput_passthru_USA, L254.BaseService_trn_USA)
+                L254.StubTranTechCalInput_passthru_USA, L254.BaseService_trn_USA,
+                L254.StubTranTechOutput_USA)
   } else {
     stop("Unknown command")
   }

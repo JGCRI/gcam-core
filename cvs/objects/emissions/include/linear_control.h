@@ -96,6 +96,9 @@ protected:
         //! Final emissions coefficient
         DEFINE_VARIABLE( SIMPLE, "final-emissions-coefficient", mFinalEmCoefficient, Value ),
         
+        //!  Emissions redution percentage (alternative to specifying emissions coefficient)
+        DEFINE_VARIABLE( SIMPLE, "control-percentage", mControlFraction, Value ),
+        
         //! Flag if wish to allow emissions factor increase
         DEFINE_VARIABLE( SIMPLE, "allow-ef-increase", mAllowIncrease, bool )
     )

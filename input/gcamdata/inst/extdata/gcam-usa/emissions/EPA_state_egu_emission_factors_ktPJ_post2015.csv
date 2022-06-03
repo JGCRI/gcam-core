@@ -1,0 +1,148 @@
+# File: EPA_state_egu_emission_factors_ktPJ_post2015.csv
+# Title: Electric Generating Unit (EGU) emission factors for US states for plants built after 2015 
+# Source: Dan Loughlin at EPA-ORD. For most pollutants these came from GREET. NOx SO2 and PM emissions came from IPM 
+# Comments: Emission factors are assumed constant for all years
+# Units: kilotonne per PJ fuel input
+# Column types: cccn
+# ----------
+fuel,technology,Non.CO2,emiss.coeff
+refined liquids,refined liquids (steam/CT),CH4,2.87E-03
+refined liquids,refined liquids (steam/CT),N2O,5.72E-04
+refined liquids,refined liquids (steam/CT),NOx,2.43E-01
+refined liquids,refined liquids (steam/CT),SO2,3.11E-02
+refined liquids,refined liquids (steam/CT),PM10,2.46E-02
+refined liquids,refined liquids (steam/CT),PM2.5,6.23E-03
+refined liquids,refined liquids (steam/CT),CO,1.48E-03
+refined liquids,refined liquids (steam/CT),NMVOC,2.45E-04
+refined liquids,refined liquids (steam/CT),BC,3.74E-04
+refined liquids,refined liquids (steam/CT),OC,2.49E-04
+coal,coal (conv pul),CH4,1.00E-03
+coal,coal (conv pul),N2O,1.50E-03
+coal,coal (conv pul),NOx,3.01E-02
+coal,coal (conv pul),SO2,2.58E-02
+coal,coal (conv pul),PM10,2.13E-02
+coal,coal (conv pul),PM2.5,1.60E-02
+coal,coal (conv pul),CO,1.18E-02
+coal,coal (conv pul),NMVOC,1.42E-03
+coal,coal (conv pul),BC,6.90E-04
+coal,coal (conv pul),OC,1.30E-03
+coal,coal (IGCC),CH4,9.95E-04
+coal,coal (IGCC),N2O,1.50E-03
+coal,coal (IGCC),NOx,5.59E-03
+coal,coal (IGCC),SO2,6.45E-03
+coal,coal (IGCC),PM10,2.39E-01
+coal,coal (IGCC),PM2.5,6.96E-02
+coal,coal (IGCC),CO,2.12E-03
+coal,coal (IGCC),NMVOC,1.16E-04
+coal,coal (IGCC),BC,2.99E-03
+coal,coal (IGCC),OC,5.64E-03
+gas,gas (steam/CT),CH4,1.00E-03
+gas,gas (steam/CT),N2O,9.67E-05
+gas,gas (steam/CT),NOx,4.73E-03
+gas,gas (steam/CT),SO2,0
+gas,gas (steam/CT),PM10,3.39E-03
+gas,gas (steam/CT),PM2.5,3.39E-03
+gas,gas (steam/CT),CO,3.91E-02
+gas,gas (steam/CT),NMVOC,1.00E-03
+gas,gas (steam/CT),BC,9.83E-05
+gas,gas (steam/CT),OC,2.30E-03
+gas,gas (CC),CH4,1.08E-03
+gas,gas (CC),N2O,1.13E-04
+gas,gas (CC),NOx,4.73E-03
+gas,gas (CC),SO2,0
+gas,gas (CC),PM10,1.26E-04
+gas,gas (CC),PM2.5,1.26E-04
+gas,gas (CC),CO,1.38E-02
+gas,gas (CC),NMVOC,2.53E-04
+gas,gas (CC),BC,3.66E-06
+gas,gas (CC),OC,8.57E-05
+biomass,biomass (conv),CH4,9.35E-03
+biomass,biomass (conv),N2O,5.79E-03
+biomass,biomass (conv),NOx,8.61E-03
+biomass,biomass (conv),SO2,3.44E-02
+biomass,biomass (conv),PM10,3.47E-02
+biomass,biomass (conv),PM2.5,3.11E-02
+biomass,biomass (conv),CO,2.67E-01
+biomass,biomass (conv),NMVOC,7.57E-03
+biomass,biomass (conv),BC,4.30E-03
+biomass,biomass (conv),OC,1.10E-02
+biomass,biomass (IGCC),CH4,1.08E-03
+biomass,biomass (IGCC),N2O,1.13E-04
+biomass,biomass (IGCC),NOx,4.73E-03
+biomass,biomass (IGCC),SO2,0
+biomass,biomass (IGCC),PM10,1.26E-04
+biomass,biomass (IGCC),PM2.5,1.26E-04
+biomass,biomass (IGCC),CO,1.38E-02
+biomass,biomass (IGCC),NMVOC,2.53E-04
+biomass,biomass (IGCC),BC,3.66E-06
+biomass,biomass (IGCC),OC,8.57E-05
+refined liquids,refined liquids (CC),CH4,2.87E-03
+refined liquids,refined liquids (CC),N2O,5.72E-04
+refined liquids,refined liquids (CC),NOx,2.43E-01
+refined liquids,refined liquids (CC),SO2,3.11E-02
+refined liquids,refined liquids (CC),PM10,2.46E-02
+refined liquids,refined liquids (CC),PM2.5,6.23E-03
+refined liquids,refined liquids (CC),CO,1.48E-03
+refined liquids,refined liquids (CC),NMVOC,2.45E-04
+refined liquids,refined liquids (CC),BC,3.74E-04
+refined liquids,refined liquids (CC),OC,2.49E-04
+refined liquids,refined liquids (CC CCS),CH4,2.87E-03
+refined liquids,refined liquids (CC CCS),N2O,5.72E-04
+refined liquids,refined liquids (CC CCS),NOx,2.43E-01
+refined liquids,refined liquids (CC CCS),SO2,3.11E-02
+refined liquids,refined liquids (CC CCS),PM10,2.46E-02
+refined liquids,refined liquids (CC CCS),PM2.5,6.23E-03
+refined liquids,refined liquids (CC CCS),CO,1.48E-03
+refined liquids,refined liquids (CC CCS),NMVOC,2.45E-04
+refined liquids,refined liquids (CC CCS),BC,3.74E-04
+refined liquids,refined liquids (CC CCS),OC,2.49E-04
+coal,coal (conv pul CCS),CH4,1.00E-03
+coal,coal (conv pul CCS),N2O,1.50E-03
+coal,coal (conv pul CCS),NOx,3.01E-02
+coal,coal (conv pul CCS),SO2,2.58E-02
+coal,coal (conv pul CCS),PM10,2.13E-02
+coal,coal (conv pul CCS),PM2.5,1.60E-02
+coal,coal (conv pul CCS),CO,1.18E-02
+coal,coal (conv pul CCS),NMVOC,1.42E-03
+coal,coal (conv pul CCS),BC,6.90E-04
+coal,coal (conv pul CCS),OC,1.30E-03
+coal,coal (IGCC CCS),CH4,6.90E-04
+coal,coal (IGCC CCS),N2O,1.30E-03
+coal,coal (IGCC CCS),NOx,5.59E-03
+coal,coal (IGCC CCS),SO2,6.45E-03
+coal,coal (IGCC CCS),PM10,2.39E-01
+coal,coal (IGCC CCS),PM2.5,6.96E-02
+coal,coal (IGCC CCS),CO,2.12E-03
+coal,coal (IGCC CCS),NMVOC,1.16E-04
+coal,coal (IGCC CCS),BC,2.99E-03
+coal,coal (IGCC CCS),OC,5.64E-03
+biomass,biomass (conv CCS),CH4,9.35E-03
+biomass,biomass (conv CCS),N2O,5.79E-03
+biomass,biomass (conv CCS),NOx,8.61E-03
+biomass,biomass (conv CCS),SO2,3.44E-02
+biomass,biomass (conv CCS),PM10,3.47E-02
+biomass,biomass (conv CCS),PM2.5,3.11E-02
+biomass,biomass (conv CCS),CO,2.67E-01
+biomass,biomass (conv CCS),NMVOC,7.57E-03
+biomass,biomass (conv CCS),BC,4.30E-03
+biomass,biomass (conv CCS),OC,1.10E-02
+biomass,biomass (IGCC CCS),CH4,1.08E-03
+biomass,biomass (IGCC CCS),N2O,1.13E-04
+biomass,biomass (IGCC CCS),NOx,4.73E-03
+biomass,biomass (IGCC CCS),SO2,0
+biomass,biomass (IGCC CCS),PM10,1.26E-04
+biomass,biomass (IGCC CCS),PM2.5,1.26E-04
+biomass,biomass (IGCC CCS),CO,1.38E-02
+biomass,biomass (IGCC CCS),NMVOC,2.53E-04
+biomass,biomass (IGCC CCS),BC,3.66E-06
+biomass,biomass (IGCC CCS),OC,8.57E-05
+gas,gas (CC CCS),CH4,1.08E-03
+gas,gas (CC CCS),N2O,1.13E-04
+gas,gas (CC CCS),NOx,4.73E-03
+gas,gas (CC CCS),SO2,0
+gas,gas (CC CCS),PM10,1.26E-04
+gas,gas (CC CCS),PM2.5,1.26E-04
+gas,gas (CC CCS),CO,1.38E-02
+gas,gas (CC CCS),NMVOC,2.53E-04
+gas,gas (CC CCS),BC,3.66E-06
+gas,gas (CC CCS),OC,8.57E-05

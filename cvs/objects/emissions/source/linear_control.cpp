@@ -6,7 +6,7 @@
 * CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
 * LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
 * sentence must appear on any copies of this computer software.
-* 
+*
 * EXPORT CONTROL
 * User agrees that the Software will not be shipped, transferred or
 * exported into any country or used in any manner prohibited by the
@@ -21,17 +21,17 @@
 * (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
 *     and that User is not otherwise prohibited
 * under the Export Laws from receiving the Software.
-* 
+*
 * Copyright 2011 Battelle Memorial Institute.  All Rights Reserved.
-* Distributed as open-source under the terms of the Educational Community 
+* Distributed as open-source under the terms of the Educational Community
 * License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
-* 
+*
 * For further details, see: http://www.globalchange.umd.edu/models/gcam/
 *
 */
 
 
-/*! 
+/*!
  * \file mac_control.cpp
  * \ingroup Objects
  * \brief LinearControl class source file.
@@ -94,6 +94,7 @@ void LinearControl::copy( const LinearControl& aOther ){
     mTargetYear = aOther.mTargetYear;
     mStartYear = aOther.mStartYear;
     mFinalEmCoefficient = aOther.mFinalEmCoefficient;
+    mControlFraction = aOther.mControlFraction;
     mAllowIncrease = aOther.mAllowIncrease;
 }
 
@@ -117,6 +118,7 @@ const string& LinearControl::getXMLNameStatic(){
 void LinearControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     XMLWriteElement( mFinalEmCoefficient, "final-emissions-coefficient", aOut, aTabs);
+    XMLWriteElement( mControlFraction, "control-percentage", aOut, aTabs);
     XMLWriteElement( mTargetYear, "end-year", aOut, aTabs);
     XMLWriteElementCheckDefault( mStartYear, "start-year", aOut, aTabs,
                                 modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) );
@@ -128,13 +130,13 @@ void LinearControl::completeInit( const string& aRegionName, const string& aSect
                                const IInfo* aTechInfo )
 {
 
-    if ( ( mTargetYear == 0 ) || !mFinalEmCoefficient.isInited() && !mDisableEmControl ) {
+    if ( !mDisableEmControl && (( mTargetYear == 0 ) || (!mFinalEmCoefficient.isInited() && !mControlFraction.isInited()))) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Linear control function " << getName() << " has not been parameterized. " << endl;
         abort();
     }
-    
+
 }
 
 void LinearControl::initCalc( const string& aRegionName,
@@ -151,7 +153,7 @@ void LinearControl::initCalc( const string& aRegionName,
         mainLog << "Linear control function improperly parameterized. Target year <= last calibration year." << endl;
         abort();
     }
-    
+
     // Make sure start year is not before final calibration year
     if ( mStartYear < finalCalibYr && !mDisableEmControl ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -160,11 +162,11 @@ void LinearControl::initCalc( const string& aRegionName,
                 << " before final calibration year, resetting to " << finalCalibYr << endl;
         mStartYear = finalCalibYr;
     }
-    
+
     // Make sure start year is not before the first model period for this object.
     int thisModelYear = scenario->getModeltime()->getper_to_yr( aPeriod );
     if ( aTechInfo->getBoolean( "new-vintage-tech", true ) && mStartYear < thisModelYear ) {
-        
+
         // But don't warn if the current object has been disabled via user input
         if ( !mDisableEmControl ) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -174,8 +176,8 @@ void LinearControl::initCalc( const string& aRegionName,
         }
         mStartYear = thisModelYear;
     }
-    
-    // Need to get the emissions coefficient from start period to serve as starting point 
+
+    // Need to get the emissions coefficient from start period to serve as starting point
     // for linear decline.
     int startPeriod = scenario->getModeltime()->getyr_to_per( mStartYear );
     if ( mDisableEmControl ) {
@@ -188,12 +190,12 @@ void LinearControl::initCalc( const string& aRegionName,
             calcEmissionsReductionInternal( baseEmissionsCoef, aPeriod );
        }
     }
-    
-    // Note, the emissions driver in NonCO2Emissions::calcEmission for input driver is 
-    // defined as the sum of all physical inputs (e.g. getPhysicalDemandSum). This means 
-    // that the emissions factor has an unusual definition for quantities with more than 
+
+    // Note, the emissions driver in NonCO2Emissions::calcEmission for input driver is
+    // defined as the sum of all physical inputs (e.g. getPhysicalDemandSum). This means
+    // that the emissions factor has an unusual definition for quantities with more than
     // one input. This function should be used with caution in these cases.
-    // Fortunately, these cases are currently rare. If multiple inputs become more common 
+    // Fortunately, these cases are currently rare. If multiple inputs become more common
     // changes, a means of specifying the appropriate input would need to be added.
     // Electricity inputs, for example, should never be associated with non-CO2 emissions.
 }
@@ -207,7 +209,7 @@ void LinearControl::calcEmissionsReduction( const std::string& aRegionName, cons
 
 /*!
  * \brief Calculate a linear reduction in the emissions factor and save it to mReduction.
- * \details The reduction is calculated from the given aBaseEmissionsCoef and the 
+ * \details The reduction is calculated from the given aBaseEmissionsCoef and the
  *          parsed parameters that define the start/end year and final value.  We
  *          only allow the emissions factor to increase if the mAllowIncrease flag
  *          was explicitly set.
@@ -220,31 +222,38 @@ void LinearControl::calcEmissionsReductionInternal( const double aBaseEmissionsC
                                                     const int aPeriod )
 {
     double reduction = 0.0;
-    
+
     double thisYear = scenario->getModeltime()->getper_to_yr( aPeriod );
-    
+
     // Don't bother if no emissions or haven't passed starting point yet
-    if ( aBaseEmissionsCoef > 0 && thisYear > mStartYear && mFinalEmCoefficient.isInited() ) {
-        
+    if ( aBaseEmissionsCoef > 0 && thisYear > mStartYear &&
+         ( mFinalEmCoefficient.isInited() || mControlFraction.isInited() ) ) {
+
         // Derivation of emission reduction formula below
         // newEF = baseEF - (baseEF - targetEF) * ( year - baseYear ) / ( targetYear - baseYear )
         // newEF = baseEF * ( 1 - reduction )  therefore reduction = 1 - newEF / baseEF
         // reduction = ( 1 - targetEF / baseEF ) * ( year - baseYear ) / ( targetYear - baseYear )
-        
+
         // This is the final reduction
-        reduction = ( 1 - mFinalEmCoefficient / aBaseEmissionsCoef );
-        
+        // Emissions coefficient takes precidence if control fraction is also inited
+        // Note, have already established that at least one of these is defined.
+        if ( mFinalEmCoefficient.isInited() ) {
+            reduction = ( 1 - mFinalEmCoefficient / aBaseEmissionsCoef );
+        } else {
+            reduction = mControlFraction;
+        }
+
         // If not at final year yet, phase this in linearly
         if ( thisYear < mTargetYear ) {
             reduction *= static_cast<double>( thisYear -  mStartYear ) /
                          static_cast<double>( mTargetYear - mStartYear );
         }
-        
+
         // Ensure that reduction is not negative unless user specifically requires this
         if ( reduction < 0.0 && !mAllowIncrease ) {
             reduction = 0.0;
         }
     }
- 
+
     setEmissionsReduction( reduction );
 }

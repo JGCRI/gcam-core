@@ -1,0 +1,14 @@
+# File: EPA_resid_wood_furnace_PM_EF_future_factors.csv
+# Title: Residential wood furnace correction factors for EF after 2015
+# Source: Dan Loughlin (EPA)'s calculations based on USA EPA 40 CFR Part 60 and Abt Associates. (2015). Nonpoint Source Emissions Inventory Tools - Residential Wood Combustion Tool. Available at: http://envr.abtassociates.com/nonpoint_nei/index.html [accessed Aug 2019]
+# Comments: EF linearly decreased 33% from 2010 to 2030 adjusted to be calculated based off of the current base year 2015.
+# Units: Unitless
+# Column types: cccin
+# ----------
+supplysector,stub.technology,Non.CO2,year,factor
+resid heating,wood furnace,PM2.5,2020,0.91
+resid heating,wood furnace,PM10,2020,0.91
+resid heating,wood furnace,PM2.5,2025,0.82
+resid heating,wood furnace,PM10,2025,0.82
+resid heating,wood furnace,PM2.5,2030,0.73
+resid heating,wood furnace,PM10,2030,0.73

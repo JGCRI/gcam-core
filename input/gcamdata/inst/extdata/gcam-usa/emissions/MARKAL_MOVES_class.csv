@@ -1,0 +1,30 @@
+# File: MARKAL_MOVES_class.csv
+# Title: Mapping file between MARKAL and MOVES
+# Source: NA - Mapping file
+# Comments: for MOVES_to_MARKAL_Mapping: A represents a single MOVES sourceTypeID to multiple MARKAL classes. B represents multiple MOVES sourceTypeIDs to a single MARKAL class.
+# Units: NA
+# Column types: ciic
+# ----------
+MARKAL_Class,MOVES_Source_Type,MOVES_Reg_Class,MOVES_to_MARKAL_Mapping
+Mini car,21,,A
+Compact car,21,,A
+Full size car,21,,A
+Minivan,31,,A
+Small SUV,31,,A
+Large SUV,31,,A
+Pickup,32,30,
+Bus,41,,B
+Bus,42,,B
+Bus,43,,B
+Commercial truck,32,40,
+Commercial truck,32,41,
+Commercial truck,51,40,
+Commercial truck,51,41,
+Commercial truck,52,40,
+Commercial truck,52,41,
+Commercial truck,53,40,
+Commercial truck,53,41,
+Heavy duty long haul truck,53,,B
+Heavy duty long haul truck,62,,B
+Heavy duty short haul truck,52,,B
+Heavy duty short haul truck,61,,B

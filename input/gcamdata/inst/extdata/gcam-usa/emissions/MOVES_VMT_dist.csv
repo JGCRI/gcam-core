@@ -1,0 +1,157 @@
+# File: MOVES_VMT_dist.csv
+# Title: Vehicle Miles Traveled by Vehicle Class and Age
+# Source: Population and Activity of On-Road Vehicles in MOVES2014. US EPA Office of Transportation and Air Quality. January 2016. p. 61-63. https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=OTAQ&dirEntryId=309336
+# Comments: Tables 7-3 to 7-5
+# Units: Miles Traveled: mi Age: years
+# Column types: inci
+# ----------
+Age,Miles Traveled,Class.Of.Car,MOVES.sourceTypeID
+4,52050,Passenger Cars,21
+5,58580,Passenger Cars,21
+10,18425,Passenger Cars,21
+16,17145,Passenger Cars,21
+1,15806,Light Trucks,32
+2,15683,Light Trucks,32
+3,15859,Light Trucks,32
+4,15302,Light Trucks,32
+5,14762,Light Trucks,32
+6,13836,Light Trucks,32
+7,13542,Light Trucks,32
+8,13615,Light Trucks,32
+9,12875,Light Trucks,32
+10,12203,Light Trucks,32
+11,11501,Light Trucks,32
+12,10815,Light Trucks,32
+13,11391,Light Trucks,32
+14,10843,Light Trucks,32
+15,10378,Light Trucks,32
+16,9259,Light Trucks,32
+17,8358,Light Trucks,32
+18,9371,Light Trucks,32
+19,7352,Light Trucks,32
+20,8363,Light Trucks,32
+21,6999,Light Trucks,32
+22,7327,Light Trucks,32
+23,6969,Light Trucks,32
+24,6220,Light Trucks,32
+25,6312,Light Trucks,32
+26,6745,Light Trucks,32
+27,9515,Light Trucks,32
+28,6635,Light Trucks,32
+29,12108,Light Trucks,32
+30,5067,Light Trucks,32
+31,4577,Light Trucks,32
+32,6923,Light Trucks,32
+3,46791,Transit Bus,42
+4,41262,Transit Bus,42
+5,42206,Transit Bus,42
+6,39160,Transit Bus,42
+7,38266,Transit Bus,42
+8,36358,Transit Bus,42
+9,34935,Transit Bus,42
+10,33021,Transit Bus,42
+11,32540,Transit Bus,42
+12,32605,Transit Bus,42
+13,27722,Transit Bus,42
+14,28429,Transit Bus,42
+15,32140,Transit Bus,42
+16,28100,Transit Bus,42
+17,24626,Transit Bus,42
+18,23428,Transit Bus,42
+19,22575,Transit Bus,42
+20,23220,Transit Bus,42
+21,19588,Transit Bus,42
+22,22939,Transit Bus,42
+23,26413,Transit Bus,42
+24,23366,Transit Bus,42
+25,11259,Transit Bus,42
+26,23228,Transit Bus,42
+27,21515,Transit Bus,42
+28,25939,Transit Bus,42
+29,20117,Transit Bus,42
+30,17515,Transit Bus,42
+0,26703,Refuse,51
+1,32391,Refuse,51
+2,31210,Refuse,51
+3,31444,Refuse,51
+4,31815,Refuse,51
+5,28450,Refuse,51
+6,25462,Refuse,51
+7,30182,Refuse,51
+8,20722,Refuse,51
+9,25199,Refuse,51
+10,23366,Refuse,51
+11,18818,Refuse,51
+12,12533,Refuse,51
+13,15891,Refuse,51
+14,19618,Refuse,51
+15,12480,Refuse,51
+16,12577,Refuse,51
+0,21926,Short-Haul,52
+1,22755,Short-Haul,52
+2,24446,Short-Haul,52
+3,23874,Short-Haul,52
+4,21074,Short-Haul,52
+5,21444,Short-Haul,52
+6,16901,Short-Haul,52
+7,15453,Short-Haul,52
+8,13930,Short-Haul,52
+9,13303,Short-Haul,52
+10,11749,Short-Haul,52
+11,13675,Short-Haul,52
+12,11332,Short-Haul,52
+13,9795,Short-Haul,52
+14,9309,Short-Haul,52
+15,9379,Short-Haul,52
+16,4830,Short-Haul,52
+0,40538,Long-Haul,53
+1,28168,Long-Haul,53
+2,30139,Long-Haul,53
+3,49428,Long-Haul,53
+4,33266,Long-Haul,53
+5,23784,Long-Haul,53
+6,21238,Long-Haul,53
+7,27562,Long-Haul,53
+8,21052,Long-Haul,53
+9,11273,Long-Haul,53
+10,18599,Long-Haul,53
+11,15140,Long-Haul,53
+12,13311,Long-Haul,53
+13,9796,Long-Haul,53
+14,12067,Long-Haul,53
+15,1606,Long-Haul,53
+16,8941,Long-Haul,53
+0,119867,Short-Haul,61
+1,114983,Short-Haul,61
+2,110099,Short-Haul,61
+3,105215,Short-Haul,61
+4,100331,Short-Haul,61
+5,95447,Short-Haul,61
+6,90563,Short-Haul,61
+7,85679,Short-Haul,61
+8,80795,Short-Haul,61
+9,75911,Short-Haul,61
+10,71026,Short-Haul,61
+11,66142,Short-Haul,61
+12,61258,Short-Haul,61
+13,56374,Short-Haul,61
+14,51490,Short-Haul,61
+15,46606,Short-Haul,61
+16,41722,Short-Haul,61
+0,109418,Long-Haul,62
+1,128287,Long-Haul,62
+2,117945,Long-Haul,62
+3,110713,Long-Haul,62
+4,99925,Long-Haul,62
+5,94326,Long-Haul,62
+6,85225,Long-Haul,62
+7,85406,Long-Haul,62
+8,71834,Long-Haul,62
+9,71160,Long-Haul,62
+10,67760,Long-Haul,62
+11,80207,Long-Haul,62
+12,48562,Long-Haul,62
+13,64473,Long-Haul,62
+14,48242,Long-Haul,62
+15,58951,Long-Haul,62
+16,35897,Long-Haul,62

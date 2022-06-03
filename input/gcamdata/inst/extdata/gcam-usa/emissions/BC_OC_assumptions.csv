@@ -1,0 +1,67 @@
+# File: BC_OC_assumptions.csv
+# Title: Fractions of PM2.5 combustion emissions that are BC and OC
+# Units: BC_fraction, OC_fraction - Unitless
+# Source: Developed from Bond et al (2004). A technology-based global inventory of black and organic carbon emissions from combustion. # Provided by Dan Loughlin at EPA-ORD 8/2015 # Updated 1/13/2017 by Catherine Ledna #Updated 9/18/2019 by Brinda Yarlagadda
+# Column types: cccnn
+# ----------
+sector,subsector,technology,BC_fraction,OC_fraction
+base load generation,coal,,0.006,0
+base load generation,gas,,0.06,0.5
+base load generation,biomass,,0.05,0.2
+base load generation,refined liquids,,0.3,0.09
+intermediate generation,coal,,0.006,0
+intermediate generation,gas,,0.06,0.5
+intermediate generation,biomass,,0.05,0.2
+intermediate generation,refined liquids,,0.3,0.09
+subpeak generation,coal,,0.006,0
+subpeak generation,gas,,0.06,0.5
+subpeak generation,biomass,,0.05,0.2
+subpeak generation,refined liquids,,0.3,0.09
+peak generation,coal,,0.006,0
+peak generation,gas,,0.06,0.5
+peak generation,biomass,,0.05,0.2
+peak generation,refined liquids,,0.3,0.09
+trn_aviation_intl,International Aviation,Liquids,0.7,0.2
+trn_shipping_intl,International Ship,Liquids,0.66,0.21
+trn_freight,Freight Rail,Liquids,0.66,0.21
+trn_freight,Domestic Ship,Liquids,0.66,0.21
+trn_freight_road,,Liquids,0.66,0.21
+trn_freight_road,,NG,0.06,0.5
+trn_pass,Domestic Aviation,Liquids,0.7,0.2
+trn_pass,Passenger Rail,Liquids,0.66,0.21
+trn_pass_road,Bus,Liquids,0.66,0.21
+trn_pass_road,Bus,NG,0.06,0.5
+trn_pass_road_LDV_4W,,Liquids,0.34,0.36
+trn_pass_road_LDV_4W,,NG,0.06,0.5
+trn_pass_road_LDV_4W,,Hybrid Liquids,0.34,0.36
+trn_pass_road_LDV_2W,,Liquids,0.05,0.79
+comm cooking,gas,,0.06,0.5
+comm cooling,gas,,0.06,0.5
+comm heating,biomass,,0.05,0.2
+comm heating,coal,,0.2,0.04
+comm heating,gas,,0.06,0.5
+comm heating,refined liquids,,0.3,0.09
+comm hot water,gas,,0.06,0.5
+comm hot water,refined liquids,,0.3,0.09
+comm other,gas,,0.06,0.5
+comm other,refined liquids,,0.3,0.09
+resid cooking,gas,,0.06,0.5
+resid cooking,refined liquids,,0.13,0.1
+resid clothes dryers,gas,,0.06,0.5
+resid other,gas,,0.06,0.5
+resid heating,biomass,wood furnace,0.05,0.69
+resid heating,coal,,0.2,0.04
+resid heating,gas,,0.06,0.5
+resid heating,refined liquids,,0.13,0.1
+resid hot water,gas,,0.06,0.5
+resid hot water,refined liquids,,0.13,0.1
+resid other,refined liquids,,0.13,0.1
+other industrial energy use,coal,coal,0.2,0.04
+other industrial energy use,coal,coal cogen,0.006,0
+other industrial energy use,gas,gas,0.06,0.5
+other industrial energy use,gas,gas cogen,0.06,0.5
+other industrial energy use,refined liquids,refined liquids,0.3,0.09
+other industrial energy use,refined liquids,refined liquids cogen,0.3,0.09
+other industrial energy use,biomass,biomass,0.05,0.2
+other industrial energy use,biomass ,biomass cogen,0.05,0.2
+urban processes,waste_incineration,waste_incineration,0.05,0.2

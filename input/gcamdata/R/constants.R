@@ -102,6 +102,7 @@ CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
 CONV_HA_BM2 <- 1e-5
 CONV_HA_M2 <- 10000
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
+CONV_G_TG <- 1e-12
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
@@ -130,7 +131,6 @@ CONV_THA_KGM2       <- 0.1            # tons C/ha -> kg C/m2
 CONV_TON_MEGATON    <- 1e-6
 CONV_TONNE_GJ_DISTILLATE  <- 42.91    # tons to GJ distillate
 CONV_TONNE_GJ_RFO   <- 40.87          # tons to GJ residual fuel oil
-CONV_TST_TG         <- 0.000907       # thousand short tons to Tg
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
@@ -143,6 +143,7 @@ CONV_GWH_EJ <- 3.6e-6
 CONV_TWH_EJ <- 3.6e-3
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
+CONV_MJ_EJ <- 1e-12
 CONV_EJ_GJ <- 1 / CONV_GJ_EJ
 CONV_MBLD_EJYR <- 6.119 * 365.25 * 1e-3 # million barrels a day to EJ per year
 CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
@@ -163,6 +164,16 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
 CONV_FT2_M2 <- 0.0929 # Square feet to square meters
+CONV_MI_KM <- 1.60934
+CONV_PERS_MILPERS <- 1000000 #Person to million-passengers
+
+# SO2 related conversion factors
+RESID_BTU_PER_BBL <- 6.29 # Source EIA (Note HHV)
+RESID_BBLS_PER_TONNE <- 6.66 # Source EIA (Note HHV)
+RESID_ENERGY_DENSITY_BTU <- RESID_BTU_PER_BBL * RESID_BBLS_PER_TONNE * 0.95 # Btu/tonne net
+RESID_ENERGY_DENSITY_JOULES <- RESID_ENERGY_DENSITY_BTU * 1055 # TJ/Tg
+RESID_ENERGY_CONTENT <- RESID_ENERGY_DENSITY_JOULES/1E6 # Tg/EJ
+SO2_SHIP_LIMIT_POLICY_MULTIPLIER <- 0.001 * 2
 
 # AgLU constants ======================================================================
 
@@ -276,7 +287,7 @@ aglu.MAX_BIO_YIELD_THA <- 20
 aglu.BIO_ENERGY_CONTENT_GJT <- 17.5
 
 # Regions in which agriculture and land use are not modeled
-#kbn 2019/09/25 Took taiwan out from below since we have data for Taiwan now.
+# kbn 2019/09/25 Took taiwan out from below since we have data for Taiwan now.
 aglu.NO_AGLU_REGIONS <- ""
 
 # Define GCAM category name of fertilizer
@@ -525,8 +536,8 @@ energy.OIL_CREDITS_MARKETNAME   <- "oil-credits"
 energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that must come from oil
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
-#kbn 2019-10-11 Adding constant for transportation type. Set this to 'rev.mode' to use revised mode classes, 'rev_size.class' to use revised size classes.
-#To use the old modes and size classes, use 'mode' and 'size.class' for the constants. The default for GCAM are the new modes and size classes.
+# kbn 2019-10-11 Adding constant for transportation type. Set this to 'rev.mode' to use revised mode classes, 'rev_size.class' to use revised size classes.
+# To use the old modes and size classes, use 'mode' and 'size.class' for the constants. The default for GCAM are the new modes and size classes.
 
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
@@ -710,10 +721,11 @@ emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2015:2100]
 emissions.CONV_C_CO2    <- 44 / 12 # Convert Carbon to CO2
 emissions.F_GAS_UNITS   <- "Gg"
 emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
-emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district heat","NG","LA-BEV")  #These technologies get filtered out and no emissions are generated for them. Note that NG emissions for vehicles are added directly from GAINS and not calculated.
-emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  #All emission factors above this threshold are replaced with the global median of emission factors.
-emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  #GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
-emissions.UNMGD_LAND_AVG_YRS <- 30 #Years for climatological average for the GFED LULC data.
+emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district heat","NG","LA-BEV")  # These technologies get filtered out and no emissions are generated for them. Note that NG emissions for vehicles are added directly from GAINS and not calculated.
+emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  # All emission factors above this threshold are replaced with the global median of emission factors.
+emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  # GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
+emissions.UNMGD_LAND_AVG_YRS <- 30 # Years for climatological average for the GFED LULC data.
+emissions.CEDS_scale    <- "usa" # iso's that will be scaled to CEDS emissions
 emissions.CH4.GWP.AR4 <- 25 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
 emissions.N2O.GWP.AR4 <- 298 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
 
@@ -727,6 +739,8 @@ emissions.AGR_SECTORS        <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES          <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES  <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES          <- c("CH4", "N2O")
+emissions.NONGHG_PROC_SECTORS <- c("SO2_1", "SO2_2", "SO2_3", "SO2_4", "NOx", "CO", "NMVOC", "PM2.5", "PM10")
+emissions.REFGHG_GASES		   <- c("NOx","SO2","PM2.5","CO","NH3")
 emissions.NONGHG_GASES       <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.PFCS               <- c("CF4", "C2F6", "SF6")
 emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
@@ -740,6 +754,19 @@ emissions.DIGITS_CO2COEF       <- 1
 emissions.DIGITS_EMISS_COEF    <- 7
 emissions.DIGITS_EMISSIONS     <- 10
 emissions.DIGITS_MACC          <- 3
+
+# IND URB PROCESSES CONSTANTS (copied to all regions in world in zchunk_L231.proc_sector.R (hard coded - may want to change to these)
+# using these same constants for all states in GCAM-USA chunk L231.proc_sector_USA.R)
+# would be good to know where these values come from
+emissions.FINAL_DEMAND <- "urban processes"
+emissions.FINAL_DEMAND_PCB <- 1 # per capita based
+emissions.FINAL_DEMAND_INCELAS <- 0 # income elasticity
+emissions.FINAL_DEMAND_BASE_SERVICE <- 0.004
+emissions.FINAL_DEMAND_AEEI <- 0 # autonomous energy efficiency improvement
+emissions.REG_TECH_CAL_VALUE_MINICAM_ENERGY_INPUT <- "misc emissions sources"
+emissions.REG_TECH_CAL_VALUE <- 0.001
+emissions.IND_PROC_INPUT <- 0.008
+emissions.IND_PROC_MINICAM_ENERGY_INPUT <- "industrial processes"
 emissions.DIGITS_MACC_TC       <- 4 # tech.change rounding
 emissions.DIGITS_GFED          <- 12
 
@@ -882,7 +909,7 @@ gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
 gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 
 # Water mapping assumptions
-gcamusa.FINAL_MAPPING_YEAR <- 2010 #    Water mappings are conducted from the Huang et al. (2018) dataset which are through 2010, not the final historical year
+gcamusa.FINAL_MAPPING_YEAR <- 2010 # Water mappings are conducted from the Huang et al. (2018) dataset which are through 2010, not the final historical year
 gcamusa.WATER_MAPPING_YEAR <- 2005
 gcamusa.USA_REGION_NUMBER <- 1
 gcamusa.ZERO_WATER_COEF <- 0
@@ -892,6 +919,97 @@ gcamusa.MIN_PRIM_ENERGY_YEAR <- 1990
 
 # GCAM-USA does not have energy-for-water so desalination is an exogenous, unlimited resource with a fixed price
 gcamusa.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
+
+# GCAM-USA transportation emissions vehicle classes
+gcamusa.MOVES_BASE_YEAR_CLASSES <- c(2005,2010,2015) # Year classes of cars to be used to get base year vintaged emissions
+gcamusa.MOVES_MIN_VINTAGE_YEAR <- 1990 # Earliest vintage year used
+gcamusa.MOVES_MAX_AGE<- 25 # Maximum age used
+gcamusa.MARKAL_DEGRADE_YEARS <- 15 # Number of years we have EF degradation values for
+gcamusa.MOTO_VINTAGES <- c(seq(gcamusa.MOVES_MIN_VINTAGE_YEAR, max(MODEL_FUTURE_YEARS), 5)) # Vintages to select from MOVES motorcycle data
+
+# GCAM-USA transportation emissions fuels to filter out because there is no intensity data
+gcamusa.MARKAL_LDV_FILTER_OUT_FUELS <- c("B20","PH10G","PH10E")
+gcamusa.MARKAL_MINICAR_FILTER_OUT_FUELS <- c("DSL", "E10", "E15")
+
+# GCAM-USA Transportation sectors
+gcamusa.TRANSPORT_SECTORS <- c("trn_freight", "trn_pass","trn_shipping_intl", "trn_aviation_intl")
+gcamusa.LDV_SUPPLYSECTORS <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV")
+gcamusa.HDV_SUPPLYSECTORS <- c("trn_pass_road","trn_freight_road")
+gcamusa.GCAM_TRANSPORT_SECTORS <- c("Road")
+
+# GCAM-USA transportation EFs to change to be based on NEI emissions/own service demand for that vehicle class directly
+gcamusa.TRANSUBSECTOR_CHANGE_EF <- c("Heavy truck")
+gcamusa.YEAR_CHANGE_EF <- c("2010")
+gcamusa.STUB_TECH_CHANGE_EF <- c("Liquids")
+gcamusa.NONCO2_CHANGE_EF <- c("NOx", "SO2", "PM2.5", "PM10", "NH3", "CO", "NMVOC", "BC", "OC")
+
+# GCAM-USA transportation base years and future years (different than model base years and future years)
+# Calibrated periods in the model. Only level 2 chunks should reference these
+gcamusa.TRAN_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010, 2015)
+# Future (not calibrated) model periods. Only level 2 chunks should reference these
+gcamusa.TRAN_MODEL_FUTURE_YEARS <- seq(2020, 2100, 5)
+
+# defined for MARKAL EF years in LA171 gcam-usa chunk
+gcamusa.TRN_MARKAL_EMISSION_YEARS <- seq(2005,2050, 5)
+
+# defined for EF years in L271 gcam-usa chunk
+gcamusa.TRN_EMISSION_YEARS <- seq(2005,2100, 5)
+
+# emission factor timestep
+gcamusa.TRN_EF_timestep <- 5
+
+# GCAM-USA StubTranTech missing lifetime
+gcamusa.STUBTRANTECH_LIFETIME_2045V <- 25 # lifetime for missing vehicles vintages 2045 and earlier
+gcamusa.STUBTRANTECH_LIFETIME_2050V <- 20 # lifetime for missing vehicles vintages 2050 and later
+
+# GCAM-USA groups to filter out of degrades table (to not predict degradation of EF over time)
+gcamusa.DEGRADES_FILTER_OUT_MARKAL_CLASS <- "Small SUV"
+gcamusa.DEGRADES_FILTER_OUT_MARKAL_FUEL <- "ELC"
+gcamusa.DEGRADES_FILTER_OUT_NONCO2 <-c("PM2.5", "PM10")
+
+# GCAM-USA other transportation
+gcamusa.INTL_SHIP_PM_RATIO <- 0.92 # this is the ratio of PM2.5 to PM10 for international shipping emissions. Value calculated from the EPA US inventory modelling platform 2016v2 20aug2021
+
+# GCAM-USA process emissions
+gcamusa.IND_PROC_EM_NEI_GCAM_SECTORS <- c("industry_processes", "solvents")
+gcamusa.URB_PROC_EM_NEI_GCAM_SECTORS <- c("landfills", "wastewater", "waste_incineration")
+gcamusa.CEMENT_NEI_GCAM_SECTORS <- c("cement")
+gcamusa.NONGHG_PROC_SECTORS.missing_pollutants <- c("PM2.5", "PM10", "NH3")
+gcamusa.NONGHG_PROC_SECTORS.missing_subsectors <- c("wastewater")
+gcamusa.NONGHG_PROC_SECTORS.gdp_max_reduction <- 30
+gcamusa.NONGHG_PROC_SECTORS.gdp_steepness <- 3.5
+
+gcamusa.PROC_DEFAULT_SECTOR <- "industrial processes"
+gcamusa.PROC_DEFAULT_S_T <- "other industrial processes"
+
+gcamusa.CEMENT_TECHS <- c("cement", "cement CCS")
+
+# GCAM-USA industry / industrial energy
+# Define sector(s) used in L275.indenergy_nonghg_USA and L231.proc_sector_USA
+gcamusa.IND_SECTOR_NAME <- "other industry"
+gcamusa.IND_EN_SECTOR_NAME <- "other industrial energy use"
+gcamusa.IND_FDSTCK_SECTOR_NAME <- "other industrial feedstocks"
+
+# Number of digits for model input data
+gcamusa.DIGITS_TRN_EF_DEGRADE     <- 15
+
+# GCAM-USA petroleum fuel conversion factors
+gcamusa.CONVERSIONFACTOR_NATURALGAS_GJ_PER_T_NET <- 48.0 # Natural Gas GJ/t. (Divide TJ by net heating value (LHV) to get kt) 2006 IPCC guidelines for National GHG inventories Vol 2 - Energy, Ch 1 - Intro Table 1.2
+gcamusa.CONVERSIONFACTOR_MOTORGASOLINE_GJ_PER_T_NET <- 44.75 # Motor gasoline(3) GJ/t, IEA energy statistics manual
+gcamusa.CONVERSIONFACTOR_DIESEL_GJ_PER_T_NET <- 43.38 # Gas/diesel oil GJ/t, IEA energy statistics manual
+gcamusa.CONVERSIONFACTOR_RESIDUALOIL_GJ_PER_T_NET <- 41.57 # Fuel oil GJ/t, high-sulphur, IEA energy statistics manual
+
+# Non-CO2 BC - OC - PM conversion factors
+gcamusa.OC_TO_OM <- 1.3
+gcamusa.PM1_TO_PM2.5 <- 1.1
+
+# Non-CO2 BC and OC onroad scaling factors
+gcamusa.BC_1990_ONROAD_SCALING_FACTOR <- 1/1.4
+gcamusa.OC_1990_ONROAD_SCALING_FACTOR <- 1/1.4
+
+# If this variable is FALSE, onroad dust emissions (CEDS 1A3b_Road-noncomb) will not be included
+# If it is TRUE, onroad dust emissions will be included
+gcamusa.DUST <- TRUE
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
