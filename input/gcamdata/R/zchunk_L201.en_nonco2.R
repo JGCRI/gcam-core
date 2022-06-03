@@ -485,6 +485,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP") ->
       L201.nonghg_res
 
+    # update into using input emissions + output driver
+    # YO Mar 2020
     L201.ghg_res %>%
       add_title("GHG emission factors from resource production in all regions") %>%
       add_units("Tg/EJ") %>%

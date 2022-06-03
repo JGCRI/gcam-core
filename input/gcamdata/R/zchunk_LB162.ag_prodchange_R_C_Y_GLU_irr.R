@@ -19,6 +19,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows distinct filter first group_by left_join mutate select semi_join summarise
 #' @importFrom tidyr complete nesting
+#' @importFrom tibble tibble
 #' @author ACS June 2017
 module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -185,7 +186,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       semi_join(select(L162.ag_Yieldmult_Rcrs_Ccrs_Y_irr, CROSIT_ctry, CROSIT_crop, Irr_Rfd),
                 by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd")) %>%
       # repeat for all years in aglu.SPEC_AG_PROD_YEARS and join Yield multipliers for each year
-      repeat_add_columns(tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>%
+      repeat_add_columns(tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>%
       left_join_error_no_match(L162.ag_Yieldmult_Rcrs_Ccrs_Y_irr,
                                by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) ->
       L162.ag_HA_ha_Rcrs_Ccrs_Ysy_GLU_irr
@@ -215,7 +216,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
 
     L162.ag_HA_ha_ctry_crop_irr %>%
       na.omit() %>%
-      repeat_add_columns(tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>%
+      repeat_add_columns(tibble(year = aglu.SPEC_AG_PROD_YEARS)) %>%
       left_join(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) %>%
       na.omit() %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
@@ -254,7 +255,7 @@ module_aglu_LB162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # Where lagyear represents the year a ratio is subtracted from (ie lagyear = 2010 indicates this ratio
     # is subtracted from the 2010 ratio.)
     # This allows the same calculation to be performed even if aglu.SPEC_AG_PROD_YEARS changes.
-    tibble::tibble(year = aglu.SPEC_AG_PROD_YEARS, timestep = c(diff(aglu.SPEC_AG_PROD_YEARS), max(aglu.SPEC_AG_PROD_YEARS) + 1)) ->
+    tibble(year = aglu.SPEC_AG_PROD_YEARS, timestep = c(diff(aglu.SPEC_AG_PROD_YEARS), max(aglu.SPEC_AG_PROD_YEARS) + 1)) ->
       timesteps
 
     L162.agBio_YieldRatio_R_C_Ysy_GLU_irr %>%

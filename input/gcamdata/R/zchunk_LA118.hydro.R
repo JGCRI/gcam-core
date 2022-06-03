@@ -20,6 +20,7 @@ module_energy_LA118.hydro <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/Hydropower_potential",
+             FILE = "energy/mappings/IEA_product_fuel",
              "L100.IEA_en_bal_ctry_hist",
              FILE = "energy/A18.hydro_output"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -31,6 +32,7 @@ module_energy_LA118.hydro <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     Hydropower_potential <- get_data(all_data, "energy/Hydropower_potential")
+    IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
     A18.hydro_output <- get_data(all_data, "energy/A18.hydro_output")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
 
@@ -38,7 +40,7 @@ module_energy_LA118.hydro <- function(command, ...) {
     # without the proprietary IEA data files). If this is the case, we substitute a
     # pre-built output dataset and exit.
     if(is.null(L100.IEA_en_bal_ctry_hist)) {
-      L118.out_EJ_R_elec_hydro_Yfut <- prebuilt_data("L118.out_EJ_R_elec_hydro_Yfut")
+      L118.out_EJ_R_elec_hydro_Yfut <- extract_prebuilt_data("L118.out_EJ_R_elec_hydro_Yfut")
     } else {
       L100.IEA_en_bal_ctry_hist %>%
         gather_years ->
@@ -52,6 +54,12 @@ module_energy_LA118.hydro <- function(command, ...) {
         FLOW <- PRODUCT <- .  <- Technical_MW <- Economic_MW <- Growth_potential_EJ <-
         value_interpolated <- Growth_potential_EJ_sum <- year.x <- year.y <- year_base <-
         year_future <- value_future <- NULL   # silence package check notes
+
+      # Historical years to include
+      # Under normal situation, max(HISTORICAL_YEARS) is before MODEL_FUTURE_YEARS
+      # so we only include max(HISTORICAL_YEARS)
+      # If we are hindcasting, this will also include MODEL_FUTURE_YEARS before max(HISTORICAL_YEARS)
+      HYDRO_HIST_YEARS <- union(intersect(HISTORICAL_YEARS, MODEL_FUTURE_YEARS), max(HISTORICAL_YEARS))
 
       # Calculation of economic hydropower potential by country, in EJ/yr
       # Calculate a capacity factor for translating MW to GWh, using weighted average capacity factor of all existing dams
@@ -89,12 +97,16 @@ module_energy_LA118.hydro <- function(command, ...) {
         select(iso, Economic_EJ) -> # Stripping down unneeded information from table
         Hydropower_potential
 
-      # Calculate the growth potential by country, which is the economic potential minus the actual generation in the most recent historical year (from the IEA balances)
+      # Calculate the growth potential by country, which is the economic potential minus
+      # the actual generation in the most recent historical year (from the IEA balances)
       L100.IEA_en_bal_ctry_hist %>%
-        filter(FLOW == "ELOUTPUT", PRODUCT == "Hydro", year == max(HISTORICAL_YEARS)) %>%
+        left_join(rename(IEA_product_fuel, PRODUCT = product), by = "PRODUCT") %>%
+        filter(FLOW == "ELOUTPUT", fuel == "elec_hydro", year %in% HYDRO_HIST_YEARS) %>%
         mutate(value_base = value * CONV_GWH_EJ) %>%
         left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
-        select(iso, region_GCAM3, year, value_base) ->
+        group_by(iso, region_GCAM3, year) %>%
+        summarise(value_base = sum(value_base)) %>%
+        ungroup()->
         L118.out_EJ_ctry_elec_hydro_fby
 
       # Aggregate by region
@@ -107,6 +119,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       # Calculate the future growth potential in each country as the economic potential minus the present-day generation
       Hydropower_potential %>%
         left_join(L118.out_EJ_ctry_elec_hydro_fby, by = "iso") %>%
+        filter(year == max(HISTORICAL_YEARS)) %>%
         mutate(Growth_potential_EJ = Economic_EJ - value_base,
                Growth_potential_EJ = if_else(is.na(Growth_potential_EJ) | Growth_potential_EJ < 0, 0, Growth_potential_EJ)) %>%
         select(-region_GCAM3, -Economic_EJ, -value_base) %>%
@@ -127,10 +140,10 @@ module_energy_LA118.hydro <- function(command, ...) {
         bind_rows(A18.hydro_output_long) ->
         L118.out_EJ_RG3_elec_hydro_Y_with_values
 
-      # Create a table from 2010 to 2100 in all "FUTURE_YEARS" and interpolate for the missing values
+      # Create a table from HYDRO_HIST_YEARS to 2100 in all "FUTURE_YEARS" and interpolate for the missing values
       L118.out_EJ_RG3_elec_hydro_fby %>%
-        select(region_GCAM3) %>%
-        repeat_add_columns(tibble::tibble(year = c(max(HISTORICAL_YEARS), FUTURE_YEARS))) %>% # Years include historical max and future
+        distinct(region_GCAM3) %>%
+        repeat_add_columns(tibble::tibble(year = c(HYDRO_HIST_YEARS, FUTURE_YEARS))) %>% # Years include HYDRO_HIST_YEARS and future
         left_join(L118.out_EJ_RG3_elec_hydro_Y_with_values, by = c("region_GCAM3", "year")) %>%
         group_by(region_GCAM3) %>%
         mutate(value_interpolated = approx_fun(year, value, rule = 2)) %>% # Interpolation step
@@ -148,7 +161,7 @@ module_energy_LA118.hydro <- function(command, ...) {
 
       # Now add the historical max year as its own column, and delete in interpolated column
       L118.out_EJ_RG3_elec_hydro_Y_interp %>%
-        filter(year != max(HISTORICAL_YEARS)) %>% # Deleting historical max year to be used in another column
+        filter(!year %in% HYDRO_HIST_YEARS) %>% # Deleting historical years to be used in another column
         left_join(L118.out_EJ_RG3_elec_hydro_Y_interp_maxhist, by = "region_GCAM3") %>%
         # Calculate growth, which is total value (interpolated) minus the base (historical max)
         # For regions whose 2015 output is higher than GCAM3's estimated 2100 output, don't allow the output to decrease
@@ -160,6 +173,7 @@ module_energy_LA118.hydro <- function(command, ...) {
       Hydropower_potential %>%
         group_by(region_GCAM3) %>%
         summarise(Growth_potential_EJ_sum = sum(Growth_potential_EJ)) %>%
+        ungroup() %>%
         filter(!is.na(region_GCAM3)) -> # Getting rid of the NA caused by Kosova not having a RG3 name
         Hydropower_potential_RG3 # Represents total pie of each country
 
@@ -175,15 +189,15 @@ module_energy_LA118.hydro <- function(command, ...) {
 
       # Adding future years
       L118.out_EJ_ctry_elec_hydro_fby %>%
+        filter(year == max(HISTORICAL_YEARS)) %>%
         left_join(Hydropower_potential, by = "iso") %>% # Adding share column
         left_join(L118.growth_EJ_RG3_elec_hydro_Y, by = "region_GCAM3") %>% # Adding RG3 growth
         mutate(value_future = value_base + share * value_growth) %>% # Base-year output plus RG3 growth times country-wise share
-        select(-share, -value_growth) %>%
-        # Renaming year.x (base year) and year.y (future year)
-        rename(year_base = year.x, year_future = year.y) %>%
-        spread(year_base, value_base) %>%
-        spread(year_future, value_future) %>%
-        gather_years ->
+        select(-share, -value_growth, -year.x, -value_base,
+               year = year.y, value = value_future) %>%
+        # Insert back historical years
+        bind_rows(rename(L118.out_EJ_ctry_elec_hydro_fby, value = value_base)) %>%
+        arrange(iso, year) ->
         L118.out_EJ_ctry_elec_hydro_Y
 
       # For countries not in the world dams database (all are very small), copy final historical year forward
@@ -223,7 +237,7 @@ module_energy_LA118.hydro <- function(command, ...) {
         add_comments("In most cases, a growth potential for each country was calculated,
                    multiplied by its share in the region, and added to the base-year ouput") %>%
         add_legacy_name("L118.out_EJ_R_elec_hydro_Yfut") %>%
-        add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential",
+        add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential", "energy/mappings/IEA_product_fuel",
                        "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output") ->
         L118.out_EJ_R_elec_hydro_Yfut
 

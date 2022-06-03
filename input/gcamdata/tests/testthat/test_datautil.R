@@ -72,9 +72,9 @@ test_that("same_attributes_as works", {
 
 test_that("prebuilt_data works", {
   pb <- list(x = 1, y = 2)
-  expect_null(prebuilt_data("not_prebuild_data"))
+  expect_null(extract_prebuilt_data("not_prebuild_data"))
 
-  obj <- prebuilt_data(names(pb)[1], pb = pb)
+  obj <- extract_prebuilt_data(names(pb)[1], pb = pb)
   expect_equivalent(obj, pb[[1]])
   expect_is(get_comments(obj), "character")  # should have a comment attached
 })
