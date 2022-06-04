@@ -116,6 +116,7 @@
                         <rewrite from="H2 industrial" to=""/>
                         <rewrite from="traditional biomass" to="j traditional biomass"/>
                         <rewrite from="regional corn for ethanol" to="d biomass"/>
+                        <rewrite from="regional biomass" to="d biomass"/>
                         <rewrite from="regional biomassOil" to="d biomass"/>
                         <rewrite from="traded coal" to="c coal"/>
                         <rewrite from="solar-elect" to="h solar"/>
@@ -210,6 +211,7 @@
                         <rewrite from="H2 industrial" to=""/>
                         <rewrite from="traditional biomass" to="j traditional biomass"/>
                         <rewrite from="regional corn for ethanol" to="d biomass"/>
+                        <rewrite from="regional biomass" to="d biomass"/>
                         <rewrite from="regional biomassOil" to="d biomass"/>
                         <rewrite from="traded coal" to="c coal"/>
                         <rewrite from="solar-elect" to="h solar"/>
@@ -406,7 +408,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 			 	 $region in $regionsG 	
 			 	 let $scenario_split := tokenize($scenario, ' '), 	    
 				 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
-                 $currInputs := $currTree/*[@type='sector' and (@name='unconventional oil production' or exists(child::keyword/@final-energy))]//*[@type='input' and empty(index-of(('trn_pass_road', 'limestone', 'process heat cement', 'industrial energy use', 'industrial feedstocks', 'renewable', 'trn_freight_road', 'trn_pass_road_LDV', 'trn_pass_road_LDV_2W', 'trn_pass_road_LDV_4W', 'unconventional oil', 'oil-credits'), @name))],
+                 $currInputs := $currTree/*[@type='sector' and (@name='unconventional oil production' or exists(child::keyword/@final-energy))]//*[@type='input' and empty(index-of(('trn_pass_road', 'limestone', 'process heat cement', 'industrial energy use', 'industrial feedstocks', 'renewable', 'trn_freight_road', 'trn_pass_road_LDV', 'trn_pass_road_LDV_2W', 'trn_pass_road_LDV_4W', 'unconventional oil', 'oil-credits', 'scrap', 'alumina'), @name))],
                  $coefs := local:generate-sector-input-coefs(distinct-values($currInputs/@name), $currTree, (), false()),
                  $ccs_coefs := local:generate-ccs-coefs($currTree, $coefs)
 				 return 
@@ -2073,6 +2075,15 @@ element input {
 							<rewrite from="chemical feedstocks" to="industry"/>
  		           			<rewrite from="construction feedstocks" to="industry"/>
  		           			<rewrite from="mining energy use" to="industry"/>
+							<rewrite from="desalinated water" to="industry"/>
+							<rewrite from="industrial wastewater treatment" to="industry"/>
+							<rewrite from="industrial water abstraction" to="industry"/>
+							<rewrite from="industrial water treatment" to="industry"/>
+							<rewrite from="irrigation water abstraction" to="industry"/>
+							<rewrite from="municipal wastewater treatment" to="industry"/>
+							<rewrite from="municipal water abstraction" to="industry"/>
+							<rewrite from="municipal water distribution" to="industry"/>
+							<rewrite from="municipal water treatment" to="industry"/>
                         </level>
                     </labelRewriteList>
                 </supplyDemandQuery>
@@ -2152,7 +2163,7 @@ element input {
                     <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='wholesale gas' or @name='delivered gas' or
             @name='delivered coal' or @name='delivered biomass' or @name='traditional biomass' or
             @name='elect_td_ind' or @name='elect_td_bld' or @name='elect_td_trn' or
-            @name='H2 wholesale dispensing' @name='H2 wholesale delivery' @name='H2 retail dispensing' or @name='H2 retail delivery' or
+            @name='H2 wholesale dispensing' or @name='H2 wholesale delivery' or @name='H2 retail dispensing' or @name='H2 retail delivery' or
             @name='refined liquids industrial' or @name='refined liquids enduse')]/
             cost/text()</xPath>
                     <comments/>
