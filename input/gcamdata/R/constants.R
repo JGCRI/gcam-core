@@ -135,6 +135,7 @@ CONV_TONNE_GJ_RFO   <- 40.87          # tons to GJ residual fuel oil
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
 CONV_DAYS_YEAR <- 1 / 365.25
+CONV_DAY_HOURS <- 24
 
 # Energy
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
@@ -150,6 +151,8 @@ CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
 CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 CONV_MJ_BTU <- 947.777
 CONV_BTU_KJ <- 1.0551
+CONV_MMBTU_KGH2 <- 0.113939965425114 # MMBTU/kg H2 - LHV Source: H2 CCTP Workbook.xls (Used for older GCAM assumptions)
+CONV_GJ_KGH2 <- 0.12021 #GJ/kg H2 - LHV
 
 # Distance
 CONV_MILE_KM <- 1.60934 # Mile to km
@@ -164,6 +167,7 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
 CONV_FT2_M2 <- 0.0929 # Square feet to square meters
+CONV_GAL_M3 <- 0.00378541 #gallons to m3
 CONV_MI_KM <- 1.60934
 CONV_PERS_MILPERS <- 1000000 #Person to million-passengers
 
@@ -496,10 +500,13 @@ energy.PV_LIFETIME             <- 30       # years
 energy.PV_RESID_INSTALLED_COST <- 9500     # 2005USD per kw
 energy.PV_RESID_OM             <- 100      # 2005USD per kw per year
 energy.CSP_STORAGE_CF_DIFF     <- 0.25     # capacity factor difference between CSP_storage (0.5) and CSP (0.25)
+energy.SOLAR_ELECTROLYSIS_KGH2_D <- 50000    # kg of h2 produced per day at a solar-electrolysis plant
+energy.ELECTROLYZER_RENEWABLE_CAPACITY_RATIO <- 0.618  # unitless capacity ratio of electrolyzers to renewable-electric equipment
 
 # Wind related constants
 energy.WIND_CURVE_MIDPOINT <- 0.5
 energy.WIND_MIN_POTENTIAL <- 0.001
+energy.WIND_ELECTROLYSIS_KGH2_D <- 50000    # kg of h2 produced per day at a wind-electrolysis plant
 
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT        <- 7
@@ -526,6 +533,11 @@ energy.DIGITS_SATIATION_ADDER  <- 9
 energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
 energy.DIGITS_TECHCHANGE       <- 4
+
+#jf 2021-10-21
+#defines fraction of liquid fuel consumption used for off-road vehicles in agriculture, mining, and construction energy use.
+#the remainder is allocated to stationary equipment (e.g., generators)
+energy.LIQUID_FUEL_MOBILE_FRAC <- 0.8
 
 # Policy assumptions for module_energy_L270.limits
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
@@ -565,7 +577,7 @@ income.param.usa<-0.4875
 
 # Constants for global detailed industry
 energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
-energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 enduse") #assign iron & steel global technology coefficients
+energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 wholesale delivery") #assign iron & steel global technology coefficients
 
 # Socioeconomics constants ======================================================================
 
@@ -851,6 +863,10 @@ gcamusa.GRID_REGION_LOGIT_TYPE <- "relative-cost-logit"
 gcamusa.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
 
 gcamusa.ELECT_TD_SECTORS  <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
+
+#Fuels whose markets will be represented with state-specific prices
+gcamusa.STATE_FUEL_MARKETS <- c(gcamusa.ELECT_TD_SECTORS, "H2 industrial", "H2 retail delivery", "H2 retail dispensing",
+                                "H2 wholesale delivery", "H2 wholesale dispensing","H2 central production","H2 pipeline","H2 liquid truck")
 
 # Indicate whether to use regional ?cost adders? to differentiate
 # fuel prices by grid region in GCAM-USA (FALSE = same prices in all states)

@@ -7,5 +7,6 @@ supplysector,subsector,logit.exponent,logit.type
 N fertilizer,coal,-12,
 N fertilizer,gas,-12,
 N fertilizer,refined liquids,-12,
+N fertilizer,hydrogen,-12,
 N fertilizer,Imports,-6,
 Exports_fertilizer,N fertilizer,-12,

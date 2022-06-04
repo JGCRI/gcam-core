@@ -90,7 +90,8 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       technology <- supplysector <- subsector <- minicam.energy.input <- coefficient <-
       remove.fraction <- minicam.non.energy.input <- input.cost  <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
-      value.x <- value.y <- parameter <- NULL
+      value.x <- value.y <- parameter <- year.x <- year.y <- tech.share.weight <- stub.technology <-
+      market.name <- sector.name <- subsector.name <- terminal_coef <- share.weight.year <- coeff <- NULL
 
     # ===================================================
     # 1. Perform computations

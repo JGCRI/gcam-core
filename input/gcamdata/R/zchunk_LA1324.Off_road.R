@@ -30,7 +30,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
 
     # Silence global variable package check
     raw <- subsector <- minicam.energy.input <- Country <- sector <-
-    share <- value <- Off_road <- year <- value.y <- value.x <- NULL
+    share <- value <- Off_road <- year <- value.y <- value.x <- fuel <- industry <-
+      GCAM_region_ID <- has_district_heat <- NULL
 
     all_data <- list(...)[[1]]
 

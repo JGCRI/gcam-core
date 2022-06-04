@@ -34,7 +34,9 @@ module_energy_LA1325.chemical <- function(command, ...) {
 
     # Silence global variable package check
     raw <- subsector <- minicam.energy.input <- Country <- sector <-
-    share <- value <- chemical <- year <- value.y <- value.x <- NULL
+      share <- value <- chemical <- year <- value.y <- value.x <- GCAM_region_ID <-
+      `chemical energy use` <- `chemical feedstocks` <- fuel <- industry <- has_district_heat <-
+      value_ori <- value_new <- NULL
 
     all_data <- list(...)[[1]]
 

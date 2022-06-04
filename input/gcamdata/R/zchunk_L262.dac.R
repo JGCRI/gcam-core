@@ -27,6 +27,7 @@ module_energy_L262.dac <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/calibrated_techs_cdr",
 
+             FILE = "energy/A62.PrimaryFuelCCoef",
              FILE = "energy/A62.sector",
              FILE = "energy/A62.subsector_interp",
              FILE = "energy/A62.subsector_logit",
@@ -56,7 +57,8 @@ module_energy_L262.dac <- function(command, ...) {
              FILE = "energy/A62.globaltech_retirement",
              "L162.out_Mt_R_dac_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L262.Supplysector_dac",
+    return(c("L262.CarbonCoef_dac",
+             "L262.Supplysector_dac",
              "L262.FinalEnergyKeyword_dac",
              "L262.SubsectorLogit_dac",
              "L262.SubsectorShrwtFllt_dac",
@@ -102,6 +104,7 @@ module_energy_L262.dac <- function(command, ...) {
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs_cdr")
+    A62.PrimaryFuelCCoef <- get_data(all_data, "energy/A62.PrimaryFuelCCoef", strip_attributes = TRUE)
     A62.sector <- get_data(all_data, "energy/A62.sector", strip_attributes = TRUE)
     A62.subsector_interp <- get_data(all_data, "energy/A62.subsector_interp", strip_attributes = TRUE)
     A62.subsector_logit <- get_data(all_data, "energy/A62.subsector_logit", strip_attributes = TRUE)
@@ -141,11 +144,17 @@ module_energy_L262.dac <- function(command, ...) {
       PrimaryFuelCO2Coef <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
       value.x <- value.y <- parameter <- half.life <- median.shutdown.point <-
-      L262.GlobalTechCoef_dac_ssp1 <- L262.GlobalTechCoef_dac_ssp2 <-L262.GlobalTechCoef_dac_ssp3 <-L262.GlobalTechCoef_dac_ssp4 <-L262.GlobalTechCoef_dac_ssp5 <-NULL
+      L262.GlobalTechCoef_dac_ssp1 <- L262.GlobalTechCoef_dac_ssp2 <-L262.GlobalTechCoef_dac_ssp3 <-L262.GlobalTechCoef_dac_ssp4 <-L262.GlobalTechCoef_dac_ssp5 <-
+      L262.GlobalTechCost_dac_ssp1 <- L262.GlobalTechCost_dac_ssp2 <- L262.GlobalTechCost_dac_ssp3 <- L262.GlobalTechCost_dac_ssp4 <- L262.GlobalTechCost_dac_ssp5 <-
+      L262.GlobalTechShrwt_dac_ssp1 <- L262.GlobalTechShrwt_dac_ssp2 <- L262.GlobalTechShrwt_dac_ssp3 <- L262.GlobalTechShrwt_dac_ssp4 <- L262.GlobalTechShrwt_dac_ssp5 <- NULL
 
 
     # ===================================================
     # 1. Perform computations
+    # Prelim - carbon coefficient (emissions factor)
+    A62.PrimaryFuelCCoef %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["CarbonCoef"]]), GCAM_region_names = GCAM_region_names, has_traded = TRUE) -> L262.CarbonCoef_dac
+
     # 1a. Supplysector information
     # L262.Supplysector_dac: Supply sector information for CO2 removal sector containing dac subsectors and technologies
     A62.sector %>%
@@ -404,6 +413,13 @@ module_energy_L262.dac <- function(command, ...) {
 
 
 
+    L262.CarbonCoef_dac %>%
+      add_title("Assumed carbon coefficient of air-derived CO2") %>%
+      add_units("Unitless C/C ratio") %>%
+      add_comments("Set in exogenous data table A62.PrimaryFuelCCoef") %>%
+      add_precursors("energy/A62.PrimaryFuelCCoef", "common/GCAM_region_names") ->
+      L262.CarbonCoef_dac
+
 
     L262.Supplysector_dac %>%
       add_title("Supply sector information for CO2 removal sector") %>%
@@ -535,7 +551,8 @@ module_energy_L262.dac <- function(command, ...) {
       add_precursors("energy/A62.globaltech_retirement") ->
       L262.GlobalTechProfitShutdown_dac
 
-    return_data(L262.Supplysector_dac, L262.FinalEnergyKeyword_dac, L262.SubsectorLogit_dac,
+    return_data(L262.CarbonCoef_dac,
+                L262.Supplysector_dac, L262.FinalEnergyKeyword_dac, L262.SubsectorLogit_dac,
                 L262.SubsectorShrwtFllt_dac, L262.SubsectorInterp_dac,
                 L262.GlobalTechCost_dac,
                 L262.GlobalTechCost_dac_ssp1,L262.GlobalTechCost_dac_ssp2,L262.GlobalTechCost_dac_ssp3,L262.GlobalTechCost_dac_ssp4,L262.GlobalTechCost_dac_ssp5,

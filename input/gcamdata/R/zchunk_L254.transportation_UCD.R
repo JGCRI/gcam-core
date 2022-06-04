@@ -85,6 +85,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
              "L254.GlobalTranTechInterp",
              "L254.GlobalTranTechShrwt",
              "L254.GlobalTranTechSCurve",
+             "L254.GlobalTranTechProfitShutdown",
              "L254.StubTranTechCalInput",
              "L254.StubTranTechLoadFactor",
              "L254.StubTranTechCost",
@@ -104,7 +105,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       year <- year.fillout <- to.value <- value <- speed.source <- tranSubsector.x <- addTimeValue <- time.value.multiplier <-
       fuelprefElasticity <- tranSubsector <- share.weight <- calibrated.value <- subs.share.weight <- loadFactor <-
       coefficient <- stub.technology <- output <- output_agg <- output_cum <- share.weight.year <- tech.share.weight <-
-      calOutputValue <- energy.final.demand <- base.service <- object <- r_ss <- UCD_region <- size.class <- sce <- NULL
+      calOutputValue <- energy.final.demand <- base.service <- object <- r_ss <- UCD_region <- size.class <- sce <-
+      steepness <- profit.shutdown.steepness <- NULL
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names",strip_attributes = TRUE)
@@ -458,27 +460,28 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       L254.GlobalTranTechShrwt_CORE # OUTPUT
 
 
-    A54.globaltranTech_shrwt %>%
-      filter(sce=="highEV") %>%
-      select(-sce) %>%
-      gather_years %>%
-      # Expand table to include all model years
-      complete(year = c(year, MODEL_YEARS), nesting(supplysector, tranSubsector, tranTechnology)) %>%
-      # Extrapolate to fill out values for all years
-      # Rule 2 is used so years that may be outside of min-max range are assigned values from closest data, as opposed to NAs
-      group_by(supplysector, tranSubsector, tranTechnology) %>%
-      mutate(share.weight = approx_fun(year, value, rule = 2),
-             share.weight = round(share.weight, energy.DIGITS_SHRWT)) %>%
-      ungroup() %>%
-      filter(year %in% MODEL_YEARS) %>%
-      mutate(sce= paste0("highEV")) %>%
-      rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]],sce) ->
-      L254.GlobalTranTechShrwt_highEV # OUTPUT
+    # A54.globaltranTech_shrwt %>%
+    #   filter(sce=="highEV") %>%
+    #   select(-sce) %>%
+    #   gather_years %>%
+    #   # Expand table to include all model years
+    #   complete(year = c(year, MODEL_YEARS), nesting(supplysector, tranSubsector, tranTechnology)) %>%
+    #   # Extrapolate to fill out values for all years
+    #   # Rule 2 is used so years that may be outside of min-max range are assigned values from closest data, as opposed to NAs
+    #   group_by(supplysector, tranSubsector, tranTechnology) %>%
+    #   mutate(share.weight = approx_fun(year, value, rule = 2),
+    #          share.weight = round(share.weight, energy.DIGITS_SHRWT)) %>%
+    #   ungroup() %>%
+    #   filter(year %in% MODEL_YEARS) %>%
+    #   mutate(sce= paste0("highEV")) %>%
+    #   rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
+    #   select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]],sce) ->
+    #   L254.GlobalTranTechShrwt_highEV # OUTPUT
 
-    L254.GlobalTranTechShrwt <- bind_rows(L254.GlobalTranTechShrwt_highEV,L254.GlobalTranTechShrwt_CORE)
+    #L254.GlobalTranTechShrwt <- bind_rows(L254.GlobalTranTechShrwt_highEV,L254.GlobalTranTechShrwt_CORE)
+    L254.GlobalTranTechShrwt <- L254.GlobalTranTechShrwt_CORE
 
-    # L254.GlobalTranTechSCurve: Retirement of global tranTechnologies
+    # L254.GlobalTranTechSCurve and L254.GlobalTranTechProfitShutdown: Retirement of global tranTechnologies
     # A54.globaltranTech_retire reports transportation technology retirement parameters. Only applies to vintaged technologies
     A54.globaltranTech_retire %>%
       set_years() %>%
@@ -496,9 +499,18 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       filter(year > L254.GlobalTranTechSCurve_MAX_YEAR) %>%
       bind_rows(L254.GlobalTranTechSCurve_1) %>%
-      rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
+      rename(sector.name = supplysector, subsector.name = tranSubsector) ->
+      A54.globaltranTech_retire
+
+    A54.globaltranTech_retire %>%
       select(LEVEL2_DATA_NAMES[["GlobalTranTechSCurve"]]) ->
       L254.GlobalTranTechSCurve # OUTPUT
+
+    A54.globaltranTech_retire %>%
+      select(-steepness) %>%
+      rename(steepness = profit.shutdown.steepness) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTranTechProfitShutdown"]]) ->
+      L254.GlobalTranTechProfitShutdown
 
 
     # PART E: CALIBRATION AND REGION-SPECIFIC DATA
@@ -516,11 +528,15 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       L254.StubTranTechCalInput_basetable
 
     #kbn 2020-02-06 Energy intensity are not separated by SSPs. So, just copying information from CORE to all SSPs.
+    # L254.StubTranTechCalInput_basetable<- bind_rows(L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("CORE")),
+    #                                                 L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP1")),
+    #                                                 L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP3")),
+    #                                                 L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP5")),
+    #                                                 L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("highEV")))
     L254.StubTranTechCalInput_basetable<- bind_rows(L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("CORE")),
                                                     L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP1")),
                                                     L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP3")),
-                                                    L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP5")),
-                                                    L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("highEV")))
+                                                    L254.StubTranTechCalInput_basetable %>% mutate(sce= paste0("SSP5")))
 
     # Aggregate to set subsector share weights according to region, supplysector, tranSubsector, year combination
     # kbn 2020-02-06 Add sce below (See description of changes using search string kbn 2020-06-02 Making changes to generate xmls for SSPs flexibly)
@@ -938,6 +954,13 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       add_precursors("energy/A54.globaltranTech_retire", "energy/A54.globaltranTech_retire_revised") ->
       L254.GlobalTranTechSCurve
 
+    L254.GlobalTranTechProfitShutdown %>%
+      add_title("Profit shutdown parameters of global tranTechnologies") %>%
+      add_units("unitless function parameters") %>%
+      add_comments("Profit shutdown parameters in the final year of the base data were carried forward to all future time periods") %>%
+      same_precursors_as(L254.GlobalTranTechSCurve) ->
+      L254.GlobalTranTechProfitShutdown
+
     L254.StubTranTechCalInput %>%
       add_title("Calibrated input of tranTechnologies") %>%
       add_units("Unitless") %>%
@@ -1031,7 +1054,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                 L254.tranSubsectorFuelPref, L254.StubTranTech, L254.StubTech_passthru, L254.StubTech_nonmotor,
                 L254.GlobalTechShrwt_passthru, L254.GlobalTechShrwt_nonmotor, L254.GlobalTechCoef_passthru,
                 L254.GlobalRenewTech_nonmotor, L254.GlobalTranTechInterp, L254.GlobalTranTechShrwt,
-                L254.GlobalTranTechSCurve, L254.StubTranTechCalInput, L254.StubTranTechLoadFactor,
+                L254.GlobalTranTechSCurve, L254.GlobalTranTechProfitShutdown, L254.StubTranTechCalInput, L254.StubTranTechLoadFactor,
                 L254.StubTranTechCost, L254.StubTranTechCoef, L254.StubTechCalInput_passthru,
                 L254.StubTechProd_nonmotor, L254.PerCapitaBased_trn, L254.PriceElasticity_trn,
                 L254.IncomeElasticity_trn, L254.BaseService_trn)

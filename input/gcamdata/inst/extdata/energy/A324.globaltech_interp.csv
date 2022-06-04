@@ -1,0 +1,27 @@
+# File: A324.globaltech_interp.csv
+# Title: Industry technology share-weight interpolation
+# Units: Unitless
+# Column types: ccccccc
+# ----------
+supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function
+agricultural energy use,stationary,refined liquids,share-weight,final-calibration-year,end-year,fixed
+agricultural energy use,stationary,gas,share-weight,final-calibration-year,end-year,fixed
+agricultural energy use,stationary,biomass,share-weight,final-calibration-year,end-year,fixed
+agricultural energy use,stationary,electricity ,share-weight,final-calibration-year,end-year,fixed
+agricultural energy use,stationary,hydrogen,share-weight,final-calibration-year,end-year,fixed
+agricultural energy use,stationary,coal,share-weight,final-calibration-year,end-year,fixed
+agricultural energy use,stationary,heat,share-weight,final-calibration-year,end-year,fixed
+mining energy use,stationary,refined liquids,share-weight,final-calibration-year,end-year,fixed
+mining energy use,stationary,gas,share-weight,final-calibration-year,end-year,fixed
+mining energy use,stationary,biomass,share-weight,final-calibration-year,end-year,fixed
+mining energy use,stationary,electricity ,share-weight,final-calibration-year,end-year,fixed
+mining energy use,stationary,hydrogen,share-weight,final-calibration-year,end-year,fixed
+mining energy use,stationary,coal,share-weight,final-calibration-year,end-year,fixed
+mining energy use,stationary,heat,share-weight,final-calibration-year,end-year,fixed
+construction energy use,stationary,refined liquids,share-weight,final-calibration-year,end-year,fixed
+construction energy use,stationary,gas,share-weight,final-calibration-year,end-year,fixed
+construction energy use,stationary,biomass,share-weight,final-calibration-year,end-year,fixed
+construction energy use,stationary,electricity ,share-weight,final-calibration-year,end-year,fixed
+construction energy use,stationary,hydrogen,share-weight,final-calibration-year,end-year,fixed
+construction energy use,stationary,coal,share-weight,final-calibration-year,end-year,fixed
+construction energy use,stationary,heat,share-weight,final-calibration-year,end-year,fixed

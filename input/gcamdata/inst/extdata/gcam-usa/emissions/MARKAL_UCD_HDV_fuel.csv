@@ -8,3 +8,5 @@ MARKAL_HDV_fuel,UCD_HDV_fuel
 B0,Liquids
 CNG,NG
 ELC,BEV
+ELC,FCEV
+B0,Hybrid Liquids

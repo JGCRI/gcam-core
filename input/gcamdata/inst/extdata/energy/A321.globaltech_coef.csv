@@ -1,7 +1,7 @@
 # File: A321.globaltech_coef.csv
 # Title: Cement production default coefficients
 # Units: limestone input is unitless (Mt limestone per Mt cement); all others are GJ per kg (EJ of energy per Mt of cement)
-# Column types: ccccnnn 
+# Column types: ccccnnn
 # ----------
 supplysector,subsector,technology,minicam.energy.input,1971,2010,2100
 cement,cement,cement,process heat cement,0.004,0.004,0.003
@@ -14,3 +14,4 @@ process heat cement,biomass,biomass,delivered biomass,1,1,1
 process heat cement,coal,coal,delivered coal,1,1,1
 process heat cement,gas,gas,wholesale gas,1,1,1
 process heat cement,refined liquids,refined liquids,refined liquids industrial,1,1,1
+process heat cement,hydrogen,hydrogen,H2 industrial,1,1,1

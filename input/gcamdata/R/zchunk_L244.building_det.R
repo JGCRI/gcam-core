@@ -132,7 +132,9 @@ module_energy_L244.building_det <- function(command, ...) {
       L244.SatiationAdder_SSP3 <- L244.GenericServiceSatiation_SSP3 <-L244.Satiation_flsp_SSP4 <-
       L244.SatiationAdder_SSP4 <- L244.GenericServiceSatiation_SSP4 <- L244.Satiation_flsp_SSP5 <-
       L244.SatiationAdder_SSP5 <- L244.GenericServiceSatiation_SSP5 <- scenario <- L244.HDDCDD_A2_CCSM3x <-
-      L244.HDDCDD_A2_HadCM3 <- L244.HDDCDD_B1_CCSM3x <- L244.HDDCDD_B1_HadCM3 <- L244.HDDCDD_constdd_no_GCM <- NULL
+      L244.HDDCDD_A2_HadCM3 <- L244.HDDCDD_B1_CCSM3x <- L244.HDDCDD_B1_HadCM3 <- L244.HDDCDD_constdd_no_GCM <-
+      area_thouskm2 <- flsp <- flsp_pc <- unadjust.satiation <- land.density.param <- tot.dens <-
+      b.param <- income.param <- gdp_pc <- flsp_est <- base_flsp <- bias.adjust.param <- NULL
 
     all_data <- list(...)[[1]]
 

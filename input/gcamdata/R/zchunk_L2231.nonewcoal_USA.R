@@ -23,8 +23,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
              FILE = "gcam-usa/A23.elecS_tech_availability",
              FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              "L222.StubTechMarket_en_USA",
-             "L222.StubTech_en",
-             "L225.StubTech_h2"))
+             "L222.StubTech_en"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA",
              "L2231.StubTechShrwt_nonewcoal_nongen_USA",
@@ -40,7 +39,6 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
     # Load required inputs
     L222.StubTechMarket_en_USA <- get_data(all_data, "L222.StubTechMarket_en_USA")
     L222.StubTech_en <- get_data(all_data, "L222.StubTech_en")
-    L225.StubTech_h2 <- get_data(all_data, "L225.StubTech_h2")
     A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping", strip_attributes = TRUE)
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability")
     A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
@@ -71,8 +69,6 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
 
     L222.StubTech_en %>%
       filter(region == gcam.USA_REGION, subsector == "coal gasification", !grepl("CCS",stub.technology)) %>%
-      bind_rows(L225.StubTech_h2 %>%
-                  filter(region == gcam.USA_REGION, subsector == "coal", !grepl("CCS",stub.technology))) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       mutate(share.weight = 0) %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]], share.weight) ->
@@ -121,8 +117,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_tech_mapping_cool",
                      "L222.StubTechMarket_en_USA",
-                     "L222.StubTech_en",
-                     "L225.StubTech_h2") ->
+                     "L222.StubTech_en") ->
       L2231.SubsectorShrwt_nonewcoal_elecS_cool_USA
 
     L2231.StubTechShrwt_nonewcoal_nongen_USA %>%
@@ -133,8 +128,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "L222.StubTechMarket_en_USA",
-                     "L222.StubTech_en",
-                     "L225.StubTech_h2") ->
+                     "L222.StubTech_en") ->
       L2231.StubTechShrwt_nonewcoal_nongen_USA
 
     L2231.SubsectorShrwt_coal_delay_elecS_cool_USA %>%
@@ -147,8 +141,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_tech_mapping_cool",
                      "L222.StubTechMarket_en_USA",
-                     "L222.StubTech_en",
-                     "L225.StubTech_h2") ->
+                     "L222.StubTech_en") ->
       L2231.SubsectorShrwt_coal_delay_elecS_cool_USA
 
     L2231.StubTechShrwt_coal_delay_nongen_USA %>%
@@ -160,8 +153,7 @@ module_gcamusa_L2231.nonewcoal_USA <- function(command, ...) {
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/A23.elecS_tech_mapping_cool",
                      "L222.StubTechMarket_en_USA",
-                     "L222.StubTech_en",
-                     "L225.StubTech_h2") ->
+                     "L222.StubTech_en") ->
       L2231.StubTechShrwt_coal_delay_nongen_USA
 
     L2231.SubsectorShrwt_coal_delay_elecS_cool_USA

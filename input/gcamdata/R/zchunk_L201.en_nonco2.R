@@ -57,7 +57,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       input.emissions <- `2000` <- emiss.coef <- ctrl.name <- max_reduction <- variable <-
       steepness <- SO2 <- NOx <- CO <- BC <- OC <- NMVOC <- resource <- has_district_heat <-
       . <- region <- supplysector <- max.reduction <- technology <- minicam.energy.input <-
-      tranSubsector <- tranTechnology <- input.name <- efficiency <- NULL  # silence package check notes
+      tranSubsector <- tranTechnology <- input.name <- efficiency <- fuel <- subsector_orig <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")

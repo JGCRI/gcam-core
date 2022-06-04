@@ -96,7 +96,10 @@ module_energy_L2325.chemical <- function(command, ...) {
       technology <- supplysector <- subsector <- minicam.energy.input <- coefficient <-
       remove.fraction <- minicam.non.energy.input <- input.cost  <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
-      value.x <- value.y <- parameter <- NULL
+      value.x <- value.y <- parameter <- secondary.output <- efficiency <- elec_ratio <- output.ratio <-
+      year.x <- year.y <- output.ratio.x <- output.ratio.y <- sector.name <- subsector.name <-
+      calOutputValue.x <- calOutputValue.y <- output_tot <- stub.technology <- market.name <- terminal_coef <-
+      share.weight <- interpolation.function <- NULL
 
     # ===================================================
     # 1. Perform computations

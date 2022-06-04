@@ -137,8 +137,11 @@ module_gcamusa_L276.nonghg_othertrn_USA <- function(command, ...) {
       mutate( Non.CO2 = gsub( "PM2.5", "BC", Non.CO2 ),
               Non.CO2 = gsub( "PM10", "OC", Non.CO2 ) ) %>%
       # Join with the emissions
-      left_join_error_no_match( L201.en_pol_emissions %>% filter( region == "USA" ) %>% select( -region ) %>% mutate( Non.CO2 = gsub( "SO2_1", "SO2", Non.CO2 ) ),
-                                by = c("supplysector", "tranSubsector" = "subsector", "stub.technology", "Non.CO2", "year") )
+      # Note: we will have "future only" technologies such as FCEV or BEV which will cause
+      # NAs when joined.  But that is ok as they should little/no emissions anyways
+      left_join( L201.en_pol_emissions %>% filter( region == "USA" ) %>% select( -region ) %>% mutate( Non.CO2 = gsub( "SO2_1", "SO2", Non.CO2 ) ),
+                 by = c("supplysector", "tranSubsector" = "subsector", "stub.technology", "Non.CO2", "year") ) %>%
+      filter(!is.na(input.emissions))
 
     # Fuel
     L276.int_nonghg_tech_coeff_Yb_USA_fuel <- L254.StubTranTechCalInput_USA %>%

@@ -111,7 +111,7 @@ module_energy_L2321.cement <- function(command, ...) {
       L2321.IncomeElasticity_cement_gssp3 <- L2321.IncomeElasticity_cement_gssp4 <-
       L2321.IncomeElasticity_cement_gssp5 <- L2321.IncomeElasticity_cement_ssp1 <-
       L2321.IncomeElasticity_cement_ssp2 <- L2321.IncomeElasticity_cement_ssp3 <-
-      L2321.IncomeElasticity_cement_ssp4 <- L2321.IncomeElasticity_cement_ssp5 <- NULL
+      L2321.IncomeElasticity_cement_ssp4 <- L2321.IncomeElasticity_cement_ssp5 <- year.x <- year.y <- NULL
 
     # ===================================================
     # 1. Perform computations

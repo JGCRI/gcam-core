@@ -23,7 +23,7 @@ module_gcamusa_batch_elecS_ghg_emissions_water_USA_xml <- function(command, ...)
     L2236.elecS_cool_ghg_emissions_USA  <- get_data(all_data, 'L2236.elecS_cool_ghg_emissions_USA')
 
     # Silence package checks
-    emiss.coeff <- NULL
+    emiss.coeff <- technology <- NULL
 
     # ===================================================
     # Rename columns to meet the LEVEL2_DATA_NAMES header requirements

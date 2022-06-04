@@ -1,7 +1,7 @@
 # File: A321.subsector_interp.csv
 # Title: Cement default subsector shareweight interpolation
 # Units: NA
-# Column types: ccccccc 
+# Column types: ccccccc
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 cement,cement,share-weight,final-calibration-year,end-year,,fixed
@@ -9,3 +9,6 @@ process heat cement,biomass,share-weight,final-calibration-year,end-year,,fixed
 process heat cement,coal,share-weight,final-calibration-year,end-year,,fixed
 process heat cement,gas,share-weight,final-calibration-year,end-year,,fixed
 process heat cement,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+process heat cement,hydrogen,share-weight,start-year,2020,,fixed
+process heat cement,hydrogen,share-weight,2020,2050,,linear
+process heat cement,hydrogen,share-weight,2050,end-year,,fixed

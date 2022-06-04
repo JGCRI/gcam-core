@@ -305,9 +305,10 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
       left_join_error_no_match(states_subregions %>% select(state, grid_region), by = c("region" = "state")) %>%
       mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
-                                   grid_region, market.name)) %>%
-      select(-grid_region) %>%
-      mutate(market.name = if_else(grepl("elect_td", minicam.energy.input), region, market.name)) ->
+                                   grid_region, market.name),
+             market.name = if_else(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS,
+                                   region, market.name)) %>%
+      select(-grid_region) ->
       L232.StubTechMarket_ind_USA  ## OUTPUT
 
     # markets for the cogenerated electricity (secondary output)

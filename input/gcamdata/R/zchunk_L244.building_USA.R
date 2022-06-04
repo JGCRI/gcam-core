@@ -108,7 +108,10 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       steepness_stock <- stockavg <- subsector <- subsector.name <- supplysector <-
       tech_type <- technology <- technology1 <- technology2 <-
       thermal.building.service.input <- to.value <- value <- year <- year.fillout <- . <-
-      pop_year <- Sector <- pop_share <- growth <- flsp_growth <- NULL
+      pop_year <- Sector <- pop_share <- growth <- flsp_growth <- area_gcam <- misc_land_usda <-
+      area_thouskm2 <- flsp <- pop_thous <- flsp_pc <- tot.dens <- unadjust.satiation <-
+      land.density.param <- b.param <- income.param <- gdp_pc <- flsp_est <- base_flsp <-
+      bias.adjust.param <- state_name <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -435,8 +438,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       mutate(market.name = gcam.USA_REGION) %>%
       rename(stub.technology = technology) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
-      # Electricity is consumed from state markets, so change market.name to states for electricity
-      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, region, market.name)) %>%
+      # For fuels with state markets, set the market.name to the region
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS, region, market.name)) %>%
       # replace market name with the grid region name if the minicam.energy.input is
       # considered a regional fuel market
       left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%

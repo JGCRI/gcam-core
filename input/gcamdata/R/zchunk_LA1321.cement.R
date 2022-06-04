@@ -47,7 +47,7 @@ module_energy_LA1321.cement <- function(command, ...) {
     emiss_ktC <- fuel <- heat_EJ <- heat_GJkg <- in.value <- ind.value <- iso <-
     old.year <- out.value <- process_emissions_MtC <- process_emissions_ktC <-
     prod_Mt <- prod_emiss_ratio <- reg_process_emissions <- region_GCAM3 <- sector <-
-    share <- value <- cement <- year <- value.y <- value.x <- NULL
+    share <- value <- cement <- year <- value.y <- value.x <- neg <- NULL
 
     all_data <- list(...)[[1]]
 
