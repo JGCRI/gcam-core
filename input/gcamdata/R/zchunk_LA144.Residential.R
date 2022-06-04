@@ -46,7 +46,7 @@ module_gcamusa_LA144.Residential <- function(command, ...) {
       state <- subregion9 <- year <- variable <- HOUSEHOLDS <- NWEIGHT <- . <- value.x <- value.y <- variable <- pcflsp_m2 <-
       pcflsp_m2.x <- pcflsp_m2.y <- conv_9_13 <- sector <- fuel <- service <- DIVISION <- val_1993 <- conv <- val_1990 <-
       Fuel <- Service <- tv_1995 <- fuel_sum <- share <- service.x <- Sector <- RECS_flspc_2010 <- scaler <- EIA_sector <-
-      val_2009 <- NULL
+      val_2009 <- RECS_flspc <- NULL
 
     all_data <- list(...)[[1]]
 

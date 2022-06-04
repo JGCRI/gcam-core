@@ -15,5 +15,6 @@ H2 central production,nuclear,thermal splitting,nuclearFuelGenIII
 H2 central production,electricity,electrolysis,elect_td_ind
 H2 central production,wind,electrolysis,onshore wind resource
 H2 central production,solar,electrolysis,global solar resource
-H2 forecourt production,gas,natural gas steam reforming,delivered gas
-H2 forecourt production,electricity,electrolysis,elect_td_trn
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,delivered gas
+H2 wholesale dispensing,forecourt production,electrolysis,elect_td_trn
+H2 industrial,forecourt production,electrolysis,elect_td_ind

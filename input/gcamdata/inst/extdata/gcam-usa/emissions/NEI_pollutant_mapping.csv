@@ -1,0 +1,19 @@
+# File: NEI_pollutant_mapping.csv
+# Title: mapping file for NEI pollutants and GCAM pollutants
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cc
+# ----------
+NEI_pollutant,Non.CO2
+Ammonia,NH3
+Nitrogen Oxides,NOx
+PM10 Primary (Filt + Cond),PM10
+PM2.5 Primary (Filt + Cond),PM2.5
+Volatile Organic Compounds,NMVOC
+Sulfur Dioxide,SO2
+Carbon Monoxide,CO
+Methane,CH4
+Nitrous Oxide,N2O
+Carbon Dioxide,CO2
+Organic Carbon,OC
+Black Carbon,BC

@@ -8,4 +8,7 @@ N fertilizer,coal,share-weight,final-calibration-year,end-year,,fixed
 N fertilizer,gas,share-weight,final-calibration-year,end-year,,linear
 N fertilizer,refined liquids,share-weight,final-calibration-year,2035,,linear
 N fertilizer,refined liquids,share-weight,2035,end-year,,fixed
+N fertilizer,hydrogen,share-weight,start-year,2020,,fixed
+N fertilizer,hydrogen,share-weight,2020,2050,,linear
+N fertilizer,hydrogen,share-weight,2050,end-year,,fixed
 Exports_fertilizer,N fertilizer,share-weight,final-calibration-year,end-year,,fixed

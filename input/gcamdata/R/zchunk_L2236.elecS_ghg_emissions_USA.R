@@ -52,7 +52,9 @@ module_gcamusa_L2236.elecS_ghg_emissions_USA <- function(command, ...) {
       calOutputValue <- emiss.coeff <- fuel <- fuel_input <- fuel_input_USA <-
       fuel_input_share <- input.emissions <- palette <- region <- segment_share <-
       state <- stub.technology <- subsector <- subsector_1 <- supplysector <-
-      tech_calOuput <- tech_fuel_input <- technology <- value <- year <- NULL
+      tech_calOuput <- tech_fuel_input <- technology <- value <- year <-
+      to.technology <- plant_type <- cooling_system <- water_type <-
+      to.technology <- supplysector.y <- supplysector.x <- subsector0 <- NULL
 
 
 

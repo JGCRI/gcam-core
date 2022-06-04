@@ -34,7 +34,9 @@ module_energy_LA1326.aluminum <- function(command, ...) {
 
     # Silence global variable package check
     raw <- subsector <- minicam.energy.input <- Country <- sector <-
-    share <- value <- aluminum <- year <- value.y <- value.x <- NULL
+    share <- value <- aluminum <- year <- value.y <- value.x <- iso <- data_type <-
+      flow <- var <- region <- IAA_region <- region_total <- value_region <- GCAM_region_ID <-
+      fuel <- en <- industry <- output <- input <- NULL
 
     all_data <- list(...)[[1]]
 

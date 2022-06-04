@@ -19,22 +19,22 @@ Passenger,LDV_4W,Mini Car,Liquids,Liquids,trn_road and rail,refined liquids,trn_
 Passenger,LDV_4W,Mini Car,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Mini Car,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Mini Car,NG,delivered gas
 Passenger,LDV_4W,Mini Car,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Mini Car,BEV,elect_td_trn
-Passenger,LDV_4W,Mini Car,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Mini Car,FCEV,H2 enduse
+Passenger,LDV_4W,Mini Car,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Mini Car,FCEV,H2 retail dispensing
 Passenger,LDV_4W,Car,Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Car,Liquids,refined liquids enduse
 Passenger,LDV_4W,Car,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Car,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Car,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Car,NG,delivered gas
 Passenger,LDV_4W,Car,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Car,BEV,elect_td_trn
-Passenger,LDV_4W,Car,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Car,FCEV,H2 enduse
+Passenger,LDV_4W,Car,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Car,FCEV,H2 retail dispensing
 Passenger,LDV_4W,Car,Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Car,Liquids,refined liquids enduse
 Passenger,LDV_4W,Car,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Car,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Car,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Car,NG,delivered gas
 Passenger,LDV_4W,Car,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Car,BEV,elect_td_trn
-Passenger,LDV_4W,Car,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Car,FCEV,H2 enduse
+Passenger,LDV_4W,Car,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Car,FCEV,H2 retail dispensing
 Passenger,LDV_4W,Large Car and Truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Large Car and Truck,Liquids,refined liquids enduse
 Passenger,LDV_4W,Large Car and Truck,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Large Car and Truck,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Large Car and Truck,NG,delivered gas
 Passenger,LDV_4W,Large Car and Truck,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Large Car and Truck,BEV,elect_td_trn
-Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 enduse
+Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 retail dispensing
 Freight,Rail,All,Liquids,Liquids,trn_road and rail,refined liquids,trn_freight,Freight Rail,Liquids,refined liquids enduse
 Freight,Rail,All,Electric,Electricity,trn_road and rail,electricity,trn_freight,Freight Rail,Electric,elect_td_trn
 Freight,Rail,All,Tech-Adv-Liquid,Liquids,trn_road and rail,refined liquids,trn_freight,Freight Rail,Adv-Liquid,refined liquids enduse
@@ -59,17 +59,17 @@ Passenger,LDV_4W,Car,Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_
 Passenger,LDV_4W,Car,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Car,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Car,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Car,NG,delivered gas
 Passenger,LDV_4W,Car,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Car,BEV,elect_td_trn
-Passenger,LDV_4W,Car,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Car,FCEV,H2 enduse
+Passenger,LDV_4W,Car,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Car,FCEV,H2 retail dispensing
 Passenger,LDV_4W,Large Car and Truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Large Car and Truck,Liquids,refined liquids enduse
 Passenger,LDV_4W,Large Car and Truck,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Large Car and Truck,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Large Car and Truck,NG,delivered gas
 Passenger,LDV_4W,Large Car and Truck,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Large Car and Truck,BEV,elect_td_trn
-Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 enduse
+Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 retail dispensing
 Passenger,LDV_4W,Large Car and Truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Large Car and Truck,Liquids,refined liquids enduse
 Passenger,LDV_4W,Large Car and Truck,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Large Car and Truck,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Large Car and Truck,NG,delivered gas
 Passenger,LDV_4W,Large Car and Truck,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Large Car and Truck,BEV,elect_td_trn
-Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 enduse
+Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 retail dispensing
 Freight,Truck,Light truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Light truck,Liquids,refined liquids enduse
 Freight,Truck,Light truck,NG,Natural Gas,trn_road and rail,gas,trn_freight_road,Light truck,NG,delivered gas
 Freight,Truck,Light truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Light truck,Liquids,refined liquids enduse
@@ -82,7 +82,7 @@ Passenger,LDV_4W,Large Car and Truck,Liquids,Liquids,trn_road and rail,refined l
 Passenger,LDV_4W,Large Car and Truck,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Large Car and Truck,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Large Car and Truck,NG,delivered gas
 Passenger,LDV_4W,Large Car and Truck,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Large Car and Truck,BEV,elect_td_trn
-Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 enduse
+Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 retail dispensing
 Freight,Truck,Medium truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Medium truck,Liquids,refined liquids enduse
 Freight,Truck,Medium truck,NG,Natural Gas,trn_road and rail,gas,trn_freight_road,Medium truck,NG,delivered gas
 Freight,Truck,Heavy truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Heavy truck,Liquids,refined liquids enduse
@@ -91,7 +91,7 @@ Passenger,LDV_4W,Large Car and Truck,Liquids,Liquids,trn_road and rail,refined l
 Passenger,LDV_4W,Large Car and Truck,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,refined liquids enduse
 Passenger,LDV_4W,Large Car and Truck,NG,Natural Gas,trn_road and rail,gas,trn_pass_road_LDV_4W,Large Car and Truck,NG,delivered gas
 Passenger,LDV_4W,Large Car and Truck,BEV,Electricity,trn_road and rail,electricity,trn_pass_road_LDV_4W,Large Car and Truck,BEV,elect_td_trn
-Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 enduse
+Passenger,LDV_4W,Large Car and Truck,FCEV,Hydrogen,trn_road and rail,hydrogen,trn_pass_road_LDV_4W,Large Car and Truck,FCEV,H2 retail dispensing
 Freight,Truck,Light truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Light truck,Liquids,refined liquids enduse
 Freight,Truck,Light truck,NG,Natural Gas,trn_road and rail,gas,trn_freight_road,Light truck,NG,delivered gas
 Freight,Truck,Medium truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Medium truck,Liquids,refined liquids enduse

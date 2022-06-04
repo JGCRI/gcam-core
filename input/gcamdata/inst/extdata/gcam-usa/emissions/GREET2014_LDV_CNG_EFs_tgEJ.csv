@@ -1,0 +1,18 @@
+# File: GREET2014_LDV_CNG_EFs_tgEJ.csv
+# Title: LDV CNG emission factors from GREET
+# Source: Provided by Dan Loughlin from GREET 2014 doi: 10.11578/GREET-Excel-2014/dc.20200803.5
+# Comments: NA
+# Units: Tg/EJ (input-driven)
+# Column types: ccn
+# ----------
+pollutant,Fuel,value
+CH4,CNG,0.026104239
+N2O,CNG,0.001277042
+VOC,CNG,0.032602129
+CO,CNG,0.794864691
+NOX,CNG,0.037259576
+PM10,CNG,0.004807687
+PM2.5,CNG,0.002197263
+SO2,CNG,0.000254551
+BC,CNG,0.000404624
+OC,CNG,0.001194103

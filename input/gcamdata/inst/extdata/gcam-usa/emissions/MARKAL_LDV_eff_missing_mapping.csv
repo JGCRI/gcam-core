@@ -1,0 +1,11 @@
+# File: MARKAL_LDV_eff_missing_mapping.csv
+# Title: MARKAL LDV efficiency mapping file between similar vehicle classes
+# Description: Mapping file for copying efficiencies from similar vehicle classes for needed types that are missing
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cccc
+# ----------
+Class.orig,Fuel.orig,Class.new,Fuel.new
+Compact car,CNG,Mini car,CNG
+Minivan,CNG,Small SUV,CNG
+Pickup,CNG,Large SUV,CNG

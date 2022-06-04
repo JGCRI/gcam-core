@@ -1,0 +1,12 @@
+# File: MARKAL_UCD_HDV_fuel.csv
+# Title: mapping file for MARKAL and UCD HDV fuels
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cc
+# ----------
+MARKAL_HDV_fuel,UCD_HDV_fuel
+B0,Liquids
+CNG,NG
+ELC,BEV
+ELC,FCEV
+B0,Hybrid Liquids

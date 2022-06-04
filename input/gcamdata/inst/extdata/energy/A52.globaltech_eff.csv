@@ -6,6 +6,6 @@
 supplysector,subsector,technology,minicam.energy.input,1971,2005,2100
 transportation,coal,coal,delivered coal,0.05,0.05,0.05
 transportation,electricity,electricity,elect_td_trn,0.48,0.51,0.65
-transportation,hydrogen,hydrogen,H2 enduse,0.224,0.238,0.35
+transportation,hydrogen,hydrogen,H2 retail dispensing,0.224,0.238,0.35
 transportation,gas,gas,delivered gas,0.16,0.17,0.25
 transportation,refined liquids,refined liquids,refined liquids enduse,0.16,0.17,0.25

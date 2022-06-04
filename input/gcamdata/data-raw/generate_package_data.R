@@ -153,6 +153,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["ResReserveTechCoef"]] <- c("region", "resource", "reserve.subresource", "resource.reserve.technology", "year", "minicam.energy.input", "coefficient")
 
   # Global technologies
+  level2_data_names[["GlobalTechInputPMult"]] <- c("sector.name", "subsector.name", "technology", "year","minicam.energy.input", "price.unit.conversion")
   level2_data_names[["GlobalTech"]] <- c("sector.name", "subsector.name", "technology")
   level2_data_names[["GlobalTechInterp"]] <- c("sector.name", "subsector.name", "technology", "apply.to", "from.year", "to.year", "interpolation.function")
   level2_data_names[["GlobalTechInterpTo"]] <- c("sector.name", "subsector.name", "technology", "apply.to", "from.year", "to.year", "to.value", "interpolation.function")
@@ -199,6 +200,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["GlobalTranTechShrwt"]] <- c("sector.name", "subsector.name", "tranTechnology", "year", "share.weight")
   level2_data_names[["GlobalTranTechInterp"]] <- c("sector.name", "subsector.name", "tranTechnology", "apply.to", "from.year", "to.year", "interpolation.function")
   level2_data_names[["GlobalTranTechSCurve"]] <- c("sector.name", "subsector.name", "tranTechnology", "year", "lifetime", "steepness", "half.life")
+  level2_data_names[["GlobalTranTechProfitShutdown"]] <- c("sector.name", "subsector.name", "tranTechnology", "year", "median.shutdown.point", "steepness")
   level2_data_names[["GlobalPassThroughTech"]] <- c("sector.name", "subsector.name", "technology")
   level2_data_names[["GlobalResBio"]] <- c("sector.name", "subsector.name", "technology", "year", "residue.biomass.production", "mass.conversion", "harvest.index", "eros.ctrl", "mass.to.energy", "water.content")
   level2_data_names[["GlobalTechIntGainOutputRatio"]] <- c(level2_data_names[["GlobalTechYr"]], "internal.gains.output.ratio", "internal.gains.market.name")
@@ -409,6 +411,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["OutputEmissCoeff"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "emiss.coeff")
   level2_data_names[["InputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions", "input.name")
   level2_data_names[["OutputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
+  level2_data_names[["OutputResourceEmissions"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["StbTechOutputEmissions"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "input.emissions")
   level2_data_names[["ReadInControl"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coeff")
   level2_data_names[["ResReadInControl"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "future.emiss.coeff.name", "future.emiss.coeff.year", "emiss.coef")
@@ -432,7 +435,9 @@ generate_level2_data_names <- function() {
   level2_data_names[["AgMACTC"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")
   level2_data_names[["AgMACPhaseIn"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year", "Non.CO2", "mac.control", "mac.phase.in.time")
   level2_data_names[["TrnInputEmissCoeff"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "emiss.coef", "input.name")
-  level2_data_names[["LinearCtrlInc"]] <- c("region", "supplysector", "tranSubsector","stub.technology", "year", "Non.CO2", "linear.control", "start.year", "end.year", "final.emissions.coefficient")
+  level2_data_names[["TrnOutputEmissCoeff"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["LinearCtrlInc"]] <- c("region", "supplysector", "tranSubsector", "stub.technology", "year", "Non.CO2", "linear.control", "start.year", "end.year", "final.emissions.coefficient", "allow.ef.increase")
+  level2_data_names[["LinearCtrl"]] <- c("region", "supplysector", "subsector","stub.technology", "year", "Non.CO2", "linear.control", "start.year", "end.year", "final.emissions.coefficient")
   level2_data_names[["EF_Retrofit"]] <- c("region", "supplysector", "subsector", "stub.technology", "retrofit_vintage", "Non.CO2", "linear.control", "start.year", "end.year", "final.emissions.coefficient")
   level2_data_names[["RetrofitOff"]] <- c("region", "supplysector", "subsector", "stub.technology", "period", "Non.CO2", "linear.control", "start.year", "end.year", "disable.em.control")
   level2_data_names[["EF_NSPS"]] <- c("region", "supplysector", "subsector", "stub.technology", "period", "Non.CO2", "emiss.coef")
@@ -498,6 +503,7 @@ usethis::use_data(GCAM_DATA_MAP, overwrite = TRUE, internal = FALSE)
 prebuilt_data_names <- c(
   # outputs of module_emissions_L102.nonco2_ceds_R_S_Y
   "L102.ceds_GFED_nonco2_tg_R_S_F",
+  "L102.ceds_GFED_nonco2_tg_C_S_F",
   "L102.ceds_int_shipping_nonco2_tg_S_F",
 
   # outputs of module_energy_LA101.en_bal_IEA

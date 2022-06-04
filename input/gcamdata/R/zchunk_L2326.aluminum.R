@@ -93,8 +93,9 @@ module_energy_L2326.aluminum <- function(command, ...) {
     has_district_heat <- year <- value <- GCAM_region_ID <- sector <- fuel <- year.fillout <- to.value <-
       technology <- supplysector <- subsector <- minicam.energy.input <- coefficient <-
       remove.fraction <- minicam.non.energy.input <- input.cost  <- calibration <- calOutputValue <- subs.share.weight <- region <-
-      calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
-      value.x <- value.y <- parameter <- NULL
+      calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <- output.ratio <-
+      value.x <- value.y <- parameter <- secondary.output <- elec_ratio <- year.x <- year.y <- output.ratio.x <-
+      output.ratio.y <- sector.name <- subsector.name <- stub.technology <- market.name <- terminal_coef <- NULL
 
     # ===================================================
     # 1. Perform computations

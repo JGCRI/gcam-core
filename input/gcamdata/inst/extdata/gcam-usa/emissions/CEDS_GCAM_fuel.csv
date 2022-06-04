@@ -1,0 +1,16 @@
+# File: CEDS_GCAM_fuel.csv
+# Title: Convert CEDS_fuel code to GCAM_fuel name
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cc
+# ----------
+CEDS_Fuel,GCAM_fuel
+biomass,biomass
+diesel_oil,refined liquids
+heavy_oil,refined liquids
+light_oil,refined liquids
+hard_coal,coal
+brown_coal,coal
+Anthracite_Lignite,coal
+natural_gas,gas
+Process, process

@@ -35,7 +35,9 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
 
     # Silence global variable package check
     raw <- subsector <- minicam.energy.input <- Country <- sector <-
-    share <- value <- iron_steel <- year <- value.y <- value.x <- NULL
+      share <- value <- iron_steel <- year <- value.y <- value.x <- iso <- unit_prod <-
+      GCAM_region_ID <- fuel <- industry <- output <- energy_use <- scalar <- coefficient <-
+      Unit <- technology <- NULL
 
     all_data <- list(...)[[1]]
 

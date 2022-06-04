@@ -150,3 +150,33 @@ trn_pass_road_LDV_4W,Large Car and Truck,NG,Combustion_general
 resid heating,traditional biomass,traditional biomass,Combustion_Bio
 resid others,traditional biomass,traditional biomass,Combustion_Bio
 trn_pass_road_LDV,2W and 3W,NG,Combustion_general
+agricultural energy use,stationary,biomass,Combustion_general
+agricultural energy use,stationary,coal,Combustion_general
+agricultural energy use,stationary,gas,Combustion_general
+agricultural energy use,stationary,refined liquids,Combustion_general
+agricultural energy use,mobile,refined liquids,Combustion_general
+alumina,biomass,biomass,Combustion_general
+alumina,coal,coal,Combustion_general
+alumina,gas,gas,Combustion_general
+alumina,refined liquids,refined liquids,Combustion_general
+chemical energy use,biomass,biomass,Combustion_general
+chemical energy use,coal,coal,Combustion_general
+chemical energy use,gas,gas,Combustion_general
+chemical energy use,refined liquids,refined liquids,Combustion_general
+construction energy use,stationary,biomass,Combustion_general
+construction energy use,stationary,coal,Combustion_general
+construction energy use,stationary,gas,Combustion_general
+construction energy use,stationary,refined liquids,Combustion_general
+construction energy use,mobile,refined liquids,Combustion_general
+mining energy use,stationary,biomass,Combustion_general
+mining energy use,stationary,coal,Combustion_general
+mining energy use,stationary,gas,Combustion_general
+mining energy use,stationary,refined liquids,Combustion_general
+mining energy use,mobile,refined liquids,Combustion_general
+iron and steel,coal,BLASTFUR,Combustion_general
+iron and steel,gas,EAF with DRI,Combustion_general
+iron and steel,refined liquids,EAF with scrap,Combustion_general
+iron and steel,coal,EAF with DRI,Combustion_general
+iron and steel,gas,BLASTFUR,Combustion_general
+iron and steel,refined liquids,BLASTFUR,Combustion_general
+iron and steel,refined liquids,EAF with DRI,Combustion_general

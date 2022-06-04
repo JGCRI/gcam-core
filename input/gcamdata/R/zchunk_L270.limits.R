@@ -54,7 +54,10 @@ module_energy_L270.limits <- function(command, ...) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
       region <- scenario <- constraint <- . <- PrimaryFuelCO2Coef.name <-
-      PrimaryFuelCO2Coef <- NULL # silence package check notes
+      PrimaryFuelCO2Coef <- technology <- coefficient <- coef <- market <-
+      resource_type <- resource <- `output-unit` <- `price-unit` <- subresource <-
+      grade <- available <- extractioncost <- renewresource <- sub.renewable.resource <-
+      AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 

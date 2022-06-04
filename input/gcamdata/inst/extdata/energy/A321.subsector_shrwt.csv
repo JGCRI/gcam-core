@@ -1,7 +1,7 @@
 # File: A321.subsector_shrwt.csv
 # Title: Cement default subsector shareweights
 # Units: Unitless
-# Column types: cccci 
+# Column types: cccci
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
 cement,cement,start-year,,1
@@ -9,3 +9,6 @@ process heat cement,biomass,start-year,,1
 process heat cement,coal,start-year,,1
 process heat cement,gas,start-year,,1
 process heat cement,refined liquids,start-year,,1
+process heat cement,hydrogen,start-year,,0
+process heat cement,hydrogen,2020,,0
+process heat cement,hydrogen,2050,,1

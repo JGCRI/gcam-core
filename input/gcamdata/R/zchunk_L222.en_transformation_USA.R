@@ -350,9 +350,9 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
                                      grid_region, market.name)) %>%
         select(-grid_region) -> L222.StubTechMarket_en_USA
 
-      # Finish L222.StubTechMarket_en_USA by Setting electricity to the state markets
+      # Finish L222.StubTechMarket_en_USA by assigning state fuel markets
       L222.StubTechMarket_en_USA %>%
-        filter(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS) %>%
+        filter(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS) %>%
         mutate(market.name = region) ->
         tmp
 
@@ -364,7 +364,7 @@ module_gcamusa_L222.en_transformation_USA <- function(command, ...) {
         L222.StubTech_en_USA_key
 
       L222.StubTechMarket_en_USA %>%
-        filter(!(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS)) %>%
+        filter(!(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS)) %>%
         bind_rows(tmp) %>%
         select(one_of(LEVEL2_DATA_NAMES[["StubTechMarket"]])) %>%
         unite(key, supplysector, subsector, stub.technology, sep = "~") %>%

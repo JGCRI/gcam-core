@@ -17,4 +17,5 @@ N fertilizer,coal,coal,initial-future-year,40,,20,0.3,-0.5,6
 N fertilizer,coal,coal CCS,initial-future-year,40,,20,0.3,-0.5,6
 N fertilizer,gas,gas,initial-future-year,40,,20,0.3,-0.5,6
 N fertilizer,gas,gas CCS,initial-future-year,40,,20,0.3,-0.5,6
+N fertilizer,hydrogen,hydrogen,initial-future-year,40,,20,0.3,-0.5,6
 N fertilizer,refined liquids,refined liquids,initial-future-year,40,,20,0.3,-0.5,6

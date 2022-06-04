@@ -93,7 +93,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
              "L254.StubTranTechCalInput_USA",
              "L254.StubTranTechProd_nonmotor_USA",
              "L254.StubTranTechCalInput_passthru_USA",
-             "L254.BaseService_trn_USA"))
+             "L254.BaseService_trn_USA",
+             "L254.StubTranTechOutput_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -132,26 +133,26 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
     A54.sector <- get_data(all_data, "energy/A54.sector",strip_attributes = TRUE)
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions",strip_attributes = TRUE)
     #kbn 2020-02-27 Making changes to select the CORE scenario for transportation in GCAM USA
-    L254.Supplysector_trn <- get_data(all_data, "L254.Supplysector_trn",strip_attributes = TRUE) %>% filter(sce %in% c("highEV","CORE"))
-    L254.FinalEnergyKeyword_trn <- get_data(all_data, "L254.FinalEnergyKeyword_trn",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorLogit <- get_data(all_data, "L254.tranSubsectorLogit",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorShrwtFllt <- get_data(all_data, "L254.tranSubsectorShrwtFllt",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorInterp <- get_data(all_data, "L254.tranSubsectorInterp",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorSpeed <- get_data(all_data, "L254.tranSubsectorSpeed",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorSpeed_passthru <- get_data(all_data, "L254.tranSubsectorSpeed_passthru",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorSpeed_noVOTT <- get_data(all_data, "L254.tranSubsectorSpeed_noVOTT",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorSpeed_nonmotor <- get_data(all_data, "L254.tranSubsectorSpeed_nonmotor",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorVOTT <- get_data(all_data, "L254.tranSubsectorVOTT",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.tranSubsectorFuelPref <- get_data(all_data, "L254.tranSubsectorFuelPref",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.StubTranTech <- get_data(all_data, "L254.StubTranTech",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.StubTech_passthru <- get_data(all_data, "L254.StubTech_passthru",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.StubTech_nonmotor <- get_data(all_data, "L254.StubTech_nonmotor",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.StubTranTechLoadFactor <- get_data(all_data, "L254.StubTranTechLoadFactor",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.StubTranTechCost <- get_data(all_data, "L254.StubTranTechCost",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.StubTranTechCoef <- get_data(all_data, "L254.StubTranTechCoef",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.PerCapitaBased_trn <- get_data(all_data, "L254.PerCapitaBased_trn",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.PriceElasticity_trn <- get_data(all_data, "L254.PriceElasticity_trn",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
-    L254.IncomeElasticity_trn <- get_data(all_data, "L254.IncomeElasticity_trn",strip_attributes = TRUE)%>% filter(sce %in% c("highEV","CORE"))
+    L254.Supplysector_trn <- get_data(all_data, "L254.Supplysector_trn",strip_attributes = TRUE) %>% filter(sce %in% c("CORE"))
+    L254.FinalEnergyKeyword_trn <- get_data(all_data, "L254.FinalEnergyKeyword_trn",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorLogit <- get_data(all_data, "L254.tranSubsectorLogit",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorShrwtFllt <- get_data(all_data, "L254.tranSubsectorShrwtFllt",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorInterp <- get_data(all_data, "L254.tranSubsectorInterp",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorSpeed <- get_data(all_data, "L254.tranSubsectorSpeed",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorSpeed_passthru <- get_data(all_data, "L254.tranSubsectorSpeed_passthru",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorSpeed_noVOTT <- get_data(all_data, "L254.tranSubsectorSpeed_noVOTT",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorSpeed_nonmotor <- get_data(all_data, "L254.tranSubsectorSpeed_nonmotor",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorVOTT <- get_data(all_data, "L254.tranSubsectorVOTT",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.tranSubsectorFuelPref <- get_data(all_data, "L254.tranSubsectorFuelPref",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.StubTranTech <- get_data(all_data, "L254.StubTranTech",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.StubTech_passthru <- get_data(all_data, "L254.StubTech_passthru",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.StubTech_nonmotor <- get_data(all_data, "L254.StubTech_nonmotor",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.StubTranTechLoadFactor <- get_data(all_data, "L254.StubTranTechLoadFactor",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.StubTranTechCost <- get_data(all_data, "L254.StubTranTechCost",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.StubTranTechCoef <- get_data(all_data, "L254.StubTranTechCoef",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.PerCapitaBased_trn <- get_data(all_data, "L254.PerCapitaBased_trn",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.PriceElasticity_trn <- get_data(all_data, "L254.PriceElasticity_trn",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
+    L254.IncomeElasticity_trn <- get_data(all_data, "L254.IncomeElasticity_trn",strip_attributes = TRUE)%>% filter(sce %in% c("CORE"))
     L154.in_EJ_state_trn_m_sz_tech_F <- get_data(all_data, "L154.in_EJ_state_trn_m_sz_tech_F",strip_attributes = TRUE)
     L154.out_mpkm_state_trn_nonmotor_Yh <- get_data(all_data, "L154.out_mpkm_state_trn_nonmotor_Yh",strip_attributes = TRUE)
 
@@ -190,11 +191,11 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
           select(-grid_region)
       }
 
-      # Electricity is always consumed from state markets
+      # For fuels consumed from state markets, the market.name is the region
       if("market.name" %in% names(data_new)) {
         data_new <- data_new %>%
-          mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS,
-                                       region[minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS]))
+          mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS,
+                                       region[minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS]))
       }
 
       data_new
@@ -235,7 +236,6 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
     #kbn 2019-10-14 Switching to left_join_keep_first
     L154.in_EJ_state_trn_m_sz_tech_F %>%
       mutate(sce=paste0("CORE")) %>%
-      #bind_rows(L154.in_EJ_state_trn_m_sz_tech_F %>% mutate(sce=paste0("highEV"))) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       mutate(calibrated.value = round(value, digits = energy.DIGITS_CALOUTPUT),
              region = state) %>%
@@ -602,6 +602,16 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
                      "energy/mappings/UCD_size_class_revisions") ->
       L254.BaseService_trn_USA
 
+    L254.StubTranTechOutput_USA %>%
+      add_title("service output for all tranTechnologies") %>%
+      add_units("Million pass-km and million ton-km") %>%
+      add_comments("Service outputs of all motorized technologies are calculated as calInput * loadFactor / coefficient") %>%
+      add_legacy_name("L254.StubTranTechOutput_USA") %>%
+      same_precursors_as("L254.StubTranTechCalInput_USA") %>%
+      same_precursors_as("L254.StubTranTechLoadFactor_USA") %>%
+      same_precursors_as("L254.StubTranTechCoef_USA") ->
+      L254.StubTranTechOutput_USA
+
     return_data(L254.DeleteSupplysector_USAtrn, L254.DeleteFinalDemand_USAtrn,
                 L254.Supplysector_trn_USA,
                 L254.FinalEnergyKeyword_trn_USA,
@@ -624,7 +634,8 @@ module_gcamusa_L254.transportation_USA <- function(command, ...) {
                 L254.PriceElasticity_trn_USA,
                 L254.IncomeElasticity_trn_USA,
                 L254.StubTranTechCalInput_USA, L254.StubTranTechProd_nonmotor_USA,
-                L254.StubTranTechCalInput_passthru_USA, L254.BaseService_trn_USA)
+                L254.StubTranTechCalInput_passthru_USA, L254.BaseService_trn_USA,
+                L254.StubTranTechOutput_USA)
   } else {
     stop("Unknown command")
   }

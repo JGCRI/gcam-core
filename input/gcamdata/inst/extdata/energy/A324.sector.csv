@@ -4,9 +4,8 @@
 # Column types: ccccicc
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
-agricultural energy use,EJ,EJ,1975$/GJ,-3,industry,
-mining energy use,EJ,EJ,1975$/GJ,-3,industry,
-mining energy use,EJ,EJ,1975$/GJ,-3,industry,
+agricultural energy use,EJ,EJ,1975$/GJ,0,industry,
+mining energy use,EJ,EJ,1975$/GJ,0,industry,
 construction,EJ,EJ,1975$/GJ,-3,,
-construction energy use,EJ,EJ,1975$/GJ,-3,industry,
+construction energy use,EJ,EJ,1975$/GJ,0,industry,
 construction feedstocks,EJ,EJ,1975$/GJ,-3,industry,
