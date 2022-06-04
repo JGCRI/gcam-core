@@ -171,7 +171,7 @@ module_gcamusa_L169.nonghg_NEI_scaling_USA <- function(command, ...) {
         filter( grepl("1A3bi", CEDS_Sector ) ) %>%
         group_by( state, year, pollutant, CEDS_Fuel, tier1_description, unit ) %>%
         mutate( emissions = sum(emissions) ) %>%
-        distinct() %>%
+        ungroup() %>%
         mutate( "CEDS_Sector" = "1A3bi_Road" ) %>%
         complete( nesting( state, pollutant, CEDS_Sector, CEDS_Fuel, tier1_description, unit ), year = 2008:2017 ) %>%
         distinct()
@@ -183,10 +183,9 @@ module_gcamusa_L169.nonghg_NEI_scaling_USA <- function(command, ...) {
                 grepl( "PM", pollutant ) ) %>%
         group_by( state, year, pollutant, CEDS_Fuel, tier1_description, unit ) %>%
         mutate( emissions = sum(emissions) ) %>%
-        distinct() %>%
+        ungroup() %>%
         mutate( "CEDS_Sector" = "1A3bi_Road" ) %>%
-        distinct() %>%
-        ungroup()
+        distinct()
 
       # calculate fuel shares from the combustion onroad emissions
       # Note: Dan (EPA-ORD) suggested miles based if possible, but that can't be done at this step
