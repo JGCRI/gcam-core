@@ -21,7 +21,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select mutate_all
 #' @importFrom tidyr gather spread
-#' @importClassesFrom tibble tibble
+#' @importFrom tibble tibble
 #' @author CWR Oct. 2018 , YO Mar. 2020, KBN 2020
 module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {

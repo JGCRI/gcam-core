@@ -70,7 +70,7 @@ module_gcamusa_L169.nonghg_NEI_scaling_USA <- function(command, ...) {
     # 1.1 preparing EPA Tier1 state level data
     state_tier1_caps %>%
       # changing units of the EPA Tier1 data to match NEI (Thousand Tons to Tons)
-      dplyr::mutate_if( is.numeric, dplyr::funs(. * 1000) ) -> state_tier1_tons
+      dplyr::mutate_if( is.numeric, list(~ . * 1000) ) -> state_tier1_tons
 
     # NA entries become 0 in order for emissions sums to work (otherwise NA is returned)
     state_tier1_tons[is.na(state_tier1_tons)] <- 0

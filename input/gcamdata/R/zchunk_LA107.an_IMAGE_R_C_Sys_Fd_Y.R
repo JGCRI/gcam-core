@@ -231,7 +231,11 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # Replace NAs with max from other regions in that year as a conservative estimate
     L107.an_FeedIO_R_C_Sys_Fd_Y %>%
       group_by(GCAM_commodity, year, system, feed) %>%
-      mutate(value = if_else(is.na(value) & !all(is.na(value)), max(value, na.rm = T), value)) %>%
+      # we get superfluous warnings about no non-missing arguments to max despite
+      # explicitly checking for it
+      # this is due to: https://stackoverflow.com/questions/16275149/does-ifelse-really-calculate-both-of-its-vectors-every-time-is-it-slow
+      # so in this case we can safely just suppress the warning
+      mutate(value = if_else(is.na(value) & !all(is.na(value)), suppressWarnings(max(value, na.rm = T)), value)) %>%
       ungroup ->
       L107.an_FeedIO_R_C_Sys_Fd_Y
 
