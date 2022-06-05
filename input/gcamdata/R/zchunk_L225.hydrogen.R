@@ -96,6 +96,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # H2 liquid truck has a simultaneity that may benefit from using a trial market here
     L225.SectorUseTrialMarket_h2 <- filter(L225.Supplysector_h2, supplysector == "H2 liquid truck") %>%
+      mutate(supplysector = "trn_freight_road") %>%
       select(region, supplysector) %>%
       mutate(use.trial.market = 1)
 
