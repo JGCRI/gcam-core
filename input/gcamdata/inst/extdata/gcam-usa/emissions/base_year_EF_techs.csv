@@ -1,0 +1,13 @@
+# File: base_year_EF_techs.csv
+# Title: Mapping file for copying emission factors (EFs) from existing technologies in base year
+# Description: All non-electric technologies should be listed here if they do not have base-year EFs.  EFs must be copied from some similar technology.
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cccccc
+# ----------
+supplysector.orig,subsector.orig,stub.technology.orig,supplysector.new,subsector.new,stub.technology.new
+comm heating,gas,gas furnace,comm heating,gas,gas furnace hi-eff
+comm hot water,gas,gas water heater,comm hot water,gas,gas water heater hi-eff
+comm heating,coal,coal furnace,resid heating ,coal,coal furnace
+resid cooking,gas,gas oven,resid cooking,gas,gas oven hi-eff
+resid cooking,refined liquids,lpg oven,resid cooking,refined liquids,lpg oven hi-eff

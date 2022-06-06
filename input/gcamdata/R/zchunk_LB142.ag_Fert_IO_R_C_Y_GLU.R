@@ -123,7 +123,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
       replace_na(list(Fert_Cons_MtN = 0)) %>%
       left_join_error_no_match(iso_GCAM_regID, by = "iso") %>%
       # Map in GCAM commodity, creates NA, use left_join instead of left_join_error_no_match
-      left_join(FAO_ag_items_PRODSTAT, by = "GTAP_crop") %>%
+      left_join(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity, GCAM_subsector), by = "GTAP_crop") %>%
       # Drop crops not belong to GCAM commodity
       filter(!is.na(GCAM_commodity)) %>%
       # Aggregate fertilizer demands by GCAM region, commodity, and GLU

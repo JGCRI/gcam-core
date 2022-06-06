@@ -1,29 +1,14 @@
 # File: A324.subsector_logit.csv
 # Title:  agriculture, construction, mining  default subsector logit exponents
 # Units: Unitless
-# Column types: ccic 
+# Column types: ccic
 # ----------
 supplysector,subsector,logit.exponent,logit.type
-agricultural energy use,refined liquids,-6,
-agricultural energy use,gas,-6,
-agricultural energy use,biomass,-6,
-agricultural energy use,electricity,-6,
-agricultural energy use,hydrogen,-6,
-agricultural energy use,coal,-6,
-agricultural energy use,heat,-6,
-mining energy use,refined liquids,-6,
-mining energy use,gas,-6,
-mining energy use,biomass,-6,
-mining energy use,electricity,-6,
-mining energy use,hydrogen,-6,
-mining energy use,coal,-6,
-mining energy use,heat,-6,
+agricultural energy use,stationary,-6,
+agricultural energy use,mobile,-6,
+mining energy use,stationary,-6,
+mining energy use,mobile,-6,
 construction,construction,-6,
-construction energy use,refined liquids,-6,
-construction energy use,gas,-6,
-construction energy use,biomass,-6,
-construction energy use,electricity,-6,
-construction energy use,hydrogen,-6,
-construction energy use,coal,-6,
-construction energy use,heat,-6,
+construction energy use,stationary,-6,
+construction energy use,mobile,-6,
 construction feedstocks,refined liquids,-6,

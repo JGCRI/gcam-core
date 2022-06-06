@@ -61,6 +61,10 @@ module_emissions_L253.emission_controls <- function(command, ...) {
 
   } else if(command == driver.MAKE) {
 
+    # Silencing package checks
+    . <- year <- supplysector <- MAC_region <- state <- state_name <-
+      scenario <- value <- SO2_name <- region <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -132,6 +136,15 @@ module_emissions_L253.emission_controls <- function(command, ...) {
 
     # Function that processes emission control data
     process_em_control_data <- function(em_control_data) {
+
+      # Silence package checks
+      GCAM_region <- supplysector <- region <- Non.CO2 <- SO2_name <-
+        tail <- pcGDP_start_NSPS <- NSPS_start_year <- NSPS_em_coeff <- year <- GDP <-
+        id <- retrofit_start_year <- pcGDP_start_retrofit <- subsector <-
+        stub.technology <- linear.control <- retrofit_time <- retrofit_vintage <-
+        retrofit_em_coeff <- start.year <- final.emissions.coefficient <- emiss.coef <-
+        head <- period <- end.year <- efficiency.y <- efficiency.x <- efficiency <-
+        gdp.control <- disable.em.control <- NULL
 
       # Only run if there is emission control data
       if(length(em_control_data) > 0){

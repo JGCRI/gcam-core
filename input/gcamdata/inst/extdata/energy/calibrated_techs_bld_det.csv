@@ -34,3 +34,7 @@ bld_comm,electricity,comm others,comm others,electricity,electricity,elect_td_bl
 bld_comm,gas,comm others,comm others,gas,gas,delivered gas,comm,comm,comm_building
 bld_comm,refined liquids,comm others,comm others,refined liquids,refined liquids,refined liquids enduse,comm,comm,comm_building
 bld_comm,heat,comm others,comm others,district heat,district heat,district heat,comm,comm,comm_building
+bld_comm,hydrogen,comm heating,comm heating,gas,hydrogen,H2 retail delivery,comm,comm,comm_building
+bld_comm,hydrogen,comm others,comm others,gas,hydrogen,H2 retail delivery,comm,comm,comm_building
+bld_resid,hydrogen,resid heating,resid heating,gas,hydrogen,H2 retail delivery,resid,resid,resid_building
+bld_resid,hydrogen,resid others,resid others,gas,hydrogen,H2 retail delivery,resid,resid,resid_building

@@ -1,0 +1,21 @@
+# File: MARKAL_fuel_name_code.csv
+# Title: Mapping file between MARKAL fuel code and fuel name
+# Source: NA - Mapping file
+# Comments: In B# the # is the biodiesel content. So B0 is diesel and B100 is pure biodiesel 
+# Units: NA
+# Column types: cc
+# ----------
+Fuel_name,Fuel_code
+Gasoline,GSL
+Diesel,DSL
+CNG,CNG
+Electricity,ELC
+E85 or gasoline,E10
+E85 or gasoline,E15
+E85 or gasoline,E85
+Electricity and gasoline 20mi,PH20G
+Electricity and gasoline or ethanol 20mi,PH20E
+Electricity and gasoline 40mi,PH40G
+Electricity and gasoline or ethanol 40mi,PH40E
+Biodiesel (B20),B20
+Diesel,B0

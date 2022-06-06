@@ -34,3 +34,7 @@ comm others,electricity,electricity,3000,10,50,0.95,73.68421053,0.029
 comm others,gas,gas,3000,10,100,0.6,108.3333333,0.029
 comm others,refined liquids,refined liquids,3000,10,100,0.6,100,0.029
 comm others,district heat,district heat,2000,20,50,0.9,66.66666667,0.029
+resid heating,gas,hydrogen,1650,20,50,0.8,70.1575,0.024
+resid others,gas,hydrogen,1650,10,20,0.6,50,0.029
+comm heating,gas,hydrogen,5500,25,200,0.79,211,0.024
+comm others,gas,hydrogen,3300,10,100,0.6,108.3333333,0.029

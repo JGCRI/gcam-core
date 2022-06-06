@@ -1,0 +1,12 @@
+# File: MARKAL_UCD_LDV_fuel.csv
+# Title: mapping file for MARKAL and UCD LDV fuels
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cc
+# ----------
+MARKAL_LDV_fuel,UCD_LDV_fuel
+ELC,BEV
+ELC,FCEV
+GSL,Liquids
+GSL,Hybrid Liquids
+CNG,NG

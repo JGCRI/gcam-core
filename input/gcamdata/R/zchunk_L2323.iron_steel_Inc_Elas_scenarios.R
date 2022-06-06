@@ -44,7 +44,9 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
 
     GCAM_region_ID <- value <- year <- pcgdp_90thousUSD <- scenario <-
         region <- energy.final.demand <- income.elasticity <- . <-
-      value.x <- value.y <- NULL # silence package check.
+      value.x <- value.y <- pcgdp_90thousUSD_2015 <- a <- b <- m <-
+      per_capita_steel <- population <- steel_pro <- pcgdp_90thousUSD_before <-
+      steel_pro_before <- steel_hist <- inc_elas <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 

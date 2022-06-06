@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
 #'   \code{command} is "MAKE") all the generated outputs: \code{L1321.ag_prP_R_C_75USDkg},
-#'   \code{L1321.an_prP_R_C_75USDkg}, \code{L1321.expP_R_F_75USDm3
+#'   \code{L1321.an_prP_R_C_75USDkg}, \code{L1321.expP_R_F_75USDm3}
 #' @details This chunk calculates average prices over calibration years by GCAM commodity and region. Averages across
 #'   years are unweighted; averages over FAO item are weighted by production.
 #' @importFrom assertthat assert_that
@@ -165,7 +165,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       mutate(item = "Cottonseed",
              item.code = (FAO_ag_items_TRADE %>% filter(pp_commod == 'Cottonseed'))$item.code,
              production = production * (1 - aglu.WEIGHT_COTTON_LINT))
-             
+
     L1321.ag_prod_kt_ctry_item <- bind_rows(filter(L1321.ag_prod_kt_ctry_item, item != "Seed cotton"),
                                          L1321.prod_kt_ctry_CttnLnt,
                                          L1321.prod_kt_ctry_CttnSd)

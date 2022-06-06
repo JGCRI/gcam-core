@@ -17,3 +17,5 @@ comm others,electricity,electric,0.5
 comm others,gas,gas,0.5
 comm others,refined liquids,oil,0.5
 comm others,district heat,district heat,0.5
+resid others,gas,hydrogen,0.5
+comm others,gas,hydrogen,0.5

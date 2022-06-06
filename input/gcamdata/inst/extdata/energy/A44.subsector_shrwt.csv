@@ -1,7 +1,7 @@
 # File: A44.subsector_shrwt.csv
 # Title: Building default subsector shareweights
 # Units: Unitless
-# Column types: cccci 
+# Column types: ccccn
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
 resid heating,biomass,start-year,,1

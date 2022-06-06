@@ -136,7 +136,7 @@ module_energy_L232.other_industry <- function(command, ...) {
       L232.IncomeElasticity_ind_gssp5 <- L232.IncomeElasticity_ind_ssp1 <-
       L232.IncomeElasticity_ind_ssp2 <- L232.IncomeElasticity_ind_ssp3 <-
       L232.IncomeElasticity_ind_ssp4 <- L232.IncomeElasticity_ind_ssp5 <-
-      market.name <- stub.technology <- NULL
+      market.name <- stub.technology <- year.y <- NULL
 
     # ===================================================
     # 1. Perform computations

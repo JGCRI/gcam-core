@@ -66,7 +66,10 @@ module_energy_LA144.building_det_flsp <- function(command, ...) {
     . <- `1980` <- `1990` <- `1991` <- `1992` <- `1995` <- `1996` <- `1998` <- `2001` <- `2004` <-
       GCAM_region_ID <- GCAM_sector <- gcam.consumer <- region_GCAM3 <- state <- value_bm2 <-
       value_bm2_other <- value_flsp <- value_pcdwelling <- value_pcflsp <- value_pcflsp_USA <-
-      value_phflsp <- year <- value <- iso <- country <- Variable <- Unit <- NULL
+      value_phflsp <- year <- value <- iso <- country <- Variable <- Unit <- LandNode1 <- allocation <-
+      region <- nonHab <- landAllocation <- totland <- Units <- gdp <- pop <- flps_bm2 <- area_thous_km2 <-
+      nls <- coef <- gdp_mil <- area_thouskm2 <- unadjust.satiation <- land.density.param <- tot.dens <-
+      b.param <- income.param <- pc_gdp_thous <- flsp_pc_est <- flsp_est <- NULL
 
     # FLOORSPACE CALCULATION - RESIDENTIAL
 

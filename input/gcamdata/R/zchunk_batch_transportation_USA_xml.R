@@ -39,16 +39,20 @@ module_gcamusa_batch_transportation_USA_xml <- function(command, ...) {
              "L254.StubTranTechCalInput_passthru_USA",
              "L254.BaseService_trn_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    xml_files<- c("transportation_USA_CORE.xml","transportation_USA_highEV.xml")
+    #xml_files<- c("transportation_USA_CORE.xml","transportation_USA_highEV.xml")
+    xml_files<- c("transportation_USA_CORE.xml")
     names(xml_files) <- rep("XML", length(xml_files))
     return(xml_files)
   } else if(command == driver.MAKE) {
+
+    # Silence package check notes
+    sce <- year <- . <- NULL
 
     all_data <- list(...)[[1]]
 
     ret_data <- c()
     curr_env <- environment()
-    for (i in c("CORE", "highEV")){
+    for (i in c("CORE")){
 
     xml_name <- paste0("transportation_USA_", i, ".xml")
 
@@ -67,7 +71,6 @@ module_gcamusa_batch_transportation_USA_xml <- function(command, ...) {
     L254.tranSubsectorSpeed_noVOTT_USA <- get_data(all_data, "L254.tranSubsectorSpeed_noVOTT_USA")%>% filter(sce==i)
     L254.tranSubsectorSpeed_nonmotor_USA <- get_data(all_data, "L254.tranSubsectorSpeed_nonmotor_USA")%>% filter(sce==i)
     L254.tranSubsectorVOTT_USA <- get_data(all_data, "L254.tranSubsectorVOTT_USA") %>% filter(sce==i)
-    #L254.tranSubsectorFuelPref_USA <- get_data(all_data, "L254.tranSubsectorFuelPref_USA")%>% filter(sce==i)
     L254.StubTranTech_USA <- get_data(all_data, "L254.StubTranTech_USA") %>% filter(sce==i)
     L254.StubTranTech_passthru_USA <- get_data(all_data, "L254.StubTranTech_passthru_USA") %>% filter(sce==i)
     L254.StubTranTech_nonmotor_USA <- get_data(all_data, "L254.StubTranTech_nonmotor_USA") %>% filter(sce==i)

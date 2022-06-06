@@ -8,5 +8,7 @@ N fertilizer,coal,start-year,,1
 N fertilizer,gas,start-year,,1
 N fertilizer,refined liquids,start-year,,1
 N fertilizer,refined liquids,2035,,0
+N fertilizer,hydrogen,start-year,,0
+N fertilizer,hydrogen,2050,,1
 N fertilizer,Imports,start-year,,0
 Exports_fertilizer,N fertilizer,start-year,,0

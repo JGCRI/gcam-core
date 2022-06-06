@@ -42,6 +42,9 @@ module_energy_batch_dac_xml <- function(command, ...) {
              XML = "dac_ssp5.xml"))
   } else if(command == driver.MAKE) {
 
+    # Silence package check notes
+    dac_ssp1.xml <- dac_ssp2.xml <- dac_ssp3.xml <- dac_ssp4.xml <- dac_ssp5.xml <- NULL
+
     all_data <- list(...)[[1]]
 
     for(sce in TECH_PARAMETRIZATION_INPUTS){
