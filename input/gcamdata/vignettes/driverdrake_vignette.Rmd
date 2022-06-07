@@ -248,3 +248,40 @@ See the `drake` documentation for other features. Some that may be useful with `
 
 
 
+
+## Writing csv outputs with driver_drake
+Sometimes it is useful to write out intermediate outputs to csv files. This is done for all outputs when using `driver(write_outputs = T)`, but is not necessary when using `driver_drake()` since the outputs are saved in the cache. However, if a user would still like to save these csv files, we offer a few examples of how to do this below. In all cases, we recommend running `driver_drake()` first to ensure the cache is up-to-date.
+
+### Saving one file
+If there is one file that you would like to save from the cache, you can quickly access it and save it using `load_from_cache()` and `save_chunkdata()`
+
+```{r}
+# Choose the output from the cache, which will be loaded as a list of tibbles 
+# (in this case a list of length 1)
+load_from_cache("L2072.AgCoef_BphysWater_bio_mgmt") %>%
+  save_chunkdata()
+```
+
+### Saving all outputs from a specific chunk
+To save all the outputs from one chunk, we can simply return those outputs from `driver_drake()`.
+
+```{r}
+# Here we can return all the outputs of a chunk using driver_drake
+outputs_of("module_energy_L244.building_det") %>%
+  load_from_cache() %>%
+  save_chunkdata()
+```
+
+### Saving all data system outputs
+This is not recommended, as it is not usually necessary and will be fairly slow, but is possible by returning all the necessary data names and then loading them all from cache.
+
+```{r}
+# Get the names of all outputs
+all_output_names <- driver_drake(return_plan_only = T) %>%
+  # Filter to non-xml module outputs (not from a data module)
+  dplyr::filter(grepl('^module', command),
+                grepl('^L[0-9]{3,}', target)) 
+# Load all outputs
+load_from_cache(all_output_names$target) %>%
+  save_chunkdata()
+```

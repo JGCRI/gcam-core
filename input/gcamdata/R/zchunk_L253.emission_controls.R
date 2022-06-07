@@ -156,7 +156,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
           left_join(meta_region_map, by = c("region" = "meta_region")) %>%
           filter(GCAM_region %in% dist_heat_regions$region |
                    !supplysector %in% dist_heat_regions$supplysector) %>%
-          mutate(region = ifelse(is.na(GCAM_region), region, GCAM_region)) %>%
+          mutate(region = if_else(is.na(GCAM_region), region, GCAM_region)) %>%
           semi_join(L201.nonghg_steepness,
                     by = c("region", "supplysector", "subsector", "stub.technology")) %>%
           select(-GCAM_region) -> em_control_data

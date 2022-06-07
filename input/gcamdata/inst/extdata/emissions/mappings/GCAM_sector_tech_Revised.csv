@@ -1,6 +1,7 @@
 # File: GCAM_sector_tech_Revised.csv
 # Title: Mapping between GCAM agriculture technologies to EPA aggregate sectors, aggregte fuels, EDGAR aggregate sector, RCP aggregate sector, BCOC aggregate sectore, EPA MACC sector, and IIASA sector
 # Units: None
+# Comments: The fuel column should not be taken literally for all sectors. For agriculture, transportation, and others it is used simply for matching purposes and does not represent a fuel.
 # Source: internal
 # Column types: ccccccccccccccc
 # ----------

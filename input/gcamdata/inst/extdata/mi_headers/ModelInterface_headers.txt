@@ -117,7 +117,7 @@ ReserveCalReserve, world/+{name}region, region/+{name}resource, resource/+{name}
 
 ResSubresourceProdLifetime, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+average-production-lifetime, scenario, scenario/world
 
-ResTechShrwt, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+share-weight, scenario, scenario/world
+ResTechShrwt, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+share-weight, scenario, scenario/world, period/{name=CO2}CO2
 
 ResTechCoef, world/+{name}region, region/+{name}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world
 
@@ -127,7 +127,7 @@ ResReserveTechCost, world/+{name}region, region/+{name}resource, resource/+{name
 
 ResReserveTechCoef, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, period/{name=CO2}CO2
 
-ResReserveTechLifetime, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+lifetime, scenario, scenario/world
+ResReserveTechLifetime, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+lifetime, scenario, scenario/world, period/{name=CO2}CO2
 
 ResReserveTechDeclinePhase, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+decline-phase-percent, scenario, scenario/world
 
@@ -580,6 +580,16 @@ PortfolioStdConstraint,world/+{name}region,region/+{name}policy-portfolio-standa
 PortfolioStdMinPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}min-price, scenario,scenario/world
 
 PortfolioStdMaxPrice,world/+{name}region,region/+{name}policy-portfolio-standard, policy-portfolio-standard/+{year=1975;fillout=1}max-price, scenario,scenario/world
+
+GHGConstrMkt, world/+{name}region, region/+{name}ghgpolicy, ghgpolicy/+market, scenario,scenario/world, world/region
+
+GHGConstr, world/+{name}region, region/+{name}ghgpolicy, ghgpolicy/+market, ghgpolicy/+{year}constraint, ghgpolicy/+constraint, scenario, scenario/world, world/region
+
+GHGConstrLink, world/+{name}region, region/+{name}linked-ghg-policy, linked-ghg-policy/+{year=1975;fillout=1}price-adjust, linked-ghg-policy/+{year=1975;fillout=1}demand-adjust, linked-ghg-policy/+market, linked-ghg-policy/+linked-policy, linked-ghg-policy/+price-unit, linked-ghg-policy/+output-unit, scenario, scenario/world, world/region
+
+GHGConstrLinkAdj, world/+{name}region, region/+{name}linked-ghg-policy, linked-ghg-policy/+{year;fillout=1}price-adjust, linked-ghg-policy/+price-adjust, linked-ghg-policy/+{year;fillout=1}demand-adjust, linked-ghg-policy/+demand-adjust, scenario, scenario/world, world/region
+
+GHGConstrLinkMkt, world/+{name}region, region/+{name}linked-ghg-policy, linked-ghg-policy/+market, linked-ghg-policy/+linked-policy, scenario, scenario, scenario/world, world/region
 
 #####, LAND ALLOCATOR
 

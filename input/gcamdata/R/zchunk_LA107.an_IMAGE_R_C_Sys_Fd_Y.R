@@ -176,13 +176,75 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       rename(prodVal = value) %>%
       # calculate the region, commodity, system, feed type, year IO coefficient as feed consumption/animal production
       mutate(value = feedVal / prodVal) %>%
-      select(-feedVal, -prodVal) %>%
-      # Replace NAs with a default value. This is a conservative default IO coefficient
-      # for regions without the necessary production data from which to compute one.
-      # Tends to be pastoral production in regions with zero pastoral production. If we
-      # were to allow this tech in the future (currently it is zero-shareweighted out),
-      # we'd need to have something plausible.
-      replace_na(list(value = 100)) ->
+      select(-feedVal, -prodVal) ->
+      L107.an_FeedIO_R_C_Sys_Fd_Y
+
+    # Need to fill in NAs - new method RLH 3/9/22
+    # Step 1: Extrapolate for any commodity/system/feed combos that are just missing some years
+    L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+      group_by(GCAM_region_ID, GCAM_commodity, system, feed) %>%
+      # Filter if there is an NA, but not in all years
+      filter(any(is.na(value)) & !all(is.na(value))) %>%
+      # Replace with last/first available year
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup() ->
+      L107.an_FeedIO_extrapolate
+
+    # add in extrapolated values
+    L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+      anti_join(L107.an_FeedIO_extrapolate, by = c("GCAM_region_ID", "GCAM_commodity", "year", "system", "feed")) %>%
+      bind_rows(L107.an_FeedIO_extrapolate) ->
+      L107.an_FeedIO_R_C_Sys_Fd_Y
+
+    # Step 2: For any commodity/system/feed combos that exist in other regions and in that region with a different system
+    # Replace with global average ratio of commodity/feed between systems in other regions
+    L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+      spread(system, value) %>%
+      # na.omit will remove any commodity/feeds that only exist with one system
+      na.omit() %>%
+      mutate(mixed_to_pastoral = Mixed/Pastoral) %>%
+      group_by(GCAM_commodity, year, feed) %>%
+      # mean ratio each commodity/year/system/feed
+      summarise(mixed_to_pastoral = mean(mixed_to_pastoral)) %>%
+      ungroup ->
+      L107.an_FeedIO_global_ratios
+
+    # Adjust values based on ratios
+    L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+      # Need to use right_join since there would be many NAs where only one system type existed
+      right_join(L107.an_FeedIO_global_ratios, by = c("GCAM_commodity", "year", "feed")) %>%
+      group_by(GCAM_region_ID, GCAM_commodity, year, feed) %>%
+      # Filter to values with an NA and both Mixed and Pastoral systems
+      filter(any(is.na(value)) & dplyr::n() > 1) %>%
+      mutate(value = if_else(system == "Pastoral", value[system == "Mixed"] / mixed_to_pastoral, value),
+             value = if_else(system == "Mixed", value[system == "Pastoral"]  * mixed_to_pastoral, value)) %>%
+      select(-mixed_to_pastoral) ->
+      L107.an_FeedIO_ratio_adjust
+
+    # Add in adjusted values
+    L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+      anti_join(L107.an_FeedIO_ratio_adjust, by = c("GCAM_region_ID", "GCAM_commodity", "year", "feed")) %>%
+      bind_rows(L107.an_FeedIO_ratio_adjust) ->
+      L107.an_FeedIO_R_C_Sys_Fd_Y
+
+    # Step 3: For any commodity/system/feed combos that exist in other regions
+    # Replace NAs with max from other regions in that year as a conservative estimate
+    L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+      group_by(GCAM_commodity, year, system, feed) %>%
+      # we get superfluous warnings about no non-missing arguments to max despite
+      # explicitly checking for it
+      # this is due to: https://stackoverflow.com/questions/16275149/does-ifelse-really-calculate-both-of-its-vectors-every-time-is-it-slow
+      # so in this case we can safely just suppress the warning
+      mutate(value = if_else(is.na(value) & !all(is.na(value)), suppressWarnings(max(value, na.rm = T)), value)) %>%
+      ungroup ->
+      L107.an_FeedIO_R_C_Sys_Fd_Y
+
+    # Step 4: if all NA in all region/year/commodity/system/feed, then replace with maximum for all
+    # region/year/commodity (ie replace Pork/Mixed/Pasture_FodderGrass with max Pork value)
+    L107.an_FeedIO_R_C_Sys_Fd_Y %>%
+      group_by(GCAM_commodity) %>%
+      mutate(value = if_else(is.na(value), max(value, na.rm = T), value)) %>%
+      ungroup ->
       L107.an_FeedIO_R_C_Sys_Fd_Y
 
     # Produce outputs
@@ -217,7 +279,7 @@ module_aglu_LA107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       add_title("Animal production input-output coefficients by GCAM region / commodity / system / feed type / year") %>%
       add_units("Unitless") %>%
       add_comments("GCAM-region-level feed consumption is divided by GCAM-region-level production to give") %>%
-      add_comments("GCAM-region-level IO coefficients. NA values are rewritten to 100.") %>%
+      add_comments("GCAM-region-level IO coefficients. NA values rewritten based on comparable data.") %>%
       add_legacy_name("L107.an_FeedIO_R_C_Sys_Fd_Y") %>%
       add_precursors("common/iso_GCAM_regID",
                      "L100.IMAGE_an_Prodmixfrac_ctry_C_Y",

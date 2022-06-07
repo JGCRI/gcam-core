@@ -284,8 +284,8 @@ module_energy_L2323.iron_steel <- function(command, ...) {
     L1323.IO_GJkg_R_iron_steel_F_Yh %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join(calibrated_techs, by = c("supplysector", "subsector", "technology", "fuel")) %>%
-      mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
-      mutate(stub.technology = technology,
+      mutate(coefficient = round(coefficient, energy.DIGITS_COEFFICIENT),
+             stub.technology = technology,
              market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L2323.StubTechCoef_iron_steel_tmp
@@ -301,10 +301,10 @@ module_energy_L2323.iron_steel <- function(command, ...) {
                  by = c("region", "supplysector", "subsector", "stub.technology", "minicam.energy.input", "market.name", "year")) %>%
       left_join(L2323.StubTechProd_iron_steel %>% select(-share.weight.year,-subs.share.weight,-tech.share.weight),
                 by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
-      mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR , coeff, coefficient)) %>%
-      mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & stub.technology == energy.IRON_STEEL.DEFAULT_COEF[1] , terminal_coef, coefficient)) %>%
-      mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == energy.IRON_STEEL.DEFAULT_COEF[2] , terminal_coef, coefficient)) %>%
-      mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == energy.IRON_STEEL.DEFAULT_COEF[3] , terminal_coef, coefficient)) %>%
+      mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR , coeff, coefficient),
+             coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & stub.technology == energy.IRON_STEEL.DEFAULT_COEF[1] , terminal_coef, coefficient),
+             coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == energy.IRON_STEEL.DEFAULT_COEF[2] , terminal_coef, coefficient),
+             coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == energy.IRON_STEEL.DEFAULT_COEF[3] , terminal_coef, coefficient)) %>%
       select(-terminal_coef,-coeff,-calOutputValue) %>%
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input) %>%
       mutate(coefficient = round(approx_fun(year, coefficient,rule = 2), energy.DIGITS_COEFFICIENT)) %>%

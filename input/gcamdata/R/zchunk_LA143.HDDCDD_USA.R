@@ -14,6 +14,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows distinct filter if_else group_by inner_join left_join mutate select summarise
 #' @importFrom tidyr complete nesting separate
+#' @importFrom tibble tibble
 #' @author KRD Nov 2017
 module_gcamusa_LA143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -318,7 +319,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
       left_join_error_no_match(L143.Pop_SR9_USA, by = c("subregion9", "year")) %>%
       mutate(DD = value_sR9 / pop_SR9) %>%
       select(subregion9, variable, DD) %>%
-      repeat_add_columns(tibble::tibble(year = gcamusa.AEO_DD_YEARS)) %>%
+      repeat_add_columns(tibble(year = gcamusa.AEO_DD_YEARS)) %>%
       left_join_error_no_match(AEO_2015_HDDCDD %>%
                   gather_years("value_AEO") %>%
                   filter(year %in% gcamusa.AEO_DD_YEARS,
@@ -353,7 +354,7 @@ module_gcamusa_LA143.HDDCDD <- function(command, ...) {
     L143.HDDCDD_AEO_AEO_years %>%
       filter(year == max(gcamusa.AEO_DD_YEARS)) %>%
       distinct(state, subregion9, variable, value) %>%
-      repeat_add_columns(tibble::tibble(year = FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = FUTURE_YEARS)) %>%
       filter(year > max(gcamusa.AEO_DD_YEARS)) -> L143.HDDCDD_AEO_postAEO_years
 
     # bind new AEO scenario into L143.HDDCDD_scen_state

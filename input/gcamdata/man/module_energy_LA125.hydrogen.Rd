@@ -26,5 +26,5 @@ Takes inputs from H2A and generates GCAM's assumptions by technology and year
 GPK/JF/PW July 2021
 
 
-# Notes: 1) NREL H2A v2018 did not include the following H2 production technologies:
+# Note:  NREL H2A v2018 did not include the following H2 production technologies:
 }

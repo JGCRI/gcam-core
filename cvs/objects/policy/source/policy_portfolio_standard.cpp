@@ -223,20 +223,3 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
     }
 }
 
-/*!
- * \brief Perform any initializations that need to occur prior to attempting to solve
- *        aPeriod.
- * \param aRegionName The name of the containing region.
- * \param aPeriod The current model period about to begin.
- */
-void PolicyPortfolioStandard::initCalc( const string& aRegionName, const int aPeriod ) {
-}
-
-/*!
- * \brief Perform any computations after a model period has found a solution.
- * \param aRegionName The name of the containing region.
- * \param aPeriod The current model period which just finished.
- */
-void PolicyPortfolioStandard::postCalc( const string& aRegionName, const int aPeriod ) {
-}
-

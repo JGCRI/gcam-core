@@ -505,11 +505,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
 
     #kbn 2020 bind using rbindlist to increase processing speed. A separate PR submitted on github to functionalize this for future use.
-    list_for_bind=list ((ALL_ctry_var %>%  filter(sce=="CORE")), (ALL_ctry_var_SSPS) )
+    list_for_bind <- list((ALL_ctry_var %>%  filter(sce=="CORE")), (ALL_ctry_var_SSPS))
     ALL_ctry_var <- rbindlist(list_for_bind, use.names=TRUE)
 
 
-    size_class<-(paste(energy.TRAN_UCD_SIZE_CLASS,".x",sep=""))
+    size_class <- (paste(energy.TRAN_UCD_SIZE_CLASS,".x",sep=""))
     ALL_region_var <- ALL_ctry_var %>%
       mutate(Tvkm = weight_EJ / intensity,
              Tpkm = Tvkm * `load factor`,

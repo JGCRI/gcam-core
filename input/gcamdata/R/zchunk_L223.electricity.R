@@ -79,6 +79,7 @@ module_energy_L223.electricity <- function(command, ...) {
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L223.Supplysector_elec",
              "L223.ElecReserve",
+             "L223.SectorUseTrialMarket_elec",
              "L223.SubsectorLogit_elec",
              "L223.SubsectorShrwt_elec",
              "L223.SubsectorShrwtFllt_elec",
@@ -197,6 +198,11 @@ module_energy_L223.electricity <- function(command, ...) {
 
     # Write electricity reserve margin and average grid capacity factor assumptions to all regions in L223.ElecReserve
     L223.ElecReserve <- write_to_all_regions(A23.sector, LEVEL2_DATA_NAMES[["ElecReserve"]], GCAM_region_names)
+
+    # Create a trial market to help with simultaneities related to electricity
+    L223.SectorUseTrialMarket_elec <- filter(L223.Supplysector_elec, supplysector == "electricity") %>%
+      select(region, supplysector) %>%
+      mutate(use.trial.market = 1)
 
     # =========================
     # 2b. Subsector Information
@@ -875,7 +881,7 @@ module_energy_L223.electricity <- function(command, ...) {
       group_by(GCAM_region_ID, sector, fuel) %>%
       mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
-      filter(year %in% MODEL_FUTURE_YEARS[!MODEL_FUTURE_YEARS %in% HISTORICAL_YEARS]) %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       # append region names
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L223.StubTechFixOut_hydro
@@ -1056,6 +1062,13 @@ module_energy_L223.electricity <- function(command, ...) {
       add_legacy_name("L223.ElecReserve") %>%
       add_precursors("common/GCAM_region_names", "energy/A23.sector") ->
       L223.ElecReserve
+
+    L223.SectorUseTrialMarket_elec %>%
+      add_title("Electricity trial markets") %>%
+      add_units("unitless") %>%
+      add_comments("Trial market in the electricity sector helps the model solve the simultaneities associated with electricity") %>%
+      same_precursors_as(L223.Supplysector_elec) ->
+      L223.SectorUseTrialMarket_elec
 
     L223.SubsectorLogit_elec %>%
       add_title("Subsector logit exponents of energy transformation sectors") %>%
@@ -1430,7 +1443,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_units("Exajoules/year") %>%
       add_comments("Interpolated from historical year calibrated outputs and filtered list to technologies with a fixed output. By default, this is hydropower.") %>%
       add_legacy_name("L223.StubTechFixOut_elec") %>%
-      add_precursors("common/GCAM_region_names", "energy/calibrated_techs", "L1231.in_EJ_R_elec_F_tech_Yh") ->
+      add_precursors("common/GCAM_region_names", "energy/calibrated_techs", "L1231.out_EJ_R_elec_F_tech_Yh") ->
       L223.StubTechFixOut_elec
 
     L223.StubTechFixOut_hydro %>%
@@ -1582,7 +1595,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_precursors("L113.globaltech_capital_ATB_low") ->
       L223.GlobalTechCapital_bio_low
 
-    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec,
+    return_data(L223.Supplysector_elec, L223.ElecReserve, L223.SectorUseTrialMarket_elec, L223.SubsectorLogit_elec, L223.SubsectorShrwt_elec,
      L223.SubsectorShrwtFllt_elec, L223.SubsectorShrwt_coal, L223.SubsectorShrwt_nuc, L223.SubsectorShrwt_renew,
       L223.SubsectorInterp_elec, L223.SubsectorInterpTo_elec, L223.StubTech_elec,
       L223.GlobalIntTechEff_elec, L223.GlobalTechEff_elec, L223.GlobalTechCapFac_elec,

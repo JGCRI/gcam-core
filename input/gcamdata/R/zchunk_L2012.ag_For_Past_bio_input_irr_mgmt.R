@@ -46,7 +46,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              "L2012.AgHAtoCL_irr_mgmt",
              "L2012.AgYield_bio_ref",
              "L201.AgYield_bio_grass",
-             "L201.AgYield_bio_tree"))
+             "L201.AgYield_bio_tree",
+             "L2012.AgTechYr_Past"))
   } else if(command == driver.MAKE) {
 
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
@@ -356,6 +357,15 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       select(-GLU_name) ->
       L201.AgYield_bio_grass
 
+    # Write out the all years and CO2 object for Pasture AgProductionTechnologies
+    L2012.AgProduction_For_Past %>%
+      filter(AgSupplySector %in% L123.ag_Prod_Mt_R_Past_Y_GLU$GCAM_commodity) %>%
+      select(LEVEL2_DATA_NAMES[["AgTech"]]) %>%
+      distinct() %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      select(LEVEL2_DATA_NAMES[["AgTechYr"]]) ->
+      L2012.AgTechYr_Past
+
     # Produce outputs
     L2012.AgSupplySector %>%
       add_title("Generic information for agriculture supply sectors") %>%
@@ -466,7 +476,15 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       same_precursors_as("L2012.AgSupplySubsector") ->
       L201.AgYield_bio_tree
 
-    return_data(L2012.AgSupplySector, L2012.AgSupplySubsector, L2012.AgProduction_ag_irr_mgmt, L2012.AgProduction_For, L2012.AgProduction_Past, L2012.AgHAtoCL_irr_mgmt, L2012.AgYield_bio_ref, L201.AgYield_bio_grass, L201.AgYield_bio_tree)
+    L2012.AgTechYr_Past %>%
+      add_title("Pasture technologies written to all years") %>%
+      add_units("Unitless") %>%
+      add_comments("This is necessary for the input XML to have the CO2 object written out") %>%
+      same_precursors_as("L2012.AgProduction_For_Past") ->
+      L2012.AgTechYr_Past
+
+
+    return_data(L2012.AgSupplySector, L2012.AgSupplySubsector, L2012.AgProduction_ag_irr_mgmt, L2012.AgProduction_For, L2012.AgProduction_Past, L2012.AgHAtoCL_irr_mgmt, L2012.AgYield_bio_ref, L201.AgYield_bio_grass, L201.AgYield_bio_tree, L2012.AgTechYr_Past)
   } else {
     stop("Unknown command")
   }

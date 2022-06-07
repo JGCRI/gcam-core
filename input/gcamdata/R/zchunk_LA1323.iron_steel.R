@@ -93,7 +93,7 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
     L1323.out_Mt_R_iron_steel_Yh %>%
       rename(output = value) %>%
       left_join(steel_intensity %>% select(-subsector), by = c("subsector"="technology")) %>%
-      dplyr::mutate(value = value * CONV_GJ_EJ / CONV_T_MT,
+      mutate(value = value * CONV_GJ_EJ / CONV_T_MT,
                     energy_use = output * value,
                     unit = "EJ") ->
       Intensity_literature
@@ -104,15 +104,15 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
       dplyr::summarise(energy_use = sum(energy_use)) %>%
       ungroup() %>%
       left_join(en_steel %>% select(GCAM_region_ID, year, fuel, value),by = c("GCAM_region_ID","fuel",  "year")) %>%
-      dplyr::mutate(value = replace_na(value,0),
-                    scalar = replace_na(value / energy_use, 1)) %>%
-      dplyr::mutate(scalar = if_else(energy_use == 0 & value > 0, 1, scalar))->
+      mutate(value = replace_na(value,0),
+             scalar = replace_na(value / energy_use, 1),
+             scalar = if_else(energy_use == 0 & value > 0, 1, scalar)) ->
       Scaler
 
     # Intensity scaled = Intensity from the literature times scaler.
     Intensity_literature %>%
       left_join(Scaler %>% select(GCAM_region_ID, year, fuel, scalar),by = c("GCAM_region_ID", "fuel", "year")) %>%
-      dplyr::mutate(coefficient = value * scalar) %>%
+      mutate(coefficient = value * scalar) %>%
       select(GCAM_region_ID, year, subsector, fuel, coefficient, Unit) ->
       Intensity_scaled
 
@@ -145,8 +145,8 @@ module_energy_LA1323.iron_steel <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value,0)) %>%
-      mutate(value = raw - value , raw = NULL) ->
+      mutate(value = replace_na(value,0),
+             value = raw - value , raw = NULL) ->
       L1323.in_EJ_R_indenergy_F_Yh_tmp
 
     L1323.in_EJ_R_indenergy_F_Yh_tmp %>%

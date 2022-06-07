@@ -21,6 +21,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select mutate_all
 #' @importFrom tidyr gather spread
+#' @importFrom tibble tibble
 #' @author CWR Oct. 2018 , YO Mar. 2020, KBN 2020
 module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -764,7 +765,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       rename(production = value) %>%
       left_join(GCAM_sector_tech, by = c("GCAM_commodity" = "sector", "system" = "fuel", "feed" = "technology")) %>%
       select(GCAM_region_ID, GCAM_commodity, system, feed, year, production, EPA_agg_sector, EDGAR_agg_sector) %>%
-      repeat_add_columns(tibble::tibble(Non.CO2 = unique(L112.CEDS_GCAM_An$Non.CO2))) %>%  # Add Gas Name and AGR for agriculture
+      repeat_add_columns(tibble(Non.CO2 = unique(L112.CEDS_GCAM_An$Non.CO2))) %>%  # Add Gas Name and AGR for agriculture
       # match in emissions factors, using left_join and dropping fuel column
       left_join(L103.ghg_tgmt_USA_an_Sepa_F_2005, by = c("EPA_agg_sector" = "sector")) %>%
       mutate(epa_emissions = production * ch4_em_factor) %>%  # compute unscaled emissions
@@ -950,7 +951,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
     # Add gas name to AWB production shares to prepare for matching with emissions
     L112.AWBshare_R_C_GLU %>%
-      repeat_add_columns(tibble::tibble(`Non.CO2` = unique(L112.CEDS_GCAM_awb$Non.CO2))) ->
+      repeat_add_columns(tibble(`Non.CO2` = unique(L112.CEDS_GCAM_awb$Non.CO2))) ->
       L112.nonco2_tg_R_awb_C_Y_GLU
 
     # Estimate ag waste burning emissions using the estimated share (fraction) times total regional AWB emissions
@@ -1163,7 +1164,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       ungroup() %>%
       select(GCAM_region_ID, Land_Type, year,value) %>%
       distinct() %>% # aggregate grassland land area by regions/land type
-      repeat_add_columns(tibble::tibble(Non.CO2 = unique(L124.bcoc_tg_R_grass_Y_GLU$Non.CO2))) %>%
+      repeat_add_columns(tibble(Non.CO2 = unique(L124.bcoc_tg_R_grass_Y_GLU$Non.CO2))) %>%
       filter(year %in% c(L124.bcoc_tg_R_grass_Y_GLU$year)) %>% # repeat for both BC and OC
       inner_join(L124.bcoc_tg_R_grass_Y_GLU %>% rename(em=value) %>% filter(year %in% c(L124.LC_bm2_R_Grass_Yh_GLU_adj$year)), by = c("GCAM_region_ID", "Non.CO2","year","Land_Type")) %>% # add emissions to land region area
       mutate(em_factor = em / value) %>% # calculate emission factor (emissions/area)

@@ -61,7 +61,6 @@
 class Demographic;
 class Sector;
 class GHGPolicy;
-class PolicyPortfolioStandard;
 class Curve;
 class AResource;
 class IInfo;
@@ -117,10 +116,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "sector", mSupplySector, std::vector<Sector*> ),
         
         /*! \brief vector of pointers to ghg market objects, container for constraints and emissions */
-        DEFINE_VARIABLE( CONTAINER, "ghg-policies", mGhgPolicies, std::vector<GHGPolicy*> ),
-        
-        /*! \brief vector of pointers to portfolio standard market objects, container for constraints */
-        DEFINE_VARIABLE( CONTAINER, "policies", mPolicies, std::vector<PolicyPortfolioStandard*> ),
+        DEFINE_VARIABLE( CONTAINER, "policies", mGhgPolicies, std::vector<GHGPolicy*> ),
         
         /*! \brief vector of pointers to resource objects */
         DEFINE_VARIABLE( CONTAINER, "resource", mResources, std::vector<AResource*> ),

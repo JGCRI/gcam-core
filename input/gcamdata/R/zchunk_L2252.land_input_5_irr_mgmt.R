@@ -33,6 +33,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter full_join if_else group_by left_join mutate select semi_join summarize
 #' @importFrom tidyr replace_na separate
+#' @importFrom tibble tibble
 #' @author ACS September 2017
 module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -191,7 +192,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # L2252.LN5_Logit: Logit exponent between lo and hi managed techs for each crop-irrigation type combo
     # ie competition between Corn_IRR_hi and Corn_Irr_lo.
     L2242.LN4_Logit %>%
-      repeat_add_columns(tibble::tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(Irr_Rfd = c("IRR", "RFD"))) %>%
       mutate(LandNode5 = paste(LandNode4, Irr_Rfd, sep = aglu.IRR_DELIMITER),
              logit.exponent = aglu.MGMT_LOGIT_EXP,
              logit.type = aglu.MGMT_LOGIT_TYPE) %>%
@@ -215,7 +216,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L2252.LN5_Logit %>%
       rename(LandLeaf = LandNode5) %>%
       select(-logit.year.fillout, -logit.exponent, -logit.type) %>%
-      repeat_add_columns(tibble::tibble(year = aglu.LAND_COVER_YEARS)) %>%
+      repeat_add_columns(tibble(year = aglu.LAND_COVER_YEARS)) %>%
       mutate(allocation = -1) %>%
       convert_LN4_to_LN5(names = LEVEL2_DATA_NAMES[["LN5_HistMgdAllocation"]]) %>%
       select(-allocation) %>%

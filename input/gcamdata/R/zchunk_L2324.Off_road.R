@@ -341,8 +341,8 @@ module_energy_L2324.Off_road <- function(command, ...) {
     L2324.Off_road_tmp %>%
       left_join(L2324.StubTechCalInput_Off_road_tmp,
                 by = c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input")) %>%
-      mutate(fuel = NULL,sector = NULL, value = NULL,GCAM_region_ID  = NULL,calibrated.value = replace_na(calibrated.value,0)) %>%
-      mutate(share.weight.year = year,
+      mutate(fuel = NULL,sector = NULL, value = NULL,GCAM_region_ID  = NULL,calibrated.value = replace_na(calibrated.value,0),
+             share.weight.year = year,
              tech.share.weight = if_else(calibrated.value > 0, 1, 0)) %>%
       set_subsector_shrwt(value_col = "calibrated.value") %>%
       filter(!(region %in% L2324.rm_heat_techs_R$region & stub.technology == 'heat')) %>% #remove heat technology from regions that have no distict heat

@@ -14,7 +14,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L102.ceds_nonco2_tg_R_S_F}, \code{L102.ceds_int_shipping_nonco2_tg_S_F}.
+the generated outputs: \code{L102.ceds_nonco2_tg_R_S_F}, \code{L102.ceds_GFED_nonco2_tg_C_S_F}, \code{L102.ceds_int_shipping_nonco2_tg_S_F}.
 }
 \description{
 Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels and aggregates to GCAM regions. Note that the outputs of this chunk are a part of the prebuilt data.

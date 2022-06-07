@@ -335,7 +335,17 @@ module_gcamusa_L271.nonghg_trn_USA <- function(command, ...) {
 
     invisible(lapply(X = as.list(prediction_table$id), FUN = function(X){
 
-      prediction_table[prediction_table$id == X, "final.emissions.coefficient"]  <<- predict.lm(model_rslt[[X]], newdata = prediction_table[prediction_table$id == X, ])
+      curr_predict_id <- prediction_table$id == X
+      num_degrades_entries <- sum(degrades$id == X)
+
+      if(num_degrades_entries == 0) {
+        stop("Error: There are 0 entries for this ID.")
+      } else if(num_degrades_entries == 1) {
+        # Some IDs only have a single entry. In this case, we want to assign the final emissions coefficient to what it is in the degrades table.
+        prediction_table[curr_predict_id, "final.emissions.coefficient"] <<- degrades[degrades$id == X, "value", drop = TRUE]
+      } else {
+        prediction_table[curr_predict_id, "final.emissions.coefficient"]  <<- predict.lm(model_rslt[[X]], newdata = prediction_table[curr_predict_id, ])
+      }
 
     }))
 

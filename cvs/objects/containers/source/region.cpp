@@ -81,8 +81,6 @@ typedef std::vector<Sector*>::iterator SectorIterator;
 typedef std::vector<Sector*>::const_iterator CSectorIterator;
 typedef std::vector<GHGPolicy*>::iterator GHGPolicyIterator;
 typedef std::vector<GHGPolicy*>::const_iterator CGHGPolicyIterator;
-typedef std::vector<PolicyPortfolioStandard*>::iterator PolicyIterator;
-typedef std::vector<PolicyPortfolioStandard*>::const_iterator CPolicyIterator;
 typedef std::vector<AResource*>::iterator ResourceIterator;
 typedef std::vector<AResource*>::const_iterator CResourceIterator;
 
@@ -105,10 +103,6 @@ void Region::clear(){
     }
 
     for( GHGPolicyIterator policyIter = mGhgPolicies.begin(); policyIter != mGhgPolicies.end(); ++policyIter ){
-        delete *policyIter;
-    }
-
-    for( PolicyIterator policyIter = mPolicies.begin(); policyIter != mPolicies.end(); ++policyIter ){
         delete *policyIter;
     }
     
@@ -151,16 +145,6 @@ void Region::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     for( CSectorIterator j = mSupplySector.begin(); j != mSupplySector.end(); j++ ){
         ( *j )->toDebugXML( period, out, tabs );
     }
-
-    // write out mGhgPolicies objects.
-    for( CGHGPolicyIterator currPolicy = mGhgPolicies.begin(); currPolicy != mGhgPolicies.end(); ++currPolicy ){
-        (*currPolicy)->toDebugXML( period, out, tabs );
-    }
-
-    // write out mPolicies objects.
-    for( CPolicyIterator currPolicy = mPolicies.begin(); currPolicy != mPolicies.end(); ++currPolicy ){
-        (*currPolicy)->toDebugXML( period, out, tabs );
-    }
     
     // write out the resources objects.
     for( CResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
@@ -199,9 +183,6 @@ void Region::completeInit() {
     for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
         (*ghgPolicy)->completeInit( mName );
     }
-    for( PolicyIterator policy = mPolicies.begin(); policy != mPolicies.end(); ++policy ){
-        (*policy)->completeInit( mName );
-    }
     for( ResourceIterator resourceIter = mResources.begin(); resourceIter != mResources.end(); ++resourceIter ) {
         (*resourceIter)->completeInit( mName, mRegionInfo );
     }
@@ -212,9 +193,6 @@ void Region::completeInit() {
  * \param aPeriod The model period about to begin.
  */
 void Region::initCalc( const int aPeriod ) {
-    for( auto currPolicy : mPolicies ) {
-        currPolicy->initCalc( mName, aPeriod );
-    }
 }
 
 /*! \brief Function to finalize objects after a period is solved.
@@ -232,9 +210,6 @@ void Region::postCalc( const int aPeriod ){
     // Post calculation for resource sectors
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
         (*currResource)->postCalc( mName, aPeriod );
-    }
-    for( auto currPolicy : mPolicies ) {
-        currPolicy->postCalc( mName, aPeriod );
     }
 }
 

@@ -429,7 +429,7 @@ reduce_mgd_carbon <- function( data, LTfor = "Forest", LTpast = "Pasture") {
 #' @return A character vector of region names belonging to the specified income group.
 #' @importFrom dplyr filter mutate select
 get_ssp_regions <- function(pcGDP, reg_names, income_group,
-                            ssp_filter = "SSP4", year_filter = 2010) {
+                            ssp_filter = "SSP4", year_filter = aglu.PCGDP_YEAR) {
   assert_that(is_tibble(pcGDP))
   assert_that(is_tibble(reg_names))
   assert_that(is.character(income_group))

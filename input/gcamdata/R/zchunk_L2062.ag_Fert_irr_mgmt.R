@@ -16,6 +16,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else left_join mutate select
 #' @importFrom tidyr replace_na
+#' @importFrom tibble tibble
 #' @author KVC June 2017
 module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -54,8 +55,8 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(basin_to_country_mapping[ c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
 
       # Copy coefficients to all four technologies
-      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
 
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
@@ -74,7 +75,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       bind_rows(L2062.AgCoef_Fert_ag_irr_mgmt) %>%
       filter(coefficient > 0) ->
       L2062.AgCoef_Fert_ag_irr_mgmt

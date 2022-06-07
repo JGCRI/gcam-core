@@ -233,13 +233,13 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     L243.SubsectorShrwt_TotBio %>%
       filter(region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low"),
              subsector == "imported biomass") %>%
-      mutate(share.weight = if_else(year >= 2025, 0.1, share.weight)) ->
+      mutate(share.weight = if_else(year >= aglu.BIO_TRADE_SSP4_YEAR_FILLOUT, 0.1, share.weight)) ->
       L243.SubsectorShrwt_TotBio_SSP4_lo
 
     L243.SubsectorShrwtFllt_TradedBio %>%
       mutate(trade.region = gsub(" traded biomass", "", subsector)) %>%
       filter(trade.region %in% get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low")) %>%
-      mutate(year.fillout = 2025, share.weight = 0.1) %>%
+      mutate(year.fillout = aglu.BIO_TRADE_SSP4_YEAR_FILLOUT, share.weight = 0.1) %>%
       select(-trade.region) ->
       L243.SubsectorShrwtFllt_TradedBio_SSP4
 
@@ -251,7 +251,7 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
       filter(region %in% c(get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "high"),
                           get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "medium")),
              subsector == "imported biomass") %>%
-      mutate(share.weight = if_else(year >= 2025, 0.5, share.weight)) ->
+      mutate(share.weight = if_else(year >= aglu.BIO_TRADE_SSP4_YEAR_FILLOUT, 0.5, share.weight)) ->
       L243.SubsectorShrwt_TotBio_SSP4_hi
 
     # Bind SSP4 share weights for all regions into single data frames
@@ -263,11 +263,11 @@ module_aglu_L243.bio_trade_input <- function(command, ...) {
     # See Calvin et al. (2017) for documentation. https://doi.org/10.1016/j.gloenvcha.2016.06.010
     L243.SubsectorShrwt_TotBio %>%
       filter(subsector == "imported biomass") %>%
-      mutate(share.weight = if_else(year >= 2025, 0.1,  share.weight)) ->
+      mutate(share.weight = if_else(year >= aglu.BIO_TRADE_SSP4_YEAR_FILLOUT, 0.1,  share.weight)) ->
       L243.SubsectorShrwt_TotBio_SSP3
 
     L243.StubTechShrwt_TotBio %>%
-      filter(subsector == "imported biomass", year > 2020) %>%
+      filter(subsector == "imported biomass", year >= aglu.BIO_TRADE_SSP3_YEAR_FILLOUT) %>%
       mutate(share.weight = 0.1) ->
       L243.StubTechShrwt_TotBio_SSP3
 

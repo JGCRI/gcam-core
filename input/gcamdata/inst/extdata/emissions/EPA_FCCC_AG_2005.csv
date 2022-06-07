@@ -1,6 +1,7 @@
 # File: EPA_FCCC_AG_2005.csv
 # Title: EPA USA GHG emissions inventory for agriculture, 2005
 # Units: Gg
+# Source: USA National Inventory Submission - Common Reporting Format - Table 4s2 - https://unfccc.int/files/national_reports/annex_i_ghg_inventories/national_inventories_submissions/application/x-zip-compressed/usa_2007_crf_11apr.zip
 # Column types: ccnnnnc 
 # ----------
 Source_Category_Raw,Source_Category,CH4,N2O,NOx,CO,NMVOC

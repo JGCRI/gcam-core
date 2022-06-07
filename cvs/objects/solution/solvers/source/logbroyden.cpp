@@ -255,12 +255,15 @@ SolverComponent::ReturnCode LogBroyden::solve(SolutionInfoSet &solnset, int peri
     fdjac(F, x, fx, J, allCols, true);
 
     solverLog << ">>>> Main loop jacobian called.\n";
+    UBVECTOR x_Backup(x);
     int pcfail = jacobian_precondition(x, fx, J, F, &solverLog, mLogPricep);
 
     if( pcfail ) {
       solverLog.setLevel(ILogger::WARNING);
       solverLog << "Unable to find nonsingular initial guess for one or more markets.  bsolve() will probably fail.\n";
       solverLog.setLevel(ILogger::DEBUG);
+        x = x_Backup;
+        F(x,fx);
     }
     else {
       solverLog << "Revised guess:\n" << x << "\nRevised F( x ):\n" << fx << "\n";
@@ -494,7 +497,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           dxmag = sqrt(dx.dot(dx));
           solverLog << " new dxmag: " << dxmag << std::endl;
       }
-      else if(dxmag > 1000.0) {
+      /*else if(dxmag > 1000.0) {
           // potentially unreliable result, let's put a little more effort
           // in with full pivot LU to hopefully get a more accurate solution
           solverLog << "Attempting full pivot LU instead, old dxmag: " << dxmag;
@@ -503,7 +506,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           dx = luFullPiv.solve(-1.0 * fx);
           dxmag = sqrt(dx.dot(dx));
           solverLog << " new dxmag: " << dxmag << std::endl;
-      }
+      }*/
 
     // log the proposal step
     solverLog << "Proposal step magnitude dxmag= " << sqrt(dx.dot(dx)) << "\n\n";

@@ -448,6 +448,11 @@ generate_level2_data_names <- function() {
   level2_data_names[["PortfolioStdConstraint"]] <- c("region", "policy.portfolio.standard", "market", "policyType", "year", "constraint")
   level2_data_names[["PortfolioStdMinPrice"]] <- c("region", "policy.portfolio.standard", "min.price")
   level2_data_names[["PortfolioStdMaxPrice"]] <- c("region", "policy.portfolio.standard", "max.price")
+  level2_data_names[["GHGConstrMkt"]] <- c("region", "ghgpolicy", "market")
+  level2_data_names[["GHGConstr"]] <- c("region", "ghgpolicy", "market", "constraint.year", "constraint")
+  level2_data_names[["GHGConstrLink"]] <- c("region", "linked.ghg.policy", "price.adjust", "demand.adjust", "market", "linked.policy", "price.unit", "output.unit")
+  level2_data_names[["GHGConstrLinkAdj"]] <- c("region", "linked.ghg.policy", "price.adjust.year.fillout", "price.adjust",  "demand.adjust.year.fillout", "demand.adjust")
+  level2_data_names[["GHGConstrLinkMkt"]] <- c("region", "linked.ghg.policy", "market", "linked.policy")
 
   level2_data_names
 }

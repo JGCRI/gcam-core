@@ -219,9 +219,9 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
       }
       else {
         # raw CEDS datasets not available, so we will use the prebuilt version
-        L102.ceds_GFED_nonco2_tg_R_S_F <- prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
-        L102.ceds_GFED_nonco2_tg_C_S_F <- prebuilt_data("L102.ceds_GFED_nonco2_tg_C_S_F")
-        L102.ceds_int_shipping_nonco2_tg_S_F <- prebuilt_data("L102.ceds_int_shipping_nonco2_tg_S_F")
+        L102.ceds_GFED_nonco2_tg_R_S_F <- extract_prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
+        L102.ceds_GFED_nonco2_tg_C_S_F <- extract_prebuilt_data("L102.ceds_GFED_nonco2_tg_C_S_F")
+        L102.ceds_int_shipping_nonco2_tg_S_F <- extract_prebuilt_data("L102.ceds_int_shipping_nonco2_tg_S_F")
       }
 
       return_data(L102.ceds_GFED_nonco2_tg_R_S_F, L102.ceds_GFED_nonco2_tg_C_S_F, L102.ceds_int_shipping_nonco2_tg_S_F)
