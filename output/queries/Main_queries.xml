@@ -4419,6 +4419,8 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                         <rewrite from="resid others" to="buildings"/>
                         <rewrite from="unconventional oil production" to="industry"/>
                         <rewrite from="resid cooling" to="buildings"/>
+                        <rewrite from="other industry" to="industry"/>
+                        <rewrite from="municipal water" to="industry"/>
                     </level>
                 </labelRewriteList>
             </supplyDemandQuery>
