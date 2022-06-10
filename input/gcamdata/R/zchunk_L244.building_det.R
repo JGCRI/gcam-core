@@ -1188,6 +1188,20 @@ module_energy_L244.building_det <- function(command, ...) {
         semi_join(L244.Tech_bld, by = c("region", "supplysector", "subsector"))
     }
 
+    # Adjust interpolation rule to promote electricity penetration in China
+    L244.SubsectorInterp_bld<-L244.SubsectorInterp_bld %>%
+      mutate(to.value = 1) %>%
+      mutate(interpolation.function = if_else(grepl("resid heating modern", supplysector) &
+                                              region == "China" &
+                                              subsector %in% c("electricity"),
+                                              "linear", interpolation.function),
+             to.year = if_else(grepl("resid heating modern", supplysector) &
+                                                region == "China" &
+                                                subsector %in% c("electricity"),
+                                                2050, to.year)) %>%
+      select(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]])
+
+
     # L244.FuelPrefElast_bld: Fuel preference elasticities for buildings
     L244.FuelPrefElast_bld <- A44.fuelprefElasticity %>%
       mutate(year.fillout = min(MODEL_BASE_YEARS)) %>%
