@@ -1,0 +1,98 @@
+# File: CEDS_to_GCAM_sector_mapping.csv
+# Title: mapping file for CEDS extended sectors and GCAM sectors
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cccccc
+# ----------
+CEDS_sector_code,CEDS_Sector,IPCC_sector_code,IPCC_sector_description,GCAM_sector,Notes
+11C,11C_Other-natural,,,,Not used in GCAM
+1A1a,1A1a_Public-Electricity,1A1a,Public electricity and heat production,elec_heat,
+1A1b,1A1b_Pet-refining,,,petroleum_refining,Calibrate GCAM-USA refining to use petroleum refining emissions new petroleum refining tag
+1A1c,1A1c_Coke-ovens,,,industry_energy,
+1A1g,1A1g_Other-energy-transf,,,industry_energy,
+1A2,1A2a_Ind-Comb,,,industry_energy,"This is CHP, maybe use someday"
+1A2,1A2_Industrial_fuel_comb_off_hwy,,,industry_energy,
+1A2,1A2_Industrial_fuel_combustion,1A1bc,Other Energy Industries,industry_energy,
+1A2c,1A2c_Chemicals,,,industry_energy,
+1A2f,1A2f_Ind-Comb-Non-metalic-minerals,,,industry_energy,
+1A2g,1A2g_Construction_and_Mining,1A2,Manufacturing Industries and Construction,industry_energy,
+1A2g,1A2g_Industry-other,1A2,Manufacturing Industries and Construction,industry_energy,
+1A3aii,1A3aii_Domestic-aviation,1A3a,Domestic aviation,trn_domestic air,
+1A3b,1A3b_Road-noncomb,,,,Not used in GCAM- PM from tires; map to road transport according to fuel use
+1A3bi,1A3bi_Road,,,Road,This is an aggregate CEDS sector created for GCAM-USA processing
+1A3bii,1A3bii_Road-LDV,1A3b,Road transportation,Road-LDV,
+1A3bii,1A3bii_Road-truck-Light-Commertial,1A3b,Road transportation,Road-truck-Light-Commertial,
+1A3biii,1A3biii_Road-bus,1A3b,Road transportation,Road-bus,
+1A3biii,1A3biii_Road-heavy-duty-trucks-buses,,,Road-truck-Long-haul,
+1A3biii,1A3biii_Road-truck-heavy,,,Road-truck-Long-haul,
+1A3biii,1A3biii_Road-truck-Long-haul,1A3b,Road transportation,Road-truck-Long-haul,
+1A3biii,1A3biii_Road-truck-medium,,,Road-truck-Short-haul,
+1A3biii,1A3biii_Road-truck-medium-heavy,,,Road-truck-Long-haul,
+1A3biii,1A3biii_Road-truck-Short-haul,1A3b,Road transportation,Road-truck-Short-haul,
+1A3biv,1A3biv_Road-mopeds-motorcycles,,,Road-LDV,Might need to add a category
+1A3c,1A3c_Rail,1A3c,Rail transportation,trn_rail,
+1A3dii,1A3dii_Domestic-navigation (shipping),1A3d,Inland navigation,trn_domestic ship,
+1A3eii,1A3eii_Other-unspecified-transp,,,,Just PM- map to road transport according to fuel use
+1A4ai,1A4ai_Commercial-institutional-stationary,1A4,Residential and other sectors,building_comm,
+1A4aii,1A4aii_Commercial-institutional-mobile,,,industry_energy,
+1A4bi,1A4bi_Residential-mobile,,,industry_energy,
+1A4bi,1A4bi_Residential-stationary,1A4,Residential and other sectors,building_resid,
+1A4c,1A4c_Agriculture-forestry-fishing,1A4,Residential and other sectors,industry_energy,
+1A5,1A5_Recreational-Equipment-Land,1A4,Residential and other sectors,industry_energy,
+1A5,1A5_Recreational-Equipment-Marine,1A4,Residential and other sectors,industry_energy,
+1B2ai,1B2ai_Fugitive-petr-prod,1B2,Fugitive emissions from oil and gas,petroleum_production,
+1B2aiv,1B2aiv_Fugitive-petr-refining,1B2,Fugitive emissions from oil and gas,petroleum_refining,
+1B2av,1B2av_Fugitive-petr-distr,1B2,Fugitive emissions from oil and gas,petroleum_distribution,
+1B2av,1B2av_Fugitive-petr-distr-marine,,,petroleum_distribution_marine,Consider putting somewhere else
+1B2b,1B2b_Fugitive-NG-prod-distr,1B2,Fugitive emissions from oil and gas,NG_production_distribution,
+2A1,2A1_Cement-production,2A7,Production of other minerals,cement,
+2A2,2A2_Lime-production,2A7,Production of other minerals,industry_processes,
+2A5b,2A5b_Construction-and-demolition,1A2,Manufacturing Industries and Construction,industry_processes,
+2A6,2A6_Other-minerals,2A7,Production of other minerals,industry_processes,
+2B,2B_Chemicals-other,2B,Production of chemicals,industry_processes,
+2C,2C_Iron-steel-alloy,2C,Production of metals,industry_processes,
+2C3,2C3_Aluminum-production,2C,Production of metals,industry_processes,
+2C5,2C5_Lead-production,2C,Production of metals,industry_processes,
+2C6,2C6_Zinc-production,2C,Production of metals,industry_processes,
+2C7,2C7_Other-metal,2C,Production of metals,industry_processes,
+2C7a,2C7a_Copper-production,2C,Production of metals,industry_processes,
+2C7b,2C7b_Nickel-production,2C,Production of metals,industry_processes,
+2D3a,2D3a_Domestic-solvent-use,3D,Solvent and other product use: other,solvents,
+2D3c,2D3c_Asphalt-roofing,3D,Solvent and other product use: other,solvents,
+2D3d,2D3d_Coating-application,3A,Solvent and other product use: paint,solvents,
+2D3e,2D3e_Degreasing,3B,Solvent and other product use: degrease,solvents,
+2D3f,2D3f_Dry-cleaning,3C,Solvent and other product use: chemicals,solvents,
+2D3h,2D3h_Printing,3D,Solvent and other product use: other,solvents,
+2D3i,2D3i_Other-solvent-use,3D,Solvent and other product use: other,solvents,
+2H1,2H1_Pulp-and-paper,2D,Production of pulp/paper/food/drink,industry_processes,
+2H2,2H2_Ethanol Production,,,ethanol_production,Should have as a subsector of refineries
+2H2,2H2_Biodiesel Production,,,biodiesel_production,
+2H2,2H2_Food-and-beverage,2D,Production of pulp/paper/food/drink,industry_processes,
+2H3,2H3_Other-industrial-processes,,,industry_processes,
+2I,2I_Wood-processing,,,industry_processes,
+3B1a,3B1a_Cattle-dairy,2D,Production of pulp/paper/food/drink,Dairy,
+3B1b,3B1b_Cattle-non-dairy,2D,Production of pulp/paper/food/drink,Beef,
+3B2,3B2_Manure-sheep,4D2,Manure in pasture/range/paddock,SheepGoat,
+3B3,3B3_Manure-swine,4D2,Manure in pasture/range/paddock,Pork,
+3B4,3B4_Manure-other,4D2,Manure in pasture/range/paddock,Other_Farm,
+3B4,3B4_Manure-poultry,4D2,Manure in pasture/range/paddock,Poultry,
+3B4d,3B4d_Manure-goats,4D2,Manure in pasture/range/paddock,SheepGoat,
+3Da1,3Da1_Inorganic-N-fertilizers,4D3,Indirect N2O from agriculture,Other_Farm,
+3Dc,3Dc_Other-farm,4D2,Manure in pasture/range/paddock,Other_Farm,
+3Df,3Df_Use-of-pesticides,,,industry_processes,
+3F,3F_Ag-res-on-field,4F,Agricultural waste burning,AWB,
+5A,5A_Solid-waste-disposal,6A,Solid waste disposal on land,landfills,
+5B,5B_Compost-biogas,,,Other_Farm,
+5C,5C_Incineration,6C,Waste incineration,waste_incineration,
+5C,5C_Open-burning-commercial,,,landfills,
+5C,5C_Open-burning-dump,,,landfills,
+5C,5C_Open-burning-industrial,,,landfills,
+5C,5C_Open-burning-land-clearing,,,,Part of AgLU emissions so we don't use this
+5C,5C_Open-burning-residential,,,waste_incineration,map to waste_incineration for BYU
+5C,5C_Open-burning-yard-waste,,,waste_incineration,map to waste_incineration for BYU
+5C,5C_Other-open-burning,,,landfills,
+5D1,5D1_Wastewater-domestic,,,wastewater,These have air pollutant emissions. Really should go to wastewater in BYU
+5D2,5D2_Wastewater-industrial,,,industry_processes,
+5D3,5D3_Wastewater-commertial,,,industry_processes,
+5E,5E_Other-waste,6D,Other waste handling,landfills,
+6A,6A_Other-commertial,1A4,Residential and other sectors,building_comm,

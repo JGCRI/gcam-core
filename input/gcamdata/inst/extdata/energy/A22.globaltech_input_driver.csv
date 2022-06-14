@@ -19,3 +19,5 @@ refining,coal to liquids,coal to liquids CCS level 1,regional coal
 refining,coal to liquids,coal to liquids CCS level 2,regional coal
 refining,gas to liquids,gas to liquids,regional natural gas
 refining,oil refining,oil refining,regional oil
+refining,biomass liquids,BTL with hydrogen,H2 industrial
+refining,biomass liquids,BTL with hydrogen,regional biomass

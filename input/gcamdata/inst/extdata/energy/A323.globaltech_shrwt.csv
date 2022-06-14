@@ -1,14 +1,15 @@
 # File: A323.globaltech_shrwt.csv
 # Title: Iron and steel default shareweights
 # Units: Unitless
-# Column types: cccnnnnn
+# Column types: cccnnnnnn
 # ----------
-supplysector,subsector,technology,1971,2015,2019,2050,2100
-iron and steel,BLASTFUR,BLASTFUR,1,1,1,1,1
-iron and steel,BLASTFUR,BLASTFUR CCS,0,0,0,1,1
-iron and steel,BLASTFUR,Biomass-based,0,0,0,0.2,0.2
-iron and steel,BLASTFUR,BLASTFUR with hydrogen,0,0,0,0.2,0.2
-iron and steel,EAF with DRI,EAF with DRI,1,1,1,1,1
-iron and steel,EAF with DRI,EAF with DRI CCS,0,0,0,0.5,0.5
-iron and steel,EAF with DRI,Hydrogen-based DRI,0,0,1,1,1
-iron and steel,EAF with scrap,EAF with scrap,1,1,1,1,1
+supplysector,subsector,technology,1971,2015,2020,2025,2050,2100
+iron and steel,BLASTFUR,BLASTFUR,1,1,1,1,1,1
+iron and steel,BLASTFUR,BLASTFUR CCS,0,0,0,0.2,1,1
+iron and steel,BLASTFUR,Biomass-based,0,0,0,0.2,0.2,0.2
+iron and steel,EAF with DRI,EAF with DRI,1,1,1,1,1,1
+iron and steel,EAF with DRI,EAF with DRI CCS,0,0,0,0.2,1,1
+iron and steel,EAF with DRI,Hydrogen-based DRI,0,0,0,1,1,1
+iron and steel,EAF with scrap,EAF with scrap,1,1,1,1,1,1
+iron and steel,BLASTFUR,BLASTFUR with hydrogen,0,0,0,1,1,1
+iron and steel,BLASTFUR,BLASTFUR CCS with hydrogen,0,0,0,0.2,1,1

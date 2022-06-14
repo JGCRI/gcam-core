@@ -4,8 +4,6 @@
 # Column types: cccccccc
 # ----------
 supplysector,tranSubsector,tranTechnology,apply.to,from.year,to.year,interpolation.function,sce
-trn_freight,Freight Rail,Adv-Electric,share-weight,final-calibration-year,end-year,fixed,CORE
-trn_freight,Freight Rail,Adv-Liquid,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_freight,Freight Rail,Coal,share-weight,final-calibration-year,2020,linear,CORE
 trn_freight,Freight Rail,Electric,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_freight,Freight Rail,Liquids,share-weight,final-calibration-year,end-year,fixed,CORE
@@ -59,8 +57,6 @@ trn_freight_road,Truck (9-16t),Liquids,share-weight,final-calibration-year,end-y
 trn_freight_road,Truck (9-16t),NG,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass,Passenger Rail,Electric,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass,Passenger Rail,Liquids,share-weight,final-calibration-year,end-year,fixed,CORE
-trn_pass,Passenger Rail,Tech-Adv-Electric,share-weight,final-calibration-year,end-year,fixed,CORE
-trn_pass,Passenger Rail,Tech-Adv-Liquid,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass_road,Bus,Liquids,share-weight,final-calibration-year,2020,linear,CORE
 trn_pass_road,Bus,NG,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass_road_bus,Heavy Bus,Liquids,share-weight,final-calibration-year,2020,linear,CORE
@@ -101,100 +97,3 @@ trn_pass_road_LDV_4W,Subcompact Car,NG,share-weight,final-calibration-year,end-y
 trn_pass_road_LDV_4W,Van,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,CORE
 trn_pass_road_LDV_4W,Van,Liquids,share-weight,final-calibration-year,end-year,linear,CORE
 trn_pass_road_LDV_4W,Van,NG,share-weight,final-calibration-year,end-year,fixed,CORE
-trn_freight,Freight Rail,Adv-Electric,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight,Freight Rail,Adv-Liquid,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight,Freight Rail,Coal,share-weight,final-calibration-year,2020,linear,highEV
-trn_freight,Freight Rail,Electric,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight,Freight Rail,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,3W Rural,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,3W Rural,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (>12t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (>12t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (>14t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (>14t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (>15t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (>15t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (>32t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (>32t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-1t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-1t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-2.7t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-2.7t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-2t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-2t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-3.5t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-3.5t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-4.5t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-4.5t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-6t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (0-6t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (1-6t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (1-6t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (16-32t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (16-32t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (2-5t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (2-5t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (2.7-4.5t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (2.7-4.5t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (3.5-16t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (3.5-16t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (4.5-12t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (4.5-12t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (4.5-15t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (4.5-15t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (5-9t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (5-9t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (6-14t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (6-14t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (6-15t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (6-15t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (6-30t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (6-30t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (9-16t),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_freight_road,Truck (9-16t),NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass,Passenger Rail,Electric,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass,Passenger Rail,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass,Passenger Rail,Tech-Adv-Electric,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass,Passenger Rail,Tech-Adv-Liquid,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road,Bus,Liquids,share-weight,final-calibration-year,2020,linear,highEV
-trn_pass_road,Bus,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_bus,Heavy Bus,Liquids,share-weight,final-calibration-year,2020,linear,highEV
-trn_pass_road_bus,Heavy Bus,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_bus,Light Bus,Liquids,share-weight,final-calibration-year,2020,linear,highEV
-trn_pass_road_bus,Light Bus,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV,Three-Wheeler,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV,Three-Wheeler,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_2W,Moped,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_2W,Motorcycle (>250cc),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_2W,Motorcycle (50-250cc),LA-BEV,share-weight,final-calibration-year,2050,linear,highEV
-trn_pass_road_LDV_2W,Motorcycle (50-250cc),Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_2W,Scooter,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Compact Car,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Compact Car,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Compact Car,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Large Car,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Large Car,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Large Car,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Large Car and SUV,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Large Car and SUV,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Large Car and SUV,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Light Truck and SUV,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Light Truck and SUV,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Light Truck and SUV,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Midsize Car,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Midsize Car,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Midsize Car,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Mini Car,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Mini Car,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Multipurpose Vehicle,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Multipurpose Vehicle,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Multipurpose Vehicle,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Subcompact Car,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Subcompact Car,Liquids,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Subcompact Car,NG,share-weight,final-calibration-year,end-year,fixed,highEV
-trn_pass_road_LDV_4W,Van,Hybrid Liquids,share-weight,final-calibration-year,2030,linear,highEV
-trn_pass_road_LDV_4W,Van,Liquids,share-weight,final-calibration-year,end-year,linear,highEV
-trn_pass_road_LDV_4W,Van,NG,share-weight,final-calibration-year,end-year,fixed,highEV

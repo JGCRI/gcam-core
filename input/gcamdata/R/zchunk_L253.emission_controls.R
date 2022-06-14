@@ -36,8 +36,10 @@ module_emissions_L253.emission_controls <- function(command, ...) {
              FILE = "emissions/emission_controls/A53.em_ctrl_param_dom_shipping",
              user_em_control_files, # All files in user_emission_controls folder
              "L102.pcgdp_thous90USD_Scen_R_Y",
+             "L201.nonghg_steepness",
              "L223.StubTechEff_elec",
-             "L223.GlobalTechEff_elec"))
+             "L223.GlobalTechEff_elec",
+             "L224.Supplysector_heat"))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L253.EF_retrofit",
@@ -59,6 +61,10 @@ module_emissions_L253.emission_controls <- function(command, ...) {
 
   } else if(command == driver.MAKE) {
 
+    # Silencing package checks
+    . <- year <- supplysector <- MAC_region <- state <- state_name <-
+      scenario <- value <- SO2_name <- region <- NULL
+
     all_data <- list(...)[[1]]
 
     # Load required inputs
@@ -66,9 +72,12 @@ module_emissions_L253.emission_controls <- function(command, ...) {
     non_co2_region_info <- get_data(all_data, "emissions/A_regions")
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     pcGDP_MER <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y", strip_attributes = TRUE)
+    L201.nonghg_steepness <- get_data(all_data, "L201.nonghg_steepness", strip_attributes = TRUE)
     base_year_eff <- get_data(all_data, "L223.StubTechEff_elec", strip_attributes = TRUE)
     future_year_eff <- get_data(all_data, "L223.GlobalTechEff_elec", strip_attributes = TRUE) %>%
       filter(year %in% MODEL_FUTURE_YEARS)
+    dist_heat_regions <- get_data(all_data, "L224.Supplysector_heat", strip_attributes = TRUE) %>%
+      select(region, supplysector)
 
     # Load all inputs that contains A53. We do this to simplify the process of moving data
     # from the user drop folder to the core. To move data to the core, the user just has to
@@ -128,6 +137,15 @@ module_emissions_L253.emission_controls <- function(command, ...) {
     # Function that processes emission control data
     process_em_control_data <- function(em_control_data) {
 
+      # Silence package checks
+      GCAM_region <- supplysector <- region <- Non.CO2 <- SO2_name <-
+        tail <- pcGDP_start_NSPS <- NSPS_start_year <- NSPS_em_coeff <- year <- GDP <-
+        id <- retrofit_start_year <- pcGDP_start_retrofit <- subsector <-
+        stub.technology <- linear.control <- retrofit_time <- retrofit_vintage <-
+        retrofit_em_coeff <- start.year <- final.emissions.coefficient <- emiss.coef <-
+        head <- period <- end.year <- efficiency.y <- efficiency.x <- efficiency <-
+        gdp.control <- disable.em.control <- NULL
+
       # Only run if there is emission control data
       if(length(em_control_data) > 0){
 
@@ -136,7 +154,11 @@ module_emissions_L253.emission_controls <- function(command, ...) {
         # Using left_join instead of left_join_error_no_match because not all regions have meta region mapping
         em_control_data %>%
           left_join(meta_region_map, by = c("region" = "meta_region")) %>%
-          mutate(region = ifelse(is.na(GCAM_region), region, GCAM_region)) %>%
+          filter(GCAM_region %in% dist_heat_regions$region |
+                   !supplysector %in% dist_heat_regions$supplysector) %>%
+          mutate(region = if_else(is.na(GCAM_region), region, GCAM_region)) %>%
+          semi_join(L201.nonghg_steepness,
+                    by = c("region", "supplysector", "subsector", "stub.technology")) %>%
           select(-GCAM_region) -> em_control_data
 
         # Stop if regions aren't valid regions
@@ -310,8 +332,10 @@ module_emissions_L253.emission_controls <- function(command, ...) {
                                   user_em_control_files,
                                   em_ctrl_inputs,
                                   "L102.pcgdp_thous90USD_Scen_R_Y",
+                                  "L201.nonghg_steepness",
                                   "L223.StubTechEff_elec",
-                                  "L223.GlobalTechEff_elec"))
+                                  "L223.GlobalTechEff_elec",
+                                  "L224.Supplysector_heat"))
           L253.EF_retrofit_precursors[precursors] <- precursors
           do.call(add_precursors, L253.EF_retrofit_precursors) -> L253.EF_retrofit
         } else {
@@ -369,8 +393,10 @@ module_emissions_L253.emission_controls <- function(command, ...) {
                                   user_em_control_files,
                                   em_ctrl_inputs,
                                   "L102.pcgdp_thous90USD_Scen_R_Y",
+                                  "L201.nonghg_steepness",
                                   "L223.StubTechEff_elec",
-                                  "L223.GlobalTechEff_elec"))
+                                  "L223.GlobalTechEff_elec",
+                                  "L224.Supplysector_heat"))
           L253.EF_retrofit_USA_precursors[precursors] <- precursors
           do.call(add_precursors, L253.EF_retrofit_USA_precursors) -> L253.EF_retrofit_USA
         } else {

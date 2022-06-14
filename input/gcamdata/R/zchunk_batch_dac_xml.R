@@ -16,7 +16,8 @@ module_energy_batch_dac_xml <- function(command, ...) {
 
   TECH_PARAMETRIZATION_INPUTS <- paste0("ssp", 1:5)
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L262.Supplysector_dac",
+    return(c("L262.CarbonCoef_dac",
+             "L262.Supplysector_dac",
              "L262.FinalEnergyKeyword_dac",
              "L262.SubsectorLogit_dac",
              "L262.SubsectorShrwtFllt_dac",
@@ -41,10 +42,14 @@ module_energy_batch_dac_xml <- function(command, ...) {
              XML = "dac_ssp5.xml"))
   } else if(command == driver.MAKE) {
 
+    # Silence package check notes
+    dac_ssp1.xml <- dac_ssp2.xml <- dac_ssp3.xml <- dac_ssp4.xml <- dac_ssp5.xml <- NULL
+
     all_data <- list(...)[[1]]
 
     for(sce in TECH_PARAMETRIZATION_INPUTS){
     # Load required inputs
+    L262.CarbonCoef_dac <- get_data(all_data, "L262.CarbonCoef_dac")
     L262.Supplysector_dac <- get_data(all_data, "L262.Supplysector_dac")
     L262.FinalEnergyKeyword_dac <- get_data(all_data, "L262.FinalEnergyKeyword_dac")
     L262.SubsectorLogit_dac <- get_data(all_data, "L262.SubsectorLogit_dac")
@@ -76,6 +81,7 @@ module_energy_batch_dac_xml <- function(command, ...) {
     # ===================================================
     # Produce outputs
     create_xml(xmlfn) %>%
+      add_xml_data(L262.CarbonCoef_dac, "CarbonCoef") %>%
       add_logit_tables_xml(L262.Supplysector_dac, "Supplysector") %>%
       add_xml_data(L262.FinalEnergyKeyword_dac, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L262.SubsectorLogit_dac, "SubsectorLogit") %>%
@@ -92,7 +98,8 @@ module_energy_batch_dac_xml <- function(command, ...) {
       add_xml_data(L262.PriceElasticity_dac, "PriceElasticity") %>%
       add_xml_data(L262.GlobalTechSCurve_dac, "GlobalTechSCurve") %>%
       add_xml_data(L262.GlobalTechProfitShutdown_dac, "GlobalTechProfitShutdown") %>%
-      add_precursors("L262.Supplysector_dac",
+      add_precursors("L262.CarbonCoef_dac",
+                     "L262.Supplysector_dac",
                      "L262.FinalEnergyKeyword_dac",
                      "L262.SubsectorLogit_dac",
                      "L262.SubsectorShrwtFllt_dac",

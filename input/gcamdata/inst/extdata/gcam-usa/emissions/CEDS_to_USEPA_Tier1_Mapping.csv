@@ -1,0 +1,109 @@
+# File: CEDS_to_USEPA_Tier1_Mapping.csv
+# Title: mapping file for EPA Tier 1 description and CEDS extended sectors
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cc
+# ----------
+tier1_description,CEDS_Sector
+CHEMICAL & ALLIED PRODUCT MFG,2B_Chemicals-other
+DOMESTIC SHIPPING,1A3dii_Domestic-navigation (shipping)
+FUEL COMB. ELEC. UTIL.,1A1a_Public-Electricity
+FUEL COMB. INDUSTRIAL,
+FUEL COMB. OTHER,
+HIGHWAY VEHICLES,
+METALS PROCESSING,
+MISCELLANEOUS,
+OFF-HIGHWAY,
+OTHER INDUSTRIAL PROCESSES,
+OTHER NATURAL,11C_Other-natural
+PETROLEUM & RELATED INDUSTRIES,
+SOLVENT UTILIZATION,
+STORAGE & TRANSPORT,
+WASTE DISPOSAL & RECYCLING,
+,
+OFF-HIGHWAY,1A3aii_Domestic-aviation
+FUEL COMB. INDUSTRIAL,1A2a_Ind-Comb
+FUEL COMB. INDUSTRIAL,1A1c_Coke-ovens
+FUEL COMB. INDUSTRIAL,1A2_Industrial_fuel_combustion
+FUEL COMB. INDUSTRIAL,1A2c_Chemicals
+FUEL COMB. INDUSTRIAL,1A2f_Ind-Comb-Non-metalic-minerals
+FUEL COMB. INDUSTRIAL,1A2g_Industry-other
+FUEL COMB. INDUSTRIAL,1A1b_Pet-refining
+FUEL COMB. INDUSTRIAL,1A1g_Other-energy-transf
+FUEL COMB. OTHER,1A4ai_Commercial-institutional-stationary
+OFF-HIGHWAY,1A4aii_Commercial-institutional-mobile
+OFF-HIGHWAY,1A4bi_Residential-mobile
+FUEL COMB. OTHER,1A4bi_Residential-stationary
+HIGHWAY VEHICLES,1A3b_Road-noncomb
+HIGHWAY VEHICLES,1A3bii_Road-LDV
+HIGHWAY VEHICLES,1A3bii_Road-truck-Light-Commertial
+HIGHWAY VEHICLES,1A3biii_Road-bus
+HIGHWAY VEHICLES,1A3biii_Road-truck-Long-haul
+HIGHWAY VEHICLES,1A3biii_Road-truck-Short-haul
+HIGHWAY VEHICLES,1A3biii_Road-heavy-duty-trucks-buses
+HIGHWAY VEHICLES,1A3biii_Road-truck-heavy
+HIGHWAY VEHICLES,1A3biii_Road-truck-medium
+HIGHWAY VEHICLES,1A3biii_Road-truck-medium-heavy
+HIGHWAY VEHICLES,1A3biv_Road-mopeds-motorcycles
+METALS PROCESSING,2C_Iron-steel-alloy
+METALS PROCESSING,2C3_Aluminum-production
+METALS PROCESSING,2C5_Lead-production
+METALS PROCESSING,2C6_Zinc-production
+METALS PROCESSING,2C7_Other-metal
+METALS PROCESSING,2C7a_Copper-production
+METALS PROCESSING,2C7b_Nickel-production
+MISCELLANEOUS,3B1a_Cattle-dairy
+MISCELLANEOUS,3B1b_Cattle-non-dairy
+MISCELLANEOUS,3B2_Manure-sheep
+MISCELLANEOUS,3B3_Manure-swine
+MISCELLANEOUS,3B4_Manure-other
+MISCELLANEOUS,3B4_Manure-poultry
+MISCELLANEOUS,3B4d_Manure-goats
+MISCELLANEOUS,3Da1_Inorganic-N-fertilizers
+MISCELLANEOUS,3Dc_Other-farm
+MISCELLANEOUS,3Df_Use-of-pesticides
+MISCELLANEOUS,3F_Ag-res-on-field
+OFF-HIGHWAY,1A2_Industrial_fuel_comb_off_hwy
+OFF-HIGHWAY,1A2g_Construction_and_Mining
+OFF-HIGHWAY,1A3c_Rail
+OFF-HIGHWAY,1A3eii_Other-unspecified-transp
+OFF-HIGHWAY,1A4c_Agriculture-forestry-fishing
+OFF-HIGHWAY,1A5_Recreational-Equipment-Land
+OFF-HIGHWAY,1A5_Recreational-Equipment-Marine
+OTHER INDUSTRIAL PROCESSES,2A5b_Construction-and-demolition
+OTHER INDUSTRIAL PROCESSES,2A1_Cement-production
+OTHER INDUSTRIAL PROCESSES,2A2_Lime-production
+OTHER INDUSTRIAL PROCESSES,2A6_Other-minerals
+OTHER INDUSTRIAL PROCESSES,2H1_Pulp-and-paper
+OTHER INDUSTRIAL PROCESSES,2H2_Biodiesel Production
+OTHER INDUSTRIAL PROCESSES,2H2_Ethanol Production
+OTHER INDUSTRIAL PROCESSES,2H2_Food-and-beverage
+OTHER INDUSTRIAL PROCESSES,2H3_Other-industrial-processes
+PETROLEUM & RELATED INDUSTRIES,1B2ai_Fugitive-petr-prod
+PETROLEUM & RELATED INDUSTRIES,1B2aiv_Fugitive-petr-refining
+PETROLEUM & RELATED INDUSTRIES,1B2av_Fugitive-petr-distr
+PETROLEUM & RELATED INDUSTRIES,1B2av_Fugitive-petr-distr-marine
+PETROLEUM & RELATED INDUSTRIES,2I_Wood-processing
+PETROLEUM & RELATED INDUSTRIES,6A_Other-commertial
+SOLVENT UTILIZATION,2D3a_Domestic-solvent-use
+SOLVENT UTILIZATION,2D3c_Asphalt-roofing
+SOLVENT UTILIZATION,2D3d_Coating-application
+SOLVENT UTILIZATION,2D3e_Degreasing
+SOLVENT UTILIZATION,2D3f_Dry-cleaning
+SOLVENT UTILIZATION,2D3h_Printing
+SOLVENT UTILIZATION,2D3i_Other-solvent-use
+PETROLEUM & RELATED INDUSTRIES,1B2b_Fugitive-NG-prod-distr
+WASTE DISPOSAL & RECYCLING,5A_Solid-waste-disposal
+WASTE DISPOSAL & RECYCLING,5B_Compost-biogas
+WASTE DISPOSAL & RECYCLING,5D1_Wastewater-domestic
+WASTE DISPOSAL & RECYCLING,5D2_Wastewater-industrial
+WASTE DISPOSAL & RECYCLING,5D3_Wastewater-commertial
+WASTE DISPOSAL & RECYCLING,5C_Incineration
+WASTE DISPOSAL & RECYCLING,5C_Open-burning-commercial
+WASTE DISPOSAL & RECYCLING,5C_Open-burning-dump
+WASTE DISPOSAL & RECYCLING,5C_Open-burning-industrial
+WASTE DISPOSAL & RECYCLING,5C_Open-burning-land-clearing
+WASTE DISPOSAL & RECYCLING,5C_Open-burning-residential
+WASTE DISPOSAL & RECYCLING,5C_Open-burning-yard-waste
+WASTE DISPOSAL & RECYCLING,5C_Other-open-burning
+WASTE DISPOSAL & RECYCLING,5E_Other-waste

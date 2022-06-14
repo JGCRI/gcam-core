@@ -29,5 +29,5 @@ Compute a variety of final energy keyword, sector, share weight, and technology 
 The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc for Off_road sector.
 }
 \author{
-Yang Liu Sep 2019
+Yang Liu Sep 2019, Molly Charles 2020-21, 2022 modifications from Jay Fuhrman, Siddarth Durga, Page Kyle
 }

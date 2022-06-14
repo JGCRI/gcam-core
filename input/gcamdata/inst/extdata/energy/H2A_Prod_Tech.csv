@@ -1,14 +1,14 @@
 # File: H2A_Prod_Tech.csv
 # Title: H2A characteristics of hydrogen production technologies
-# Units: Cost is 2005$/kg of Hydrogen; IO coef is btu/kg
+# Units: Cost is 2016$/kg of Hydrogen; IO coef is btu/kg
 # Source: H2A is the DOE EERE Hydrogen program's analysis model (https://www.hydrogen.energy.gov/h2a_analysis.html)
-# Column types: cnnn 
+# Column types: cnnn
 # ----------
 Technology,NEcost,FeedstockIO_btukg,ElecIO_btukg
-Central Natural Gas,0.366,156249.1217,1941.508318
-Central Natural Gas Sequestration,0.562,155832.5499,5916.652765
-Central Coal,1.067,210645.8833,-10833.54817
-Central Coal Sequestration,1.38,194329.988,914.4538299
-Electrolysis (forecourt),2.632,113939.9654,0
-Biomass,1.06,252947.4705,5391.183027
-Wind Central,6.034,113939.9654,0
+Central Natural Gas,0.3207,156249.1217,1941.508318
+Central Natural Gas Sequestration,0.733,155832.5499,5916.652765
+Central Coal,1.2904,210645.8833,-10833.54817
+Central Coal Sequestration,1.6153,194329.988,914.4538299
+Electrolysis (forecourt),1.2889,113939.9654,0
+Biomass,1.0395,252947.4705,5391.183027
+Wind Central,4.722,113939.9654,0

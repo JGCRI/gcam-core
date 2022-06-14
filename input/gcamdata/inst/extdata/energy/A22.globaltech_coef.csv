@@ -28,3 +28,5 @@ refining,biomass liquids,corn ethanol,elect_td_ind,0.026,0.026,0.026
 refining,biomass liquids,sugar cane ethanol,regional sugar for ethanol,1,1,1
 refining,biomass liquids,biodiesel,regional biomassOil,1.0309,1.0309,1.03
 refining,biomass liquids,biodiesel,wholesale gas,0.05767,0.05767,0.06
+refining,biomass liquids,BTL with hydrogen,H2 industrial,0.816228052,0.816228052,0.816228052
+refining,biomass liquids,BTL with hydrogen,regional biomass,1.031914894,1.031914894,1.031914894

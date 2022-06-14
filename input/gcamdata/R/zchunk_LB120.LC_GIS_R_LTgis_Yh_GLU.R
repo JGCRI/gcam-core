@@ -41,8 +41,8 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
     iso <- GCAM_region_ID <- Land_Type <- year <- GLU <- Area_bm2 <- LT_HYDE <-
       land_code <- LT_SAGE <- variable <- value <- Forest <- MgdFor <- Grassland <-
       Shrubland <- Pasture <- nonForScaler <- ForScaler <- `mature age` <- Status <- prot_status <- prot_frac <-
-      non_prot_frac <- c_type <- Category <- `soil_c (0-30 cms)` <- `veg_c (above ground biomass)` <- `veg_c (below ground biomass)` <-
-      soil_c <- vegc_ag <- vegc_bg <- land_area <- veg_c <- NULL    # silence package check.
+      non_prot_frac <- c_type <- Category <- `soil_c (0-100 cms)` <- `veg_c (above ground biomass)` <- `veg_c (below ground biomass)` <-
+      soil_c <- vegc_ag <- vegc_bg <- land_area <- veg_c <- Tot_land <- NULL    # silence package check.
 
     all_data <- list(...)[[1]]
 

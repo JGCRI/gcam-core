@@ -27,8 +27,8 @@
 		<Value name = "heat">../input/gcamdata/xml/heat.xml</Value>
 		<Value name = "hydrogen">../input/gcamdata/xml/hydrogen.xml</Value>
 		<Value name = "energy_distribution">../input/gcamdata/xml/en_distribution.xml</Value>
-		<Value name = "industry">../input/gcamdata/xml/industry.xml</Value>
-		<Value name = "industry_income_elas">../input/gcamdata/xml/industry_incelas_gssp2.xml</Value>
+		<Value name = "other_industry">../input/gcamdata/xml/other_industry.xml</Value>
+		<Value name = "industry_income_elas">../input/gcamdata/xml/other_industry_incelas_gssp2.xml</Value>
  		<Value name = "iron_steel">../input/gcamdata/xml/iron_steel.xml</Value>
 		<Value name = "iron_steel_income_elas">../input/gcamdata/xml/iron_steel_incelas_gssp2.xml</Value>   
  		<Value name = "Off_road">../input/gcamdata/xml/Off_road.xml</Value>
@@ -97,6 +97,7 @@
 		<Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
 		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>
 		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
+
         <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		

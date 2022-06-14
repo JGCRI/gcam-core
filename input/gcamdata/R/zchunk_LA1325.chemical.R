@@ -34,7 +34,9 @@ module_energy_LA1325.chemical <- function(command, ...) {
 
     # Silence global variable package check
     raw <- subsector <- minicam.energy.input <- Country <- sector <-
-    share <- value <- chemical <- year <- value.y <- value.x <- NULL
+      share <- value <- chemical <- year <- value.y <- value.x <- GCAM_region_ID <-
+      `chemical energy use` <- `chemical feedstocks` <- fuel <- industry <- has_district_heat <-
+      value_ori <- value_new <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -113,8 +115,8 @@ module_energy_LA1325.chemical <- function(command, ...) {
                                  group_by(GCAM_region_ID, year, fuel) %>%
                                  summarise(value_new = sum(value)),
                                by = c("GCAM_region_ID",  "fuel", "year")) %>%
-      mutate(value = value - value_ori + value_new) %>%
-      mutate(value =if_else(value > 0 , value, 0)) %>%
+      mutate(value = value - value_ori + value_new,
+             value =if_else(value > 0 , value, 0)) %>%
       select(-value_ori, -value_new) ->
       L1325.in_EJ_R_chemical_F_Y_CHEMICAL
 
@@ -128,8 +130,8 @@ module_energy_LA1325.chemical <- function(command, ...) {
                                  group_by(GCAM_region_ID, year, fuel) %>%
                                  summarise(value_new = sum(value)),
                                by = c("GCAM_region_ID",  "fuel", "year")) %>%
-      mutate(value = value - value_ori + value_new) %>%
-      mutate(value =if_else(value > 0 , value, 0)) %>%
+      mutate(value = value - value_ori + value_new,
+             value =if_else(value > 0 , value, 0)) %>%
       select(-value_ori, -value_new) ->
       L1325.in_EJ_R_chemical_F_Y_NECHEM
 
@@ -146,8 +148,8 @@ module_energy_LA1325.chemical <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value ) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value ) ->
       L1325.in_EJ_R_indenergy_F_Yh_tmp
 
     L1323.in_EJ_R_indfeed_F_Yh %>%
@@ -157,8 +159,8 @@ module_energy_LA1325.chemical <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value ) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value ) ->
       L1324.in_EJ_R_indfeed_F_Yh
 
     L1325.in_EJ_R_indenergy_F_Yh_tmp %>%
@@ -193,8 +195,8 @@ module_energy_LA1325.chemical <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value , raw = NULL) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value , raw = NULL) ->
       L1325.in_EJ_R_indenergy_F_Yh
 
     L1323.in_EJ_R_indfeed_F_Yh %>%
@@ -203,8 +205,8 @@ module_energy_LA1325.chemical <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value , raw = NULL) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value , raw = NULL) ->
       L1324.in_EJ_R_indfeed_F_Yh
 
     L1325.in_EJ_R_chemical_F_Y_recal %>%

@@ -5,6 +5,10 @@
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 H2 central production,EJ,EJ,1975$/GJ,-3,
-H2 forecourt production,EJ,EJ,1975$/GJ,-3,
-H2 distribution,EJ,EJ,1975$/GJ,-3,
-H2 enduse,EJ,EJ,1975$/GJ,-3,
+H2 pipeline,EJ,EJ,1975$/GJ,-3,
+H2 liquid truck,EJ,EJ,1975$/GJ,-3,
+H2 wholesale delivery,EJ,EJ,1975$/GJ,-3,
+H2 industrial,EJ,EJ,1975$/GJ,-3,
+H2 retail delivery,EJ,EJ,1975$/GJ,-3,
+H2 wholesale dispensing,EJ,EJ,1975$/GJ,-3,
+H2 retail dispensing,EJ,EJ,1975$/GJ,-3,

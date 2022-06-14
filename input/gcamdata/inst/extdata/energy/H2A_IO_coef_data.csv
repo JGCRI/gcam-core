@@ -1,0 +1,55 @@
+# File: H2A_IO_coef_data.csv
+# Title: H2A energy input-output coefficients of hydrogen production technologies
+# Units: Generally GJ in /kg H2 out, unless otherwise indicated
+# Source: H2A is the DOE EERE Hydrogen program's analysis model (https://www.hydrogen.energy.gov/h2a_analysis.html). H2A 2018 (generally), Results tab (2008 for nuclear thermal splitting)
+# Comments: Non-energy cost = required selling price - feedstock costs. Max improvement = improvement_to_2040 + 10%, unless otherwise stated
+# Column types: cccccnnc
+# ----------
+sector.name,subsector.name,technology,minicam.energy.input,units,2015,2040,notes
+H2 central production,biomass,biomass to H2,regional biomass,GJ in /kg H2 out,0.26374,0.25472,
+H2 central production,biomass,biomass to H2,regional natural gas,GJ in /kg H2 out,0.00622,0.00311,
+H2 central production,biomass,biomass to H2,elect_td_ind,GJ in /kg H2 out,0.00353,0.0034,
+H2 central production,biomass,biomass to H2 CCS,regional biomass,GJ in /kg H2 out,,,H2A 2018 did not report Biomass + CCS assumptions.
+H2 central production,biomass,biomass to H2 CCS,regional natural gas,GJ in /kg H2 out,,,H2A 2018 did not report Biomass + CCS assumptions.
+H2 central production,biomass,biomass to H2 CCS,elect_td_ind,GJ in /kg H2 out,,,H2A 2018 did not report Biomass + CCS assumptions.
+H2 central production,coal,coal chemical,regional coal,GJ in /kg H2 out,,,H2A 2018 did not report Coal without CCS assumptions.
+H2 central production,coal,coal chemical,elect_td_ind,GJ in /kg H2 out,,,H2A 2018 did not report Coal without CCS assumptions.
+H2 central production,coal,coal chemical CCS,regional coal,GJ in /kg H2 out,0.22046,,H2A  2018 did not report future Coal + CCS assumptions.
+H2 central production,coal,coal chemical CCS,elect_td_ind,GJ in /kg H2 out,0.00533,,H2A  2018 did not report future Coal + CCS assumptions.
+H2 central production,electricity,electrolysis,elect_td_ind,GJ hydrogen output / GJ input,0.61496,0.66518,Method of electrolysis utilized: PEM Electrolysis.
+H2 central production,solar,electrolysis,global solar resource,GJ hydrogen output / GJ input,0.61496,0.66518,Method of electrolysis utilized: PEM Electrolysis powered by solar PV created electricity. Efficiency is equivalent to central electrolysis.
+H2 central production,wind,electrolysis,onshore wind resource,GJ hydrogen output / GJ input,0.61496,0.66518,Method of electrolysis utilized: PEM Electrolysis powered by solar wind created electricity.Efficiency is equivalent to central electrolysis.
+H2 central production,gas,natural gas steam reforming,regional natural gas,GJ in /kg H2 out,0.16484,0.16458,
+H2 central production,gas,natural gas steam reforming,elect_td_ind,GJ in /kg H2 out,0.00205,0.00216,
+H2 central production,gas,natural gas steam reforming CCS,regional natural gas,GJ in /kg H2 out,0.16437,0.16437,
+H2 central production,gas,natural gas steam reforming CCS,elect_td_ind,GJ in /kg H2 out,0.00235,0.00235,
+H2 central production,nuclear,thermal splitting,nuclearFuelGenIII,GJ in /kg H2 out,0.14406,0.14406,2040 efficiency assumed to be the same as 2015. Equals the sum of electricity and thermal energy requirements (GJ). Source: H2A 2008.
+H2 wholesale dispensing,forecourt production,electrolysis,elect_td_trn,GJ hydrogen output / GJ input,0.61158,0.66386,Method of electrolysis utilized: PEM Electrolysis - Forecourt model for larger (1500kG/H2/day) plant.
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,delivered gas,GJ in /kg H2 out,0.16437,0.15382,
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,elect_td_trn,GJ in /kg H2 out,0.004,0.00816,
+H2 central production,biomass,biomass to H2,water_td_ind_C,gal / kgH2 out,3.273902439,3.187804878,Assume 100% process water consumption.  Total cooling water is calculated by subtracting from total WCF from Spath et al (2005) We then calculate the consumed fraction of cooling water by applying the consumption/withdrawal ratio from Mackinack et al for recirculating IGCC power plant
+H2 central production,biomass,biomass to H2 CCS,water_td_ind_C,gal / kgH2 out,3.273902439,3.187804878,Assume 100% process water consumption.  Total cooling water is calculated by subtracting from total WCF from Spath et al (2005) We then calculate the consumed fraction of cooling water by applying the consumption/withdrawal ratio from Mackinack et al for recirculating IGCC power plant
+H2 central production,coal,coal chemical,water_td_ind_C,gal / kgH2 out,10.06010314,10.06010314,
+H2 central production,coal,coal chemical CCS,water_td_ind_C,gal / kgH2 out,10.06010314,10.06010314,
+H2 central production,electricity,electrolysis,water_td_ind_C,gal / kgH2 out,4.76,3.98,
+H2 central production,solar,electrolysis,water_td_ind_C,gal / kgH2 out,4.76,3.98,
+H2 central production,wind,electrolysis,water_td_ind_C,gal / kgH2 out,4.76,3.98,
+H2 central production,gas,natural gas steam reforming,water_td_ind_C,gal / kgH2 out,4.296129518,4.296129518,Assume the fraction of cooling water that is consumed is equal to that of the recirculating gas (steam/CT) technology from electricity sector
+H2 central production,gas,natural gas steam reforming CCS,water_td_ind_C,gal / kgH2 out,4.493433908,4.493433908,Assume the fraction of cooling water that is consumed is equal to that of the recirculating gas (CC CCS) technology from electricity sector
+H2 central production,nuclear,thermal splitting,water_td_ind_C,gal / kgH2 out,2.3609,2.3609,
+H2 wholesale dispensing,forecourt production,electrolysis,water_td_ind_C,gal / kgH2 out,4.76,3.98,
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,water_td_ind_C,gal / kgH2 out,5.77,4.38,
+H2 industrial,forecourt production,electrolysis,water_td_ind_C,gal / kgH2 out,4.76,3.98,
+H2 central production,biomass,biomass to H2,water_td_ind_W,gal / kgH2 out,3.37,3.28,Spath et al (2005)
+H2 central production,biomass,biomass to H2 CCS,water_td_ind_W,gal / kgH2 out,3.37,3.28,Spath et al (2005)
+H2 central production,coal,coal chemical,water_td_ind_W,gal / kgH2 out,10.06010314,10.06010314,
+H2 central production,coal,coal chemical CCS,water_td_ind_W,gal / kgH2 out,10.06010314,10.06010314,
+H2 central production,electricity,electrolysis,water_td_ind_W,gal / kgH2 out,4.76,3.98,
+H2 central production,solar,electrolysis,water_td_ind_W,gal / kgH2 out,4.76,3.98,
+H2 central production,wind,electrolysis,water_td_ind_W,gal / kgH2 out,4.76,3.98,
+H2 central production,gas,natural gas steam reforming,water_td_ind_W,gal / kgH2 out,4.85,4.85,
+H2 central production,gas,natural gas steam reforming CCS,water_td_ind_W,gal / kgH2 out,4.85,4.85,
+H2 central production,nuclear,thermal splitting,water_td_ind_W,gal / kgH2 out,2.3609,2.3609,
+H2 wholesale dispensing,forecourt production,electrolysis,water_td_ind_W,gal / kgH2 out,4.76,3.98,
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,water_td_ind_W,gal / kgH2 out,5.77,4.38,
+H2 industrial,forecourt production,electrolysis,water_td_ind_W,gal / kgH2 out,4.76,3.98,

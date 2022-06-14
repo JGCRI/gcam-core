@@ -1,0 +1,11 @@
+# File: CEDS_GCAM_transport.csv
+# Title: Convert CEDS_fuel code to GCAM_technology
+# Units: NA
+# Source: NA - Mapping file
+# Column types: cc
+# ----------
+CEDS_Fuel,GCAM_fuel
+diesel_oil,Liquids
+light_oil,Liquids
+natural_gas,NG
+Other_Fuel,Liquids

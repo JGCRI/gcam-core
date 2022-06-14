@@ -233,27 +233,12 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
 
     # Specify the SSP4 scenario with diverging agricultural productivity change
     # between high, median, and low income regions (not incl biomass)
-    L102.pcgdp_thous90USD_Scen_R_Y %>%
-      filter(scenario == "SSP4" & year == 2010) %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      # Calculate GDP per capita in 2010 USD
-      mutate(value = value / gdp_deflator(1990, 2010)) %>%
-      select(region, value) ->
-      L225.pcgdp_2010
 
     # Get the region list of high income countries
-    L225.pcgdp_2010 %>%
-      filter(value > aglu.HIGH_GROWTH_PCGDP) %>%
-      select(region) %>%
-      # Convert tibble to vector
-      pull(region) ->
+    get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "high") ->
       high_reg
     # Get the region list of low income countries
-    L225.pcgdp_2010 %>%
-      filter(value < aglu.LOW_GROWTH_PCGDP) %>%
-      select(region) %>%
-      # Convert tibble to vector
-      pull(region) ->
+    get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low") ->
       low_reg
 
     # Assign the reference agricultural productivity change to median income countries,

@@ -15,6 +15,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
     return(c("L223.Supplysector_elec",
              "L223.SubsectorShrwtFllt_elec",
              "L223.ElecReserve",
+             "L223.SectorUseTrialMarket_elec",
              "L223.StubTechCapFactor_elec",
              "L223.SubsectorInterp_elec",
              "L223.SubsectorInterpTo_elec",
@@ -74,6 +75,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
     L223.Supplysector_elec <- get_data(all_data, "L223.Supplysector_elec")
     L223.SubsectorShrwtFllt_elec <- get_data(all_data, "L223.SubsectorShrwtFllt_elec")
     L223.ElecReserve <- get_data(all_data, "L223.ElecReserve")
+    L223.SectorUseTrialMarket_elec <- get_data(all_data, "L223.SectorUseTrialMarket_elec")
     L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
     L223.SubsectorInterp_elec <- get_data(all_data, "L223.SubsectorInterp_elec")
     L223.SubsectorInterpTo_elec <- get_data(all_data, "L223.SubsectorInterpTo_elec")
@@ -145,6 +147,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
       add_logit_tables_xml(L223.Supplysector_elec, "Supplysector") %>%
       add_xml_data(L223.SubsectorShrwtFllt_elec, "SubsectorShrwtFllt") %>%
       add_xml_data(L223.ElecReserve, "ElecReserve") %>%
+      add_xml_data(L223.SectorUseTrialMarket_elec, "SectorUseTrialMarket") %>%
       add_xml_data(L223.StubTechCapFactor_elec, "StubTechCapFactor") %>%
       add_xml_data(L223.SubsectorInterp_elec, "SubsectorInterp") %>%
       add_xml_data(L223.SubsectorInterpTo_elec, "SubsectorInterpTo") %>%
@@ -197,6 +200,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
       add_precursors("L223.Supplysector_elec",
                      "L223.SubsectorShrwtFllt_elec",
                      "L223.ElecReserve",
+                     "L223.SectorUseTrialMarket_elec",
                      "L223.StubTechCapFactor_elec",
                      "L223.SubsectorInterp_elec",
                      "L223.SubsectorInterpTo_elec",

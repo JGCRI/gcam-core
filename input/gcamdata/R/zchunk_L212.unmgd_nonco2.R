@@ -62,7 +62,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     # Silencing package checks
     GCAM_region_ID <- region <- AgSupplySubsector <- GLU <- itemName <- AgSupplySector <-
       UnmanagedLandTechnology <- year <- value <- Non.CO2 <- em_factor <- technology <-
-      emiss.coef <- input.emissions <- input.name <- NULL
+      emiss.coef <- input.emissions <- input.name <- Land_Type <- prot_frac <- NULL
 
     all_data <- list(...)[[1]]
 

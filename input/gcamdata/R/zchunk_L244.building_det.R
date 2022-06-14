@@ -190,6 +190,7 @@ module_energy_L244.building_det <- function(command, ...) {
       scenario <- L244.HDDCDD_A2_CCSM3x <-
       L244.HDDCDD_A2_HadCM3 <- L244.HDDCDD_B1_CCSM3x <- L244.HDDCDD_B1_HadCM3 <- L244.HDDCDD_constdd_no_GCM <- NULL
 
+
     all_data <- list(...)[[1]]
 
     # Load required inputs

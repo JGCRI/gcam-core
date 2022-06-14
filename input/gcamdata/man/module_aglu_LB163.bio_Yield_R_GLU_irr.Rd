@@ -18,13 +18,18 @@ the generated outputs: \code{L163.ag_irrBioYield_GJm2_R_GLU}, \code{L163.ag_rfdB
 original data system was \code{LB163.bio_Yield_R_GLU_irr.R} (aglu level1).
 }
 \description{
-Compute base year rainfed and irrigated bioenergy crop yields for each GCAM region and GLU.
+Compute base year generic, rainfed, and irrigated bioenergy crop yields for each GCAM region and GLU.
 }
 \details{
 A global average yield is calculated for each GTAP crop. This is then used to calculate a yield Ratio for each
 iso-GLU-irrigation for each GTAP crop. This ratio and harvested area are then summed across all GTAP crops to the GCAM
 region-GLU-irrigation level and are used to calculate a YieldIndex for each region-GLU-irrigation. This YieldIndex is
 then multiplied by a base yield (calculated from USA yields) to get bioenergy yields for each region-GLU-irrigation.
+}
+\references{
+Wullschleger, S.D., E.B. Davis, M.E. Borsuk, C.A. Gunderson, and L.R. Lynd. 2010.
+Biomass production in switchgrass across the United States: database description and determinants
+of yield. Agronomy Journal 102: 1158-1168. doi:10.2134/agronj2010.0087.
 }
 \author{
 ACS June 2017

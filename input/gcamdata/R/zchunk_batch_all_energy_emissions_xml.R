@@ -95,6 +95,10 @@ module_emissions_batch_all_energy_emissions_xml <- function(command, ...) {
                      "L232.nonco2_max_reduction", "L232.nonco2_steepness", "L241.nonco2_tech_coeff",
                      "L241.OutputEmissCoeff_elec", "L241.nonco2_max_reduction", "L241.nonco2_steepness") ->
       all_energy_emissions.xml
+    # need to call add_precursors indirectly to ensure input_names gets "unlisted"
+    all_energy_emissions.xml <- do.call("add_precursors", c(list(all_energy_emissions.xml), input_names))
+
+
 
     create_xml("all_energy_emissions_MAC.xml") %>%
       add_xml_data(L252.ResMAC_fos, "ResMAC") %>%

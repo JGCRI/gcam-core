@@ -31,6 +31,11 @@ create_xml <- function(xml_file, mi_header = NULL) {
     invisible()
 }
 
+#' A suffix to be appended to the XML name in \code{set_xml_file_helper}.  Potentially
+#' useful when used to generate permutations of inputs.  We need to go through a package
+#' data so as to do this in a way that is opaque to drake
+xml.XML_SUFFIX <- NULL
+
 #' set_xml_file_helper
 #'
 #' @param xml The xml pipeline object
@@ -38,6 +43,11 @@ create_xml <- function(xml_file, mi_header = NULL) {
 #' @return The updated XML object.
 set_xml_file_helper <- function(xml, fq_name) {
   xml$xml_file <- fq_name
+
+  # append an XML suffix if so configured
+  if(!is.null(xml.XML_SUFFIX)) {
+    xml$xml_file <- paste0(gsub('\\.xml$', '', xml$xml_file), xml.XML_SUFFIX, '.xml')
+  }
 
   invisible(xml)
 }

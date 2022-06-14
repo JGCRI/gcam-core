@@ -172,6 +172,34 @@ approx_fun <- function(year, value, rule = 1) {
   }
 }
 
+#' approx_fun_constant
+#'
+#' \code{\link{approx}} (interpolation) for use in a dplyr pipeline.
+#'
+#' @param year Numeric year, in a melted tibble or data frame
+#' @param value Numeric value to interpolate
+#' @param rule Rule to use; see \code{\link{approx}} and details
+#' @details This is a slight change to approx_fun that can be used if there is only one value, not two to interpolate between.
+#' @details This function will apply the one value you do have to all other years in a grouping.
+#' @return Interpolated values.
+#' @importFrom assertthat assert_that
+#' @export
+#' @examples
+#' df <- data.frame(year = 1:5, value = c(1, 2, NA, 4, 5))
+#' approx_fun_constant(df$year, df$value, rule = 2)
+approx_fun_constant <- function(year, value, rule = 1) {
+  assert_that(is.numeric(year))
+  assert_that(is.numeric(value))
+
+  if(rule == 1 | rule == 2) {
+    tryCatch(stats::approx(as.vector(year), value, rule = rule, xout = year, ties = mean, method = "constant")$y,
+             error = function(e) NA)
+
+  } else {
+    stop("Use fill_exp_decay_extrapolate!")
+  }
+}
+
 #' repeat_add_columns
 #'
 #' Repeat a data frame for each entry in a second, binding the columns together.

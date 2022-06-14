@@ -2,7 +2,7 @@
 
 #' module_aglu_LB163.bio_Yield_R_GLU_irr
 #'
-#' Compute base year rainfed and irrigated bioenergy crop yields for each GCAM region and GLU.
+#' Compute base year generic, rainfed, and irrigated bioenergy crop yields for each GCAM region and GLU.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -14,6 +14,9 @@
 #' iso-GLU-irrigation for each GTAP crop. This ratio and harvested area are then summed across all GTAP crops to the GCAM
 #' region-GLU-irrigation level and are used to calculate a YieldIndex for each region-GLU-irrigation. This YieldIndex is
 #' then multiplied by a base yield (calculated from USA yields) to get bioenergy yields for each region-GLU-irrigation.
+#' @references Wullschleger, S.D., E.B. Davis, M.E. Borsuk, C.A. Gunderson, and L.R. Lynd. 2010.
+#' Biomass production in switchgrass across the United States: database description and determinants
+#' of yield. Agronomy Journal 102: 1158-1168. doi:10.2134/agronj2010.0087.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter group_by left_join mutate pull select summarise
 #' @author ACS June 2017
@@ -22,13 +25,15 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L100.LDS_ag_HA_ha",
              "L100.LDS_ag_prod_t",
+             "L101.ag_HA_bm2_R_C_Y_GLU",
              "L151.ag_irrHA_ha_ctry_crop",
              "L151.ag_irrProd_t_ctry_crop",
              "L151.ag_rfdHA_ha_ctry_crop",
              "L151.ag_rfdProd_t_ctry_crop"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L163.ag_irrBioYield_GJm2_R_GLU",
-             "L163.ag_rfdBioYield_GJm2_R_GLU"))
+             "L163.ag_rfdBioYield_GJm2_R_GLU",
+             "L113.ag_bioYield_GJm2_R_GLU"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -41,6 +46,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
     L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
+    L101.ag_HA_bm2_R_C_Y_GLU <- get_data(all_data, "L101.ag_HA_bm2_R_C_Y_GLU")
     L151.ag_irrHA_ha_ctry_crop <- get_data(all_data, "L151.ag_irrHA_ha_ctry_crop")
     L151.ag_irrProd_t_ctry_crop <- get_data(all_data, "L151.ag_irrProd_t_ctry_crop")
     L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
@@ -97,13 +103,38 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
       rename(Prod = rfdProd) ->
       L151.ag_rfdProd_t_ctry_crop
 
-    # Join all four processed L151 data frames and use to calculate yield
-    # by iso-GLU-GTAPcrop-irrigation.
-    # Then, join in global average yield from step 1 for each GTAPcrop,
-    # use it to compute a Ratio = Yield / Yield_avg and
-    # a Ratio_weight = Ratio * HA.
+    # First calculated yields for generic crops and
+    # join in global average yield to compute a
+    # Ratio = Yield / Yield_avg and a
+    # Ratio_weight = Ratio * HA.
     # HA and Ratio_weight can then be aggregated from iso to GCAM region
     # and used to calculate YieldIndex = Ratio_weight/HA:
+
+    # GPK 1/3/2019 modification: the inner_join step below guarantees that bioenergy grass yields are only estimated in
+    # land use regions that have harvested area in FAOSTAT. There are some countries (e.g. San Marino) in Monfreda/LDS
+    # but not FAOSTAT, which can lead to inconsistency in whether bioenergy grass crops are available in a given land
+    # use region.
+
+    L100.LDS_ag_HA_ha %>%
+      rename(HA = value) %>%
+      left_join_error_no_match(L100.LDS_ag_prod_t, by = c("iso", "GLU", "GTAP_crop")) %>%
+      mutate(Yield = value / HA) %>%
+      # Drop the missing values, where the harvested area was above the min threshold but production was not
+      na.omit  %>%
+      left_join_error_no_match(select(L163.ag_prod_t_glbl_crop, GTAP_crop, Yield_avg), by = "GTAP_crop") %>%
+      mutate(Ratio = Yield / Yield_avg,
+             Ratio_weight = Ratio * HA) %>%
+      left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
+      group_by(GCAM_region_ID, GLU) %>%
+      summarise(HA = sum(HA), Ratio_weight = sum(Ratio_weight)) %>%
+      ungroup %>%
+      inner_join(distinct(select(L101.ag_HA_bm2_R_C_Y_GLU, GCAM_region_ID, GLU)),
+                 by = c("GCAM_region_ID", "GLU")) %>%
+      mutate(YieldIndex = Ratio_weight / HA) ->
+      L113.YieldIndex_R_GLU
+
+    # Join all four processed L151 data frames and repeat above steps,
+    # but now for rainfed and irrigated, rather than generic, crops
     L151.ag_irrHA_ha_ctry_crop %>%
       bind_rows(L151.ag_rfdHA_ha_ctry_crop) %>%
       left_join_error_no_match(bind_rows(L151.ag_irrProd_t_ctry_crop, L151.ag_rfdProd_t_ctry_crop),
@@ -141,15 +172,23 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
       USAreg
 
     # Calculate the base yield, a scaler value:
-     L163.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L163.YieldIndex_R_GLU_irr$YieldIndex[L163.YieldIndex_R_GLU_irr$GCAM_region_ID == USAreg])
-     L163.base_bio_yield_GJm2 <- L163.base_bio_yield_tha * aglu.BIO_ENERGY_CONTENT_GJT / CONV_HA_M2
+    L113.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L113.YieldIndex_R_GLU$YieldIndex[L113.YieldIndex_R_GLU$GCAM_region_ID == USAreg])
+    L113.base_bio_yield_GJm2 <- L113.base_bio_yield_tha * aglu.BIO_ENERGY_CONTENT_GJT / CONV_HA_M2
+
+    L163.base_bio_yield_tha <- aglu.MAX_BIO_YIELD_THA / max(L163.YieldIndex_R_GLU_irr$YieldIndex[L163.YieldIndex_R_GLU_irr$GCAM_region_ID == USAreg])
+    L163.base_bio_yield_GJm2 <- L163.base_bio_yield_tha * aglu.BIO_ENERGY_CONTENT_GJT / CONV_HA_M2
 
     # Finally, calculate bioenergy yields in each region-glu-irrigation combo:
+    L113.YieldIndex_R_GLU %>%
+      mutate(Yield_GJm2 = YieldIndex * L113.base_bio_yield_GJm2) %>%
+      select(-HA, -Ratio_weight, -YieldIndex) ->
+      L113.ag_bioYield_GJm2_R_GLU
+
+
     L163.YieldIndex_R_GLU_irr %>%
       mutate(Yield_GJm2 = YieldIndex * L163.base_bio_yield_GJm2) %>%
       select(-HA, -Ratio_weight, -YieldIndex) ->
       L163.ag_bioYield_GJm2_R_GLU_irr
-
 
 
     # Step 4: Split rainfed and irrigated into separate tables for the write-out
@@ -165,7 +204,20 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
       L163.ag_rfdBioYield_GJm2_R_GLU
 
 
-    # Produce outputs
+      # Produce outputs
+    L113.ag_bioYield_GJm2_R_GLU %>%
+      add_title("Base year bioenergy yields by GCAM region and GLU") %>%
+      add_units(" GJ/m2") %>%
+      add_comments("Calculate global average yields for each FAO crop in the base year;") %>%
+      add_comments("calculate each region / zone / crop's comparative yield; compute bioenergy yields") %>%
+      add_comments("as this region/zone-specific index multiplied by a base yield") %>%
+      add_legacy_name("L113.ag_bioYield_GJm2_R_GLU") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "L100.LDS_ag_HA_ha",
+                     "L100.LDS_ag_prod_t",
+                     "L101.ag_HA_bm2_R_C_Y_GLU") ->
+      L113.ag_bioYield_GJm2_R_GLU
+
     L163.ag_irrBioYield_GJm2_R_GLU %>%
       add_title("Reference base year bioenergy yields for irrigated crops by GCAM region / GLU") %>%
       add_units("Gigajoule per square meter (GJ/m2)") %>%
@@ -195,7 +247,7 @@ module_aglu_LB163.bio_Yield_R_GLU_irr <- function(command, ...) {
                      "L151.ag_rfdProd_t_ctry_crop") ->
       L163.ag_rfdBioYield_GJm2_R_GLU
 
-    return_data(L163.ag_irrBioYield_GJm2_R_GLU, L163.ag_rfdBioYield_GJm2_R_GLU)
+    return_data(L113.ag_bioYield_GJm2_R_GLU, L163.ag_irrBioYield_GJm2_R_GLU, L163.ag_rfdBioYield_GJm2_R_GLU)
   } else {
     stop("Unknown command")
   }

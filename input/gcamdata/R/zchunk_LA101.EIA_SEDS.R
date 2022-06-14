@@ -12,7 +12,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L101.EIA_use_all_Bbtu}, \code{L101.inEIA_EJ_state_S_F}. The corresponding file in the
+#' the generated outputs: \code{L101.EIA_use_all_Bbtu}, \code{L101.inEIA_EJ_state_S_F}, \code{L101.inEIA_EJ_state_S_F_all_years}. The corresponding file in the
 #' original data system was \code{LA101.EIA_SEDS.R} (gcam-usa level1).
 #' @details See above
 #' @importFrom assertthat assert_that
@@ -27,7 +27,8 @@ module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
              FILE = "gcam-usa/A_fuel_conv"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L101.EIA_use_all_Bbtu",
-             "L101.inEIA_EJ_state_S_F"))
+             "L101.inEIA_EJ_state_S_F",
+             "L101.inEIA_EJ_state_S_F_all_years"))
   } else if(command == driver.MAKE) {
 
     year <- value <- Data_Status <- State <- MSN <- GCAM_fuel <- GCAM_sector <-
@@ -62,7 +63,7 @@ module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
       mutate(state = State, fuel = GCAM_fuel, sector = GCAM_sector) ->
       Bbtu_with_GCAM_names
 
-    # Create 1 of the 2 output tables: narrow years from 1971-2010, convert billion BTU to EJ (fuel specific), remove rows that have no defined sector or fuel name
+    # Create 1 of the 3 output tables: narrow years from 1971-2010, convert billion BTU to EJ (fuel specific), remove rows that have no defined sector or fuel name
     Bbtu_with_GCAM_names %>%
       select(state, sector, fuel, year, value) %>%
       filter(year %in% HISTORICAL_YEARS, !is.na(fuel), !is.na(sector)) %>%
@@ -74,13 +75,25 @@ module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
       ungroup() ->
       L101.inEIA_EJ_state_S_F
 
-    # Create other output table: leave units as billion BTU, getting rid of missing values: prior to 1980, lots are missing. These data are only used for state-wise allocations
+    # Create 2 of the 3 output tables: keep all years, convert billion BTU to EJ (fuel specific), remove rows that have no defined sector or fuel name
+    Bbtu_with_GCAM_names %>%
+      select(state, sector, fuel, year, value) %>%
+      filter(!is.na(fuel), !is.na(sector)) %>%
+      left_join(A_fuel_conv, by = "fuel") %>%
+      mutate(value = value * conv_Bbtu_EJ) %>%
+      group_by(state, sector, fuel, year) %>%
+      summarise(value = sum(value)) %>%
+      arrange(fuel, sector) %>%
+      ungroup() ->
+      L101.inEIA_EJ_state_S_F_all_years
+
+    # Create 3 of the 3 output tables: leave units as billion BTU, getting rid of missing values: prior to 1980, lots are missing. These data are only used for state-wise allocations
     Bbtu_with_GCAM_names %>%
       select(Data_Status, state, MSN, year, value, EIA_fuel, EIA_sector, sector, fuel, -State) %>%
       arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) -> # Year needs to be in descending order to use fill function
       Bbtu_with_GCAM_names_intermediate
 
-    # To create this second output table, I need to split the dataframe and recombine
+    # To create this third output table, I need to split the dataframe and recombine
     Bbtu_with_GCAM_names_intermediate %>%
       filter(year %in% gcamusa.SEDS_DATA_YEARS) %>% # Custom year range (1971:2017), want to keep NAs in 1960-1970
       fill(value) %>% # Replace NAs in 1971-1979 with values from one year more recent
@@ -108,7 +121,15 @@ module_gcamusa_LA101.EIA_SEDS <- function(command, ...) {
                      "gcam-usa/EIA_SEDS_sectors", "gcam-usa/A_fuel_conv") ->
       L101.inEIA_EJ_state_S_F
 
-    return_data(L101.EIA_use_all_Bbtu, L101.inEIA_EJ_state_S_F)
+    L101.inEIA_EJ_state_S_F_all_years %>%
+      add_title("State Energy Data in EJ by Year, GCAM-Sector, and GCAM-Fuel, for all available EIA years") %>%
+      add_units("EJ") %>%
+      add_comments("GCAM sector and fuel names were added, units converted to EJ, data with no GCAM fuel or sector name removed") %>%
+      add_precursors("gcam-usa/EIA_use_all_Bbtu", "gcam-usa/EIA_SEDS_fuels",
+                     "gcam-usa/EIA_SEDS_sectors", "gcam-usa/A_fuel_conv") ->
+      L101.inEIA_EJ_state_S_F_all_years
+
+    return_data(L101.EIA_use_all_Bbtu, L101.inEIA_EJ_state_S_F, L101.inEIA_EJ_state_S_F_all_years)
   } else {
     stop("Unknown command")
   }

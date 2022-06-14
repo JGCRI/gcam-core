@@ -43,7 +43,7 @@ H2 central production,coal,coal chemical,3.5,3.5,3.5,3.5,3.5,3.5
 H2 central production,coal,coal chemical CCS,3.5,3.5,3.5,3.5,3.5,3.5
 H2 central production,gas,natural gas steam reforming,3.5,3.5,3.5,3.5,3.5,
 H2 central production,gas,natural gas steam reforming CCS,3.5,3.5,3.5,3.5,3.5,
-H2 forecourt production,gas,natural gas steam reforming,3.5,3.5,3.5,3.5,3.5,
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,3.5,3.5,3.5,3.5,3.5,
 other industrial energy use,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
 other industrial energy use,biomass,biomass cogen,,,,,,
 other industrial energy use,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
@@ -221,36 +221,39 @@ chemical energy use,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
 chemical energy use,gas,gas cogen,,,,,,
 chemical energy use,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
 chemical energy use,refined liquids,refined liquids cogen,,,,,,
-agricultural energy use,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
-agricultural energy use,biomass,biomass cogen,,,,,,
-agricultural energy use,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
-agricultural energy use,coal,coal cogen,,,,,,
-agricultural energy use,district heat,district heat,,,,,,
-agricultural energy use,electricity,electricity,,,,,,
-agricultural energy use,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
-agricultural energy use,gas,gas cogen,,,,,,
-agricultural energy use,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
-agricultural energy use,refined liquids,refined liquids cogen,,,,,,
-mining energy use,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
-mining energy use,biomass,biomass cogen,,,,,,
-mining energy use,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
-mining energy use,coal,coal cogen,,,,,,
-mining energy use,district heat,district heat,,,,,,
-mining energy use,electricity,electricity,,,,,,
-mining energy use,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
-mining energy use,gas,gas cogen,,,,,,
-mining energy use,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
-mining energy use,refined liquids,refined liquids cogen,,,,,,
-construction energy use,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
-construction energy use,biomass,biomass cogen,,,,,,
-construction energy use,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
-construction energy use,coal,coal cogen,,,,,,
-construction energy use,district heat,district heat,,,,,,
-construction energy use,electricity,electricity,,,,,,
-construction energy use,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
-construction energy use,gas,gas cogen,,,,,,
-construction energy use,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
-construction energy use,refined liquids,refined liquids cogen,,,,,,
+agricultural energy use,stationary,biomass,3.5,3.5,3.5,3.5,3.5,3.5
+agricultural energy use,stationary,biomass cogen,,,,,,
+agricultural energy use,stationary,coal,3.5,3.5,3.5,3.5,3.5,3.5
+agricultural energy use,stationary,coal cogen,,,,,,
+agricultural energy use,stationary,district heat,,,,,,
+agricultural energy use,stationary,electricity,,,,,,
+agricultural energy use,stationary,gas,3.5,3.5,3.5,3.5,3.5,3.5
+agricultural energy use,stationary,gas cogen,,,,,,
+agricultural energy use,mobile,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+agricultural energy use,stationary,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+agricultural energy use,stationary,refined liquids cogen,,,,,,
+mining energy use,stationary,biomass,3.5,3.5,3.5,3.5,3.5,3.5
+mining energy use,stationary,biomass cogen,,,,,,
+mining energy use,stationary,coal,3.5,3.5,3.5,3.5,3.5,3.5
+mining energy use,stationary,coal cogen,,,,,,
+mining energy use,stationary,district heat,,,,,,
+mining energy use,stationary,electricity,,,,,,
+mining energy use,stationary,gas,3.5,3.5,3.5,3.5,3.5,3.5
+mining energy use,stationary,gas cogen,,,,,,
+mining energy use,mobile,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+mining energy use,stationary,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+mining energy use,stationary,refined liquids cogen,,,,,,
+construction energy use,stationary,biomass,3.5,3.5,3.5,3.5,3.5,3.5
+construction energy use,stationary,biomass cogen,,,,,,
+construction energy use,stationary,coal,3.5,3.5,3.5,3.5,3.5,3.5
+construction energy use,stationary,coal cogen,,,,,,
+construction energy use,stationary,district heat,,,,,,
+construction energy use,stationary,electricity,,,,,,
+construction energy use,stationary,gas,3.5,3.5,3.5,3.5,3.5,3.5
+construction energy use,stationary,gas cogen,,,,,,
+construction energy use,mobile,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+construction energy use,stationary,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+construction energy use,stationary,refined liquids cogen,,,,,,
 alumina,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
 alumina,biomass,biomass cogen,,,,,,
 alumina,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5

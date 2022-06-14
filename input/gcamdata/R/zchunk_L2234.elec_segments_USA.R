@@ -28,6 +28,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join distinct filter if_else mutate select semi_join summarise_if bind_rows
 #' @importFrom tidyr complete nesting replace_na
+#' @importFrom tibble tibble
 #' @author MTB Aug 2018
 module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -555,7 +556,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       bind_rows(A23.elecS_tech_mapping) -> L2234.StubTechProd_elecS_USA_temp
 
     L2234.StubTechProd_elecS_USA_temp %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_BASE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       write_to_all_states(c("region","Electric.sector", "supplysector", "subsector",
                             "Electric.sector.technology", "technology","year")) -> L2234.StubTechProd_elecS_USA_temp
 
@@ -1005,7 +1006,7 @@ module_gcamusa_L2234.elec_segments_USA <- function(command, ...) {
       select(region, supplysector, subsector) %>%
       mutate(technology = subsector,
              share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
-      repeat_add_columns((tibble::tibble(year = MODEL_YEARS))) -> L2234.TechShrwt_elecS_grid
+      repeat_add_columns((tibble(year = MODEL_YEARS))) -> L2234.TechShrwt_elecS_grid
 
     # Specify inputs for technologies in grid regions
     L2234.TechShrwt_elecS_grid %>%

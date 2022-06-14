@@ -1,29 +1,38 @@
 # File: A324.globaltech_cost.csv
 # Title: agriculture, construction, mining default costs
 # Units: 1975$/GJ
-# Column types: ccccnnnn
+# Column types: ccccnnnnnnnnn
 # ---------
-supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2030,2100
-agricultural energy use,refined liquids,refined liquids,non-energy,3,3,3,3
-agricultural energy use,gas,gas,non-energy,3,3,3,3
-agricultural energy use,biomass,biomass,non-energy,4,4,4,4
-agricultural energy use,electricity,electricity,non-energy,3,3,3,3
-agricultural energy use,hydrogen,hydrogen,non-energy,3,3,3,3
-agricultural energy use,coal,coal,non-energy,3,3,3,3
-agricultural energy use,heat,heat,non-energy,3,3,3,3
-mining energy use,refined liquids,refined liquids,non-energy,3,3,3,3
-mining energy use,gas,gas,non-energy,3,3,3,3
-mining energy use,biomass,biomass,non-energy,4,4,4,4
-mining energy use,electricity,electricity,non-energy,3,3,3,3
-mining energy use,hydrogen,hydrogen,non-energy,3,3,3,3
-mining energy use,coal,coal,non-energy,3,3,3,3
-mining energy use,heat,heat,non-energy,3,3,3,3
-construction energy use,refined liquids,refined liquids,non-energy,3,3,3,3
-construction energy use,gas,gas,non-energy,3,3,3,3
-construction energy use,biomass,biomass,non-energy,4,4,4,4
-construction energy use,electricity,electricity,non-energy,3,3,3,3
-construction energy use,hydrogen,hydrogen,non-energy,3,3,3,3
-construction energy use,coal,coal,non-energy,3,3,3,3
-construction energy use,heat,heat,non-energy,3,3,3,3
-construction,construction,construction,non-energy,3,3,3,3
-construction feedstocks,refined liquids,refined liquids,non-energy,0,0,0,0
+supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2025,2030,2035,2040,2045,2050,2100
+agricultural energy use,mobile,refined liquids,non-energy,18.84,18.84,18.84,18.84,18.84,18.84,18.84,18.84,18.84
+agricultural energy use,mobile,electricity,non-energy,29.7672,29.7672,29.7672,28.0716,26.5644,24.8688,23.1732,21.666,21.666
+agricultural energy use,mobile,hydrogen,non-energy,22.608,22.608,22.608,22.2312,21.8544,21.4776,21.1008,20.724,20.724
+mining energy use,mobile,refined liquids,non-energy,37.05,37.05,37.05,37.05,37.05,37.05,37.05,37.05,37.05
+mining energy use,mobile,electricity,non-energy,58.539,58.539,58.539,55.2045,52.2405,48.906,45.5715,42.6075,42.6075
+mining energy use,mobile,hydrogen,non-energy,44.46,44.46,44.46,43.719,42.978,42.237,41.496,40.755,40.755
+construction energy use,mobile,refined liquids,non-energy,55.56,55.56,55.56,55.56,55.56,55.56,55.56,55.56,55.56
+construction energy use,mobile,electricity,non-energy,87.7848,87.7848,87.7848,82.7844,78.3396,73.3392,68.3388,63.894,63.894
+construction energy use,mobile,hydrogen,non-energy,66.672,66.672,66.672,65.5608,64.4496,63.3384,62.2272,61.116,61.116
+construction,construction,construction,non-energy,3,3,3,3,3,3,3,3,3
+construction feedstocks,refined liquids,refined liquids,non-energy,0,0,0,0,0,0,0,0,0
+agricultural energy use,stationary,refined liquids,non-energy,5,5,5,5,5,5,5,5,5
+agricultural energy use,stationary,gas,non-energy,5,5,5,5,5,5,5,5,5
+agricultural energy use,stationary,biomass,non-energy,5,5,5,5,5,5,5,5,5
+agricultural energy use,stationary,electricity,non-energy,5,5,5,5,5,5,5,5,5
+agricultural energy use,stationary,hydrogen,non-energy,5,5,5,5,5,5,5,5,5
+agricultural energy use,stationary,coal,non-energy,5,5,5,5,5,5,5,5,5
+agricultural energy use,stationary,heat,non-energy,5,5,5,5,5,5,5,5,5
+mining energy use,stationary,refined liquids,non-energy,5,5,5,5,5,5,5,5,5
+mining energy use,stationary,gas,non-energy,5,5,5,5,5,5,5,5,5
+mining energy use,stationary,biomass,non-energy,5,5,5,5,5,5,5,5,5
+mining energy use,stationary,electricity,non-energy,5,5,5,5,5,5,5,5,5
+mining energy use,stationary,hydrogen,non-energy,5,5,5,5,5,5,5,5,5
+mining energy use,stationary,coal,non-energy,5,5,5,5,5,5,5,5,5
+mining energy use,stationary,heat,non-energy,5,5,5,5,5,5,5,5,5
+construction energy use,stationary,refined liquids,non-energy,5,5,5,5,5,5,5,5,5
+construction energy use,stationary,gas,non-energy,5,5,5,5,5,5,5,5,5
+construction energy use,stationary,biomass,non-energy,5,5,5,5,5,5,5,5,5
+construction energy use,stationary,electricity,non-energy,5,5,5,5,5,5,5,5,5
+construction energy use,stationary,hydrogen,non-energy,5,5,5,5,5,5,5,5,5
+construction energy use,stationary,coal,non-energy,5,5,5,5,5,5,5,5,5
+construction energy use,stationary,heat,non-energy,5,5,5,5,5,5,5,5,5

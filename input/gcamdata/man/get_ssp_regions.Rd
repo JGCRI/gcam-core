@@ -9,7 +9,7 @@ get_ssp_regions(
   reg_names,
   income_group,
   ssp_filter = "SSP4",
-  year_filter = 2010
+  year_filter = aglu.PCGDP_YEAR
 )
 }
 \arguments{

@@ -1,0 +1,49 @@
+name: R-CMD
+
+# Controls when the action will run. 
+on: [pull_request]
+
+jobs:
+  R-CMD:
+    runs-on: ubuntu-20.04
+
+    strategy:
+      fail-fast: false 
+      matrix:
+        R: [ '3.6.3', 'release' ]
+
+    name: R ${{ matrix.R }} R-CMD
+  
+    env:
+      R_REMOTES_NO_ERRORS_FROM_WARNINGS: false
+      GCAMDATA_USE_JAVA: true
+      GITHUB_PAT: ${{ secrets.GITHUB_TOKEN }}
+
+    steps:
+      - uses: actions/checkout@v2
+      - uses: r-lib/actions/setup-r@master
+        with:
+          r-version: ${{ matrix.R }}
+
+      - name: Cache R packages 
+        uses: actions/cache@v1 
+        with: 
+          path: ${{ env.R_LIBS_USER }} 
+          key: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1-${{ hashFiles('.github/depends.Rds') }} 
+          restore-keys: ${{ runner.os }}-${{ hashFiles('.github/R-version') }}-1- 
+
+      - name: Ubuntu config
+        run: |
+          sudo apt-get install libcurl4-openssl-dev
+          sudo fallocate -l 8g /mnt/for_fork.swap
+          sudo chmod 600 /mnt/for_fork.swap
+          sudo mkswap /mnt/for_fork.swap
+          sudo swapon /mnt/for_fork.swap
+
+      - name: Restore renv and check
+        run: |
+          install.packages(c("renv"), repos = "https://cloud.r-project.org")
+          renv::init( bare = TRUE)
+          renv::restore()
+          rcmdcheck::rcmdcheck(args = c("--no-manual", "--ignore-vignettes"), build_args = c("--no-build-vignettes"), error_on = "error", check_dir = "check")
+        shell: Rscript {0}

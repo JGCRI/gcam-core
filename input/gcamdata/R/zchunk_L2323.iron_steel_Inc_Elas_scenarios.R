@@ -44,7 +44,9 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
 
     GCAM_region_ID <- value <- year <- pcgdp_90thousUSD <- scenario <-
         region <- energy.final.demand <- income.elasticity <- . <-
-      value.x <- value.y <- NULL # silence package check.
+      value.x <- value.y <- pcgdp_90thousUSD_2015 <- a <- b <- m <-
+      per_capita_steel <- population <- steel_pro <- pcgdp_90thousUSD_before <-
+      steel_pro_before <- steel_hist <- inc_elas <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
@@ -109,8 +111,8 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       filter(year %in%  MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(L101.Pop_thous_Scen_R_Yfut, by = c("scenario", "GCAM_region_ID", "year", "region")) %>%
       left_join_error_no_match(A323.inc_elas_parameter, by = c( "region")) %>%
-      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- MODEL_FINAL_BASE_YEAR) ) %>%
-      mutate(steel_pro = per_capita_steel * population*0.000001)
+      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- MODEL_FINAL_BASE_YEAR),
+             steel_pro = per_capita_steel * population*0.000001)
 
 
   #Rebuild a new tibble save the previous year value
@@ -125,15 +127,15 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       left_join(pcgdp_2015, by = c("scenario", "GCAM_region_ID", "year")) %>%
       mutate(pcgdp_90thousUSD_before = replace_na(pcgdp_90thousUSD_before,0),steel_pro_before  = replace_na(steel_pro_before ,0),
              steel_hist  = replace_na(steel_hist,0),pcgdp_90thousUSD_2015 = replace_na(pcgdp_90thousUSD_2015,0),
-             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, steel_pro_before = steel_pro_before + steel_hist) %>%
-      #cal
-      mutate(inc_elas = log(steel_pro / steel_pro_before)/log(pcgdp_90thousUSD/pcgdp_90thousUSD_before)) %>%
-      mutate(income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
+             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, steel_pro_before = steel_pro_before + steel_hist,
+             #cal
+             inc_elas = log(steel_pro / steel_pro_before)/log(pcgdp_90thousUSD/pcgdp_90thousUSD_before),
+             income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       arrange(year) %>%
       #replace those huge number
-      mutate(income.elasticity = replace(income.elasticity,income.elasticity > 10 , 10)) %>%
-      mutate(income.elasticity = replace(income.elasticity,income.elasticity < -10,-10))
+      mutate(income.elasticity = replace(income.elasticity,income.elasticity > 10 , 10),
+             income.elasticity = replace(income.elasticity,income.elasticity < -10,-10))
 
 
     # Split by scenario and remove scenario column from each tibble
@@ -152,8 +154,8 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       filter(year %in%  MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("GCAM_region_ID", "year", "region")) %>%
       left_join_error_no_match(A323.inc_elas_parameter, by = c( "region")) %>%
-      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- 2015) ) %>%
-      mutate(steel_pro = per_capita_steel * population*0.000001)
+      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- 2015),
+             steel_pro = per_capita_steel * population*0.000001)
 
 
     #Rebuild a new tibble save the previous year value
@@ -168,15 +170,15 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       left_join(pcgdp_2015_GCAM3, by = c( "GCAM_region_ID", "year")) %>%
       mutate(pcgdp_90thousUSD_before = replace_na(pcgdp_90thousUSD_before,0),steel_pro_before  = replace_na(steel_pro_before ,0),
              steel_hist  = replace_na(steel_hist,0),pcgdp_90thousUSD_2015 = replace_na(pcgdp_90thousUSD_2015,0),
-             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, steel_pro_before = steel_pro_before + steel_hist) %>%
-      #cal
-      mutate(inc_elas = log(steel_pro / steel_pro_before)/log(pcgdp_90thousUSD/pcgdp_90thousUSD_before)) %>%
-      mutate(income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
+             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, steel_pro_before = steel_pro_before + steel_hist,
+             #cal
+             inc_elas = log(steel_pro / steel_pro_before)/log(pcgdp_90thousUSD/pcgdp_90thousUSD_before),
+             income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
       select(region, energy.final.demand, year, income.elasticity) %>%
       arrange(year) %>%
       #replace those huge number
-      mutate(income.elasticity = replace(income.elasticity,income.elasticity > 10 , 10)) %>%
-      mutate(income.elasticity = replace(income.elasticity,income.elasticity < -10,-10))
+      mutate(income.elasticity = replace(income.elasticity,income.elasticity > 10 , 10),
+             income.elasticity = replace(income.elasticity,income.elasticity < -10,-10))
 
 
     # ===================================================

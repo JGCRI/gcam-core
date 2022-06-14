@@ -93,8 +93,9 @@ module_energy_L2326.aluminum <- function(command, ...) {
     has_district_heat <- year <- value <- GCAM_region_ID <- sector <- fuel <- year.fillout <- to.value <-
       technology <- supplysector <- subsector <- minicam.energy.input <- coefficient <-
       remove.fraction <- minicam.non.energy.input <- input.cost  <- calibration <- calOutputValue <- subs.share.weight <- region <-
-      calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
-      value.x <- value.y <- parameter <- NULL
+      calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <- output.ratio <-
+      value.x <- value.y <- parameter <- secondary.output <- elec_ratio <- year.x <- year.y <- output.ratio.x <-
+      output.ratio.y <- sector.name <- subsector.name <- stub.technology <- market.name <- terminal_coef <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -335,8 +336,8 @@ module_energy_L2326.aluminum <- function(command, ...) {
       filter(supplysector != "aluminum") %>%
       left_join(L2326.StubTechCalInput_aluminum_tmp,
                 by = c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input")) %>%
-      mutate(fuel = NULL,sector = NULL, value = NULL,GCAM_region_ID  = NULL,calibrated.value = replace_na(calibrated.value,0)) %>%
-      mutate(share.weight.year = year) %>%
+      mutate(fuel = NULL,sector = NULL, value = NULL,GCAM_region_ID  = NULL,calibrated.value = replace_na(calibrated.value,0),
+             share.weight.year = year) %>%
       rename(calOutputValue = calibrated.value) %>%  # temporary column name change to accommodate function set_subsector_shrwt
       set_subsector_shrwt %>%
       rename(calibrated.value = calOutputValue) %>% # temporary column name changeto accommodate function set_subsector_shrwt
@@ -371,8 +372,8 @@ module_energy_L2326.aluminum <- function(command, ...) {
       mutate(calibrated.value = round(value, energy.DIGITS_CALOUTPUT)) %>%
       left_join(calibrated_techs_export, by = c("fuel", "sector")) %>%
       anti_join(L2326.rm_heat_techs_R, by = c("region", "subsector")) %>% # Remove non-existent heat subsectors from each region
-      mutate(coefficient = round(value, energy.DIGITS_COEFFICIENT)) %>%
-      mutate(stub.technology = technology,
+      mutate(coefficient = round(value, energy.DIGITS_COEFFICIENT),
+             stub.technology = technology,
              market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L2326.StubTechCoef_aluminum_tmp
@@ -380,8 +381,8 @@ module_energy_L2326.aluminum <- function(command, ...) {
     L2326.aluminum_tmp %>%
       left_join(L2326.StubTechCoef_aluminum_tmp,
                 by = c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input")) %>%
-      mutate(GCAM_region_ID  = NULL,coefficient = replace_na(coefficient,0)) %>%
-      mutate(share.weight.year = year,market.name = region) %>%
+      mutate(GCAM_region_ID  = NULL,coefficient = replace_na(coefficient,0),
+             share.weight.year = year,market.name = region) %>%
       anti_join(L2326.rm_heat_techs_R, by = c("region", "subsector")) %>% # Remove non-existent heat subsectors from each region
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L2326.StubTechCoef_aluminum
@@ -393,8 +394,8 @@ module_energy_L2326.aluminum <- function(command, ...) {
       left_join(select(L2326.GlobalTechCoef_aluminum %>% rename(terminal_coef = coefficient,supplysector = sector.name,subsector = subsector.name),
                        supplysector, subsector, technology, minicam.energy.input, terminal_coef, year),
                 by = c("supplysector", "subsector", stub.technology = "technology", "minicam.energy.input","year")) %>%
-      mutate(coefficient = if_else(year == 2010 & is.na(coefficient), terminal_coef, coefficient)) %>%
-      mutate(coefficient = if_else(year == 2015 & coefficient ==0, terminal_coef, coefficient)) %>%
+      mutate(coefficient = if_else(year == 2010 & is.na(coefficient), terminal_coef, coefficient),
+             coefficient = if_else(year == 2015 & coefficient ==0, terminal_coef, coefficient)) %>%
       select(-terminal_coef) %>%
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input) %>%
       mutate(coefficient = round(approx_fun(year, coefficient,rule = 2), energy.DIGITS_COEFFICIENT)) %>%
@@ -436,8 +437,8 @@ module_energy_L2326.aluminum <- function(command, ...) {
       filter(supplysector == "aluminum") %>%
       left_join(L2326.StubTechProd_aluminum_tmp,
                 by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
-      mutate(GCAM_region_ID  = NULL,calOutputValue = replace_na(calOutputValue,0)) %>%
-      mutate(share.weight.year = year) %>%
+      mutate(GCAM_region_ID  = NULL,calOutputValue = replace_na(calOutputValue,0),
+             share.weight.year = year) %>%
       set_subsector_shrwt %>%
       mutate(tech.share.weight = if_else(subs.share.weight > 0, 1, 0)) %>%
       anti_join(L2326.rm_heat_techs_R, by = c("region", "subsector")) %>% # Remove non-existent heat subsectors from each region

@@ -71,7 +71,6 @@
 #include "emissions/include/emissions_summer.h"
 #include "emissions/include/luc_emissions_summer.h"
 #include "technologies/include/global_technology_database.h"
-#include "reporting/include/energy_balance_table.h"
 #include "containers/include/market_dependency_finder.h"
 #include "technologies/include/global_technology_database.h"
 #include "containers/include/iactivity.h"
@@ -217,20 +216,6 @@ void World::initCalc( const int period ) {
 
     for( vector<Region*>::iterator i = mRegions.begin(); i != mRegions.end(); i++ ){
         ( *i )->initCalc( period );
-    }
-    
-    Configuration* conf = Configuration::getInstance();
-    if( conf->getBool( "CalibrationActive" ) ){
-        // print an I/O table for debuging before we do any calibration
-        ILogger& calLog = ILogger::getLogger( "calibration_log" );
-        calLog.setLevel( ILogger::DEBUG );
-        for( CRegionIterator reigonIt = mRegions.begin(); reigonIt != mRegions.end(); ++reigonIt ){
-            // for this table we will want a condensed table without non-calibrated values
-            // so the user can get an easy to see view of what they put in
-            EnergyBalanceTable table( (*reigonIt)->getName(), calLog, true, false );
-            (*reigonIt)->accept( &table, period );
-            table.finish();
-        }
     }
     
     // Reset the calc counter.
@@ -625,28 +610,9 @@ void World::runClimateModel( int aPeriod ) {
 */
 bool World::isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const {
     bool isAllCalibrated = true;
-    ILogger& calLog = ILogger::getLogger( "calibration_log" );
-    calLog.setLevel( ILogger::DEBUG );
     for( CRegionIterator i = mRegions.begin(); i != mRegions.end(); i++ ){
         bool currRegionCalibrated = ( *i )->isAllCalibrated( period, calAccuracy, printWarnings );
         isAllCalibrated &= currRegionCalibrated;
-        // if we did not calibrate this region correctly and we are printing warnings then give the
-        // user some I/O tables to help them understand what was inconsistent
-        if( !currRegionCalibrated && printWarnings ) {
-            // we want to give the user two tables to use one with a condensed view
-            // with all inputs and outputs so they can see what didn't calibrate
-            // and another table fully expanded with just the calibrated values
-            calLog << "Energy balance table where inputs and outputs have been replaced by a"
-                << " calibrated value if it exists:" << endl;
-            EnergyBalanceTable condensedTable( (*i)->getName(), calLog, true, true );
-            (*i)->accept( &condensedTable, period );
-            condensedTable.finish();
-            
-            calLog << "Full energy balalce table with just cal values:" << endl;
-            EnergyBalanceTable fullTable( (*i)->getName(), calLog, false, false );
-            (*i)->accept( &fullTable, period );
-            fullTable.finish();
-        }
     }
 	
     return isAllCalibrated;

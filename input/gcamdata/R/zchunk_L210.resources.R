@@ -529,16 +529,9 @@ module_energy_L210.resources <- function(command, ...) {
     }
 
     # SSP4 is handled differently because of its region groupings - we will handle its precursors separately below
-    L210.pcgdp_max_base_year <- L102.pcgdp_thous90USD_Scen_R_Y %>%
-      filter(scenario == "SSP4",
-             year == max(MODEL_BASE_YEARS)) %>%
-      # Add region name
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(value = value * gdp_deflator(2010, 1990))
-
     # Define high and low growth regions
-    L210.high_reg <- L210.pcgdp_max_base_year$region[L210.pcgdp_max_base_year$value > aglu.HIGH_GROWTH_PCGDP]
-    L210.low_reg <- L210.pcgdp_max_base_year$region[L210.pcgdp_max_base_year$value < aglu.LOW_GROWTH_PCGDP]
+    L210.high_reg <- get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "high")
+    L210.low_reg <- get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low")
 
     L210.RsrcEnvironCost_SSP4 <- L210.RsrcEnvironCost_SSP4 %>%
       # Set environmental costs for coal to 0 for low growth regions,

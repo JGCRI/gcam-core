@@ -2,25 +2,26 @@
 # Title: Primary energy transformation default technology shareweights
 # Units: N/A
 # Description: Shareweights of transformation technologies 
-# Column types: ccciinii 
+# Column types: cccnnnnnn 
 # ----------
-supplysector,subsector,technology,1971,2015,2020,2050,2100
-gas processing,natural gas,natural gas,1,1,1,1,1
-gas processing,biomass gasification,biomass gasification,1,1,1,1,1
-gas processing,coal gasification,coal gasification,1,1,1,1,1
-nuclearFuelGenII,enrichedUranium,enrichedUranium,1,1,1,1,1
-nuclearFuelGenIII,enrichedUranium,enrichedUranium,1,1,1,1,1
-refining,oil refining,oil refining,1,1,1,1,1
-refining,coal to liquids,coal to liquids,0,0,1,1,1
-refining,coal to liquids,coal to liquids CCS level 1,0,0,0.333,1,1
-refining,coal to liquids,coal to liquids CCS level 2,0,0,0.333,1,1
-refining,gas to liquids,gas to liquids,0,0,1,1,1
-refining,biomass liquids,cellulosic ethanol,0,0,1,1,1
-refining,biomass liquids,cellulosic ethanol CCS level 1,0,0,0.333,1,1
-refining,biomass liquids,cellulosic ethanol CCS level 2,0,0,0.333,1,1
-refining,biomass liquids,FT biofuels,0,0,1,1,1
-refining,biomass liquids,FT biofuels CCS level 1,0,0,0.333,1,1
-refining,biomass liquids,FT biofuels CCS level 2,0,0,0.333,1,1
-refining,biomass liquids,corn ethanol,0,1,1,1,1
-refining,biomass liquids,sugar cane ethanol,0,1,1,1,1
-refining,biomass liquids,biodiesel,0,1,1,1,1
+supplysector,subsector,technology,1971,2015,2020,2025,2050,2100
+gas processing,natural gas,natural gas,1,1,1,1,1,1
+gas processing,biomass gasification,biomass gasification,1,1,1,1,1,1
+gas processing,coal gasification,coal gasification,1,1,1,1,1,1
+nuclearFuelGenII,enrichedUranium,enrichedUranium,1,1,1,1,1,1
+nuclearFuelGenIII,enrichedUranium,enrichedUranium,1,1,1,1,1,1
+refining,oil refining,oil refining,1,1,1,1,1,1
+refining,coal to liquids,coal to liquids,0,0,1,1,1,1
+refining,coal to liquids,coal to liquids CCS level 1,0,0,0.333,0.444,1,1
+refining,coal to liquids,coal to liquids CCS level 2,0,0,0.333,0.444,1,1
+refining,gas to liquids,gas to liquids,0,0,1,1,1,1
+refining,biomass liquids,cellulosic ethanol,0,0,1,1,1,1
+refining,biomass liquids,cellulosic ethanol CCS level 1,0,0,0.333,0.444,1,1
+refining,biomass liquids,cellulosic ethanol CCS level 2,0,0,0.333,0.444,1,1
+refining,biomass liquids,FT biofuels,0,0,1,1,1,1
+refining,biomass liquids,FT biofuels CCS level 1,0,0,0.333,0.444,1,1
+refining,biomass liquids,FT biofuels CCS level 2,0,0,0.333,0.444,1,1
+refining,biomass liquids,corn ethanol,0,1,1,1,1,1
+refining,biomass liquids,sugar cane ethanol,0,1,1,1,1,1
+refining,biomass liquids,biodiesel,0,1,1,1,1,1
+refining,biomass liquids,BTL with hydrogen,0,0,0,1,1,1

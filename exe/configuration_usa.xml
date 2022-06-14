@@ -17,7 +17,7 @@
 		<Value write-output="0" append-scenario-name="0" name="landAllocatorGraphName">LandAllocatorGraph.dot</Value>
 	</Files>
 	<ScenarioComponents>
-        <Value name = "climate">../input/gcamdata/xml/no_climate_model.xml</Value>
+        <Value name = "climate">../input/gcamdata/xml/hector.xml</Value>
 		<Value name = "socioeconomics">../input/gcamdata/xml/socioeconomics_gSSP2.xml</Value>
 
 		<Value name = "resources">../input/gcamdata/xml/resources.xml</Value>
@@ -28,8 +28,8 @@
 		<Value name = "heat">../input/gcamdata/xml/heat.xml</Value>
 		<Value name = "hydrogen">../input/gcamdata/xml/hydrogen.xml</Value>
 		<Value name = "energy_distribution">../input/gcamdata/xml/en_distribution.xml</Value>
-		<Value name = "industry">../input/gcamdata/xml/industry.xml</Value>
-		<Value name = "industry_income_elas">../input/gcamdata/xml/industry_incelas_gssp2.xml</Value>
+		<Value name = "other_industry">../input/gcamdata/xml/other_industry.xml</Value>
+		<Value name = "industry_income_elas">../input/gcamdata/xml/other_industry_incelas_gssp2.xml</Value>
  		<Value name = "iron_steel">../input/gcamdata/xml/iron_steel.xml</Value>
 		<Value name = "iron_steel_income_elas">../input/gcamdata/xml/iron_steel_incelas_gssp2.xml</Value>   
  		<Value name = "Off_road">../input/gcamdata/xml/Off_road.xml</Value>
@@ -80,6 +80,21 @@
 		<Value name = "municipal_water">../input/gcamdata/xml/water_demand_municipal.xml</Value>
 		<Value name = "primary_ene_water">../input/gcamdata/xml/water_demand_primary.xml</Value>
 		
+		<!-- Global nonCO2 GHG files -->
+		<Value name = "ind_urb_proc">../input/gcamdata/xml/ind_urb_processing_sectors.xml</Value>
+		<Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions.xml</Value>
+		<Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions.xml</Value>
+		<Value name = "nonco2_unmgd">../input/gcamdata/xml/all_unmgd_emissions.xml</Value>
+		<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT.xml</Value>
+		<Value name = "nonco2_aglu_prot">../input/gcamdata/xml/all_protected_unmgd_emissions.xml</Value>
+		<Value name = "nonco2_em_controls">../input/gcamdata/xml/emission_factor_controls.xml</Value>
+		
+		<!-- Global nonCO2 GHG MAC files -->
+		<Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions_MAC.xml</Value>
+		<Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions_MAC.xml</Value>
+		<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT_MAC.xml</Value> 
+		<Value name = "nonco2_proc">../input/gcamdata/xml/ind_urb_processing_sectors_MAC.xml</Value> 
+		
 		<Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
 		<Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
 		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>
@@ -105,7 +120,6 @@
 		<Value name = "fert_usa">../input/gcamdata/xml/Fert_USA.xml</Value>
 
 		<!-- NEW NESTING STRUCTURE -->
-		
 		<Value name = "solar_usa">../input/gcamdata/xml/solar_reeds_USA.xml</Value>
 		<Value name = "wind_usa">../input/gcamdata/xml/wind_reeds_USA.xml</Value>
 		<Value name = "hydro_usa">../input/gcamdata/xml/elec_hydro_USA.xml</Value>
@@ -127,7 +141,17 @@
 		<!--GHG EMISSIONS USA-->
 		<Value name = "ghg_usa">../input/gcamdata/xml/ghg_emissions_USA.xml</Value>
 		<Value name = "ghg_usa">../input/gcamdata/xml/elecS_ghg_emissions_water_USA.xml</Value>
-		<Value name = "ghg_usa">../input/gcamdata/xml/trn_ghg_emissions_USA.xml</Value>	
+		<Value name = "ghg_usa">../input/gcamdata/xml/trn_ghg_emissions_USA.xml</Value>
+
+		<!--nonGHG EMISSIONS USA-->
+		<Value name = "bld_emiss_USA">../input/gcamdata/xml/bld_emissions_USA.xml</Value>
+		<Value name = "othertrn_emiss_USA">../input/gcamdata/xml/othertrn_emissions_USA.xml</Value>
+		<Value name = "indenergy_emiss_USA">../input/gcamdata/xml/indenergy_emissions_USA.xml</Value>
+		<Value name = "elc_emiss_USA">../input/gcamdata/xml/elc_emissions_USA.xml</Value>
+		<Value name = "transport_emiss_USA">../input/gcamdata/xml/transport_emissions_USA.xml</Value>
+		<Value name = "prc_usa">../input/gcamdata/xml/ind_urb_processing_sectors_USA.xml</Value>
+		<Value name = "process_emiss_USA">../input/gcamdata/xml/ind_urb_proc_emissions_USA.xml</Value>
+		<Value name = "refining_emiss_USA">../input/gcamdata/xml/refinery_emissions_USA.xml</Value>
 	
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		
@@ -160,7 +184,9 @@
 		<Value name="climateOutputInterval">5</Value>
 		<Value name="parallel-grain-size">50</Value>
 		<Value name="stop-period">-1</Value>
+		<Value name="stop-year">-1</Value>
 		<Value name="restart-period">-1</Value>
+		<Value name="restart-year">-1</Value>
 		<Value name="max-parallelism">-1</Value>
 	</Ints>
 	<Doubles>

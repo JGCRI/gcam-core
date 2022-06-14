@@ -44,7 +44,7 @@ H2 central production,coal,coal chemical,0.009,0.0002,0.0002,0,0,0
 H2 central production,coal,coal chemical CCS,0.009,0.0002,0.0002,0,0,0
 H2 central production,gas,natural gas steam reforming,,0.0042,0.0004,0,0,
 H2 central production,gas,natural gas steam reforming CCS,,0.0042,0.0004,0,0,
-H2 forecourt production,gas,natural gas steam reforming,,0.0042,0.0004,0,0,
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,,0.0042,0.0004,0,0,
 industrial energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
 industrial energy use,biomass,biomass cogen,,,,,,
 industrial energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
@@ -224,36 +224,39 @@ chemical energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
 chemical energy use,gas,gas cogen,,,,,,
 chemical energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
 chemical energy use,refined liquids,refined liquids cogen,,,,,,
-agricultural energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
-agricultural energy use,biomass,biomass cogen,,,,,,
-agricultural energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
-agricultural energy use,coal,coal cogen,,,,,,
-agricultural energy use,district heat,district heat,,,,,,
-agricultural energy use,electricity,electricity,,,,,,
-agricultural energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
-agricultural energy use,gas,gas cogen,,,,,,
-agricultural energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
-agricultural energy use,refined liquids,refined liquids cogen,,,,,,
-mining energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
-mining energy use,biomass,biomass cogen,,,,,,
-mining energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
-mining energy use,coal,coal cogen,,,,,,
-mining energy use,district heat,district heat,,,,,,
-mining energy use,electricity,electricity,,,,,,
-mining energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
-mining energy use,gas,gas cogen,,,,,,
-mining energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
-mining energy use,refined liquids,refined liquids cogen,,,,,,
-construction energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
-construction energy use,biomass,biomass cogen,,,,,,
-construction energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
-construction energy use,coal,coal cogen,,,,,,
-construction energy use,district heat,district heat,,,,,,
-construction energy use,electricity,electricity,,,,,,
-construction energy use,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
-construction energy use,gas,gas cogen,,,,,,
-construction energy use,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
-construction energy use,refined liquids,refined liquids cogen,,,,,,
+agricultural energy use,stationary,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+agricultural energy use,stationary,biomass cogen,,,,,,
+agricultural energy use,stationary,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+agricultural energy use,stationary,coal cogen,,,,,,
+agricultural energy use,stationary,district heat,,,,,,
+agricultural energy use,stationary,electricity,,,,,,
+agricultural energy use,stationary,gas,0.0238,0.0468,0.0067,0,0,0.0038
+agricultural energy use,stationary,gas cogen,,,,,,
+agricultural energy use,mobile,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+agricultural energy use,stationary,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+agricultural energy use,stationary,refined liquids cogen,,,,,,
+mining energy use,stationary,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+mining energy use,stationary,biomass cogen,,,,,,
+mining energy use,stationary,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+mining energy use,stationary,coal cogen,,,,,,
+mining energy use,stationary,district heat,,,,,,
+mining energy use,stationary,electricity,,,,,,
+mining energy use,stationary,gas,0.0238,0.0468,0.0067,0,0,0.0038
+mining energy use,stationary,gas cogen,,,,,,
+mining energy use,mobile,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+mining energy use,stationary,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+mining energy use,stationary,refined liquids cogen,,,,,,
+construction energy use,stationary,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+construction energy use,stationary,biomass cogen,,,,,,
+construction energy use,stationary,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+construction energy use,stationary,coal cogen,,,,,,
+construction energy use,stationary,district heat,,,,,,
+construction energy use,stationary,electricity,,,,,,
+construction energy use,stationary,gas,0.0238,0.0468,0.0067,0,0,0.0038
+construction energy use,stationary,gas cogen,,,,,,
+construction energy use,mobile,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+construction energy use,stationary,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+construction energy use,stationary,refined liquids cogen,,,,,,
 alumina,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
 alumina,biomass,biomass cogen,,,,,,
 alumina,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038

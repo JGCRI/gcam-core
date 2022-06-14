@@ -38,3 +38,4 @@ refining,biomass liquids,FT biofuels CCS level 2,initial-future-year,45,,30,0.3,
 refining,biomass liquids,corn ethanol,initial-future-year,45,,30,0.3,-0.5,5
 refining,biomass liquids,sugar cane ethanol,initial-future-year,45,,30,0.3,-0.5,5
 refining,biomass liquids,biodiesel,initial-future-year,45,,30,0.3,-0.9,5
+refining,biomass liquids,BTL with hydrogen,final-calibration-year,45,,25,0.2,-0.1,10

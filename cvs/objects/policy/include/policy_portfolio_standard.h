@@ -45,41 +45,32 @@
 * \author Sonny Kim
 */
 
-#include <string>
-#include <boost/core/noncopyable.hpp>
-
-#include "util/base/include/inamed.h"
-#include "util/base/include/time_vector.h"
-#include "util/base/include/value.h"
-#include "util/base/include/data_definition_util.h"
+#include "policy/include/policy_ghg.h"
 
 /*! 
 * \ingroup Objects
 * \brief Class which defines a portfolio standard policy. 
 * \author Sonny Kim
 */
-class PolicyPortfolioStandard: public INamed, private boost::noncopyable {
+class PolicyPortfolioStandard: public GHGPolicy {
 public:
     PolicyPortfolioStandard();
 
-    const std::string& getName() const;
-    const std::string& getXMLName() const;
+    virtual const std::string& getName() const;
+    virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-    void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    void completeInit( const std::string& aRegionName );
-    void initCalc( const std::string& aRegionName, const int aPeriod );
-    void postCalc( const std::string& aRegionName, const int aPeriod );
+    virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    virtual void completeInit( const std::string& aRegionName );
 protected:
 
-    DEFINE_DATA(
-        // PolicyPortfolioStandard is the only member of this container hierarchy.
-        DEFINE_SUBCLASS_FAMILY( PolicyPortfolioStandard ),
+    DEFINE_DATA_WITH_PARENT(
+        GHGPolicy,
         
         //! Policy name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        //DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
         //! Name of the market
-        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
+        //DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
         
         //! Type of policy (tax or subsidy)
         DEFINE_VARIABLE( SIMPLE, "policyType", mPolicyType, std::string ),
@@ -88,10 +79,10 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "isShareBased", mIsShareBased, bool ),
         
         //! Quantity constraint by year
-        DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<Value> ),
+        //DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<Value> ),
         
         //! Fixed tax on Fuel by year($/GJ)
-        DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<Value> ),
+        //DEFINE_VARIABLE( ARRAY, "fixedTax", mFixedTax, objects::PeriodVector<Value> ),
         
         //! Share of total or sectoral output
         DEFINE_VARIABLE( ARRAY, "share-of-sector-output", mShareOfSectorOutput, objects::PeriodVector<Value> ),

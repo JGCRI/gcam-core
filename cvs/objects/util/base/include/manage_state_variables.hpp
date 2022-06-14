@@ -70,6 +70,7 @@ class Value;
  * \author Pralit Patel
  */
 class ManageStateVariables {
+    friend class SolutionDebugger;
 public:
     ManageStateVariables( const int aPeriod );
     ~ManageStateVariables();

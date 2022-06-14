@@ -479,7 +479,7 @@ double SubResource::getLowestPrice( const int aPeriod ) const
         return util::getLargeNumber();
     }
 
-    double depleted = aPeriod != 0 ? mCumulProd[ aPeriod - 1 ] : 0;
+    double depleted = aPeriod != 0 ? mCumulProd[ aPeriod - 1 ] : 0.0;
 
 
     // figure out what's the lowest grade that hasn't been fully

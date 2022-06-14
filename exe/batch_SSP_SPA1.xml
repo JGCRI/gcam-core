@@ -12,8 +12,8 @@
 			<Value name = "heat">../input/gcamdata/xml/heat.xml</Value>
 			<Value name = "hydrogen">../input/gcamdata/xml/hydrogen.xml</Value>
 			<Value name = "energy_distribution">../input/gcamdata/xml/en_distribution.xml</Value>
-			<Value name = "industry">../input/gcamdata/xml/industry.xml</Value>
-			<Value name = "industry_income_elas">../input/gcamdata/xml/industry_incelas_gssp2.xml</Value>
+			<Value name = "industry">../input/gcamdata/xml/other_industry.xml</Value>
+			<Value name = "industry_income_elas">../input/gcamdata/xml/other_industry_incelas_gssp2.xml</Value>
  			<Value name = "iron_steel">../input/gcamdata/xml/iron_steel.xml</Value>
 			<Value name = "iron_steel_income_elas">../input/gcamdata/xml/iron_steel_incelas_gssp2.xml</Value>   
  			<Value name = "Off_road">../input/gcamdata/xml/Off_road.xml</Value>
@@ -88,7 +88,7 @@
 			<Value name="socioeconomics">../input/gcamdata/xml/socioeconomics_SSP1.xml</Value>
 			
 			<!-- INDUSTRY -->
-			<Value name="ind">../input/gcamdata/xml/industry_incelas_ssp1.xml</Value>		
+			<Value name="ind">../input/gcamdata/xml/other_industry_incelas_ssp1.xml</Value>		
 			<Value name = "iron_steel_income_elas">../input/gcamdata/xml/iron_steel_incelas_ssp1.xml</Value>   
 			<Value name = "Off_road_income_elas">../input/gcamdata/xml/Off_road_incelas_ssp1.xml</Value>  
 			<Value name = "chemical_income_elas">../input/gcamdata/xml/chemical_incelas_ssp1.xml</Value>   

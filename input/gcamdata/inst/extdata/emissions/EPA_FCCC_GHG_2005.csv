@@ -1,6 +1,7 @@
 # File: EPA_FCCC_GHG_2005.csv
 # Title: EPA USA GHG emissions inventory, 2005
 # Units: Gg
+# Source: USA National Inventory Submission - Common Reporting Format - Tables1.A(a)s1-4 - https://unfccc.int/files/national_reports/annex_i_ghg_inventories/national_inventories_submissions/application/x-zip-compressed/usa_2007_crf_11apr.zip
 # Column types: ccnnn 
 # ----------
 GREENHOUSE GAS SOURCE AND SINK CATEGORIES,Source_Category, CO2,CH4,N2O

@@ -19,6 +19,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter full_join group_by if_else left_join mutate right_join select semi_join summarise
 #' @importFrom tidyr complete nesting replace_na separate
+#' @importFrom tibble tibble
 #' @author RC July 2017
 module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -101,7 +102,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Copy to both high and low management levels
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_subsector, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
@@ -110,7 +111,7 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
              coefficient = round(value, aglu.DIGITS_CALOUTPUT)) %>%
       filter(coefficient > 0) %>%
       # Assume coefs stay constant, copy to all model years
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) ->
+      repeat_add_columns(tibble(year = MODEL_YEARS)) ->
       L2072.AgCoef_Water_ag_mgmt
 
     # Separate irrigation water consumption IO coefficients

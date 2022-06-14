@@ -306,7 +306,9 @@ module_gcamusa_L2322.Fert_USA <- function(command, ...) {
                                  select(state, grid_region),
                                by = c("region" = "state")) %>%
       mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
-             grid_region, market.name)) %>%
+             grid_region, market.name),
+             market.name = if_else(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS,
+                                   region, market.name)) %>%
       select(-grid_region) ->
 	  L2322.StubTechCoef_Fert_USA
 

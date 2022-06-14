@@ -1,0 +1,10 @@
+# File: A62.PrimaryFuelCCoef.csv
+# Title: DAC Global Default Emissions Factor
+# Description: assumed airCO2 emissions factor
+# Units: Unitless (C/C)
+# Source: none
+# Column types: cni
+# ----------
+PrimaryFuelCO2Coef.name,PrimaryFuelCO2Coef,traded
+airCO2,1,0
+

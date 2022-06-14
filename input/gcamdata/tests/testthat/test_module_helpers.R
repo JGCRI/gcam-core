@@ -220,8 +220,8 @@ test_that("get_ssp_regions", {
 
   pcGDP <- tibble(GCAM_region_ID = 1:3,
                   scenario = ssp,
-                  year = yr,
-                  value = gdp_deflator(1990, yr) *
+                  year = eval(yr),
+                  value = gdp_deflator(1990, eval(yr)) *
                     c(aglu.LOW_GROWTH_PCGDP - 1,
                       aglu.HIGH_GROWTH_PCGDP + 1,
                       mean(c(aglu.LOW_GROWTH_PCGDP, aglu.HIGH_GROWTH_PCGDP))))
@@ -237,7 +237,7 @@ test_that("get_ssp_regions", {
   expect_error(get_ssp_regions(pcGDP, reg_names, income_group = "zzz"))
 
   # No matches if we change year and/or scenario
-  expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "low", year_filter = yr - 1), character(0))
+  expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "low", year_filter = eval(yr) - 1), character(0))
   expect_equal(get_ssp_regions(pcGDP, reg_names, income_group = "high", ssp_filter = paste0(ssp, "x")), character(0))
 })
 
