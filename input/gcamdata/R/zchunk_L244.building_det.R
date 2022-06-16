@@ -1189,15 +1189,30 @@ module_energy_L244.building_det <- function(command, ...) {
         semi_join(L244.Tech_bld, by = c("region", "supplysector", "subsector"))
     }
 
-    # Adjust interpolation rule to promote electricity penetration in China
+    # Adjust interpolation rule to promote electricity penetration in developing economies
+    # There are some regions in which electric heating needs to be promoted due to very low values in base years:
+    elec_adj<-L144.base_service_EJ_serv_fuel %>%
+      filter(year == 2015, fuel == "electricity", grepl("resid heating", service)) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(L144.flsp_bm2_R_res_Yh %>% rename(flsp_bm2 = value),
+                                by = c("GCAM_region_ID", "year", "region")) %>%
+      mutate(value_gj_m2 = value / flsp_bm2) %>%
+      arrange(value_gj_m2) %>%
+      filter(value_gj_m2 <= 1e-03) %>%
+      # take out Indonesia because it does not include heating demand
+      filter(region != "Indonesia")
+
+    elec_heat_regions<-unique(elec_adj$region)
+
+
     L244.SubsectorInterp_bld<-L244.SubsectorInterp_bld %>%
       mutate(to.value = 1) %>%
       mutate(interpolation.function = if_else(grepl("resid heating modern", supplysector) &
-                                              region == "China" &
+                                              region %in% elec_heat_regions &
                                               subsector %in% c("electricity"),
                                               "linear", interpolation.function),
              to.year = if_else(grepl("resid heating modern", supplysector) &
-                                                region == "China" &
+                                                region %in% elec_heat_regions &
                                                 subsector %in% c("electricity"),
                                                 2050, to.year)) %>%
       select(LEVEL2_DATA_NAMES[["SubsectorInterpTo"]])
