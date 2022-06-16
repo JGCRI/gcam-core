@@ -1,0 +1,11 @@
+# File: MOVES_VMT_dist_missing_mapping.csv
+# Title: MOVES VMT dist mapping file between similar vehicle source classes
+# Description: Mapping file for copying VMT distributions from similar vehicle source classes for needed types that are missing
+# Units: NA
+# Source: NA - Mapping file. Found source type names in Table 2-1 US EPA Population and Activity of On-road Vehicles in MOVES2014 Draft Report. https://cfpub.epa.gov/si/si_public_record_report.cfm?Lab=OTAQ&dirEntryId=309336
+# Column types: icic
+# ----------
+sourceTypeID.orig,Class.orig,sourceTypeID.new,Class.new
+32,Light Commercial Trucks,31,Passenger Trucks (primarily personal use)
+42,Transit Buses,41,Intercity Buses
+42,Transit Buses,43,School Buses

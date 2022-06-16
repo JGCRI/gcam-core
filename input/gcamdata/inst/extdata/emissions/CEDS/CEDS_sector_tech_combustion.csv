@@ -95,21 +95,24 @@ resid heating,traditional biomass,traditional biomass,bld_resid,biomass
 resid others,traditional biomass,traditional biomass,bld_resid,biomass
 trn_pass_road_LDV_2W,Motorcycle (50-250cc),Liquids,LDV_2W,refined liquids
 trn_freight_road,Truck,Liquids,Truck,refined liquids
-agricultural energy use,refined liquids,refined liquids,agricultural energy use,refined liquids
-agricultural energy use,gas,gas,agricultural energy use,gas
-agricultural energy use,biomass,biomass,agricultural energy use,biomass
-agricultural energy use,coal,coal,agricultural energy use,coal
-agricultural energy use,heat,heat,agricultural energy use,heat
-mining energy use,refined liquids,refined liquids,mining energy use,refined liquids
-mining energy use,gas,gas,mining energy use,gas
-mining energy use,biomass,biomass,mining energy use,biomass
-mining energy use,coal,coal,mining energy use,coal
-mining energy use,heat,heat,mining energy use,heat
-construction energy use,refined liquids,refined liquids,construction energy use,refined liquids
-construction energy use,gas,gas,construction energy use,gas
-construction energy use,biomass,biomass,construction energy use,biomass
-construction energy use,coal,coal,construction energy use,coal
-construction energy use,heat,heat,construction energy use,heat
+agricultural energy use,mobile,refined liquids,agricultural energy use,refined liquids
+agricultural energy use,stationary,refined liquids,agricultural energy use,refined liquids
+agricultural energy use,stationary,gas,agricultural energy use,gas
+agricultural energy use,stationary,biomass,agricultural energy use,biomass
+agricultural energy use,stationary,coal,agricultural energy use,coal
+agricultural energy use,stationary,heat,agricultural energy use,heat
+mining energy use,mobile,refined liquids,mining energy use,refined liquids
+mining energy use,stationary,refined liquids,mining energy use,refined liquids
+mining energy use,stationary,gas,mining energy use,gas
+mining energy use,stationary,biomass,mining energy use,biomass
+mining energy use,stationary,coal,mining energy use,coal
+mining energy use,stationary,heat,mining energy use,heat
+construction energy use,mobile,refined liquids,construction energy use,refined liquids
+construction energy use,stationary,refined liquids,construction energy use,refined liquids
+construction energy use,stationary,gas,construction energy use,gas
+construction energy use,stationary,biomass,construction energy use,biomass
+construction energy use,stationary,coal,construction energy use,coal
+construction energy use,stationary,heat,construction energy use,heat
 chemical energy use,refined liquids,refined liquids,chemical energy use,refined liquids
 chemical energy use,refined liquids,refined liquids cogen,chemical energy use,refined liquids
 chemical energy use,refined liquids,refined liquids CCS,chemical energy use,refined liquids

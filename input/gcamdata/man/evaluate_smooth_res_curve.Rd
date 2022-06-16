@@ -4,8 +4,13 @@
 \alias{evaluate_smooth_res_curve}
 \title{evaluate_smooth_res_curve}
 \usage{
-evaluate_smooth_res_curve(curve.exponent, mid.price, base.price,
-  maxSubResource, p)
+evaluate_smooth_res_curve(
+  curve.exponent,
+  mid.price,
+  base.price,
+  maxSubResource,
+  p
+)
 }
 \arguments{
 \item{curve.exponent}{smooth renewable resource curve shape parameter, numeric}

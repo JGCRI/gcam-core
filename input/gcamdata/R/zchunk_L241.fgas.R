@@ -36,9 +36,9 @@ module_emissions_L241.fgas <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions         <- get_data(all_data, "emissions/A_regions")
     FUT_EMISS_GV      <- get_data(all_data, "emissions/FUT_EMISS_GV")
-    L142.pfc_R_S_T_Yh <- get_data(all_data, "L142.pfc_R_S_T_Yh")
-    L141.hfc_R_S_T_Yh <- get_data(all_data, "L141.hfc_R_S_T_Yh")
-    L141.hfc_ef_R_cooling_Yh <- get_data(all_data, "L141.hfc_ef_R_cooling_Yh")
+    L142.pfc_R_S_T_Yh <- get_data(all_data, "L142.pfc_R_S_T_Yh", strip_attributes = T)
+    L141.hfc_R_S_T_Yh <- get_data(all_data, "L141.hfc_R_S_T_Yh", strip_attributes = T)
+    L141.hfc_ef_R_cooling_Yh <- get_data(all_data, "L141.hfc_ef_R_cooling_Yh", strip_attributes = T)
 
     ## silence package check.
     . <- `2010` <- `2020` <- `2030` <- EF <- Emissions <- GCAM_region_ID <- GDP <-
@@ -74,58 +74,64 @@ module_emissions_L241.fgas <- function(command, ...) {
 
     # F-gas emissions factors for future years
     #
-    # First, create a subset of the cooling emission factors from 2010.
+    # First, create a subset of the cooling emission factors from  the max year, currently 2010.
     # (Update 11 Aug 2017: subset the last HFC_MODEL_BASE_YEARS present in data, letting us pass timeshift test.)
     # Eventually these values will be used to estimate future emission factors by scaling with
     # USA emission factors.
+    MAX_DATA_YEAR <- max(intersect(L141.hfc_ef_R_cooling_Yh$year, emissions.HFC_MODEL_BASE_YEARS))
+
     L141.hfc_ef_R_cooling_Yh %>%
-      filter(year == max(intersect(year, emissions.HFC_MODEL_BASE_YEARS))) %>%
+      filter(year == MAX_DATA_YEAR) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
-      L141.hfc_ef_cooling_2010
+      L141.hfc_ef_cooling_maxhistyr
 
 
-    # From the 2010 hfc cooling emission factors select USA emission factors, in
+    # From the max historical year (2010) hfc cooling emission factors select USA emission factors, in
     # subsequent steps the USA emission factors will be used to estimate future
     # emission factors.
-    L141.hfc_ef_cooling_2010 %>%
+    # But first correct the USA factor emissions for HFC134a by dividing by three
+    # since it is less commonly used now in USA.
+    L141.hfc_ef_cooling_maxhistyr %>%
       filter(region == gcam.USA_REGION) %>%
-      select(USA_factor = value, -region, year, Non.CO2, supplysector) ->
-      L141.hfc_ef_cooling_2010_USA
+      mutate(value = if_else(Non.CO2 == "HFC134a", value / 3, value)) %>%
+      select(value, -region, Non.CO2, supplysector) ->
+      L141.hfc_ef_cooling_maxhistyr_USA
 
 
-    # Match USA cooling hfc emissions factors from by sector and gas with 2010
+    # Match USA cooling hfc emissions factors from by sector and gas with max hist year (2010)
     # emission factors for other regions. Eventually the USA factor emissions will
     # be used to interpolate future emission factors for the other regions.
     #
-    # But first correct the USA factor emissions for HFC134a by dividing by three
-    # since it is less commonly used now in USA.
-    L141.hfc_ef_cooling_2010 %>%
-      left_join_error_no_match(L141.hfc_ef_cooling_2010_USA, by = c("supplysector", "Non.CO2", "year")) %>%
-      mutate(USA_factor = if_else(Non.CO2 == "HFC134a", USA_factor / 3, USA_factor)) ->
-      L241.hfc_cool_ef_2010_USfactor
+    L141.hfc_ef_cooling_maxhistyr %>%
+      select(-year, -value) %>%
+      left_join_error_no_match(L141.hfc_ef_cooling_maxhistyr_USA, by = c("supplysector", "Non.CO2")) %>%
+      mutate(year = emissions.HFC_FUT_YEAR) ->
+      L241.hfc_cool_ef_futyr_USfactor
 
-
-    # Format the data frame of 2010 regional emission factors and 2010 USA emission factors
-    # for the next step where future emission factors are calculated.
+    # Format the data frame of max hist year (2010) regional emission factors and max hist year (2010)
+    # USA emission factors for the next step where future emission factors are calculated.
     #
-    # Future emission factors are will not be calculated for regions with 2010 emission factors
-    # greater than the 2010 USA emission factor because of the way that the calculated as a
-    # fraction of the change between the region and USA 2010 emission factors, negative emission
+    # Future emission factors are will not be calculated for regions with max hist year (2010) emission factors
+    # greater than the max hist year (2010) USA emission factor because of the way that the calculated as a
+    # fraction of the change between the region and USA max hist year (2010) emission factors, negative emission
     # factors would be estimated.
-    L241.hfc_cool_ef_2010_USfactor %>%
-      filter(USA_factor > value) %>%
-      rename(`2010` = value, `2030` = USA_factor) %>%
-      select(-year) ->
+    L141.hfc_ef_cooling_maxhistyr %>%
+      bind_rows(L241.hfc_cool_ef_futyr_USfactor) %>%
+      group_by(GCAM_region_ID , supplysector, subsector, stub.technology, Non.CO2, region) %>%
+      filter(value[year == emissions.HFC_FUT_YEAR] > value[year == MAX_DATA_YEAR]) %>%
+      ungroup() ->
       L241.hfc_cool_ef_update
 
-    # Linearlly interpolate future regional emission factors from 2010 emission factor and
-    # the 2010 USA emission facor.
+    # Linearlly interpolate future regional emission factors from max yr (2010) emission factor and
+    # the max year (2010) USA emission factor for all model years between
+    # MAX_DATA_YEAR (2010) and emissions.HFC_FUT_YEAR.
+    years_to_complete <- MODEL_YEARS[MODEL_YEARS < emissions.HFC_FUT_YEAR & MODEL_YEARS > MAX_DATA_YEAR]
     L241.hfc_cool_ef_update %>%
-      mutate(`2015` = NA, `2020` = NA, `2025` = NA) %>%
-      gather_years %>%
+      complete(year = years_to_complete, nesting(GCAM_region_ID, Non.CO2, region,
+                                                 stub.technology, subsector, supplysector)) %>%
       group_by(GCAM_region_ID, supplysector, subsector, stub.technology, Non.CO2) %>%
-      mutate(value = approx_fun(as.numeric(year), value)) %>%
-      spread(year, value) ->
+      mutate(value = approx_fun(as.numeric(year), value))  %>%
+      ungroup() ->
       L241.hfc_cool_ef_update_all
 
     # Subset the future emission factors for the hfc model base years.
@@ -133,7 +139,6 @@ module_emissions_L241.fgas <- function(command, ...) {
     # These emission factors will be used in a ratio to compare
     # future emission factors.
     L241.hfc_cool_ef_update_all %>%
-      gather_years %>%
       filter(!year %in% emissions.HFC_MODEL_BASE_YEARS) ->
       L241.hfc_cool_ef_update_filtered
 
@@ -145,50 +150,52 @@ module_emissions_L241.fgas <- function(command, ...) {
       filter(!supplysector %in% c("resid cooling", "comm cooling")) %>%
       # EF is 1000 x emissions for non-cooling sectors
       mutate(value = value * 1000) %>%
-      filter(year == max(emissions.HFC_MODEL_BASE_YEARS)) %>%
+      filter(year == MAX_DATA_YEAR) %>%
       filter(value > 0) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
-      L241.hfc_ef_2010
+      L241.hfc_ef_maxhistyr
 
     # Use data from Guus Velders (a f-gas expert) of near future f gas
-    # emissions to calculate the future to 2010 emission factor ratios.
+    # emissions to calculate the future to max hist yr (2010) emission factor ratios.
     # These emission factor ratios will be used to update the non-cooling
     # emission factors.
     #
     # Format the FUT_EMISS_GV species by removing the "-" so that the species
     # can be used to join the FUT_EMISS_GV emission factors with L241.hfc_ef_2010
     # in the next step.
+    #
+    # In case max_data_year is not in FUT_EMISS_GV (ie timeshift), use minimum year instead
+    if(MAX_DATA_YEAR %in% FUT_EMISS_GV$Year){
+      ratio_years <- c(MAX_DATA_YEAR, emissions.GV_YEARS)
+    } else {
+      ratio_years <-  c(min(FUT_EMISS_GV$Year), emissions.GV_YEARS)}
+
     FUT_EMISS_GV %>%
-      select(-Emissions, -GDP) %>%
-      spread(Year, EF) %>%
-      select(Species, Scenario, `2010`, `2020`, `2030`) %>%
-      mutate(Species = gsub("-", "", Species ),
-             Ratio_2020 = `2020` / `2010`,
-             Ratio_2030 =  `2030` / `2010`,
-             Species = gsub("-", "", Species))->
+      select(-Emissions, -GDP, -Scenario) %>%
+      rename(year = Year) %>%
+      filter(year %in% ratio_years) %>%
+      group_by(Species) %>%
+      mutate(ratio = EF / EF[year == min(ratio_years)]) %>%
+      ungroup %>%
+      mutate(Species = gsub("-", "", Species)) %>%
+      filter(year %in% emissions.GV_YEARS) ->
       L241.FUT_EF_Ratio
 
     # Use the future emission factor ratios to update/scale the non-cooling
     # emission factors.
-    L241.hfc_ef_2010 %>%
+    L241.hfc_ef_maxhistyr %>%
+      select(-year) %>%
       # Since Guus Velders data set contains information on extra gases we can use left_join here because we expect there to be NAs that will latter be removed.
       left_join(L241.FUT_EF_Ratio, by = c("Non.CO2" = "Species")) %>%
-      mutate(`2020` = value * Ratio_2020,
-             `2030` = value * Ratio_2030) %>%
-      select(-Ratio_2020, -Ratio_2030, -Scenario) %>%
-      na.omit() ->
-      L241.hfc_ef_2010_update
-
-    # Format the updated non-cooling emission factors.
-    L241.hfc_ef_2010_update %>%
-      select(-year, -value, -`2010`) %>%
-      gather_years %>%
+      mutate(value = value * ratio) %>%
+      select(-ratio, -EF) %>%
+      na.omit() %>%
       filter(!year %in% emissions.HFC_MODEL_BASE_YEARS) ->
-      L241.hfc_ef_2010_update_all
+      L241.hfc_ef_update_all
 
     # Combine the updated cooling and non-cooling hfc gas emission
     # factor data frames together.
-    L241.hfc_ef_2010_update_all %>%
+    L241.hfc_ef_update_all %>%
       bind_rows(L241.hfc_cool_ef_update_filtered) %>%
       mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS),
              year = as.numeric(year)) %>%

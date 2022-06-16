@@ -550,3 +550,59 @@ Eastern Europe,bld_resid,gas,resid others,0.168619381
 Eastern Europe,bld_resid,refined liquids,resid others,0.033620385
 Eastern Europe,bld_resid,traditional biomass,resid others,0
 Eastern Europe,bld_resid,heat,resid others,0
+USA,bld_comm,hydrogen,comm others,0
+USA,bld_comm,hydrogen,comm heating,0
+USA,bld_resid,hydrogen,comm others,0
+USA,bld_resid,hydrogen,comm heating,0
+Canada,bld_comm,hydrogen,comm others,0
+Canada,bld_comm,hydrogen,comm heating,0
+Canada,bld_resid,hydrogen,comm others,0
+Canada,bld_resid,hydrogen,comm heating,0
+Western Europe,bld_comm,hydrogen,comm others,0
+Western Europe,bld_comm,hydrogen,comm heating,0
+Western Europe,bld_resid,hydrogen,comm others,0
+Western Europe,bld_resid,hydrogen,comm heating,0
+Japan,bld_comm,hydrogen,comm others,0
+Japan,bld_comm,hydrogen,comm heating,0
+Japan,bld_resid,hydrogen,comm others,0
+Japan,bld_resid,hydrogen,comm heating,0
+Korea,bld_comm,hydrogen,comm others,0
+Korea,bld_comm,hydrogen,comm heating,0
+Korea,bld_resid,hydrogen,comm others,0
+Korea,bld_resid,hydrogen,comm heating,0
+Southeast Asia,bld_comm,hydrogen,comm others,0
+Southeast Asia,bld_comm,hydrogen,comm heating,0
+Southeast Asia,bld_resid,hydrogen,comm others,0
+Southeast Asia,bld_resid,hydrogen,comm heating,0
+India,bld_comm,hydrogen,comm others,0
+India,bld_comm,hydrogen,comm heating,0
+India,bld_resid,hydrogen,comm others,0
+India,bld_resid,hydrogen,comm heating,0
+Australia_NZ,bld_comm,hydrogen,comm others,0
+Australia_NZ,bld_comm,hydrogen,comm heating,0
+Australia_NZ,bld_resid,hydrogen,comm others,0
+Australia_NZ,bld_resid,hydrogen,comm heating,0
+Africa,bld_comm,hydrogen,comm others,0
+Africa,bld_comm,hydrogen,comm heating,0
+Africa,bld_resid,hydrogen,comm others,0
+Africa,bld_resid,hydrogen,comm heating,0
+Middle East,bld_comm,hydrogen,comm others,0
+Middle East,bld_comm,hydrogen,comm heating,0
+Middle East,bld_resid,hydrogen,comm others,0
+Middle East,bld_resid,hydrogen,comm heating,0
+Latin America,bld_comm,hydrogen,comm others,0
+Latin America,bld_comm,hydrogen,comm heating,0
+Latin America,bld_resid,hydrogen,comm others,0
+Latin America,bld_resid,hydrogen,comm heating,0
+Former Soviet Union,bld_comm,hydrogen,comm others,0
+Former Soviet Union,bld_comm,hydrogen,comm heating,0
+Former Soviet Union,bld_resid,hydrogen,comm others,0
+Former Soviet Union,bld_resid,hydrogen,comm heating,0
+China,bld_comm,hydrogen,comm others,0
+China,bld_comm,hydrogen,comm heating,0
+China,bld_resid,hydrogen,comm others,0
+China,bld_resid,hydrogen,comm heating,0
+Eastern Europe,bld_comm,hydrogen,comm others,0
+Eastern Europe,bld_comm,hydrogen,comm heating,0
+Eastern Europe,bld_resid,hydrogen,comm others,0
+Eastern Europe,bld_resid,hydrogen,comm heating,0

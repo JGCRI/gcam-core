@@ -1,10 +1,10 @@
 # File: A232.structure.csv
 # Title: USA electricity sector structure characteristics
 # Units: Unitless
-# Column types: ccccccicicccc 
+# Column types: ccccccicicccc
 # ----------
 region,supplysector,subsector,technology,minicam.energy.input,market.name,subsector.logit,subsector.logit.type,technology.logit,technology.logit.type,output.unit,input.unit,price.unit
-USA,electricity trade,grid_region electricity trade,grid_region electricity trade,electricity_net_ownuse,grid_region,-6,,-6,,EJ,EJ,1975$/GJ
+USA,electricity trade,grid_region electricity trade,grid_region electricity trade,electricity_net_ownuse,grid_region,-3,,-6,,EJ,EJ,1975$/GJ
 grid_region,electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,electricity,grid_region,-3,,-6,,EJ,EJ,1975$/GJ
 grid_region,electricity domestic supply,electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,grid_region,-3,,-6,,EJ,EJ,1975$/GJ
 grid_region,electricity domestic supply,electricity trade,electricity trade,electricity trade,USA,-3,,-6,,EJ,EJ,1975$/GJ

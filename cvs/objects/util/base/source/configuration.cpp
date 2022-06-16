@@ -72,6 +72,14 @@ Configuration* Configuration::getInstance() {
     return gInstance.get();
 }
 
+/*!
+ * \brief Reset the configuration.
+ * \details Reset the configuration presumably to read a new one.
+ */
+void Configuration::reset() {
+    gInstance.reset( new Configuration() );
+}
+
 bool Configuration::XMLParse( rapidxml::xml_node<char>* aRoot ) {
     /*! \pre Assume we are passed a valid node. */
     assert( aRoot );

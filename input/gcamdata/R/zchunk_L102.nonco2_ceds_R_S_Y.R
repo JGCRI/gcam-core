@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L102.ceds_nonco2_tg_R_S_F}, \code{L102.ceds_int_shipping_nonco2_tg_S_F}.
+#' the generated outputs: \code{L102.ceds_nonco2_tg_R_S_F}, \code{L102.ceds_GFED_nonco2_tg_C_S_F}, \code{L102.ceds_int_shipping_nonco2_tg_S_F}.
 #' @details Calculates emissions using CEDS and CMIP data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -35,6 +35,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
                "L154.IEA_histfut_data_times_UCD_shares"))
     } else if(command == driver.DECLARE_OUTPUTS) {
       return(c("L102.ceds_GFED_nonco2_tg_R_S_F",
+               "L102.ceds_GFED_nonco2_tg_C_S_F",
                "L102.ceds_int_shipping_nonco2_tg_S_F"))
     } else if(command == driver.MAKE) {
 
@@ -156,7 +157,11 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
           gather_years %>%
           filter(year %in% emissions.CEDS_YEARS) %>%
           # Converts kt(gg) to Teragrams
-          mutate(emissions = emissions * CONV_GG_TG)->L102.CEDS
+          mutate(emissions = emissions * CONV_GG_TG) ->L102.CEDS
+
+        # Filter for iso's whose emissions will be scaled to CEDS (currently just USA)
+        L102.CEDS %>%
+          filter(iso %in% emissions.CEDS_scale) -> L102.CEDS_to_scale
 
 
         # Aggregate by region, GHG, and CEDS sector
@@ -172,6 +177,16 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
 
         # PRODUCE OUTPUTS
         # ===============
+        L102.CEDS_to_scale %>%
+          add_title("CEDS non-CO2 emissions by country and CEDS sector / fuel / historical year",overwrite = TRUE) %>%
+          add_units("Tg") %>%
+          add_comments("An intermediate output used to scale NEI emissions to CEDS at the national level") %>%
+          add_precursors("emissions/CEDS/BC_total_CEDS_emissions","emissions/CEDS/OC_total_CEDS_emissions","emissions/CEDS/CO_total_CEDS_emissions",
+                         "emissions/CEDS/NH3_total_CEDS_emissions","emissions/CEDS/NMVOC_total_CEDS_emissions","emissions/CEDS/NOx_total_CEDS_emissions",
+                         "emissions/CEDS/SO2_total_CEDS_emissions","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
+                         "common/iso_GCAM_regID","emissions/CEDS/CH4_total_CEDS_emissions","emissions/CEDS/GFED-CMIP6_LUC_emissions","emissions/CEDS/LULUC_to_sector_Mapping","emissions/CEDS/N2O_total_CEDS_emissions",
+                         "L154.IEA_histfut_data_times_UCD_shares") ->
+          L102.ceds_GFED_nonco2_tg_C_S_F
 
         L102.CEDS_GCAM_GFED %>%
           add_title("CEDS non-CO2 emissions by GCAM region and CEDS sector / fuel / historical year",overwrite = TRUE) %>%
@@ -194,20 +209,23 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
           L102.ceds_int_shipping_nonco2_tg_S_F
 
         # verify the calculated data matches the prebuilt version if not a warning
-        # will be generated and should only be ignored if the underly CEDS data
+        # will be generated and should only be ignored if the underlying CEDS data
         # actually changed
         verify_identical_prebuilt(L102.ceds_GFED_nonco2_tg_R_S_F)
+        verify_identical_prebuilt(L102.ceds_GFED_nonco2_tg_C_S_F)
         verify_identical_prebuilt(L102.ceds_int_shipping_nonco2_tg_S_F)
 
 
       }
       else {
         # raw CEDS datasets not available, so we will use the prebuilt version
-        L102.ceds_GFED_nonco2_tg_R_S_F <- prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
-        L102.ceds_int_shipping_nonco2_tg_S_F <- prebuilt_data("L102.ceds_int_shipping_nonco2_tg_S_F")
+        L102.ceds_GFED_nonco2_tg_R_S_F <- extract_prebuilt_data("L102.ceds_GFED_nonco2_tg_R_S_F")
+        L102.ceds_GFED_nonco2_tg_C_S_F <- extract_prebuilt_data("L102.ceds_GFED_nonco2_tg_C_S_F")
+        L102.ceds_int_shipping_nonco2_tg_S_F <- extract_prebuilt_data("L102.ceds_int_shipping_nonco2_tg_S_F")
       }
 
-      return_data(L102.ceds_GFED_nonco2_tg_R_S_F, L102.ceds_int_shipping_nonco2_tg_S_F)
+      return_data(L102.ceds_GFED_nonco2_tg_R_S_F, L102.ceds_GFED_nonco2_tg_C_S_F, L102.ceds_int_shipping_nonco2_tg_S_F)
+
     } else {
       stop("Unknown command")
     }

@@ -236,6 +236,15 @@ module_aglu_LA100.FAO_downscale_ctry <- function(command, ...) {
       bind_rows(FAO_fodder_Prod_t_PRODSTAT) ->
       FAO_ag_Prod_t_PRODSTAT
 
+    # China vegetable food consumption is estimated from production volumes in the SUA database that are far higher
+    # than the quantities for the constituent crops reported in the PRODSTAT database, which we use for production.
+    # This discrepancy is corrected (approximately) here.
+    FAO_ag_Food_t_SUA[FAO_histyear_cols] <- lapply(FAO_ag_Food_t_SUA[FAO_histyear_cols], as.numeric)
+    FAO_ag_Food_t_SUA[FAO_ag_Food_t_SUA$countries == "China" & FAO_ag_Food_t_SUA$item == "Vegetables, Other",
+                      FAO_histyear_cols] <-
+      FAO_ag_Food_t_SUA[FAO_ag_Food_t_SUA$countries == "China" & FAO_ag_Food_t_SUA$item == "Vegetables, Other",
+                        FAO_histyear_cols] * aglu.CHN_VEG_FOOD_MULT
+
     # Not all databases go to 2012. Extrapolate each dataset to 2012, repeating
     # the data for 2009/10. Where missing 1961, substitute 1962
     list("FAO_ag_Exp_t_SUA" = FAO_ag_Exp_t_SUA,

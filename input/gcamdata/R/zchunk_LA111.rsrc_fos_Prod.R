@@ -148,7 +148,7 @@ module_energy_LA111.rsrc_fos_Prod <- function(command, ...) {
     # pre-built output datasets and exit.
     if(is.null(L100.IEA_en_bal_ctry_hist)) {
       # Proprietary IEA energy data are not available, so used saved outputs
-      L111.RsrcCurves_EJ_R_Ffos <- prebuilt_data("L111.RsrcCurves_EJ_R_Ffos")
+      L111.RsrcCurves_EJ_R_Ffos <- extract_prebuilt_data("L111.RsrcCurves_EJ_R_Ffos")
     } else {
 
       L100.IEA_en_bal_ctry_hist %>%

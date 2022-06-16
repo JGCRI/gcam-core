@@ -7,12 +7,8 @@
 PATHOFFSET = ../..
 include ${PATHOFFSET}/build/linux/configure.gcam
 
-OBJS       = batch_csv_outputter.o \
-             graph_printer.o \
-             land_allocator_printer.o \
-             storage_table.o \
-             energy_balance_table.o \
-             xml_db_outputter.o
+SRCS = $(wildcard *.cpp)
+OBJS = $(SRCS:.cpp=.o)
 
 reporting_dir: ${OBJS}
 

@@ -16,7 +16,6 @@ DISABLED_MODULES         <- "NONE"
 FLAG_INPUT_DATA      <- "FLAG_INPUT_DATA"       # input data, don't output
 FLAG_NO_OUTPUT       <- "FLAG_NO_OUTPUT"        # don't output
 FLAG_NO_TEST         <- "FLAG_NO_TEST"          # don't test
-FLAG_SUM_TEST        <- "FLAG_SUM_TEST"         # use less-restrictive sum test
 FLAG_XML             <- "FLAG_XML"              # xml data
 
 
@@ -57,12 +56,14 @@ gcam.DEFAULT_TECH_LOGIT      <- -6
 driver.MAKE            <- "MAKE"
 driver.DECLARE_OUTPUTS <- "DECLARE_OUTPUTS"
 driver.DECLARE_INPUTS  <- "DECLARE_INPUTS"
+driver.DECLARE_MODIFY  <- "DECLARE_MODIFY"
 
 # Data and utility constants ======================================================================
 
 data.SEPARATOR <- "; "
 data.PRECURSOR <- "Precursor"
 data.DEPENDENT <- "Dependent"
+data.USER_MOD_POSTFIX <- "__0"
 
 
 # Modeltime constants ======================================================================
@@ -102,6 +103,7 @@ CONV_T_METRIC_SHORT <- 1000 / 908  # Ratio between metric ton and short ton
 CONV_HA_BM2 <- 1e-5
 CONV_HA_M2 <- 10000
 CONV_THA_KGM2 <- 0.1   # tons C/ha -> kg C/m2
+CONV_G_TG <- 1e-12
 CONV_GG_TG <- 0.001 # gigagrams to tegagrams
 CONV_TST_TG <- 0.000907 # thousand short tons to Tg
 CONV_KG_TO_TG <- 1e-9
@@ -130,11 +132,11 @@ CONV_THA_KGM2       <- 0.1            # tons C/ha -> kg C/m2
 CONV_TON_MEGATON    <- 1e-6
 CONV_TONNE_GJ_DISTILLATE  <- 42.91    # tons to GJ distillate
 CONV_TONNE_GJ_RFO   <- 40.87          # tons to GJ residual fuel oil
-CONV_TST_TG         <- 0.000907       # thousand short tons to Tg
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25
 CONV_DAYS_YEAR <- 1 / 365.25
+CONV_DAY_HOURS <- 24
 
 # Energy
 CONV_MWH_GJ <- 3.6 # Megawatt hours to Gigajoules
@@ -143,12 +145,15 @@ CONV_GWH_EJ <- 3.6e-6
 CONV_TWH_EJ <- 3.6e-3
 CONV_KWH_GJ <- 3.6e-3
 CONV_GJ_EJ <- 1e-9
+CONV_MJ_EJ <- 1e-12
 CONV_EJ_GJ <- 1 / CONV_GJ_EJ
 CONV_MBLD_EJYR <- 6.119 * 365.25 * 1e-3 # million barrels a day to EJ per year
 CONV_KBTU_EJ <- 1.0551e-12 # KiloBTU to EJ
 CONV_TBTU_EJ <- 0.0010551 # TeraBTU to EJ
 CONV_MJ_BTU <- 947.777
 CONV_BTU_KJ <- 1.0551
+CONV_MMBTU_KGH2 <- 0.113939965425114 # MMBTU/kg H2 - LHV Source: H2 CCTP Workbook.xls (Used for older GCAM assumptions)
+CONV_GJ_KGH2 <- 0.12021 #GJ/kg H2 - LHV
 
 # Distance
 CONV_MILE_KM <- 1.60934 # Mile to km
@@ -163,6 +168,17 @@ CONV_HA_M2 <- 1e4 # ha to m2
 CONV_BM2_M2 <- 1e9
 CONV_MILFT2_M2 <- 92900 # Million square feet to square meters
 CONV_FT2_M2 <- 0.0929 # Square feet to square meters
+CONV_GAL_M3 <- 0.00378541 #gallons to m3
+CONV_MI_KM <- 1.60934
+CONV_PERS_MILPERS <- 1000000 #Person to million-passengers
+
+# SO2 related conversion factors
+RESID_BTU_PER_BBL <- 6.29 # Source EIA (Note HHV)
+RESID_BBLS_PER_TONNE <- 6.66 # Source EIA (Note HHV)
+RESID_ENERGY_DENSITY_BTU <- RESID_BTU_PER_BBL * RESID_BBLS_PER_TONNE * 0.95 # Btu/tonne net
+RESID_ENERGY_DENSITY_JOULES <- RESID_ENERGY_DENSITY_BTU * 1055 # TJ/Tg
+RESID_ENERGY_CONTENT <- RESID_ENERGY_DENSITY_JOULES/1E6 # Tg/EJ
+SO2_SHIP_LIMIT_POLICY_MULTIPLIER <- 0.001 * 2
 
 # AgLU constants ======================================================================
 
@@ -186,12 +202,15 @@ aglu.SSP_DEMAND_YEARS       <- seq(2015, 2100, 5) # food demand in the SSPs is c
 aglu.TRADE_CAL_YEARS        <- 2013:2017 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
 aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
-aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "MiscCrop", "OilCrop", "OtherGrain", "PalmFruit", "Rice", "RootTuber", "SugarCrop", "Wheat")
+aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "Fruits", "Legumes", "MiscCrop", "NutsSeeds", "OilCrop", "OtherGrain", "OilPalm", "Rice", "RootTuber", "Soybean", "SugarCrop", "Vegetables", "Wheat")
+aglu.BIO_TRADE_SSP4_YEAR_FILLOUT       <- 2025 # year.fillout for SSP4 in L243.bio_trade_input
+aglu.BIO_TRADE_SSP3_YEAR_FILLOUT       <- 2020 # year.fillout for SSP4 in L243.bio_trade_input
 aglu.TRADED_MEATS           <- c("Beef", "Dairy", "Pork", "Poultry", "SheepGoat")
 aglu.TRADED_FORESTS         <- c("Forest")
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others
+aglu.TREECROP_MATURE_AGE <- 10 # Number of years for vegetation carbon to reach peak, for tree crops
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -234,6 +253,7 @@ aglu.MAX_MGDFOR_FRAC  <- 1    # Maximum percentage of any region/GLUs forest tha
 # GDP constraints
 aglu.HIGH_GROWTH_PCGDP <- 12.275   # GDP per capita high threshold for SSP4 region groupings, thousand 2010$ per person
 aglu.LOW_GROWTH_PCGDP  <- 2.75     # GDP per capita low threshold for SSP4 region groupings, thousand 2010$ per person
+aglu.PCGDP_YEAR <- 2010            # Year to compare to PCGDP thresholds
 
 # AgLu mulitpliers
 aglu.MGMT_YIELD_ADJ <- 0.2       # Yield multiplier that goes from the observed yield to the "high" and "low" yields: observed plus or minus observed times this number.
@@ -275,7 +295,7 @@ aglu.MAX_BIO_YIELD_THA <- 20
 aglu.BIO_ENERGY_CONTENT_GJT <- 17.5
 
 # Regions in which agriculture and land use are not modeled
-#kbn 2019/09/25 Took taiwan out from below since we have data for Taiwan now.
+# kbn 2019/09/25 Took taiwan out from below since we have data for Taiwan now.
 aglu.NO_AGLU_REGIONS <- ""
 
 # Define GCAM category name of fertilizer
@@ -300,7 +320,7 @@ aglu.AVG_WOOD_DENSITY_KGCM3 <- 250 # In kg carbon per m3
 aglu.CVEG_MULT_UNMGDFOR_MGDFOR <- 0.5
 aglu.CSOIL_MULT_UNMGDFOR_MGDFOR <- 0.87      #source: Guo and Gifford 2002; https://doi.org/10.1046/j.1354-1013.2002.00486.x
 aglu.CVEG_MULT_UNMGDPAST_MGDPAST <- 0.5
-aglu.CSOIL_MULT_UNMGDPAST_MGDPAST <- 0.9     # stay conservative here b/c no data source
+aglu.CSOIL_MULT_UNMGDPAST_MGDPAST <- 0.8     # stay conservative here b/c no data source
 
 # Average Agriculture Density kg/m^3 for mass conversion
 # Source: http://www.engineeringtoolbox.com/wood-density-d_40.html
@@ -327,6 +347,26 @@ aglu.WOOD_WATER_CONTENT <- 0.065
 aglu.MIN_VEG_CARBON_DENSITY  <- 0
 aglu.MIN_SOIL_CARBON_DENSITY <- 0
 
+#This is the model carbon year. Carbon outputs are scaled to this year
+MODEL_CARBON_YEAR <- 2010
+
+# These are the default values of carbon desnities from Houghton (in MgC/ha) by land type. moirai only outputs carbon for unmanaged land. Therefore, we need default values for other land types.
+#Moreover we do not have data on carbon for Polar deserts and Tundra. So we use default values for those as well.
+aglu.DEFAULT_SOIL_CARBON_PASTURE <- 13
+aglu.DEFAULT_VEG_CARBON_PASTURE <- 0.7
+aglu.DEFAULT_SOIL_CARBON_CROPLAND <- 9
+aglu.DEFAULT_VEG_CARBON_CROPLAND <- 0.3
+aglu.DEFAULT_SOIL_CARBON_URBANLAND <- 5.8
+aglu.DEFAULT_VEG_CARBON_URBANLAND <- 0.3
+aglu.DEFAULT_SOIL_CARBON_TUNDRA <- 22
+aglu.DEFAULT_VEG_CARBON_TUNDRA <- 0.9
+
+# This is the default maturity age from Houghton.
+aglu.DEFAULT_MATURITY_AGE_PASTURE <- 10
+aglu.DEFAULT_TUNDRA_AGE <- 50
+
+# We may not have maturity age for some land types. If this arises, set it to the below (mean of all LT)
+aglu.DEFAULT_MATURITY_AGE_ALL_LAND <- 35
 
 # Define top-level (zero) land nest logit exponent and logit type
 aglu.N0_LOGIT_EXP  <- 0
@@ -343,6 +383,15 @@ aglu.NONPROTECT_LAND_STATUS <- c("SuitableUnprotected","Unknown")
 # Default fraction for protected land. This is used if the aglu.PROTECTION_DATA_SOURCE is set to TRUE or if protection data is unavailable.
 aglu.PROTECT_DEFAULT<- 0.9
 
+#Set the constants below to select the data source for carbon initialization. Currently set to `houghton`. Alternatively, this can be set to 'moirai'
+aglu.CARBON_DATA_SOURCE <- "moirai"
+
+# Available options for aglu.CARBON_STATE are median_value (median of all available grid cells), min_value (minimum of all available grid cells), max_value (maximum of all available grid cells),
+# weighted_average (weighted average of all available grid cells using the land area as a weight), q1_value (first quartile of all available grid cells) and q3_value (3rd quartile of all available grid cells).
+# Default recommended for GCAM is the q3_value. Note that these states can be selected only when using moirai as the carbon data source.
+aglu.CARBON_STATE <- c("q3_value")
+
+
 # Multiplier on the ghost share for irrigated land
 aglu.IRR_GHOST_SHARE_MULT <- 0.25
 
@@ -357,6 +406,13 @@ aglu.LN1_PROTUNMGD_LOGIT_TYPE <- NA
 # default logit exponent and type for LN5, the competition betweein high and lo management
 aglu.MGMT_LOGIT_EXP  <- 2.5
 aglu.MGMT_LOGIT_TYPE <- "absolute-cost-logit"
+
+# Statistical differences reconciliation: China's Vegetable production estimates are inconsistent between the PRODSTAT
+# ("Production") and SUA ("Commodity Balances"). Because the latter dataset is used for estimating food consumption in
+# GCAM, and because these SUA food consumption estimates are derived from production data that is about 20% higher than
+# PRODSTAT, this discrepancy causes very high negative "non-food" demands in this nation, which are large enough to
+# result in negative non-food demands globally.
+aglu.CHN_VEG_FOOD_MULT <- 0.8
 
 # XML-related constants
 aglu.CROP_GLU_DELIMITER   <- "_"  # delimiter between the crop name and GLU name
@@ -448,10 +504,13 @@ energy.PV_LIFETIME             <- 30       # years
 energy.PV_RESID_INSTALLED_COST <- 9500     # 2005USD per kw
 energy.PV_RESID_OM             <- 100      # 2005USD per kw per year
 energy.CSP_STORAGE_CF_DIFF     <- 0.25     # capacity factor difference between CSP_storage (0.5) and CSP (0.25)
+energy.SOLAR_ELECTROLYSIS_KGH2_D <- 50000    # kg of h2 produced per day at a solar-electrolysis plant
+energy.ELECTROLYZER_RENEWABLE_CAPACITY_RATIO <- 0.618  # unitless capacity ratio of electrolyzers to renewable-electric equipment
 
 # Wind related constants
 energy.WIND_CURVE_MIDPOINT <- 0.5
 energy.WIND_MIN_POTENTIAL <- 0.001
+energy.WIND_ELECTROLYSIS_KGH2_D <- 50000    # kg of h2 produced per day at a wind-electrolysis plant
 
 # Digits for rounding into XMLs
 energy.DIGITS_CALOUTPUT        <- 7
@@ -479,6 +538,11 @@ energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
 energy.DIGITS_TECHCHANGE       <- 4
 
+#jf 2021-10-21
+#defines fraction of liquid fuel consumption used for off-road vehicles in agriculture, mining, and construction energy use.
+#the remainder is allocated to stationary equipment (e.g., generators)
+energy.LIQUID_FUEL_MOBILE_FRAC <- 0.8
+
 # Policy assumptions for module_energy_L270.limits
 energy.NEG_EMISS_POLICY_NAME    <- "negative_emiss_budget"
 energy.NEG_EMISS_TARGET_GAS     <- "CO2_LTG" # the name of the gas to target in the negative emiss budget
@@ -488,8 +552,8 @@ energy.OIL_CREDITS_MARKETNAME   <- "oil-credits"
 energy.OILFRACT_ELEC            <- 1.0 # Fraction of liquids for feedstocks that must come from oil
 energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity that must come from oil
 
-#kbn 2019-10-11 Adding constant for transportation type. Set this to 'rev.mode' to use revised mode classes, 'rev_size.class' to use revised size classes.
-#To use the old modes and size classes, use 'mode' and 'size.class' for the constants. The default for GCAM are the new modes and size classes.
+# kbn 2019-10-11 Adding constant for transportation type. Set this to 'rev.mode' to use revised mode classes, 'rev_size.class' to use revised size classes.
+# To use the old modes and size classes, use 'mode' and 'size.class' for the constants. The default for GCAM are the new modes and size classes.
 
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
@@ -508,16 +572,16 @@ energy.OM_FIXED_INPUT <- "OM-fixed"
 energy.OM_VAR_INPUT <- "OM-var"
 
 # Constants for the residential sector: Parameters for USA (estimated offline) and unadjusted saturation values:
-obs_UnadjSat<-100
-obs_UnadjSat_USA<-150
+energy.OBS_UNADJ_SAT <- 100
+gcamusa.OBS_UNADJ_SAT <- 150
 
-land.density.param.usa<-0
-b.param.usa<-3.49026
-income.param.usa<-0.4875
+gcamusa.LAND_DENSITY_PARAM <- 0
+gcamusa.B_PARAM <- 3.49026
+gcamusa.INCOME_PARAM <- 0.4875
 
 # Constants for global detailed industry
 energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
-energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 enduse") #assign iron & steel global technology coefficients
+energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 wholesale delivery") #assign iron & steel global technology coefficients
 
 # Socioeconomics constants ======================================================================
 
@@ -668,15 +732,18 @@ emissions.MODEL_BASE_YEARS        <- MODEL_BASE_YEARS
 emissions.NH3_EXTRA_YEARS         <- 1971:1989
 emissions.NH3_HISTORICAL_YEARS    <- 1990:2002
 emissions.SSP_FUTURE_YEARS        <- MODEL_YEARS[MODEL_YEARS %in% 2015:2100]
+emissions.HFC_FUT_YEAR            <- 2030            # max year for emissions factors in L241.fgas
+emissions.GV_YEARS                <- c(2020, 2030)   # years to fill in from Guus Velders data
 
 # Other emissions constants
 emissions.CONV_C_CO2    <- 44 / 12 # Convert Carbon to CO2
 emissions.F_GAS_UNITS   <- "Gg"
 emissions.TST_TO_TG     <- 0.000907 # Thousand short tons to Tg
-emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district heat","NG","LA-BEV")  #These technologies get filtered out and no emissions are generated for them. Note that NG emissions for vehicles are added directly from GAINS and not calculated.
-emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  #All emission factors above this threshold are replaced with the global median of emission factors.
-emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  #GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
-emissions.UNMGD_LAND_AVG_YRS <- 30 #Years for climatological average for the GFED LULC data.
+emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district heat","NG","LA-BEV")  # These technologies get filtered out and no emissions are generated for them. Note that NG emissions for vehicles are added directly from GAINS and not calculated.
+emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  # All emission factors above this threshold are replaced with the global median of emission factors.
+emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  # GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
+emissions.UNMGD_LAND_AVG_YRS <- 30 # Years for climatological average for the GFED LULC data.
+emissions.CEDS_scale    <- "usa" # iso's that will be scaled to CEDS emissions
 emissions.CH4.GWP.AR4 <- 25 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
 emissions.N2O.GWP.AR4 <- 298 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
 
@@ -690,6 +757,8 @@ emissions.AGR_SECTORS        <- c("rice", "fertilizer", "soil")
 emissions.AGR_GASES          <- c("CH4_AGR", "N2O_AGR", "NH3_AGR", "NOx_AGR")
 emissions.AG_MACC_GHG_NAMES  <- c("CH4_AGR", "N2O_AGR")
 emissions.GHG_NAMES          <- c("CH4", "N2O")
+emissions.NONGHG_PROC_SECTORS <- c("SO2_1", "SO2_2", "SO2_3", "SO2_4", "NOx", "CO", "NMVOC", "PM2.5", "PM10")
+emissions.REFGHG_GASES		   <- c("NOx","SO2","PM2.5","CO","NH3")
 emissions.NONGHG_GASES       <- c("SO2", "NOx", "CO", "NMVOC", "NH3")
 emissions.PFCS               <- c("CF4", "C2F6", "SF6")
 emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
@@ -703,8 +772,29 @@ emissions.DIGITS_CO2COEF       <- 1
 emissions.DIGITS_EMISS_COEF    <- 7
 emissions.DIGITS_EMISSIONS     <- 10
 emissions.DIGITS_MACC          <- 3
+
+# IND URB PROCESSES CONSTANTS (copied to all regions in world in zchunk_L231.proc_sector.R (hard coded - may want to change to these)
+# using these same constants for all states in GCAM-USA chunk L231.proc_sector_USA.R)
+# would be good to know where these values come from
+emissions.FINAL_DEMAND <- "urban processes"
+emissions.FINAL_DEMAND_PCB <- 1 # per capita based
+emissions.FINAL_DEMAND_INCELAS <- 0 # income elasticity
+emissions.FINAL_DEMAND_BASE_SERVICE <- 0.004
+emissions.FINAL_DEMAND_AEEI <- 0 # autonomous energy efficiency improvement
+emissions.REG_TECH_CAL_VALUE_MINICAM_ENERGY_INPUT <- "misc emissions sources"
+emissions.REG_TECH_CAL_VALUE <- 0.001
+emissions.IND_PROC_INPUT <- 0.008
+emissions.IND_PROC_MINICAM_ENERGY_INPUT <- "industrial processes"
 emissions.DIGITS_MACC_TC       <- 4 # tech.change rounding
 emissions.DIGITS_GFED          <- 12
+
+# Parameters for the urban processing sector
+emissions.URBAN_PROCESS_PERCAPITABASED <- 1 # service as function of population?
+emissions.URBAN_PROCESS_INCOME_ELASTICITY <- 0
+emissions.URBAN_PROCESS_BASE_SERVICE <- 0.004 # base service (per capita)
+emissions.URBAN_PROCESS_AEEI <- 0 # No energy efficiency improvements
+# Calibrated value for misc emissions from industrial and urban processes
+emissions.INDURB_PROCESS_MISCEMISSIONS_CALVAL <- 0.001
 
 # GCAM-USA constants ======================================================================
 
@@ -788,6 +878,10 @@ gcamusa.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
 
 gcamusa.ELECT_TD_SECTORS  <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 
+#Fuels whose markets will be represented with state-specific prices
+gcamusa.STATE_FUEL_MARKETS <- c(gcamusa.ELECT_TD_SECTORS, "H2 industrial", "H2 retail delivery", "H2 retail dispensing",
+                                "H2 wholesale delivery", "H2 wholesale dispensing","H2 central production","H2 pipeline","H2 liquid truck")
+
 # Indicate whether to use regional ?cost adders? to differentiate
 # fuel prices by grid region in GCAM-USA (FALSE = same prices in all states)
 gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
@@ -845,7 +939,7 @@ gcamusa.ELEC_SEGMENT_SUBPEAK <- "subpeak generation"
 gcamusa.ELEC_SEGMENT_PEAK <- "peak generation"
 
 # Water mapping assumptions
-gcamusa.FINAL_MAPPING_YEAR <- 2010 #    Water mappings are conducted from the Huang et al. (2018) dataset which are through 2010, not the final historical year
+gcamusa.FINAL_MAPPING_YEAR <- 2010 # Water mappings are conducted from the Huang et al. (2018) dataset which are through 2010, not the final historical year
 gcamusa.WATER_MAPPING_YEAR <- 2005
 gcamusa.USA_REGION_NUMBER <- 1
 gcamusa.ZERO_WATER_COEF <- 0
@@ -855,6 +949,97 @@ gcamusa.MIN_PRIM_ENERGY_YEAR <- 1990
 
 # GCAM-USA does not have energy-for-water so desalination is an exogenous, unlimited resource with a fixed price
 gcamusa.DESALINATION_PRICE                  <- 0.214  # 1975$/m3
+
+# GCAM-USA transportation emissions vehicle classes
+gcamusa.MOVES_BASE_YEAR_CLASSES <- c(2005,2010,2015) # Year classes of cars to be used to get base year vintaged emissions
+gcamusa.MOVES_MIN_VINTAGE_YEAR <- 1990 # Earliest vintage year used
+gcamusa.MOVES_MAX_AGE<- 25 # Maximum age used
+gcamusa.MARKAL_DEGRADE_YEARS <- 15 # Number of years we have EF degradation values for
+gcamusa.MOTO_VINTAGES <- c(seq(gcamusa.MOVES_MIN_VINTAGE_YEAR, max(MODEL_FUTURE_YEARS), 5)) # Vintages to select from MOVES motorcycle data
+
+# GCAM-USA transportation emissions fuels to filter out because there is no intensity data
+gcamusa.MARKAL_LDV_FILTER_OUT_FUELS <- c("B20","PH10G","PH10E")
+gcamusa.MARKAL_MINICAR_FILTER_OUT_FUELS <- c("DSL", "E10", "E15")
+
+# GCAM-USA Transportation sectors
+gcamusa.TRANSPORT_SECTORS <- c("trn_freight", "trn_pass","trn_shipping_intl", "trn_aviation_intl")
+gcamusa.LDV_SUPPLYSECTORS <- c("trn_pass_road_LDV_4W", "trn_pass_road_LDV")
+gcamusa.HDV_SUPPLYSECTORS <- c("trn_pass_road","trn_freight_road")
+gcamusa.GCAM_TRANSPORT_SECTORS <- c("Road")
+
+# GCAM-USA transportation EFs to change to be based on NEI emissions/own service demand for that vehicle class directly
+gcamusa.TRANSUBSECTOR_CHANGE_EF <- c("Heavy truck")
+gcamusa.YEAR_CHANGE_EF <- c("2010")
+gcamusa.STUB_TECH_CHANGE_EF <- c("Liquids")
+gcamusa.NONCO2_CHANGE_EF <- c("NOx", "SO2", "PM2.5", "PM10", "NH3", "CO", "NMVOC", "BC", "OC")
+
+# GCAM-USA transportation base years and future years (different than model base years and future years)
+# Calibrated periods in the model. Only level 2 chunks should reference these
+gcamusa.TRAN_MODEL_BASE_YEARS <- c(1975, 1990, 2005, 2010, 2015)
+# Future (not calibrated) model periods. Only level 2 chunks should reference these
+gcamusa.TRAN_MODEL_FUTURE_YEARS <- seq(2020, 2100, 5)
+
+# defined for MARKAL EF years in LA171 gcam-usa chunk
+gcamusa.TRN_MARKAL_EMISSION_YEARS <- seq(2005,2050, 5)
+
+# defined for EF years in L271 gcam-usa chunk
+gcamusa.TRN_EMISSION_YEARS <- seq(2005,2100, 5)
+
+# emission factor timestep
+gcamusa.TRN_EF_timestep <- 5
+
+# GCAM-USA StubTranTech missing lifetime
+gcamusa.STUBTRANTECH_LIFETIME_2045V <- 25 # lifetime for missing vehicles vintages 2045 and earlier
+gcamusa.STUBTRANTECH_LIFETIME_2050V <- 20 # lifetime for missing vehicles vintages 2050 and later
+
+# GCAM-USA groups to filter out of degrades table (to not predict degradation of EF over time)
+gcamusa.DEGRADES_FILTER_OUT_MARKAL_CLASS <- "Small SUV"
+gcamusa.DEGRADES_FILTER_OUT_MARKAL_FUEL <- "ELC"
+gcamusa.DEGRADES_FILTER_OUT_NONCO2 <-c("PM2.5", "PM10")
+
+# GCAM-USA other transportation
+gcamusa.INTL_SHIP_PM_RATIO <- 0.92 # this is the ratio of PM2.5 to PM10 for international shipping emissions. Value calculated from the EPA US inventory modelling platform 2016v2 20aug2021
+
+# GCAM-USA process emissions
+gcamusa.IND_PROC_EM_NEI_GCAM_SECTORS <- c("industry_processes", "solvents")
+gcamusa.URB_PROC_EM_NEI_GCAM_SECTORS <- c("landfills", "wastewater", "waste_incineration")
+gcamusa.CEMENT_NEI_GCAM_SECTORS <- c("cement")
+gcamusa.NONGHG_PROC_SECTORS.missing_pollutants <- c("PM2.5", "PM10", "NH3")
+gcamusa.NONGHG_PROC_SECTORS.missing_subsectors <- c("wastewater")
+gcamusa.NONGHG_PROC_SECTORS.gdp_max_reduction <- 30
+gcamusa.NONGHG_PROC_SECTORS.gdp_steepness <- 3.5
+
+gcamusa.PROC_DEFAULT_SECTOR <- "industrial processes"
+gcamusa.PROC_DEFAULT_S_T <- "other industrial processes"
+
+gcamusa.CEMENT_TECHS <- c("cement", "cement CCS")
+
+# GCAM-USA industry / industrial energy
+# Define sector(s) used in L275.indenergy_nonghg_USA and L231.proc_sector_USA
+gcamusa.IND_SECTOR_NAME <- "other industry"
+gcamusa.IND_EN_SECTOR_NAME <- "other industrial energy use"
+gcamusa.IND_FDSTCK_SECTOR_NAME <- "other industrial feedstocks"
+
+# Number of digits for model input data
+gcamusa.DIGITS_TRN_EF_DEGRADE     <- 15
+
+# GCAM-USA petroleum fuel conversion factors
+gcamusa.CONVERSIONFACTOR_NATURALGAS_GJ_PER_T_NET <- 48.0 # Natural Gas GJ/t. (Divide TJ by net heating value (LHV) to get kt) 2006 IPCC guidelines for National GHG inventories Vol 2 - Energy, Ch 1 - Intro Table 1.2
+gcamusa.CONVERSIONFACTOR_MOTORGASOLINE_GJ_PER_T_NET <- 44.75 # Motor gasoline(3) GJ/t, IEA energy statistics manual
+gcamusa.CONVERSIONFACTOR_DIESEL_GJ_PER_T_NET <- 43.38 # Gas/diesel oil GJ/t, IEA energy statistics manual
+gcamusa.CONVERSIONFACTOR_RESIDUALOIL_GJ_PER_T_NET <- 41.57 # Fuel oil GJ/t, high-sulphur, IEA energy statistics manual
+
+# Non-CO2 BC - OC - PM conversion factors
+gcamusa.OC_TO_OM <- 1.3
+gcamusa.PM1_TO_PM2.5 <- 1.1
+
+# Non-CO2 BC and OC onroad scaling factors
+gcamusa.BC_1990_ONROAD_SCALING_FACTOR <- 1/1.4
+gcamusa.OC_1990_ONROAD_SCALING_FACTOR <- 1/1.4
+
+# If this variable is FALSE, onroad dust emissions (CEDS 1A3b_Road-noncomb) will not be included
+# If it is TRUE, onroad dust emissions will be included
+gcamusa.DUST <- TRUE
 
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions

@@ -1,0 +1,24 @@
+# File: A25.globaltech_retirement.csv
+# Title: H2 production technology retirement parameters
+# Units: Years for lifetime and half.life; Unitless for steepness; median.shutdown.point; profit.shutdown.steepness
+# Comments: Lifetime is the maximum lifetime of cohort. If no retirement function is used; the entire cohort is retired in this number of years.
+#           half.life: number of years at which 50% of the cohort is retired; using the s-curve-shutdown-decider retirement function.
+#           steepness: shape parameter used by the s-curve-shutdown-decider retirement function.
+#           median.shutdown.point: profit-ratio at which 50% of the cohort is shut down for lack of profitability.
+#           profit.shutdown.steepness: shape parameter of profit-shutdown-decider function.
+# Column types: cccciinni 
+# ----------
+supplysector,subsector,technology,year,lifetime,half.life,steepness,median.shutdown.point,profit.shutdown.steepness
+H2 central production,coal,coal chemical,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,coal,coal chemical CCS,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,gas,natural gas steam reforming,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,gas,natural gas steam reforming CCS,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,biomass,biomass to H2,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,biomass,biomass to H2 CCS,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,nuclear,thermal splitting,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,electricity,electrolysis,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,wind,electrolysis,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,solar,electrolysis,initial-future-year,40,30,0.1,-0.1,6
+H2 industrial,forecourt production,electrolysis,initial-future-year,20,15,0.1,-0.1,6
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,initial-future-year,20,15,0.1,-0.1,6
+H2 wholesale dispensing,forecourt production,electrolysis,initial-future-year,20,15,0.1,-0.1,6

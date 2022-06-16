@@ -71,6 +71,7 @@ class Tabs;
 */
 
 class Configuration {
+    friend class gcam;
 
 public:
 	static Configuration* getInstance();
@@ -105,6 +106,8 @@ private:
 
 	//! Private undefined assignment operator to prevent a programmer from creating a second object.
 	Configuration& operator=( const Configuration& );
+
+    static void reset();
 
 
 };

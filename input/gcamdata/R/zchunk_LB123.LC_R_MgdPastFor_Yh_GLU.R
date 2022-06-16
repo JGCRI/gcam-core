@@ -25,7 +25,8 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
              "L120.LC_bm2_R_LT_Yh_GLU",
              "L121.CarbonContent_kgm2_R_LT_GLU",
              "L121.Yield_kgm2_R_Past_GLU",
-             "L101.Pop_thous_R_Yh"))
+             "L101.Pop_thous_R_Yh",
+             "L120.LC_soil_veg_carbon_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L123.ag_Prod_Mt_R_Past_Y_GLU",
              "L123.ag_Yield_kgm2_R_Past_Y_GLU",
@@ -45,8 +46,14 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
     L110.For_ALL_bm3_R_Y <- get_data(all_data, "L110.For_ALL_bm3_R_Y")
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
-    L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
 
+    if(aglu.CARBON_DATA_SOURCE=="moirai"){
+
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L120.LC_soil_veg_carbon_GLU")
+    }else{
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
+
+    }
     L121.Yield_kgm2_R_Past_GLU <- get_data(all_data, "L121.Yield_kgm2_R_Past_GLU")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
 
@@ -153,7 +160,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
      L121.CarbonContent_kgm2_R_LT_GLU %>%
       filter(Land_Type == "Forest") %>%
       # Calculate veg mass of each GLU based on above-ground carbon content of each GLU
-      mutate(VegVolume_m3m2 = veg_c / aglu.AVG_WOOD_DENSITY_KGCM3,
+      mutate(VegVolume_m3m2 = (veg_c*aglu.CVEG_MULT_UNMGDPAST_MGDPAST) / aglu.AVG_WOOD_DENSITY_KGCM3,
              # Carbon densities are divided by mature age to get net primary productivity
              Yield_m3m2 = VegVolume_m3m2 / `mature age`) ->
       L123.For_Yield_m3m2_R_GLU
@@ -317,7 +324,8 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       add_legacy_name("L123.For_Prod_bm3_R_Y_GLU") %>%
       add_precursors("L110.For_ALL_bm3_R_Y",
                      "L120.LC_bm2_R_LT_Yh_GLU",
-                     "L121.CarbonContent_kgm2_R_LT_GLU") ->
+                     "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L120.LC_soil_veg_carbon_GLU") ->
       L123.For_Prod_bm3_R_Y_GLU
 
     L123.LC_bm2_R_MgdFor_Yh_GLU %>%

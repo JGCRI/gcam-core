@@ -25,6 +25,7 @@
 #' and also the domestic supply and electricity trade sectors for the grid regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join distinct filter if_else mutate select
+#' @importFrom tibble tibble
 #' @author MTB Aug 2018
 module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -35,6 +36,8 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
              FILE = "gcam-usa/A23.elec_delete",
              FILE = "gcam-usa/A23.elecS_sector_vertical",
              FILE = "gcam-usa/A23.elecS_metainfo_vertical",
+             FILE = "gcam-usa/pca_state",
+             FILE = "gcam-usa/pca_electricity_trade",
              "L1235.elecS_demand_fraction_USA",
              "L1235.elecS_horizontal_vertical_GCAM_coeff_USA",
              "L123.in_EJ_state_ownuse_elec",
@@ -94,21 +97,23 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
       net.exports <- imports <- exports <- ownuse_coef <- net.supply <- NULL  # silence package check notes
 
     # Load required inputs
-    states_subregions <- get_data(all_data, "gcam-usa/states_subregions", strip_attributes = TRUE)
-    A232.structure <- get_data(all_data, "gcam-usa/A232.structure", strip_attributes = TRUE)
-    A232.elec_subsector_shrwt_grid_adj <- get_data(all_data, "gcam-usa/A232.elec_subsector_shrwt_grid_adj", strip_attributes = TRUE)
-    A232.elec_subsector_shrwt_interpto_grid_adj <- get_data(all_data, "gcam-usa/A232.elec_subsector_shrwt_interpto_grid_adj", strip_attributes = TRUE)
-    A23.elec_delete <- get_data(all_data, "gcam-usa/A23.elec_delete", strip_attributes = TRUE)
-    A23.elecS_sector_vertical <- get_data(all_data, "gcam-usa/A23.elecS_sector_vertical", strip_attributes = TRUE)
-    A23.elecS_metainfo_vertical <- get_data(all_data, "gcam-usa/A23.elecS_metainfo_vertical", strip_attributes = TRUE)
-    L1235.elecS_demand_fraction_USA <- get_data(all_data, "L1235.elecS_demand_fraction_USA", strip_attributes = TRUE)
-    L1235.elecS_horizontal_vertical_GCAM_coeff_USA <- get_data(all_data, "L1235.elecS_horizontal_vertical_GCAM_coeff_USA", strip_attributes = TRUE) %>%
+    states_subregions <- get_data(all_data, "gcam-usa/states_subregions",strip_attributes = TRUE)
+    A232.structure <- get_data(all_data, "gcam-usa/A232.structure",strip_attributes = TRUE)
+    A232.elec_subsector_shrwt_grid_adj <- get_data(all_data, "gcam-usa/A232.elec_subsector_shrwt_grid_adj",strip_attributes = TRUE)
+    A232.elec_subsector_shrwt_interpto_grid_adj <- get_data(all_data, "gcam-usa/A232.elec_subsector_shrwt_interpto_grid_adj",strip_attributes = TRUE)
+    A23.elec_delete <- get_data(all_data, "gcam-usa/A23.elec_delete",strip_attributes = TRUE)
+    A23.elecS_sector_vertical <- get_data(all_data, "gcam-usa/A23.elecS_sector_vertical",strip_attributes = TRUE)
+    A23.elecS_metainfo_vertical <- get_data(all_data, "gcam-usa/A23.elecS_metainfo_vertical",strip_attributes = TRUE)
+    pca_state <- get_data(all_data, "gcam-usa/pca_state",strip_attributes = TRUE)
+    pca_electricity_trade <- get_data(all_data, "gcam-usa/pca_electricity_trade",strip_attributes = TRUE)
+    L1235.elecS_demand_fraction_USA <- get_data(all_data, "L1235.elecS_demand_fraction_USA",strip_attributes = TRUE)
+    L1235.elecS_horizontal_vertical_GCAM_coeff_USA <- get_data(all_data, "L1235.elecS_horizontal_vertical_GCAM_coeff_USA",strip_attributes = TRUE) %>%
       rename(region = grid_region)
-    L123.in_EJ_state_ownuse_elec <- get_data(all_data, "L123.in_EJ_state_ownuse_elec", strip_attributes = TRUE)
-    L123.out_EJ_state_ownuse_elec <- get_data(all_data, "L123.out_EJ_state_ownuse_elec", strip_attributes = TRUE)
-    L126.in_EJ_state_td_elec <- get_data(all_data, "L126.in_EJ_state_td_elec", strip_attributes = TRUE)
-    L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F", strip_attributes = TRUE)
-    L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec", strip_attributes = TRUE)
+    L123.in_EJ_state_ownuse_elec <- get_data(all_data, "L123.in_EJ_state_ownuse_elec",strip_attributes = TRUE)
+    L123.out_EJ_state_ownuse_elec <- get_data(all_data, "L123.out_EJ_state_ownuse_elec",strip_attributes = TRUE)
+    L126.in_EJ_state_td_elec <- get_data(all_data, "L126.in_EJ_state_td_elec",strip_attributes = TRUE)
+    L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F",strip_attributes = TRUE)
+    L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec",strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing
@@ -116,7 +121,8 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     # PART 1: THE USA REGION
     # Remove the USA electricity sector, and replace with electricity trade
     A23.elec_delete %>%
-      mutate(region = gcam.USA_REGION) -> L2235.DeleteSupplysector_elec_USA
+      mutate(region = gcam.USA_REGION,
+             region = region) -> L2235.DeleteSupplysector_elec_USA
 
     # Creating vertical segments in grid regions
     L2235.Supplysector_elecS_grid_vertical <-
@@ -156,7 +162,7 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
 
     # Technology shareweights
     L2235.SubsectorLogit_elecS_grid_vertical %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subsector,
              share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
       select(region, supplysector, subsector, technology, year, share.weight) -> L2235.TechShrwt_elecS_grid_vertical
@@ -170,13 +176,13 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
       rename(region = grid_region,
              minicam.energy.input = vertical_segment) %>%
       select(-demand_fraction) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) -> L2235.TechMarket_elecS_grid_vertical_electricity
+      repeat_add_columns(tibble(year = MODEL_YEARS)) -> L2235.TechMarket_elecS_grid_vertical_electricity
 
     L1235.elecS_horizontal_vertical_GCAM_coeff_USA %>%
       mutate(market.name = region) %>%
       select(-coefficient) %>%
       arrange(region) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) -> L2235.TechMarket_elecS_grid_vertical
+      repeat_add_columns(tibble(year = MODEL_YEARS)) -> L2235.TechMarket_elecS_grid_vertical
 
     L2235.TechMarket_elecS_grid_vertical %>%
       bind_rows(L2235.TechMarket_elecS_grid_vertical_electricity) -> L2235.TechMarket_elecS_grid_vertical
@@ -189,10 +195,10 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
       rename(coefficient = demand_fraction) -> L2235.TechCoef_elecS_grid_vertical_electricity
 
     L2235.TechMarket_elecS_grid_vertical %>%
-      # MB note:  document why no LJENM
-      left_join(L1235.elecS_horizontal_vertical_GCAM_coeff_USA,
+      # Some non-load segment supplysectors still exist, filter those here
+      filter(supplysector!="electricity") %>%
+      left_join_error_no_match(L1235.elecS_horizontal_vertical_GCAM_coeff_USA,
                 by = c("region", "supplysector", "subsector", "technology", "minicam.energy.input")) %>%
-      filter(!is.na(coefficient)) %>%
       select(region, supplysector, subsector, technology, year, minicam.energy.input, coefficient, market.name) %>%
       bind_rows(L2235.TechCoef_elecS_grid_vertical_electricity) -> L2235.TechCoef_elecS_grid_vertical
 
@@ -213,7 +219,7 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     # No need to read in subsector logit exponents, which are applied to the technology competition
     A232.structure %>%
       filter(region == gcam.USA_REGION) %>%
-      repeat_add_columns(tibble::tibble(grid_region = gcamusa.GRID_REGIONS)) %>%
+      repeat_add_columns(tibble(grid_region = gcamusa.GRID_REGIONS)) %>%
       mutate(subsector = gsub("grid_region", "", subsector),
              subsector = paste0(grid_region, subsector),
              year.fillout = min(MODEL_BASE_YEARS),
@@ -241,11 +247,6 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
       mutate(from.year = as.integer(from.year),
              to.year = as.integer(to.year)) %>%
       filter(region == gcam.USA_REGION) -> A232.elec_subsector_shrwt_interpto_grid_adj_USA
-
-    # L2235.SubsectorShrwtFllt_elec_USA %>%
-    #   mutate(year.fillout = as.integer(year.fillout)) %>%
-    #   anti_join(A232.elec_subsector_shrwt_grid_adj_USA,
-    #             by = c("region", "supplysector", "subsector")) -> L2235.SubsectorShrwtFllt_elec_USA
 
     L2235.SubsectorInterp_elec_USA %>%
       mutate(from.year = as.integer(from.year),
@@ -277,13 +278,14 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     # Technology shareweights, USA region
     A232.structure %>%
       filter(region == gcam.USA_REGION) %>%
-      repeat_add_columns(tibble::tibble(grid_region = gcamusa.GRID_REGIONS)) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(grid_region = gcamusa.GRID_REGIONS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(subsector = gsub("grid_region", "", subsector),
              subsector = paste0(grid_region, subsector),
              technology = gsub("grid_region", "", technology),
              technology = paste0(grid_region, technology),
-             share.weight = gcamusa.DEFAULT_SHAREWEIGHT) %>%
+             # Zero out Hawaii shareweights to reflect difficulties trading between Hawaii grid and remainder of USA grid regions
+             share.weight = if_else(grepl("Hawaii",subsector),0, gcamusa.DEFAULT_SHAREWEIGHT)) %>%
       select(region, supplysector, subsector, technology, year, share.weight, grid_region) -> L2235.TechShrwt_elec_USA
 
     # Technology coefficients and market names, USA region
@@ -354,6 +356,111 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
              # Calculate consumption from domestic sources: total consumption minus imports
              net.supply = consumption - imports) -> L2235.elec_flows_FERC
 
+    ## We have thus far assumed that electricity trade from and to grid regions
+    ## is based on the net trade, however in most cases regions will import and
+    ## export electricity from the grid at the same time which was not being captured.
+    ## We add here a method to reverse engineer calibrated gross trade values
+    ## that will account for imports and exports from the grid region.
+    ## We find the percentage of trade in a particular grid region that is either
+    ## importing or exporting from Chini et. al (2018) and then divide our previously
+    ## calibrated values by this ratio.
+
+    pca_electricity_trade %>%
+      left_join_error_no_match(pca_state %>% select(`Plant State`,respondent_id),
+                by=c("Reporting_PCA" = "respondent_id")) %>%
+      rename(import_state = `Plant State`) %>%
+      left_join(pca_state %>% select(`Plant State`,respondent_id),
+                by=c("Connected_PCA" = "respondent_id")) %>%
+      ## Certain PCA's (values >330) often represent locations in Canada and
+      ## and Mexico. We do not want these here and filter as the 'Plant State'
+      ## becomes NA. LJENM thus does not work as filtering occurs after join
+      ## This also drops observations from 2670 to 2590
+      na.omit() %>%
+      rename(export_state = `Plant State`) %>%
+      left_join_error_no_match(states_subregions %>% select(state,grid_region),
+                by=c("import_state" = "state")) %>%
+      rename(import_grid = grid_region) %>%
+      left_join_error_no_match(states_subregions %>% select(state,grid_region),
+                by=c("export_state" = "state")) %>%
+      rename(export_grid = grid_region) %>%
+      filter(export_grid!=import_grid) %>%
+      ## Filter for trading between different regions
+      select(Year,Received_Electricity,import_grid,export_grid) ->
+      grid_trade
+
+    ## Calculate gross imports in each grid
+    grid_trade %>%
+      select(-export_grid) %>%
+      group_by(Year,import_grid) %>%
+      summarise(grid_imports = sum(Received_Electricity)) %>%
+      ungroup() ->
+      grid_imports
+
+    ## Calculate gross exports in each grid
+    grid_trade %>%
+      select(-import_grid) %>%
+      group_by(Year,export_grid) %>%
+      summarise(grid_exports = sum(Received_Electricity)) %>%
+      ungroup() ->
+      grid_exports
+
+    ## Calculate import to export ratio and make adjustments to calibrated values
+    grid_imports %>%
+    ## Central Southwest grid values exist for 2014 and not 2015, here we make an adjustment to hold 2014 values to 2015 within this grid.
+      full_join(grid_exports %>%
+                  complete(nesting(export_grid), Year = MODEL_BASE_YEARS) %>%
+                  group_by(export_grid) %>%
+                  mutate(grid_exports = approx_fun(Year, grid_exports, rule = 2)) %>%
+                  filter(Year %in% grid_imports$Year),
+                by = c("Year", "import_grid" = "export_grid")) %>%
+      ## If grids do not have imports or exports, a NA will occur,
+      ## we replace these with zeros to understand that 100% share is
+      ## imports or exports respectively.
+      replace_na(list(grid_exports=0,grid_imports=0)) %>%
+      mutate(i2e_ratio = grid_imports / (grid_exports + grid_imports),
+             e2i_ratio = 1 - i2e_ratio) %>%
+      filter(Year %in% MODEL_BASE_YEARS) ->
+      grid_trade_ratio
+
+    ## Data exists from Chini et al., 2018 only back to 2010, therefore
+    ## we hold 2010 ratios constant in past
+    grid_trade_ratio %>%
+      # fill the table with all other base years
+      complete(nesting(import_grid), Year = MODEL_BASE_YEARS) %>%
+      group_by(import_grid) %>%
+      # hold 2010 values constant for all earlier base years
+      mutate(grid_imports = approx_fun(Year, grid_imports, rule = 2),
+             grid_exports = approx_fun(Year, grid_exports, rule = 2),
+             i2e_ratio = approx_fun(Year, i2e_ratio, rule = 2),
+             e2i_ratio = approx_fun(Year, e2i_ratio, rule = 2)) %>%
+      ungroup() %>%
+      arrange(Year) %>%
+      select(-grid_exports, -grid_imports) ->
+      grid_trade_ratio
+
+    L2235.elec_flows_FERC %>%
+      left_join(grid_trade_ratio,
+                by=c("year"="Year","grid_region"="import_grid")) %>%
+      ## Alaska grid has no data here so NAs are introduced. This eliminates
+      ## possibility of LJENM. We replace NAs with 1 in order to eliminate the
+      ## scaling of existing import/export values in mutate call.
+      replace_na(list(i2e_ratio =1, e2i_ratio = 1)) %>%
+      mutate(
+        imports_new = if_else( imports > 0, imports/i2e_ratio,
+                           if_else( imports == 0, (exports/e2i_ratio)-exports, imports)),
+        exports_new = if_else( exports >0, exports/e2i_ratio,
+                           if_else( exports == 0, (imports/i2e_ratio)-imports, exports)),
+        ## The data does not line up in the New York Grid yielding INF so we revert back to previous trade
+        imports_new = if_else(imports_new == Inf,imports,imports_new),
+        exports_new = if_else(exports_new == Inf,exports,exports_new)) %>%
+      select(-imports,-exports, -i2e_ratio, -e2i_ratio) %>%
+      rename(exports=exports_new,
+             imports=imports_new) %>%
+      ## Reassign net.supply to be used as net ownuse to reflect change
+      ## in imports by grid region
+      mutate(net.supply = consumption - imports) ->
+      L2235.elec_flows_FERC
+
     # Calibrated exports of electricity from grid regions to shared USA region
     L2235.elec_flows_FERC %>%
       mutate(calOutputValue = round(exports, gcamusa.DIGITS_CALOUTPUT),
@@ -375,7 +482,7 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     # Population rates in the FERC grid regions
     states_subregions %>%
       distinct(grid_region) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(totalPop = 1) %>%
       rename(region = grid_region) %>%
       arrange(region) -> L2235.Pop_FERC_USA
@@ -399,14 +506,15 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     A232.structure %>%
       filter(region == "grid_region") %>%
       select(-region) %>%
-      repeat_add_columns(tibble::tibble(region = gcamusa.GRID_REGIONS)) %>%
+      repeat_add_columns(tibble(region = gcamusa.GRID_REGIONS)) %>%
       mutate(market.name = if_else(market.name == "grid_region", region, market.name)) -> L2235.structure_FERC
 
     L2235.structure_FERC %>%
       mutate(logit.year.fillout = min(MODEL_BASE_YEARS),
              logit.type = gcamusa.GRID_REGION_LOGIT_TYPE) %>%
       select(region, supplysector, output.unit, input.unit, price.unit,
-             logit.year.fillout, logit.exponent = subsector.logit, logit.type) -> L2235.Supplysector_elec_FERC
+             logit.year.fillout, logit.exponent = subsector.logit, logit.type) ->
+               L2235.Supplysector_elec_FERC
 
     # Subsector (grid region) shareweights in USA electricity
     L2235.structure_FERC %>%
@@ -456,12 +564,14 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     # Technology shareweights, USA region
     L2235.structure_FERC %>%
       select(region, supplysector, subsector, technology) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
-      mutate(share.weight = gcamusa.DEFAULT_SHAREWEIGHT) -> L2235.TechShrwt_elec_FERC
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      ##Alaska grid throws unsolvable markets in the future when allowed to have a technology shareweight.
+      ## Subsector shareweights are 0 anyways, so we zero out here too.
+      mutate(share.weight = if_else(grepl("Alaska",region)&grepl("trade",subsector),0,gcamusa.DEFAULT_SHAREWEIGHT)) -> L2235.TechShrwt_elec_FERC
 
     # Technology coefficients and market names
     L2235.structure_FERC %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       filter(supplysector != "electricity_net_ownuse") %>%
       mutate(coefficient = gcamusa.DEFAULT_COEFFICIENT) %>%
       select(region, supplysector, subsector, technology, year, minicam.energy.input,
@@ -469,7 +579,7 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
 
     # Own use coefficients in the grid regions
     L2235.structure_FERC %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       filter(supplysector == "electricity_net_ownuse") %>%
       # join will produce NAs; left_join_error_no_match throws error, so left_join is used
       left_join(L2235.elec_flows_FERC %>%
@@ -482,7 +592,7 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
       select(region, supplysector, subsector, technology, year, minicam.energy.input,
              coefficient, market.name) -> L2235.TechCoef_elecownuse_FERC
 
-    # Calibrated electricity imports (from USA region
+    # Calibrated electricity imports (from USA region)
     L2235.TechCoef_elec_FERC %>%
       filter(year %in% MODEL_BASE_YEARS,
              market.name == gcam.USA_REGION) %>%
@@ -660,6 +770,8 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
       add_legacy_name("L2235.Production_exports_USAelec") %>%
       add_precursors("gcam-usa/states_subregions",
                      "gcam-usa/A232.structure",
+                     "gcam-usa/pca_state",
+                     "gcam-usa/pca_electricity_trade",
                      "L1232.out_EJ_sR_elec",
                      "L132.out_EJ_state_indchp_F",
                      "L123.in_EJ_state_ownuse_elec",

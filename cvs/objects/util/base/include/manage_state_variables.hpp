@@ -70,6 +70,7 @@ class Value;
  * \author Pralit Patel
  */
 class ManageStateVariables {
+    friend class SolutionDebugger;
 public:
     ManageStateVariables( const int aPeriod );
     ~ManageStateVariables();
@@ -110,7 +111,7 @@ private:
     
     //! The total number of individual Values flagged as STATE that could possibly
     //! be changed during World.calc( mPeriodToCollect ).
-    size_t mNumCollected;
+    uint64_t mNumCollected;
     
     //! The list of individual Values flagged as STATE that could possibly be
     //! changed during World.calc( mPeriodToCollect ).  We store them in a list

@@ -132,7 +132,9 @@ module_energy_L244.building_det <- function(command, ...) {
       L244.SatiationAdder_SSP3 <- L244.GenericServiceSatiation_SSP3 <-L244.Satiation_flsp_SSP4 <-
       L244.SatiationAdder_SSP4 <- L244.GenericServiceSatiation_SSP4 <- L244.Satiation_flsp_SSP5 <-
       L244.SatiationAdder_SSP5 <- L244.GenericServiceSatiation_SSP5 <- scenario <- L244.HDDCDD_A2_CCSM3x <-
-      L244.HDDCDD_A2_HadCM3 <- L244.HDDCDD_B1_CCSM3x <- L244.HDDCDD_B1_HadCM3 <- L244.HDDCDD_constdd_no_GCM <- NULL
+      L244.HDDCDD_A2_HadCM3 <- L244.HDDCDD_B1_CCSM3x <- L244.HDDCDD_B1_HadCM3 <- L244.HDDCDD_constdd_no_GCM <-
+      area_thouskm2 <- flsp <- flsp_pc <- unadjust.satiation <- land.density.param <- tot.dens <-
+      b.param <- income.param <- gdp_pc <- flsp_est <- base_flsp <- bias.adjust.param <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -362,15 +364,15 @@ module_energy_L244.building_det <- function(command, ...) {
       left_join_error_no_match(L101.Pop_thous_R_Yh, by=c("GCAM_region_ID","year")) %>%
       left_join_error_no_match(L144.flsp_bm2_R_res_Yh,by=c("GCAM_region_ID","year")) %>%
       rename(flsp=value) %>%
-      mutate(tot.dens=pop_thous/area_thouskm2) %>%
-      mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
-      mutate(base_flsp=flsp_pc) %>%
-      mutate(flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
-                                                                                        *exp(-`income.param`*log(gdp_pc)))) %>%
-      mutate(bias.adjust.param=flsp_pc-flsp_est) %>%
-      mutate(base_flsp=round(base_flsp,energy.DIGITS_FLOORSPACE),
-             bias.adjust.param=round(bias.adjust.param,energy.DIGITS_FLOORSPACE)) %>%
-      mutate(gcam.consumer="resid",
+      mutate(tot.dens=pop_thous/area_thouskm2,
+             flsp_pc=(flsp*1E9)/(pop_thous*1E3),
+             base_flsp=flsp_pc,
+             flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
+                                                                                        *exp(-`income.param`*log(gdp_pc))),
+             bias.adjust.param=flsp_pc-flsp_est,
+             base_flsp=round(base_flsp,energy.DIGITS_FLOORSPACE),
+             bias.adjust.param=round(bias.adjust.param,energy.DIGITS_FLOORSPACE),
+             gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
       rename(pop.dens=tot.dens,

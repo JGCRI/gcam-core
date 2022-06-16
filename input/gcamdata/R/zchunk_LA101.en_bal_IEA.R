@@ -52,10 +52,10 @@ module_energy_LA101.en_bal_IEA <- function(command, ...) {
     # pre-built output datasets and exit.
     if(is.null(L100.IEA_en_bal_ctry_hist)) {
       # Proprietary IEA energy data are not available, so used saved outputs
-      L101.en_bal_EJ_R_Si_Fi_Yh_full <- prebuilt_data("L101.en_bal_EJ_R_Si_Fi_Yh_full")
-      L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- prebuilt_data("L101.en_bal_EJ_ctry_Si_Fi_Yh_full")
-      L101.in_EJ_ctry_trn_Fi_Yh <- prebuilt_data("L101.in_EJ_ctry_trn_Fi_Yh")
-      L101.in_EJ_ctry_bld_Fi_Yh <- prebuilt_data("L101.in_EJ_ctry_bld_Fi_Yh")
+      L101.en_bal_EJ_R_Si_Fi_Yh_full <- extract_prebuilt_data("L101.en_bal_EJ_R_Si_Fi_Yh_full")
+      L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- extract_prebuilt_data("L101.en_bal_EJ_ctry_Si_Fi_Yh_full")
+      L101.in_EJ_ctry_trn_Fi_Yh <- extract_prebuilt_data("L101.in_EJ_ctry_trn_Fi_Yh")
+      L101.in_EJ_ctry_bld_Fi_Yh <- extract_prebuilt_data("L101.in_EJ_ctry_bld_Fi_Yh")
     } else {
 
       # Add IEA data to main tibble (lines 35-46 in original file)

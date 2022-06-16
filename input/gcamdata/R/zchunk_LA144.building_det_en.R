@@ -355,8 +355,10 @@ module_energy_LA144.building_det_en <- function(command, ...) {
       # Calculate the adjustment to the energy consumed by heating and cooling
       mutate(adjustment = normal / normal_RG3) %>%
       # Match in the unadjusted shares, and compute the first-order estimate of energy consumption
-      left_join_error_no_match(L144.share_serv_fuel, by = c("region_GCAM3", "sector", "fuel", "service")) %>%
+      # Need to use left_join here because future building technologies (e.g. hydrogen) are not included in L144.share_serv_fuel
+      left_join(L144.share_serv_fuel, by = c("region_GCAM3", "sector", "fuel", "service")) %>%
       rename(share_serv_fuel_RG3 = share_serv_fuel) %>%
+      replace_na(list(share_serv_fuel_RG3 = 0, share_TFEbysector = 0, fuel_share_of_TFEbysector = 0)) %>%
       # Energy_tot = energy consumption by country, sector, and fuel (not disaggregated to service)
       # Joining table does not have every combination, so NAs will be introduced
       left_join(L144.in_EJ_ctry_bld_Fi_Yh, by = c("iso", "sector", "fuel")) %>%

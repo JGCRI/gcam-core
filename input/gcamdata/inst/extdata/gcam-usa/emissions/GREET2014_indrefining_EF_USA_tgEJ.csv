@@ -1,0 +1,80 @@
+# File: GREET2014_indrefining_EF_USA_tgEJ.csv
+# Title: Emission factors for refining technologies
+# Units: Tg/EJ (output-driven)
+# Comments: From ORD
+# Source: Provided by Dan Loughlin at ORD from GREET 2014
+# Column types: ccccicn 
+# ----------
+region,supplysector,subsector,stub.technology,year,Non.CO2,emiss.coeff
+USA,refining,coal to liquids,coal to liquids,2015,NOx,0.00793
+USA,refining,coal to liquids,coal to liquids,2015,SO2,0.00654
+USA,refining,coal to liquids,coal to liquids,2015,CO,0.0029
+USA,refining,coal to liquids,coal to liquids,2015,PM10,0.00818
+USA,refining,coal to liquids,coal to liquids,2015,PM2.5,0.00122
+USA,refining,coal to liquids,coal to liquids,2015,BC,0.000041
+USA,refining,coal to liquids,coal to liquids,2015,OC,0.00015
+USA,refining,coal to liquids,coal to liquids,2015,CH4_epa,0.14
+USA,refining,coal to liquids,coal to liquids,2015,N2O_epa,0.0000282
+USA,refining,gas to liquids,gas to liquids,2015,NOx,0.0252
+USA,refining,gas to liquids,gas to liquids,2015,SO2,0.00648
+USA,refining,gas to liquids,gas to liquids,2015,CO,0.0178
+USA,refining,gas to liquids,gas to liquids,2015,PM10,0.0131
+USA,refining,gas to liquids,gas to liquids,2015,PM2.5,0.013
+USA,refining,gas to liquids,gas to liquids,2015,BC,0.000059
+USA,refining,gas to liquids,gas to liquids,2015,OC,0.000074
+USA,refining,gas to liquids,gas to liquids,2015,CH4_epa,0.0659
+USA,refining,gas to liquids,gas to liquids,2015,N2O_epa,0.0000807
+USA,refining,biomass liquids,cellulosic ethanol,2015,NOx,0.0158
+USA,refining,biomass liquids,cellulosic ethanol,2015,SO2,0.0209
+USA,refining,biomass liquids,cellulosic ethanol,2015,CO,0.0118
+USA,refining,biomass liquids,cellulosic ethanol,2015,PM10,0.00102
+USA,refining,biomass liquids,cellulosic ethanol,2015,PM2.5,0.000303
+USA,refining,biomass liquids,cellulosic ethanol,2015,BC,0.000022
+USA,refining,biomass liquids,cellulosic ethanol,2015,OC,0.000047
+USA,refining,biomass liquids,cellulosic ethanol,2015,CH4_epa,0.00235
+USA,refining,biomass liquids,cellulosic ethanol,2015,N2O_epa,0.000892
+USA,refining,biomass liquids,corn ethanol,2015,NOx,0.00209
+USA,refining,biomass liquids,corn ethanol,2015,SO2,0.00154
+USA,refining,biomass liquids,corn ethanol,2015,CO,0.00147
+USA,refining,biomass liquids,corn ethanol,2015,PM10,0.000982
+USA,refining,biomass liquids,corn ethanol,2015,PM2.5,0.00025
+USA,refining,biomass liquids,corn ethanol,2015,BC,0.000017
+USA,refining,biomass liquids,corn ethanol,2015,OC,0.000041
+USA,refining,biomass liquids,corn ethanol,2015,CH4_epa,0.00557
+USA,refining,biomass liquids,corn ethanol,2015,N2O_epa,0.0000552
+USA,refining,oil refining,oil refining,2005,NOx,0.0152
+USA,refining,oil refining,oil refining,2010,NOx,0.0112
+USA,refining,oil refining,oil refining,2015,NOx,0.00875
+USA,refining,oil refining,oil refining,2020,NOx,0.00787
+USA,refining,oil refining,oil refining,2005,CH4_epa,0.0169
+USA,refining,oil refining,oil refining,2010,CH4_epa,0.0171
+USA,refining,oil refining,oil refining,2015,CH4_epa,0.0165
+USA,refining,oil refining,oil refining,2020,CH4_epa,0.0163
+USA,refining,oil refining,oil refining,2005,N2O_epa,0.000112
+USA,refining,oil refining,oil refining,2010,N2O_epa,0.000156
+USA,refining,oil refining,oil refining,2015,N2O_epa,0.000148
+USA,refining,oil refining,oil refining,2020,N2O_epa,0.000146
+USA,refining,oil refining,oil refining,2005,SO2,0.0122
+USA,refining,oil refining,oil refining,2010,SO2,0.0137
+USA,refining,oil refining,oil refining,2015,SO2,0.0114
+USA,refining,oil refining,oil refining,2020,SO2,0.00729
+USA,refining,oil refining,oil refining,2005,CO,0.00568
+USA,refining,oil refining,oil refining,2010,CO,0.00556
+USA,refining,oil refining,oil refining,2015,CO,0.00513
+USA,refining,oil refining,oil refining,2020,CO,0.00496
+USA,refining,oil refining,oil refining,2005,PM10,0.0012
+USA,refining,oil refining,oil refining,2010,PM10,0.00123
+USA,refining,oil refining,oil refining,2015,PM10,0.000783
+USA,refining,oil refining,oil refining,2020,PM10,0.000745
+USA,refining,oil refining,oil refining,2005,PM2.5,0.00092
+USA,refining,oil refining,oil refining,2010,PM2.5,0.000776
+USA,refining,oil refining,oil refining,2015,PM2.5,0.000602
+USA,refining,oil refining,oil refining,2020,PM2.5,0.000563
+USA,refining,oil refining,oil refining,2005,BC,0.0000898
+USA,refining,oil refining,oil refining,2010,BC,0.0000786
+USA,refining,oil refining,oil refining,2015,BC,0.0000623
+USA,refining,oil refining,oil refining,2020,BC,0.0000543
+USA,refining,oil refining,oil refining,2005,OC,0.000188
+USA,refining,oil refining,oil refining,2010,OC,0.000173
+USA,refining,oil refining,oil refining,2015,OC,0.000139
+USA,refining,oil refining,oil refining,2020,OC,0.000129

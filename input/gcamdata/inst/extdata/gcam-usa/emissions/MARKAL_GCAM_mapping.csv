@@ -1,0 +1,19 @@
+# File: MARKAL_GCAM_mapping.csv
+# Title: Mapping file between MARKAL and GCAM
+# Source: NA - Mapping file
+# Comments: NA
+# Units: NA
+# Column types: cc
+# ----------
+class,GCAM_sector
+Bus,Road-bus
+Commercial truck,Road-truck-Light-Commertial
+Compact car,Road-LDV
+Full size car,Road-LDV
+Heavy duty long haul truck,Road-truck-Long-haul
+Heavy duty short haul truck,Road-truck-Short-haul
+Large SUV,Road-LDV
+Mini car,Road-LDV
+Minivan,Road-LDV
+Pickup,Road-LDV
+Small SUV,Road-LDV

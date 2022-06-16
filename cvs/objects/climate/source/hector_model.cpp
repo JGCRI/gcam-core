@@ -295,7 +295,7 @@ void HectorModel::reset( const int aPeriod ) {
         // shutdown all Hector components and delete.
         climatelog << "Shutting down old Hector core." << endl;
         mHcore->shutDown();
-        mHcore.release();
+        mHcore.reset(0);
     }
     if( !mOfile.get() ) {
         mOfile.reset( new ofstream( "logs/gcam-hector-outputstream.csv" ) );

@@ -16,6 +16,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else left_join mutate select
 #' @importFrom tidyr replace_na
+#' @importFrom tibble tibble
 #' @author KVC June 2017
 module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
@@ -37,7 +38,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     year <- value <- GCAM_region_ID <- GCAM_commodity <- GLU <- GLU_name <- IRR_RFD <-
       MGMT <- region <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <-
       minicam.energy.input <- coefficient <- WaterContent <- nonLandVariableCost <-
-      FertCost <- NULL  # silence package check notes
+      FertCost <- GCAM_subsector <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -54,13 +55,14 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(basin_to_country_mapping[ c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
 
       # Copy coefficients to all four technologies
-      repeat_add_columns(tibble::tibble(IRR_RFD = c("IRR", "RFD"))) %>%
-      repeat_add_columns(tibble::tibble(MGMT = c("hi", "lo"))) %>%
+      repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
+      repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
 
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
+             AgSupplySubsector = paste(GCAM_subsector, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
+             AgProductionTechnology = paste(paste(AgSupplySubsector, IRR_RFD, sep = aglu.IRR_DELIMITER),
+                                            MGMT, sep = aglu.MGMT_DELIMITER)) %>%
 
       # Add name of minicam.energy.input
       mutate(minicam.energy.input = "N fertilizer") %>%
@@ -73,7 +75,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year) %>%
-      repeat_add_columns(tibble::tibble(year = MODEL_FUTURE_YEARS)) %>%
+      repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       bind_rows(L2062.AgCoef_Fert_ag_irr_mgmt) %>%
       filter(coefficient > 0) ->
       L2062.AgCoef_Fert_ag_irr_mgmt

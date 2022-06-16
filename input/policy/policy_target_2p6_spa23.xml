@@ -6,7 +6,7 @@
     <first-tax-year>2040</first-tax-year>
  <path-discount-rate>0.03</path-discount-rate>
     <!-- Note, the value chosen here is the solved price from the last GCAM release. -->
-    <initial-tax-guess>208.0</initial-tax-guess>
+    <initial-tax-guess>650.0</initial-tax-guess>
 	<tax-name>CO2_LTG</tax-name>
 	<overshoot/>
     <max-tax>8000</max-tax>

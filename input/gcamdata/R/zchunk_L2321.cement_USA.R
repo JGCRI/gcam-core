@@ -288,29 +288,21 @@ module_gcamusa_L2321.cement_USA <- function(command, ...) {
                 by =c("region", "supplysector", "minicam.energy.input", "year")) ->
       L2321.StubTechCoef_cement_USA
 
-    # Add market information, limestone and process heat are state level markets where as electricity
-    # comes from the USA level.
+    # Add market information: default is USA. replace for fuels with grid region level markets and state markets.
+    # Process heat cement and limestone are also represented at the state level (names referenced from existing objects).
     L2321.StubTechCoef_cement_USA %>%
-      mutate(market.name = region,
-             market.name = if_else(grepl("elec", minicam.energy.input), gcam.USA_REGION, market.name)) %>%
-      # replace market name with the grid region name if the minicam.energy.input is
-      # considered a regional fuel market
       left_join(states_subregions %>%
                   select(region = state, grid_region),
                 by = "region") %>%
-      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
-                                   grid_region, market.name)) %>%
-      select(-grid_region) ->
+      mutate(market.name = gcam.USA_REGION,
+             market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                   grid_region, market.name),
+             market.name = if_else(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS,
+                                   region, market.name),
+             market.name = if_else(minicam.energy.input %in% c(gcamusa.STATE_UNLIMITED_RESOURCES, L2321.Supplysector_cement$supplysector),
+                                   region, market.name)) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L2321.StubTechCoef_cement_USA
-
-
-    # Change market name to reflect the fact that electricity is consumed from state markets.
-    L2321.StubTechCoef_cement_USA %>%
-      mutate(replace = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, 1, 0),
-             market.name = if_else(replace == 1, region, market.name)) %>%
-      select(-replace) ->
-      L2321.StubTechCoef_cement_USA
-
 
     # Create the calibrated input of fuel consumption for producing heat input table.
     #
@@ -364,7 +356,7 @@ module_gcamusa_L2321.cement_USA <- function(command, ...) {
     # the process heat supplysector data frame.
     L2321.StubTechMarket_cement_USA %>%
       # Use left join here to pass time shift test.
-      left_join(calibrated_techs %>%
+      left_join(A321.globaltech_coef %>%
                   select(supplysector, subsector, stub.technology = technology,
                          minicam.energy.input),
                 by = c("supplysector", "subsector", "stub.technology")) ->
@@ -375,12 +367,14 @@ module_gcamusa_L2321.cement_USA <- function(command, ...) {
       mutate(market.name = gcam.USA_REGION) %>%
       select(region, supplysector, subsector, stub.technology, year, minicam.energy.input, market.name) %>%
       # replace market name with the grid region name if the minicam.energy.input is
-      # considered a regional fuel market
+      # considered a regional fuel market, and with the state name if it's a state market
       left_join_error_no_match(states_subregions %>%
                                  select(region = state, grid_region),
                                by = "region") %>%
       mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
-                                   grid_region, market.name)) %>%
+                                   grid_region, market.name),
+             market.name = if_else(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS,
+                                   region, market.name)) %>%
       select(-grid_region) ->
       L2321.StubTechMarket_cement_USA
 

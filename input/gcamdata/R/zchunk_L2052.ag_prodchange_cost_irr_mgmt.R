@@ -49,7 +49,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       MGMT <- AgSupplySector <- AgSupplySubsector <- AgProductionTechnology <-
       AgProdChange <- nonLandVariableCost <- high_reg <- low_reg <- region <-
       GCAM_region_ID <- year <- value <- GCAM_commodity <- Cost_75USDkg <-
-      Irr_Rfd <- scenario <- calPrice <- cost_PrP_ratio <- . <- NULL  # silence package check notes
+      Irr_Rfd <- scenario <- calPrice <- cost_PrP_ratio <- . <- GCAM_subsector <- NULL  # silence package check notes
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
@@ -78,7 +78,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     L161.ag_irrProd_Mt_R_C_Y_GLU %>%
       mutate(IRR_RFD = "IRR") %>%
       bind_rows(mutate(L161.ag_rfdProd_Mt_R_C_Y_GLU, IRR_RFD = "RFD")) %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU, IRR_RFD) %>%
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, IRR_RFD) %>%
       unique() %>%
       # Map in costs data, same level for irrigated and rainfed
       left_join_error_no_match(L164.ag_Cost_75USDkg_C, by = "GCAM_commodity") %>%
@@ -89,8 +89,9 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, IRR_RFD, MGMT, sep = "_")) %>%
+             AgSupplySubsector = paste(GCAM_subsector, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
+             AgProductionTechnology = paste(paste(AgSupplySubsector, IRR_RFD, sep = aglu.IRR_DELIMITER),
+                                            MGMT, sep = aglu.MGMT_DELIMITER)) %>%
       # Copy costs to all model years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(names_AgCost) ->
@@ -153,8 +154,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, sep = "_")) %>%
+             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
+             AgProductionTechnology = AgSupplySubsector) %>%
       left_join(L132.ag_an_For_Prices, by = "GCAM_commodity") %>%
       left_join(L1321.expP_R_F_75USDm3, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
                   mutate(nonLandVariableCost = if_else(is.na(value),
@@ -178,8 +179,9 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
       mutate(AgSupplySector = GCAM_commodity,
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = "_"),
-             AgProductionTechnology = paste(GCAM_commodity, GLU_name, Irr_Rfd, MGMT, sep = "_")) %>%
+             AgSupplySubsector = paste(GCAM_subsector, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
+             AgProductionTechnology = paste(paste(AgSupplySubsector, Irr_Rfd, sep = aglu.IRR_DELIMITER),
+                                            MGMT, sep = aglu.MGMT_DELIMITER)) %>%
       select(names_AgProdChange) ->
       L2052.AgProdChange_ag_irr_ref
 
@@ -201,7 +203,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       # Copy to both irrigated and rainfed technologies
       repeat_add_columns(tibble(IRR_RFD = c("IRR", "RFD"))) %>%
       # Separate the AgProductionTechnology variable to get GLU names for matching in the yield change rates
-      separate(AgProductionTechnology, c("biomass", "GLU_name"), sep = "_") %>%
+      separate(AgProductionTechnology, c("biomass", "GLU_name"), sep = aglu.CROP_GLU_DELIMITER) %>%
       # Map in yield change rates, the same values for bioenergy crops are applied equally to grass and tree crops.
       left_join(L2051.AgProdChange_bio_irr_ref[c("region", "GLU_name", "Irr_Rfd", "year", "AgProdChange")],
                 by = c("region", "GLU_name", "IRR_RFD" = "Irr_Rfd", "year")) %>%
@@ -212,7 +214,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       # Copy coefficients to high and low management levels
       repeat_add_columns(tibble(MGMT = c("hi", "lo"))) %>%
       # Revise technology names to add all technologies
-      mutate(AgProductionTechnology = paste(AgSupplySubsector, IRR_RFD, MGMT, sep = "_")) %>%
+      mutate(AgProductionTechnology = paste(paste(AgSupplySubsector, IRR_RFD, sep = aglu.CROP_GLU_DELIMITER),
+                                            MGMT, sep = aglu.MGMT_DELIMITER)) %>%
       select(names_AgProdChange) ->
       L2052.AgProdChange_bio_irr_ref
 
@@ -230,27 +233,12 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
 
     # Specify the SSP4 scenario with diverging agricultural productivity change
     # between high, median, and low income regions (not incl biomass)
-    L102.pcgdp_thous90USD_Scen_R_Y %>%
-      filter(scenario == "SSP4" & year == 2010) %>%
-      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      # Calculate GDP per capita in 2010 USD
-      mutate(value = value / gdp_deflator(1990, 2010)) %>%
-      select(region, value) ->
-      L225.pcgdp_2010
 
     # Get the region list of high income countries
-    L225.pcgdp_2010 %>%
-      filter(value > aglu.HIGH_GROWTH_PCGDP) %>%
-      select(region) %>%
-      # Convert tibble to vector
-      pull(region) ->
+    get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "high") ->
       high_reg
     # Get the region list of low income countries
-    L225.pcgdp_2010 %>%
-      filter(value < aglu.LOW_GROWTH_PCGDP) %>%
-      select(region) %>%
-      # Convert tibble to vector
-      pull(region) ->
+    get_ssp_regions(L102.pcgdp_thous90USD_Scen_R_Y, GCAM_region_names, "low") ->
       low_reg
 
     # Assign the reference agricultural productivity change to median income countries,

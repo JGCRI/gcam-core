@@ -29,7 +29,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              FILE = "energy/mappings/UCD_techs",
              #kbn 2019-10-09 Added size class divisions file here.
              FILE=  "energy/mappings/UCD_size_class_revisions",
-             FILE =  "energy/UCD_trn_data_CORE_highEV",
+             FILE = "energy/OTAQ_trn_data_EMF37",
              FILE =  "energy/UCD_trn_data_CORE",
              FILE =  "energy/UCD_trn_data_SSP1",
              FILE =  "energy/UCD_trn_data_SSP3",
@@ -48,7 +48,8 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y",
              "L154.speed_kmhr_R_trn_m_sz_tech_F_Y",
              "L154.out_mpkm_R_trn_nonmotor_Yh",
-             "L154.IEA_histfut_data_times_UCD_shares"))
+             "L154.IEA_histfut_data_times_UCD_shares",
+             "UCD_trn_data"))
   } else if(command == driver.MAKE) {
 
     ## silence package check.
@@ -70,17 +71,14 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     UCD_ctry <- get_data(all_data, "energy/mappings/UCD_ctry")
     UCD_techs <- get_data(all_data, "energy/mappings/UCD_techs")
+    OTAQ_trn_data_EMF37 <- get_data(all_data, "energy/OTAQ_trn_data_EMF37")
     UCD_trn_data_CORE <- get_data(all_data, "energy/UCD_trn_data_CORE") %>%
       gather_years %>% mutate(sce=paste0("CORE"))
     # kbn 2020-06-02 get data for all SSPs. No data for SSP2.
     UCD_trn_data_SSP1 <- get_data(all_data,"energy/UCD_trn_data_SSP1") %>% gather_years %>% mutate(sce=paste0("SSP1"))
     UCD_trn_data_SSP3 <- get_data(all_data,"energy/UCD_trn_data_SSP3") %>% gather_years %>% mutate(sce=paste0("SSP3"))
     UCD_trn_data_SSP5 <- get_data(all_data,"energy/UCD_trn_data_SSP5") %>% gather_years %>% mutate(sce=paste0("SSP5"))
-    # UCD_trn_data_CORE_highEV is a scenario, but has data for historical years.
-    UCD_trn_data_CORE_highEV <- get_data(all_data,"energy/UCD_trn_data_CORE_highEV") %>% gather_years %>% mutate(sce=paste0("highEV")) %>%
-                                                        filter(year %in% c(FUTURE_YEARS))
-    # kbn 2020-06-02 Bind data for SSPs with CORE
-    UCD_trn_data <- bind_rows(UCD_trn_data_CORE,UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5,UCD_trn_data_CORE_highEV)
+    UCD_trn_data <- bind_rows(UCD_trn_data_CORE,UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5)
 
     L101.in_EJ_ctry_trn_Fi_Yh <- get_data(all_data, "L101.in_EJ_ctry_trn_Fi_Yh")
     L1011.in_EJ_ctry_intlship_TOT_Yh <- get_data(all_data, "L1011.in_EJ_ctry_intlship_TOT_Yh")
@@ -90,6 +88,38 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     #kbn 2019-10-07: Read new size class assignments
     Size_class_New<- get_data(all_data, "energy/mappings/UCD_size_class_revisions")
     # ===================================================
+    # Prepare EMF37 data for merging: first, repeat by the full set of scenarios
+    OTAQ_trn_data_EMF37 %>%
+      gather_years() %>%
+      repeat_add_columns(tibble(sce = unique(UCD_trn_data$sce))) ->
+      OTAQ_trn_data_EMF37_to_bind
+
+    # Expand the OTAQ trn data to all of the required years in the UCD transportation database
+    UCD_data_years <- sort(unique(UCD_trn_data$year))
+
+    OTAQ_trn_data_EMF37_to_bind_noenergy <- filter(OTAQ_trn_data_EMF37_to_bind, variable != "energy") %>%
+      complete(nesting(sce, UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit),
+               year = UCD_data_years) %>%
+      group_by(sce, UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup()
+
+    UCD_trn_data_nocalibration <- UCD_trn_data %>%
+      filter(!variable %in% c("energy", "service output")) %>%
+      anti_join(OTAQ_trn_data_EMF37_to_bind_noenergy, by = c("sce", "UCD_region", "UCD_sector", "mode","size.class",
+                                                    "UCD_technology", "UCD_fuel", "variable", "unit", "year")) %>%
+      bind_rows(OTAQ_trn_data_EMF37_to_bind_noenergy) %>%
+      arrange(sce, UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit, year)
+
+      UCD_trn_data_calibrated <- filter(UCD_trn_data, variable %in% c("energy", "service output")
+                                    & year == min(year)) %>%
+        anti_join(filter(OTAQ_trn_data_EMF37_to_bind, variable == "energy" & year == min(year)),
+                  by = c("sce", "UCD_region", "UCD_sector", "mode","size.class",
+                         "UCD_technology", "UCD_fuel", "variable", "unit", "year")) %>%
+        bind_rows(filter(OTAQ_trn_data_EMF37_to_bind, variable == "energy" & year == min(year)))
+
+      UCD_trn_data <- bind_rows(UCD_trn_data_calibrated, UCD_trn_data_nocalibration)
+
     # Part 1: downscaling country-level transportation energy data to UCD transportation technologies, then scaling to transportation
     # enduse data.
 
@@ -310,7 +340,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     all_years <- tibble( year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       filter(!(year %in% unique(UCD_trn_data$year)))
 
-    UCD_trn_data_sce <- bind_rows(UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5,UCD_trn_data_CORE_highEV)
+    UCD_trn_data_sce <- bind_rows(UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5)
     all_years_SSPs <- tibble( year = c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
       filter(!(year %in% unique(UCD_trn_data$year)))
     #kbn 2020-01-30 We don't need all years for the SSPs. Only selecting years from 2015 on wards. Splitting years
@@ -475,11 +505,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
 
 
     #kbn 2020 bind using rbindlist to increase processing speed. A separate PR submitted on github to functionalize this for future use.
-    list_for_bind=list ((ALL_ctry_var %>%  filter(sce=="CORE")), (ALL_ctry_var_SSPS) )
+    list_for_bind <- list((ALL_ctry_var %>%  filter(sce=="CORE")), (ALL_ctry_var_SSPS))
     ALL_ctry_var <- rbindlist(list_for_bind, use.names=TRUE)
 
 
-    size_class<-(paste(energy.TRAN_UCD_SIZE_CLASS,".x",sep=""))
+    size_class <- (paste(energy.TRAN_UCD_SIZE_CLASS,".x",sep=""))
     ALL_region_var <- ALL_ctry_var %>%
       mutate(Tvkm = weight_EJ / intensity,
              Tpkm = Tvkm * `load factor`,
@@ -561,7 +591,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
                      "energy/mappings/calibrated_techs_trn_agg", "energy/mappings/enduse_fuel_aggregation",
                      "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
-                     "energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE","energy/UCD_trn_data_CORE_highEV",
+                     "energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE",
                      "energy/mappings/UCD_size_class_revisions") ->
       L154.in_EJ_R_trn_m_sz_tech_F_Yh
 
@@ -576,7 +606,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L1011.in_EJ_ctry_intlship_TOT_Yh", "L131.in_EJ_R_Senduse_F_Yh",
                      "energy/mappings/calibrated_techs_trn_agg", "energy/mappings/enduse_fuel_aggregation",
                      "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
-                     "energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE","energy/UCD_trn_data_CORE_highEV",
+                     "energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE",
                      "energy/mappings/UCD_size_class_revisions") ->L154.IEA_histfut_data_times_UCD_shares
 
 
@@ -586,7 +616,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("Aggregated country-level transportation energy data to UCD transportation technologies") %>%
       add_legacy_name("L154.in_EJ_ctry_trn_m_sz_tech_F") %>%
       add_precursors("common/iso_GCAM_regID", "L101.in_EJ_ctry_trn_Fi_Yh",
-                     "energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE_highEV",
+                     "energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5",
                      "energy/mappings/UCD_size_class_revisions",
                      "energy/mappings/calibrated_techs_trn_agg",
                      "energy/mappings/UCD_ctry", "energy/mappings/UCD_techs",
@@ -598,7 +628,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_units("MJ/vkm") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y") %>%
-      add_precursors("energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE","energy/UCD_trn_data_CORE_highEV",
+      add_precursors("energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE",
                      "energy/mappings/UCD_size_class_revisions", "energy/mappings/UCD_ctry",
                      "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/mappings/enduse_fuel_aggregation",
                      "energy/mappings/UCD_techs",
@@ -613,7 +643,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_units("pers/veh or tonnes/veh") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.loadfactor_R_trn_m_sz_tech_F_Y") %>%
-      add_precursors("energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE_highEV",
+      add_precursors("energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5",
                      "energy/mappings/UCD_size_class_revisions", "energy/mappings/UCD_ctry",
                      "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/mappings/enduse_fuel_aggregation",
                      "energy/mappings/UCD_techs",
@@ -628,7 +658,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_units("2005USD/vkm") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.cost_usdvkm_R_trn_m_sz_tech_F_Y") %>%
-      add_precursors("energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE_highEV",
+      add_precursors("energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5",
                      "energy/mappings/UCD_size_class_revisions", "energy/mappings/UCD_ctry",
                      "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/mappings/enduse_fuel_aggregation",
                      "energy/mappings/UCD_techs",
@@ -643,7 +673,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_units("km/hr") %>%
       add_comments("UCD transportation database data aggregated to GCAM region") %>%
       add_legacy_name("L154.speed_kmhr_R_trn_m_sz_tech_F_Y") %>%
-      add_precursors("energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE_highEV",
+      add_precursors("energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5",
                      "energy/mappings/UCD_size_class_revisions", "energy/mappings/UCD_ctry",
                      "common/iso_GCAM_regID", "energy/mappings/calibrated_techs_trn_agg", "energy/mappings/enduse_fuel_aggregation",
                      "energy/mappings/UCD_techs",
@@ -659,15 +689,26 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       add_comments("UCD transportation data combined with population data") %>%
       add_legacy_name("L154.out_mpkm_R_trn_nonmotor_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/mappings/UCD_ctry",
-                     "energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5","energy/UCD_trn_data_CORE_highEV",
+                     "energy/UCD_trn_data_CORE","energy/UCD_trn_data_SSP1","energy/UCD_trn_data_SSP3","energy/UCD_trn_data_SSP5",
                      "energy/mappings/UCD_size_class_revisions", "energy/mappings/UCD_size_class_revisions",
                      "L100.Pop_thous_ctry_Yh") ->
       L154.out_mpkm_R_trn_nonmotor_Yh
 
+    UCD_trn_data %>%
+      add_title("Transportation database (merged between OTAQ/EMF-37 and UCD, all scenarios)") %>%
+      add_units("Indicated within table") %>%
+      add_comments("All variables required for transportation models") %>%
+      add_precursors("common/iso_GCAM_regID", "energy/mappings/UCD_ctry",
+                     "energy/UCD_trn_data_CORE", "energy/OTAQ_trn_data_EMF37",
+                     "energy/mappings/UCD_size_class_revisions", "energy/mappings/UCD_size_class_revisions") ->
+      UCD_trn_data
+
+
     return_data(L154.in_EJ_R_trn_m_sz_tech_F_Yh, L154.in_EJ_ctry_trn_m_sz_tech_F,
                 L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y, L154.loadfactor_R_trn_m_sz_tech_F_Y,
                 L154.cost_usdvkm_R_trn_m_sz_tech_F_Y, L154.speed_kmhr_R_trn_m_sz_tech_F_Y,
-                L154.out_mpkm_R_trn_nonmotor_Yh,L154.IEA_histfut_data_times_UCD_shares)
+                L154.out_mpkm_R_trn_nonmotor_Yh,L154.IEA_histfut_data_times_UCD_shares,
+                UCD_trn_data)
   } else {
     stop("Unknown command")
   }

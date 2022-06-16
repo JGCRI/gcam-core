@@ -1,0 +1,180 @@
+<?xml version="1.0" encoding="UTF-8"?><scenario>
+    <world>
+        <region name="EU-12">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+                <constraint year="2025">45000</constraint>
+                <constraint year="2030">36000</constraint>
+                <constraint year="2035">27000</constraint>
+                <constraint year="2040">18000</constraint>
+                <constraint year="2045">9000</constraint>
+                <constraint year="2050">0</constraint>
+                <constraint year="2055">0</constraint>
+                <constraint year="2060">0</constraint>
+                <constraint year="2065">0</constraint>
+                <constraint year="2070">0</constraint>
+                <constraint year="2075">0</constraint>
+                <constraint year="2080">0</constraint>
+                <constraint year="2085">0</constraint>
+                <constraint year="2090">0</constraint>
+                <constraint year="2095">0</constraint>
+                <constraint year="2100">0</constraint>
+            </ghgpolicy>
+        </region>
+        <region name="Africa_Eastern">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Africa_Northern">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Africa_Southern">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Africa_Western">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Argentina">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Australia_NZ">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Brazil">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Canada">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Central America and Caribbean">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Central Asia">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="China">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Colombia">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="EU-15">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Europe_Eastern">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Europe_Non_EU">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="European Free Trade Association">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="India">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Indonesia">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Japan">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Mexico">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Middle East">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Pakistan">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Russia">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="South Africa">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="South America_Northern">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="South America_Southern">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="South Asia">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="South Korea">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Southeast Asia">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="Taiwan">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+        <region name="USA">
+            <ghgpolicy name="GHG">
+                <market>Global</market>
+            </ghgpolicy>
+        </region>
+    </world>
+</scenario>

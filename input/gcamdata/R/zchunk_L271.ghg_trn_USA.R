@@ -24,7 +24,7 @@ module_gcamusa_L271.ghg_trn_USA <- function(command, ...) {
 
     # silence check package notes
     supplysector  <- tranSubsector <- stub.technology <- year <- calibrated.value <-
-      region <- Non.CO2 <- emiss.coef <- NULL
+      region <- Non.CO2 <- emiss.coef <- subsector <- input.emissions <- input.name <- . <- NULL
 
     all_data <- list(...)[[1]]
 

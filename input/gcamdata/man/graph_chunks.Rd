@@ -4,8 +4,12 @@
 \alias{graph_chunks}
 \title{graph_chunks}
 \usage{
-graph_chunks(module_filter = NULL, plot_gcam = FALSE,
-  include_disabled = FALSE, quiet = TRUE)
+graph_chunks(
+  module_filter = NULL,
+  plot_gcam = FALSE,
+  include_disabled = FALSE,
+  quiet = TRUE
+)
 }
 \arguments{
 \item{module_filter}{Optional name of module to filter by}

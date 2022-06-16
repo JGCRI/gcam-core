@@ -24,8 +24,8 @@ module_energy_LB1322.Fert <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/mappings/IEA_ctry",
              FILE = "energy/IEA_Fert_fuel_data",
-             FILE = "energy/H2A_Prod_Tech",
              "L142.ag_Fert_Prod_MtN_ctry_Y",
+             FILE = "energy/H2A_Prod_Tech",
              FILE = "energy/A10.rsrc_info",
              FILE = "energy/A21.globaltech_cost",
              FILE = "energy/A22.globaltech_cost",
@@ -279,7 +279,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       complete(resource, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
-      mutate(value = replace_na(value, 0)) %>% 
+      mutate(value = replace_na(value, 0)) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A10.rsrc_cost_aglu.FERT_PRICE_YEAR
 
@@ -344,7 +344,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     # First, calculate costs in 1975 USD per kg N
     H2A_Prod_Tech %>%
-      mutate(NEcost_75USDkgN = NEcost * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * NH3_H_frac / CONV_NH3_N) ->
+      mutate(NEcost_75USDkgN = NEcost * gdp_deflator(1975, 2016) * NH3_H_frac / CONV_NH3_N) ->
       H2A_Prod_Tech_1975
 
     # Derive costs as the cost of NGSR plus the specified cost adder
@@ -369,22 +369,26 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     L1322.Fert_NEcost_75USDkgN_coalCCS <- L1322.Fert_NEcost_75USDkgN_technologies[["coalCCS"]]
 
+    #For H2, subtract out natural gas SMR non-energy cost to avoid double counting
+    L1322.Fert_NEcost_75USDkgN_H2 <- L1322.Fert_NEcost_75USDkgN_gas-L1322.Fert_NEcost_75USDkgN_technologies[["Central_Natural_Gas"]]
+
     # Oil
     # For oil, the lack of differentiation in oil-derived products means that the fuel costs are too high
     # Fertilizer is made from relatively low-cost by-products of oil refining
     # Also, the technology is being phased out where it is currently used (primarily India)
     # To minimize price distortions from this phase-out, and to ensure no negative profit rates in the ag sector,
     # set the NE cost to generally balance the total net costs with natural gas steam reforming
-    # Costs for natural gas were calculated above to be 0.074. So set costs for oil to be -0.1.
-    L1322.Fert_NEcost_75USDkgN_oil <- -0.1
 
-    # Build final output table with NE costs by technology
-    L1322.Fert_NEcost_75USDkgN_F <- tibble(fuel = c("gas", "gas CCS", "coal", "coal CCS", "refined liquids"),
+    L1322.Fert_NEcost_75USDkgN_oil <- -0.05
+
+    # Build final output table with NE costs by technology.  Non-energy costs for direct hydrogen production were set equal to those of vented gas.
+    L1322.Fert_NEcost_75USDkgN_F <- tibble(fuel = c("gas", "gas CCS", "coal", "coal CCS", "refined liquids","hydrogen"),
                                            NEcost_75USDkgN = c(L1322.Fert_NEcost_75USDkgN_gas,
                                                                L1322.Fert_NEcost_75USDkgN_gasCCS,
                                                                L1322.Fert_NEcost_75USDkgN_coal,
                                                                L1322.Fert_NEcost_75USDkgN_coalCCS,
-                                                               L1322.Fert_NEcost_75USDkgN_oil))
+                                                               L1322.Fert_NEcost_75USDkgN_oil,
+                                                               L1322.Fert_NEcost_75USDkgN_H2))
 
     # ===================================================
 
@@ -438,7 +442,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
       add_comments("Gas with CCS, coal, and coal with CCS were calculated using H2A characteristics of hydrogen production technologies") %>%
       add_comments("Oil was set to generally balance the total net costs with natural gas steam reforming.") %>%
       add_legacy_name("L1322.Fert_NEcost_75USDkgN_F") %>%
-      add_precursors("energy/H2A_Prod_Tech", "energy/A10.rsrc_info",
+      add_precursors("energy/H2A_Prod_Tech","energy/A10.rsrc_info",
                      "energy/A21.globaltech_cost", "energy/A22.globaltech_cost") ->
       L1322.Fert_NEcost_75USDkgN_F
 

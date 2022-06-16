@@ -65,7 +65,8 @@ module_gcamusa_L273.en_ghg_emissions_USA <- function(command, ...) {
       input.emissions <- keep <- mac.control <- mac.reduction <- market.name <-
       output.emissions <- palette <- region <- sector <- service_output <- service_output2 <-
       share <- state <- state_technology <- stub.technology <- subsector <- supplysector <-
-      tax <- technology <- value <- value2 <- year <- NULL
+      tax <- technology <- value <- value2 <- year <- minicam.energy.input <- tranSubsector <-
+      tranTechnology <- tech.change.year <- tech.change <- mac.phase.in.time <- NULL
 
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions", strip_attributes = TRUE)

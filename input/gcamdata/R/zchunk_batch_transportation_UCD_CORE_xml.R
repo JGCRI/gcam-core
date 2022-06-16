@@ -37,6 +37,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
              "L254.GlobalTranTechInterp",
              "L254.GlobalTranTechShrwt",
              "L254.GlobalTranTechSCurve",
+             "L254.GlobalTranTechProfitShutdown",
              "L254.StubTranTechCalInput",
              "L254.StubTranTechLoadFactor",
              "L254.StubTranTechCost",
@@ -48,7 +49,8 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
              "L254.IncomeElasticity_trn",
              "L254.BaseService_trn"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    xml_files<- c("transportation_UCD_CORE.xml","transportation_UCD_SSP1.xml","transportation_UCD_SSP3.xml","transportation_UCD_SSP5.xml","transportation_UCD_highEV.xml")
+    #xml_files<- c("transportation_UCD_CORE.xml","transportation_UCD_SSP1.xml","transportation_UCD_SSP3.xml","transportation_UCD_SSP5.xml","transportation_UCD_highEV.xml")
+    xml_files<- c("transportation_UCD_CORE.xml","transportation_UCD_SSP1.xml","transportation_UCD_SSP3.xml","transportation_UCD_SSP5.xml")
     names(xml_files) <- rep("XML", length(xml_files))
     return(xml_files)
   } else if(command == driver.MAKE) {
@@ -85,6 +87,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
     L254.GlobalTranTechInterp <- get_data(all_data, "L254.GlobalTranTechInterp")
     L254.GlobalTranTechShrwt <- get_data(all_data, "L254.GlobalTranTechShrwt")
     L254.GlobalTranTechSCurve <- get_data(all_data, "L254.GlobalTranTechSCurve")
+    L254.GlobalTranTechProfitShutdown <- get_data(all_data, "L254.GlobalTranTechProfitShutdown")
     L254.StubTranTechCalInput <- get_data(all_data, "L254.StubTranTechCalInput")
 
 
@@ -102,13 +105,16 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
     # Produce outputs
     # Because `return_data` gets the name of the object from what's actually given in the call,
     # we need to assign xml_tmp to a correctly-named variable in the current environment
+    # transportation_UCD_CORE.xml <- transportation_UCD_SSP1.xml <- transportation_UCD_SSP2.xml <-
+    #   transportation_UCD_SSP3.xml <- transportation_UCD_SSP5.xml <- transportation_UCD_CORE_highEV.xml <- NULL  # silence package check notes
     transportation_UCD_CORE.xml <- transportation_UCD_SSP1.xml <- transportation_UCD_SSP2.xml <-
-      transportation_UCD_SSP3.xml <- transportation_UCD_SSP5.xml <- transportation_UCD_CORE_highEV.xml <- NULL  # silence package check notes
+      transportation_UCD_SSP3.xml <- transportation_UCD_SSP5.xml <- NULL  # silence package check notes
 
     ret_data <- c()
     curr_env <- environment()
 
-    for (i in c("CORE","SSP1","SSP3","SSP5", "highEV")){
+    #for (i in c("CORE","SSP1","SSP3","SSP5", "highEV")){
+    for (i in c("CORE","SSP1","SSP3","SSP5")){
       xml_name <- paste0("transportation_UCD_", i, ".xml")
       #Read SSP specific data
       L254.tranSubsectorSpeed_SSP <- L254.tranSubsectorSpeed %>% filter(sce== i)
@@ -188,6 +194,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
         add_xml_data(L254.GlobalTranTechInterp_SSP, "GlobalTranTechInterp") %>%
         add_xml_data(L254.GlobalTranTechShrwt_SSP, "GlobalTranTechShrwt") %>%
         add_xml_data(L254.GlobalTranTechSCurve, "GlobalTranTechSCurve") %>%
+        add_xml_data(L254.GlobalTranTechProfitShutdown, "GlobalTranTechProfitShutdown") %>%
         add_xml_data(L254.StubTranTechCalInput_SSP, "StubTranTechCalInput") %>%
         add_xml_data(L254.StubTranTechLoadFactor_SSP, "StubTranTechLoadFactor") %>%
         add_xml_data(L254.StubTranTechCost_SSP, "StubTranTechCost") %>%
@@ -219,6 +226,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
                        "L254.GlobalTranTechInterp",
                        "L254.GlobalTranTechShrwt",
                        "L254.GlobalTranTechSCurve",
+                       "L254.GlobalTranTechProfitShutdown",
                        "L254.StubTranTechCalInput",
                        "L254.StubTranTechLoadFactor",
                        "L254.StubTranTechCost",

@@ -147,7 +147,7 @@ public:
     * \return The string(by reference) associated with the key or the empty
     *         string if it does not exist.
     */
-    const virtual std::string& getString( const std::string& aStringKey,
+    const virtual std::string getString( const std::string& aStringKey,
                                           const bool aMustExist ) const = 0;
 
     /*! \brief Get a boolean from the IInfo with a specified key.
@@ -189,7 +189,7 @@ public:
     * \return The string(by reference) associated with the key or the empty
     *         string if it does not exist.
     */
-    virtual const std::string& getStringHelper( const std::string& aStringKey, bool& aFound ) const = 0;
+    virtual const std::string getStringHelper( const std::string& aStringKey, bool& aFound ) const = 0;
 
     /*! \brief Return whether a value exists in the IInfo.
     * \details Performs a search of the IInfo object using the same method as

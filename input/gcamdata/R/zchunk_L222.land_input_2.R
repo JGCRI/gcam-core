@@ -58,7 +58,8 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
              FILE = "aglu/A_LT_Mapping",
              "L121.CarbonContent_kgm2_R_LT_GLU",
              "L125.LC_bm2_R_LT_Yh_GLU",
-             "L120.LC_prot_land_frac_GLU"))
+             "L120.LC_prot_land_frac_GLU",
+             "L120.LC_soil_veg_carbon_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L222.LN2_Logit",
              "L222.LN2_HistUnmgdAllocation",
@@ -89,6 +90,16 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
 
     L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
     L120.LC_prot_land_frac_GLU <- get_data(all_data, "L120.LC_prot_land_frac_GLU",strip_attributes = TRUE)
+
+    # If the carbon data source is set to moirai, use the spatially distinct carbon values. If not, use the Houghton values.
+    if(aglu.CARBON_DATA_SOURCE=="moirai"){
+
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L120.LC_soil_veg_carbon_GLU")
+    }else{
+      L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
+
+    }
+
 
     # This chunk just deals with the Pasture nodes. Therefore we filter the protected area fractions just for Pastures.
     L120.LC_prot_land_frac_GLU <- L120.LC_prot_land_frac_GLU %>%  filter(Land_Type == aglu.PASTURE_NODE_NAMES,year == MODEL_FINAL_BASE_YEAR) %>% select(-Land_Type,-year)
@@ -172,7 +183,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     L222.LN2_HistUnmgdAllocation %>%
       left_join(L120.LC_prot_land_frac_GLU %>%  rename(GLU_code =GLU), by= c("GCAM_region_ID","GLU_code")) %>%
       mutate(prot_frac = if_else(is.na(prot_frac),aglu.PROTECT_DEFAULT,prot_frac),
-      allocation = (1 - prot_frac) * allocation) %>%
+             allocation = (1 - prot_frac) * allocation) %>%
       select(LEVEL2_DATA_NAMES[["LN2_HistUnmgdAllocation"]])->
       L222.LN2_HistUnmgdAllocation_noprot
 
@@ -191,8 +202,8 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # L222.LN1_UnmgdAllocation_prot: unmanaged land cover, protected
     L222.LN2_HistUnmgdAllocation %>%
       left_join(L120.LC_prot_land_frac_GLU %>%  rename(GLU_code =GLU), by= c("GCAM_region_ID","GLU_code")) %>%
-      mutate(prot_frac = if_else(is.na(prot_frac),aglu.PROTECT_DEFAULT,prot_frac)) %>%
-      mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
+      mutate(prot_frac = if_else(is.na(prot_frac),aglu.PROTECT_DEFAULT,prot_frac),
+             UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
              LandNode1 = UnmanagedLandLeaf,
              allocation = prot_frac * allocation) %>%
       select(LEVEL2_DATA_NAMES[["LN2_HistUnmgdAllocation"]]) %>%
@@ -201,8 +212,8 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
 
     L222.LN2_UnmgdAllocation %>%
       left_join(L120.LC_prot_land_frac_GLU %>%  rename(GLU_code =GLU), by= c("GCAM_region_ID","GLU_code")) %>%
-      mutate(prot_frac = if_else(is.na(prot_frac),aglu.PROTECT_DEFAULT,prot_frac)) %>%
-      mutate(UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
+      mutate(prot_frac = if_else(is.na(prot_frac),aglu.PROTECT_DEFAULT,prot_frac),
+             UnmanagedLandLeaf = paste0("Protected", UnmanagedLandLeaf),
              LandNode1 = UnmanagedLandLeaf,
              allocation = prot_frac * allocation) %>%
       select(LEVEL2_DATA_NAMES[["LN2_UnmgdAllocation"]]) %>%
@@ -356,6 +367,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandLeaf_Unmgd2",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L120.LC_soil_veg_carbon_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_UnmgdCarbon
 
@@ -370,6 +382,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandLeaf2",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L120.LC_soil_veg_carbon_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN2_MgdCarbon
 
@@ -415,9 +428,9 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       add_comments("Historical land cover for protected unmanaged land (LT_GLU) in the first nest, from L222.LN2_HistUnmgdAllocation.") %>%
       add_legacy_name("L222.LN1_HistUnmgdAllocation_prot") %>%
       add_precursors("common/GCAM_region_names",
-                      "water/basin_to_country_mapping",
-                      "aglu/A_LandLeaf_Unmgd2",
-                      "L125.LC_bm2_R_LT_Yh_GLU",
+                     "water/basin_to_country_mapping",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "L125.LC_bm2_R_LT_Yh_GLU",
                      "L120.LC_prot_land_frac_GLU") ->
       L222.LN1_HistUnmgdAllocation_prot
 
@@ -427,9 +440,9 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       add_comments("Land cover in the model base periods for protected unmanaged land (LT_GLU)  in the first nest, from L222.LN2_UnmgdAllocation.") %>%
       add_legacy_name("L222.LN1_UnmgdAllocation_prot") %>%
       add_precursors("common/GCAM_region_names",
-                      "water/basin_to_country_mapping",
-                      "aglu/A_LandLeaf_Unmgd2",
-                      "L125.LC_bm2_R_LT_Yh_GLU",
+                     "water/basin_to_country_mapping",
+                     "aglu/A_LandLeaf_Unmgd2",
+                     "L125.LC_bm2_R_LT_Yh_GLU",
                      "L120.LC_prot_land_frac_GLU") ->
       L222.LN1_UnmgdAllocation_prot
 
@@ -443,6 +456,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "aglu/GCAMLandLeaf_CdensityLT",
                      "aglu/A_LandLeaf_Unmgd2",
                      "L121.CarbonContent_kgm2_R_LT_GLU",
+                     "L120.LC_soil_veg_carbon_GLU",
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_UnmgdCarbon_prot
 

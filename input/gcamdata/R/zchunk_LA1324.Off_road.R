@@ -30,7 +30,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
 
     # Silence global variable package check
     raw <- subsector <- minicam.energy.input <- Country <- sector <-
-    share <- value <- Off_road <- year <- value.y <- value.x <- NULL
+    share <- value <- Off_road <- year <- value.y <- value.x <- fuel <- industry <-
+      GCAM_region_ID <- has_district_heat <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -65,7 +66,7 @@ module_energy_LA1324.Off_road <- function(command, ...) {
     # Mining energy input
     L1011.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(grepl("mining", sector)) %>%
-      rbind(L1324.in_EJ_R_Off_road_F_Y) ->
+      bind_rows(L1324.in_EJ_R_Off_road_F_Y) ->
       L1324.in_EJ_R_Off_road_F_Y
 
     #Mapping the fuel used in off-road sector
@@ -103,8 +104,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value ) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value ) ->
       L1324.in_EJ_R_indenergy_F_Yh_tmp
 
     L1322.in_EJ_R_indfeed_F_Yh %>%
@@ -114,8 +115,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value ) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value ) ->
       L1323.in_EJ_R_indfeed_F_Yh
 
     L1324.in_EJ_R_indenergy_F_Yh_tmp %>%
@@ -150,8 +151,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value , raw = NULL) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value , raw = NULL) ->
       L1324.in_EJ_R_indenergy_F_Yh
 
     L1322.in_EJ_R_indfeed_F_Yh %>%
@@ -160,8 +161,8 @@ module_energy_LA1324.Off_road <- function(command, ...) {
                   group_by(GCAM_region_ID, year, fuel) %>%
                   summarise(value = sum(value)), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
-      mutate(value = replace_na(value, 0)) %>%
-      mutate(value = raw - value , raw = NULL) ->
+      mutate(value = replace_na(value, 0),
+             value = raw - value , raw = NULL) ->
       L1323.in_EJ_R_indfeed_F_Yh
 
     L1324.in_EJ_R_Off_road_F_Y_recal %>%

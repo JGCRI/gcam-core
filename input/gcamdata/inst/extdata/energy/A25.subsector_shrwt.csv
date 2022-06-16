@@ -11,11 +11,16 @@ H2 central production,nuclear,start-year,,0
 H2 central production,electricity,start-year,,0
 H2 central production,wind,start-year,,0
 H2 central production,solar,start-year,,0
-H2 forecourt production,gas,start-year,,0
-H2 forecourt production,electricity,start-year,,0
-H2 distribution,H2 distribution,start-year,,0
-H2 enduse,H2 distribution,start-year,,0
-H2 enduse,H2 forecourt production,start-year,,0
+H2 pipeline,H2 pipeline,start-year,,0
+H2 liquid truck,H2 liquid truck,start-year,,0
+H2 wholesale delivery,H2 pipeline,start-year,,0
+H2 wholesale delivery,H2 liquid truck,start-year,,0
+H2 industrial,H2 delivery,start-year,,0
+H2 industrial,forecourt production,start-year,,0
+H2 retail delivery,H2 retail delivery,start-year,,0
+H2 wholesale dispensing,H2 delivery,start-year,,0
+H2 wholesale dispensing,forecourt production,start-year,,0
+H2 retail dispensing,H2 retail dispensing,start-year,,0
 H2 central production,coal,2020,,1
 H2 central production,gas,2020,,1
 H2 central production,biomass,2020,,1
@@ -23,8 +28,13 @@ H2 central production,nuclear,2020,,1
 H2 central production,electricity,2020,,1
 H2 central production,wind,2020,,1
 H2 central production,solar,2020,,1
-H2 forecourt production,gas,2020,,1
-H2 forecourt production,electricity,2020,,1
-H2 distribution,H2 distribution,2020,,1
-H2 enduse,H2 distribution,2020,,1
-H2 enduse,H2 forecourt production,2020,,1
+H2 pipeline,H2 pipeline,2020,,1
+H2 liquid truck,H2 liquid truck,2020,,1
+H2 wholesale delivery,H2 pipeline,2020,,1
+H2 wholesale delivery,H2 liquid truck,2020,,1
+H2 industrial,H2 delivery,2020,,1
+H2 industrial,forecourt production,2020,,1
+H2 retail delivery,H2 retail delivery,2020,,1
+H2 wholesale dispensing,H2 delivery,2020,,1
+H2 wholesale dispensing,forecourt production,2020,,1
+H2 retail dispensing,H2 retail dispensing,2020,,1

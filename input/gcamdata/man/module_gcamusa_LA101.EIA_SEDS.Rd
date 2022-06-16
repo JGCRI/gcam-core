@@ -14,7 +14,7 @@ module_gcamusa_LA101.EIA_SEDS(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L101.EIA_use_all_Bbtu}, \code{L101.inEIA_EJ_state_S_F}. The corresponding file in the
+the generated outputs: \code{L101.EIA_use_all_Bbtu}, \code{L101.inEIA_EJ_state_S_F}, \code{L101.inEIA_EJ_state_S_F_all_years}. The corresponding file in the
 original data system was \code{LA101.EIA_SEDS.R} (gcam-usa level1).
 }
 \description{

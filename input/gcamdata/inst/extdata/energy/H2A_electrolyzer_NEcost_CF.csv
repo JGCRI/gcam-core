@@ -1,0 +1,16 @@
+# File: H2A_electrolyzer_NEcost_CF.csv
+# Title: H2A non-energy costs of electrolyzers as a function of capacity factor
+# Units: 2016$/kg
+# Source: H2A is the DOE EERE Hydrogen program's analysis model (https://www.hydrogen.energy.gov/h2a_analysis.html)
+# Comments: Data provided by Patrick O'Rourke (Green_H2_Electrolyzer-costs-regional_CF_CMP_v1.xlsx)
+# Column types: nnn
+# ----------
+capacity.factor,2015,2040
+0.1,11.13511476,4.715375958
+0.15,7.435357173,3.154852141
+0.2,5.585478378,2.374590232
+0.25,4.475551102,1.906433087
+0.3,3.735599584,1.594328323
+0.35,3.207062785,1.37139635
+0.4,2.810660187,1.204197369
+0.97,1.180096919,0.516440738

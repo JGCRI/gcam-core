@@ -22,3 +22,4 @@ process heat cement,biomass,biomass,initial-future-year,40,,20,0.3,-0.5,6
 process heat cement,coal,coal,initial-future-year,40,,20,0.3,-0.5,6
 process heat cement,gas,gas,initial-future-year,40,,20,0.3,-0.5,6
 process heat cement,refined liquids,refined liquids,initial-future-year,40,,20,0.3,-0.5,6
+process heat cement,hydrogen,hydrogen,initial-future-year,40,,20,0.3,-0.5,6

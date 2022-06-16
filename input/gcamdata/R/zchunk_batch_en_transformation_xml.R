@@ -13,6 +13,7 @@
 module_energy_batch_en_transformation_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L222.Supplysector_en",
+             "L222.SectorUseTrialMarket_en",
              "L222.SubsectorLogit_en",
              "L222.SubsectorShrwtFllt_en",
              "L222.SubsectorInterp_en",
@@ -36,6 +37,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
 
     # Load required inputs
     L222.Supplysector_en <- get_data(all_data, "L222.Supplysector_en")
+    L222.SectorUseTrialMarket_en <- get_data(all_data, "L222.SectorUseTrialMarket_en")
     L222.SubsectorLogit_en <- get_data(all_data, "L222.SubsectorLogit_en")
     L222.SubsectorShrwtFllt_en <- get_data(all_data, "L222.SubsectorShrwtFllt_en")
     L222.SubsectorInterp_en <- get_data(all_data, "L222.SubsectorInterp_en")
@@ -61,6 +63,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
     # Produce outputs
     create_xml("en_transformation.xml") %>%
       add_logit_tables_xml(L222.Supplysector_en, "Supplysector") %>%
+      add_xml_data(L222.SectorUseTrialMarket_en, "SectorUseTrialMarket") %>%
       add_logit_tables_xml(L222.SubsectorLogit_en, "SubsectorLogit") %>%
       add_xml_data(L222.SubsectorShrwtFllt_en, "SubsectorShrwtFllt") %>%
       add_xml_data(L222.SubsectorInterp_en, "SubsectorInterp") %>%
@@ -77,6 +80,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
       add_xml_data(L222.StubTechProd_refining, "StubTechProd") %>%
       add_xml_data(L222.StubTechCoef_refining, "StubTechCoef") %>%
       add_precursors("L222.Supplysector_en",
+                     "L222.SectorUseTrialMarket_en",
                      "L222.SubsectorLogit_en",
                      "L222.SubsectorShrwtFllt_en",
                      "L222.SubsectorInterp_en",

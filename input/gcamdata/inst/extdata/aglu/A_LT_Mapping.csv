@@ -3,30 +3,42 @@
 # Units: NA
 # Original source: NA
 # Description: Allows land nodes to be assigned from the land types in level1
-# Column types: cccccc 
+# Column types: ccccccc
 # ----------
-LandNode1,LandNode2,LandNode3,Land_Type,LandLeaf,GCAM_commodity
-AgroForestLand,AgroForest_NonPasture,AllForestLand,Forest,Forest,Forest
-AgroForestLand,AgroForest_NonPasture,AllForestLand,UnmanagedForest,UnmanagedForest,
-AgroForestLand,AgroForest_NonPasture,AllForestLand,biomassTree,biomassTree,biomassTree
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Corn,Corn
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FiberCrop,FiberCrop
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FodderGrass,FodderGrass
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FodderHerb,FodderHerb
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,MiscCrop,MiscCrop
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OilCrop,OilCrop
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OtherGrain,OtherGrain
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,PalmFruit,PalmFruit
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Rice,Rice
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,RootTuber,RootTuber
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,SugarCrop,SugarCrop
-AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Wheat,Wheat
-AgroForestLand,AgroForest_NonPasture,CropLand,biomassGrass,biomassGrass,biomassGrass
-AgroForestLand,AgroForest_NonPasture,CropLand,OtherArableLand,OtherArableLand,
-AgroForestLand,AgroForest_NonPasture,GrassShrubLand,Grassland,Grassland,
-AgroForestLand,AgroForest_NonPasture,GrassShrubLand,Shrubland,Shrubland,
-AgroForestLand,AllPastureLand,,Pasture,Pasture,Pasture
-AgroForestLand,AllPastureLand,,UnmanagedPasture,UnmanagedPasture,
-RockIceDesert,,,RockIceDesert,RockIceDesert,
-Tundra,,,Tundra,Tundra,
-UrbanLand,,,UrbanLand,UrbanLand,
+LandNode1,LandNode2,LandNode3,Land_Type,LandLeaf,GCAM_commodity,GCAM_subsector
+AgroForestLand,AgroForest_NonPasture,AllForestLand,Forest,Forest,Forest,Forest
+AgroForestLand,AgroForest_NonPasture,AllForestLand,UnmanagedForest,UnmanagedForest,,
+AgroForestLand,AgroForest_NonPasture,AllForestLand,biomassTree,biomassTree,biomassTree,biomassTree
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,CornC4,Corn,CornC4
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FiberCrop,FiberCrop,FiberCrop
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FodderGrass,FodderGrass,FodderGrass
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FodderHerb,FodderHerb,FodderHerb
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FodderHerb,FodderHerb,FodderHerbC4
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Fruits,Fruits,Fruits
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FruitsTree,Fruits,FruitsTree
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Legumes,Legumes,Legumes
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,MiscCrop,MiscCrop,MiscCrop
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,MiscCropTree,MiscCrop,MiscCropTree
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,NutsSeeds,NutsSeeds,NutsSeeds
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,NutsSeedsTree,NutsSeeds,NutsSeedsTree
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OilCrop,OilCrop,OilCrop
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OilCropTree,OilCrop,OilCropTree
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OtherGrain,OtherGrain,OtherGrain
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OtherGrainC4,OtherGrain,OtherGrainC4
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,OilPalmTree,OilPalm,OilPalmTree
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Rice,Rice,Rice
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,RootTuber,RootTuber,RootTuber
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Soybean,Soybean,Soybean
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,SugarCrop,SugarCrop,SugarCrop
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,SugarCropC4,SugarCrop,SugarCropC4
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Vegetables,Vegetables,Vegetables
+AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,Wheat,Wheat,Wheat
+AgroForestLand,AgroForest_NonPasture,CropLand,biomassGrass,biomassGrass,biomassGrass,biomassGrass
+AgroForestLand,AgroForest_NonPasture,CropLand,OtherArableLand,OtherArableLand,,
+AgroForestLand,AgroForest_NonPasture,GrassShrubLand,Grassland,Grassland,,
+AgroForestLand,AgroForest_NonPasture,GrassShrubLand,Shrubland,Shrubland,,
+AgroForestLand,AllPastureLand,,Pasture,Pasture,Pasture,Pasture
+AgroForestLand,AllPastureLand,,UnmanagedPasture,UnmanagedPasture,,
+RockIceDesert,,,RockIceDesert,RockIceDesert,,
+Tundra,,,Tundra,Tundra,,
+UrbanLand,,,UrbanLand,UrbanLand,,

@@ -108,7 +108,10 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       steepness_stock <- stockavg <- subsector <- subsector.name <- supplysector <-
       tech_type <- technology <- technology1 <- technology2 <-
       thermal.building.service.input <- to.value <- value <- year <- year.fillout <- . <-
-      pop_year <- Sector <- pop_share <- growth <- flsp_growth <- NULL
+      pop_year <- Sector <- pop_share <- growth <- flsp_growth <- area_gcam <- misc_land_usda <-
+      area_thouskm2 <- flsp <- pop_thous <- flsp_pc <- tot.dens <- unadjust.satiation <-
+      land.density.param <- b.param <- income.param <- gdp_pc <- flsp_est <- base_flsp <-
+      bias.adjust.param <- state_name <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -277,17 +280,17 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       rename(pop_thous=value) %>%
       left_join_error_no_match(L144.flsp_bm2_state_res %>% rename(region=state), by=c("region","year")) %>%
       rename(flsp=value) %>%
-      mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3)) %>%
-      mutate(base_flsp=flsp_pc) %>%
-      mutate(tot.dens=round(pop_thous/area_thouskm2,0)) %>%
-      #correct 0 population density to avoid NaN
-      mutate(tot.dens=if_else(tot.dens==0,1,tot.dens)) %>%
-      mutate(flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
-                                                                                        *exp(-`income.param`*log(gdp_pc)))) %>%
-      mutate(`bias.adjust.param`=flsp_pc-flsp_est) %>%
-      mutate(base_flsp=round(base_flsp,energy.DIGITS_FLOORSPACE),
-             bias.adjust.param=round(bias.adjust.param,energy.DIGITS_FLOORSPACE)) %>%
-      mutate(gcam.consumer="resid",
+      mutate(flsp_pc=(flsp*1E9)/(pop_thous*1E3),
+             base_flsp=flsp_pc,
+             tot.dens=round(pop_thous/area_thouskm2,0),
+             #correct 0 population density to avoid NaN
+             tot.dens=if_else(tot.dens==0,1,tot.dens),
+             flsp_est=(`unadjust.satiation` +(-`land.density.param`*log(tot.dens)))*exp(-`b.param`
+                                                                                        *exp(-`income.param`*log(gdp_pc))),
+             `bias.adjust.param`=flsp_pc-flsp_est,
+             base_flsp=round(base_flsp,energy.DIGITS_FLOORSPACE),
+             bias.adjust.param=round(bias.adjust.param,energy.DIGITS_FLOORSPACE),
+             gcam.consumer="resid",
              nodeInput="resid",
              building.node.input="resid_building") %>%
       rename(pop.dens=tot.dens,
@@ -435,8 +438,8 @@ module_gcamusa_L244.building_USA <- function(command, ...) {
       mutate(market.name = gcam.USA_REGION) %>%
       rename(stub.technology = technology) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["StubTechMarket"]]) %>%
-      # Electricity is consumed from state markets, so change market.name to states for electricity
-      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.ELECT_TD_SECTORS, region, market.name)) %>%
+      # For fuels with state markets, set the market.name to the region
+      mutate(market.name = if_else(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS, region, market.name)) %>%
       # replace market name with the grid region name if the minicam.energy.input is
       # considered a regional fuel market
       left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%

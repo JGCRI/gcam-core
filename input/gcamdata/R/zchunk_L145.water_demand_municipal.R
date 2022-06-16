@@ -156,7 +156,7 @@ module_water_L145.water_demand_municipal <- function(command, ...) {
 
     # Produce outputs
     L145.municipal_water_ctry_W_Yh_km3 %>%
-      add_title("Municipal water withdrawals by GCAM_region_ID for all historical years ") %>%
+      add_title("Municipal water withdrawals by country for all historical years ") %>%
       add_units("km^3") %>%
       add_comments("FAO_municipal_water_AQUASTAT by country interpolated linearly on a per-capita basis") %>%
       add_legacy_name("L145.municipal_water_ctry_W_Yh_km3") %>%
