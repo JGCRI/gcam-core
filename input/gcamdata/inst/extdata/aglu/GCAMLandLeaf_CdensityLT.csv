@@ -9,7 +9,8 @@ Tundra,Tundra
 RockIceDesert,RockIceDesert
 UrbanLand,UrbanLand
 UnmanagedPasture,Pasture
-UnmanagedForest,Forest
+UnmanagedHardwood_Forest,Hardwood_Forest
+UnmanagedSoftwood_Forest,Softwood_Forest
 Grassland,Grassland
 Shrubland,Shrubland
 OtherArableLand,Cropland

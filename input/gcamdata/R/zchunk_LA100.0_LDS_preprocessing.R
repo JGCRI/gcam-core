@@ -226,6 +226,34 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
                                L100.LDS_ag_prod_t$GTAP_crop == "VgtbFrshNES" &
                                L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
 
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "Potatoes" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "Potatoes" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "SugarCane" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "SugarCane" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "Watermelons" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "Watermelons" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "Soybeans" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "Soybeans" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
 
     # And we're done
     return_data(L100.Land_type_area_ha,

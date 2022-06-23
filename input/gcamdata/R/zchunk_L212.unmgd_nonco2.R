@@ -110,7 +110,7 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
 
     L212.ItemName <- tibble(AgSupplySector = "UnmanagedLand",
                             AgSupplySubsector = c("ForestFire", "Deforest", "GrasslandFires"),
-                            itemName = c("UnmanagedForest", "UnmanagedForest", "Grassland")) %>%
+                            itemName = c("UnmanagedHardwood_Forest", "UnmanagedSoftwood_Forest", "Grassland")) %>%
       # Add in region and GLU
       left_join(L212.ItemName_R_LT_GLU, by = c("itemName" = "Land_Type")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -225,13 +225,13 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
 
     # Forest emissions - fires and deforest
     L212.FORESTEmissions_prot <- L212.FOREST %>%
-      left_join(L120.LC_prot_land_frac_GLU %>% filter(Land_Type =="Forest") , by= c("GCAM_region_ID","GLU")) %>%
+      left_join(L120.LC_prot_land_frac_GLU %>% filter(Land_Type %in% c(aglu.FOREST_NODE_NAMES)) , by= c("GCAM_region_ID","GLU")) %>%
       mutate(UnmanagedLandTechnology = paste0("Protected", UnmanagedLandTechnology),
              input.emissions = if_else(is.na(prot_frac),input.emissions * aglu.PROTECT_DEFAULT,input.emissions*prot_frac)) %>%
       select(-GCAM_region_ID, -GLU)
 
     L212.FORESTEmissions_noprot <- L212.FOREST  %>%
-      left_join(L120.LC_prot_land_frac_GLU %>% filter(Land_Type =="Forest") , by= c("GCAM_region_ID","GLU")) %>%
+      left_join(L120.LC_prot_land_frac_GLU %>% filter(Land_Type %in% c(aglu.FOREST_NODE_NAMES)) , by= c("GCAM_region_ID","GLU")) %>%
       mutate(input.emissions = if_else(is.na(prot_frac),input.emissions * (1 - aglu.PROTECT_DEFAULT),input.emissions*(1 - prot_frac))) %>%
       select(-GCAM_region_ID, -GLU)
 

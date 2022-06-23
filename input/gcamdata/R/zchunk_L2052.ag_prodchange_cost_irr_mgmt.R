@@ -153,9 +153,10 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
-      mutate(AgSupplySector = GCAM_commodity,
+      mutate(AgSupplySector = "Forest",
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
-             AgProductionTechnology = AgSupplySubsector) %>%
+             AgProductionTechnology = AgSupplySubsector,
+             GCAM_commodity = "Forest") %>%
       left_join(L132.ag_an_For_Prices, by = "GCAM_commodity") %>%
       left_join(L1321.expP_R_F_75USDm3, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
                   mutate(nonLandVariableCost = if_else(is.na(value),

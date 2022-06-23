@@ -6,7 +6,8 @@
 # Column types: cccc 
 # ----------
 LandNode1,LandNode2,LandNode3,LandLeaf
-AgroForestLand,AgroForest_NonPasture,AllForestLand,Forest
+AgroForestLand,AgroForest_NonPasture,AllForestLand,Hardwood_Forest
+AgroForestLand,AgroForest_NonPasture,AllForestLand,Softwood_Forest
 AgroForestLand,AgroForest_NonPasture,AllForestLand,biomassTree
 AgroForestLand,AgroForest_NonPasture,CropLand,CornC4
 AgroForestLand,AgroForest_NonPasture,CropLand,FiberCrop

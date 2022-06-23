@@ -91,6 +91,25 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # The function, add_bio_res_params_For_Mill, takes a data frame and adds user specified parameters and
     # then repeats the resulting data frame for all MODEL_YEARS to form the  AgResBio_source
     # output table
+    add_bio_res_params_For_Mill_Forest <- function(df, residueBiomassProduction = "biomass",
+                                            harvestIndex = aglu.FOREST_HARVEST_INDEX, erosCtrl,
+                                            massToEnergy = aglu.WOOD_ENERGY_CONTENT_GJKG, waterContent = aglu.WOOD_WATER_CONTENT) {
+      df %>%
+        mutate(residue.biomass.production = residueBiomassProduction,
+               mass.conversion = if_else(grepl("Hardwood",LT),aglu.AVG_WOOD_DENSITY_KGM3_HARDWOOD,aglu.AVG_WOOD_DENSITY_KGM3_SOFTWOOD),
+               harvest.index = harvestIndex,
+               eros.ctrl = erosCtrl,
+               mass.to.energy = massToEnergy,
+               water.content = waterContent) %>%
+        group_by(GCAM_region_ID, GCAM_commodity, GLU,LT) %>%
+        mutate(mass.conversion= mean(mass.conversion)) %>%
+        ungroup() %>%
+        select(-LT) %>%
+        distinct() %>%
+        repeat_add_columns(tibble(year = MODEL_YEARS))
+    } # end add_bio_res_params_For_Mill_Forest
+
+
     add_bio_res_params_For_Mill <- function(df, residueBiomassProduction = "biomass", massConversion = aglu.AVG_WOOD_DENSITY_KGM3,
                                             harvestIndex = aglu.FOREST_HARVEST_INDEX, erosCtrl,
                                             massToEnergy = aglu.WOOD_ENERGY_CONTENT_GJKG, waterContent = aglu.WOOD_WATER_CONTENT) {
@@ -102,19 +121,20 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                mass.to.energy = massToEnergy,
                water.content = waterContent) %>%
         repeat_add_columns(tibble(year = MODEL_YEARS))
-    } # end add_bio_res_params_For_Mill
 
+      }# end add_bio_res_params_For_Mill
 
     # 1. Form a table of Forest Residue Biomass Paramters by region-glu-year
     L123.For_Prod_bm3_R_Y_GLU %>%
+      mutate(LT= GCAM_commodity) %>%
       # Set up identifying information to fill in with parameters, incl 2.
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, GCAM_commodity, GLU,LT) %>%
       distinct %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(AgSupplySector = GCAM_commodity,
+      mutate(AgSupplySector = "Forest",
              AgSupplySubsector = paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector) %>%
-      add_bio_res_params_For_Mill(erosCtrl = aglu.FOREST_EROSION_CTRL_KGM2) %>%
+      add_bio_res_params_For_Mill_Forest(erosCtrl = aglu.FOREST_EROSION_CTRL_KGM2) %>%
       select(-GCAM_region_ID, -GCAM_commodity, -GLU) ->
       L204.AgResBio_For
 
@@ -125,7 +145,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      add_bio_res_params_For_Mill(erosCtrl = aglu.MILL_EROSION_CTRL_KGM2) ->
+      add_bio_res_params_For_Mill(erosCtrl = aglu.MILL_EROSION_CTRL_KGM2,
+                                  massConversion = mean(c(aglu.AVG_WOOD_DENSITY_KGM3_HARDWOOD,aglu.AVG_WOOD_DENSITY_KGM3_SOFTWOOD))) ->
       L204.GlobalResBio_Mill
 
 

@@ -158,38 +158,39 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     # Use average vegetation carbon densities and mature ages to estimate annual forest biomass production,
     # and used to derive exogenous yields for separating managed/unmanaged forest.
      L121.CarbonContent_kgm2_R_LT_GLU %>%
-      filter(Land_Type == "Forest") %>%
+      filter(Land_Type %in% aglu.FOREST_NODE_NAMES) %>%
       # Calculate veg mass of each GLU based on above-ground carbon content of each GLU
-      mutate(VegVolume_m3m2 = (veg_c*aglu.CVEG_MULT_UNMGDPAST_MGDPAST) / aglu.AVG_WOOD_DENSITY_KGCM3,
+      mutate(VegVolume_m3m2 = if_else(grepl("Hardwood",Land_Type),(veg_c*aglu.CVEG_MULT_UNMGDFOR_MGDFOR) / aglu.AVG_WOOD_DENSITY_KGCM3_HARDWOOD,
+                                      (veg_c*aglu.CVEG_MULT_UNMGDFOR_MGDFOR) / aglu.AVG_WOOD_DENSITY_KGCM3_SOFTWOOD),
              # Carbon densities are divided by mature age to get net primary productivity
              Yield_m3m2 = VegVolume_m3m2 / `mature age`) ->
       L123.For_Yield_m3m2_R_GLU
 
     # Use total forest land and yields to calculate potential forest biomass production
     L120.LC_bm2_R_LT_Yh_GLU %>%
-      rename(GCAM_commodity = Land_Type) %>%
       # Filter total forest land
-      filter(GCAM_commodity == "Forest", year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
+      filter(Land_Type %in% aglu.FOREST_NODE_NAMES, year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
       # Match in forest primary yields
-      left_join_error_no_match(select(L123.For_Yield_m3m2_R_GLU, GCAM_region_ID, GLU, Yield_m3m2),
-                               by = c("GCAM_region_ID", "GLU")) %>%
+      left_join_error_no_match(select(L123.For_Yield_m3m2_R_GLU, GCAM_region_ID, GLU, Yield_m3m2,Land_Type),
+                               by = c("GCAM_region_ID", "GLU","Land_Type")) %>%
       # Calculate potential forest biomass production as total forest land times yields
-      mutate(value = value * Yield_m3m2) ->
-      L123.For_potentialProd_bm3_R_Y_GLU
+      mutate(value = value * Yield_m3m2) %>%
+      rename(GCAM_commodity = Land_Type)->L123.For_potentialProd_bm3_R_Y_GLU
+
 
     # Use the GLU fraction of potential forest biomass production to disaggregate regional wood production to GLU
     # Forest output by GLU = Regional forest output * GLU-wise forest biomass production fraction
     L123.For_potentialProd_bm3_R_Y_GLU %>%
       # Calculate regional total forest biomass production
-      group_by(GCAM_region_ID, GCAM_commodity, year) %>%
+      group_by(GCAM_region_ID,year) %>%
       summarise(total = sum(value)) %>%
       ungroup %>%
       # Match in forest biomass production by GLU
-      right_join(L123.For_potentialProd_bm3_R_Y_GLU, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
+      right_join(L123.For_potentialProd_bm3_R_Y_GLU, by = c("GCAM_region_ID", "year")) %>%
       # Calculate the GLU to regional fraction of forest biomass production
       mutate(frac = value / total) %>%
       # Match in regional wood production
-      left_join_error_no_match(L110.For_ALL_bm3_R_Y, by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
+      left_join_error_no_match(L110.For_ALL_bm3_R_Y %>% select(-GCAM_commodity), by = c("GCAM_region_ID",  "year")) %>%
       # Calculate logging production as the regional total times the GLU-wise forest biomass production fractions
       mutate(value = Prod_bm3 * frac) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, year, value) ->
@@ -242,7 +243,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     # assumed maximum percentage of total forest, reduce the managed forest land.
     L123.LC_bm2_R_MgdFor_Yh_GLU %>%
       # Match in total forest land
-      left_join_error_no_match(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Forest", year %in% aglu.LAND_COVER_YEARS),
+      left_join_error_no_match(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type %in% aglu.FOREST_NODE_NAMES, year %in% aglu.LAND_COVER_YEARS),
                                by = c("GCAM_region_ID", "Land_Type", "GLU", "year")) %>%
       # Calculate the fraction of managed to total forest land
       mutate(frac = MgdFor / value) %>%
@@ -252,7 +253,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       # Apply maximum percentage of any region/GLUs forest that is allowed to be in production (managed)
       mutate(frac = replace(frac, frac > aglu.MAX_MGDFOR_FRAC, aglu.MAX_MGDFOR_FRAC)) %>%
       # Match in total forest land again to calculate the adjusted managed forest land
-      left_join_error_no_match(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "Forest", year %in% aglu.LAND_COVER_YEARS),
+      left_join_error_no_match(filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type %in% aglu.FOREST_NODE_NAMES, year %in% aglu.LAND_COVER_YEARS),
                                by = c("GCAM_region_ID", "Land_Type", "GLU", "year")) %>%
       # Recalculate managed forest land, adjusted by assumed maximum portion that can be managed
       mutate(value = value * frac) %>%

@@ -68,6 +68,15 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     L122.ag_HA_to_CropLand_R_Y_GLU <- get_data(all_data, "L122.ag_HA_to_CropLand_R_Y_GLU", strip_attributes = TRUE)
     L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "L123.ag_Prod_Mt_R_Past_Y_GLU", strip_attributes = TRUE)
     L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU", strip_attributes = TRUE)
+
+    L123.For_Prod_bm3_R_Y_GLU %>%
+      group_by(GCAM_region_ID,GLU,year) %>%
+      mutate(value= sum(value),
+             GCAM_commodity= "Forest") %>%
+      ungroup() %>%
+      distinct()->L123.For_Prod_bm3_R_Y_GLU_for_biomass
+
+
     L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices", strip_attributes = TRUE)
     L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg", strip_attributes = TRUE)
     L1321.expP_R_F_75USDm3 <- get_data(all_data, "L1321.expP_R_F_75USDm3", strip_attributes = TRUE)
@@ -115,7 +124,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              GCAM_subsector = "biomassGrass") ->
       L201.R_C_GLU_biograss
     # Second, biotree: available anywhere that has any forest production at all
-    L123.For_Prod_bm3_R_Y_GLU %>%
+    L123.For_Prod_bm3_R_Y_GLU_for_biomass %>%
       select(GCAM_region_ID, GLU) %>%
       unique %>%
       mutate(GCAM_commodity = "biomass",
@@ -124,7 +133,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # Third, bind Ag commodties, forest, pasture and biomass all together
     L101.ag_Prod_Mt_R_C_Y_GLU %>%
       bind_rows(L123.For_Prod_bm3_R_Y_GLU, L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
-      mutate(GCAM_subsector = if_else(is.na(GCAM_subsector), GCAM_commodity, GCAM_subsector)) %>%
+      mutate(GCAM_subsector = if_else(is.na(GCAM_subsector), GCAM_commodity, GCAM_subsector),
+             GCAM_commodity = if_else(grepl("Forest",GCAM_commodity),"Forest",GCAM_commodity)) %>%
       select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique %>%
       bind_rows(L201.R_C_GLU_biograss, L201.R_C_GLU_biotree) %>%
@@ -174,7 +184,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
-      mutate(AgProductionTechnology = paste(GCAM_commodity, GLU_name, sep = aglu.CROP_GLU_DELIMITER)) ->
+      mutate(AgProductionTechnology = paste(GCAM_commodity, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
+             GCAM_commodity = if_else(grepl("Forest",GCAM_commodity),"Forest",GCAM_commodity)) ->
       L201.For_Past_Prod_R_Y_GLU
 
     # Subset only forest and pasture products from the main subsector table and paste in calibrated production, rounded
