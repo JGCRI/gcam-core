@@ -159,7 +159,8 @@ double TranTechnology::getTotalGHGCost( const string& aRegionName,
         totalGHGCost += mGHG[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent, aPeriod );
     }
     // totalGHGCost is in 1975$/GJ(Btu/veh-mi) due to the vehicle intensity.
-    return totalGHGCost * JPERBTU / GIGA * CVRT90;
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return (totalGHGCost * JPERBTU / GIGA * CVRT90) / mLoadFactor;
 }
 
 double TranTechnology::calcSecondaryValue( const string& aRegionName,
@@ -187,7 +188,8 @@ double TranTechnology::calcSecondaryValue( const string& aRegionName,
 
     // TODO: Remove this function once units framework code is added.
     // totalValue is in 1975$/GJ(Btu/veh-mi) due to the vehicle intensity.
-    return totalValue * JPERBTU / GIGA * CVRT90;
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return (totalValue * JPERBTU / GIGA * CVRT90) / mLoadFactor;
 }
 
 double TranTechnology::getEnergyCost( const string& aRegionName,
@@ -212,7 +214,8 @@ double TranTechnology::getEnergyCost( const string& aRegionName,
                     / mAlphaZero * JPERBTU / GIGA * CVRT90;
         }
     }
-    return cost;
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return cost / mLoadFactor;
 }
 
 double TranTechnology::getNonEnergyCost( const string& aRegionName,
@@ -233,7 +236,8 @@ double TranTechnology::getNonEnergyCost( const string& aRegionName,
                     / mAlphaZero;
         }
     }
-    return cost;
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return cost / mLoadFactor;
 }
 
 
@@ -244,10 +248,12 @@ void TranTechnology::calcCost( const string& aRegionName,
     double techCost = getTotalInputCost( aRegionName, aSectorName, aPeriod )
                       * mPMultiplier - calcSecondaryValue( aRegionName, aPeriod );
     
-    // Convert cost to cost per service instead of cost per vehicle.
-    // For example,  convert $/vehicle-mi into $/pass-mi or $/ton-mi 
+    // All costs have already been converted to cost per service instead of cost per vehicle.
+    // For example, $/vehicle-mi has been converted into $/pass-mi or $/ton-mi
+    // doing it this way ensure we are always comparing prices and costs in the same unit
+    // which is important for calculating the shutdown decider for instance
 
-    mCosts[ aPeriod ] = max( techCost / mLoadFactor, util::getSmallNumber() );
+    mCosts[ aPeriod ] = max( techCost, util::getSmallNumber() );
 }
 
 void TranTechnology::production( const string& aRegionName, const string& aSectorName,
