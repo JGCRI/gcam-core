@@ -51,9 +51,7 @@
 #include "marketplace/include/marketplace.h"
 #include "containers/include/iinfo.h"
 #include "containers/include/market_dependency_finder.h"
-#include "util/curves/include/point_set_curve.h"
-#include "util/curves/include/explicit_point_set.h"
-#include "util/curves/include/xy_data_point.h"
+#include "util/base/include/util.h"
 
 using namespace std;
 
@@ -68,20 +66,17 @@ mFullPhaseInPrice (400.00),
 mZeroCostPhaseInTime( 25 ),
 mMacPhaseInTime( 0 ),
 mCovertPriceValue( 1 ),
-mPriceMarketName( "CO2" ),
-mMacCurve( new PointSetCurve( new ExplicitPointSet() ) )
+mPriceMarketName( "CO2" )
 {
 }
 
 //! Default destructor.
 MACControl::~MACControl(){
-    delete mMacCurve;
 }
 
 //! Copy constructor.
 MACControl::MACControl( const MACControl& aOther )
 : AEmissionsControl( aOther ) {
-    mMacCurve = 0;
     copy( aOther );
 }
 
@@ -93,10 +88,6 @@ MACControl* MACControl::clone() const {
 //! Assignment operator.
 MACControl& MACControl::operator=( const MACControl& aOther ){
     if( this != &aOther ){
-        // Free memory before copying.  Since this is just a single
-        // variable I am just deleting it directly here.
-        delete mMacCurve;
-        mMacCurve = 0;
         AEmissionsControl::operator=( aOther );
         copy( aOther );
     }
@@ -109,7 +100,7 @@ void MACControl::copy( const MACControl& aOther ){
      * \pre mMacCurve should be null otherwise we have a memory leak.
      */
     assert( !mMacCurve );
-    mMacCurve = aOther.mMacCurve->clone();
+    mMacCurve = aOther.mMacCurve;
     mNoZeroCostReductions = aOther.mNoZeroCostReductions;
     mTechChange = aOther.mTechChange;
     mFullPhaseInPrice = aOther.mFullPhaseInPrice;
@@ -142,8 +133,7 @@ bool MACControl::XMLParse(rapidxml::xml_node<char>* & aNode) {
         map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
         double taxVal = XMLParseHelper::getValue<double>(attrs["tax"]);
         double reductionVal = XMLParseHelper::getValue<double>( aNode );
-        XYDataPoint* currPoint = new XYDataPoint( taxVal, reductionVal );
-        mMacCurve->getPointSet()->addPoint( currPoint );
+        mMacCurve[taxVal] = reductionVal;
         return true;
     }
     else if ( nodeName == "no-zero-cost-reductions" ){
@@ -161,10 +151,8 @@ bool MACControl::XMLParse(rapidxml::xml_node<char>* & aNode) {
 }
 
 void MACControl::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
-    const vector<pair<double,double> > pairs = mMacCurve->getSortedPairs();
-    typedef vector<pair<double, double> >::const_iterator PairIterator;
     map<string, double> attrs;
-    for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
+    for( auto currPair = mMacCurve.begin(); currPair != mMacCurve.end(); ++currPair ) {
         attrs[ "tax" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "mac-reduction", aOut, aTabs, attrs );
     }
@@ -183,7 +171,7 @@ void MACControl::completeInit( const string& aRegionName, const string& aSectorN
 {
     scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName, aRegionName, mPriceMarketName, aRegionName );
 
-    if ( mMacCurve->getMaxX() == -DBL_MAX ) {
+    if ( mMacCurve.empty() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
         mainLog << "MAC Curve " << getName() << " appears to have no data. " << endl;
@@ -316,25 +304,9 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
  * \param aCarbonPrice carbon price
  */
 double MACControl::getMACValue( const double aCarbonPrice ) const {
-    const double maxCO2Tax = mMacCurve->getMaxX();
-    
-    // so that getY function won't interpolate beyond last value
-    double effectiveCarbonPrice = min( aCarbonPrice, maxCO2Tax );
-
-    double reduction = mMacCurve->getY( effectiveCarbonPrice );
-
     // If no mac curve read in then reduction should be zero.
     // This is a legitimate option for a user to remove a mac curve
-    if ( ( mMacCurve->getMinX() == mMacCurve->getMaxX() ) && ( mMacCurve->getMaxX() == 0 ) ) {
-         reduction = 0;
-    }
-    // Check to see if some other error has occurred
-    else if ( reduction == -DBL_MAX ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << " An error occured when evaluating MAC curve for a GHG." << endl;
-        reduction = 0;
-    }
+    double reduction = mMacCurve.empty() ? 0.0 : util::curve_lookup_interp( mMacCurve, aCarbonPrice );
     
     return reduction;
 }

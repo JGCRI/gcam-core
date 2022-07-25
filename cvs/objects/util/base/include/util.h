@@ -426,6 +426,47 @@ namespace objects {
         return ( std::fabs( aFirstValue - aSecondValue ) < aTolerance );
     }
 
+    /*!
+     * \brief Lookup a piece wise linear curve at the given X value.
+     * \details The curve is given as a map[X] -> Y.  The Y values will be interpolated *between*
+     *          the price points given in aCurve.  X values beyond the endpoints are capped at the
+     *          end values of the curve (i.e. no extrapolation).
+     * \param aCurve The piece-wise linear curve represented as a map of X values to Y values.
+     * \param aX The X value at which to lookup / interpolate the Y value for.
+     * \return The appropriate Y value represented by aCurve at aX.
+     */
+    inline double curve_lookup_interp( const std::map<double, double>& aCurve,
+                                       const double aX )
+    {
+        /*!
+         * \pre aCurve must not be empty
+         */
+        assert( !aCurve.empty() );
+        
+        auto it = aCurve.lower_bound(aX);
+        if(it == aCurve.end()) {
+            // X is greater than any value in the curve, return the last Y value in the curve
+            return (--it)->second;
+        }
+        if(it == aCurve.begin() || (*it).first == aX) {
+            // either below the bottom of the curve or an exact hit
+            // in either case just return the Y value
+            return (*it).second;
+        }
+        else {
+            // we need to interpolate between two points
+            // it is currently pointing at the upper bound, save a reference to that
+            // and decrement to get the lower bound values
+            auto ubIt = it--;
+            double lbX = (*it).first;
+            double lbY = (*it).second;
+            double ubX = (*ubIt).first;
+            double ubY = (*ubIt).second;
+            // linearly interpolate
+            return ( aX - lbX ) * ( ubY - lbY ) / ( ubX - lbX ) + lbY;
+        }
+    }
+
     /*
     * \brief Interpolate a Y value based on two points and an X value.
     * \param aX X value for which to find an X value.
