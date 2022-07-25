@@ -146,17 +146,17 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     # Start with the yield table to determine where forest are being read in
     # Differentiate regional cost for forest using aglu.FOR_COST_SHARE in constants.R
     L123.For_Yield_m3m2_R_GLU %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, GCAM_commodity, Land_Type,GLU) %>%
       unique() %>%
       # Copy costs to all model years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(tibble(GCAM_commodity= aglu.FOREST_supply_sector)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
-      mutate(AgSupplySector = "Forest",
-             AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
-             AgProductionTechnology = AgSupplySubsector,
-             GCAM_commodity = "Forest") %>%
+      mutate(AgSupplySector = GCAM_commodity,
+             AgSupplySubsector = paste(Land_Type, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
+             AgProductionTechnology = AgSupplySubsector) %>%
       left_join(L132.ag_an_For_Prices, by = "GCAM_commodity") %>%
       left_join(L1321.expP_R_F_75USDm3, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
                   mutate(nonLandVariableCost = if_else(is.na(value),

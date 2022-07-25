@@ -174,8 +174,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       left_join_error_no_match(select(L123.For_Yield_m3m2_R_GLU, GCAM_region_ID, GLU, Yield_m3m2,Land_Type),
                                by = c("GCAM_region_ID", "GLU","Land_Type")) %>%
       # Calculate potential forest biomass production as total forest land times yields
-      mutate(value = value * Yield_m3m2) %>%
-      rename(GCAM_commodity = Land_Type)->L123.For_potentialProd_bm3_R_Y_GLU
+      mutate(value = value * Yield_m3m2) ->L123.For_potentialProd_bm3_R_Y_GLU
 
 
     # Use the GLU fraction of potential forest biomass production to disaggregate regional wood production to GLU
@@ -189,20 +188,26 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       right_join(L123.For_potentialProd_bm3_R_Y_GLU, by = c("GCAM_region_ID", "year")) %>%
       # Calculate the GLU to regional fraction of forest biomass production
       mutate(frac = value / total) %>%
+      repeat_add_columns(tibble(GCAM_commodity = as.character(aglu.FOREST_commodities))) %>%
       # Match in regional wood production
-      left_join_error_no_match(L110.For_ALL_bm3_R_Y %>% select(-GCAM_commodity), by = c("GCAM_region_ID",  "year")) %>%
+      left_join_error_no_match(L110.For_ALL_bm3_R_Y, by = c("GCAM_region_ID",  "year","GCAM_commodity")) %>%
       # Calculate logging production as the regional total times the GLU-wise forest biomass production fractions
       mutate(value = Prod_bm3 * frac) %>%
-      select(GCAM_region_ID, GCAM_commodity, GLU, year, value) ->
+      select(GCAM_region_ID, GCAM_commodity, GLU, year, value, Land_Type) ->
       L123.For_Prod_bm3_R_Y_GLU
 
     # Calculate land cover of "managed" forest as the wood production divided by yield (net primary productivity)
     L123.For_Prod_bm3_R_Y_GLU %>%
+      group_by(GCAM_region_ID, Land_Type, GLU,year) %>%
+      mutate(value=sum(value)) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, Land_Type, GLU,value,year) %>%
+      distinct() %>%
       left_join_error_no_match(L123.For_Yield_m3m2_R_GLU,
-                               by = c("GCAM_region_ID", "GCAM_commodity" = "Land_Type", "GLU")) %>%
+                               by = c("GCAM_region_ID", "Land_Type", "GLU")) %>%
       # Managed forest land cover as wood production divided by yields
       mutate(MgdFor = value / Yield_m3m2) %>%
-      select(GCAM_region_ID, Land_Type = GCAM_commodity, GLU, year, MgdFor) ->
+      select(GCAM_region_ID, Land_Type, GLU, year, MgdFor) ->
       L123.LC_bm2_R_MgdFor_Y_GLU
 
     # Build managed forest land use in pre-aglu historical years
@@ -219,7 +224,7 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     # Scale managed forest land to pre-aglu historical years by population
     # Start with building a tibble with region x GLUs that have wood production
     L123.For_Prod_bm3_R_Y_GLU %>%
-      select(GCAM_region_ID, Land_Type = GCAM_commodity, GLU) %>%
+      select(GCAM_region_ID, Land_Type, GLU) %>%
       unique %>%
       # Copy to pre-aglu years
       repeat_add_columns(tibble(year = as.integer(aglu.PREAGLU_YEARS))) %>%
@@ -264,8 +269,13 @@ module_aglu_LB123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     # Note: for region/GLUs where threshold percentage of total forest is applied,
     # they have increased forest yields, because prodction is unaffected.
     L123.For_Prod_bm3_R_Y_GLU %>%
+      group_by(GCAM_region_ID,GLU,Land_Type,year) %>%
+      mutate(value=sum(value)) %>%
+      ungroup() %>%
+      select(GCAM_region_ID,GLU,Land_Type,year,value) %>%
+      distinct() %>%
       left_join_error_no_match(rename(L123.LC_bm2_R_MgdFor_Yh_GLU, MgdFor_adj = value),
-                               by = c("GCAM_region_ID", "GCAM_commodity" = "Land_Type", "GLU", "year")) %>%
+                               by = c("GCAM_region_ID", "Land_Type", "GLU", "year")) %>%
       # Re-calculate yields with production and the adjusted managed forest land
       mutate(value = value / MgdFor_adj) %>%
       select(-MgdFor_adj) ->

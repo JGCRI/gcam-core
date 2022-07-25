@@ -26,4 +26,5 @@ traded dairy,traded dairy,traded dairy,Dairy,1,0,1,1
 traded pork,traded pork,traded pork,Pork,1,0,1,1
 traded poultry,traded poultry,traded poultry,Poultry,1,0,1,1
 traded sheepgoat,traded sheepgoat,traded sheepgoat,SheepGoat,1,0,1,1
-traded forest,traded forest,traded forest,Forest,1,0,1,1
+traded industrial_roundwood,traded industrial_roundwood,traded industrial_roundwood,industrial_roundwood,1,0,1,1
+traded wood_fuel,traded wood_fuel,traded wood_fuel,wood_fuel,1,0,1,1

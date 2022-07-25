@@ -78,7 +78,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       bind_rows(L109.an_ALL_Mt_R_C_Y %>%
                   select(GCAM_region_ID, GCAM_commodity, year, Prod_Mt, NetExp_Mt)) %>%
       bind_rows(L110.For_ALL_bm3_R_Y %>%
-                  filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
+                  filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
                   select(GCAM_region_ID, GCAM_commodity, year,
                          Prod_Mt = Prod_bm3, NetExp_Mt = NetExp_bm3)) #note that physical unit for forest data is bm3
 
@@ -90,7 +90,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                   left_join(
                     L100.FAO_For_Exp_m3 %>%
                       mutate(GCAM_region_ID = left_join_error_no_match(L100.FAO_For_Exp_m3, iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']],
-                             GCAM_commodity = "Forest",                   # add the forest commodity label
+                             GCAM_commodity = item,                   # add the forest commodity label
                              value = CONV_M3_BM3 * value,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
                              flow = "GrossExp") %>%
                       select(GCAM_region_ID, GCAM_commodity, flow, year, value) %>%
@@ -100,7 +100,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                       spread(flow, value),
                     by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
                   replace_na(list(GrossExp = 0)) %>%
-                  filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
+                  filter(GCAM_commodity %in% c("industrial_roundwood","wood_fuel")) %>%
                   mutate(GrossImp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
                          GrossExp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
                   select(names(L1091.GrossTrade_Mt_R_C_Y)) )
@@ -143,7 +143,9 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["TechCost"]])
 
     # L240.TechCoef_tra: Coefficient and market name of traded technologies
-    L240.TechCoef_tra <- select(A_agTradedTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]])
+    L240.TechCoef_tra <- select(A_agTradedTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]]) %>%
+      mutate(minicam.energy.input = if_else(minicam.energy.input %in% c("industrial_roundwood","wood_fuel"),aglu.FOREST_supply_sector,minicam.energy.input))
+
 
     # L240.Production_tra: Output (gross exports) of traded technologies
     L240.GrossExports_Mt_R_C_Y <- left_join_error_no_match(L1091.GrossTrade_Mt_R_C_Y,
@@ -158,6 +160,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       mutate(share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
+      mutate(minicam.energy.input = if_else(minicam.energy.input %in% c("industrial_roundwood","wood_fuel"),aglu.FOREST_supply_sector,minicam.energy.input)) %>%
       select(LEVEL2_DATA_NAMES[["Production"]])
 
     # PART 2: DOMESTIC SUPPLY SECTOR / SUBSECTOR / TECHNOLOGY")
@@ -181,7 +184,8 @@ module_aglu_L240.ag_trade <- function(command, ...) {
     L240.TechShrwt_reg <- select(A_agRegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechShrwt"]])
 
     # L240.TechCoef_reg: Coefficient and market name of traded technologies
-    L240.TechCoef_reg <- select(A_agRegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]])
+    L240.TechCoef_reg <- select(A_agRegionalTechnology_R_Y, LEVEL2_DATA_NAMES[["TechCoef"]]) %>%
+                         mutate(minicam.energy.input= if_else(minicam.energy.input %in% aglu.FOREST_commodities, aglu.FOREST_supply_sector,minicam.energy.input))
 
     # L240.Production_reg_imp: Output (flow) of gross imports
     # Imports are equal to the gross imports calculated in L1091
@@ -225,6 +229,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
              share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = subs.share.weight) %>%
+      mutate(minicam.energy.input = if_else(minicam.energy.input %in% c("industrial_roundwood","wood_fuel"),aglu.FOREST_supply_sector,minicam.energy.input)) %>%
       select(LEVEL2_DATA_NAMES[["Production"]])
 
     # Produce outputs

@@ -22,7 +22,8 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     return(c(FILE = "common/iso_GCAM_regID",
              "L100.FAO_For_Prod_m3",
              "L100.FAO_For_Imp_m3",
-             "L100.FAO_For_Exp_m3"))
+             "L100.FAO_For_Exp_m3",
+             FILE="aglu/A_forest_mapping"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L110.For_ALL_bm3_R_Y"))
   } else if(command == driver.MAKE) {
@@ -37,6 +38,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     L100.FAO_For_Prod_m3 <- get_data(all_data, "L100.FAO_For_Prod_m3")
     L100.FAO_For_Imp_m3 <- get_data(all_data, "L100.FAO_For_Imp_m3")
     L100.FAO_For_Exp_m3 <- get_data(all_data, "L100.FAO_For_Exp_m3")
+    A_forest_mapping <- get_data(all_data,"aglu/A_forest_mapping")
 
     # Lines 34-39 in original file
     # indicate flow on each tibble - flow is a directional quantity indicating net export or production
@@ -66,13 +68,15 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
     # convert units and aggregate over flow to form Production and Net Export in units of bm3
     # Use spread to have columns for Prod and NetExp instead of flow and value
     # Add a column for the variable consumption, Cons=Prod-NetExp
-    L110.FAO_For_ALL_m3 %>%                                   # take the combined tibble
+    L110.FAO_For_ALL_m3 %>%
+      left_join_error_no_match(A_forest_mapping, by = c("item")) %>%
+      # take the combined tibble
       # do a left join on For_ALL tibble, match up the iso labels from the iso tibble,
       #   This appends to the For_ALL tibble all of the information from the iso_GCAM_regID, including the column we actually
       #   want, GCAM_region_ID. This column is all that we save:
       mutate(GCAM_region_ID = left_join_error_no_match(L110.FAO_For_ALL_m3, iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']],
-             GCAM_commodity = "Forest",                   # add the forest commodity label
-             value = CONV_M3_BM3 * value,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
+             # add the forest commodity label
+             value = CONV_M3_BM3 * value*tonnes_to_m3,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
              flow = sub("_m3", "_bm3", flow)) %>%         # update the labels in flow to reflect the new units of bm3
       #
       # we don't care about other identifiers anymore, only region id, commodity, flow and year corresponding to value:
@@ -89,7 +93,9 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       #   The new DSR eliminates the use of L110.For_ALL_bm3_R_Y.prelim
       spread(flow, value) %>%
       #
-      mutate(Cons_bm3 = Prod_bm3 - NetExp_bm3) %>%                                     # form a new variable, consumption Cons = Prod-NetExp
+      mutate(Prod_bm3= if_else(is.na(Prod_bm3),0,Prod_bm3),
+             NetExp_bm3= if_else(is.na(NetExp_bm3),0,NetExp_bm3),
+             Cons_bm3 = Prod_bm3 - NetExp_bm3) %>%                                     # form a new variable, consumption Cons = Prod-NetExp
       select(GCAM_region_ID, GCAM_commodity, year, Prod_bm3, NetExp_bm3, Cons_bm3) ->  # reorder columns
       L110.For_ALL_bm3_R_Y                                                             # save it in the region year R_Y tibble
 

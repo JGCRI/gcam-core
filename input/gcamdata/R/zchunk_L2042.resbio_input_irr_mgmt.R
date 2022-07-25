@@ -126,13 +126,14 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
     # 1. Form a table of Forest Residue Biomass Paramters by region-glu-year
     L123.For_Prod_bm3_R_Y_GLU %>%
-      mutate(LT= GCAM_commodity) %>%
+      mutate(LT= Land_Type,
+             GCAM_commodity= aglu.FOREST_supply_sector) %>%
       # Set up identifying information to fill in with parameters, incl 2.
       select(GCAM_region_ID, GCAM_commodity, GLU,LT) %>%
       distinct %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(AgSupplySector = "Forest",
-             AgSupplySubsector = paste(GCAM_commodity, GLU, sep = aglu.CROP_GLU_DELIMITER),
+      mutate(AgSupplySector = GCAM_commodity,
+             AgSupplySubsector = paste(LT, GLU, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector) %>%
       add_bio_res_params_For_Mill_Forest(erosCtrl = aglu.FOREST_EROSION_CTRL_KGM2) %>%
       select(-GCAM_region_ID, -GCAM_commodity, -GLU) ->
@@ -141,7 +142,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
     # 2. Form a table of global Mill Residue Biomass Paramters by year
     A_demand_technology %>%
-      filter(supplysector == "NonFoodDemand_Forest") %>%
+      filter(supplysector %in% aglu.FOREST_demand_sectors) %>%
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%

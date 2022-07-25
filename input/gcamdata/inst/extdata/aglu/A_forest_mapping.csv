@@ -1,0 +1,9 @@
+# File: A_forest_mapping.csv
+# Title: Maps FAO forest products to GCAM commoditties
+# Units: NA
+# Source: Defined by authors
+# Column types: cci
+# ----------
+item,GCAM_commodity,tonnes_to_m3
+Industrial roundwood,industrial_roundwood,1
+Wood fuel,wood_fuel,1

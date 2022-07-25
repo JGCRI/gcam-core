@@ -337,6 +337,12 @@ aglu.MILL_EROSION_CTRL_KGM2 <- 0
 # Wood energy content in GJ/kg
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 
+
+aglu.FOREST_commodities <- c("industrial_roundwood","wood_fuel")
+aglu.FOREST_demand_sectors <- c("NonFoodDemand_industrial_roundwood","NonFoodDemand_wood_fuel")
+aglu.FOREST_supply_sector <- "Forest"
+
+aglu.FOREST_max_price <- 165
 # wood water content
 # Unitless (mass of water / total wood mass)
 aglu.WOOD_WATER_CONTENT <- 0.065

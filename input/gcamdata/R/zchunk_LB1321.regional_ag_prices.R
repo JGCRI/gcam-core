@@ -293,8 +293,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       mutate(countries = if_else(countries == "Sudan (former)", "Sudan", countries)) %>%
       gather_years() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
-      mutate(element = if_else(element == "Export Quantity (m3)", "Exp_m3", "ExpV_kUSD"),
-             GCAM_commodity = "Forest") %>%
+      mutate(element = if_else(element == "Export Quantity", "Exp_m3", "ExpV_kUSD"),
+             GCAM_commodity = aglu.FOREST_supply_sector) %>%
       spread(element, value) %>%
       inner_join(L1321.GDPdefl_ctry,
                  by = c("countries", "year")) %>%
