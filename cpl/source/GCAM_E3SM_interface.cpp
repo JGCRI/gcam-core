@@ -9,12 +9,56 @@
 #include "../include/GCAM_E3SM_interface.h"
 #include "containers/include/world.h"
 
+#include "util/base/include/configuration.h"
+#include "containers/include/iscenario_runner.h"
+#include "containers/include/scenario_runner_factory.h"
+#include "containers/include/scenario.h"
+#include "util/logger/include/ilogger.h"
+#include "util/base/include/timer.h"
+#include "util/base/include/version.h"
+#include "util/base/include/model_time.h"
+#include "util/base/include/xml_parse_helper.h"
+
 #include "../include/remap_data.h"
 #include "../include/get_data_helper.h"
 #include "../include/set_data_helper.h"
 #include "../include/carbon_scalers.h"
 #include "../include/emiss_downscale.h"
-#include "util/base/include/xml_helper.h"
+
+#include <boost/iostreams/device/mapped_file.hpp>
+
+using namespace std;
+
+template<typename ContainerType>
+bool parseXMLInternal(const string& aXMLFile, ContainerType* aRootElement) {
+    try {
+        // open the file as a memory mapped file and make sure it was successful
+        boost::iostreams::mapped_file_source xmlFile(aXMLFile.c_str());
+        
+        // Parse the file, note the memory for the parser will be released when doc
+        // goes out of scope.
+        rapidxml::xml_document<> doc;
+        doc.parse<rapidxml::parse_non_destructive>(const_cast<char*>(xmlFile.data()));
+        
+        // Kick off the processing of the XML nodes starting with the root element.
+        rapidxml::xml_node<char>* child = doc.first_node();
+        aRootElement->XMLParse(child);
+        
+        xmlFile.close();
+    }
+    catch(std::ios_base::failure ioException) {
+        cerr << "Could not open: " << aXMLFile << " failed with: "
+             << ioException.what() << endl;
+        return false;
+    }
+    catch(rapidxml::parse_error parseException) {
+        cerr << "Failed to parse: " << aXMLFile << " with error: "
+             << parseException.what() << endl;
+        return false;
+    }
+    
+    return true;
+}
 
 ofstream outFile;
 
@@ -50,7 +94,8 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     const string loggerFileName = loggerFactoryArg;
     
     // Initialize the LoggerFactory
-    bool success = XMLHelper<void>::parseXML( loggerFileName, &loggerFactoryWrapper );
+    XMLParseHelper::initParser();
+    bool success = XMLParseHelper::parseXML( loggerFileName, &loggerFactoryWrapper );
     
     // Get the main log file.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -94,7 +139,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "Parsing input files..." << endl;
     Configuration* conf = Configuration::getInstance();
-    success = XMLHelper<void>::parseXML( configurationFileName, conf );
+    success = XMLParseHelper::parseXML( configurationFileName, conf );
     // TODO: Check if parsing succeeded.
        
     // Initialize the timer.  Create an object of the Timer class.
@@ -125,22 +170,22 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     }
     
     // Setup the CO2 mappings
-    success = XMLHelper<void>::parseXML(aGCAM2ELMCO2Map, &mCO2EmissData);
+    success = parseXMLInternal(aGCAM2ELMCO2Map, &mCO2EmissData);
     mCO2EmissData.addYearColumn("Year", years, yearRemap);
     mCO2EmissData.finalizeColumns();
 
     // Setup the land use change mappings
-    success = XMLHelper<void>::parseXML(aGCAM2ELMLUCMap, &mLUCData);
+    success = parseXMLInternal(aGCAM2ELMLUCMap, &mLUCData);
     mLUCData.addYearColumn("Year", years, yearRemap);
     mLUCData.finalizeColumns();
     
     // Setup the wood harvest mappings
-    success = XMLHelper<void>::parseXML(aGCAM2ELMWHMap, &mWoodHarvestData);
+    success = parseXMLInternal(aGCAM2ELMWHMap, &mWoodHarvestData);
     mWoodHarvestData.addYearColumn("Year", years, yearRemap);
     mWoodHarvestData.finalizeColumns();
 
     // Clean up
-    XMLHelper<void>::cleanupParser();
+    XMLParseHelper::cleanupParser();
     
     // Set start and end year
     gcamStartYear = modeltime->getStartYear();
@@ -202,7 +247,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 
     int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
    
-    if( modeltime->isModelYear( gcamYear )) {
+    if( modeltime->isModelYear( e3smYear )) {
         // set restart period
         restartPeriod = gcamPeriod;
 

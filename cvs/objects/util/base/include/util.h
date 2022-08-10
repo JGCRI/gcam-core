@@ -424,9 +424,9 @@ inline bool isEqual<double>( const double aFirstValue,
                             const double aTolerance )
 {
     // Protect against nan
-    if( boost::math::isnan(aFirstValue) || boost::math::isnan(aSecondValue) ) {
+    if( std::isnan(aFirstValue) || std::isnan(aSecondValue) ) {
         // If both values are nan, then they are equal
-        if( boost::math::isnan(aFirstValue) && boost::math::isnan(aSecondValue) ) {
+        if( std::isnan(aFirstValue) && std::isnan(aSecondValue) ) {
             return true;
         } else {
             return false;

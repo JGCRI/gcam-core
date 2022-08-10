@@ -39,13 +39,10 @@
 #include <map>
 #include <iostream>
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
-#include "util/base/include/iparsable.h"
+#include "util/base/include/aparsable.h"
 
 template<typename T>
-struct ReMapDataHelper {
+struct ReMapDataHelper : public AParsable {
 public:
     std::string mDataName;
     std::vector<T> mInOrderOutputNames;
@@ -53,10 +50,10 @@ public:
     size_t getIndex(const T& aGCAMName) const;
     size_t getStrideLength() const;
     std::string getName() const;
-    bool XMLParse(const xercesc::DOMNode* aNode);
+    virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
 };
 
-class ReMapData : public IParsable {
+class ReMapData : public AParsable {
 public:
     ReMapData();
     ~ReMapData();
@@ -65,7 +62,7 @@ public:
     void finalizeColumns();
     void setData(std::vector<std::string>& aColValues, const int aYearValue, const double aValue);
     double* getData();
-    bool XMLParse(const xercesc::DOMNode* aNode);
+    virtual bool XMLParse(rapidxml::xml_node<char>* & aNode);
     size_t getArrayLength() const;
     std::ostream& printAsTable(std::ostream& aOut) const;
 private:

@@ -97,7 +97,7 @@ TBB_LIB_IMPORT		= -l$(LIBTBB) -l$(LIBTBBMALLOC) -l$(LIBTBBMALLOC_PROXY)
 endif
 
 # Set up Java paths for compiling via environment variables if we are using it
-ifneq ($(HAVE_JAVA),0) 
+ifneq ($(_HAVE_JAVA_),0) 
 ifeq ($(strip $(JAVA_INCLUDE)),)
   $(error Unable to detect Java include path, please set env variable JAVA_INCLUDE)
 endif

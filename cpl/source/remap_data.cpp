@@ -37,15 +37,12 @@
  * \author Pralit Patel
  */
 
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/dom/DOMNodeList.hpp>
-
 #include "../include/remap_data.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "reporting/include/xml_db_outputter.h"
 
 using namespace std;
-using namespace xercesc;
 
 // Find the index of a particular item in the mapping
 template<typename T>
@@ -90,40 +87,33 @@ string ReMapDataHelper<T>::getName() const {
  * \author Kate Calvin
  */
 template<typename T>
-bool ReMapDataHelper<T>::XMLParse( const DOMNode* aNode ) {
-    
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the first child the node.
-    DOMNode* curr = aNode->getFirstChild();
-    
-    // loop through the children
-    while( curr ) {
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
-        if( nodeName == "#text" ) {
-            curr = curr->getNextSibling();
+bool ReMapDataHelper<T>::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+
+    while(aNode) {
+        string nodeName = XMLParseHelper::getNodeName( aNode );
+        if( aNode->type() != rapidxml::node_element ) {
+            aNode = aNode->next_sibling();
             continue;
         }
         else if( nodeName == "output-data" ) {
-            T tempName = XMLHelper<T>::getValue( curr );
+            T tempName = XMLParseHelper::getValue<T>( aNode );
             mInOrderOutputNames.push_back(tempName);
         }
         else if( nodeName == "map" ) {
-            const T fromName = XMLHelper<T>::getAttr( curr, "from" );
-            const T toName = XMLHelper<T>::getAttr( curr, "to" );
+            map<string, string> attrs = XMLParseHelper::getAllAttrs( aNode );
+            const T fromName = XMLParseHelper::getValue<T>( attrs["from"] );
+            const T toName = XMLParseHelper::getValue<T>( attrs["to"] );
             mGCAMToOutputNameMap.insert( std::make_pair( fromName, toName ) );
         }
         else {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Unrecognized text string: " << nodeName << " found while parsing "
-                    << "column information" << "." << endl;
+                << "column information" << "." << endl;
         }
-        
-        // Get the next child of aNode to process.
-        curr = curr->getNextSibling();
+        aNode = aNode->next_sibling();
     }
+
     return true;
 }
 
@@ -149,24 +139,20 @@ ReMapData::~ReMapData() {
  * This method reads all of the columns in a mapping file
  * \author Kate Calvin
  */
-bool ReMapData::XMLParse( const DOMNode* aNode ) {
-    // assume we were passed a valid node.
-    assert( aNode );
-    
-    // get the first child the node.
-    DOMNode* curr = aNode->getFirstChild();
+bool ReMapData::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     
     // loop through the children
-    while( curr ) {
-        string nodeName = XMLHelper<string>::safeTranscode( curr->getNodeName() );
+    while( aNode ) {
+        string nodeName = XMLParseHelper::getNodeName( aNode );
         
-        if( nodeName == "#text" ) {
-            curr = curr->getNextSibling();
+        if( aNode->type() != rapidxml::node_element) {
+            aNode = aNode->next_sibling();
             continue;
         }
         else if( nodeName == "column" ) {
             // First determine if the node exists.
-            const std::string objName = XMLHelper<std::string>::getAttr( curr, "name" );
+            map<string, string> attrs = XMLParseHelper::getAllAttrs( aNode );
+            const std::string objName = attrs["name"];
             
             // Search the insert to vector for an item with the name.
             auto iter = mColumns.end();
@@ -177,13 +163,14 @@ bool ReMapData::XMLParse( const DOMNode* aNode ) {
             }
             
             // Check if the node already exists in the model tree.
+            rapidxml::xml_node<char>* child = aNode->first_node();
             if( iter != mColumns.end() ){
                 // Modify or delete the node based on the contents of the delete attribute.
-                (*iter).XMLParse( curr );
+                (*iter).XMLParse( child );
             } else {
                 ReMapDataHelper<string> newHelper;
                 newHelper.mDataName = objName;
-                newHelper.XMLParse( curr );
+                newHelper.XMLParse( child );
                 mColumns.push_back( newHelper );
             }
         }
@@ -198,7 +185,7 @@ bool ReMapData::XMLParse( const DOMNode* aNode ) {
         }
         
         // Get the next child of aNode to process.
-        curr = curr->getNextSibling();
+        aNode = aNode->next_sibling();
     }
     
     return true;

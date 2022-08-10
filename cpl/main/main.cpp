@@ -46,8 +46,11 @@
 #include <list>
 
 // Include interface
+#include "util/logger/include/ilogger.h"
 #include "../include/GCAM_E3SM_interface.h"
 #include "../include/aspatial_data.h"
+
+using namespace std;
 
 int main( ) {
     /* STEP 1: DEFINE CONTROL VARIABLES WITH DEFAULTS
@@ -292,8 +295,8 @@ int main( ) {
                     // Read in area of grid cell
                     tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
                 }
-                p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
-                                      NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE);
+                p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamipftfract, gcaminpp, gcamihr,
+                                      NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, ELM_IAC_CARBON_SCALING, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE);
             }
             
             // Run model
@@ -330,8 +333,8 @@ int main( ) {
                 // Read in area of grid cell
                 tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
             }
-            p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamilfract, gcamipftfract, gcaminpp, gcamihr,
-                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE);
+            p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamipftfract, gcaminpp, gcamihr,
+                                  NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, ELM_IAC_CARBON_SCALING, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE);
         }
         
         // Run model

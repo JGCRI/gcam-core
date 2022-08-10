@@ -11,24 +11,13 @@
 #include <memory>
 #include <list>
 
-// xerces xml headers
-#include <xercesc/dom/DOMNode.hpp>
-#include <xercesc/parsers/XercesDOMParser.hpp>
-
 // include custom headers
-#include "util/base/include/xml_helper.h"
-#include "util/base/include/configuration.h"
-#include "containers/include/iscenario_runner.h"
-#include "containers/include/scenario_runner_factory.h"
-#include "containers/include/region.h"
-#include "util/logger/include/ilogger.h"
 #include "util/logger/include/logger_factory.h"
-#include "util/base/include/timer.h"
-#include "util/base/include/version.h"
+#include "containers/include/iscenario_runner.h"
 #include "../include/remap_data.h"
 
-using namespace std;
-using namespace xercesc;
+// forward declarations
+class Region;
 
 class GCAM_E3SM_interface {
 public:

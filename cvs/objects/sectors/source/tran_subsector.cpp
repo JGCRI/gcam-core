@@ -211,12 +211,11 @@ double TranSubsector::getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) 
     
     // Save time value so can print out
     // Maybe also write to XML DB?
-    return Subsector::getPrice( aGDP, aPeriod ) + timeValue;
-    double timeValue =  getTimeValue( aGDP, aPeriod );
     double subsectorPrice = Subsector::getPrice( aGDP, aPeriod );
-    if ( boost::math::isnan( subsectorPrice ) )  {
+    if ( std::isnan( subsectorPrice ) )  {
         return subsectorPrice;
     } else {
+        double timeValue =  getTimeValue( aGDP, aPeriod );
         return subsectorPrice + timeValue;
     }
 }
