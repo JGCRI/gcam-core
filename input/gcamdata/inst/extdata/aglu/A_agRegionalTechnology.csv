@@ -46,7 +46,7 @@ regional poultry,domestic poultry,domestic poultry,Poultry,1,0,1,regional
 regional poultry,imported poultry,imported poultry,traded poultry,1,0,1,USA
 regional sheepgoat,domestic sheepgoat,domestic sheepgoat,SheepGoat,1,0,1,regional
 regional sheepgoat,imported sheepgoat,imported sheepgoat,traded sheepgoat,1,0,1,USA
-regional industrial_roundwood,domestic industrial_roundwood,domestic industrial_roundwood,industrial_roundwood,1,0,1,regional
-regional industrial_roundwood,imported industrial_roundwood,imported industrial_roundwood,traded industrial_roundwood,1,0,1,USA
-regional wood_fuel,domestic wood_fuel,domestic wood_fuel,wood_fuel,1,0,1,regional
-regional wood_fuel,imported wood_fuel,imported wood_fuel,traded wood_fuel,1,0,1,USA
+regional sawnwood,domestic sawnwood,domestic sawnwood,sawnwood,1,0,1,regional
+regional sawnwood,imported sawnwood,imported sawnwood,traded sawnwood,1,0,1,USA
+regional pulpwood,domestic pulpwood,domestic pulpwood,pulpwood,1,0,1,regional
+regional pulpwood,imported pulpwood,imported pulpwood,traded pulpwood,1,0,1,USA

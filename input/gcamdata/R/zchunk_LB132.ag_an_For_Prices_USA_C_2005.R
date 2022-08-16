@@ -25,7 +25,8 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
              FILE = "aglu/USDA_Alfalfa_prices_USDt",
              # Use level0 production data instead of level1 with the 5-yr rolling average
              FILE = "aglu/FAO/FAO_ag_Prod_t_PRODSTAT",
-             FILE = "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT"))
+             FILE = "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT",
+             FILE="aglu/A_forest_mapping"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return("L132.ag_an_For_Prices")
   } else if(command == driver.MAKE) {
@@ -46,6 +47,7 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     USDA_Alfalfa_prices_USDt <- get_data(all_data, "aglu/USDA_Alfalfa_prices_USDt")
     FAO_ag_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_Prod_t_PRODSTAT")
     FAO_USA_an_Prod_t_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT")
+    A_forest_mapping <- get_data(all_data,"aglu/A_forest_mapping")
 
     # Since FAO_USA_ag_an_P_USDt_PRICESTAT is in nominal years we will need a table of deflators
     # to normalize each to constant 1975$
@@ -184,12 +186,14 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
     # Part 3: Forest products, and will be combined with outputs from Part 1 and Part 2
     # Because roundwood producer prices are not reported in FAOSTAT, we use FAO forest export value and export quantities to estimate price
     FAO_USA_For_Exp_t_USD_FORESTAT %>%
+      left_join_error_no_match(A_forest_mapping, by = c("item")) %>%
       select(-countries, -country.codes, -item, -item.codes, -element.codes) %>%
       gather_years %>%
       filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       # Modify element names to one word so that they can be used as column names when spreading element and doing calculations
       mutate(element = if_else(element == "Export Quantity", "Exp_m3", "ExpV_USD"),
-             GCAM_commodity = aglu.FOREST_supply_sector) %>%
+             GCAM_commodity = aglu.FOREST_supply_sector,
+             value= ifelse(element == "Exp_m3",value*tonnes_to_m3,value)) %>%
       group_by(element,year,GCAM_commodity) %>%
       mutate(value=sum(value)) %>%
       ungroup() %>%

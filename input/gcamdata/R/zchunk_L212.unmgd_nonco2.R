@@ -108,9 +108,14 @@ module_emissions_L212.unmgd_nonco2 <- function(command, ...) {
     L212.ItemName_R_LT_GLU <- bind_rows(unique(L124.nonco2_tg_R_grass_Y_GLU[c("GCAM_region_ID", "Land_Type", "GLU")]),
                                      unique(L124.nonco2_tg_R_forest_Y_GLU[c("GCAM_region_ID", "Land_Type", "GLU")]))
 
+    L212.ItemName_forest <- tibble(AgSupplySector = "UnmanagedLand",
+                                   AgSupplySubsector = c("ForestFire", "Deforest")) %>%
+                            repeat_add_columns(tibble(itemName= aglu.UNMANAGED_FOREST_NODE_NAMES))
+
     L212.ItemName <- tibble(AgSupplySector = "UnmanagedLand",
-                            AgSupplySubsector = c("ForestFire", "Deforest", "GrasslandFires"),
-                            itemName = c("UnmanagedHardwood_Forest", "UnmanagedSoftwood_Forest", "Grassland")) %>%
+                            AgSupplySubsector = c("GrasslandFires"),
+                            itemName = c("Grassland")) %>%
+      bind_rows(L212.ItemName_forest) %>%
       # Add in region and GLU
       left_join(L212.ItemName_R_LT_GLU, by = c("itemName" = "Land_Type")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%

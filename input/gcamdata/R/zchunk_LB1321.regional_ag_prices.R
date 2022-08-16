@@ -26,7 +26,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
              FILE = "common/FAO_GDP_Deflators",
              FILE = "aglu/FAO/FAO_an_Prod_t_PRODSTAT",
              FILE = "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT",
-             "L132.ag_an_For_Prices"))
+             "L132.ag_an_For_Prices",
+             FILE="aglu/A_forest_mapping"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1321.ag_prP_R_C_75USDkg",
              "L1321.an_prP_R_C_75USDkg",
@@ -56,7 +57,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     AGLU_Ctry_Unique<-distinct(AGLU_ctry,FAO_country,.keep_all = TRUE)
     # xz 2021/4/14 added regional forest export prices
     FAO_For_Exp_m3_USD_FORESTAT <- get_data(all_data, "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT")
-
+    A_forest_mapping <- get_data(all_data,"aglu/A_forest_mapping")
 
     # 1. Producer prices
     # 1.1 GDP deflators (to 2005) by country and analysis year
@@ -288,14 +289,21 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
 
     # Forest export price by country, analysis year, and crop
     L1321.expP_ctry_item_75kUSDm3 <- FAO_For_Exp_m3_USD_FORESTAT %>%
+      left_join_error_no_match(A_forest_mapping, by = c("item")) %>%
       select(-`element codes`) %>%
       filter(countries != "Sudan") %>%
       mutate(countries = if_else(countries == "Sudan (former)", "Sudan", countries)) %>%
       gather_years() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
       mutate(element = if_else(element == "Export Quantity", "Exp_m3", "ExpV_kUSD"),
-             GCAM_commodity = aglu.FOREST_supply_sector) %>%
-      spread(element, value) %>%
+             GCAM_commodity = aglu.FOREST_supply_sector,
+             value= ifelse(element == "Exp_m3",value*tonnes_to_m3,value)) %>%
+      spread(element, value,fill=0) %>%
+      group_by(countries,year,GCAM_commodity) %>%
+      mutate(Exp_m3= sum(Exp_m3),
+             ExpV_kUSD=sum(ExpV_kUSD)) %>%
+      ungroup() %>%
+      distinct() %>%
       inner_join(L1321.GDPdefl_ctry,
                  by = c("countries", "year")) %>%
       mutate(ExpV_kUSD = as.numeric(ExpV_kUSD),

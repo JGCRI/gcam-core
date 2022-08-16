@@ -2,8 +2,10 @@
 # Title: Maps FAO forest products to GCAM commoditties
 # Units: NA
 # Source: Defined by authors
-# Column types: cci
+# Column types: cccn
 # ----------
-item,GCAM_commodity,tonnes_to_m3
-Industrial roundwood,industrial_roundwood,1
-Wood fuel,wood_fuel,1
+item,GCAM_commodity,GCAM_supplysector,tonnes_to_m3
+Sawnwood,sawnwood,sawnwood,1.82
+Veneer sheets,sawnwood,sawnwood,1.9
+Wood pulp,pulpwood,pulpwood,3.37
+Wood-based panels,sawnwood,sawnwood,1.6

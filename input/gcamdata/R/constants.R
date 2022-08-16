@@ -338,8 +338,8 @@ aglu.MILL_EROSION_CTRL_KGM2 <- 0
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 
 
-aglu.FOREST_commodities <- c("industrial_roundwood","wood_fuel")
-aglu.FOREST_demand_sectors <- c("NonFoodDemand_industrial_roundwood","NonFoodDemand_wood_fuel")
+aglu.FOREST_commodities <- c("sawnwood","pulpwood")
+aglu.FOREST_demand_sectors <- c("NonFoodDemand_sawnwood","NonFoodDemand_pulpwood")
 aglu.FOREST_supply_sector <- "Forest"
 
 aglu.FOREST_max_price <- 165
@@ -447,6 +447,7 @@ aglu.DIGITS_WATER_CONTENT <- 2
 #Land leaf names used in the data system for different land types
 aglu.PASTURE_NODE_NAMES <- "Pasture"
 aglu.FOREST_NODE_NAMES <- c("Softwood_Forest", "Hardwood_Forest")
+aglu.UNMANAGED_FOREST_NODE_NAMES <- c("UnmanagedSoftwood_Forest", "UnmanagedHardwood_Forest")
 aglu.GRASSLAND_NODE_NAMES <- "Grassland"
 
 
