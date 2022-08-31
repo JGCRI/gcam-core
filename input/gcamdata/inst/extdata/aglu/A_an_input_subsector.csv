@@ -26,3 +26,5 @@ FeedCrops,Vegetables,-6,start-year,1,share-weight,final-calibration-year,end-yea
 FeedCrops,Wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,,fixed,
 FeedCrops,DDGS and feedcakes,-6,initial-future-year,1,share-weight,final-calibration-year,2150,1,s-curve,
 Scavenging_Other,Scavenging_Other,-6,start-year,1,share-weight,final-calibration-year,end-year,,fixed,
+sawnwood_processing,Forest,-6,start-year,1,share-weight,final-calibration-year,end-year,,fixed,
+pulpwood_processing,Forest,-6,start-year,1,share-weight,final-calibration-year,end-year,,fixed,

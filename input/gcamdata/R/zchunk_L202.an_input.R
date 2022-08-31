@@ -45,7 +45,8 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L1091.GrossTrade_Mt_R_C_Y",
              "L132.ag_an_For_Prices",
              "L1321.ag_prP_R_C_75USDkg",
-             "L1321.an_prP_R_C_75USDkg"))
+             "L1321.an_prP_R_C_75USDkg",
+             "L123.For_Prod_bm3_R_Y_GLU"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L202.RenewRsrc",
              "L202.RenewRsrcPrice",
@@ -69,7 +70,9 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L202.StubTechProd_an",
              "L202.StubTechCoef_an",
              "L202.StubTechCost_an",
-             "L202.ag_consP_R_C_75USDkg"
+             "L202.ag_consP_R_C_75USDkg",
+             "L202.StubTechCost_For_proc",
+             "L202.StubTechProd_in_Forest"
              ))
   } else if(command == driver.MAKE) {
 
@@ -104,6 +107,8 @@ module_aglu_L202.an_input <- function(command, ...) {
     L1091.GrossTrade_Mt_R_C_Y <- get_data(all_data, "L1091.GrossTrade_Mt_R_C_Y")
     L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg", strip_attributes = TRUE)
     L1321.an_prP_R_C_75USDkg <- get_data(all_data, "L1321.an_prP_R_C_75USDkg")
+    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data,"L123.For_Prod_bm3_R_Y_GLU") %>% group_by(GCAM_commodity, GCAM_region_ID,year) %>%
+      mutate(value=sum(value)) %>% ungroup() %>% select(GCAM_commodity, GCAM_region_ID,year,value) %>% distinct() %>% mutate(GCAM_commodity= paste0(GCAM_commodity,"_processing"))
 
     # 2. Build tables
     # Base table for resources - add region names to Level1 data tables (lines 49-70 old file)
@@ -250,8 +255,26 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->
+      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) %>%
+      #Take out forest supply sectors from this
+      filter(!stub.technology %in% aglu.FOREST_supply_sector)->
       L202.StubTechProd_in
+
+    A_an_input_technology %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]]), GCAM_region_names) %>%
+      mutate(stub.technology = technology) %>%
+      filter(stub.technology %in% aglu.FOREST_supply_sector) %>%
+      repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
+      # not every region/technology/year has a match, so need to use left_join
+      left_join(L123.For_Prod_bm3_R_Y_GLU %>% left_join_error_no_match(GCAM_region_names, BY = C("GCAM_region_ID")), by = c("region", "supplysector" = "GCAM_commodity", "year")) %>%
+      mutate(calOutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
+      # subsector and technology shareweights (subsector requires the year as well)
+      mutate(share.weight.year = year,
+             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
+             tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechProd"]]) ->L202.StubTechProd_in_Forest
+      #Take out forest supply sectors from this
+
 
     # L202.Supplysector_an: generic animal production supplysector info (159-162)
     A_an_supplysector %>%
@@ -324,6 +347,16 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(coefficient = round(value, aglu.DIGITS_CALOUTPUT)) %>%
       select(-value, -GCAM_region_ID) ->
       L202.StubTechCoef_an
+
+    A_an_input_technology %>%
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name"), GCAM_region_names) %>%
+      rename(stub.technology = technology) %>%
+      filter(stub.technology %in% aglu.FOREST_supply_sector) %>%
+      repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
+      mutate(coefficient = 1) ->
+      L202.StubTechCoef_an_Forest
+
+    L202.StubTechCoef_an %>% bind_rows(L202.StubTechCoef_an_Forest)->L202.StubTechCoef_an
 
     # For values beyond the coefficient time series, use the final available year
     final_coef_year <- max(L202.an_FeedIO_R_C_Sys_Fd_Y.mlt$year)
@@ -454,6 +487,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       repeat_add_columns(GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
+      filter(!minicam.energy.input %in% aglu.FOREST_supply_sector) %>%
       mutate(stub.technology = technology,
              minicam.non.energy.input = "non-feed") %>%
       left_join_error_no_match(select(L202.an_nonFeedCost_R_C, region, GCAM_commodity, system, nonFeedCost),
@@ -461,6 +495,17 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(input.cost = round(nonFeedCost, aglu.DIGITS_CALPRICE)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCost"]]) ->
       L202.StubTechCost_an
+
+    A_an_input_technology %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      repeat_add_columns(GCAM_region_names) %>%
+      filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
+      filter(minicam.energy.input %in% aglu.FOREST_supply_sector) %>%
+      mutate(stub.technology = technology,
+             minicam.non.energy.input = "non-feed") %>%
+      mutate(input.cost = if_else(supplysector=="sawnwood_processing", 20,5)) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCost"]]) ->
+      L202.StubTechCost_For_proc
 
 
 
@@ -649,6 +694,16 @@ module_aglu_L202.an_input <- function(command, ...) {
                      "energy/A_regions", "common/GCAM_region_names") ->
       L202.StubTechProd_in
 
+    L202.StubTechProd_in_Forest %>%
+      add_title("Base year output of the inputs (feed types) to animal production") %>%
+      add_units("Mt/yr") %>%
+      add_comments("Calibrated primary sources of animal feed commodities, specific to each region and time period.") %>%
+      add_legacy_name("L202.StubTechProd_in_Forest") %>%
+      add_precursors("aglu/A_an_input_technology", "L107.an_FeedIO_R_C_Sys_Fd_Y",
+                     "energy/A_regions", "common/GCAM_region_names",
+                     "L202.StubTechProd_in") ->
+      L202.StubTechProd_in_Forest
+
     L202.Supplysector_an %>%
       add_title("Generic animal production supplysector info") %>%
       add_units("NA") %>%
@@ -707,6 +762,17 @@ module_aglu_L202.an_input <- function(command, ...) {
                      "L107.an_Feed_Mt_R_C_Sys_Fd_Y", "L1091.GrossTrade_Mt_R_C_Y", "L109.ag_ALL_Mt_R_C_Y") ->
       L202.StubTechCost_an
 
+    L202.StubTechCost_For_proc %>%
+      add_title("Costs of forest production technologies") %>%
+      add_units("1975$/m3") %>%
+      add_comments("Animal feed cost, prices, and technology") %>%
+      add_comments("This is the non-feed cost; i.e., all costs of producing animal commodities except for the feed.") %>%
+      add_legacy_name("L202.StubTechCost_For_proc") %>%
+      same_precursors_as(L202.StubTechCoef_an) %>%
+      add_precursors("L132.ag_an_For_Prices", "L1321.ag_prP_R_C_75USDkg", "L1321.an_prP_R_C_75USDkg",
+                     "L107.an_Feed_Mt_R_C_Sys_Fd_Y", "L1091.GrossTrade_Mt_R_C_Y", "L109.ag_ALL_Mt_R_C_Y") ->
+      L202.StubTechCost_For_proc
+
     # Return also the consumer prices, to be made available elsewhere
     L202.ag_consP_R_C_75USDkg %>%
       add_title("Consumer costs of crops") %>%
@@ -720,9 +786,9 @@ module_aglu_L202.an_input <- function(command, ...) {
     return_data(L202.RenewRsrc, L202.RenewRsrcPrice, L202.maxSubResource, L202.RenewRsrcCurves, L202.ResTechShrwt,
                 L202.UnlimitedRenewRsrcCurves, L202.UnlimitedRenewRsrcPrice, L202.Supplysector_in,
                 L202.SubsectorAll_in, L202.SubsectorInterpTo_in, L202.StubTech_in, L202.StubTechInterp_in, L202.GlobalTechCoef_in,
-                L202.GlobalTechShrwt_in, L202.StubTechProd_in, L202.Supplysector_an, L202.SubsectorAll_an,
+                L202.GlobalTechShrwt_in, L202.StubTechProd_in,L202.StubTechProd_in_Forest,L202.Supplysector_an, L202.SubsectorAll_an,
                 L202.GlobalTechShrwt_an, L202.StubTechInterp_an, L202.StubTechProd_an, L202.StubTechCoef_an,
-                L202.StubTechCost_an, L202.ag_consP_R_C_75USDkg)
+                L202.StubTechCost_an, L202.ag_consP_R_C_75USDkg,L202.StubTechCost_For_proc)
   } else {
     stop("Unknown command")
   }

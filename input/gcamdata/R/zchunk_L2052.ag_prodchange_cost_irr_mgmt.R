@@ -159,9 +159,10 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
              AgProductionTechnology = AgSupplySubsector) %>%
       left_join(L132.ag_an_For_Prices, by = "GCAM_commodity") %>%
       left_join(L1321.expP_R_F_75USDm3, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
-                  mutate(nonLandVariableCost = if_else(is.na(value),
-                                                       calPrice * aglu.FOR_COST_SHARE,
-                                                       value * aglu.FOR_COST_SHARE) ) %>%
+                  mutate(shares= if_else(grepl("Hardwood",Land_Type),aglu.FOR_COST_SHARE_HARDWOOD,aglu.FOR_COST_SHARE_SOFTWOOD)
+                    ,nonLandVariableCost = if_else(is.na(value),
+                                                       calPrice * shares,
+                                                       value * shares) ) %>%
       select(names_AgCost) ->
       L2052.AgCost_For
     # Future agricultural productivity changes
