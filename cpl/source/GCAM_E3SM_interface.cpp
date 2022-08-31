@@ -41,7 +41,7 @@ bool parseXMLInternal(const string& aXMLFile, ContainerType* aRootElement) {
         doc.parse<rapidxml::parse_non_destructive>(const_cast<char*>(xmlFile.data()));
         
         // Kick off the processing of the XML nodes starting with the root element.
-        rapidxml::xml_node<char>* child = doc.first_node();
+        rapidxml::xml_node<char>* child = doc.first_node()->first_node();
         aRootElement->XMLParse(child);
         
         xmlFile.close();
@@ -247,7 +247,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 
     int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
    
-    if( modeltime->isModelYear( e3smYear )) {
+    if( modeltime->isModelYear( e3smYear ) || e3smYear == 1970) {
         // set restart period
         restartPeriod = gcamPeriod;
 

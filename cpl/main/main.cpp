@@ -269,7 +269,7 @@ int main( ) {
      STEP 4: RUN GCAM
      */
     if (RUN_FULL_SCENARIO) {
-        for ( int y = 1975; y < 2101; y++ ){
+        for ( int y = 1970; y < 2101; y++ ){
             int ymd = y * 10000;
             int *yyyymmdd = &ymd;
             

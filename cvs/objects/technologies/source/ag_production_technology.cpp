@@ -80,6 +80,7 @@ AgProductionTechnology::AgProductionTechnology()
     mNonLandVariableCost = 0;
     mNonLandCostTechChange = 0;
     mYield  = 0;
+    mYieldScaler = 1.0;
     mAgProdChange  = 0;
     mHarvestsPerYear = 1;
     mProductLeaf = 0;

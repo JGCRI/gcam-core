@@ -128,10 +128,10 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<Value> ),
         
         //! Below ground carbon density
-        DEFINE_VARIABLE( ARRAY, "above-ground-carbon-density", mAboveGroundCarbonDensity, objects::YearVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "above-ground-carbon-density-annual", mAboveGroundCarbonDensity, objects::YearVector<double> ),
                             
         //! Below ground carbon density
-        DEFINE_VARIABLE( ARRAY, "below-ground-carbon-density", mBelowGroundCarbonDensity, objects::YearVector<double> ),
+        DEFINE_VARIABLE( ARRAY, "below-ground-carbon-density-annual", mBelowGroundCarbonDensity, objects::YearVector<double> ),
                             
         //! Time scale for soil carbon emissions
         DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int ),
