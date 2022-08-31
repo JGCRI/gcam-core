@@ -86,9 +86,9 @@ private:
      { 1, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } }, // 1. NEMPFT, Needleleaf evergreen temperate tree
      { 2, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } }, // 2. NEBPFT, Needleleaf evergreen boreal tree
      { 3, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } }, // 3. NDBPFT, Needleleaf deciduous boreal tree
-     { 4, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "PalmFruit", "biomassTree" } }, // 4. BETPFT, Broadleaf evergreen tropical tree
+     { 4, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "OilPalmTree", "biomassTree" } }, // 4. BETPFT, Broadleaf evergreen tropical tree
      { 5, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomassTree" } }, // 5. BEMPFT, Broadleaf evergreen temperate tree
-     { 6, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "PalmFruit", "biomassTree" } }, // 6. BDTPFT, Broadleaf deciduous tropical tree
+     { 6, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "OilPalmTree", "biomassTree" } }, // 6. BDTPFT, Broadleaf deciduous tropical tree
      { 7, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomassTree" } }, // 7. BDMPFT, Broadleaf deciduous temperate tree
      { 8, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } }, // 8. BDBPFT, Broadleaf deciduous boreal tree
      { 9, { "Shrubland", "ProtectedShrubland" } }, // 9. SEMPFT, Broadleaf evergreen temperate shrub
@@ -96,8 +96,8 @@ private:
      { 11, { "Shrubland", "ProtectedShrubland" } }, // 11. SDBPFT, Broadleaf deciduous boreal shrub
      { 12, { "Grassland", "ProtectedGrassland", "Tundra", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass"} }, // 12. GA3PFT, C3 arctic grass
      { 13, { "Grassland", "ProtectedGrassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass" } }, // 13. GC3PFT, C3 non-arctic grass
-     { 14, { "Grassland", "ProtectedGrassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass", "miscanthus", "biomassGrass", "Corn", "SugarCrop" } }, // 14. GC4PFT, C4 grass
-     { 15, { "Rice","Wheat", "MiscCrop", "OtherGrain", "OilCrop", "FiberCrop", "FodderHerb", "RootTuber", "OtherArableLand", "OtherArableLand" } }, // 15. CPFT, Cropland
+     { 14, { "Grassland", "ProtectedGrassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass", "biomassGrass", "CornC4", "SugarCrop", "SugarCropC4" } }, // 14. GC4PFT, C4 grass
+     { 15, { "Rice","Wheat", "MiscCrop", "MiscCropC4", "OtherGrain", "OtherGrainC4", "OilCrop", "OilCropTree", "FiberCrop", "FodderHerb", "FodderHerbC4", "RootTuber", "OtherArableLand" } }, // 15. CPFT, Cropland
      { 16, {  } } // 16. NA
     };
 };

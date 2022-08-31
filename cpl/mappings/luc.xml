@@ -405,17 +405,26 @@
         <output-data>Cropland</output-data>
         <output-data>Barren</output-data>
         <output-data>Tundra</output-data>
-        <map from="Corn" to="Cropland"/>
+        <map from="CornC4" to="Cropland"/>
         <map from="FiberCrop" to="Cropland"/>
         <map from="FodderGrass" to="Cropland"/>
         <map from="FodderHerb" to="Cropland"/>
+        <map from="FodderHerbC4" to="Cropland"/>
         <map from="Forest" to="Forest"/>
+        <map from="Fruits" to="Cropland"/>
+        <map from="FruitsTree" to="Cropland"/>
         <map from="Grassland" to="Grassland"/>
+        <map from="Legumes" to="Cropland"/>
         <map from="MiscCrop" to="Cropland"/>
+        <map from="MiscCropTree" to="Cropland"/>
+        <map from="NutsSeeds" to="Cropland"/>
+        <map from="NutsSeedsTree" to="Cropland"/>
         <map from="OilCrop" to="Cropland"/>
+        <map from="OilCropTree" to="Cropland"/>
+        <map from="OilPalmTree" to="Cropland"/>
         <map from="OtherArableLand" to="Cropland"/>
         <map from="OtherGrain" to="Cropland"/>
-        <map from="PalmFruit" to="Cropland"/>
+        <map from="OtherGrainC4" to="Cropland"/>
         <map from="Pasture" to="Pasture"/>
         <map from="ProtectedGrassland" to="Grassland"/>
         <map from="ProtectedShrubland" to="Shrubland"/>
@@ -425,11 +434,14 @@
         <map from="RockIceDesert" to="Barren"/>
         <map from="RootTuber" to="Cropland"/>
         <map from="Shrubland" to="Shrubland"/>
+        <map from="Soybean" to="Cropland"/>
         <map from="SugarCrop" to="Cropland"/>
+        <map from="SugarCropC4" to="Cropland"/>
         <map from="Tundra" to="Tundra"/>
         <map from="UnmanagedForest" to="Forest"/>
         <map from="UnmanagedPasture" to="Pasture"/>
         <map from="UrbanLand" to="Urban"/>
+        <map from="Vegetables" to="Cropland"/>
         <map from="Wheat" to="Cropland"/>
         <map from="biomassGrass" to="Cropland"/>
         <map from="biomassTree" to="Cropland"/>

@@ -43,12 +43,18 @@
         <map from="H2 central production" to="surface"/>
         <map from="H2 forecourt production" to="surface"/>
         <map from="N fertilizer" to="surface"/>
+        <map from="agricultural energy use" to="surface"/>
+        <map from="alumina" to="surface"/>
         <map from="backup_electricity" to="surface"/>
         <map from="cement" to="surface"/>
+        <map from="chemical energy use" to="surface"/>
+        <map from="chemical feedstocks" to="surface"/>
         <map from="comm cooling" to="surface"/>
         <map from="comm heating" to="surface"/>
         <map from="comm others" to="surface"/>
+        <map from="construction energy use" to="surface"/>
         <map from="csp_backup" to="surface"/>
+        <map from="desalinated water" to="surface"/>
         <map from="district heat" to="surface"/>
         <map from="elec_biomass (IGCC)" to="surface"/>
         <map from="elec_biomass (IGCC CCS)" to="surface"/>
@@ -66,8 +72,10 @@
         <map from="elec_refined liquids (steam/CT)" to="surface"/>
         <map from="gas pipeline" to="surface"/>
         <map from="gas processing" to="surface"/>
-        <map from="industrial energy use" to="surface"/>
-        <map from="industrial feedstocks" to="surface"/>
+        <map from="iron and steel" to="surface"/>
+        <map from="mining energy use" to="surface"/>
+        <map from="other industrial energy use" to="surface"/>
+        <map from="other industrial feedstocks" to="surface"/>
         <map from="process heat cement" to="surface"/>
         <map from="refining" to="surface"/>
         <map from="regional biomass" to="surface"/>
@@ -83,9 +91,7 @@
         <map from="trn_pass" to="surface"/>
         <map from="trn_pass_road" to="surface"/>
         <map from="trn_pass_road_LDV" to="surface"/>
-        <map from="trn_pass_road_LDV_2W" to="surface"/>
         <map from="trn_pass_road_LDV_4W" to="surface"/>
-        <map from="trn_pass_road_bus" to="surface"/>
         <map from="trn_shipping_intl" to="surface"/>
         <map from="unconventional oil production" to="surface"/>
     </column>
