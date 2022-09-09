@@ -25,7 +25,8 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
              "L100.FAO_For_Exp_m3",
              FILE="aglu/A_forest_mapping"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L110.For_ALL_bm3_R_Y"))
+    return(c("L110.For_ALL_bm3_R_Y",
+             "L110.IO_Coefs_pulp"))
   } else if(command == driver.MAKE) {
 
     value <- flow <- GCAM_region_ID <- GCAM_commodity <- year <- Prod_bm3 <-
@@ -134,6 +135,43 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       unique ->
       L110.For_ALL_bm3_R_Y
 
+    ##Add calculations of wood pulp IO coefficients
+
+    #First separate out roundwood consumption
+    L110.For_ALL_bm3_R_Y %>%
+      filter(GCAM_commodity==aglu.FOREST_supply_sector) %>%
+      select(GCAM_region_ID,year,roundwood_cons=Cons_bm3)->L110.Roundwood_Cons
+
+    #Join the same with commoditties.
+    L110.For_ALL_bm3_R_Y %>%
+      filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
+      select(GCAM_region_ID,year,GCAM_commodity,Prod_bm3) %>%
+      spread(GCAM_commodity,Prod_bm3) %>%
+      left_join_error_no_match(L110.Roundwood_Cons, by = c("GCAM_region_ID","year")) %>%
+      #Assume that sawnwood has a coeff of 1. Pulpwood is the remaining. There are a couple of adjustments that need to be made.
+      mutate(after_pulp = roundwood_cons-(pulpwood*aglu.FOREST_pulp_conversion),
+             #If a country does not have enough roundwood cons to produce saw, increase it.
+             roundwood_cons=if_else(after_pulp <0, pulpwood*aglu.FOREST_pulp_conversion*1.1,roundwood_cons),
+             after_pulp = roundwood_cons-(pulpwood*aglu.FOREST_pulp_conversion),
+             #Now calculate pulp IO here
+             IO=after_pulp/sawnwood,
+             IO= if_else(is.infinite(IO),0,IO)) ->L110.IO_Coefs_pulp
+
+    #Since we increased roundwood cons in some places, increase production proportionately
+    L110.For_ALL_bm3_R_Y %>%
+      filter(GCAM_commodity==aglu.FOREST_supply_sector) %>%
+      left_join_error_no_match(L110.IO_Coefs_pulp %>% select(GCAM_region_ID,year,roundwood_cons), by = c("GCAM_region_ID","year")) %>%
+      mutate(diff=roundwood_cons-Cons_bm3,
+             Prod_bm3= Prod_bm3+diff,
+             Cons_bm3=roundwood_cons) %>%
+      select(colnames(L110.For_ALL_bm3_R_Y))->L110.For_ALL_bm3_R_Y_Primary
+
+    L110.For_ALL_bm3_R_Y %>%
+      filter(GCAM_commodity!=aglu.FOREST_supply_sector) %>%
+      bind_rows(L110.For_ALL_bm3_R_Y_Primary)->L110.For_ALL_bm3_R_Y
+
+
+
     # Produce outputs
     L110.For_ALL_bm3_R_Y %>%
       add_title("Forest products mass balance by GCAM region / year") %>%
@@ -144,10 +182,25 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_For_Prod_m3",
                      "L100.FAO_For_Imp_m3",
-                     "L100.FAO_For_Exp_m3") ->
+                     "L100.FAO_For_Exp_m3",
+                     "aglu/A_forest_mapping") ->
       L110.For_ALL_bm3_R_Y
 
-    return_data(L110.For_ALL_bm3_R_Y)
+    L110.IO_Coefs_pulp %>%
+      select(GCAM_region_ID,year,IO) %>%
+      add_title("Wood pulp IO coefficients in m3/tonne") %>%
+      add_units("m3/tonne") %>%
+      add_comments("FAO production data is used to scale Net Exports (FAO Exports - FAO Imports) at the Region level") %>%
+      add_comments("such that Global Production equals Consumption (Production - Net Exports).") %>%
+      add_legacy_name("L110.IO_Coefs_pulp") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "L100.FAO_For_Prod_m3",
+                     "L100.FAO_For_Imp_m3",
+                     "L100.FAO_For_Exp_m3",
+                     "aglu/A_forest_mapping") ->
+      L110.IO_Coefs_pulp
+
+    return_data(L110.For_ALL_bm3_R_Y,L110.IO_Coefs_pulp)
   } else {
     stop("Unknown command")
   }

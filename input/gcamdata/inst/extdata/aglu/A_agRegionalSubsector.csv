@@ -49,3 +49,5 @@ regional sawnwood,domestic sawnwood,-6,start-year,1,share-weight,final-calibrati
 regional sawnwood,imported sawnwood,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional pulpwood,domestic pulpwood,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional pulpwood,imported pulpwood,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional industrial_roundwood,domestic industrial_roundwood,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional industrial_roundwood,imported industrial_roundwood,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,

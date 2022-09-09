@@ -132,7 +132,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       L201.R_C_GLU_biotree
     # Third, bind Ag commodties, forest, pasture and biomass all together
     L101.ag_Prod_Mt_R_C_Y_GLU %>%
-      bind_rows(L123.For_Prod_bm3_R_Y_GLU %>% mutate(GCAM_commodity=aglu.FOREST_supply_sector), L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
+      bind_rows(L123.For_Prod_bm3_R_Y_GLU %>% filter(GCAM_commodity==aglu.FOREST_supply_sector), L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
       mutate(GCAM_subsector = if_else(is.na(GCAM_subsector), Land_Type, GCAM_subsector),
              GCAM_subsector = if_else(is.na(GCAM_subsector), GCAM_commodity, GCAM_subsector)) %>%
       select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
@@ -178,7 +178,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     # L2012.AgProduction_For and L2012.AgProduction_Past: Forest and pasture product calibration (output)
     L123.For_Prod_bm3_R_Y_GLU %>%
-      mutate(GCAM_commodity= aglu.FOREST_supply_sector) %>%
+      filter(GCAM_commodity== aglu.FOREST_supply_sector) %>%
       # Combine forest and pasture production by region x GLU
       bind_rows(L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%

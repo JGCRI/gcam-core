@@ -26,5 +26,5 @@ FeedCrops,Vegetables,Vegetables,share-weight,final-calibration-year,end-year,fix
 FeedCrops,Wheat,Wheat,share-weight,final-calibration-year,end-year,fixed,regional wheat,1
 FeedCrops,DDGS and feedcakes,DDGS and feedcakes,share-weight,initial-future-year,end-year,fixed,DDGS and feedcakes,1
 Scavenging_Other,Scavenging_Other,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other_Rsrc,1
-sawnwood_processing,Forest,Forest,share-weight,final-calibration-year,end-year,fixed,Forest,1
-pulpwood_processing,Forest,Forest,share-weight,final-calibration-year,end-year,fixed,Forest,1
+sawnwood_processing,sawnwood,sawnwood,share-weight,final-calibration-year,end-year,fixed,regional industrial_roundwood,1
+pulpwood_processing,pulpwood,pulpwood,share-weight,final-calibration-year,end-year,fixed,regional industrial_roundwood,1

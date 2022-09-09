@@ -189,10 +189,10 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
       left_join_error_no_match(A_forest_mapping, by = c("item")) %>%
       select(-countries, -country.codes, -item, -item.codes, -element.codes) %>%
       gather_years %>%
-      filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
+      filter(year %in% aglu.MODEL_PRICE_YEARS,
+             GCAM_commodity == aglu.FOREST_supply_sector) %>%
       # Modify element names to one word so that they can be used as column names when spreading element and doing calculations
       mutate(element = if_else(element == "Export Quantity", "Exp_m3", "ExpV_USD"),
-             GCAM_commodity = aglu.FOREST_supply_sector,
              value= ifelse(element == "Exp_m3",value*tonnes_to_m3,value)) %>%
       group_by(element,year,GCAM_commodity) %>%
       mutate(value=sum(value)) %>%

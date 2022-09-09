@@ -126,8 +126,9 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
     # 1. Form a table of Forest Residue Biomass Paramters by region-glu-year
     L123.For_Prod_bm3_R_Y_GLU %>%
-      mutate(LT= Land_Type,
-             GCAM_commodity= aglu.FOREST_supply_sector) %>%
+      filter(GCAM_commodity== aglu.FOREST_supply_sector) %>%
+      mutate(LT= Land_Type
+             ) %>%
       # Set up identifying information to fill in with parameters, incl 2.
       select(GCAM_region_ID, GCAM_commodity, GLU,LT) %>%
       distinct %>%
@@ -142,7 +143,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
     # 2. Form a table of global Mill Residue Biomass Paramters by year
     A_demand_technology %>%
-      filter(supplysector %in% aglu.FOREST_demand_sectors) %>%
+      #Filter here only for sawmills. Don't calculate this for pulpwood
+      filter(supplysector %in% aglu.FOREST_demand_sectors[1]) %>%
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%

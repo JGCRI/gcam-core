@@ -46,7 +46,9 @@ module_aglu_L202.an_input <- function(command, ...) {
              "L132.ag_an_For_Prices",
              "L1321.ag_prP_R_C_75USDkg",
              "L1321.an_prP_R_C_75USDkg",
-             "L123.For_Prod_bm3_R_Y_GLU"))
+             "L110.For_ALL_bm3_R_Y",
+             "L110.IO_Coefs_pulp",
+             "L1321.For_Cost"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L202.RenewRsrc",
              "L202.RenewRsrcPrice",
@@ -107,10 +109,12 @@ module_aglu_L202.an_input <- function(command, ...) {
     L1091.GrossTrade_Mt_R_C_Y <- get_data(all_data, "L1091.GrossTrade_Mt_R_C_Y")
     L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg", strip_attributes = TRUE)
     L1321.an_prP_R_C_75USDkg <- get_data(all_data, "L1321.an_prP_R_C_75USDkg")
-    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data,"L123.For_Prod_bm3_R_Y_GLU") %>% group_by(GCAM_commodity, GCAM_region_ID,year) %>%
-      mutate(value=sum(value)) %>% ungroup() %>% select(GCAM_commodity, GCAM_region_ID,year,value) %>% distinct() %>% mutate(GCAM_commodity= paste0(GCAM_commodity,"_processing"))
+    L110.For_ALL_bm3_R_Y <- get_data(all_data,"L110.For_ALL_bm3_R_Y") %>% filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%  group_by(GCAM_commodity, GCAM_region_ID,year) %>%
+      mutate(value=sum(Prod_bm3)) %>% ungroup() %>% select(GCAM_commodity, GCAM_region_ID,year,value) %>% distinct() %>% mutate(GCAM_commodity= paste0(GCAM_commodity,"_processing"))
+    L110.IO_Coefs_pulp <- get_data(all_data,"L110.IO_Coefs_pulp")
+    L1321.For_Cost <- get_data(all_data,"L1321.For_Cost") %>% mutate(GCAM_commodity = paste0(GCAM_commodity, "_processing"))
 
-    # 2. Build tables
+     # 2. Build tables
     # Base table for resources - add region names to Level1 data tables (lines 49-70 old file)
 
     # Following datasets are already 'long' so just skip the old interpolate_and_melt step
@@ -257,16 +261,16 @@ module_aglu_L202.an_input <- function(command, ...) {
              tech.share.weight = if_else(calOutputValue > 0, 1, 0)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechProd"]]) %>%
       #Take out forest supply sectors from this
-      filter(!stub.technology %in% aglu.FOREST_supply_sector)->
+      filter(!stub.technology %in% aglu.FOREST_commodities)->
       L202.StubTechProd_in
 
     A_an_input_technology %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]]), GCAM_region_names) %>%
       mutate(stub.technology = technology) %>%
-      filter(stub.technology %in% aglu.FOREST_supply_sector) %>%
+      filter(stub.technology %in% aglu.FOREST_commodities) %>%
       repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
       # not every region/technology/year has a match, so need to use left_join
-      left_join(L123.For_Prod_bm3_R_Y_GLU %>% left_join_error_no_match(GCAM_region_names, BY = C("GCAM_region_ID")), by = c("region", "supplysector" = "GCAM_commodity", "year")) %>%
+      left_join(L110.For_ALL_bm3_R_Y %>% left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")), by = c("region", "supplysector" = "GCAM_commodity", "year")) %>%
       mutate(calOutputValue = round(value, aglu.DIGITS_CALOUTPUT)) %>%
       # subsector and technology shareweights (subsector requires the year as well)
       mutate(share.weight.year = year,
@@ -351,10 +355,16 @@ module_aglu_L202.an_input <- function(command, ...) {
     A_an_input_technology %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name"), GCAM_region_names) %>%
       rename(stub.technology = technology) %>%
-      filter(stub.technology %in% aglu.FOREST_supply_sector) %>%
+      filter(stub.technology %in% aglu.FOREST_commodities) %>%
       repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
-      mutate(coefficient = 1) ->
-      L202.StubTechCoef_an_Forest
+      left_join(L110.IO_Coefs_pulp%>% left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")), by = c("region","year")) %>%
+      mutate(coefficient = IO,
+             coefficient=if_else(stub.technology == "pulpwood",aglu.FOREST_pulp_conversion,coefficient)) %>%
+      group_by(GCAM_region_ID,stub.technology) %>%
+      mutate(coefficient= ifelse(is.na(coefficient),approx_fun(year, coefficient, rule = 1),coefficient)) %>%
+      ungroup() %>%
+      select(colnames(L202.StubTechCoef_an))->L202.StubTechCoef_an_Forest
+
 
     L202.StubTechCoef_an %>% bind_rows(L202.StubTechCoef_an_Forest)->L202.StubTechCoef_an
 
@@ -487,7 +497,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       repeat_add_columns(GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
-      filter(!minicam.energy.input %in% aglu.FOREST_supply_sector) %>%
+      filter(!minicam.energy.input %in% c("regional industrial_roundwood")) %>%
       mutate(stub.technology = technology,
              minicam.non.energy.input = "non-feed") %>%
       left_join_error_no_match(select(L202.an_nonFeedCost_R_C, region, GCAM_commodity, system, nonFeedCost),
@@ -500,10 +510,11 @@ module_aglu_L202.an_input <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       repeat_add_columns(GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) %>%
-      filter(minicam.energy.input %in% aglu.FOREST_supply_sector) %>%
+      filter(minicam.energy.input %in% c("regional industrial_roundwood")) %>%
       mutate(stub.technology = technology,
              minicam.non.energy.input = "non-feed") %>%
-      mutate(input.cost = if_else(supplysector=="sawnwood_processing", 20,5)) %>%
+      left_join(L1321.For_Cost, by = c("GCAM_region_ID","supplysector"="GCAM_commodity")) %>%
+      mutate(input.cost = ifelse(is.na(ForCost),0,ForCost)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCost"]]) ->
       L202.StubTechCost_For_proc
 

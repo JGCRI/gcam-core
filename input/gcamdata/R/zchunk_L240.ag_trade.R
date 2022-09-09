@@ -78,7 +78,6 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       bind_rows(L109.an_ALL_Mt_R_C_Y %>%
                   select(GCAM_region_ID, GCAM_commodity, year, Prod_Mt, NetExp_Mt)) %>%
       bind_rows(L110.For_ALL_bm3_R_Y %>%
-                  filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
                   select(GCAM_region_ID, GCAM_commodity, year,
                          Prod_Mt = Prod_bm3, NetExp_Mt = NetExp_bm3)) #note that physical unit for forest data is bm3
 
@@ -100,7 +99,6 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                       spread(flow, value),
                     by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
                   replace_na(list(GrossExp = 0)) %>%
-                  filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
                   mutate(GrossImp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
                          GrossExp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
                   select(names(L1091.GrossTrade_Mt_R_C_Y)) )

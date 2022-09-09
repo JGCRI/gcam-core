@@ -341,6 +341,8 @@ aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 aglu.FOREST_commodities <- c("sawnwood","pulpwood")
 aglu.FOREST_demand_sectors <- c("NonFoodDemand_sawnwood","NonFoodDemand_pulpwood")
 aglu.FOREST_supply_sector <- "Forest"
+aglu.FOREST_sawtimber_conversion <- 2.17
+aglu.FOREST_pulp_conversion <- 3.17
 
 aglu.FOREST_max_price <- 165
 # wood water content

@@ -3,7 +3,7 @@
 # Units: Various
 # Comments: pass-through subsectors; there is no technology competition
 # Source: NA
-# Column types: ccccnnnc 
+# Column types: ccccnnnc
 # ----------
 supplysector,subsector,technology,minicam.energy.input,coefficient,input.cost,share.weight,market.name
 regional corn,domestic corn,domestic corn,Corn,1,0,1,regional
@@ -50,3 +50,5 @@ regional sawnwood,domestic sawnwood,domestic sawnwood,sawnwood,1,0,1,regional
 regional sawnwood,imported sawnwood,imported sawnwood,traded sawnwood,1,0,1,USA
 regional pulpwood,domestic pulpwood,domestic pulpwood,pulpwood,1,0,1,regional
 regional pulpwood,imported pulpwood,imported pulpwood,traded pulpwood,1,0,1,USA
+regional industrial_roundwood,domestic industrial_roundwood,domestic industrial_roundwood,Forest,1,0,1,regional
+regional industrial_roundwood,imported industrial_roundwood,imported industrial_roundwood,traded industrial_roundwood,1,0,1,USA

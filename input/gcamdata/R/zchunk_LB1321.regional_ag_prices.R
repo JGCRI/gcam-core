@@ -31,7 +31,8 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1321.ag_prP_R_C_75USDkg",
              "L1321.an_prP_R_C_75USDkg",
-             "L1321.expP_R_F_75USDm3"))
+             "L1321.expP_R_F_75USDm3",
+             "L1321.For_Cost"))
   } else if(command == driver.MAKE) {
 
     year <- value <- Year <- Value <- FAO_country <- iso <- deflator <-
@@ -296,7 +297,6 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       gather_years() %>%
       filter(year %in% aglu.TRADE_CAL_YEARS) %>%
       mutate(element = if_else(element == "Export Quantity", "Exp_m3", "ExpV_kUSD"),
-             GCAM_commodity = aglu.FOREST_supply_sector,
              value= ifelse(element == "Exp_m3",value*tonnes_to_m3,value)) %>%
       spread(element, value,fill=0) %>%
       group_by(countries,year,GCAM_commodity) %>%
@@ -310,6 +310,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
              ExpV_kUSD = ((ExpV_kUSD / currentUSD_per_baseyearUSD) * gdp_deflator(1975, aglu.DEFLATOR_BASE_YEAR))) %>%
       select(iso, GCAM_commodity, year, ExpV_kUSD, Exp_m3) %>%
       drop_na(ExpV_kUSD, Exp_m3)
+
 
     # Fill out data for missing years
     # Complete only the years (i.e. for each country and commodity, write out all possible years)
@@ -329,6 +330,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       # Calculate forest price as export value (in thous USD) divided by export quantity
       mutate(Price_USDm3 = ExpV_kUSD * 1000 / Exp_m3)
 
+
     # Calculate default global average export prices (weighted by volume)
     L1321.expP_F_75USDm3 <- L1321.expP_R_F_Y_75USDm3 %>%
       group_by(GCAM_commodity) %>%
@@ -340,12 +342,27 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
 
     # Using global values fill out missing values for all necessary regions and commodities
     L1321.expP_R_F_Y_75USDm3 <- L1321.expP_R_F_Y_75USDm3 %>%
-      filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
       complete(GCAM_region_ID, GCAM_commodity, year) %>%
       left_join_error_no_match(L1321.expP_F_75USDm3,
                                by = "GCAM_commodity") %>%
       mutate(Price_USDm3 = if_else(is.na(Price_USDm3), avg_expP_F , Price_USDm3)) %>%
       select(GCAM_region_ID, GCAM_commodity, year, Price_USDm3)
+
+    L1321.expP_R_F_Y_75USDm3 %>%
+      filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
+      rename(value=Price_USDm3) %>%
+      left_join_error_no_match(L1321.expP_R_F_Y_75USDm3 %>% filter(!GCAM_commodity %in% aglu.FOREST_commodities) %>% select(-GCAM_commodity), by = c("GCAM_region_ID","year")) %>%
+      mutate(ForCost = if_else(GCAM_commodity== "sawnwood",value-(Price_USDm3*aglu.FOREST_sawtimber_conversion),
+                               value-(Price_USDm3*aglu.FOREST_pulp_conversion))) %>%
+      select(-Price_USDm3) %>%
+      filter(ForCost > 0) %>%
+      group_by(GCAM_region_ID, GCAM_commodity) %>%
+      mutate(ForCost=mean(ForCost),
+             ForCost = if_else(is.infinite(ForCost),0,ForCost)) %>%
+      ungroup() %>%
+      select(GCAM_region_ID, GCAM_commodity,ForCost) %>%
+      distinct()->L1321.For_Cost
+
 
     # Final step - filter only traded crops and take the mean among years considered
     L1321.expP_R_F_75USDm3 <- L1321.expP_R_F_Y_75USDm3 %>%
@@ -388,9 +405,22 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
                      "common/FAO_GDP_Deflators") ->
       L1321.expP_R_F_75USDm3
 
+    L1321.For_Cost %>%
+      select(GCAM_region_ID,year,GCAM_commodity,ForCost) %>%
+      add_title("Regional cost for GCAM forest secondary commoditties") %>%
+      add_units("1975$/unit") %>%
+      add_comments("Region-specific costs by GCAM commodity and region") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "aglu/AGLU_ctry",
+                     "aglu/FAO/FAO_ag_items_TRADE",
+                     "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT",
+                     "common/FAO_GDP_Deflators") ->
+        L1321.For_Cost
+
     return_data(L1321.ag_prP_R_C_75USDkg,
                 L1321.an_prP_R_C_75USDkg,
-                L1321.expP_R_F_75USDm3)
+                L1321.expP_R_F_75USDm3,
+                L1321.For_Cost)
   } else {
     stop("Unknown command")
   }
