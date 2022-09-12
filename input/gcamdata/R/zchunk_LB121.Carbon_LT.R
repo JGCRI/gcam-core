@@ -93,7 +93,7 @@ module_aglu_LB121.Carbon_LT <- function(command, ...) {
 
       L120.LC_soil_veg_carbon_GLU %>%
         filter(Land_Type == "Pasture") %>%
-        mutate(pasture_yield = veg_c,
+        mutate(pasture_yield = veg_c*aglu.CVEG_MULT_UNMGDPAST_MGDPAST,
                )->L121.CarbonContent_kgm2_R_LTpast_GLU
 
 
