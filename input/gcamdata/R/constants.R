@@ -132,6 +132,7 @@ CONV_THA_KGM2       <- 0.1            # tons C/ha -> kg C/m2
 CONV_TON_MEGATON    <- 1e-6
 CONV_TONNE_GJ_DISTILLATE  <- 42.91    # tons to GJ distillate
 CONV_TONNE_GJ_RFO   <- 40.87          # tons to GJ residual fuel oil
+CONV_CO2_C          <- 12/44          # mass CO2 to mass C
 
 # Time
 CONV_YEAR_HOURS <- 24 * 365.25

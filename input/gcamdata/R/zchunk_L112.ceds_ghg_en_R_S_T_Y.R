@@ -693,9 +693,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     L112.nonco2_tgej_R_en_S_F_Yh_withNAs %>%
       replace_na(list(emfact = 0)) %>%
       group_by(year, Non.CO2, supplysector, subsector, stub.technology) %>%
-      mutate(emfact = median(emfact), upper = quantile(emfact,0.95)) %>%
+      mutate(globalemfact = median(emfact), upper = quantile(emfact,0.95)) %>%
       ungroup() %>%
-      rename(globalemfact = emfact) %>%
       select(year, Non.CO2, supplysector, subsector, stub.technology, globalemfact, upper) %>%
       distinct()->
       L112.nonco2_tgej_R_en_S_F_Yh_globalmedian
@@ -1090,28 +1089,30 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     # outputs to allow level two code to continue working unchanged.
 
     L112.nonco2_tg_R_en_S_F_Yh %>%
-      filter(Non.CO2 %in% c("CH4", "N2O")) %>%
+      filter(Non.CO2 %in% c("CH4", "N2O", "CO2_FUG")) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emissions) %>%
       bind_rows(GAINS_NG_em_factors %>% mutate(value=energy*value) %>%
                   filter(Non.CO2 %in% c("CH4", "N2O")) %>% select(-energy))->
       L112.ghg_tg_R_en_S_F_Yh
 
     L112.nonco2_tg_R_en_S_F_Yh %>%
-      filter(!(Non.CO2 %in% c("CH4", "N2O"))) %>%
+      filter(!(Non.CO2 %in% c("CH4", "N2O", "CO2_FUG"))) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emissions) %>%
       bind_rows(GAINS_NG_em_factors %>% mutate(value=energy*value) %>%
-                  filter(!(Non.CO2 %in% c("CH4", "N2O","CO2"))) %>% select(-energy))->L111.nonghg_tg_R_en_S_F_Yh
+                  filter(!(Non.CO2 %in% c("CH4", "N2O", "CO2"))) %>% select(-energy))->L111.nonghg_tg_R_en_S_F_Yh
 
 
 
     L112.nonco2_tgej_R_en_S_F_Yh %>%
-      filter(Non.CO2 %in% c("CH4", "N2O")) %>%
+      filter(Non.CO2 %in% c("CH4", "N2O", "CO2_FUG")) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact) %>%
-      bind_rows(GAINS_NG_em_factors %>% filter(Non.CO2 %in% c("CH4", "N2O")) %>% select(-energy))->L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP
+      bind_rows(GAINS_NG_em_factors %>% filter(Non.CO2 %in% c("CH4", "N2O")) %>% select(-energy)) -> L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP
+      #mutate(Non.CO2 = case_when(Non.CO2 == "CO2" ~ "CO2x",T ~ Non.CO2))
+
 
 
     L112.nonco2_tgej_R_en_S_F_Yh %>%
-      filter(!(Non.CO2 %in% c("CH4", "N2O", "CO2"))) %>%
+      filter(!(Non.CO2 %in% c("CH4", "N2O", "CO2_FUG"))) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact) %>%
       bind_rows(GAINS_NG_em_factors %>% filter(!(Non.CO2 %in% c("CH4", "N2O"))) %>% select(-energy))->
       L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP
