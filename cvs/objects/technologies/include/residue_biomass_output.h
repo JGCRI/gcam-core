@@ -38,7 +38,6 @@
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 
-class PointSetCurve;
 class ALandAllocatorItem;
 
 /*!
@@ -165,7 +164,7 @@ protected :
         DEFINE_VARIABLE( SIMPLE, "mass-to-energy", mMassToEnergy, double ),
 
         //! Piece-wise linear cost curve 
-        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "fract-harvested", mCostCurve, PointSetCurve* )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "fract-harvested", mCostCurve, std::map<double, double> )
     )
 
     //! Weak pointer to the land leaf which corresponds to this biomass output
