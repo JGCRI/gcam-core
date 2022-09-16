@@ -401,6 +401,7 @@ generate_level2_data_names <- function() {
   # NonCO2
   level2_data_names[["ResEmissCoef"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "emiss.coef")
   level2_data_names[["GDPCtrlMaxRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "max.reduction")
+  level2_data_names[["GDPCtrlMaxResReserve"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "max.reduction")
   level2_data_names[["GDPCtrlSteepRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["ResMAC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
   level2_data_names[["ResMACTC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")

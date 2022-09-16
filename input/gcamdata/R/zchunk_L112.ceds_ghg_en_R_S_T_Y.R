@@ -1107,7 +1107,6 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       filter(Non.CO2 %in% c("CH4", "N2O", "CO2_FUG")) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, value = emfact) %>%
       bind_rows(GAINS_NG_em_factors %>% filter(Non.CO2 %in% c("CH4", "N2O")) %>% select(-energy)) -> L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP
-      #mutate(Non.CO2 = case_when(Non.CO2 == "CO2" ~ "CO2x",T ~ Non.CO2))
 
 
 
