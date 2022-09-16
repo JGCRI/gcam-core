@@ -502,7 +502,7 @@ XML_NODE_EQUIV <- list(
                   "nesting-subsector"),
   "technology" = c("technology", "stub-technology", "intermittent-technology",
                    "tranTechnology", "AgProductionTechnology", "pass-through-technology",
-                   "resource.reserve.technology"),
+                   "resource-reserve-technology"),
   "discrete-choice" = c("dummy-logit-tag", "relative-cost-logit",
                         "absolute-cost-logit"),
   "LandLeaf" = c("LandLeaf", "UnmanagedLandLeaf"),
