@@ -342,7 +342,10 @@ aglu.FOREST_commodities <- c("sawnwood","pulpwood")
 aglu.FOREST_demand_sectors <- c("NonFoodDemand_sawnwood","NonFoodDemand_pulpwood")
 aglu.FOREST_supply_sector <- "Forest"
 aglu.FOREST_sawtimber_conversion <- 2.17
-aglu.FOREST_pulp_conversion <- 3.17
+
+#90% of pulp processing is chemical which has an IO of 5.44 and 10% is mechanical which is 2.55. Taking weighted average of the two,
+# we get 5.15.
+aglu.FOREST_pulp_conversion <- 5.15
 
 aglu.FOREST_max_price <- 165
 # wood water content

@@ -26,6 +26,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
              FILE = "common/FAO_GDP_Deflators",
              FILE = "aglu/FAO/FAO_an_Prod_t_PRODSTAT",
              FILE = "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT",
+             "L110.IO_Coefs_pulp",
              "L132.ag_an_For_Prices",
              FILE="aglu/A_forest_mapping"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -59,6 +60,7 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
     # xz 2021/4/14 added regional forest export prices
     FAO_For_Exp_m3_USD_FORESTAT <- get_data(all_data, "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT")
     A_forest_mapping <- get_data(all_data,"aglu/A_forest_mapping")
+    L110.IO_Coefs_pulp <- get_data(all_data,"L110.IO_Coefs_pulp")
 
     # 1. Producer prices
     # 1.1 GDP deflators (to 2005) by country and analysis year
@@ -352,7 +354,9 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
       filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
       rename(value=Price_USDm3) %>%
       left_join_error_no_match(L1321.expP_R_F_Y_75USDm3 %>% filter(!GCAM_commodity %in% aglu.FOREST_commodities) %>% select(-GCAM_commodity), by = c("GCAM_region_ID","year")) %>%
-      mutate(ForCost = if_else(GCAM_commodity== "sawnwood",value-(Price_USDm3*aglu.FOREST_sawtimber_conversion),
+      left_join(L110.IO_Coefs_pulp, by = c("GCAM_region_ID","year")) %>%
+      mutate(IO= if_else(is.na(IO),aglu.FOREST_sawtimber_conversion,IO)) %>%
+      mutate(ForCost = if_else(GCAM_commodity== "sawnwood",value-(Price_USDm3*IO),
                                value-(Price_USDm3*aglu.FOREST_pulp_conversion))) %>%
       select(-Price_USDm3) %>%
       filter(ForCost > 0) %>%
