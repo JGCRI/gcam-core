@@ -148,11 +148,11 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       select(GCAM_region_ID,year,GCAM_commodity,Prod_bm3) %>%
       spread(GCAM_commodity,Prod_bm3) %>%
       left_join_error_no_match(L110.Roundwood_Cons, by = c("GCAM_region_ID","year")) %>%
-      #Assume that sawnwood has a coeff of 1. Pulpwood is the remaining. There are a couple of adjustments that need to be made.
-      mutate(after_pulp = roundwood_cons-(pulpwood*aglu.FOREST_pulp_conversion),
+      #Assume that pulpwood has a coeff of 5.14 sawtimber is the remaining. There are a couple of adjustments that need to be made.
+      mutate(after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_pulp_conversion),
              #If a country does not have enough roundwood cons to produce saw, increase it.
-             roundwood_cons=if_else(after_pulp <0, pulpwood*aglu.FOREST_pulp_conversion*1.1,roundwood_cons),
-             after_pulp = roundwood_cons-(pulpwood*aglu.FOREST_pulp_conversion),
+             roundwood_cons=if_else(after_pulp <0, woodpulp*aglu.FOREST_pulp_conversion*1.1,roundwood_cons),
+             after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_pulp_conversion),
              #Now calculate pulp IO here
              IO=after_pulp/sawnwood,
              IO= if_else(is.infinite(IO),0,IO)) ->L110.IO_Coefs_pulp

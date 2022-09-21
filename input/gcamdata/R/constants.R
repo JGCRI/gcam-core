@@ -338,8 +338,8 @@ aglu.MILL_EROSION_CTRL_KGM2 <- 0
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 
 
-aglu.FOREST_commodities <- c("sawnwood","pulpwood")
-aglu.FOREST_demand_sectors <- c("NonFoodDemand_sawnwood","NonFoodDemand_pulpwood")
+aglu.FOREST_commodities <- c("sawnwood","woodpulp")
+aglu.FOREST_demand_sectors <- c("NonFoodDemand_sawnwood","NonFoodDemand_woodpulp")
 aglu.FOREST_supply_sector <- "Forest"
 aglu.FOREST_sawtimber_conversion <- 2.17
 
