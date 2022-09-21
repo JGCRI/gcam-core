@@ -52,8 +52,6 @@ class Tabs;
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
 
-class PointSetCurve;
-
 /*! 
  * \ingroup Objects
  * \brief A secondary output that adds to the supply of the secondary good based
@@ -199,7 +197,7 @@ protected:
         
         //! Piece-wise linear cost curve that contains price driven fraction adjustments
         //! to mOutputRatio.
-        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "fraction-produced", mCostCurve, PointSetCurve* ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "fraction-produced", mCostCurve, std::map<double, double> ),
                                 
         //! The market name in which this output is adjusting the value.  If empty
         //! the current region is assumed.

@@ -48,10 +48,8 @@
 #include "util/base/include/ivisitor.h"
 #include "containers/include/market_dependency_finder.h"
 #include "functions/include/function_utils.h"
-#include "util/curves/include/point_set_curve.h"
-#include "util/curves/include/explicit_point_set.h"
-#include "util/curves/include/xy_data_point.h"
 #include "sectors/include/sector_utils.h"
+#include "util/base/include/util.h"
 
 using namespace std;
 
@@ -59,11 +57,9 @@ extern Scenario* scenario;
 
 FractionalSecondaryOutput::FractionalSecondaryOutput()
 {
-    mCostCurve = 0;
 }
 
 FractionalSecondaryOutput::~FractionalSecondaryOutput() {
-    delete mCostCurve;
 }
 
 
@@ -79,8 +75,7 @@ void FractionalSecondaryOutput::copy( const FractionalSecondaryOutput& aOther ) 
     mOutputRatio = aOther.mOutputRatio;
     mMarketName = aOther.mMarketName;
     
-    delete mCostCurve;
-    mCostCurve = aOther.mCostCurve ? aOther.mCostCurve->clone() : 0;
+    mCostCurve = aOther.mCostCurve;
 }
 
 const string& FractionalSecondaryOutput::getName() const
@@ -129,20 +124,10 @@ bool FractionalSecondaryOutput::isSameType( const string& aType ) const
 bool FractionalSecondaryOutput::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     string nodeName = XMLParseHelper::getNodeName(aNode);
     if(nodeName == "fraction-produced") {
-        // we need some specialized behavior to read in the point set curve
-        PointSet* curvePoints;
-        if(!mCostCurve) {
-            curvePoints = new ExplicitPointSet();
-            mCostCurve = new PointSetCurve(curvePoints);
-        }
-        else {
-            curvePoints = mCostCurve->getPointSet();
-        }
         map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
         double price = XMLParseHelper::getValue<double>( attrs["price"] );
         double fraction = XMLParseHelper::getValue<double>( aNode );
-        XYDataPoint* currPoint = new XYDataPoint( price, fraction );
-        curvePoints->addPoint( currPoint );
+        mCostCurve[price] = fraction;
         return true;
     }
     else {
@@ -160,10 +145,8 @@ void FractionalSecondaryOutput::toDebugXML( const int aPeriod,
     XMLWriteElement( mCalPrice, "calPrice", aOut, aTabs );
     XMLWriteElement( mPhysicalOutputs[ aPeriod ], "output", aOut, aTabs );
     
-    const vector<pair<double,double> > pairs = mCostCurve->getSortedPairs();
-    typedef vector<pair<double, double> >::const_iterator PairIterator;
     map<string, double> attrs;
-    for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
+    for( auto currPair = mCostCurve.begin(); currPair != mCostCurve.end(); ++currPair ) {
         attrs[ "price" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "fraction-produced", aOut, aTabs, attrs );
     }
@@ -185,14 +168,14 @@ void FractionalSecondaryOutput::completeInit( const string& aSectorName,
                                                                           mMarketName.empty() ? aRegionName : mMarketName );
     }
 
-    if( !mCostCurve ) {
+    if( mCostCurve.empty() ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
         mainLog << "No fraction-produced read in for " << getXMLNameStatic() << " " << getName() << endl;
         abort();
     }
 
-    if( mCostCurve->getMinY() > 0 ) {
+    if( mCostCurve.begin()->second > 0 ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING);
         mainLog << "Minimum fraction-produced greater than zero for " << getXMLNameStatic() << " " << getName() << endl;
@@ -214,7 +197,7 @@ void FractionalSecondaryOutput::initCalc( const string& aRegionName,
     // however there may still be some indirect behavior above the top of the curve as it affects
     // the primary good's economics.
     SectorUtils::setSupplyBehaviorBounds( getName(), mMarketName.empty() ? aRegionName : mMarketName,
-            mCostCurve->getMinX(), util::getLargeNumber(), aPeriod );
+            mCostCurve.begin()->first, util::getLargeNumber(), aPeriod );
 }
 
 
@@ -265,7 +248,7 @@ double FractionalSecondaryOutput::getValue( const string& aRegionName,
     // if calibrating then we assume a fractional production of 1
     // do not allow extrapolation
     double productionFraction = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() && mCalPrice.isInited() ?
-        1.0 : min( mCostCurve->getMaxY(), mCostCurve->getY( secondaryGoodPrice ) );
+        1.0 : util::curve_lookup_interp( mCostCurve, secondaryGoodPrice );
 
     // The value of the secondary output is the market price multiplied by the
     // output ratio adjusted by the fractional production.
@@ -304,7 +287,7 @@ double FractionalSecondaryOutput::getMarketPrice( const string& aRegionName, con
         return 0;
     }
 
-    return std::max( price, mCostCurve->getMinX() );
+    return price;
 }
 
 /*! 
@@ -327,7 +310,7 @@ double FractionalSecondaryOutput::calcPhysicalOutputInternal( const string& aReg
     }
     double secondaryGoodPrice = getMarketPrice( aRegionName, aPeriod );
     // do not allow extrapolation
-    double productionFraction = min( mCostCurve->getMaxY(), mCostCurve->getY( secondaryGoodPrice ) );
+    double productionFraction = util::curve_lookup_interp( mCostCurve, secondaryGoodPrice );
     return maxSecondaryOutput * productionFraction;
 }
 
