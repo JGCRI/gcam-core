@@ -109,12 +109,15 @@ double ProfitShutdownDecider::calcShutdownCoef( const double aCalculatedProfitRa
                                                 const int aInitialTechYear,
                                                 const int aPeriod ) const 
 {
-    // Compute Shutdown factor using logistic S-curve.  ScaleFactor that is returned
-    // is actually the fraction not shut down, so it is 1.0 - the shutdown fraction.
-    const double midPointToSteepness = pow( mMedianShutdownPoint + 1, mSteepness );
-    double scaleFactor = 1.0 - mMaxShutdown * ( midPointToSteepness /
-                         ( midPointToSteepness + pow( aCalculatedProfitRate + 1, mSteepness ) ) );
-
+    // Only operate the profit shutdown decider in future model periods
+    double scaleFactor = 1.0;
+    if (aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod()) {
+        // Compute Shutdown factor using logistic S-curve.  ScaleFactor that is returned
+        // is actually the fraction not shut down, so it is 1.0 - the shutdown fraction.
+        const double midPointToSteepness = pow(mMedianShutdownPoint + 1, mSteepness);
+        scaleFactor = 1.0 - mMaxShutdown * (midPointToSteepness /
+            (midPointToSteepness + pow(aCalculatedProfitRate + 1, mSteepness)));
+    }
     // Scale factor is between 0 and 1.
     assert( scaleFactor >= 0 && scaleFactor <= 1 );
     return scaleFactor;

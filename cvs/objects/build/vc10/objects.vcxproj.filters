@@ -919,6 +919,9 @@
     <ClCompile Include="..\..\functions\source\building_gompertz_function.cpp">
       <Filter>Source Files\functions</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\technologies\source\exogenous_shutdown_decider.cpp">
+      <Filter>Source Files\technologies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -1864,6 +1867,9 @@
       <Filter>Header Files\util\base</Filter>
     <ClInclude Include="..\..\functions\include\building_gompertz_function.h">
       <Filter>Header Files\functions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\technologies\include\exogenous_shutdown_decider.h">
+      <Filter>Header Files\technologies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

@@ -63,6 +63,7 @@ class Tabs;
 class ProfitShutdownDecider;
 class PhasedShutdownDecider;
 class S_CurveShutdownDecider;
+class ExogenousShutdownDecider;
 
 /*! 
  * \ingroup Objects
@@ -122,7 +123,7 @@ protected:
         /* Declare all subclasses of IShutdownDecider to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( IShutdownDecider, ProfitShutdownDecider, PhasedShutdownDecider, S_CurveShutdownDecider )
+        DEFINE_SUBCLASS_FAMILY( IShutdownDecider, ProfitShutdownDecider, PhasedShutdownDecider, S_CurveShutdownDecider, ExogenousShutdownDecider )
     )
 };
 

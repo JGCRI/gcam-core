@@ -32,9 +32,9 @@
 
 
 /*! 
- * \file s_curve_shutdown_decider.cpp
+ * \file exogenous_shutdown_decider.cpp
  * \ingroup Objects
- * \brief S_CurveShutdownDecider class source file.
+ * \brief ExogenousShutdownDecider class source file.
  * \author Patrick Luckow
  */
 
@@ -42,7 +42,7 @@
 #include <cassert>
 #include <cmath>
 
-#include "technologies/include/s_curve_shutdown_decider.h"
+#include "technologies/include/exogenous_shutdown_decider.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
@@ -54,32 +54,30 @@ extern Scenario* scenario;
 /*!
  * \brief Constructor
  */
-S_CurveShutdownDecider::S_CurveShutdownDecider()
+ExogenousShutdownDecider::ExogenousShutdownDecider()
 {
-    mSteepness = 0.1;
-    mHalfLife = 45;
+
 }
 
-S_CurveShutdownDecider::~S_CurveShutdownDecider() {
+ExogenousShutdownDecider::~ExogenousShutdownDecider() {
 }
 
-S_CurveShutdownDecider* S_CurveShutdownDecider::clone() const {
-    S_CurveShutdownDecider* clone = new S_CurveShutdownDecider();
+ExogenousShutdownDecider* ExogenousShutdownDecider::clone() const {
+    ExogenousShutdownDecider* clone = new ExogenousShutdownDecider();
     clone->copy( *this );
     return clone;
 }
 
-void S_CurveShutdownDecider::copy( const S_CurveShutdownDecider& aOther ) {
+void ExogenousShutdownDecider::copy( const ExogenousShutdownDecider& aOther ) {
     mName = aOther.mName;
-    mSteepness = aOther.mSteepness;
-    mHalfLife = aOther.mHalfLife;
+    mOutputScalar = aOther.mOutputScalar;
 }
 
-bool S_CurveShutdownDecider::isSameType( const string& aType ) const {
+bool ExogenousShutdownDecider::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& S_CurveShutdownDecider::getName() const {
+const string& ExogenousShutdownDecider::getName() const {
     return mName;
 }
 
@@ -92,41 +90,32 @@ const string& S_CurveShutdownDecider::getName() const {
 * \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
-const string& S_CurveShutdownDecider::getXMLNameStatic() {
-    const static string XML_NAME = "s-curve-shutdown-decider";
+const string& ExogenousShutdownDecider::getXMLNameStatic() {
+    const static string XML_NAME = "exogneous-shutdown-decider";
     return XML_NAME;
 }
 
-const string& S_CurveShutdownDecider::getXMLName() const {
+const string& ExogenousShutdownDecider::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void S_CurveShutdownDecider::toDebugXML( const int aPeriod,
+void ExogenousShutdownDecider::toDebugXML( const int aPeriod,
                                         ostream& aOut,
                                         Tabs* aTabs ) const
 {
     XMLWriteOpeningTag( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElementCheckDefault( mSteepness, "steepness", aOut, aTabs, 0.0 );
-    XMLWriteElementCheckDefault( mHalfLife, "half-life", aOut, aTabs, 0.0 );
+    XMLWriteElement( mOutputScalar[aPeriod], "output-scalar", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-double S_CurveShutdownDecider::calcShutdownCoef(const double aCalculatedProfitRate,
+double ExogenousShutdownDecider::calcShutdownCoef(const double aCalculatedProfitRate,
                                                 const string& aRegionName,
                                                 const string& aSectorName,
                                                 const int aInstallationYear,
                                                 const int aPeriod ) const 
 {
-    // Only operate the shutdown decider in future model periods
-    double scaleFactor = 1.0;
-    if (aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod()) {
-        const Modeltime* modeltime = scenario->getModeltime();
-        // shutdown the production with the function 1/(1+e^(steepness*(years active-halflife))).
-        // this prevents a lot of retirement in the early years, and gives the vintage a long tail;
-        // All remaining vintage is cut off at the read in lifetime
-        scaleFactor = 1 / (1 + exp(mSteepness * ((modeltime->getper_to_yr(aPeriod) - aInstallationYear) - mHalfLife)));
-    }
+    double scaleFactor = mOutputScalar[aPeriod];
     // Scale factor is between 0 and 1.
-    assert(scaleFactor >= 0 && scaleFactor <= 1);
+    assert(scaleFactor >= 0);
     return scaleFactor;
 }
