@@ -127,6 +127,8 @@ void AgProductionTechnology::toDebugXMLDerived( const int period, ostream& out, 
     XMLWriteElement( mAgProdChange, "agProdChange", out, tabs );
     XMLWriteElement( mHarvestsPerYear, "harvests-per-year", out, tabs );
     XMLWriteElement( mImpliedSubsidy, "implied-subsidy", out, tabs );
+    XMLWriteElement( mYieldScaler, "yield-scaler", out, tabs );
+
 }
 
 /*! \brief Get the XML node name for output to XML.
@@ -207,11 +209,6 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
     
     // set the previous vintage for the next tech
     aPrevPeriodInfo.mPrevVintage = this;
-
-    // Adjust yield for changes in carbon density.
-    // Note that we want to make sure this adjustment is for this year's yield only,
-    // so this is done after the yield is set in the market info object
-    mYield *= mYieldScaler;
 
     // If yield is GCal/kHa and prices are $/GCal, then rental rate is $/kHa
     // And this is what is now passed in ($/kHa)

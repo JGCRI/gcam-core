@@ -42,6 +42,7 @@
         <output-data>aircraft</output-data>
         <map from="H2 central production" to="surface"/>
         <map from="H2 forecourt production" to="surface"/>
+        <map from="H2 wholesale dispensing" to="surface"/>
         <map from="N fertilizer" to="surface"/>
         <map from="agricultural energy use" to="surface"/>
         <map from="alumina" to="surface"/>
