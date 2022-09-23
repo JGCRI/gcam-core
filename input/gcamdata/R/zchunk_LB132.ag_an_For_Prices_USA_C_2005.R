@@ -246,7 +246,8 @@ module_aglu_LB132.ag_an_For_Prices_USA_C_2005 <- function(command, ...) {
                      "aglu/FAO/FAO_USA_For_Exp_t_USD_FORESTAT",
                      "aglu/USDA_Alfalfa_prices_USDt",
                      "aglu/FAO/FAO_ag_Prod_t_PRODSTAT",
-                     "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT") ->
+                     "aglu/FAO/FAO_USA_an_Prod_t_PRODSTAT",
+                     "aglu/A_forest_mapping") ->
       L132.ag_an_For_Prices
     return_data(L132.ag_an_For_Prices)
   } else {

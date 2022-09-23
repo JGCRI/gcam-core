@@ -406,7 +406,9 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
                      "aglu/AGLU_ctry",
                      "aglu/FAO/FAO_ag_items_TRADE",
                      "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT",
-                     "common/FAO_GDP_Deflators") ->
+                     "common/FAO_GDP_Deflators",
+                     "aglu/A_forest_mapping",
+                     "L110.IO_Coefs_pulp") ->
       L1321.expP_R_F_75USDm3
 
     L1321.For_Cost %>%
@@ -418,7 +420,9 @@ module_aglu_LB1321.regional_ag_prices <- function(command, ...) {
                      "aglu/AGLU_ctry",
                      "aglu/FAO/FAO_ag_items_TRADE",
                      "aglu/FAO/FAO_For_Exp_m3_USD_FORESTAT",
-                     "common/FAO_GDP_Deflators") ->
+                     "common/FAO_GDP_Deflators",
+                     "aglu/A_forest_mapping",
+                     "L110.IO_Coefs_pulp") ->
         L1321.For_Cost
 
     return_data(L1321.ag_prP_R_C_75USDkg,

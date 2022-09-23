@@ -781,7 +781,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       add_legacy_name("L202.StubTechCost_For_proc") %>%
       same_precursors_as(L202.StubTechCoef_an) %>%
       add_precursors("L132.ag_an_For_Prices", "L1321.ag_prP_R_C_75USDkg", "L1321.an_prP_R_C_75USDkg",
-                     "L107.an_Feed_Mt_R_C_Sys_Fd_Y", "L1091.GrossTrade_Mt_R_C_Y", "L109.ag_ALL_Mt_R_C_Y") ->
+                     "L107.an_Feed_Mt_R_C_Sys_Fd_Y", "L1091.GrossTrade_Mt_R_C_Y", "L109.ag_ALL_Mt_R_C_Y",
+                     "L110.IO_Coefs_pulp","L1321.For_Cost","L110.For_ALL_bm3_R_Y") ->
       L202.StubTechCost_For_proc
 
     # Return also the consumer prices, to be made available elsewhere
