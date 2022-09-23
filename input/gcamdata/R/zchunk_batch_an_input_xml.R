@@ -121,7 +121,9 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
                      "L202.StubTechInterp_an",
                      "L202.StubTechProd_an",
                      "L202.StubTechCoef_an",
-                     "L202.StubTechCost_an"
+                     "L202.StubTechCost_an",
+                     "L202.StubTechCost_For_proc",
+                  "L202.StubTechProd_in_Forest"
                      ) ->
       an_input.xml
 
