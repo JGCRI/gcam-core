@@ -91,7 +91,7 @@ const string& ExogenousShutdownDecider::getName() const {
 * \return The constant XML_NAME as a static.
 */
 const string& ExogenousShutdownDecider::getXMLNameStatic() {
-    const static string XML_NAME = "exogneous-shutdown-decider";
+    const static string XML_NAME = "exogenous-shutdown-decider";
     return XML_NAME;
 }
 

@@ -68,7 +68,7 @@ class Tabs;
  *         
  *
  *          <b>XML specification for ExogenousShutdownDecider</b>
- *          - XML name: \c exogneous-shutdown-decider
+ *          - XML name: \c exogenous-shutdown-decider
  *          - Contained by: Technology
  *          - Parsing inherited from class: None
  *          - Attributes: None
