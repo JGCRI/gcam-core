@@ -685,27 +685,39 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       left_join_error_no_match(L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy,
                                by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "year")) %>%
       mutate(emfact = emissions / energy) %>%
-      select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, emfact) ->
+      select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, emfact, energy) ->
       #Replaces NAs with zeroes (places where zero emissions and energy lead to 0/0 = NaN)
       L112.nonco2_tgej_R_en_S_F_Yh_withNAs
 
-    # Generates global median emissions factors
+    #Generate threshold for replacing emissions factors that are too high
     L112.nonco2_tgej_R_en_S_F_Yh_withNAs %>%
       replace_na(list(emfact = 0)) %>%
       group_by(year, Non.CO2, supplysector, subsector, stub.technology) %>%
-      mutate(globalemfact = median(emfact), upper = quantile(emfact,0.95)) %>%
-      ungroup() %>%
-      select(year, Non.CO2, supplysector, subsector, stub.technology, globalemfact, upper) %>%
-      distinct()->
-      L112.nonco2_tgej_R_en_S_F_Yh_globalmedian
+      arrange(desc(energy)) %>%
+      # get cumulative percentage of global production
+      mutate(globalTotal = sum(energy),
+             cumPercent = case_when(globalTotal == 0 ~ 0,
+                                    T ~ cumsum(energy)/globalTotal),
+             #minCumPercent = min(cumPercent),
+             upper = quantile(emfact,0.95),
+             # get maximum and median emfacts from the top producers (99.75% of global production)
+             # but also keep
+             maxTopEF = max(emfact[cumPercent <= max(min(cumPercent), 0.9975) & !(energy == 0 & cumPercent > 0)]),
+             medTopEF = median(emfact[cumPercent <= max(min(cumPercent), 0.9975) & !(energy == 0 & cumPercent > 0)]),
+             # get threshold (smaller of global 95th percentile and max of top 99.75% producers)
+             threshold = min(upper, maxTopEF),
+             medGlobal = median(emfact)) %>% ungroup() %>%
+      select(year, Non.CO2, supplysector, subsector, stub.technology, medTopEF, threshold, medGlobal) %>%
+      distinct() ->
+      L112.nonco2_tgej_R_en_S_F_Yh_thresholds
 
     # Replaces all emissions factors above a given value or that are NAs with the global median emissions factor for that year, non.CO2, and technology
     L112.nonco2_tgej_R_en_S_F_Yh_withNAs %>%
-      left_join_error_no_match(L112.nonco2_tgej_R_en_S_F_Yh_globalmedian, by = c("year", "Non.CO2", "supplysector", "subsector", "stub.technology")) %>%
+      left_join_error_no_match(L112.nonco2_tgej_R_en_S_F_Yh_thresholds, by = c("year", "Non.CO2", "supplysector", "subsector", "stub.technology")) %>%
       #There are two adjustments here. First, we check if the supply sector is related to fossil fuels, in that case, if the emfact is above 95th percentile, we replace with the global median.
       #If not, we just compare with our threshold of 1000 tg/ej and make the replacements accordingly. These adjustments are structured given that fossil fuel production may increase rapidly in some regions (even though absolute increase may be low).
-      mutate(emfact = if_else(supplysector == "out_resources", if_else(emfact >upper | is.na(emfact) , globalemfact, emfact),
-                              if_else(emfact >  emissions.HIGH_EM_FACTOR_THRESHOLD | is.na(emfact) , globalemfact, emfact))) %>%
+      mutate(emfact = if_else(supplysector == "out_resources", if_else(emfact >threshold | is.na(emfact) , medTopEF, emfact),
+                              if_else(emfact >  emissions.HIGH_EM_FACTOR_THRESHOLD | is.na(emfact) , medGlobal, emfact))) %>%
       select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, emfact) %>%
       mutate(emfact = if_else(is.infinite(emfact), 1, emfact)) ->
       L112.nonco2_tgej_R_en_S_F_Yh

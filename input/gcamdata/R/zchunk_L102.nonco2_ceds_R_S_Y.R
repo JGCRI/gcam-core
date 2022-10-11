@@ -168,10 +168,11 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
           gather_years %>%
           filter(year %in% emissions.CEDS_YEARS) %>%
           # Converts kt(gg) to Teragrams for all gases and converts Teragrams (MTCO2) to MTC for CO2
-          mutate(emissions = case_when(Non.CO2 == "CO2_FUG" ~ emissions*CONV_GG_TG*CONV_CO2_C,
-                                       TRUE ~ emissions*CONV_GG_TG),
-                 units = case_when(Non.CO2 == "CO2_FUG" ~ "MTC",
-                                   TRUE ~ "Tg")) -> L102.CEDS
+          # mutate(emissions = case_when(Non.CO2 == "CO2_FUG" ~ emissions*CONV_GG_TG*CONV_CO2_C,
+          #                              TRUE ~ emissions*CONV_GG_TG),
+          #        units = case_when(Non.CO2 == "CO2_FUG" ~ "MTC",
+          #                          TRUE ~ "Tg")) -> L102.CEDS
+          mutate(emissions = emissions*CONV_GG_TG) -> L102.CEDS
 
         # Filter for iso's whose emissions will be scaled to CEDS (currently just USA)
         L102.CEDS %>%
