@@ -307,7 +307,7 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
                          ForScaler = if_else(((Hardwood_Forest+Softwood_Forest) - MgdFor) < 0 & (Hardwood_Forest+Softwood_Forest) > 0,  MgdFor/(Hardwood_Forest+Softwood_Forest) ,1)) %>%
                   select(GCAM_region_ID, GLU, year, nonForScaler, ForScaler),
                 by = c("GCAM_region_ID", "GLU", "year") ) %>%
-      mutate(value = if_else(Land_Type %in% c("Grassland", "Shrubland" , "Pasture"),
+      mutate(ForScaler=1,nonForScaler=1,value = if_else(Land_Type %in% c("Grassland", "Shrubland" , "Pasture"),
                              value * nonForScaler,
                              if_else(Land_Type %in% aglu.FOREST_NODE_NAMES, value * ForScaler, value) )) %>%
       select(-nonForScaler, -ForScaler) ->
