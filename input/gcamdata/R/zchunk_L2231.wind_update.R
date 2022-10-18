@@ -23,6 +23,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
              FILE = "common/GCAM_region_names",
              FILE = "energy/mappings/fuel_energy_input",
              FILE = "energy/A20.wind_class_CFs",
+             FILE =  "energy/mappings/NREL_wind_ctry",
              FILE = "energy/NREL_onshore_energy",
              FILE = "energy/onshore_wind_grid_cost",
              FILE = "energy/NREL_wind_energy_distance_range",
@@ -45,7 +46,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
       capital.overnight.lag <- capital.tech.change.5yr <- k1 <- tech.change.5yr <-
       tech.change <- year <- bin <- cost <- Wind_Resource_Region <- Wind_Class <- grid.cost <-
       renewresource <- smooth.renewable.subresource <- capacity.factor.capital <- capacity.factor.OM <-
-      supplysector <- subsector <- stub.technology <- input.OM.fixed <- year.fillout <-
+      supplysector <- subsector <- stub.technology <- input.OM.fixed <- year.fillout <- iso <-
       techChange <- minicam.energy.input <- input.cost <- total <- IAM_country <- technology <- value <-
       CF <- k2 <- rep_dist_for_bin <- share <- cost_per_kW_km <- capital.tech.change.period <- tech.change.period <-
       time.change <- NULL  # silence package check notes
@@ -57,6 +58,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
     A20.wind_class_CFs <- get_data(all_data, "energy/A20.wind_class_CFs")
     L113.globaltech_OMfixed_ATB <- get_data(all_data, "L113.globaltech_OMfixed_ATB")
     L113.globaltech_capital_ATB <- get_data(all_data, "L113.globaltech_capital_ATB")
+    NREL_wind_ctry <- get_data(all_data, "energy/mappings/NREL_wind_ctry")
     NREL_onshore_energy <- get_data(all_data, "energy/NREL_onshore_energy")
     onshore_wind_grid_cost <- get_data(all_data, "energy/onshore_wind_grid_cost")
     NREL_wind_energy_distance_range <- get_data(all_data, "energy/NREL_wind_energy_distance_range")
@@ -68,20 +70,18 @@ module_energy_L2231.wind_update <- function(command, ...) {
     # First, map NREL data on resource potential by country to GCAM 32 regions, convert PWh to EJ
     # Second, aggregate by GCAM region/ wind class
 
-    NREL_onshore_energy %>%
+    L2231.onshore_wind_potential_EJ <- NREL_onshore_energy %>%
       select(-total) %>%
-      left_join_error_no_match(iso_GCAM_regID %>%
-                                 select(country_name, GCAM_region_ID) %>%
-                                 distinct(),
-                               by = c("IAM_country" = "country_name")) %>%
+      left_join_error_no_match(NREL_wind_ctry, by = "IAM_country") %>%
+      left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%
-      select(-IAM_country, -GCAM_region_ID) %>%
+      select(-c(IAM_country, iso, GCAM_region_ID)) %>%
       gather(wind_class, resource.potential.EJ, -region, -distance) %>%
       mutate(resource.potential.EJ = resource.potential.EJ * 1000 * CONV_TWH_EJ ) %>%
       group_by(region, wind_class) %>%
       summarise(resource.potential.EJ = sum(resource.potential.EJ)) %>%
       ungroup() %>%
-      filter(resource.potential.EJ != 0) -> L2231.onshore_wind_potential_EJ
+      filter(resource.potential.EJ != 0) #-> L2231.onshore_wind_potential_EJ
 
     L113.globaltech_capital_ATB %>%
       gather_years() %>%
@@ -249,11 +249,10 @@ module_energy_L2231.wind_update <- function(command, ...) {
     # First, get share of potential by each distance bin for each GCAM region
     NREL_onshore_energy %>%
       select(IAM_country, distance, total) %>%
-      left_join_error_no_match(iso_GCAM_regID %>%
-                                 select(country_name, GCAM_region_ID),
-                               by = c("IAM_country" = "country_name")) %>%
+      left_join_error_no_match(NREL_wind_ctry, by = "IAM_country") %>%
+      left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%
-      select(-IAM_country, -GCAM_region_ID) %>%
+      select(-c(IAM_country, iso, GCAM_region_ID)) %>%
       group_by(region, distance) %>%
       summarise(total = sum(total)) %>%
       ungroup() %>%
