@@ -544,6 +544,9 @@
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC.cpp" />
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp" />
     <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp" />
+    <ClCompile Include="..\..\containers\source\analyze_container.cpp" />
+    <ClCompile Include="..\..\containers\source\analyze_str.cpp" />
+    <ClCompile Include="..\..\containers\source\analyze_tech_mem.cpp" />
     <ClCompile Include="..\..\containers\source\batch_runner.cpp" />
     <ClCompile Include="..\..\containers\source\calc_base_price.cpp" />
     <ClCompile Include="..\..\containers\source\consumer_activity.cpp" />
@@ -807,6 +810,9 @@
     <ClInclude Include="..\..\climate\include\no_climate_model.h" />
     <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h" />
     <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />
+    <ClInclude Include="..\..\containers\include\analyze_container.hpp" />
+    <ClInclude Include="..\..\containers\include\analyze_str.hpp" />
+    <ClInclude Include="..\..\containers\include\analyze_tech_mem.hpp" />
     <ClInclude Include="..\..\containers\include\batch_runner.h" />
     <ClInclude Include="..\..\containers\include\calc_base_price.h" />
     <ClInclude Include="..\..\containers\include\consumer_activity.h" />
