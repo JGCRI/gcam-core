@@ -4081,13 +4081,13 @@ element input {
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:) or @type = 'resource' (:collapse:)](: / *[@type = 'subresource' (: collapse :)] :)//*[((@name='CO2' or @name = 'CO2_FUG'))]/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
-            <emissionsQueryBuilder title="CO2 emissions by sector">
+            <emissionsQueryBuilder title="CO2 emissions by sector (excluding resource production)">
                 <axis1 name="sector">sector</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type='sector']//CO2/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
-            <supplyDemandQuery title="CO2 emissions by sector (no bio)">
+            <supplyDemandQuery title="CO2 emissions by sector (no bio) (excluding resource production)">
                 <axis1 name="sector">sector[@name]</axis1>
                 <axis2 name="Year">emissions[@year]</axis2>
                 <xPath buildList="true" dataName="input" group="false" sumAll="false"><![CDATA[
@@ -4278,7 +4278,7 @@ element input {
                     </level>
                 </labelRewriteList>
             </supplyDemandQuery>
-            <supplyDemandQuery title="CO2 emissions by assigned sector (no bio)">
+            <supplyDemandQuery title="CO2 emissions by assigned sector (no bio) (excluding resource production)">
                 <axis1 name="sector">sector[@name]</axis1>
                 <axis2 name="Year">emissions[@year]</axis2>
                 <xPath buildList="true" dataName="input" group="false" sumAll="false"><![CDATA[ 
@@ -4424,13 +4424,13 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                     </level>
                 </labelRewriteList>
             </supplyDemandQuery>
-            <emissionsQueryBuilder title="CO2 emissions by subsector">
+            <emissionsQueryBuilder title="CO2 emissions by subsector (excluding resource production)">
                 <axis1 name="subsector">subsector</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]/*[@type='subsector']//CO2/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
-            <emissionsQueryBuilder title="CO2 emissions by tech">
+            <emissionsQueryBuilder title="CO2 emissions by tech (excluding resource production)">
                 <axis1 name="technology">technology</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]/*[@type='subsector']/*[@type='technology']//
@@ -4467,7 +4467,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                 <axis1 name="GHG">GHG</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' (:collapse:) or @type = 'resource' (:collapse:)](: / *[@type = 'subresource' (: collapse :)] :)//
-            *[@type = 'GHG']/emissions/node()</xPath>
+            *[@type = 'GHG' and @name != 'CO2' and @name != 'CO2_FUG']/emissions/node()</xPath>
 				<labelRewriteList append-values="false">
                     <level name="GHG">
                         <rewrite from="CO2_FUG" to="CO2"/>
@@ -4475,16 +4475,16 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                 </labelRewriteList>
                 <comments/>
             </emissionsQueryBuilder>
-            <emissionsQueryBuilder title="nonCO2 emissions by sector">
+            <emissionsQueryBuilder title="nonCO2 emissions by sector (excluding resource production)">
                 <axis1 name="GHG">GHG</axis1>
                 <axis2 name="Year">emissions</axis2>
-                <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']//*[@type = 'GHG']/emissions/node()</xPath>
+                <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']//*[@type = 'GHG' and @name != 'CO2' and @name != 'CO2_FUG']/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
             <emissionsQueryBuilder title="nonCO2 emissions by resource production">
                 <axis1 name="GHG">GHG</axis1>
                 <axis2 name="Year">emissions</axis2>
-                <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'resource']//*[@type = 'GHG']/emissions/node()</xPath>
+                <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'resource']//*[@type = 'GHG' and @name != 'CO2' and @name != 'CO2_FUG']/emissions/node()</xPath>
 				<labelRewriteList append-values="false">
                     <level name="GHG">
                         <rewrite from="CO2_FUG" to="CO2"/>
@@ -4492,18 +4492,18 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                 </labelRewriteList>
                 <comments/>
             </emissionsQueryBuilder>
-            <emissionsQueryBuilder title="nonCO2 emissions by subsector">
+            <emissionsQueryBuilder title="nonCO2 emissions by subsector (excluding resource production)">
                 <axis1 name="GHG">GHG</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']//
-            *[@type = 'GHG']/emissions/node()</xPath>
+            *[@type = 'GHG' and @name != 'CO2' and @name != 'CO2_FUG']/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
-            <emissionsQueryBuilder title="nonCO2 emissions by tech">
+            <emissionsQueryBuilder title="nonCO2 emissions by tech (excluding resource production)">
                 <axis1 name="GHG">GHG</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/
-            *[@type = 'GHG']/emissions/node()</xPath>
+            *[@type = 'GHG' and @name != 'CO2' and @name != 'CO2_FUG']/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
             <emissionsQueryBuilder title="specific nonCO2 emissions by region">
@@ -4513,7 +4513,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
             *[@type = 'GHG' and (@name='BC')]/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
-            <emissionsQueryBuilder title="specific nonCO2 emissions by sector">
+            <emissionsQueryBuilder title="specific nonCO2 emissions by sector (excluding resource production)">
                 <axis1 name="sector">sector</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']//*[@type = 'GHG' and (@name='BC')]/emissions/node()</xPath>
@@ -4525,13 +4525,13 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'resource'](: / *[@type = 'subresource' (: collapse :)] :)//*[@type = 'GHG' and (@name='CH4')]/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
-            <emissionsQueryBuilder title="specific nonCO2 emissions by subsector">
+            <emissionsQueryBuilder title="specific nonCO2 emissions by subsector (excluding resource production)">
                 <axis1 name="sector">sector</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']//*[@type = 'GHG' and (@name='BC')]/emissions/node()</xPath>
                 <comments/>
             </emissionsQueryBuilder>
-            <emissionsQueryBuilder title="specific nonCO2 emissions by tech">
+            <emissionsQueryBuilder title="specific nonCO2 emissions by tech (excluding resource production)">
                 <axis1 name="technology">technology</axis1>
                 <axis2 name="Year">emissions</axis2>
                 <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector']/*[@type = 'subsector']/*[@type = 'technology']/
