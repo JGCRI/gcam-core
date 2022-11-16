@@ -244,7 +244,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
       # add units back in and convert CO2_FUG to correct units
       mutate(emiss.units = case_when(Non.CO2 == "CO2_FUG" ~ "MTC", T ~ "Tg"),
-             emiss.coef = case_when(Non.CO2 == "CO2_FUG" ~ emiss.coef*CONV_CO2_C, T ~ emiss.coef)) %>%
+             emiss.coef = case_when(Non.CO2 == "CO2_FUG" ~ emiss.coef*1/emissions.CONV_C_CO2, T ~ emiss.coef)) %>%
       select(LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.ghg_res
