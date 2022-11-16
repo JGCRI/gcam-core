@@ -4,7 +4,7 @@ library(devtools)
 # We could potentially use drake to speed up the process of updating the package
 # data which otherwise requires multiple runs of driver.  However, given drake
 # is optional we default to not use it.
-USE_DRIVER_DRAKE <- TRUE
+USE_DRIVER_DRAKE <- FALSE
 
 # Note: the methods below explicitly name XML tags as expected by GCAM and/or
 # the model interface headers thus will need to be maintained to be consistent.

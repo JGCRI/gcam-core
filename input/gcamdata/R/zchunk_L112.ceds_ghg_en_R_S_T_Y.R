@@ -698,10 +698,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       mutate(globalTotal = sum(energy),
              cumPercent = case_when(globalTotal == 0 ~ 0,
                                     T ~ cumsum(energy)/globalTotal),
-             #minCumPercent = min(cumPercent),
              upper = quantile(emfact,0.95),
              # get maximum and median emfacts from the top producers (99.75% of global production)
-             # but also keep
+             # but also keep technology + gas combinations with only one region (cumPercent = 1)
              maxTopEF = max(emfact[cumPercent <= max(min(cumPercent), 0.9975) & !(energy == 0 & cumPercent > 0)]),
              medTopEF = median(emfact[cumPercent <= max(min(cumPercent), 0.9975) & !(energy == 0 & cumPercent > 0)]),
              # get threshold (smaller of global 95th percentile and max of top 99.75% producers)
