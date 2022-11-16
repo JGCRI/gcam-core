@@ -245,8 +245,8 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     NREL_offshore_energy %>%
       select(-depth_class,-distance_to_shore,-total) %>%
       inner_join(iso_GCAM_regID %>%
-                                 select(country_name, GCAM_region_ID),
-                               by = c("IAM_country" = "country_name")) %>%
+                   select(country_name, GCAM_region_ID) %>% distinct(),
+                 by = c("IAM_country" = "country_name")) %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%
       select(-IAM_country, -GCAM_region_ID) %>%
       gather(class,potential,-region) %>%
