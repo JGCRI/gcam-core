@@ -94,29 +94,6 @@ module_energy_LA121.liquids <- function(command, ...) {
         mutate(fuel="gas") %>%
         distinct() -> gas_uncov_ratio
 
-
-      # Calculating energy inputs (gas) to unconventional oil production in the historical years
-      A21.globaltech_coef %>%
-        left_join(calibrated_techs, by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
-        filter(!is.na(sector)) %>%
-        select(-sector, -fuel, -calibration, -secondary.output) ->
-        L121.globaltech_coef
-
-      L121.globaltech_coef %>%
-        gather_years %>%
-        # Adding empty historical years to fill in with interpolation
-        complete(year = unique(c(HISTORICAL_YEARS, year)),
-                 nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
-        arrange(year) %>%
-        group_by(technology, subsector, supplysector, minicam.energy.input) %>%
-        # Interpolate to fill in missing globaltech_coef historical years
-        mutate(value = approx_fun(year, value)) %>%
-        left_join(distinct(calibrated_techs), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
-        select(supplysector, subsector, technology, minicam.energy.input, year, value, sector, fuel) ->
-        L121.globaltech_coef_interp
-
-
-
       # Downscaling unconventional oil consumption shares by GCAM 3.0 region to countries
       product_filters <- filter(IEA_product_rsrc, resource == "crude oil")
       product_filters <- unique(product_filters$PRODUCT)
