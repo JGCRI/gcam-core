@@ -3515,8 +3515,8 @@ element input {
             <query title="detailed historical land allocation">
                 <axis1 name="LandLeaf">LandLeaf[@name]</axis1>
                 <axis2 name="Year">hist-land-allocation[@year]</axis2>
-                <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//hist-land-allocation/text()</xPath>
-                <comments/>
+                <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//LandLeaf[not(contains(@name, 'IRR')) and not (contains(@name, 'RFD'))]/hist-land-allocation/text()</xPath>
+                <comments>Before 1975, all cropland is allocated to OtherArableLand (data for distinct cropland categories is not avialable pre-1975)</comments>
             </query>
             <query title="land allocation by crop">
                 <axis1 name="LandLeaf">LandLeaf[@crop]</axis1>
@@ -3580,38 +3580,24 @@ element input {
             <query title="aggregated historical land allocation">
                 <axis1 name="LandLeaf">LandLeaf[@crop]</axis1>
                 <axis2 name="Year">hist-land-allocation[@year]</axis2>
-                <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//hist-land-allocation/text()</xPath>
-                <comments/>
+                <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//LandLeaf[not(contains(@name, 'IRR')) and not (contains(@name, 'RFD'))]/hist-land-allocation/text()</xPath>
+                <comments>Before 1975, all cropland is allocated to OtherArableLand (data for distinct cropland categories is not avialable pre-1975)</comments>
                 <labelRewriteList append-values="false">
                     <level name="LandLeaf">
                         <rewrite from="Grassland" to="grass"/>
                         <rewrite from="ProtectedUnmanagedPasture" to="pasture (other)"/>
-                        <rewrite from="FodderHerb" to="crops"/>
-                        <rewrite from="MiscCrop" to="crops"/>
-                        <rewrite from="PalmFruit" to="crops"/>
-                        <rewrite from="FiberCrop" to="crops"/>
-                        <rewrite from="OtherGrain" to="crops"/>
-                        <rewrite from="FodderGrass" to="crops"/>
                         <rewrite from="ProtectedGrassland" to="grass"/>
                         <rewrite from="ProtectedUnmanagedForest" to="forest (unmanaged)"/>
-                        <rewrite from="biomassTree" to="biomass"/>
                         <rewrite from="OtherArableLand" to="otherarable"/>
-                        <rewrite from="Rice" to="crops"/>
                         <rewrite from="UrbanLand" to="urban"/>
                         <rewrite from="RockIceDesert" to="rock and desert"/>
-                        <rewrite from="RootTuber" to="crops"/>
-                        <rewrite from="Corn" to="crops"/>
-                        <rewrite from="OilCrop" to="crops"/>
                         <rewrite from="ProtectedShrubland" to="shrubs"/>
-                        <rewrite from="SugarCrop" to="crops"/>
                         <rewrite from="UnmanagedForest" to="forest (unmanaged)"/>
                         <rewrite from="Pasture" to="pasture (grazed)"/>
                         <rewrite from="Forest" to="forest (managed)"/>
-                        <rewrite from="biomassGrass" to="biomass"/>
                         <rewrite from="Shrubland" to="shrubs"/>
                         <rewrite from="UnmanagedPasture" to="pasture (other)"/>
                         <rewrite from="Tundra" to="tundra"/>
-                        <rewrite from="Wheat" to="crops"/>
                     </level>
                 </labelRewriteList>
             </query>
