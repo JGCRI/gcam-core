@@ -407,19 +407,22 @@ void IntermittentTechnology::calcCost( const string& aRegionName,
                                        const string& aSectorName,
                                        const int aPeriod )
 {
-    // Set marginal cost for backup to the input object set asside for this
-    ( *mBackupCapCostInput )->setPrice( aRegionName, 
-                              getMarginalBackupCapCost( aRegionName, mTrialMarketName, aPeriod ), 
-                              aPeriod );
-   
-    // Set the coefficients for energy and backup in the production function.
-    // Must call this after costs for backup capital and technology have been set.
-    setCoefficients( aRegionName, mTrialMarketName, aPeriod );
+    if( mProductionState[ aPeriod ]->isOperating() ) {
 
-    // Calculate the base technology cost. This will use the standard leontief
-    // production function with updated coefficients for the fuel and the
-    // backup.
-    Technology::calcCost( aRegionName, aSectorName, aPeriod );
+        double cost = getTotalInputCost( aRegionName, aSectorName, aPeriod )
+            * mPMultiplier -
+            calcSecondaryValue( aRegionName, aPeriod );
+
+        double valueFactor = 1 ;
+
+        if( mBackupCalculator && mResourceInput != mInputs.end() ){
+            valueFactor = mBackupCalculator->getValueFactor( mTrialMarketName, aRegionName, aPeriod );
+        }
+
+        mCosts[ aPeriod ] = cost / valueFactor;
+
+        assert( util::isValidNumber( mCosts[ aPeriod ] ) );
+    }
 }
 
 /*! \brief Returns marginal cost for backup capacity

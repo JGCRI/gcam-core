@@ -96,6 +96,10 @@ public:
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     virtual void initCalc( const IInfo* aTechInfo );
     
+    virtual double getValueFactor( const std::string& aSector,
+                                   const std::string& aRegion,
+                                   const int aPeriod ) const;
+
     virtual double getMarginalBackupCapacity( const std::string& aSector,
                                               const std::string& aElectricSector,
                                               const std::string& aResource,

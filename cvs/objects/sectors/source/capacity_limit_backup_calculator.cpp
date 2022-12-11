@@ -117,6 +117,15 @@ void CapacityLimitBackupCalculator::initCalc( const IInfo* aTechInfo ) {
     // No information needs to be passed in
 }
 
+double CapacityLimitBackupCalculator::getValueFactor( const string& aSector,
+                                                      const string& aRegion,
+                                                      const int aPeriod ) const
+{
+    double renewElecShare = std::min( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 1.0 );
+    //TODO: Replace value factor slope and intercept below with new technology-specific inputs
+    return std::max( ( 0.945 - 1.326 * renewElecShare ), 0.00001 );
+}
+
 double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& aSector,
                                                                  const string& aElectricSector,
                                                                  const string& aResource,
