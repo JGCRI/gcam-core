@@ -49,8 +49,6 @@
 #include "emissions/include/aemissions_control.h"
 #include "util/base/include/time_vector.h"
 
-class PointSetCurve;
-
 /*! 
  * \ingroup Objects
  * \brief An class that represents MAC Controls.
@@ -96,7 +94,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "no-zero-cost-reductions", mNoZeroCostReductions, bool ),
         
         //! The underlying Curve (as read in)
-        DEFINE_VARIABLE( CONTAINER | NOT_PARSABLE, "mac-reduction", mMacCurve, PointSetCurve* ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "mac-reduction", mMacCurve, std::map<double, double> ),
         
         //! Threshold emission price to fully phase-in zero-cost reductions and mac phase-in reductions
         DEFINE_VARIABLE( SIMPLE, "full-phase-in-price", mFullPhaseInPrice, double ),

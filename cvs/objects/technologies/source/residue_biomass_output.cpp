@@ -40,12 +40,9 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/TValidatorInfo.h"
-#include "util/curves/include/point_set_curve.h"
-#include "util/curves/include/curve.h"
-#include "util/curves/include/explicit_point_set.h"
-#include "util/curves/include/xy_data_point.h"
 #include "land_allocator/include/aland_allocator_item.h"
 #include "containers/include/market_dependency_finder.h"
+#include "util/base/include/util.h"
 
 #include <cstdio>
 
@@ -62,12 +59,10 @@ ResidueBiomassOutput::ResidueBiomassOutput( const std::string& sectorName )
     mMassConversion = 0;
     mWaterContent = 0;
     mMassToEnergy = 0;
-    mCostCurve = 0;
 }
 
 ResidueBiomassOutput::~ResidueBiomassOutput( ) 
 {
-    delete mCostCurve;
 }
 
 ResidueBiomassOutput* ResidueBiomassOutput::clone() const {
@@ -86,8 +81,7 @@ void ResidueBiomassOutput::copy( const ResidueBiomassOutput& aOther ) {
     mMassToEnergy = aOther.mMassToEnergy;
     mWaterContent = aOther.mWaterContent;
     
-    delete mCostCurve;
-    mCostCurve = aOther.mCostCurve ? aOther.mCostCurve->clone() : 0;
+    mCostCurve = aOther.mCostCurve;
     
     // note results are not copied.
 }
@@ -208,7 +202,7 @@ IOutput::OutputList ResidueBiomassOutput::calcPhysicalOutput( const double aPrim
 
     // Compute the fraction of the total possible supply that is
     // produced at the current biomass price 
-    double fractProduced = mCostCurve->getY( price );
+    double fractProduced = util::curve_lookup_interp( mCostCurve, price );
 
     // Compute the quantity of a crop residue biomass produced
     double resEnergy = maxBioEnergySupply * fractProduced;
@@ -220,10 +214,6 @@ IOutput::OutputList ResidueBiomassOutput::calcPhysicalOutput( const double aPrim
 void ResidueBiomassOutput::completeInit( const std::string& aSectorName, const std::string& aRegionName,
                                          const IInfo* aTechInfo, const bool aIsTechOperating )
 {
-    #if !defined( _MSC_VER )
-        using std::exit;
-    #endif
-
     // If erosion control is positive, but a land allocator
     // has not been assigned, then print an error message
     // Erosion control equations need land allocations.
@@ -232,14 +222,22 @@ void ResidueBiomassOutput::completeInit( const std::string& aSectorName, const s
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Invalid land allocator for " << getXMLNameStatic()
                 << " in sector " << aSectorName << std::endl;
-        exit( -1 );
+        abort();
+    }
+    
+    if( mCostCurve.empty() ) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "Curve contains no data for " << getXMLName() << " " << mName
+                << " in " << aRegionName << ", " << aSectorName << endl;
+        abort();
     }
 
     // Validate input parameters
     typedef ObjECTS::TValidatorInfo<> validator_type;
     validator_type validator[] = {
-                    validator_type( mCostCurve->getMaxY(), "max-harvest-fraction",
-                                    mCostCurve->getMaxY() <= 1 ),
+                    validator_type( mCostCurve.rbegin()->second, "max-harvest-fraction",
+                                    mCostCurve.rbegin()->second <= 1 ),
                     validator_type( mErosCtrl, "eros-ctrl", mErosCtrl >= 0 ),
                     validator_type( mHarvestIndex, "harvest-index", mHarvestIndex >= 0 ),
                     validator_type( mMassConversion, "mass-conversion", mMassConversion >= 0 ),
@@ -254,7 +252,7 @@ void ResidueBiomassOutput::completeInit( const std::string& aSectorName, const s
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Invalid input parameter(s) to " << getXMLNameStatic()
                 << " in sector " << aSectorName << ": " << msg << std::endl;
-        exit( -1 );
+        abort();
     }
     
     scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
@@ -349,11 +347,8 @@ void ResidueBiomassOutput::toDebugXML( const int aPeriod, std::ostream& aOut, Ta
     XMLWriteElement( mMassToEnergy, "mass-to-energy", aOut, aTabs );
     XMLWriteElement( mWaterContent, "water-content", aOut, aTabs );
     
-    
-    const vector<pair<double,double> > pairs = mCostCurve->getSortedPairs();
-    typedef vector<pair<double, double> >::const_iterator PairIterator;
     map<string, double> attrs;
-    for( PairIterator currPair = pairs.begin(); currPair != pairs.end(); ++currPair ) {
+    for( auto currPair = mCostCurve.begin(); currPair != mCostCurve.end(); ++currPair ) {
         attrs[ "price" ] = currPair->first;
         XMLWriteElementWithAttributes( currPair->second, "fract-harvested", aOut, aTabs, attrs );
     }
@@ -363,20 +358,10 @@ void ResidueBiomassOutput::toDebugXML( const int aPeriod, std::ostream& aOut, Ta
 bool ResidueBiomassOutput::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     string nodeName = XMLParseHelper::getNodeName(aNode);
     if(nodeName == "fract-harvested") {
-        // we need some specialized behavior to read in the point set curve
-        PointSet* curvePoints;
-        if(!mCostCurve) {
-            curvePoints = new ExplicitPointSet();
-            mCostCurve = new PointSetCurve(curvePoints);
-        }
-        else {
-            curvePoints = mCostCurve->getPointSet();
-        }
         map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
         double price = XMLParseHelper::getValue<double>( attrs["price"] );
         double fraction = XMLParseHelper::getValue<double>( aNode );
-        XYDataPoint* currPoint = new XYDataPoint( price, fraction );
-        curvePoints->addPoint( currPoint );
+        mCostCurve[price] = fraction;
         return true;
     }
     else {
