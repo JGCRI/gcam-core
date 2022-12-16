@@ -123,7 +123,9 @@ double CapacityLimitBackupCalculator::getValueFactor( const string& aSector,
 {
     double renewElecShare = std::min( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 1.0 );
     //TODO: Replace value factor slope and intercept below with new technology-specific inputs
-    return std::max( ( 0.945 - 1.326 * renewElecShare ), 0.00001 );
+    double techVFIntercept = 0.945;
+    double techVFSlope = -1.326;
+    return std::max( (techVFIntercept + techVFSlope * renewElecShare ), 0.00001 );
 }
 
 double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& aSector,
