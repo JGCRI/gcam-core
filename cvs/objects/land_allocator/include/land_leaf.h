@@ -148,6 +148,8 @@ public:
     virtual ICarbonCalc* getCarbonContentCalc() const;
         
 	virtual bool isUnmanagedLandLeaf( )  const;
+
+	virtual LandUseHistory* getHistoricalLandUse() const;
     
     bool hasLandAllocationCalculated( const int aPeriod ) const;
 
