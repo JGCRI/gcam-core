@@ -60,6 +60,33 @@
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/marketplace.h"
 
+/*!
+ * \brief Perform a summation while being careful to calculate and preserve the error correction term.
+ * \details We use the Kahan-Babuška-Neumaier algorithm to sum supplies and demands which is important
+ *       as we tend to get values in all different kinds of scales leading to round off / truncation error
+ *       in the floating point summation.  This is of particular concern when GCAM_PARALLEL_ENABLED
+ *       since the inherent nature of parallelism causes a different level of round off / truncation with each
+ *       model call.
+ * \param aSum The running sum Value to update.
+ * \param aCorrection The current error correction which will be used to accumulate the error from
+ *                    adding aValueIn.
+ * \param aValueIn The next value to sum.
+ */
+inline void kahanSum(Value& aSum, Value& aCorrection, const double aValueIn) {
+    // the new sum without any error correction
+    double t = aSum + aValueIn;
+    // calculate and accumulate the error resulting from roundoff / truncation
+    aCorrection += std::abs(aSum) >= std::abs(aValueIn) ?
+        // apply the Neumaier tweak to the algorithm which accommodates the case
+        // where the sum had been in a "small" range but the next value to be
+        // added is in "large" range, in which case error should be calculated
+        // from it instead of the current sum
+        (aSum - t) + aValueIn :
+        (aValueIn - t) + aSum;
+    // now update the sum
+    aSum = t;
+}
+
 using namespace std;
 using namespace objects;
 
@@ -321,6 +348,7 @@ double Market::getRawPrice() const {
 */
 void Market::nullDemand() {
     mDemand = 0;
+    mDemandCorrection = 0;
 }
 
 /*! \brief Add to the the Market an amount of demand in a method based on the
@@ -332,14 +360,14 @@ void Market::nullDemand() {
 void Market::addToDemand( const double demandIn ) {
 #if GCAM_PARALLEL_ENABLED
     if( !Marketplace::mIsDerivativeCalc ) {
-        Mutex::scoped_lock writeLock( mDemandMutex, true );
-        mDemand += demandIn;
+        Mutex::scoped_lock writeLock( mDemandMutex );
+        kahanSum(mDemand, mDemandCorrection, demandIn);
     }
     else {
-        mDemand += demandIn;
+        kahanSum(mDemand, mDemandCorrection, demandIn);
     }
 #else
-    mDemand += demandIn;
+    kahanSum(mDemand, mDemandCorrection, demandIn);
 #endif
 }
 
@@ -351,17 +379,7 @@ void Market::addToDemand( const double demandIn ) {
 * \sa getDemand
 */
 double Market::getRawDemand() const {
-#if GCAM_PARALLEL_ENABLED
-    if( !Marketplace::mIsDerivativeCalc ) {
-        Mutex::scoped_lock readLock( mDemandMutex, false );
-        return mDemand;
-    }
-    else {
-        return mDemand;
-    }
-#else
-    return mDemand;
-#endif
+    return mDemand + mDemandCorrection;
 }
 
 /*! \brief Get the demand used in the solver.
@@ -372,17 +390,7 @@ double Market::getRawDemand() const {
  * \sa getRawDemand
  */
 double Market::getSolverDemand() const {
-#if GCAM_PARALLEL_ENABLED
-    if( !Marketplace::mIsDerivativeCalc ) {
-        Mutex::scoped_lock readLock( mDemandMutex, false );
-        return mDemand;
-    }
-    else {
-        return mDemand;
-    }
-#else
-    return mDemand;
-#endif
+    return mDemand + mDemandCorrection;
 }
 
 /*! \brief Get the demand.
@@ -390,17 +398,7 @@ double Market::getSolverDemand() const {
 * \return Market demand.
 */
 double Market::getDemand() const {
-#if GCAM_PARALLEL_ENABLED
-    if( !Marketplace::mIsDerivativeCalc ) {
-        Mutex::scoped_lock readLock( mDemandMutex, false );
-        return mDemand;
-    }
-    else {
-        return mDemand;
-    }
-#else
-    return mDemand;
-#endif
+    return mDemand + mDemandCorrection;
 }
 
 /*! \brief Null the supply.
@@ -408,6 +406,7 @@ double Market::getDemand() const {
 */
 void Market::nullSupply() {
     mSupply = 0;
+    mSupplyCorrection = 0;
 }
 
 /*! \brief Get the raw supply.
@@ -418,17 +417,7 @@ void Market::nullSupply() {
 * \sa getSupply
 */
 double Market::getRawSupply() const {
-#if GCAM_PARALLEL_ENABLED
-    if( !Marketplace::mIsDerivativeCalc ) {
-        Mutex::scoped_lock readLock( mSupplyMutex, false );
-        return mSupply;
-    }
-    else {
-        return mSupply;
-    }
-#else
-    return mSupply;
-#endif
+    return mSupply + mSupplyCorrection;
 }
 
 /*! \brief Get the supply value to be used in the solver
@@ -440,17 +429,7 @@ double Market::getRawSupply() const {
 * \sa getRawSupply
 */
 double Market::getSolverSupply() const {
-#if GCAM_PARALLEL_ENABLED
-    if( !Marketplace::mIsDerivativeCalc ) {
-        Mutex::scoped_lock readLock( mSupplyMutex, false );
-        return mSupply;
-    }
-    else {
-        return mSupply;
-    }
-#else
-    return mSupply;
-#endif
+    return mSupply + mSupplyCorrection;
 }
 
 /*! \brief Get the supply.
@@ -458,17 +437,7 @@ double Market::getSolverSupply() const {
 * \return Market supply
 */
 double Market::getSupply() const {
-#if GCAM_PARALLEL_ENABLED
-    if( !Marketplace::mIsDerivativeCalc ) {
-        Mutex::scoped_lock readLock( mSupplyMutex, false );
-        return mSupply;
-    }
-    else {
-        return mSupply;
-    }
-#else
-    return mSupply;
-#endif
+    return mSupply + mSupplyCorrection;
 }
 
 /*! \brief Add to the the Market an amount of supply in a method based on the
@@ -480,14 +449,14 @@ double Market::getSupply() const {
 void Market::addToSupply( const double supplyIn ) {
 #if GCAM_PARALLEL_ENABLED
     if( !Marketplace::mIsDerivativeCalc ) {
-        Mutex::scoped_lock writeLock( mSupplyMutex, true );
-        mSupply += supplyIn;
+        Mutex::scoped_lock writeLock( mSupplyMutex );
+        kahanSum(mSupply, mSupplyCorrection, supplyIn);
     }
     else {
-        mSupply += supplyIn;
+        kahanSum(mSupply, mSupplyCorrection, supplyIn);
     }
 #else
-    mSupply += supplyIn;
+    kahanSum(mSupply, mSupplyCorrection, supplyIn);
 #endif
 }
 

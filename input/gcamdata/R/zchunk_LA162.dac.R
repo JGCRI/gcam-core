@@ -17,25 +17,18 @@
 #' @author JF March 2021
 module_energy_LA162.dac <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/A62.calibration"))
+    return(c("L161.RsrcCurves_MtC_R"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L162.out_Mt_R_dac_Yh"))
   } else if(command == driver.MAKE) {
 
     # Silence global variable package check
-    . <- Biomass <- Biomass_EJ <- Coal <- Coal_EJ <- Country <- GCAM_region_ID <- Gas <- Gas_EJ <-
-    IEA_fuelshare_region <- IEA_intensity_region <- IOelec <- Oil <- Oil_EJ <- TPE_GJkg <-
-    Worrell_region <- cement_prod_Mt <- country_name <- elec_EJ <- elec_GJkg <-
-    emiss_ktC <- fuel <- heat_EJ <- heat_GJkg <- in.value <- ind.value <- iso <-
-    old.year <- out.value <- process_emissions_MtC <- process_emissions_ktC <-
-    prod_Mt <- prod_emiss_ratio <- reg_process_emissions <- region_GCAM3 <- sector <-
-    share <- value <- cement <- year <- value.y <- value.x <- NULL
+    Cstorage <- GCAM_region_ID <- sector <- year <- value <- NULL
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-
-    ces_calibration <- get_data(all_data, "energy/A62.calibration")
+    L161.RsrcCurves_MtC_R <- get_data(all_data, "L161.RsrcCurves_MtC_R")
 
 
     # ===================================================
@@ -44,14 +37,22 @@ module_energy_LA162.dac <- function(command, ...) {
     # Set constants used for this chunk
     # ---------------------------------
 
-    ces_calibration -> L162.out_Mt_R_dac_Yh
-
+    L161.RsrcCurves_MtC_R %>%
+      group_by(GCAM_region_ID) %>%
+      summarise(Cstorage = sum(available)) %>%
+      ungroup() %>%
+      mutate(sector = "CO2 removal",
+             year = max(MODEL_BASE_YEARS),
+             value = Cstorage / Cstorage[GCAM_region_ID == gcam.USA_CODE] * energy.DAC_LIMIT_USA_MTC) %>%
+      select(GCAM_region_ID, sector, year, value) ->
+      L162.out_Mt_R_dac_Yh
 
     L162.out_Mt_R_dac_Yh %>%
+      add_title("Calibration of DAC in each region") %>%
       add_units("Mt C") %>%
-      add_comments("Outputs are calculated by simply transposing the calibration matrix, which contains arbitrarily high values for dac+noDAC") %>%
+      add_comments("Calculated from each region's total onshore CO2 storage, indexed to an exogenous DAC limit assigned to the USA") %>%
       add_legacy_name("L162.out_Mt_R_dac_Yh") %>%
-      add_precursors("energy/A62.calibration") ->
+      add_precursors("L161.RsrcCurves_MtC_R") ->
       L162.out_Mt_R_dac_Yh
 
 

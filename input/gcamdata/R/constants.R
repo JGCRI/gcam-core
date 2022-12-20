@@ -475,6 +475,9 @@ energy.GAS_PIPELINE_COST_ADDER_75USDGJ  <- 0.1  # estimated cost mark-up from "r
 
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
+# Indicate the ceiling on direct air capture in the USA region
+energy.DAC_LIMIT_USA_MTC <- 2000
+
 # the year for the ratio of industrial energy:feedstocks convergence in all regions
 # in the old data system this was intended to be 2150 but was actually 2100
 energy.INDCOEF_CONVERGENCE_YR <- 2100
