@@ -85,9 +85,6 @@ public:
     virtual double getLandAllocation( const std::string& aProductName,
                                       const int aPeriod ) const;
 
-    virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate,
-                                        const int aPeriod );
-
     virtual void setSoilTimeScale( const int aTimeScale );
 
     virtual void setProfitRate( const std::string& aRegionName,
@@ -140,9 +137,6 @@ protected:
                             
         //! Land allocated typically in thous km2.
         DEFINE_VARIABLE( ARRAY, "landAllocation", mLandAllocation, objects::PeriodVector<Value> ),
-
-        //! Rate at which carbon price is expected to increase
-        DEFINE_VARIABLE( ARRAY, "carbonPriceIncreaseRate", mCarbonPriceIncreaseRate, objects::PeriodVector<double> ),
 
         //! Integer storing the soil time scale for a region
         DEFINE_VARIABLE( SIMPLE, "soilTimeScale", mSoilTimeScale, int ),

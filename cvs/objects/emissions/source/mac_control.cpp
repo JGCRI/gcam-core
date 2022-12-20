@@ -185,14 +185,13 @@ void MACControl::initCalc( const string& aRegionName,
 {
 }
 
-void MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
+double MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
     
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
     // Check first if MAC curve operation should be turned off
     // we do not apply the MAC curve in calibration model periods
     if ( aPeriod <= finalCalibPer || mCovertPriceValue < 0 || mDisableEmControl ) { // User flag to turn off MAC curves
-        setEmissionsReduction( 0 );
-        return;
+        return 0.0;
     }
     
     const Marketplace* marketplace = scenario->getMarketplace();
@@ -295,7 +294,7 @@ void MACControl::calcEmissionsReduction( const std::string& aRegionName, const i
 
     reduction = baseReduction - zeroCostReduction * zeroCostReductionMultiplier - phasedInMACReduction * macPhaseInMultiplier;
 
-    setEmissionsReduction( reduction );
+    return reduction;
 }
 
 /*! \brief Get MAC curve value

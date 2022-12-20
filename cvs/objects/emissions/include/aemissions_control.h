@@ -90,6 +90,13 @@ public:
     virtual const std::string& getXMLName() const = 0;
     
     double getEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
+    
+    /*!
+     * \brief Set the final emissions coefficient calculated in the given period taking into account all emissions controls which applied.
+     * \param aAdjustedEmissCoef The final adjusted emissions coefficient to set.
+     * \param aPeriod The model period for which this emissions coefficient was calculated.
+     */
+    virtual void setAdjustedEmissCoef( const double aAdjustedEmissCoef, const int aPeriod ) {}
 
     virtual const std::string& getName() const;
 
@@ -136,9 +143,7 @@ protected:
      */
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
 
-    virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) = 0;
-
-    void setEmissionsReduction( double aReduction );
+    virtual double calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) = 0;
     
     DEFINE_DATA(
         /* Declare all subclasses of AEmissionsControl to allow automatic traversal of the
@@ -149,9 +154,6 @@ protected:
         //! Name of the reduction so that users can have multiple emissions reductions
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
         
-        //! Reduction (usually calculated)
-        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "reduction", mReduction, Value ),
-
         //! Once read in at a specific model period, emission control object would not operate for this or any future vintages (or model periods for non-vintaged technologies)
         DEFINE_VARIABLE( SIMPLE, "disable-em-control", mDisableEmControl, bool )
     )

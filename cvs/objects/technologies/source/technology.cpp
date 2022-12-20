@@ -137,7 +137,6 @@ void Technology::copy( const Technology& techIn ) {
     mYear = techIn.mYear;
     mCosts = techIn.mCosts;
     mFixedOutput = techIn.mFixedOutput;
-    mAlphaZero = techIn.mAlphaZero;
     mCapacityFactor = techIn.mCapacityFactor;
 
     // Copy the input vector.
@@ -148,11 +147,6 @@ void Technology::copy( const Technology& techIn ) {
     if( techIn.mCaptureComponent ) {
         delete mCaptureComponent;
         mCaptureComponent = techIn.mCaptureComponent->clone();
-    }
-
-    if( techIn.mTechChangeCalc ){
-        delete mTechChangeCalc;
-        mTechChangeCalc = techIn.mTechChangeCalc->clone();
     }
     
     for (CGHGIterator iter = techIn.mGHG.begin(); iter != techIn.mGHG.end(); ++iter) {
@@ -194,7 +188,6 @@ void Technology::clear()
     }
     delete mCaptureComponent;
     delete mCalValue;
-    delete mTechChangeCalc;
 }
 
 //! Initialize elemental data members.
@@ -202,7 +195,6 @@ void Technology::init()
 {
     mCaptureComponent = 0;
     mCalValue = 0;
-    mTechChangeCalc = 0;
     
     // This will be reinitialized in completeInit once the technologies start
     // year is known.
@@ -213,7 +205,6 @@ void Technology::init()
     mProductionFunction = 0;
     mPMultiplier = 1;
     mFixedOutput = -1;
-    mAlphaZero = 1;
     mCapacityFactor = 1;
 }
 
@@ -386,11 +377,6 @@ void Technology::completeInit( const string& aRegionName,
         mCaptureComponent->completeInit( aRegionName, aSectorName );
     }
 
-    // Initialize the technical change calculator.
-    if( mTechChangeCalc ){
-        mTechChangeCalc->completeInit();
-    }
-
     // Initialize the cal data object.
     if( mCalValue ) {
         mCalValue->completeInit();
@@ -432,7 +418,6 @@ void Technology::toDebugXML( const int period,
     XMLWriteElement( mShareWeight, "share-weight", out, tabs );
     XMLWriteElement( mFixedOutput, "fixedOutput", out, tabs );
     XMLWriteElement( mLifetimeYears, "lifetime", out, tabs );
-    XMLWriteElement( mAlphaZero, "alpha-zero", out, tabs );
     XMLWriteElement( mCosts[ period ], "cost", out, tabs );
     XMLWriteElement( mPMultiplier, "pMultiplier", out, tabs );
     XMLWriteElementCheckDefault( mCapacityFactor, "capacity-factor", out, tabs, 1.0 );
@@ -447,10 +432,6 @@ void Technology::toDebugXML( const int period,
 
     if( mCaptureComponent ) {
         mCaptureComponent->toDebugXML( period, out, tabs );
-    }
-
-    if( mTechChangeCalc ) {
-        mTechChangeCalc->toDebugXML( period, out, tabs );
     }
 
     for( CShutdownDeciderIterator i = mShutdownDeciders.begin(); i != mShutdownDeciders.end(); ++i ){
@@ -568,13 +549,6 @@ void Technology::initCalc( const string& aRegionName,
         mOutputs[ i ]->initCalc( aRegionName, aSectorName, aPeriod );
     }
 
-    // Determine cumulative technical change. Alpha zero defaults to 1.
-    if( mTechChangeCalc ){
-        mAlphaZero = mTechChangeCalc->calcAndAdjustForTechChange( mInputs,
-                     aPrevPeriodInfo, mProductionFunction, aRegionName,
-                     aSectorName, aPeriod );
-    }
-
     // If Calibration is Active, reinitialize share weights for calibration.
     if( Configuration::getInstance()->getBool( "CalibrationActive" ) ){
         // For new technology vintages up to and including final calibration period.
@@ -665,6 +639,11 @@ void Technology::postCalc( const string& aRegionName,
     if( mProductionState[ aPeriod ]->isOperating() ) {
         for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
             mOutputs[ i ]->postCalc( aRegionName, aPeriod );
+        }
+        
+        bool isInitialTechYear = mProductionState[ aPeriod ]->isNewInvestment();
+        for(auto ghg : mGHG) {
+            ghg->postCalc(aRegionName, isInitialTechYear, mInputs, mOutputs, mCaptureComponent, aPeriod);
         }
     }
 }
@@ -870,7 +849,7 @@ void Technology::production( const string& aRegionName,
 
     // Calculate input demand.
     mProductionFunction->calcDemand( mInputs, primaryOutput, aRegionName, aSectorName,
-                                     1, aPeriod, 0, mAlphaZero );
+                                     1, aPeriod, 0, 1 );
 
     calcEmissionsAndOutputs( aRegionName, primaryOutput, aGDP, aPeriod );
 }
@@ -1115,7 +1094,7 @@ double Technology::getTotalInputCost( const string& aRegionName,
     /*! \pre The technology must have a production function. */
     assert( mProductionFunction );
     double cost = mProductionFunction->calcCosts( mInputs, aRegionName,
-                                                  mAlphaZero, aPeriod );
+                                                  1, aPeriod );
     assert( cost >= 0 );
     return cost;
 }
@@ -1140,8 +1119,7 @@ double Technology::getEnergyCost( const string& aRegionName,
         if( mInputs[ i ]->hasTypeFlag( IInput::CAPITAL ) || mInputs[ i ]->hasTypeFlag( IInput::OM_FIXED ) ) {
             // TODO: Leontief assumption.
             cost -= mInputs[ i ]->getPrice( aRegionName, aPeriod )
-                    * mInputs[ i ]->getCoefficient( aPeriod )
-                    / mAlphaZero;
+                    * mInputs[ i ]->getCoefficient( aPeriod );
         }
     }
     assert( cost >= -util::getSmallNumber() );
@@ -1212,8 +1190,7 @@ double Technology::getCalibrationOutput( const bool aHasRequiredInput,
             double calInput = mInputs[ i ]->getCalibrationQuantity( aPeriod );
             if( calInput >= 0 ) {
                 // TODO: Remove leontief assumption.
-                totalCalOutput = calInput / mInputs[ i ]->getCoefficient( aPeriod )
-                                 * mAlphaZero;
+                totalCalOutput = calInput / mInputs[ i ]->getCoefficient( aPeriod );
                 break;
             }
         }

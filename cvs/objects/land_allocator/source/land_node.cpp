@@ -248,14 +248,6 @@ void LandNode::setProfitRate( const string& aRegionName,
     } 
 }
 
-void LandNode::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate,
-                                    const int aPeriod )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setCarbonPriceIncreaseRate( aCarbonPriceIncreaseRate, aPeriod );
-    }
-}
-
 /*!
 * \brief Set the number of years needed to for soil carbons emissions/uptake
 * \details This method sets the soil time scale into the carbon calculator

@@ -184,7 +184,7 @@ SO2_SHIP_LIMIT_POLICY_MULTIPLIER <- 0.001 * 2
 
 # Time
 aglu.AGLU_HISTORICAL_YEARS  <- 1971:2015
-aglu.BASE_YEAR_IFA          <- 2006      # Base year of International Fertilizer Industry Association (IFA) fertilizer application data KD does this belong here???
+aglu.BASE_YEAR_IFA          <- 2006      # Base year of International Fertilizer Industry Association (IFA) fertilizer application data (TODO: KD does this belong here???)
 aglu.BIO_START_YEAR         <- 2020
 aglu.CROSIT_HISTORICAL_YEAR <- 2005      # Historical year from the CROSIT data
 aglu.DIET_YEARS             <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5)
@@ -197,7 +197,7 @@ aglu.MODEL_COST_YEARS       <- 2008:2016
 aglu.MODEL_PRICE_YEARS      <- 2008:2016
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
 aglu.DEFLATOR_BASE_YEAR     <- 2015                                          # year used as the basis for computing regional price deflators
-aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
+aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, (TODO: KD i think this might need a better comment)
 aglu.SSP_DEMAND_YEARS       <- seq(2015, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
 aglu.TRADE_CAL_YEARS        <- 2013:2017 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
 aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
@@ -474,6 +474,9 @@ energy.GAS_PRICE  <- 2
 energy.GAS_PIPELINE_COST_ADDER_75USDGJ  <- 0.1  # estimated cost mark-up from "regional natural gas" to "wholesale gas" (1975$/GJ)
 
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
+
+# Indicate the ceiling on direct air capture in the USA region
+energy.DAC_LIMIT_USA_MTC <- 2000
 
 # the year for the ratio of industrial energy:feedstocks convergence in all regions
 # in the old data system this was intended to be 2150 but was actually 2100

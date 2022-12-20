@@ -114,9 +114,6 @@ public:
                                    const double aProfitRate,
                                    const int aPeriod );
 
-    virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
-                                      const int aPeriod );
-
     /*!
      * \brief Set the number of years needed to for soil carbons emissions/uptake
      * \details This method sets the soil time scale into the carbon calculator
@@ -182,7 +179,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "discrete-choice-function", mChoiceFn, IDiscreteChoice* ),
 
         //! Double storing the average price of land in a region or subregion
-        DEFINE_VARIABLE( SIMPLE | STATE, "unManagedLandValue", mUnManagedLandValue, Value ),
+        DEFINE_VARIABLE( SIMPLE, "unManagedLandValue", mUnManagedLandValue, Value ),
 
         //! List of the children of this land node located below it in the land
         //! allocation tree.

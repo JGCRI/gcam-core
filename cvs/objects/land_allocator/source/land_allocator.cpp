@@ -61,7 +61,6 @@ extern Scenario* scenario;
 LandAllocator::LandAllocator()
 : LandNode( 0 )
 {
-    mCarbonPriceIncreaseRate.assign( mCarbonPriceIncreaseRate.size(), 0.0 );
     mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();
 }
 
@@ -94,6 +93,13 @@ void LandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTa
 
 void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
 {
+    // do an initial call to setUnmanagedLandProfitRate here which allows us
+    // to avoid tagging the mUnManagedLandValue as STATE in the land nodes
+    // Note: we still need to call setUnmanagedLandProfitRate during model
+    // operation so that unmanaged land leaves can calculate a profit rate
+    // which may include such things as carbon values
+    setUnmanagedLandProfitRate( aRegionName, mUnManagedLandValue, aPeriod );
+    
     // In calibration periods, check land area and set calibration values
     if ( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
         checkLandArea( aRegionName, aPeriod);
@@ -102,16 +108,6 @@ void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
 
     // Call land node's initCalc
     LandNode::initCalc( aRegionName, aPeriod );
-    
-    // Ensure that carbon price increase rate is positive
-    if ( mCarbonPriceIncreaseRate[ aPeriod ] < 0 ) {
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "Carbon price increase rate is negative in region "
-                << aRegionName << endl;
-        exit( -1 );
-    }
-    setCarbonPriceIncreaseRate( mCarbonPriceIncreaseRate[ aPeriod ] , aPeriod );
 }
 
 void LandAllocator::completeInit( const string& aRegionName, 
@@ -242,13 +238,6 @@ double LandAllocator::getLandAllocation( const string& aProductName,
         return node->getLandAllocation( aProductName, aPeriod );
     }
     return 0;
-}
-
-void LandAllocator::setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, const int aPeriod )
-{
-    for ( unsigned int i = 0; i < mChildren.size(); i++ ) {
-        mChildren[ i ]->setCarbonPriceIncreaseRate( aCarbonPriceIncreaseRate, aPeriod );
-    }
 }
 
 /*!

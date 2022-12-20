@@ -143,12 +143,12 @@ void ReadInControl::initCalc( const string& aRegionName,
     }
 }
 
-void ReadInControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
+double ReadInControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
     double reduction = 0.0;
     
     if ( (*mFutureEmissionsFactors)[ mTechBuildPeriod ] != 0.0 ) {
         reduction = ( (*mFutureEmissionsFactors)[ mTechBuildPeriod ] - (*mFutureEmissionsFactors)[ aPeriod ] ) / (*mFutureEmissionsFactors)[ mTechBuildPeriod ];
     }
     
-    setEmissionsReduction( reduction );
+    return reduction;
 }

@@ -1,4 +1,4 @@
-#' module_gcamusa_L170.nonghg_ceds_scaling_USA
+#' module_emissions_L170.nonghg_ceds_scaling
 #'
 #' Scales pre-processed NEI non-CO2 emissions to CEDS at the national level
 #' The NEI data is processed exogenously. It is scaled to EPA Tier 1, interpolated
@@ -17,7 +17,7 @@
 #' @importFrom tidyr gather spread
 #' @author MAW February 2021
 
-module_gcamusa_L170.nonghg_ceds_scaling_USA <- function(command, ...) {
+module_emissions_L170.nonghg_ceds_scaling <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE="gcam-usa/emissions/NEI_pollutant_mapping",
              FILE="gcam-usa/emissions/CEDS_to_CEDS_sector_mapping",

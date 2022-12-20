@@ -281,6 +281,9 @@
     <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sectors\source\fixed_final_demand.cpp">
+      <Filter>Source Files\sectors</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\sectors\source\sector.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
@@ -1066,6 +1069,9 @@
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\energy_final_demand.h">
+      <Filter>Header Files\sectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sectors\include\fixed_final_demand.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h">

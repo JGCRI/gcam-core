@@ -123,6 +123,7 @@ void LinearControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* a
     XMLWriteElementCheckDefault( mStartYear, "start-year", aOut, aTabs,
                                 modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() ) );
     XMLWriteElementCheckDefault( mAllowIncrease, "allow-ef-increase", aOut, aTabs, false );
+    XMLWriteElement( mAdjustedEmissCoef [ aPeriod ], "control-adjusted-emiss-coef", aOut, aTabs );
 }
 
 
@@ -181,10 +182,10 @@ void LinearControl::initCalc( const string& aRegionName,
     // for linear decline.
     int startPeriod = scenario->getModeltime()->getyr_to_per( mStartYear );
     if ( mDisableEmControl ) {
-        setEmissionsReduction( 0 );
+        mReduction = 0;
     } else {
         if ( aPeriod >=  ( startPeriod + 1 ) ) {
-            double baseEmissionsCoef = aParentGHG->getAdjustedEmissCoef( startPeriod );
+            double baseEmissionsCoef = mAdjustedEmissCoef[ startPeriod ];
             // we calculate the emissions reduction now in initCalc because it will not be
             // changing with each iteration so we can use this optimization.
             calcEmissionsReductionInternal( baseEmissionsCoef, aPeriod );
@@ -200,11 +201,12 @@ void LinearControl::initCalc( const string& aRegionName,
     // Electricity inputs, for example, should never be associated with non-CO2 emissions.
 }
 
-void LinearControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod,
+double LinearControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod,
                                             const GDP* aGDP )
 {
     // The actual work of calculating the reduction is done by the call to calcEmissionsReductionInternal
     // which is called during initCalc since the reduction will not be changing during World.calc.
+    return mReduction;
 }
 
 /*!
@@ -255,5 +257,9 @@ void LinearControl::calcEmissionsReductionInternal( const double aBaseEmissionsC
         }
     }
 
-    setEmissionsReduction( reduction );
+    mReduction = reduction;
+}
+
+void LinearControl::setAdjustedEmissCoef( const double aAdjustedEmissCoef, const int aPeriod ) {
+    mAdjustedEmissCoef[aPeriod] = aAdjustedEmissCoef;
 }
