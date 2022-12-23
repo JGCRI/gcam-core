@@ -580,6 +580,10 @@ namespace objects {
             assert( isValidNumber( mData[ aIndex ] ) );
             return mData[ aIndex ];
         }
+
+    //! We need a static index to give TechVintageVector a UID for each instance which can then
+    //! be used to join the instance with any temporary vectors set up to hold data while parsing etc.
+    extern size_t sTechVintageVectorKeyIndex;
     
     /*!
      * \brief Base class of vectors indexed by period that will automatically get resized
@@ -738,7 +742,7 @@ namespace objects {
     {
         // WARNING: this could be very bad if someone tried to dereference this
         // we will stash a temporary look up ID in mData
-        mData = reinterpret_cast<T*>( this );
+        mData = reinterpret_cast<T*>( ++sTechVintageVectorKeyIndex );
     }
     
     /*!

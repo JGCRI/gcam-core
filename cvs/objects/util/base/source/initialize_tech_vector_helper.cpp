@@ -50,6 +50,7 @@
 #include "util/base/include/gcam_data_containers.h"
 
 // We need some place to static initialize the TechVectorParseHelper temporary storage arrays
+size_t objects::sTechVintageVectorKeyIndex = 0;
 TechVectorParseHelperTempStoreMapType sTechVectorParseHelperMap(boost::fusion::make_pair<double>( static_cast<TechVectorParseHelper<double>*>( 0 ) ),
                                                        boost::fusion::make_pair<Value>( static_cast<TechVectorParseHelper<Value>*>( 0 ) ) );
 

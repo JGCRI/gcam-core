@@ -1,4 +1,4 @@
-#' module_gcamusa_L270.nonghg_nei_to_gcam
+#' module_emissions_L270.nonghg_nei_to_gcam
 #'
 #' Produce tables containing non-GHG emissions for all model base years by sector.
 #'
@@ -14,7 +14,7 @@
 #' @importFrom tidyr gather spread
 #' @author MAW February 2022
 
-module_gcamusa_L270.nonghg_nei_to_gcam <- function(command, ...) {
+module_emissions_L270.nonghg_nei_to_gcam <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/emissions/NEI_pollutant_mapping",
              FILE = "gcam-usa/emissions/CEDS_GCAM_fuel",

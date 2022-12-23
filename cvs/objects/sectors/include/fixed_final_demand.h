@@ -31,63 +31,48 @@
 */
 
 
-#ifndef _AFINAL_DEMAND_H_
-#define _AFINAL_DEMAND_H_
+#ifndef _FIXED_FINAL_DEMAND_H_
+#define _FIXED_FINAL_DEMAND_H_
 #if defined(_MSC_VER)
 #pragma once
 #endif
 
 /*! 
- * \file afinal_demand.h
+ * \file fixed_final_demand.h
  * \ingroup Objects
- * \brief The AFinalDemand abstract base class header file.
- * \author Josh Lurz
+ * \brief The FixedFinalDemand abstract base class header file.
+ * \author Pralit Patel
  */
-#include <boost/core/noncopyable.hpp>
 
-#include "util/base/include/inamed.h"
-#include "util/base/include/ivisitable.h"
-#include "util/base/include/data_definition_util.h"
+#include "sectors/include/afinal_demand.h"
+#include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
 
-// Forward declarations
-class GDP;
-class Demographic;
-class IInfo;
-class Tabs;
-
-// Need to forward declare the subclasses as well.
-class EnergyFinalDemand;
-class FixedFinalDemand;
 
 /*! 
  * \ingroup Objects
  * \brief A description of a final demand, the end users in the economy.
- * \details Final demand do not produce outputs, but only consume goods which
- *          can include services. They are not linked to each other directly,
- *          but are in aggregate the consumers of the economy.
+ * \details This subclass always returns an exogenously set service output.
  */
-
-class AFinalDemand: public INamed,
-                    public IVisitable,
-                    private boost::noncopyable
-{
+class FixedFinalDemand: public AFinalDemand {
 public:
-    /*!
-     * \brief Destructor.
-     */
-    virtual ~AFinalDemand();
+    FixedFinalDemand();
+
+    static const std::string& getXMLNameStatic();
+
+    virtual ~FixedFinalDemand();
     
-    virtual const std::string& getXMLName() const = 0;
+    virtual const std::string& getXMLName() const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
-                             Tabs* aTabs ) const = 0;
+                             Tabs* aTabs ) const;
     
     /*!
      * \brief Get the name of the final demand.
      * \return The name of the final demand.
      */
-    virtual const std::string& getName() const = 0;
+    virtual const std::string& getName() const;
     
     /*!
      * \brief Complete the initialization of the final demand.
@@ -97,7 +82,7 @@ public:
      * \param aRegionInfo Regional information container.
      */
     virtual void completeInit( const std::string& aRegionName,
-                               const IInfo* aRegionInfo ) = 0;
+                               const IInfo* aRegionInfo );
 
     /*!
      * \brief Initialize the final demand for a given period.
@@ -111,7 +96,7 @@ public:
     virtual void initCalc( const std::string& aRegionName,
                            const GDP* aGDP,
                            const Demographic* aDemographics,
-                           const int aPeriod ) = 0;
+                           const int aPeriod );
     
     /*!
      * \brief Calculate the quantity of the demand and add it to the
@@ -127,7 +112,7 @@ public:
     virtual void setFinalDemand( const std::string& aRegionName,
                                  const Demographic* aDemographics,
                                  const GDP* aGDP,
-                                 const int aPeriod ) = 0;
+                                 const int aPeriod );
 
     /*!
      * \brief Get the market price of the service weighted by the quantity of
@@ -137,24 +122,29 @@ public:
      * \param aPeriod Model period.
      */
     virtual double getWeightedEnergyPrice( const std::string& aRegionName,
-                                           const int aPeriod ) const = 0;
+                                           const int aPeriod ) const;
 
     // Documentation is inherited.
     virtual void accept( IVisitor* aVisitor,
-                         const int aPeriod ) const = 0;
+                         const int aPeriod ) const;
     
 protected:
     
-    DEFINE_DATA(
-        /* Declare all subclasses of AFinalDemand to allow automatic traversal of the
-         * hierarchy under introspection.
-         */
-        DEFINE_SUBCLASS_FAMILY( AFinalDemand, EnergyFinalDemand, FixedFinalDemand )
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AFinalDemand,
+
+        //! Name of the final demand and the good it consumes.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! Total end-use sector service which will always be demanded
+        //! \note We mark this as STATE even though it will not change as it is
+        //! required to be able to addToDemand in the marketplace
+        DEFINE_VARIABLE( ARRAY | STATE,  "service", mServiceDemand, objects::PeriodVector<Value> )
     )
 };
 
-// Inline function definitions.
-inline AFinalDemand::~AFinalDemand(){}
 
-#endif // _AFINAL_DEMAND_H_
+#endif // _FIXED_FINAL_DEMAND_H_
 

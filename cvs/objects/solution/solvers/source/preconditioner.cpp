@@ -263,7 +263,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         // and there is excess demand: set new price a bit
                         // above the bottom of the curve.
                         // 1% above lower bound
-                        newprice = lb + 0.01 * fabs(lb);
+                        newprice = lb + 0.01 * std::max(fabs(lb), 0.001);
                         // sometimes the range of valid prices is really
                         // narrow and the above can actually overshoot.
                         if(newprice >= solvable[i].getUpperBoundSupplyPrice())
@@ -317,6 +317,12 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       solvable[i].setPrice(newprice);
                       chg = true;
                       ++nchg;
+                    }
+                    else if(fd < mFTOL && oldsply >= mFTOL && olddmnd >= mFTOL) {
+                        // reset a small demand scale when it looked like a market was "off"
+                        // but the supplies and demands are now in a normal range
+                        fd = olddmnd;
+                        solvable[i].setForecastDemand(fd);
                     }
                     break; 
                 case IMarketType::TRIAL_VALUE:

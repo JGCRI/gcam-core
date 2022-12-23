@@ -67,21 +67,6 @@ public:
     virtual ~ILandAllocator();
 
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const = 0;
-    
-    /*!
-     * \brief Set the rate at which the carbon price is expected to increase
-     * \details This method sets expectations about the carbon price to be
-     *          used in calculating the carbon subsidy on land. Setting the expected rate
-     *          of increase of the carbon price to zero implies myopic decision making
-     *          or an expectation of flat carbon prices. Setting this rate to a positive 
-     *          number implies an expectation that the carbon price will rise exponentially
-     *          at the rate specified.
-     * \param aCarbonPriceIncreaseRate Expected rate of increase.
-     * \param aPeriod Period.
-     * \author Kate Calvin
-     */
-    virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
-                                      const int aPeriod ) = 0;
 
     /*!
      * \brief Set the number of years needed to for soil carbons emissions/uptake

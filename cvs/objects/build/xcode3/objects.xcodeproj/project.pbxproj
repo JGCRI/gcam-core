@@ -223,6 +223,7 @@
 		CD693FA01AEFE0CE00805384 /* relative_cost_logit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD693F9F1AEFE0CE00805384 /* relative_cost_logit.cpp */; };
 		CD693FA31AEFF0A100805384 /* absolute_cost_logit.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */; };
 		CD6B455519B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */; };
+		CD6E69EB292820790080C353 /* fixed_final_demand.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD6E69EA292820790080C353 /* fixed_final_demand.cpp */; };
 		CD7A9A012673C096000EA23F /* xml_parse_helper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7A9A002673C096000EA23F /* xml_parse_helper.cpp */; };
 		CD7A9A032673FC47000EA23F /* mapped_file.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7A9A022673FC47000EA23F /* mapped_file.cpp */; };
 		CD83E61614F4584900A1D301 /* linked_market.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD83E61514F4584900A1D301 /* linked_market.cpp */; };
@@ -808,6 +809,8 @@
 		CD693FA21AEFF0A100805384 /* absolute_cost_logit.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = absolute_cost_logit.cpp; sourceTree = "<group>"; };
 		CD6B455319B138870020AC72 /* has_market_flag_solution_info_filter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = has_market_flag_solution_info_filter.h; sourceTree = "<group>"; };
 		CD6B455419B1388F0020AC72 /* has_market_flag_solution_info_filter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = has_market_flag_solution_info_filter.cpp; sourceTree = "<group>"; };
+		CD6E69E82928206C0080C353 /* fixed_final_demand.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = fixed_final_demand.h; sourceTree = "<group>"; };
+		CD6E69EA292820790080C353 /* fixed_final_demand.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fixed_final_demand.cpp; sourceTree = "<group>"; };
 		CD7A99FE2673A49D000EA23F /* xml_parse_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml_parse_helper.h; sourceTree = "<group>"; };
 		CD7A9A002673C096000EA23F /* xml_parse_helper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml_parse_helper.cpp; sourceTree = "<group>"; };
 		CD7A9A022673FC47000EA23F /* mapped_file.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = mapped_file.cpp; sourceTree = "<group>"; };
@@ -1541,6 +1544,7 @@
 		CD4885E4122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD6E69E82928206C0080C353 /* fixed_final_demand.h */,
 				0E90E7BA23200F0C00B0454A /* nesting_subsector.h */,
 				CD8FDEC71C0647050099C752 /* pass_through_sector.h */,
 				CD4885E5122873C200F5A88A /* afinal_demand.h */,
@@ -1563,6 +1567,7 @@
 		CD488600122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CD6E69EA292820790080C353 /* fixed_final_demand.cpp */,
 				0E90E7BD23200F1E00B0454A /* nesting_subsector.cpp */,
 				CD8FDEC81C0647140099C752 /* pass_through_sector.cpp */,
 				CD488601122873C200F5A88A /* ag_supply_sector.cpp */,
@@ -2347,6 +2352,7 @@
 				CD488833122873C200F5A88A /* data_point.cpp in Sources */,
 				CD488834122873C200F5A88A /* explicit_point_set.cpp in Sources */,
 				CD488835122873C200F5A88A /* point_set.cpp in Sources */,
+				CD6E69EB292820790080C353 /* fixed_final_demand.cpp in Sources */,
 				CDA481A525E6FC3E0046E143 /* fdjac.cpp in Sources */,
 				CD488836122873C200F5A88A /* point_set_curve.cpp in Sources */,
 				CD488837122873C200F5A88A /* xy_data_point.cpp in Sources */,

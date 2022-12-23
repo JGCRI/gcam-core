@@ -249,7 +249,6 @@ void NodeCarbonCalc::calcLandUseHistory()
                 // the carbon.
                 carbonStock[ i ] += currCarbonMove - ( mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] - emissBeforeMove );
             }
-            mCarbonCalcs[ i ]->mTotalEmissions[ year ] = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] + mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
         }
         
         prevLand = currLand;
@@ -451,8 +450,6 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
                 for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
                     mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] += (*currEmissionsAbove[ i ])[ year ];
                     mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] += (*currEmissionsBelow[ i ])[ year ];
-                    mCarbonCalcs[ i ]->mTotalEmissions[ year ] = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] +
-                        mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
                     mCarbonCalcs[ i ]->mSavedCarbonStock[ aPeriod - 1 ] = mCarbonCalcs[ i ]->mCarbonStock[ prevModelYear ];
                     mCarbonCalcs[ i ]->mSavedLandAllocation[ aPeriod - 1 ] = mCarbonCalcs[ i ]->mLandLeaf->getLandAllocation( mCarbonCalcs[ i ]->mLandLeaf->getName(), aPeriod - 1 );
                 }
@@ -461,8 +458,6 @@ void NodeCarbonCalc::calc( const int aPeriod, const int aEndYear, const ICarbonC
                 for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
                     mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] -= (*currEmissionsAbove[ i ])[ year ];
                     mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ] -= (*currEmissionsBelow[ i ])[ year ];
-                    mCarbonCalcs[ i ]->mTotalEmissions[ year ] = mCarbonCalcs[ i ]->mTotalEmissionsAbove[ year ] +
-                        mCarbonCalcs[ i ]->mTotalEmissionsBelow[ year ];
                 }
             }
             else if( aCalcMode == ICarbonCalc::eReturnTotal ) {
