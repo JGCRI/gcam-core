@@ -303,9 +303,6 @@ protected:
         //! Calibration value
         DEFINE_VARIABLE( CONTAINER, "calibration-value", mCalValue, ICalData* ),
 
-        //! An add-on which calculates technical change for the Technology.
-        DEFINE_VARIABLE( CONTAINER, "tech-change-calc", mTechChangeCalc, ITechnicalChangeCalc* ),
-
         /*!
          * \brief The calculated cost of the Technology period.
          * \note calcCost must be called in an iteration before this value is valid.
@@ -333,11 +330,6 @@ protected:
 
         //! Amount of fixed supply for this tech, exclusive of constraints
         DEFINE_VARIABLE( SIMPLE, "fixedOutput", mFixedOutput, double ),
-
-        //! Alpha-zero coefficient for the current period. This is calculated by the
-        //! mTechChangeCalc if one exists, otherwise it is set to 1. It is constant
-        //! throughout a period.
-        DEFINE_VARIABLE( SIMPLE, "alpha-zero", mAlphaZero, double ),
 
         //! period year or vintage
         DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),

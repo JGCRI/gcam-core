@@ -70,7 +70,7 @@ double NoEmissCarbonCalc::calc(const int aPeriod, const int aEndYear, const Carb
     // composed within the NodeCarbonCalc class which will drive the emissions
     // calculation and set them into this object.
     
-    return aCalcMode != eReturnTotal || aPeriod == 0 ? mTotalEmissions[ aEndYear ] : mStoredEmissions;
+    return aCalcMode != eReturnTotal || aPeriod == 0 ? mTotalEmissionsAbove[ aEndYear ] + mTotalEmissionsBelow[ aEndYear ] : mStoredEmissions;
 }
 
 void NoEmissCarbonCalc::acceptDerived( IVisitor* aVisitor, const int aPeriod ) const {

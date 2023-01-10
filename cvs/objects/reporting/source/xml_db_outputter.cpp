@@ -76,6 +76,7 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/gdp.h"
 #include "land_allocator/include/land_leaf.h"
+#include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/icarbon_calc.h"
 #include "ccarbon_model/include/land_carbon_densities.h"
 #include "util/base/include/atom.h"
@@ -128,6 +129,7 @@
 #include "reporting/include/xml_db_outputter.h"
 
 extern Scenario* scenario; // for modeltime
+typedef std::map<unsigned int, double> LandMapType; // for land use history output
 
 // TODO: Remove global time variable.
 extern time_t gGlobalTime;
@@ -1633,6 +1635,16 @@ void XMLDBOutputter::startVisitLandLeaf( const LandLeaf* aLandLeaf,
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
         writeItem( "share-weight", "", aLandLeaf->mShareWeight[ i ], i );
     }
+
+	// get mLandUseHistory from aLandLeaf -> get mHistoricalLand from mLandUseHistory
+	LandUseHistory* landUseHistoryOutput = aLandLeaf->getHistoricalLandUse();
+	LandMapType landHistoryOutput = landUseHistoryOutput->getHistoricalLand();
+
+	// Visit landHistoryOutput object and write land allocation in each historical year.
+	typedef typename LandMapType::const_iterator LandMapIterator;
+	for (LandMapIterator entry = landHistoryOutput.begin(); entry != landHistoryOutput.end(); ++entry) {
+		writeItemUsingYear("hist-land-allocation", "thous km2", entry->second, entry->first);
+	}
 }
 
 void XMLDBOutputter::endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod ){

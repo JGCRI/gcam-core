@@ -115,9 +115,6 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         ICarbonCalc,
         
-        //! Total emissions by year.
-        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "land-use-change-emissions", mTotalEmissions, objects::YearVector<double> ),
-        
         //! Above ground total emissions by year
         DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "above-ground-land-use-change-emissions", mTotalEmissionsAbove, objects::YearVector<double> ),
         
