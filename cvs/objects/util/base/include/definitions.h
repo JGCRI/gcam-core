@@ -53,47 +53,8 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include "util/base/include/gcamstr.h"
 
-#include <boost/flyweight.hpp>
-#include <boost/flyweight/no_locking.hpp>
-#include <boost/flyweight/no_tracking.hpp>
-
-struct gcamstr : public boost::flyweight<std::string, boost::flyweights::no_tracking, boost::flyweights::no_locking> {
-    using Base = boost::flyweight<std::string, boost::flyweights::no_tracking, boost::flyweights::no_locking>;
-    using Base::Base;
-    
-    gcamstr(const char* aStr):Base(std::string(aStr)) { }
-    
-    inline gcamstr& operator=(const std::string& aStr) {
-        gcamstr wrap(aStr);
-        std::swap(*this, wrap);
-        return *this;
-    }
-    
-    inline gcamstr& operator=(const char* aStr) {
-        gcamstr wrap(aStr);
-        std::swap(*this, wrap);
-        return *this;
-    }
-    bool empty() const {
-        return get().empty();
-    }
-};
-
-inline bool operator<(const gcamstr& aLHS, const gcamstr& aRHS) {
-    return reinterpret_cast<const gcamstr::Base&>(aLHS) <
-        reinterpret_cast<const gcamstr::Base&>(aRHS);
-}
-
-inline bool operator==(const gcamstr& aLHS, const gcamstr& aRHS) {
-    return reinterpret_cast<const gcamstr::Base&>(aLHS) ==
-        reinterpret_cast<const gcamstr::Base&>(aRHS);
-}
-
-inline bool operator!=(const gcamstr& aLHS, const gcamstr& aRHS) {
-    return reinterpret_cast<const gcamstr::Base&>(aLHS) !=
-        reinterpret_cast<const gcamstr::Base&>(aRHS);
-}
 
 // Configuration constants.
 

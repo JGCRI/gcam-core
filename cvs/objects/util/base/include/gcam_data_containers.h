@@ -209,6 +209,7 @@
 #include "solution/solvers/include/preconditioner.hpp"
 #include "util/base/include/data_definition_util.h"
 #include "util/base/include/fixed_interpolation_function.h"
+#include "util/base/include/gcamstr.h"
 #include "util/base/include/iinterpolation_function.h"
 #include "util/base/include/interpolation_rule.h"
 #include "util/base/include/linear_interpolation_function.h"
