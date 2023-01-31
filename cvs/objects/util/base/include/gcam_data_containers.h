@@ -181,6 +181,7 @@
 #include "technologies/include/residue_biomass_output.h"
 #include "technologies/include/retired_production_state.h"
 #include "technologies/include/s_curve_shutdown_decider.h"
+#include "technologies/include/exogenous_shutdown_decider.h"
 #include "technologies/include/secondary_output.h"
 #include "technologies/include/solar_technology.h"
 #include "technologies/include/standard_capture_component.h"
