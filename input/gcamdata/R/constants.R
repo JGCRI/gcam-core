@@ -708,9 +708,15 @@ efw.ELEC_DESAL_TECHS                      <- c("gas (steam/CT)", "refined liquid
 # Emissions constants ======================================================================
 
 # scaling CH4 and N2O emissions to EPA 2019 mitigation report BAU emission trajectory
-emissions.NONCO2.EPA.SCALING <- FALSE
+emissions.NONCO2.EPA.SCALING <- TRUE
 emissions.EPA.SCALING.THRESHOLD <- 50 # EPA emissions/ CEDS emission, used to check scaling outliers in L112 chunk
 emissions.EPA.SCALING.THRESHOLD.COMBUSTION <- 20 # check scaling outliers in L112 chunk for combustion sector
+
+# default unconventional oil co2 fug emfact for regions without historical unconventional oil. Based on emissions factors from the 2019 Refinement to the 2006
+# IPCC Guidelines for National GHG Inventories; calculated as the weighted average of the oil sands emissions factor and average non-oil-sands emissions factor.
+# Weights come from the share of oil sands and non-oil-sands global recoverable unconventional oil resources (Wang 2016 https://doi.org/10.1016/S1876-3804(16)30111-2)
+# Emfacts for regions with historical unconventional oil are specified in emissions/IPCC_unconventional_oil_fug_emfacts.csv
+emissions.UNCONVENTIONAL.OIL.FUG.CO2.EMFACT <- 0.994
 
 # Time
 emissions.CEDS_YEARS              <- 1970:2019           # Year coverage for CEDS inventory.

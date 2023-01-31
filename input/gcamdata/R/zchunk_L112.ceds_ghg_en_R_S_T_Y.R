@@ -41,6 +41,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/mappings/calibrated_outresources",
              FILE="emissions/CEDS/gains_iso_sector_emissions",
              FILE="emissions/CEDS/gains_iso_fuel_emissions",
+             FILE="emissions/IPCC_unconventional_oil_fug_emfacts",
              "L102.ceds_GFED_nonco2_tg_R_S_F",
              "L102.ceds_int_shipping_nonco2_tg_S_F",
              "L122.LC_bm2_R_HarvCropLand_C_Yh_GLU",
@@ -121,6 +122,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       # removing columns we do not use, and sectors that aren't mapped to GCAM sectors
       select( -c( "Region", "Gains_Sector" ) ) %>%
       filter( !is.na( sector ) )
+
+    # Get unconventional oil emissions factor assumptions
+    IPCC_unconventional_oil_fug_emfacts <- get_data(all_data, "emissions/IPCC_unconventional_oil_fug_emfacts")
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -685,12 +689,88 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       left_join_error_no_match(L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy,
                                by = c("GCAM_region_ID", "supplysector", "subsector", "stub.technology", "year")) %>%
       mutate(emfact = emissions / energy) %>%
-      select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, emfact, energy) ->
-      #Replaces NAs with zeroes (places where zero emissions and energy lead to 0/0 = NaN)
+      select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, emfact, energy, emissions) ->
       L112.nonco2_tgej_R_en_S_F_Yh_withNAs
 
+
+    # add exogenous unconventional oil emissions factors for fugitive CO2
+    IPCC_unconventional_oil_fug_emfacts %>%
+      # assign countries' emfacts to corresponding regions
+      left_join_error_no_match(iso_GCAM_regID, by = c("iso", "country_name")) %>%
+      select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, emfact) %>%
+      # fill in all other regions using the default fug co2 emissions factor
+      group_by(supplysector, subsector, stub.technology) %>%
+      complete(GCAM_region_ID = seq(1, nrow(GCAM_region_names)),
+               fill = list(emfact = emissions.UNCONVENTIONAL.OIL.FUG.CO2.EMFACT,
+                           Non.CO2 = "CO2_FUG")) %>%
+      ungroup() %>%
+      # fill in all historical years with the same emfact
+      group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, emfact) %>%
+      mutate(year = 2015) %>%
+      complete(year = HISTORICAL_YEARS) %>%
+      ungroup() %>%
+      # combine with other emissions factors
+      bind_rows(L112.nonco2_tgej_R_en_S_F_Yh_withNAs) %>%
+      # replace NA with 0 in energy column for the new unconventional oil rows
+      mutate(energy = if_else(is.na(energy), 0, energy)) ->
+      L112.nonco2_tgej_R_en_S_F_Yh_with_fug_uo_emfacts
+
+    # for regions with historical unconventional oil production, use unconventional
+    # oil fug co2 emfact to split up crude oil emissions into conventional and
+    # unconventional emissions and recalculate conventional crude oil emfact
+    L111.Prod_EJ_R_F_Yh %>%
+      filter(fuel == "crude oil") %>%
+      rename(supplysector = sector, subsector = fuel, stub.technology = technology) %>%
+      # combine energy production with fug co2 emfacts from crude oil
+      right_join(filter(L112.nonco2_tgej_R_en_S_F_Yh_with_fug_uo_emfacts,
+                        subsector == "crude oil",  Non.CO2 == "CO2_FUG"),
+                 by = c("GCAM_region_ID", "supplysector", "subsector", "year", "stub.technology")) %>%
+      # replace aggregated crude oil energy values with separate conventional
+      # and unconventional energy values
+      mutate(energy = case_when(!is.na(value) ~ value, T ~ energy)) %>%
+      select(-value) %>%
+      # reshape to do emissions factor calculations
+      tidyr::gather("var", "value", -c(GCAM_region_ID, year, Non.CO2, supplysector,
+                                subsector, stub.technology)) %>%
+      unite(temp, stub.technology, var) %>%
+      spread(temp, value) %>%
+      # keep only rows that have nonzero unconventional oil production
+      filter(`unconventional oil_energy` > 0) %>%
+      # calculate unconventional oil emissions (multiply energy by the assumed
+      # emfact) and new crude oil emfact (subtract unconventional oil emissions
+      # from total emissions and divide by conventional oil energy)
+      mutate(`unconventional oil_emissions` = `unconventional oil_emfact`*`unconventional oil_energy`,
+             `crude oil_emfact` = (`crude oil_emissions` - `unconventional oil_emissions`)/`crude oil_energy`) %>%
+      select(GCAM_region_ID, year, Non.CO2, supplysector, subsector,
+             `crude oil_emfact`, `crude oil_energy`,
+             `unconventional oil_energy`, `unconventional oil_emfact`) %>%
+      tidyr::gather("var", "value", -c(GCAM_region_ID, year, Non.CO2,
+                                       supplysector, subsector)) %>%
+      separate(var, c("stub.technology", "var"), sep="_") %>%
+      spread(var, value) ->
+    conventional_oil_new_emfacts
+
+    # make sure there are no negative emissions factors resulting from this
+    # calculation (if so, the default unconventional oil fug co2 emfact could be
+    # too high, resulting in unconventional oil emissions higher than total oil emissions)
+    if(any(conventional_oil_new_emfacts$emfact < 0)){
+      stop("Unconventional oil fugitive CO2 emissions factor used to split historical crude oil emissions into conventional and unconventional oil resulted in negative emissions factor(s).")
+    }
+
+    # merge new crude oil emfacts back into all emfacts
+    L112.nonco2_tgej_R_en_S_F_Yh_with_fug_uo_emfacts %>%
+      left_join(conventional_oil_new_emfacts,
+                by = c("GCAM_region_ID", "Non.CO2", "supplysector",
+                       "subsector", "stub.technology", "year")) %>%
+      # keep new energy and emfact values when applicable
+      mutate(emfact = case_when(!is.na(emfact.y) ~ emfact.y, T ~ emfact.x),
+             energy = case_when(!is.na(energy.y) ~ energy.y, T ~ energy.x)) %>%
+      select(GCAM_region_ID, year, Non.CO2, supplysector, subsector,
+             stub.technology, emfact, energy)->
+      L112.nonco2_tgej_R_en_S_F_Yh_with_oil_adjustment
+
     #Generate threshold for replacing emissions factors that are too high
-    L112.nonco2_tgej_R_en_S_F_Yh_withNAs %>%
+    L112.nonco2_tgej_R_en_S_F_Yh_with_oil_adjustment %>%
       replace_na(list(emfact = 0)) %>%
       group_by(year, Non.CO2, supplysector, subsector, stub.technology) %>%
       arrange(desc(energy)) %>%
@@ -711,15 +791,16 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.nonco2_tgej_R_en_S_F_Yh_thresholds
 
     # Replaces all emissions factors above a given value or that are NAs with the global median emissions factor for that year, non.CO2, and technology
-    L112.nonco2_tgej_R_en_S_F_Yh_withNAs %>%
+    L112.nonco2_tgej_R_en_S_F_Yh_with_oil_adjustment %>%
       left_join_error_no_match(L112.nonco2_tgej_R_en_S_F_Yh_thresholds, by = c("year", "Non.CO2", "supplysector", "subsector", "stub.technology")) %>%
-      #There are two adjustments here. First, we check if the supply sector is related to fossil fuels, in that case, if the emfact is above 95th percentile, we replace with the global median.
+      #There are two adjustments here. First, we check if the supply sector is related to fossil fuels (except unconventional oil, since this is done exogenously), in that case, if the emfact is above 95th percentile, we replace with the global median.
       #If not, we just compare with our threshold of 1000 tg/ej and make the replacements accordingly. These adjustments are structured given that fossil fuel production may increase rapidly in some regions (even though absolute increase may be low).
-      mutate(emfact = if_else(supplysector == "out_resources", if_else(emfact >threshold | is.na(emfact) , medTopEF, emfact),
+      mutate(emfact = if_else(supplysector == "out_resources" & stub.technology != "unconventional oil", if_else(emfact >threshold | is.na(emfact) , medTopEF, emfact),
                               if_else(emfact >  emissions.HIGH_EM_FACTOR_THRESHOLD | is.na(emfact) , medGlobal, emfact))) %>%
       select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, emfact) %>%
       mutate(emfact = if_else(is.infinite(emfact), 1, emfact)) ->
       L112.nonco2_tgej_R_en_S_F_Yh
+
 
 
     # =======================
@@ -1678,7 +1759,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/mappings/UCD_techs_emissions_revised",
                      "L270.nonghg_tg_state_refinery_F_Yb",
                      "gcam-usa/emissions/BC_OC_assumptions",
-                     "gcam-usa/emissions/BCOC_PM25_ratios") ->
+                     "gcam-usa/emissions/BCOC_PM25_ratios",
+                     "emissions/IPCC_unconventional_oil_fug_emfacts") ->
       L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP
 
     L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy %>%
