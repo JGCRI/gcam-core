@@ -1,0 +1,190 @@
+# File: NREL_wind_ctry.csv
+# Title: Mapping between iso codes and country names for NREL wind input files: energy/NREL_onshore_energy.csv and energy/NREL_offshore_energy.csv
+# Units: NA
+# Column types: cc
+# ----------
+IAM_country,iso
+Albania,alb
+Algeria,dza
+Angola,ago
+Argentina,arg
+Australia,aus
+Bahamas,bhs
+Bahrain,bhr
+Bangladesh,bgd
+Barbados,brb
+Belgium,bel
+Belize,blz
+Benin,ben
+Brazil,bra
+Bulgaria,bgr
+Cambodia,khm
+Cameroon,cmr
+Canada,can
+Cape Verde,cpv
+Chile,chl
+China,chn
+Colombia,col
+Comoros,com
+Congo,cog
+Costa Rica,cri
+Cote dIvoire,civ
+Croatia,hrv
+Cuba,cub
+Cyprus,cyp
+"Korea, Democratic Peoples Republic of",prk
+"Congo, the Democratic Republic of the",cod
+Denmark,dnk
+Djibouti,dji
+Dominican Republic,dom
+Timor Leste,tls
+Ecuador,ecu
+Egypt,egy
+El Salvador,slv
+Equatorial Guinea,gnq
+Eritrea,eri
+Estonia,est
+Fiji,fji
+Finland,fin
+France,fra
+French Polynesia,pyf
+Gabon,gab
+Gambia,gmb
+Georgia,geo
+Germany,deu
+Ghana,gha
+Greece,grc
+Guadeloupe,glp
+Guam,gum
+Guatemala,gtm
+Guinea,gin
+Guinea-Bissau,gnb
+Guyana,guy
+Haiti,hti
+Honduras,hnd
+Iceland,isl
+India,ind
+Indonesia,idn
+"Iran, Islamic Republic of",irn
+Iraq,irq
+Ireland,irl
+Israel,isr
+Italy,ita
+Jamaica,jam
+Japan,jpn
+Kenya,ken
+Kuwait,kwt
+Latvia,lva
+Lebanon,lbn
+Liberia,lbr
+Libyan Arab Jamahiriya,lby
+Lithuania,ltu
+Madagascar,mdg
+Malaysia,mys
+Maldives,mdv
+Malta,mlt
+Mauritania,mrt
+Mauritius,mus
+Mexico,mex
+Morocco,mar
+Mozambique,moz
+Myanmar,mmr
+Namibia,nam
+Netherlands,nld
+Netherlands Antilles,ant
+New Caledonia,ncl
+New Zealand,nzl
+Nicaragua,nic
+Nigeria,nga
+Norway,nor
+Oman,omn
+Pakistan,pak
+Panama,pan
+Papua New Guinea,png
+Peru,per
+Philippines,phl
+Poland,pol
+Portugal,prt
+Puerto Rico,pri
+Qatar,qat
+"Korea, Republic of",kor
+Reunion,reu
+Romania,rom
+Russian Federation,rus
+Samoa,wsm
+Saudi Arabia,sau
+Senegal,sen
+Sierra Leone,sle
+Singapore,sgp
+Slovenia,svn
+Solomon Islands,slb
+Somalia,som
+South Africa,zaf
+Spain,esp
+Sri Lanka,lka
+Sudan,sdn
+Suriname,sur
+Sweden,swe
+Syrian Arab Republic,syr
+Taiwan,twn
+Thailand,tha
+Togo,tgo
+Trinidad and Tobago,tto
+Tunisia,tun
+Turkey,tur
+Ukraine,ukr
+United Arab Emirates,are
+United Kingdom,gbr
+"Tanzania, United Republic of",tza
+United States of America,usa
+Uruguay,ury
+Vanuatu,vut
+Venezuela,ven
+Viet Nam,vnm
+Western Sahara,esh
+Yemen,yem
+"Yugoslavia, Federal Republic of",yug
+Afghanistan,afg
+Armenia,arm
+Austria,aut
+Azerbaijan,aze
+Belarus,blr
+Bhutan,btn
+Bolivia,bol
+Bosnia and Herzegovina,bih
+Botswana,bwa
+Brunei Darussalam,brn
+Burkina Faso,bfa
+Burundi,bdi
+Central African Republic,caf
+Chad,tcd
+Hong Kong,hkg
+Czech Republic,cze
+Ethiopia,eth
+Hungary,hun
+Jordan,jor
+Kazakhstan,kaz
+Kyrgyzstan,kgz
+Lao Peoples Democratic Republic,lao
+Lesotho,lso
+Luxembourg,lux
+Malawi,mwi
+Mali,mli
+Mongolia,mng
+Nepal,npl
+Niger,ner
+"Palestinian Territory, Occupied",pse
+Paraguay,pry
+"Moldova, Republic of",mda
+Rwanda,rwa
+Slovakia,svk
+Swaziland,swz
+Switzerland,che
+Tajikistan,tjk
+"Macedonia, the former Yugoslav Republic of",mkd
+Turkmenistan,tkm
+Uganda,uga
+Uzbekistan,uzb
+Zambia,zmb
+Zimbabwe,zwe
+imbabwe,zwe

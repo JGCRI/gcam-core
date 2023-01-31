@@ -17,7 +17,7 @@
 #' @author Yang Liu Sep 2019
 module_energy_LA1325.chemical <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L1011.en_bal_EJ_R_Si_Fi_Yh",
+    return(c("L1012.en_bal_EJ_R_Si_Fi_Yh",
 			       FILE = "energy/A_regions",
              FILE = "energy/mappings/enduse_fuel_aggregation",
 			       "L1321.in_EJ_R_indenergy_F_Yh",
@@ -42,7 +42,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
 
     # Load required inputs
     A_regions <- get_data(all_data, "energy/A_regions")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     L1324.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1324.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
     L1323.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L1323.in_EJ_R_indfeed_F_Yh", strip_attributes = TRUE)
@@ -61,7 +61,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
     # ===================================================
 
     # Construction energy and feedstock input
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(grepl("chemical", sector)) ->
       L1325.in_EJ_R_chemical_F_Y
 
@@ -221,7 +221,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
       add_comments("Obtained from IEA") %>%
       add_legacy_name("L1325.in_EJ_R_chemical_F_Y") %>%
       add_precursors("energy/A_regions",
-					           "L1011.en_bal_EJ_R_Si_Fi_Yh",
+					           "L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/mappings/enduse_fuel_aggregation") ->
       L1325.in_EJ_R_chemical_F_Y
 
@@ -232,7 +232,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
       add_comments("To determine adjusted input energy for industrial energy use") %>%
       add_legacy_name("L1325.in_EJ_R_indenergy_F_Yh") %>%
       add_precursors("L1324.in_EJ_R_indenergy_F_Yh","L1321.in_EJ_R_indenergy_F_Yh",
-                     "L1322.in_EJ_R_indenergy_F_Yh","L1011.en_bal_EJ_R_Si_Fi_Yh","energy/mappings/enduse_fuel_aggregation") ->
+                     "L1322.in_EJ_R_indenergy_F_Yh","L1012.en_bal_EJ_R_Si_Fi_Yh","energy/mappings/enduse_fuel_aggregation") ->
       L1325.in_EJ_R_indenergy_F_Yh
 
     L1324.in_EJ_R_indfeed_F_Yh %>%
@@ -241,7 +241,7 @@ module_energy_LA1325.chemical <- function(command, ...) {
       add_comments("Subtracted chemical feedstock use from industrial feedstock use values in L1324.in_EJ_R_indfeed_F_Yh") %>%
       add_comments("To determine adjusted input feedstock for industrial feed use") %>%
       add_legacy_name("L1324.in_EJ_R_indfeed_F_Yh") %>%
-      add_precursors("L1323.in_EJ_R_indfeed_F_Yh","L1322.in_EJ_R_indfeed_F_Yh", "L132.in_EJ_R_indfeed_F_Yh","L1011.en_bal_EJ_R_Si_Fi_Yh",
+      add_precursors("L1323.in_EJ_R_indfeed_F_Yh","L1322.in_EJ_R_indfeed_F_Yh", "L132.in_EJ_R_indfeed_F_Yh","L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/mappings/enduse_fuel_aggregation") ->
       L1324.in_EJ_R_indfeed_F_Yh
 

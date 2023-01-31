@@ -19,7 +19,7 @@
 module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
-             "L1011.en_bal_EJ_R_Si_Fi_Yh",
+             "L1012.en_bal_EJ_R_Si_Fi_Yh",
              "L121.in_EJ_R_TPES_crude_Yh",
              "L121.in_EJ_R_TPES_unoil_Yh",
              "L111.Prod_EJ_R_F_Yh",
@@ -38,7 +38,7 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh")
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh")
     L121.in_EJ_R_TPES_crude_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_crude_Yh")
     L121.in_EJ_R_TPES_unoil_Yh <- get_data(all_data, "L121.in_EJ_R_TPES_unoil_Yh")
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
@@ -50,10 +50,10 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
 
     #This treats natural gas and LNG as one fuel type, but that should be changed in the future.
     # Total production is taken from L111.Prod_EJ_R_F_Yh and total consumption is calculated from
-    # L1011.en_bal_EJ_R_Si_Fi_Yh and L121.in_EJ_R_TPES_crude_Yh/unoil.
+    # L1012.en_bal_EJ_R_Si_Fi_Yh and L121.in_EJ_R_TPES_crude_Yh/unoil.
 
     #Part 1: Calculate toal consumption of fuels by region
-    bind_rows(L1011.en_bal_EJ_R_Si_Fi_Yh,
+    bind_rows(L1012.en_bal_EJ_R_Si_Fi_Yh,
               L121.in_EJ_R_TPES_crude_Yh,
               L121.in_EJ_R_TPES_unoil_Yh) %>%
       filter(sector == "TPES",
@@ -148,7 +148,7 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Calculate fossil fuel net trade by GCAM region, commodity and year") %>%
       add_precursors("common/GCAM_region_names",
-                     "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "L121.in_EJ_R_TPES_crude_Yh",
                      "L121.in_EJ_R_TPES_unoil_Yh",
                      "L111.Prod_EJ_R_F_Yh") ->
@@ -159,7 +159,7 @@ module_energy_LB2011.ff_ALL_R_C_Y <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("Adjust Comtrade fossil fuel net trade to match GCAM's calibrated values by GCAM region, commodity and year") %>%
       add_precursors("common/GCAM_region_names",
-                     "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "L121.in_EJ_R_TPES_crude_Yh",
                      "L121.in_EJ_R_TPES_unoil_Yh",
                      "L111.Prod_EJ_R_F_Yh",
