@@ -2179,6 +2179,7 @@
 				CD488754122873C200F5A88A /* co2_emissions.cpp in Sources */,
 				CD488756122873C200F5A88A /* emissions_summer.cpp in Sources */,
 				CDAACD88216C546D00D13FD6 /* supply_demand_curve_saver.cpp in Sources */,
+				CD488758122873C200F5A88A /* ghg_factory.cpp in Sources */,
 				4BC45CF32717DF19001B7DF6 /* building_gompertz_function.cpp in Sources */,
 				CD693FA01AEFE0CE00805384 /* relative_cost_logit.cpp in Sources */,
 				CD48875B122873C200F5A88A /* input_driver.cpp in Sources */,

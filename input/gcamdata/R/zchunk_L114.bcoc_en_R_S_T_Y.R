@@ -27,7 +27,9 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
              "L101.in_EJ_R_en_Si_F_Yh",
              "L104.bcoc_tgej_USA_en_T_1990",
              FILE = "emissions/RCP_BC_2000",
-             FILE = "emissions/RCP_OC_2000"))
+             FILE = "emissions/RCP_OC_2000",
+             FILE = "socioeconomics/income_shares"
+             ))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L114.bcoc_tgej_R_en_S_F_2000"))
   } else if(command == driver.MAKE) {
@@ -54,6 +56,8 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
     L104.bcoc_tgej_USA_en_T_1990 <- get_data(all_data, "L104.bcoc_tgej_USA_en_T_1990")
     RCP_BC_2000 <- get_data(all_data, "emissions/RCP_BC_2000")
     RCP_OC_2000 <- get_data(all_data, "emissions/RCP_OC_2000")
+    income_shares<-get_data(all_data, "socioeconomics/income_shares")
+    groups<-income_shares %>% select(category) %>% distinct()
 
     # Compile the driver data (energy consumption by sector and fuel, around the year 2000)
     BCOC_drivers <- L101.in_EJ_R_en_Si_F_Yh %>%
@@ -140,6 +144,16 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
       mutate(year = 2000) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, year, emissions.factor) %>%
       spread(year, emissions.factor)
+
+    L114.bcoc_tgej_R_en_S_F_2000_resid<-L114.bcoc_tgej_R_en_S_F_2000 %>%
+      filter(grepl("resid",supplysector)) %>%
+      repeat_add_columns(tibble(group = unique(groups$category))) %>%
+      unite(supplysector, c("supplysector","group"), sep = "_")
+
+    L114.bcoc_tgej_R_en_S_F_2000<-L114.bcoc_tgej_R_en_S_F_2000 %>%
+      filter(!grepl("resid",supplysector)) %>%
+      bind_rows(L114.bcoc_tgej_R_en_S_F_2000_resid)
+
     # Document for output
     L114.bcoc_tgej_R_en_S_F_2000 %>%
       add_title("BC / OC emissions factors for energy technologies by GCAM region / sector / technology / 2000") %>%
@@ -154,7 +168,8 @@ module_emissions_L114.bcoc_en_R_S_T_Y <- function(command, ...) {
                      "L101.in_EJ_R_en_Si_F_Yh",
                      "L104.bcoc_tgej_USA_en_T_1990",
                      "emissions/RCP_BC_2000",
-                     "emissions/RCP_OC_2000") ->
+                     "emissions/RCP_OC_2000",
+                     "socioeconomics/income_shares") ->
       L114.bcoc_tgej_R_en_S_F_2000
 
     return_data(L114.bcoc_tgej_R_en_S_F_2000)

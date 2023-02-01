@@ -2215,7 +2215,7 @@ element input {
                              text { $demand/text() div $input/ancestor::gcam-consumer/subregional-population[@year=$demand/@year] * 1000000 }
                          }
                      },
-                     $new_root := local:append-heirarchy($input/parent::*/parent::*, $new_input)
+                     $new_root := local:append-heirarchy($input/parent::*, $new_input)
                      return $new_root//text()
                      } 
                      };
@@ -2238,6 +2238,18 @@ element input {
                  
             
                     ]]></xPath>
+                    <comments/>
+                </supplyDemandQuery>
+			<supplyDemandQuery title="building commercial floorspace satiation impedance">
+                    <axis1 name="building">building-node-input[@name]</axis1>
+                    <axis2 name="Year">satiation-impedance[@year]</axis2>
+                    <xPath buildList="true" dataName="cost by unit floorspace" group="false" sumAll="false">gcam-consumer//building-node-input/satiation-impedance/node()</xPath>
+                    <comments/>
+                </supplyDemandQuery>
+                <supplyDemandQuery title="building residential floorspace regional bias adder">
+                    <axis1 name="building">building-node-input[@name]</axis1>
+                    <axis2 name="Year">bias-adder[@year]</axis2>
+                    <xPath buildList="true" dataName="building satiation adder" group="false" sumAll="false">gcam-consumer//building-node-input/bias-adder/node()</xPath>
                     <comments/>
                 </supplyDemandQuery>
                 <supplyDemandQuery title="building total final energy by region">
@@ -2341,6 +2353,24 @@ element input {
                *[@type='subsector']/*[@type='technology']/
                output-primary[@type='output']/
                physical-output[@vintage=parent::*/parent::*/@year]/node()</xPath>
+                    <comments/>
+                </supplyDemandQuery>
+                <supplyDemandQuery title="building service density by energy service">
+                    <axis1 name="building">building-node-input[@name]</axis1>
+                    <axis2 name="Year">service-density[@year]</axis2>
+                    <xPath buildList="true" dataName="service density" group="false" sumAll="false">gcam-consumer//building-node-input/*[@type="input"]/service-density/node()</xPath>
+                    <comments/>
+                </supplyDemandQuery>
+                <supplyDemandQuery title="building satiation impedance by energy service">
+                    <axis1 name="building">building-node-input[@name]</axis1>
+                    <axis2 name="Year">satiation-impedance[@year]</axis2>
+                    <xPath buildList="true" dataName="cost by unit floorspace" group="false" sumAll="false">gcam-consumer//building-node-input/*[@type="input"]/satiation-impedance/node()</xPath>
+                    <comments/>
+                </supplyDemandQuery>
+                <supplyDemandQuery title="building regional bias adder by energy service">
+                    <axis1 name="building">building-node-input[@name]</axis1>
+                    <axis2 name="Year">bias-adder[@year]</axis2>
+                    <xPath buildList="true" dataName="building regional bias adder" group="false" sumAll="false">gcam-consumer//building-node-input/*[@type="input"]/bias-adder/node()</xPath>
                     <comments/>
                 </supplyDemandQuery>
                 <supplyDemandQuery title="building internal gain energy by service">
@@ -4570,6 +4600,18 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
             <xPath buildList="true" dataName="gdp-per-capita-ppp" group="false" sumAll="false">GDP/gdp-per-capita-ppp/text()</xPath>
             <comments/>
         </gdpQueryBuilder>
+        <demographicsQuery title="subregional population">
+            <axis1 name="region">region</axis1>
+            <axis2 name="Year">subregional-population</axis2>
+            <xPath buildList="true" dataName="subregional-population" group="false" sumAll="false">gcam-consumer/subregional-population/node()</xPath>
+            <comments/>
+        </demographicsQuery>
+        <demographicsQuery title="subregional income">
+            <axis1 name="region">region</axis1>
+            <axis2 name="Year">subregional-percapita-income</axis2>
+            <xPath buildList="true" dataName="subregional-percapita-income" group="false" sumAll="false">gcam-consumer/subregional-percapita-income/node()</xPath>
+            <comments/>
+        </demographicsQuery>
     </queryGroup>
     <queryGroup name="policy">
         <marketQuery title="CO2 prices">

@@ -147,7 +147,7 @@ module_emissions_L241.fgas <- function(command, ...) {
     #
     # First, subset the hfc emissions for non-cooling emissions.
     L141.hfc_R_S_T_Yh %>%
-      filter(!supplysector %in% c("resid cooling", "comm cooling")) %>%
+      filter(!grepl("cooling",supplysector)) %>%
       # EF is 1000 x emissions for non-cooling sectors
       mutate(value = value * 1000) %>%
       filter(year == MAX_DATA_YEAR) %>%

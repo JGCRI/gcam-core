@@ -611,7 +611,7 @@ module_energy_L210.resources <- function(command, ...) {
       bind_rows(filter(L210.ResTechShrwt, resource != "uranium"), .) ->
       L210.ResTechShrwt
 
-    # ===================================================
+        # ===================================================
 
     # Produce outputs
 

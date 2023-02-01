@@ -36,15 +36,15 @@ comm heating,gas,gas,bld_comm,gas
 comm others,gas,gas,bld_comm,gas
 comm heating,refined liquids,refined liquids,bld_comm,refined liquids
 comm others,refined liquids,refined liquids,bld_comm,refined liquids
-resid heating,biomass,biomass,bld_resid,biomass
-resid others,biomass,biomass,bld_resid,biomass
-resid heating,coal,coal,bld_resid,coal
-resid others,coal,coal,bld_resid,coal
-resid cooling,gas,gas,bld_resid,gas
-resid heating,gas,gas,bld_resid,gas
-resid others,gas,gas,bld_resid,gas
-resid heating,refined liquids,refined liquids,bld_resid,refined liquids
-resid others,refined liquids,refined liquids,bld_resid,refined liquids
+resid heating modern,biomass,biomass,bld_resid,biomass
+resid others modern,biomass,biomass,bld_resid,biomass
+resid heating coal,coal,coal,bld_resid,coal
+resid others coal,coal,coal,bld_resid,coal
+resid cooling modern,gas,gas,bld_resid,gas
+resid heating modern,gas,gas,bld_resid,gas
+resid others modern,gas,gas,bld_resid,gas
+resid heating modern,refined liquids,refined liquids,bld_resid,refined liquids
+resid others modern,refined liquids,refined liquids,bld_resid,refined liquids
 trn_freight,Freight Rail,Coal,trn_rail,coal
 trn_freight,Freight Rail,Liquids,trn_rail,refined liquids
 trn_freight,Domestic Ship,Liquids,trn_domestic ship,refined liquids
@@ -91,8 +91,8 @@ trn_pass_road_LDV_4W,Car,Liquids,LDV_4W,refined liquids
 trn_pass_road_LDV_4W,Large Car and Truck,Liquids,LDV_4W,refined liquids
 trn_pass_road_bus,All,Liquids,Bus,refined liquids
 trn_pass_road_bus,All,Liquids,Bus,refined liquids
-resid heating,traditional biomass,traditional biomass,bld_resid,biomass
-resid others,traditional biomass,traditional biomass,bld_resid,biomass
+resid heating TradBio,traditional biomass,traditional biomass,bld_resid,biomass
+resid others TradBio,traditional biomass,traditional biomass,bld_resid,biomass
 trn_pass_road_LDV_2W,2W and 3W,Liquids,LDV_2W_3W,refined liquids
 agricultural energy use,mobile,refined liquids,agricultural energy use,refined liquids
 agricultural energy use,stationary,refined liquids,agricultural energy use,refined liquids

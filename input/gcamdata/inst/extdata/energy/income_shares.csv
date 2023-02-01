@@ -1,0 +1,39 @@
+# File: income_shares.csv
+# Title: Alternative income distribution pathways
+# Units: %
+# Source: Made-up for testing
+# Column types: icnnnnn
+# ----------
+GCAM_region_ID,region,Q1,Q2,Q3,Q4,Q5
+1,USA,0.05,0.1,0.15,0.2,0.5
+2,Africa_Eastern,0.05,0.1,0.15,0.2,0.5
+3,Africa_Northern,0.05,0.1,0.15,0.2,0.5
+4,Africa_Southern,0.05,0.1,0.15,0.2,0.5
+5,Africa_Western,0.05,0.1,0.15,0.2,0.5
+6,Australia_NZ,0.05,0.1,0.15,0.2,0.5
+7,Brazil,0.05,0.1,0.15,0.2,0.5
+8,Canada,0.05,0.1,0.15,0.2,0.5
+9,Central America and Caribbean,0.05,0.1,0.15,0.2,0.5
+10,Central Asia,0.05,0.1,0.15,0.2,0.5
+11,China,0.05,0.1,0.15,0.2,0.5
+12,EU-12,0.05,0.1,0.15,0.2,0.5
+13,EU-15,0.05,0.1,0.15,0.2,0.5
+14,Europe_Eastern,0.05,0.1,0.15,0.2,0.5
+15,Europe_Non_EU,0.05,0.1,0.15,0.2,0.5
+16,European Free Trade Association,0.05,0.1,0.15,0.2,0.5
+17,India,0.05,0.1,0.15,0.2,0.5
+18,Indonesia,0.05,0.1,0.15,0.2,0.5
+19,Japan,0.05,0.1,0.15,0.2,0.5
+20,Mexico,0.05,0.1,0.15,0.2,0.5
+21,Middle East,0.05,0.1,0.15,0.2,0.5
+22,Pakistan,0.05,0.1,0.15,0.2,0.5
+23,Russia,0.05,0.1,0.15,0.2,0.5
+24,South Africa,0.05,0.1,0.15,0.2,0.5
+25,South America_Northern,0.05,0.1,0.15,0.2,0.5
+26,South America_Southern,0.05,0.1,0.15,0.2,0.5
+27,South Asia,0.05,0.1,0.15,0.2,0.5
+28,South Korea,0.05,0.1,0.15,0.2,0.5
+29,Southeast Asia,0.05,0.1,0.15,0.2,0.5
+30,Taiwan,0.05,0.1,0.15,0.2,0.5
+31,Argentina,0.05,0.1,0.15,0.2,0.5
+32,Colombia,0.05,0.1,0.15,0.2,0.5

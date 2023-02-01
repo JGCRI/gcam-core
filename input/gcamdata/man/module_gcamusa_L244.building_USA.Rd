@@ -23,7 +23,11 @@ the generated outputs: \code{L244.DeleteConsumer_USAbld}, \code{L244.DeleteSuppl
 \code{L244.SubsectorLogit_bld_gcamusa}, \code{L244.StubTech_bld_gcamusa}, \code{L244.StubTechCalInput_bld_gcamusa}, \code{L244.StubTechMarket_bld},
 \code{L244.GlobalTechIntGainOutputRatio}, \code{L244.GlobalTechInterpTo_bld}, \code{L244.GlobalTechEff_bld},
 \code{L244.GlobalTechShrwt_bld_gcamusa}, \code{L244.GlobalTechCost_bld_gcamusa}, \code{L244.GlobalTechSCurve_bld}, \code{L244.HDDCDD_A2_GFDL_USA},
-\code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.GompFnParam_gcamusa}.
+\code{L244.HDDCDD_AEO_2015_USA}, \code{L244.HDDCDD_constdds_USA}, \code{L244.GompFnParam_gcamusa}, \code{L244.Satiation_impedance_gcamusa},
+\code{L244.GenericServiceImpedance_gcamusa},\code{L244.GenericServiceCoef_gcamusa},\code{L244.GenericServiceAdder_gcamusa},
+\code{L244.ThermalServiceImpedance_gcamusa},\code{L244.ThermalServiceCoef_gcamusa},\code{L244.ThermalServiceAdder_gcamusa},
+\code{L210.DeleteRsrcTradBio_gcamusa}, \code{L244.GenericServicePrice_gcamusa}, \code{L244.ThermalServicePrice_gcamusa},
+\code{L244.GenericBaseDens_gcamusa}, \code{L244.ThermalBaseDens_gcamusa},
 The corresponding file in the original data system was \code{L244.building_USA.R} (gcam-usa level2).
 }
 \description{

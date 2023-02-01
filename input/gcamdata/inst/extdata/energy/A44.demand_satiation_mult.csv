@@ -1,12 +1,16 @@
 # File: A44.demand_satiation_mult.csv
 # Title: Assumed increase in demand of services in USA
 # Units: Increase in demand per unit floorspace
-# Column types: cn 
+# Column types: ccn 
 # ----------
-supplysector,multiplier
-resid heating,1.1
-resid cooling,1.1
-resid others,1.3
-comm heating,1.1
-comm cooling,1.1
-comm others,1.3
+supplysector,agg.service,multiplier
+resid heating modern,resid heating,1.1
+resid heating coal,resid heating,1.1
+resid heating TradBio,resid heating,1.1
+resid cooling modern,resid cooling,1.1
+resid others modern,resid others,1.3
+resid others coal,resid others,1.3
+resid others TradBio,resid others,1.3
+comm heating,comm heating,1.1
+comm cooling,comm cooling,1.1
+comm others,comm others,1.3
