@@ -773,6 +773,11 @@ emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon co
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
 emissions.UNMGD_LAND_INPUT_NAME <- "land-input"
 
+emissions.FUGITIVE_FOSSIL_CO2_NAME <- "CO2_FUG" # name for fugitive co2 emissions from fossil production
+emissions.FOSSIL_EMFACT_THRESHOLD_PERCENTILE <- 0.95 # energy production percentile used in determination of fossil emfact upper thresholds
+emissions.FOSSIL_EMFACT_THRESHOLD_TOP_PRODUCERS <- 0.9975 # percent of production defining the "top producers" used in determination of fossil emfact upper thresholds
+
+
 # Digits for rounding into XMLs
 emissions.DIGITS_CO2COEF       <- 1
 emissions.DIGITS_EMISS_COEF    <- 7

@@ -227,8 +227,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(supplysector == "out_resources",
              year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(resource = subsector) %>%
-      rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
+      mutate(subresource = stub.technology) %>%
+      rename(resource = subsector, technology = stub.technology, emiss.coef = value) %>%
       # add units back in
       mutate(emiss.units = "Tg") %>%
       select(LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
@@ -240,8 +240,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(supplysector == "out_resources",
              year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(resource = subsector) %>%
-      rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
+      mutate(subresource = stub.technology) %>%
+      rename(resource = subsector, technology = stub.technology, emiss.coef = value) %>%
       # add units back in and convert CO2_FUG to correct units
       mutate(emiss.units = case_when(Non.CO2 == "CO2_FUG" ~ "MTC", T ~ "Tg"),
              emiss.coef = case_when(Non.CO2 == "CO2_FUG" ~ emiss.coef*1/emissions.CONV_C_CO2, T ~ emiss.coef)) %>%

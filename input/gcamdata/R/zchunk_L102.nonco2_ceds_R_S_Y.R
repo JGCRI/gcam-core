@@ -115,7 +115,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
         #Introducing N2O
         CEDS_N2O$Non.CO2 <- "N2O"
         # CO2 fugitive
-        CEDS_CO2$Non.CO2 <- "CO2_FUG"
+        CEDS_CO2$Non.CO2 <- emissions.FUGITIVE_FOSSIL_CO2_NAME
         # Prepare unmanaged forest emissions from CMIP to be combined with CEDS data set
         CMIP_unmgd_emissions %>%
           filter(!iso %in% c(emissions.GFED_NODATA)) %>%
@@ -168,10 +168,6 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
           gather_years %>%
           filter(year %in% emissions.CEDS_YEARS) %>%
           # Converts kt(gg) to Teragrams for all gases and converts Teragrams (MTCO2) to MTC for CO2
-          # mutate(emissions = case_when(Non.CO2 == "CO2_FUG" ~ emissions*CONV_GG_TG*CONV_CO2_C,
-          #                              TRUE ~ emissions*CONV_GG_TG),
-          #        units = case_when(Non.CO2 == "CO2_FUG" ~ "MTC",
-          #                          TRUE ~ "Tg")) -> L102.CEDS
           mutate(emissions = emissions*CONV_GG_TG) -> L102.CEDS
 
         # Filter for iso's whose emissions will be scaled to CEDS (currently just USA)
