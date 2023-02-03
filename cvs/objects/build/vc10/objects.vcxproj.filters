@@ -1,1869 +1,572 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <Filter Include="Source Files">
-      <UniqueIdentifier>{e3e4781a-407b-457f-83f9-c07e1f4fe564}</UniqueIdentifier>
-      <Extensions>cpp</Extensions>
-    </Filter>
-    <Filter Include="Source Files\containers">
-      <UniqueIdentifier>{8f7048a3-4d6f-4a38-8d3e-b623f62ee564}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\demographics">
-      <UniqueIdentifier>{ac9ac84d-ab20-421d-8e31-ae30f7117a46}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\emissions">
-      <UniqueIdentifier>{07c2947e-8b2d-42c5-95c4-62d49f1b6916}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\marketplace">
-      <UniqueIdentifier>{77a112d6-8f7a-4b24-99e7-feb24f55580e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\resources">
-      <UniqueIdentifier>{c20a4dc4-a4d0-4a64-b652-2c066d62430e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\sectors">
-      <UniqueIdentifier>{7a6f00ec-e2bb-4c5b-a547-00951b187eb1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\solution">
-      <UniqueIdentifier>{9286af08-633a-4433-905b-b8f14aced08d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\solution\solvers">
-      <UniqueIdentifier>{8a2639cf-b415-4645-88e8-e5773625ba29}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\solution\util">
-      <UniqueIdentifier>{c8192d80-85d6-4aef-9844-850e9899329e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\technology">
-      <UniqueIdentifier>{7b371689-5fc5-4ff8-840b-83b64365e8cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\util">
-      <UniqueIdentifier>{1b7875b9-eab6-4b78-b161-c82543144cab}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\util\base">
-      <UniqueIdentifier>{e63ba312-824a-4744-bf79-2053eacb634a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\util\logger">
-      <UniqueIdentifier>{e7c9badc-94be-48ae-8ca9-672ff0d5a18a}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\util\curves">
-      <UniqueIdentifier>{7456f06c-269e-4ce0-9f31-7c3da9b9ba4e}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\consumers">
-      <UniqueIdentifier>{ec757e25-b364-484e-b9b5-091d051710f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\reporting">
-      <UniqueIdentifier>{c7f72b39-bb21-4692-8088-f366ead86d79}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\climate">
-      <UniqueIdentifier>{1f5b58d0-8e57-47c9-9cd6-18c00a4d1293}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\functions">
-      <UniqueIdentifier>{c1a72959-9a1d-45e9-a7c7-0ef533dba1cc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\target_finder">
-      <UniqueIdentifier>{7ab6e32f-d82c-4af4-bff2-dae806623fde}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\land_allocator">
-      <UniqueIdentifier>{74c7fc78-1a85-4183-94a3-8b16364e25dc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\main">
-      <UniqueIdentifier>{736c7c11-8afe-4bd5-9d18-0255f64712e2}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\ccarbon_model">
-      <UniqueIdentifier>{2a860b6e-1238-4a72-860f-ed0028ed4ad1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\policy">
-      <UniqueIdentifier>{64c9cd04-590e-4607-9c8e-19399d6ba325}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files">
-      <UniqueIdentifier>{f3c20036-5b61-4188-a152-0a918586d252}</UniqueIdentifier>
-      <Extensions>h;hpp;hxx;hm;inl;inc</Extensions>
-    </Filter>
-    <Filter Include="Header Files\demographics">
-      <UniqueIdentifier>{523174cc-8492-4a3b-8f3e-69a3598f961f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\emissions">
-      <UniqueIdentifier>{0f6f5a35-15f0-4664-a8c7-dc744d7c3cdf}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\marketplace">
-      <UniqueIdentifier>{c26e889b-4600-4159-88dd-956a67fa4cdc}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\resources">
-      <UniqueIdentifier>{98ee5f2d-45cb-4e48-9a52-70673557ac24}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\sectors">
-      <UniqueIdentifier>{bad66375-d96a-4ffa-82e5-70ee4b65f064}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\solution">
-      <UniqueIdentifier>{598e79b3-54ec-4791-9b12-183fee7be709}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\solution\solvers">
-      <UniqueIdentifier>{bdbbb8c1-ff58-4ca6-8143-9db15d11a5f9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\solution\util">
-      <UniqueIdentifier>{e76de1ec-9bc3-452a-a1f4-81796714f1f4}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\technologies">
-      <UniqueIdentifier>{61a7ab3b-f106-47f6-a52c-1002c747c654}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\util">
-      <UniqueIdentifier>{4facf15c-937e-429b-9599-9a049e8e7b68}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\util\base">
-      <UniqueIdentifier>{040a7511-1764-40f0-9d02-289211842ea1}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\util\logger">
-      <UniqueIdentifier>{90eb9457-9b2a-44be-b398-de6d59ca300f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\util\curves">
-      <UniqueIdentifier>{e3beed39-6974-438b-b2c9-5c1f719ea0b3}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\consumers">
-      <UniqueIdentifier>{d6a20b1f-d5de-4b0f-b16f-e8b8c9e7d7d5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\reporting">
-      <UniqueIdentifier>{5d385391-1cd8-4219-ac61-a94c3dc289b5}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\functions">
-      <UniqueIdentifier>{c5f182eb-bda4-4729-b4d4-99ee08b63e00}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\climate">
-      <UniqueIdentifier>{51e2e12c-93f9-4571-a291-d23dff493c59}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\target_finder">
-      <UniqueIdentifier>{2741b9fc-90db-4ca6-bdc9-04159daf3eda}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\land_allocator">
-      <UniqueIdentifier>{1d005fc2-a6d3-411c-9c75-939b2cfcb570}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\ccarbon_model">
-      <UniqueIdentifier>{a51e5deb-af6d-4f09-a603-b8ae063e0478}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\policy">
-      <UniqueIdentifier>{c7a1d0c7-52d2-4f90-a12e-e89109d9ba62}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\containers">
-      <UniqueIdentifier>{faa4b2da-4e16-41a9-ac39-838da9a72319}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Header Files\parallel">
-      <UniqueIdentifier>{9fa177e1-95f5-473b-bdb9-b4d2441a4620}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\parallel">
-      <UniqueIdentifier>{cedec6da-9927-4422-a273-00598d0a342f}</UniqueIdentifier>
-    </Filter>
+    <ClCompile Include="..\..\ccarbon_model\source\asimple_carbon_calc.cpp" />
+    <ClCompile Include="..\..\ccarbon_model\source\carbon_model_utils.cpp" />
+    <ClCompile Include="..\..\ccarbon_model\source\land_carbon_densities.cpp" />
+    <ClCompile Include="..\..\ccarbon_model\source\node_carbon_calc.cpp" />
+    <ClCompile Include="..\..\ccarbon_model\source\no_emiss_carbon_calc.cpp" />
+    <ClCompile Include="..\..\climate\source\hector_model.cpp" />
+    <ClCompile Include="..\..\climate\source\MAGICC_array.cpp" />
+    <ClCompile Include="..\..\climate\source\MAGICC_IO_helpers.cpp" />
+    <ClCompile Include="..\..\climate\source\no_climate_model.cpp" />
+    <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC.cpp" />
+    <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp" />
+    <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp" />
+    <ClCompile Include="..\..\containers\source\batch_runner.cpp" />
+    <ClCompile Include="..\..\containers\source\consumer_activity.cpp" />
+    <ClCompile Include="..\..\containers\source\final_demand_activity.cpp" />
+    <ClCompile Include="..\..\containers\source\gdp.cpp" />
+    <ClCompile Include="..\..\containers\source\info.cpp" />
+    <ClCompile Include="..\..\containers\source\info_factory.cpp" />
+    <ClCompile Include="..\..\containers\source\land_allocator_activity.cpp" />
+    <ClCompile Include="..\..\containers\source\mac_generator_scenario_runner.cpp" />
+    <ClCompile Include="..\..\containers\source\market_dependency_finder.cpp" />
+    <ClCompile Include="..\..\containers\source\national_account.cpp" />
+    <ClCompile Include="..\..\containers\source\region.cpp" />
+    <ClCompile Include="..\..\containers\source\region_minicam.cpp" />
+    <ClCompile Include="..\..\containers\source\resource_activity.cpp" />
+    <ClCompile Include="..\..\containers\source\scenario.cpp" />
+    <ClCompile Include="..\..\containers\source\scenario_runner_factory.cpp" />
+    <ClCompile Include="..\..\containers\source\sector_activity.cpp" />
+    <ClCompile Include="..\..\containers\source\single_scenario_runner.cpp" />
+    <ClCompile Include="..\..\containers\source\total_policy_cost_calculator.cpp" />
+    <ClCompile Include="..\..\containers\source\world.cpp" />
+    <ClCompile Include="..\..\demographics\source\age_cohort.cpp" />
+    <ClCompile Include="..\..\demographics\source\demographic.cpp" />
+    <ClCompile Include="..\..\demographics\source\female.cpp" />
+    <ClCompile Include="..\..\demographics\source\gender.cpp" />
+    <ClCompile Include="..\..\demographics\source\male.cpp" />
+    <ClCompile Include="..\..\demographics\source\population.cpp" />
+    <ClCompile Include="..\..\demographics\source\population_mini_cam.cpp" />
+    <ClCompile Include="..\..\emissions\source\aemissions_control.cpp" />
+    <ClCompile Include="..\..\emissions\source\aghg.cpp" />
+    <ClCompile Include="..\..\emissions\source\co2_emissions.cpp" />
+    <ClCompile Include="..\..\emissions\source\emissions_summer.cpp" />
+    <ClCompile Include="..\..\emissions\source\gdp_control.cpp" />
+    <ClCompile Include="..\..\emissions\source\input_driver.cpp" />
+    <ClCompile Include="..\..\emissions\source\input_output_driver.cpp" />
+    <ClCompile Include="..\..\emissions\source\linear_control.cpp" />
+    <ClCompile Include="..\..\emissions\source\luc_emissions_summer.cpp" />
+    <ClCompile Include="..\..\emissions\source\mac_control.cpp" />
+    <ClCompile Include="..\..\emissions\source\nonco2_emissions.cpp" />
+    <ClCompile Include="..\..\emissions\source\output_driver.cpp" />
+    <ClCompile Include="..\..\emissions\source\readin_control.cpp" />
+    <ClCompile Include="..\..\functions\source\absolute_cost_logit.cpp" />
+    <ClCompile Include="..\..\functions\source\building_function.cpp" />
+    <ClCompile Include="..\..\functions\source\building_gompertz_function.cpp" />
+    <ClCompile Include="..\..\functions\source\building_node_input.cpp" />
+    <ClCompile Include="..\..\functions\source\building_service_function.cpp" />
+    <ClCompile Include="..\..\functions\source\building_service_input.cpp" />
+    <ClCompile Include="..\..\functions\source\ctax_input.cpp" />
+    <ClCompile Include="..\..\functions\source\food_demand_function.cpp" />
+    <ClCompile Include="..\..\functions\source\food_demand_input.cpp" />
+    <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp" />
+    <ClCompile Include="..\..\functions\source\satiation_demand_function.cpp" />
+    <ClCompile Include="..\..\functions\source\thermal_building_service_input.cpp" />
+    <ClCompile Include="..\..\land_allocator\source\carbon_land_leaf.cpp" />
+    <ClCompile Include="..\..\land_allocator\source\land_allocator.cpp" />
+    <ClCompile Include="..\..\marketplace\source\cached_market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\calibration_market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\demand_market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\inverse_calibration_market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\linked_market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\market_container.cpp" />
+    <ClCompile Include="..\..\marketplace\source\market_locator.cpp" />
+    <ClCompile Include="..\..\marketplace\source\market_RES.cpp" />
+    <ClCompile Include="..\..\marketplace\source\market_subsidy.cpp" />
+    <ClCompile Include="..\..\marketplace\source\market_tax.cpp" />
+    <ClCompile Include="..\..\marketplace\source\marketplace.cpp" />
+    <ClCompile Include="..\..\marketplace\source\normal_market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\price_market.cpp" />
+    <ClCompile Include="..\..\marketplace\source\trial_value_market.cpp" />
+    <ClCompile Include="..\..\parallel\source\gcam_parallel.cpp" />
+    <ClCompile Include="..\..\policy\source\linked_ghg_policy.cpp" />
+    <ClCompile Include="..\..\resources\source\accumulated_grade.cpp" />
+    <ClCompile Include="..\..\resources\source\accumulated_post_grade.cpp" />
+    <ClCompile Include="..\..\resources\source\grade.cpp" />
+    <ClCompile Include="..\..\resources\source\renewable_subresource.cpp" />
+    <ClCompile Include="..\..\resources\source\reserve_subresource.cpp" />
+    <ClCompile Include="..\..\resources\source\resource.cpp" />
+    <ClCompile Include="..\..\resources\source\smooth_renewable_subresource.cpp" />
+    <ClCompile Include="..\..\resources\source\subresource.cpp" />
+    <ClCompile Include="..\..\resources\source\unlimited_resource.cpp" />
+    <ClCompile Include="..\..\sectors\source\ag_supply_sector.cpp" />
+    <ClCompile Include="..\..\sectors\source\ag_supply_subsector.cpp" />
+    <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp" />
+    <ClCompile Include="..\..\sectors\source\nesting_subsector.cpp" />
+    <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp" />
+    <ClCompile Include="..\..\sectors\source\sector.cpp" />
+    <ClCompile Include="..\..\sectors\source\sector_utils.cpp" />
+    <ClCompile Include="..\..\sectors\source\subsector.cpp" />
+    <ClCompile Include="..\..\sectors\source\subsector_add_techcosts.cpp" />
+    <ClCompile Include="..\..\sectors\source\supply_sector.cpp" />
+    <ClCompile Include="..\..\sectors\source\tran_subsector.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\bisect_one.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\bisect_policy.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\bisect_policy_nr_solver.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\bisection_nr_solver.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\logbroyden.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson_sd.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\preconditioner.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\solver_component.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\solver_factory.cpp" />
+    <ClCompile Include="..\..\solution\solvers\source\user_configurable_solver.cpp" />
+    <ClCompile Include="..\..\solution\util\source\all_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\and_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\calc_counter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\edfun.cpp" />
+    <ClCompile Include="..\..\solution\util\source\fdjac.cpp" />
+    <ClCompile Include="..\..\solution\util\source\has_market_flag_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp" />
+    <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\market_matches_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\market_type_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\not_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\or_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\price_greater_than_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\price_less_than_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\solution_info.cpp" />
+    <ClCompile Include="..\..\solution\util\source\solution_info_filter_factory.cpp" />
+    <ClCompile Include="..\..\solution\util\source\solution_info_param_parser.cpp" />
+    <ClCompile Include="..\..\solution\util\source\solution_info_set.cpp" />
+    <ClCompile Include="..\..\solution\util\source\solvable_nr_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\solvable_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\solution\util\source\solver_library.cpp" />
+    <ClCompile Include="..\..\solution\util\source\unsolved_solution_info_filter.cpp" />
+    <ClCompile Include="..\..\target_finder\source\cumulative_emissions_target.cpp" />
+    <ClCompile Include="..\..\target_finder\source\kyoto_forcing_target.cpp" />
+    <ClCompile Include="..\..\target_finder\source\rcp_forcing_target.cpp" />
+    <ClCompile Include="..\..\target_finder\source\secanter.cpp" />
+    <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\base_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\cal_data_output.cpp" />
+    <ClCompile Include="..\..\technologies\source\cal_data_output_percap.cpp" />
+    <ClCompile Include="..\..\technologies\source\default_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\empty_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\expenditure.cpp" />
+    <ClCompile Include="..\..\technologies\source\fixed_production_state.cpp" />
+    <ClCompile Include="..\..\technologies\source\fractional_secondary_output.cpp" />
+    <ClCompile Include="..\..\technologies\source\generic_output.cpp" />
+    <ClCompile Include="..\..\technologies\source\global_technology_database.cpp" />
+    <ClCompile Include="..\..\technologies\source\intermittent_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\internal_gains.cpp" />
+    <ClCompile Include="..\..\technologies\source\marginal_profit_calculator.cpp" />
+    <ClCompile Include="..\..\technologies\source\non_energy_use_capture_component.cpp" />
+    <ClCompile Include="..\..\technologies\source\nuke_fuel_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\pass_through_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\phased_shutdown_decider.cpp" />
+    <ClCompile Include="..\..\technologies\source\power_plant_capture_component.cpp" />
+    <ClCompile Include="..\..\technologies\source\primary_output.cpp" />
+    <ClCompile Include="..\..\technologies\source\production_state_factory.cpp" />
+    <ClCompile Include="..\..\technologies\source\profit_shutdown_decider.cpp" />
+    <ClCompile Include="..\..\technologies\source\residue_biomass_output.cpp" />
+    <ClCompile Include="..\..\technologies\source\resource_reserve_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\res_secondary_output.cpp" />
+    <ClCompile Include="..\..\technologies\source\retired_production_state.cpp" />
+    <ClCompile Include="..\..\technologies\source\secondary_output.cpp" />
+    <ClCompile Include="..\..\technologies\source\solar_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\standard_capture_component.cpp" />
+    <ClCompile Include="..\..\technologies\source\standard_technical_change_calc.cpp" />
+    <ClCompile Include="..\..\technologies\source\stub_technology_container.cpp" />
+    <ClCompile Include="..\..\technologies\source\s_curve_shutdown_decider.cpp" />
+    <ClCompile Include="..\..\technologies\source\technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\technology_container.cpp" />
+    <ClCompile Include="..\..\technologies\source\tran_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\unmanaged_land_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\variable_production_state.cpp" />
+    <ClCompile Include="..\..\technologies\source\vintage_production_state.cpp" />
+    <ClCompile Include="..\..\technologies\source\wind_technology.cpp" />
+    <ClCompile Include="..\..\util\base\source\atom.cpp" />
+    <ClCompile Include="..\..\util\base\source\atom_registry.cpp" />
+    <ClCompile Include="..\..\util\base\source\calibrate_resource_visitor.cpp" />
+    <ClCompile Include="..\..\util\base\source\calibrate_share_weight_visitor.cpp" />
+    <ClCompile Include="..\..\util\base\source\configuration.cpp" />
+    <ClCompile Include="..\..\util\base\source\fixed_interpolation_function.cpp" />
+    <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp" />
+    <ClCompile Include="..\..\util\base\source\initialize_tech_vector_helper.cpp" />
+    <ClCompile Include="..\..\util\base\source\input_finder.cpp" />
+    <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp" />
+    <ClCompile Include="..\..\util\base\source\linear_interpolation_function.cpp" />
+    <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp" />
+    <ClCompile Include="..\..\util\base\source\mapped_file.cpp" />
+    <ClCompile Include="..\..\util\base\source\model_time.cpp" />
+    <ClCompile Include="..\..\util\base\source\supply_demand_curve_saver.cpp" />
+    <ClCompile Include="..\..\util\base\source\s_curve_interpolation_function.cpp" />
+    <ClCompile Include="..\..\util\base\source\supply_demand_curve.cpp" />
+    <ClCompile Include="..\..\util\base\source\timer.cpp" />
+    <ClCompile Include="..\..\util\base\source\util.cpp" />
+    <ClCompile Include="..\..\util\base\source\xml_parse_helper.cpp" />
+    <ClCompile Include="..\..\util\logger\source\logger.cpp" />
+    <ClCompile Include="..\..\util\logger\source\logger_factory.cpp" />
+    <ClCompile Include="..\..\util\logger\source\plain_text_logger.cpp" />
+    <ClCompile Include="..\..\util\logger\source\xml_logger.cpp" />
+    <ClCompile Include="..\..\util\curves\source\curve.cpp" />
+    <ClCompile Include="..\..\util\curves\source\data_point.cpp" />
+    <ClCompile Include="..\..\util\curves\source\explicit_point_set.cpp" />
+    <ClCompile Include="..\..\util\curves\source\point_set.cpp" />
+    <ClCompile Include="..\..\util\curves\source\point_set_curve.cpp" />
+    <ClCompile Include="..\..\util\curves\source\xy_data_point.cpp" />
+    <ClCompile Include="..\..\consumers\source\consumer.cpp" />
+    <ClCompile Include="..\..\reporting\source\batch_csv_outputter.cpp" />
+    <ClCompile Include="..\..\reporting\source\graph_printer.cpp" />
+    <ClCompile Include="..\..\reporting\source\land_allocator_printer.cpp" />
+    <ClCompile Include="..\..\reporting\source\xml_db_outputter.cpp" />
+    <ClCompile Include="..\..\climate\source\magicc_model.cpp" />
+    <ClCompile Include="..\..\functions\source\aproduction_function.cpp" />
+    <ClCompile Include="..\..\functions\source\ces_production_function.cpp" />
+    <ClCompile Include="..\..\functions\source\efficiency.cpp" />
+    <ClCompile Include="..\..\functions\source\energy_input.cpp" />
+    <ClCompile Include="..\..\functions\source\function_manager.cpp" />
+    <ClCompile Include="..\..\functions\source\function_utils.cpp" />
+    <ClCompile Include="..\..\functions\source\input_capital.cpp" />
+    <ClCompile Include="..\..\functions\source\input_OM_fixed.cpp" />
+    <ClCompile Include="..\..\functions\source\input_OM_var.cpp" />
+    <ClCompile Include="..\..\functions\source\input_subsidy.cpp" />
+    <ClCompile Include="..\..\functions\source\input_tax.cpp" />
+    <ClCompile Include="..\..\functions\source\intensity.cpp" />
+    <ClCompile Include="..\..\functions\source\leaf_input_finder.cpp" />
+    <ClCompile Include="..\..\functions\source\leontief_production_function.cpp" />
+    <ClCompile Include="..\..\functions\source\logit_production_function.cpp" />
+    <ClCompile Include="..\..\functions\source\minicam_input.cpp" />
+    <ClCompile Include="..\..\functions\source\minicam_leontief_production_function.cpp" />
+    <ClCompile Include="..\..\functions\source\minicam_price_elasticity_function.cpp" />
+    <ClCompile Include="..\..\functions\source\nested_ces_production_function.cpp" />
+    <ClCompile Include="..\..\functions\source\node_input.cpp" />
+    <ClCompile Include="..\..\functions\source\non_energy_input.cpp" />
+    <ClCompile Include="..\..\functions\source\renewable_input.cpp" />
+    <ClCompile Include="..\..\target_finder\source\bisecter.cpp" />
+    <ClCompile Include="..\..\target_finder\source\concentration_target.cpp" />
+    <ClCompile Include="..\..\target_finder\source\emissions_stabalization_target.cpp" />
+    <ClCompile Include="..\..\target_finder\source\forcing_target.cpp" />
+    <ClCompile Include="..\..\target_finder\source\policy_target_runner.cpp" />
+    <ClCompile Include="..\..\target_finder\source\target_factory.cpp" />
+    <ClCompile Include="..\..\target_finder\source\temperature_target.cpp" />
+    <ClCompile Include="..\..\land_allocator\source\aland_allocator_item.cpp" />
+    <ClCompile Include="..\..\land_allocator\source\land_leaf.cpp" />
+    <ClCompile Include="..\..\land_allocator\source\land_node.cpp" />
+    <ClCompile Include="..\..\land_allocator\source\land_use_history.cpp" />
+    <ClCompile Include="..\..\land_allocator\source\unmanaged_land_leaf.cpp" />
+    <ClCompile Include="..\..\main\source\main.cpp" />
+    <ClCompile Include="..\..\policy\source\policy_ghg.cpp" />
+    <ClCompile Include="..\..\policy\source\policy_portfolio_standard.cpp" />
+    <ClCompile Include="..\..\sectors\source\value_factor_calculator.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\containers\source\batch_runner.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\gdp.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\info.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\info_factory.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\mac_generator_scenario_runner.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\national_account.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\region.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\region_minicam.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\scenario.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\scenario_runner_factory.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\single_scenario_runner.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\total_policy_cost_calculator.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\world.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\age_cohort.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\demographic.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\female.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\gender.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\male.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\population.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\demographics\source\population_mini_cam.cpp">
-      <Filter>Source Files\demographics</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\cached_market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\calibration_market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\demand_market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\inverse_calibration_market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\market_locator.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\market_subsidy.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\market_tax.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\marketplace.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\normal_market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\price_market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\trial_value_market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\accumulated_grade.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\accumulated_post_grade.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\grade.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\renewable_subresource.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\resource.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\smooth_renewable_subresource.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\subresource.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\unlimited_resource.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\capacity_limit_backup_calculator.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\CSP_backup_calculator.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\sector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\sector_utils.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\subsector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\subsector_add_techcosts.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\supply_sector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\tran_subsector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\bisect_one.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\bisect_policy.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\bisect_policy_nr_solver.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\bisection_nr_solver.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\log_newton_raphson_sd.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\solver_component.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\solver_factory.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\user_configurable_solver.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\all_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\and_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\calc_counter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\market_name_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\market_matches_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\market_type_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\not_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\or_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\solution_info.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\solution_info_filter_factory.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\solution_info_param_parser.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\solution_info_set.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\solvable_nr_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\solvable_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\solver_library.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\unsolved_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\base_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\cal_data_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\cal_data_output_percap.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\default_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\empty_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\expenditure.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\fixed_production_state.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\global_technology_database.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\intermittent_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\internal_gains.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\marginal_profit_calculator.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\non_energy_use_capture_component.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\nuke_fuel_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\phased_shutdown_decider.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\power_plant_capture_component.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\primary_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\production_state_factory.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\profit_shutdown_decider.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\residue_biomass_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\retired_production_state.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\secondary_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\solar_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\standard_capture_component.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\standard_technical_change_calc.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\stub_technology_container.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\technology_container.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\tran_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\unmanaged_land_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\variable_production_state.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\vintage_production_state.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\wind_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\atom.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\atom_registry.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\calibrate_resource_visitor.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\calibrate_share_weight_visitor.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\configuration.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\fixed_interpolation_function.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\input_finder.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\linear_interpolation_function.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\model_time.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\s_curve_interpolation_function.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\supply_demand_curve.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\timer.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\util.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\logger\source\logger.cpp">
-      <Filter>Source Files\util\logger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\logger\source\logger_factory.cpp">
-      <Filter>Source Files\util\logger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\logger\source\plain_text_logger.cpp">
-      <Filter>Source Files\util\logger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\logger\source\xml_logger.cpp">
-      <Filter>Source Files\util\logger</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\curves\source\curve.cpp">
-      <Filter>Source Files\util\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\curves\source\data_point.cpp">
-      <Filter>Source Files\util\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\curves\source\explicit_point_set.cpp">
-      <Filter>Source Files\util\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\curves\source\point_set.cpp">
-      <Filter>Source Files\util\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\curves\source\point_set_curve.cpp">
-      <Filter>Source Files\util\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\curves\source\xy_data_point.cpp">
-      <Filter>Source Files\util\curves</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\consumers\source\consumer.cpp">
-      <Filter>Source Files\consumers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\batch_csv_outputter.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\energy_balance_table.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\graph_printer.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\land_allocator_printer.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\storage_table.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\xml_db_outputter.cpp">
-      <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\magicc_model.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\aproduction_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\ces_production_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\efficiency.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\energy_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\function_manager.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\function_utils.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\input_capital.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\input_OM_fixed.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\input_OM_var.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\input_subsidy.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\input_tax.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\intensity.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\leaf_input_finder.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\leontief_production_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\logit_production_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\minicam_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\minicam_leontief_production_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\minicam_price_elasticity_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\nested_ces_production_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\node_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\non_energy_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\renewable_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\bisecter.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\concentration_target.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\emissions_stabalization_target.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\forcing_target.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\policy_target_runner.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\target_factory.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\temperature_target.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\land_allocator\source\aland_allocator_item.cpp">
-      <Filter>Source Files\land_allocator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\land_allocator\source\land_leaf.cpp">
-      <Filter>Source Files\land_allocator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\land_allocator\source\land_node.cpp">
-      <Filter>Source Files\land_allocator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\land_allocator\source\land_use_history.cpp">
-      <Filter>Source Files\land_allocator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\land_allocator\source\unmanaged_land_leaf.cpp">
-      <Filter>Source Files\land_allocator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\main\source\main.cpp">
-      <Filter>Source Files\main</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\policy\source\policy_ghg.cpp">
-      <Filter>Source Files\policy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\policy\source\policy_portfolio_standard.cpp">
-      <Filter>Source Files\policy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ccarbon_model\source\land_carbon_densities.cpp">
-      <Filter>Source Files\ccarbon_model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ccarbon_model\source\asimple_carbon_calc.cpp">
-      <Filter>Source Files\ccarbon_model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ccarbon_model\source\carbon_model_utils.cpp">
-      <Filter>Source Files\ccarbon_model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\MAGICC_array.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\MAGICC_IO_helpers.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\aghg.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\co2_emissions.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\emissions_summer.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\input_driver.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\input_output_driver.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\luc_emissions_summer.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\output_driver.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\land_allocator\source\carbon_land_leaf.cpp">
-      <Filter>Source Files\land_allocator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\land_allocator\source\land_allocator.cpp">
-      <Filter>Source Files\land_allocator</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\ag_supply_sector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\ag_supply_subsector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\generic_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\res_secondary_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\s_curve_shutdown_decider.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\market_RES.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\kyoto_forcing_target.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\secanter.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp">
-      <Filter>Source Files\consumers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\building_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\building_node_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\building_service_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\building_service_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\satiation_demand_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\market_dependency_finder.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\edfun.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\price_greater_than_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\price_less_than_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\final_demand_activity.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\land_allocator_activity.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\resource_activity.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\sector_activity.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\consumer_activity.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\thermal_building_service_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\parallel\source\gcam_parallel.cpp">
-      <Filter>Source Files\parallel</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\logbroyden.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\jacobian-precondition.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ccarbon_model\source\no_emiss_carbon_calc.cpp">
-      <Filter>Source Files\ccarbon_model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\ccarbon_model\source\node_carbon_calc.cpp">
-      <Filter>Source Files\ccarbon_model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\linked_market.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\policy\source\linked_ghg_policy.cpp">
-      <Filter>Source Files\policy</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\cumulative_emissions_target.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\aemissions_control.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\gdp_control.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\mac_control.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\nonco2_emissions.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\has_market_flag_solution_info_filter.cpp">
-      <Filter>Source Files\solution\util</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\target_finder\source\rcp_forcing_target.cpp">
-      <Filter>Source Files\target_finder</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\absolute_cost_logit.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\solvers\source\preconditioner.cpp">
-      <Filter>Source Files\solution\solvers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\hector_model.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\fractional_secondary_output.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\pass_through_sector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\pass_through_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\marketplace\source\market_container.cpp">
-      <Filter>Source Files\marketplace</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\linear_control.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\ctax_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\emissions\source\readin_control.cpp">
-      <Filter>Source Files\emissions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\supply_demand_curve_saver.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\initialize_tech_vector_helper.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\no_climate_model.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\resources\source\reserve_subresource.cpp">
-      <Filter>Source Files\resources</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\resource_reserve_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\nesting_subsector.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\food_demand_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\functions\source\food_demand_input.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\solution\util\source\fdjac.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\mapped_file.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\xml_parse_helper.cpp">
-      <Filter>Source Files\util\base</Filter>
-    <ClCompile Include="..\..\functions\source\building_gompertz_function.cpp">
-      <Filter>Source Files\functions</Filter>
-    </ClCompile>
-  </ItemGroup>
-  <ItemGroup>
-    <ClInclude Include="..\..\containers\include\batch_runner.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\gdp.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\iinfo.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\info.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\info_factory.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\iscenario_runner.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\mac_generator_scenario_runner.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\national_account.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\region.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\region_minicam.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\scenario.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\scenario_runner_factory.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\single_scenario_runner.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\total_policy_cost_calculator.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\tree_item.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\world.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\age_cohort.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\demographic.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\female.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\gender.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\male.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\population.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\demographics\include\population_mini_cam.h">
-      <Filter>Header Files\demographics</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\cached_market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\calibration_market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\demand_market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\imarket_type.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\inverse_calibration_market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\market_locator.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\market_subsidy.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\market_tax.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\marketplace.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\normal_market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\price_market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\trial_value_market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\accumulated_grade.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\accumulated_post_grade.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\aresource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\grade.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\renewable_subresource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\resource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\smooth_renewable_subresource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\subresource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\unlimited_resource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\afinal_demand.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\capacity_limit_backup_calculator.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\CSP_backup_calculator.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\energy_final_demand.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\ibackup_calculator.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\sector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\sector_utils.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\subsector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\supply_sector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\tran_subsector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\bisect_all.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\bisect_one.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\bisect_policy.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\bisect_policy_nr_solver.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\bisection_nr_solver.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson_sd.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\solver.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\solver_component.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\solver_factory.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\user_configurable_solver.h">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\all_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\and_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\calc_counter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\isolution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\market_name_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\market_matches_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\market_type_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\not_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\or_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\solution_info.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\solution_info_filter_factory.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\solution_info_param_parser.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\solution_info_set.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\solvable_nr_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\solvable_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\solver_library.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\unsolved_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\base_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\cal_data_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\cal_data_output_percap.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\default_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\empty_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\expenditure.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\fixed_production_state.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\global_technology_database.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\ical_data.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\icapture_component.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\intermittent_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\internal_gains.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\ioutput.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\iproduction_state.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\ishutdown_decider.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\itechnical_change_calc.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\itechnology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\itechnology_container.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\marginal_profit_calculator.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\non_energy_use_capture_component.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\nuke_fuel_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\phased_shutdown_decider.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\power_plant_capture_component.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\primary_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\production_state_factory.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\profit_shutdown_decider.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\residue_biomass_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\retired_production_state.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\secondary_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\solar_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\standard_capture_component.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\standard_technical_change_calc.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\stub_technology_container.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\technology_container.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\tran_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\unmanaged_land_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\variable_production_state.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\vintage_production_state.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\wind_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\atom.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\atom_registry.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\auto_file.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\calibrate_resource_visitor.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\calibrate_share_weight_visitor.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\configuration.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\default_visitor.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\definitions.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\fixed_interpolation_function.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\hash_map.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\iinterpolation_function.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\inamed.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\input_finder.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\interpolation_rule.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\ivisitable.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\ivisitor.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\linear_interpolation_function.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\model_time.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\object_meta_info.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\s_curve_interpolation_function.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\string_hash.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\supply_demand_curve.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\time_vector.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\timer.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\TValidatorInfo.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\util.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\value.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\version.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\xml_helper.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\logger\include\ilogger.h">
-      <Filter>Header Files\util\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\logger\include\logger.h">
-      <Filter>Header Files\util\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\logger\include\logger_factory.h">
-      <Filter>Header Files\util\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\logger\include\plain_text_logger.h">
-      <Filter>Header Files\util\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\logger\include\xml_logger.h">
-      <Filter>Header Files\util\logger</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\curves\include\cost_curve.h">
-      <Filter>Header Files\util\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\curves\include\curve.h">
-      <Filter>Header Files\util\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\curves\include\data_point.h">
-      <Filter>Header Files\util\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\curves\include\explicit_point_set.h">
-      <Filter>Header Files\util\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\curves\include\point_set.h">
-      <Filter>Header Files\util\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\curves\include\point_set_curve.h">
-      <Filter>Header Files\util\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\curves\include\xy_data_point.h">
-      <Filter>Header Files\util\curves</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\consumers\include\consumer.h">
-      <Filter>Header Files\consumers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\batch_csv_outputter.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\energy_balance_table.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\graph_printer.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\storage_table.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\xml_db_outputter.h">
-      <Filter>Header Files\reporting</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\aproduction_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\ces_production_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\efficiency.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\energy_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\function_manager.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\function_utils.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\icoefficient.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\ifunction.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\iinput.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\inested_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\input_capital.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\input_OM_fixed.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\input_OM_var.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\input_subsidy.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\input_tax.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\intensity.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\leaf_input_finder.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\leontief_production_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\logit_production_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\minicam_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\minicam_leontief_production_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\minicam_price_elasticity_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\nested_ces_production_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\node_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\non_energy_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\renewable_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\climate\include\iclimate_model.h">
-      <Filter>Header Files\climate</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\climate\include\magicc_model.h">
-      <Filter>Header Files\climate</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\bisecter.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\concentration_target.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\forcing_target.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\itarget.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\policy_target_runner.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\target_factory.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\temperature_target.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\land_allocator\include\aland_allocator_item.h">
-      <Filter>Header Files\land_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\land_allocator\include\iland_allocator.h">
-      <Filter>Header Files\land_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\land_allocator\include\land_leaf.h">
-      <Filter>Header Files\land_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\land_allocator\include\land_node.h">
-      <Filter>Header Files\land_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\land_allocator\include\unmanaged_land_leaf.h">
-      <Filter>Header Files\land_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\policy\include\policy_ghg.h">
-      <Filter>Header Files\policy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\policy\include\policy_portfolio_standard.h">
-      <Filter>Header Files\policy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ccarbon_model\include\land_carbon_densities.h">
-      <Filter>Header Files\ccarbon_model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ccarbon_model\include\asimple_carbon_calc.h">
-      <Filter>Header Files\ccarbon_model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ccarbon_model\include\carbon_model_utils.h">
-      <Filter>Header Files\ccarbon_model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ccarbon_model\include\icarbon_calc.h">
-      <Filter>Header Files\ccarbon_model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h">
-      <Filter>Header Files\climate</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\climate\include\MAGICC_array.h">
-      <Filter>Header Files\climate</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\iemissions_driver.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\aghg.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\co2_emissions.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\emissions_summer.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\input_driver.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\input_output_driver.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\luc_emissions_summer.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\output_driver.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\land_allocator\include\carbon_land_leaf.h">
-      <Filter>Header Files\land_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\land_allocator\include\land_allocator.h">
-      <Filter>Header Files\land_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\land_allocator\include\land_use_history.h">
-      <Filter>Header Files\land_allocator</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\ag_supply_sector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\ag_supply_subsector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\ag_production_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\generic_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\res_secondary_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\s_curve_shutdown_decider.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\market_RES.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\emissions_stabalization_target.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\itarget_solver.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\kyoto_forcing_target.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\secanter.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\consumers\include\gcam_consumer.h">
-      <Filter>Header Files\consumers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\building_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\building_node_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\building_service_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\building_service_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\satiation_demand_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\market_dependency_finder.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\price_greater_than_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\price_less_than_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\final_demand_activity.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\iactivity.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\land_allocator_activity.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\resource_activity.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\sector_activity.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\consumer_activity.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\thermal_building_service_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\parallel\include\util.hpp">
-      <Filter>Header Files\parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\parallel\include\bitvector.hpp">
-      <Filter>Header Files\parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\parallel\include\bmatrix.hpp">
-      <Filter>Header Files\parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\parallel\include\clanid.hpp">
-      <Filter>Header Files\parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\parallel\include\digraph.hpp">
-      <Filter>Header Files\parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\parallel\include\gcam_parallel.hpp">
-      <Filter>Header Files\parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\parallel\include\grain-collect.hpp">
-      <Filter>Header Files\parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\parallel\include\graph-parse.hpp">
-      <Filter>Header Files\parallel</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\logbroyden.hpp">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\ublas-helpers.hpp">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\edfun.hpp">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\fdjac.hpp">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\functor.hpp">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\jacobian-precondition.hpp">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\linesearch.hpp">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\fltcmp.hpp">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ccarbon_model\include\no_emiss_carbon_calc.h">
-      <Filter>Header Files\ccarbon_model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\ccarbon_model\include\node_carbon_calc.h">
-      <Filter>Header Files\ccarbon_model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\linked_market.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\policy\include\linked_ghg_policy.h">
-      <Filter>Header Files\policy</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\cumulative_emissions_target.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\aemissions_control.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\gdp_control.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\mac_control.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\nonco2_emissions.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\util\include\has_market_flag_solution_info_filter.h">
-      <Filter>Header Files\solution\util</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\target_finder\include\rcp_forcing_target.h">
-      <Filter>Header Files\target_finder</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\absolute_cost_logit.hpp">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\relative_cost_logit.hpp">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\solution\solvers\include\preconditioner.hpp">
-      <Filter>Header Files\solution\solvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\climate\include\hector_model.hpp">
-      <Filter>Header Files\climate</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\fractional_secondary_output.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\pass_through_sector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\pass_through_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\imodel_feedback_calc.h">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\data_definition_util.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\expand_data_vector.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\factory.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\gcam_data_containers.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\gcam_fusion.hpp">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\iyeared.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\marketplace\include\market_container.h">
-      <Filter>Header Files\marketplace</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\linear_control.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\manage_state_variables.hpp">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\ctax_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\emissions\include\readin_control.h">
-      <Filter>Header Files\emissions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\supply_demand_curve_saver.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\initialize_tech_vector_helper.hpp">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\climate\include\no_climate_model.h">
-      <Filter>Header Files\climate</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\resources\include\reserve_subresource.h">
-      <Filter>Header Files\resources</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\resource_reserve_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\nesting_subsector.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\food_demand_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\functions\include\food_demand_input.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\aparsable.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\xml_parse_helper.h">
-      <Filter>Header Files\util\base</Filter>
-    <ClInclude Include="..\..\functions\include\building_gompertz_function.h">
-      <Filter>Header Files\functions</Filter>
-    </ClInclude>
+    <ClInclude Include="..\..\ccarbon_model\include\asimple_carbon_calc.h" />
+    <ClInclude Include="..\..\ccarbon_model\include\carbon_model_utils.h" />
+    <ClInclude Include="..\..\ccarbon_model\include\icarbon_calc.h" />
+    <ClInclude Include="..\..\ccarbon_model\include\land_carbon_densities.h" />
+    <ClInclude Include="..\..\ccarbon_model\include\node_carbon_calc.h" />
+    <ClInclude Include="..\..\ccarbon_model\include\no_emiss_carbon_calc.h" />
+    <ClInclude Include="..\..\climate\include\hector_model.hpp" />
+    <ClInclude Include="..\..\climate\include\MAGICC_array.h" />
+    <ClInclude Include="..\..\climate\include\no_climate_model.h" />
+    <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h" />
+    <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />
+    <ClInclude Include="..\..\containers\include\batch_runner.h" />
+    <ClInclude Include="..\..\containers\include\consumer_activity.h" />
+    <ClInclude Include="..\..\containers\include\final_demand_activity.h" />
+    <ClInclude Include="..\..\containers\include\gdp.h" />
+    <ClInclude Include="..\..\containers\include\iactivity.h" />
+    <ClInclude Include="..\..\containers\include\iinfo.h" />
+    <ClInclude Include="..\..\containers\include\imodel_feedback_calc.h" />
+    <ClInclude Include="..\..\containers\include\info.h" />
+    <ClInclude Include="..\..\containers\include\info_factory.h" />
+    <ClInclude Include="..\..\containers\include\iscenario_runner.h" />
+    <ClInclude Include="..\..\containers\include\land_allocator_activity.h" />
+    <ClInclude Include="..\..\containers\include\mac_generator_scenario_runner.h" />
+    <ClInclude Include="..\..\containers\include\market_dependency_finder.h" />
+    <ClInclude Include="..\..\containers\include\national_account.h" />
+    <ClInclude Include="..\..\containers\include\region.h" />
+    <ClInclude Include="..\..\containers\include\region_minicam.h" />
+    <ClInclude Include="..\..\containers\include\resource_activity.h" />
+    <ClInclude Include="..\..\containers\include\scenario.h" />
+    <ClInclude Include="..\..\containers\include\scenario_runner_factory.h" />
+    <ClInclude Include="..\..\containers\include\sector_activity.h" />
+    <ClInclude Include="..\..\containers\include\single_scenario_runner.h" />
+    <ClInclude Include="..\..\containers\include\total_policy_cost_calculator.h" />
+    <ClInclude Include="..\..\containers\include\tree_item.h" />
+    <ClInclude Include="..\..\containers\include\world.h" />
+    <ClInclude Include="..\..\demographics\include\age_cohort.h" />
+    <ClInclude Include="..\..\demographics\include\demographic.h" />
+    <ClInclude Include="..\..\demographics\include\female.h" />
+    <ClInclude Include="..\..\demographics\include\gender.h" />
+    <ClInclude Include="..\..\demographics\include\male.h" />
+    <ClInclude Include="..\..\demographics\include\population.h" />
+    <ClInclude Include="..\..\demographics\include\population_mini_cam.h" />
+    <ClInclude Include="..\..\emissions\include\aemissions_control.h" />
+    <ClInclude Include="..\..\emissions\include\iemissions_driver.h" />
+    <ClInclude Include="..\..\emissions\include\aghg.h" />
+    <ClInclude Include="..\..\emissions\include\co2_emissions.h" />
+    <ClInclude Include="..\..\emissions\include\emissions_summer.h" />
+    <ClInclude Include="..\..\emissions\include\gdp_control.h" />
+    <ClInclude Include="..\..\emissions\include\input_driver.h" />
+    <ClInclude Include="..\..\emissions\include\input_output_driver.h" />
+    <ClInclude Include="..\..\emissions\include\linear_control.h" />
+    <ClInclude Include="..\..\emissions\include\luc_emissions_summer.h" />
+    <ClInclude Include="..\..\emissions\include\mac_control.h" />
+    <ClInclude Include="..\..\emissions\include\nonco2_emissions.h" />
+    <ClInclude Include="..\..\emissions\include\output_driver.h" />
+    <ClInclude Include="..\..\emissions\include\readin_control.h" />
+    <ClInclude Include="..\..\functions\include\absolute_cost_logit.hpp" />
+    <ClInclude Include="..\..\functions\include\building_function.h" />
+    <ClInclude Include="..\..\functions\include\building_gompertz_function.h" />
+    <ClInclude Include="..\..\functions\include\building_node_input.h" />
+    <ClInclude Include="..\..\functions\include\building_service_function.h" />
+    <ClInclude Include="..\..\functions\include\building_service_input.h" />
+    <ClInclude Include="..\..\functions\include\ctax_input.h" />
+    <ClInclude Include="..\..\functions\include\food_demand_function.h" />
+    <ClInclude Include="..\..\functions\include\food_demand_input.h" />
+    <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp" />
+    <ClInclude Include="..\..\functions\include\relative_cost_logit.hpp" />
+    <ClInclude Include="..\..\functions\include\satiation_demand_function.h" />
+    <ClInclude Include="..\..\functions\include\thermal_building_service_input.h" />
+    <ClInclude Include="..\..\land_allocator\include\carbon_land_leaf.h" />
+    <ClInclude Include="..\..\land_allocator\include\land_allocator.h" />
+    <ClInclude Include="..\..\land_allocator\include\land_use_history.h" />
+    <ClInclude Include="..\..\marketplace\include\cached_market.h" />
+    <ClInclude Include="..\..\marketplace\include\calibration_market.h" />
+    <ClInclude Include="..\..\marketplace\include\demand_market.h" />
+    <ClInclude Include="..\..\marketplace\include\imarket_type.h" />
+    <ClInclude Include="..\..\marketplace\include\inverse_calibration_market.h" />
+    <ClInclude Include="..\..\marketplace\include\linked_market.h" />
+    <ClInclude Include="..\..\marketplace\include\market.h" />
+    <ClInclude Include="..\..\marketplace\include\market_container.h" />
+    <ClInclude Include="..\..\marketplace\include\market_locator.h" />
+    <ClInclude Include="..\..\marketplace\include\market_RES.h" />
+    <ClInclude Include="..\..\marketplace\include\market_subsidy.h" />
+    <ClInclude Include="..\..\marketplace\include\market_tax.h" />
+    <ClInclude Include="..\..\marketplace\include\marketplace.h" />
+    <ClInclude Include="..\..\marketplace\include\normal_market.h" />
+    <ClInclude Include="..\..\marketplace\include\price_market.h" />
+    <ClInclude Include="..\..\marketplace\include\trial_value_market.h" />
+    <ClInclude Include="..\..\parallel\include\bitvector.hpp" />
+    <ClInclude Include="..\..\parallel\include\bmatrix.hpp" />
+    <ClInclude Include="..\..\parallel\include\clanid.hpp" />
+    <ClInclude Include="..\..\parallel\include\digraph.hpp" />
+    <ClInclude Include="..\..\parallel\include\gcam_parallel.hpp" />
+    <ClInclude Include="..\..\parallel\include\grain-collect.hpp" />
+    <ClInclude Include="..\..\parallel\include\graph-parse.hpp" />
+    <ClInclude Include="..\..\parallel\include\util.hpp" />
+    <ClInclude Include="..\..\policy\include\linked_ghg_policy.h" />
+    <ClInclude Include="..\..\resources\include\accumulated_grade.h" />
+    <ClInclude Include="..\..\resources\include\accumulated_post_grade.h" />
+    <ClInclude Include="..\..\resources\include\aresource.h" />
+    <ClInclude Include="..\..\resources\include\grade.h" />
+    <ClInclude Include="..\..\resources\include\renewable_subresource.h" />
+    <ClInclude Include="..\..\resources\include\reserve_subresource.h" />
+    <ClInclude Include="..\..\resources\include\resource.h" />
+    <ClInclude Include="..\..\resources\include\smooth_renewable_subresource.h" />
+    <ClInclude Include="..\..\resources\include\subresource.h" />
+    <ClInclude Include="..\..\resources\include\unlimited_resource.h" />
+    <ClInclude Include="..\..\sectors\include\afinal_demand.h" />
+    <ClInclude Include="..\..\sectors\include\ag_supply_sector.h" />
+    <ClInclude Include="..\..\sectors\include\ag_supply_subsector.h" />
+    <ClInclude Include="..\..\sectors\include\energy_final_demand.h" />
+    <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
+    <ClInclude Include="..\..\sectors\include\nesting_subsector.h" />
+    <ClInclude Include="..\..\sectors\include\pass_through_sector.h" />
+    <ClInclude Include="..\..\sectors\include\sector.h" />
+    <ClInclude Include="..\..\sectors\include\sector_utils.h" />
+    <ClInclude Include="..\..\sectors\include\subsector.h" />
+    <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h" />
+    <ClInclude Include="..\..\sectors\include\supply_sector.h" />
+    <ClInclude Include="..\..\sectors\include\tran_subsector.h" />
+    <ClInclude Include="..\..\solution\solvers\include\bisect_all.h" />
+    <ClInclude Include="..\..\solution\solvers\include\bisect_one.h" />
+    <ClInclude Include="..\..\solution\solvers\include\bisect_policy.h" />
+    <ClInclude Include="..\..\solution\solvers\include\bisect_policy_nr_solver.h" />
+    <ClInclude Include="..\..\solution\solvers\include\bisection_nr_solver.h" />
+    <ClInclude Include="..\..\solution\solvers\include\logbroyden.hpp" />
+    <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson.h" />
+    <ClInclude Include="..\..\solution\solvers\include\log_newton_raphson_sd.h" />
+    <ClInclude Include="..\..\solution\solvers\include\preconditioner.hpp" />
+    <ClInclude Include="..\..\solution\solvers\include\solver.h" />
+    <ClInclude Include="..\..\solution\solvers\include\solver_component.h" />
+    <ClInclude Include="..\..\solution\solvers\include\solver_factory.h" />
+    <ClInclude Include="..\..\solution\solvers\include\user_configurable_solver.h" />
+    <ClInclude Include="..\..\solution\util\include\all_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\and_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\calc_counter.h" />
+    <ClInclude Include="..\..\solution\util\include\edfun.hpp" />
+    <ClInclude Include="..\..\solution\util\include\fdjac.hpp" />
+    <ClInclude Include="..\..\solution\util\include\functor.hpp" />
+    <ClInclude Include="..\..\solution\util\include\has_market_flag_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\isolution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\jacobian-precondition.hpp" />
+    <ClInclude Include="..\..\solution\util\include\linesearch.hpp" />
+    <ClInclude Include="..\..\solution\util\include\market_name_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\market_matches_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\market_type_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\not_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\or_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\price_greater_than_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\price_less_than_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\solution_info.h" />
+    <ClInclude Include="..\..\solution\util\include\solution_info_filter_factory.h" />
+    <ClInclude Include="..\..\solution\util\include\solution_info_param_parser.h" />
+    <ClInclude Include="..\..\solution\util\include\solution_info_set.h" />
+    <ClInclude Include="..\..\solution\util\include\solvable_nr_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\solvable_solution_info_filter.h" />
+    <ClInclude Include="..\..\solution\util\include\solver_library.h" />
+    <ClInclude Include="..\..\solution\util\include\ublas-helpers.hpp" />
+    <ClInclude Include="..\..\solution\util\include\unsolved_solution_info_filter.h" />
+    <ClInclude Include="..\..\target_finder\include\cumulative_emissions_target.h" />
+    <ClInclude Include="..\..\target_finder\include\emissions_stabalization_target.h" />
+    <ClInclude Include="..\..\target_finder\include\itarget_solver.h" />
+    <ClInclude Include="..\..\target_finder\include\kyoto_forcing_target.h" />
+    <ClInclude Include="..\..\target_finder\include\rcp_forcing_target.h" />
+    <ClInclude Include="..\..\target_finder\include\secanter.h" />
+    <ClInclude Include="..\..\technologies\include\ag_production_technology.h" />
+    <ClInclude Include="..\..\technologies\include\base_technology.h" />
+    <ClInclude Include="..\..\technologies\include\cal_data_output.h" />
+    <ClInclude Include="..\..\technologies\include\cal_data_output_percap.h" />
+    <ClInclude Include="..\..\technologies\include\default_technology.h" />
+    <ClInclude Include="..\..\technologies\include\empty_technology.h" />
+    <ClInclude Include="..\..\technologies\include\expenditure.h" />
+    <ClInclude Include="..\..\technologies\include\fixed_production_state.h" />
+    <ClInclude Include="..\..\technologies\include\fractional_secondary_output.h" />
+    <ClInclude Include="..\..\technologies\include\generic_output.h" />
+    <ClInclude Include="..\..\technologies\include\global_technology_database.h" />
+    <ClInclude Include="..\..\technologies\include\ical_data.h" />
+    <ClInclude Include="..\..\technologies\include\icapture_component.h" />
+    <ClInclude Include="..\..\technologies\include\intermittent_technology.h" />
+    <ClInclude Include="..\..\technologies\include\internal_gains.h" />
+    <ClInclude Include="..\..\technologies\include\ioutput.h" />
+    <ClInclude Include="..\..\technologies\include\iproduction_state.h" />
+    <ClInclude Include="..\..\technologies\include\ishutdown_decider.h" />
+    <ClInclude Include="..\..\technologies\include\itechnical_change_calc.h" />
+    <ClInclude Include="..\..\technologies\include\itechnology.h" />
+    <ClInclude Include="..\..\technologies\include\itechnology_container.h" />
+    <ClInclude Include="..\..\technologies\include\marginal_profit_calculator.h" />
+    <ClInclude Include="..\..\technologies\include\non_energy_use_capture_component.h" />
+    <ClInclude Include="..\..\technologies\include\nuke_fuel_technology.h" />
+    <ClInclude Include="..\..\technologies\include\pass_through_technology.h" />
+    <ClInclude Include="..\..\technologies\include\phased_shutdown_decider.h" />
+    <ClInclude Include="..\..\technologies\include\power_plant_capture_component.h" />
+    <ClInclude Include="..\..\technologies\include\primary_output.h" />
+    <ClInclude Include="..\..\technologies\include\production_state_factory.h" />
+    <ClInclude Include="..\..\technologies\include\profit_shutdown_decider.h" />
+    <ClInclude Include="..\..\technologies\include\residue_biomass_output.h" />
+    <ClInclude Include="..\..\technologies\include\resource_reserve_technology.h" />
+    <ClInclude Include="..\..\technologies\include\res_secondary_output.h" />
+    <ClInclude Include="..\..\technologies\include\retired_production_state.h" />
+    <ClInclude Include="..\..\technologies\include\secondary_output.h" />
+    <ClInclude Include="..\..\technologies\include\solar_technology.h" />
+    <ClInclude Include="..\..\technologies\include\standard_capture_component.h" />
+    <ClInclude Include="..\..\technologies\include\standard_technical_change_calc.h" />
+    <ClInclude Include="..\..\technologies\include\stub_technology_container.h" />
+    <ClInclude Include="..\..\technologies\include\s_curve_shutdown_decider.h" />
+    <ClInclude Include="..\..\technologies\include\technology.h" />
+    <ClInclude Include="..\..\technologies\include\technology_container.h" />
+    <ClInclude Include="..\..\technologies\include\tran_technology.h" />
+    <ClInclude Include="..\..\technologies\include\unmanaged_land_technology.h" />
+    <ClInclude Include="..\..\technologies\include\variable_production_state.h" />
+    <ClInclude Include="..\..\technologies\include\vintage_production_state.h" />
+    <ClInclude Include="..\..\technologies\include\wind_technology.h" />
+    <ClInclude Include="..\..\util\base\include\aparsable.h" />
+    <ClInclude Include="..\..\util\base\include\atom.h" />
+    <ClInclude Include="..\..\util\base\include\atom_registry.h" />
+    <ClInclude Include="..\..\util\base\include\auto_file.h" />
+    <ClInclude Include="..\..\util\base\include\calibrate_resource_visitor.h" />
+    <ClInclude Include="..\..\util\base\include\calibrate_share_weight_visitor.h" />
+    <ClInclude Include="..\..\util\base\include\configuration.h" />
+    <ClInclude Include="..\..\util\base\include\data_definition_util.h" />
+    <ClInclude Include="..\..\util\base\include\default_visitor.h" />
+    <ClInclude Include="..\..\util\base\include\definitions.h" />
+    <ClInclude Include="..\..\util\base\include\expand_data_vector.h" />
+    <ClInclude Include="..\..\util\base\include\factory.h" />
+    <ClInclude Include="..\..\util\base\include\fixed_interpolation_function.h" />
+    <ClInclude Include="..\..\util\base\include\fltcmp.hpp" />
+    <ClInclude Include="..\..\util\base\include\gcam_data_containers.h" />
+    <ClInclude Include="..\..\util\base\include\gcam_fusion.hpp" />
+    <ClInclude Include="..\..\util\base\include\hash_map.h" />
+    <ClInclude Include="..\..\util\base\include\iinterpolation_function.h" />
+    <ClInclude Include="..\..\util\base\include\inamed.h" />
+    <ClInclude Include="..\..\util\base\include\initialize_tech_vector_helper.hpp" />
+    <ClInclude Include="..\..\util\base\include\input_finder.h" />
+    <ClInclude Include="..\..\util\base\include\interpolation_rule.h" />
+    <ClInclude Include="..\..\util\base\include\ivisitable.h" />
+    <ClInclude Include="..\..\util\base\include\ivisitor.h" />
+    <ClInclude Include="..\..\util\base\include\iyeared.h" />
+    <ClInclude Include="..\..\util\base\include\linear_interpolation_function.h" />
+    <ClInclude Include="..\..\util\base\include\manage_state_variables.hpp" />
+    <ClInclude Include="..\..\util\base\include\model_time.h" />
+    <ClInclude Include="..\..\util\base\include\object_meta_info.h" />
+    <ClInclude Include="..\..\util\base\include\supply_demand_curve_saver.h" />
+    <ClInclude Include="..\..\util\base\include\s_curve_interpolation_function.h" />
+    <ClInclude Include="..\..\util\base\include\string_hash.h" />
+    <ClInclude Include="..\..\util\base\include\supply_demand_curve.h" />
+    <ClInclude Include="..\..\util\base\include\time_vector.h" />
+    <ClInclude Include="..\..\util\base\include\timer.h" />
+    <ClInclude Include="..\..\util\base\include\TValidatorInfo.h" />
+    <ClInclude Include="..\..\util\base\include\util.h" />
+    <ClInclude Include="..\..\util\base\include\value.h" />
+    <ClInclude Include="..\..\util\base\include\version.h" />
+    <ClInclude Include="..\..\util\base\include\xml_helper.h" />
+    <ClInclude Include="..\..\util\base\include\xml_parse_helper.h" />
+    <ClInclude Include="..\..\util\logger\include\ilogger.h" />
+    <ClInclude Include="..\..\util\logger\include\logger.h" />
+    <ClInclude Include="..\..\util\logger\include\logger_factory.h" />
+    <ClInclude Include="..\..\util\logger\include\plain_text_logger.h" />
+    <ClInclude Include="..\..\util\logger\include\xml_logger.h" />
+    <ClInclude Include="..\..\util\curves\include\cost_curve.h" />
+    <ClInclude Include="..\..\util\curves\include\curve.h" />
+    <ClInclude Include="..\..\util\curves\include\data_point.h" />
+    <ClInclude Include="..\..\util\curves\include\explicit_point_set.h" />
+    <ClInclude Include="..\..\util\curves\include\point_set.h" />
+    <ClInclude Include="..\..\util\curves\include\point_set_curve.h" />
+    <ClInclude Include="..\..\util\curves\include\xy_data_point.h" />
+    <ClInclude Include="..\..\consumers\include\consumer.h" />
+    <ClInclude Include="..\..\reporting\include\batch_csv_outputter.h" />
+    <ClInclude Include="..\..\reporting\include\graph_printer.h" />
+    <ClInclude Include="..\..\reporting\include\xml_db_outputter.h" />
+    <ClInclude Include="..\..\functions\include\aproduction_function.h" />
+    <ClInclude Include="..\..\functions\include\ces_production_function.h" />
+    <ClInclude Include="..\..\functions\include\efficiency.h" />
+    <ClInclude Include="..\..\functions\include\energy_input.h" />
+    <ClInclude Include="..\..\functions\include\function_manager.h" />
+    <ClInclude Include="..\..\functions\include\function_utils.h" />
+    <ClInclude Include="..\..\functions\include\icoefficient.h" />
+    <ClInclude Include="..\..\functions\include\ifunction.h" />
+    <ClInclude Include="..\..\functions\include\iinput.h" />
+    <ClInclude Include="..\..\functions\include\inested_input.h" />
+    <ClInclude Include="..\..\functions\include\input_capital.h" />
+    <ClInclude Include="..\..\functions\include\input_OM_fixed.h" />
+    <ClInclude Include="..\..\functions\include\input_OM_var.h" />
+    <ClInclude Include="..\..\functions\include\input_subsidy.h" />
+    <ClInclude Include="..\..\functions\include\input_tax.h" />
+    <ClInclude Include="..\..\functions\include\intensity.h" />
+    <ClInclude Include="..\..\functions\include\leaf_input_finder.h" />
+    <ClInclude Include="..\..\functions\include\leontief_production_function.h" />
+    <ClInclude Include="..\..\functions\include\logit_production_function.h" />
+    <ClInclude Include="..\..\functions\include\minicam_input.h" />
+    <ClInclude Include="..\..\functions\include\minicam_leontief_production_function.h" />
+    <ClInclude Include="..\..\functions\include\minicam_price_elasticity_function.h" />
+    <ClInclude Include="..\..\functions\include\nested_ces_production_function.h" />
+    <ClInclude Include="..\..\functions\include\node_input.h" />
+    <ClInclude Include="..\..\functions\include\non_energy_input.h" />
+    <ClInclude Include="..\..\functions\include\renewable_input.h" />
+    <ClInclude Include="..\..\climate\include\iclimate_model.h" />
+    <ClInclude Include="..\..\climate\include\magicc_model.h" />
+    <ClInclude Include="..\..\target_finder\include\bisecter.h" />
+    <ClInclude Include="..\..\target_finder\include\concentration_target.h" />
+    <ClInclude Include="..\..\target_finder\include\forcing_target.h" />
+    <ClInclude Include="..\..\target_finder\include\itarget.h" />
+    <ClInclude Include="..\..\target_finder\include\policy_target_runner.h" />
+    <ClInclude Include="..\..\target_finder\include\target_factory.h" />
+    <ClInclude Include="..\..\target_finder\include\temperature_target.h" />
+    <ClInclude Include="..\..\land_allocator\include\aland_allocator_item.h" />
+    <ClInclude Include="..\..\land_allocator\include\iland_allocator.h" />
+    <ClInclude Include="..\..\land_allocator\include\land_leaf.h" />
+    <ClInclude Include="..\..\land_allocator\include\land_node.h" />
+    <ClInclude Include="..\..\land_allocator\include\unmanaged_land_leaf.h" />
+    <ClInclude Include="..\..\policy\include\policy_ghg.h" />
+    <ClInclude Include="..\..\policy\include\policy_portfolio_standard.h" />
+    <ClInclude Include="..\..\sectors\include\value_factor_calculator.h" />
   </ItemGroup>
 </Project>

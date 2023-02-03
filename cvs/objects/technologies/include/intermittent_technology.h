@@ -49,6 +49,7 @@
 #include "technologies/include/technology.h"
 #include "util/base/include/value.h"
 #include "sectors/include/ibackup_calculator.h"
+#include "sectors/include/value_factor_calculator.h"
 
 class IInfo;
 /*
@@ -134,7 +135,8 @@ protected:
         Technology,
 
         //! A calculator which determines the amount of backup per unit output.
-        DEFINE_VARIABLE( CONTAINER, "backup-calculator", mBackupCalculator, IBackupCalculator* ),
+        // DEFINE_VARIABLE( CONTAINER, "backup-calculator", mBackupCalculator, IBackupCalculator* ),
+        DEFINE_VARIABLE(CONTAINER, "value-factor-calculator", mValueFactorCalculator, ValueFactorCalculator*),
 
         //! Name of the electricity sector which this Technology will supply.
         DEFINE_VARIABLE( SIMPLE, "electric-sector-name", mElectricSectorName, std::string ),
@@ -150,20 +152,24 @@ protected:
         //! Cached input containing the resource.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "resource-input-pointer", mResourceInput, InputIterator ),
 
+        /*
         //! Cached input containing the backup.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "backup-input-pointer", mBackupInput, InputIterator ),
 
         //! Cached input containing the capital costs for backup.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "backup-cap-cost-input-pointer", mBackupCapCostInput, InputIterator ),
+        */
 
         //! Cached input containing the technology costs.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "tech-cost-input-pointer", mTechCostInput, InputIterator ),
 
+        /*
         //! Backup capacity factor read in at the Sector level.
         DEFINE_VARIABLE( SIMPLE, "backup-capacity-factor", mBackupCapacityFactor, Value ),
 
         //! Backup capital cost.
         DEFINE_VARIABLE( SIMPLE, "backup-capital-cost", mBackupCapitalCost, Value ),
+        */
 
         //! Electric reserve cost read in at the Sector level.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "electricity-reserve-margin", mElecReserveMargin, Value ),
@@ -172,7 +178,7 @@ protected:
         //todo dynamically calculate average grid capacity factor
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "average-grid-capacity-factor", mAveGridCapacityFactor, Value ),
 
-        //! State value necessary to track tech output ration
+        //! State value necessary to track tech output ratio
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "tech-output-ratio", mIntermitOutTechRatio, Value )
     )
     
@@ -181,40 +187,15 @@ protected:
     
     void copy( const IntermittentTechnology& aOther );
 
-    void setCoefficients( const std::string& aRegionName,
-                          const std::string& aSectorName,
-                          const int aPeriod );
-
-    virtual double getResourceToEnergyRatio( const std::string& aRegionName,
-                                             const std::string& aSectorName,
-                                             const int aPeriod );
-
-    double getBackupCapacityPerEnergyOutput( const std::string& aRegionName,
-                                             const std::string& aSectorName,
-                                             const int aPeriod ) const;
-
-    double getMarginalBackupCapCost( const std::string& aRegionName,
-                                     const std::string& aSectorName,
-                                     const int aPeriod ) const;
+    virtual double getResourceToEnergyRatio(const std::string& aRegionName,
+        const std::string& aSectorName,
+        const int aPeriod);
 
     void initializeInputLocations( const std::string& aRegionName,
                                    const std::string& aSectorName,
                                    const int aPeriod );
 
-    double getMarginalBackupCapacity( const std::string& aRegionName,
-                                      const std::string& aSectorName,
-                                      const int aPeriod ) const;
-
-    double getAverageBackupCapacity( const std::string& aRegionName,
-                                     const std::string& aSectorName,
-                                     const int aPeriod ) const;
-
-    double calcEnergyFromBackup() const;
-
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-
-
-    virtual const std::string& getBackupCapCostName( ) const;
 
     virtual const std::string& getTechCostName( ) const;
 };
