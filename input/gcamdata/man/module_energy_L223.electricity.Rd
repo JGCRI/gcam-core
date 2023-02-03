@@ -24,7 +24,7 @@ the generated outputs: \code{L223.Supplysector_elec}, \code{L223.ElecReserve}, \
 \code{L223.GlobalTechOMvar_elec}, \code{L223.GlobalIntTechOMvar_elec}, \code{L223.GlobalTechShrwt_elec},
 \code{L223.GlobalTechInterp_elec}, \code{L223.GlobalIntTechShrwt_elec}, \code{L223.PrimaryRenewKeyword_elec},
 \code{L223.PrimaryRenewKeywordInt_elec}, \code{L223.AvgFossilEffKeyword_elec}, \code{L223.GlobalTechCapture_elec},
-\code{L223.GlobalIntTechBackup_elec}, \code{L223.StubTechCapFactor_elec}, \code{L223.StubTechCost_offshore_wind},
+\code{L223.GlobalIntTechValueFactor_elec}, \code{L223.StubTechCapFactor_elec}, \code{L223.StubTechCost_offshore_wind},
 \code{L223.GlobalTechShutdown_elec}, \code{L223.GlobalIntTechShutdown_elec}, \code{L223.GlobalTechSCurve_elec},
 \code{L223.GlobalIntTechSCurve_elec}, \code{L223.GlobalTechLifetime_elec}, \code{L223.GlobalIntTechLifetime_elec},
 \code{L223.GlobalTechProfitShutdown_elec}, \code{L223.GlobalIntTechProfitShutdown_elec},

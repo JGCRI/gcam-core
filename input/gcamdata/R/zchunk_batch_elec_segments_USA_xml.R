@@ -44,9 +44,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
              "L2234.GlobalTechProfitShutdown_elecS_USA",
              "L2234.GlobalTechSCurve_elecS_USA",
              "L2234.GlobalTechCapture_elecS_USA",
-             "L2234.GlobalIntTechBackup_elecS_USA",
+             "L2234.GlobalIntTechValueFactor_elecS_USA",
              "L2234.StubTechMarket_elecS_USA",
-             "L2234.StubTechMarket_backup_elecS_USA",
              "L2234.StubTechElecMarket_backup_elecS_USA",
              "L2234.StubTechProd_elecS_USA",
              "L2234.StubTechFixOut_elecS_USA",
@@ -127,9 +126,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
     L2234.GlobalTechProfitShutdown_elecS_USA <- get_data(all_data, "L2234.GlobalTechProfitShutdown_elecS_USA")
     L2234.GlobalTechSCurve_elecS_USA <- get_data(all_data, "L2234.GlobalTechSCurve_elecS_USA")
     L2234.GlobalTechCapture_elecS_USA <- get_data(all_data, "L2234.GlobalTechCapture_elecS_USA")
-    L2234.GlobalIntTechBackup_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechBackup_elecS_USA")
+    L2234.GlobalIntTechValueFactor_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechValueFactor_elecS_USA")
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, "L2234.StubTechMarket_elecS_USA")
-    L2234.StubTechMarket_backup_elecS_USA <- get_data(all_data, "L2234.StubTechMarket_backup_elecS_USA")
     L2234.StubTechElecMarket_backup_elecS_USA <- get_data(all_data, "L2234.StubTechElecMarket_backup_elecS_USA")
     L2234.StubTechProd_elecS_USA <- get_data(all_data, "L2234.StubTechProd_elecS_USA")
     L2234.StubTechFixOut_elecS_USA <- get_data(all_data, "L2234.StubTechFixOut_elecS_USA")
@@ -201,11 +199,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
     L2234.GlobalTechProfitShutdown_elecS_USA <- fix_global_tech_names(L2234.GlobalTechProfitShutdown_elecS_USA)
     L2234.GlobalTechSCurve_elecS_USA <- fix_global_tech_names(L2234.GlobalTechSCurve_elecS_USA)
     L2234.GlobalTechCapture_elecS_USA <- fix_global_tech_names(L2234.GlobalTechCapture_elecS_USA)
-    # NOTE:  below is an issue with LEVEL2_DATA_NAMES... GlobalIntTechBackup name should be intermittent.technology,
-    # as the table is for intermittent technologies and the old DS MI header name is intermittent.technology
-    L2234.GlobalIntTechBackup_elecS_USA <- L2234.GlobalIntTechBackup_elecS_USA %>%
-      fix_global_tech_names() %>%
-      rename(technology = intermittent.technology)
+    L2234.GlobalIntTechValueFactor_elecS_USA <- L2234.GlobalIntTechValueFactor_elecS_USA %>%
+      fix_global_tech_names()
 
     L2234.StubTechProd_elecS_USA <- rename(L2234.StubTechProd_elecS_USA, tech.share.weight = share.weight)
     L2234.TechProd_elecS_grid_USA <- rename(L2234.TechProd_elecS_grid_USA, tech.share.weight = share.weight)
@@ -239,9 +234,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
       add_xml_data(L2234.GlobalTechProfitShutdown_elecS_USA, "GlobalTechProfitShutdown") %>%
       add_xml_data(L2234.GlobalTechSCurve_elecS_USA, "GlobalTechSCurve") %>%
       add_xml_data(L2234.GlobalTechCapture_elecS_USA, "GlobalTechCapture") %>%
-      add_xml_data(L2234.GlobalIntTechBackup_elecS_USA, "GlobalIntTechBackup") %>%
+      add_xml_data(L2234.GlobalIntTechValueFactor_elecS_USA, "GlobalIntTechValueFactor") %>%
       add_xml_data(L2234.StubTechMarket_elecS_USA, "StubTechMarket") %>%
-      add_xml_data(L2234.StubTechMarket_backup_elecS_USA, "StubTechMarket") %>%
       add_xml_data(L2234.StubTechElecMarket_backup_elecS_USA, "StubTechElecMarket") %>%
       add_xml_data(L2234.StubTechProd_elecS_USA, "StubTechProd") %>%
       add_xml_data(L2234.SubsectorShrwt_elecS_USA, "SubsectorShrwt") %>%
@@ -320,9 +314,8 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
                      "L2234.GlobalTechProfitShutdown_elecS_USA",
                      "L2234.GlobalTechSCurve_elecS_USA",
                      "L2234.GlobalTechCapture_elecS_USA",
-                     "L2234.GlobalIntTechBackup_elecS_USA",
+                     "L2234.GlobalIntTechValueFactor_elecS_USA",
                      "L2234.StubTechMarket_elecS_USA",
-                     "L2234.StubTechMarket_backup_elecS_USA",
                      "L2234.StubTechElecMarket_backup_elecS_USA",
                      "L2234.StubTechProd_elecS_USA",
                      "L2234.StubTechFixOut_elecS_USA",

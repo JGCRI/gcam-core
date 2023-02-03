@@ -40,7 +40,6 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
              "L223.StubTechFixOut_hydro_USA",
              "L223.StubTechProd_elec_USA",
              "L223.StubTechMarket_elec_USA",
-             "L223.StubTechMarket_backup_USA",
              "L223.StubTechElecMarket_backup_USA",
              "L223.StubTechCapFactor_elec_wind_USA",
              "L223.StubTechCapFactor_elec_solar_USA",
@@ -102,7 +101,6 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
     L223.StubTechFixOut_hydro_USA <- get_data(all_data, "L223.StubTechFixOut_hydro_USA")
     L223.StubTechProd_elec_USA <- get_data(all_data, "L223.StubTechProd_elec_USA")
     L223.StubTechMarket_elec_USA <- get_data(all_data, "L223.StubTechMarket_elec_USA")
-    L223.StubTechMarket_backup_USA <- get_data(all_data, "L223.StubTechMarket_backup_USA")
     L223.StubTechElecMarket_backup_USA <- get_data(all_data, "L223.StubTechElecMarket_backup_USA")
     L223.StubTechCapFactor_elec_wind_USA <- get_data(all_data, "L223.StubTechCapFactor_elec_wind_USA")
     L223.StubTechCapFactor_elec_solar_USA <- get_data(all_data, "L223.StubTechCapFactor_elec_solar_USA")
@@ -165,7 +163,6 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
       add_xml_data(L223.StubTechFixOut_hydro_USA, "StubTechFixOut") %>%
       add_xml_data(L223.StubTechProd_elec_USA, "StubTechProd") %>%
       add_xml_data(L223.StubTechMarket_elec_USA, "StubTechMarket") %>%
-      add_xml_data(L223.StubTechMarket_backup_USA, "StubTechMarket") %>%
       add_xml_data(L223.StubTechElecMarket_backup_USA, "StubTechElecMarket") %>%
       add_xml_data(L223.StubTechCapFactor_elec_wind_USA, "StubTechCapFactor") %>%
       add_xml_data(L223.StubTechCapFactor_elec_solar_USA, "StubTechCapFactor") %>%
@@ -217,7 +214,6 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
                      "L223.StubTechFixOut_hydro_USA",
                      "L223.StubTechProd_elec_USA",
                      "L223.StubTechMarket_elec_USA",
-                     "L223.StubTechMarket_backup_USA",
                      "L223.StubTechElecMarket_backup_USA",
                      "L223.StubTechCapFactor_elec_wind_USA",
                      "L223.StubTechCapFactor_elec_solar_USA",

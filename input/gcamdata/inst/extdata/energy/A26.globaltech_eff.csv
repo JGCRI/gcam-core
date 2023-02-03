@@ -5,8 +5,6 @@
 # Column types: ccccnnn 
 # ----------
 supplysector,subsector,technology,minicam.energy.input,1971,2005,2100
-backup_electricity,gas,gas (steam/CT),wholesale gas,0.377,0.377,0.428
-csp_backup,gas,CSP gas hybrid mode,wholesale gas,0.307,0.307,0.358
 delivered biomass,delivered biomass,delivered biomass,regional biomass,1,1,1
 delivered coal,delivered coal,delivered coal,regional coal,1,1,1
 electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,electricity,1,1,1
