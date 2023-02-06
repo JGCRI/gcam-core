@@ -133,7 +133,7 @@ void GDPControl::initCalc( const string& aRegionName,
     }    
 }
 
-void GDPControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
+double GDPControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
     double reduction = 0.0;
     
     // Calculate reduction
@@ -156,5 +156,5 @@ void GDPControl::calcEmissionsReduction( const std::string& aRegionName, const i
         }
     }
     
-    setEmissionsReduction( reduction );
+    return reduction;
 }

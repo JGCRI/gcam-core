@@ -2391,7 +2391,7 @@ element input {
                         <axis1 name="region">region</axis1>
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
-               *[@type='input' (:collapse:) and (@name='delivered biomass' or @name='delivered coal' or
+               *[@type='input' (:collapse:) and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
                @name='elect_td_ind' or @name='wholesale gas' or @name='refined liquids industrial')]/demand-physical/node()</xPath>
                         <comments/>
@@ -2400,7 +2400,7 @@ element input {
                         <axis1 name="sector">sector</axis1>
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
-               *[@type='input' (:collapse:) and (@name='delivered biomass' or @name='delivered coal' or
+               *[@type='input' (:collapse:) and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
                @name='elect_td_ind' or @name='wholesale gas' or
                @name='refined liquids industrial')]/demand-physical/node()</xPath>
@@ -2415,7 +2415,7 @@ element input {
                         <axis1 name="input">input</axis1>
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
-               *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or
+               *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
                @name='elect_td_ind' or @name='wholesale gas' or
                @name='refined liquids industrial')]/demand-physical/node()</xPath>
@@ -2425,7 +2425,7 @@ element input {
                         <axis1 name="input">input</axis1>
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
-               *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or
+               *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
                @name='elect_td_ind' or @name='wholesale gas' or
                @name='refined liquids industrial')]/demand-physical/node()</xPath>
@@ -2441,7 +2441,7 @@ element input {
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]/
                *[@type='subsector']/*[@type='technology']/
-               *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or
+               *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
                @name='elect_td_ind' or @name='wholesale gas' or
                @name='refined liquids industrial')]/demand-physical/node()</xPath>
@@ -3512,6 +3512,12 @@ element input {
                 <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//land-allocation/text()</xPath>
                 <comments/>
             </query>
+            <query title="detailed historical land allocation">
+                <axis1 name="LandLeaf">LandLeaf[@name]</axis1>
+                <axis2 name="Year">hist-land-allocation[@year]</axis2>
+                <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//LandLeaf[not(contains(@name, 'IRR')) and not (contains(@name, 'RFD'))]/hist-land-allocation/text()</xPath>
+                <comments>Before 1975, all cropland is allocated to OtherArableLand (data for distinct cropland categories is not avialable pre-1975)</comments>
+            </query>
             <query title="land allocation by crop">
                 <axis1 name="LandLeaf">LandLeaf[@crop]</axis1>
                 <axis2 name="Year">land-allocation[@year]</axis2>
@@ -3568,6 +3574,30 @@ element input {
                         <rewrite from="UnmanagedPasture" to="pasture (other)"/>
                         <rewrite from="Tundra" to="tundra"/>
                         <rewrite from="Wheat" to="crops"/>
+                    </level>
+                </labelRewriteList>
+            </query>
+            <query title="aggregated historical land allocation">
+                <axis1 name="LandLeaf">LandLeaf[@crop]</axis1>
+                <axis2 name="Year">hist-land-allocation[@year]</axis2>
+                <xPath buildList="true" dataName="LandLeaf" group="false" sumAll="false">/LandNode[@name='root' or @type='LandNode' (:collapse:)]//LandLeaf[not(contains(@name, 'IRR')) and not (contains(@name, 'RFD'))]/hist-land-allocation/text()</xPath>
+                <comments>Before 1975, all cropland is allocated to OtherArableLand (data for distinct cropland categories is not avialable pre-1975)</comments>
+                <labelRewriteList append-values="false">
+                    <level name="LandLeaf">
+                        <rewrite from="Grassland" to="grass"/>
+                        <rewrite from="ProtectedUnmanagedPasture" to="pasture (other)"/>
+                        <rewrite from="ProtectedGrassland" to="grass"/>
+                        <rewrite from="ProtectedUnmanagedForest" to="forest (unmanaged)"/>
+                        <rewrite from="OtherArableLand" to="otherarable"/>
+                        <rewrite from="UrbanLand" to="urban"/>
+                        <rewrite from="RockIceDesert" to="rock and desert"/>
+                        <rewrite from="ProtectedShrubland" to="shrubs"/>
+                        <rewrite from="UnmanagedForest" to="forest (unmanaged)"/>
+                        <rewrite from="Pasture" to="pasture (grazed)"/>
+                        <rewrite from="Forest" to="forest (managed)"/>
+                        <rewrite from="Shrubland" to="shrubs"/>
+                        <rewrite from="UnmanagedPasture" to="pasture (other)"/>
+                        <rewrite from="Tundra" to="tundra"/>
                     </level>
                 </labelRewriteList>
             </query>

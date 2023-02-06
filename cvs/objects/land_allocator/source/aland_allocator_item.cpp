@@ -60,8 +60,7 @@ ALandAllocatorItem::ALandAllocatorItem( const ALandAllocatorItem* aParent,
       mShare( Value( -1.0 ) ), // this is so initialization can be checked.
       mProfitRate( Value( 0.0 ) ),
       mIsGhostShareRelativeToDominantCrop( false ),
-      mType( aType ),
-      mIsLandExpansionCost( false )
+      mType( aType )
 {
 }
 
@@ -70,8 +69,7 @@ ALandAllocatorItem::ALandAllocatorItem( const LandAllocatorItemType aType )
       mShare( Value( -1.0 ) ), // this is so initialization can be checked.
       mProfitRate( Value( 0.0 ) ),
       mIsGhostShareRelativeToDominantCrop( false ),
-      mType( aType ),
-      mIsLandExpansionCost( false )
+      mType( aType )
 {
 }
 

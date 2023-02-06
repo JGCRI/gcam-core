@@ -209,7 +209,7 @@ double TranTechnology::getEnergyCost( const string& aRegionName,
             // Converts cost to 1990$.
             cost += mInputs[ i ]->getPrice( aRegionName, aPeriod )
                     * mInputs[ i ]->getCoefficient( aPeriod )
-                    / mAlphaZero * JPERBTU / GIGA * CVRT90;
+                    * JPERBTU / GIGA * CVRT90;
         }
     }
     return cost;
@@ -229,8 +229,7 @@ double TranTechnology::getNonEnergyCost( const string& aRegionName,
             // TODO: Leontief assumption.
             // Assumes prices in 1990$ per vehicle mile.
             cost += mInputs[ i ]->getPrice( aRegionName, aPeriod )
-                    * mInputs[ i ]->getCoefficient( aPeriod )
-                    / mAlphaZero;
+                    * mInputs[ i ]->getCoefficient( aPeriod );
         }
     }
     return cost;
@@ -303,7 +302,7 @@ void TranTechnology::production( const string& aRegionName, const string& aSecto
     // TODO: Would need to calculate the shutdown coef here if transportation
     //       stocks were vintaged.
     mProductionFunction->calcDemand( mInputs, fuelUsage, aRegionName,
-                                     aSectorName, 1, aPeriod, 0, mAlphaZero );
+                                     aSectorName, 1, aPeriod, 0, 1 );
 
     calcEmissionsAndOutputs( aRegionName, primaryOutput, aGDP, aPeriod );  
 }
@@ -349,7 +348,7 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
             if( calInput >= 0 ) {
                 // TODO: Remove leontief assumption.
                 totalCalOutput = calInput / mInputs[ i ]->getCoefficient( aPeriod )
-                                 * mAlphaZero / ECONV * mLoadFactor;
+                                 / ECONV * mLoadFactor;
                 break;
             }
         }

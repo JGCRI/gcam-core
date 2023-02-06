@@ -25,10 +25,8 @@ module_energy_LA121.liquids <- function(command, ...) {
              FILE = "aglu/IIASA_biofuel_tech_mapping",
              FILE = "aglu/IIASA_biofuel_region_mapping",
              FILE = "aglu/A_OilSeed_SecOut",
-             FILE = "energy/calibrated_techs",
              FILE = "energy/mappings/IEA_product_rsrc",
              FILE = "energy/A21.unoil_demandshares",
-             FILE = "energy/A21.globaltech_coef",
              FILE = "energy/A21.globalrsrctech_coef",
              "L100.IEA_en_bal_ctry_hist",
              "L1012.en_bal_EJ_R_Si_Fi_Yh",
@@ -58,10 +56,8 @@ module_energy_LA121.liquids <- function(command, ...) {
     IIASA_biofuel_tech_mapping <- get_data(all_data, "aglu/IIASA_biofuel_tech_mapping", strip_attributes = TRUE)
     IIASA_biofuel_region_mapping <- get_data(all_data, "aglu/IIASA_biofuel_region_mapping", strip_attributes = TRUE)
     A_OilSeed_SecOut <- get_data(all_data, "aglu/A_OilSeed_SecOut", strip_attributes = TRUE)
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
     IEA_product_rsrc <- get_data(all_data, "energy/mappings/IEA_product_rsrc", strip_attributes = TRUE)
     A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares", strip_attributes = TRUE)
-    A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef", strip_attributes = TRUE)
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist", strip_attributes = TRUE)
     L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
     A21.globalrsrctech_coef <- get_data(all_data, "energy/A21.globalrsrctech_coef", strip_attributes = TRUE) %>%
@@ -93,29 +89,6 @@ module_energy_LA121.liquids <- function(command, ...) {
         rename(GCAM_region_ID=region, fuel = minicam.energy.input) %>%
         mutate(fuel="gas") %>%
         distinct() -> gas_uncov_ratio
-
-
-      # Calculating energy inputs (gas) to unconventional oil production in the historical years
-      A21.globaltech_coef %>%
-        left_join(calibrated_techs, by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
-        filter(!is.na(sector)) %>%
-        select(-sector, -fuel, -calibration, -secondary.output) ->
-        L121.globaltech_coef
-
-      L121.globaltech_coef %>%
-        gather_years %>%
-        # Adding empty historical years to fill in with interpolation
-        complete(year = unique(c(HISTORICAL_YEARS, year)),
-                 nesting(supplysector, subsector, technology, minicam.energy.input)) %>%
-        arrange(year) %>%
-        group_by(technology, subsector, supplysector, minicam.energy.input) %>%
-        # Interpolate to fill in missing globaltech_coef historical years
-        mutate(value = approx_fun(year, value)) %>%
-        left_join(distinct(calibrated_techs), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
-        select(supplysector, subsector, technology, minicam.energy.input, year, value, sector, fuel) ->
-        L121.globaltech_coef_interp
-
-
 
       # Downscaling unconventional oil consumption shares by GCAM 3.0 region to countries
       product_filters <- filter(IEA_product_rsrc, resource == "crude oil")
@@ -170,9 +143,6 @@ module_energy_LA121.liquids <- function(command, ...) {
       L111.Prod_EJ_R_F_Yh %>%
         filter(technology=="unconventional oil") -> unoil_prod
 
-
-
-      L121.in_EJ_R_TPES_unoil_Yh %>% filter(value > 0) -> L121.in_EJ_R_TPES_unoil_Yh_temp
       # Conventional (crude) oil: calculate as liquids TPES - unconventional oil
       L1012.en_bal_EJ_R_Si_Fi_Yh %>%
         filter(sector == "TPES", fuel == "refined liquids") -> L121.in_EJ_R_TPES_liq_Yh
@@ -261,8 +231,7 @@ module_energy_LA121.liquids <- function(command, ...) {
         add_units("EJ") %>%
         add_comments("Inputs to unconventional oil production calculated by multiplying production data by IO coef") %>%
         add_legacy_name("L121.in_EJ_R_unoil_F_Yh") %>%
-        add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A21.globaltech_coef","energy/A21.globalrsrctech_coef",
-                       "energy/calibrated_techs") ->
+        add_precursors("L111.Prod_EJ_R_F_Yh", "energy/A21.globalrsrctech_coef") ->
         L121.in_EJ_R_unoil_F_Yh
 
       L121.in_EJ_R_TPES_crude_Yh %>%

@@ -1,4 +1,4 @@
-#' module_gcamusa_L169.nonghg_NEI_scaling_USA
+#' module_emissions_L169.nonghg_NEI_scaling
 #'
 #' Further processes the NEI data to get a full timeseries for 1990 - 2017.
 #' The NEI data is scaled to EPA Tier 1 for HIGHWAY VEHICLES, OFF-HIGHWAY, and FUEL COMB. ELEC. UTIL.
@@ -17,7 +17,7 @@
 #' @importFrom tidyr gather spread
 #' @author MAW December 2021
 
-module_gcamusa_L169.nonghg_NEI_scaling_USA <- function(command, ...) {
+module_emissions_L169.nonghg_NEI_scaling <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE="gcam-usa/emissions/state_tier1_caps",
              FILE="gcam-usa/emissions/NEI_emissions_to_CEDS_adj_2008",

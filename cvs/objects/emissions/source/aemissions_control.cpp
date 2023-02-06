@@ -48,9 +48,8 @@ using namespace std;
 
 //! Default constructor.
 AEmissionsControl::AEmissionsControl()
+:mDisableEmControl(false)
 {
-    mReduction = 0;
-    mDisableEmControl = false;
 }
 
 //! Destructor
@@ -75,16 +74,12 @@ AEmissionsControl& AEmissionsControl::operator=( const AEmissionsControl& aOther
 void AEmissionsControl::copy( const AEmissionsControl& aOther ){
     mName = aOther.mName;
     mDisableEmControl = aOther.mDisableEmControl;
-    //mReduction = aOther.mReduction;
 }
 
 //! Writes datamembers to debugging datastream in XML format.
 void AEmissionsControl::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs ) const {
 
     XMLWriteOpeningTag( getXMLName(), aOut, aTabs, getName() );
-
-    // write xml for data members
-    XMLWriteElement( mReduction, "reduction", aOut, aTabs );
 
     // write xml for data members
     XMLWriteElement( mDisableEmControl, "disable-em-control", aOut, aTabs );
@@ -104,10 +99,5 @@ const string& AEmissionsControl::getName() const {
 }
 
 double AEmissionsControl::getEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ){
-    calcEmissionsReduction( aRegionName, aPeriod, aGDP );
-    return mReduction;
-}
-
-void AEmissionsControl::setEmissionsReduction( double aReduction ){
-    mReduction = aReduction;
+    return calcEmissionsReduction( aRegionName, aPeriod, aGDP );
 }
