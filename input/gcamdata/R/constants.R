@@ -708,7 +708,7 @@ efw.ELEC_DESAL_TECHS                      <- c("gas (steam/CT)", "refined liquid
 # Emissions constants ======================================================================
 
 # scaling CH4 and N2O emissions to EPA 2019 mitigation report BAU emission trajectory
-emissions.NONCO2.EPA.SCALING <- TRUE
+emissions.NONCO2.EPA.SCALING <- FALSE
 emissions.EPA.SCALING.THRESHOLD <- 50 # EPA emissions/ CEDS emission, used to check scaling outliers in L112 chunk
 emissions.EPA.SCALING.THRESHOLD.COMBUSTION <- 20 # check scaling outliers in L112 chunk for combustion sector
 
