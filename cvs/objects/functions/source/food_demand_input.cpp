@@ -499,12 +499,12 @@ double StaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) con
     double etas;
     
     if(aAdjIncome > x1) {
-        etas = mIncomeElasticity*(1-log(k*aAdjIncome)) / aAdjIncome;
+        etas = (1.0-log(k*aAdjIncome)) / aAdjIncome;
     }
     else {
-        etas = 1.0;
+        etas = (1.0-log(k*x1)) / x1;
     }
-    return etas;
+    return etas * mIncomeElasticity;
 }
 
 NonStaplesFoodDemandInput::NonStaplesFoodDemandInput()
@@ -632,15 +632,15 @@ double NonStaplesFoodDemandInput::calcIncomeTermDerivative( double aAdjIncome ) 
 
     if(fabs(delta) > 1.0e-3/mIncomeElasticity) {
         // lim_x->0 etan = 1
-        etan = aAdjIncome < 1.0e-4 ? 1 : 1/delta + aAdjIncome*log(aAdjIncome)/pow(delta, 2);
+        etan = aAdjIncome < 1.0e-4 ? 1.0 : 1.0/delta + aAdjIncome*log(aAdjIncome)/pow(delta, 2);
     }
     else {
         // Represent the income term derivative near x==1 as a Taylor series
-        etan = mIncomeElasticity * (0.5 +
+        etan = (0.5 +
                      1.0/6.0 * delta +
                      1.0/12.0 * pow(delta, 2) +
                      1.0/20.0 * pow(delta, 3));
     }
-    return etan;
+    return etan * mIncomeElasticity;
 }
 

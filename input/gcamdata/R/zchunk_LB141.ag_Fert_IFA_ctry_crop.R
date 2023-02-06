@@ -48,6 +48,21 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     IFA2002_Fert_ktN <- get_data(all_data, "aglu/IFA2002_Fert_ktN")
     IFA_Fert_ktN <- get_data(all_data, "aglu/IFA_Fert_ktN")
 
+    # 11/17/2022 GPK - because of comparative low yields for its surrounding commodity classes, Nutmeg production in
+    # India is getting assigned very high fertilizer input-output coefficients, almost 0.5 kgN per harvested kg of nutmeg.
+    # Bottom-up data on nutmeg production (e.g. https://indiaagronet.com/indiaagronet/crop%20info/nutmeg.htm) suggests
+    # that the IO-coef should be more like 0.1, and for plantations whose avg yield is about 100 kg/ha, the N application
+    # rate is about 10 kgN/ha
+    IFA2002_Fert_ktN_supplement <- tibble(
+      COUNTRY = "INDIA",
+      YEAR = 2000,
+      CROP = "Nutmeg",
+      AREA_thousHa = 100,
+      N_kt = 1,
+      P2O5_kt = 2,
+      K2O_kt = 0)
+    IFA2002_Fert_ktN <- bind_rows(IFA2002_Fert_ktN, IFA2002_Fert_ktN_supplement)
+    FAO_ag_items_PRODSTAT$IFA2002_crop[FAO_ag_items_PRODSTAT$GTAP_crop == "Ntmg_Mc_Crdm" & !is.na(FAO_ag_items_PRODSTAT$GTAP_crop)] <- "Nutmeg"
 
     # Perform Calculations
 
