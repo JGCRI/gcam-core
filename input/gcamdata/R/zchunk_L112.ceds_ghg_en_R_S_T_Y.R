@@ -693,17 +693,29 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.nonco2_tgej_R_en_S_F_Yh_withNAs
 
 
-    # add exogenous unconventional oil emissions factors for fugitive CO2
+    # add exogenous unconventional oil emissions factors for fugitive ghg emissions
     IPCC_unconventional_oil_fug_emfacts %>%
       # assign countries' emfacts to corresponding regions
       left_join_error_no_match(iso_GCAM_regID, by = c("iso", "country_name")) %>%
       select(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, emfact) %>%
-      # fill in all other regions using the default fug co2 emissions factor
-      group_by(supplysector, subsector, stub.technology) %>%
-      complete(GCAM_region_ID = seq(1, nrow(GCAM_region_names)),
-               fill = list(emfact = emissions.UNCONVENTIONAL.OIL.FUG.CO2.EMFACT,
-                           Non.CO2 = "CO2_FUG")) %>%
-      ungroup() %>%
+      # fill in all other regions using the default fug co2 emissions factors for co2, ch4, and n2o
+      group_by(supplysector, subsector, stub.technology, Non.CO2) %>%
+      complete(GCAM_region_ID = seq(1, nrow(GCAM_region_names))) %>%
+      mutate(emfact = case_when(is.na(emfact) & Non.CO2 == "CO2_FUG" ~ emissions.UNCONVENTIONAL.OIL.FUG.CO2.EMFACT,
+                                is.na(emfact) & Non.CO2 == "CH4" ~ emissions.UNCONVENTIONAL.OIL.FUG.CH4.EMFACT,
+                                is.na(emfact) & Non.CO2 == "N2O" ~ emissions.UNCONVENTIONAL.OIL.FUG.N2O.EMFACT,
+                                T ~ emfact)) %>%
+      ungroup() ->
+      all_unconventional_oil_fug_emfacts
+
+    # make sure there there are no NA emfacts introduced (this would be the case
+    # if a ghg was included in the exogenous emissions factors that does not
+    # have a default in constants.R)
+    if(any(is.na(all_unconventional_oil_fug_emfacts$emfact))){
+      stop("A GHG included in the exogenous unconventional oil fugitive emissions factors does not have a corresponding default emissions factor in constants.R")
+    }
+
+    all_unconventional_oil_fug_emfacts %>%
       # fill in all historical years with the same emfact
       group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, emfact) %>%
       mutate(year = 2015) %>%
@@ -715,15 +727,16 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       mutate(energy = if_else(is.na(energy), 0, energy)) ->
       L112.nonco2_tgej_R_en_S_F_Yh_with_fug_uo_emfacts
 
+
     # for regions with historical unconventional oil production, use unconventional
-    # oil fug co2 emfact to split up crude oil emissions into conventional and
+    # oil fugitive emfacts to split up crude oil emissions into conventional and
     # unconventional emissions and recalculate conventional crude oil emfact
     L111.Prod_EJ_R_F_Yh %>%
       filter(fuel == "crude oil") %>%
       rename(supplysector = sector, subsector = fuel, stub.technology = technology) %>%
-      # combine energy production with fug co2 emfacts from crude oil
+      # combine energy production with fug ghg emfacts from crude oil
       right_join(filter(L112.nonco2_tgej_R_en_S_F_Yh_with_fug_uo_emfacts,
-                        subsector == "crude oil",  Non.CO2 == "CO2_FUG"),
+                        subsector == "crude oil",  Non.CO2 %in% c("CO2_FUG", "CH4", "N2O")),
                  by = c("GCAM_region_ID", "supplysector", "subsector", "year", "stub.technology")) %>%
       # replace aggregated crude oil energy values with separate conventional
       # and unconventional energy values
@@ -754,7 +767,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     # calculation (if so, the default unconventional oil fug co2 emfact could be
     # too high, resulting in unconventional oil emissions higher than total oil emissions)
     if(any(conventional_oil_new_emfacts$emfact < 0)){
-      stop("Unconventional oil fugitive CO2 emissions factor used to split historical crude oil emissions into conventional and unconventional oil resulted in negative emissions factor(s).")
+      stop("An unconventional oil fugitive emissions factor used to split historical crude oil emissions into conventional and unconventional oil resulted in negative emissions factor(s).")
     }
 
     # merge new crude oil emfacts back into all emfacts

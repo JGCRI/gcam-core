@@ -1,10 +1,14 @@
 # File: IPCC_unconventional_oil_fug_emfacts.csv
 # Title: Fugitive emissions factors for unconventional oil production
 # Description: Region-specific fugitive emissions factors for unconventional oil that differ from default in constants.R
-# Units: MtC/EJ
+# Units: Mt/EJ
 # Source: Based on emissions factors in the 2019 Refinement to the 2006 IPCC Guidelines For National Greenhouse Gas Inventories. The oil sands emission factor is used for regions with historical production.
 # Column types: ccccccn
 # ----------
 iso,country_name,Non.CO2,supplysector,subsector,stub.technology,emfact
 can,Canada,CO2_FUG,out_resources,crude oil,unconventional oil,2.295
 ven,Venezuela,CO2_FUG,out_resources,crude oil,unconventional oil,2.295
+can,Canada,CH4,out_resources,crude oil,unconventional oil,0.02033
+ven,Venezuela,CH4,out_resources,crude oil,unconventional oil,0.02033
+can,Canada,N2O,out_resources,crude oil,unconventional oil,9.112E-07
+ven,Venezuela,N2O,out_resources,crude oil,unconventional oil,9.112E-07
