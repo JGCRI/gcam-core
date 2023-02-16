@@ -198,7 +198,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Africa_Eastern</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -384,7 +384,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Africa_Northern</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -570,7 +570,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Africa_Southern</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -756,7 +756,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Africa_Western</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -942,7 +942,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Australia_NZ</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -1128,7 +1128,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Brazil</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -1314,7 +1314,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Canada</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -1500,7 +1500,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Central America and Caribbean</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -1686,7 +1686,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Central Asia</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -1872,7 +1872,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>China</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -2058,7 +2058,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>EU-12</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -2244,7 +2244,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>EU-15</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -2430,7 +2430,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Europe_Eastern</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -2616,7 +2616,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Europe_Non_EU</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -2802,7 +2802,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>European Free Trade Association</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -2988,7 +2988,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>India</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -3174,7 +3174,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Indonesia</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -3360,7 +3360,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Japan</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -3546,7 +3546,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Mexico</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -3732,7 +3732,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Middle East</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -3918,7 +3918,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Pakistan</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -4104,7 +4104,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Russia</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -4290,7 +4290,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>South Africa</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -4476,7 +4476,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>South America_Northern</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -4662,7 +4662,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>South America_Southern</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -4848,7 +4848,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>South Asia</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -5034,7 +5034,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>South Korea</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -5220,7 +5220,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Southeast Asia</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -5406,7 +5406,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Taiwan</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -5592,7 +5592,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Argentina</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>
@@ -5778,7 +5778,7 @@
             <linked-ghg-policy name="CO2_FUG">
                 <price-adjust fillout="1" year="1975">0</price-adjust>
                 <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-                <market>USA</market>
+                <market>Colombia</market>
                 <linked-policy>GHG</linked-policy>
                 <price-unit>1990$/tC</price-unit>
                 <output-unit>MTC</output-unit>

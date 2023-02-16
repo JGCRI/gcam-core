@@ -13,7 +13,7 @@
          <linked-ghg-policy name="CO2_FUG">
              <price-adjust fillout="1" year="1975">1</price-adjust>
              <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
-             <market>USA</market>
+             <market>global</market>
              <linked-policy>GHG</linked-policy>
              <price-unit>1990$/tC</price-unit>
              <output-unit>MTC</output-unit>
