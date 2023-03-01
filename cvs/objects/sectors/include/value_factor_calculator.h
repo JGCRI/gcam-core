@@ -91,7 +91,7 @@ public:
         const double aAverageGridCapacityFactor,
         const int aPeriod) const;
 
-    virtual double ValueFactorCalculator::getValueFactor(const std::string& aSector,
+    virtual double getValueFactor(const std::string& aSector,
         const std::string& aElectricSector,
         const std::string& aRegion,
         const int aPeriod) const;
