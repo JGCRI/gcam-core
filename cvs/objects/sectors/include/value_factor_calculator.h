@@ -62,7 +62,7 @@ class IInfo;
  *          sectors that produce electricity.
  * \author Josh Lurz
  */
-class ValueFactorCalculator : public IBackupCalculator, private boost::noncopyable {
+class ValueFactorCalculator : public IBackupCalculator {
 public:
     ValueFactorCalculator();
     virtual ValueFactorCalculator* clone() const;
