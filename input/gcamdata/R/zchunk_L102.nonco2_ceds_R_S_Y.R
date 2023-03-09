@@ -30,6 +30,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
                OPTIONAL_FILE = "emissions/CEDS/NOx_total_CEDS_emissions",
                OPTIONAL_FILE = "emissions/CEDS/SO2_total_CEDS_emissions",
                OPTIONAL_FILE = "emissions/CEDS/N2O_total_CEDS_emissions",
+               OPTIONAL_FILE = "emissions/CEDS/CO2_total_CEDS_emissions",
                FILE = "emissions/CEDS/ceds_sector_map",
                FILE = "emissions/CEDS/ceds_fuel_map",
                "L154.IEA_histfut_data_times_UCD_shares"))
@@ -57,8 +58,10 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
       CEDS_CO <- get_data(all_data, "emissions/CEDS/CO_total_CEDS_emissions")
       CEDS_NOx <- get_data(all_data, "emissions/CEDS/NOx_total_CEDS_emissions")
       CEDS_SO2 <- get_data(all_data, "emissions/CEDS/SO2_total_CEDS_emissions")
+      CEDS_CO2_all <- get_data(all_data, "emissions/CEDS/CO2_total_CEDS_emissions")
       #Introducing N2O
       CEDS_N2O <- get_data(all_data, "emissions/CEDS/N2O_total_CEDS_emissions")
+
 
       CEDS_sector_map <- get_data(all_data, "emissions/CEDS/ceds_sector_map")
       CEDS_fuel_map <- get_data(all_data, "emissions/CEDS/ceds_fuel_map")
@@ -68,7 +71,11 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
 
       # If the (proprietary) raw CEDS datasets are available, go through the full computations below
       # If not, use the pre-saved summary file (i.e., the output of this chunk!) assuming it's available
-      if(!is.null(CEDS_CH4) && !is.null(CEDS_BC) && !is.null(CEDS_OC) && !is.null(CEDS_CO) && !is.null(CEDS_NMVOC) && !is.null(CEDS_NH3) && !is.null(CEDS_NOx) && !is.null(CEDS_SO2)) {
+      if(!is.null(CEDS_CH4) && !is.null(CEDS_BC) && !is.null(CEDS_OC) && !is.null(CEDS_CO) && !is.null(CEDS_NMVOC) && !is.null(CEDS_NH3) && !is.null(CEDS_NOx) && !is.null(CEDS_SO2) && !is.null(CEDS_CO2_all)) {
+
+        # for CO2, keep only fugitive emissions
+        CEDS_CO2 <- CEDS_CO2_all %>%
+          filter(grepl("Fugitive",sector))
 
         #gather years
         CEDS_CH4 <- CEDS_CH4 %>%
@@ -90,6 +97,8 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
         #Introducing N2O
         CEDS_N2O <- CEDS_N2O %>%
           gather_years(value_col = "emissions")
+        CEDS_CO2 <- CEDS_CO2 %>%
+          gather_years(value_col = "emissions")
 
 
 
@@ -105,6 +114,8 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
         CEDS_NOx$Non.CO2 <- "NOx"
         #Introducing N2O
         CEDS_N2O$Non.CO2 <- "N2O"
+        # CO2 fugitive
+        CEDS_CO2$Non.CO2 <- emissions.FUGITIVE_FOSSIL_CO2_NAME
         # Prepare unmanaged forest emissions from CMIP to be combined with CEDS data set
         CMIP_unmgd_emissions %>%
           filter(!iso %in% c(emissions.GFED_NODATA)) %>%
@@ -123,7 +134,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
 
 
         # Compute CEDS emissions by region and sector
-        bind_rows(CEDS_CH4 ,CEDS_BC, CEDS_NMVOC, CEDS_NH3, CEDS_OC, CEDS_NOx, CEDS_SO2, CEDS_CO, CEDS_N2O) -> CEDS_data
+        bind_rows(CEDS_CH4 ,CEDS_BC, CEDS_NMVOC, CEDS_NH3, CEDS_OC, CEDS_NOx, CEDS_SO2, CEDS_CO, CEDS_N2O, CEDS_CO2) -> CEDS_data
 
         CEDS_data %>%
           #ISO code for Serbia is different in CEDS. Change this to GCAM iso for Serbia so that left_join_error_no_match won't fail.
@@ -156,8 +167,8 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
           na.omit() %>%
           gather_years %>%
           filter(year %in% emissions.CEDS_YEARS) %>%
-          # Converts kt(gg) to Teragrams
-          mutate(emissions = emissions * CONV_GG_TG) ->L102.CEDS
+          # Converts kt(gg) to Teragrams for all gases and converts Teragrams (MTCO2) to MTC for CO2
+          mutate(emissions = emissions*CONV_GG_TG) -> L102.CEDS
 
         # Filter for iso's whose emissions will be scaled to CEDS (currently just USA)
         L102.CEDS %>%

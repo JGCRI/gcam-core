@@ -1,0 +1,14 @@
+# File: IPCC_unconventional_oil_fug_emfacts.csv
+# Title: Fugitive emissions factors for unconventional oil production
+# Description: Region-specific fugitive emissions factors for unconventional oil that differ from default in constants.R. Emissions factors calculated by adding the factor in the "onshore: oil sands mining and ore processing" and "onshore: oil sands upgrading" rows in Table 4.2.4 and converting to Tg/EJ. The emissions factors used for all other regions (emissions.UNCONVENTIONAL.OIL.FUG.xxx.EMFACT in constants.R) were calculated from the emissions factors here as well as an emissions factor for "other unconventional oil" which is the average of the onshore unconventional oil exploration rows in Table 4.2.4 and onshore oil production rows in Table 4.2.4A. These two emissions factors were combined using a weighted average with weights (oil sands vs other unconventional) derived from estimated global unconventional oil resources (Source: https://www.sciencedirect.com/science/article/pii/S1876380416301112)
+# Units: Tg/EJ
+# Source: Based on emissions factors in the 2019 Refinement to the 2006 IPCC Guidelines For National Greenhouse Gas Inventories (https://www.ipcc-nggip.iges.or.jp/public/2019rf/pdf/2_Volume2/19R_V2_4_Ch04_Fugitive_Emissions.pdf) tables 4.2.4 and 4.2.4A. The oil sands emission factor is used for regions with historical production.
+# Column types: ccccccn
+# ----------
+iso,country_name,Non.CO2,supplysector,subsector,stub.technology,emfact
+can,Canada,CO2_FUG,out_resources,crude oil,unconventional oil,2.295
+ven,Venezuela,CO2_FUG,out_resources,crude oil,unconventional oil,2.295
+can,Canada,CH4,out_resources,crude oil,unconventional oil,0.02033
+ven,Venezuela,CH4,out_resources,crude oil,unconventional oil,0.02033
+can,Canada,N2O,out_resources,crude oil,unconventional oil,9.112E-07
+ven,Venezuela,N2O,out_resources,crude oil,unconventional oil,9.112E-07

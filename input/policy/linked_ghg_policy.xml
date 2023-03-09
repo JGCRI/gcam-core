@@ -10,6 +10,14 @@
             <price-unit>1990$/tC</price-unit>
             <output-unit>MtC</output-unit>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+             <price-adjust fillout="1" year="1975">1</price-adjust>
+             <demand-adjust fillout="1" year="1975">3.666667</demand-adjust>
+             <market>global</market>
+             <linked-policy>GHG</linked-policy>
+             <price-unit>1990$/tC</price-unit>
+             <output-unit>MTC</output-unit>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <price-adjust fillout="1" year="1975">5.727272727</price-adjust>
             <demand-adjust fillout="1" year="1975">21</demand-adjust>
@@ -112,6 +120,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -163,6 +175,10 @@
       </region>
       <region name="Africa_Northern">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -220,6 +236,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -271,6 +291,10 @@
       </region>
       <region name="Africa_Western">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -328,6 +352,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -379,6 +407,10 @@
       </region>
       <region name="Brazil">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -436,6 +468,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -487,6 +523,10 @@
       </region>
       <region name="Central America and Caribbean">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -544,6 +584,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -595,6 +639,10 @@
       </region>
       <region name="China">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -652,6 +700,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -703,6 +755,10 @@
       </region>
       <region name="EU-15">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -760,6 +816,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -811,6 +871,10 @@
       </region>
       <region name="Europe_Non_EU">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -868,6 +932,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -919,6 +987,10 @@
       </region>
       <region name="India">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -976,6 +1048,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -1027,6 +1103,10 @@
       </region>
       <region name="Japan">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -1084,6 +1164,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -1135,6 +1219,10 @@
       </region>
       <region name="Middle East">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -1192,6 +1280,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -1243,6 +1335,10 @@
       </region>
       <region name="Russia">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -1300,6 +1396,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -1351,6 +1451,10 @@
       </region>
       <region name="South America_Northern">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -1408,6 +1512,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -1459,6 +1567,10 @@
       </region>
       <region name="South Asia">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -1516,6 +1628,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -1567,6 +1683,10 @@
       </region>
       <region name="Southeast Asia">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
@@ -1624,6 +1744,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -1678,6 +1802,10 @@
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
          <linked-ghg-policy name="CH4">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
@@ -1729,6 +1857,10 @@
       </region>
       <region name="Colombia">
          <linked-ghg-policy name="CO2">
+            <market>global</market>
+            <linked-policy>GHG</linked-policy>
+         </linked-ghg-policy>
+         <linked-ghg-policy name="CO2_FUG">
             <market>global</market>
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>

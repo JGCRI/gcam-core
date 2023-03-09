@@ -715,6 +715,14 @@ emissions.NONCO2.EPA.SCALING <- FALSE
 emissions.EPA.SCALING.THRESHOLD <- 50 # EPA emissions/ CEDS emission, used to check scaling outliers in L112 chunk
 emissions.EPA.SCALING.THRESHOLD.COMBUSTION <- 20 # check scaling outliers in L112 chunk for combustion sector
 
+# default unconventional oil fugitive emfacts (Tg/EJ) for regions without historical unconventional oil. Based on emissions factors from the 2019 Refinement to the 2006
+# IPCC Guidelines for National GHG Inventories; calculated as the weighted average of the oil sands emissions factor and average non-oil-sands emissions factor.
+# Weights come from the share of oil sands and non-oil-sands global recoverable unconventional oil resources (Wang 2016 https://doi.org/10.1016/S1876-3804(16)30111-2)
+# Emfacts for regions with historical unconventional oil are specified in emissions/IPCC_unconventional_oil_fug_emfacts.csv
+emissions.UNCONVENTIONAL.OIL.FUG.CO2.EMFACT <- 0.994
+emissions.UNCONVENTIONAL.OIL.FUG.CH4.EMFACT <- 0.0882
+emissions.UNCONVENTIONAL.OIL.FUG.N2O.EMFACT <- 0.000000939
+
 # Time
 emissions.CEDS_YEARS              <- 1970:2019           # Year coverage for CEDS inventory.
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
@@ -769,6 +777,11 @@ emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
 emissions.UNMGD_LAND_INPUT_NAME <- "land-input"
+
+emissions.FUGITIVE_FOSSIL_CO2_NAME <- "CO2_FUG" # name for fugitive co2 emissions from fossil production
+emissions.FOSSIL_EMFACT_THRESHOLD_PERCENTILE <- 0.95 # energy production percentile used in determination of fossil emfact upper thresholds
+emissions.FOSSIL_EMFACT_THRESHOLD_TOP_PRODUCERS <- 0.9975 # percent of production defining the "top producers" used in determination of fossil emfact upper thresholds
+
 
 # Digits for rounding into XMLs
 emissions.DIGITS_CO2COEF       <- 1

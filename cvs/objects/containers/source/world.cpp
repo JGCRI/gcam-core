@@ -307,6 +307,7 @@ void World::calc( const int aPeriod, GcamFlowGraph *aWorkGraph, const vector<IAc
 void World::setEmissions( int period ) {
     // Declare visitors which will aggregate emissions by period.
     EmissionsSummer co2Summer( "CO2" );
+    EmissionsSummer co2fugSummer( "CO2_FUG" );
     LUCEmissionsSummer co2LandUseSummer( "CO2NetLandUse" );
     EmissionsSummer ch4Summer( "CH4" );
     EmissionsSummer ch4agrSummer( "CH4_AGR" );
@@ -353,6 +354,7 @@ void World::setEmissions( int period ) {
     // Group the EmissionsSummer together for improved performance.
     GroupedEmissionsSummer allSummer;
     allSummer.addEmissionsSummer( &co2Summer );
+    allSummer.addEmissionsSummer( &co2fugSummer );
     allSummer.addEmissionsSummer( &ch4Summer );
     allSummer.addEmissionsSummer( &ch4agrSummer );
     allSummer.addEmissionsSummer( &ch4awbSummer );
@@ -415,7 +417,8 @@ void World::setEmissions( int period ) {
     // MAGICC will use the default values.
     if( co2Summer.areEmissionsSet( period ) ){
         mClimateModel->setEmissions( "CO2", period,
-                                     co2Summer.getEmissions( period )
+                                     ( co2Summer.getEmissions( period ) +
+                                       co2fugSummer.getEmissions( period ) )
                                      / TG_TO_PG );
     }
     
