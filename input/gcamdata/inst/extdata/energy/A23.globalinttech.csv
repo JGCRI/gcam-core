@@ -9,4 +9,4 @@ electricity,wind,wind,electricity,wind,0.91,-1.2
 electricity,solar,PV,electricity,solar,0.972,-1.443
 electricity,solar,CSP,electricity,solar,0.972,-1.443
 elect_td_bld,rooftop_pv,rooftop_pv,electricity,solar,0.972,-1.443
-electricity,wind,wind_offshore,electricity,wind,0.946,-1.661
+electricity,wind,wind_offshore,electricity,wind_offshore,0.946,-1.661
