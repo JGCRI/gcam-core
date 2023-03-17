@@ -166,7 +166,7 @@ double ValueFactorCalculator::getValueFactor( const string& aSector,
     double renewElecShare = std::min( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 1.0 );
 
     double valueFactor = 1.0;
-    valueFactor = std::max( ( mValueFactorIntercept - mValueFactorSlope * renewElecShare ), util::getVerySmallNumber() );
+    valueFactor = std::max( ( mValueFactorIntercept + mValueFactorSlope * renewElecShare ), util::getVerySmallNumber() );
 
     return valueFactor;
 
