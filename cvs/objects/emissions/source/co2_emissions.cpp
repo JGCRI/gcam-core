@@ -155,7 +155,7 @@ double CO2Emissions::getGHGValue( const std::string& aRegionName,
     double removeFraction = aSequestrationDevice ? aSequestrationDevice->getRemoveFraction( getName() ) : 0;
 
     // Get the greenhouse gas tax from the marketplace.
-    double GHGTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
+    double GHGTax = mCachedMarket.getPrice( getName(), aRegionName, aPeriod, false );
 
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
         GHGTax = 0;

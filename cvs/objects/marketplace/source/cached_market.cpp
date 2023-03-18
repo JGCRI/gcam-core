@@ -42,6 +42,7 @@
 #include "marketplace/include/cached_market.h"
 
 #include "marketplace/include/market.h"
+#include "marketplace/include/market_container.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/util.h"
 #include "marketplace/include/marketplace.h"
@@ -52,20 +53,25 @@ using namespace std;
 extern Scenario* scenario;
 
 /*!
+ * \brief Default constructor.  The cached market will be initialized as not found.
+ */
+CachedMarket::CachedMarket():mCachedMarket(0)
+{
+}
+
+/*!
  * \brief Constructor which takes the parameters used to locate the given market.
  * \param aGoodName The good name used to locate aLocatedMarket.  Stored for debugging.
- * \param aGoodName The region name used to locate aLocatedMarket.  Stored for debugging.
- * \param aGoodName The period used to locate aLocatedMarket.  Stored for debugging.
+ * \param aRegionName The region name used to locate aLocatedMarket.  Stored for debugging.
  * \param aLocatedMarket A pointer to the actual market which was located.  Note that this
  *                       parameter can be null which indicates the market was not found.
  */
-CachedMarket::CachedMarket( const string& aGoodName, const string& aRegionName, const int aPeriod,
-                            Market* aLocatedMarket )
+CachedMarket::CachedMarket( const string& aGoodName, const string& aRegionName,
+                            MarketContainer* aLocatedMarket )
 :
 #ifndef NDEBUG
 mGoodName( aGoodName ),
 mRegionName( aRegionName ),
-mPeriod( aPeriod ),
 #endif
 mCachedMarket( aLocatedMarket )
 {
@@ -100,11 +106,6 @@ void CachedMarket::setPrice( const string& aGoodName, const string& aRegionName,
      */
     assert( aRegionName == mRegionName );
     
-    /*!
-     * \invariant The given period matches the one that was used when locating this market.
-     */
-    assert( aPeriod == mPeriod );
-    
     // Print a warning message if the new price is not a finite number.
     if ( !util::isValidNumber( aValue ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -114,7 +115,7 @@ void CachedMarket::setPrice( const string& aGoodName, const string& aRegionName,
     }
     
     if ( mCachedMarket ) {
-        mCachedMarket->setPrice( aValue );
+        mCachedMarket->getMarket( aPeriod )->setPrice( aValue );
     }
     else if( aMustExist ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -147,11 +148,6 @@ void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionNa
      */
     assert( aRegionName == mRegionName );
     
-    /*!
-     * \invariant The given period matches the one that was used when locating this market.
-     */
-    assert( aPeriod == mPeriod );
-    
     // Print a warning message when adding infinity values to the supply.
     if ( !util::isValidNumber( aValue ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -161,7 +157,7 @@ void CachedMarket::addToSupply( const string& aGoodName, const string& aRegionNa
     }
     
     if ( mCachedMarket ) {
-        mCachedMarket->addToSupply( scenario->getMarketplace()->mIsDerivativeCalc ?
+        mCachedMarket->getMarket( aPeriod )->addToSupply( scenario->getMarketplace()->mIsDerivativeCalc ?
                                     aValue.getDiff() : aValue.get() );
     }
     else if( aMustExist ){
@@ -209,7 +205,7 @@ void CachedMarket::addToDemand( const string& aGoodName, const string& aRegionNa
     }
     
     if ( mCachedMarket ) {
-        mCachedMarket->addToDemand( scenario->getMarketplace()->mIsDerivativeCalc ?
+        mCachedMarket->getMarket( aPeriod )->addToDemand( scenario->getMarketplace()->mIsDerivativeCalc ?
                                     aValue.getDiff() : aValue.get() );
     }
     else if( aMustExist ){
@@ -248,7 +244,7 @@ double CachedMarket::getPrice( const string& aGoodName, const string& aRegionNam
     assert( aPeriod == mPeriod );
     
     if( mCachedMarket ) {
-        return mCachedMarket->getPrice();
+        return mCachedMarket->getMarket( aPeriod )->getPrice();
     }
     
     if( aMustExist ) {
@@ -287,7 +283,7 @@ double CachedMarket::getSupply( const string& aGoodName, const string& aRegionNa
     assert( aPeriod == mPeriod );
     
     if ( mCachedMarket ) {
-        return mCachedMarket->getSupply();
+        return mCachedMarket->getMarket( aPeriod )->getSupply();
     }
     
     ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -323,7 +319,7 @@ double CachedMarket::getDemand(  const string& aGoodName, const string& aRegionN
     assert( aPeriod == mPeriod );
     
     if ( mCachedMarket ) {
-        return mCachedMarket->getDemand();
+        return mCachedMarket->getMarket( aPeriod )->getDemand();
     }
     
     ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -367,7 +363,7 @@ const IInfo* CachedMarket::getMarketInfo( const string& aGoodName, const string&
 
     const IInfo* info = 0;
     if ( mCachedMarket ) {
-        info = mCachedMarket->getMarketInfo();
+        info = mCachedMarket->getMarket( aPeriod )->getMarketInfo();
         /*! \invariant The market is required to return an information object
          *              that is non-null. 
          */
@@ -419,7 +415,7 @@ IInfo* CachedMarket::getMarketInfo( const string& aGoodName, const string& aRegi
     
     IInfo* info = 0;
     if ( mCachedMarket ) {
-        info = mCachedMarket->getMarketInfo();
+        info = mCachedMarket->getMarket( aPeriod )->getMarketInfo();
         /*! \invariant The market is required to return an information object
          *              that is non-null. 
          */

@@ -47,11 +47,11 @@
 #include <string>
 
 class Tabs;
-class CachedMarket;
 
 #include "technologies/include/ioutput.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
+#include "marketplace/include/cached_market.h"
 
 /*! 
  * \ingroup Objects
@@ -175,7 +175,7 @@ protected:
     )
     
     //! A pre-located market which has been cached from the marketplace to add supply to.
-    std::unique_ptr<CachedMarket> mCachedMarket;
+    CachedMarket mCachedMarket;
     
     void copy( const PrimaryOutput& aOther );
 };

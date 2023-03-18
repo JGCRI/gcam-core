@@ -182,8 +182,7 @@ public:
     IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
                          const int aPeriod, const bool aMustExist );
     
-    std::unique_ptr<CachedMarket> locateMarket( const std::string& aGoodName, const std::string& aRegionName,
-                                               const int aPeriod ) const;
+    CachedMarket locateMarket( const std::string& aGoodName, const std::string& aRegionName ) const;
 
    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 

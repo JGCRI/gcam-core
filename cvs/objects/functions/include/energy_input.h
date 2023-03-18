@@ -50,10 +50,10 @@
 #include "functions/include/minicam_input.h"
 #include "util/base/include/value.h"
 #include "util/base/include/time_vector.h"
+#include "marketplace/include/cached_market.h"
 
 class Tabs;
 class ICoefficient;
-class CachedMarket;
 
 /*! 
  * \ingroup Objects
@@ -205,7 +205,7 @@ protected:
     
     //! A pre-located market which has been cahced from the marketplace to get
     //! the price and add demands to.
-    std::unique_ptr<CachedMarket> mCachedMarket;
+    CachedMarket mCachedMarket;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
