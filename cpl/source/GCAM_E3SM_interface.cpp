@@ -215,45 +215,83 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
  * \param sneakermode integer indicating sneakernet mode is on
  * \param write_rest integer indicating restarts should be written
  */
-void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss )
+void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss,
+                                   std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup )
 {
+    int z, num_it, spinup;
+    int row, lurow, r, l;
+    ofstream oFile;
+
     // Get year only of the current date
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
     // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
     int e3smYear = *yyyymmdd/10000;
     // If the e3smYear is not a GCAM model year, then GCAM will automatically run ahead
     int gcamPeriod = modeltime->getyr_to_per( e3smYear );
-    // If the e3smYear is a GCAM model period, then we need to increment GCAM's model period
-    if ( modeltime->isModelYear( e3smYear ) ) {
-        gcamPeriod = gcamPeriod + 1;
-    }
 
-    int gcamYear = modeltime->getper_to_yr( gcamPeriod );
-    
-    bool success = false;
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
-    
-    if ( gcamYear < gcamStartYear ) {
-        coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is before GCAM starting date: " << gcamStartYear << endl;
-        return;
-    }
-    if ( gcamYear > gcamEndYear ) {
-        coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is after GCAM ending date: " << gcamEndYear << endl;
-        return;
-    }
-    
-    coupleLog << "Current E3SM Year is " << e3smYear << ", Current GCAM Year is " << gcamYear << endl;
 
-    int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
-   
-    if( modeltime->isModelYear( e3smYear ) || e3smYear == 1970) {
+    // If this is the initial year 2015 then run spinup first
+    // and write the base file data (or the base file itself)
+    // should get this year and a flag for doing this from namelist
+
+    // original condition:
+    // if( modeltime->isModelYear( e3smYear ) || e3smYear == 1970) {
+
+    // run GCAM each year, starting in 2015: GCAM failed to solve in 2016 because of whack scalars 
+    //if( modeltime->isModelYear( e3smYear ) || e3smYear == 1970) {
+    if( e3smYear >= 2015) {
+
+    // run on GCAM interval
+    //if( modeltime->isModelYear( e3smYear ) ) {
+
+        if ( e3smYear == 2015 && aSpinup) {
+           // do a spinup loop first and save the base year data (2015)
+           num_it = 2;
+           spinup = 1;
+        } else {
+           num_it = 1;
+           spinup = 0;
+        }
+
+        // do the indent if this works
+	for( z = 0; z < num_it; z++) {
+
+        // If the e3smYear is a GCAM model period, then we need to increment GCAM's model period
+        // unless this is the spinup loop
+        if ( modeltime->isModelYear( e3smYear ) & spinup == 0) {
+            gcamPeriod = gcamPeriod + 1;
+        }
+
+        int gcamYear = modeltime->getper_to_yr( gcamPeriod );
+    
+        bool success = false;
+    
+        if ( gcamYear < gcamStartYear ) {
+            coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is before GCAM starting date: " << gcamStartYear << endl;
+            return;
+        }
+        if ( gcamYear > gcamEndYear ) {
+            coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is after GCAM ending date: " << gcamEndYear << endl;
+            return;
+        }
+    
+        coupleLog << "Current E3SM Year is " << e3smYear << ", Current GCAM Year is " << gcamYear << endl;
+
+        int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
+  
         // set restart period
-        restartPeriod = gcamPeriod;
+        // run the calibration if this is the first year
+        // make a namelist item to toggle this?
+        if ( spinup == 1 ) {
+           restartPeriod = -1;
+        } else {
+           restartPeriod = gcamPeriod;
+        }
 
         Timer timer;
         
-        // TODO: is this necessary, it will be the same as currYear
         coupleLog << "Running GCAM for year " << gcamYear;
         coupleLog << ", calculating period = " << gcamPeriod << endl;
         
@@ -276,6 +314,15 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         getCo2.run(runner->getInternalScenario());
         std::copy(co2, co2+mCO2EmissData.getArrayLength(), gcamoemiss);
         coupleLog << mCO2EmissData << endl;
+
+        // write the 2015 CO2 to a table
+        // this is the actual co2 base file - so the name comes from the namelist
+        if (spinup == 1) {
+           std::string co2_oname(aBaseCO2GcamFileName);
+           oFile.open(co2_oname);
+           mCO2EmissData.printAsTable(oFile);
+           oFile.close();
+        }
         
         coupleLog << "Getting LUC" << endl;
         double *luc = mLUCData.getData();
@@ -284,7 +331,16 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mLUCData);
         getLUC.run(runner->getInternalScenario());
         coupleLog << mLUCData << endl;
-        
+       
+        // write the 2015 LUC to a table
+        // this is diagnostic so hardcode the file name
+        if (spinup == 1) {
+           std::string luc_oname = "luc_2015_out.csv";
+           oFile.open(luc_oname);
+           mLUCData.printAsTable(oFile);
+           oFile.close();
+        } 
+
         coupleLog << "Getting Wood harvest" << endl;
         double *woodHarvest = mWoodHarvestData.getData();
         // be sure to reset any data set previously
@@ -292,29 +348,68 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[IndexFilter,IntEquals,0]/physical-output[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mWoodHarvestData);
         getWH.run(runner->getInternalScenario());
         coupleLog << mWoodHarvestData << endl;
-        
+
+        // write the 2015 wood harvest to a table for a base file
+        // this is diagnostic so hardcode the file name 
+        if (spinup == 1) {
+           std::string wh_oname = "wh_2015_out.csv";
+           oFile.open(wh_oname);
+           mWoodHarvestData.printAsTable(oFile);
+           oFile.close();
+        }       
+ 
         // Set data in the gcamoluc* arrays
+        // also write the baseline csv file if in spinup mode
+
+        if (spinup == 1) {
+           oFile.open(aBaseLucGcamFileName);
+           oFile << "glu,type,Year,value" << endl;
+           //oFile.close();
+        }
+
+        // only needed for spinup, but doesn't like being in an if statement
+        //         ILogger& baseLucFile = ILogger::getLogger(aBaseLucGcamFileName);
+        //                 baseLucFile.setLevel( ILogger::NOTICE );
+        //                         baseLucFile << "glu,type,Year,value" << endl;
+        //                                 baseLucFile.precision(20);
+
         const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-        int row = 0;
-        int lurow = 0;
+        row = 0;
+        lurow = 0;
         // The variables below are read in, but to get them from the namelist would require changes to the runGCAM call
         // For now, we'll derive them from data already accessible
         int numRegions = mWoodHarvestData.getArrayLength();
         int numLUTypes = mLUCData.getArrayLength() / mWoodHarvestData.getArrayLength();
-        for( int r = 0; r < numRegions; r++) {
-            for( int l = 0; l < numLUTypes; l++) {
+        for( r = 0; r < numRegions; r++) {
+            for( l = 0; l < numLUTypes; l++) {
                 gcamoluc[row] = luc[lurow];
+                if (spinup == 1) {
+                    oFile << r+1 << "," << l+1 << "," << gcamYear << "," << gcamoluc[row] << endl;
+                }
                 lurow++;
                 row++;
             }
             // Convert to tC and set wood harvest data to output vector
-            gcamoluc[row] = mWoodHarvestData.getData()[r] * 288000000;
+            // this is the factor that GCAM uses; it is an intermediate value
+            gcamoluc[row] = mWoodHarvestData.getData()[r] * 250000000;
+            if (spinup == 1) {
+                oFile << r+1 << "," << l+1 << "," << gcamYear << "," << gcamoluc[row] << endl;
+            }
             row++;
+        }
+
+        if (spinup == 1) {
+            oFile.close();
         }
         
         // Print output
         runner->printOutput(timer);
-    }
+
+        spinup = 0;
+
+        } // end for z loop for spinup option
+
+    } // end if valid year
         
 }
 
@@ -332,6 +427,8 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     if ( modeltime->isModelYear( e3smYear ) ) {
         gcamPeriod = gcamPeriod + 1;
     }
+
+    std::string fName;
 
     int gcamYear = modeltime->getper_to_yr( gcamPeriod );
     const int finalCalibrationPeriod = modeltime->getFinalCalibrationPeriod();
@@ -353,26 +450,29 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     coupleLog << "In setDensityGCAM, gcamYear is: " << gcamYear << endl; 
 
     // Only set carbon densities during GCAM model years after the first coupled year
-    if( modeltime->isModelYear( gcamYear ) && e3smYear >=  *aFirstCoupledYear ) {
+    // set carbon densities each year to calc and write them and to match running gcam each year
+    //if( modeltime->isModelYear( gcamYear ) && e3smYear >=  *aFirstCoupledYear ) {
+    if( e3smYear >=  *aFirstCoupledYear ) {
         coupleLog << "Setting carbon density in year: " << gcamYear << endl;
         CarbonScalers e3sm2gcam(*aNumLon, *aNumLat, *aNumPFT);
         
         // Get scaler information
         if ( aReadScalars ) {
             coupleLog << "Reading scalars from file." << endl;
-            e3sm2gcam.readScalers(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
+            fName = "./scalers_" + std::to_string(e3smYear) + ".csv";
+            e3sm2gcam.readScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         } else {
             coupleLog << "Calculating scalers from data." << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
-            e3sm2gcam.calcScalers(gcamYear, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
+            e3sm2gcam.calcScalers(e3smYear, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
                                   scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData,
                                   aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
         }
         
         // Optional: write scaler information to a file
-        // TODO: make the file name an input instead of hardcoded
+        // TODO?: make the file name an input instead of hardcoded
         if( aWriteScalars ) {
-            string fName = "./scalers_" + std::to_string(gcamYear) + ".csv";
+            fName = "./scalers_" + std::to_string(e3smYear) + ".csv";
             e3sm2gcam.writeScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, 17722);
         }
       
@@ -396,16 +496,42 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
                                                  double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                                                  double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                                                  double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                                                 std::string aBaseCO2SfcFile, double *aBaseCO2EmissSfc, std::string aBaseCO2AirFile, double *aBaseCO2EmissAir,
-                                                 int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear) {
+                                                 std::string aBaseCO2GcamFileName, std::string aBaseCO2SfcFile, std::string aBaseCO2AirFile,
+                                                 int *aNumReg, int *aNumSector, int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear) {
+
+    int r, s, row;
+    std::vector<double> gcamoSfcEmissVector((*aNumReg),0);
+    std::vector<double> gcamoAirEmissVector((*aNumReg),0);
+
+    // separate gcamoemiss into surface and aircraft sector vectors
+    row = 0;
+    for( r=0; r<(*aNumReg); r++ ) {
+        for( s=0; s<(*aNumSector); s++) {
+            if(s==0){
+                gcamoSfcEmissVector[r]=gcamoemiss[row];
+            } else if(s==1){
+                gcamoAirEmissVector[r]=gcamoemiss[row];
+                row++;
+            }
+        }
+    }
+
     // Downscale surface CO2 emissions
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
     coupleLog << "Downscaling CO2 emissions" << endl;
-    EmissDownscale surfaceCO2((*aNumLon) * (*aNumLat) * 12); // Emissions data is monthly now
+    EmissDownscale surfaceCO2((*aNumLon) * (*aNumLat) * 12, (*aNumReg), (*aNumSector)); // Emissions data is monthly now
+    // Read in the GCAM regionXsector base CO2 data
+    surfaceCO2.readBaseYearCO2Data(aBaseCO2GcamFileName);
+    // read in the gridded eam baseline co2 data
     surfaceCO2.readSpatialData(aBaseCO2SfcFile, true, true, false);
-    surfaceCO2.downscaleCO2Emissions(*aBaseCO2EmissSfc, gcamoemiss[0]);
-    coupleLog << "Diagnostics: Global surface CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss[0] << endl;
+    surfaceCO2.downscaleCO2Emissions("surface", gcamoSfcEmissVector);
+    // These regions are in order of the output regions in co2.xml 
+    for( r=0; r<(*aNumReg); r++ ) {
+        coupleLog << "Diagnostics: Regional surface CO2 Emissions (PgC) in " << *aCurrYear << endl;
+        coupleLog << "Region " << r+1  << " = " << gcamoSfcEmissVector[r] << endl;
+    }
+
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
         string fNameSfc = "./gridded_co2_sfc" + std::to_string(*aCurrYear) + ".txt";
@@ -417,11 +543,19 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
                                        gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
                                        gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, *aNumLon, *aNumLat);
     
-    
-    EmissDownscale aircraftCO2((*aNumLon) * (*aNumLat) * 12 * 2); // Emissions data is monthly now; we're using two different height levels for aircraft
+    // Emissions data is monthly now; we're using two different height levels for aircraft 
+    EmissDownscale aircraftCO2((*aNumLon) * (*aNumLat) * 12 * 2, (*aNumReg), (*aNumSector));
+    // Read in the GCAM regionXsector base CO2 data
+    aircraftCO2.readBaseYearCO2Data(aBaseCO2GcamFileName);
+    // read in the gridded eam baseline co2 data
     aircraftCO2.readSpatialData(aBaseCO2AirFile, true, true, false);
-    aircraftCO2.downscaleCO2Emissions(*aBaseCO2EmissAir, gcamoemiss[1]);
-    coupleLog << "Diagnostics: Global aircraft CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss[1] << endl;
+    aircraftCO2.downscaleCO2Emissions("aircraft", gcamoAirEmissVector);
+    // These regions are in order of the output regions in co2.xml
+    for( r=0; r<(*aNumReg); r++ ) {
+        coupleLog << "Diagnostics: Regional aircraft CO2 Emissions (PgC) in " << *aCurrYear << endl;
+        coupleLog << "Region " << r+1  << " = " << gcamoAirEmissVector[r] << endl;
+    }
+
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
         string fNameAir = "./gridded_co2_air_" + std::to_string(*aCurrYear) + ".txt";

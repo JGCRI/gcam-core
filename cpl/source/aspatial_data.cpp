@@ -58,9 +58,8 @@ mValueVector(aSize, 0) {
 ASpatialData::~ASpatialData() {
 }
 
-// Read in spatial data from a csv file
-// Note: this is used for diagnostics and testing. In fully coupled E3SM-GCAM, this data
-// are passed in code to the wrapper
+// Read in spatial data from a space separated value file
+// this is currently used to read in the base co2 spatial data
 double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal) {
     // Create a double to store totals (if aCalcTotal == true)
     double total = 0.0;
@@ -120,7 +119,7 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
     return total;
 }
 
-// Read in spatial data from a csv file directly into an array
+// Read in spatial data from a space separated value file directly into an array
 double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aValueArray) {
     // Create a double to store totals (if aCalcTotal == true)
     double total = 0.0;
@@ -179,6 +178,131 @@ double ASpatialData::readSpatialData(std::string aFileName, bool aHasLatLon, boo
 
     return total;
 }
+
+
+// Read in spatial data from a csv file
+// this is used for reading base elm data for scalar calculation
+//   and also for the same in testing in the main program
+double ASpatialData::readSpatialDataCSV(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal) {
+    // Create a double to store totals (if aCalcTotal == true)
+    double total = 0.0;
+    
+    ifstream data(aFileName);
+    if (!data.is_open())
+    {
+        ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+        coupleLog.setLevel( ILogger::ERROR );
+        coupleLog << "File not found: " << aFileName << endl;
+        exit(EXIT_FAILURE);
+    }
+    string str;
+    getline(data, str); // skip the first line
+    int row = 0;
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        double value;
+        
+        if ( aHasID ) {
+            int id;
+
+            // Parse ID
+            getline(iss, token, ',');
+            id = std::stoi(token);
+            mIDVector.at(row) = id;
+         }
+        
+        if ( aHasLatLon ) {
+            double lon;
+            int lat;
+
+            // Parse longitude
+            getline(iss, token, ',');
+            lon = std::stod(token);
+            mLonVector[row] = lon;
+
+            // Parse latitude
+            getline(iss, token, ',');
+            lat = std::stod(token);
+            mLatVector[row] = lat;
+        }
+
+        // Parse value
+        getline(iss, token, ',');
+        value = std::stod(token);
+        mValueVector[row] = value;
+
+        // if aCalcTotal == true, then add this to the total
+        total += value;
+
+        row++;
+    }
+    
+    return total;
+}
+
+
+// Read in spatial data from a csv file directly into an array
+double ASpatialData::readSpatialDataCSV(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aValueArray) {
+    // Create a double to store totals (if aCalcTotal == true)
+    double total = 0.0;
+    
+    ifstream data(aFileName);
+    if (!data.is_open())
+    {
+        ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+        coupleLog.setLevel( ILogger::ERROR );
+        coupleLog << "File not found: " << aFileName << endl;
+        exit(EXIT_FAILURE);
+    }
+    string str;
+    getline(data, str); // skip the first line
+    int row = 0;
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        double value;
+        
+        if ( aHasID ) {
+            int id;
+
+            // Parse ID
+            getline(iss, token, ',');
+            id = std::stoi(token);
+            mIDVector.at(row) = id;
+        }
+        
+        if ( aHasLatLon ) {
+            double lon;
+            int lat;
+
+            // Parse longitude
+            getline(iss, token, ',');
+            lon = std::stod(token);
+            mLonVector[row] = lon;
+
+            // Parse latitude
+            getline(iss, token, ',');
+            lat = std::stod(token);
+            mLatVector[row] = lat;
+        }
+
+        // Parse value
+        getline(iss, token, ',');
+        value = std::stod(token);
+        aValueArray[row] = value;
+        
+        // if aCalcTotal == true, then add this to the total
+        total += value;
+
+        row++;
+    }
+
+    return total;
+}
+
 
 void ASpatialData::writeSpatialData(std::string aFileName, bool aWriteID) {
     ofstream oFile;

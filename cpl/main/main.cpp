@@ -222,7 +222,6 @@ int main( ) {
     // Set up data structures that will be passed to runGCAM
     // In fully coupled mode, these are allocated by E3SM
     double *gcamiarea = new double [(*NUM_LAT) * (*NUM_LON)]();
-    double *gcamilfract = new double [(*NUM_LAT) * (*NUM_LON)]();
     double *gcamipftfract = new double [(*NUM_LAT) * (*NUM_LON) * (*NUM_PFT)]();
     double *gcaminpp = new double [(*NUM_LAT) * (*NUM_LON) * (*NUM_PFT)]();
     double *gcamihr = new double [(*NUM_LAT) * (*NUM_LON) * (*NUM_PFT)]();
@@ -278,22 +277,21 @@ int main( ) {
                 coupleLog << "E3SM-GCAM: Carbon scaling on" << endl;
                 if ( READ_ELM_FROM_FILE ) {
                     // Read the ELM data from a file and then pass it to setDensityGCAM below
+                    // These are currently the new base files, can make others from a different year
+
                     // Read in average NPP
                     ASpatialData tempPFTData((*NUM_LAT) * (*NUM_LON) * (*NUM_PFT));
-                    tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
+                    tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_npp.csv", true, true, false, gcaminpp);
                     
                     // Read in average HR
-                    tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
+                    tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_hr.csv", true, true, false, gcamihr);
                     
                     // Read in PFT weight in grid cell
-                    tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
+                    tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_pft_wt.csv", true, true, false, gcamipftfract);
                     
                     // Read in area of grid cell
                     ASpatialData tempData((*NUM_LAT) * (*NUM_LON));
-                    tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
-                    
-                    // Read in area of grid cell
-                    tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
+                    tempData.readSpatialDataCSV("../cpl/data/base_f09_cell_area.csv", true, false, false, gcamiarea);
                 }
                 p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamipftfract, gcaminpp, gcamihr,
                                       NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, ELM_IAC_CARBON_SCALING, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE);
@@ -316,22 +314,21 @@ int main( ) {
             coupleLog << "E3SM-GCAM: Carbon scaling on" << endl;
             if ( READ_ELM_FROM_FILE ) {
                 // Read the ELM data from a file and then pass it to setDensityGCAM below
+                // These are currently the new base files, can make others from a different year
+                
                 // Read in average NPP
                 ASpatialData tempPFTData((*NUM_LAT) * (*NUM_LON) * (*NUM_PFT));
-                tempPFTData.readSpatialData("../cpl/data/npp_mean_pft.txt", true, true, false, gcaminpp);
+                tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_npp.csv", true, true, false, gcaminpp);
                 
                 // Read in average HR
-                tempPFTData.readSpatialData("../cpl/data/hr_mean_pft.txt", true, true, false, gcamihr);
+                tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_hr.csv", true, true, false, gcamihr);
                 
                 // Read in PFT weight in grid cell
-                tempPFTData.readSpatialData("../cpl/data/pft_wt.txt", true, true, false, gcamipftfract);
+                tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_pft_wt.csv", true, true, false, gcamipftfract);
                 
                 // Read in area of grid cell
                 ASpatialData tempData((*NUM_LAT) * (*NUM_LON));
-                tempData.readSpatialData("../cpl/data/area.txt", true, false, false, gcamiarea);
-                
-                // Read in area of grid cell
-                tempData.readSpatialData("../cpl/data/landfrac.txt", true, false, false, gcamilfract);
+                tempData.readSpatialDataCSV("../cpl/data/base_f09_cell_area.csv", true, false, false, gcamiarea);
             }
             p_obj->setDensityGCAM(yyyymmdd, gcamiarea, gcamipftfract, gcaminpp, gcamihr,
                                   NUM_LON, NUM_LAT, NUM_PFT, ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS, ELM_IAC_CARBON_SCALING, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE);
@@ -358,13 +355,12 @@ int main( ) {
     }
     /*
      STEP 5: FINALIZE AND CLEAN UP ALL VARIABLES
-     */
+     */n
     // Finalize GCAM
     p_obj->finalizeGCAM();
     
     // Remove all arrays
     delete [] gcamiarea;
-    delete [] gcamilfract;
     delete [] gcamipftfract;
     delete [] gcaminpp;
     delete [] gcamihr;

@@ -45,10 +45,11 @@
 
 class EmissDownscale : public ASpatialData {
 public:
-    EmissDownscale(int aSize);
+    EmissDownscale(int aSize, int aNumReg, int aNumSector);
     ~EmissDownscale();
     // TODO: Eventually these will need to be vectors of regional emissions instead of global totals
-    void downscaleCO2Emissions(double aBaseYearEmissions, double aCurrYearEmissions);
+    void downscaleCO2Emissions(const std::string sector, std::vector<double> aCurrYearRegionEmissVector);
+    void readBaseYearCO2Data(std::string aBaseCO2GcamFileName);
     void separateMonthlyEmissions(double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
                                   double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
                                   double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
@@ -66,6 +67,12 @@ public:
 private:
     std::vector<double> mBaseYearEmissVector;
     std::vector<double> mCurrYearEmissVector;
+    std::vector<double> mBaseYearRegionSfcEmissVector;
+    std::vector<double> mBaseYearRegionAirEmissVector;
+    double mGlobalSfcCO2Emiss;
+    double mGlobalAirCO2Emiss;
+    std::vector<std::string> mSectors;
+    std::vector<std::string> mRegions;
 };
 
 #endif // __EMISS_DOWNSCALE__

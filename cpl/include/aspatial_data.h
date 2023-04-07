@@ -48,6 +48,8 @@ public:
     virtual void readMapping(std::string aFileName);
     virtual double readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal);
     virtual double readSpatialData(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aValueArray);
+    virtual double readSpatialDataCSV(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal);
+    virtual double readSpatialDataCSV(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aValueArray);
     virtual void writeSpatialData(std::string aFileName, bool aWriteID);
     virtual void setValueVector(std::vector<double> aValueVector);
     virtual std::vector<double> getValueVector();

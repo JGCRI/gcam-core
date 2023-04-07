@@ -69,15 +69,15 @@ CarbonScalers::~CarbonScalers() {
 // ASpatialData::readSpatialData method and then copying the vectors.
 void CarbonScalers::readBaseYearData(std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName){
     // Read in average NPP
-    readSpatialData(aBaseNPPFileName, true, true, false);
+    readSpatialDataCSV(aBaseNPPFileName, true, true, false);
     mBaseNPPVector = getValueVector();
     
     // Read in average HR
-    readSpatialData(aBaseHRFileName, true, true, false);
+    readSpatialDataCSV(aBaseHRFileName, true, true, false);
     mBaseHRVector = getValueVector();
     
     // Read in PFT weight in grid cell
-    readSpatialData(aBasePFTWtFileName, true, true, false);
+    readSpatialDataCSV(aBasePFTWtFileName, true, true, false);
     mBasePFTFractVector = getValueVector();
 }
 
@@ -151,14 +151,48 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 }
 
 // Calculate scalers
-void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+void CarbonScalers::calcScalers(int aE3SMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                 std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
     
     // Exclude outliers from the scalar calculation
     excludeOutliers(aELMNPP, aELMHR);
-    
+   
+    // generate diagnostic files for the incoming elm data
+    string nppName = "./npp2GCAM_" + std::to_string(aE3SMYear) + ".csv";
+    ILogger& npp2GCAM = ILogger::getLogger( nppName );
+    npp2GCAM.setLevel( ILogger::NOTICE );
+    npp2GCAM.precision(20);
+    npp2GCAM << "pft_id,lon_ind,lat_ind,npp_gC_per_m2_per_s" << endl;
+
+    string hrName = "./hr2GCAM_" + std::to_string(aE3SMYear) + ".csv";
+    ILogger& hr2GCAM = ILogger::getLogger( hrName );
+    hr2GCAM.setLevel( ILogger::NOTICE );
+    hr2GCAM.precision(20);
+    hr2GCAM << "pft_id,lon_ind,lat_ind,hr_gC_per_m2_per_s" << endl;
+
+    string pftName = "./pft2GCAM_" + std::to_string(aE3SMYear) + ".csv";
+    ILogger& pft2GCAM = ILogger::getLogger( pftName );
+    pft2GCAM.setLevel( ILogger::NOTICE );
+    pft2GCAM.precision(20);
+    pft2GCAM << "pft_id,lon_ind,lat_ind,pft_wt_cell_frac" << endl;
+
+    string areaName = "./area2GCAM.csv";
+    ILogger& area2GCAM = ILogger::getLogger( areaName );
+    area2GCAM.setLevel( ILogger::NOTICE );
+    area2GCAM.precision(20);
+    // only do this once, and the first call is in 2016
+    if(aE3SMYear == 2016) {
+        area2GCAM << "lon_ind,lat_ind,cell_area_km2" << endl;
+    }
+
+    // diagnostics to find out where the data are being lost
+    string SdName = "./scaler_diagnostic.csv";
+    ILogger& Sd = ILogger::getLogger( SdName );
+    Sd.setLevel( ILogger::NOTICE );
+    Sd.precision(20);
+
     // Create mappings to store intermediate information
     std::map<std::pair<std::string,std::string>, double> totalArea;
     std::map<std::pair<std::string,std::string>, double> baseTotalArea;
@@ -169,7 +203,10 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     std::map<std::pair<std::string,std::string>, double> baseTotalHR;
     std::map<std::pair<std::string,std::string>, double> belowScalarMap;
     
-    // Loop over PFTs and grid cells to calculate weighted average NPP for each GCAM region
+    // Loop over PFTs and grid cells to calculate weighted average NPP/HR for each land type in each GCAM land unit
+    // the average for each land type is based on the relevant pfts and cells within a land unit
+    // the assumption is that a given land type is proportionally distributed across the relevant pfts and cells
+    // thus a weighted pft average is desired, which does not depend on the existence or amount of a given land type
     // Note: E3SM data will have longitude moving fastest, then latitude, then pft, so loop in that order
     int gridIndex = 0; // Index used for Grid vectors
     int valIndex = 0; // Index used for PFT x Grid vectors
@@ -184,6 +221,15 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                 // TODO: What to do about grid cells with multiple entries? - doesn't seem like this should happen
                 string gridID = std::to_string(j) + "_" + std::to_string(k);
                 auto tempGrid = mRegionMapping.find( gridID );
+
+                // write diagnostics of the incoming elm data; entire grid is in these files (and the base files)
+                npp2GCAM << pft << "," << j << "," << k << "," << aELMNPP[valIndex] << endl;
+                hr2GCAM << pft << "," << j << "," << k << "," << aELMHR[valIndex] << endl;
+                pft2GCAM << pft << "," << j << "," << k << "," << aELMPFTFract[valIndex] << endl;
+                if(aE3SMYear == 2016 && pft == 0) {
+                    area2GCAM << j << "," << k << "," << aELMArea[gridIndex] << endl;
+                }
+
                 if ( mRegionMapping.find(gridID) == mRegionMapping.end() ) {
                     // Grid isn't found in the mapping. Currently, this probably means it is an ocean grid.
                     // TODO: set up loop only over land grids, either using the mRegionMapping or one of the files from ELM
@@ -192,19 +238,28 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                     regInGrd = (*tempGrid).second;
                     // Loop over all regions this grid is mapped to and calculate the scalars
                     for(auto regID : regInGrd) {
-                        // Calculate total as NPP/HR of the PFT * area of the PFT
+                        // Calculate total flux as NPP/HR of the PFT * area of the PFT
                         // pft value is fraction of grid cell
+                        // area is in km^2, but npp and hr are in gC/m^2/sec
+                        // the average below includes area in both numerator and denominator
+                        //  so no need to convert to m^2
                         scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * aELMArea[gridIndex];
                         base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * aELMArea[gridIndex];
-                       
+                      
+                        // the incoming npp (probably hr also) needs error checking in the iac code
+                        // bad npp values are coming in where there is some case pft area (and zero base pft area) but no npp has been set
+                        //  this could be related to res mismatch
+                        // the baseline data have been cleaned based on pft area = zero
+                        // maybe changing the max algorithm will fix it
+                        // for now, try setting the case scalar to zero if base scalar is zero
+                        // TODO: fix the bad values before passing to gcam
+                        if (base_scalar == 0) {
+                           scalar = 0;
+                        }
+ 
                         // Find current PFT in the PFT2Crop map
                         auto currPFT = mPFT2GCAMCropMap.find( pft );
                         vector<string> cropsInPFT = (*currPFT).second;
-                        
-                        // Adjust scalars based on number of crops in PFT
-                        // this provides equal weight to each crop since they are not separate in elm
-                        scalar = scalar / cropsInPFT.size();
-                        base_scalar = base_scalar / cropsInPFT.size();
                         
                         // Then add the npp and area for both current and base periods to the region/crop totals
                         // Note: this assumes that if you find the pair in totalArea that it exists for the baseTotalArea,
@@ -224,14 +279,23 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                                 baseTotalNPP[std::make_pair(regID,currCrop)] = mBaseNPPVector[valIndex] * base_scalar;
                                 totalHR[std::make_pair(regID,currCrop)] = aELMHR[valIndex] * scalar;
                                 baseTotalHR[std::make_pair(regID,currCrop)] = mBaseHRVector[valIndex] * base_scalar;
+                            } // end if else new region land type pair
+
+                            // check one instance of not matching output 
+                            if( currCrop == "FiberCrop" && regID == "Africa_Southern.AfrCstSW") {
+                               Sd << regID << ", " << currCrop << ", pft=" << pft << ", lon=" << j << ", lat=" << k << endl;
+                               Sd << "scalar=" << scalar << ", base_scalar=" << base_scalar << endl;
+                               Sd << "totalArea=" << totalArea[std::make_pair(regID,currCrop)] << ", totalNPP=" << totalNPP[std::make_pair(regID,currCrop)] << ", totalHR=" << totalHR[std::make_pair(regID,currCrop)] << endl;
+                               Sd << "aELMNPP=" << aELMNPP[valIndex] << ", aELMHR=" << aELMHR[valIndex] << ", val_Index=" << valIndex << endl << endl;
                             }
-                         }
-                    }
-                }
-            }
-        }
-    }
-    
+
+                         } // end for loop over land types for this pft
+                    } // end for loop over region in this grid cell
+                } // if else this grid cell is found
+            } // end for j loop over lon
+        } // end for k loop over lat
+    } // end for pft loop over pft
+   
     // Calculate scalars
     // Loop over all items in the map
     std::string crop;
@@ -263,7 +327,9 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
         }
         
         // Calculate scalar
-        if ( baseAvgNPP > 0 ) {
+        // npp can be negative; for now ignore if either is negative
+        // ToDo: add cases for sign checking?
+        if ( baseAvgNPP > 0 && avgNPP > 0) {
             aboveScalarMap[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
         } else {
             aboveScalarMap[std::make_pair(regID,crop)] = 1.0;
@@ -273,20 +339,43 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
         if ( baseAvgHR > 0 ) {
             // The belowground scalar is a combination of NPP and HR...BUT HR needs to be "flipped" around 1
             // This is because higher heterotrophic respiration means lower C density, everything else being equal
+            // for now, deal with large ratios so that this scalar does not go negative
             hrScalar = 2.0 - ( avgHR / baseAvgHR );
+            if(hrScalar <= 0) {hrScalar = 0.0;}
             belowScalarMap[std::make_pair(regID,crop)] = ( aboveScalarMap[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
         } else {
             belowScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
-     }
-     
-    createScalerVectors(aGCAMYear, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
+    
+        // check the essential data
+        if(aE3SMYear == 2016) {
+           Sd << regID << "," << crop << endl;
+           Sd << "CASE: total area " << totalArea[std::make_pair(regID,crop)];
+           Sd << " total npp " << totalNPP[std::make_pair(regID,crop)] << " total hr " << totalHR[std::make_pair(regID,crop)];
+           Sd << " avgNPP " << avgNPP << " avgHR " << avgHR << endl;
+           Sd << "BASE: total area " << baseTotalArea[std::make_pair(regID,crop)];
+           Sd << " total npp " << baseTotalNPP[std::make_pair(regID,crop)] << " total hr " << baseTotalHR[std::make_pair(regID,crop)];
+           Sd << " avgNPP " << baseAvgNPP << " avgHR " << baseAvgHR << endl;
+           Sd << "above scalar " << aboveScalarMap[std::make_pair(regID,crop)];
+           Sd << " below scalar " << belowScalarMap[std::make_pair(regID,crop)] << endl;
+        }
+     } // end for loop over totalArea 
+
+    createScalerVectors(aE3SMYear, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
+
+    // check the vectors
+    //Sd << endl << "Check vectors" << endl;
+    //Sd << "year " << "region " << "tech_basin " << "above scalar " << "below scalar" << endl;
+    //for (int r = 0; r < 17722; r++) {
+    //   Sd << aYears[r] << " "  << aRegions[r] << " " << aLandTechs[r] << " " << aAboveScalers[r] << " " << aBelowScalers[r] << endl;
+    //}
+
 }
 
 
 // This function transforms the mappings used for internal scalar calculation
 // into the vectors needed to set data within GCAM
-void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+void CarbonScalers::createScalerVectors(int aE3SMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                         std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
                                         std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
                                         std::map<std::pair<std::string,std::string>, double> aBelowScalarMap) {
@@ -306,7 +395,7 @@ void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears,
         // Set values in each vector
         // Note that we need to combine the basin with the crop name for the `aLandTechs` vector
         // and separate the region from the basin for the `aRegions` vector.
-        aYears[row] = aGCAMYear;
+        aYears[row] = aE3SMYear;
         aRegions[row] = strs[0];
         aLandTechs[row] = crop + "_" + strs[1];
         aAboveScalers[row] = curr.second;
@@ -317,12 +406,16 @@ void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears,
     
 }
 
-// Write scalar data to a file. This is a diagnostic.
+// Write scalar data to a file. This is for non-synchronous experiments, and is a diagnostic.
 void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, int aLength) {
     // DEBUG: Write output
     // TODO: This should be moved to a separate method that will write output (if the boolean is set)
     ofstream oFile;
     oFile.open(aFileName);
+    if (!oFile.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
     for(int i = 0; i < aLength; i++) {
         oFile << aYears[i] << "," << aRegions[i] << "," << aLandTechs[i] << "," << aAboveScalers[i] << "," << aBelowScalers[i] << endl;
     }
@@ -332,12 +425,13 @@ void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears
 // Read in scalers from a csv file
 // Note: this is used for diagnostics or special experiments. In fully coupled E3SM-GCAM, these scalers
 // are calculated based on data passed in code through the wrapper
-void CarbonScalers::readScalers(std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+void CarbonScalers::readScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                  std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers) {
     
-    // TODO: Get this file name from either a configuration or passed argument
     // TODO: Also, do we need to worry about length?
-    ifstream data("../cpl/data/scaler_data.csv");
+
+    ifstream data(aFileName);
+
     if (!data.is_open())
     {
         exit(EXIT_FAILURE);
@@ -394,9 +488,10 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     std::transform(scaledNPP.begin(), scaledNPP.end(), mBaseNPPVector.begin(), scaledNPP.begin(), std::divides<double>());
     std::transform(scaledHR.begin(), scaledHR.end(), mBaseHRVector.begin(), scaledHR.begin(), std::divides<double>());
     
-    // Remove zero and nan values -- ocean grid cells weren't included in the original data and cells with 0 base values were excluded
-    std::vector<double>::iterator newIter = std::remove_if( scaledNPP.begin(), scaledNPP.end(), [](double x){return x == 0 || x != x;});
-    std::vector<double>::iterator newHRIter = std::remove_if( scaledHR.begin(), scaledHR.end(), [](double x){return x == 0 || x != x;});
+    // Remove zero and nan and inf values -- this excludes cells with 0 base values from median calcs
+    // zero values could skew the median calcs because the case records with zeros may not have pft areas
+    std::vector<double>::iterator newIter = std::remove_if( scaledNPP.begin(), scaledNPP.end(), [](double x){return x == 0 || !isfinite(x);});
+    std::vector<double>::iterator newHRIter = std::remove_if( scaledHR.begin(), scaledHR.end(), [](double x){return x == 0 || !isfinite(x);});
     scaledNPP.resize( newIter -  scaledNPP.begin() );
     scaledHR.resize( newHRIter -  scaledHR.begin() );
 
@@ -426,9 +521,11 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     double lowerBoundHR = medianHR - madLimit * madHR;
     
     // Remove Outliers. These are set to zero so they will be excluded from scaler calculation
+    // for now, also remove records that give non-finite ratios
     for( int i = 0; i < length; i++ ) {
         if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound ||
-            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ) {
+            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ||
+            !isfinite(scaledNPP[i]) || !isfinite(scaledHR[i]) ) {
             aELMNPP[i] = 0;
             mBaseNPPVector[i] = 0;
             aELMHR[i] = 0;

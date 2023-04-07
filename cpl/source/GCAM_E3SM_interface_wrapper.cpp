@@ -49,9 +49,13 @@ extern "C" {
   }
     
   // Run GCAM
-  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss) {
-    
-      p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss);
+  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, char* aBaseLucGcamFileName, char* aBaseCO2GcamFileName, int *aSpinup) {
+  
+      std::string BaseLucGcamFileName(aBaseLucGcamFileName);
+      std::string BaseCO2GcamFileName(aBaseCO2GcamFileName);
+      bool Spinup = *aSpinup == 1 ? true : false;
+  
+      p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, BaseLucGcamFileName, BaseCO2GcamFileName, Spinup);
   }
 
   // Downscale Emissions
@@ -65,12 +69,13 @@ extern "C" {
                               double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                               double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                               double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                              char* aBaseCO2SfcFile, double *aBaseCO2EmissSfc, char* aBaseCO2AirFile, double *aBaseCO2EmissAir,
-                              int *aNumLon, int *aNumLat, int* aWriteCO2, int *aCurrYear) {
+                              char *aBaseCO2GcamFileName, char *aBaseCO2SfcFile, char *aBaseCO2AirFile,
+                              int *aNumReg, int *aNumSector, int *aNumLon, int *aNumLat, int* aWriteCO2, int *aCurrYear) {
       
       // Convert to string - fortran doesn't handle string
       std::string BaseCO2SfcFile(aBaseCO2SfcFile);
       std::string BaseCO2AirFile(aBaseCO2AirFile);
+      std::string BaseCO2GcamFileName(aBaseCO2GcamFileName);
       
       // Convert to bool - fortran doesn't have a bool
       bool writeCO2 = *aWriteCO2 == 1 ? true : false;
@@ -85,8 +90,8 @@ extern "C" {
                                   gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
                                   gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
                                   gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
-                                  BaseCO2SfcFile, aBaseCO2EmissSfc, BaseCO2AirFile, aBaseCO2EmissAir,
-                                  aNumLon, aNumLat, writeCO2, aCurrYear);
+                                  BaseCO2GcamFileName, BaseCO2SfcFile, BaseCO2AirFile,
+                                  aNumReg, aNumSector, aNumLon, aNumLat, writeCO2, aCurrYear);
 }
 
     

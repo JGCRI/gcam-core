@@ -47,11 +47,11 @@ class CarbonScalers : public ASpatialData {
 public:
     CarbonScalers(int aNumLat, int aNumLon, int aNumPFT);
     ~CarbonScalers();
-    void readScalers(std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+    void readScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                       std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers);
-    void calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+    void calcScalers(int aE3SMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                      std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
-    void createScalerVectors(int aGCAMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+    void createScalerVectors(int aE3SMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                             std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
                                             std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
                                             std::map<std::pair<std::string,std::string>, double> aBelowScalarMap);
@@ -81,23 +81,25 @@ private:
     std::map<std::pair<std::string,std::string>, double> mRegionWeights;
     
     //! Map PFTs to GCAM crops
+    // These are matched for pft relationship over location; for example, several crop area types are in forest or c4 grass rather than cropland
+    // So if the natural types are not present in the cell, but the crops are, then these crops will have a scalar of one
     std::map<int, std::vector<std::string>> mPFT2GCAMCropMap {
      { 0, { "RockIceDesert", "UrbanLand" } }, // 0. BPFT, Bare ground/not vegetated
      { 1, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } }, // 1. NEMPFT, Needleleaf evergreen temperate tree
      { 2, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } }, // 2. NEBPFT, Needleleaf evergreen boreal tree
      { 3, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } }, // 3. NDBPFT, Needleleaf deciduous boreal tree
-     { 4, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "OilPalmTree", "biomassTree" } }, // 4. BETPFT, Broadleaf evergreen tropical tree
+     { 4, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "OilPalmTree", "biomassTree", "OilCropTree", "MiscCropTree" } }, // 4. BETPFT, Broadleaf evergreen tropical tree
      { 5, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomassTree" } }, // 5. BEMPFT, Broadleaf evergreen temperate tree
-     { 6, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "OilPalmTree", "biomassTree" } }, // 6. BDTPFT, Broadleaf deciduous tropical tree
-     { 7, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomassTree" } }, // 7. BDMPFT, Broadleaf deciduous temperate tree
+     { 6, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "OilPalmTree", "biomassTree", "OilCropTree", "MiscCropTree" } }, // 6. BDTPFT, Broadleaf deciduous tropical tree
+     { 7, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest", "biomassTree", "NutsSeedsTree", "FruitsTree" } }, // 7. BDMPFT, Broadleaf deciduous temperate tree
      { 8, { "Forest", "UnmanagedForest", "ProtectedUnmanagedForest" } }, // 8. BDBPFT, Broadleaf deciduous boreal tree
      { 9, { "Shrubland", "ProtectedShrubland" } }, // 9. SEMPFT, Broadleaf evergreen temperate shrub
      { 10, { "Shrubland", "ProtectedShrubland" } }, // 10. SDMPFT, Broadleaf deciduous temperate shrub
      { 11, { "Shrubland", "ProtectedShrubland" } }, // 11. SDBPFT, Broadleaf deciduous boreal shrub
      { 12, { "Grassland", "ProtectedGrassland", "Tundra", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass"} }, // 12. GA3PFT, C3 arctic grass
      { 13, { "Grassland", "ProtectedGrassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass" } }, // 13. GC3PFT, C3 non-arctic grass
-     { 14, { "Grassland", "ProtectedGrassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass", "biomassGrass", "CornC4", "SugarCrop", "SugarCropC4" } }, // 14. GC4PFT, C4 grass
-     { 15, { "Rice","Wheat", "MiscCrop", "MiscCropC4", "OtherGrain", "OtherGrainC4", "OilCrop", "OilCropTree", "FiberCrop", "FodderHerb", "FodderHerbC4", "RootTuber", "OtherArableLand" } }, // 15. CPFT, Cropland
+     { 14, { "Grassland", "ProtectedGrassland", "Pasture", "UnmanagedPasture", "ProtectedUnmanagedPasture", "FodderGrass", "biomassGrass", "CornC4", "SugarCropC4", "MiscCropC4", "OtherGrainC4", "FodderHerbC4" } }, // 14. GC4PFT, C4 grass
+     { 15, { "Rice","Wheat", "MiscCrop", "NutsSeeds", "OtherGrain", "OilCrop", "FiberCrop", "FodderHerb", "RootTuber", "OtherArableLand", "Fruits", "Legumes", "Soybean", "SugarCrop", "Vegetables" } }, // 15. CPFT, Cropland
      { 16, {  } } // 16. NA
     };
 };

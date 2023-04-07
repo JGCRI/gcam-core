@@ -216,7 +216,7 @@ XMLDBOutputter::~XMLDBOutputter(){
  */
 bool XMLDBOutputter::checkJavaWorking() {
 #if( _HAVE_JAVA_ )
-    auto_ptr<JNIContainer> testContainer = createContainer( true );
+    unique_ptr<JNIContainer> testContainer = createContainer( true );
     // if we get back a null container then some error occured
     // createContainer would have already print any error messages.
     return testContainer.get();
@@ -296,9 +296,9 @@ void XMLDBOutputter::finalizeAndClose() {
  *         ready to accept data to write/alter to the database.  If an error occurs
  *         a null container will be returned.
  */
-auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bool aTestingOnly ) {
+unique_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bool aTestingOnly ) {
     // Create a Java instance.
-    auto_ptr<JNIContainer> jniContainer( new JNIContainer );
+    unique_ptr<JNIContainer> jniContainer( new JNIContainer );
 
     // Ensure the user wants this output
     const Configuration* conf = Configuration::getInstance();

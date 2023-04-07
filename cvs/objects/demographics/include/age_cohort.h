@@ -84,8 +84,8 @@ public:
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
     std::string ageGroup; //!< age group name
-    std::auto_ptr<Male> male; //!< male gender object
-    std::auto_ptr<Female> female; //!< male gender object
+    std::unique_ptr<Male> male; //!< male gender object
+    std::unique_ptr<Female> female; //!< male gender object
 private:
     mutable int mLowerAgeBound;
     mutable int mUpperAgeBound;
