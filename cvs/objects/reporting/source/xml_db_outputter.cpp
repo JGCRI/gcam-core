@@ -1096,6 +1096,10 @@ void XMLDBOutputter::startVisitAgProductionTechnology( const AgProductionTechnol
         *mBufferStack.top(), mTabs.get(), -1, "" );
     writeItemToBuffer( aAgProductionTechnology->mHarvestsPerYear, "harvestsPerYear", 
         *mBufferStack.top(), mTabs.get(), -1, "" );
+    if(aAgProductionTechnology->mImpliedSubsidy != 0.0) {
+        writeItemToBuffer( aAgProductionTechnology->mImpliedSubsidy, "implied-subsidy",
+                          *mBufferStack.top(), mTabs.get(), -1, "" );
+    }
 }
 
 void XMLDBOutputter::endVisitAgProductionTechnology( const AgProductionTechnology* aTechnology,

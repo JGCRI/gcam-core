@@ -258,6 +258,7 @@ generate_level2_data_names <- function() {
   # Agricultural sectors, subsectors, and technologies
   level2_data_names[["AgSupplySector"]] <- c("region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent")
   level2_data_names[["AgMkt"]] <- c("region", "AgSupplySector", "market")
+  level2_data_names[["AgCalMinProfitRate"]] <- c("region", "AgSupplySector", "cal.min.profit.rate")
   level2_data_names[["AgSupplySector_absolute-cost-logit"]] <- c("region", "AgSupplySector")
   level2_data_names[["AgSupplySector_relative-cost-logit"]] <- c("region", "AgSupplySector")
   level2_data_names[["AgSupplySubsector"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "logit.year.fillout", "logit.exponent")

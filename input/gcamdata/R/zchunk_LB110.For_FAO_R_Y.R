@@ -18,13 +18,20 @@
 #' @importFrom dplyr bind_rows filter group_by mutate select summarise summarise_all
 #' @author MC and ACS March 2017
 module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      "L100.FAO_For_Prod_m3",
+      "L100.FAO_For_Imp_m3",
+      "L100.FAO_For_Exp_m3")
+
+  MODULE_OUTPUTS <-
+    c("L110.For_ALL_bm3_R_Y")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             "L100.FAO_For_Prod_m3",
-             "L100.FAO_For_Imp_m3",
-             "L100.FAO_For_Exp_m3"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L110.For_ALL_bm3_R_Y"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     value <- flow <- GCAM_region_ID <- GCAM_commodity <- year <- Prod_bm3 <-
@@ -32,15 +39,11 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L100.FAO_For_Prod_m3 <- get_data(all_data, "L100.FAO_For_Prod_m3")
-    L100.FAO_For_Imp_m3 <- get_data(all_data, "L100.FAO_For_Imp_m3")
-    L100.FAO_For_Exp_m3 <- get_data(all_data, "L100.FAO_For_Exp_m3")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
-    # Lines 34-39 in original file
+
     # indicate flow on each tibble - flow is a directional quantity indicating net export or production
-    # Old comment: 2. Perform computations
     # Old comment: Indicate the flow on each table and combine (rbind). Multiply imports by -1 and call both imports and exports the same flow
     L100.FAO_For_Prod_m3 %>%    # take the production tibble
       mutate(flow = "Prod_m3") -> # add the flow column and make every entry = "Prod_m3"
@@ -70,8 +73,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       # do a left join on For_ALL tibble, match up the iso labels from the iso tibble,
       #   This appends to the For_ALL tibble all of the information from the iso_GCAM_regID, including the column we actually
       #   want, GCAM_region_ID. This column is all that we save:
-      mutate(GCAM_region_ID = left_join_error_no_match(L110.FAO_For_ALL_m3, iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']],
-             GCAM_commodity = "Forest",                   # add the forest commodity label
+      mutate(GCAM_commodity = "Forest",                   # add the forest commodity label
              value = CONV_M3_BM3 * value,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
              flow = sub("_m3", "_bm3", flow)) %>%         # update the labels in flow to reflect the new units of bm3
       #
@@ -128,7 +130,32 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
       unique ->
       L110.For_ALL_bm3_R_Y
 
-    # Produce outputs
+
+    # Move this code from L240 to here to reduce dependency ----
+    # Back out gross trade using forest export
+    # FAO does not provide primary roundwood bilateral trade data. We use export data to back calculate gross trade.
+    # replace_na here only affect Taiwan, which we did not have trade data.
+    L110.For_ALL_bm3_R_Y %>%
+      left_join(
+        L100.FAO_For_Exp_m3 %>%
+          mutate(GCAM_commodity = "Forest",                   # add the forest commodity label
+                 value = CONV_M3_BM3 * value,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
+                 flow = "GrossExp") %>%
+          select(GCAM_region_ID, GCAM_commodity, flow, year, value) %>%
+          group_by(GCAM_region_ID, GCAM_commodity, flow, year) %>%
+          summarise(value = sum(value)) %>%
+          ungroup() %>%
+          spread(flow, value),
+        by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
+      replace_na(list(GrossExp = 0)) %>%
+      filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
+      mutate(GrossImp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
+             GrossExp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
+      select(-GrossExp) ->
+      L110.For_ALL_bm3_R_Y
+
+
+    # Produce outputs ----
     L110.For_ALL_bm3_R_Y %>%
       add_title("Forest products mass balance by GCAM region / year") %>%
       add_units("billion cubic meters (bm3)") %>%
@@ -141,7 +168,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
                      "L100.FAO_For_Exp_m3") ->
       L110.For_ALL_bm3_R_Y
 
-    return_data(L110.For_ALL_bm3_R_Y)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

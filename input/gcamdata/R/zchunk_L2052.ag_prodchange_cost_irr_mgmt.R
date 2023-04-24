@@ -17,30 +17,38 @@
 #' @importFrom tidyr replace_na separate
 #' @author RC July 2017
 module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/basin_to_country_mapping",
+      "L123.For_Yield_m3m2_R_GLU",
+      "L161.ag_irrProd_Mt_R_C_Y_GLU",
+      "L161.ag_rfdProd_Mt_R_C_Y_GLU",
+      "L162.ag_YieldRate_R_C_Y_GLU_irr",
+      "L162.bio_YieldRate_R_Y_GLU_irr",
+      "L164.ag_Cost_75USDkg_C",
+      "L1321.ag_prP_R_C_75USDkg",
+      "L2012.AgSupplySector",
+      "L201.AgYield_bio_grass",
+      "L201.AgYield_bio_tree",
+      "L102.pcgdp_thous90USD_Scen_R_Y",
+      "L1321.expP_R_F_75USDm3")
+
+  MODULE_OUTPUTS <-
+    c("L2052.AgCost_ag_irr_mgmt",
+      "L2052.AgCalMinProfitRate",
+      "L2052.AgCost_bio_irr_mgmt",
+      "L2052.AgCost_For",
+      "L2052.AgProdChange_ag_irr_ref",
+      "L2052.AgProdChange_bio_irr_ref",
+      "L2052.AgProdChange_irr_high",
+      "L2052.AgProdChange_irr_low",
+      "L2052.AgProdChange_irr_ssp4")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             "L123.For_Yield_m3m2_R_GLU",
-             "L161.ag_irrProd_Mt_R_C_Y_GLU",
-             "L161.ag_rfdProd_Mt_R_C_Y_GLU",
-             "L162.ag_YieldRate_R_C_Y_GLU_irr",
-             "L162.bio_YieldRate_R_Y_GLU_irr",
-             "L164.ag_Cost_75USDkg_C",
-             "L132.ag_an_For_Prices",
-             "L2012.AgSupplySector",
-             "L201.AgYield_bio_grass",
-             "L201.AgYield_bio_tree",
-             "L102.pcgdp_thous90USD_Scen_R_Y",
-             "L1321.expP_R_F_75USDm3"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2052.AgCost_ag_irr_mgmt",
-             "L2052.AgCost_bio_irr_mgmt",
-             "L2052.AgCost_For",
-             "L2052.AgProdChange_ag_irr_ref",
-             "L2052.AgProdChange_bio_irr_ref",
-             "L2052.AgProdChange_irr_high",
-             "L2052.AgProdChange_irr_low",
-             "L2052.AgProdChange_irr_ssp4"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -51,28 +59,15 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       GCAM_region_ID <- year <- value <- GCAM_commodity <- Cost_75USDkg <-
       Irr_Rfd <- scenario <- calPrice <- cost_PrP_ratio <- . <- GCAM_subsector <- NULL  # silence package check notes
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping", strip_attributes = TRUE)
-    L123.For_Yield_m3m2_R_GLU <- get_data(all_data, "L123.For_Yield_m3m2_R_GLU", strip_attributes = TRUE)
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU", strip_attributes = TRUE)
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU", strip_attributes = TRUE)
-    L162.ag_YieldRate_R_C_Y_GLU_irr <- get_data(all_data, "L162.ag_YieldRate_R_C_Y_GLU_irr", strip_attributes = TRUE)
-    L162.bio_YieldRate_R_Y_GLU_irr <- get_data(all_data, "L162.bio_YieldRate_R_Y_GLU_irr", strip_attributes = TRUE)
-    L164.ag_Cost_75USDkg_C <- get_data(all_data, "L164.ag_Cost_75USDkg_C", strip_attributes = TRUE)
-    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices", strip_attributes = TRUE)
-    L2012.AgSupplySector <- get_data(all_data, "L2012.AgSupplySector", strip_attributes = TRUE)
-    L201.AgYield_bio_grass <- get_data(all_data, "L201.AgYield_bio_grass", strip_attributes = TRUE)
-    L201.AgYield_bio_tree <- get_data(all_data, "L201.AgYield_bio_tree", strip_attributes = TRUE)
-    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y", strip_attributes = TRUE)
-    L1321.expP_R_F_75USDm3 <- get_data(all_data, "L1321.expP_R_F_75USDm3", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # Define column names
     names_AgTech <- LEVEL2_DATA_NAMES[["AgTech"]]
     names_AgCost <- LEVEL2_DATA_NAMES[["AgCost"]]
     names_AgProdChange <- LEVEL2_DATA_NAMES[["AgProdChange"]]
 
-    # Production costs
+    # Production costs ----
     # Assign nonLandVariableCost of crop production, assuming the same level to all four technologies
     # Start with the L161 production tables to specify which region / GLU / crop will need costs assigned
     L161.ag_irrProd_Mt_R_C_Y_GLU %>%
@@ -109,12 +104,16 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     # be grown in Puerto Rico, and (b) have lower producer prices in Puerto Rico than in the USA.
 
     # Specifically, the method applies the cost:price ratio of each crop in the USA to each crop in all regions
-    L132.ag_an_For_Prices %>% filter(GCAM_commodity %in% L164.ag_Cost_75USDkg_C$GCAM_commodity) %>%
-      mutate(region = gcam.USA_REGION) %>%
-      select(region, GCAM_commodity, calPrice) %>%
+    # L132.ag_an_For_Prices %>% filter(GCAM_commodity %in% L164.ag_Cost_75USDkg_C$GCAM_commodity) %>% mutate(region = gcam.USA_REGION)
+    # L132.ag_an_For_Prices is replaced with L1321.ag_prP_R_C_75USDkg for consistency
+    L1321.ag_prP_R_C_75USDkg %>%
+      filter(region == gcam.USA_REGION) %>%
+      filter(GCAM_commodity %in% L164.ag_Cost_75USDkg_C$GCAM_commodity) %>%
+      select(region, GCAM_commodity, calPrice = value) %>%
       left_join_error_no_match(L164.ag_Cost_75USDkg_C, by = "GCAM_commodity") %>%
       mutate(cost_PrP_ratio = Cost_75USDkg / calPrice) %>%
-      select(AgSupplySector = GCAM_commodity, cost_PrP_ratio)->L2052.AgCostRatio_USA
+      select(AgSupplySector = GCAM_commodity, cost_PrP_ratio) ->
+        L2052.AgCostRatio_USA
 
     L2052.AgCost_ag_irr_mgmt <- left_join_error_no_match(L2052.AgCost_ag_irr_mgmt, L2052.AgCostRatio_USA,
                                      by = "AgSupplySector") %>%
@@ -156,14 +155,40 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       mutate(AgSupplySector = GCAM_commodity,
              AgSupplySubsector = paste(GCAM_commodity, GLU_name, sep = aglu.CROP_GLU_DELIMITER),
              AgProductionTechnology = AgSupplySubsector) %>%
-      left_join(L132.ag_an_For_Prices, by = "GCAM_commodity") %>%
-      left_join(L1321.expP_R_F_75USDm3, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
-                  mutate(nonLandVariableCost = if_else(is.na(value),
-                                                       calPrice * aglu.FOR_COST_SHARE,
-                                                       value * aglu.FOR_COST_SHARE) ) %>%
+      left_join(L1321.expP_R_F_75USDm3, by = c("GCAM_region_ID", "GCAM_commodity", "region")) %>%
+                  mutate(nonLandVariableCost = value * aglu.FOR_COST_SHARE) %>%
       select(names_AgCost) ->
       L2052.AgCost_For
-    # Future agricultural productivity changes
+
+
+    # Generate min profit for ag sector ----
+    # This will be read in as a threshold to calculate implicit land subsidy in GCAM
+    # mainly to avoid negative profits & also to handel inconsistency nonland costs calculations
+    L2052.AgCost_ag_irr_mgmt %>%
+      left_join_error_no_match(select(L2012.AgSupplySector, region, AgSupplySector, calPrice),
+                               by = c("region", "AgSupplySector")) %>%
+      mutate(Profit = calPrice - nonLandVariableCost) ->
+      L2052.UnAdjProfits
+
+    # The min profit is uniform across regions & crops (not including bio & forest)
+    # Check min profit by ag sector here. This could be considered later when needed
+    # L2052.UnAdjProfits %>%
+    #   group_by(AgSupplySector) %>%
+    #   summarize(cal.min.profit.rate = min(Profit)) %>%
+    #   ungroup() %>%
+    #   left_join_error_no_match(L2052.UnAdjProfits %>% select(region, AgSupplySector) %>% distinct(),
+    #                            ., by=c("AgSupplySector")) %>%
+    #   select(LEVEL2_DATA_NAMES[['AgCalMinProfitRate']]) ->
+    #   L2052.AgCalMinProfitRate
+
+    L2052.UnAdjProfits %>%
+      select(region, AgSupplySector) %>%
+      distinct() %>%
+      mutate(cal.min.profit.rate = min(L2052.UnAdjProfits$Profit)) ->
+      L2052.AgCalMinProfitRate
+
+
+    # Future agricultural productivity changes ----
     # Specify reference scenario agricultural productivity change for crops (not incl biomass)
     L162.ag_YieldRate_R_C_Y_GLU_irr %>%
       filter(year %in% MODEL_FUTURE_YEARS) %>%
@@ -249,7 +274,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
                 filter(L2052.AgProdChange_irr_low, region %in% low_reg)) ->
       L2052.AgProdChange_irr_ssp4
 
-    # Produce outputs
+    # Produce outputs ----
     L2052.AgCost_ag_irr_mgmt %>%
       add_title("Non-land variable costs of crops prodction by region / crop / GLU / technology") %>%
       add_units("1975$ per kg") %>%
@@ -260,9 +285,18 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
                      "L161.ag_irrProd_Mt_R_C_Y_GLU",
                      "L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "L164.ag_Cost_75USDkg_C",
-                     "L132.ag_an_For_Prices",
+                     "L1321.ag_prP_R_C_75USDkg",
                      "L2012.AgSupplySector") ->
       L2052.AgCost_ag_irr_mgmt
+
+    L2052.AgCalMinProfitRate %>%
+      add_title("Set minimum calibration profit rate") %>%
+      add_units("1975$ per kg") %>%
+      add_comments("Enables the calculation of an implicit subsidy to ensure that calibration profit rates") %>%
+      add_comments("do not fall below the threshold value provided in this output regardless of dynamic costs") %>%
+      add_comments("calculated such as fertilizer or water costs.") %>%
+      add_precursors("L2012.AgSupplySector", "L2052.AgCost_ag_irr_mgmt") ->
+      L2052.AgCalMinProfitRate
 
     L2052.AgCost_bio_irr_mgmt %>%
       add_title("Non-land variable costs of biomass crops production by region / crop / GLU / technology") %>%
@@ -335,11 +369,8 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       add_precursors("L102.pcgdp_thous90USD_Scen_R_Y") ->
       L2052.AgProdChange_irr_ssp4
 
-    return_data(L2052.AgCost_ag_irr_mgmt, L2052.AgCost_bio_irr_mgmt,
-                L2052.AgCost_For,
-                L2052.AgProdChange_ag_irr_ref, L2052.AgProdChange_bio_irr_ref,
-                L2052.AgProdChange_irr_high, L2052.AgProdChange_irr_low,
-                L2052.AgProdChange_irr_ssp4)
+    return_data(MODULE_OUTPUTS)
+
   } else {
     stop("Unknown command")
   }

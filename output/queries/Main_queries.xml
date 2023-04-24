@@ -116,7 +116,6 @@
                         <rewrite from="H2 industrial" to=""/>
                         <rewrite from="traditional biomass" to="j traditional biomass"/>
                         <rewrite from="regional corn for ethanol" to="d biomass"/>
-                        <rewrite from="regional biomass" to="d biomass"/>
                         <rewrite from="regional biomassOil" to="d biomass"/>
                         <rewrite from="traded coal" to="c coal"/>
                         <rewrite from="solar-elect" to="h solar"/>
@@ -137,6 +136,7 @@
                         <rewrite from="wholesale gas" to=""/>
                         <rewrite from="hydro-elect" to="f hydro"/>
                         <rewrite from="traded natural gas" to="b natural gas"/>
+                        <rewrite from="regional biomass" to="d biomass"/>
                         <rewrite from="coal" to="c coal"/>
                         <rewrite from="wind-elect" to="g wind"/>
                     </level>
@@ -211,7 +211,6 @@
                         <rewrite from="H2 industrial" to=""/>
                         <rewrite from="traditional biomass" to="j traditional biomass"/>
                         <rewrite from="regional corn for ethanol" to="d biomass"/>
-                        <rewrite from="regional biomass" to="d biomass"/>
                         <rewrite from="regional biomassOil" to="d biomass"/>
                         <rewrite from="traded coal" to="c coal"/>
                         <rewrite from="solar-elect" to="h solar"/>
@@ -235,6 +234,7 @@
                         <rewrite from="wholesale gas" to=""/>
                         <rewrite from="traded natural gas" to="b natural gas"/>
                         <rewrite from="hydro-elect" to="f hydro"/>
+                        <rewrite from="regional biomass" to="d biomass"/>
                         <rewrite from="coal" to="c coal"/>
                         <rewrite from="wind-elect" to="g wind"/>
                     </level>
@@ -1900,7 +1900,7 @@ element input {
                 </supplyDemandQuery>
                 <supplyDemandQuery title="gas prices by sector">
                     <axis1 name="fuel">sector</axis1>
-                    <axis2 name="Year">price</axis2>
+                    <axis2 name="Year">cost</axis2>
                     <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='gas processing' or @name='gas pipeline' or
                @name='wholesale gas' or @name='delivered gas')]/cost/text()</xPath>
                     <comments/>
@@ -2046,44 +2046,44 @@ element input {
                     <labelRewriteList append-values="false">
                         <level name="sector">
                             <rewrite from="trn_pass_road_LDV_4W" to="transportation"/>
-                            <rewrite from="trn_pass_road" to="transportation"/>
+                            <rewrite from="mining energy use" to="industry"/>
                             <rewrite from="trn_pass_road_LDV_2W" to="transportation"/>
-                            <rewrite from="trn_freight_road" to="transportation"/>
-                            <rewrite from="trn_freight" to="transportation"/>
-                            <rewrite from="comm others" to="building"/>
                             <rewrite from="comm heating" to="building"/>
+                            <rewrite from="industrial wastewater treatment" to="industry"/>
                             <rewrite from="comm cooling" to="building"/>
+                            <rewrite from="municipal wastewater treatment" to="industry"/>
+                            <rewrite from="irrigation water abstraction" to="industry"/>
+                            <rewrite from="aluminum" to="industry"/>
+                            <rewrite from="agricultural energy use" to="industry"/>
                             <rewrite from="other industrial energy use" to="industry"/>
+                            <rewrite from="chemical energy use" to="industry"/>
                             <rewrite from="trn_pass_road_LDV" to="transportation"/>
                             <rewrite from="trn_pass_road_bus" to="transportation"/>
                             <rewrite from="trn_aviation_intl" to="transportation"/>
+                            <rewrite from="alumina" to="industry"/>
+                            <rewrite from="industrial water abstraction" to="industry"/>
+                            <rewrite from="resid heating" to="building"/>
+                            <rewrite from="process heat cement" to="industry"/>
+                            <rewrite from="chemical feedstocks" to="industry"/>
+                            <rewrite from="trn_shipping_intl" to="transportation"/>
+                            <rewrite from="industrial water treatment" to="industry"/>
+                            <rewrite from="trn_pass_road" to="transportation"/>
+                            <rewrite from="construction feedstocks" to="industry"/>
+                            <rewrite from="trn_freight_road" to="transportation"/>
+                            <rewrite from="iron and steel" to="industry"/>
+                            <rewrite from="trn_freight" to="transportation"/>
+                            <rewrite from="comm others" to="building"/>
+                            <rewrite from="municipal water distribution" to="industry"/>
+                            <rewrite from="municipal water treatment" to="industry"/>
+                            <rewrite from="desalinated water" to="industry"/>
                             <rewrite from="trn_pass" to="transportation"/>
                             <rewrite from="cement" to="industry"/>
                             <rewrite from="N fertilizer" to="industry"/>
-                            <rewrite from="resid heating" to="building"/>
                             <rewrite from="resid others" to="building"/>
-                            <rewrite from="process heat cement" to="industry"/>
                             <rewrite from="resid cooling" to="building"/>
+                            <rewrite from="construction energy use" to="industry"/>
+                            <rewrite from="municipal water abstraction" to="industry"/>
                             <rewrite from="other industrial feedstocks" to="industry"/>
-                            <rewrite from="trn_shipping_intl" to="transportation"/>
-							<rewrite from="iron and steel" to="industry"/>
- 		           			<rewrite from="agricultural energy use" to="industry"/>
- 		           			<rewrite from="aluminum" to="industry"/>
-							<rewrite from="alumina" to="industry"/>
- 		           			<rewrite from="chemical energy use" to="industry"/>
- 		           			<rewrite from="construction energy use" to="industry"/>
-							<rewrite from="chemical feedstocks" to="industry"/>
- 		           			<rewrite from="construction feedstocks" to="industry"/>
- 		           			<rewrite from="mining energy use" to="industry"/>
-							<rewrite from="desalinated water" to="industry"/>
-							<rewrite from="industrial wastewater treatment" to="industry"/>
-							<rewrite from="industrial water abstraction" to="industry"/>
-							<rewrite from="industrial water treatment" to="industry"/>
-							<rewrite from="irrigation water abstraction" to="industry"/>
-							<rewrite from="municipal wastewater treatment" to="industry"/>
-							<rewrite from="municipal water abstraction" to="industry"/>
-							<rewrite from="municipal water distribution" to="industry"/>
-							<rewrite from="municipal water treatment" to="industry"/>
                         </level>
                     </labelRewriteList>
                 </supplyDemandQuery>
@@ -3533,40 +3533,39 @@ element input {
                     <level name="LandLeaf">
                         <rewrite from="Grassland" to="grass"/>
                         <rewrite from="ProtectedUnmanagedPasture" to="pasture (other)"/>
+                        <rewrite from="Vegetables" to="crops"/>
                         <rewrite from="FodderHerb" to="crops"/>
-                        <rewrite from="FodderHerbC4" to="crops"/>
                         <rewrite from="MiscCrop" to="crops"/>
-                        <rewrite from="MiscCropTree" to="crops"/>
+                        <rewrite from="OtherGrainC4" to="crops"/>
                         <rewrite from="PalmFruit" to="crops"/>
                         <rewrite from="FiberCrop" to="crops"/>
+                        <rewrite from="NutsSeeds" to="crops"/>
                         <rewrite from="OtherGrain" to="crops"/>
-                        <rewrite from="OtherGrainC4" to="crops"/>
+                        <rewrite from="Soybean" to="crops"/>
                         <rewrite from="FodderGrass" to="crops"/>
                         <rewrite from="ProtectedGrassland" to="grass"/>
+                        <rewrite from="Fruits" to="crops"/>
+                        <rewrite from="FodderHerbC4" to="crops"/>
                         <rewrite from="ProtectedUnmanagedForest" to="forest (unmanaged)"/>
                         <rewrite from="biomassTree" to="biomass"/>
+                        <rewrite from="OilPalm" to="crops"/>
                         <rewrite from="OtherArableLand" to="otherarable"/>
+                        <rewrite from="MiscCropTree" to="crops"/>
+                        <rewrite from="OilPalmTree" to="crops"/>
                         <rewrite from="Rice" to="crops"/>
+                        <rewrite from="Legumes" to="crops"/>
+                        <rewrite from="NutsSeedsTree" to="crops"/>
+                        <rewrite from="OilCropTree" to="crops"/>
                         <rewrite from="UrbanLand" to="urban"/>
                         <rewrite from="RockIceDesert" to="rock and desert"/>
                         <rewrite from="RootTuber" to="crops"/>
                         <rewrite from="Corn" to="crops"/>
-                        <rewrite from="CornC4" to="crops"/>
-                        <rewrite from="Fruits" to="crops"/>
                         <rewrite from="FruitsTree" to="crops"/>
-                        <rewrite from="Legumes" to="crops"/>
-                        <rewrite from="NutsSeeds" to="crops"/>
-                        <rewrite from="NutsSeedsTree" to="crops"/>
-                        <rewrite from="Soybean" to="crops"/>
-                        <rewrite from="Vegetables" to="crops"/>
                         <rewrite from="OilCrop" to="crops"/>
-                        <rewrite from="OilCropTree" to="crops"/>
-                        <rewrite from="OilPalm" to="crops"/>
-                        <rewrite from="OilPalmTree" to="crops"/>
                         <rewrite from="ProtectedShrubland" to="shrubs"/>
                         <rewrite from="SugarCrop" to="crops"/>
-                        <rewrite from="SugarCropC4" to="crops"/>
                         <rewrite from="UnmanagedForest" to="forest (unmanaged)"/>
+                        <rewrite from="SugarCropC4" to="crops"/>
                         <rewrite from="Pasture" to="pasture (grazed)"/>
                         <rewrite from="Forest" to="forest (managed)"/>
                         <rewrite from="biomassGrass" to="biomass"/>
@@ -3574,6 +3573,7 @@ element input {
                         <rewrite from="UnmanagedPasture" to="pasture (other)"/>
                         <rewrite from="Tundra" to="tundra"/>
                         <rewrite from="Wheat" to="crops"/>
+                        <rewrite from="CornC4" to="crops"/>
                     </level>
                 </labelRewriteList>
             </query>
@@ -3776,6 +3776,13 @@ element input {
                     <xPath buildList="true" dataName="price" group="false" sumAll="false">*[@type='sector' and (local-name()='AgSupplySector')]/cost/text()</xPath>
                     <comments/>
                 </supplyDemandQuery>
+                <supplyDemandQuery title="ag tech implied subsidy">
+                    <axis1 name="technology">technology</axis1>
+                    <axis2 name="Year">technology</axis2>
+                    <xPath buildList="true" dataName="subsidy" group="false" sumAll="false">*[@type='sector' and (local-name()='AgSupplySector')]/
+            *[@type='subsector']/*[@type='technology']/implied-subsidy/text()</xPath>
+                    <comments/>
+                </supplyDemandQuery>
             </queryGroup>
             <queryGroup name="crop water demands">
                 <supplyDemandQuery title="irrigation water withdrawals by region">
@@ -3910,7 +3917,7 @@ element input {
             <supplyDemandQuery title="residue biomass production">
                 <axis1 name="sector">sector[@name]</axis1>
                 <axis2 name="Year">physical-output[@vintage]</axis2>
-                <xPath buildList="false" dataName="output" group="false" sumAll="false">*[@type='sector']//output-residue-biomass/physical-output/node()</xPath>
+                <xPath buildList="false" dataName="output" group="false" sumAll="false">*[@type='sector' and not(@name='biomass')]//*[@type='output' and @name='biomass']/physical-output/node()</xPath>
                 <comments/>
             </supplyDemandQuery>
             <resourceQuery title="MSW production">
@@ -4063,7 +4070,7 @@ element input {
                 <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='input' and
             (@name='regional corn' or @name='regional fibercrop' or @name='regional fruits' or @name='regional legumes'
                or @name='regional misccrop' or @name='regional nuts_seeds' or @name='regional oilcrop' or @name='regional othergrain'
-               or @name='regional palmfruit' or @name='regional rice' or @name='regional root_tuber'
+               or @name='regional oilpalm' or @name='regional rice' or @name='regional root_tuber'
                or @name='regional soybean' or @name='regional sugarcrop' or @name='regional vegetables' or @name='regional wheat'
                or @name='FodderGrass' or @name='FodderHerb' or @name='Forest' or @name='Pasture')]/
                demand-physical/node()</xPath>
@@ -4073,7 +4080,7 @@ element input {
                 <axis1 name="sector">sector</axis1>
                 <axis2 name="Year">demand-physical[@vintage]</axis2>
                 <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']//*[@type='input' and
-            (@name='Beef' or @name='Pork' or @name='Poultry' or @name='SheepGoat' or @name='OtherMeat_Fish')]/
+            (@name='regional beef' or @name='regional dairy' or @name='regional pork' or @name='regional poultry' or @name='regional sheepgoat' or @name='OtherMeat_Fish')]/
             demand-physical/node()</xPath>
                 <comments/>
             </supplyDemandQuery>
@@ -4099,6 +4106,50 @@ element input {
                 <axis1 name="input">input[@name]</axis1>
                 <axis2 name="Year">regional-bias[@year]</axis2>
                 <xPath buildList="true" dataName="regional-bias" group="false" sumAll="false">gcam-consumer[@name='FoodDemand']//*[@type='input']/regional-bias/node()</xPath>
+                <comments/>
+            </supplyDemandQuery>
+        </queryGroup>
+        <queryGroup name="ag trade">
+            <supplyDemandQuery title="ag import vs. domestic supply (Regional Armington competition)">
+                <axis1 name="input">input</axis1>
+                <axis2 name="Year">demand-physical[@vintage]</axis2>
+                <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'regional')]/*[@type='subsector']//*[@type='input']/demand-physical[@unit='Mt' or @unit='billion m3']/node()</xPath>
+                <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="ag export to the world center (USA) (Intl. Armington competition)">
+                <axis1 name="input">input</axis1>
+                <axis2 name="Year">demand-physical[@vintage]</axis2>
+                <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'traded')]/*[@type='subsector']//*[@type='input']/demand-physical[@unit='Mt' or @unit='billion m3']/node()</xPath>
+                <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="ag import vs. domestic prices">
+                <axis1 name="subsector">subsector</axis1>
+                <axis2 name="Year">cost</axis2>
+                <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'regional')]/*[@type='subsector']/cost[@unit='1975$/kg' or @unit='1975$/m3']/text()</xPath>
+                <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="ag export prices (at world center USA)">
+                <axis1 name="subsector">subsector</axis1>
+                <axis2 name="Year">cost</axis2>
+                <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'traded')]/*[@type='subsector']/cost[@unit='1975$/kg' or @unit='1975$/m3']/text()</xPath>
+                <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="import vs. domestic share-weights (Armington regional taste)">
+                <axis1 name="subsector">subsector</axis1>
+                <axis2 name="Year">share-weight</axis2>
+                <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'regional')]/*[@type='subsector']/share-weight/text()</xPath>
+                <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="international competition share-weights (Armington intl. taste)">
+                <axis1 name="subsector">subsector</axis1>
+                <axis2 name="Year">share-weight</axis2>
+                <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'traded')]/*[@type='subsector']/share-weight/text()</xPath>
+                <comments/>
+            </supplyDemandQuery>
+            <supplyDemandQuery title="ag regional prices (weighted average b/t domestic and imported prices)">
+                <axis1 name="sector">sector</axis1>
+                <axis2 name="Year">cost</axis2>
+                <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'regional')]/cost[@unit='1975$/kg' or @unit='1975$/m3']/text()</xPath>
                 <comments/>
             </supplyDemandQuery>
         </queryGroup>
@@ -4434,6 +4485,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                         <rewrite from="trn_pass_road_LDV" to="transportation"/>
                         <rewrite from="trn_pass_road_bus" to="transportation"/>
                         <rewrite from="trn_aviation_intl" to="transportation"/>
+                        <rewrite from="municipal water" to="industry"/>
                         <rewrite from="resid heating" to="buildings"/>
                         <rewrite from="construction" to="industry"/>
                         <rewrite from="trn_shipping_intl" to="transportation"/>
@@ -4443,14 +4495,13 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                         <rewrite from="iron and steel" to="industry"/>
                         <rewrite from="trn_freight" to="transportation"/>
                         <rewrite from="comm others" to="buildings"/>
+                        <rewrite from="other industry" to="industry"/>
                         <rewrite from="trn_pass" to="transportation"/>
                         <rewrite from="chemical" to="industry"/>
                         <rewrite from="N fertilizer" to="industry"/>
                         <rewrite from="resid others" to="buildings"/>
                         <rewrite from="unconventional oil production" to="industry"/>
                         <rewrite from="resid cooling" to="buildings"/>
-                        <rewrite from="other industry" to="industry"/>
-                        <rewrite from="municipal water" to="industry"/>
                     </level>
                 </labelRewriteList>
             </supplyDemandQuery>

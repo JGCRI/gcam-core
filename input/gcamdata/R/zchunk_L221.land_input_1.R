@@ -32,41 +32,45 @@
 #' }
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter left_join mutate select
-#' @author ACS August 2017
+#' @author ACS August 2017 XZ (2022)
 module_aglu_L221.land_input_1 <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/basin_to_country_mapping",
+      FILE = "aglu/GCAMLandLeaf_CdensityLT",
+      FILE = "aglu/A_LandNode_logit",
+      FILE = "aglu/A_LandLeaf_Unmgd1",
+      FILE = "aglu/A_LT_Mapping",
+      FILE = "aglu/A_soil_time_scale_R",
+      "L121.CarbonContent_kgm2_R_LT_GLU",
+      "L125.LC_bm2_R_LT_Yh_GLU",
+      "L125.LC_bm2_R",
+      "L131.LV_USD75_m2_R_GLU",
+      "L120.LC_soil_veg_carbon_GLU")
+
+  MODULE_OUTPUTS <-
+    c("L221.LN0_Logit",
+      "L221.LN0_Land",
+      "L221.LN0_SoilTimeScale",
+      "L221.LN1_ValueLogit",
+      "L221.LN1_HistUnmgdAllocation",
+      "L221.LN1_UnmgdAllocation",
+      "L221.LN1_UnmgdCarbon")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             FILE = "aglu/GCAMLandLeaf_CdensityLT",
-             FILE = "aglu/A_LandNode_logit",
-             FILE = "aglu/A_LandLeaf_Unmgd1",
-             FILE = "aglu/A_LT_Mapping",
-             FILE = "aglu/A_soil_time_scale_R",
-             "L121.CarbonContent_kgm2_R_LT_GLU",
-             "L125.LC_bm2_R_LT_Yh_GLU",
-             "L125.LC_bm2_R",
-             "L131.LV_USD75_m2_R_GLU",
-             "L120.LC_soil_veg_carbon_GLU"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L221.LN0_Logit",
-             "L221.LN0_Land",
-             "L221.LN0_SoilTimeScale",
-             "L221.LN1_ValueLogit",
-             "L221.LN1_HistUnmgdAllocation",
-             "L221.LN1_UnmgdAllocation",
-             "L221.LN1_UnmgdCarbon"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    GCAMLandLeaf_CdensityLT <- get_data(all_data, "aglu/GCAMLandLeaf_CdensityLT")
-    A_LandNode_logit <- get_data(all_data, "aglu/A_LandNode_logit")
-    A_LandLeaf_Unmgd1 <- get_data(all_data, "aglu/A_LandLeaf_Unmgd1")
-    A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
-    A_soil_time_scale_R <- get_data(all_data, "aglu/A_soil_time_scale_R", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data,
+                  MODULE_INPUTS[!MODULE_INPUTS %in% c("L120.LC_soil_veg_carbon_GLU",
+                                                       "L121.CarbonContent_kgm2_R_LT_GLU")],
+                          strip_attributes = TRUE)
 
 
     # If the carbon data source is set to moirai, use the spatially distinct carbon values. If not, use the Houghton values.
@@ -79,11 +83,6 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     }
 
 
-    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
-    L125.LC_bm2_R <- get_data(all_data, "L125.LC_bm2_R", strip_attributes = TRUE)
-    L131.LV_USD75_m2_R_GLU <- get_data(all_data, "L131.LV_USD75_m2_R_GLU")
-
-
     # silence package check notes
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
       LandLeaf <- Land_Type <- LandNode <- LandNode1 <- LandNode2 <- LandNode3 <- UnmanagedLandLeaf <-
@@ -94,7 +93,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       min.veg.carbon.density <- min.soil.carbon.density <- . <- NULL
 
 
-    # 1. Process inputs
+    # 1. Process inputs ----
 
     # Replace GLU names and Add region names
     L121.CarbonContent_kgm2_R_LT_GLU %>%
@@ -125,18 +124,32 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
 
     # Convert land value to  1975$ per thousand km2 and calculate minimum land value,
     # setting a minimum threshold on the land values to ensure that no land use regions get a value of zero
+    # min_LV_USD75_bm2 is picked based on data and represents a very conservative value (better than zero)
+    min_LV_USD75_bm2 = 200000
     L131.LV_USD75_m2_R_GLU %>%
-      mutate(LV_USD75_bm2 = round(LV_USD75_m2 * CONV_BM2_M2, aglu.DIGITS_LAND_VALUE)) ->
+      mutate(LV_USD75_bm2 = round(LV_USD75_m2 * CONV_BM2_M2, aglu.DIGITS_LAND_VALUE)) %>%
+      select(region, GLU, LV_USD75_bm2) %>%
+      filter(LV_USD75_bm2 > min_LV_USD75_bm2) ->
       L131.LV_USD75_bm2_R_GLU
 
+    # Get a regional median value to fill in zero or NA later ----
+    # Previously min value was used which could underestimate the marginal land conversion cost
+
+    # One motivation of this change was to fix the Southeast Asia Hong basin issue
+    # Note that the data source and the method for generating
+    # unmanaged land rental profit should be revisited (XZ)
     L131.LV_USD75_bm2_R_GLU %>%
-      select(LV_USD75_bm2) %>%
-      filter(LV_USD75_bm2 > 0) %>%
-      min ->
-      min_LV_USD75_bm2
+      group_by(region) %>%
+      summarize(reg_med_LV_USD75_bm2 = median(LV_USD75_bm2)) %>%
+      ungroup() %>%
+      complete(region = GCAM_region_names$region) %>%
+      replace_na(list(reg_med_LV_USD75_bm2 = 0)) %>%
+      mutate(reg_med_LV_USD75_bm2 = if_else(reg_med_LV_USD75_bm2 == 0,
+                                            median(reg_med_LV_USD75_bm2), reg_med_LV_USD75_bm2)) ->
+      med_LV_USD75_bm2
 
 
-    # 2. Build tables
+    # 2. Build tables ----
 
     # Build L221.LN0_Logit: Logit exponent of the top-level (zero) land nest
     L125.LC_bm2_R %>%
@@ -180,10 +193,10 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       # add land value, maintaining any NA's to be replaced with minimum
       left_join(select(L131.LV_USD75_bm2_R_GLU, region, GLU, LV_USD75_bm2), by = c("region", "GLU")) %>%
       rename(unManagedLandValue = LV_USD75_bm2) %>%
+      left_join_error_no_match(med_LV_USD75_bm2, by = "region") %>%
       # update land value with minimum to make sure every region-glu has a nonzero land value
-      mutate(unManagedLandValue = replace(unManagedLandValue,
-                                          is.na(unManagedLandValue) | unManagedLandValue == 0,
-                                          min_LV_USD75_bm2),
+      mutate(unManagedLandValue = if_else(is.na(unManagedLandValue) | unManagedLandValue == 0,
+                                          reg_med_LV_USD75_bm2, unManagedLandValue),
              LandNode1 = paste(LandNode1, GLU, sep = aglu.CROP_GLU_DELIMITER)) %>%
       select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent, logit.type) ->
       L221.LN1_ValueLogit
@@ -312,8 +325,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "L131.LV_USD75_m2_R_GLU") ->
       L221.LN1_UnmgdCarbon
 
-    return_data(L221.LN0_Logit, L221.LN0_Land, L221.LN0_SoilTimeScale, L221.LN1_ValueLogit,
-                L221.LN1_HistUnmgdAllocation, L221.LN1_UnmgdAllocation, L221.LN1_UnmgdCarbon)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

@@ -96,14 +96,14 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     # Initial data cleaning (original lines 55-57)
     L100.Water_footprint_m3 %>%
       rename(MH_crop = GTAP_crop) %>%
-      left_join_error_no_match(select(FAO_ag_items_PRODSTAT, MH_crop, GTAP_crop), by = "MH_crop") ->
+      left_join(select(FAO_ag_items_PRODSTAT, MH_crop, GTAP_crop), by = "MH_crop") ->
       L165.Water_footprint_m3
 
     # Re-cast nation-level data so that blue and green are represented as data columns (original lines 59-64)
     Mekonnen_Hoekstra_Rep47_A2 %>%
-      gather(iso, coef_m3t, -FAO_crop, -water_type) %>%
+      gather(iso, coef_m3t, -FAO_crop_item, -item_code, -water_type) %>%
       mutate(coef_m3kg = coef_m3t / CONV_T_KG) %>%
-      select(iso, FAO_crop, water_type, coef_m3kg) %>%
+      select(iso, FAO_crop_item, item_code, water_type, coef_m3kg) %>%
       # Set all missing values to zero -- this may be re-visited at another point
       # We may want to substitute default values from the MH2011 table
 
@@ -153,10 +153,11 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     # estimates of crop production by region, and share of irrigated production by region.
     CTRY_GLU_MAX_ADDER <- 2
     L165.Mekonnen_Hoekstra_Rep47_A2 %>%
-      group_by(FAO_crop) %>%
+      group_by(FAO_crop_item, item_code) %>%
       summarise(Blue = max(Blue + CTRY_GLU_MAX_ADDER),
                 Green = max(Green + CTRY_GLU_MAX_ADDER)) %>%
-      left_join(select(FAO_ag_items_PRODSTAT, item, MH_crop), by = c("FAO_crop" = "item")) ->
+      ungroup() %>%
+      left_join(select(FAO_ag_items_PRODSTAT, item_code, MH_crop), by = c("item_code")) ->
       L165.MaxWaterCoefs_m3kg
 
     # Apply the cap computed above: change L165.ag_Water_ctry_MHcrop_GLU$coef_m3kg to be the minimum
@@ -164,9 +165,10 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
     L165.MaxWaterCoefs_m3kg %>%
       gather(water_type, value_other, Blue, Green) %>%
       mutate(water_type = tolower(water_type)) %>%
-      right_join(L165.ag_Water_ctry_MHcrop_GLU, by = c("MH_crop", "water_type")) %>%
+      right_join(L165.ag_Water_ctry_MHcrop_GLU,
+                 by = c("MH_crop", "water_type")) %>%
       mutate(coef_m3kg = pmin(coef_m3kg, value_other)) %>%
-      select(-value_other, -FAO_crop) ->
+      select(-value_other, -FAO_crop_item, -item_code) ->
       L165.ag_Water_ctry_MHcrop_GLU
 
     # Work through calculation sequence to determine blue and green water coefficients for irrigated
@@ -251,7 +253,8 @@ module_aglu_LB165.ag_water_R_C_Y_GLU_irr <- function(command, ...) {
       # combine with the non-substituted crops
       bind_rows(filter(L165.ag_Water_ctry_MHcropX, ! FAO_crop %in% crops_to_substitute)) %>%
       # match in the water contents
-      left_join_keep_first_only(L165.Mekonnen_Hoekstra_Rep47_A2, by = c("iso", "FAO_crop")) %>%
+      left_join_keep_first_only(L165.Mekonnen_Hoekstra_Rep47_A2 %>% rename(FAO_crop = FAO_crop_item),
+                                by = c("iso", "FAO_crop")) %>%
       rename(blue_m3kg = Blue, green_m3kg = Green) %>%
       # drop the crops that aren't assigned to anything, which will return missing values here
       na.omit() ->

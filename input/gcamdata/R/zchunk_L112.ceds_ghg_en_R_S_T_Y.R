@@ -975,8 +975,10 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       group_by(GCAM_region_ID, GCAM_commodity, year) %>%
       # Total production by region, commodity, and year for calculating share
       mutate(total_prod = sum(value)) %>%
+      # When total_prod is zero, use equal share
+      mutate(prod_share = if_else(total_prod != 0, value / total_prod, 1/dplyr::n() )) %>%
       ungroup() %>%
-      transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year, prod_share = value / total_prod) ->
+      select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, year, prod_share) ->
       L122.ag_Prod_Mt_R_rice_Y_GLU
 
     # Multiply total emissions by production share

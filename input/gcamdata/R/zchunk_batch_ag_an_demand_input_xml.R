@@ -11,66 +11,45 @@
 #' the generated outputs: \code{ag_an_demand_input.xml}. The corresponding file in the
 #' original data system was \code{batch_demand_input_xml.R} (aglu XML).
 module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L203.Supplysector_demand",
+      "L203.NestingSubsectorAll_demand_food",
+      "L203.SubsectorAll_demand_food",
+      "L203.SubsectorAll_demand_nonfood",
+      "L203.StubTech_demand_food",
+      "L203.StubTech_demand_nonfood",
+      "L203.GlobalTechCoef_demand",
+      "L203.GlobalTechShrwt_demand",
+      "L203.StubTechProd_food",
+      "L203.StubTechProd_nonfood_crop",
+      "L203.StubTechProd_nonfood_meat",
+      "L203.StubTechProd_For",
+      "L203.StubCalorieContent",
+      "L203.PerCapitaBased",
+      "L203.BaseService",
+      "L203.IncomeElasticity",
+      "L203.PriceElasticity",
+      "L203.SubregionalShares",
+      "L203.DemandFunction_food",
+      "L203.DemandStapleParams",
+      "L203.DemandNonStapleParams",
+      "L203.DemandStapleRegBias",
+      "L203.DemandNonStapleRegBias",
+      "L203.StapleBaseService",
+      "L203.NonStapleBaseService",
+      "L203.GlobalTechInterp_demand")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L203.Supplysector_demand",
-              "L203.NestingSubsectorAll_demand_food",
-              "L203.SubsectorAll_demand_food",
-              "L203.SubsectorAll_demand_nonfood",
-              "L203.StubTech_demand_food",
-              "L203.StubTech_demand_nonfood",
-              "L203.GlobalTechCoef_demand",
-              "L203.GlobalTechShrwt_demand",
-              "L203.StubTechProd_food",
-              "L203.StubTechProd_nonfood_crop",
-              "L203.StubTechProd_nonfood_meat",
-              "L203.StubTechProd_For",
-              "L203.StubCalorieContent",
-              "L203.PerCapitaBased",
-              "L203.BaseService",
-              "L203.IncomeElasticity",
-              "L203.PriceElasticity",
-              "L203.SubregionalShares",
-              "L203.DemandFunction_food",
-              "L203.DemandStapleParams",
-              "L203.DemandNonStapleParams",
-              "L203.DemandStapleRegBias",
-              "L203.DemandNonStapleRegBias",
-              "L203.StapleBaseService",
-              "L203.NonStapleBaseService",
-              "L203.GlobalTechInterp_demand"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ag_an_demand_input.xml"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L203.Supplysector_demand <- get_data(all_data, "L203.Supplysector_demand")
-    L203.NestingSubsectorAll_demand_food <- get_data(all_data, "L203.NestingSubsectorAll_demand_food")
-    L203.SubsectorAll_demand_food <- get_data(all_data, "L203.SubsectorAll_demand_food")
-    L203.SubsectorAll_demand_nonfood <- get_data(all_data, "L203.SubsectorAll_demand_nonfood")
-    L203.StubTech_demand_food <- get_data(all_data, "L203.StubTech_demand_food")
-    L203.StubTech_demand_nonfood <- get_data(all_data, "L203.StubTech_demand_nonfood")
-    L203.GlobalTechCoef_demand <- get_data(all_data, "L203.GlobalTechCoef_demand")
-    L203.GlobalTechShrwt_demand <- get_data(all_data, "L203.GlobalTechShrwt_demand")
-    L203.GlobalTechInterp_demand <- get_data(all_data, "L203.GlobalTechInterp_demand")
-    L203.StubTechProd_food <- get_data(all_data, "L203.StubTechProd_food")
-    L203.StubTechProd_nonfood_crop <- get_data(all_data, "L203.StubTechProd_nonfood_crop")
-    L203.StubTechProd_nonfood_meat <- get_data(all_data, "L203.StubTechProd_nonfood_meat")
-    L203.StubTechProd_For <- get_data(all_data, "L203.StubTechProd_For")
-    L203.StubCalorieContent <- get_data(all_data, "L203.StubCalorieContent")
-    L203.PerCapitaBased <- get_data(all_data, "L203.PerCapitaBased")
-    L203.BaseService <- get_data(all_data, "L203.BaseService")
-    L203.IncomeElasticity <- get_data(all_data, "L203.IncomeElasticity")
-    L203.PriceElasticity <- get_data(all_data, "L203.PriceElasticity")
-    L203.SubregionalShares <- get_data(all_data, "L203.SubregionalShares")
-    L203.DemandFunction_food <- get_data(all_data, "L203.DemandFunction_food")
-    L203.DemandStapleParams <- get_data(all_data, "L203.DemandStapleParams")
-    L203.DemandNonStapleParams <- get_data(all_data, "L203.DemandNonStapleParams")
-    L203.DemandStapleRegBias <- get_data(all_data, "L203.DemandStapleRegBias")
-    L203.DemandNonStapleRegBias <- get_data(all_data, "L203.DemandNonStapleRegBias")
-    L203.StapleBaseService <- get_data(all_data, "L203.StapleBaseService")
-    L203.NonStapleBaseService <- get_data(all_data, "L203.NonStapleBaseService")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -115,7 +94,7 @@ module_aglu_batch_ag_an_demand_input_xml <- function(command, ...) {
                      "L203.StapleBaseService", "L203.NonStapleBaseService") ->
       ag_an_demand_input.xml
 
-    return_data(ag_an_demand_input.xml)
+    return_data("ag_an_demand_input.xml")
   } else {
     stop("Unknown command")
   }

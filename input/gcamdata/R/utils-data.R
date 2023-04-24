@@ -233,19 +233,89 @@ get_data <- function(all_data, name, strip_attributes = FALSE) {
   }
 }
 
+#' get_data_list
+#'
+#' This function calls \code{get_data} for each data name in \code{data_list} and assigns
+#' the resulting data into the given \code{environ} with the data name being used as the
+#' variable name.  Note: for values in data_list "named" FILE the "basename" of the string
+#' will be used as the variable name.
+#'
+#' @param all_data Data structure
+#' @param data_list A character vector of data to load into the given environment
+#' @param strip_attributes A logical vector which will be passed on to \code{get_data}.  The length
+#' must be 1 (use the save logical for all values of data_list) or match the length of
+#' \code{data_list} (one logical value for each data_list item).
+#' @param environ The environment into which the data should be loaded.  If NULL (the default)
+#' the caller's environment will be used.
+get_data_list <- function(all_data, data_list, strip_attributes = FALSE, environ = NULL) {
+  # expecting a (potentially named) character vector for data_list
+  assertthat::assert_that(is.character(data_list))
+  data_list_names <- names(data_list)
+
+  # strip_attributes must be logical and either be length 1 (in which case the same value
+  # will be used for all calls to get_data) or match the length of data_list (values will be
+  # matched up per index)
+  assertthat::assert_that(is.logical(strip_attributes))
+  assertthat::assert_that(length(strip_attributes) == 1 || length(strip_attributes) == length(data_list))
+  if(length(strip_attributes) == 1) {
+    strip_attributes = rep_len(strip_attributes, length(data_list))
+  }
+
+  # if no environment was explicitly given the default behavior is to load into the caller's
+  # environment
+  if(is.null(environ)) {
+    environ = parent.frame()
+  }
+
+  # loop over each data_list, call get_data and assign the result to the same data name in
+  # the given environment
+  for(i in seq_along(data_list)) {
+    curr_var_name <- data_list[i]
+    # the variable name to assign for FILE is the "basename" of the file
+    # i.e. `FILE = "common/GCAM_region_names"` will result in `GCAM_region_names` being set
+    if(!is.null(data_list_names) && data_list_names[i] %in% c("FILE", "OPTIONAL_FILE")) {
+      # Note: strsplit returns a list (one per each str to be split) of character vector
+      # (one for each token split out).  Given we are split one string at a time
+      # we will just grab the first element of the list (`[[1]]`)
+      data_name_split = strsplit(curr_var_name, "/")[[1]]
+      # get the last element of the char vec to use as the var name
+      curr_var_name = tail(data_name_split, n = 1)
+    }
+    # get the data
+    data = get_data(all_data, data_list[i], strip_attributes[i])
+    # assign it into the environment
+    assign(curr_var_name, data, envir = environ)
+  }
+}
+
 
 #' return_data
 #'
 #' Construct a data structure of objects (\code{...}) and return it.
 #' Abstracts this away from chunk function code.
 #'
-#' @param ... Objects to handle
+#' @param ... Objects to handle; could be a vector of char including object names
 #' @return Object ready for insertion into the data system data structure.
 return_data <- function(...) {
+
   dots <- list(...)
-  raw_names <- as.list(substitute(list(...)))[-1L]
-  # if a user explicitly named a return data then keep their name
-  # otherwise use the name of the raw variable to set the name
+
+  if (is.character(dots[[1]])) {
+
+    raw_names <- c(...)
+    dots <- list()
+    for (x in raw_names) {
+
+      dots[[x]] <- get(x, envir = parent.frame() )
+    }
+
+  } else{
+
+    raw_names <- as.list(substitute(list(...)))[-1L]
+    # if a user explicitly named a return data then keep their name
+    # otherwise use the name of the raw variable to set the name
+  }
+
   if(is.null(names(dots))) {
     # if none of the arguments were explicitly named then `names(dots)`
     # returns NULL and we should set all the names to the raw names

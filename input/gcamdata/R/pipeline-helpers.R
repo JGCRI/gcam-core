@@ -331,7 +331,7 @@ missing_data <- function() {
 #'
 #' @param year Year to convert TO.
 #' @param base_year Year to convert FROM.
-#' @return GDP Deflator.  Multiply to convert FROM \code{base_year} dollars TO
+#' @return US GDP Deflator.  Multiply to convert FROM \code{base_year} dollars TO
 #' \code{year} dollars.
 #' @source U.S. Bureau of Economic Analysis, Gross domestic product (implicit
 #' price deflator) [A191RD3A086NBEA], retrieved from FRED, Federal Reserve Bank
@@ -345,7 +345,8 @@ missing_data <- function() {
 gdp_deflator <- function(year, base_year) {
   # This time series is the BEA "A191RD3A086NBEA" product
   # Downloaded April 13, 2017 from https://fred.stlouisfed.org/series/A191RD3A086NBEA
-  gdp_years <- 1929:2019
+  # 3-16-2022 FRED data was re-based; extend the index to 2021 using annual rates
+  gdp_years <- 1929:2021
   gdp <- c(9.896, 9.535, 8.555, 7.553, 7.345, 7.749, 7.908, 8.001, 8.347,
            8.109, 8.033, 8.131, 8.68, 9.369, 9.795, 10.027, 10.288, 11.618,
            12.887, 13.605, 13.581, 13.745, 14.716, 14.972, 15.157, 15.298,
@@ -357,7 +358,7 @@ gdp_deflator <- function(year, base_year) {
            75.324, 76.699, 78.012, 78.859, 80.065, 81.887, 83.754, 85.039,
            86.735, 89.12, 91.988, 94.814, 97.337, 99.246, 100, 101.221,
            103.311, 105.214, 106.913, 108.828, 109.998, 111.445, 113.545,
-           116.311, 118.339)
+           116.311, 118.339, 119.766, 124.743)
   names(gdp) <- gdp_years
 
   assert_that(all(year %in% gdp_years))

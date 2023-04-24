@@ -11,7 +11,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L142.ag_Fert_Prod_MtN_ctry_Y}, \code{L142.ag_Fert_NetExp_MtN_R_Y}, \code{L142.ag_Fert_IO_R_C_Y_GLU}. The corresponding file in the
 #' original data system was \code{LB142.ag_Fert_IO_R_C_Y_GLU.R} (aglu level1).
-#' @details This chunk calculates fertilizer prodcution by country / year (adjusted to global total consumption),
+#' @details This chunk calculates fertilizer production by country / year (adjusted to global total consumption),
 #' fertilizer net exports by GCAM region / year as production minus consumption, and fertilizer input-output coefficients
 #' by GCAM region / commodity / year / GLU.
 #' @importFrom assertthat assert_that
@@ -19,18 +19,25 @@
 #' @importFrom tidyr complete replace_na
 #' @author RC June 2017
 module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+      "L100.LDS_ag_prod_t",
+      "L100.FAO_Fert_Cons_tN",
+      "L100.FAO_Fert_Prod_tN",
+      "L101.ag_Prod_Mt_R_C_Y_GLU",
+      "L141.ag_Fert_Cons_MtN_ctry_crop")
+
+  MODULE_OUTPUTS <-
+    c("L142.ag_Fert_Prod_MtN_ctry_Y",
+      "L142.ag_Fert_NetExp_MtN_R_Y",
+      "L142.ag_Fert_IO_R_C_Y_GLU")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
-             "L100.LDS_ag_prod_t",
-             "L100.FAO_Fert_Cons_tN",
-             "L100.FAO_Fert_Prod_tN",
-             "L101.ag_Prod_Mt_R_C_Y_GLU",
-             "L141.ag_Fert_Cons_MtN_ctry_crop"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L142.ag_Fert_Prod_MtN_ctry_Y",
-             "L142.ag_Fert_NetExp_MtN_R_Y",
-             "L142.ag_Fert_IO_R_C_Y_GLU"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     Fert_Cons_MtN <- Fert_Cons_MtN_unscaled <- Fert_IO <- Fert_IO_unscaled <- Prod_share <-
@@ -39,14 +46,9 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
-    L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
-    L100.FAO_Fert_Cons_tN <- get_data(all_data, "L100.FAO_Fert_Cons_tN")
-    L100.FAO_Fert_Prod_tN <- get_data(all_data, "L100.FAO_Fert_Prod_tN", strip_attributes = TRUE)
-    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU")
-    L141.ag_Fert_Cons_MtN_ctry_crop <- get_data(all_data, "L141.ag_Fert_Cons_MtN_ctry_crop")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
 
     # Compile N fertilizer production and consumption by country, and adjust country production so that production and consumption balance globally
     L100.FAO_Fert_Prod_tN %>%
@@ -222,7 +224,7 @@ module_aglu_LB142.ag_Fert_IO_R_C_Y_GLU <- function(command, ...) {
                      "L141.ag_Fert_Cons_MtN_ctry_crop") ->
       L142.ag_Fert_IO_R_C_Y_GLU
 
-    return_data(L142.ag_Fert_Prod_MtN_ctry_Y, L142.ag_Fert_NetExp_MtN_R_Y, L142.ag_Fert_IO_R_C_Y_GLU)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

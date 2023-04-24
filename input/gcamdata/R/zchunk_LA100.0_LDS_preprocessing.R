@@ -47,7 +47,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
+    # Load required inputs ----
     LDSfiles <- list()
     for(nm in namelist) {
       LDSfiles[[nm]] <- get_data(all_data, paste0(dirname, nm))
@@ -141,7 +141,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
     #  - Wheat: re-assign the production from GLU078 to GLU103
 
 
-    #1. Adjustment for wheat
+    #1. Adjustment for wheat ----
     #a. Get Taiwan's data for GLU078 for wheat for production, harvested area and MIRCA
     GLUDataforWheat = subset(L100.LDS_ag_HA_ha,GTAP_crop=='Wheat'& GLU=='GLU078'& iso=="twn")
     Value = GLUDataforWheat$value
@@ -171,7 +171,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
 
     }
 
-    #2. Adjustment for Flax
+    #2. Adjustment for Flax ----
     #Add rows for production and harvested area for GLU103 with values that are commensurate with FAOSTAT.
     GLUDataforFlax = subset(L100.LDS_ag_HA_ha,GTAP_crop=='FlaxFibr_Tow'& GLU=='GLU078'& iso=="twn")
     Value = GLUDataforFlax$value
@@ -182,7 +182,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
       L100.LDS_ag_prod_t<-add_row(L100.LDS_ag_prod_t,iso="twn",GLU="GLU103",GTAP_crop='FlaxFibr_Tow',value=1000)
     }
 
-    #3. Adjustment for Rapeseed and Barley
+    #3. Adjustment for Rapeseed and Barley ----
     # Move all harvested area and production from GLU078 to GLU103
     L100.LDS_ag_HA_ha$GLU[L100.LDS_ag_HA_ha$iso == "twn" &
                             L100.LDS_ag_HA_ha$GTAP_crop == "Rapeseed"] <- "GLU103"
@@ -194,7 +194,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
     L100.LDS_ag_prod_t$GLU[L100.LDS_ag_prod_t$iso == "twn" &
                              L100.LDS_ag_prod_t$GTAP_crop == "Barley"] <- "GLU103"
 
-    #4. Adjustment for Soybean (production in the 1970's was >100x the production in ~2000; using the 2000-era GLU shares leads to too much land required in GLU078)
+    #4. Adjustment for Soybean (production in the 1970's was >100x the production in ~2000; using the 2000-era GLU shares leads to too much land required in GLU078) ----
     # Soybean: move nearly all harvested area and production from GLU078 to GLU103, by setting the production and harvested area in GLU078 to a nominal value.
     L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
                           L100.LDS_ag_HA_ha$GTAP_crop == "Soybeans" &
@@ -203,7 +203,7 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
                            L100.LDS_ag_prod_t$GTAP_crop == "Soybeans" &
                            L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
 
-    #5. Adjustment for Sweet potatoes (production in the 1970's was >20x the production in ~2000. GLU-wise allocation from ~2000 causes issues in GLU078
+    #5. Adjustment for Sweet potatoes (production in the 1970's was >20x the production in ~2000. GLU-wise allocation from ~2000 causes issues in GLU078 ----
     L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
                               L100.LDS_ag_HA_ha$GTAP_crop == "SweetPotato" &
                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
@@ -225,6 +225,17 @@ module_aglu_LA100.0_LDS_preprocessing <- function(command, ...) {
     L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
                                L100.LDS_ag_prod_t$GTAP_crop == "VgtbFrshNES" &
                                L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+
+    #6. Adjustment for small yield crops in small region ----
+    # yield too small: GTAP_crop == "FrgProdNES", GLU %in% c("GLU049", "GLU021"), iso == "pol"
+    # adjust using average yield in the region doesn't help
+    # simply filter out both land and prod
+
+    L100.LDS_ag_prod_t %>% filter(!(iso == "pol" & GTAP_crop == "FrgProdNES" & GLU %in% c("GLU049", "GLU021"))) ->
+      L100.LDS_ag_prod_t
+    L100.LDS_ag_HA_ha %>% filter(!(iso == "pol" & GTAP_crop == "FrgProdNES" & GLU %in% c("GLU049", "GLU021"))) ->
+      L100.LDS_ag_HA_ha
 
 
     # And we're done

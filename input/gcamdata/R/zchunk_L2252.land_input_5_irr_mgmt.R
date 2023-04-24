@@ -422,8 +422,11 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       add_comments("Land cover in the model base periods for managed crop land (LT_GLU) in the fifth nest, from L181 land cover data.") %>%
       add_comments("Filter to remove zero production leafs, using L2012.AgProduction_ag_irr_mgmt") %>%
       add_legacy_name("L2252.LN5_MgdAllocation_crop") %>%
-      same_precursors_as("L2252.LN5_HistMgdAllocation_crop") %>%
-      add_precursors("L2012.AgProduction_ag_irr_mgmt") ->
+      add_precursors("common/GCAM_region_names",
+                     "water/basin_to_country_mapping",
+                     "L181.LC_bm2_R_C_Yh_GLU_irr_level",
+                     "L2242.LN4_Logit",
+                     "L2012.AgProduction_ag_irr_mgmt") ->
       L2252.LN5_MgdAllocation_crop
 
     L2252.LN5_HistMgdAllocation_bio %>%

@@ -23,26 +23,27 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter if_else group_by lag left_join mutate select summarise
 #' @importFrom tidyr gather replace_na spread
-#' @author RC July 2017
+#' @author RC July 2017 XZ 2022
 module_aglu_L203.ag_an_demand_input <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "aglu/A_demand_food_staples",
+      FILE = "aglu/A_demand_food_nonstaples",
+      FILE = "aglu/A_demand_supplysector",
+      FILE = "aglu/A_demand_nesting_subsector",
+      FILE = "aglu/A_demand_subsector",
+      FILE = "aglu/A_demand_technology",
+      FILE = "aglu/A_fuelprefElasticity_ssp1",
+      FILE = "aglu/A_diet_bias",
+      "L101.CropMeat_Food_Pcal_R_C_Y",
+      "L109.ag_ALL_Mt_R_C_Y",
+      "L109.an_ALL_Mt_R_C_Y",
+      "L110.For_ALL_bm3_R_Y")
+
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "aglu/A_demand_food_staples",
-             FILE = "aglu/A_demand_food_nonstaples",
-             FILE = "aglu/A_demand_supplysector",
-             FILE = "aglu/A_demand_nesting_subsector",
-             FILE = "aglu/A_demand_subsector",
-             FILE = "aglu/A_demand_technology",
-             FILE = "aglu/A_fuelprefElasticity_ssp1",
-             FILE = "aglu/A_diet_bias",
-             "L101.ag_Food_Pcal_R_C_Y",
-             "L101.ag_kcalg_R_C_Y",
-             "L105.an_Food_Pcal_R_C_Y",
-             "L105.an_kcalg_R_C_Y",
-             "L109.ag_ALL_Mt_R_C_Y",
-             "L109.an_ALL_Mt_R_C_Y",
-             "L110.For_ALL_bm3_R_Y"
-             ))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L203.Supplysector_demand",
              "L203.NestingSubsectorAll_demand_food",
@@ -81,25 +82,48 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       gcam.consumer <- nodeInput <- demand_type <- staples.food.demand.input <-
       non.staples.food.demand.input <- subsector <- NULL   # silence package check notes
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
-    A_demand_supplysector <- get_data(all_data, "aglu/A_demand_supplysector", strip_attributes = TRUE)
-    A_demand_nesting_subsector <- get_data(all_data, "aglu/A_demand_nesting_subsector", strip_attributes = TRUE)
-    A_demand_subsector <- get_data(all_data, "aglu/A_demand_subsector", strip_attributes = TRUE)
-    A_demand_technology <- get_data(all_data, "aglu/A_demand_technology", strip_attributes = TRUE)
-    A_fuelprefElasticity_ssp1 <- get_data(all_data, "aglu/A_fuelprefElasticity_ssp1", strip_attributes = TRUE)
-    A_demand_food_staples <- get_data(all_data, "aglu/A_demand_food_staples", strip_attributes = TRUE)
-    A_demand_food_nonstaples <- get_data(all_data, "aglu/A_demand_food_nonstaples", strip_attributes = TRUE)
-    A_diet_bias <- get_data(all_data, "aglu/A_diet_bias", strip_attributes = TRUE)
-    L101.ag_Food_Pcal_R_C_Y <- get_data(all_data, "L101.ag_Food_Pcal_R_C_Y")
-    L101.ag_kcalg_R_C_Y <- get_data(all_data, "L101.ag_kcalg_R_C_Y")
-    L105.an_Food_Pcal_R_C_Y <- get_data(all_data, "L105.an_Food_Pcal_R_C_Y")
-    L105.an_kcalg_R_C_Y <- get_data(all_data, "L105.an_kcalg_R_C_Y")
-    L109.ag_ALL_Mt_R_C_Y <- get_data(all_data, "L109.ag_ALL_Mt_R_C_Y")
-    L109.an_ALL_Mt_R_C_Y <- get_data(all_data, "L109.an_ALL_Mt_R_C_Y")
-    L110.For_ALL_bm3_R_Y <- get_data(all_data, "L110.For_ALL_bm3_R_Y")
+    # Load required inputs ----
 
-    # Build L203.Supplysector_demand: generic info for demand sectors by region
+    lapply(MODULE_INPUTS, function(d){
+      # get name as the char after last /
+      nm <- tail(strsplit(d, "/")[[1]], n = 1)
+      # get data and assign
+      assign(nm, get_data(all_data, d, strip_attributes = T),
+             envir = parent.env(environment()))  })
+
+
+    # Get mass-calories conversion rates for food commodities----
+    # Note that food consumption in Mt in L109 files should be finalized
+    # So the conversion rates are finalized here (after any potential earlier food adjustments)
+    L109.ag_ALL_Mt_R_C_Y %>%
+      # Combine the balance tables of crop and meat in Mt
+      bind_rows(L109.an_ALL_Mt_R_C_Y) %>%
+      select(GCAM_region_ID, GCAM_commodity, year, Food_Mt) %>%
+      # keep food commodities only
+      inner_join(L101.CropMeat_Food_Pcal_R_C_Y%>% distinct(GCAM_commodity),
+                 by = "GCAM_commodity") %>%
+      left_join_error_no_match(L101.CropMeat_Food_Pcal_R_C_Y %>% rename(Pcal = value),
+                               by = c("GCAM_region_ID", "GCAM_commodity", "year")) ->
+      L101.CropMeat_Food_kcalg_R_C_Y_1
+
+    L101.CropMeat_Food_kcalg_R_C_Y_1 %>%
+      dplyr::group_by_at(vars(-GCAM_region_ID, -Food_Mt, -Pcal)) %>%
+      summarise_at(.vars = vars(Food_Mt, Pcal), sum) %>%
+      mutate(value_world = Pcal / Food_Mt) %>%
+      select(-Food_Mt, -Pcal)->
+      L101.CropMeat_Food_kcalg_R_C_Y_1_World
+
+    L101.CropMeat_Food_kcalg_R_C_Y_1 %>%
+      left_join_error_no_match(L101.CropMeat_Food_kcalg_R_C_Y_1_World,
+                               by = c("GCAM_commodity", "year")) %>%
+      mutate(value = if_else(Food_Mt == 0, value_world,
+                             Pcal / Food_Mt)) %>%
+      select(-Food_Mt, -Pcal, -value_world) %>%
+      filter(year %in% MODEL_BASE_YEARS) ->
+      L101.CropMeat_Food_kcalg_R_C_Y
+
+
+      # Build L203.Supplysector_demand: generic info for demand sectors by region
     A_demand_supplysector %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["Supplysector"]], LOGIT_TYPE_COLNAME), GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) -> # Remove any regions for which agriculture and land use are not modeled
@@ -176,10 +200,9 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) ->
       A_demand_technology_R_Y
 
+
     # Build L203.StubTechProd_food: crop and meat food supply by technology and region
-    L101.ag_Food_Pcal_R_C_Y %>%
-      # Combine crop and meat food demand in Pcal
-      bind_rows(L105.an_Food_Pcal_R_C_Y) %>%
+    L101.CropMeat_Food_Pcal_R_C_Y %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") ->
       L203.ag_an_Food_Pcal_R_C_Y
@@ -250,10 +273,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
 
     # Build L203.StubCalorieContent:
     # calorie content of food crops (incl secondary products) and meat commodities
-    L101.ag_kcalg_R_C_Y %>%
-      # Combine the weigted average caloric content of crop and meat products
-      bind_rows(L105.an_kcalg_R_C_Y) %>%
-      filter(year %in% MODEL_BASE_YEARS) %>%
+    L101.CropMeat_Food_kcalg_R_C_Y %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID") ->
       L203.ag_an_kcalg_R_C_Y
 
@@ -383,7 +403,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
                                by = c("region", "non.staples.food.demand.input")) %>%
       select(LEVEL2_DATA_NAMES[["NonStapleBaseService"]])
 
-    #FINAL OUTPUT
+    #FINAL OUTPUT ----
     L203.Supplysector_demand %>%
       add_title("Generic information for agriculture demand sectors") %>%
       add_units("Unitless") %>%
@@ -477,8 +497,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       add_legacy_name("L203.StubTechProd_food_crop") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_technology",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y") ->
+                     "L101.CropMeat_Food_Pcal_R_C_Y") ->
       L203.StubTechProd_food
 
     L203.StubTechProd_nonfood %>%
@@ -526,8 +545,9 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       add_legacy_name("L203.StubCalorieContent_crop") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_technology",
-                     "L101.ag_kcalg_R_C_Y",
-                     "L105.an_kcalg_R_C_Y") ->
+                     "L101.CropMeat_Food_Pcal_R_C_Y",
+                     "L109.ag_ALL_Mt_R_C_Y",
+                     "L109.an_ALL_Mt_R_C_Y") ->
       L203.StubCalorieContent
 
     L203.PerCapitaBased %>%
@@ -549,8 +569,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "aglu/A_demand_supplysector",
                      "aglu/A_demand_technology",
-                     "L101.ag_Food_Pcal_R_C_Y",
-                     "L105.an_Food_Pcal_R_C_Y",
+                     "L101.CropMeat_Food_Pcal_R_C_Y",
                      "L109.ag_ALL_Mt_R_C_Y",
                      "L109.an_ALL_Mt_R_C_Y",
                      "L110.For_ALL_bm3_R_Y") ->

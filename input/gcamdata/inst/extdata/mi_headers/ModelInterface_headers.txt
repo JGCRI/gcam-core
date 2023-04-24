@@ -575,6 +575,8 @@ AgInputTax, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{
 
 AgMkt, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+market, scenario, scenario/world
 
+AgCalMinProfitRate, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+cal-min-profit-rate, scenario, scenario/world
+
 
 #####, POLICY
 

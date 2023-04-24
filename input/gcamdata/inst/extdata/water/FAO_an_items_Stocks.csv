@@ -1,30 +1,30 @@
 # File: FAO_an_items_Stocks.csv
-# Title: FAO animal product item names
+# Title: FAO and MH2010 animal product item names
 # Units: NA
-# Comments: NA
-# Column types: cccc 
+# Description: FAO (QCL dataset) animal stock and milk animal mapping
+# Date of last update: 2022-03-15 (XZ)
+# Column types: ciccc 
 # ----------
-"item","GCAM_commodity","Animal",dairy.to.total
-"Milk, whole fresh cow","Dairy","Dairy cattle",Cattle
-"Milk, whole fresh sheep","Dairy","Dairy cattle",Sheep
-"Milk, whole fresh goat","Dairy","Dairy cattle",Goats
-"Milk, whole fresh camel","Dairy","Dairy cattle",Camels
-"Milk, whole fresh buffalo","Dairy","Dairy cattle",Buffaloes
-"Cattle","Beef","Beef cattle",
-"Buffaloes","Beef","Beef cattle",
-"Sheep","SheepGoat","Sheep",
-"Goats","SheepGoat","Goat",
-"Pigs","Pork","Pig",
-"Horses","OtherMeat_Fish","Horse",
-"Asses","OtherMeat_Fish","Horse",
-"Mules","OtherMeat_Fish","Horse",
-"Chickens","Poultry","Broiler chicken",
-"Turkeys","Poultry","Broiler chicken",
-"Rabbits and hares","OtherMeat_Fish",,
-"Beehives",,,
-"Camels","OtherMeat_Fish","Horse",
-"Ducks","Poultry","Broiler chicken",
-"Geese and guinea fowls","Poultry","Broiler chicken",
-"Camelids, other","OtherMeat_Fish",,
-"Rodents, other","OtherMeat_Fish",,
-"Animals live nes",,,
+item,item_code,GCAM_commodity,Animal,dairy.to.total
+"Milk, whole fresh cow",882,Dairy,Dairy cattle,Cattle
+"Milk, whole fresh sheep",982,Dairy,Dairy cattle,Sheep
+"Milk, whole fresh goat",1020,Dairy,Dairy cattle,Goats
+"Milk, whole fresh camel",1130,Dairy,Dairy cattle,Camels
+"Milk, whole fresh buffalo",951,Dairy,Dairy cattle,Buffaloes
+Cattle,866,Beef,Beef cattle,
+Buffaloes,946,Beef,Beef cattle,
+Sheep,976,SheepGoat,Sheep,
+Goats,1016,SheepGoat,Goat,
+Pigs,1034,Pork,Pig,
+Horses,1096,OtherMeat_Fish,Horse,
+Asses,1107,OtherMeat_Fish,Horse,
+Mules,1110,OtherMeat_Fish,Horse,
+Chickens,1057,Poultry,Broiler chicken,
+Turkeys,1079,Poultry,Broiler chicken,
+Rabbits and hares,1140,OtherMeat_Fish,,
+Beehives,1181,,,
+Camels,1126,OtherMeat_Fish,Horse,
+Ducks,1068,Poultry,Broiler chicken,
+Geese and guinea fowls,1072,Poultry,Broiler chicken,
+"Camelids, other",1157,OtherMeat_Fish,,
+"Rodents, other",1150,OtherMeat_Fish,,

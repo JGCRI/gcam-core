@@ -1,0 +1,540 @@
+# File: SUA_item_code_map.csv
+# Title: Mapping of SUA items to their item_code
+# Units: NA
+# Description: Ideally we just use SUA (supply utilization accounts) item names directly.  However, given the volume of data
+# it helps to use item_code to reduce the size of the input data as well as speed up processing.  We will then need this mapping
+# to ultimately translate back to item names.
+# Last update: 8-15-2022 (XZ)
+# Column types: ci
+# ----------
+item,item_code
+Wheat,15
+"Rice, paddy",27
+Barley,44
+Beer of barley,51
+Maize,56
+"Oil, maize",60
+Rye,71
+Oats,75
+Millet,79
+Sorghum,83
+Buckwheat,89
+Quinoa,92
+Fonio,94
+Triticale,97
+Canary seed,101
+"Grain, mixed",103
+Potatoes,116
+Sweet potatoes,122
+Cassava,125
+Roots and tubers nes,149
+Sugar beet,157
+Sugar crops nes,161
+Sugar Raw Centrifugal,162
+Molasses,165
+"Beans, dry",176
+"Broad beans, horse beans, dry",181
+"Peas, dry",187
+Chick peas,191
+Lentils,201
+Bambara beans,203
+Vetches,205
+"Cashew nuts, with shell",217
+Chestnut,220
+"Almonds, with shell",221
+"Walnuts, with shell",222
+Pistachios,223
+Kola nuts,224
+"Hazelnuts, with shell",225
+Areca nuts,226
+Nuts nes,234
+Soybeans,236
+"Oil, groundnut",244
+Coconuts,249
+"Oil, coconut (copra)",252
+"Oil, palm",257
+"Oil, palm kernel",258
+Olives,260
+"Oil, olive, virgin",261
+Karite nuts (sheanuts),263
+Sunflower seed,267
+"Oil, sunflower",268
+Rapeseed,270
+"Oil, rapeseed",271
+"Oil, safflower",281
+Sesame seed,289
+"Oil, sesame",290
+Mustard seed,292
+Poppy seed,296
+Cottonseed,329
+"Oil, cottonseed",331
+Linseed,333
+"Oil, linseed",334
+Oilseeds nes,339
+Cabbages and other brassicas,358
+Artichokes,366
+Asparagus,367
+Lettuce and chicory,372
+Spinach,373
+Tomatoes,388
+Cauliflowers and broccoli,393
+"Pumpkins, squash and gourds",394
+Cucumbers and gherkins,397
+Eggplants (aubergines),399
+"Chillies and peppers, green",401
+"Onions, shallots, green",402
+"Onions, dry",403
+Garlic,406
+"Leeks, other alliaceous vegetables",407
+"Beans, green",414
+"Peas, green",417
+Carrots and turnips,426
+"Maize, green",446
+Mushrooms and truffles,449
+"Vegetables, fresh nes",463
+Bananas,486
+Plantains and others,489
+Oranges,490
+"Tangerines, mandarins, clementines, satsumas",495
+Lemons and limes,497
+Grapefruit (inc. pomelos),507
+Apples,515
+Pears,521
+Quinces,523
+Apricots,526
+"Cherries, sour",530
+Cherries,531
+Peaches and nectarines,534
+Plums and sloes,536
+Strawberries,544
+Gooseberries,549
+Currants,550
+Blueberries,552
+Cranberries,554
+Grapes,560
+Wine,564
+Watermelons,567
+"Melons, other (inc.cantaloupes)",568
+Figs,569
+"Mangoes, mangosteens, guavas",571
+Avocados,572
+Pineapples,574
+Dates,577
+Persimmons,587
+Cashewapple,591
+Kiwi fruit,592
+Papayas,600
+"Fruit, tropical fresh nes",603
+"Fruit, fresh nes",619
+"Coffee, green",656
+"Cocoa, beans",661
+Tea,667
+Mate,671
+Pepper (piper spp.),687
+"Chillies and peppers, dry",689
+Vanilla,692
+Cinnamon (cannella),693
+Cloves,698
+"Nutmeg, mace and cardamoms",702
+"Anise, badian, fennel, coriander",711
+Ginger,720
+Spices nes,723
+"Meat, cattle",867
+"Offals, edible, cattle",868
+"Fat, cattle",869
+"Milk, whole fresh cow",882
+Cream fresh,885
+"Butter, cow milk",886
+"Milk, skimmed cow",888
+"Milk, whole condensed",889
+"Whey, condensed",890
+Yoghurt,891
+"Milk, whole evaporated",894
+"Milk, whole dried",897
+"Milk, skimmed dried",898
+"Whey, dry",900
+"Cheese, whole cow milk",901
+"Meat, sheep",977
+"Offals, sheep,edible",978
+"Cheese, sheep milk",984
+"Meat, goat",1017
+"Offals, edible, goats",1018
+"Meat, pig",1035
+"Offals, pigs, edible",1036
+"Fat, pigs",1037
+Lard,1043
+"Meat, chicken",1058
+"Eggs, hen, in shell",1062
+"Meat, duck",1069
+"Meat, goose and guinea fowl",1073
+"Meat, turkey",1080
+"Eggs, other bird, in shell",1091
+"Meat, horse",1097
+"Fat, camels",1129
+"Meat, rabbit",1141
+"Meat, game",1163
+Meat nes,1166
+"Honey, natural",1182
+Tallow,1225
+"Margarine, short",1242
+"Flour, wheat",16
+"Bran, wheat",17
+Macaroni,18
+Bread,20
+Bulgur,21
+Pastry,22
+"Rice, husked",28
+"Rice, milled/husked",29
+"Rice, milled",31
+"Rice, broken",32
+"Oil, rice bran",36
+"Flour, rice",38
+"Beverages, fermented rice",39
+"Cereals, breakfast",41
+"Barley, pearled",46
+Malt,49
+"Germ, maize",57
+"Flour, maize",58
+"Bran, maize",59
+Oats rolled,76
+"Bran, millet",81
+"Bran, sorghum",85
+"Flour, mixed grain",104
+Infant food,109
+Wafers,110
+"Flour, cereals",111
+Cereal preparations nes,113
+Mixes and doughs,114
+"Food preparations, flour, malt extract",115
+"Flour, potatoes",117
+"Potatoes, frozen",118
+"Flour, cassava",126
+Cassava dried,128
+"Starch, cassava",129
+"Flour, roots and tubers nes",150
+Maple sugar and syrups,160
+Sugar non-centrifugal,163
+Sugar refined,164
+"Fructose and syrup, other",166
+Sugar nes,167
+Sugar confectionery,168
+Glucose and dextrose,172
+Lactose,173
+"Flour, pulses",212
+"Brazil nuts, shelled",229
+"Cashew nuts, shelled",230
+Almonds shelled,231
+"Walnuts, shelled",232
+"Hazelnuts, shelled",233
+"Nuts, prepared (exc. groundnuts)",235
+"Oil, soybean",237
+Soya sauce,239
+Soya paste,240
+"Groundnuts, shelled",243
+"Groundnuts, prepared",246
+Peanut butter,247
+"Coconuts, desiccated",250
+Copra,251
+Olives preserved,262
+Butter of karite nuts,264
+"Oil, castor beans",266
+"Oil, olive residues",274
+"Flour, mustard",295
+"Oil, vegetable origin nes",340
+"Juice, tomato",390
+"Tomatoes, paste",391
+"Tomatoes, peeled",392
+Sweet corn frozen,447
+Sweet corn prep or preserved,448
+"Mushrooms, canned",451
+"Vegetables, dehydrated",469
+Vegetables in vinegar,471
+"Vegetables, preserved nes",472
+"Vegetables, frozen",473
+"Vegetables, temporarily preserved",474
+"Vegetables, preserved, frozen",475
+"Vegetables, homogenized preparations",476
+"Juice, orange, single strength",491
+"Juice, orange, concentrated",492
+"Juice, lemon, single strength",498
+"Juice, lemon, concentrated",499
+"Juice, grapefruit",509
+"Juice, grapefruit, concentrated",510
+"Juice, citrus, single strength",513
+"Juice, citrus, concentrated",514
+Cider etc,517
+"Juice, apple, single strength",518
+"Juice, apple, concentrated",519
+"Apricots, dry",527
+Plums dried (prunes),537
+Raisins,561
+"Juice, grape",562
+Vermouths & similar,565
+Figs dried,570
+Pineapples canned,575
+"Juice, pineapple",576
+"Juice, pineapple, concentrated",580
+"Fruit, dried nes",620
+"Juice, fruit nes",622
+"Fruit, prepared nes",623
+"Fruit, cooked, homogenized preparations",626
+"Beverages, distilled alcoholic",634
+"Coffee, roasted",657
+"Coffee, substitutes containing coffee",658
+"Coffee, extracts",659
+"Cocoa, paste",662
+"Cocoa, butter",664
+"Cocoa, powder & cake",665
+Chocolate products nes,666
+"Tea, mate extracts",672
+"Feed and meal, gluten",846
+"Meat, cattle, boneless (beef & veal)",870
+"Meat, beef and veal sausages",874
+"Meat, beef, preparations",875
+"Yoghurt, concentrated or not",892
+"Buttermilk, curdled, acidified milk",893
+"Cheese, processed",907
+"Milk, products of natural constituents nes",909
+Ice cream and edible ice,910
+Grease incl. lanolin wool,994
+"Meat, pork",1038
+Bacon and ham,1039
+"Meat, pig sausages",1041
+"Meat, pig, preparations",1042
+"Offals, liver chicken",1059
+"Fat, liver prepared (foie gras)",1060
+"Meat, chicken, canned",1061
+"Eggs, liquid",1063
+"Eggs, dried",1064
+"Offals, liver geese",1074
+"Offals, liver duck",1075
+"Meat, dried nes",1164
+"Oils, fats of animal nes",1168
+Food prep nes,1232
+"Margarine, liquid",1241
+"Fat nes, prepared",1243
+"Oil, boiled etc",1274
+Fatty acids,1276
+Fatty substance residues,1277
+Cereals nes,108
+Yautia (cocoyam),135
+Taro (cocoyam),136
+Yams,137
+Sugar cane,156
+"Cow peas, dry",195
+Pigeon peas,197
+Lupins,210
+Pulses nes,211
+"Brazil nuts, with shell",216
+"Groundnuts, with shell",242
+Oil palm fruit,254
+Palm kernels,256
+Castor oil seed,265
+Tung nuts,275
+Jojoba seed,277
+Safflower seed,280
+Melonseed,299
+Tallowtree seed,305
+Kapok fruit,310
+Kapokseed in shell,311
+Hempseed,336
+Cassava leaves,378
+"Vegetables, leguminous nes",420
+String beans,423
+Okra,430
+Chicory roots,459
+Carobs,461
+"Fruit, citrus nes",512
+"Fruit, stone nes",541
+"Fruit, pome nes",542
+Raspberries,547
+Berries nes,558
+"Ghee, butteroil of cow milk",887
+"Milk, skimmed evaporated",895
+"Milk, skimmed condensed",896
+"Milk, dry buttermilk",899
+"Cheese, skimmed cow milk",904
+"Meat, buffalo",947
+"Offals, edible, buffaloes",948
+"Fat, buffaloes",949
+"Milk, whole fresh buffalo",951
+"Butter, buffalo milk",952
+"Ghee, buffalo milk",953
+"Cheese, buffalo milk",955
+"Fat, sheep",979
+"Milk, whole fresh sheep",982
+"Butter and ghee, sheep milk",983
+"Fat, goats",1019
+"Milk, whole fresh goat",1020
+"Cheese, goat milk",1021
+"Meat, bird nes",1089
+"Offals, horses",1098
+"Meat, ass",1108
+"Meat, mule",1111
+"Meat, camel",1127
+"Offals, edible, camels",1128
+"Milk, whole fresh camel",1130
+"Meat, other rodents",1151
+"Snails, not sea",1176
+"Germ, wheat",19
+"Starch, wheat",23
+"Gluten, wheat",24
+"Beverages, fermented wheat",26
+"Gluten, rice",33
+"Starch, rice",34
+"Bran, rice",35
+"Barley, pot",45
+"Bran, barley",47
+"Flour, barley and grits",48
+Malt extract,50
+"Gluten, maize",63
+"Starch, maize",64
+Beer of maize,66
+"Flour, rye",72
+"Bran, rye",73
+"Bran, oats",77
+"Flour, millet",80
+Beer of millet,82
+"Flour, sorghum",84
+Beer of sorghum,86
+"Flour, buckwheat",90
+"Bran, buckwheat",91
+"Flour, fonio",95
+"Bran, fonio",96
+"Flour, triticale",98
+"Bran, triticale",99
+"Bran, mixed grains",105
+"Bran, cereals nes",112
+"Starch, potatoes",119
+"Tapioca, potatoes",121
+"Tapioca, cassava",127
+Roots and tubers dried,151
+Fructose chemically pure,154
+Maltose chemically pure,155
+"Sugar, cane, raw, centrifugal",158
+Isoglucose,175
+"Bran, pulses",213
+Soya curd,241
+"Oil, tung nuts",276
+"Oil, jojoba",278
+"Oil, mustard",293
+"Oil, poppy",297
+Vegetable tallow,306
+Kapokseed shelled,312
+"Oil, kapok",313
+"Oil, hempseed",337
+"Flour, oilseeds",343
+"Mushrooms, dried",450
+"Juice, vegetables nes",466
+"Juice, tangerine",496
+"Juice, plum, single strength",538
+"Juice, plum, concentrated",539
+"Grapes, must",563
+"Juice, mango",583
+"Fruit, tropical dried nes",604
+"Flour, fruit",624
+"Fruits, nuts, peel, sugar preserved",625
+Alcohol non food,632
+"Fat, cattle butcher",871
+"Meat, beef, dried, salted, smoked",872
+"Meat, extracts",873
+"Meat, homogenized preparations",877
+Liver prep.,878
+"Whey, fresh",903
+"Whey, cheese",905
+"Milk, reconstituted",908
+Egg albumine,916
+Casein,917
+"Milk, skimmed buffalo",954
+"Milk, skimmed sheep",985
+"Butter, goat milk",1022
+"Milk, skimmed goat",1023
+"Fat, pig butcher",1040
+"Fat, poultry",1065
+"Fat, poultry, rendered",1066
+"Offals, liver turkeys",1081
+"Fat, other camelids",1160
+Offals nes,1167
+"Meat nes, preparations",1172
+Lard stearine oil,1221
+Degras,1222
+"Castor oil, hydrogenated (opal wax)",1273
+"Oil, hydrogenated",1275
+"Cake, soybeans",238
+"Cake, groundnuts",245
+"Cake, copra",253
+"Cake, palm kernel",259
+"Cake, sunflower",269
+"Cake, rapeseed",272
+"Cake, sesame seed",291
+"Cake, mustard",294
+"Cake, cottonseed",332
+"Cake, others",341
+"Rice, paddy (rice milled equivalent)",30
+Seed cotton,328
+Hops,677
+Peppermint,748
+"Pyrethrum, dried",754
+Cotton lint,767
+Flax fibre and tow,773
+Hemp tow waste,777
+Kapok fibre,778
+Jute,780
+"Bastfibres, other",782
+Ramie,788
+Sisal,789
+Agave fibres nes,800
+Manila fibre (abaca),809
+Coir,813
+Fibre crops nes,821
+"Tobacco, unmanufactured",826
+"Rubber, natural",836
+"Gums, natural",839
+"Hides, cattle, fresh",919
+"Hides, buffalo, fresh",957
+"Wool, greasy",987
+"Skins, sheep, fresh",995
+"Skins, goat, fresh",1025
+"Meat, other camelids",1158
+Beeswax,1183
+"Silk-worm cocoons, reelable",1185
+"Silk, raw",1186
+Freshwater Fish,2761
+Demersal Fish,2762
+Pelagic Fish,2763
+"Marine Fish, Other",2764
+Crustaceans,2765
+Cephalopods,2766
+"Molluscs, Other",2767
+"Meat, Aquatic Mammals",2768
+"Aquatic Animals, Others",2769
+Aquatic Plants,2775
+"Fish, Body Oil",2781
+"Fish, Liver Oil",2782
+"Cake, rice bran",360000
+"Cake, maize",600000
+"Cake, olive residues",2740000
+"Cake, jojoba",2780000
+"Cake, safflower",2810000
+"Cake, poppy",2970000
+"Cake, kapok",3130000
+"Fiber, cottonseed",3320000
+"Cake, linseed",3340000
+"Cake, hempseed",3370000
+"Cake, vegetable origin nes",3400000
+"AnMeatEq, cattle",8670000
+"AnMeatEq, buffalo",9470000
+"AnMeatEq, sheep",9770000
+"AnMeatEq, goat",10170000
+"AnMeatEq, pig",10350000
+"AnMeatEq, chicken",10580000
+"AnMeatEq, duck",10690000
+"AnMeatEq, goose and guinea fowl",10730000
+"AnMeatEq, turkey",10800000
+"AnMeatEq, horse",10970000
+"AnMeatEq, ass",11080000
+"AnMeatEq, mule",11110000
+"AnMeatEq, camel",11270000
+"AnMeatEq, rabbit",11410000
+"AnMeatEq, other rodents",11510000
+"AnMeatEq, other camelids",11580000
