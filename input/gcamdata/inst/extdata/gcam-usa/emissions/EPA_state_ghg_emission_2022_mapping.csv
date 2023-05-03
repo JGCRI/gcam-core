@@ -1,0 +1,35 @@
+# File: EPA_state_ghg_emission_2022_mapping.csv
+# Title: mapping EPA state-level CH4 and N2O data souces into GCAM sectors
+# Units: NA
+# Source: EPA State GHG emissions and removals https://www.epa.gov/ghgemissions/state-ghg-emissions-and-removals
+# Comments: The file primarily covers industrial and urban processes with the inclusion of other sectors for potential future use; XX serves as a meta tag to exclude any irrelevant sectors from the current data flow
+# Column types: cc
+# ----------
+source,GCAM_sector
+Stationary Combustion,energy
+Mobile Combustion,energy
+Coal Mining,coal
+Abandoned Underground Coal Mines,XX
+Natural Gas Systems,gas
+Petroleum Systems,oil
+Abandoned Oil and Gas Wells,XX
+Petrochemical Production,industry
+Carbide Production and Consumption,industry
+Iron and Steel Production & Metallurgical Coke Production,industry
+Ferroalloy Production,industry
+Enteric Fermentation,livestock
+Manure Management,livestock
+Rice Cultivation,crop
+Field Burning of Agricultural Residues,agriculture waste burning
+Landfills,landfills
+Wastewater Treatment,wastewater
+Composting,landfills
+Anaerobic Digestion at Biogas Facilities,waste_incineration
+Incineration of Waste,waste_incineration
+International Bunker Fuels,XX
+Adipic Acid Production,adipic acid
+Nitric Acid Production,nitric acid
+Agricultural Soil Management,soil
+N2O from Product Uses,solvents
+Caprolactam and Glyoxal and Glyoxylic Acid Production,other industrial processes
+Electronics Industry,XX

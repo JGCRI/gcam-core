@@ -744,7 +744,7 @@ StbTechOutputEmissions, world/+{name}region, region/+{name;nocreate=1}supplysect
 
 MAC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
 
-MAC_NC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
+MAC_NC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
 
 MACTC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+{year;fillout=1}tech-change, mac-control/+tech-change, scenario, scenario/world
 
