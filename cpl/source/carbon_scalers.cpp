@@ -398,8 +398,21 @@ void CarbonScalers::createScalerVectors(int aE3SMYear, std::vector<int>& aYears,
         aYears[row] = aE3SMYear;
         aRegions[row] = strs[0];
         aLandTechs[row] = crop + "_" + strs[1];
-        aAboveScalers[row] = curr.second;
-        aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
+
+        // for now limit the scalar values to 500
+        // todo: revise filtering process so this isn't necessary
+        if (curr.second > 500.0) {
+           aAboveScalers[row] = 500.0;
+        } else {
+           aAboveScalers[row] = curr.second;
+        }
+        if (aBelowScalarMap[std::make_pair(regID,crop)] > 500.0) {
+           aBelowScalers[row] = 500.0;
+        } else {
+           aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
+        }
+        //aAboveScalers[row] = curr.second;
+        //aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
     
         row++;
     }
