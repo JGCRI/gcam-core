@@ -208,7 +208,7 @@ Africa,natural gas,natural gas,grade 4,739,1.7
 Africa,natural gas,natural gas,grade 5,716,3.1
 Africa,natural gas,natural gas,grade 6,1339,3.7
 Africa,natural gas,natural gas,grade 7,4286,6.5
-Africa,natural gas,natural gas,grade 8,0,6.6
+Africa,natural gas,natural gas,grade 8,0,16.6
 Australia_NZ,natural gas,natural gas,grade 1,10,0.62
 Australia_NZ,natural gas,natural gas,grade 2,67,0.68
 Australia_NZ,natural gas,natural gas,grade 3,46,1.1
@@ -216,7 +216,7 @@ Australia_NZ,natural gas,natural gas,grade 4,99,1.7
 Australia_NZ,natural gas,natural gas,grade 5,478,3.1
 Australia_NZ,natural gas,natural gas,grade 6,893,3.7
 Australia_NZ,natural gas,natural gas,grade 7,11508,6.5
-Australia_NZ,natural gas,natural gas,grade 8,0,6.6
+Australia_NZ,natural gas,natural gas,grade 8,0,16.6
 Canada,natural gas,natural gas,grade 1,44,0.62
 Canada,natural gas,natural gas,grade 2,279,0.68
 Canada,natural gas,natural gas,grade 3,119,1.1
@@ -224,7 +224,7 @@ Canada,natural gas,natural gas,grade 4,279,1.7
 Canada,natural gas,natural gas,grade 5,478,3.1
 Canada,natural gas,natural gas,grade 6,893,3.7
 Canada,natural gas,natural gas,grade 7,20005,6.5
-Canada,natural gas,natural gas,grade 8,0,6.6
+Canada,natural gas,natural gas,grade 8,0,16.6
 China,natural gas,natural gas,grade 1,6,0.62
 China,natural gas,natural gas,grade 2,40,0.68
 China,natural gas,natural gas,grade 3,171,1.1
@@ -232,7 +232,7 @@ China,natural gas,natural gas,grade 4,379,1.7
 China,natural gas,natural gas,grade 5,239,3.1
 China,natural gas,natural gas,grade 6,446,3.7
 China,natural gas,natural gas,grade 7,3386,6.5
-China,natural gas,natural gas,grade 8,0,6.6
+China,natural gas,natural gas,grade 8,0,16.6
 Eastern Europe,natural gas,natural gas,grade 1,16,0.62
 Eastern Europe,natural gas,natural gas,grade 2,101,0.68
 Eastern Europe,natural gas,natural gas,grade 3,25,1.1
@@ -240,7 +240,7 @@ Eastern Europe,natural gas,natural gas,grade 4,24,1.7
 Eastern Europe,natural gas,natural gas,grade 5,48,3.1
 Eastern Europe,natural gas,natural gas,grade 6,89,3.7
 Eastern Europe,natural gas,natural gas,grade 7,11,6.5
-Eastern Europe,natural gas,natural gas,grade 8,0,6.6
+Eastern Europe,natural gas,natural gas,grade 8,0,16.6
 Former Soviet Union,natural gas,natural gas,grade 1,325,0.62
 Former Soviet Union,natural gas,natural gas,grade 2,2074,0.68
 Former Soviet Union,natural gas,natural gas,grade 3,1409,1.1
@@ -248,7 +248,7 @@ Former Soviet Union,natural gas,natural gas,grade 4,1389,1.7
 Former Soviet Union,natural gas,natural gas,grade 5,478,3.1
 Former Soviet Union,natural gas,natural gas,grade 6,893,3.7
 Former Soviet Union,natural gas,natural gas,grade 7,47088,6.5
-Former Soviet Union,natural gas,natural gas,grade 8,0,6.6
+Former Soviet Union,natural gas,natural gas,grade 8,0,16.6
 India,natural gas,natural gas,grade 1,5,0.62
 India,natural gas,natural gas,grade 2,32,0.68
 India,natural gas,natural gas,grade 3,301,1.1
@@ -256,7 +256,7 @@ India,natural gas,natural gas,grade 4,339,1.7
 India,natural gas,natural gas,grade 5,382,3.1
 India,natural gas,natural gas,grade 6,714,3.7
 India,natural gas,natural gas,grade 7,4263,6.5
-India,natural gas,natural gas,grade 8,0,6.6
+India,natural gas,natural gas,grade 8,0,16.6
 Japan,natural gas,natural gas,grade 1,1,0.62
 Japan,natural gas,natural gas,grade 2,6,0.68
 Japan,natural gas,natural gas,grade 3,23,1.1
@@ -264,7 +264,7 @@ Japan,natural gas,natural gas,grade 4,51,1.7
 Japan,natural gas,natural gas,grade 5,239,3.1
 Japan,natural gas,natural gas,grade 6,446,3.7
 Japan,natural gas,natural gas,grade 7,5534,6.5
-Japan,natural gas,natural gas,grade 8,0,6.6
+Japan,natural gas,natural gas,grade 8,0,16.6
 Korea,natural gas,natural gas,grade 1,5,0.62
 Korea,natural gas,natural gas,grade 2,0,0.68
 Korea,natural gas,natural gas,grade 3,0,1.1
@@ -272,7 +272,7 @@ Korea,natural gas,natural gas,grade 4,0,1.7
 Korea,natural gas,natural gas,grade 5,0,3.1
 Korea,natural gas,natural gas,grade 6,0,3.7
 Korea,natural gas,natural gas,grade 7,1448,6.5
-Korea,natural gas,natural gas,grade 8,0,6.6
+Korea,natural gas,natural gas,grade 8,0,16.6
 Latin America,natural gas,natural gas,grade 1,37,0.62
 Latin America,natural gas,natural gas,grade 2,236,0.68
 Latin America,natural gas,natural gas,grade 3,372,1.1
@@ -280,7 +280,7 @@ Latin America,natural gas,natural gas,grade 4,783,1.7
 Latin America,natural gas,natural gas,grade 5,716,3.1
 Latin America,natural gas,natural gas,grade 6,1339,3.7
 Latin America,natural gas,natural gas,grade 7,51149,6.5
-Latin America,natural gas,natural gas,grade 8,0,6.6
+Latin America,natural gas,natural gas,grade 8,0,16.6
 Middle East,natural gas,natural gas,grade 1,41,0.62
 Middle East,natural gas,natural gas,grade 2,810,0.68
 Middle East,natural gas,natural gas,grade 3,735,1.1
@@ -288,7 +288,7 @@ Middle East,natural gas,natural gas,grade 4,2252,1.7
 Middle East,natural gas,natural gas,grade 5,239,3.1
 Middle East,natural gas,natural gas,grade 6,446,3.7
 Middle East,natural gas,natural gas,grade 7,2272,6.5
-Middle East,natural gas,natural gas,grade 8,0,6.6
+Middle East,natural gas,natural gas,grade 8,0,16.6
 Southeast Asia,natural gas,natural gas,grade 1,45,0.62
 Southeast Asia,natural gas,natural gas,grade 2,287,0.68
 Southeast Asia,natural gas,natural gas,grade 3,301,1.1
@@ -296,7 +296,7 @@ Southeast Asia,natural gas,natural gas,grade 4,339,1.7
 Southeast Asia,natural gas,natural gas,grade 5,478,3.1
 Southeast Asia,natural gas,natural gas,grade 6,893,3.7
 Southeast Asia,natural gas,natural gas,grade 7,2148,6.5
-Southeast Asia,natural gas,natural gas,grade 8,0,6.6
+Southeast Asia,natural gas,natural gas,grade 8,0,16.6
 USA,natural gas,natural gas,grade 1,207,0.62
 USA,natural gas,natural gas,grade 2,778,0.68
 USA,natural gas,natural gas,grade 3,575,1.1
@@ -304,7 +304,7 @@ USA,natural gas,natural gas,grade 4,1431,1.7
 USA,natural gas,natural gas,grade 5,716,3.1
 USA,natural gas,natural gas,grade 6,1339,3.7
 USA,natural gas,natural gas,grade 7,48254,6.5
-USA,natural gas,natural gas,grade 8,0,6.6
+USA,natural gas,natural gas,grade 8,0,16.6
 Western Europe,natural gas,natural gas,grade 1,78,0.62
 Western Europe,natural gas,natural gas,grade 2,496,0.68
 Western Europe,natural gas,natural gas,grade 3,278,1.1
@@ -312,7 +312,7 @@ Western Europe,natural gas,natural gas,grade 4,647,1.7
 Western Europe,natural gas,natural gas,grade 5,382,3.1
 Western Europe,natural gas,natural gas,grade 6,714,3.7
 Western Europe,natural gas,natural gas,grade 7,8560,6.5
-Western Europe,natural gas,natural gas,grade 8,0,6.6
+Western Europe,natural gas,natural gas,grade 8,0,16.6
 Africa,crude oil,unconventional oil,grade 1,503,1.8
 Africa,crude oil,unconventional oil,grade 2,983,3.3
 Africa,crude oil,unconventional oil,grade 3,267.48,10.8
