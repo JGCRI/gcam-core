@@ -425,7 +425,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
             currDiag *= LARGE_DIAG_THRESHOLD / fabs(currDiag);
         }
         else if(currDiag != 0 && fabs(currDiag) < 1.0/LARGE_DIAG_THRESHOLD) {
-            currDiag *= LARGE_DIAG_THRESHOLD * LARGE_DIAG_THRESHOLD;
+            currDiag /= fabs(currDiag) * LARGE_DIAG_THRESHOLD;
         }
       jdiag[j] = currDiag;
     }
