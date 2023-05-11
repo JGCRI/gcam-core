@@ -272,14 +272,7 @@ void Market::set_price_to_last_if_default( const double lastPrice ) {
 void Market::set_price_to_last( const double lastPrice ) {
     // Initialize the price from last period's price.
     // This resets all prices to last.
-    if( mPrice > 0 ){
-        mPrice = lastPrice;
-    }
-    // If last period price is null, reset to small number so that solver
-    // has a value to start with.
-    else if( mPrice == 0 ){
-        mPrice = util::getSmallNumber();
-    }
+    mPrice = lastPrice;
 }
 
 /*!

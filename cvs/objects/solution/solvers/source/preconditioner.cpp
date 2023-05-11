@@ -412,7 +412,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                 case IMarketType::SUBSIDY:
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     ub = solvable[i].getUpperBoundSupplyPrice();
-                    if( olddmnd <= 0.0 && olddmnd < oldsply && oldprice > ub ) {
+                    if( olddmnd < 0.0 && olddmnd < oldsply && oldprice > ub ) {
                         newprice = lb - 0.1;
                         solvable[i].setPrice(newprice);
                         chg = true;

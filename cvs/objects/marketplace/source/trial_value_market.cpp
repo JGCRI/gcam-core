@@ -87,12 +87,7 @@ void TrialValueMarket::set_price_to_last_if_default( const double lastPrice ) {
 }
 
 void TrialValueMarket::set_price_to_last( const double lastPrice ) {
-    // Initialize the price from last period's price.
-    // This resets all prices to last.
-    if( mPrice > 0 ){
-        mPrice = lastPrice;
-    }
-    // Note zero may be a valid price for a trial value.
+    Market::set_price_to_last( lastPrice );
 }
 
 double TrialValueMarket::getPrice() const {
