@@ -345,6 +345,7 @@ aglu.FOREST_sawtimber_conversion <- 2.17
 
 #90% of pulp processing is chemical which has an IO of 5.44 and 10% is mechanical which is 2.55. Taking weighted average of the two,
 # we get 5.15.
+#Source
 aglu.FOREST_pulp_conversion <- 5.15
 
 aglu.FOREST_max_price <- 165

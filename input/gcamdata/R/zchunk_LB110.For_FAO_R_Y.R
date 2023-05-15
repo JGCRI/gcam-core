@@ -62,7 +62,8 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
 
     # Combine all three L100.FAO_For_X tibbles into a single tibble
     # this tibble will be summed over by flow later, calculating export-import to give net export
-    L110.FAO_For_ALL_m3 <- bind_rows(L100.FAO_For_Prod_m3, L100.FAO_For_Imp_m3, L100.FAO_For_Exp_m3)
+    L110.FAO_For_ALL_m3 <- bind_rows(L100.FAO_For_Prod_m3, L100.FAO_For_Imp_m3, L100.FAO_For_Exp_m3) %>%
+                           mutate(value= if_else(item =="Wood fuel",value*0.3,value))
 
     # Lines 41-60 in original file
     # Add regionID lookup vectors and GCAM_commodity label to the For_ALL tibble
@@ -155,7 +156,10 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
              after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_pulp_conversion),
              #Now calculate pulp IO here
              IO=after_pulp/sawnwood,
-             IO= if_else(is.infinite(IO),0,IO)) ->L110.IO_Coefs_pulp
+             #We are going to run in a scenario where the coef is less than 1 in some places.
+             IO= if_else(IO < 1,1,IO),
+             IO= if_else(sawnwood==0, 0,IO),
+             roundwood_cons=(woodpulp*aglu.FOREST_pulp_conversion)+(IO*sawnwood)) ->L110.IO_Coefs_pulp
 
     #Since we increased roundwood cons in some places, increase production proportionately
     L110.For_ALL_bm3_R_Y %>%
