@@ -99,6 +99,7 @@
 		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>
 		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
 		<Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
+        <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 
         <!-- set up the near-term / long-term policy inputs -->

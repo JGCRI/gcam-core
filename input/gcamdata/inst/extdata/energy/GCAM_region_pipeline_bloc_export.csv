@@ -1,0 +1,39 @@
+# File: GCAM_region_pipeline_bloc_export.csv
+# Title: Mapping gas origin region to its corresponding pipeline trade bloc that it exports to
+# Source: NA (mapping file)
+# Units: NA
+# Column types: cc
+# ----------
+origin.region,pipeline.market
+USA,N.Amer
+Africa_Eastern,Afr_MidE
+Africa_Northern,Afr_MidE
+Africa_Southern,Afr_MidE
+Africa_Western,Afr_MidE
+Australia_NZ,PAC
+Brazil,LA
+Canada,N.Amer
+Central America and Caribbean,LA
+Central Asia,RUS
+China,PAC
+EU-12,EUR
+EU-15,EUR
+Europe_Eastern,RUS
+Europe_Non_EU,EUR
+European Free Trade Association,EUR
+India,PAC
+Indonesia,PAC
+Japan,PAC
+Mexico,N.Amer
+Middle East,Afr_MidE
+Pakistan,PAC
+Russia,RUS
+South Africa,Afr_MidE
+South America_Northern,LA
+South America_Southern,LA
+South Asia,PAC
+South Korea,PAC
+Southeast Asia,PAC
+Taiwan,PAC
+Argentina,LA
+Colombia,LA

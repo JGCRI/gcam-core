@@ -77,6 +77,7 @@
             <Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
             <Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
 			<Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
+            <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 			
 			<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 
