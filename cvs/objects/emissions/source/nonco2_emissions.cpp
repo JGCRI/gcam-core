@@ -122,6 +122,8 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
         abort();
     }
     
+    mEmissionsUnit = prevComplexGHG->mEmissionsUnit;
+    
     if( !mEmissionsDriver ) {
         mEmissionsDriver = prevComplexGHG->mEmissionsDriver->clone();
     }
