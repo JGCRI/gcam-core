@@ -246,16 +246,8 @@ void CarbonScalers::calcScalers(int aE3SMYear, double *aELMArea, double *aELMPFT
                         scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * aELMArea[gridIndex];
                         base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * aELMArea[gridIndex];
                       
-                        // the incoming npp (probably hr also) needs error checking in the iac code
-                        // bad npp values are coming in where there is some case pft area (and zero base pft area) but no npp has been set
-                        //  this could be related to res mismatch
-                        // the baseline data have been cleaned based on pft area = zero
-                        // maybe changing the max algorithm will fix it
-                        // for now, try setting the case scalar to zero if base scalar is zero
-                        // TODO: fix the bad values before passing to gcam
-                        if (base_scalar == 0) {
-                           scalar = 0;
-                        }
+                        // the annual average do not have bad npp values anymore, at least when res matches
+                        //    so do not need to check for base_scalar == 0 and then set scalar to 0
  
                         // Find current PFT in the PFT2Crop map
                         auto currPFT = mPFT2GCAMCropMap.find( pft );
@@ -282,12 +274,12 @@ void CarbonScalers::calcScalers(int aE3SMYear, double *aELMArea, double *aELMPFT
                             } // end if else new region land type pair
 
                             // check one instance of not matching output 
-                            if( currCrop == "FiberCrop" && regID == "Africa_Southern.AfrCstSW") {
-                               Sd << regID << ", " << currCrop << ", pft=" << pft << ", lon=" << j << ", lat=" << k << endl;
-                               Sd << "scalar=" << scalar << ", base_scalar=" << base_scalar << endl;
-                               Sd << "totalArea=" << totalArea[std::make_pair(regID,currCrop)] << ", totalNPP=" << totalNPP[std::make_pair(regID,currCrop)] << ", totalHR=" << totalHR[std::make_pair(regID,currCrop)] << endl;
-                               Sd << "aELMNPP=" << aELMNPP[valIndex] << ", aELMHR=" << aELMHR[valIndex] << ", val_Index=" << valIndex << endl << endl;
-                            }
+                            //if( currCrop == "FiberCrop" && regID == "Africa_Southern.AfrCstSW") {
+                            //   Sd << regID << ", " << currCrop << ", pft=" << pft << ", lon=" << j << ", lat=" << k << endl;
+                            //   Sd << "scalar=" << scalar << ", base_scalar=" << base_scalar << endl;
+                            //   Sd << "totalArea=" << totalArea[std::make_pair(regID,currCrop)] << ", totalNPP=" << totalNPP[std::make_pair(regID,currCrop)] << ", totalHR=" << totalHR[std::make_pair(regID,currCrop)] << endl;
+                            //   Sd << "aELMNPP=" << aELMNPP[valIndex] << ", aELMHR=" << aELMHR[valIndex] << ", val_Index=" << valIndex << endl << endl;
+                            //}
 
                          } // end for loop over land types for this pft
                     } // end for loop over region in this grid cell
@@ -327,10 +319,15 @@ void CarbonScalers::calcScalers(int aE3SMYear, double *aELMArea, double *aELMPFT
         }
         
         // Calculate scalar
-        // npp can be negative; for now ignore if either is negative
-        // ToDo: add cases for sign checking?
-        if ( baseAvgNPP > 0 && avgNPP > 0) {
+        // npp can be negative
+        // gcam only have positive accumulation
+        // so have to ignore negative base values
+        // but if a case npp value goes negative then the scalar should go to zero
+        // TODO: check this
+        if ( baseAvgNPP > 0 && avgNPP > 0 ) {
             aboveScalarMap[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
+        } else if ( avgNPP < 0 ) {
+            aboveScalarMap[std::make_pair(regID,crop)] = 0.0;
         } else {
             aboveScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
@@ -339,9 +336,12 @@ void CarbonScalers::calcScalers(int aE3SMYear, double *aELMArea, double *aELMPFT
         if ( baseAvgHR > 0 ) {
             // The belowground scalar is a combination of NPP and HR...BUT HR needs to be "flipped" around 1
             // This is because higher heterotrophic respiration means lower C density, everything else being equal
-            // for now, deal with large ratios so that this scalar does not go negative
+            // Check for values that would send this negative, but don't change anything yet
             hrScalar = 2.0 - ( avgHR / baseAvgHR );
-            if(hrScalar <= 0) {hrScalar = 0.0;}
+            if(hrScalar <= 0) {
+               //hrScalar = 0.0;
+               Sd << "Bad hrScalar" << hrScalar << "for region" << regID << "crop" << crop << endl;
+            }
             belowScalarMap[std::make_pair(regID,crop)] = ( aboveScalarMap[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
         } else {
             belowScalarMap[std::make_pair(regID,crop)] = 1.0;
@@ -364,11 +364,11 @@ void CarbonScalers::calcScalers(int aE3SMYear, double *aELMArea, double *aELMPFT
     createScalerVectors(aE3SMYear, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
 
     // check the vectors
-    //Sd << endl << "Check vectors" << endl;
-    //Sd << "year " << "region " << "tech_basin " << "above scalar " << "below scalar" << endl;
-    //for (int r = 0; r < 17722; r++) {
-    //   Sd << aYears[r] << " "  << aRegions[r] << " " << aLandTechs[r] << " " << aAboveScalers[r] << " " << aBelowScalers[r] << endl;
-    //}
+    Sd << endl << "Check vectors" << endl;
+    Sd << "year " << "region " << "tech_basin " << "above scalar " << "below scalar" << endl;
+    for (int r = 0; r < 17722; r++) {
+       Sd << aYears[r] << " "  << aRegions[r] << " " << aLandTechs[r] << " " << aAboveScalers[r] << " " << aBelowScalers[r] << endl;
+    }
 
 }
 
@@ -399,20 +399,8 @@ void CarbonScalers::createScalerVectors(int aE3SMYear, std::vector<int>& aYears,
         aRegions[row] = strs[0];
         aLandTechs[row] = crop + "_" + strs[1];
 
-        // for now limit the scalar values to 500
-        // todo: revise filtering process so this isn't necessary
-        if (curr.second > 500.0) {
-           aAboveScalers[row] = 500.0;
-        } else {
-           aAboveScalers[row] = curr.second;
-        }
-        if (aBelowScalarMap[std::make_pair(regID,crop)] > 500.0) {
-           aBelowScalers[row] = 500.0;
-        } else {
-           aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
-        }
-        //aAboveScalers[row] = curr.second;
-        //aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
+        aAboveScalers[row] = curr.second;
+        aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
     
         row++;
     }
@@ -421,8 +409,6 @@ void CarbonScalers::createScalerVectors(int aE3SMYear, std::vector<int>& aYears,
 
 // Write scalar data to a file. This is for non-synchronous experiments, and is a diagnostic.
 void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, int aLength) {
-    // DEBUG: Write output
-    // TODO: This should be moved to a separate method that will write output (if the boolean is set)
     ofstream oFile;
     oFile.open(aFileName);
     if (!oFile.is_open())
@@ -534,11 +520,9 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     double lowerBoundHR = medianHR - madLimit * madHR;
     
     // Remove Outliers. These are set to zero so they will be excluded from scaler calculation
-    // for now, also remove records that give non-finite ratios
     for( int i = 0; i < length; i++ ) {
         if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound ||
-            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ||
-            !isfinite(scaledNPP[i]) || !isfinite(scaledHR[i]) ) {
+            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ) {
             aELMNPP[i] = 0;
             mBaseNPPVector[i] = 0;
             aELMHR[i] = 0;

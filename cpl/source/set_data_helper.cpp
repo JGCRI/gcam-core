@@ -34,6 +34,7 @@
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
 #include <boost/algorithm/string/predicate.hpp>
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
@@ -91,7 +92,20 @@ void SetDataHelper::processData(double& aData) {
 }
 template<>
 void SetDataHelper::processData(Value& aData) {
-    aData = mDataVector[mRow];
+
+    ILogger& sdhLog = ILogger::getLogger( "SetDataHelper_log" );
+    sdhLog.setLevel( ILogger::NOTICE );
+
+    if(mDataVector[mRow] != 1.0) {
+       sdhLog << "Region" << mRegionColumn[mRow] << "LandTech" << mLandTechColumn[mRow] << "Year" << mYearColumn[mRow] << "mDataVector scalar:" << mDataVector[mRow] << endl;
+    }
+
+    aData.set(mDataVector[mRow]);
+    //aData = mDataVector[mRow];
+
+    if(aData != 1.0) {
+       sdhLog << "Region" << mRegionColumn[mRow] << "LandTech" << mLandTechColumn[mRow] << "Year" << mYearColumn[mRow] << "aData scalar:" << aData << endl;
+    }
 }
 template<>
 void SetDataHelper::processData(int& aData) {

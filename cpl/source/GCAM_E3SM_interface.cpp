@@ -448,6 +448,7 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
    
     coupleLog << "In setDensityGCAM, e3smYear is: " << e3smYear << endl;
     coupleLog << "In setDensityGCAM, gcamYear is: " << gcamYear << endl; 
+    coupleLog << "In setDensityGCAM, before first year check, aScaleCarbon is: " << aScaleCarbon << endl;
 
     // Only set carbon densities during GCAM model years after the first coupled year
     // set carbon densities each year to calc and write them and to match running gcam each year
@@ -479,6 +480,9 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         // TODO: What happens if there is no scalarData or if the elements are blank?
         // check and then don't call setdatahelper 
         if( aScaleCarbon ) { 
+
+           coupleLog << "In setDensityGCAM, setting scalars, aScaleCarbon is: " << aScaleCarbon << endl;
+
            SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
            setScaler.run(runner->getInternalScenario());
         }
