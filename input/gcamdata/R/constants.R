@@ -584,6 +584,11 @@ gcamusa.INCOME_PARAM <- 0.4875
 # Constants for global detailed industry
 energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
 energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 wholesale delivery") #assign iron & steel global technology coefficients
+energy.IRON_STEEL.RESOURCES <- c("Other semi-finished iron and steel products","Rolled iron and steel",
+                                 "Iron and steel bars","Intermediate iron and steel making products",
+                                 "Iron and steel wire","Iron and steel sections") #finished and semi-finished iron and steel resources
+energy.IRON_STEEL.DOMESTIC_SW <- c("Africa_Southern","Indonesia","Africa_Northern","Africa_Eastern","Africa_Western","South Asia","Southeast Asia")
+energy.IRON_STEEL.TRADED_SW <- c("Africa_Southern traded iron and steel","Indonesia traded iron and steel","Africa_Northern traded iron and steel","Africa_Eastern traded iron and steel","Africa_Western traded iron and steel","South Asia traded iron and steel","Southeast Asia traded iron and steel")
 
 # Socioeconomics constants ======================================================================
 

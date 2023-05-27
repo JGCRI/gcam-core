@@ -1,0 +1,9 @@
+# File: A323.capital_cost_adders.csv
+# Title: IRONSTL capital costs adder as a fraction of CAPEX to OPEX and raw materials
+# Units: fraction
+# Column types: ccn
+# ----------
+supplysector,subsector,capital_cost_frac
+iron and steel,BLASTFUR,0.256
+iron and steel,EAF with DRI,0.294736842
+iron and steel,EAF with scrap,0.127536232

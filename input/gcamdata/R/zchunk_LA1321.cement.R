@@ -327,7 +327,7 @@ module_energy_LA1321.cement <- function(command, ...) {
 
     # ---------------------------------------------------------------------------------------------------------------------
     ## 7/30/21: Modification for detailed industry
-    ## Manually adjust coal use in South Korea, so there is enough left for iron and steel sector
+    ## Manually adjust coal use in South Korea, so there is enough left for iron and steel sector (do not delete until detailed industry is restructured)
     ## Upper bound is IEA coal consumption in non-metallic minerals
 
     L1321.in_EJ_R_cement_F_Y %>%

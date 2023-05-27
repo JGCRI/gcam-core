@@ -14,6 +14,8 @@ module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L232.DeleteSupplysector_USAind",
              "L232.DeleteFinalDemand_USAind",
+             "L232.DeleteDomSubsector_USAind",
+             "L232.DeleteTraSubsector_USAind",
              "L232.Supplysector_ind_USA",
              "L232.FinalEnergyKeyword_ind_USA",
              "L232.SubsectorLogit_ind_USA",
@@ -30,7 +32,9 @@ module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
              "L232.StubTechCoef_industry_USA",
              "L232.StubTechMarket_ind_USA",
              "L232.BaseService_ind_USA",
-             "L232.StubTechSecMarket_ind_USA"))
+             "L232.StubTechSecMarket_ind_USA",
+             "L232.Production_reg_imp",
+             "L232.BaseService_iron_steel"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "industry_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -40,6 +44,10 @@ module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
     # Load required inputs
     L232.DeleteSupplysector_USAind <- get_data(all_data, "L232.DeleteSupplysector_USAind")
     L232.DeleteFinalDemand_USAind <- get_data(all_data, "L232.DeleteFinalDemand_USAind")
+    L232.DeleteDomSubsector_USAind <- get_data(all_data, "L232.DeleteDomSubsector_USAind")
+    L232.DeleteTraSubsector_USAind <- get_data(all_data, "L232.DeleteTraSubsector_USAind")
+    L232.Production_reg_imp <- get_data(all_data, "L232.Production_reg_imp")
+    L232.BaseService_iron_steel <- get_data(all_data, "L232.BaseService_iron_steel")
     L232.Supplysector_ind_USA <- get_data(all_data, "L232.Supplysector_ind_USA")
     L232.FinalEnergyKeyword_ind_USA <- get_data(all_data, "L232.FinalEnergyKeyword_ind_USA")
     L232.SubsectorLogit_ind_USA <- get_data(all_data, "L232.SubsectorLogit_ind_USA")
@@ -64,6 +72,10 @@ module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
     create_xml("industry_USA.xml") %>%
       add_xml_data(L232.DeleteSupplysector_USAind, "DeleteSupplysector") %>%
       add_xml_data(L232.DeleteFinalDemand_USAind, "DeleteFinalDemand") %>%
+      add_xml_data(L232.DeleteDomSubsector_USAind, "DeleteSubsector") %>%
+      add_xml_data(L232.DeleteTraSubsector_USAind, "DeleteSubsector") %>%
+      add_xml_data(L232.Production_reg_imp, "Production") %>%
+      add_xml_data(L232.BaseService_iron_steel, "BaseService") %>%
       add_logit_tables_xml(L232.Supplysector_ind_USA, "Supplysector") %>%
       add_xml_data(L232.FinalEnergyKeyword_ind_USA, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L232.SubsectorLogit_ind_USA, "SubsectorLogit") %>%
@@ -83,6 +95,8 @@ module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
       add_xml_data(L232.BaseService_ind_USA, "BaseService") %>%
       add_precursors("L232.DeleteSupplysector_USAind",
                      "L232.DeleteFinalDemand_USAind",
+                     "L232.DeleteTraSubsector_USAind",
+                     "L232.DeleteDomSubsector_USAind",
                      "L232.Supplysector_ind_USA",
                      "L232.FinalEnergyKeyword_ind_USA",
                      "L232.SubsectorLogit_ind_USA",
@@ -99,7 +113,9 @@ module_gcamusa_batch_industry_USA_xml <- function(command, ...) {
                      "L232.StubTechCoef_industry_USA",
                      "L232.StubTechMarket_ind_USA",
                      "L232.BaseService_ind_USA",
-                     "L232.StubTechSecMarket_ind_USA") ->
+                     "L232.StubTechSecMarket_ind_USA",
+                     "L232.Production_reg_imp",
+                     "L232.BaseService_iron_steel") ->
       industry_USA.xml
 
     return_data(industry_USA.xml)

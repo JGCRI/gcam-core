@@ -1,0 +1,152 @@
+# File: WSA_gcam_mapping.csv
+# Title: WSA countries to GCAM region mapping
+# Units: NA
+# Description: Maps WSA (world steel association) countries to GCAM_region
+# Column types: cc
+# ----------
+Country,GCAM_region
+Ethiopia,Africa_Eastern
+Kenya,Africa_Eastern
+Sudan,Africa_Eastern
+Algeria,Africa_Northern
+Egypt,Africa_Northern
+Libya,Africa_Northern
+Morocco,Africa_Northern
+Tunisia,Africa_Northern
+Angola,Africa_Southern
+Tanzania,Africa_Southern
+Cameroon,Africa_Western
+Ghana,Africa_Western
+Nigeria,Africa_Western
+Senegal,Africa_Western
+Argentina,Argentina
+Australia,Australia_NZ
+New Zealand,Australia_NZ
+Brazil,Brazil
+Canada,Canada
+Costa Rica,Central America and Caribbean
+Cuba,Central America and Caribbean
+Dominican Republic,Central America and Caribbean
+El Salvador,Central America and Caribbean
+Guatemala,Central America and Caribbean
+Honduras,Central America and Caribbean
+Jamaica,Central America and Caribbean
+Nicaragua,Central America and Caribbean
+Panama,Central America and Caribbean
+Trinidad and Tobago,Central America and Caribbean
+Turkmenistan,Central Asia
+Armenia,Central Asia
+Azerbaijan,Central Asia
+Georgia,Central Asia
+Kazakhstan,Central Asia
+Kyrgyzstan,Central Asia
+Tajikistan,Central Asia
+Uzbekistan,Central Asia
+China,China
+Hong Kong,China
+Colombia,Colombia
+Bulgaria,EU-12
+Cyprus,EU-12
+Czechia,EU-12
+Estonia,EU-12
+Hungary,EU-12
+Latvia,EU-12
+Lithuania,EU-12
+Malta,EU-12
+Poland,EU-12
+Romania,EU-12
+Slovakia,EU-12
+Slovenia,EU-12
+Austria,EU-15
+Belgium,EU-15
+Belgium-Luxembourg,EU-15
+Denmark,EU-15
+Finland,EU-15
+France,EU-15
+Germany,EU-15
+Greece,EU-15
+Ireland,EU-15
+Italy,EU-15
+Luxembourg,EU-15
+Netherlands,EU-15
+Portugal,EU-15
+Spain,EU-15
+Sweden,EU-15
+United Kingdom,EU-15
+Belarus,Europe_Eastern
+Moldova,Europe_Eastern
+Ukraine,Europe_Eastern
+Turkey,Europe_Non_EU
+Albania,Europe_Non_EU
+Bosnia-Herzegovina,Europe_Non_EU
+Croatia,Europe_Non_EU
+Macedonia,Europe_Non_EU
+Montenegro,Europe_Non_EU
+Serbia,Europe_Non_EU
+Serbia-Montenegro,Europe_Non_EU
+Iceland,European Free Trade Association
+Norway,European Free Trade Association
+Switzerland,European Free Trade Association
+India,India
+Indonesia,Indonesia
+Japan,Japan
+Mexico,Mexico
+Bahrain,Middle East
+Iran,Middle East
+Iraq,Middle East
+Israel,Middle East
+Jordan,Middle East
+Kuwait,Middle East
+Lebanon,Middle East
+Oman,Middle East
+Qatar,Middle East
+Saudi Arabia,Middle East
+Syria,Middle East
+United Arab Emirates,Middle East
+Yemen,Middle East
+Pakistan,Pakistan
+Russia,Russia
+South Africa,South Africa
+Venezuela,South America_Northern
+Bolivia,South America_Southern
+Chile,South America_Southern
+Ecuador,South America_Southern
+Paraguay,South America_Southern
+Peru,South America_Southern
+Philippines,Southeast Asia
+Uruguay,South America_Southern
+Bangladesh,South Asia
+Sri Lanka,South Asia
+South Korea,South Korea
+North Korea,Southeast Asia
+Malaysia,Southeast Asia
+Myanmar,Southeast Asia
+Singapore,Southeast Asia
+Thailand,Southeast Asia
+Viet Nam,Southeast Asia
+"Taiwan, China",Taiwan
+United States,USA
+Mauritania,Africa_Western
+Uganda,Africa_Eastern
+Mongolia,Central Asia
+Ivory Coast,Africa_Western
+Slovak Republic,EU-12
+Czech Republic,EU-12
+Dem. Rep. of the Congo,Africa_Western
+D.P.R. Korea,Southeast Asia
+Other Middle East,Middle East
+Other Oceania,Southeast Asia
+Togo,Africa_Western
+Zambia,Africa_Southern
+Zimbabwe,Africa_Southern
+Benin,Africa_Western
+Congo,Africa_Western
+Djibouti,Africa_Eastern
+Equatorial Guinea,Africa_Western
+Gabon,Africa_Western
+Guinea,Africa_Western
+"Hong Kong, China",China
+Madagascar,Africa_Eastern
+Mozambique,Africa_Southern
+Mauritius,Africa_Eastern
+Other North America,Central America and Caribbean

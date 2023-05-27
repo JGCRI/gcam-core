@@ -12,14 +12,14 @@
 #' \code{L2323.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2323.SubsectorLogit_iron_steel}, \code{L2323.SubsectorShrwtFllt_iron_steel},
 #' \code{L2323.SubsectorInterp_iron_steel}, \code{L2323.StubTech_iron_steel}, \code{L2323.GlobalTechShrwt_iron_steel}, \code{L2323.GlobalTechCoef_iron_steel},
 #' \code{L2323.GlobalTechCost_iron_steel}, \code{L2323.GlobalTechCapture_iron_steel}, \code{L2323.StubTechProd_iron_steel}, \code{L2323.StubTechCalInput_iron_steel},
-#' \code{L2323.StubTechCoef_iron_steel}, \code{L2323.PerCapitaBased_iron_steel}, \code{L2323.BaseService_iron_steel}, \code{L2323.PriceElasticity_iron_steel},
+#' \code{L2323.StubTechCoef_iron_steel}, \code{L2323.StubTechCost_iron_steel}, \code{L2323.PerCapitaBased_iron_steel}, \code{L2323.BaseService_iron_steel}, \code{L2323.PriceElasticity_iron_steel},
 #' \code{object}. The corresponding file in the
 #' original data system was \code{L2323.iron_steel.R} (energy level2).
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc for iron and steel sector.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows distinct filter if_else group_by lag left_join mutate pull select
 #' @importFrom tidyr gather spread
-#' @author Yang Liu Sep 2019
+#' @author Yang Liu Sep 2019, Siddarth Durga April 2023
 module_energy_L2323.iron_steel <- function(command, ...) {
 
   INCOME_ELASTICITY_OUTPUTS <- c("GCAM3",
@@ -30,7 +30,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/calibrated_techs",
              FILE = "energy/A323.sector",
-             FILE = "energy/A323.subsector_interp",
              FILE = "energy/A323.subsector_logit",
              FILE = "energy/A323.subsector_shrwt",
              FILE = "energy/A323.globaltech_coef",
@@ -39,9 +38,15 @@ module_energy_L2323.iron_steel <- function(command, ...) {
              FILE = "energy/A323.globaltech_co2capture",
              FILE = "energy/A323.globaltech_retirement",
              FILE = "energy/A323.demand",
+             FILE = "energy/A323.capital_cost_adders",
+             FILE = "energy/A323.ccs_adders",
+             FILE = "energy/TZ_steel_production_costs",
+             FILE = "energy/mappings/TZ_steel_cost_gcam_mapping",
+             FILE = "energy/mappings/TZ_steel_cost_oecd_mapping",
 			       "L1323.out_Mt_R_iron_steel_Yh",
-             "L1323.IO_GJkg_R_iron_steel_F_Yh"
-             #"L1323.in_EJ_R_iron_steel_F_Y"
+             "L1323.IO_GJkg_R_iron_steel_F_Yh",
+			       "L1323.SubsectorInterp_iron_steel",
+			       "LB1092.Tradebalance_iron_steel_Mt_R_Y"
 			       ))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2323.Supplysector_iron_steel",
@@ -61,6 +66,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
              "L2323.StubTechProd_iron_steel",
              #"L2323.StubTechCalInput_iron_steel",
              "L2323.StubTechCoef_iron_steel",
+             "L2323.StubTechCost_iron_steel",
              "L2323.PerCapitaBased_iron_steel",
              "L2323.BaseService_iron_steel",
 			       "L2323.PriceElasticity_iron_steel"))
@@ -72,7 +78,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     A323.sector <- get_data(all_data, "energy/A323.sector", strip_attributes = TRUE)
-    A323.subsector_interp <- get_data(all_data, "energy/A323.subsector_interp", strip_attributes = TRUE)
     A323.subsector_logit <- get_data(all_data, "energy/A323.subsector_logit", strip_attributes = TRUE)
     A323.subsector_shrwt <- get_data(all_data, "energy/A323.subsector_shrwt", strip_attributes = TRUE)
     A323.globaltech_coef <- get_data(all_data, "energy/A323.globaltech_coef", strip_attributes = TRUE)
@@ -81,17 +86,110 @@ module_energy_L2323.iron_steel <- function(command, ...) {
     A323.globaltech_co2capture <- get_data(all_data, "energy/A323.globaltech_co2capture", strip_attributes = TRUE)
     A323.globaltech_retirement <- get_data(all_data, "energy/A323.globaltech_retirement", strip_attributes = TRUE)
     A323.demand <- get_data(all_data, "energy/A323.demand", strip_attributes = TRUE)
+    A323.capital_cost_adders <- get_data(all_data, "energy/A323.capital_cost_adders", strip_attributes = TRUE)
+    A323.ccs_adders <- get_data(all_data, "energy/A323.ccs_adders", strip_attributes = TRUE)
     L1323.out_Mt_R_iron_steel_Yh <- get_data(all_data, "L1323.out_Mt_R_iron_steel_Yh", strip_attributes = TRUE)
-    L1323.IO_GJkg_R_iron_steel_F_Yh <- get_data(all_data, "L1323.IO_GJkg_R_iron_steel_F_Yh")
+    L1323.IO_GJkg_R_iron_steel_F_Yh <- get_data(all_data, "L1323.IO_GJkg_R_iron_steel_F_Yh",strip_attributes = TRUE)
+    L1323.SubsectorInterp_iron_steel <- get_data(all_data,"L1323.SubsectorInterp_iron_steel",strip_attributes = TRUE)
+    LB1092.Tradebalance_iron_steel_Mt_R_Y <- get_data(all_data, "LB1092.Tradebalance_iron_steel_Mt_R_Y",strip_attributes = TRUE)
+    TZ_steel_production_costs <- get_data(all_data, "energy/TZ_steel_production_costs", strip_attributes = TRUE)
+    TZ_steel_cost_gcam_mapping <- get_data(all_data, "energy/mappings/TZ_steel_cost_gcam_mapping", strip_attributes = TRUE)
+    TZ_steel_cost_oecd_mapping <- get_data(all_data, "energy/mappings/TZ_steel_cost_oecd_mapping", strip_attributes = TRUE)
+
 
     # ===================================================
-    # 0. Give binding for variable names used in pipeline
+    # Give binding for variable names used in pipeline
     year <- value <- GCAM_region_ID <- sector <- fuel <- year.fillout <- to.value <-
       technology <- supplysector <- subsector <- minicam.energy.input <- coefficient <-
       remove.fraction <- minicam.non.energy.input <- input.cost  <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
       value.x <- value.y <- parameter <- year.x <- year.y <- tech.share.weight <- stub.technology <-
-      market.name <- sector.name <- subsector.name <- terminal_coef <- share.weight.year <- coeff <- NULL
+      market.name <- sector.name <- subsector.name <- terminal_coef <- share.weight.year <- coeff <-
+      Plant_ID <- Model_Year <- Primary_Production_Route <- Category <- Component <- Value <-
+      Unit <- Country <- capital_cost_frac <- ccs_cost_adder <- NULL
+
+    # ====================================================================
+    # 0. Calculate the regional steel production costs by stub technology
+    # The TZ steel cost database contains plant-level steel production costs across major producing countries
+    # The costs are aggregated by primary production route, averaged across OECD and non-OECD regions, and mapped to the GCAM regions
+    # ====================================================================
+
+      TZ_steel_production_costs %>%
+        # filter non-energy costs for GCAM model years
+        filter(Model_Year %in% c(MODEL_BASE_YEARS)) %>%
+        rename(year=Model_Year,subsector= Primary_Production_Route,value=Value)%>%
+        # remove energy and total costs from data
+        filter(!(Category%in%c("Total","Energy"))) %>%
+        # remove coke from BF-BOF raw materials cost
+        # GCAM estimates cost of coke in energy costs
+        filter(!(Component%in%c("Coke"))) %>%
+        # map TZ countries with oecd classification
+        left_join(TZ_steel_cost_oecd_mapping,by=c("Country"))-> TZ_steel_production_costs
+
+    # Function to aggregate steel production data by Country or OECD regions
+    aggregate_steel_production_costs <- function(data,agg_region) {
+
+        TZ_steel_production_costs %>%
+        # estimate total costs by Plant ID across countries
+        group_by(subsector,Plant_ID,year)%>%
+        mutate(value=sum(value)) %>%
+        distinct(Plant_ID,subsector,year,{{agg_region}},value)%>%
+        # calculate mean costs by country for EAF and BF-BOF
+        group_by({{agg_region}},subsector,year)%>%
+        summarize(value=mean(value)) %>%
+        mutate(subsector=ifelse(subsector=="EAF","EAF with scrap","BLASTFUR")) -> all_steel_production_costs
+
+      return(all_steel_production_costs)
+    }
+
+    # Calculate the average steel production costs by sub sector for OECD and non-OECD countries
+    oecd_steel_production_costs <- aggregate_steel_production_costs(data=TZ_steel_production_costs,agg_region=OECD_mapping) %>%
+      rename(Country=OECD_mapping)
+
+    # Calculate average steel production costs by sub sector for countries in transition zero database and combine
+    # with OECD average data
+    all_steel_production_costs <- rbind(aggregate_steel_production_costs(data=TZ_steel_production_costs,agg_region=Country),
+                                            oecd_steel_production_costs)
+
+    #add capital costs and CCS costs to estimate total production costs
+    all_steel_production_costs <-  TZ_steel_cost_gcam_mapping%>%
+      left_join(all_steel_production_costs,by=c("Country")) %>%
+      mutate(supplysector="iron and steel")%>%
+      left_join(A323.capital_cost_adders,by=c("subsector","supplysector"))%>%
+      #multiply total OPEX, labor, and raw materials costs with capital cost fraction from IEA
+      mutate(value=value+(value*capital_cost_frac))%>%
+      left_join(A323.ccs_adders,by=c("subsector","supplysector"))%>%
+      mutate(value=((value/CONV_T_KG)+ccs_cost_adder)*gdp_deflator(1975,base_year=2015))%>%
+      select(supplysector,subsector,region,year,stub.technology,minicam.non.energy.input,value)
+
+    #complete subsector and technology nesting across model years
+    all_steel_production_costs %>%
+      rename(input.cost=value)%>%
+      complete(nesting(supplysector, subsector, region,stub.technology,input.cost, minicam.non.energy.input), year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))%>%
+      select(region,supplysector, subsector, stub.technology,year,minicam.non.energy.input, input.cost) %>%
+      mutate(input.cost = round(input.cost, energy.DIGITS_COST)) %>%
+      ungroup() %>%
+      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCost"]]) ->
+      L2323.StubTechCost_iron_steel
+
+    # ============================================================================
+    # ============================================================================
+
+    # L2323.GlobalTechCost_iron_steel: Non-energy costs of global iron_steel manufacturing technologies
+    A323.globaltech_cost %>%
+      gather_years %>%
+      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      arrange(supplysector, subsector, technology, minicam.non.energy.input, year) %>%
+      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
+      mutate(input.cost = approx_fun(year, value, rule = 1),
+             input.cost = round(input.cost, energy.DIGITS_COST)) %>%
+      ungroup %>%
+      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      rename(sector.name = supplysector,
+             subsector.name = subsector) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
+      L2323.GlobalTechCost_iron_steel
 
     # ===================================================
     # 1. Perform computations
@@ -121,10 +219,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       L2323.SubsectorShrwtFllt_iron_steel
 
     # L2323.SubsectorInterp_iron_steel: Subsector shareweight interpolation of iron and steel sector
-    A323.subsector_interp %>%
-      filter(is.na(to.value)) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorInterp"]], GCAM_region_names) ->
-      L2323.SubsectorInterp_iron_steel
+    L2323.SubsectorInterp_iron_steel <- L1323.SubsectorInterp_iron_steel
 
     # 1c. Technology information
     # L2323.StubTech_iron_steel: Identification of stub technologies of iron_steel
@@ -237,21 +332,6 @@ module_energy_L2323.iron_steel <- function(command, ...) {
         L2323.GlobalTechProfitShutdown_en
     }
 
-    # L2323.GlobalTechCost_iron_steel: Non-energy costs of global iron_steel manufacturing technologies
-    A323.globaltech_cost %>%
-      gather_years %>%
-      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
-      arrange(supplysector, subsector, technology, minicam.non.energy.input, year) %>%
-      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
-      mutate(input.cost = approx_fun(year, value, rule = 1),
-             input.cost = round(input.cost, energy.DIGITS_COST)) %>%
-      ungroup %>%
-      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
-      rename(sector.name = supplysector,
-             subsector.name = subsector) %>%
-      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
-      L2323.GlobalTechCost_iron_steel
-
     # Calibration and region-specific data
     # L2323.StubTechProd_iron_steel: calibrated iron_steel production
     calibrated_techs %>%
@@ -302,7 +382,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       left_join(L2323.StubTechProd_iron_steel %>% select(-share.weight.year,-subs.share.weight,-tech.share.weight),
                 by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
       mutate(coefficient = if_else(year > MODEL_FINAL_BASE_YEAR , coeff, coefficient),
-             coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & stub.technology == energy.IRON_STEEL.DEFAULT_COEF[1] , terminal_coef, coefficient),
+             #coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & stub.technology == energy.IRON_STEEL.DEFAULT_COEF[1] , terminal_coef, coefficient),
              coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == energy.IRON_STEEL.DEFAULT_COEF[2] , terminal_coef, coefficient),
              coefficient = if_else(year > MODEL_FINAL_BASE_YEAR & minicam.energy.input == energy.IRON_STEEL.DEFAULT_COEF[3] , terminal_coef, coefficient)) %>%
       select(-terminal_coef,-coeff,-calOutputValue) %>%
@@ -317,14 +397,16 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       write_to_all_regions(LEVEL2_DATA_NAMES[["PerCapitaBased"]], GCAM_region_names)  ->
       L2323.PerCapitaBased_iron_steel
 
-    # L2323.BaseService_iron_steel: base-year service output of iron and steel
-    L2323.StubTechProd_iron_steel %>%
+    # L2323.BaseService_iron_steel: base-year service output of iron and steel demand (not production)
+    LB1092.Tradebalance_iron_steel_Mt_R_Y %>%
+      filter(metric %in% c("consumption_reval"),
+             year %in% c(MODEL_BASE_YEARS),GCAM_region != "NA")%>%
+      mutate(value=round(value, energy.DIGITS_CALOUTPUT))%>%
+      distinct(GCAM_region,year,value)%>%
+      rename(region=GCAM_region,calOutputValue=value)%>%
       select(region, year, base.service = calOutputValue) %>%
       mutate(energy.final.demand = A323.demand[["energy.final.demand"]]) %>%
-      group_by(region,year,energy.final.demand) %>%
-      summarise(base.service = sum(base.service)) %>%
-      ungroup() ->
-      L2323.BaseService_iron_steel
+      ungroup()-> L2323.BaseService_iron_steel
 
     # L2323.PriceElasticity_iron_steel: price elasticity
     A323.demand %>%
@@ -372,7 +454,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       add_units("NA") %>%
       add_comments("For iron and steel sector, the subsector shareweight interpolation function infromation from A323.subsector_interp is expanded into all GCAM regions") %>%
       add_legacy_name("L2323.SubsectorInterp_iron_steel") %>%
-      add_precursors("energy/A323.subsector_interp", "common/GCAM_region_names") ->
+      add_precursors("L1323.SubsectorInterp_iron_steel") ->
       L2323.SubsectorInterp_iron_steel
 
     L2323.StubTech_iron_steel %>%
@@ -406,6 +488,15 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       add_legacy_name("L2323.GlobalTechCost_iron_steel") %>%
       add_precursors("energy/A323.globaltech_cost", "energy/A323.globaltech_co2capture", "energy/A323.globaltech_coef") ->
       L2323.GlobalTechCost_iron_steel
+
+    L2323.StubTechCost_iron_steel %>%
+      add_title("Regionally varying non-energy costs of iron and steel manufacturing technologies") %>%
+      add_units("1975$/kg for supplysector iron_steel") %>%
+      add_comments("For iron and steel sector, the non-energy costs of regional iron and steel manufacturing technologies are obtained from transition zero global cost tracker database and then adjusted with capital costs and CCS to include CO2 capture costs") %>%
+      add_legacy_name("L2323.StubTechCost_iron_steel") %>%
+      add_precursors("energy/A323.capital_cost_adders", "energy/A323.ccs_adders", "energy/TZ_steel_production_costs","energy/mappings/TZ_steel_cost_gcam_mapping",
+                     "energy/mappings/TZ_steel_cost_oecd_mapping") ->
+      L2323.StubTechCost_iron_steel
 
     L2323.GlobalTechCapture_iron_steel %>%
       add_title("CO2 capture fractions from global iron snf steel production technologies with CCS") %>%
@@ -501,7 +592,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       add_units("Mt") %>%
       add_comments("Transformed from L2323.StubTechProd_iron_steel by adding energy.final.demand from A323.demand") %>%
       add_legacy_name("L2323.BaseService_iron_steel") %>%
-      add_precursors("energy/A323.demand", "energy/calibrated_techs", "L1323.out_Mt_R_iron_steel_Yh", "common/GCAM_region_names") ->
+      add_precursors("energy/A323.demand", "energy/calibrated_techs", "L1323.out_Mt_R_iron_steel_Yh", "common/GCAM_region_names","LB1092.Tradebalance_iron_steel_Mt_R_Y") ->
       L2323.BaseService_iron_steel
 
     L2323.PriceElasticity_iron_steel %>%
@@ -513,13 +604,13 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       L2323.PriceElasticity_iron_steel
 
       return_data(L2323.Supplysector_iron_steel, L2323.FinalEnergyKeyword_iron_steel, L2323.SubsectorLogit_iron_steel,
-                  L2323.SubsectorShrwtFllt_iron_steel, L2323.SubsectorInterp_iron_steel,
+                  L2323.SubsectorShrwtFllt_iron_steel,L2323.SubsectorInterp_iron_steel,
                   L2323.StubTech_iron_steel, L2323.GlobalTechShrwt_iron_steel,
                   L2323.GlobalTechCoef_iron_steel, L2323.GlobalTechCost_iron_steel, L2323.GlobalTechCapture_iron_steel, L2323.GlobalTechShutdown_en,
                   L2323.GlobalTechSCurve_en, L2323.GlobalTechLifetime_en, L2323.GlobalTechProfitShutdown_en,
                   L2323.StubTechProd_iron_steel, L2323.StubTechCoef_iron_steel,
                   L2323.PerCapitaBased_iron_steel, L2323.BaseService_iron_steel,
-                  L2323.PriceElasticity_iron_steel)
+                  L2323.PriceElasticity_iron_steel,L2323.StubTechCost_iron_steel)
   } else {
     stop("Unknown command")
   }

@@ -2628,6 +2628,18 @@ element input {
                         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='iron and steel')]/cost/text()</xPath>
                         <comments/>
                     </supplyDemandQuery>
+				 	<supplyDemandQuery title="traded iron and steel">
+    					<axis1 name="input">input</axis1>
+    					<axis2 name="Year">demand-physical[@vintage]</axis2>
+    					<xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'traded iron and steel')]/*[@type='subsector']//*[@type='input']/demand-physical/node()</xPath>
+    					<comments/>
+					</supplyDemandQuery>
+  					<supplyDemandQuery title="regional iron and steel sources">
+        				<axis1 name="input">input</axis1>
+        				<axis2 name="Year">demand-physical[@vintage]</axis2>
+        				<xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'regional iron and steel')]/*[@type='subsector']//*[@type='input']/demand-physical/node()</xPath>
+        				<comments/>
+    				</supplyDemandQuery>
                 </queryGroup>
                 <queryGroup name="chemicals">
                     <supplyDemandQuery title="chemical production by region">

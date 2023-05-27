@@ -1,0 +1,20 @@
+# File: TZ_steel_cost_oecd_mapping.csv
+# Title: TZ country to OECD mapping
+# Units: NA
+# Description: Maps TZ (transition zero) countries to OECD regions
+# Column types: cc
+# ----------
+Country,OECD_mapping
+China,NonOECD
+Brazil,NonOECD
+Germany,OECD
+Italy,OECD
+India,NonOECD
+Japan,OECD
+Mexico,OECD
+Russia,NonOECD
+South Korea,OECD
+Turkey,OECD
+Ukraine,NonOECD
+United States,OECD
+Vietnam,NonOECD

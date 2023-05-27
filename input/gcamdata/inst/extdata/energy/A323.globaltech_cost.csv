@@ -4,12 +4,12 @@
 # Column types: ccccnnnn
 # ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2050,2100
-iron and steel,BLASTFUR,BLASTFUR,non-energy,0.034126772,0.034126772,0.029033796,0.023722725
-iron and steel,BLASTFUR,BLASTFUR CCS,non-energy,0.03521611,0.03521611,0.029960564,0.024479962
-iron and steel,BLASTFUR,Biomass-based,non-energy,0.034126772,0.034126772,0.029033796,0.023722725
-iron and steel,BLASTFUR,BLASTFUR with hydrogen,non-energy,0.034126772,0.034126772,0.029033796,0.023722725
-iron and steel,EAF with DRI,EAF with DRI,non-energy,0.094153309,0.094153309,0.080102154,0.065449291
-iron and steel,EAF with DRI,EAF with DRI CCS,non-energy,0.098967413,0.098967413,0.084197815,0.068795745
-iron and steel,EAF with DRI,Hydrogen-based DRI,non-energy,0.094153309,0.094153309,0.062463229,0.037399042
-iron and steel,EAF with scrap,EAF with scrap,non-energy,0.024777206,0.024777206,0.021079531,0.017223511
-iron and steel,BLASTFUR,BLASTFUR CCS with hydrogen,non-energy,0.03521611,0.03521611,0.029960564,0.024479962
+iron and steel,BLASTFUR,BLASTFUR,non-energy,0.08321,0.08321,0.08321,0.08321
+iron and steel,BLASTFUR,BLASTFUR CCS,non-energy,0.0901,0.0901,0.0901,0.0901
+iron and steel,BLASTFUR,Biomass-based,non-energy,0.08321,0.08321,0.08321,0.08321
+iron and steel,BLASTFUR,BLASTFUR with hydrogen,non-energy,0.08321,0.08321,0.08321,0.08321
+iron and steel,EAF with DRI,EAF with DRI,non-energy,0.097785,0.097785,0.097785,0.097785
+iron and steel,EAF with DRI,EAF with DRI CCS,non-energy,0.104675,0.104675,0.104675,0.104675
+iron and steel,EAF with DRI,Hydrogen-based DRI,non-energy,0.097785,0.097785,0.097785,0.097785
+iron and steel,EAF with scrap,EAF with scrap,non-energy,0.103085,0.103085,0.103085,0.103085
+iron and steel,BLASTFUR,BLASTFUR CCS with hydrogen,non-energy,0.0901,0.0901,0.0901,0.0901

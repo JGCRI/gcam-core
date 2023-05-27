@@ -1,0 +1,10 @@
+# File: A_irnstl_RegionalSubsector.csv
+# Title: Subsector assumptions for regional iron and steel markets
+# Units: Various
+# Comments: These subsectors' shareweights evolve over time. They are calibrated to 2015 shares, but become 1 in some to.year following an interpolation.function
+# Source: NA
+# Column types: ccncncccncc
+# ----------
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,to.value,interpolation.function,logit.type
+regional iron and steel,domestic iron and steel,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,
+regional iron and steel,imported iron and steel,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,

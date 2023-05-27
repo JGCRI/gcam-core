@@ -1,0 +1,10 @@
+# File: A_irnstl_RegionalTechnology.csv
+# Title: Technology-level assumptions of regional iron and steel markets
+# Units: Various
+# Comments: Subsectors capture competition between domestic and imported resources; there is no technology competition.
+# Source: NA
+# Column types: ccccnnnc
+# ----------
+supplysector,subsector,technology,minicam.energy.input,coefficient,input.cost,share.weight,market.name
+regional iron and steel,domestic iron and steel,domestic iron and steel,iron and steel,1,0,1,regional
+regional iron and steel,imported iron and steel,imported iron and steel,traded iron and steel,1,0,1,USA
