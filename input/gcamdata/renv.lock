@@ -345,7 +345,7 @@
     },
     "igraph": {
       "Package": "igraph",
-      "Version": "1.2.11",
+      "Version": "1.2.6",
       "Source": "Repository",
       "Repository": "CRAN",
       "Hash": "1d10cd31c2979f9c819ffe4d16b9dc2b"
