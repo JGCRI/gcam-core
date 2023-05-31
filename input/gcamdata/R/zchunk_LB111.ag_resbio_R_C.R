@@ -15,15 +15,20 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter full_join group_by mutate select summarize_if
 #' @importFrom tidyr gather spread
-#' @author RC March 2017
+#' @author RC March 2017 XZ 2022
 module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L100.FAO_ag_Prod_t",
+      FILE = "aglu/Various_ag_resbio_data")
+
+  MODULE_OUTPUTS <-
+    c("L111.ag_resbio_R_C")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
-             "L100.FAO_ag_Prod_t",
-             FILE = "aglu/Various_ag_resbio_data"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L111.ag_resbio_R_C"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     iso <- item <- year <- value <- resbio_params <- GCAM_region_ID <-
@@ -31,30 +36,28 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
-    L100.FAO_ag_Prod_t <- get_data(all_data, "L100.FAO_ag_Prod_t")
-    Various_ag_resbio_data <- get_data(all_data, "aglu/Various_ag_resbio_data")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
+    # Future development: L111.ag_resbio_R_C should be differentiated by GCAM_subsector
 
     # Compute weighted averages of each parameter (HarvestIndex, ErosionControl, and
     # ResidueEnergyContent) for each crop type in each GCAM region
     L100.FAO_ag_Prod_t %>%
-      select(iso, item, year, value) %>%
+      select(iso, GCAM_region_ID, item, item_code, GCAM_commodity, year, value) %>%
       filter(year %in% max(HISTORICAL_YEARS)) %>%
       select(-year) %>%
       rename(prod = value) %>%
-      full_join(Various_ag_resbio_data, by = "item") %>%
+      left_join(Various_ag_resbio_data %>% select(-item), by = "item_code") %>%
       # Drop rows with NA values (dropping commodities that are not in the resbio dataset)
       na.omit() %>%
       # also drop rows where production weights are zero, as these would return missing values later on
       filter(prod != 0) %>%
       # Multiply by production to get weights, change to long-format for easier calculation
-      gather(resbio_params, value, -iso, -item, -prod) %>%
+      gather(resbio_params, value, -iso, -GCAM_region_ID, -GCAM_commodity, -item, -item_code, -prod) %>%
       mutate(value = value * prod) %>%
-      # Add vectors for GCAM regions and commodities, collapse, and divide by production to get residue biomass values
-      left_join_error_no_match(iso_GCAM_regID[c("iso", "GCAM_region_ID")], by = "iso") %>%
-      left_join_error_no_match(FAO_ag_items_PRODSTAT[c("item", "GCAM_commodity")], by = "item") %>%
+      # For GCAM regions and commodities, collapse, and divide by production to get residue biomass values
+      select(-item_code) %>%
       group_by(GCAM_region_ID, GCAM_commodity, resbio_params) %>%
       summarize_if(is.numeric, sum) %>%
       # Dividing by production to get weighted average residue biomass parameters by region and crop
@@ -69,13 +72,11 @@ module_aglu_LB111.ag_resbio_R_C <- function(command, ...) {
       add_comments("Calculate the HarvestIndex, ErosCtrl, ResEnergy, Root_Shoot, and WaterContent of residue biomass") %>%
       add_comments("These parameters are weighted by production when calculating the average by GCAM region and commodity") %>%
       add_legacy_name("L111.ag_resbio_R_C") %>%
-      add_precursors("common/iso_GCAM_regID",
-                     "aglu/FAO/FAO_ag_items_PRODSTAT",
-                     "L100.FAO_ag_Prod_t",
+      add_precursors("L100.FAO_ag_Prod_t",
                      "aglu/Various_ag_resbio_data") ->
       L111.ag_resbio_R_C
 
-    return_data(L111.ag_resbio_R_C)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

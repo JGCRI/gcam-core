@@ -11,34 +11,40 @@
 #' the generated outputs: \code{an_input.xml}. The corresponding file in the
 #' original data system was \code{batch_an_input.xml.R} (aglu XML).
 module_aglu_batch_an_input_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L202.RenewRsrc",
+      "L202.RenewRsrcPrice",
+      "L202.maxSubResource",
+      "L202.RenewRsrcCurves",
+      "L202.ResTechShrwt",
+      "L202.UnlimitedRenewRsrcCurves",
+      "L202.UnlimitedRenewRsrcPrice",
+      "L202.Supplysector_in",
+      "L202.SubsectorAll_in",
+      "L202.SubsectorInterpTo_in",
+      "L202.StubTech_in",
+      "L202.StubTechInterp_in",
+      "L202.GlobalTechCoef_in",
+      "L202.GlobalTechShrwt_in",
+      "L202.StubTechProd_in",
+      "L202.Supplysector_an",
+      "L202.SubsectorAll_an",
+      "L202.GlobalTechShrwt_an",
+      "L202.StubTechInterp_an",
+      "L202.StubTechProd_an",
+      "L202.StubTechCoef_an",
+      "L202.StubTechCost_an",
+       "L202.StubTechCost_For_proc",
+      "L202.StubTechProd_in_Forest")
+
+  MODULE_OUTPUTS <-
+    c(XML = "an_input.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L202.RenewRsrc",
-              "L202.RenewRsrcPrice",
-              "L202.maxSubResource",
-              "L202.RenewRsrcCurves",
-              "L202.ResTechShrwt",
-              "L202.UnlimitedRenewRsrcCurves",
-              "L202.UnlimitedRenewRsrcPrice",
-              "L202.Supplysector_in",
-              "L202.SubsectorAll_in",
-              "L202.SubsectorInterpTo_in",
-              "L202.StubTech_in",
-              "L202.StubTechInterp_in",
-              "L202.GlobalTechCoef_in",
-              "L202.GlobalTechShrwt_in",
-              "L202.StubTechProd_in",
-              "L202.Supplysector_an",
-              "L202.SubsectorAll_an",
-              "L202.GlobalTechShrwt_an",
-              "L202.StubTechInterp_an",
-              "L202.StubTechProd_an",
-              "L202.StubTechCoef_an",
-              "L202.StubTechCost_an",
-             "L202.StubTechCost_For_proc",
-             "L202.StubTechProd_in_Forest"
-              ))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "an_input.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -127,7 +133,7 @@ module_aglu_batch_an_input_xml <- function(command, ...) {
                      ) ->
       an_input.xml
 
-    return_data(an_input.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

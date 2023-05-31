@@ -1,0 +1,23 @@
+# File: A_ff_TradedSubsector_NG.csv
+# Title: Subsector assumptions for traded natural gas markets (LNG and pipeline gas)
+# Units: Various
+# Comments: These subsectors' shareweights evolve over time. They are calibrated to 2010 shares but become 1 in some to.year following an interpolation.function.
+# Source: NA
+# Column types: ccncncccncic
+# ----------
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,to.value,interpolation.function,traded,logit.type
+traded LNG,traded LNG,-6,start-year,1,share-weight,final-calibration-year,2030,1,linear,1,
+traded N.Amer pipeline gas,traded N.Amer pipeline gas,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
+traded LA pipeline gas,traded LA pipeline gas,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
+traded EUR pipeline gas,traded EUR pipeline gas,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
+traded RUS pipeline gas,traded RUS pipeline gas,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
+traded Afr_MidE pipeline gas,traded Afr_MidE pipeline gas,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
+traded PAC pipeline gas,traded PAC pipeline gas,-6,start-year,1,share-weight,final-calibration-year,2100,1,fixed,1,
+traded LNG,statistical differences,-6,start-year,0,share-weight,final-calibration-year,2100,0,fixed,0,
+traded N.Amer pipeline gas,statistical differences,-6,start-year,0,share-weight,final-calibration-year,2100,0,fixed,0,
+traded LA pipeline gas,statistical differences,-6,start-year,0,share-weight,final-calibration-year,2100,0,fixed,0,
+traded EUR pipeline gas,statistical differences,-6,start-year,0,share-weight,final-calibration-year,2100,0,fixed,0,
+traded RUS pipeline gas,statistical differences,-6,start-year,0,share-weight,final-calibration-year,2100,0,fixed,0,
+traded Afr_MidE pipeline gas,statistical differences,-6,start-year,0,share-weight,final-calibration-year,2100,0,fixed,0,
+traded PAC pipeline gas,statistical differences,-6,start-year,0,share-weight,final-calibration-year,2100,0,fixed,0,
+gas trade statistical differences,statistical differences,-6,start-year,0,share-weight,final-calibration-year,2100,0,fixed,1,

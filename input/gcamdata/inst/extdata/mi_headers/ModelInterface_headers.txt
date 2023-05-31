@@ -260,6 +260,9 @@ TechInterpTo, world/+{name}region, region/+{name}supplysector, supplysector/+{na
 
 TechSCurve, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, period/+lifetime, s-curve-shutdown-decider/+steepness, s-curve-shutdown-decider/+half-life, scenario, scenario/world, period/s-curve-shutdown-decider
 
+TechProfitShutdown, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, profit-shutdown-decider/+median-shutdown-point, profit-shutdown-decider/+steepness, scenario, scenario/world, period/{name=profit}profit-shutdown-decider
+
+
 #####, GLOBAL TECHNOLOGY
 
 
@@ -378,7 +381,11 @@ StubTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}s
 
 StubTechShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+share-weight, scenario, scenario/world
 
+StubTechShrwt_NC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, period/+share-weight, scenario, scenario/world
+
 StubTechInterp, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{apply-to}interpolation-rule, stub-technology/+{from-year}interpolation-rule, stub-technology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario, scenario/world
+
+StubTechInterp_NC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{apply-to}interpolation-rule, stub-technology/+{from-year}interpolation-rule, stub-technology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario, scenario/world
 
 StubTechProd, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}stub-technology, stub-technology/+{year}period, CalDataOutput/+calOutputValue, subsector/+{year}share-weight, subsector/+share-weight, period/+share-weight, period/CalDataOutput, scenario, scenario/world
 
@@ -571,6 +578,8 @@ AgInputTax, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{
 
 AgMkt, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+market, scenario, scenario/world
 
+AgCalMinProfitRate, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+cal-min-profit-rate, scenario, scenario/world
+
 
 #####, POLICY
 
@@ -738,7 +747,7 @@ StbTechOutputEmissions, world/+{name}region, region/+{name;nocreate=1}supplysect
 
 MAC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
 
-MAC_NC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
+MAC_NC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+{tax}mac-reduction, mac-control/+mac-reduction, mac-control/+market-name, scenario, scenario/world
 
 MACTC, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name;nocreate=1}Non-CO2, Non-CO2/+{name;nocreate=1}mac-control, mac-control/+{year;fillout=1}tech-change, mac-control/+tech-change, scenario, scenario/world
 
@@ -766,15 +775,17 @@ GDPCtrlMax, world/+{name}region, region/+{name;nocreate=1}supplysector, supplyse
 
 GDPCtrlSteep, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+steepness, scenario, scenario/world
 
-GDPCtrlMaxRes, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+max-reduction, scenario, scenario/world
+GDPCtrlMaxRes, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name;nocreate=1}subresource, subresource/+{name;nocreate=1}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+max-reduction, scenario, scenario/world
 
-GDPCtrlSteepRes, world/+{name}region, region/+{name;nocreate=1}resource, resource/{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+steepness, scenario, scenario/world
+GDPCtrlMaxResReserve, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name;nocreate=1}reserve-subresource, reserve-subresource/+{name;nocreate=1}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+max-reduction, scenario, scenario/world
+
+GDPCtrlSteepRes, world/+{name}region, region/+{name;nocreate=1}resource, resource/{name;nocreate=1}subresource, subresource/+{name;nocreate=1}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+steepness, scenario, scenario/world
 
 AgGDPCtrlMax, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+max-reduction, scenario, scenario/world
 
 AgGDPCtrlSteep, world/+{name}region, region/+{name;nocreate=1}AgSupplySector, AgSupplySector/+{name;nocreate=1}AgSupplySubsector, AgSupplySubsector/+{name;nocreate=1}AgProductionTechnology, AgProductionTechnology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}gdp-control, gdp-control/+steepness, scenario, scenario/world
 
-ResEmissCoef, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name}subresource, subresource/+{name}technology, technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/output-driver, scenario, scenario/world
+ResEmissCoef, world/+{name}region, region/+{name;nocreate=1}resource, resource/+{name;nocreate=1}reserve-subresource, reserve-subresource/+{name;nocreate=1}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+emiss-coef, Non-CO2/+emissions-unit, Non-CO2/output-driver, scenario, scenario/world
 
 ReadInControl, world/+{name}region, region/+{name;nocreate=1}supplysector, supplysector/+{name;nocreate=1}subsector, subsector/+{name;nocreate=1}stub-technology, stub-technology/+{year}period, period/+{name}Non-CO2, Non-CO2/+{name}readin-control, readin-control/+{year}future-emiss-factor, readin-control/+future-emiss-factor, scenario, scenario/world
 

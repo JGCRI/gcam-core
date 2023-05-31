@@ -1,0 +1,4377 @@
+# File: steel_prod_process.csv
+# Title: Crude steel production by country and process
+# Units: Thousand tonnes
+# Description: National steel production by process (Blast Furnace and Electric Arc Furnace)
+# Source: World Steel Association Statistical Year books
+# Column types: cinnc
+# ----------
+country_name,year,BLASTFUR,EAF,unit_prod
+Albania,1971,0,3.56,thousand tons
+United Arab Emirates,1971,0,64.1,thousand tons
+Argentina,1971,1590,1605,thousand tons
+Australia,1971,4290,785,thousand tons
+Austria,1971,3680,387,thousand tons
+Belgium,1971,6350,1944,thousand tons
+Bulgaria,1971,1010,429,thousand tons
+Bosnia and Herzegovina,1971,38.1,16.76,thousand tons
+Belarus,1971,0,1070,thousand tons
+Brazil,1971,15800,4092,thousand tons
+Canada,1971,6850,4970,thousand tons
+Switzerland,1971,0,712,thousand tons
+Chile,1971,809,154,thousand tons
+China,1971,77200,14420,thousand tons
+Colombia,1971,199,271,thousand tons
+Cuba,1971,0,239.4,thousand tons
+Czech Republic,1971,4060,373,thousand tons
+Germany,1971,23500,9500,thousand tons
+Denmark,1971,0,571,thousand tons
+Dominican Republic,1971,0.0712,27.75,thousand tons
+Algeria,1971,536,64.1,thousand tons
+Ecuador,1971,0,41.32,thousand tons
+Egypt,1971,839,1183,thousand tons
+Spain,1971,3000,8300,thousand tons
+Estonia,1971,0.712,0,thousand tons
+Finland,1971,2230,687,thousand tons
+France,1971,8910,6020,thousand tons
+United Kingdom,1971,8230,2470,thousand tons
+Ghana,1971,0,17.77,thousand tons
+Greece,1971,0,775,thousand tons
+Guatemala,1971,0.356,118.6,thousand tons
+Croatia,1971,0,50.6,thousand tons
+Hungary,1971,1170,166,thousand tons
+Indonesia,1971,0,2027,thousand tons
+India,1971,12300,6910,thousand tons
+Ireland,1971,0,257,thousand tons
+"Iran, Islamic Republic of",1971,1570,3132,thousand tons
+Israel,1971,0,199.9,thousand tons
+Italy,1971,7610,11460,thousand tons
+Jordan,1971,0,21.33,thousand tons
+Japan,1971,54000,21840,thousand tons
+Kazakhstan,1971,3400,0,thousand tons
+Kenya,1971,0,14.22,thousand tons
+"Korea, Republic of",1971,17600,13140,thousand tons
+Libyan Arab Jamahiriya,1971,0,751,thousand tons
+Sri Lanka,1971,0,21.33,thousand tons
+Luxembourg,1971,0,1836,thousand tons
+Latvia,1971,353,1.425,thousand tons
+Morocco,1971,3.56,0,thousand tons
+"Moldova, Republic of",1971,0,647,thousand tons
+Mexico,1971,3730,7410,thousand tons
+"Macedonia, the former Yugoslav Republic of",1971,0.0712,114.6,thousand tons
+Myanmar,1971,0,17.77,thousand tons
+Malaysia,1971,0,2604,thousand tons
+Netherlands,1971,3920,113.2,thousand tons
+Norway,1971,0,484,thousand tons
+New Zealand,1971,394,106.6,thousand tons
+Pakistan,1971,606,71.2,thousand tons
+Peru,1971,204,330.4,thousand tons
+Philippines,1971,0,303.8,thousand tons
+Poland,1971,5130,2340,thousand tons
+"Korea, Democratic Peoples Republic of",1971,1070,0,thousand tons
+Portugal,1971,292,483,thousand tons
+Paraguay,1971,54.9,0,thousand tons
+Qatar,1971,0,520,thousand tons
+Romania,1971,2380,945,thousand tons
+Russian Federation,1971,36000,6130,thousand tons
+Saudi Arabia,1971,0,2120,thousand tons
+Singapore,1971,0,429,thousand tons
+El Salvador,1971,0.356,28.82,thousand tons
+Slovakia,1971,2460,203.6,thousand tons
+Slovenia,1971,0,370,thousand tons
+Sweden,1971,2300,1419,thousand tons
+Syrian Arab Republic,1971,0,49.9,thousand tons
+Thailand,1971,0,1499,thousand tons
+Trinidad and Tobago,1971,0,528,thousand tons
+Tunisia,1971,121,42,thousand tons
+Turkey,1971,3730,6480,thousand tons
+Taiwan,1971,7100,4930,thousand tons
+Ukraine,1971,21900,702,thousand tons
+Uruguay,1971,0,27.1,thousand tons
+United States of America,1971,38500,34120,thousand tons
+Uzbekistan,1971,81.2,209.1,thousand tons
+Venezuela,1971,0.285,2736,thousand tons
+Viet Nam,1971,0,218.3,thousand tons
+South Africa,1971,3330,2711,thousand tons
+Angola,1971,0,1,thousand tons
+Albania,1972,0,3.62,thousand tons
+United Arab Emirates,1972,0,65.1,thousand tons
+Argentina,1972,1610,1631,thousand tons
+Australia,1972,4360,798,thousand tons
+Austria,1972,3740,393,thousand tons
+Belgium,1972,6450,1978,thousand tons
+Bulgaria,1972,1030,436,thousand tons
+Bosnia and Herzegovina,1972,38.7,17.04,thousand tons
+Belarus,1972,0,1087,thousand tons
+Brazil,1972,16000,4158,thousand tons
+Canada,1972,6960,5050,thousand tons
+Switzerland,1972,0,724,thousand tons
+Chile,1972,822,156.6,thousand tons
+China,1972,78400,14631,thousand tons
+Colombia,1972,202,275.1,thousand tons
+Cuba,1972,0,243.4,thousand tons
+Czech Republic,1972,4120,379,thousand tons
+Germany,1972,23900,9640,thousand tons
+Denmark,1972,0,580,thousand tons
+Dominican Republic,1972,0.0724,28.16,thousand tons
+Algeria,1972,544,65.1,thousand tons
+Ecuador,1972,0,42,thousand tons
+Egypt,1972,853,1201,thousand tons
+Spain,1972,3050,8440,thousand tons
+Estonia,1972,0.724,0,thousand tons
+Finland,1972,2270,698,thousand tons
+France,1972,9060,6110,thousand tons
+United Kingdom,1972,8360,2510,thousand tons
+Ghana,1972,0,18.14,thousand tons
+Greece,1972,0,788,thousand tons
+Guatemala,1972,0.362,120.5,thousand tons
+Croatia,1972,0,51.4,thousand tons
+Hungary,1972,1190,168.7,thousand tons
+Indonesia,1972,0,2065,thousand tons
+India,1972,12500,7010,thousand tons
+Ireland,1972,0,261,thousand tons
+"Iran, Islamic Republic of",1972,1590,3184,thousand tons
+Israel,1972,0,202.6,thousand tons
+Italy,1972,7730,11640,thousand tons
+Jordan,1972,0,21.71,thousand tons
+Japan,1972,54900,22170,thousand tons
+Kazakhstan,1972,3450,0,thousand tons
+Kenya,1972,0,14.47,thousand tons
+"Korea, Republic of",1972,17900,13360,thousand tons
+Libyan Arab Jamahiriya,1972,0,763,thousand tons
+Sri Lanka,1972,0,21.71,thousand tons
+Luxembourg,1972,0,1859,thousand tons
+Latvia,1972,359,1.448,thousand tons
+Morocco,1972,3.62,0,thousand tons
+"Moldova, Republic of",1972,0,657,thousand tons
+Mexico,1972,3790,7530,thousand tons
+"Macedonia, the former Yugoslav Republic of",1972,0.0724,116.5,thousand tons
+Myanmar,1972,0,18.14,thousand tons
+Malaysia,1972,0,2644,thousand tons
+Netherlands,1972,3990,115.1,thousand tons
+Norway,1972,0,491,thousand tons
+New Zealand,1972,400,108.3,thousand tons
+Pakistan,1972,615,72.4,thousand tons
+Peru,1972,208,335.7,thousand tons
+Philippines,1972,0,308,thousand tons
+Poland,1972,5220,2380,thousand tons
+"Korea, Democratic Peoples Republic of",1972,1090,0,thousand tons
+Portugal,1972,297,491,thousand tons
+Paraguay,1972,55.7,0,thousand tons
+Qatar,1972,0,528,thousand tons
+Romania,1972,2420,959,thousand tons
+Russian Federation,1972,36600,6230,thousand tons
+Saudi Arabia,1972,0,2158,thousand tons
+Singapore,1972,0,437,thousand tons
+El Salvador,1972,0.362,29.34,thousand tons
+Slovakia,1972,2500,207.1,thousand tons
+Slovenia,1972,0,375,thousand tons
+Sweden,1972,2340,1443,thousand tons
+Syrian Arab Republic,1972,0,50.7,thousand tons
+Thailand,1972,0,1525,thousand tons
+Trinidad and Tobago,1972,0,537,thousand tons
+Tunisia,1972,123,42.8,thousand tons
+Turkey,1972,3790,6590,thousand tons
+Taiwan,1972,7220,5010,thousand tons
+Ukraine,1972,22300,713,thousand tons
+Uruguay,1972,0,27.5,thousand tons
+United States of America,1972,39100,34660,thousand tons
+Uzbekistan,1972,82.5,211.9,thousand tons
+Venezuela,1972,0.29,2776,thousand tons
+Viet Nam,1972,0,221.2,thousand tons
+South Africa,1972,3380,2751,thousand tons
+Angola,1972,0,1,thousand tons
+Albania,1973,0,3.68,thousand tons
+United Arab Emirates,1973,0,66.2,thousand tons
+Argentina,1973,1640,1657,thousand tons
+Australia,1973,4430,811,thousand tons
+Austria,1973,3800,400,thousand tons
+Belgium,1973,6550,2002,thousand tons
+Bulgaria,1973,1040,443,thousand tons
+Bosnia and Herzegovina,1973,39.3,17.33,thousand tons
+Belarus,1973,0,1105,thousand tons
+Brazil,1973,16300,4220,thousand tons
+Canada,1973,7070,5130,thousand tons
+Switzerland,1973,0,736,thousand tons
+Chile,1973,835,159.2,thousand tons
+China,1973,79700,14843,thousand tons
+Colombia,1973,206,280.1,thousand tons
+Cuba,1973,0,247.3,thousand tons
+Czech Republic,1973,4190,384,thousand tons
+Germany,1973,24300,9800,thousand tons
+Denmark,1973,0,589,thousand tons
+Dominican Republic,1973,0.0735,28.57,thousand tons
+Algeria,1973,553,66.2,thousand tons
+Ecuador,1973,0,42.6,thousand tons
+Egypt,1973,866,1221,thousand tons
+Spain,1973,3100,8570,thousand tons
+Estonia,1973,0.735,0,thousand tons
+Finland,1973,2300,709,thousand tons
+France,1973,9200,6210,thousand tons
+United Kingdom,1973,8500,2550,thousand tons
+Ghana,1973,0,18.41,thousand tons
+Greece,1973,0,800,thousand tons
+Guatemala,1973,0.368,122.5,thousand tons
+Croatia,1973,0,52.2,thousand tons
+Hungary,1973,1200,171.4,thousand tons
+Indonesia,1973,0,2093,thousand tons
+India,1973,12700,7130,thousand tons
+Ireland,1973,0,265,thousand tons
+"Iran, Islamic Republic of",1973,1620,3237,thousand tons
+Israel,1973,0,206.4,thousand tons
+Italy,1973,7850,11820,thousand tons
+Jordan,1973,0,22.1,thousand tons
+Japan,1973,55700,22590,thousand tons
+Kazakhstan,1973,3510,0,thousand tons
+Kenya,1973,0,14.73,thousand tons
+"Korea, Republic of",1973,18100,13560,thousand tons
+Libyan Arab Jamahiriya,1973,0,776,thousand tons
+Sri Lanka,1973,0,22.1,thousand tons
+Luxembourg,1973,0,1892,thousand tons
+Latvia,1973,365,1.471,thousand tons
+Morocco,1973,3.68,0,thousand tons
+"Moldova, Republic of",1973,0,668,thousand tons
+Mexico,1973,3850,7640,thousand tons
+"Macedonia, the former Yugoslav Republic of",1973,0.0735,118.4,thousand tons
+Myanmar,1973,0,18.41,thousand tons
+Malaysia,1973,0,2684,thousand tons
+Netherlands,1973,4050,117,thousand tons
+Norway,1973,0,500,thousand tons
+New Zealand,1973,406,110,thousand tons
+Pakistan,1973,625,73.6,thousand tons
+Peru,1973,211,340.9,thousand tons
+Philippines,1973,0,313.2,thousand tons
+Poland,1973,5300,2420,thousand tons
+"Korea, Democratic Peoples Republic of",1973,1100,0,thousand tons
+Portugal,1973,302,498,thousand tons
+Paraguay,1973,56.6,0,thousand tons
+Qatar,1973,0,536,thousand tons
+Romania,1973,2460,975,thousand tons
+Russian Federation,1973,37200,6340,thousand tons
+Saudi Arabia,1973,0,2196,thousand tons
+Singapore,1973,0,443,thousand tons
+El Salvador,1973,0.368,29.75,thousand tons
+Slovakia,1973,2540,210.6,thousand tons
+Slovenia,1973,0,382,thousand tons
+Sweden,1973,2380,1465,thousand tons
+Syrian Arab Republic,1973,0,51.5,thousand tons
+Thailand,1973,0,1541,thousand tons
+Trinidad and Tobago,1973,0,545,thousand tons
+Tunisia,1973,125,43.4,thousand tons
+Turkey,1973,3850,6690,thousand tons
+Taiwan,1973,7330,5090,thousand tons
+Ukraine,1973,22600,725,thousand tons
+Uruguay,1973,0,27.91,thousand tons
+United States of America,1973,39700,35200,thousand tons
+Uzbekistan,1973,83.8,215.7,thousand tons
+Venezuela,1973,0.294,2817,thousand tons
+Viet Nam,1973,0,225,thousand tons
+South Africa,1973,3440,2802,thousand tons
+Angola,1973,0,1,thousand tons
+Albania,1974,0,3.74,thousand tons
+United Arab Emirates,1974,0,67.2,thousand tons
+Argentina,1974,1660,1683,thousand tons
+Australia,1974,4500,824,thousand tons
+Austria,1974,3860,406,thousand tons
+Belgium,1974,6660,2036,thousand tons
+Bulgaria,1974,1060,450,thousand tons
+Bosnia and Herzegovina,1974,40,17.52,thousand tons
+Belarus,1974,0,1122,thousand tons
+Brazil,1974,16500,4290,thousand tons
+Canada,1974,7180,5210,thousand tons
+Switzerland,1974,0,747,thousand tons
+Chile,1974,848,161.8,thousand tons
+China,1974,80900,15055,thousand tons
+Colombia,1974,209,284.2,thousand tons
+Cuba,1974,0,251.2,thousand tons
+Czech Republic,1974,4250,391,thousand tons
+Germany,1974,24700,9950,thousand tons
+Denmark,1974,0,598,thousand tons
+Dominican Republic,1974,0.0747,29.07,thousand tons
+Algeria,1974,562,67.2,thousand tons
+Ecuador,1974,0,43.3,thousand tons
+Egypt,1974,880,1240,thousand tons
+Spain,1974,3150,8710,thousand tons
+Estonia,1974,0.747,0,thousand tons
+Finland,1974,2340,721,thousand tons
+France,1974,9350,6310,thousand tons
+United Kingdom,1974,8630,2590,thousand tons
+Ghana,1974,0,18.68,thousand tons
+Greece,1974,0,813,thousand tons
+Guatemala,1974,0.374,124.4,thousand tons
+Croatia,1974,0,53.1,thousand tons
+Hungary,1974,1220,174.1,thousand tons
+Indonesia,1974,0,2131,thousand tons
+India,1974,12900,7240,thousand tons
+Ireland,1974,0,269,thousand tons
+"Iran, Islamic Republic of",1974,1640,3289,thousand tons
+Israel,1974,0,209.2,thousand tons
+Italy,1974,7980,12020,thousand tons
+Jordan,1974,0,22.38,thousand tons
+Japan,1974,56600,22920,thousand tons
+Kazakhstan,1974,3560,0,thousand tons
+Kenya,1974,0,14.99,thousand tons
+"Korea, Republic of",1974,18400,13780,thousand tons
+Libyan Arab Jamahiriya,1974,0,788,thousand tons
+Sri Lanka,1974,0,22.38,thousand tons
+Luxembourg,1974,0,1925,thousand tons
+Latvia,1974,371,1.494,thousand tons
+Morocco,1974,3.74,0,thousand tons
+"Moldova, Republic of",1974,0,678,thousand tons
+Mexico,1974,3910,7760,thousand tons
+"Macedonia, the former Yugoslav Republic of",1974,0.0747,120.2,thousand tons
+Myanmar,1974,0,18.68,thousand tons
+Malaysia,1974,0,2724,thousand tons
+Netherlands,1974,4110,118.8,thousand tons
+Norway,1974,0,507,thousand tons
+New Zealand,1974,413,111.7,thousand tons
+Pakistan,1974,635,74.7,thousand tons
+Peru,1974,214,347.2,thousand tons
+Philippines,1974,0,318.4,thousand tons
+Poland,1974,5380,2460,thousand tons
+"Korea, Democratic Peoples Republic of",1974,1120,0,thousand tons
+Portugal,1974,306,507,thousand tons
+Paraguay,1974,57.5,0,thousand tons
+Qatar,1974,0,545,thousand tons
+Romania,1974,2500,991,thousand tons
+Russian Federation,1974,37700,6430,thousand tons
+Saudi Arabia,1974,0,2224,thousand tons
+Singapore,1974,0,450,thousand tons
+El Salvador,1974,0.374,30.26,thousand tons
+Slovakia,1974,2580,214,thousand tons
+Slovenia,1974,0,388,thousand tons
+Sweden,1974,2420,1488,thousand tons
+Syrian Arab Republic,1974,0,52.3,thousand tons
+Thailand,1974,0,1567,thousand tons
+Trinidad and Tobago,1974,0,554,thousand tons
+Tunisia,1974,127,44.1,thousand tons
+Turkey,1974,3910,6790,thousand tons
+Taiwan,1974,7450,5170,thousand tons
+Ukraine,1974,23000,735,thousand tons
+Uruguay,1974,0,28.41,thousand tons
+United States of America,1974,40300,35740,thousand tons
+Uzbekistan,1974,85.2,218.5,thousand tons
+Venezuela,1974,0.299,2867,thousand tons
+Viet Nam,1974,0,228.9,thousand tons
+South Africa,1974,3490,2842,thousand tons
+Angola,1974,0,1,thousand tons
+Albania,1975,0,3.79,thousand tons
+United Arab Emirates,1975,0,68.3,thousand tons
+Argentina,1975,1690,1709,thousand tons
+Australia,1975,4570,836,thousand tons
+Austria,1975,3920,412,thousand tons
+Belgium,1975,6760,2070,thousand tons
+Bulgaria,1975,1080,457,thousand tons
+Bosnia and Herzegovina,1975,40.6,17.8,thousand tons
+Belarus,1975,0,1140,thousand tons
+Brazil,1975,16800,4360,thousand tons
+Canada,1975,7290,5290,thousand tons
+Switzerland,1975,0,759,thousand tons
+Chile,1975,861,164.4,thousand tons
+China,1975,82200,15366,thousand tons
+Colombia,1975,212,288.3,thousand tons
+Cuba,1975,0,255.2,thousand tons
+Czech Republic,1975,4320,397,thousand tons
+Germany,1975,25100,10110,thousand tons
+Denmark,1975,0,607,thousand tons
+Dominican Republic,1975,0.0759,29.48,thousand tons
+Algeria,1975,570,68.3,thousand tons
+Ecuador,1975,0,44,thousand tons
+Egypt,1975,894,1259,thousand tons
+Spain,1975,3200,8840,thousand tons
+Estonia,1975,0.759,0,thousand tons
+Finland,1975,2380,732,thousand tons
+France,1975,9490,6410,thousand tons
+United Kingdom,1975,8760,2630,thousand tons
+Ghana,1975,0,18.95,thousand tons
+Greece,1975,0,825,thousand tons
+Guatemala,1975,0.379,126.3,thousand tons
+Croatia,1975,0,53.8,thousand tons
+Hungary,1975,1240,176.8,thousand tons
+Indonesia,1975,0,2159,thousand tons
+India,1975,13100,7350,thousand tons
+Ireland,1975,0,273,thousand tons
+"Iran, Islamic Republic of",1975,1670,3341,thousand tons
+Israel,1975,0,212,thousand tons
+Italy,1975,8100,12200,thousand tons
+Jordan,1975,0,22.76,thousand tons
+Japan,1975,57500,23240,thousand tons
+Kazakhstan,1975,3620,0,thousand tons
+Kenya,1975,0,15.14,thousand tons
+"Korea, Republic of",1975,18700,13980,thousand tons
+Libyan Arab Jamahiriya,1975,0,800,thousand tons
+Sri Lanka,1975,0,22.76,thousand tons
+Luxembourg,1975,0,1948,thousand tons
+Latvia,1975,376,1.518,thousand tons
+Morocco,1975,3.79,0,thousand tons
+"Moldova, Republic of",1975,0,688,thousand tons
+Mexico,1975,3970,7880,thousand tons
+"Macedonia, the former Yugoslav Republic of",1975,0.0759,122.1,thousand tons
+Myanmar,1975,0,18.95,thousand tons
+Malaysia,1975,0,2765,thousand tons
+Netherlands,1975,4180,120.6,thousand tons
+Norway,1975,0,515,thousand tons
+New Zealand,1975,419,113.4,thousand tons
+Pakistan,1975,645,75.9,thousand tons
+Peru,1975,218,352.5,thousand tons
+Philippines,1975,0,323.6,thousand tons
+Poland,1975,5470,2500,thousand tons
+"Korea, Democratic Peoples Republic of",1975,1140,0,thousand tons
+Portugal,1975,311,514,thousand tons
+Paraguay,1975,58.4,0,thousand tons
+Qatar,1975,0,553,thousand tons
+Romania,1975,2540,1005,thousand tons
+Russian Federation,1975,38300,6530,thousand tons
+Saudi Arabia,1975,0,2263,thousand tons
+Singapore,1975,0,458,thousand tons
+El Salvador,1975,0.379,30.67,thousand tons
+Slovakia,1975,2610,216.5,thousand tons
+Slovenia,1975,0,393,thousand tons
+Sweden,1975,2450,1511,thousand tons
+Syrian Arab Republic,1975,0,53.1,thousand tons
+Thailand,1975,0,1592,thousand tons
+Trinidad and Tobago,1975,0,562,thousand tons
+Tunisia,1975,129,44.7,thousand tons
+Turkey,1975,3970,6900,thousand tons
+Taiwan,1975,7560,5250,thousand tons
+Ukraine,1975,23400,747,thousand tons
+Uruguay,1975,0,28.82,thousand tons
+United States of America,1975,40900,36270,thousand tons
+Uzbekistan,1975,86.5,222.3,thousand tons
+Venezuela,1975,0.303,2908,thousand tons
+Viet Nam,1975,0,231.7,thousand tons
+South Africa,1975,3550,2883,thousand tons
+Angola,1975,0,1,thousand tons
+Albania,1976,0,3.88,thousand tons
+United Arab Emirates,1976,0,69.9,thousand tons
+Argentina,1976,1730,1749,thousand tons
+Australia,1976,4680,855,thousand tons
+Austria,1976,4010,421,thousand tons
+Belgium,1976,6910,2110,thousand tons
+Bulgaria,1976,1100,466,thousand tons
+Bosnia and Herzegovina,1976,41.5,18.23,thousand tons
+Belarus,1976,0,1165,thousand tons
+Brazil,1976,17200,4460,thousand tons
+Canada,1976,7450,5410,thousand tons
+Switzerland,1976,0,775,thousand tons
+Chile,1976,881,168.3,thousand tons
+China,1976,84000,15684,thousand tons
+Colombia,1976,217,294.8,thousand tons
+Cuba,1976,0,260.6,thousand tons
+Czech Republic,1976,4420,406,thousand tons
+Germany,1976,25600,10340,thousand tons
+Denmark,1976,0,621,thousand tons
+Dominican Republic,1976,0.0776,30.14,thousand tons
+Algeria,1976,583,69.9,thousand tons
+Ecuador,1976,0,45,thousand tons
+Egypt,1976,914,1288,thousand tons
+Spain,1976,3270,9040,thousand tons
+Estonia,1976,0.776,0,thousand tons
+Finland,1976,2430,748,thousand tons
+France,1976,9710,6550,thousand tons
+United Kingdom,1976,8960,2690,thousand tons
+Ghana,1976,0,19.35,thousand tons
+Greece,1976,0,844,thousand tons
+Guatemala,1976,0.388,129.2,thousand tons
+Croatia,1976,0,55.1,thousand tons
+Hungary,1976,1270,180.5,thousand tons
+Indonesia,1976,0,2210,thousand tons
+India,1976,13400,7510,thousand tons
+Ireland,1976,0,279,thousand tons
+"Iran, Islamic Republic of",1976,1710,3409,thousand tons
+Israel,1976,0,217.1,thousand tons
+Italy,1976,8280,12480,thousand tons
+Jordan,1976,0,23.29,thousand tons
+Japan,1976,58800,23820,thousand tons
+Kazakhstan,1976,3700,0,thousand tons
+Kenya,1976,0,15.52,thousand tons
+"Korea, Republic of",1976,19100,14300,thousand tons
+Libyan Arab Jamahiriya,1976,0,818,thousand tons
+Sri Lanka,1976,0,23.29,thousand tons
+Luxembourg,1976,0,1998,thousand tons
+Latvia,1976,385,1.552,thousand tons
+Morocco,1976,3.88,0,thousand tons
+"Moldova, Republic of",1976,0,704,thousand tons
+Mexico,1976,4060,8070,thousand tons
+"Macedonia, the former Yugoslav Republic of",1976,0.0776,124.8,thousand tons
+Myanmar,1976,0,19.35,thousand tons
+Malaysia,1976,0,2830,thousand tons
+Netherlands,1976,4270,123.4,thousand tons
+Norway,1976,0,527,thousand tons
+New Zealand,1976,429,116.1,thousand tons
+Pakistan,1976,659,77.6,thousand tons
+Peru,1976,222,360.4,thousand tons
+Philippines,1976,0,330.3,thousand tons
+Poland,1976,5590,2550,thousand tons
+"Korea, Democratic Peoples Republic of",1976,1160,0,thousand tons
+Portugal,1976,318,526,thousand tons
+Paraguay,1976,59.7,0,thousand tons
+Qatar,1976,0,566,thousand tons
+Romania,1976,2600,1029,thousand tons
+Russian Federation,1976,39200,6680,thousand tons
+Saudi Arabia,1976,0,2315,thousand tons
+Singapore,1976,0,468,thousand tons
+El Salvador,1976,0.388,31.44,thousand tons
+Slovakia,1976,2670,221.6,thousand tons
+Slovenia,1976,0,402,thousand tons
+Sweden,1976,2510,1545,thousand tons
+Syrian Arab Republic,1976,0,54.3,thousand tons
+Thailand,1976,0,1631,thousand tons
+Trinidad and Tobago,1976,0,575,thousand tons
+Tunisia,1976,132,45.8,thousand tons
+Turkey,1976,4060,7060,thousand tons
+Taiwan,1976,7740,5370,thousand tons
+Ukraine,1976,23900,765,thousand tons
+Uruguay,1976,0,29.48,thousand tons
+United States of America,1976,41900,37080,thousand tons
+Uzbekistan,1976,88.4,227.6,thousand tons
+Venezuela,1976,0.31,2974,thousand tons
+Viet Nam,1976,0,237,thousand tons
+South Africa,1976,3630,2949,thousand tons
+Angola,1976,0,1,thousand tons
+Albania,1977,0,3.97,thousand tons
+United Arab Emirates,1977,0,71.3,thousand tons
+Argentina,1977,1760,1788,thousand tons
+Australia,1977,4780,874,thousand tons
+Austria,1977,4090,431,thousand tons
+Belgium,1977,7070,2161,thousand tons
+Bulgaria,1977,1130,477,thousand tons
+Bosnia and Herzegovina,1977,42.4,18.66,thousand tons
+Belarus,1977,0,1191,thousand tons
+Brazil,1977,17500,4550,thousand tons
+Canada,1977,7620,5530,thousand tons
+Switzerland,1977,0,793,thousand tons
+Chile,1977,900,171.2,thousand tons
+China,1977,85900,16001,thousand tons
+Colombia,1977,222,301.4,thousand tons
+Cuba,1977,0,265.9,thousand tons
+Czech Republic,1977,4510,414,thousand tons
+Germany,1977,26200,10570,thousand tons
+Denmark,1977,0,635,thousand tons
+Dominican Republic,1977,0.0793,30.8,thousand tons
+Algeria,1977,596,71.3,thousand tons
+Ecuador,1977,0,46,thousand tons
+Egypt,1977,934,1316,thousand tons
+Spain,1977,3340,9250,thousand tons
+Estonia,1977,0.793,0,thousand tons
+Finland,1977,2480,766,thousand tons
+France,1977,9920,6700,thousand tons
+United Kingdom,1977,9160,2750,thousand tons
+Ghana,1977,0,19.86,thousand tons
+Greece,1977,0,863,thousand tons
+Guatemala,1977,0.396,131.7,thousand tons
+Croatia,1977,0,56.3,thousand tons
+Hungary,1977,1300,184.3,thousand tons
+Indonesia,1977,0,2262,thousand tons
+India,1977,13700,7680,thousand tons
+Ireland,1977,0,286,thousand tons
+"Iran, Islamic Republic of",1977,1750,3487,thousand tons
+Israel,1977,0,222.3,thousand tons
+Italy,1977,8470,12750,thousand tons
+Jordan,1977,0,23.81,thousand tons
+Japan,1977,60100,24310,thousand tons
+Kazakhstan,1977,3780,0,thousand tons
+Kenya,1977,0,15.91,thousand tons
+"Korea, Republic of",1977,19600,14620,thousand tons
+Libyan Arab Jamahiriya,1977,0,837,thousand tons
+Sri Lanka,1977,0,23.81,thousand tons
+Luxembourg,1977,0,2037,thousand tons
+Latvia,1977,393,1.586,thousand tons
+Morocco,1977,3.96,0,thousand tons
+"Moldova, Republic of",1977,0,720,thousand tons
+Mexico,1977,4150,8240,thousand tons
+"Macedonia, the former Yugoslav Republic of",1977,0.0793,127.6,thousand tons
+Myanmar,1977,0,19.86,thousand tons
+Malaysia,1977,0,2895,thousand tons
+Netherlands,1977,4370,126.1,thousand tons
+Norway,1977,0,539,thousand tons
+New Zealand,1977,438,118.7,thousand tons
+Pakistan,1977,674,79.3,thousand tons
+Peru,1977,227,368.3,thousand tons
+Philippines,1977,0,338.1,thousand tons
+Poland,1977,5720,2610,thousand tons
+"Korea, Democratic Peoples Republic of",1977,1190,0,thousand tons
+Portugal,1977,325,538,thousand tons
+Paraguay,1977,61.1,0,thousand tons
+Qatar,1977,0,578,thousand tons
+Romania,1977,2650,1052,thousand tons
+Russian Federation,1977,40100,6820,thousand tons
+Saudi Arabia,1977,0,2367,thousand tons
+Singapore,1977,0,478,thousand tons
+El Salvador,1977,0.396,32.11,thousand tons
+Slovakia,1977,2730,226.8,thousand tons
+Slovenia,1977,0,411,thousand tons
+Sweden,1977,2570,1580,thousand tons
+Syrian Arab Republic,1977,0,55.5,thousand tons
+Thailand,1977,0,1670,thousand tons
+Trinidad and Tobago,1977,0,588,thousand tons
+Tunisia,1977,135,46.8,thousand tons
+Turkey,1977,4150,7210,thousand tons
+Taiwan,1977,7910,5490,thousand tons
+Ukraine,1977,24400,781,thousand tons
+Uruguay,1977,0,30.13,thousand tons
+United States of America,1977,42800,37990,thousand tons
+Uzbekistan,1977,90.4,232.8,thousand tons
+Venezuela,1977,0.317,3040,thousand tons
+Viet Nam,1977,0,242.2,thousand tons
+South Africa,1977,3710,3014,thousand tons
+Angola,1977,0,1,thousand tons
+Albania,1978,0,4.05,thousand tons
+United Arab Emirates,1978,0,72.9,thousand tons
+Argentina,1978,1800,1817,thousand tons
+Australia,1978,4880,893,thousand tons
+Austria,1978,4180,440,thousand tons
+Belgium,1978,7220,2212,thousand tons
+Bulgaria,1978,1150,488,thousand tons
+Bosnia and Herzegovina,1978,43.3,18.99,thousand tons
+Belarus,1978,0,1216,thousand tons
+Brazil,1978,17900,4660,thousand tons
+Canada,1978,7780,5650,thousand tons
+Switzerland,1978,0,810,thousand tons
+Chile,1978,920,175.1,thousand tons
+China,1978,87700,16318,thousand tons
+Colombia,1978,227,308,thousand tons
+Cuba,1978,0,272.3,thousand tons
+Czech Republic,1978,4610,423,thousand tons
+Germany,1978,26800,10800,thousand tons
+Denmark,1978,0,649,thousand tons
+Dominican Republic,1978,0.081,31.56,thousand tons
+Algeria,1978,609,72.9,thousand tons
+Ecuador,1978,0,47,thousand tons
+Egypt,1978,954,1343,thousand tons
+Spain,1978,3420,9450,thousand tons
+Estonia,1978,0.81,0,thousand tons
+Finland,1978,2540,782,thousand tons
+France,1978,10100,6840,thousand tons
+United Kingdom,1978,9360,2810,thousand tons
+Ghana,1978,0,20.26,thousand tons
+Greece,1978,0,882,thousand tons
+Guatemala,1978,0.405,135.4,thousand tons
+Croatia,1978,0,57.5,thousand tons
+Hungary,1978,1330,189.1,thousand tons
+Indonesia,1978,0,2304,thousand tons
+India,1978,14000,7850,thousand tons
+Ireland,1978,0,291,thousand tons
+"Iran, Islamic Republic of",1978,1780,3565,thousand tons
+Israel,1978,0,226.4,thousand tons
+Italy,1978,8650,13030,thousand tons
+Jordan,1978,0,24.33,thousand tons
+Japan,1978,61400,24790,thousand tons
+Kazakhstan,1978,3860,0,thousand tons
+Kenya,1978,0,16.19,thousand tons
+"Korea, Republic of",1978,20000,14940,thousand tons
+Libyan Arab Jamahiriya,1978,0,855,thousand tons
+Sri Lanka,1978,0,24.33,thousand tons
+Luxembourg,1978,0,2086,thousand tons
+Latvia,1978,402,1.62,thousand tons
+Morocco,1978,4.05,0,thousand tons
+"Moldova, Republic of",1978,0,735,thousand tons
+Mexico,1978,4240,8420,thousand tons
+"Macedonia, the former Yugoslav Republic of",1978,0.081,130.3,thousand tons
+Myanmar,1978,0,20.26,thousand tons
+Malaysia,1978,0,2960,thousand tons
+Netherlands,1978,4460,128.8,thousand tons
+Norway,1978,0,550,thousand tons
+New Zealand,1978,448,121.2,thousand tons
+Pakistan,1978,689,81,thousand tons
+Peru,1978,232,376.3,thousand tons
+Philippines,1978,0,344.8,thousand tons
+Poland,1978,5840,2660,thousand tons
+"Korea, Democratic Peoples Republic of",1978,1220,0,thousand tons
+Portugal,1978,332,550,thousand tons
+Paraguay,1978,62.4,0,thousand tons
+Qatar,1978,0,591,thousand tons
+Romania,1978,2710,1074,thousand tons
+Russian Federation,1978,40900,6970,thousand tons
+Saudi Arabia,1978,0,2420,thousand tons
+Singapore,1978,0,488,thousand tons
+El Salvador,1978,0.405,32.77,thousand tons
+Slovakia,1978,2790,232,thousand tons
+Slovenia,1978,0,420,thousand tons
+Sweden,1978,2620,1614,thousand tons
+Syrian Arab Republic,1978,0,56.7,thousand tons
+Thailand,1978,0,1698,thousand tons
+Trinidad and Tobago,1978,0,600,thousand tons
+Tunisia,1978,138,47.8,thousand tons
+Turkey,1978,4240,7370,thousand tons
+Taiwan,1978,8080,5610,thousand tons
+Ukraine,1978,24900,798,thousand tons
+Uruguay,1978,0,30.79,thousand tons
+United States of America,1978,43700,38790,thousand tons
+Uzbekistan,1978,92.4,237,thousand tons
+Venezuela,1978,0.324,3106,thousand tons
+Viet Nam,1978,0,247.5,thousand tons
+South Africa,1978,3790,3080,thousand tons
+Angola,1978,0,1,thousand tons
+Albania,1979,0,4.13,thousand tons
+United Arab Emirates,1979,0,74.5,thousand tons
+Argentina,1979,1840,1857,thousand tons
+Australia,1979,4990,912,thousand tons
+Austria,1979,4270,450,thousand tons
+Belgium,1979,7370,2252,thousand tons
+Bulgaria,1979,1170,498,thousand tons
+Bosnia and Herzegovina,1979,44.3,19.42,thousand tons
+Belarus,1979,0,1243,thousand tons
+Brazil,1979,18300,4750,thousand tons
+Canada,1979,7950,5770,thousand tons
+Switzerland,1979,0,827,thousand tons
+Chile,1979,939,179,thousand tons
+China,1979,89600,16736,thousand tons
+Colombia,1979,231,314.5,thousand tons
+Cuba,1979,0,277.7,thousand tons
+Czech Republic,1979,4710,432,thousand tons
+Germany,1979,27300,11020,thousand tons
+Denmark,1979,0,663,thousand tons
+Dominican Republic,1979,0.0827,32.22,thousand tons
+Algeria,1979,622,74.5,thousand tons
+Ecuador,1979,0,48,thousand tons
+Egypt,1979,975,1370,thousand tons
+Spain,1979,3490,9640,thousand tons
+Estonia,1979,0.827,0,thousand tons
+Finland,1979,2590,798,thousand tons
+France,1979,10400,6980,thousand tons
+United Kingdom,1979,9560,2870,thousand tons
+Ghana,1979,0,20.66,thousand tons
+Greece,1979,0,900,thousand tons
+Guatemala,1979,0.414,138.1,thousand tons
+Croatia,1979,0,58.7,thousand tons
+Hungary,1979,1360,192.8,thousand tons
+Indonesia,1979,0,2356,thousand tons
+India,1979,14300,8010,thousand tons
+Ireland,1979,0,298,thousand tons
+"Iran, Islamic Republic of",1979,1820,3644,thousand tons
+Israel,1979,0,231.6,thousand tons
+Italy,1979,8830,13300,thousand tons
+Jordan,1979,0,24.86,thousand tons
+Japan,1979,62700,25380,thousand tons
+Kazakhstan,1979,3950,0,thousand tons
+Kenya,1979,0,16.57,thousand tons
+"Korea, Republic of",1979,20400,15260,thousand tons
+Libyan Arab Jamahiriya,1979,0,872,thousand tons
+Sri Lanka,1979,0,24.86,thousand tons
+Luxembourg,1979,0,2126,thousand tons
+Latvia,1979,410,1.655,thousand tons
+Morocco,1979,4.14,0,thousand tons
+"Moldova, Republic of",1979,0,751,thousand tons
+Mexico,1979,4330,8600,thousand tons
+"Macedonia, the former Yugoslav Republic of",1979,0.0827,133.1,thousand tons
+Myanmar,1979,0,20.66,thousand tons
+Malaysia,1979,0,3025,thousand tons
+Netherlands,1979,4560,131.6,thousand tons
+Norway,1979,0,562,thousand tons
+New Zealand,1979,457,123.8,thousand tons
+Pakistan,1979,703,82.8,thousand tons
+Peru,1979,237,384.2,thousand tons
+Philippines,1979,0,352.6,thousand tons
+Poland,1979,5960,2720,thousand tons
+"Korea, Democratic Peoples Republic of",1979,1240,0,thousand tons
+Portugal,1979,339,561,thousand tons
+Paraguay,1979,63.7,0,thousand tons
+Qatar,1979,0,603,thousand tons
+Romania,1979,2770,1097,thousand tons
+Russian Federation,1979,41800,7120,thousand tons
+Saudi Arabia,1979,0,2462,thousand tons
+Singapore,1979,0,499,thousand tons
+El Salvador,1979,0.414,33.54,thousand tons
+Slovakia,1979,2850,237,thousand tons
+Slovenia,1979,0,429,thousand tons
+Sweden,1979,2680,1648,thousand tons
+Syrian Arab Republic,1979,0,57.9,thousand tons
+Thailand,1979,0,1737,thousand tons
+Trinidad and Tobago,1979,0,613,thousand tons
+Tunisia,1979,141,48.8,thousand tons
+Turkey,1979,4330,7530,thousand tons
+Taiwan,1979,8250,5720,thousand tons
+Ukraine,1979,25500,815,thousand tons
+Uruguay,1979,0,31.45,thousand tons
+United States of America,1979,44700,39600,thousand tons
+Uzbekistan,1979,94.3,242.2,thousand tons
+Venezuela,1979,0.331,3171,thousand tons
+Viet Nam,1979,0,252.8,thousand tons
+South Africa,1979,3870,3146,thousand tons
+Angola,1979,0,1,thousand tons
+Albania,1980,0,4.22,thousand tons
+United Arab Emirates,1980,0,76,thousand tons
+Argentina,1980,1880,1896,thousand tons
+Australia,1980,5090,930,thousand tons
+Austria,1980,4360,459,thousand tons
+Belgium,1980,7530,2300,thousand tons
+Bulgaria,1980,1200,509,thousand tons
+Bosnia and Herzegovina,1980,45.2,19.85,thousand tons
+Belarus,1980,0,1269,thousand tons
+Brazil,1980,18700,4850,thousand tons
+Canada,1980,8120,5910,thousand tons
+Switzerland,1980,0,845,thousand tons
+Chile,1980,959,182.9,thousand tons
+China,1980,91500,17053,thousand tons
+Colombia,1980,236,321.1,thousand tons
+Cuba,1980,0,284.1,thousand tons
+Czech Republic,1980,4810,441,thousand tons
+Germany,1980,27900,11250,thousand tons
+Denmark,1980,0,677,thousand tons
+Dominican Republic,1980,0.0845,32.88,thousand tons
+Algeria,1980,635,76,thousand tons
+Ecuador,1980,0,49,thousand tons
+Egypt,1980,995,1406,thousand tons
+Spain,1980,3560,9840,thousand tons
+Estonia,1980,0.845,0,thousand tons
+Finland,1980,2640,815,thousand tons
+France,1980,10600,7130,thousand tons
+United Kingdom,1980,9760,2930,thousand tons
+Ghana,1980,0,21.07,thousand tons
+Greece,1980,0,919,thousand tons
+Guatemala,1980,0.422,140.7,thousand tons
+Croatia,1980,0,60,thousand tons
+Hungary,1980,1380,196.6,thousand tons
+Indonesia,1980,0,2407,thousand tons
+India,1980,14600,8180,thousand tons
+Ireland,1980,0,304,thousand tons
+"Iran, Islamic Republic of",1980,1860,3712,thousand tons
+Israel,1980,0,236.8,thousand tons
+Italy,1980,9020,13590,thousand tons
+Jordan,1980,0,25.38,thousand tons
+Japan,1980,64000,25860,thousand tons
+Kazakhstan,1980,4030,0,thousand tons
+Kenya,1980,0,16.85,thousand tons
+"Korea, Republic of",1980,20800,15580,thousand tons
+Libyan Arab Jamahiriya,1980,0,891,thousand tons
+Sri Lanka,1980,0,25.38,thousand tons
+Luxembourg,1980,0,2175,thousand tons
+Latvia,1980,419,1.689,thousand tons
+Morocco,1980,4.22,0,thousand tons
+"Moldova, Republic of",1980,0,766,thousand tons
+Mexico,1980,4420,8780,thousand tons
+"Macedonia, the former Yugoslav Republic of",1980,0.0845,135.9,thousand tons
+Myanmar,1980,0,21.07,thousand tons
+Malaysia,1980,0,3080,thousand tons
+Netherlands,1980,4650,134.3,thousand tons
+Norway,1980,0,573,thousand tons
+New Zealand,1980,467,126.3,thousand tons
+Pakistan,1980,718,84.5,thousand tons
+Peru,1980,242,392.1,thousand tons
+Philippines,1980,0,359.3,thousand tons
+Poland,1980,6090,2780,thousand tons
+"Korea, Democratic Peoples Republic of",1980,1270,0,thousand tons
+Portugal,1980,346,573,thousand tons
+Paraguay,1980,65,0,thousand tons
+Qatar,1980,0,616,thousand tons
+Romania,1980,2830,1120,thousand tons
+Russian Federation,1980,42700,7270,thousand tons
+Saudi Arabia,1980,0,2514,thousand tons
+Singapore,1980,0,509,thousand tons
+El Salvador,1980,0.422,34.21,thousand tons
+Slovakia,1980,2910,241,thousand tons
+Slovenia,1980,0,438,thousand tons
+Sweden,1980,2730,1682,thousand tons
+Syrian Arab Republic,1980,0,59.1,thousand tons
+Thailand,1980,0,1776,thousand tons
+Trinidad and Tobago,1980,0,626,thousand tons
+Tunisia,1980,144,49.9,thousand tons
+Turkey,1980,4420,7680,thousand tons
+Taiwan,1980,8420,5840,thousand tons
+Ukraine,1980,26000,832,thousand tons
+Uruguay,1980,0,32.1,thousand tons
+United States of America,1980,45600,40400,thousand tons
+Uzbekistan,1980,96.3,247.4,thousand tons
+Venezuela,1980,0.338,3237,thousand tons
+Viet Nam,1980,0,258,thousand tons
+South Africa,1980,3950,3211,thousand tons
+Angola,1980,0,1,thousand tons
+Albania,1981,0,4.22,thousand tons
+United Arab Emirates,1981,0,76.1,thousand tons
+Argentina,1981,1880,1906,thousand tons
+Australia,1981,5100,932,thousand tons
+Austria,1981,4370,459,thousand tons
+Belgium,1981,7530,2300,thousand tons
+Bulgaria,1981,1200,509,thousand tons
+Bosnia and Herzegovina,1981,45.2,19.86,thousand tons
+Belarus,1981,0,1270,thousand tons
+Brazil,1981,18700,4860,thousand tons
+Canada,1981,8120,5910,thousand tons
+Switzerland,1981,0,845,thousand tons
+Chile,1981,960,182.9,thousand tons
+China,1981,91600,17054,thousand tons
+Colombia,1981,236,321.2,thousand tons
+Cuba,1981,0,284.2,thousand tons
+Czech Republic,1981,4810,443,thousand tons
+Germany,1981,27900,11270,thousand tons
+Denmark,1981,0,677,thousand tons
+Dominican Republic,1981,0.0846,32.89,thousand tons
+Algeria,1981,636,76.1,thousand tons
+Ecuador,1981,0,49.1,thousand tons
+Egypt,1981,996,1407,thousand tons
+Spain,1981,3560,9860,thousand tons
+Estonia,1981,0.846,0,thousand tons
+Finland,1981,2650,816,thousand tons
+France,1981,10600,7140,thousand tons
+United Kingdom,1981,9770,2930,thousand tons
+Ghana,1981,0,21.17,thousand tons
+Greece,1981,0,920,thousand tons
+Guatemala,1981,0.423,140.8,thousand tons
+Croatia,1981,0,60,thousand tons
+Hungary,1981,1380,196.7,thousand tons
+Indonesia,1981,0,2408,thousand tons
+India,1981,14600,8200,thousand tons
+Ireland,1981,0,304,thousand tons
+"Iran, Islamic Republic of",1981,1860,3723,thousand tons
+Israel,1981,0,236.8,thousand tons
+Italy,1981,9030,13600,thousand tons
+Jordan,1981,0,25.39,thousand tons
+Japan,1981,64100,25970,thousand tons
+Kazakhstan,1981,4030,0,thousand tons
+Kenya,1981,0,16.96,thousand tons
+"Korea, Republic of",1981,20900,15600,thousand tons
+Libyan Arab Jamahiriya,1981,0,892,thousand tons
+Sri Lanka,1981,0,25.39,thousand tons
+Luxembourg,1981,0,2176,thousand tons
+Latvia,1981,419,1.691,thousand tons
+Morocco,1981,4.23,0,thousand tons
+"Moldova, Republic of",1981,0,768,thousand tons
+Mexico,1981,4430,8790,thousand tons
+"Macedonia, the former Yugoslav Republic of",1981,0.0846,136,thousand tons
+Myanmar,1981,0,21.17,thousand tons
+Malaysia,1981,0,3091,thousand tons
+Netherlands,1981,4660,134.5,thousand tons
+Norway,1981,0,574,thousand tons
+New Zealand,1981,467,126.5,thousand tons
+Pakistan,1981,719,84.6,thousand tons
+Peru,1981,242,392.2,thousand tons
+Philippines,1981,0,360.4,thousand tons
+Poland,1981,6090,2780,thousand tons
+"Korea, Democratic Peoples Republic of",1981,1270,0,thousand tons
+Portugal,1981,347,573,thousand tons
+Paraguay,1981,65.1,0,thousand tons
+Qatar,1981,0,616,thousand tons
+Romania,1981,2830,1121,thousand tons
+Russian Federation,1981,42700,7280,thousand tons
+Saudi Arabia,1981,0,2525,thousand tons
+Singapore,1981,0,509,thousand tons
+El Salvador,1981,0.423,34.22,thousand tons
+Slovakia,1981,2910,241,thousand tons
+Slovenia,1981,0,439,thousand tons
+Sweden,1981,2740,1684,thousand tons
+Syrian Arab Republic,1981,0,59.2,thousand tons
+Thailand,1981,0,1776,thousand tons
+Trinidad and Tobago,1981,0,626,thousand tons
+Tunisia,1981,144,49.9,thousand tons
+Turkey,1981,4420,7690,thousand tons
+Taiwan,1981,8430,5860,thousand tons
+Ukraine,1981,26000,833,thousand tons
+Uruguay,1981,0,32.11,thousand tons
+United States of America,1981,45600,40400,thousand tons
+Uzbekistan,1981,96.4,247.5,thousand tons
+Venezuela,1981,0.338,3238,thousand tons
+Viet Nam,1981,0,259.1,thousand tons
+South Africa,1981,3950,3222,thousand tons
+Angola,1981,0,1,thousand tons
+Albania,1982,0,4.23,thousand tons
+United Arab Emirates,1982,0,76.2,thousand tons
+Argentina,1982,1880,1907,thousand tons
+Australia,1982,5100,933,thousand tons
+Austria,1982,4370,460,thousand tons
+Belgium,1982,7540,2310,thousand tons
+Bulgaria,1982,1200,509,thousand tons
+Bosnia and Herzegovina,1982,45.3,19.87,thousand tons
+Belarus,1982,0,1272,thousand tons
+Brazil,1982,18700,4870,thousand tons
+Canada,1982,8130,5910,thousand tons
+Switzerland,1982,0,846,thousand tons
+Chile,1982,961,183,thousand tons
+China,1982,91700,17055,thousand tons
+Colombia,1982,237,322.3,thousand tons
+Cuba,1982,0,284.3,thousand tons
+Czech Republic,1982,4820,443,thousand tons
+Germany,1982,28000,11280,thousand tons
+Denmark,1982,0,678,thousand tons
+Dominican Republic,1982,0.0846,32.9,thousand tons
+Algeria,1982,637,76.2,thousand tons
+Ecuador,1982,0,49.1,thousand tons
+Egypt,1982,997,1407,thousand tons
+Spain,1982,3570,9870,thousand tons
+Estonia,1982,0.846,0,thousand tons
+Finland,1982,2650,816,thousand tons
+France,1982,10600,7140,thousand tons
+United Kingdom,1982,9780,2930,thousand tons
+Ghana,1982,0,21.18,thousand tons
+Greece,1982,0,921,thousand tons
+Guatemala,1982,0.423,140.8,thousand tons
+Croatia,1982,0,60.1,thousand tons
+Hungary,1982,1390,196.8,thousand tons
+Indonesia,1982,0,2409,thousand tons
+India,1982,14600,8200,thousand tons
+Ireland,1982,0,305,thousand tons
+"Iran, Islamic Republic of",1982,1860,3724,thousand tons
+Israel,1982,0,236.9,thousand tons
+Italy,1982,9040,13610,thousand tons
+Jordan,1982,0,25.39,thousand tons
+Japan,1982,64100,25980,thousand tons
+Kazakhstan,1982,4040,0,thousand tons
+Kenya,1982,0,16.96,thousand tons
+"Korea, Republic of",1982,20900,15600,thousand tons
+Libyan Arab Jamahiriya,1982,0,893,thousand tons
+Sri Lanka,1982,0,25.39,thousand tons
+Luxembourg,1982,0,2178,thousand tons
+Latvia,1982,420,1.693,thousand tons
+Morocco,1982,4.23,0,thousand tons
+"Moldova, Republic of",1982,0,769,thousand tons
+Mexico,1982,4430,8800,thousand tons
+"Macedonia, the former Yugoslav Republic of",1982,0.0846,136.2,thousand tons
+Myanmar,1982,0,21.18,thousand tons
+Malaysia,1982,0,3091,thousand tons
+Netherlands,1982,4660,134.6,thousand tons
+Norway,1982,0,575,thousand tons
+New Zealand,1982,468,126.6,thousand tons
+Pakistan,1982,719,84.6,thousand tons
+Peru,1982,243,393.3,thousand tons
+Philippines,1982,0,360.5,thousand tons
+Poland,1982,6100,2790,thousand tons
+"Korea, Democratic Peoples Republic of",1982,1270,0,thousand tons
+Portugal,1982,347,574,thousand tons
+Paraguay,1982,65.2,0,thousand tons
+Qatar,1982,0,617,thousand tons
+Romania,1982,2830,1122,thousand tons
+Russian Federation,1982,42800,7290,thousand tons
+Saudi Arabia,1982,0,2526,thousand tons
+Singapore,1982,0,510,thousand tons
+El Salvador,1982,0.423,34.33,thousand tons
+Slovakia,1982,2920,243,thousand tons
+Slovenia,1982,0,439,thousand tons
+Sweden,1982,2740,1686,thousand tons
+Syrian Arab Republic,1982,0,59.2,thousand tons
+Thailand,1982,0,1777,thousand tons
+Trinidad and Tobago,1982,0,628,thousand tons
+Tunisia,1982,144,50,thousand tons
+Turkey,1982,4430,7700,thousand tons
+Taiwan,1982,8440,5860,thousand tons
+Ukraine,1982,26100,834,thousand tons
+Uruguay,1982,0,32.12,thousand tons
+United States of America,1982,45700,40500,thousand tons
+Uzbekistan,1982,96.5,247.5,thousand tons
+Venezuela,1982,0.339,3249,thousand tons
+Viet Nam,1982,0,259.2,thousand tons
+South Africa,1982,3960,3223,thousand tons
+Angola,1982,0,1,thousand tons
+Albania,1983,0,4.24,thousand tons
+United Arab Emirates,1983,0,76.3,thousand tons
+Argentina,1983,1890,1907,thousand tons
+Australia,1983,5110,934,thousand tons
+Austria,1983,4380,461,thousand tons
+Belgium,1983,7550,2310,thousand tons
+Bulgaria,1983,1200,510,thousand tons
+Bosnia and Herzegovina,1983,45.3,19.87,thousand tons
+Belarus,1983,0,1272,thousand tons
+Brazil,1983,18700,4870,thousand tons
+Canada,1983,8140,5920,thousand tons
+Switzerland,1983,0,848,thousand tons
+Chile,1983,962,183,thousand tons
+China,1983,91800,17156,thousand tons
+Colombia,1983,237,322.4,thousand tons
+Cuba,1983,0,284.3,thousand tons
+Czech Republic,1983,4820,443,thousand tons
+Germany,1983,28000,11290,thousand tons
+Denmark,1983,0,679,thousand tons
+Dominican Republic,1983,0.0847,33.01,thousand tons
+Algeria,1983,637,76.3,thousand tons
+Ecuador,1983,0,49.2,thousand tons
+Egypt,1983,998,1408,thousand tons
+Spain,1983,3570,9880,thousand tons
+Estonia,1983,0.847,0,thousand tons
+Finland,1983,2650,818,thousand tons
+France,1983,10600,7160,thousand tons
+United Kingdom,1983,9790,2940,thousand tons
+Ghana,1983,0,21.18,thousand tons
+Greece,1983,0,922,thousand tons
+Guatemala,1983,0.424,140.9,thousand tons
+Croatia,1983,0,60.2,thousand tons
+Hungary,1983,1390,197.9,thousand tons
+Indonesia,1983,0,2409,thousand tons
+India,1983,14600,8210,thousand tons
+Ireland,1983,0,305,thousand tons
+"Iran, Islamic Republic of",1983,1870,3725,thousand tons
+Israel,1983,0,236.9,thousand tons
+Italy,1983,9050,13630,thousand tons
+Jordan,1983,0,25.4,thousand tons
+Japan,1983,64200,25990,thousand tons
+Kazakhstan,1983,4040,0,thousand tons
+Kenya,1983,0,16.97,thousand tons
+"Korea, Republic of",1983,20900,15620,thousand tons
+Libyan Arab Jamahiriya,1983,0,894,thousand tons
+Sri Lanka,1983,0,25.4,thousand tons
+Luxembourg,1983,0,2179,thousand tons
+Latvia,1983,420,1.695,thousand tons
+Morocco,1983,4.24,0,thousand tons
+"Moldova, Republic of",1983,0,769,thousand tons
+Mexico,1983,4440,8800,thousand tons
+"Macedonia, the former Yugoslav Republic of",1983,0.0847,136.3,thousand tons
+Myanmar,1983,0,21.18,thousand tons
+Malaysia,1983,0,3092,thousand tons
+Netherlands,1983,4670,134.8,thousand tons
+Norway,1983,0,575,thousand tons
+New Zealand,1983,468,126.7,thousand tons
+Pakistan,1983,720,84.7,thousand tons
+Peru,1983,243,393.4,thousand tons
+Philippines,1983,0,360.6,thousand tons
+Poland,1983,6110,2790,thousand tons
+"Korea, Democratic Peoples Republic of",1983,1270,0,thousand tons
+Portugal,1983,347,575,thousand tons
+Paraguay,1983,65.2,0,thousand tons
+Qatar,1983,0,617,thousand tons
+Romania,1983,2840,1123,thousand tons
+Russian Federation,1983,42800,7290,thousand tons
+Saudi Arabia,1983,0,2526,thousand tons
+Singapore,1983,0,511,thousand tons
+El Salvador,1983,0.424,34.34,thousand tons
+Slovakia,1983,2920,243,thousand tons
+Slovenia,1983,0,440,thousand tons
+Sweden,1983,2740,1688,thousand tons
+Syrian Arab Republic,1983,0,59.3,thousand tons
+Thailand,1983,0,1777,thousand tons
+Trinidad and Tobago,1983,0,628,thousand tons
+Tunisia,1983,144,50,thousand tons
+Turkey,1983,4430,7710,thousand tons
+Taiwan,1983,8450,5870,thousand tons
+Ukraine,1983,26100,835,thousand tons
+Uruguay,1983,0,32.23,thousand tons
+United States of America,1983,45700,40500,thousand tons
+Uzbekistan,1983,96.6,248.6,thousand tons
+Venezuela,1983,0.339,3250,thousand tons
+Viet Nam,1983,0,259.2,thousand tons
+South Africa,1983,3960,3224,thousand tons
+Angola,1983,0,1,thousand tons
+Albania,1984,0,4.24,thousand tons
+United Arab Emirates,1984,0,76.3,thousand tons
+Argentina,1984,1890,1908,thousand tons
+Australia,1984,5110,935,thousand tons
+Austria,1984,4380,461,thousand tons
+Belgium,1984,7560,2320,thousand tons
+Bulgaria,1984,1200,511,thousand tons
+Bosnia and Herzegovina,1984,45.4,19.98,thousand tons
+Belarus,1984,0,1274,thousand tons
+Brazil,1984,18800,4870,thousand tons
+Canada,1984,8150,5920,thousand tons
+Switzerland,1984,0,848,thousand tons
+Chile,1984,963,184.1,thousand tons
+China,1984,91900,17157,thousand tons
+Colombia,1984,237,322.4,thousand tons
+Cuba,1984,0,285.4,thousand tons
+Czech Republic,1984,4830,443,thousand tons
+Germany,1984,28000,11300,thousand tons
+Denmark,1984,0,680,thousand tons
+Dominican Republic,1984,0.0848,33.02,thousand tons
+Algeria,1984,638,76.3,thousand tons
+Ecuador,1984,0,49.2,thousand tons
+Egypt,1984,999,1408,thousand tons
+Spain,1984,3580,9890,thousand tons
+Estonia,1984,0.848,0,thousand tons
+Finland,1984,2660,818,thousand tons
+France,1984,10600,7160,thousand tons
+United Kingdom,1984,9800,2940,thousand tons
+Ghana,1984,0,21.19,thousand tons
+Greece,1984,0,923,thousand tons
+Guatemala,1984,0.424,140.9,thousand tons
+Croatia,1984,0,60.3,thousand tons
+Hungary,1984,1390,198,thousand tons
+Indonesia,1984,0,2420,thousand tons
+India,1984,14600,8220,thousand tons
+Ireland,1984,0,305,thousand tons
+"Iran, Islamic Republic of",1984,1870,3736,thousand tons
+Israel,1984,0,238,thousand tons
+Italy,1984,9060,13640,thousand tons
+Jordan,1984,0,25.41,thousand tons
+Japan,1984,64300,26000,thousand tons
+Kazakhstan,1984,4050,0,thousand tons
+Kenya,1984,0,16.97,thousand tons
+"Korea, Republic of",1984,20900,15640,thousand tons
+Libyan Arab Jamahiriya,1984,0,895,thousand tons
+Sri Lanka,1984,0,25.41,thousand tons
+Luxembourg,1984,0,2180,thousand tons
+Latvia,1984,421,1.697,thousand tons
+Morocco,1984,4.24,0,thousand tons
+"Moldova, Republic of",1984,0,770,thousand tons
+Mexico,1984,4440,8820,thousand tons
+"Macedonia, the former Yugoslav Republic of",1984,0.0848,136.5,thousand tons
+Myanmar,1984,0,21.19,thousand tons
+Malaysia,1984,0,3093,thousand tons
+Netherlands,1984,4670,134.8,thousand tons
+Norway,1984,0,576,thousand tons
+New Zealand,1984,469,127,thousand tons
+Pakistan,1984,721,84.9,thousand tons
+Peru,1984,243,393.5,thousand tons
+Philippines,1984,0,361.7,thousand tons
+Poland,1984,6110,2790,thousand tons
+"Korea, Democratic Peoples Republic of",1984,1270,0,thousand tons
+Portugal,1984,348,575,thousand tons
+Paraguay,1984,65.3,0,thousand tons
+Qatar,1984,0,618,thousand tons
+Romania,1984,2840,1125,thousand tons
+Russian Federation,1984,42900,7310,thousand tons
+Saudi Arabia,1984,0,2527,thousand tons
+Singapore,1984,0,512,thousand tons
+El Salvador,1984,0.424,34.35,thousand tons
+Slovakia,1984,2920,243,thousand tons
+Slovenia,1984,0,441,thousand tons
+Sweden,1984,2740,1690,thousand tons
+Syrian Arab Republic,1984,0,59.4,thousand tons
+Thailand,1984,0,1778,thousand tons
+Trinidad and Tobago,1984,0,629,thousand tons
+Tunisia,1984,144,50,thousand tons
+Turkey,1984,4440,7720,thousand tons
+Taiwan,1984,8460,5870,thousand tons
+Ukraine,1984,26100,835,thousand tons
+Uruguay,1984,0,32.24,thousand tons
+United States of America,1984,45800,40500,thousand tons
+Uzbekistan,1984,96.7,248.7,thousand tons
+Venezuela,1984,0.339,3251,thousand tons
+Viet Nam,1984,0,259.3,thousand tons
+South Africa,1984,3970,3225,thousand tons
+Angola,1984,0,1,thousand tons
+Albania,1985,0,4.25,thousand tons
+United Arab Emirates,1985,0,76.4,thousand tons
+Argentina,1985,1890,1908,thousand tons
+Australia,1985,5120,936,thousand tons
+Austria,1985,4390,461,thousand tons
+Belgium,1985,7570,2320,thousand tons
+Bulgaria,1985,1210,511,thousand tons
+Bosnia and Herzegovina,1985,45.4,19.99,thousand tons
+Belarus,1985,0,1275,thousand tons
+Brazil,1985,18800,4880,thousand tons
+Canada,1985,8160,5930,thousand tons
+Switzerland,1985,0,850,thousand tons
+Chile,1985,964,184.1,thousand tons
+China,1985,92000,17158,thousand tons
+Colombia,1985,237,323.5,thousand tons
+Cuba,1985,0,285.5,thousand tons
+Czech Republic,1985,4830,444,thousand tons
+Germany,1985,28100,11320,thousand tons
+Denmark,1985,0,680,thousand tons
+Dominican Republic,1985,0.0849,33.03,thousand tons
+Algeria,1985,639,76.4,thousand tons
+Ecuador,1985,0,49.2,thousand tons
+Egypt,1985,1000,1408,thousand tons
+Spain,1985,3580,9900,thousand tons
+Estonia,1985,0.849,0,thousand tons
+Finland,1985,2660,820,thousand tons
+France,1985,10600,7170,thousand tons
+United Kingdom,1985,9810,2950,thousand tons
+Ghana,1985,0,21.2,thousand tons
+Greece,1985,0,924,thousand tons
+Guatemala,1985,0.425,140.9,thousand tons
+Croatia,1985,0,60.3,thousand tons
+Hungary,1985,1390,198.1,thousand tons
+Indonesia,1985,0,2420,thousand tons
+India,1985,14600,8230,thousand tons
+Ireland,1985,0,306,thousand tons
+"Iran, Islamic Republic of",1985,1870,3737,thousand tons
+Israel,1985,0,238.1,thousand tons
+Italy,1985,9070,13660,thousand tons
+Jordan,1985,0,25.51,thousand tons
+Japan,1985,64400,26010,thousand tons
+Kazakhstan,1985,4050,0,thousand tons
+Kenya,1985,0,16.98,thousand tons
+"Korea, Republic of",1985,20900,15660,thousand tons
+Libyan Arab Jamahiriya,1985,0,896,thousand tons
+Sri Lanka,1985,0,25.51,thousand tons
+Luxembourg,1985,0,2181,thousand tons
+Latvia,1985,421,1.698,thousand tons
+Morocco,1985,4.25,0,thousand tons
+"Moldova, Republic of",1985,0,771,thousand tons
+Mexico,1985,4450,8830,thousand tons
+"Macedonia, the former Yugoslav Republic of",1985,0.0849,136.6,thousand tons
+Myanmar,1985,0,21.2,thousand tons
+Malaysia,1985,0,3104,thousand tons
+Netherlands,1985,4680,135,thousand tons
+Norway,1985,0,577,thousand tons
+New Zealand,1985,469,127.1,thousand tons
+Pakistan,1985,722,84.9,thousand tons
+Peru,1985,244,394.6,thousand tons
+Philippines,1985,0,361.8,thousand tons
+Poland,1985,6120,2790,thousand tons
+"Korea, Democratic Peoples Republic of",1985,1270,0,thousand tons
+Portugal,1985,348,575,thousand tons
+Paraguay,1985,65.4,0,thousand tons
+Qatar,1985,0,620,thousand tons
+Romania,1985,2840,1125,thousand tons
+Russian Federation,1985,42900,7310,thousand tons
+Saudi Arabia,1985,0,2528,thousand tons
+Singapore,1985,0,512,thousand tons
+El Salvador,1985,0.425,34.35,thousand tons
+Slovakia,1985,2930,243,thousand tons
+Slovenia,1985,0,441,thousand tons
+Sweden,1985,2750,1691,thousand tons
+Syrian Arab Republic,1985,0,59.5,thousand tons
+Thailand,1985,0,1788,thousand tons
+Trinidad and Tobago,1985,0,629,thousand tons
+Tunisia,1985,144,50.1,thousand tons
+Turkey,1985,4440,7720,thousand tons
+Taiwan,1985,8470,5880,thousand tons
+Ukraine,1985,26100,837,thousand tons
+Uruguay,1985,0,32.25,thousand tons
+United States of America,1985,45800,40700,thousand tons
+Uzbekistan,1985,96.8,248.7,thousand tons
+Venezuela,1985,0.34,3262,thousand tons
+Viet Nam,1985,0,260.4,thousand tons
+South Africa,1985,3970,3236,thousand tons
+Angola,1985,0,1,thousand tons
+Albania,1986,0,4.31,thousand tons
+United Arab Emirates,1986,0,77.6,thousand tons
+Argentina,1986,1920,1935,thousand tons
+Australia,1986,5200,950,thousand tons
+Austria,1986,4450,468,thousand tons
+Belgium,1986,7680,2350,thousand tons
+Bulgaria,1986,1220,519,thousand tons
+Bosnia and Herzegovina,1986,46.1,20.28,thousand tons
+Belarus,1986,0,1294,thousand tons
+Brazil,1986,19100,4950,thousand tons
+Canada,1986,8280,6030,thousand tons
+Switzerland,1986,0,862,thousand tons
+Chile,1986,979,186.8,thousand tons
+China,1986,93400,17371,thousand tons
+Colombia,1986,241,327.7,thousand tons
+Cuba,1986,0,289.5,thousand tons
+Czech Republic,1986,4910,450,thousand tons
+Germany,1986,28500,11480,thousand tons
+Denmark,1986,0,691,thousand tons
+Dominican Republic,1986,0.0862,33.55,thousand tons
+Algeria,1986,648,77.6,thousand tons
+Ecuador,1986,0,50,thousand tons
+Egypt,1986,1020,1433,thousand tons
+Spain,1986,3630,10050,thousand tons
+Estonia,1986,0.862,0,thousand tons
+Finland,1986,2700,832,thousand tons
+France,1986,10800,7280,thousand tons
+United Kingdom,1986,9960,2990,thousand tons
+Ghana,1986,0,21.57,thousand tons
+Greece,1986,0,938,thousand tons
+Guatemala,1986,0.431,143.4,thousand tons
+Croatia,1986,0,61.2,thousand tons
+Hungary,1986,1410,200.4,thousand tons
+Indonesia,1986,0,2459,thousand tons
+India,1986,14900,8350,thousand tons
+Ireland,1986,0,311,thousand tons
+"Iran, Islamic Republic of",1986,1900,3790,thousand tons
+Israel,1986,0,240.9,thousand tons
+Italy,1986,9200,13860,thousand tons
+Jordan,1986,0,25.91,thousand tons
+Japan,1986,65300,26450,thousand tons
+Kazakhstan,1986,4110,0,thousand tons
+Kenya,1986,0,17.24,thousand tons
+"Korea, Republic of",1986,21300,15900,thousand tons
+Libyan Arab Jamahiriya,1986,0,909,thousand tons
+Sri Lanka,1986,0,25.91,thousand tons
+Luxembourg,1986,0,2215,thousand tons
+Latvia,1986,428,1.724,thousand tons
+Morocco,1986,4.31,0,thousand tons
+"Moldova, Republic of",1986,0,782,thousand tons
+Mexico,1986,4510,8960,thousand tons
+"Macedonia, the former Yugoslav Republic of",1986,0.0862,138.7,thousand tons
+Myanmar,1986,0,21.57,thousand tons
+Malaysia,1986,0,3145,thousand tons
+Netherlands,1986,4750,137.1,thousand tons
+Norway,1986,0,586,thousand tons
+New Zealand,1986,476,128.9,thousand tons
+Pakistan,1986,733,86.2,thousand tons
+Peru,1986,247,400,thousand tons
+Philippines,1986,0,367.1,thousand tons
+Poland,1986,6210,2840,thousand tons
+"Korea, Democratic Peoples Republic of",1986,1290,0,thousand tons
+Portugal,1986,353,584,thousand tons
+Paraguay,1986,66.4,0,thousand tons
+Qatar,1986,0,629,thousand tons
+Romania,1986,2880,1143,thousand tons
+Russian Federation,1986,43600,7420,thousand tons
+Saudi Arabia,1986,0,2567,thousand tons
+Singapore,1986,0,520,thousand tons
+El Salvador,1986,0.431,34.88,thousand tons
+Slovakia,1986,2970,246,thousand tons
+Slovenia,1986,0,448,thousand tons
+Sweden,1986,2790,1718,thousand tons
+Syrian Arab Republic,1986,0,60.4,thousand tons
+Thailand,1986,0,1814,thousand tons
+Trinidad and Tobago,1986,0,638,thousand tons
+Tunisia,1986,147,50.9,thousand tons
+Turkey,1986,4510,7840,thousand tons
+Taiwan,1986,8600,5970,thousand tons
+Ukraine,1986,26500,849,thousand tons
+Uruguay,1986,0,32.76,thousand tons
+United States of America,1986,46500,41200,thousand tons
+Uzbekistan,1986,98.3,252.6,thousand tons
+Venezuela,1986,0.345,3303,thousand tons
+Viet Nam,1986,0,263.3,thousand tons
+South Africa,1986,4030,3277,thousand tons
+Angola,1986,0,1,thousand tons
+Albania,1987,0,4.37,thousand tons
+United Arab Emirates,1987,0,78.7,thousand tons
+Argentina,1987,1950,1972,thousand tons
+Australia,1987,5270,964,thousand tons
+Austria,1987,4520,475,thousand tons
+Belgium,1987,7790,2390,thousand tons
+Bulgaria,1987,1240,527,thousand tons
+Bosnia and Herzegovina,1987,46.8,20.58,thousand tons
+Belarus,1987,0,1313,thousand tons
+Brazil,1987,19300,5030,thousand tons
+Canada,1987,8410,6110,thousand tons
+Switzerland,1987,0,875,thousand tons
+Chile,1987,993,189.5,thousand tons
+China,1987,94700,17683,thousand tons
+Colombia,1987,245,332.9,thousand tons
+Cuba,1987,0,293.5,thousand tons
+Czech Republic,1987,4980,457,thousand tons
+Germany,1987,28900,11660,thousand tons
+Denmark,1987,0,700,thousand tons
+Dominican Republic,1987,0.0875,34.07,thousand tons
+Algeria,1987,658,78.7,thousand tons
+Ecuador,1987,0,50.8,thousand tons
+Egypt,1987,1030,1448,thousand tons
+Spain,1987,3690,10200,thousand tons
+Estonia,1987,0.875,0,thousand tons
+Finland,1987,2740,844,thousand tons
+France,1987,10900,7390,thousand tons
+United Kingdom,1987,10100,3030,thousand tons
+Ghana,1987,0,21.85,thousand tons
+Greece,1987,0,952,thousand tons
+Guatemala,1987,0.437,146,thousand tons
+Croatia,1987,0,62.1,thousand tons
+Hungary,1987,1430,203.7,thousand tons
+Indonesia,1987,0,2488,thousand tons
+India,1987,15100,8470,thousand tons
+Ireland,1987,0,315,thousand tons
+"Iran, Islamic Republic of",1987,1930,3843,thousand tons
+Israel,1987,0,244.8,thousand tons
+Italy,1987,9340,14070,thousand tons
+Jordan,1987,0,26.2,thousand tons
+Japan,1987,66300,26790,thousand tons
+Kazakhstan,1987,4170,0,thousand tons
+Kenya,1987,0,17.5,thousand tons
+"Korea, Republic of",1987,21600,16140,thousand tons
+Libyan Arab Jamahiriya,1987,0,922,thousand tons
+Sri Lanka,1987,0,26.2,thousand tons
+Luxembourg,1987,0,2250,thousand tons
+Latvia,1987,434,1.75,thousand tons
+Morocco,1987,4.37,0,thousand tons
+"Moldova, Republic of",1987,0,794,thousand tons
+Mexico,1987,4580,9090,thousand tons
+"Macedonia, the former Yugoslav Republic of",1987,0.0875,140.7,thousand tons
+Myanmar,1987,0,21.85,thousand tons
+Malaysia,1987,0,3196,thousand tons
+Netherlands,1987,4820,139.1,thousand tons
+Norway,1987,0,594,thousand tons
+New Zealand,1987,483,130.9,thousand tons
+Pakistan,1987,744,87.5,thousand tons
+Peru,1987,251,406.5,thousand tons
+Philippines,1987,0,372.4,thousand tons
+Poland,1987,6300,2880,thousand tons
+"Korea, Democratic Peoples Republic of",1987,1310,0,thousand tons
+Portugal,1987,359,593,thousand tons
+Paraguay,1987,67.4,0,thousand tons
+Qatar,1987,0,638,thousand tons
+Romania,1987,2930,1159,thousand tons
+Russian Federation,1987,44200,7530,thousand tons
+Saudi Arabia,1987,0,2606,thousand tons
+Singapore,1987,0,528,thousand tons
+El Salvador,1987,0.437,35.4,thousand tons
+Slovakia,1987,3020,250,thousand tons
+Slovenia,1987,0,454,thousand tons
+Sweden,1987,2830,1743,thousand tons
+Syrian Arab Republic,1987,0,61.2,thousand tons
+Thailand,1987,0,1841,thousand tons
+Trinidad and Tobago,1987,0,649,thousand tons
+Tunisia,1987,149,51.6,thousand tons
+Turkey,1987,4570,7960,thousand tons
+Taiwan,1987,8720,6050,thousand tons
+Ukraine,1987,26900,862,thousand tons
+Uruguay,1987,0,33.28,thousand tons
+United States of America,1987,47200,41900,thousand tons
+Uzbekistan,1987,99.7,256.5,thousand tons
+Venezuela,1987,0.35,3355,thousand tons
+Viet Nam,1987,0,267.2,thousand tons
+South Africa,1987,4090,3329,thousand tons
+Angola,1987,0,1,thousand tons
+Albania,1988,0,4.44,thousand tons
+United Arab Emirates,1988,0,79.9,thousand tons
+Argentina,1988,1970,1999,thousand tons
+Australia,1988,5350,978,thousand tons
+Austria,1988,4580,482,thousand tons
+Belgium,1988,7910,2410,thousand tons
+Bulgaria,1988,1260,534,thousand tons
+Bosnia and Herzegovina,1988,47.5,20.87,thousand tons
+Belarus,1988,0,1333,thousand tons
+Brazil,1988,19600,5090,thousand tons
+Canada,1988,8530,6200,thousand tons
+Switzerland,1988,0,887,thousand tons
+Chile,1988,1010,192.1,thousand tons
+China,1988,96100,17896,thousand tons
+Colombia,1988,248,338,thousand tons
+Cuba,1988,0,298.6,thousand tons
+Czech Republic,1988,5050,464,thousand tons
+Germany,1988,29300,11820,thousand tons
+Denmark,1988,0,711,thousand tons
+Dominican Republic,1988,0.0887,34.49,thousand tons
+Algeria,1988,667,79.9,thousand tons
+Ecuador,1988,0,51.5,thousand tons
+Egypt,1988,1050,1474,thousand tons
+Spain,1988,3740,10340,thousand tons
+Estonia,1988,0.887,0,thousand tons
+Finland,1988,2780,857,thousand tons
+France,1988,11100,7500,thousand tons
+United Kingdom,1988,10300,3070,thousand tons
+Ghana,1988,0,22.22,thousand tons
+Greece,1988,0,966,thousand tons
+Guatemala,1988,0.444,147.5,thousand tons
+Croatia,1988,0,63,thousand tons
+Hungary,1988,1450,207,thousand tons
+Indonesia,1988,0,2527,thousand tons
+India,1988,15300,8600,thousand tons
+Ireland,1988,0,320,thousand tons
+"Iran, Islamic Republic of",1988,1950,3907,thousand tons
+Israel,1988,0,248.6,thousand tons
+Italy,1988,9470,14270,thousand tons
+Jordan,1988,0,26.59,thousand tons
+Japan,1988,67300,27220,thousand tons
+Kazakhstan,1988,4230,0,thousand tons
+Kenya,1988,0,17.76,thousand tons
+"Korea, Republic of",1988,21900,16360,thousand tons
+Libyan Arab Jamahiriya,1988,0,937,thousand tons
+Sri Lanka,1988,0,26.59,thousand tons
+Luxembourg,1988,0,2280,thousand tons
+Latvia,1988,440,1.775,thousand tons
+Morocco,1988,4.44,0,thousand tons
+"Moldova, Republic of",1988,0,806,thousand tons
+Mexico,1988,4650,9220,thousand tons
+"Macedonia, the former Yugoslav Republic of",1988,0.0887,142.8,thousand tons
+Myanmar,1988,0,22.22,thousand tons
+Malaysia,1988,0,3237,thousand tons
+Netherlands,1988,4890,141.1,thousand tons
+Norway,1988,0,602,thousand tons
+New Zealand,1988,490,132.9,thousand tons
+Pakistan,1988,754,88.7,thousand tons
+Peru,1988,255,411.9,thousand tons
+Philippines,1988,0,377.7,thousand tons
+Poland,1988,6400,2920,thousand tons
+"Korea, Democratic Peoples Republic of",1988,1330,0,thousand tons
+Portugal,1988,364,602,thousand tons
+Paraguay,1988,68.3,0,thousand tons
+Qatar,1988,0,647,thousand tons
+Romania,1988,2970,1177,thousand tons
+Russian Federation,1988,44800,7650,thousand tons
+Saudi Arabia,1988,0,2645,thousand tons
+Singapore,1988,0,535,thousand tons
+El Salvador,1988,0.444,35.93,thousand tons
+Slovakia,1988,3060,254,thousand tons
+Slovenia,1988,0,461,thousand tons
+Sweden,1988,2870,1768,thousand tons
+Syrian Arab Republic,1988,0,62.1,thousand tons
+Thailand,1988,0,1867,thousand tons
+Trinidad and Tobago,1988,0,658,thousand tons
+Tunisia,1988,151,52.4,thousand tons
+Turkey,1988,4640,8070,thousand tons
+Taiwan,1988,8850,6140,thousand tons
+Ukraine,1988,27300,874,thousand tons
+Uruguay,1988,0,33.69,thousand tons
+United States of America,1988,47900,42400,thousand tons
+Uzbekistan,1988,101,260.4,thousand tons
+Venezuela,1988,0.355,3407,thousand tons
+Viet Nam,1988,0,271.2,thousand tons
+South Africa,1988,4150,3381,thousand tons
+Angola,1988,0,1,thousand tons
+Albania,1989,0,4.5,thousand tons
+United Arab Emirates,1989,0,81,thousand tons
+Argentina,1989,2000,2026,thousand tons
+Australia,1989,5430,992,thousand tons
+Austria,1989,4650,489,thousand tons
+Belgium,1989,8020,2450,thousand tons
+Bulgaria,1989,1280,541,thousand tons
+Bosnia and Herzegovina,1989,48.2,21.17,thousand tons
+Belarus,1989,0,1352,thousand tons
+Brazil,1989,19900,5170,thousand tons
+Canada,1989,8650,6290,thousand tons
+Switzerland,1989,0,900,thousand tons
+Chile,1989,1020,194.8,thousand tons
+China,1989,97500,18209,thousand tons
+Colombia,1989,252,342.2,thousand tons
+Cuba,1989,0,302.6,thousand tons
+Czech Republic,1989,5120,471,thousand tons
+Germany,1989,29800,12000,thousand tons
+Denmark,1989,0,721,thousand tons
+Dominican Republic,1989,0.09,35,thousand tons
+Algeria,1989,677,81,thousand tons
+Ecuador,1989,0,52.2,thousand tons
+Egypt,1989,1060,1499,thousand tons
+Spain,1989,3800,10500,thousand tons
+Estonia,1989,0.9,0,thousand tons
+Finland,1989,2820,868,thousand tons
+France,1989,11300,7600,thousand tons
+United Kingdom,1989,10400,3120,thousand tons
+Ghana,1989,0,22.5,thousand tons
+Greece,1989,0,979,thousand tons
+Guatemala,1989,0.45,150,thousand tons
+Croatia,1989,0,64,thousand tons
+Hungary,1989,1470,209.3,thousand tons
+Indonesia,1989,0,2565,thousand tons
+India,1989,15500,8720,thousand tons
+Ireland,1989,0,324,thousand tons
+"Iran, Islamic Republic of",1989,1980,3960,thousand tons
+Israel,1989,0,252.5,thousand tons
+Italy,1989,9610,14480,thousand tons
+Jordan,1989,0,26.98,thousand tons
+Japan,1989,68200,27560,thousand tons
+Kazakhstan,1989,4290,0,thousand tons
+Kenya,1989,0,18.02,thousand tons
+"Korea, Republic of",1989,22200,16600,thousand tons
+Libyan Arab Jamahiriya,1989,0,950,thousand tons
+Sri Lanka,1989,0,26.98,thousand tons
+Luxembourg,1989,0,2320,thousand tons
+Latvia,1989,446,1.802,thousand tons
+Morocco,1989,4.5,0,thousand tons
+"Moldova, Republic of",1989,0,818,thousand tons
+Mexico,1989,4710,9360,thousand tons
+"Macedonia, the former Yugoslav Republic of",1989,0.09,144.8,thousand tons
+Myanmar,1989,0,22.5,thousand tons
+Malaysia,1989,0,3289,thousand tons
+Netherlands,1989,4960,143.2,thousand tons
+Norway,1989,0,611,thousand tons
+New Zealand,1989,497,134.3,thousand tons
+Pakistan,1989,765,90,thousand tons
+Peru,1989,258,418,thousand tons
+Philippines,1989,0,383,thousand tons
+Poland,1989,6490,2960,thousand tons
+"Korea, Democratic Peoples Republic of",1989,1350,0,thousand tons
+Portugal,1989,369,611,thousand tons
+Paraguay,1989,69.3,0,thousand tons
+Qatar,1989,0,656,thousand tons
+Romania,1989,3010,1193,thousand tons
+Russian Federation,1989,45500,7750,thousand tons
+Saudi Arabia,1989,0,2684,thousand tons
+Singapore,1989,0,543,thousand tons
+El Salvador,1989,0.45,36.45,thousand tons
+Slovakia,1989,3100,257,thousand tons
+Slovenia,1989,0,468,thousand tons
+Sweden,1989,2910,1789,thousand tons
+Syrian Arab Republic,1989,0,63,thousand tons
+Thailand,1989,0,1894,thousand tons
+Trinidad and Tobago,1989,0,667,thousand tons
+Tunisia,1989,153,53.1,thousand tons
+Turkey,1989,4710,8190,thousand tons
+Taiwan,1989,8980,6240,thousand tons
+Ukraine,1989,27700,887,thousand tons
+Uruguay,1989,0,34.21,thousand tons
+United States of America,1989,48600,43100,thousand tons
+Uzbekistan,1989,103,263.3,thousand tons
+Venezuela,1989,0.36,3448,thousand tons
+Viet Nam,1989,0,275.1,thousand tons
+South Africa,1989,4210,3422,thousand tons
+Angola,1989,0,1,thousand tons
+Albania,1990,0,4.56,thousand tons
+United Arab Emirates,1990,0,82.1,thousand tons
+Argentina,1990,2030,2053,thousand tons
+Australia,1990,5500,1006,thousand tons
+Austria,1990,4710,496,thousand tons
+Belgium,1990,8130,2480,thousand tons
+Bulgaria,1990,1300,550,thousand tons
+Bosnia and Herzegovina,1990,48.8,21.46,thousand tons
+Belarus,1990,0,1371,thousand tons
+Brazil,1990,20200,5250,thousand tons
+Canada,1990,8770,6370,thousand tons
+Switzerland,1990,0,913,thousand tons
+Chile,1990,1040,197.4,thousand tons
+China,1990,98900,18422,thousand tons
+Colombia,1990,255,347.3,thousand tons
+Cuba,1990,0,306.6,thousand tons
+Czech Republic,1990,5200,477,thousand tons
+Germany,1990,30200,12160,thousand tons
+Denmark,1990,0,731,thousand tons
+Dominican Republic,1990,0.0913,35.52,thousand tons
+Algeria,1990,686,82.1,thousand tons
+Ecuador,1990,0,52.9,thousand tons
+Egypt,1990,1080,1514,thousand tons
+Spain,1990,3850,10640,thousand tons
+Estonia,1990,0.913,0,thousand tons
+Finland,1990,2860,881,thousand tons
+France,1990,11400,7710,thousand tons
+United Kingdom,1990,10500,3160,thousand tons
+Ghana,1990,0,22.78,thousand tons
+Greece,1990,0,993,thousand tons
+Guatemala,1990,0.456,152.5,thousand tons
+Croatia,1990,0,64.8,thousand tons
+Hungary,1990,1500,212.6,thousand tons
+Indonesia,1990,0,2604,thousand tons
+India,1990,15700,8840,thousand tons
+Ireland,1990,0,329,thousand tons
+"Iran, Islamic Republic of",1990,2010,4014,thousand tons
+Israel,1990,0,255.3,thousand tons
+Italy,1990,9750,14680,thousand tons
+Jordan,1990,0,27.37,thousand tons
+Japan,1990,69200,28000,thousand tons
+Kazakhstan,1990,4350,0,thousand tons
+Kenya,1990,0,18.28,thousand tons
+"Korea, Republic of",1990,22500,16840,thousand tons
+Libyan Arab Jamahiriya,1990,0,963,thousand tons
+Sri Lanka,1990,0,27.37,thousand tons
+Luxembourg,1990,0,2340,thousand tons
+Latvia,1990,453,1.823,thousand tons
+Morocco,1990,4.56,0,thousand tons
+"Moldova, Republic of",1990,0,829,thousand tons
+Mexico,1990,4780,9490,thousand tons
+"Macedonia, the former Yugoslav Republic of",1990,0.0913,146.9,thousand tons
+Myanmar,1990,0,22.78,thousand tons
+Malaysia,1990,0,3330,thousand tons
+Netherlands,1990,5030,145.2,thousand tons
+Norway,1990,0,620,thousand tons
+New Zealand,1990,504,136.8,thousand tons
+Pakistan,1990,776,91.3,thousand tons
+Peru,1990,262,424,thousand tons
+Philippines,1990,0,389.3,thousand tons
+Poland,1990,6580,3000,thousand tons
+"Korea, Democratic Peoples Republic of",1990,1370,0,thousand tons
+Portugal,1990,374,619,thousand tons
+Paraguay,1990,70.3,0,thousand tons
+Qatar,1990,0,666,thousand tons
+Romania,1990,3050,1210,thousand tons
+Russian Federation,1990,46100,7860,thousand tons
+Saudi Arabia,1990,0,2723,thousand tons
+Singapore,1990,0,550,thousand tons
+El Salvador,1990,0.456,36.97,thousand tons
+Slovakia,1990,3150,261,thousand tons
+Slovenia,1990,0,473,thousand tons
+Sweden,1990,2950,1820,thousand tons
+Syrian Arab Republic,1990,0,63.9,thousand tons
+Thailand,1990,0,1920,thousand tons
+Trinidad and Tobago,1990,0,676,thousand tons
+Tunisia,1990,155,53.8,thousand tons
+Turkey,1990,4770,8310,thousand tons
+Taiwan,1990,9100,6320,thousand tons
+Ukraine,1990,28100,899,thousand tons
+Uruguay,1990,0,34.73,thousand tons
+United States of America,1990,49300,43700,thousand tons
+Uzbekistan,1990,104,267.2,thousand tons
+Venezuela,1990,0.365,3500,thousand tons
+Viet Nam,1990,0,279,thousand tons
+South Africa,1990,4270,3474,thousand tons
+Angola,1990,0,1,thousand tons
+Albania,1991,0,4.54,thousand tons
+United Arab Emirates,1991,0,81.7,thousand tons
+Argentina,1991,2020,2040,thousand tons
+Australia,1991,5470,1001,thousand tons
+Austria,1991,4690,493,thousand tons
+Belgium,1991,8090,2480,thousand tons
+Bulgaria,1991,1290,547,thousand tons
+Bosnia and Herzegovina,1991,48.6,21.33,thousand tons
+Belarus,1991,0,1365,thousand tons
+Brazil,1991,20100,5220,thousand tons
+Canada,1991,8730,6350,thousand tons
+Switzerland,1991,0,909,thousand tons
+Chile,1991,1030,196.2,thousand tons
+China,1991,98400,18317,thousand tons
+Colombia,1991,254,345.9,thousand tons
+Cuba,1991,0,305.3,thousand tons
+Czech Republic,1991,5170,475,thousand tons
+Germany,1991,30000,12110,thousand tons
+Denmark,1991,0,727,thousand tons
+Dominican Republic,1991,0.0908,35.38,thousand tons
+Algeria,1991,683,81.7,thousand tons
+Ecuador,1991,0,52.6,thousand tons
+Egypt,1991,1070,1512,thousand tons
+Spain,1991,3830,10590,thousand tons
+Estonia,1991,0.908,0,thousand tons
+Finland,1991,2840,877,thousand tons
+France,1991,11400,7670,thousand tons
+United Kingdom,1991,10500,3150,thousand tons
+Ghana,1991,0,22.75,thousand tons
+Greece,1991,0,988,thousand tons
+Guatemala,1991,0.454,151.3,thousand tons
+Croatia,1991,0,64.5,thousand tons
+Hungary,1991,1490,212.1,thousand tons
+Indonesia,1991,0,2591,thousand tons
+India,1991,15700,8800,thousand tons
+Ireland,1991,0,327,thousand tons
+"Iran, Islamic Republic of",1991,2000,3999,thousand tons
+Israel,1991,0,254,thousand tons
+Italy,1991,9700,14610,thousand tons
+Jordan,1991,0,27.24,thousand tons
+Japan,1991,68800,27850,thousand tons
+Kazakhstan,1991,4330,0,thousand tons
+Kenya,1991,0,18.16,thousand tons
+"Korea, Republic of",1991,22400,16760,thousand tons
+Libyan Arab Jamahiriya,1991,0,958,thousand tons
+Sri Lanka,1991,0,27.24,thousand tons
+Luxembourg,1991,0,2340,thousand tons
+Latvia,1991,451,1.819,thousand tons
+Morocco,1991,4.54,0,thousand tons
+"Moldova, Republic of",1991,0,825,thousand tons
+Mexico,1991,4760,9450,thousand tons
+"Macedonia, the former Yugoslav Republic of",1991,0.0908,146.2,thousand tons
+Myanmar,1991,0,22.75,thousand tons
+Malaysia,1991,0,3316,thousand tons
+Netherlands,1991,5000,144.5,thousand tons
+Norway,1991,0,616,thousand tons
+New Zealand,1991,502,135.6,thousand tons
+Pakistan,1991,772,90.8,thousand tons
+Peru,1991,261,421,thousand tons
+Philippines,1991,0,386.9,thousand tons
+Poland,1991,6550,2990,thousand tons
+"Korea, Democratic Peoples Republic of",1991,1360,0,thousand tons
+Portugal,1991,372,616,thousand tons
+Paraguay,1991,69.9,0,thousand tons
+Qatar,1991,0,662,thousand tons
+Romania,1991,3040,1204,thousand tons
+Russian Federation,1991,45900,7820,thousand tons
+Saudi Arabia,1991,0,2710,thousand tons
+Singapore,1991,0,547,thousand tons
+El Salvador,1991,0.454,36.83,thousand tons
+Slovakia,1991,3130,259,thousand tons
+Slovenia,1991,0,471,thousand tons
+Sweden,1991,2940,1806,thousand tons
+Syrian Arab Republic,1991,0,63.6,thousand tons
+Thailand,1991,0,1908,thousand tons
+Trinidad and Tobago,1991,0,674,thousand tons
+Tunisia,1991,154,53.6,thousand tons
+Turkey,1991,4750,8260,thousand tons
+Taiwan,1991,9060,6290,thousand tons
+Ukraine,1991,28000,894,thousand tons
+Uruguay,1991,0,34.48,thousand tons
+United States of America,1991,49000,43500,thousand tons
+Uzbekistan,1991,104,265.9,thousand tons
+Venezuela,1991,0.363,3486,thousand tons
+Viet Nam,1991,0,277.7,thousand tons
+South Africa,1991,4250,3460,thousand tons
+Angola,1991,0,1,thousand tons
+Albania,1992,0,4.52,thousand tons
+United Arab Emirates,1992,0,81.3,thousand tons
+Argentina,1992,2010,2038,thousand tons
+Australia,1992,5450,996,thousand tons
+Austria,1992,4670,491,thousand tons
+Belgium,1992,8050,2460,thousand tons
+Bulgaria,1992,1280,544,thousand tons
+Bosnia and Herzegovina,1992,48.4,21.2,thousand tons
+Belarus,1992,0,1357,thousand tons
+Brazil,1992,20000,5200,thousand tons
+Canada,1992,8690,6320,thousand tons
+Switzerland,1992,0,904,thousand tons
+Chile,1992,1030,196,thousand tons
+China,1992,97900,18213,thousand tons
+Colombia,1992,253,343.5,thousand tons
+Cuba,1992,0,303.9,thousand tons
+Czech Republic,1992,5150,473,thousand tons
+Germany,1992,29900,12040,thousand tons
+Denmark,1992,0,724,thousand tons
+Dominican Republic,1992,0.0904,35.14,thousand tons
+Algeria,1992,680,81.3,thousand tons
+Ecuador,1992,0,52.4,thousand tons
+Egypt,1992,1060,1500,thousand tons
+Spain,1992,3810,10540,thousand tons
+Estonia,1992,0.904,0,thousand tons
+Finland,1992,2830,872,thousand tons
+France,1992,11300,7630,thousand tons
+United Kingdom,1992,10400,3140,thousand tons
+Ghana,1992,0,22.62,thousand tons
+Greece,1992,0,984,thousand tons
+Guatemala,1992,0.452,150.1,thousand tons
+Croatia,1992,0,64.1,thousand tons
+Hungary,1992,1480,210.7,thousand tons
+Indonesia,1992,0,2578,thousand tons
+India,1992,15600,8760,thousand tons
+Ireland,1992,0,325,thousand tons
+"Iran, Islamic Republic of",1992,1990,3974,thousand tons
+Israel,1992,0,252.7,thousand tons
+Italy,1992,9650,14540,thousand tons
+Jordan,1992,0,27.11,thousand tons
+Japan,1992,68500,27700,thousand tons
+Kazakhstan,1992,4310,0,thousand tons
+Kenya,1992,0,18.04,thousand tons
+"Korea, Republic of",1992,22300,16660,thousand tons
+Libyan Arab Jamahiriya,1992,0,954,thousand tons
+Sri Lanka,1992,0,27.11,thousand tons
+Luxembourg,1992,0,2320,thousand tons
+Latvia,1992,448,1.805,thousand tons
+Morocco,1992,4.52,0,thousand tons
+"Moldova, Republic of",1992,0,821,thousand tons
+Mexico,1992,4730,9400,thousand tons
+"Macedonia, the former Yugoslav Republic of",1992,0.0904,145.4,thousand tons
+Myanmar,1992,0,22.62,thousand tons
+Malaysia,1992,0,3302,thousand tons
+Netherlands,1992,4980,143.7,thousand tons
+Norway,1992,0,614,thousand tons
+New Zealand,1992,499,135.5,thousand tons
+Pakistan,1992,768,90.4,thousand tons
+Peru,1992,259,420,thousand tons
+Philippines,1992,0,385.4,thousand tons
+Poland,1992,6520,2980,thousand tons
+"Korea, Democratic Peoples Republic of",1992,1360,0,thousand tons
+Portugal,1992,371,613,thousand tons
+Paraguay,1992,69.6,0,thousand tons
+Qatar,1992,0,659,thousand tons
+Romania,1992,3020,1198,thousand tons
+Russian Federation,1992,45700,7780,thousand tons
+Saudi Arabia,1992,0,2697,thousand tons
+Singapore,1992,0,545,thousand tons
+El Salvador,1992,0.452,36.59,thousand tons
+Slovakia,1992,3120,259,thousand tons
+Slovenia,1992,0,469,thousand tons
+Sweden,1992,2920,1802,thousand tons
+Syrian Arab Republic,1992,0,63.3,thousand tons
+Thailand,1992,0,1896,thousand tons
+Trinidad and Tobago,1992,0,670,thousand tons
+Tunisia,1992,154,53.3,thousand tons
+Turkey,1992,4730,8220,thousand tons
+Taiwan,1992,9010,6260,thousand tons
+Ukraine,1992,27800,890,thousand tons
+Uruguay,1992,0,34.34,thousand tons
+United States of America,1992,48800,43200,thousand tons
+Uzbekistan,1992,103,264.6,thousand tons
+Venezuela,1992,0.362,3462,thousand tons
+Viet Nam,1992,0,276.4,thousand tons
+South Africa,1992,4230,3436,thousand tons
+Angola,1992,0,1,thousand tons
+Albania,1993,0,4.5,thousand tons
+United Arab Emirates,1993,0,80.9,thousand tons
+Argentina,1993,2000,2025,thousand tons
+Australia,1993,5420,991,thousand tons
+Austria,1993,4640,489,thousand tons
+Belgium,1993,8010,2450,thousand tons
+Bulgaria,1993,1280,541,thousand tons
+Bosnia and Herzegovina,1993,48.1,21.16,thousand tons
+Belarus,1993,0,1351,thousand tons
+Brazil,1993,19900,5170,thousand tons
+Canada,1993,8640,6280,thousand tons
+Switzerland,1993,0,900,thousand tons
+Chile,1993,1020,194.7,thousand tons
+China,1993,97400,18208,thousand tons
+Colombia,1993,251,342.1,thousand tons
+Cuba,1993,0,302.5,thousand tons
+Czech Republic,1993,5120,470,thousand tons
+Germany,1993,29700,11980,thousand tons
+Denmark,1993,0,720,thousand tons
+Dominican Republic,1993,0.0899,35,thousand tons
+Algeria,1993,676,80.9,thousand tons
+Ecuador,1993,0,52.1,thousand tons
+Egypt,1993,1060,1488,thousand tons
+Spain,1993,3790,10480,thousand tons
+Estonia,1993,0.899,0,thousand tons
+Finland,1993,2820,868,thousand tons
+France,1993,11300,7590,thousand tons
+United Kingdom,1993,10400,3120,thousand tons
+Ghana,1993,0,22.5,thousand tons
+Greece,1993,0,979,thousand tons
+Guatemala,1993,0.45,149.9,thousand tons
+Croatia,1993,0,63.8,thousand tons
+Hungary,1993,1470,209.2,thousand tons
+Indonesia,1993,0,2565,thousand tons
+India,1993,15500,8710,thousand tons
+Ireland,1993,0,323,thousand tons
+"Iran, Islamic Republic of",1993,1980,3960,thousand tons
+Israel,1993,0,251.4,thousand tons
+Italy,1993,9600,14470,thousand tons
+Jordan,1993,0,26.98,thousand tons
+Japan,1993,68200,27550,thousand tons
+Kazakhstan,1993,4290,0,thousand tons
+Kenya,1993,0,18.02,thousand tons
+"Korea, Republic of",1993,22200,16580,thousand tons
+Libyan Arab Jamahiriya,1993,0,949,thousand tons
+Sri Lanka,1993,0,26.98,thousand tons
+Luxembourg,1993,0,2320,thousand tons
+Latvia,1993,446,1.802,thousand tons
+Morocco,1993,4.5,0,thousand tons
+"Moldova, Republic of",1993,0,816,thousand tons
+Mexico,1993,4710,9350,thousand tons
+"Macedonia, the former Yugoslav Republic of",1993,0.0899,144.7,thousand tons
+Myanmar,1993,0,22.5,thousand tons
+Malaysia,1993,0,3288,thousand tons
+Netherlands,1993,4950,143,thousand tons
+Norway,1993,0,611,thousand tons
+New Zealand,1993,497,134.3,thousand tons
+Pakistan,1993,765,90,thousand tons
+Peru,1993,258,417,thousand tons
+Philippines,1993,0,383,thousand tons
+Poland,1993,6480,2960,thousand tons
+"Korea, Democratic Peoples Republic of",1993,1350,0,thousand tons
+Portugal,1993,369,610,thousand tons
+Paraguay,1993,69.3,0,thousand tons
+Qatar,1993,0,655,thousand tons
+Romania,1993,3010,1193,thousand tons
+Russian Federation,1993,45400,7750,thousand tons
+Saudi Arabia,1993,0,2684,thousand tons
+Singapore,1993,0,542,thousand tons
+El Salvador,1993,0.45,36.44,thousand tons
+Slovakia,1993,3100,257,thousand tons
+Slovenia,1993,0,466,thousand tons
+Sweden,1993,2910,1788,thousand tons
+Syrian Arab Republic,1993,0,63,thousand tons
+Thailand,1993,0,1893,thousand tons
+Trinidad and Tobago,1993,0,667,thousand tons
+Tunisia,1993,153,53,thousand tons
+Turkey,1993,4700,8180,thousand tons
+Taiwan,1993,8970,6220,thousand tons
+Ukraine,1993,27700,886,thousand tons
+Uruguay,1993,0,34.2,thousand tons
+United States of America,1993,48500,43100,thousand tons
+Uzbekistan,1993,103,263.2,thousand tons
+Venezuela,1993,0.36,3448,thousand tons
+Viet Nam,1993,0,275.1,thousand tons
+South Africa,1993,4200,3422,thousand tons
+Angola,1993,0,1,thousand tons
+Albania,1994,0,4.47,thousand tons
+United Arab Emirates,1994,0,80.5,thousand tons
+Argentina,1994,1990,2013,thousand tons
+Australia,1994,5390,987,thousand tons
+Austria,1994,4620,486,thousand tons
+Belgium,1994,7970,2440,thousand tons
+Bulgaria,1994,1270,539,thousand tons
+Bosnia and Herzegovina,1994,47.9,21.03,thousand tons
+Belarus,1994,0,1344,thousand tons
+Brazil,1994,19800,5140,thousand tons
+Canada,1994,8600,6250,thousand tons
+Switzerland,1994,0,895,thousand tons
+Chile,1994,1020,193.5,thousand tons
+China,1994,96900,18104,thousand tons
+Colombia,1994,250,340.7,thousand tons
+Cuba,1994,0,301.2,thousand tons
+Czech Republic,1994,5100,468,thousand tons
+Germany,1994,29600,11930,thousand tons
+Denmark,1994,0,716,thousand tons
+Dominican Republic,1994,0.0895,34.86,thousand tons
+Algeria,1994,673,80.5,thousand tons
+Ecuador,1994,0,52,thousand tons
+Egypt,1994,1050,1487,thousand tons
+Spain,1994,3770,10430,thousand tons
+Estonia,1994,0.895,0,thousand tons
+Finland,1994,2800,864,thousand tons
+France,1994,11200,7550,thousand tons
+United Kingdom,1994,10300,3110,thousand tons
+Ghana,1994,0,22.37,thousand tons
+Greece,1994,0,973,thousand tons
+Guatemala,1994,0.447,148.8,thousand tons
+Croatia,1994,0,63.5,thousand tons
+Hungary,1994,1470,208.8,thousand tons
+Indonesia,1994,0,2552,thousand tons
+India,1994,15400,8670,thousand tons
+Ireland,1994,0,322,thousand tons
+"Iran, Islamic Republic of",1994,1970,3935,thousand tons
+Israel,1994,0,250.1,thousand tons
+Italy,1994,9550,14390,thousand tons
+Jordan,1994,0,26.84,thousand tons
+Japan,1994,67800,27400,thousand tons
+Kazakhstan,1994,4270,0,thousand tons
+Kenya,1994,0,17.9,thousand tons
+"Korea, Republic of",1994,22100,16500,thousand tons
+Libyan Arab Jamahiriya,1994,0,945,thousand tons
+Sri Lanka,1994,0,26.84,thousand tons
+Luxembourg,1994,0,2300,thousand tons
+Latvia,1994,444,1.788,thousand tons
+Morocco,1994,4.47,0,thousand tons
+"Moldova, Republic of",1994,0,813,thousand tons
+Mexico,1994,4690,9300,thousand tons
+"Macedonia, the former Yugoslav Republic of",1994,0.0895,144,thousand tons
+Myanmar,1994,0,22.37,thousand tons
+Malaysia,1994,0,3264,thousand tons
+Netherlands,1994,4930,142.3,thousand tons
+Norway,1994,0,607,thousand tons
+New Zealand,1994,494,134.1,thousand tons
+Pakistan,1994,761,89.5,thousand tons
+Peru,1994,257,415.7,thousand tons
+Philippines,1994,0,381.5,thousand tons
+Poland,1994,6450,2950,thousand tons
+"Korea, Democratic Peoples Republic of",1994,1340,0,thousand tons
+Portugal,1994,367,607,thousand tons
+Paraguay,1994,68.9,0,thousand tons
+Qatar,1994,0,653,thousand tons
+Romania,1994,2990,1186,thousand tons
+Russian Federation,1994,45200,7710,thousand tons
+Saudi Arabia,1994,0,2670,thousand tons
+Singapore,1994,0,540,thousand tons
+El Salvador,1994,0.447,36.2,thousand tons
+Slovakia,1994,3080,256,thousand tons
+Slovenia,1994,0,464,thousand tons
+Sweden,1994,2900,1782,thousand tons
+Syrian Arab Republic,1994,0,62.6,thousand tons
+Thailand,1994,0,1881,thousand tons
+Trinidad and Tobago,1994,0,663,thousand tons
+Tunisia,1994,152,52.8,thousand tons
+Turkey,1994,4680,8150,thousand tons
+Taiwan,1994,8920,6200,thousand tons
+Ukraine,1994,27500,881,thousand tons
+Uruguay,1994,0,33.96,thousand tons
+United States of America,1994,48300,42800,thousand tons
+Uzbekistan,1994,102,261.9,thousand tons
+Venezuela,1994,0.358,3434,thousand tons
+Viet Nam,1994,0,273.7,thousand tons
+South Africa,1994,4180,3408,thousand tons
+Angola,1994,0,1,thousand tons
+Albania,1995,0,4.45,thousand tons
+United Arab Emirates,1995,0,80.1,thousand tons
+Argentina,1995,1980,2001,thousand tons
+Australia,1995,5370,982,thousand tons
+Austria,1995,4600,484,thousand tons
+Belgium,1995,7930,2430,thousand tons
+Bulgaria,1995,1260,536,thousand tons
+Bosnia and Herzegovina,1995,47.6,20.9,thousand tons
+Belarus,1995,0,1338,thousand tons
+Brazil,1995,19700,5120,thousand tons
+Canada,1995,8560,6230,thousand tons
+Switzerland,1995,0,891,thousand tons
+Chile,1995,1010,193.3,thousand tons
+China,1995,96400,17999,thousand tons
+Colombia,1995,249,338.3,thousand tons
+Cuba,1995,0,298.8,thousand tons
+Czech Republic,1995,5070,466,thousand tons
+Germany,1995,29400,11860,thousand tons
+Denmark,1995,0,713,thousand tons
+Dominican Republic,1995,0.0891,34.61,thousand tons
+Algeria,1995,670,80.1,thousand tons
+Ecuador,1995,0,51.7,thousand tons
+Egypt,1995,1050,1475,thousand tons
+Spain,1995,3750,10380,thousand tons
+Estonia,1995,0.891,0,thousand tons
+Finland,1995,2790,859,thousand tons
+France,1995,11100,7520,thousand tons
+United Kingdom,1995,10300,3090,thousand tons
+Ghana,1995,0,22.24,thousand tons
+Greece,1995,0,969,thousand tons
+Guatemala,1995,0.445,148.6,thousand tons
+Croatia,1995,0,63.2,thousand tons
+Hungary,1995,1460,207.3,thousand tons
+Indonesia,1995,0,2539,thousand tons
+India,1995,15300,8630,thousand tons
+Ireland,1995,0,321,thousand tons
+"Iran, Islamic Republic of",1995,1960,3920,thousand tons
+Israel,1995,0,248.8,thousand tons
+Italy,1995,9510,14320,thousand tons
+Jordan,1995,0,26.71,thousand tons
+Japan,1995,67500,27260,thousand tons
+Kazakhstan,1995,4250,0,thousand tons
+Kenya,1995,0,17.77,thousand tons
+"Korea, Republic of",1995,22000,16420,thousand tons
+Libyan Arab Jamahiriya,1995,0,939,thousand tons
+Sri Lanka,1995,0,26.71,thousand tons
+Luxembourg,1995,0,2290,thousand tons
+Latvia,1995,442,1.781,thousand tons
+Morocco,1995,4.45,0,thousand tons
+"Moldova, Republic of",1995,0,809,thousand tons
+Mexico,1995,4660,9260,thousand tons
+"Macedonia, the former Yugoslav Republic of",1995,0.0891,143.3,thousand tons
+Myanmar,1995,0,22.24,thousand tons
+Malaysia,1995,0,3250,thousand tons
+Netherlands,1995,4900,141.6,thousand tons
+Norway,1995,0,605,thousand tons
+New Zealand,1995,492,133,thousand tons
+Pakistan,1995,757,89.1,thousand tons
+Peru,1995,255,413.2,thousand tons
+Philippines,1995,0,379,thousand tons
+Poland,1995,6420,2930,thousand tons
+"Korea, Democratic Peoples Republic of",1995,1340,0,thousand tons
+Portugal,1995,365,604,thousand tons
+Paraguay,1995,68.6,0,thousand tons
+Qatar,1995,0,649,thousand tons
+Romania,1995,2980,1180,thousand tons
+Russian Federation,1995,45000,7660,thousand tons
+Saudi Arabia,1995,0,2657,thousand tons
+Singapore,1995,0,537,thousand tons
+El Salvador,1995,0.445,36.06,thousand tons
+Slovakia,1995,3070,255,thousand tons
+Slovenia,1995,0,462,thousand tons
+Sweden,1995,2880,1774,thousand tons
+Syrian Arab Republic,1995,0,62.4,thousand tons
+Thailand,1995,0,1869,thousand tons
+Trinidad and Tobago,1995,0,659,thousand tons
+Tunisia,1995,151,52.5,thousand tons
+Turkey,1995,4660,8100,thousand tons
+Taiwan,1995,8880,6170,thousand tons
+Ukraine,1995,27400,877,thousand tons
+Uruguay,1995,0,33.82,thousand tons
+United States of America,1995,48100,42700,thousand tons
+Uzbekistan,1995,102,260.6,thousand tons
+Venezuela,1995,0.356,3420,thousand tons
+Viet Nam,1995,0,272.4,thousand tons
+South Africa,1995,4160,3393,thousand tons
+Angola,1995,0,1,thousand tons
+Albania,1996,0,4.44,thousand tons
+United Arab Emirates,1996,0,80,thousand tons
+Argentina,1996,1980,2000,thousand tons
+Australia,1996,5360,980,thousand tons
+Austria,1996,4590,484,thousand tons
+Belgium,1996,7920,2430,thousand tons
+Bulgaria,1996,1260,536,thousand tons
+Bosnia and Herzegovina,1996,47.6,20.89,thousand tons
+Belarus,1996,0,1335,thousand tons
+Brazil,1996,19700,5110,thousand tons
+Canada,1996,8550,6210,thousand tons
+Switzerland,1996,0,889,thousand tons
+Chile,1996,1010,192.2,thousand tons
+China,1996,96300,17998,thousand tons
+Colombia,1996,249,338.2,thousand tons
+Cuba,1996,0,298.7,thousand tons
+Czech Republic,1996,5060,465,thousand tons
+Germany,1996,29400,11850,thousand tons
+Denmark,1996,0,712,thousand tons
+Dominican Republic,1996,0.0889,34.6,thousand tons
+Algeria,1996,669,80,thousand tons
+Ecuador,1996,0,51.6,thousand tons
+Egypt,1996,1050,1474,thousand tons
+Spain,1996,3750,10370,thousand tons
+Estonia,1996,0.889,0,thousand tons
+Finland,1996,2780,859,thousand tons
+France,1996,11100,7500,thousand tons
+United Kingdom,1996,10300,3090,thousand tons
+Ghana,1996,0,22.24,thousand tons
+Greece,1996,0,968,thousand tons
+Guatemala,1996,0.445,148.5,thousand tons
+Croatia,1996,0,63.1,thousand tons
+Hungary,1996,1460,207.2,thousand tons
+Indonesia,1996,0,2528,thousand tons
+India,1996,15300,8620,thousand tons
+Ireland,1996,0,320,thousand tons
+"Iran, Islamic Republic of",1996,1960,3909,thousand tons
+Israel,1996,0,248.8,thousand tons
+Italy,1996,9490,14300,thousand tons
+Jordan,1996,0,26.7,thousand tons
+Japan,1996,67400,27240,thousand tons
+Kazakhstan,1996,4240,0,thousand tons
+Kenya,1996,0,17.77,thousand tons
+"Korea, Republic of",1996,21900,16400,thousand tons
+Libyan Arab Jamahiriya,1996,0,938,thousand tons
+Sri Lanka,1996,0,26.7,thousand tons
+Luxembourg,1996,0,2290,thousand tons
+Latvia,1996,441,1.779,thousand tons
+Morocco,1996,4.45,0,thousand tons
+"Moldova, Republic of",1996,0,807,thousand tons
+Mexico,1996,4660,9250,thousand tons
+"Macedonia, the former Yugoslav Republic of",1996,0.0889,143.1,thousand tons
+Myanmar,1996,0,22.24,thousand tons
+Malaysia,1996,0,3249,thousand tons
+Netherlands,1996,4900,141.4,thousand tons
+Norway,1996,0,604,thousand tons
+New Zealand,1996,491,132.9,thousand tons
+Pakistan,1996,756,88.9,thousand tons
+Peru,1996,255,413.1,thousand tons
+Philippines,1996,0,378.9,thousand tons
+Poland,1996,6410,2930,thousand tons
+"Korea, Democratic Peoples Republic of",1996,1330,0,thousand tons
+Portugal,1996,365,603,thousand tons
+Paraguay,1996,68.5,0,thousand tons
+Qatar,1996,0,649,thousand tons
+Romania,1996,2980,1179,thousand tons
+Russian Federation,1996,44900,7660,thousand tons
+Saudi Arabia,1996,0,2646,thousand tons
+Singapore,1996,0,537,thousand tons
+El Salvador,1996,0.445,36.04,thousand tons
+Slovakia,1996,3070,254,thousand tons
+Slovenia,1996,0,461,thousand tons
+Sweden,1996,2880,1771,thousand tons
+Syrian Arab Republic,1996,0,62.2,thousand tons
+Thailand,1996,0,1868,thousand tons
+Trinidad and Tobago,1996,0,659,thousand tons
+Tunisia,1996,151,52.5,thousand tons
+Turkey,1996,4650,8090,thousand tons
+Taiwan,1996,8870,6160,thousand tons
+Ukraine,1996,27400,876,thousand tons
+Uruguay,1996,0,33.81,thousand tons
+United States of America,1996,48000,42500,thousand tons
+Uzbekistan,1996,101,260.5,thousand tons
+Venezuela,1996,0.356,3408,thousand tons
+Viet Nam,1996,0,272.3,thousand tons
+South Africa,1996,4160,3382,thousand tons
+Angola,1996,0,1,thousand tons
+Albania,1997,0,4.71,thousand tons
+United Arab Emirates,1997,0,84.7,thousand tons
+Argentina,1997,2090,2118,thousand tons
+Australia,1997,5670,1037,thousand tons
+Austria,1997,4860,511,thousand tons
+Belgium,1997,8390,2570,thousand tons
+Bulgaria,1997,1340,566,thousand tons
+Bosnia and Herzegovina,1997,50.4,22.08,thousand tons
+Belarus,1997,0,1413,thousand tons
+Brazil,1997,20800,5410,thousand tons
+Canada,1997,9040,6570,thousand tons
+Switzerland,1997,0,941,thousand tons
+Chile,1997,1070,203.9,thousand tons
+China,1997,102000,19051,thousand tons
+Colombia,1997,263,357.9,thousand tons
+Cuba,1997,0,315.9,thousand tons
+Czech Republic,1997,5360,493,thousand tons
+Germany,1997,31100,12540,thousand tons
+Denmark,1997,0,754,thousand tons
+Dominican Republic,1997,0.0941,36.59,thousand tons
+Algeria,1997,708,84.7,thousand tons
+Ecuador,1997,0,54.6,thousand tons
+Egypt,1997,1110,1565,thousand tons
+Spain,1997,3970,10970,thousand tons
+Estonia,1997,0.941,0,thousand tons
+Finland,1997,2950,909,thousand tons
+France,1997,11800,7950,thousand tons
+United Kingdom,1997,10900,3270,thousand tons
+Ghana,1997,0,23.55,thousand tons
+Greece,1997,0,1024,thousand tons
+Guatemala,1997,0.471,156.6,thousand tons
+Croatia,1997,0,66.8,thousand tons
+Hungary,1997,1540,219.5,thousand tons
+Indonesia,1997,0,2683,thousand tons
+India,1997,16200,9120,thousand tons
+Ireland,1997,0,339,thousand tons
+"Iran, Islamic Republic of",1997,2070,4144,thousand tons
+Israel,1997,0,263.2,thousand tons
+Italy,1997,10000,15140,thousand tons
+Jordan,1997,0,28.28,thousand tons
+Japan,1997,71300,28900,thousand tons
+Kazakhstan,1997,4490,0,thousand tons
+Kenya,1997,0,18.82,thousand tons
+"Korea, Republic of",1997,23200,17360,thousand tons
+Libyan Arab Jamahiriya,1997,0,993,thousand tons
+Sri Lanka,1997,0,28.28,thousand tons
+Luxembourg,1997,0,2420,thousand tons
+Latvia,1997,467,1.878,thousand tons
+Morocco,1997,4.71,0,thousand tons
+"Moldova, Republic of",1997,0,854,thousand tons
+Mexico,1997,4930,9790,thousand tons
+"Macedonia, the former Yugoslav Republic of",1997,0.0941,151.5,thousand tons
+Myanmar,1997,0,23.55,thousand tons
+Malaysia,1997,0,3434,thousand tons
+Netherlands,1997,5180,149.6,thousand tons
+Norway,1997,0,639,thousand tons
+New Zealand,1997,520,140.8,thousand tons
+Pakistan,1997,800,94.1,thousand tons
+Peru,1997,270,437,thousand tons
+Philippines,1997,0,401.2,thousand tons
+Poland,1997,6780,3090,thousand tons
+"Korea, Democratic Peoples Republic of",1997,1410,0,thousand tons
+Portugal,1997,386,638,thousand tons
+Paraguay,1997,72.5,0,thousand tons
+Qatar,1997,0,686,thousand tons
+Romania,1997,3150,1248,thousand tons
+Russian Federation,1997,47600,8100,thousand tons
+Saudi Arabia,1997,0,2803,thousand tons
+Singapore,1997,0,567,thousand tons
+El Salvador,1997,0.471,38.15,thousand tons
+Slovakia,1997,3240,269,thousand tons
+Slovenia,1997,0,489,thousand tons
+Sweden,1997,3040,1875,thousand tons
+Syrian Arab Republic,1997,0,65.9,thousand tons
+Thailand,1997,0,1974,thousand tons
+Trinidad and Tobago,1997,0,697,thousand tons
+Tunisia,1997,160,55.5,thousand tons
+Turkey,1997,4920,8560,thousand tons
+Taiwan,1997,9390,6510,thousand tons
+Ukraine,1997,29000,927,thousand tons
+Uruguay,1997,0,35.78,thousand tons
+United States of America,1997,50800,45100,thousand tons
+Uzbekistan,1997,107,276.2,thousand tons
+Venezuela,1997,0.376,3606,thousand tons
+Viet Nam,1997,0,288.1,thousand tons
+South Africa,1997,4400,3580,thousand tons
+Angola,1997,0,1,thousand tons
+Albania,1998,0,4.57,thousand tons
+United Arab Emirates,1998,0,82.4,thousand tons
+Argentina,1998,2040,2054,thousand tons
+Australia,1998,5520,1009,thousand tons
+Austria,1998,4730,497,thousand tons
+Belgium,1998,8150,2500,thousand tons
+Bulgaria,1998,1300,550,thousand tons
+Bosnia and Herzegovina,1998,49,21.48,thousand tons
+Belarus,1998,0,1375,thousand tons
+Brazil,1998,20200,5260,thousand tons
+Canada,1998,8790,6400,thousand tons
+Switzerland,1998,0,916,thousand tons
+Chile,1998,1040,198.6,thousand tons
+China,1998,99100,18524,thousand tons
+Colombia,1998,256,348.6,thousand tons
+Cuba,1998,0,307.8,thousand tons
+Czech Republic,1998,5210,479,thousand tons
+Germany,1998,30300,12200,thousand tons
+Denmark,1998,0,734,thousand tons
+Dominican Republic,1998,0.0915,35.64,thousand tons
+Algeria,1998,688,82.4,thousand tons
+Ecuador,1998,0,53,thousand tons
+Egypt,1998,1080,1515,thousand tons
+Spain,1998,3860,10670,thousand tons
+Estonia,1998,0.915,0,thousand tons
+Finland,1998,2870,884,thousand tons
+France,1998,11500,7730,thousand tons
+United Kingdom,1998,10600,3180,thousand tons
+Ghana,1998,0,22.89,thousand tons
+Greece,1998,0,996,thousand tons
+Guatemala,1998,0.458,152.6,thousand tons
+Croatia,1998,0,65,thousand tons
+Hungary,1998,1500,212.8,thousand tons
+Indonesia,1998,0,2606,thousand tons
+India,1998,15800,8870,thousand tons
+Ireland,1998,0,330,thousand tons
+"Iran, Islamic Republic of",1998,2010,4026,thousand tons
+Israel,1998,0,256.5,thousand tons
+Italy,1998,9770,14720,thousand tons
+Jordan,1998,0,27.49,thousand tons
+Japan,1998,69400,28020,thousand tons
+Kazakhstan,1998,4360,0,thousand tons
+Kenya,1998,0,18.29,thousand tons
+"Korea, Republic of",1998,22600,16880,thousand tons
+Libyan Arab Jamahiriya,1998,0,966,thousand tons
+Sri Lanka,1998,0,27.49,thousand tons
+Luxembourg,1998,0,2360,thousand tons
+Latvia,1998,454,1.835,thousand tons
+Morocco,1998,4.58,0,thousand tons
+"Moldova, Republic of",1998,0,831,thousand tons
+Mexico,1998,4790,9510,thousand tons
+"Macedonia, the former Yugoslav Republic of",1998,0.0915,147.1,thousand tons
+Myanmar,1998,0,22.89,thousand tons
+Malaysia,1998,0,3342,thousand tons
+Netherlands,1998,5040,145.5,thousand tons
+Norway,1998,0,621,thousand tons
+New Zealand,1998,506,136.9,thousand tons
+Pakistan,1998,778,91.6,thousand tons
+Peru,1998,262,425,thousand tons
+Philippines,1998,0,389.6,thousand tons
+Poland,1998,6600,3010,thousand tons
+"Korea, Democratic Peoples Republic of",1998,1370,0,thousand tons
+Portugal,1998,375,620,thousand tons
+Paraguay,1998,70.5,0,thousand tons
+Qatar,1998,0,667,thousand tons
+Romania,1998,3060,1213,thousand tons
+Russian Federation,1998,46200,7880,thousand tons
+Saudi Arabia,1998,0,2725,thousand tons
+Singapore,1998,0,551,thousand tons
+El Salvador,1998,0.458,37.1,thousand tons
+Slovakia,1998,3150,262,thousand tons
+Slovenia,1998,0,475,thousand tons
+Sweden,1998,2960,1822,thousand tons
+Syrian Arab Republic,1998,0,64.1,thousand tons
+Thailand,1998,0,1921,thousand tons
+Trinidad and Tobago,1998,0,678,thousand tons
+Tunisia,1998,156,54,thousand tons
+Turkey,1998,4790,8320,thousand tons
+Taiwan,1998,9130,6340,thousand tons
+Ukraine,1998,28200,901,thousand tons
+Uruguay,1998,0,34.75,thousand tons
+United States of America,1998,49400,43700,thousand tons
+Uzbekistan,1998,104,268.4,thousand tons
+Venezuela,1998,0.366,3512,thousand tons
+Viet Nam,1998,0,280.2,thousand tons
+South Africa,1998,4280,3486,thousand tons
+Angola,1998,0,1,thousand tons
+Albania,1999,0,4.65,thousand tons
+United Arab Emirates,1999,0,83.7,thousand tons
+Argentina,1999,2070,2092,thousand tons
+Australia,1999,5600,1025,thousand tons
+Austria,1999,4800,505,thousand tons
+Belgium,1999,8280,2530,thousand tons
+Bulgaria,1999,1320,559,thousand tons
+Bosnia and Herzegovina,1999,49.7,21.89,thousand tons
+Belarus,1999,0,1396,thousand tons
+Brazil,1999,20600,5340,thousand tons
+Canada,1999,8930,6490,thousand tons
+Switzerland,1999,0,929,thousand tons
+Chile,1999,1060,201.3,thousand tons
+China,1999,101000,18739,thousand tons
+Colombia,1999,260,353.8,thousand tons
+Cuba,1999,0,311.9,thousand tons
+Czech Republic,1999,5290,486,thousand tons
+Germany,1999,30700,12380,thousand tons
+Denmark,1999,0,745,thousand tons
+Dominican Republic,1999,0.0929,36.18,thousand tons
+Algeria,1999,699,83.7,thousand tons
+Ecuador,1999,0,53.9,thousand tons
+Egypt,1999,1090,1540,thousand tons
+Spain,1999,3920,10840,thousand tons
+Estonia,1999,0.929,0,thousand tons
+Finland,1999,2910,897,thousand tons
+France,1999,11600,7840,thousand tons
+United Kingdom,1999,10700,3220,thousand tons
+Ghana,1999,0,23.28,thousand tons
+Greece,1999,0,1011,thousand tons
+Guatemala,1999,0.465,155.1,thousand tons
+Croatia,1999,0,66,thousand tons
+Hungary,1999,1520,216.3,thousand tons
+Indonesia,1999,0,2645,thousand tons
+India,1999,16000,9000,thousand tons
+Ireland,1999,0,334,thousand tons
+"Iran, Islamic Republic of",1999,2050,4091,thousand tons
+Israel,1999,0,260.5,thousand tons
+Italy,1999,9920,14950,thousand tons
+Jordan,1999,0,27.89,thousand tons
+Japan,1999,70400,28470,thousand tons
+Kazakhstan,1999,4430,0,thousand tons
+Kenya,1999,0,18.56,thousand tons
+"Korea, Republic of",1999,22900,17140,thousand tons
+Libyan Arab Jamahiriya,1999,0,980,thousand tons
+Sri Lanka,1999,0,27.89,thousand tons
+Luxembourg,1999,0,2390,thousand tons
+Latvia,1999,461,1.858,thousand tons
+Morocco,1999,4.65,0,thousand tons
+"Moldova, Republic of",1999,0,844,thousand tons
+Mexico,1999,4870,9660,thousand tons
+"Macedonia, the former Yugoslav Republic of",1999,0.0929,149.9,thousand tons
+Myanmar,1999,0,23.28,thousand tons
+Malaysia,1999,0,3394,thousand tons
+Netherlands,1999,5120,147.8,thousand tons
+Norway,1999,0,631,thousand tons
+New Zealand,1999,513,139.4,thousand tons
+Pakistan,1999,790,92.9,thousand tons
+Peru,1999,267,432,thousand tons
+Philippines,1999,0,396,thousand tons
+Poland,1999,6700,3060,thousand tons
+"Korea, Democratic Peoples Republic of",1999,1390,0,thousand tons
+Portugal,1999,381,630,thousand tons
+Paraguay,1999,71.6,0,thousand tons
+Qatar,1999,0,678,thousand tons
+Romania,1999,3110,1232,thousand tons
+Russian Federation,1999,47000,8000,thousand tons
+Saudi Arabia,1999,0,2775,thousand tons
+Singapore,1999,0,560,thousand tons
+El Salvador,1999,0.465,37.63,thousand tons
+Slovakia,1999,3200,266,thousand tons
+Slovenia,1999,0,482,thousand tons
+Sweden,1999,3010,1855,thousand tons
+Syrian Arab Republic,1999,0,65,thousand tons
+Thailand,1999,0,1948,thousand tons
+Trinidad and Tobago,1999,0,688,thousand tons
+Tunisia,1999,158,54.9,thousand tons
+Turkey,1999,4860,8460,thousand tons
+Taiwan,1999,9270,6430,thousand tons
+Ukraine,1999,28600,915,thousand tons
+Uruguay,1999,0,35.28,thousand tons
+United States of America,1999,50200,44500,thousand tons
+Uzbekistan,1999,106,272.4,thousand tons
+Venezuela,1999,0.372,3565,thousand tons
+Viet Nam,1999,0,284.3,thousand tons
+South Africa,1999,4340,3539,thousand tons
+Angola,1999,0,1,thousand tons
+Albania,2000,0,5,thousand tons
+United Arab Emirates,2000,0,90,thousand tons
+Argentina,2000,2220,2250,thousand tons
+Australia,2000,6030,1103,thousand tons
+Austria,2000,5160,543,thousand tons
+Azerbaijan,2000,0,0,thousand tons
+Belgium,2000,8910,2730,thousand tons
+Bangladesh,2000,0,0,thousand tons
+Bulgaria,2000,1420,602,thousand tons
+Bosnia and Herzegovina,2000,53.5,23.52,thousand tons
+Belarus,2000,0,1501,thousand tons
+Brazil,2000,22100,5750,thousand tons
+Canada,2000,9610,6990,thousand tons
+Switzerland,2000,0,1000,thousand tons
+Chile,2000,1140,217,thousand tons
+China,2000,108000,20210,thousand tons
+Colombia,2000,280,380.3,thousand tons
+Cuba,2000,0,336.7,thousand tons
+Czech Republic,2000,5690,523,thousand tons
+Germany,2000,33100,13320,thousand tons
+Denmark,2000,0,801,thousand tons
+Dominican Republic,2000,0.1,38.94,thousand tons
+Algeria,2000,752,90,thousand tons
+Ecuador,2000,0,58.5,thousand tons
+Egypt,2000,1180,1658,thousand tons
+Spain,2000,4220,11660,thousand tons
+Estonia,2000,1,0,thousand tons
+Finland,2000,3130,965,thousand tons
+France,2000,12500,8440,thousand tons
+United Kingdom,2000,11600,3470,thousand tons
+Ghana,2000,0,25,thousand tons
+Greece,2000,0,1088,thousand tons
+Guatemala,2000,0.5,167,thousand tons
+Croatia,2000,0,71,thousand tons
+Hungary,2000,1640,233,thousand tons
+Indonesia,2000,0,2844,thousand tons
+India,2000,17200,9690,thousand tons
+Ireland,2000,0,360,thousand tons
+"Iran, Islamic Republic of",2000,2200,4400,thousand tons
+Israel,2000,0,280.2,thousand tons
+Italy,2000,10700,16090,thousand tons
+Jordan,2000,0,30,thousand tons
+Japan,2000,75800,30600,thousand tons
+Kazakhstan,2000,4770,0,thousand tons
+Kenya,2000,0,20,thousand tons
+"Korea, Republic of",2000,24700,18440,thousand tons
+Libyan Arab Jamahiriya,2000,0,1055,thousand tons
+Sri Lanka,2000,0,30,thousand tons
+Luxembourg,2000,0,2570,thousand tons
+Latvia,2000,496,2,thousand tons
+Morocco,2000,5,0,thousand tons
+"Moldova, Republic of",2000,0,909,thousand tons
+Mexico,2000,5240,10390,thousand tons
+"Macedonia, the former Yugoslav Republic of",2000,0.1,160.5,thousand tons
+Myanmar,2000,0,25,thousand tons
+Montenegro,2000,0,0,thousand tons
+Malaysia,2000,0,3646,thousand tons
+Nigeria,2000,0,0,thousand tons
+Netherlands,2000,5510,159,thousand tons
+Norway,2000,0,679,thousand tons
+New Zealand,2000,552,149.9,thousand tons
+Oman,2000,0,0,thousand tons
+Pakistan,2000,850,100,thousand tons
+Peru,2000,287,464,thousand tons
+Philippines,2000,0,426,thousand tons
+Poland,2000,7210,3290,thousand tons
+"Korea, Democratic Peoples Republic of",2000,1500,0,thousand tons
+Portugal,2000,410,678,thousand tons
+Paraguay,2000,77,0,thousand tons
+Qatar,2000,0,729,thousand tons
+Romania,2000,3350,1325,thousand tons
+Russian Federation,2000,50500,8610,thousand tons
+Saudi Arabia,2000,0,2985,thousand tons
+Singapore,2000,0,603,thousand tons
+El Salvador,2000,0.5,40.52,thousand tons
+Serbia,2000,0,0,thousand tons
+Slovakia,2000,3450,286,thousand tons
+Slovenia,2000,0,519,thousand tons
+Sweden,2000,3240,1996,thousand tons
+Syrian Arab Republic,2000,0,70,thousand tons
+Thailand,2000,0,2104,thousand tons
+Trinidad and Tobago,2000,0,742,thousand tons
+Tunisia,2000,170,59,thousand tons
+Turkey,2000,5230,9100,thousand tons
+Taiwan,2000,9970,6920,thousand tons
+Ukraine,2000,30800,985,thousand tons
+Uruguay,2000,0,38.14,thousand tons
+United States of America,2000,54000,47900,thousand tons
+Uzbekistan,2000,114,293.3,thousand tons
+Venezuela,2000,0.4,3830,thousand tons
+Viet Nam,2000,0,306.4,thousand tons
+South Africa,2000,4680,3803,thousand tons
+Angola,2000,0,1,thousand tons
+Albania,2001,0,80,thousand tons
+United Arab Emirates,2001,0,90,thousand tons
+Argentina,2001,2030,2078,thousand tons
+Australia,2001,5770,1259,thousand tons
+Austria,2001,5320,546,thousand tons
+Azerbaijan,2001,0,80,thousand tons
+Belgium,2001,8020,2740,thousand tons
+Bangladesh,2001,0,0,thousand tons
+Bulgaria,2001,1270,703,thousand tons
+Bosnia and Herzegovina,2001,59.2,24.84,thousand tons
+Belarus,2001,0,1486,thousand tons
+Brazil,2001,21300,5410,thousand tons
+Canada,2001,8840,6440,thousand tons
+Switzerland,2001,0,1000,thousand tons
+Chile,2001,1000,245.9,thousand tons
+China,2001,128000,24000,thousand tons
+Colombia,2001,332,305.4,thousand tons
+Cuba,2001,0,269.8,thousand tons
+Czech Republic,2001,5740,573,thousand tons
+Germany,2001,31700,13150,thousand tons
+Denmark,2001,0,751,thousand tons
+Dominican Republic,2001,0,0,thousand tons
+Algeria,2001,847,100,thousand tons
+Ecuador,2001,0.3,59.7,thousand tons
+Egypt,2001,1150,2646,thousand tons
+Spain,2001,4220,12280,thousand tons
+Estonia,2001,1,0,thousand tons
+Finland,2001,3080,859,thousand tons
+France,2001,11100,8230,thousand tons
+United Kingdom,2001,10300,3130,thousand tons
+Ghana,2001,0,25,thousand tons
+Greece,2001,0,1281,thousand tons
+Guatemala,2001,0.2,201.4,thousand tons
+Croatia,2001,0,58,thousand tons
+Hungary,2001,1500,457,thousand tons
+Indonesia,2001,0,2777,thousand tons
+India,2001,17300,9960,thousand tons
+Ireland,2001,0,150,thousand tons
+"Iran, Islamic Republic of",2001,2150,4760,thousand tons
+Israel,2001,0,280.2,thousand tons
+Italy,2001,10000,16540,thousand tons
+Jordan,2001,0,30,thousand tons
+Japan,2001,74400,28450,thousand tons
+Kazakhstan,2001,4660,0,thousand tons
+Kenya,2001,0,20,thousand tons
+"Korea, Republic of",2001,24700,19120,thousand tons
+Libyan Arab Jamahiriya,2001,0.1,846,thousand tons
+Sri Lanka,2001,0,30,thousand tons
+Luxembourg,2001,0,2730,thousand tons
+Latvia,2001,513,2,thousand tons
+Morocco,2001,5,0,thousand tons
+"Moldova, Republic of",2001,0.1,966,thousand tons
+Mexico,2001,4770,8530,thousand tons
+"Macedonia, the former Yugoslav Republic of",2001,0,260.2,thousand tons
+Myanmar,2001,0,25,thousand tons
+Montenegro,2001,0,0,thousand tons
+Malaysia,2001,0,4104,thousand tons
+Nigeria,2001,0,0,thousand tons
+Netherlands,2001,5900,135.4,thousand tons
+Norway,2001,0,640,thousand tons
+New Zealand,2001,606,219.8,thousand tons
+Oman,2001,0,0,thousand tons
+Pakistan,2001,853,100,thousand tons
+Peru,2001,273,417,thousand tons
+Philippines,2001,74,426,thousand tons
+Poland,2001,6000,2820,thousand tons
+"Korea, Democratic Peoples Republic of",2001,1400,0,thousand tons
+Portugal,2001,62,666,thousand tons
+Paraguay,2001,71,0,thousand tons
+Qatar,2001,0,891,thousand tons
+Romania,2001,3560,1370,thousand tons
+Russian Federation,2001,50100,8850,thousand tons
+Saudi Arabia,2001,0,3409,thousand tons
+Singapore,2001,0.3,455,thousand tons
+El Salvador,2001,0.5,38.54,thousand tons
+Serbia,2001,0,0,thousand tons
+Slovakia,2001,3680,313,thousand tons
+Slovenia,2001,0,462,thousand tons
+Sweden,2001,3650,1873,thousand tons
+Syrian Arab Republic,2001,0,70,thousand tons
+Thailand,2001,0,2130,thousand tons
+Trinidad and Tobago,2001,0,668,thousand tons
+Tunisia,2001,176,62.9,thousand tons
+Turkey,2001,5280,9700,thousand tons
+Taiwan,2001,10300,6950,thousand tons
+Ukraine,2001,32200,927,thousand tons
+Uruguay,2001,0.1,30.92,thousand tons
+United States of America,2001,47400,42800,thousand tons
+Uzbekistan,2001,100,332.9,thousand tons
+Venezuela,2001,0.3,3815,thousand tons
+Viet Nam,2001,0,318.6,thousand tons
+South Africa,2001,4910,3909,thousand tons
+Angola,2001,0,1,thousand tons
+Albania,2002,0,140,thousand tons
+United Arab Emirates,2002,0,90,thousand tons
+Argentina,2002,1820,2538,thousand tons
+Australia,2002,6160,1369,thousand tons
+Austria,2002,5540,651,thousand tons
+Azerbaijan,2002,0,125,thousand tons
+Belgium,2002,8420,2930,thousand tons
+Bangladesh,2002,0,0,thousand tons
+Bulgaria,2002,1220,641,thousand tons
+Bosnia and Herzegovina,2002,50.6,23.39,thousand tons
+Belarus,2002,0,1485,thousand tons
+Brazil,2002,23600,5990,thousand tons
+Canada,2002,9450,6550,thousand tons
+Switzerland,2002,0,1000,thousand tons
+Chile,2002,1010,265.9,thousand tons
+China,2002,152000,30520,thousand tons
+Colombia,2002,320,344.6,thousand tons
+Cuba,2002,0,268.4,thousand tons
+Czech Republic,2002,5980,528,thousand tons
+Germany,2002,31800,13210,thousand tons
+Denmark,2002,0,392,thousand tons
+Dominican Republic,2002,0,0,thousand tons
+Algeria,2002,986,105.5,thousand tons
+Ecuador,2002,0.3,68.7,thousand tons
+Egypt,2002,1150,3170,thousand tons
+Spain,2002,4200,12210,thousand tons
+Estonia,2002,1,0,thousand tons
+Finland,2002,3100,908,thousand tons
+France,2002,12400,7880,thousand tons
+United Kingdom,2002,8960,2570,thousand tons
+Ghana,2002,0,25,thousand tons
+Greece,2002,0,1837,thousand tons
+Guatemala,2002,0.1,215.8,thousand tons
+Croatia,2002,0.1,33.9,thousand tons
+Hungary,2002,1650,400,thousand tons
+Indonesia,2002,0,2461,thousand tons
+India,2002,18000,10850,thousand tons
+Ireland,2002,0,0,thousand tons
+"Iran, Islamic Republic of",2002,2170,5150,thousand tons
+Israel,2002,0,280.2,thousand tons
+Italy,2002,9330,16740,thousand tons
+Jordan,2002,0,134.2,thousand tons
+Japan,2002,78500,29200,thousand tons
+Kazakhstan,2002,4810,0,thousand tons
+Kenya,2002,0,20,thousand tons
+"Korea, Republic of",2002,24900,20400,thousand tons
+Libyan Arab Jamahiriya,2002,0.3,886,thousand tons
+Sri Lanka,2002,0,30,thousand tons
+Luxembourg,2002,0,2720,thousand tons
+Latvia,2002,518,2,thousand tons
+Morocco,2002,5,0,thousand tons
+"Moldova, Republic of",2002,0.5,513,thousand tons
+Mexico,2002,4120,9890,thousand tons
+"Macedonia, the former Yugoslav Republic of",2002,0,260.2,thousand tons
+Myanmar,2002,0,25,thousand tons
+Montenegro,2002,0,0,thousand tons
+Malaysia,2002,0,4720,thousand tons
+Nigeria,2002,0,0,thousand tons
+Netherlands,2002,6000,121.5,thousand tons
+Norway,2002,0,698,thousand tons
+New Zealand,2002,560,205.2,thousand tons
+Oman,2002,0,0,thousand tons
+Pakistan,2002,870,100,thousand tons
+Peru,2002,214,396.2,thousand tons
+Philippines,2002,83,467,thousand tons
+Poland,2002,5810,2560,thousand tons
+"Korea, Democratic Peoples Republic of",2002,1400,0,thousand tons
+Portugal,2002,0,920,thousand tons
+Paraguay,2002,80,0,thousand tons
+Qatar,2002,0,1027,thousand tons
+Romania,2002,4510,984,thousand tons
+Russian Federation,2002,50900,8900,thousand tons
+Saudi Arabia,2002,0,3567,thousand tons
+Singapore,2002,0,460,thousand tons
+El Salvador,2002,0.2,48.8,thousand tons
+Serbia,2002,0,0,thousand tons
+Slovakia,2002,3970,301,thousand tons
+Slovenia,2002,0,481,thousand tons
+Sweden,2002,3810,1944,thousand tons
+Syrian Arab Republic,2002,0,70,thousand tons
+Thailand,2002,0,2539,thousand tons
+Trinidad and Tobago,2002,0.3,817,thousand tons
+Tunisia,2002,135,65.2,thousand tons
+Turkey,2002,5130,11340,thousand tons
+Taiwan,2002,10500,7710,thousand tons
+Ukraine,2002,33100,992,thousand tons
+Uruguay,2002,0,34.21,thousand tons
+United States of America,2002,45500,46100,thousand tons
+Uzbekistan,2002,135,314.6,thousand tons
+Venezuela,2002,0.2,4159,thousand tons
+Viet Nam,2002,0,409.2,thousand tons
+South Africa,2002,4970,4120,thousand tons
+Angola,2002,0,1,thousand tons
+Albania,2003,0,140,thousand tons
+United Arab Emirates,2003,0,90,thousand tons
+Argentina,2003,2540,2500,thousand tons
+Australia,2003,6200,1342,thousand tons
+Austria,2003,5710,555,thousand tons
+Azerbaijan,2003,0,250,thousand tons
+Belgium,2003,8310,2800,thousand tons
+Bangladesh,2003,0,0,thousand tons
+Bulgaria,2003,1500,814,thousand tons
+Bosnia and Herzegovina,2003,72,22.96,thousand tons
+Belarus,2003,0,1589,thousand tons
+Brazil,2003,24600,6590,thousand tons
+Canada,2003,9300,6630,thousand tons
+Switzerland,2003,0,1000,thousand tons
+Chile,2003,1080,300.1,thousand tons
+China,2003,183000,39050,thousand tons
+Colombia,2003,290,377.6,thousand tons
+Cuba,2003,0,210.4,thousand tons
+Czech Republic,2003,6320,464,thousand tons
+Germany,2003,31400,13430,thousand tons
+Denmark,2003,0,0,thousand tons
+Dominican Republic,2003,0,0,thousand tons
+Algeria,2003,950,100.7,thousand tons
+Ecuador,2003,0.2,79.8,thousand tons
+Egypt,2003,1150,3250,thousand tons
+Spain,2003,3760,12530,thousand tons
+Estonia,2003,1,0,thousand tons
+Finland,2003,3410,1357,thousand tons
+France,2003,12000,7770,thousand tons
+United Kingdom,2003,10600,2500,thousand tons
+Ghana,2003,0,25,thousand tons
+Greece,2003,0,1701,thousand tons
+Guatemala,2003,0,226.3,thousand tons
+Croatia,2003,0,41.4,thousand tons
+Hungary,2003,1640,350,thousand tons
+Indonesia,2003,0,2040,thousand tons
+India,2003,19100,12680,thousand tons
+Ireland,2003,0,0,thousand tons
+"Iran, Islamic Republic of",2003,2270,5600,thousand tons
+Israel,2003,0,280.2,thousand tons
+Italy,2003,9930,17120,thousand tons
+Jordan,2003,0,135.4,thousand tons
+Japan,2003,81400,29200,thousand tons
+Kazakhstan,2003,4900,0,thousand tons
+Kenya,2003,0,20,thousand tons
+"Korea, Republic of",2003,25600,20800,thousand tons
+Libyan Arab Jamahiriya,2003,0.5,1007,thousand tons
+Sri Lanka,2003,0,30,thousand tons
+Luxembourg,2003,0,2680,thousand tons
+Latvia,2003,518,2,thousand tons
+Morocco,2003,5,0,thousand tons
+"Moldova, Republic of",2003,0,886,thousand tons
+Mexico,2003,4590,10570,thousand tons
+"Macedonia, the former Yugoslav Republic of",2003,0,291.2,thousand tons
+Myanmar,2003,0,25,thousand tons
+Montenegro,2003,0,0,thousand tons
+Malaysia,2003,0,3960,thousand tons
+Nigeria,2003,0,0,thousand tons
+Netherlands,2003,6450,119.6,thousand tons
+Norway,2003,0,703,thousand tons
+New Zealand,2003,623,230.2,thousand tons
+Oman,2003,0,0,thousand tons
+Pakistan,2003,900,100,thousand tons
+Peru,2003,203,466,thousand tons
+Philippines,2003,75,425,thousand tons
+Poland,2003,6070,3040,thousand tons
+"Korea, Democratic Peoples Republic of",2003,1400,0,thousand tons
+Portugal,2003,0,1000,thousand tons
+Paraguay,2003,91,0,thousand tons
+Qatar,2003,0,1055,thousand tons
+Romania,2003,4540,1148,thousand tons
+Russian Federation,2003,52100,9350,thousand tons
+Saudi Arabia,2003,0,3947,thousand tons
+Singapore,2003,0,562,thousand tons
+El Salvador,2003,0.1,56.9,thousand tons
+Serbia,2003,0,0,thousand tons
+Slovakia,2003,4280,312,thousand tons
+Slovenia,2003,0,541,thousand tons
+Sweden,2003,3880,1822,thousand tons
+Syrian Arab Republic,2003,0,70,thousand tons
+Thailand,2003,0,3552,thousand tons
+Trinidad and Tobago,2003,0.1,903,thousand tons
+Tunisia,2003,20.4,65.6,thousand tons
+Turkey,2003,5750,12540,thousand tons
+Taiwan,2003,10800,8050,thousand tons
+Ukraine,2003,34900,2000,thousand tons
+Uruguay,2003,0,40.52,thousand tons
+United States of America,2003,45900,47900,thousand tons
+Uzbekistan,2003,149,350,thousand tons
+Venezuela,2003,0,3933,thousand tons
+Viet Nam,2003,0,544,thousand tons
+South Africa,2003,5080,4400,thousand tons
+Angola,2003,0,1,thousand tons
+Albania,2004,0,143.4,thousand tons
+United Arab Emirates,2004,0,90,thousand tons
+Argentina,2004,2490,2644,thousand tons
+Australia,2004,5940,1474,thousand tons
+Austria,2004,5900,629,thousand tons
+Azerbaijan,2004,0,250,thousand tons
+Belgium,2004,8810,2890,thousand tons
+Bangladesh,2004,0,0,thousand tons
+Bulgaria,2004,1270,832,thousand tons
+Bosnia and Herzegovina,2004,52.9,22.07,thousand tons
+Belarus,2004,0,1793,thousand tons
+Brazil,2004,25400,7510,thousand tons
+Canada,2004,9650,6650,thousand tons
+Switzerland,2004,0,1000,thousand tons
+Chile,2004,1210,370.9,thousand tons
+China,2004,231000,41680,thousand tons
+Colombia,2004,320,486,thousand tons
+Cuba,2004,0,192.1,thousand tons
+Czech Republic,2004,6510,525,thousand tons
+Germany,2004,32200,14220,thousand tons
+Denmark,2004,0,0,thousand tons
+Dominican Republic,2004,0,0,thousand tons
+Algeria,2004,1010,0,thousand tons
+Ecuador,2004,0.3,71.7,thousand tons
+Egypt,2004,1280,3527,thousand tons
+Spain,2004,4210,13410,thousand tons
+Estonia,2004,1,0,thousand tons
+Finland,2004,3340,1495,thousand tons
+France,2004,12800,8020,thousand tons
+United Kingdom,2004,10700,3100,thousand tons
+Ghana,2004,0,25,thousand tons
+Greece,2004,0,1965,thousand tons
+Guatemala,2004,0,231.7,thousand tons
+Croatia,2004,0,86.1,thousand tons
+Hungary,2004,1670,284,thousand tons
+Indonesia,2004,0,3684,thousand tons
+India,2004,16800,15790,thousand tons
+Ireland,2004,0,0,thousand tons
+"Iran, Islamic Republic of",2004,2300,6380,thousand tons
+Israel,2004,0,280.2,thousand tons
+Italy,2004,10600,18000,thousand tons
+Jordan,2004,0,139.6,thousand tons
+Japan,2004,83000,29700,thousand tons
+Kazakhstan,2004,5380,0,thousand tons
+Kenya,2004,0,20,thousand tons
+"Korea, Republic of",2004,26700,20800,thousand tons
+Libyan Arab Jamahiriya,2004,0,1026,thousand tons
+Sri Lanka,2004,0,30,thousand tons
+Luxembourg,2004,0,2680,thousand tons
+Latvia,2004,660,2,thousand tons
+Morocco,2004,5,0,thousand tons
+"Moldova, Republic of",2004,0.4,1013,thousand tons
+Mexico,2004,4760,11970,thousand tons
+"Macedonia, the former Yugoslav Republic of",2004,0,308.9,thousand tons
+Myanmar,2004,0,25,thousand tons
+Montenegro,2004,0,0,thousand tons
+Malaysia,2004,0,5700,thousand tons
+Nigeria,2004,0,40,thousand tons
+Netherlands,2004,6710,135.7,thousand tons
+Norway,2004,0,725,thousand tons
+New Zealand,2004,638,247.4,thousand tons
+Oman,2004,0,0,thousand tons
+Pakistan,2004,1020,120,thousand tons
+Peru,2004,256,470,thousand tons
+Philippines,2004,0,400,thousand tons
+Poland,2004,6880,3720,thousand tons
+"Korea, Democratic Peoples Republic of",2004,1400,0,thousand tons
+Portugal,2004,0,1445,thousand tons
+Paraguay,2004,107,0,thousand tons
+Qatar,2004,0,1089,thousand tons
+Romania,2004,4680,1360,thousand tons
+Russian Federation,2004,54900,10690,thousand tons
+Saudi Arabia,2004,0,3906,thousand tons
+Singapore,2004,0.2,609,thousand tons
+El Salvador,2004,0,59.4,thousand tons
+Serbia,2004,0,0,thousand tons
+Slovakia,2004,4100,357,thousand tons
+Slovenia,2004,0.5,566,thousand tons
+Sweden,2004,4100,1874,thousand tons
+Syrian Arab Republic,2004,0,70,thousand tons
+Thailand,2004,0,4540,thousand tons
+Trinidad and Tobago,2004,0.1,815,thousand tons
+Tunisia,2004,0.2,65.8,thousand tons
+Turkey,2004,5830,14650,thousand tons
+Taiwan,2004,10900,8660,thousand tons
+Ukraine,2004,36100,2633,thousand tons
+Uruguay,2004,0.3,57.7,thousand tons
+United States of America,2004,47700,52000,thousand tons
+Uzbekistan,2004,180,422,thousand tons
+Venezuela,2004,0.2,4560,thousand tons
+Viet Nam,2004,0,689,thousand tons
+South Africa,2004,4950,4550,thousand tons
+Angola,2004,0,1,thousand tons
+Albania,2005,0.5,179.4,thousand tons
+United Arab Emirates,2005,0,90,thousand tons
+Argentina,2005,2570,2804,thousand tons
+Australia,2005,6380,1381,thousand tons
+Austria,2005,6410,623,thousand tons
+Azerbaijan,2005,0,330.2,thousand tons
+Belgium,2005,7780,2640,thousand tons
+Bangladesh,2005,0,0,thousand tons
+Bulgaria,2005,1200,772,thousand tons
+Bosnia and Herzegovina,2005,19.7,269.2,thousand tons
+Belarus,2005,0,2029,thousand tons
+Brazil,2005,24700,6960,thousand tons
+Canada,2005,8970,6360,thousand tons
+Switzerland,2005,0,1159,thousand tons
+Chile,2005,1150,388,thousand tons
+China,2005,314000,41790,thousand tons
+Colombia,2005,335,672,thousand tons
+Cuba,2005,0,244.8,thousand tons
+Czech Republic,2005,5630,557,thousand tons
+Germany,2005,30900,13660,thousand tons
+Denmark,2005,0,0,thousand tons
+Dominican Republic,2005,0,0,thousand tons
+Algeria,2005,1010,0,thousand tons
+Ecuador,2005,0.4,83.6,thousand tons
+Egypt,2005,1100,4500,thousand tons
+Spain,2005,4360,13470,thousand tons
+Estonia,2005,0,0,thousand tons
+Finland,2005,3320,1422,thousand tons
+France,2005,12200,7300,thousand tons
+United Kingdom,2005,10500,2690,thousand tons
+Ghana,2005,0,25,thousand tons
+Greece,2005,0,2267,thousand tons
+Guatemala,2005,0,207.8,thousand tons
+Croatia,2005,0.2,72.8,thousand tons
+Hungary,2005,1640,316,thousand tons
+Indonesia,2005,0,3672,thousand tons
+India,2005,20400,25390,thousand tons
+Ireland,2005,0,0,thousand tons
+"Iran, Islamic Republic of",2005,2460,6940,thousand tons
+Israel,2005,0,300,thousand tons
+Italy,2005,11700,17660,thousand tons
+Jordan,2005,0,150,thousand tons
+Japan,2005,83600,28800,thousand tons
+Kazakhstan,2005,4450,0,thousand tons
+Kenya,2005,0,20,thousand tons
+"Korea, Republic of",2005,26700,21000,thousand tons
+Libyan Arab Jamahiriya,2005,0.3,1255,thousand tons
+Sri Lanka,2005,0,30,thousand tons
+Luxembourg,2005,0,2195,thousand tons
+Latvia,2005,686,2,thousand tons
+Morocco,2005,5.1,205.2,thousand tons
+"Moldova, Republic of",2005,0.5,1049,thousand tons
+Mexico,2005,4500,11690,thousand tons
+"Macedonia, the former Yugoslav Republic of",2005,0,310.2,thousand tons
+Myanmar,2005,0,25,thousand tons
+Montenegro,2005,0,0,thousand tons
+Malaysia,2005,0,5290,thousand tons
+Nigeria,2005,0,100,thousand tons
+Netherlands,2005,6780,141.1,thousand tons
+Norway,2005,0,705,thousand tons
+New Zealand,2005,605,284.2,thousand tons
+Oman,2005,0,0,thousand tons
+Pakistan,2005,801,25,thousand tons
+Peru,2005,240,550,thousand tons
+Philippines,2005,0,470,thousand tons
+Poland,2005,4890,3440,thousand tons
+"Korea, Democratic Peoples Republic of",2005,1400,0,thousand tons
+Portugal,2005,0,1408,thousand tons
+Paraguay,2005,101,0,thousand tons
+Qatar,2005,0,1057,thousand tons
+Romania,2005,4510,1771,thousand tons
+Russian Federation,2005,55300,10800,thousand tons
+Saudi Arabia,2005,0,4180,thousand tons
+Singapore,2005,0.1,572,thousand tons
+El Salvador,2005,0,48.3,thousand tons
+Serbia,2005,0,0,thousand tons
+Slovakia,2005,4120,364,thousand tons
+Slovenia,2005,0.1,582,thousand tons
+Sweden,2005,3920,1802,thousand tons
+Syrian Arab Republic,2005,0,70,thousand tons
+Thailand,2005,0,5160,thousand tons
+Trinidad and Tobago,2005,0.3,712,thousand tons
+Tunisia,2005,0,70,thousand tons
+Turkey,2005,6120,14850,thousand tons
+Taiwan,2005,10000,8900,thousand tons
+Ukraine,2005,34800,3800,thousand tons
+Uruguay,2005,0.1,63.9,thousand tons
+United States of America,2005,42700,52100,thousand tons
+Uzbekistan,2005,175,420,thousand tons
+Venezuela,2005,0.5,4910,thousand tons
+Viet Nam,2005,0,890,thousand tons
+South Africa,2005,5260,4240,thousand tons
+Angola,2005,0,1,thousand tons
+Albania,2006,0.5,205.8,thousand tons
+United Arab Emirates,2006,0,90,thousand tons
+Argentina,2006,2630,2908,thousand tons
+Australia,2006,6440,1435,thousand tons
+Austria,2006,6490,643,thousand tons
+Azerbaijan,2006,0,300,thousand tons
+Belgium,2006,8170,3460,thousand tons
+Bangladesh,2006,0,0,thousand tons
+Bulgaria,2006,1150,968,thousand tons
+Bosnia and Herzegovina,2006,0,490,thousand tons
+Belarus,2006,139,2189,thousand tons
+Brazil,2006,23400,7540,thousand tons
+Canada,2006,9120,6370,thousand tons
+Switzerland,2006,0,1252,thousand tons
+Chile,2006,1160,449,thousand tons
+China,2006,377000,44210,thousand tons
+Colombia,2006,363,849,thousand tons
+Cuba,2006,0.3,256.6,thousand tons
+Czech Republic,2006,6280,579,thousand tons
+Germany,2006,32600,14680,thousand tons
+Denmark,2006,0,0,thousand tons
+Dominican Republic,2006,0,0,thousand tons
+Algeria,2006,1160,0,thousand tons
+Ecuador,2006,0,85.3,thousand tons
+Egypt,2006,1300,4750,thousand tons
+Spain,2006,3600,14790,thousand tons
+Estonia,2006,0,0,thousand tons
+Finland,2006,3450,1600,thousand tons
+France,2006,12200,7610,thousand tons
+United Kingdom,2006,11200,2700,thousand tons
+Ghana,2006,0,25,thousand tons
+Greece,2006,0,2410,thousand tons
+Guatemala,2006,0.4,292,thousand tons
+Croatia,2006,0.5,80.5,thousand tons
+Hungary,2006,1650,434,thousand tons
+Indonesia,2006,0,3762,thousand tons
+India,2006,21300,28160,thousand tons
+Ireland,2006,0,0,thousand tons
+"Iran, Islamic Republic of",2006,2200,7590,thousand tons
+Israel,2006,0,300,thousand tons
+Italy,2006,11800,19810,thousand tons
+Jordan,2006,0,150,thousand tons
+Japan,2006,86000,30300,thousand tons
+Kazakhstan,2006,3740,527,thousand tons
+Kenya,2006,0,20,thousand tons
+"Korea, Republic of",2006,26300,22200,thousand tons
+Libyan Arab Jamahiriya,2006,0.3,1151,thousand tons
+Sri Lanka,2006,0,30,thousand tons
+Luxembourg,2006,0,2800,thousand tons
+Latvia,2006,688,2,thousand tons
+Morocco,2006,0,314.4,thousand tons
+"Moldova, Republic of",2006,0,678,thousand tons
+Mexico,2006,4190,12260,thousand tons
+"Macedonia, the former Yugoslav Republic of",2006,0,354,thousand tons
+Myanmar,2006,0,25,thousand tons
+Montenegro,2006,0,161.6,thousand tons
+Malaysia,2006,0,5830,thousand tons
+Nigeria,2006,0,100,thousand tons
+Netherlands,2006,6220,149.6,thousand tons
+Norway,2006,0,684,thousand tons
+New Zealand,2006,577,232.8,thousand tons
+Oman,2006,0,0,thousand tons
+Pakistan,2006,1000,40,thousand tons
+Peru,2006,279,617,thousand tons
+Philippines,2006,0,558,thousand tons
+Poland,2006,5770,4240,thousand tons
+"Korea, Democratic Peoples Republic of",2006,1400,0,thousand tons
+Portugal,2006,0,1719,thousand tons
+Paraguay,2006,115,0,thousand tons
+Qatar,2006,0,1003,thousand tons
+Romania,2006,4370,1895,thousand tons
+Russian Federation,2006,54600,16310,thousand tons
+Saudi Arabia,2006,0,3974,thousand tons
+Singapore,2006,0.3,607,thousand tons
+El Salvador,2006,0,72,thousand tons
+Serbia,2006,1660,0,thousand tons
+Slovakia,2006,4710,378,thousand tons
+Slovenia,2006,0,628,thousand tons
+Sweden,2006,3580,1878,thousand tons
+Syrian Arab Republic,2006,0,70,thousand tons
+Thailand,2006,0,4910,thousand tons
+Trinidad and Tobago,2006,0.2,672,thousand tons
+Tunisia,2006,0,75,thousand tons
+Turkey,2006,6180,17080,thousand tons
+Taiwan,2006,10700,9320,thousand tons
+Ukraine,2006,39400,1500,thousand tons
+Uruguay,2006,0.2,56.8,thousand tons
+United States of America,2006,42100,56100,thousand tons
+Uzbekistan,2006,105,512,thousand tons
+Venezuela,2006,0,4870,thousand tons
+Viet Nam,2006,0,1869,thousand tons
+South Africa,2006,5170,4540,thousand tons
+Angola,2006,0,1,thousand tons
+Albania,2007,0,263.3,thousand tons
+United Arab Emirates,2007,0,90,thousand tons
+Argentina,2007,2590,2791,thousand tons
+Australia,2007,6420,1525,thousand tons
+Austria,2007,6870,707,thousand tons
+Azerbaijan,2007,0,150,thousand tons
+Belgium,2007,7150,3550,thousand tons
+Bangladesh,2007,0,0,thousand tons
+Bulgaria,2007,1030,882,thousand tons
+Bosnia and Herzegovina,2007,0,534,thousand tons
+Belarus,2007,110,2296,thousand tons
+Brazil,2007,25700,8080,thousand tons
+Canada,2007,9240,6330,thousand tons
+Switzerland,2007,0,1264,thousand tons
+Chile,2007,1220,459,thousand tons
+China,2007,431000,58420,thousand tons
+Colombia,2007,340,905,thousand tons
+Cuba,2007,0,268.4,thousand tons
+Czech Republic,2007,6400,662,thousand tons
+Germany,2007,33500,15020,thousand tons
+Denmark,2007,0,0,thousand tons
+Dominican Republic,2007,0,0,thousand tons
+Algeria,2007,1280,0,thousand tons
+Ecuador,2007,0.1,86.9,thousand tons
+Egypt,2007,999,5220,thousand tons
+Spain,2007,4190,14810,thousand tons
+Estonia,2007,0,0,thousand tons
+Finland,2007,3120,1314,thousand tons
+France,2007,11800,7440,thousand tons
+United Kingdom,2007,11400,3030,thousand tons
+Ghana,2007,0,25,thousand tons
+Greece,2007,0,2550,thousand tons
+Guatemala,2007,0.5,348.6,thousand tons
+Croatia,2007,0,75,thousand tons
+Hungary,2007,1730,498,thousand tons
+Indonesia,2007,0,4158,thousand tons
+India,2007,22300,31180,thousand tons
+Ireland,2007,0,0,thousand tons
+"Iran, Islamic Republic of",2007,1930,8120,thousand tons
+Israel,2007,0,300,thousand tons
+Italy,2007,11600,20000,thousand tons
+Jordan,2007,0,150,thousand tons
+Japan,2007,89200,30900,thousand tons
+Kazakhstan,2007,4110,672,thousand tons
+Kenya,2007,0,20,thousand tons
+"Korea, Republic of",2007,27600,24000,thousand tons
+Libyan Arab Jamahiriya,2007,0,1250,thousand tons
+Sri Lanka,2007,0,30,thousand tons
+Luxembourg,2007,0,2860,thousand tons
+Latvia,2007,696,0,thousand tons
+Morocco,2007,0.1,512,thousand tons
+"Moldova, Republic of",2007,0,965,thousand tons
+Mexico,2007,4560,13010,thousand tons
+"Macedonia, the former Yugoslav Republic of",2007,0.3,359,thousand tons
+Myanmar,2007,0,25,thousand tons
+Montenegro,2007,0,173.7,thousand tons
+Malaysia,2007,0,6890,thousand tons
+Nigeria,2007,0,100,thousand tons
+Netherlands,2007,7200,165.4,thousand tons
+Norway,2007,0,708,thousand tons
+New Zealand,2007,612,232.8,thousand tons
+Oman,2007,0,0,thousand tons
+Pakistan,2007,990,100,thousand tons
+Peru,2007,324,557,thousand tons
+Philippines,2007,0,718,thousand tons
+Poland,2007,6200,4430,thousand tons
+"Korea, Democratic Peoples Republic of",2007,1400,0,thousand tons
+Portugal,2007,0,1855,thousand tons
+Paraguay,2007,95,0,thousand tons
+Qatar,2007,0,1147,thousand tons
+Romania,2007,4360,1909,thousand tons
+Russian Federation,2007,53100,19270,thousand tons
+Saudi Arabia,2007,0,4640,thousand tons
+Singapore,2007,0,640,thousand tons
+El Salvador,2007,0,73.2,thousand tons
+Serbia,2007,1480,0,thousand tons
+Slovakia,2007,4690,396,thousand tons
+Slovenia,2007,0,638,thousand tons
+Sweden,2007,3750,1926,thousand tons
+Syrian Arab Republic,2007,0,70,thousand tons
+Thailand,2007,0,5570,thousand tons
+Trinidad and Tobago,2007,0,683,thousand tons
+Tunisia,2007,0,80,thousand tons
+Turkey,2007,6390,19400,thousand tons
+Taiwan,2007,10900,10010,thousand tons
+Ukraine,2007,41200,1633,thousand tons
+Uruguay,2007,0,71.1,thousand tons
+United States of America,2007,41100,57100,thousand tons
+Uzbekistan,2007,103,542,thousand tons
+Venezuela,2007,0,5000,thousand tons
+Viet Nam,2007,0,2026,thousand tons
+South Africa,2007,4520,4580,thousand tons
+Angola,2007,0,1,thousand tons
+Albania,2008,0,250,thousand tons
+United Arab Emirates,2008,0,90,thousand tons
+Argentina,2008,2660,2883,thousand tons
+Australia,2008,6160,1462,thousand tons
+Austria,2008,6870,723,thousand tons
+Azerbaijan,2008,0,150,thousand tons
+Belgium,2008,7410,3270,thousand tons
+Bangladesh,2008,0,50,thousand tons
+Bulgaria,2008,429,902,thousand tons
+Bosnia and Herzegovina,2008,228,380,thousand tons
+Belarus,2008,100,2486,thousand tons
+Brazil,2008,25800,7930,thousand tons
+Canada,2008,8960,5990,thousand tons
+Switzerland,2008,0,1312,thousand tons
+Chile,2008,1180,364.5,thousand tons
+China,2008,449000,63370,thousand tons
+Colombia,2008,308,745,thousand tons
+Cuba,2008,0,279,thousand tons
+Czech Republic,2008,5760,630,thousand tons
+Germany,2008,31200,14640,thousand tons
+Denmark,2008,0,0,thousand tons
+Dominican Republic,2008,0,0,thousand tons
+Algeria,2008,619,0,thousand tons
+Ecuador,2008,0.2,127.8,thousand tons
+Egypt,2008,898,5300,thousand tons
+Spain,2008,4070,14570,thousand tons
+Estonia,2008,0,0,thousand tons
+Finland,2008,3150,1266,thousand tons
+France,2008,10700,7210,thousand tons
+United Kingdom,2008,10500,3040,thousand tons
+Ghana,2008,0,25,thousand tons
+Greece,2008,0,2480,thousand tons
+Guatemala,2008,0,250,thousand tons
+Croatia,2008,0,89.1,thousand tons
+Hungary,2008,1580,521,thousand tons
+Indonesia,2008,0,3920,thousand tons
+India,2008,22600,35250,thousand tons
+Ireland,2008,0,0,thousand tons
+"Iran, Islamic Republic of",2008,1980,7980,thousand tons
+Israel,2008,0,300,thousand tons
+Italy,2008,10900,19660,thousand tons
+Jordan,2008,0,150,thousand tons
+Japan,2008,89200,29500,thousand tons
+Kazakhstan,2008,3370,877,thousand tons
+Kenya,2008,0,20,thousand tons
+"Korea, Republic of",2008,30200,23400,thousand tons
+Libyan Arab Jamahiriya,2008,0.1,1137,thousand tons
+Sri Lanka,2008,0,30,thousand tons
+Luxembourg,2008,0,2590,thousand tons
+Latvia,2008,635,0,thousand tons
+Morocco,2008,0.2,478,thousand tons
+"Moldova, Republic of",2008,0,885,thousand tons
+Mexico,2008,5010,12200,thousand tons
+"Macedonia, the former Yugoslav Republic of",2008,0.1,252.9,thousand tons
+Myanmar,2008,0,25,thousand tons
+Montenegro,2008,0,170.4,thousand tons
+Malaysia,2008,0,6420,thousand tons
+Nigeria,2008,0,100,thousand tons
+Netherlands,2008,6710,147.7,thousand tons
+Norway,2008,0,560,thousand tons
+New Zealand,2008,566,232.8,thousand tons
+Oman,2008,0,0,thousand tons
+Pakistan,2008,900,100,thousand tons
+Peru,2008,379,732,thousand tons
+Philippines,2008,0.3,711,thousand tons
+Poland,2008,5220,4500,thousand tons
+"Korea, Democratic Peoples Republic of",2008,1300,0,thousand tons
+Portugal,2008,0,2017,thousand tons
+Paraguay,2008,83,0,thousand tons
+Qatar,2008,0,1407,thousand tons
+Romania,2008,3340,1693,thousand tons
+Russian Federation,2008,48500,20000,thousand tons
+Saudi Arabia,2008,0,4670,thousand tons
+Singapore,2008,0,764,thousand tons
+El Salvador,2008,0,71,thousand tons
+Serbia,2008,1660,0,thousand tons
+Slovakia,2008,4110,380,thousand tons
+Slovenia,2008,0.1,641,thousand tons
+Sweden,2008,3440,1757,thousand tons
+Syrian Arab Republic,2008,0,70,thousand tons
+Thailand,2008,0,5210,thousand tons
+Trinidad and Tobago,2008,0,489,thousand tons
+Tunisia,2008,0,82,thousand tons
+Turkey,2008,7040,19730,thousand tons
+Taiwan,2008,10100,9790,thousand tons
+Ukraine,2008,35700,1572,thousand tons
+Uruguay,2008,0.4,85.6,thousand tons
+United States of America,2008,39100,52800,thousand tons
+Uzbekistan,2008,102,580,thousand tons
+Venezuela,2008,0,4220,thousand tons
+Viet Nam,2008,0,2250,thousand tons
+South Africa,2008,4500,3738,thousand tons
+Angola,2008,0,1,thousand tons
+Albania,2009,0.5,220.6,thousand tons
+United Arab Emirates,2009,0,200,thousand tons
+Argentina,2009,2170,1842,thousand tons
+Australia,2009,4330,918,thousand tons
+Austria,2009,5070,588,thousand tons
+Azerbaijan,2009,0,120,thousand tons
+Belgium,2009,3290,2340,thousand tons
+Bangladesh,2009,0,70,thousand tons
+Bulgaria,2009,0.3,725,thousand tons
+Bosnia and Herzegovina,2009,517,2.102,thousand tons
+Belarus,2009,61,2354,thousand tons
+Brazil,2009,20200,6350,thousand tons
+Canada,2009,5340,3959,thousand tons
+Switzerland,2009,0.5,934,thousand tons
+Chile,2009,968,340.6,thousand tons
+China,2009,521000,55790,thousand tons
+Colombia,2009,309,742,thousand tons
+Cuba,2009,0.1,267.1,thousand tons
+Czech Republic,2009,4250,339,thousand tons
+Germany,2009,21300,11340,thousand tons
+Denmark,2009,0,0,thousand tons
+Dominican Republic,2009,0,0,thousand tons
+Algeria,2009,597,0,thousand tons
+Ecuador,2009,0,259.3,thousand tons
+Egypt,2009,841,4700,thousand tons
+Spain,2009,3090,11270,thousand tons
+Estonia,2009,0,0,thousand tons
+Finland,2009,2220,846,thousand tons
+France,2009,7680,5160,thousand tons
+United Kingdom,2009,7950,2123,thousand tons
+Ghana,2009,0,25,thousand tons
+Greece,2009,0,2000,thousand tons
+Guatemala,2009,0,223.8,thousand tons
+Croatia,2009,0.3,42.7,thousand tons
+Hungary,2009,1270,131.9,thousand tons
+Indonesia,2009,0,3500,thousand tons
+India,2009,23400,40130,thousand tons
+Ireland,2009,0,0,thousand tons
+"Iran, Islamic Republic of",2009,1990,8920,thousand tons
+Israel,2009,0,300,thousand tons
+Italy,2009,5810,14040,thousand tons
+Jordan,2009,0,150,thousand tons
+Japan,2009,68300,19220,thousand tons
+Kazakhstan,2009,3280,863,thousand tons
+Kenya,2009,0,20,thousand tons
+"Korea, Republic of",2009,27700,21000,thousand tons
+Libyan Arab Jamahiriya,2009,0.1,914,thousand tons
+Sri Lanka,2009,0,30,thousand tons
+Luxembourg,2009,0,2142,thousand tons
+Latvia,2009,692,0,thousand tons
+Morocco,2009,0.2,499,thousand tons
+"Moldova, Republic of",2009,0,426,thousand tons
+Mexico,2009,4340,9790,thousand tons
+"Macedonia, the former Yugoslav Republic of",2009,0,270.5,thousand tons
+Myanmar,2009,0,25,thousand tons
+Montenegro,2009,0,130,thousand tons
+Malaysia,2009,0,5350,thousand tons
+Nigeria,2009,0,100,thousand tons
+Netherlands,2009,5130,60.1,thousand tons
+Norway,2009,0,595,thousand tons
+New Zealand,2009,532,232.8,thousand tons
+Oman,2009,0,0,thousand tons
+Pakistan,2009,619,580,thousand tons
+Peru,2009,0.3,717,thousand tons
+Philippines,2009,0,824,thousand tons
+Poland,2009,3240,3890,thousand tons
+"Korea, Democratic Peoples Republic of",2009,1300,0,thousand tons
+Portugal,2009,0,1614,thousand tons
+Paraguay,2009,54,0,thousand tons
+Qatar,2009,0,1448,thousand tons
+Romania,2009,1790,971,thousand tons
+Russian Federation,2009,43900,16160,thousand tons
+Saudi Arabia,2009,0,4690,thousand tons
+Singapore,2009,0.4,663,thousand tons
+El Salvador,2009,0.2,55.8,thousand tons
+Serbia,2009,1060,0,thousand tons
+Slovakia,2009,3540,203.9,thousand tons
+Slovenia,2009,0,430,thousand tons
+Sweden,2009,1840,966,thousand tons
+Syrian Arab Republic,2009,0,70,thousand tons
+Thailand,2009,0,3645,thousand tons
+Trinidad and Tobago,2009,0,417,thousand tons
+Tunisia,2009,0,155.2,thousand tons
+Turkey,2009,7560,17780,thousand tons
+Taiwan,2009,8150,7660,thousand tons
+Ukraine,2009,28500,1338,thousand tons
+Uruguay,2009,0.5,56.5,thousand tons
+United States of America,2009,22700,36680,thousand tons
+Uzbekistan,2009,90,626,thousand tons
+Venezuela,2009,0,3804,thousand tons
+Viet Nam,2009,0,2698,thousand tons
+South Africa,2009,3950,3527,thousand tons
+Angola,2009,0,1,thousand tons
+Albania,2010,0.4,390,thousand tons
+United Arab Emirates,2010,0,500,thousand tons
+Argentina,2010,2600,2538,thousand tons
+Australia,2010,6070,1229,thousand tons
+Austria,2010,6570,637,thousand tons
+Azerbaijan,2010,0,120,thousand tons
+Belgium,2010,5180,2800,thousand tons
+Bangladesh,2010,0,78.2,thousand tons
+Bulgaria,2010,0,737,thousand tons
+Bosnia and Herzegovina,2010,592,0,thousand tons
+Belarus,2010,30,2500,thousand tons
+Brazil,2010,25100,7810,thousand tons
+Canada,2010,7650,5360,thousand tons
+Switzerland,2010,0,1320,thousand tons
+Chile,2010,647,364.4,thousand tons
+China,2010,572000,66320,thousand tons
+Colombia,2010,340,867,thousand tons
+Cuba,2010,0,277.7,thousand tons
+Czech Republic,2010,4760,418,thousand tons
+Germany,2010,30600,13210,thousand tons
+Denmark,2010,0,0,thousand tons
+Dominican Republic,2010,0,0,thousand tons
+Algeria,2010,662,0,thousand tons
+Ecuador,2010,0,372.3,thousand tons
+Egypt,2010,601,6080,thousand tons
+Spain,2010,3840,12500,thousand tons
+Estonia,2010,0,0,thousand tons
+Finland,2010,2760,1264,thousand tons
+France,2010,9810,5600,thousand tons
+United Kingdom,2010,7320,2390,thousand tons
+Ghana,2010,0,25,thousand tons
+Greece,2010,0,1821,thousand tons
+Guatemala,2010,0,273.8,thousand tons
+Croatia,2010,0.4,94.6,thousand tons
+Hungary,2010,1590,91.9,thousand tons
+Indonesia,2010,0,3659,thousand tons
+India,2010,23900,45000,thousand tons
+Ireland,2010,0,0,thousand tons
+"Iran, Islamic Republic of",2010,2150,9840,thousand tons
+Israel,2010,0,300,thousand tons
+Italy,2010,8590,17160,thousand tons
+Jordan,2010,0,150,thousand tons
+Japan,2010,85800,23850,thousand tons
+Kazakhstan,2010,3290,926,thousand tons
+Kenya,2010,0,20,thousand tons
+"Korea, Republic of",2010,34100,24800,thousand tons
+Libyan Arab Jamahiriya,2010,0,825,thousand tons
+Sri Lanka,2010,0,30,thousand tons
+Luxembourg,2010,0,2550,thousand tons
+Latvia,2010,655,0,thousand tons
+Morocco,2010,0.1,485,thousand tons
+"Moldova, Republic of",2010,0,239.8,thousand tons
+Mexico,2010,5160,11710,thousand tons
+"Macedonia, the former Yugoslav Republic of",2010,0.1,291.4,thousand tons
+Myanmar,2010,0,25,thousand tons
+Montenegro,2010,0,130,thousand tons
+Malaysia,2010,0,5700,thousand tons
+Nigeria,2010,0,100,thousand tons
+Netherlands,2010,6520,127.6,thousand tons
+Norway,2010,0,530,thousand tons
+New Zealand,2010,620,232.8,thousand tons
+Oman,2010,0,0,thousand tons
+Pakistan,2010,401,1000,thousand tons
+Peru,2010,0,880,thousand tons
+Philippines,2010,0,1050,thousand tons
+Poland,2010,4000,4000,thousand tons
+"Korea, Democratic Peoples Republic of",2010,1300,0,thousand tons
+Portugal,2010,0,1543,thousand tons
+Paraguay,2010,59,0,thousand tons
+Qatar,2010,0,1973,thousand tons
+Romania,2010,1990,1731,thousand tons
+Russian Federation,2010,49000,17950,thousand tons
+Saudi Arabia,2010,0,5010,thousand tons
+Singapore,2010,0,728,thousand tons
+El Salvador,2010,0,64,thousand tons
+Serbia,2010,1250,0,thousand tons
+Slovakia,2010,4240,339,thousand tons
+Slovenia,2010,0,607,thousand tons
+Sweden,2010,3330,1516,thousand tons
+Syrian Arab Republic,2010,0,70,thousand tons
+Thailand,2010,0,4145,thousand tons
+Trinidad and Tobago,2010,0.4,571,thousand tons
+Tunisia,2010,0,150,thousand tons
+Turkey,2010,8240,20890,thousand tons
+Taiwan,2010,10400,9360,thousand tons
+Ukraine,2010,31900,1500,thousand tons
+Uruguay,2010,0,65,thousand tons
+United States of America,2010,31200,49300,thousand tons
+Uzbekistan,2010,86,630,thousand tons
+Venezuela,2010,0,2210,thousand tons
+Viet Nam,2010,0,4320,thousand tons
+South Africa,2010,4370,3250,thousand tons
+Angola,2010,0,1,thousand tons
+Albania,2011,0.4,463,thousand tons
+United Arab Emirates,2011,0,2000,thousand tons
+Argentina,2011,2850,2764,thousand tons
+Australia,2011,5150,1254,thousand tons
+Austria,2011,6790,689,thousand tons
+Azerbaijan,2011,0,120,thousand tons
+Belgium,2011,5250,2770,thousand tons
+Bangladesh,2011,0.2,84.8,thousand tons
+Bulgaria,2011,0.5,834,thousand tons
+Bosnia and Herzegovina,2011,649,0,thousand tons
+Belarus,2011,14,2602,thousand tons
+Brazil,2011,27000,8240,thousand tons
+Canada,2011,7480,5410,thousand tons
+Switzerland,2011,0,1400,thousand tons
+Chile,2011,1190,424,thousand tons
+China,2011,631000,70950,thousand tons
+Colombia,2011,301,986,thousand tons
+Cuba,2011,0,281.7,thousand tons
+Czech Republic,2011,5130,455,thousand tons
+Germany,2011,30100,14200,thousand tons
+Denmark,2011,0,0,thousand tons
+Dominican Republic,2011,0,0,thousand tons
+Algeria,2011,551,0,thousand tons
+Ecuador,2011,0,463,thousand tons
+Egypt,2011,545,5940,thousand tons
+Spain,2011,3840,11660,thousand tons
+Estonia,2011,0,0,thousand tons
+Finland,2011,2700,1286,thousand tons
+France,2011,9650,6130,thousand tons
+United Kingdom,2011,6950,2530,thousand tons
+Ghana,2011,0,25,thousand tons
+Greece,2011,0,1931,thousand tons
+Guatemala,2011,0.3,293.5,thousand tons
+Croatia,2011,0.5,95.5,thousand tons
+Hungary,2011,1570,175.8,thousand tons
+Indonesia,2011,0,3619,thousand tons
+India,2011,24000,49500,thousand tons
+Ireland,2011,0,0,thousand tons
+"Iran, Islamic Republic of",2011,2300,10900,thousand tons
+Israel,2011,0,300,thousand tons
+Italy,2011,9890,18890,thousand tons
+Jordan,2011,0,150,thousand tons
+Japan,2011,82700,24900,thousand tons
+Kazakhstan,2011,3640,1063,thousand tons
+Kenya,2011,0,20,thousand tons
+"Korea, Republic of",2011,42100,26400,thousand tons
+Libyan Arab Jamahiriya,2011,0,100,thousand tons
+Sri Lanka,2011,0,30,thousand tons
+Luxembourg,2011,0,2520,thousand tons
+Latvia,2011,0,568,thousand tons
+Morocco,2011,0.3,654,thousand tons
+"Moldova, Republic of",2011,0.3,313,thousand tons
+Mexico,2011,5070,13040,thousand tons
+"Macedonia, the former Yugoslav Republic of",2011,0,386,thousand tons
+Myanmar,2011,0,25,thousand tons
+Montenegro,2011,0,140,thousand tons
+Malaysia,2011,0,5950,thousand tons
+Nigeria,2011,0,100,thousand tons
+Netherlands,2011,6760,172.2,thousand tons
+Norway,2011,0,610,thousand tons
+New Zealand,2011,611,232.8,thousand tons
+Oman,2011,0,200,thousand tons
+Pakistan,2011,352,1240,thousand tons
+Peru,2011,0.2,876,thousand tons
+Philippines,2011,0,1200,thousand tons
+Poland,2011,4420,4360,thousand tons
+"Korea, Democratic Peoples Republic of",2011,1300,0,thousand tons
+Portugal,2011,0,1944,thousand tons
+Paraguay,2011,30,0,thousand tons
+Qatar,2011,0,2039,thousand tons
+Romania,2011,1880,1948,thousand tons
+Russian Federation,2011,50400,18520,thousand tons
+Saudi Arabia,2011,0,5280,thousand tons
+Singapore,2011,0.4,751,thousand tons
+El Salvador,2011,0,97,thousand tons
+Serbia,2011,1320,0,thousand tons
+Slovakia,2011,3860,380,thousand tons
+Slovenia,2011,0.4,648,thousand tons
+Sweden,2011,3190,1675,thousand tons
+Syrian Arab Republic,2011,0,70,thousand tons
+Thailand,2011,0,4240,thousand tons
+Trinidad and Tobago,2011,0,604,thousand tons
+Tunisia,2011,0,150,thousand tons
+Turkey,2011,8830,25290,thousand tons
+Taiwan,2011,10300,9880,thousand tons
+Ukraine,2011,33800,1576,thousand tons
+Uruguay,2011,0.2,80.8,thousand tons
+United States of America,2011,34300,52100,thousand tons
+Uzbekistan,2011,83,650,thousand tons
+Venezuela,2011,0,2985,thousand tons
+Viet Nam,2011,0,4900,thousand tons
+South Africa,2011,3990,3553,thousand tons
+Angola,2011,0,1,thousand tons
+Albania,2012,0,500,thousand tons
+United Arab Emirates,2012,0,2408,thousand tons
+Argentina,2012,2210,2777,thousand tons
+Australia,2012,3780,1116,thousand tons
+Austria,2012,6750,675,thousand tons
+Azerbaijan,2012,0,120,thousand tons
+Belgium,2012,4650,2660,thousand tons
+Bangladesh,2012,0,87.3,thousand tons
+Bulgaria,2012,0.2,632,thousand tons
+Bosnia and Herzegovina,2012,700,0,thousand tons
+Belarus,2012,0,2690,thousand tons
+Brazil,2012,26400,8090,thousand tons
+Canada,2012,7810,5690,thousand tons
+Switzerland,2012,0,1450,thousand tons
+Chile,2012,1190,484,thousand tons
+China,2012,666000,64840,thousand tons
+Colombia,2012,345,957,thousand tons
+Cuba,2012,0,277.5,thousand tons
+Czech Republic,2012,4700,371,thousand tons
+Germany,2012,28900,13790,thousand tons
+Denmark,2012,0,0,thousand tons
+Dominican Republic,2012,0,0,thousand tons
+Algeria,2012,557,0,thousand tons
+Ecuador,2012,0,425,thousand tons
+Egypt,2012,527,6100,thousand tons
+Spain,2012,3420,10220,thousand tons
+Estonia,2012,0,0,thousand tons
+Finland,2012,2300,1460,thousand tons
+France,2012,9510,6100,thousand tons
+United Kingdom,2012,7520,2054,thousand tons
+Ghana,2012,0,25,thousand tons
+Greece,2012,0,1247,thousand tons
+Guatemala,2012,0.5,333,thousand tons
+Croatia,2012,0,1,thousand tons
+Hungary,2012,1490,53.8,thousand tons
+Indonesia,2012,0,2251,thousand tons
+India,2012,24900,52400,thousand tons
+Ireland,2012,0,0,thousand tons
+"Iran, Islamic Republic of",2012,2160,12300,thousand tons
+Israel,2012,0,300,thousand tons
+Italy,2012,9310,17890,thousand tons
+Jordan,2012,0,150,thousand tons
+Japan,2012,82300,24920,thousand tons
+Kazakhstan,2012,2900,772,thousand tons
+Kenya,2012,0,20,thousand tons
+"Korea, Republic of",2012,43100,26000,thousand tons
+Libyan Arab Jamahiriya,2012,0,314.6,thousand tons
+Sri Lanka,2012,0,30,thousand tons
+Luxembourg,2012,0,2212,thousand tons
+Latvia,2012,0.2,805,thousand tons
+Morocco,2012,0,539,thousand tons
+"Moldova, Republic of",2012,0.4,335,thousand tons
+Mexico,2012,4990,13080,thousand tons
+"Macedonia, the former Yugoslav Republic of",2012,0,217.4,thousand tons
+Myanmar,2012,0,25,thousand tons
+Montenegro,2012,0,120,thousand tons
+Malaysia,2012,0,5620,thousand tons
+Nigeria,2012,0,100,thousand tons
+Netherlands,2012,6740,140.8,thousand tons
+Norway,2012,0,700,thousand tons
+New Zealand,2012,626,286.8,thousand tons
+Oman,2012,0,300,thousand tons
+Pakistan,2012,201,1433,thousand tons
+Peru,2012,0.1,980,thousand tons
+Philippines,2012,0.4,1259,thousand tons
+Poland,2012,4230,4130,thousand tons
+"Korea, Democratic Peoples Republic of",2012,1280,0,thousand tons
+Portugal,2012,0,1962,thousand tons
+Paraguay,2012,44,0,thousand tons
+Qatar,2012,0,2145,thousand tons
+Romania,2012,1700,1591,thousand tons
+Russian Federation,2012,49400,20760,thousand tons
+Saudi Arabia,2012,0,5200,thousand tons
+Singapore,2012,0.5,687,thousand tons
+El Salvador,2012,0,72.3,thousand tons
+Serbia,2012,346,0,thousand tons
+Slovakia,2012,4020,381,thousand tons
+Slovenia,2012,0.1,632,thousand tons
+Sweden,2012,2880,1443,thousand tons
+Syrian Arab Republic,2012,0,10,thousand tons
+Thailand,2012,0,3329,thousand tons
+Trinidad and Tobago,2012,0,628,thousand tons
+Tunisia,2012,0,150,thousand tons
+Turkey,2012,9320,26600,thousand tons
+Taiwan,2012,11100,9570,thousand tons
+Ukraine,2012,31000,1986,thousand tons
+Uruguay,2012,0.4,77.6,thousand tons
+United States of America,2012,36300,52400,thousand tons
+Uzbekistan,2012,0,737,thousand tons
+Venezuela,2012,0,2356,thousand tons
+Viet Nam,2012,0,5300,thousand tons
+South Africa,2012,3900,3038,thousand tons
+Angola,2012,0,1,thousand tons
+Albania,2013,0,550,thousand tons
+United Arab Emirates,2013,0,2881,thousand tons
+Argentina,2013,2530,2657,thousand tons
+Australia,2013,3640,1045,thousand tons
+Austria,2013,7290,664,thousand tons
+Azerbaijan,2013,0,172.5,thousand tons
+Belgium,2013,4740,2390,thousand tons
+Bangladesh,2013,0.5,83.5,thousand tons
+Bulgaria,2013,0.2,523,thousand tons
+Bosnia and Herzegovina,2013,721,1,thousand tons
+Belarus,2013,0,2248,thousand tons
+Brazil,2013,25600,8570,thousand tons
+Canada,2013,6850,5560,thousand tons
+Switzerland,2013,0,1530,thousand tons
+Chile,2013,865,458,thousand tons
+China,2013,774000,48420,thousand tons
+Colombia,2013,323,913,thousand tons
+Cuba,2013,0,322.3,thousand tons
+Czech Republic,2013,4800,366,thousand tons
+Germany,2013,29200,13460,thousand tons
+Denmark,2013,0,0,thousand tons
+Dominican Republic,2013,0,0,thousand tons
+Algeria,2013,417,0,thousand tons
+Ecuador,2013,0,570,thousand tons
+Egypt,2013,539,6210,thousand tons
+Spain,2013,4210,10040,thousand tons
+Estonia,2013,0,0,thousand tons
+Finland,2013,2220,1300,thousand tons
+France,2013,10200,5490,thousand tons
+United Kingdom,2013,9920,1945,thousand tons
+Ghana,2013,0,25,thousand tons
+Greece,2013,0,1030,thousand tons
+Guatemala,2013,0.2,384.4,thousand tons
+Croatia,2013,0,135.1,thousand tons
+Hungary,2013,744,139,thousand tons
+Indonesia,2013,0,2645,thousand tons
+India,2013,34900,46400,thousand tons
+Ireland,2013,0,0,thousand tons
+"Iran, Islamic Republic of",2013,2010,13420,thousand tons
+Israel,2013,0,300,thousand tons
+Italy,2013,6800,17300,thousand tons
+Jordan,2013,0,150,thousand tons
+Japan,2013,85700,24920,thousand tons
+Kazakhstan,2013,3010,265.8,thousand tons
+Kenya,2013,0,20,thousand tons
+"Korea, Republic of",2013,40300,25800,thousand tons
+Libyan Arab Jamahiriya,2013,0,713,thousand tons
+Sri Lanka,2013,0,30,thousand tons
+Luxembourg,2013,0,2090,thousand tons
+Latvia,2013,0,198.3,thousand tons
+Morocco,2013,0,558,thousand tons
+"Moldova, Republic of",2013,0.2,189.7,thousand tons
+Mexico,2013,5360,12880,thousand tons
+"Macedonia, the former Yugoslav Republic of",2013,0.3,99.7,thousand tons
+Myanmar,2013,0,30,thousand tons
+Montenegro,2013,0,70,thousand tons
+Malaysia,2013,0,4700,thousand tons
+Nigeria,2013,0,100,thousand tons
+Netherlands,2013,6580,131.9,thousand tons
+Norway,2013,0,605,thousand tons
+New Zealand,2013,611,289.3,thousand tons
+Oman,2013,0,500,thousand tons
+Pakistan,2013,165,1683,thousand tons
+Peru,2013,0,1070,thousand tons
+Philippines,2013,0.2,1308,thousand tons
+Poland,2013,4400,3550,thousand tons
+"Korea, Democratic Peoples Republic of",2013,1250,0,thousand tons
+Portugal,2013,0,2052,thousand tons
+Paraguay,2013,45,0,thousand tons
+Qatar,2013,0,2237,thousand tons
+Romania,2013,1830,1155,thousand tons
+Russian Federation,2013,49000,20000,thousand tons
+Saudi Arabia,2013,0,5470,thousand tons
+Singapore,2013,0.3,434,thousand tons
+El Salvador,2013,0,118.4,thousand tons
+Serbia,2013,396,0,thousand tons
+Slovakia,2013,4170,339,thousand tons
+Slovenia,2013,0.1,618,thousand tons
+Sweden,2013,2990,1418,thousand tons
+Syrian Arab Republic,2013,0,10,thousand tons
+Thailand,2013,0,3579,thousand tons
+Trinidad and Tobago,2013,0.2,616,thousand tons
+Tunisia,2013,0,150,thousand tons
+Turkey,2013,9930,24710,thousand tons
+Taiwan,2013,12500,9800,thousand tons
+Ukraine,2013,30800,1954,thousand tons
+Uruguay,2013,0.1,90.9,thousand tons
+United States of America,2013,34200,52700,thousand tons
+Uzbekistan,2013,0,746,thousand tons
+Venezuela,2013,0,2143,thousand tons
+Viet Nam,2013,821,4660,thousand tons
+South Africa,2013,4270,2894,thousand tons
+Angola,2013,0,1,thousand tons
+Albania,2014,0,560,thousand tons
+United Arab Emirates,2014,0,2394,thousand tons
+Argentina,2014,2750,2738,thousand tons
+Australia,2014,3570,1034,thousand tons
+Austria,2014,7180,691,thousand tons
+Azerbaijan,2014,0,180.2,thousand tons
+Belgium,2014,4950,2380,thousand tons
+Bangladesh,2014,0,90,thousand tons
+Bulgaria,2014,0,612,thousand tons
+Bosnia and Herzegovina,2014,793,0,thousand tons
+Belarus,2014,0,2514,thousand tons
+Brazil,2014,26000,7880,thousand tons
+Canada,2014,7720,5010,thousand tons
+Switzerland,2014,0,1475,thousand tons
+Chile,2014,697,382.8,thousand tons
+China,2014,768000,54320,thousand tons
+Colombia,2014,298,911,thousand tons
+Cuba,2014,0,256.5,thousand tons
+Czech Republic,2014,5010,354,thousand tons
+Germany,2014,29900,13060,thousand tons
+Denmark,2014,0,0,thousand tons
+Dominican Republic,2014,0,0,thousand tons
+Algeria,2014,415,0,thousand tons
+Ecuador,2014,0,667,thousand tons
+Egypt,2014,515,5970,thousand tons
+Spain,2014,4210,10040,thousand tons
+Estonia,2014,0,0,thousand tons
+Finland,2014,2540,1265,thousand tons
+France,2014,10600,5500,thousand tons
+United Kingdom,2014,10100,1950,thousand tons
+Ghana,2014,0,25,thousand tons
+Greece,2014,0,1022,thousand tons
+Guatemala,2014,0.3,394.7,thousand tons
+Croatia,2014,0,167.6,thousand tons
+Hungary,2014,974,178,thousand tons
+Indonesia,2014,1900,2526,thousand tons
+India,2014,37100,50300,thousand tons
+Ireland,2014,0,0,thousand tons
+"Iran, Islamic Republic of",2014,2720,13570,thousand tons
+Israel,2014,0,300,thousand tons
+Italy,2014,6510,17200,thousand tons
+Jordan,2014,0,150,thousand tons
+Japan,2014,85000,25690,thousand tons
+Kazakhstan,2014,3530,155.2,thousand tons
+Kenya,2014,0,20,thousand tons
+"Korea, Republic of",2014,47300,24200,thousand tons
+Libyan Arab Jamahiriya,2014,0.3,712,thousand tons
+Sri Lanka,2014,0,30,thousand tons
+Luxembourg,2014,0,2195,thousand tons
+Latvia,2014,0,0,thousand tons
+Morocco,2014,0.1,501,thousand tons
+"Moldova, Republic of",2014,0.2,351,thousand tons
+Mexico,2014,5680,13280,thousand tons
+"Macedonia, the former Yugoslav Republic of",2014,0,188.2,thousand tons
+Myanmar,2014,0,35,thousand tons
+Montenegro,2014,0,140,thousand tons
+Malaysia,2014,0,4320,thousand tons
+Nigeria,2014,0,100,thousand tons
+Netherlands,2014,6840,125.5,thousand tons
+Norway,2014,0,600,thousand tons
+New Zealand,2014,595,264.4,thousand tons
+Oman,2014,0,1500,thousand tons
+Pakistan,2014,143,2277,thousand tons
+Peru,2014,0,1078,thousand tons
+Philippines,2014,0.1,1196,thousand tons
+Poland,2014,5070,3500,thousand tons
+"Korea, Democratic Peoples Republic of",2014,1250,0,thousand tons
+Portugal,2014,0,2071,thousand tons
+Paraguay,2014,47,0,thousand tons
+Qatar,2014,0,3015,thousand tons
+Romania,2014,1840,1314,thousand tons
+Russian Federation,2014,49600,21890,thousand tons
+Saudi Arabia,2014,0,6290,thousand tons
+Singapore,2014,0,540,thousand tons
+El Salvador,2014,0,121.4,thousand tons
+Serbia,2014,583,0,thousand tons
+Slovakia,2014,4340,362,thousand tons
+Slovenia,2014,0,615,thousand tons
+Sweden,2014,3100,1443,thousand tons
+Syrian Arab Republic,2014,0,5,thousand tons
+Thailand,2014,0,4093,thousand tons
+Trinidad and Tobago,2014,0,487,thousand tons
+Tunisia,2014,0,150,thousand tons
+Turkey,2014,10300,23800,thousand tons
+Taiwan,2014,13500,9580,thousand tons
+Ukraine,2014,25500,1677,thousand tons
+Uruguay,2014,0.4,93.6,thousand tons
+United States of America,2014,33000,55200,thousand tons
+Uzbekistan,2014,0,724,thousand tons
+Venezuela,2014,0.2,1486,thousand tons
+Viet Nam,2014,1460,4380,thousand tons
+South Africa,2014,3620,2789,thousand tons
+Angola,2014,0,1,thousand tons
+Albania,2015,0,150,thousand tons
+United Arab Emirates,2015,0,3001,thousand tons
+Argentina,2015,2820,2209,thousand tons
+Australia,2015,3800,1128,thousand tons
+Austria,2015,7020,668,thousand tons
+Azerbaijan,2015,0,180.2,thousand tons
+Belgium,2015,4810,2450,thousand tons
+Bangladesh,2015,0,100,thousand tons
+Bulgaria,2015,0,543,thousand tons
+Bosnia and Herzegovina,2015,819,0,thousand tons
+Belarus,2015,0,2513,thousand tons
+Brazil,2015,26500,6720,thousand tons
+Canada,2015,6720,5760,thousand tons
+Switzerland,2015,0,1475,thousand tons
+Chile,2015,773,339.3,thousand tons
+China,2015,756000,47470,thousand tons
+Colombia,2015,241,970,thousand tons
+Cuba,2015,0,284.3,thousand tons
+Czech Republic,2015,4900,359,thousand tons
+Germany,2015,30100,12620,thousand tons
+Denmark,2015,0,0,thousand tons
+Dominican Republic,2015,0,0,thousand tons
+Algeria,2015,650,0,thousand tons
+Ecuador,2015,0.3,720,thousand tons
+Egypt,2015,576,4930,thousand tons
+Spain,2015,4700,10140,thousand tons
+Estonia,2015,0,0,thousand tons
+Finland,2015,2620,1365,thousand tons
+France,2015,9820,5160,thousand tons
+United Kingdom,2015,9050,1857,thousand tons
+Ghana,2015,0,25,thousand tons
+Greece,2015,0,910,thousand tons
+Guatemala,2015,0.4,402.6,thousand tons
+Croatia,2015,0.5,121.5,thousand tons
+Hungary,2015,1510,168,thousand tons
+Indonesia,2015,2720,2132,thousand tons
+India,2015,38200,50800,thousand tons
+Ireland,2015,0,0,thousand tons
+"Iran, Islamic Republic of",2015,2410,13700,thousand tons
+Israel,2015,0,300,thousand tons
+Italy,2015,4790,17230,thousand tons
+Jordan,2015,0,150,thousand tons
+Japan,2015,81100,24020,thousand tons
+Kazakhstan,2015,3620,289.6,thousand tons
+Kenya,2015,0,20,thousand tons
+"Korea, Republic of",2015,48500,21200,thousand tons
+Libyan Arab Jamahiriya,2015,0.2,351.4,thousand tons
+Sri Lanka,2015,0,30,thousand tons
+Luxembourg,2015,0,2126,thousand tons
+Latvia,2015,0,0,thousand tons
+Morocco,2015,0.1,516,thousand tons
+"Moldova, Republic of",2015,0,443,thousand tons
+Mexico,2015,4980,13280,thousand tons
+"Macedonia, the former Yugoslav Republic of",2015,0,121.3,thousand tons
+Myanmar,2015,0,35,thousand tons
+Montenegro,2015,0,150,thousand tons
+Malaysia,2015,0,3788,thousand tons
+Nigeria,2015,0,100,thousand tons
+Netherlands,2015,6890,107.2,thousand tons
+Norway,2015,0,590,thousand tons
+New Zealand,2015,583,210.4,thousand tons
+Oman,2015,0,2000,thousand tons
+Pakistan,2015,182,2710,thousand tons
+Peru,2015,0.4,1082,thousand tons
+Philippines,2015,0,968,thousand tons
+Poland,2015,5320,3880,thousand tons
+"Korea, Democratic Peoples Republic of",2015,1250,0,thousand tons
+Portugal,2015,0,2033,thousand tons
+Paraguay,2015,48,0,thousand tons
+Qatar,2015,0,2592,thousand tons
+Romania,2015,2250,1100,thousand tons
+Russian Federation,2015,49300,21610,thousand tons
+Saudi Arabia,2015,0,5220,thousand tons
+Singapore,2015,0,501,thousand tons
+El Salvador,2015,0.1,123.9,thousand tons
+Serbia,2015,955,0,thousand tons
+Slovakia,2015,4240,326,thousand tons
+Slovenia,2015,0,604,thousand tons
+Sweden,2015,2890,1668,thousand tons
+Syrian Arab Republic,2015,0,5,thousand tons
+Thailand,2015,0,3722,thousand tons
+Trinidad and Tobago,2015,0,591,thousand tons
+Tunisia,2015,0,50,thousand tons
+Turkey,2015,11000,20450,thousand tons
+Taiwan,2015,13300,8070,thousand tons
+Ukraine,2015,21700,1293,thousand tons
+Uruguay,2015,0,97.5,thousand tons
+United States of America,2015,29400,49500,thousand tons
+Uzbekistan,2015,0,643,thousand tons
+Venezuela,2015,0,1343,thousand tons
+Viet Nam,2015,2270,3381,thousand tons
+South Africa,2015,3910,2512,thousand tons
+Angola,2015,0,1,thousand tons
+Austria,2016,6766,672,thousand tons
+Belgium,2016,5330,2357,thousand tons
+Bulgaria,2016,0,527,thousand tons
+Croatia,2016,0,0,thousand tons
+Czech Republic,2016,10316,295,thousand tons
+Germany,2016,29486,12594,thousand tons
+Finland,2016,2750,1350,thousand tons
+France,2016,9527,4886,thousand tons
+Greece,2016,0,1158,thousand tons
+Hungary,2016,1041,233,thousand tons
+Italy,2016,5669,17704,thousand tons
+Luxembourg,2016,0,2175,thousand tons
+Netherlands,2016,6824,93,thousand tons
+Poland,2016,5110,3891,thousand tons
+Portugal,2016,0,2010,thousand tons
+Romania,2016,2228,1046,thousand tons
+Slovakia,2016,4506,302,thousand tons
+Slovenia,2016,0,613,thousand tons
+Spain,2016,4547,9069,thousand tons
+Sweden,2016,3111,1506,thousand tons
+United Kingdom,2016,6153,1482,thousand tons
+Albania,2016,0,100,thousand tons
+Bosnia and Herzegovina,2016,806,0,thousand tons
+"Macedonia, the former Yugoslav Republic of",2016,0,169,thousand tons
+Montenegro,2016,0,120,thousand tons
+Norway,2016,0,620,thousand tons
+Serbia,2016,1173,0,thousand tons
+Switzerland,2016,0,1500,thousand tons
+Turkey,2016,11317,21846,thousand tons
+Azerbaijan,2016,0,180,thousand tons
+Belarus,2016,0,2188,thousand tons
+Kazakhstan,2016,4230,60,thousand tons
+"Moldova, Republic of",2016,0,126,thousand tons
+Russian Federation,2016,48650,21800,thousand tons
+Ukraine,2016,22520,1700,thousand tons
+Uzbekistan,2016,0,654,thousand tons
+Canada,2016,7012,5634,thousand tons
+Cuba,2016,0,244,thousand tons
+El Salvador,2016,0,100,thousand tons
+Guatemala,2016,0,314,thousand tons
+Mexico,2016,4919,13904,thousand tons
+Trinidad and Tobago,2016,0,36,thousand tons
+United States of America,2016,25888,52587,thousand tons
+Argentina,2016,2340,1787,thousand tons
+Brazil,2016,24675,6600,thousand tons
+Chile,2016,815,337,thousand tons
+Colombia,2016,244,1028,thousand tons
+Ecuador,2016,0,576,thousand tons
+Paraguay,2016,35,0,thousand tons
+Peru,2016,0,1168,thousand tons
+Uruguay,2016,0,61,thousand tons
+Venezuela,2016,0,553,thousand tons
+Algeria,2016,650,0,thousand tons
+"Congo, the Democratic Republic of the",2016,0,30,thousand tons
+Egypt,2016,575,4460,thousand tons
+Ghana,2016,0,25,thousand tons
+Kenya,2016,0,20,thousand tons
+Libyan Arab Jamahiriya,2016,0,492,thousand tons
+Mauritania,2016,5,0,thousand tons
+Morocco,2016,0,520,thousand tons
+Nigeria,2016,0,100,thousand tons
+South Africa,2016,3820,2322,thousand tons
+Tunisia,2016,0,50,thousand tons
+Uganda,2016,0,30,thousand tons
+"Iran, Islamic Republic of",2016,2183,15712,thousand tons
+Israel,2016,0,300,thousand tons
+Jordan,2016,0,150,thousand tons
+Oman,2016,0,2000,thousand tons
+Qatar,2016,0,2521,thousand tons
+Saudi Arabia,2016,0,5461,thousand tons
+Syrian Arab Republic,2016,0,5,thousand tons
+United Arab Emirates,2016,0,3149,thousand tons
+Bangladesh,2016,0,100,thousand tons
+China,2016,756681,50928,thousand tons
+India,2016,40796,54737,thousand tons
+Indonesia,2016,2907,1839,thousand tons
+Japan,2016,81513,23262,thousand tons
+"Korea, Republic of",2016,47521,21055,thousand tons
+Malaysia,2016,0,2764,thousand tons
+Mongolia,2016,0,50,thousand tons
+Myanmar,2016,0,35,thousand tons
+Pakistan,2016,0,3553,thousand tons
+Philippines,2016,0,1075,thousand tons
+Singapore,2016,0,520,thousand tons
+Sri Lanka,2016,0,30,thousand tons
+Taiwan,2016,13969,7782,thousand tons
+Thailand,2016,0,3825,thousand tons
+Viet Nam,2016,3124,4687,thousand tons
+Australia,2016,3983,1276,thousand tons
+New Zealand,2016,577,0,thousand tons
+Austria,2017,7412,723,thousand tons
+Belgium,2017,5360,2480,thousand tons
+Bulgaria,2017,0,652,thousand tons
+Croatia,2017,0,0,thousand tons
+Czech Republic,2017,4306,244,thousand tons
+Germany,2017,30290,13007,thousand tons
+Finland,2017,2700,1300,thousand tons
+France,2017,10664,4840,thousand tons
+Greece,2017,0,1359,thousand tons
+Hungary,2017,1602,298,thousand tons
+Italy,2017,4732,19336,thousand tons
+Luxembourg,2017,0,2172,thousand tons
+Netherlands,2017,6781,0,thousand tons
+Poland,2017,5706,4626,thousand tons
+Portugal,2017,20,2056,thousand tons
+Romania,2017,2330,1030,thousand tons
+Slovakia,2017,4619,355,thousand tons
+Slovenia,2017,0,648,thousand tons
+Spain,2017,4830,9614,thousand tons
+Sweden,2017,3078,1635,thousand tons
+United Kingdom,2017,5997,1494,thousand tons
+Bosnia and Herzegovina,2017,756,0,thousand tons
+"Macedonia, the former Yugoslav Republic of",2017,0,273,thousand tons
+Montenegro,2017,0,120,thousand tons
+Norway,2017,0,603,thousand tons
+Serbia,2017,1477,0,thousand tons
+Switzerland,2017,0,1450,thousand tons
+Turkey,2017,11561,25963,thousand tons
+Azerbaijan,2017,0,180,thousand tons
+Belarus,2017,0,2343,thousand tons
+Kazakhstan,2017,4390,60,thousand tons
+"Moldova, Republic of",2017,0,455,thousand tons
+Russian Federation,2017,49490,22000,thousand tons
+Ukraine,2017,19880,1445,thousand tons
+Uzbekistan,2017,0,680,thousand tons
+Canada,2017,7271,6342,thousand tons
+Cuba,2017,0,221,thousand tons
+El Salvador,2017,0,96,thousand tons
+Guatemala,2017,0,294,thousand tons
+Mexico,2017,4721,15203,thousand tons
+United States of America,2017,25788,55824,thousand tons
+Argentina,2017,2296,2328,thousand tons
+Brazil,2017,27154,7211,thousand tons
+Chile,2017,794,364,thousand tons
+Colombia,2017,220,1035,thousand tons
+Ecuador,2017,0,561,thousand tons
+Paraguay,2017,24,0,thousand tons
+Peru,2017,0,1207,thousand tons
+Uruguay,2017,0,58,thousand tons
+Venezuela,2017,0,444,thousand tons
+Algeria,2017,650,0,thousand tons
+"Congo, the Democratic Republic of the",2017,0,30,thousand tons
+Egypt,2017,570,6300,thousand tons
+Ghana,2017,0,25,thousand tons
+Kenya,2017,0,20,thousand tons
+Libyan Arab Jamahiriya,2017,0,422,thousand tons
+Mauritania,2017,5,0,thousand tons
+Morocco,2017,0,550,thousand tons
+Nigeria,2017,0,100,thousand tons
+South Africa,2017,3731,2570,thousand tons
+Tunisia,2017,0,50,thousand tons
+Uganda,2017,0,30,thousand tons
+"Iran, Islamic Republic of",2017,2235,19000,thousand tons
+Israel,2017,0,300,thousand tons
+Jordan,2017,0,150,thousand tons
+Oman,2017,0,2000,thousand tons
+Qatar,2017,0,2644,thousand tons
+Saudi Arabia,2017,0,4831,thousand tons
+Syrian Arab Republic,2017,0,5,thousand tons
+United Arab Emirates,2017,0,3309,thousand tons
+Bangladesh,2017,0,100,thousand tons
+China,2017,754225,77490,thousand tons
+India,2017,43764,55253,thousand tons
+Indonesia,2017,2922,2274,thousand tons
+Japan,2017,79343,25318,thousand tons
+"Korea, Republic of",2017,47676,23354,thousand tons
+Malaysia,2017,0,3215,thousand tons
+Mongolia,2017,0,50,thousand tons
+Myanmar,2017,0,35,thousand tons
+Pakistan,2017,0,4966,thousand tons
+Philippines,2017,0,1378,thousand tons
+Singapore,2017,0,596,thousand tons
+Sri Lanka,2017,0,30,thousand tons
+Taiwan,2017,13690,8748,thousand tons
+Thailand,2017,0,4471,thousand tons
+Viet Nam,2017,5163,6310,thousand tons
+Australia,2017,4104,1224,thousand tons
+New Zealand,2017,657,0,thousand tons
+Austria,2018,6177,708,thousand tons
+Belgium,2018,5300,2690,thousand tons
+Bulgaria,2018,0,666,thousand tons
+Croatia,2018,0,136,thousand tons
+Czech Republic,2018,4619,245,thousand tons
+Germany,2018,29732,12703,thousand tons
+Finland,2018,2800,1350,thousand tons
+France,2018,10524,4864,thousand tons
+Greece,2018,0,1467,thousand tons
+Hungary,2018,1659,329,thousand tons
+Italy,2018,4520,19976,thousand tons
+Luxembourg,2018,0,2228,thousand tons
+Netherlands,2018,6813,0,thousand tons
+Poland,2018,5392,4765,thousand tons
+Portugal,2018,0,2215,thousand tons
+Romania,2018,2175,1375,thousand tons
+Slovakia,2018,4550,250,thousand tons
+Slovenia,2018,0,654,thousand tons
+Spain,2018,4911,9410,thousand tons
+Sweden,2018,2829,1824,thousand tons
+United Kingdom,2018,5651,1616,thousand tons
+Bosnia and Herzegovina,2018,695,0,thousand tons
+"Macedonia, the former Yugoslav Republic of",2018,0,266,thousand tons
+Montenegro,2018,0,100,thousand tons
+Norway,2018,0,575,thousand tons
+Serbia,2018,1770,203,thousand tons
+Switzerland,2018,0,1500,thousand tons
+Turkey,2018,11513,25799,thousand tons
+Azerbaijan,2018,0,200,thousand tons
+Belarus,2018,0,2470,thousand tons
+Kazakhstan,2018,3905,60,thousand tons
+"Moldova, Republic of",2018,0,497,thousand tons
+Russian Federation,2018,47940,24098,thousand tons
+Ukraine,2018,19540,1571,thousand tons
+Uzbekistan,2018,0,646,thousand tons
+Canada,2018,8160,5280,thousand tons
+Cuba,2018,0,225,thousand tons
+El Salvador,2018,0,99,thousand tons
+Guatemala,2018,0,300,thousand tons
+Mexico,2018,4885,15319,thousand tons
+United States of America,2018,27704,58903,thousand tons
+Argentina,2018,2319,2843,thousand tons
+Brazil,2018,27586,7820,thousand tons
+Chile,2018,789,356,thousand tons
+Colombia,2018,222,997,thousand tons
+Ecuador,2018,0,583,thousand tons
+Paraguay,2018,25,0,thousand tons
+Peru,2018,0,1217,thousand tons
+Uruguay,2018,0,60,thousand tons
+Venezuela,2018,0,129,thousand tons
+Algeria,2018,400,1900,thousand tons
+"Congo, the Democratic Republic of the",2018,0,30,thousand tons
+Egypt,2018,500,7305,thousand tons
+Ghana,2018,0,25,thousand tons
+Kenya,2018,0,20,thousand tons
+Libyan Arab Jamahiriya,2018,0,396,thousand tons
+Mauritania,2018,5,0,thousand tons
+Morocco,2018,0,520,thousand tons
+Nigeria,2018,0,100,thousand tons
+South Africa,2018,3899,2428,thousand tons
+Tunisia,2018,0,50,thousand tons
+Uganda,2018,0,30,thousand tons
+Bahrain,2018,0,720,thousand tons
+"Iran, Islamic Republic of",2018,2255,22265,thousand tons
+Israel,2018,0,300,thousand tons
+Jordan,2018,0,350,thousand tons
+Kuwait,2018,0,1300,thousand tons
+Oman,2018,0,2000,thousand tons
+Qatar,2018,0,2575,thousand tons
+Saudi Arabia,2018,0,8187,thousand tons
+Syrian Arab Republic,2018,0,5,thousand tons
+United Arab Emirates,2018,0,3247,thousand tons
+Bangladesh,2018,0,3800,thousand tons
+China,2018,830100,98000,thousand tons
+India,2018,49038,60234,thousand tons
+Indonesia,2018,3009,3174,thousand tons
+Japan,2018,78230,26088,thousand tons
+"Korea, Republic of",2018,48281,24183,thousand tons
+Malaysia,2018,850,3250,thousand tons
+Mongolia,2018,0,50,thousand tons
+Myanmar,2018,0,300,thousand tons
+Pakistan,2018,0,4719,thousand tons
+Philippines,2018,0,1475,thousand tons
+Singapore,2018,0,618,thousand tons
+Sri Lanka,2018,0,30,thousand tons
+Taiwan,2018,14063,9177,thousand tons
+Thailand,2018,0,6403,thousand tons
+Viet Nam,2018,9471,6000,thousand tons
+Australia,2018,4228,1461,thousand tons
+New Zealand,2018,652,0,thousand tons
+Austria,2019,6714,709,thousand tons
+Belgium,2019,5240,2520,thousand tons
+Bulgaria,2019,0,566,thousand tons
+Croatia,2019,0,69,thousand tons
+Czech Republic,2019,4203,234,thousand tons
+Germany,2019,27722,11905,thousand tons
+Finland,2019,2320,1155,thousand tons
+France,2019,10061,4388,thousand tons
+Greece,2019,0,1350,thousand tons
+Hungary,2019,1418,352,thousand tons
+Italy,2019,4207,19030,thousand tons
+Luxembourg,2019,0,2119,thousand tons
+Netherlands,2019,6657,0,thousand tons
+Poland,2019,4920,4037,thousand tons
+Portugal,2019,0,2033,thousand tons
+Romania,2019,2330,1115,thousand tons
+Slovakia,2019,3350,250,thousand tons
+Slovenia,2019,0,623,thousand tons
+Spain,2019,4240,9348,thousand tons
+Sweden,2019,3124,1596,thousand tons
+United Kingdom,2019,5687,1531,thousand tons
+Bosnia and Herzegovina,2019,801,0,thousand tons
+"Macedonia, the former Yugoslav Republic of",2019,0,239,thousand tons
+Montenegro,2019,0,75,thousand tons
+Norway,2019,0,621,thousand tons
+Serbia,2019,1756,174,thousand tons
+Switzerland,2019,0,1500,thousand tons
+Turkey,2019,10859,22884,thousand tons
+Azerbaijan,2019,0,200,thousand tons
+Belarus,2019,0,2621,thousand tons
+Kazakhstan,2019,4074,60,thousand tons
+"Moldova, Republic of",2019,0,392,thousand tons
+Russian Federation,2019,47580,24150,thousand tons
+Ukraine,2019,19642,1203,thousand tons
+Uzbekistan,2019,0,666,thousand tons
+Canada,2019,7820,5080,thousand tons
+Cuba,2019,0,230,thousand tons
+El Salvador,2019,0,102,thousand tons
+Guatemala,2019,0,306,thousand tons
+Mexico,2019,4242,14145,thousand tons
+United States of America,2019,26590,61171,thousand tons
+Argentina,2019,2115,2529,thousand tons
+Brazil,2019,25297,7272,thousand tons
+Chile,2019,724,409,thousand tons
+Colombia,2019,224,1109,thousand tons
+Ecuador,2019,0,607,thousand tons
+Paraguay,2019,26,0,thousand tons
+Peru,2019,0,1230,thousand tons
+Uruguay,2019,0,62,thousand tons
+Venezuela,2019,0,51,thousand tons
+Algeria,2019,400,2000,thousand tons
+"Congo, the Democratic Republic of the",2019,0,30,thousand tons
+Egypt,2019,184,7073,thousand tons
+Ghana,2019,0,25,thousand tons
+Kenya,2019,0,20,thousand tons
+Libyan Arab Jamahiriya,2019,0,606,thousand tons
+Mauritania,2019,5,0,thousand tons
+Morocco,2019,0,500,thousand tons
+Nigeria,2019,0,100,thousand tons
+South Africa,2019,3330,2822,thousand tons
+Tunisia,2019,0,50,thousand tons
+Uganda,2019,0,30,thousand tons
+Bahrain,2019,0,700,thousand tons
+"Iran, Islamic Republic of",2019,2535,23075,thousand tons
+Israel,2019,0,300,thousand tons
+Jordan,2019,0,350,thousand tons
+Kuwait,2019,0,1270,thousand tons
+Oman,2019,0,2000,thousand tons
+Qatar,2019,0,2558,thousand tons
+Saudi Arabia,2019,0,8191,thousand tons
+Syrian Arab Republic,2019,0,5,thousand tons
+United Arab Emirates,2019,0,3327,thousand tons
+Bangladesh,2019,0,5100,thousand tons
+China,2019,893300,103200,thousand tons
+India,2019,48680,62678,thousand tons
+Indonesia,2019,3190,4593,thousand tons
+Japan,2019,74983,24301,thousand tons
+"Korea, Republic of",2019,48716,22696,thousand tons
+Malaysia,2019,720,6100,thousand tons
+Mongolia,2019,0,50,thousand tons
+Myanmar,2019,0,350,thousand tons
+Pakistan,2019,0,3304,thousand tons
+Philippines,2019,0,1915,thousand tons
+Singapore,2019,0,766,thousand tons
+Sri Lanka,2019,0,30,thousand tons
+Taiwan,2019,13587,8367,thousand tons
+Thailand,2019,0,4246,thousand tons
+Viet Nam,2019,12544,4925,thousand tons
+Australia,2019,4023,1470,thousand tons
+New Zealand,2019,667,0,thousand tons

@@ -37,7 +37,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
              "L254.GlobalTranTechInterp",
              "L254.GlobalTranTechShrwt",
              "L254.GlobalTranTechSCurve",
-             "L254.GlobalTranTechProfitShutdown",
              "L254.StubTranTechCalInput",
              "L254.StubTranTechLoadFactor",
              "L254.StubTranTechCost",
@@ -87,7 +86,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
     L254.GlobalTranTechInterp <- get_data(all_data, "L254.GlobalTranTechInterp")
     L254.GlobalTranTechShrwt <- get_data(all_data, "L254.GlobalTranTechShrwt")
     L254.GlobalTranTechSCurve <- get_data(all_data, "L254.GlobalTranTechSCurve")
-    L254.GlobalTranTechProfitShutdown <- get_data(all_data, "L254.GlobalTranTechProfitShutdown")
     L254.StubTranTechCalInput <- get_data(all_data, "L254.StubTranTechCalInput")
 
 
@@ -194,7 +192,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
         add_xml_data(L254.GlobalTranTechInterp_SSP, "GlobalTranTechInterp") %>%
         add_xml_data(L254.GlobalTranTechShrwt_SSP, "GlobalTranTechShrwt") %>%
         add_xml_data(L254.GlobalTranTechSCurve, "GlobalTranTechSCurve") %>%
-        add_xml_data(L254.GlobalTranTechProfitShutdown, "GlobalTranTechProfitShutdown") %>%
         add_xml_data(L254.StubTranTechCalInput_SSP, "StubTranTechCalInput") %>%
         add_xml_data(L254.StubTranTechLoadFactor_SSP, "StubTranTechLoadFactor") %>%
         add_xml_data(L254.StubTranTechCost_SSP, "StubTranTechCost") %>%
@@ -226,7 +223,6 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
                        "L254.GlobalTranTechInterp",
                        "L254.GlobalTranTechShrwt",
                        "L254.GlobalTranTechSCurve",
-                       "L254.GlobalTranTechProfitShutdown",
                        "L254.StubTranTechCalInput",
                        "L254.StubTranTechLoadFactor",
                        "L254.StubTranTechCost",

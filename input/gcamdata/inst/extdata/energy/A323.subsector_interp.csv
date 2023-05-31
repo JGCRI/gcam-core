@@ -5,5 +5,5 @@
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 iron and steel,BLASTFUR,share-weight,final-calibration-year,end-year,,fixed
-iron and steel,EAF with DRI,share-weight,final-calibration-year,end-year,,fixed
+iron and steel,EAF with DRI,share-weight,final-calibration-year,end-year,,linear
 iron and steel,EAF with scrap,share-weight,final-calibration-year,end-year,,fixed

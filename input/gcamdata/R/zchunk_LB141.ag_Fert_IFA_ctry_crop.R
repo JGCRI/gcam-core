@@ -19,16 +19,23 @@
 #' @importFrom tidyr gather drop_na replace_na
 #' @author ACS May 2017
 module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+      FILE = "common/iso_GCAM_regID",
+      FILE = "aglu/AGLU_ctry",
+      "L100.LDS_ag_HA_ha",
+      "L100.FAO_ag_HA_ha",
+      FILE = "aglu/IFA2002_Fert_ktN",
+      FILE = "aglu/IFA_Fert_ktN")
+
+  MODULE_OUTPUTS <-
+    c("L141.ag_Fert_Cons_MtN_ctry_crop")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
-             FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/AGLU_ctry",
-             "L100.LDS_ag_HA_ha",
-             "L100.FAO_ag_HA_ha",
-             FILE = "aglu/IFA2002_Fert_ktN",
-             FILE = "aglu/IFA_Fert_ktN"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L141.ag_Fert_Cons_MtN_ctry_crop"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     AREA_thousHa <- COUNTRY <- CROP <- Country <- FAO <- Fert_Cons_MtN <- Fert_MtN <- Fert_ktN <-
@@ -39,15 +46,24 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
-    L100.FAO_ag_HA_ha <- get_data(all_data, "L100.FAO_ag_HA_ha")
-    IFA2002_Fert_ktN <- get_data(all_data, "aglu/IFA2002_Fert_ktN")
-    IFA_Fert_ktN <- get_data(all_data, "aglu/IFA_Fert_ktN")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
+    # 11/17/2022 GPK - because of comparative low yields for its surrounding commodity classes, Nutmeg production in
+    # India is getting assigned very high fertilizer input-output coefficients, almost 0.5 kgN per harvested kg of nutmeg.
+    # Bottom-up data on nutmeg production (e.g. https://indiaagronet.com/indiaagronet/crop%20info/nutmeg.htm) suggests
+    # that the IO-coef should be more like 0.1, and for plantations whose avg yield is about 100 kg/ha, the N application
+    # rate is about 10 kgN/ha
+    IFA2002_Fert_ktN_supplement <- tibble(
+      COUNTRY = "INDIA",
+      YEAR = 2000,
+      CROP = "Nutmeg",
+      AREA_thousHa = 100,
+      N_kt = 1,
+      P2O5_kt = 2,
+      K2O_kt = 0)
+    IFA2002_Fert_ktN <- bind_rows(IFA2002_Fert_ktN, IFA2002_Fert_ktN_supplement)
+    FAO_ag_items_PRODSTAT$IFA2002_crop[FAO_ag_items_PRODSTAT$GTAP_crop == "Ntmg_Mc_Crdm" & !is.na(FAO_ag_items_PRODSTAT$GTAP_crop)] <- "Nutmeg"
 
     # Perform Calculations
 
@@ -100,19 +116,19 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     # to the FAO's "Grasses Nes for forage;Sil"
     L100.FAO_ag_HA_ha %>%
       filter(year %in% aglu.FAO_LDS_YEARS) %>%
-      group_by(iso, item) %>%
+      group_by(iso, item, item_code) %>%
       summarise(FAO = mean(value)) %>%
       ungroup() ->
       L141.FAO
     # Take LDS HA data and aggregate to the GCAM region-commodity level:
     L100.LDS_ag_HA_ha %>%
-      left_join(FAO_ag_items_PRODSTAT[c("item", "GTAP_crop")], by = "GTAP_crop") %>%
+      left_join(FAO_ag_items_PRODSTAT[c("item", "item_code", "GTAP_crop")], by = "GTAP_crop") %>%
       drop_na() %>%                 # Some of the GTAP crops don't have a corresponding crop in the FAO databases
-      group_by(iso, item) %>%
+      group_by(iso, item, item_code) %>%
       summarise(LDS = sum(value)) %>%
       ungroup() %>%
       # Join in the FAO data from the previous pipeline
-      left_join(L141.FAO, by = c("iso", "item")) %>%
+      left_join(L141.FAO %>% select(-item), by = c("iso", "item_code")) %>%
       replace_na(list(FAO = 0)) %>%
       # Calculate the FAO_LDS scaler value = FAO/LDS
       # Set an upper bound to prevent extremely high fertilizer allocations to potentially low production volume GLUs
@@ -120,7 +136,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
       # join back in the GTAP crop, which will be used for the remainder of the processing
       # Because the FAO item "Grasses nes for forage;Sil" is assigned to two GTAP crops ("GrsNESFrgSlg" and "MxGrss_Lgm"),
       # the "item" column will get longer. This is OK.
-      left_join(FAO_ag_items_PRODSTAT[c("item", "GTAP_crop")], by = "item", ignore_columns = "item") %>%
+      left_join(FAO_ag_items_PRODSTAT[c("item_code", "GTAP_crop")], by = "item_code") %>%
       select(iso, GTAP_crop, scaler) ->
       # store in an FAO_LDS table:
       L141.FAO_LDS
@@ -300,7 +316,7 @@ module_aglu_LB141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
                      "aglu/IFA_Fert_ktN") ->
       L141.ag_Fert_Cons_MtN_ctry_crop
 
-    return_data(L141.ag_Fert_Cons_MtN_ctry_crop)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

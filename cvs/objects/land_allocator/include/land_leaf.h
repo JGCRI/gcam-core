@@ -104,9 +104,6 @@ public:
                                    const double aProfitRate,
                                    const int aPeriod );
 
-    virtual void setCarbonPriceIncreaseRate( const double aCarbonPriceIncreaseRate, 
-                                      const int aPeriod );
-
     virtual void setSoilTimeScale( const int aTimeScale );
 
     virtual double calcLandShares( const std::string& aRegionName,
@@ -148,6 +145,8 @@ public:
     virtual ICarbonCalc* getCarbonContentCalc() const;
         
 	virtual bool isUnmanagedLandLeaf( )  const;
+
+	virtual LandUseHistory* getHistoricalLandUse() const;
     
     bool hasLandAllocationCalculated( const int aPeriod ) const;
 
@@ -172,9 +171,6 @@ protected:
 
         //! Minimum below ground carbon density (used for carbon subsidy and not emissions calculations)
         DEFINE_VARIABLE( SIMPLE, "minBelowGroundCDensity", mMinBelowGroundCDensity, Value ),
-
-        //! Expected rate of increase of the carbon price from the region info.
-        DEFINE_VARIABLE( ARRAY, "carbon-price-increase-rate", mCarbonPriceIncreaseRate, objects::PeriodVector<Value> ),
 
         //! Container of historical land use.
         DEFINE_VARIABLE( CONTAINER, "land-use-history", mLandUseHistory, LandUseHistory* ),

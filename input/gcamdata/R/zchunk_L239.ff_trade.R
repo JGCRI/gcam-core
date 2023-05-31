@@ -17,34 +17,42 @@
 #' @importFrom tibble tibble
 #' @author GPK February 2019
 module_energy_L239.ff_trade <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "energy/A_ff_RegionalSector",
+      FILE = "energy/A_ff_RegionalSubsector",
+      FILE = "energy/A_ff_RegionalTechnology",
+      FILE = "energy/A_ff_TradedSector",
+      FILE = "energy/A_ff_TradedSubsector",
+      FILE = "energy/A_ff_TradedTechnology",
+      FILE = "energy/A10.rsrc_info",
+      "L202.CarbonCoef",
+      "L2011.ff_GrossTrade_EJ_R_C_Y",
+      "L2011.ff_ALL_EJ_R_C_Y")
+
+  MODULE_OUTPUTS <-
+    c("L239.PrimaryConsKeyword_en",
+      "L239.Supplysector_tra",
+      "L239.SectorUseTrialMarket_tra",
+      "L239.SubsectorAll_tra",
+      "L239.TechShrwt_tra",
+      "L239.TechCost_tra",
+      "L239.TechCoef_tra",
+      "L239.Production_tra",
+      "L239.Supplysector_reg",
+      "L239.SubsectorAll_reg",
+      "L239.TechShrwt_reg",
+      "L239.TechCoef_reg",
+      "L239.Production_reg_imp",
+      "L239.Production_reg_dom",
+      "L239.Consumption_intraregional",
+      "L239.CarbonCoef")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/A_ff_RegionalSector",
-             FILE = "energy/A_ff_RegionalSubsector",
-             FILE = "energy/A_ff_RegionalTechnology",
-             FILE = "energy/A_ff_TradedSector",
-             FILE = "energy/A_ff_TradedSubsector",
-             FILE = "energy/A_ff_TradedTechnology",
-             "L202.CarbonCoef",
-             "L2011.ff_GrossTrade_EJ_R_C_Y",
-             "L2011.ff_ALL_EJ_R_C_Y"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L239.PrimaryConsKeyword_en",
-             "L239.Supplysector_tra",
-             "L239.SectorUseTrialMarket_tra",
-             "L239.SubsectorAll_tra",
-             "L239.TechShrwt_tra",
-             "L239.TechCost_tra",
-             "L239.TechCoef_tra",
-             "L239.Production_tra",
-             "L239.Supplysector_reg",
-             "L239.SubsectorAll_reg",
-             "L239.TechShrwt_reg",
-             "L239.TechCoef_reg",
-             "L239.Production_reg_imp",
-             "L239.Production_reg_dom",
-             "L239.Consumption_intraregional",
-             "L239.CarbonCoef"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -54,17 +62,13 @@ module_energy_L239.ff_trade <- function(command, ...) {
       GrossImp_EJ <- Prod_EJ <- fuel <- technology <- primary.consumption <- PrimaryFuelCO2Coef.name <- PrimaryFuelCO2Coef <-
       production <- consumption <- GCAM_region_ID <- NULL # silence package check notes
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names",strip_attributes = TRUE)
-    A_ff_RegionalSector <- get_data(all_data, "energy/A_ff_RegionalSector",strip_attributes = TRUE)
-    A_ff_RegionalSubsector <- get_data(all_data, "energy/A_ff_RegionalSubsector",strip_attributes = TRUE)
-    A_ff_RegionalTechnology <- get_data(all_data, "energy/A_ff_RegionalTechnology",strip_attributes = TRUE)
-    A_ff_TradedSector <- get_data(all_data, "energy/A_ff_TradedSector",strip_attributes = TRUE)
-    A_ff_TradedSubsector <- get_data(all_data, "energy/A_ff_TradedSubsector",strip_attributes = TRUE)
-    A_ff_TradedTechnology <- get_data(all_data, "energy/A_ff_TradedTechnology",strip_attributes = TRUE)
-    L2011.ff_GrossTrade_EJ_R_C_Y <- get_data(all_data, "L2011.ff_GrossTrade_EJ_R_C_Y",strip_attributes = TRUE)
-    L2011.ff_ALL_EJ_R_C_Y <- get_data(all_data, "L2011.ff_ALL_EJ_R_C_Y",strip_attributes = TRUE)
-    L202.CarbonCoef <- get_data(all_data, "L202.CarbonCoef",strip_attributes = TRUE)
+    # Load required inputs ----
+    lapply(MODULE_INPUTS, function(d){
+      # get name as the char after last /
+      nm <- tail(strsplit(d, "/")[[1]], n = 1)
+      # get data and assign
+      assign(nm, get_data(all_data, d, strip_attributes = T),
+             envir = parent.env(environment()))  })
 
 
     # Keywords of global technologies
@@ -235,8 +239,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
       L239.Consumption_intraregional
 
 
-
-    # Produce outputs
+    # Produce outputs ----
     L239.PrimaryConsKeyword_en %>%
       add_title("Keywords of global technologies") %>%
       add_units("unitless") %>%
@@ -370,22 +373,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
                      "L202.CarbonCoef") ->
       L239.CarbonCoef
 
-    return_data(L239.PrimaryConsKeyword_en,
-                L239.Supplysector_tra,
-                L239.SectorUseTrialMarket_tra,
-                L239.SubsectorAll_tra,
-                L239.TechShrwt_tra,
-                L239.TechCost_tra,
-                L239.TechCoef_tra,
-                L239.Production_tra,
-                L239.Supplysector_reg,
-                L239.SubsectorAll_reg,
-                L239.TechShrwt_reg,
-                L239.TechCoef_reg,
-                L239.Production_reg_imp,
-                L239.Production_reg_dom,
-                L239.Consumption_intraregional,
-                L239.CarbonCoef)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

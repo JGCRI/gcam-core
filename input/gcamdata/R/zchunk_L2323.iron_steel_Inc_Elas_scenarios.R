@@ -27,7 +27,7 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
              "L101.Pop_thous_Scen_R_Yfut",
              "L101.Pop_thous_GCAM3_R_Y",
              "L102.gdp_mil90usd_GCAM3_R_Y",
-             "L1323.out_Mt_R_iron_steel_Yh"))
+             "LB1092.Tradebalance_iron_steel_Mt_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2323.iron_steel_incelas_gssp1",
              "L2323.iron_steel_incelas_gssp2",
@@ -45,14 +45,13 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
     GCAM_region_ID <- value <- year <- pcgdp_90thousUSD <- scenario <-
         region <- energy.final.demand <- income.elasticity <- . <-
       value.x <- value.y <- pcgdp_90thousUSD_2015 <- a <- b <- m <-
-      per_capita_steel <- population <- steel_pro <- pcgdp_90thousUSD_before <-
-      steel_pro_before <- steel_hist <- inc_elas <- NULL # silence package check.
+      per_capita_steel <- population <- steel_cons <- pcgdp_90thousUSD_before <-
+      steel_cons_before <- steel_hist <- inc_elas <- NULL # silence package check.
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    COV_1990USD_2005USD = 1.383
-
+    LB1092.Tradebalance_iron_steel_Mt_R_Y <- get_data(all_data, "LB1092.Tradebalance_iron_steel_Mt_R_Y")
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A323.inc_elas <- get_data(all_data, "socioeconomics/A323.inc_elas", strip_attributes = TRUE)
     A323.inc_elas_parameter  <- get_data(all_data, "socioeconomics/A323.inc_elas_parameter", strip_attributes = TRUE)
@@ -86,12 +85,16 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       mutate(year = as.integer(year)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID")
 
-    steel_pro_2015 <- get_data(all_data, "L1323.out_Mt_R_iron_steel_Yh") %>%
-      group_by(GCAM_region_ID,year) %>%
+    steel_cons_2015 <- LB1092.Tradebalance_iron_steel_Mt_R_Y %>%
+      filter(metric=="consumption_reval")%>%
+      group_by(GCAM_region,year) %>%
       summarise(steel_hist = sum(value))%>%
+      rename(region=GCAM_region)%>%
+      left_join(GCAM_region_names,by=c("region"))%>%
       ungroup() %>%
       filter(year == MODEL_FINAL_BASE_YEAR) %>%
-      mutate(year = MODEL_FINAL_BASE_YEAR + 5)
+      mutate(year = MODEL_FINAL_BASE_YEAR + 5) %>%
+      select(GCAM_region_ID,year,steel_hist)
 
     pcgdp_2015 <- L102.pcgdp_thous90USD_Scen_R_Y %>%
       filter(year == MODEL_FINAL_BASE_YEAR) %>%
@@ -111,26 +114,26 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       filter(year %in%  MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(L101.Pop_thous_Scen_R_Yfut, by = c("scenario", "GCAM_region_ID", "year", "region")) %>%
       left_join_error_no_match(A323.inc_elas_parameter, by = c( "region")) %>%
-      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- MODEL_FINAL_BASE_YEAR),
-             steel_pro = per_capita_steel * population*0.000001)
+      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000)) * (1-m) ^ (year- 1990),
+             steel_cons = per_capita_steel * population*0.000001)
 
 
   #Rebuild a new tibble save the previous year value
     L2323.pcgdp_thous90USD_Scen_R_Y_5_before <- L2323.pcgdp_thous90USD_Scen_R_Y %>%
-      mutate(year= year+5,pcgdp_90thousUSD_before = pcgdp_90thousUSD ,steel_pro_before = steel_pro) %>%
-      select(scenario,GCAM_region_ID,region, year,pcgdp_90thousUSD_before,steel_pro_before )
+      mutate(year= year+5,pcgdp_90thousUSD_before = pcgdp_90thousUSD ,steel_cons_before = steel_cons) %>%
+      select(scenario,GCAM_region_ID,region, year,pcgdp_90thousUSD_before,steel_cons_before )
 
     L2323.pcgdp_thous90USD_Scen_R_Y <- L2323.pcgdp_thous90USD_Scen_R_Y %>%
       left_join(L2323.pcgdp_thous90USD_Scen_R_Y_5_before, by = c("scenario", "GCAM_region_ID", "year","region"))%>%
       #Add 2015 data
-      left_join(steel_pro_2015, by = c("GCAM_region_ID", "year")) %>%
+      left_join(steel_cons_2015, by = c("GCAM_region_ID", "year")) %>%
       left_join(pcgdp_2015, by = c("scenario", "GCAM_region_ID", "year")) %>%
-      mutate(pcgdp_90thousUSD_before = replace_na(pcgdp_90thousUSD_before,0),steel_pro_before  = replace_na(steel_pro_before ,0),
+      mutate(pcgdp_90thousUSD_before = replace_na(pcgdp_90thousUSD_before,0),steel_cons_before  = replace_na(steel_cons_before ,0),
              steel_hist  = replace_na(steel_hist,0),pcgdp_90thousUSD_2015 = replace_na(pcgdp_90thousUSD_2015,0),
-             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, steel_pro_before = steel_pro_before + steel_hist,
+             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, steel_cons_before = steel_cons_before + steel_hist,
              #cal
-             inc_elas = log(steel_pro / steel_pro_before)/log(pcgdp_90thousUSD/pcgdp_90thousUSD_before),
-             income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
+             inc_elas = log(steel_cons / steel_cons_before)/log(pcgdp_90thousUSD/pcgdp_90thousUSD_before),
+             income.elasticity = inc_elas,energy.final.demand = "regional iron and steel") %>%
       select(scenario, region, energy.final.demand, year, income.elasticity) %>%
       arrange(year) %>%
       #replace those huge number
@@ -154,25 +157,25 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       filter(year %in%  MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("GCAM_region_ID", "year", "region")) %>%
       left_join_error_no_match(A323.inc_elas_parameter, by = c( "region")) %>%
-      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000 * COV_1990USD_2005USD)) * (1-m) ^ (year- 2015),
-             steel_pro = per_capita_steel * population*0.000001)
+      mutate(per_capita_steel = a * exp(b/(pcgdp_90thousUSD * 1000)) * (1-m) ^ (year- 1990),
+             steel_cons = per_capita_steel * population*0.000001)
 
 
     #Rebuild a new tibble save the previous year value
     L2323.pcgdp_thous90USD_GCAM3_R_Y_5_before <- L2323.pcgdp_thous90USD_GCAM3_R_Y %>%
-      mutate(year= year+5,pcgdp_90thousUSD_before = pcgdp_90thousUSD ,steel_pro_before = steel_pro) %>%
-      select(scenario,GCAM_region_ID,region, year,pcgdp_90thousUSD_before,steel_pro_before )
+      mutate(year= year+5,pcgdp_90thousUSD_before = pcgdp_90thousUSD ,steel_cons_before = steel_cons) %>%
+      select(scenario,GCAM_region_ID,region, year,pcgdp_90thousUSD_before,steel_cons_before )
 
     L2323.iron_steel_incelas_gcam3 <- L2323.pcgdp_thous90USD_GCAM3_R_Y %>%
       left_join(L2323.pcgdp_thous90USD_GCAM3_R_Y_5_before, by = c("GCAM_region_ID", "year","region"))%>%
       #Add 2015 data
-      left_join(steel_pro_2015, by = c("GCAM_region_ID", "year")) %>%
+      left_join(steel_cons_2015, by = c("GCAM_region_ID", "year")) %>%
       left_join(pcgdp_2015_GCAM3, by = c( "GCAM_region_ID", "year")) %>%
-      mutate(pcgdp_90thousUSD_before = replace_na(pcgdp_90thousUSD_before,0),steel_pro_before  = replace_na(steel_pro_before ,0),
+      mutate(pcgdp_90thousUSD_before = replace_na(pcgdp_90thousUSD_before,0),steel_cons_before  = replace_na(steel_cons_before ,0),
              steel_hist  = replace_na(steel_hist,0),pcgdp_90thousUSD_2015 = replace_na(pcgdp_90thousUSD_2015,0),
-             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, steel_pro_before = steel_pro_before + steel_hist,
+             pcgdp_90thousUSD_before = pcgdp_90thousUSD_before + pcgdp_90thousUSD_2015, steel_cons_before = steel_cons_before + steel_hist,
              #cal
-             inc_elas = log(steel_pro / steel_pro_before)/log(pcgdp_90thousUSD/pcgdp_90thousUSD_before),
+             inc_elas = log(steel_cons / steel_cons_before)/log(pcgdp_90thousUSD/pcgdp_90thousUSD_before),
              income.elasticity = inc_elas,energy.final.demand = "iron and steel") %>%
       select(region, energy.final.demand, year, income.elasticity) %>%
       arrange(year) %>%
@@ -252,7 +255,7 @@ module_socioeconomics_L2323.iron_steel_Inc_Elas_scenarios <- function(command, .
       add_legacy_name("L2323.iron_steel_incelas_gcam3") %>%
       add_precursors("common/GCAM_region_names", "socioeconomics/A323.inc_elas","socioeconomics/A323.inc_elas_parameter",
                      "L101.Pop_thous_GCAM3_R_Y", "L102.gdp_mil90usd_GCAM3_R_Y",
-                     "L1323.out_Mt_R_iron_steel_Yh","L102.pcgdp_thous90USD_GCAM3_R_Y") ->
+                     "LB1092.Tradebalance_iron_steel_Mt_R_Y","L102.pcgdp_thous90USD_GCAM3_R_Y") ->
       L2323.iron_steel_incelas_gcam3
 
     return_data(L2323.iron_steel_incelas_gssp1,

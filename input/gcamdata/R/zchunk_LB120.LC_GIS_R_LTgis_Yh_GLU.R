@@ -24,8 +24,10 @@ module_aglu_LB120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
              FILE = "aglu/LDS/LDS_land_types",
              FILE = "aglu/SAGE_LT",
              FILE = "aglu/Various_CarbonData_LTsage",
-             "L100.Land_type_area_ha",
              "L100.Ref_veg_carbon_Mg_per_ha",
+             # 09-24-2022 XZ
+             # The following two LDS files need updates for Base Year Update later!
+             "L100.Land_type_area_ha",
              FILE = "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L120.LC_bm2_R_LT_Yh_GLU",

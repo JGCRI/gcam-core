@@ -38,7 +38,7 @@ regional wheat,imported wheat,-6,start-year,1,share-weight,final-calibration-yea
 regional beef,domestic beef,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional beef,imported beef,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional dairy,domestic dairy,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-regional dairy,imported dariy,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+regional dairy,imported dairy,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional pork,domestic pork,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional pork,imported pork,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 regional poultry,domestic poultry,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,

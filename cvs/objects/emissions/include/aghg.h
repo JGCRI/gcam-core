@@ -174,6 +174,13 @@ public:
                                const int aPeriod ) = 0;
     
     double getEmission( const int aPeriod ) const;
+    
+    virtual void postCalc( const std::string& aRegionName,
+                           const bool aIsInitialTechYear,
+                           const std::vector<IInput*>& aInputs,
+                           const std::vector<IOutput*>& aOutputs,
+                           ICaptureComponent* aSequestrationDevice,
+                           const int aPeriod ) {}
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     

@@ -235,21 +235,3 @@ trn_freight_road,Truck (6-14t),BEV,initial-future-year,20,10,0.122,-0.1,6
 trn_freight_road,Truck (6-15t),BEV,initial-future-year,20,10,0.122,-0.1,6
 trn_freight_road,Truck (6-30t),BEV,initial-future-year,20,10,0.122,-0.1,6
 trn_freight_road,Truck (9-16t),BEV,initial-future-year,20,10,0.122,-0.1,6
-trn_pass_road,Bus,Liquids,final-calibration-year,15,8,0.124,-0.1,6
-trn_pass_road,Bus,NG,final-calibration-year,15,8,0.124,-0.1,6
-trn_pass_road,Bus,BEV,final-calibration-year,15,8,0.124,-0.1,6
-trn_pass_road,Bus,Liquids,initial-future-year,15,8,0.122,-0.1,6
-trn_pass_road,Bus,NG,initial-future-year,15,8,0.122,-0.1,6
-trn_pass_road,Bus,BEV,initial-future-year,15,8,0.122,-0.1,6
-trn_pass_road_bus,Heavy Bus,Liquids,final-calibration-year,20,8,0.124,-0.1,6
-trn_pass_road_bus,Heavy Bus,NG,final-calibration-year,20,8,0.124,-0.1,6
-trn_pass_road_bus,Heavy Bus,BEV,final-calibration-year,20,8,0.124,-0.1,6
-trn_pass_road_bus,Heavy Bus,Liquids,initial-future-year,20,8,0.122,-0.1,6
-trn_pass_road_bus,Heavy Bus,NG,initial-future-year,20,8,0.122,-0.1,6
-trn_pass_road_bus,Heavy Bus,BEV,initial-future-year,20,8,0.122,-0.1,6
-trn_pass_road_bus,Light Bus,Liquids,final-calibration-year,10,5,0.23,-0.1,6
-trn_pass_road_bus,Light Bus,NG,final-calibration-year,10,5,0.23,-0.1,6
-trn_pass_road_bus,Light Bus,BEV,final-calibration-year,10,5,0.23,-0.1,6
-trn_pass_road_bus,Light Bus,Liquids,initial-future-year,10,5,0.193,-0.1,6
-trn_pass_road_bus,Light Bus,NG,initial-future-year,10,5,0.193,-0.1,6
-trn_pass_road_bus,Light Bus,BEV,initial-future-year,10,5,0.193,-0.1,6

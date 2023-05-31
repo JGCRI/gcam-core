@@ -45,6 +45,7 @@
  */
 
 #include "emissions/include/aemissions_control.h"
+#include "util/base/include/time_vector.h"
 #include "util/base/include/value.h"
 
 /*! 
@@ -72,6 +73,8 @@ public:
                            const IInfo* aTechInfo,
                            const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
+    
+    virtual void setAdjustedEmissCoef( const double aAdjustedEmissCoef, const int aPeriod );
 
 protected: 
     LinearControl( const LinearControl& aOther );
@@ -79,12 +82,15 @@ protected:
     
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
-    virtual void calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
+    virtual double calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
 
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
         AEmissionsControl,
+                            
+        //! Flag if wish to allow emissions factor increase
+        DEFINE_VARIABLE( SIMPLE, "allow-ef-increase", mAllowIncrease, bool ),
         
         //! Target year for final emissions factor. Does not have to be a model period.
         DEFINE_VARIABLE( SIMPLE, "end-year", mTargetYear, int ),
@@ -99,8 +105,12 @@ protected:
         //!  Emissions redution percentage (alternative to specifying emissions coefficient)
         DEFINE_VARIABLE( SIMPLE, "control-percentage", mControlFraction, Value ),
         
-        //! Flag if wish to allow emissions factor increase
-        DEFINE_VARIABLE( SIMPLE, "allow-ef-increase", mAllowIncrease, bool )
+        //! The reduction which is calculated and saved during initCalc as it will not vary within model iterations
+        DEFINE_VARIABLE( SIMPLE, "reduction", mReduction, double ),
+                            
+        //! Stored Emissions Coefficient so we can linearly controll from them
+        //! The emissions coefficient is the current ratio of emissions to driver, accounting for any controls
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "control-adjusted-emiss-coef", mAdjustedEmissCoef, objects::TechVintageVector<Value> )
     )
 
 private:

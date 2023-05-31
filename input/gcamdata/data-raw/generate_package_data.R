@@ -135,6 +135,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["TechOMfixed"]] <- c(level2_data_names[["TechYr"]], "input.OM.fixed", "OM.fixed")
   level2_data_names[["TechOMvar"]] <- c(level2_data_names[["TechYr"]], "input.OM.var", "OM.var")
   level2_data_names[["TechSCurve"]] <- c(level2_data_names[["TechYr"]], "lifetime", "steepness", "half.life")
+  level2_data_names[["TechProfitShutdown"]] <- c(level2_data_names[["TechYr"]], "median.shutdown.point", "profit.shutdown.steepness")
   level2_data_names[["TechFixOut"]] <- c(level2_data_names[["TechYr"]], "fixedOutput")
   level2_data_names[["TechIntGainOutputRatio"]] <- c("region", "supplysector", "subsector", "technology", "year", "internal.gains.output.ratio", "internal.gains.market.name")
   level2_data_names[["TechLifetime"]] <- c(level2_data_names[["TechYr"]], "lifetime")
@@ -258,6 +259,7 @@ generate_level2_data_names <- function() {
   # Agricultural sectors, subsectors, and technologies
   level2_data_names[["AgSupplySector"]] <- c("region", "AgSupplySector", "output.unit", "input.unit", "price.unit", "calPrice", "market", "logit.year.fillout", "logit.exponent")
   level2_data_names[["AgMkt"]] <- c("region", "AgSupplySector", "market")
+  level2_data_names[["AgCalMinProfitRate"]] <- c("region", "AgSupplySector", "cal.min.profit.rate")
   level2_data_names[["AgSupplySector_absolute-cost-logit"]] <- c("region", "AgSupplySector")
   level2_data_names[["AgSupplySector_relative-cost-logit"]] <- c("region", "AgSupplySector")
   level2_data_names[["AgSupplySubsector"]] <- c("region", "AgSupplySector", "AgSupplySubsector", "logit.year.fillout", "logit.exponent")
@@ -399,8 +401,9 @@ generate_level2_data_names <- function() {
   level2_data_names[["LandLeafNegEmissMkt"]] <- c("region", "LandAllocatorRoot", "LandNode" ,"LandLeaf", "negative.emiss.market")
 
   # NonCO2
-  level2_data_names[["ResEmissCoef"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "emiss.coef")
+  level2_data_names[["ResEmissCoef"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "emiss.coef", "emiss.units")
   level2_data_names[["GDPCtrlMaxRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "max.reduction")
+  level2_data_names[["GDPCtrlMaxResReserve"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "max.reduction")
   level2_data_names[["GDPCtrlSteepRes"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "ctrl.name", "steepness")
   level2_data_names[["ResMAC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tax", "mac.reduction", "market.name")
   level2_data_names[["ResMACTC"]] <- c("region", "resource", "subresource", "technology", "year", "Non.CO2", "mac.control", "tech.change.year", "tech.change")

@@ -117,10 +117,16 @@ double S_CurveShutdownDecider::calcShutdownCoef(const double aCalculatedProfitRa
                                                 const int aInstallationYear,
                                                 const int aPeriod ) const 
 {
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    // shutdown the production with the function 1/(1+e^(steepness*(years active-halflife))).
-    // this prevents a lot of retirement in the early years, and gives the vintage a long tail;
-    // All remaining vintage is cut off at the read in lifetime
-    return 1 / ( 1 + exp( mSteepness*( (modeltime->getper_to_yr( aPeriod ) - aInstallationYear) - mHalfLife ) ) );
+    // Only operate the shutdown decider in future model periods
+    double scaleFactor = 1.0;
+    if (aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod()) {
+        const Modeltime* modeltime = scenario->getModeltime();
+        // shutdown the production with the function 1/(1+e^(steepness*(years active-halflife))).
+        // this prevents a lot of retirement in the early years, and gives the vintage a long tail;
+        // All remaining vintage is cut off at the read in lifetime
+        scaleFactor = 1 / (1 + exp(mSteepness * ((modeltime->getper_to_yr(aPeriod) - aInstallationYear) - mHalfLife)));
+    }
+    // Scale factor is between 0 and 1.
+    assert(scaleFactor >= 0 && scaleFactor <= 1);
+    return scaleFactor;
 }

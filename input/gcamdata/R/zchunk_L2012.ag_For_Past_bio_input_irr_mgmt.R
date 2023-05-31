@@ -18,36 +18,39 @@
 #' @importFrom tidyr gather replace_na separate
 #' @author RC August 2017
 module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/basin_to_country_mapping",
+      FILE = "aglu/A_agSupplySector",
+      FILE = "aglu/A_agSupplySubsector",
+      "L113.ag_bioYield_GJm2_R_GLU",
+      "L122.ag_HA_bm2_R_Y_GLU_AnnualCHF",
+      "L123.ag_Prod_Mt_R_Past_Y_GLU",
+      "L123.For_Prod_bm3_R_Y_GLU",
+      "L1321.ag_prP_R_C_75USDkg",
+      "L1321.expP_R_F_75USDm3",
+      "L163.ag_irrBioYield_GJm2_R_GLU",
+      "L163.ag_rfdBioYield_GJm2_R_GLU",
+      "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level",
+      "L181.YieldMult_R_bio_GLU_irr")
+
+  MODULE_OUTPUTS <-
+    c("L2012.AgSupplySector",
+      "L2012.AgSupplySubsector",
+      "L2012.AgProduction_ag_irr_mgmt",
+      "L2012.AgProduction_For",
+      "L2012.AgProduction_Past",
+      "L2012.AgHAtoCL_irr_mgmt",
+      "L2012.AgYield_bio_ref",
+      "L201.AgYield_bio_grass",
+      "L201.AgYield_bio_tree",
+      "L2012.AgTechYr_Past")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             FILE = "aglu/A_agSupplySector",
-             FILE = "aglu/A_agSupplySubsector",
-             "L101.ag_Prod_Mt_R_C_Y_GLU",
-             "L113.ag_bioYield_GJm2_R_GLU",
-             "L122.ag_HA_to_CropLand_R_Y_GLU",
-             "L123.ag_Prod_Mt_R_Past_Y_GLU",
-             "L123.For_Prod_bm3_R_Y_GLU",
-             "L132.ag_an_For_Prices",
-             "L1321.ag_prP_R_C_75USDkg",
-             "L1321.expP_R_F_75USDm3",
-             "L161.ag_irrProd_Mt_R_C_Y_GLU",
-             "L161.ag_rfdProd_Mt_R_C_Y_GLU",
-             "L163.ag_irrBioYield_GJm2_R_GLU",
-             "L163.ag_rfdBioYield_GJm2_R_GLU",
-             "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level",
-             "L181.YieldMult_R_bio_GLU_irr"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2012.AgSupplySector",
-             "L2012.AgSupplySubsector",
-             "L2012.AgProduction_ag_irr_mgmt",
-             "L2012.AgProduction_For",
-             "L2012.AgProduction_Past",
-             "L2012.AgHAtoCL_irr_mgmt",
-             "L2012.AgYield_bio_ref",
-             "L201.AgYield_bio_grass",
-             "L201.AgYield_bio_tree",
-             "L2012.AgTechYr_Past"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
@@ -58,16 +61,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    A_AgSupplySector <- get_data(all_data, "aglu/A_agSupplySector", strip_attributes = TRUE)
-    A_AgSupplySubsector <- get_data(all_data, "aglu/A_agSupplySubsector", strip_attributes = TRUE)
-    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU", strip_attributes = TRUE)
-    L113.ag_bioYield_GJm2_R_GLU <- get_data(all_data, "L113.ag_bioYield_GJm2_R_GLU", strip_attributes = TRUE)
-    L122.ag_HA_to_CropLand_R_Y_GLU <- get_data(all_data, "L122.ag_HA_to_CropLand_R_Y_GLU", strip_attributes = TRUE)
-    L123.ag_Prod_Mt_R_Past_Y_GLU <- get_data(all_data, "L123.ag_Prod_Mt_R_Past_Y_GLU", strip_attributes = TRUE)
-    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     L123.For_Prod_bm3_R_Y_GLU %>%
       group_by(GCAM_region_ID,GLU,year) %>%
@@ -76,36 +71,22 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       ungroup() %>%
       distinct()->L123.For_Prod_bm3_R_Y_GLU_for_biomass
 
-
-    L132.ag_an_For_Prices <- get_data(all_data, "L132.ag_an_For_Prices", strip_attributes = TRUE)
-    L1321.ag_prP_R_C_75USDkg <- get_data(all_data, "L1321.ag_prP_R_C_75USDkg", strip_attributes = TRUE)
-    L1321.expP_R_F_75USDm3 <- get_data(all_data, "L1321.expP_R_F_75USDm3", strip_attributes = TRUE)
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU", strip_attributes = TRUE)
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU", strip_attributes = TRUE)
-    L163.ag_irrBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_irrBioYield_GJm2_R_GLU", strip_attributes = TRUE)
-    L163.ag_rfdBioYield_GJm2_R_GLU <- get_data(all_data, "L163.ag_rfdBioYield_GJm2_R_GLU", strip_attributes = TRUE)
-    L181.ag_Prod_Mt_R_C_Y_GLU_irr_level <- get_data(all_data, "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level", strip_attributes = TRUE)
-    L181.YieldMult_R_bio_GLU_irr <- get_data(all_data, "L181.YieldMult_R_bio_GLU_irr", strip_attributes = TRUE)
-
     # L2012.AgSupplySector: Generic AgSupplySector characteristics (units, calprice, market, logit)
     # Set up the regional price data to be joined in to the ag supplysector table
-    L2012.P_R_C <- left_join_error_no_match(L1321.ag_prP_R_C_75USDkg%>%
-                                                bind_rows(L1321.expP_R_F_75USDm3),
-                                              GCAM_region_names,
-                                              by = "GCAM_region_ID") %>%
+    L2012.P_R_C <- L1321.ag_prP_R_C_75USDkg%>%
+      bind_rows(L1321.expP_R_F_75USDm3) %>%
       mutate(reg_calPrice = round(value, aglu.DIGITS_CALPRICE)) %>%
       select(region, GCAM_commodity, reg_calPrice)
 
-    A_AgSupplySector %>%
+    A_agSupplySector %>%
       # At the supplysector (market) level, all regions get all supplysectors
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["AgSupplySector"]], LOGIT_TYPE_COLNAME),
                            GCAM_region_names = GCAM_region_names) %>%
       select(-calPrice) %>%
       # Join calibration price data, there are missing value for biomass, use left_join instead
-      left_join(L132.ag_an_For_Prices, by = c("AgSupplySector" = "GCAM_commodity")) %>%
       left_join(L2012.P_R_C, by = c("region", AgSupplySector = "GCAM_commodity")) %>%
-      mutate(calPrice = replace(calPrice, AgSupplySector == "biomass", 1), # value irrelevant
-             calPrice = if_else(is.na(reg_calPrice), calPrice, reg_calPrice),
+      mutate(calPrice = reg_calPrice,
+             calPrice = replace(calPrice, AgSupplySector == "biomass", 1), # value irrelevant
              # For regional commodities, specify market names with region names
              market = replace(market, market == "regional", region[market == "regional"])) %>%
       select(LEVEL2_DATA_NAMES[["AgSupplySector"]], LOGIT_TYPE_COLNAME) %>%
@@ -117,7 +98,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # At the subsector (production) level, only region x GLU combinations that actually exist are created.
     # So start with template production tables of available region x commodity x glu for all commodities.
     # First, biograss: available anywhere that has any crop production at all
-    L101.ag_Prod_Mt_R_C_Y_GLU %>%
+    L181.ag_Prod_Mt_R_C_Y_GLU_irr_level %>%
       select(GCAM_region_ID, GLU) %>%
       unique %>%
       mutate(GCAM_commodity = "biomass",
@@ -131,15 +112,17 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              GCAM_subsector = "biomassTree") ->
       L201.R_C_GLU_biotree
     # Third, bind Ag commodties, forest, pasture and biomass all together
-    L101.ag_Prod_Mt_R_C_Y_GLU %>%
-      bind_rows(L123.For_Prod_bm3_R_Y_GLU %>% filter(GCAM_commodity==aglu.FOREST_supply_sector), L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
-      mutate(GCAM_subsector = if_else(is.na(GCAM_subsector), Land_Type, GCAM_subsector),
-             GCAM_subsector = if_else(is.na(GCAM_subsector), GCAM_commodity, GCAM_subsector)) %>%
+    L181.ag_Prod_Mt_R_C_Y_GLU_irr_level %>%
       select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique %>%
-      bind_rows(L201.R_C_GLU_biograss, L201.R_C_GLU_biotree) %>%
+      bind_rows(
+        bind_rows(L123.For_Prod_bm3_R_Y_GLU %>%mutate(GCAM_subsector=Land_Type), L123.ag_Prod_Mt_R_Past_Y_GLU%>%mutate(GCAM_subsector=GCAM_commodity)) %>%
+          transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector , GLU) %>%
+          unique,
+        L201.R_C_GLU_biograss, L201.R_C_GLU_biotree
+      ) %>%
       arrange(GCAM_region_ID, GLU, GCAM_commodity, GCAM_subsector) %>%
-      left_join_error_no_match(A_AgSupplySubsector,
+      left_join_error_no_match(A_agSupplySubsector,
                                by = c(GCAM_commodity = "AgSupplySector",
                                       GCAM_subsector = "AgSupplySubsector")) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
@@ -211,7 +194,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     # L2012.AgHAtoCL_irr_mgmt: Harvested area to cropland ratio per year, by technologies
     # First add in necessary ID info to HA:CL table
-    L122.ag_HA_to_CropLand_R_Y_GLU %>%
+    L122.ag_HA_bm2_R_Y_GLU_AnnualCHF %>%
+      select(GCAM_region_ID, GLU, year, value = AnnualCropHarvestFrequency) %>%
       mutate(harvests.per.year = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
@@ -393,7 +377,6 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "aglu/A_agSupplySector",
-                     "L132.ag_an_For_Prices",
                      "L1321.ag_prP_R_C_75USDkg",
                      "L1321.expP_R_F_75USDm3") ->
       L2012.AgSupplySector
@@ -407,7 +390,6 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "aglu/A_agSupplySubsector",
-                     "L101.ag_Prod_Mt_R_C_Y_GLU",
                      "L123.ag_Prod_Mt_R_Past_Y_GLU",
                      "L123.For_Prod_bm3_R_Y_GLU") ->
       L2012.AgSupplySubsector
@@ -421,8 +403,6 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2012.AgProduction_ag_irr_mgmt") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
-                     "L161.ag_irrProd_Mt_R_C_Y_GLU",
-                     "L161.ag_rfdProd_Mt_R_C_Y_GLU",
                      "L181.ag_Prod_Mt_R_C_Y_GLU_irr_level") ->
       L2012.AgProduction_ag_irr_mgmt
 
@@ -445,13 +425,13 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       L2012.AgProduction_Past
 
     L2012.AgHAtoCL_irr_mgmt %>%
-      add_title("Harvest area to cropland value of agricultural commodities by year and technology") %>%
+      add_title("Harvest area to cropland value for annual crops of agricultural commodities by year and technology") %>%
       add_units("Unitless") %>%
       add_comments("Copy the same value to all technologies") %>%
       add_comments("Exclude forest and pasture") %>%
       add_legacy_name("L2012.AgHAtoCL_irr_mgmt") %>%
       same_precursors_as("L2012.AgProduction_ag_irr_mgmt") %>%
-      add_precursors("L122.ag_HA_to_CropLand_R_Y_GLU") ->
+      add_precursors("L122.ag_HA_bm2_R_Y_GLU_AnnualCHF") ->
       L2012.AgHAtoCL_irr_mgmt
 
     L2012.AgYield_bio_ref %>%
@@ -500,7 +480,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       L2012.AgTechYr_Past
 
 
-    return_data(L2012.AgSupplySector, L2012.AgSupplySubsector, L2012.AgProduction_ag_irr_mgmt, L2012.AgProduction_For, L2012.AgProduction_Past, L2012.AgHAtoCL_irr_mgmt, L2012.AgYield_bio_ref, L201.AgYield_bio_grass, L201.AgYield_bio_tree, L2012.AgTechYr_Past)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

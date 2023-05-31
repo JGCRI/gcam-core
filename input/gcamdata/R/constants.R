@@ -47,9 +47,10 @@ GCAM_REGION_ID      <- "GCAM_region_ID"
 # The default market price GCAM will use to start solving from if it has no other info
 # If users do not have an estimate for a starting price this is a safe one to set
 gcam.DEFAULT_PRICE <- 1.0
-gcam.DEFAULT_SUBSECTOR_LOGIT <- -3
-gcam.DEFAULT_TECH_LOGIT      <- -6
-
+gcam.DEFAULT_SUBSECTOR_LOGIT  <- -3
+gcam.DEFAULT_TECH_LOGIT       <- -6
+gcam.REGION_NUMBER            <- 32    # Use for assertion in data processing to ensure all region has data
+gcam.REAL_PRICE_BASE_YEAR     <- 1975  # This is only used in AgLU prices now.
 
 # Driver constants ======================================================================
 
@@ -183,44 +184,45 @@ SO2_SHIP_LIMIT_POLICY_MULTIPLIER <- 0.001 * 2
 # AgLU constants ======================================================================
 
 # Time
-aglu.AGLU_HISTORICAL_YEARS  <- 1971:2015
-aglu.BASE_YEAR_IFA          <- 2006      # Base year of International Fertilizer Industry Association (IFA) fertilizer application data KD does this belong here???
-aglu.BIO_START_YEAR         <- 2020
+aglu.MODEL_MEAN_PERIOD_LENGTH <- 5       # AgLU data use a moving average over this period length in LA.100
+aglu.MODEL_PRICE_YEARS      <- 2013:2017 # consistent with aglu.MODEL_SUA_MEAN_PERIODS
+aglu.MODEL_MACRONUTRIENT_YEARS <- 2013:2017   # consistent with aglu.MODEL_SUA_MEAN_PERIODS; FAO only has data for after 2010
+aglu.MODEL_COST_YEARS       <- 2008:2016
+aglu.DEFLATOR_BASE_YEAR     <- 2015      # year used as the basis for computing regional price deflators
+aglu.FALLOW_YEARS           <- 2013:2017 # Years used for calculating the % of fallow land
+aglu.AGLU_HISTORICAL_YEARS  <- 1973:2015
+aglu.BASE_YEAR_IFA          <- 2006      # Base year of International Fertilizer Industry Association (IFA) fertilizer application data
+aglu.BIO_START_YEAR         <- 2025      # Also set in aglu/A_bio_ghost_share
 aglu.CROSIT_HISTORICAL_YEAR <- 2005      # Historical year from the CROSIT data
-aglu.DIET_YEARS             <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5)
-aglu.FAO_HISTORICAL_YEARS   <- 1961:2015
 aglu.FAO_LDS_YEARS          <- 1998:2002  # Years for which FAO harvested area data is averaged over for use in the land data system (LDS)
 aglu.GTAP_HISTORICAL_YEAR   <- 2000      # Is the year that the GTAP data is based on.
 aglu.LAND_HISTORY_YEARS     <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
 aglu.LAND_COVER_YEARS       <- sort(unique(c(aglu.LAND_HISTORY_YEARS, aglu.AGLU_HISTORICAL_YEARS)))
-aglu.MODEL_COST_YEARS       <- 2008:2016
-aglu.MODEL_PRICE_YEARS      <- 2008:2016
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
-aglu.DEFLATOR_BASE_YEAR     <- 2015                                          # year used as the basis for computing regional price deflators
 aglu.SPEC_AG_PROD_YEARS     <- seq(max(aglu.AGLU_HISTORICAL_YEARS), 2050, by = 5) # Specified ag productivity years, KD i think this might need a better comment
 aglu.SSP_DEMAND_YEARS       <- seq(2015, 2100, 5) # food demand in the SSPs is calculated at 5-yr intervals
-aglu.TRADE_CAL_YEARS        <- 2013:2017 # Years used for calculating base year gross trade. Should ideally include the final base year, but note that the trade data starts in 1986.
-aglu.TRADE_FINAL_BASE_YEAR  <- max(MODEL_BASE_YEARS) # The base year to which gross trade volumes are assigned. Should be within the aglu.TRADE_CAL_YEARS and equal to the final model calibration year
-aglu.FALLOW_YEARS           <- 2008:2012 # Years used for calculating the % of fallow land
+# aglu.TRADED_* regional market commodities
 aglu.TRADED_CROPS           <- c("Corn", "FiberCrop", "Fruits", "Legumes", "MiscCrop", "NutsSeeds", "OilCrop", "OtherGrain", "OilPalm", "Rice", "RootTuber", "Soybean", "SugarCrop", "Vegetables", "Wheat")
 aglu.BIO_TRADE_SSP4_YEAR_FILLOUT       <- 2025 # year.fillout for SSP4 in L243.bio_trade_input
 aglu.BIO_TRADE_SSP3_YEAR_FILLOUT       <- 2020 # year.fillout for SSP4 in L243.bio_trade_input
 aglu.TRADED_MEATS           <- c("Beef", "Dairy", "Pork", "Poultry", "SheepGoat")
 aglu.TRADED_FORESTS         <- c("Forest")
+# Integrated world market and non-trade commodities
+aglu.IWM_TRADED_COMM        <- c("FodderHerb", "OtherMeat_Fish") # Integrated World Market (IWM)commodities
+aglu.NONTRADED_COMM         <- c("DDGS and feedcakes", "FodderGrass", "Pasture", "Residue", "Scavenging_Other") # non-traded commodities; "Pasture" is modeled as a crop produced from pasture land.
+
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others
 aglu.TREECROP_MATURE_AGE <- 10 # Number of years for vegetation carbon to reach peak, for tree crops
 
+aglu.Min_Share_PastureFeed_in_PastureFodderGrass <- 0.1 # minimum share of pasture in Pasture_FodderGrass for feed uses to avoid negative or zero (not including Japan now); USA has ~30%
+aglu.Zero_Min_PastureFeed_Share_iso <- c("jpn")         # mapped to GCAM_region_ID of Japan; Japan has zero unmanaged and protected pasture
+
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
 aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 
-# FAO PRICESTAT database disaggregates "cottonseed" and "cotton lint" as different commodities.
-# This is the weight used to calculate the weighted average producer price for "seed cotton",
-# based on that FAO total production volume of "seed cotton" is about 40% cotton lint and 60% cotton seeds.
-# Source: http://www.fao.org/es/faodef/fdef06e.htm
-aglu.WEIGHT_COTTON_LINT <- 0.4
 
 # Ratio of alfalfa price to grass hay used in the price conversion from alfalfa to grass hay.
 # Alfalfa price source: USDA. 2011. Prices Received for Alfalfa Hay, Baled, Washington. National Agricultural Statistics Service, U.S. Department of Agriculture.
@@ -243,8 +245,6 @@ aglu.CCONV_PEAK_AVG <- 0.5
 aglu.MIN_HA_TO_CROPLAND <- 1  # minimum harvested:cropped ratios
 aglu.MAX_HA_TO_CROPLAND <- 3  # maximum harvested:cropped ratios
 
-# Minimum non-input costs of animal production technologies, in $/kg
-aglu.MIN_AN_NONINPUT_COST <- 0.05
 
 # Production constraints
 aglu.MAX_MGDPAST_FRAC <- 0.95 # Maximum percentage of any region/GLUs pasture that is allowed to be in managed production.
@@ -264,10 +264,11 @@ aglu.LOW_PROD_GROWTH_MULT <- 0.5 # Multipliers for low ag prod growth scenarios
 aglu.BIO_GRASS_COST_75USD_GJ <- 0.75   # Production costs of biomass (from Patrick Luckow's work)
 aglu.BIO_TREE_COST_75USD_GJ  <- 0.67   # Production costs of biomass (from Patrick Luckow's work)
 aglu.FERT_PRICE              <- 596    # Price of fertilizer, 2010$ per ton NH3
-aglu.FERT_PRICE_YEAR         <- 2010    # Year corresponding to the above price/cost
-aglu.FOR_COST_75USDM3        <- 29.59  # Forestry cost (1975$/GJ)
+aglu.FERT_PRICE_YEAR         <- 2010   # Year corresponding to the above price/cost
 aglu.FOR_COST_SHARE_HARDWOOD          <- 0.59   # Non-land forestry cost share (from 2011 GTAP data base)
 aglu.FOR_COST_SHARE_SOFTWOOD          <- 0.59   # Non-land forestry cost share (from 2011 GTAP data base)
+
+
 # Price at which base year bio frac produced is used.
 # The share of residue biomass production in each region,
 # defined as the energy produced divided by the total
@@ -361,7 +362,7 @@ aglu.MIN_SOIL_CARBON_DENSITY <- 0
 #This is the model carbon year. Carbon outputs are scaled to this year
 MODEL_CARBON_YEAR <- 2010
 
-# These are the default values of carbon desnities from Houghton (in MgC/ha) by land type. moirai only outputs carbon for unmanaged land. Therefore, we need default values for other land types.
+# These are the default values of carbon densities from Houghton (in MgC/ha) by land type. moirai only outputs carbon for unmanaged land. Therefore, we need default values for other land types.
 #Moreover we do not have data on carbon for Polar deserts and Tundra. So we use default values for those as well.
 aglu.DEFAULT_SOIL_CARBON_PASTURE <- 13
 aglu.DEFAULT_VEG_CARBON_PASTURE <- 0.7
@@ -487,6 +488,9 @@ energy.GAS_PIPELINE_COST_ADDER_75USDGJ  <- 0.1  # estimated cost mark-up from "r
 
 energy.CO2.STORAGE.MARKET <- "carbon-storage"
 
+# Indicate the ceiling on direct air capture in the USA region
+energy.DAC_LIMIT_USA_MTC <- 2000
+
 # the year for the ratio of industrial energy:feedstocks convergence in all regions
 # in the old data system this was intended to be 2150 but was actually 2100
 energy.INDCOEF_CONVERGENCE_YR <- 2100
@@ -594,6 +598,11 @@ gcamusa.INCOME_PARAM <- 0.4875
 # Constants for global detailed industry
 energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
 energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 wholesale delivery") #assign iron & steel global technology coefficients
+energy.IRON_STEEL.RESOURCES <- c("Other semi-finished iron and steel products","Rolled iron and steel",
+                                 "Iron and steel bars","Intermediate iron and steel making products",
+                                 "Iron and steel wire","Iron and steel sections") #finished and semi-finished iron and steel resources
+energy.IRON_STEEL.DOMESTIC_SW <- c("Africa_Southern","Indonesia","Africa_Northern","Africa_Eastern","Africa_Western","South Asia","Southeast Asia")
+energy.IRON_STEEL.TRADED_SW <- c("Africa_Southern traded iron and steel","Indonesia traded iron and steel","Africa_Northern traded iron and steel","Africa_Eastern traded iron and steel","Africa_Western traded iron and steel","South Asia traded iron and steel","Southeast Asia traded iron and steel")
 
 # Socioeconomics constants ======================================================================
 
@@ -724,6 +733,14 @@ emissions.NONCO2.EPA.SCALING <- FALSE
 emissions.EPA.SCALING.THRESHOLD <- 50 # EPA emissions/ CEDS emission, used to check scaling outliers in L112 chunk
 emissions.EPA.SCALING.THRESHOLD.COMBUSTION <- 20 # check scaling outliers in L112 chunk for combustion sector
 
+# default unconventional oil fugitive emfacts (Tg/EJ) for regions without historical unconventional oil. Based on emissions factors from the 2019 Refinement to the 2006
+# IPCC Guidelines for National GHG Inventories; calculated as the weighted average of the oil sands emissions factor and average non-oil-sands emissions factor.
+# Weights come from the share of oil sands and non-oil-sands global recoverable unconventional oil resources (Wang 2016 https://doi.org/10.1016/S1876-3804(16)30111-2)
+# Emfacts for regions with historical unconventional oil are specified in emissions/IPCC_unconventional_oil_fug_emfacts.csv
+emissions.UNCONVENTIONAL.OIL.FUG.CO2.EMFACT <- 0.994
+emissions.UNCONVENTIONAL.OIL.FUG.CH4.EMFACT <- 0.0882
+emissions.UNCONVENTIONAL.OIL.FUG.N2O.EMFACT <- 0.000000939
+
 # Time
 emissions.CEDS_YEARS              <- 1970:2019           # Year coverage for CEDS inventory.
 emissions.CTRL_BASE_YEAR          <- 1975                # Year to read in pollution controls
@@ -778,6 +795,11 @@ emissions.TRN_INTL_SECTORS   <- c("trn_intl_ship", "trn_intl_air")
 emissions.USE_GCAM3_CCOEFS     <- 1 # Select whether to use GCAM3 fuel carbon coefficients
 emissions.USE_GLOBAL_CCOEFS    <- 1 # Select whether to use global average carbon coefficients on fuels, or region-specific carbon coefficients
 emissions.UNMGD_LAND_INPUT_NAME <- "land-input"
+
+emissions.FUGITIVE_FOSSIL_CO2_NAME <- "CO2_FUG" # name for fugitive co2 emissions from fossil production
+emissions.FOSSIL_EMFACT_THRESHOLD_PERCENTILE <- 0.95 # energy production percentile used in determination of fossil emfact upper thresholds
+emissions.FOSSIL_EMFACT_THRESHOLD_TOP_PRODUCERS <- 0.9975 # percent of production defining the "top producers" used in determination of fossil emfact upper thresholds
+
 
 # Digits for rounding into XMLs
 emissions.DIGITS_CO2COEF       <- 1

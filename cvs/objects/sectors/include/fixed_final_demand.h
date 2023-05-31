@@ -1,0 +1,150 @@
+/*
+* LEGAL NOTICE
+* This computer software was prepared by Battelle Memorial Institute,
+* hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
+* with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
+* CONTRACTOR MAKES ANY WARRANTY, EXPRESS OR IMPLIED, OR ASSUMES ANY
+* LIABILITY FOR THE USE OF THIS SOFTWARE. This notice including this
+* sentence must appear on any copies of this computer software.
+* 
+* EXPORT CONTROL
+* User agrees that the Software will not be shipped, transferred or
+* exported into any country or used in any manner prohibited by the
+* United States Export Administration Act or any other applicable
+* export laws, restrictions or regulations (collectively the "Export Laws").
+* Export of the Software may require some form of license or other
+* authority from the U.S. Government, and failure to obtain such
+* export control license may result in criminal liability under
+* U.S. laws. In addition, if the Software is identified as export controlled
+* items under the Export Laws, User represents and warrants that User
+* is not a citizen, or otherwise located within, an embargoed nation
+* (including without limitation Iran, Syria, Sudan, Cuba, and North Korea)
+*     and that User is not otherwise prohibited
+* under the Export Laws from receiving the Software.
+* 
+* Copyright 2011 Battelle Memorial Institute.  All Rights Reserved.
+* Distributed as open-source under the terms of the Educational Community 
+* License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php
+* 
+* For further details, see: http://www.globalchange.umd.edu/models/gcam/
+*
+*/
+
+
+#ifndef _FIXED_FINAL_DEMAND_H_
+#define _FIXED_FINAL_DEMAND_H_
+#if defined(_MSC_VER)
+#pragma once
+#endif
+
+/*! 
+ * \file fixed_final_demand.h
+ * \ingroup Objects
+ * \brief The FixedFinalDemand abstract base class header file.
+ * \author Pralit Patel
+ */
+
+#include "sectors/include/afinal_demand.h"
+#include "util/base/include/value.h"
+#include "util/base/include/time_vector.h"
+
+
+/*! 
+ * \ingroup Objects
+ * \brief A description of a final demand, the end users in the economy.
+ * \details This subclass always returns an exogenously set service output.
+ */
+class FixedFinalDemand: public AFinalDemand {
+public:
+    FixedFinalDemand();
+
+    static const std::string& getXMLNameStatic();
+
+    virtual ~FixedFinalDemand();
+    
+    virtual const std::string& getXMLName() const;
+
+    virtual void toDebugXML( const int aPeriod,
+                             std::ostream& aOut,
+                             Tabs* aTabs ) const;
+    
+    /*!
+     * \brief Get the name of the final demand.
+     * \return The name of the final demand.
+     */
+    virtual const std::string& getName() const;
+    
+    /*!
+     * \brief Complete the initialization of the final demand.
+     * \details This method is called after all data is parsed so that the
+     *          object may perform any final initializations.
+     * \param aRegionName Region name.
+     * \param aRegionInfo Regional information container.
+     */
+    virtual void completeInit( const std::string& aRegionName,
+                               const IInfo* aRegionInfo );
+
+    /*!
+     * \brief Initialize the final demand for a given period.
+     * \details This method is called at the beginning of each period so that
+     *          the object may perform any initializations for the model period.
+     * \param aRegionName Region name.
+     * \param aGDP Regional GDP.
+     * \param aDemograhics Region demographics.
+     * \param aPeriod Model period.
+     */
+    virtual void initCalc( const std::string& aRegionName,
+                           const GDP* aGDP,
+                           const Demographic* aDemographics,
+                           const int aPeriod );
+    
+    /*!
+     * \brief Calculate the quantity of the demand and add it to the
+     *        marketplace.
+     * \details Calculates the final demand for the input good based on a set of
+     *          drivers, such as GDP, population and price. The demand for the
+     *          final good is then added to the marketplace.
+     * \param aRegionName Region name.
+     * \param aDemographics Regional demographics.
+     * \param aGDP Regional GDP container.
+     * \param aPeriod Model period.
+     */
+    virtual void setFinalDemand( const std::string& aRegionName,
+                                 const Demographic* aDemographics,
+                                 const GDP* aGDP,
+                                 const int aPeriod );
+
+    /*!
+     * \brief Get the market price of the service weighted by the quantity of
+     *          service demanded.
+     * \todo Should this be weighted on final energy? Service is arbitrary.
+     * \param aRegionName Region name.
+     * \param aPeriod Model period.
+     */
+    virtual double getWeightedEnergyPrice( const std::string& aRegionName,
+                                           const int aPeriod ) const;
+
+    // Documentation is inherited.
+    virtual void accept( IVisitor* aVisitor,
+                         const int aPeriod ) const;
+    
+protected:
+    
+    // Define data such that introspection utilities can process the data from this
+    // subclass together with the data members of the parent classes.
+    DEFINE_DATA_WITH_PARENT(
+        AFinalDemand,
+
+        //! Name of the final demand and the good it consumes.
+        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+
+        //! Total end-use sector service which will always be demanded
+        //! \note We mark this as STATE even though it will not change as it is
+        //! required to be able to addToDemand in the marketplace
+        DEFINE_VARIABLE( ARRAY | STATE,  "service", mServiceDemand, objects::PeriodVector<Value> )
+    )
+};
+
+
+#endif // _FIXED_FINAL_DEMAND_H_
+

@@ -1,0 +1,50 @@
+# File: GCAM_region_pipeline_bloc_import.csv
+# Title: Mapping gas region to all corresponding pipeline trade bloc that it can import from
+# Source: assumptions based on existing pipeline connections
+# Units: NA
+# Column types: cc
+# ----------
+region,pipeline.market
+USA,N.Amer
+Canada,N.Amer
+Mexico,N.Amer
+Brazil,LA
+Central America and Caribbean,LA
+South America_Northern,LA
+South America_Southern,LA
+Argentina,LA
+Colombia,LA
+EU-12,EUR
+EU-15,EUR
+Europe_Eastern,EUR
+Europe_Non_EU,EUR
+European Free Trade Association,EUR
+Africa_Eastern,Afr_MidE
+Africa_Northern,Afr_MidE
+Africa_Southern,Afr_MidE
+Africa_Western,Afr_MidE
+Central Asia,Afr_MidE
+EU-12,Afr_MidE
+EU-15,Afr_MidE
+Europe_Non_EU,Afr_MidE
+Middle East,Afr_MidE
+South Africa,Afr_MidE
+Central Asia,RUS
+China,RUS
+EU-12,RUS
+EU-15,RUS
+Europe_Eastern,RUS
+Europe_Non_EU,RUS
+European Free Trade Association,RUS
+Middle East,RUS
+Russia,RUS
+China,PAC
+Southeast Asia,PAC
+India,PAC
+Pakistan,PAC
+South Asia,PAC
+South Korea,PAC
+Australia_NZ,PAC
+Indonesia,PAC
+Japan,PAC
+Taiwan,PAC

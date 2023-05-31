@@ -419,7 +419,7 @@ void AgProductionTechnology::production( const string& aRegionName,
 
     // Calculate input demand.
     mProductionFunction->calcDemand( mInputs, primaryOutput, aRegionName, aSectorName,
-        1, aPeriod, 0, mAlphaZero );
+        1, aPeriod, 0, 1 );
 	
     // This call to the technology::calcEmissionsAndOutputs() is where the physical output
     // of the ag technology is set.
@@ -466,7 +466,7 @@ double AgProductionTechnology::calcProfitRate( const string& aRegionName,
     // In the calibration periods we may need to calculate an implied subsidy to
     // ensure the profit rate does not fall below some acceptable threshold
     if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-        double profitRateThreshold = mTechnologyInfo->getDouble( "cal-min-profit-rate", true );
+        double profitRateThreshold = mTechnologyInfo->getDouble( "cal-min-profit-rate", true ) * mYield * 1e9;
         mImpliedSubsidy.set( std::max( profitRateThreshold - profitRate, 0.0 ) );
     }
 

@@ -159,7 +159,8 @@ double TranTechnology::getTotalGHGCost( const string& aRegionName,
         totalGHGCost += mGHG[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent, aPeriod );
     }
     // totalGHGCost is in 1975$/GJ(Btu/veh-mi) due to the vehicle intensity.
-    return totalGHGCost * JPERBTU / GIGA * CVRT90;
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return (totalGHGCost * JPERBTU / GIGA * CVRT90) / mLoadFactor;
 }
 
 double TranTechnology::calcSecondaryValue( const string& aRegionName,
@@ -187,7 +188,8 @@ double TranTechnology::calcSecondaryValue( const string& aRegionName,
 
     // TODO: Remove this function once units framework code is added.
     // totalValue is in 1975$/GJ(Btu/veh-mi) due to the vehicle intensity.
-    return totalValue * JPERBTU / GIGA * CVRT90;
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return (totalValue * JPERBTU / GIGA * CVRT90) / mLoadFactor;
 }
 
 double TranTechnology::getEnergyCost( const string& aRegionName,
@@ -209,10 +211,11 @@ double TranTechnology::getEnergyCost( const string& aRegionName,
             // Converts cost to 1990$.
             cost += mInputs[ i ]->getPrice( aRegionName, aPeriod )
                     * mInputs[ i ]->getCoefficient( aPeriod )
-                    / mAlphaZero * JPERBTU / GIGA * CVRT90;
+                    * JPERBTU / GIGA * CVRT90;
         }
     }
-    return cost;
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return cost / mLoadFactor;
 }
 
 double TranTechnology::getNonEnergyCost( const string& aRegionName,
@@ -229,11 +232,11 @@ double TranTechnology::getNonEnergyCost( const string& aRegionName,
             // TODO: Leontief assumption.
             // Assumes prices in 1990$ per vehicle mile.
             cost += mInputs[ i ]->getPrice( aRegionName, aPeriod )
-                    * mInputs[ i ]->getCoefficient( aPeriod )
-                    / mAlphaZero;
+                    * mInputs[ i ]->getCoefficient( aPeriod );
         }
     }
-    return cost;
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return cost / mLoadFactor;
 }
 
 
@@ -244,10 +247,12 @@ void TranTechnology::calcCost( const string& aRegionName,
     double techCost = getTotalInputCost( aRegionName, aSectorName, aPeriod )
                       * mPMultiplier - calcSecondaryValue( aRegionName, aPeriod );
     
-    // Convert cost to cost per service instead of cost per vehicle.
-    // For example,  convert $/vehicle-mi into $/pass-mi or $/ton-mi 
+    // All costs have already been converted to cost per service instead of cost per vehicle.
+    // For example, $/vehicle-mi has been converted into $/pass-mi or $/ton-mi
+    // doing it this way ensure we are always comparing prices and costs in the same unit
+    // which is important for calculating the shutdown decider for instance
 
-    mCosts[ aPeriod ] = max( techCost / mLoadFactor, util::getSmallNumber() );
+    mCosts[ aPeriod ] = max( techCost, util::getSmallNumber() );
 }
 
 void TranTechnology::production( const string& aRegionName, const string& aSectorName,
@@ -303,7 +308,7 @@ void TranTechnology::production( const string& aRegionName, const string& aSecto
     // TODO: Would need to calculate the shutdown coef here if transportation
     //       stocks were vintaged.
     mProductionFunction->calcDemand( mInputs, fuelUsage, aRegionName,
-                                     aSectorName, 1, aPeriod, 0, mAlphaZero );
+                                     aSectorName, 1, aPeriod, 0, 1 );
 
     calcEmissionsAndOutputs( aRegionName, primaryOutput, aGDP, aPeriod );  
 }
@@ -349,7 +354,7 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
             if( calInput >= 0 ) {
                 // TODO: Remove leontief assumption.
                 totalCalOutput = calInput / mInputs[ i ]->getCoefficient( aPeriod )
-                                 * mAlphaZero / ECONV * mLoadFactor;
+                                 / ECONV * mLoadFactor;
                 break;
             }
         }

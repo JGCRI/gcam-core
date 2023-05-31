@@ -14,7 +14,8 @@ module_energy_LB1011.ff_GrossTrade(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L1011.ff_GrossTrade_EJ_R_C_Y} (energy level1)
+the generated outputs: \code{L1011.ff_GrossTrade_EJ_R_C_Y}, \code{L1011.ff_GrossTrade_EJ_R_Y_LNG},
+\code{L1011.ff_GrossTrade_EJ_R_Y_NG_pipe}, \code{L1011.ff_BilatTrade_EJ_R_Y_NG_pipe} (energy level1).
 }
 \description{
 Calculate primary fossil fuel (coal, natural gas, crude oil) product balances, by region / commodity / year.

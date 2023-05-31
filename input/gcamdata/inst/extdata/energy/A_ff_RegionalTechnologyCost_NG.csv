@@ -1,0 +1,15 @@
+# File: A_ff_RegionalTechnologyCost_NG.csv
+# Title: Technology-level cost assumptions of regional natural gas trade (pipeline and LNG)
+# Units: 1975$/GJ
+# Comments: Natural gas trade cost assumptions.  Some costs are added on producer side while others are on consumer side.
+# Source: NA
+# Column types: cccccnnn
+# ----------
+supplysector,subsector0,subsector,technology,cost.component,1975,2015,2100
+regional natural gas,imported natural gas,imported LNG,imported LNG,regasification,0.09,0.09,0.09
+regional natural gas,imported natural gas,imported pipeline gas,imported N.Amer pipeline gas,trade,0,0,0
+regional natural gas,imported natural gas,imported pipeline gas,imported LA pipeline gas,trade,0,0,0
+regional natural gas,imported natural gas,imported pipeline gas,imported EUR pipeline gas,trade,0,0,0
+regional natural gas,imported natural gas,imported pipeline gas,imported RUS pipeline gas,trade,0,0,0
+regional natural gas,imported natural gas,imported pipeline gas,imported Afr_MidE pipeline gas,trade,0,0,0
+regional natural gas,imported natural gas,imported pipeline gas,imported PAC pipeline gas,trade,0,0,0

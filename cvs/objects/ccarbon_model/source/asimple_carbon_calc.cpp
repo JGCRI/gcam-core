@@ -55,7 +55,6 @@ using namespace objects;
 extern Scenario* scenario;
 
 ASimpleCarbonCalc::ASimpleCarbonCalc():
-mTotalEmissions( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
 mTotalEmissionsAbove( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
 mTotalEmissionsBelow( CarbonModelUtils::getStartYear(), CarbonModelUtils::getEndYear() ),
 mCarbonStock( scenario->getModeltime()->getStartYear(), CarbonModelUtils::getEndYear() )
@@ -111,7 +110,6 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
                 calcBelowGroundCarbonEmission( landDifference * belowGroundCarbonDensity, year, aEndYear, mTotalEmissionsBelow );
                 prevLand = currLand;
                 currCarbonStock -= mTotalEmissionsAbove[ year ];
-                mTotalEmissions[year] = mTotalEmissionsAbove[year] + mTotalEmissionsBelow[year];
             }
             mHasCalculatedHistoricEmiss = true;
             mCarbonStock[ modeltime->getStartYear() ] = currCarbonStock;
@@ -158,7 +156,6 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
             for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
                 mTotalEmissionsAbove[ year ] += currEmissionsAbove[ year ];
                 mTotalEmissionsBelow[ year ] += currEmissionsBelow[ year ];
-                mTotalEmissions[ year ] = mTotalEmissionsAbove[ year ] + mTotalEmissionsBelow[ year ];
             }
             mSavedCarbonStock[ aPeriod - 1 ] = mCarbonStock[ prevModelYear ];
             mSavedLandAllocation[ aPeriod - 1 ] = mLandLeaf->getLandAllocation( mLandLeaf->getName(), aPeriod - 1 );
@@ -168,17 +165,16 @@ double ASimpleCarbonCalc::calc( const int aPeriod, const int aEndYear, const Car
             for( year = prevModelYear + 1; year <= aEndYear; ++year ) {
                 mTotalEmissionsAbove[ year ] -= currEmissionsAbove[ year ];
                 mTotalEmissionsBelow[ year ] -= currEmissionsBelow[ year ];
-                mTotalEmissions[ year ] = mTotalEmissionsAbove[ year ] + mTotalEmissionsBelow[ year ];
             }
         }
         else if( aCalcMode == eReturnTotal ) {
             // Since the flag to avoid storing the full emissions is set we will just calculate
             // and return the appropriate total emissions.
-            return mTotalEmissions[ aEndYear ] + currEmissionsAbove[ aEndYear ] + currEmissionsBelow[ aEndYear ];
+            return mTotalEmissionsAbove[ aEndYear ] + mTotalEmissionsBelow[ aEndYear ] + currEmissionsAbove[ aEndYear ] + currEmissionsBelow[ aEndYear ];
         }
     }
     
-    return mTotalEmissions[ aEndYear ];
+    return mTotalEmissionsAbove[ aEndYear ] + mTotalEmissionsBelow[ aEndYear ];
 }
 
 /*!
@@ -317,7 +313,7 @@ void ASimpleCarbonCalc::calcSigmoidCurve( const double aCarbonDiff,
 }
 
 double ASimpleCarbonCalc::getNetLandUseChangeEmission( const int aYear ) const {
-    return mTotalEmissions[ aYear ];
+    return mTotalEmissionsAbove[ aYear ] + mTotalEmissionsBelow[ aYear ];
 }
 
 double ASimpleCarbonCalc::getNetLandUseChangeEmissionAbove( const int aYear ) const {

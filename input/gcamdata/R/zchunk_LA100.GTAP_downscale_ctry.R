@@ -18,13 +18,20 @@
 #' @importFrom stats na.omit
 #' @author RC April 2017
 module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "aglu/AGLU_ctry",
+      FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+      "L100.LDS_value_milUSD",
+      "L100.LDS_ag_prod_t")
+
+  MODULE_OUTPUTS <-
+    c("L100.GTAP_LV_milUSD")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
-             "L100.LDS_value_milUSD",
-             "L100.LDS_ag_prod_t"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L100.GTAP_LV_milUSD"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
 
@@ -33,11 +40,9 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
-    L100.LDS_value_milUSD <- get_data(all_data, "L100.LDS_value_milUSD")
-    L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
+    # Load required inputs ----
+
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # Create the iso - GTAP_region mapping file
     # GTAP6 includes 87 regions, most of which are single countries, and 18 are aggregated regions of multiple countries.
@@ -101,7 +106,7 @@ module_aglu_LA100.GTAP_downscale_ctry <- function(command, ...) {
                      "L100.LDS_ag_prod_t") ->
       L100.GTAP_LV_milUSD
 
-    return_data(L100.GTAP_LV_milUSD)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

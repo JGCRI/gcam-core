@@ -12,39 +12,35 @@
 #' The corresponding file in the original data system was
 #' \code{batch_all_aglu_emissions_IRR_MGMT.xml} (emissions XML).
 module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L2112.AWBEmissions",
+      "L2112.AGREmissions",
+      "L211.AnEmissions",
+      "L211.AnNH3Emissions",
+      "L252.MAC_an",
+      "L252.MAC_an_tc_average",
+      "L2112.AGRBio",
+      "L2112.AWB_BCOC_EmissCoeff",
+      "L2112.nonghg_max_reduction",
+      "L2112.nonghg_steepness",
+      "L252.AgMAC",
+      "L252.AgMAC_tc_average")
+
+  MODULE_OUTPUTS <-
+    c(XML = "all_aglu_emissions_IRR_MGMT.xml",
+      XML = "all_aglu_emissions_IRR_MGMT_MAC.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2112.AWBEmissions",
-              "L2112.AGREmissions",
-              "L211.AnEmissions",
-              "L211.AnNH3Emissions",
-              "L252.MAC_an",
-              "L252.MAC_an_tc_average",
-              "L2112.AGRBio",
-              "L2112.AWB_BCOC_EmissCoeff",
-              "L2112.nonghg_max_reduction",
-              "L2112.nonghg_steepness",
-              "L252.AgMAC",
-              "L252.AgMAC_tc_average"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "all_aglu_emissions_IRR_MGMT.xml",
-             XML = "all_aglu_emissions_IRR_MGMT_MAC.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L2112.AWBEmissions <- get_data(all_data, "L2112.AWBEmissions")
-    L2112.AGREmissions <- get_data(all_data, "L2112.AGREmissions")
-    L211.AnEmissions <- get_data(all_data, "L211.AnEmissions")
-    L211.AnNH3Emissions <- get_data(all_data, "L211.AnNH3Emissions")
-    L252.MAC_an <- get_data(all_data, "L252.MAC_an")
-    L252.MAC_an_tc_average <- get_data(all_data, "L252.MAC_an_tc_average")
-    L2112.AGRBio <- get_data(all_data, "L2112.AGRBio")
-    L2112.AWB_BCOC_EmissCoeff <- get_data(all_data, "L2112.AWB_BCOC_EmissCoeff")
-    L2112.nonghg_max_reduction <- get_data(all_data, "L2112.nonghg_max_reduction")
-    L2112.nonghg_steepness <- get_data(all_data, "L2112.nonghg_steepness")
-    L252.AgMAC <- get_data(all_data, "L252.AgMAC")
-    L252.AgMAC_tc_average <- get_data(all_data, "L252.AgMAC_tc_average")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     tech.change <- tech.change.year <- bio_N20_coef <- compVal <- bio_N2O_coef<- NULL # Silence package checks
 
@@ -83,8 +79,7 @@ module_emissions_batch_all_aglu_emissions_IRR_MGMT_xml <- function(command, ...)
                      "L252.AgMAC_tc_average") ->
       all_aglu_emissions_IRR_MGMT_MAC.xml
 
-    return_data(all_aglu_emissions_IRR_MGMT.xml,
-                all_aglu_emissions_IRR_MGMT_MAC.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

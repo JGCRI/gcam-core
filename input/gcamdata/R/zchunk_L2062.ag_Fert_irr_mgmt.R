@@ -19,18 +19,25 @@
 #' @importFrom tibble tibble
 #' @author KVC June 2017
 module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+       FILE = "water/basin_to_country_mapping",
+       FILE = "aglu/A_Fodderbio_chars",
+       "L142.ag_Fert_IO_R_C_Y_GLU",
+       "L2052.AgCost_ag_irr_mgmt",
+       "L2052.AgCost_bio_irr_mgmt")
+
+  MODULE_OUTPUTS <-
+    c("L2062.AgCoef_Fert_ag_irr_mgmt",
+      "L2062.AgCoef_Fert_bio_irr_mgmt",
+      "L2062.AgCost_ag_irr_mgmt_adj",
+      "L2062.AgCost_bio_irr_mgmt_adj")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c( FILE = "common/GCAM_region_names",
-              FILE = "water/basin_to_country_mapping",
-              FILE = "aglu/A_Fodderbio_chars",
-              "L142.ag_Fert_IO_R_C_Y_GLU",
-              "L2052.AgCost_ag_irr_mgmt",
-              "L2052.AgCost_bio_irr_mgmt"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2062.AgCoef_Fert_ag_irr_mgmt",
-             "L2062.AgCoef_Fert_bio_irr_mgmt",
-             "L2062.AgCost_ag_irr_mgmt_adj",
-             "L2062.AgCost_bio_irr_mgmt_adj"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -40,13 +47,9 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       minicam.energy.input <- coefficient <- WaterContent <- nonLandVariableCost <-
       FertCost <- GCAM_subsector <- NULL  # silence package check notes
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
-    L142.ag_Fert_IO_R_C_Y_GLU <- get_data(all_data, "L142.ag_Fert_IO_R_C_Y_GLU", strip_attributes = TRUE)
-    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "L2052.AgCost_ag_irr_mgmt", strip_attributes = TRUE)
-    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
 
     # Process Fertilizer Coefficients: Copy coefficients to all four technologies (irr/rfd + hi/lo)
     L142.ag_Fert_IO_R_C_Y_GLU %>%
@@ -71,7 +74,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       L2062.AgCoef_Fert_ag_irr_mgmt
 
     # Copy final base year coefficients to all future years, bind with historic coefficients, then remove zeroes
-    # Note: this assumes constant fertilizer coefficients in the future
+    # Note: this assumes constant fertilizer coefficients in the future ----
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year) %>%
@@ -104,19 +107,20 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
                                    bio_grass_coef$coefficient, bio_tree_coef$coefficient)) ->
       L2062.AgCoef_Fert_bio_irr_mgmt
 
-    # Adjust nonLandVariableCost to separate fertilizer cost (which is accounted for specifically)
+    # Adjust nonLandVariableCost to separate fertilizer cost (which is accounted for specifically) ----
+    # Note that fertilizer price is determined by supply in calibration
     L2052.AgCost_ag_irr_mgmt %>%
       # Note: using left_join because there are instances with cost but no fertilizer use.
       left_join(L2062.AgCoef_Fert_ag_irr_mgmt,
                 by = c("region", "AgSupplySector", "AgSupplySubsector", "AgProductionTechnology", "year")) %>%
-
       # Set fertilizer coefficient to zero when missing. This will lead to zero fertilizer cost.
       replace_na(list(coefficient = 0)) %>%
-
       # Calculate fertilizer cost using a fixed value (specified in constants.R in current $ per ton of NH3)
       # and the fertilizer coefficient calculated above. Subtract from original nonLandVariableCost.
-      mutate(FertCost = coefficient * aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N,
-             nonLandVariableCost = round(nonLandVariableCost - FertCost, aglu.DIGITS_CALPRICE)) %>%
+      mutate(FertCost = coefficient * aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N) %>%
+      # If we wanted we could apply regional fertilizer adjustments here.
+      # Since we are handling negative profits with the min cal profit rate there is no pressing need at the moment.
+      mutate(nonLandVariableCost = round(nonLandVariableCost - FertCost, aglu.DIGITS_CALPRICE)) %>%
       select(-minicam.energy.input, -coefficient, -FertCost) ->
       L2062.AgCost_ag_irr_mgmt_adj
 
@@ -128,11 +132,12 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
 
       # Set fertilizer coefficient to zero when missing. This will lead to zero fertilizer cost.
       replace_na(list(coefficient = 0)) %>%
-
-      # Calculate fertilizer cost using a fixed value (specified in constants.R in 2007$ per ton of NH3)
+      # Calculate fertilizer cost using a fixed value (specified in constants.R in current $ per ton of NH3)
       # and the fertilizer coefficient calculated above. Subtract from original nonLandVariableCost.
-      mutate(FertCost = coefficient * aglu.FERT_PRICE * gdp_deflator(1975, 2007) * CONV_KG_T / CONV_NH3_N,
-             nonLandVariableCost = round(nonLandVariableCost - FertCost, aglu.DIGITS_CALPRICE)) %>%
+      mutate(FertCost = coefficient * aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N) %>%
+      # If we wanted we could apply regional fertilizer adjustments here.
+      # Since we are handling negative profits with the min cal profit rate there is no pressing need at the moment.
+      mutate(nonLandVariableCost = round(nonLandVariableCost - FertCost, aglu.DIGITS_CALPRICE)) %>%
       select(-minicam.energy.input, -coefficient, -FertCost) ->
       L2062.AgCost_bio_irr_mgmt_adj
 
@@ -175,7 +180,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
       add_precursors("L2052.AgCost_bio_irr_mgmt")  ->
       L2062.AgCost_bio_irr_mgmt_adj
 
-    return_data(L2062.AgCoef_Fert_ag_irr_mgmt, L2062.AgCoef_Fert_bio_irr_mgmt, L2062.AgCost_ag_irr_mgmt_adj, L2062.AgCost_bio_irr_mgmt_adj)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

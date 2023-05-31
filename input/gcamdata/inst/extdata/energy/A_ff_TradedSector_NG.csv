@@ -1,0 +1,16 @@
+# File: A_ff_TradedSector_NG.csv
+# Title: Supplysector assumptions for traded natural gas markets (LNG and pipeline gas) (including logit exponent for subsector competition)
+# Units: Various
+# Comments: These sectors compete different regions in supplying the pool of globally traded fuels
+# Source: NA
+# Column types: ccccinc
+# ----------
+supplysector,output.unit,input.unit,price.unit,traded,logit.exponent,logit.type
+traded LNG,EJ,EJ,1975$/GJ,1,-6,
+traded N.Amer pipeline gas,EJ,EJ,1975$/GJ,1,-6,
+traded LA pipeline gas,EJ,EJ,1975$/GJ,1,-6,
+traded EUR pipeline gas,EJ,EJ,1975$/GJ,1,-6,
+traded RUS pipeline gas,EJ,EJ,1975$/GJ,1,-6,
+traded Afr_MidE pipeline gas,EJ,EJ,1975$/GJ,1,-6,
+traded PAC pipeline gas,EJ,EJ,1975$/GJ,1,-6,
+gas trade statistical differences,EJ,EJ,1975$/GJ,1,-6,

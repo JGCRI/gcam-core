@@ -1,0 +1,9 @@
+# File: A_irnstl_TradedSector.csv
+# Title: Supplysector assumptions for traded iron and steel markets (including logit exponent for subsector competition)
+# Units: Various
+# Comments: These sectors compete different regions in supplying the pool of globally traded iron and steel
+# Source: NA
+# Column types: ccccinc
+# ----------
+supplysector,output.unit,input.unit,price.unit,traded,logit.exponent,logit.type
+traded iron and steel,Mt,Mt,1975$/kg,1,-6,

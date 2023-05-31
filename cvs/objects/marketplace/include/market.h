@@ -56,7 +56,7 @@
 #include "util/base/include/data_definition_util.h"
 
 #if GCAM_PARALLEL_ENABLED
-#include "tbb/spin_rw_mutex.h"
+#include "tbb/spin_mutex.h"
 #endif
 
 class IInfo;
@@ -213,6 +213,12 @@ protected:
         //! The market supply.
         DEFINE_VARIABLE( SIMPLE | STATE, "supply", mSupply, Value ),
                 
+        //! The market demand error correction term.
+        DEFINE_VARIABLE( SIMPLE | STATE, "demand-correction", mDemandCorrection, Value ),
+        
+        //! The market supply error correction term.
+        DEFINE_VARIABLE( SIMPLE | STATE, "supply-correction", mSupplyCorrection, Value ),
+                
         //! The year associated with this market.
         DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),
         
@@ -221,7 +227,7 @@ protected:
     )
     
 #if GCAM_PARALLEL_ENABLED
-    typedef tbb::speculative_spin_rw_mutex Mutex;
+    typedef tbb::spin_mutex Mutex;
     //! A fast lock to protect conccurent adds to demand.
     mutable Mutex mDemandMutex;
     

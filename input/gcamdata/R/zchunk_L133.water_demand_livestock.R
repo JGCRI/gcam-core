@@ -16,31 +16,36 @@
 #' @importFrom tidyr replace_na
 #' @author KRD November 2017
 module_water_L133.water_demand_livestock <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      FILE = "aglu/A_an_supplysector",
+      "L105.an_Prod_Mt_R_C_Y",
+      FILE = "water/LivestockWaterFootprint_MH2010",
+      FILE = "water/FAO_an_items_Stocks",
+      "L100.FAO_an_Stocks",
+      "L100.FAO_an_Dairy_Stocks",
+      "L103.water_mapping_R_B_W_Ws_share")
+
+  MODULE_OUTPUTS <-
+    c("L133.water_demand_livestock_R_C_W_km3_Mt",
+      "L133.water_demand_livestock_R_B_W_km3")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/A_an_supplysector",
-             "L105.an_Prod_Mt_R_C_Y",
-             FILE = "water/LivestockWaterFootprint_MH2010",
-             FILE = "water/FAO_an_items_Stocks",
-             "L100.FAO_an_Stocks",
-             "L100.FAO_an_Dairy_Stocks",
-             "L103.water_mapping_R_B_W_Ws_share"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L133.water_demand_livestock_R_C_W_km3_Mt",
-             "L133.water_demand_livestock_R_B_W_km3"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    A_an_supplysector <- get_data(all_data, "aglu/A_an_supplysector")
-    L105.an_Prod_Mt_R_C_Y <- get_data(all_data, "L105.an_Prod_Mt_R_C_Y")
-    LivestockWaterFootprint_MH2010 <- get_data(all_data, "water/LivestockWaterFootprint_MH2010")
-    FAO_an_items_Stocks <- get_data(all_data, "water/FAO_an_items_Stocks")
-    L100.FAO_an_Stocks <- get_data(all_data, "L100.FAO_an_Stocks")
-    L100.FAO_an_Dairy_Stocks <- get_data(all_data, "L100.FAO_an_Dairy_Stocks")
-    L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
+    lapply(MODULE_INPUTS, function(d){
+      # get name as the char after last /
+      nm <- tail(strsplit(d, "/")[[1]], n = 1)
+      # get data and assign
+      assign(nm, get_data(all_data, d, strip_attributes = T),
+             envir = parent.env(environment()))  })
 
     # Silence package checks
     year <- iso <- item <- value <- dairy.to.total <- dairy.adj <-
@@ -50,6 +55,10 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
 
     # ===================================================
     # Calculate livestock water coefficients by region ID / GCAM_commodity/ water type.
+    #
+    # (XZ)Note that Milking cow was separated from cattle stock since they have
+    # different water coefficients. However, layer chicker was not separated from
+    # chicken stock since layer and boiler chicken had the same water coefficient.
 
     # Start by finding  the number of non-dairy producing livestock.
 
@@ -59,9 +68,10 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     # remove dairy animals.
     L100.FAO_an_Dairy_Stocks %>%
       filter(year == 2000) %>%
-      select(iso, item, value, year) %>%
-      left_join_error_no_match(FAO_an_items_Stocks %>% select(item, dairy.to.total),
-                               by = "item") %>%
+      select(iso, item,item_code, value, year) %>%
+      # item_code is used
+      left_join_error_no_match(FAO_an_items_Stocks %>% select(item_code, dairy.to.total),
+                               by = "item_code") %>%
       select(iso, item = dairy.to.total, dairy.adj = value, year) ->
       L133.dairy_an_adj
 
@@ -84,9 +94,9 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     # into a single tibble. Subsest for the year 2000 since that is the year the water use
     # coefficients are from.
     L133.FAO_an_heads %>%
-      select(iso, item, year, value) %>%
+      select(iso, item, item_code, year, value) %>%
       bind_rows(L100.FAO_an_Dairy_Stocks %>%
-                  select(iso, item, year, value)) %>%
+                  select(iso, item, item_code, year, value)) %>%
       filter(year == 2000) ->
       L133.FAO_an_heads
 
@@ -98,7 +108,7 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     L133.FAO_an_heads %>%
       # A 1:1 match is not expected and we do not want NAs introduced to the data frame so
       # use inner join here.
-      inner_join(FAO_an_items_Stocks, by = "item") %>%
+      inner_join(FAO_an_items_Stocks %>% select(item_code, Animal, GCAM_commodity), by = "item_code") %>%
       # A 1:1 match is not expected and we do not want NAs introduced to the data frame so
       # use inner join here.
       inner_join(LivestockWaterFootprint_MH2010, by = "Animal") %>%
@@ -196,7 +206,7 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
                      "aglu/A_an_supplysector") ->
       L133.water_demand_livestock_R_B_W_km3
 
-    return_data(L133.water_demand_livestock_R_C_W_km3_Mt, L133.water_demand_livestock_R_B_W_km3)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

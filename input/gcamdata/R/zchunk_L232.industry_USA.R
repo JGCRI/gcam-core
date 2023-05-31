@@ -11,10 +11,10 @@
 #' the generated outputs: \code{L232.DeleteSupplysector_USAind}, \code{L232.DeleteFinalDemand_USAind},
 #' \code{L232.StubTechCalInput_indenergy_USA}, \code{L232.StubTechCalInput_indfeed_USA}, \code{L232.StubTechProd_industry_USA},
 #' \code{L232.StubTechCoef_industry_USA}, \code{L232.StubTechMarket_ind_USA}, \code{L232.StubTechSecMarket_ind_USA},
-#' \code{L232.BaseService_ind_USA}, \code{L232.Supplysector_ind_USA}, \code{L232.FinalEnergyKeyword_ind_USA},
+#' \code{L232.BaseService_ind_USA}, \code{L232.Supplysector_ind_USA}, \code{L232.FinalEnergyKeyword_ind_USA}, \code{L232.BaseService_iron_steel},
 #' \code{L232.SubsectorLogit_ind_USA}, \code{L232.SubsectorShrwtFllt_ind_USA}, \code{L232.SubsectorInterp_ind_USA},
-#' \code{L232.StubTech_ind_USA}, \code{L232.StubTechInterp_ind_USA}, \code{L232.PerCapitaBased_ind_USA},
-#' \code{L232.PriceElasticity_ind_USA}, \code{L232.IncomeElasticity_ind_gcam3_USA}.
+#' \code{L232.StubTech_ind_USA}, \code{L232.StubTechInterp_ind_USA}, \code{L232.PerCapitaBased_ind_USA}, \code{L232.Production_reg_imp},
+#' \code{L232.PriceElasticity_ind_USA}, \code{L232.IncomeElasticity_ind_gcam3_USA}, \code{L232.DeleteDomSubsector_USAind}, \code{L232.DeleteTraSubsector_USAind}.
 #' The corresponding file in the original data system was \code{L232.industry_USA.R} (gcam-usa level2).
 #' @details Prepare level 2 industry sector files for USA.
 #' @importFrom assertthat assert_that
@@ -50,7 +50,12 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
              "L2323.PerCapitaBased_iron_steel",
              "L2324.PerCapitaBased_Off_road",
              "L2325.PerCapitaBased_chemical",
-             "L2326.PerCapitaBased_aluminum"))
+             "L2326.PerCapitaBased_aluminum",
+             "L238.SubsectorAll_tra",
+             "L238.SubsectorAll_reg",
+             "L238.Production_reg_imp",
+             "L238.Production_tra",
+             "L2323.BaseService_iron_steel"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L232.DeleteSupplysector_USAind",
              "L232.DeleteFinalDemand_USAind",
@@ -70,7 +75,11 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
              "L232.StubTechInterp_ind_USA",
              "L232.PerCapitaBased_ind_USA",
              "L232.PriceElasticity_ind_USA",
-             "L232.IncomeElasticity_ind_gcam3_USA"))
+             "L232.IncomeElasticity_ind_gcam3_USA",
+             "L232.DeleteTraSubsector_USAind",
+             "L232.DeleteDomSubsector_USAind",
+             "L232.Production_reg_imp",
+             "L232.BaseService_iron_steel"))
   } else if(command == driver.MAKE) {
 
     # silence check package notes
@@ -111,7 +120,13 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
     L2324.PerCapitaBased_Off_road <- get_data(all_data, "L2324.PerCapitaBased_Off_road", strip_attributes = TRUE)
     L2325.PerCapitaBased_chemical <- get_data(all_data, "L2325.PerCapitaBased_chemical", strip_attributes = TRUE)
     L2326.PerCapitaBased_aluminum <- get_data(all_data, "L2326.PerCapitaBased_aluminum", strip_attributes = TRUE)
+    L238.SubsectorAll_tra <- get_data(all_data, "L238.SubsectorAll_tra", strip_attributes = TRUE)
+    L238.SubsectorAll_reg <- get_data(all_data, "L238.SubsectorAll_reg", strip_attributes = TRUE)
+    L238.Production_reg_imp <- get_data(all_data, "L238.Production_reg_imp", strip_attributes = TRUE)
+    L238.Production_tra <- get_data(all_data, "L238.Production_tra", strip_attributes = TRUE)
+    L2323.BaseService_iron_steel <- get_data(all_data, "L2323.BaseService_iron_steel", strip_attributes = TRUE)
 
+    #A_irnstl_RegionalTechnology_R_Y
     # ===================================================
     # Data Processing
 
@@ -130,16 +145,52 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) ->
       L232.DeleteSupplysector_USAind  ## OUTPUT
 
-    # deleting energy final demand sectors in the full USA region")
+    # deleting energy final demand sectors in the full USA region
     L232.PerCapitaBased_ind %>%
-      bind_rows(L2323.PerCapitaBased_iron_steel,
-                L2324.PerCapitaBased_Off_road,
+      bind_rows(L2324.PerCapitaBased_Off_road,
                 L2325.PerCapitaBased_chemical,
                 L2326.PerCapitaBased_aluminum) %>%
       mutate(region = region) %>% # strip attributes from object
       filter(region == gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]]) ->
       L232.DeleteFinalDemand_USAind  ## OUTPUT
+
+    # deleting traded iron and steel subsector in the full USA region
+    L238.SubsectorAll_tra %>%
+      select(region,supplysector,subsector)%>%
+      mutate(region = region) %>% # strip attributes from object
+      filter(subsector == "USA traded iron and steel") %>%
+      select(LEVEL2_DATA_NAMES[["DeleteSubsector"]]) ->
+      L232.DeleteTraSubsector_USAind  ## OUTPUT
+
+    # deleting domestic iron and steel subsector in the full USA region
+    L238.SubsectorAll_reg %>%
+      select(region,supplysector,subsector)%>%
+      mutate(region = region) %>% # strip attributes from object
+      filter(region == gcam.USA_REGION,subsector == "domestic iron and steel") %>%
+      select(LEVEL2_DATA_NAMES[["DeleteSubsector"]]) ->
+      L232.DeleteDomSubsector_USAind  ## OUTPUT
+
+    # calculate net iron and steel imports for the USA
+    L238.Production_reg_imp %>%
+      filter(region == gcam.USA_REGION) %>%
+      left_join(L238.Production_tra %>%
+                  filter(subsector =="USA traded iron and steel") %>%
+                  rename(Exports=calOutputValue)%>%
+                  select(region,year,Exports))%>%
+      mutate(calOutputValue=calOutputValue-Exports)%>%
+      select(-Exports)-> L232.Production_reg_imp
+
+    # Update base-year service for USA region to match the above calculated net iron and steel imports
+    L2323.BaseService_iron_steel %>%
+      filter(region == gcam.USA_REGION) %>%
+      left_join(L232.Production_reg_imp %>%
+                  select(region,year,calOutputValue) %>%
+                  rename(Net_Imports=calOutputValue))%>%
+      mutate(base.service=Net_Imports)%>%
+      select(-Net_Imports)-> L232.BaseService_iron_steel
+
+
 
     # The industry_USA_processing function is used in place of a for loop in the old data sytem.
     # This function checks to see if the input data needs to be expanded to all states or used as
@@ -367,6 +418,38 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
                      "L2326.PerCapitaBased_aluminum") ->
       L232.DeleteFinalDemand_USAind
 
+    L232.DeleteDomSubsector_USAind %>%
+      add_title("USA domestic iron and steel table for industry") %>%
+      add_units("NA") %>%
+      add_comments("Generated by deselecting domestic iron and steel subsector in the global US region") %>%
+      add_legacy_name("L232.DeleteDomSubsector_USAind") %>%
+      add_precursors("L238.SubsectorAll_reg") ->
+      L232.DeleteDomSubsector_USAind
+
+    L232.DeleteTraSubsector_USAind %>%
+      add_title("USA traded iron and steel table for industry") %>%
+      add_units("NA") %>%
+      add_comments("Generated by deselecting traded iron and steel subsector in the global US region") %>%
+      add_legacy_name("L232.DeleteTraSubsector_USAind") %>%
+      add_precursors("L238.SubsectorAll_tra") ->
+      L232.DeleteTraSubsector_USAind
+
+    L232.Production_reg_imp %>%
+      add_title("USA net imports") %>%
+      add_units("NA") %>%
+      add_comments("USA net imports add-on to allow iron and steel trade work for other global regions in GCAM USA") %>%
+      add_legacy_name("L232.DeleteTraSubsector_USAind") %>%
+      add_precursors("L238.Production_reg_imp","L238.Production_tra") ->
+      L232.Production_reg_imp
+
+    L232.BaseService_iron_steel %>%
+      add_title("USA regional iron and steel base-service by year") %>%
+      add_units("NA") %>%
+      add_comments("The regional iron and steel base service is re-calibrated to USA net imports for GCAM USA") %>%
+      add_legacy_name("L232.BaseService_iron_steel") %>%
+      add_precursors("L2323.BaseService_iron_steel") ->
+      L232.BaseService_iron_steel
+
     L232.StubTechCalInput_indenergy_USA %>%
       add_title("calibrated input of industrial energy use technologies (including cogen)") %>%
       add_units("Unitless") %>%
@@ -541,7 +624,11 @@ module_gcamusa_L232.industry_USA <- function(command, ...) {
                 L232.StubTechInterp_ind_USA,
                 L232.PerCapitaBased_ind_USA,
                 L232.PriceElasticity_ind_USA,
-                L232.IncomeElasticity_ind_gcam3_USA)
+                L232.IncomeElasticity_ind_gcam3_USA,
+                L232.DeleteDomSubsector_USAind,
+                L232.DeleteTraSubsector_USAind,
+                L232.Production_reg_imp,
+                L232.BaseService_iron_steel)
   } else {
     stop("Unknown command")
   }

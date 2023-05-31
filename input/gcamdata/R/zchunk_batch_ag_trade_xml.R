@@ -10,40 +10,35 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{ag_trade.xml}.
 module_aglu_batch_ag_trade_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L240.Supplysector_tra",
+      "L240.SectorUseTrialMarket_tra",
+      "L240.SubsectorAll_tra",
+      "L240.TechShrwt_tra",
+      "L240.TechCost_tra",
+      "L240.TechCoef_tra",
+      "L240.Production_tra",
+      "L240.Supplysector_reg",
+      "L240.SubsectorAll_reg",
+      "L240.TechShrwt_reg",
+      "L240.TechCoef_reg",
+      "L240.Production_reg_imp",
+      "L240.Production_reg_dom")
+
+  MODULE_OUTPUTS <-
+    c(XML = "ag_trade.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L240.Supplysector_tra",
-             "L240.SectorUseTrialMarket_tra",
-             "L240.SubsectorAll_tra",
-             "L240.TechShrwt_tra",
-             "L240.TechCost_tra",
-             "L240.TechCoef_tra",
-             "L240.Production_tra",
-             "L240.Supplysector_reg",
-             "L240.SubsectorAll_reg",
-             "L240.TechShrwt_reg",
-             "L240.TechCoef_reg",
-             "L240.Production_reg_imp",
-             "L240.Production_reg_dom"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "ag_trade.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L240.Supplysector_tra <- get_data(all_data, "L240.Supplysector_tra")
-    L240.SectorUseTrialMarket_tra <- get_data(all_data, "L240.SectorUseTrialMarket_tra")
-    L240.SubsectorAll_tra <- get_data(all_data, "L240.SubsectorAll_tra")
-    L240.TechShrwt_tra <- get_data(all_data, "L240.TechShrwt_tra")
-    L240.TechCost_tra <- get_data(all_data, "L240.TechCost_tra")
-    L240.TechCoef_tra <- get_data(all_data, "L240.TechCoef_tra")
-    L240.Production_tra <- get_data(all_data, "L240.Production_tra")
-    L240.Supplysector_reg <- get_data(all_data, "L240.Supplysector_reg")
-    L240.SubsectorAll_reg <- get_data(all_data, "L240.SubsectorAll_reg")
-    L240.TechShrwt_reg <- get_data(all_data, "L240.TechShrwt_reg")
-    L240.TechCoef_reg <- get_data(all_data, "L240.TechCoef_reg")
-    L240.Production_reg_imp <- get_data(all_data, "L240.Production_reg_imp")
-    L240.Production_reg_dom <- get_data(all_data, "L240.Production_reg_dom")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -77,7 +72,7 @@ module_aglu_batch_ag_trade_xml <- function(command, ...) {
                      "L240.Production_reg_dom") ->
       ag_trade.xml
 
-    return_data(ag_trade.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

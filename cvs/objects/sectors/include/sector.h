@@ -123,7 +123,7 @@ protected:
         DEFINE_VARIABLE( CONTAINER, "subsector", mSubsectors, std::vector<Subsector*> ),
         
         //! Sector price by period updated with solution prices.
-        DEFINE_VARIABLE( ARRAY | STATE, "price", mPrice, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE( ARRAY, "price", mPrice, objects::PeriodVector<Value> ),
 
         //! A map of a keyword to its keyword group
         DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),

@@ -25,6 +25,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
              FILE = "common/GCAM_region_names",
              FILE = "energy/A20.wind_class_CFs",
              FILE = "energy/A20.offshore_wind_depth_cap_cost",
+             FILE =  "energy/mappings/NREL_wind_ctry",
              FILE = "energy/NREL_offshore_energy",
              FILE = "energy/NREL_wind_energy_distance_range",
              FILE = "energy/offshore_wind_grid_cost",
@@ -47,7 +48,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
       capacity.factor <- capital.overnight.lag <- capital.tech.change.5yr <- kl  <- tech.change.5yr <- tech.change <- bin <-
       cost <- Wind_Resource_Region <- Wind_Class <- grid.cost <- total <- value <- CF <- percent.supply <- P2 <- Q2 <- resource <-
       subresource <- k1 <- k2 <- potential <- region <- rep_dist_for_bin <- share <- cost_per_kW_km <- capital.tech.change.period <-
-      tech.change.period <- time.change <- reason <- scaler <- NULL    # silence package check notes
+      tech.change.period <- time.change <- reason <- scaler <- iso <- NULL    # silence package check notes
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
@@ -56,6 +57,7 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     L113.globaltech_OMfixed_ATB <- get_data(all_data, "L113.globaltech_OMfixed_ATB")
     A20.wind_class_CFs <- get_data(all_data, "energy/A20.wind_class_CFs")
     A20.offshore_wind_depth_cap_cost <- get_data(all_data, "energy/A20.offshore_wind_depth_cap_cost")
+    NREL_wind_ctry <- get_data(all_data, "energy/mappings/NREL_wind_ctry")
     NREL_offshore_energy  <- get_data(all_data, "energy/NREL_offshore_energy")
     NREL_wind_energy_distance_range <- get_data(all_data, "energy/NREL_wind_energy_distance_range")
     offshore_wind_grid_cost <- get_data(all_data, "energy/offshore_wind_grid_cost")
@@ -68,9 +70,9 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     # aggregate by GCAM region/ wind class/ depth class
     NREL_offshore_energy %>%
       select(-total) %>%
-      left_join_error_no_match(iso_GCAM_regID %>%
-                                 select(country_name, GCAM_region_ID) %>% distinct(),
-                               by = c("IAM_country" = "country_name")) %>%
+      left_join_error_no_match(NREL_wind_ctry, by = "IAM_country") %>%
+      left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso" ) %>%
+      select(-iso) %>%
       gather(wind_class, resource.potential.PWh, -IAM_country, -GCAM_region_ID, -depth_class, -distance_to_shore) %>%
       mutate(resource.potential.EJ = resource.potential.PWh * 1000 * CONV_TWH_EJ ) %>%
       group_by(GCAM_region_ID, wind_class, depth_class) %>%
@@ -244,11 +246,10 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     # not expected that regions would be able to exhaust the potential offered by the highest capacity class available.
     NREL_offshore_energy %>%
       select(-depth_class,-distance_to_shore,-total) %>%
-      inner_join(iso_GCAM_regID %>%
-                                 select(country_name, GCAM_region_ID),
-                               by = c("IAM_country" = "country_name")) %>%
+      left_join_error_no_match(NREL_wind_ctry, by = "IAM_country") %>%
+      left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%
-      select(-IAM_country, -GCAM_region_ID) %>%
+      select(-c(IAM_country, iso, GCAM_region_ID)) %>%
       gather(class,potential,-region) %>%
       group_by(region, class) %>%
       summarise(potential = sum(potential)) %>%
@@ -273,11 +274,10 @@ module_energy_LA120.offshore_wind <- function(command, ...) {
     # First, get share of potential by each distance bin for each GCAM region
     NREL_offshore_energy %>%
       select(IAM_country, distance_to_shore, total) %>%
-      inner_join(iso_GCAM_regID %>%
-                                 select(country_name, GCAM_region_ID),
-                               by = c("IAM_country" = "country_name")) %>%
+      left_join_error_no_match(NREL_wind_ctry, by = "IAM_country") %>%
+      left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
       left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")) %>%
-      select(-IAM_country, -GCAM_region_ID) %>%
+      select(-c(IAM_country, iso, GCAM_region_ID)) %>%
       group_by(region, distance_to_shore) %>%
       summarise(total = sum(total)) %>%
       ungroup() %>%

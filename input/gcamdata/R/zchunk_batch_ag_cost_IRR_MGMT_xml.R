@@ -11,32 +11,40 @@
 #' the generated outputs: \code{ag_cost_IRR_MGMT.xml}. The corresponding file in the
 #' original data system was \code{batch_ag_cost_IRR_MGMT_xml.R} (aglu XML).
 module_aglu_batch_ag_cost_IRR_MGMT_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L2062.AgCost_ag_irr_mgmt_adj",
+      "L2062.AgCost_bio_irr_mgmt_adj",
+      "L2052.AgCost_For",
+      "L2052.AgCalMinProfitRate")
+
+  MODULE_OUTPUTS <-
+    c(XML = "ag_cost_IRR_MGMT.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2052.AgCost_ag_irr_mgmt",
-              "L2052.AgCost_bio_irr_mgmt",
-              "L2052.AgCost_For"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "ag_cost_IRR_MGMT.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L2052.AgCost_ag_irr_mgmt <- get_data(all_data, "L2052.AgCost_ag_irr_mgmt")
-    L2052.AgCost_bio_irr_mgmt <- get_data(all_data, "L2052.AgCost_bio_irr_mgmt")
-    L2052.AgCost_For <- get_data(all_data, "L2052.AgCost_For")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
     # Produce outputs
     create_xml("ag_cost_IRR_MGMT.xml") %>%
-      add_xml_data(L2052.AgCost_ag_irr_mgmt, "AgCost") %>%
-      add_xml_data(L2052.AgCost_bio_irr_mgmt, "AgCost") %>%
+      add_xml_data(L2062.AgCost_ag_irr_mgmt_adj, "AgCost") %>%
+      add_xml_data(L2062.AgCost_bio_irr_mgmt_adj, "AgCost") %>%
       add_xml_data(L2052.AgCost_For, "AgCost") %>%
-      add_precursors("L2052.AgCost_ag_irr_mgmt", "L2052.AgCost_bio_irr_mgmt", "L2052.AgCost_For") ->
+      add_xml_data(L2052.AgCalMinProfitRate, "AgCalMinProfitRate") %>%
+      add_precursors("L2062.AgCost_ag_irr_mgmt_adj", "L2062.AgCost_bio_irr_mgmt_adj", "L2052.AgCost_For",
+                     "L2052.AgCalMinProfitRate") ->
       ag_cost_IRR_MGMT.xml
 
-    return_data(ag_cost_IRR_MGMT.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

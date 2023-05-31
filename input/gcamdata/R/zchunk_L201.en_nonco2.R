@@ -227,8 +227,10 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(supplysector == "out_resources",
              year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(resource = subsector) %>%
-      rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
+      mutate(subresource = stub.technology) %>%
+      rename(resource = subsector, technology = stub.technology, emiss.coef = value) %>%
+      # add units back in
+      mutate(emiss.units = "Tg") %>%
       select(LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.nonghg_res
@@ -238,8 +240,11 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(supplysector == "out_resources",
              year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(resource = subsector) %>%
-      rename(subresource = subsector, technology = stub.technology, emiss.coef = value) %>%
+      mutate(subresource = stub.technology) %>%
+      rename(resource = subsector, technology = stub.technology, emiss.coef = value) %>%
+      # add units back in and convert CO2_FUG to correct units
+      mutate(emiss.units = case_when(Non.CO2 == "CO2_FUG" ~ "MTC", T ~ "Tg"),
+             emiss.coef = case_when(Non.CO2 == "CO2_FUG" ~ emiss.coef*1/emissions.CONV_C_CO2, T ~ emiss.coef)) %>%
       select(LEVEL2_DATA_NAMES[["ResEmissCoef"]]) %>%
       mutate(emiss.coef = signif(emiss.coef, emissions.DIGITS_EMISSIONS)) ->
       L201.ghg_res
@@ -366,7 +371,6 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.en_bcoc_emissions <- delete_nonexistent_sectors(L201.en_bcoc_emissions, L201.delete.sectors)
     L201.nonghg_max_reduction <- delete_nonexistent_sectors(L201.nonghg_max_reduction, L201.delete.sectors)
     L201.nonghg_steepness <- delete_nonexistent_sectors(L201.nonghg_steepness, L201.delete.sectors)
-
 
     # Produce outputs
     L201.en_pol_emissions %>%

@@ -74,7 +74,10 @@ module_emissions_batch_all_energy_emissions_xml <- function(command, ...) {
       add_xml_data(L201.OutputEmissions_elec, "OutputEmissions") %>%
       add_xml_data(L201.nonghg_max_reduction, "GDPCtrlMax") %>%
       add_xml_data(L201.nonghg_steepness, "GDPCtrlSteep") %>%
-      add_xml_data(L201.nonghg_max_reduction_res, "GDPCtrlMaxRes") %>%
+      add_node_equiv_xml("resource") %>%
+      add_node_equiv_xml("subresource") %>%
+      add_node_equiv_xml("technology") %>%
+      add_xml_data(L201.nonghg_max_reduction_res, "GDPCtrlMaxResReserve") %>%
       add_xml_data(L201.nonghg_steepness_res, "GDPCtrlSteepRes") %>%
       add_xml_data(L201.nonghg_res, "ResEmissCoef") %>%
       add_xml_data(L201.ghg_res, "ResEmissCoef") %>%

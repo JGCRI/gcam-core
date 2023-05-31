@@ -16,12 +16,19 @@
 #' @importFrom dplyr filter group_by left_join mutate select summarize
 #' @author KVC April 2017
 module_aglu_LB131.LV_R_GLU <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      "L100.GTAP_LV_milUSD",
+      "L122.LC_bm2_R_HarvCropLand_Yh_GLU")
+
+  MODULE_OUTPUTS <-
+    c("L131.LV_USD75_m2_R_GLU")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             "L100.GTAP_LV_milUSD",
-             "L122.LC_bm2_R_HarvCropLand_Yh_GLU"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L131.LV_USD75_m2_R_GLU"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     value <- GCAM_region_ID <- GLU <- year <- LV_milUSD75 <- HarvCropLand_bm2 <-
@@ -29,10 +36,8 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L100.GTAP_LV_milUSD <- get_data(all_data, "L100.GTAP_LV_milUSD")
-    L122.LC_bm2_R_HarvCropLand_Yh_GLU <- get_data(all_data, "L122.LC_bm2_R_HarvCropLand_Yh_GLU")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # Calculate the total value of each geographic land unit (GLU)
     L100.GTAP_LV_milUSD %>%
@@ -66,7 +71,7 @@ module_aglu_LB131.LV_R_GLU <- function(command, ...) {
       add_precursors("L100.GTAP_LV_milUSD", "L122.LC_bm2_R_HarvCropLand_Yh_GLU", "common/iso_GCAM_regID") ->
       L131.LV_USD75_m2_R_GLU
 
-    return_data(L131.LV_USD75_m2_R_GLU)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

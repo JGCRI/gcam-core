@@ -101,17 +101,7 @@ void UnmanagedLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
                                                     double aAverageProfitRate,
                                                     const int aPeriod )
 {
-    // Adjust profit rate for land expnasion costs if applicable
-    double adjustedProfitRate = aAverageProfitRate;
-    const Marketplace* marketplace = scenario->getMarketplace();
-
-    if ( mIsLandExpansionCost ) {
-        //subtract off expansion cost from profit rate
-        double expansionCost = marketplace->getPrice( mLandExpansionCostName, aRegionName, aPeriod );
-        adjustedProfitRate = adjustedProfitRate - expansionCost;
-    }
-
-    mProfitRate[ aPeriod ] = max( adjustedProfitRate + getCarbonSubsidy( aRegionName, aPeriod )
+    mProfitRate[ aPeriod ] = max( aAverageProfitRate + getCarbonSubsidy( aRegionName, aPeriod )
                                  + getLandConstraintCost( aRegionName, aPeriod ), 0.0 );
 }  
 

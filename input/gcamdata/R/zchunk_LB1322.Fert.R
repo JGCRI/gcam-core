@@ -20,23 +20,30 @@
 #' @importFrom tidyr complete fill gather replace_na spread
 #' @author AJS July 2017
 module_energy_LB1322.Fert <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      FILE = "energy/mappings/IEA_ctry",
+      FILE = "energy/IEA_Fert_fuel_data",
+      "L142.ag_Fert_Prod_MtN_ctry_Y",
+      FILE = "energy/H2A_Prod_Tech",
+      FILE = "energy/A10.rsrc_info",
+      FILE = "energy/A21.globaltech_cost",
+      FILE = "energy/A22.globaltech_cost",
+      "L1321.in_EJ_R_indenergy_F_Yh",
+      "L132.in_EJ_R_indfeed_F_Yh"  )
+
+  MODULE_OUTPUTS <-
+    c("L1322.Fert_Prod_MtN_R_F_Y",
+      "L1322.IO_R_Fert_F_Yh",
+      "L1322.in_EJ_R_indenergy_F_Yh",
+      "L1322.in_EJ_R_indfeed_F_Yh",
+      "L1322.Fert_NEcost_75USDkgN_F")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "energy/mappings/IEA_ctry",
-             FILE = "energy/IEA_Fert_fuel_data",
-             "L142.ag_Fert_Prod_MtN_ctry_Y",
-             FILE = "energy/H2A_Prod_Tech",
-             FILE = "energy/A10.rsrc_info",
-             FILE = "energy/A21.globaltech_cost",
-             FILE = "energy/A22.globaltech_cost",
-             "L1321.in_EJ_R_indenergy_F_Yh",
-             "L132.in_EJ_R_indfeed_F_Yh"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1322.Fert_Prod_MtN_R_F_Y",
-             "L1322.IO_R_Fert_F_Yh",
-             "L1322.in_EJ_R_indenergy_F_Yh",
-             "L1322.in_EJ_R_indfeed_F_Yh",
-             "L1322.Fert_NEcost_75USDkgN_F"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -51,22 +58,11 @@ module_energy_LB1322.Fert <- function(command, ...) {
       `Central Natural Gas` <- `Central Coal` <- `Central Coal Sequestration` <- Fert_Prod_MtN_adj <-
       in_indfeed_netFert <- Central_Natural_Gas_Sequestration <- Central_Natural_Gas <- Central_Coal <- Central_Coal_Sequestration <- NULL
 
-    # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    IEA_ctry <- get_data(all_data, "energy/mappings/IEA_ctry")
-    IEA_Fert_fuel_data <- get_data(all_data, "energy/IEA_Fert_fuel_data")
-    H2A_Prod_Tech <- get_data(all_data, "energy/H2A_Prod_Tech")
-    L142.ag_Fert_Prod_MtN_ctry_Y <- get_data(all_data, "L142.ag_Fert_Prod_MtN_ctry_Y")
-    A10.rsrc_info <- get_data(all_data, "energy/A10.rsrc_info")
-    A21.globaltech_cost <- get_data(all_data, "energy/A21.globaltech_cost")
-    A22.globaltech_cost <- get_data(all_data, "energy/A22.globaltech_cost")
-    L1321.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1321.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
-    L132.in_EJ_R_indfeed_F_Yh <- get_data(all_data, "L132.in_EJ_R_indfeed_F_Yh")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
 
-    # ===================================================
-
-    # Compute fertilizer production and energy inputs by technology
+    # Compute fertilizer production and energy inputs by technology ----
     # Disaggregating fertilizer production by country / year to production technologies (gas, coal, oil)
 
     # First, extract fuel share data to create a dedicated table for fuel shares
@@ -94,7 +90,8 @@ module_energy_LB1322.Fert <- function(command, ...) {
 
     L142.ag_Fert_Prod_MtN_ctry_Y %>%
       repeat_add_columns(tibble::tibble(fuel = c("coal", "gas", "refined liquids"))) %>% # Exanding table to include fuels for each iso
-      left_join_error_no_match(IEA_iso_region, by = "iso") %>% # Assign data to fert region using iso
+      # change to inner_join here as L142.ag_Fert_Prod_MtN_ctry_Y may have unimportant FAO regions that not included in IEA_iso_region
+      inner_join(IEA_iso_region, by = "iso") %>% # Assign data to fert region using iso
       # Now we can attach the share data, matching to fert region
       left_join_error_no_match(L1322.IEA_fert_fuel_shares, by = c("fuel", "IEA_Fert_reg")) %>%
       # Switch individual countries' fuel shares according to literature or to make energy balances work at the regional level.
@@ -225,8 +222,8 @@ module_energy_LB1322.Fert <- function(command, ...) {
              in_indenergy_netFert, in_indfeed_netFert) ->
       L1322.Fert_ALL_MtN_R_F_Y_adj
 
-    # -----------------------------------------------------------------------------------------------------------------
-    # Building tables of fertilizer production by technology, IO coefs, and energy/feedstock inputs to rest of industry
+
+    # Building tables of fertilizer production by technology, IO coefs, and energy/feedstock inputs to rest of industry ----
     # Four of the final five tables will be built here.
 
     # Creating final output table "Fertilizer production by GCAM region / fuel / year"
@@ -263,13 +260,13 @@ module_energy_LB1322.Fert <- function(command, ...) {
       select(GCAM_region_ID, sector, fuel, year, value) ->
       L1322.in_EJ_R_indenergy_F_Yh # Note that this is a final output table.
 
-    # -----------------------------------------------------------------------------------------------------------------
 
-    # Calculate fertilizer non-energy costs by technology
+    # Calculate fertilizer non-energy costs by technology ----
     # These technologies include gas, gas with CCS, coal, coal with CCS, and oil
     # First, calculate gas cost per kg N
     # Calculating non-energy costs for gas technology as USA market fertilizer price minus GCAM fuel costs
     # Calculate the gas price as the sum of resource costs plus intermediate sectoral mark-ups
+
 
     # The processing steps below ensure that the base year for fertilizer prices is included
     A10.rsrc_info %>%
@@ -289,20 +286,6 @@ module_energy_LB1322.Fert <- function(command, ...) {
     # As mentioned above, because 2010 is the year used as the fertilizer base price (from A10.rsrc_info), we will interpolate for
     # this year for both global tech cost tables so that we may add up all costs consistently.
 
-    # Interpolate to get cost of primary energy handling for natural gas in aglu.FERT_PRICE_YEAR
-    A21.globaltech_cost %>%
-      filter(technology == "regional natural gas") %>%
-      gather_years() %>%
-      select(technology, year, value) %>%
-      complete(technology, year = sort(unique(c(year, aglu.FERT_PRICE_YEAR)))) %>%
-      mutate(value = approx_fun(year, value)) %>%
-      filter(year == aglu.FERT_PRICE_YEAR) %>%
-      mutate(value = if_else(is.na(value) ,0 , as.double(value))) %>%
-      pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
-      A21.globaltech_cost_aglu.FERT_PRICE_YEAR
-
-
-
     # Interpolate to get cost of primary energy transformation for natural gas in aglu.FERT_PRICE_YEAR
     A22.globaltech_cost %>%
       filter(technology == "natural gas") %>%
@@ -314,7 +297,6 @@ module_energy_LB1322.Fert <- function(command, ...) {
       mutate(value = if_else(is.na(value),0,as.double(value))) %>%
       pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
       A22.globaltech_cost_aglu.FERT_PRICE_YEAR
-
 
     # Sum up costs. Units are 1975 USD per GJ.
     L1322.P_gas_75USDGJ <- A10.rsrc_cost_aglu.FERT_PRICE_YEAR + energy.GAS_PIPELINE_COST_ADDER_75USDGJ
@@ -331,6 +313,9 @@ module_energy_LB1322.Fert <- function(command, ...) {
     L1322.Fert_Fuelcost_75USDGJ_gas <- L1322.P_gas_75USDGJ * L1322.IO_GJkgN_Fert_gas
 
     # Convert total NH3 cost (2010$/tNH3) to N cost (1975$/kgN)
+    # Note that aglu.FERT_PRICE is only used here for calculating nonenergy cost
+    # aglu.FERT_PRICE is not a real value since the price should be regional
+
     Fert_Cost_75USDkgN <- aglu.FERT_PRICE * gdp_deflator(1975, aglu.FERT_PRICE_YEAR) * CONV_KG_T / CONV_NH3_N
 
     # Calculate non-fuel cost of natural gas steam reforming (includes delivery charges)
@@ -390,7 +375,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
                                                                L1322.Fert_NEcost_75USDkgN_oil,
                                                                L1322.Fert_NEcost_75USDkgN_H2))
 
-    # ===================================================
+    # Done ----
 
     L1322.Fert_Prod_MtN_R_F_Y %>%
       add_title("Fertilizer production by GCAM region / fuel / year") %>%
@@ -446,7 +431,7 @@ module_energy_LB1322.Fert <- function(command, ...) {
                      "energy/A21.globaltech_cost", "energy/A22.globaltech_cost") ->
       L1322.Fert_NEcost_75USDkgN_F
 
-    return_data(L1322.Fert_Prod_MtN_R_F_Y, L1322.IO_R_Fert_F_Yh, L1322.in_EJ_R_indenergy_F_Yh, L1322.in_EJ_R_indfeed_F_Yh, L1322.Fert_NEcost_75USDkgN_F)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

@@ -20,34 +20,40 @@
 #' @importFrom tibble tibble
 #' @author GPK February 2019  XZ March 2020
 module_aglu_L240.ag_trade <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "aglu/A_agRegionalSector",
+      FILE = "aglu/A_agRegionalSubsector",
+      FILE = "aglu/A_agRegionalTechnology",
+      FILE = "aglu/A_agTradedSector",
+      FILE = "aglu/A_agTradedSubsector",
+      FILE = "aglu/A_agTradedTechnology",
+      FILE = "common/iso_GCAM_regID",
+      "L109.ag_ALL_Mt_R_C_Y",
+      "L109.an_ALL_Mt_R_C_Y",
+      "L110.For_ALL_bm3_R_Y",
+      "L100.FAO_For_Exp_m3")
+
+  MODULE_OUTPUTS <-
+    c("L240.Supplysector_tra",
+      "L240.SectorUseTrialMarket_tra",
+      "L240.SubsectorAll_tra",
+      "L240.TechShrwt_tra",
+      "L240.TechCost_tra",
+      "L240.TechCoef_tra",
+      "L240.Production_tra",
+      "L240.Supplysector_reg",
+      "L240.SubsectorAll_reg",
+      "L240.TechShrwt_reg",
+      "L240.TechCoef_reg",
+      "L240.Production_reg_imp",
+      "L240.Production_reg_dom")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "aglu/A_agRegionalSector",
-             FILE = "aglu/A_agRegionalSubsector",
-             FILE = "aglu/A_agRegionalTechnology",
-             FILE = "aglu/A_agTradedSector",
-             FILE = "aglu/A_agTradedSubsector",
-             FILE = "aglu/A_agTradedTechnology",
-             FILE = "common/iso_GCAM_regID",
-             "L109.ag_ALL_Mt_R_C_Y",
-             "L109.an_ALL_Mt_R_C_Y",
-             "L110.For_ALL_bm3_R_Y",
-             "L100.FAO_For_Exp_m3",
-             "L1091.GrossTrade_Mt_R_C_Y"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L240.Supplysector_tra",
-             "L240.SectorUseTrialMarket_tra",
-             "L240.SubsectorAll_tra",
-             "L240.TechShrwt_tra",
-             "L240.TechCost_tra",
-             "L240.TechCoef_tra",
-             "L240.Production_tra",
-             "L240.Supplysector_reg",
-             "L240.SubsectorAll_reg",
-             "L240.TechShrwt_reg",
-             "L240.TechCoef_reg",
-             "L240.Production_reg_imp",
-             "L240.Production_reg_dom"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -57,22 +63,10 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       GrossImp_Mt <- Prod_Mt <- GCAM_region_ID <- NetExp_Mt <- Prod_bm3 <-
       NetExp_bm3 <- value <- flow <- GrossExp <- NULL # silence package check notes
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_agRegionalSector <- get_data(all_data, "aglu/A_agRegionalSector", strip_attributes = TRUE)
-    A_agRegionalSubsector <- get_data(all_data, "aglu/A_agRegionalSubsector", strip_attributes = TRUE)
-    A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology", strip_attributes = TRUE)
-    A_agTradedSector <- get_data(all_data, "aglu/A_agTradedSector", strip_attributes = TRUE)
-    A_agTradedSubsector <- get_data(all_data, "aglu/A_agTradedSubsector", strip_attributes = TRUE)
-    A_agTradedTechnology <- get_data(all_data, "aglu/A_agTradedTechnology", strip_attributes = TRUE)
-    L109.ag_ALL_Mt_R_C_Y <- get_data(all_data, "L109.ag_ALL_Mt_R_C_Y")
-    L109.an_ALL_Mt_R_C_Y <- get_data(all_data, "L109.an_ALL_Mt_R_C_Y")
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L110.For_ALL_bm3_R_Y <- get_data(all_data, "L110.For_ALL_bm3_R_Y")
-    L100.FAO_For_Exp_m3 <- get_data(all_data, "L100.FAO_For_Exp_m3")
-    L1091.GrossTrade_Mt_R_C_Y <- get_data(all_data, "L1091.GrossTrade_Mt_R_C_Y")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
-    # 0: Bind crops, livestock, and forest for prod and netexp
+    # 0: Bind crops, livestock, and forest for prod and net trade (netexp)
     L109.ag_an_for_ALL_Mt_R_C_Y <- L109.ag_ALL_Mt_R_C_Y %>%
       select(GCAM_region_ID, GCAM_commodity, year, Prod_Mt, NetExp_Mt) %>%
       bind_rows(L109.an_ALL_Mt_R_C_Y %>%
@@ -81,27 +75,14 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                   select(GCAM_region_ID, GCAM_commodity, year,
                          Prod_Mt = Prod_bm3, NetExp_Mt = NetExp_bm3)) #note that physical unit for forest data is bm3
 
-    # Adding forest trade data in L1091.GrossTrade_Mt_R_C_Y. Note that bilateral trade data are not used for now.
-    # FAO does not provide primary roundwood bilateral trade data. We use export data to back calculate gross trade.
-    # replace_na here only affect Taiwan, which we did not have trade data.
-    L1091.GrossTrade_Mt_R_C_Y <- L1091.GrossTrade_Mt_R_C_Y %>%
+    #  and for gross trade
+    L1091.GrossTrade_Mt_R_C_Y <- L109.ag_ALL_Mt_R_C_Y %>%
+      select(GCAM_region_ID, GCAM_commodity, year, GrossExp_Mt, GrossImp_Mt) %>%
+      bind_rows(L109.an_ALL_Mt_R_C_Y %>%
+                  select(GCAM_region_ID, GCAM_commodity, year, GrossExp_Mt, GrossImp_Mt)) %>%
       bind_rows(L110.For_ALL_bm3_R_Y %>%
-                  left_join(
-                    L100.FAO_For_Exp_m3 %>%
-                      mutate(GCAM_region_ID = left_join_error_no_match(L100.FAO_For_Exp_m3, iso_GCAM_regID, by = c("iso"))[['GCAM_region_ID']],
-                             GCAM_commodity = item,                   # add the forest commodity label
-                             value = CONV_M3_BM3 * value,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
-                             flow = "GrossExp") %>%
-                      select(GCAM_region_ID, GCAM_commodity, flow, year, value) %>%
-                      group_by(GCAM_region_ID, GCAM_commodity, flow, year) %>%
-                      summarise(value = sum(value)) %>%
-                      ungroup() %>%
-                      spread(flow, value),
-                    by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
-                  replace_na(list(GrossExp = 0)) %>%
-                  mutate(GrossImp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
-                         GrossExp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
-                  select(names(L1091.GrossTrade_Mt_R_C_Y)) )
+                  select(GCAM_region_ID, GCAM_commodity, year, GrossExp_Mt, GrossImp_Mt))
+
 
     # 1. TRADED SECTOR / SUBSECTOR / TECHNOLOGY")
     # L240.Supplysector_tra: generic supplysector info for traded ag commodities
@@ -285,10 +266,11 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       add_comments("Regional exports of commodities that are traded between GCAM regions") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_agTradedTechnology",
+                     "L109.ag_ALL_Mt_R_C_Y",
+                     "L109.an_ALL_Mt_R_C_Y",
                      "L110.For_ALL_bm3_R_Y",
                      "L100.FAO_For_Exp_m3",
-                     "common/iso_GCAM_regID",
-                     "L1091.GrossTrade_Mt_R_C_Y") ->
+                     "common/iso_GCAM_regID") ->
       L240.Production_tra
 
     L240.Supplysector_reg %>%
@@ -329,7 +311,8 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       add_comments("Consumption of commodities that are traded between GCAM regions") %>%
       add_precursors("common/GCAM_region_names",
                      "aglu/A_agRegionalTechnology",
-                     "L1091.GrossTrade_Mt_R_C_Y") ->
+                     "L109.ag_ALL_Mt_R_C_Y",
+                     "L109.an_ALL_Mt_R_C_Y") ->
       L240.Production_reg_imp
 
     L240.Production_reg_dom %>%
@@ -342,23 +325,10 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                      "L109.an_ALL_Mt_R_C_Y",
                      "L110.For_ALL_bm3_R_Y",
                      "L100.FAO_For_Exp_m3",
-                     "common/iso_GCAM_regID",
-                     "L1091.GrossTrade_Mt_R_C_Y") ->
+                     "common/iso_GCAM_regID") ->
       L240.Production_reg_dom
 
-    return_data(L240.Supplysector_tra,
-                L240.SectorUseTrialMarket_tra,
-                L240.SubsectorAll_tra,
-                L240.TechShrwt_tra,
-                L240.TechCost_tra,
-                L240.TechCoef_tra,
-                L240.Production_tra,
-                L240.Supplysector_reg,
-                L240.SubsectorAll_reg,
-                L240.TechShrwt_reg,
-                L240.TechCoef_reg,
-                L240.Production_reg_imp,
-                L240.Production_reg_dom)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

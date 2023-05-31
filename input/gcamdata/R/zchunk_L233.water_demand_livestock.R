@@ -17,13 +17,20 @@
 #' @importFrom dplyr inner_join left_join mutate select
 #' @author YL July 2017
 module_water_L233.water_demand_livestock <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/water_td_sectors",
+      FILE = "aglu/A_an_technology",
+      "L133.water_demand_livestock_R_C_W_km3_Mt")
+
+  MODULE_OUTPUTS <-
+    c("L233.TechCoef")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/water_td_sectors",
-             FILE = "aglu/A_an_technology",
-             "L133.water_demand_livestock_R_C_W_km3_Mt"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L233.TechCoef"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -32,10 +39,7 @@ module_water_L233.water_demand_livestock <- function(command, ...) {
       water_type <- region <- GCAM_region_ID <- NULL  # silence package check notes
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
-    A_an_technology <- get_data(all_data, "aglu/A_an_technology")
-    L133.water_demand_livestock_R_C_W_km3_Mt <- get_data(all_data, "L133.water_demand_livestock_R_C_W_km3_Mt", strip_attributes = TRUE)
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # Just read in water coefficients for all years
     L133.water_demand_livestock_R_C_W_km3_Mt %>%
@@ -53,7 +57,7 @@ module_water_L233.water_demand_livestock <- function(command, ...) {
 
     # Produce outputs
     add_title("water coefficient for region-specific livestock") %>%
-      add_units("m^3/Mt") %>%
+      add_units("km^3/Mt") %>%
       add_comments("The data is generated through:
                    1) read in the file L133.water_demand_livestock_R_C_W_km3_Mt and left join with the file A_an_technology;
                    2) generate new fields water_sector and minicam.energy.input:
@@ -64,7 +68,8 @@ module_water_L233.water_demand_livestock <- function(command, ...) {
                      "L133.water_demand_livestock_R_C_W_km3_Mt") ->
       L233.TechCoef
 
-    return_data(L233.TechCoef)
+
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

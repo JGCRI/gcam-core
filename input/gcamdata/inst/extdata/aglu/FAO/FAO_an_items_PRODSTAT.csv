@@ -1,47 +1,78 @@
-# File: FAO_an_items_PRODSTAT.csv,
-# Title: mapping file of FAO animal products and GCAM animal commodities,
-# Unit: Unitless,
-# Description: Maps FAO PRODSTAT animal products to GCAM animal products,
-# Sources: FAO,
-# Column types: cc 
+# File: FAO_an_items_PRODSTAT.csv
+# Title: mapping file of FAO animal products and GCAM animal commodities
+# Unit: Unitless
+# Description: Maps FAO PRODSTAT animal products to GCAM animal products. 
+# item and item_code are both updated so that they match FAO FBS and SCL data sets. 
+# Items not included are either nonfood or incuded in other places. Fish items are included using FBS item_code. 
+# This mapping is mainly used for price calculation. Items with no quality price data (fish items) could be dropped in processing. 
+# FAO only has price data for items with TRUE for price_item
+# Sources: FAO and other databases
+# Date of last update: 2022-03-27 (XZ)
+# Column types: cicl 
 # ----------
-item,GCAM_commodity
-Beeswax,
-"Bird meat, nes",Poultry
-Buffalo Hide,
-Buffalo meat,Beef
-"Buffalo milk, whole, fresh",Dairy
-Camel meat,OtherMeat_Fish
-"Camel milk, whole, fresh",Dairy
-Cattle Hides,
-Cattle meat,Beef
-Chicken meat,Poultry
-"Cow milk, whole, fresh",Dairy
-Duck meat,Poultry
-Game meat,OtherMeat_Fish
-Goat meat,SheepGoat
-"Goat milk, whole, fresh",Dairy
-Goatskins,
-Goose and guinea fowl meat,Poultry
-Hair of Horses,
-"Hen eggs, in shell",Poultry
-Horse meat,OtherMeat_Fish
-Meat nes,OtherMeat_Fish
-Meat of Asses,OtherMeat_Fish
-Meat of Mules,OtherMeat_Fish
-Meat of Other Rod,OtherMeat_Fish
-Meat Oth Camelids,OtherMeat_Fish
-Natural honey,
-Offals Nes,OtherMeat_Fish
-"Other bird eggs,in shell",Poultry
-Pig meat,Pork
-Rabbit meat,OtherMeat_Fish
-Sheep meat,SheepGoat
-"Sheep milk, whole, fresh",Dairy
-Sheepskins,
-"Silk-worm cocoons, reelable",
-Skin Furs,
-Skins With Wool Sheep,
-"Snails, Not Sea",OtherMeat_Fish
-Turkey meat,Poultry
-"Wool, greasy",
+item,item_code,GCAM_commodity,price_item
+"Meat, buffalo",947,Beef,TRUE
+"Meat, cattle",867,Beef,TRUE
+"Milk, whole fresh buffalo",951,Dairy,TRUE
+"Milk, whole fresh camel",1130,Dairy,TRUE
+"Milk, whole fresh cow",882,Dairy,TRUE
+"Milk, whole fresh goat",1020,Dairy,TRUE
+"Milk, whole fresh sheep",982,Dairy,TRUE
+"Aquatic Animals, Others",2769,OtherMeat_Fish,FALSE
+Aquatic Plants,2775,OtherMeat_Fish,FALSE
+Cephalopods,2766,OtherMeat_Fish,FALSE
+Crustaceans,2765,OtherMeat_Fish,FALSE
+Demersal Fish,2762,OtherMeat_Fish,FALSE
+"Fat, buffaloes",949,OtherMeat_Fish,FALSE
+"Fat, camels",1129,OtherMeat_Fish,FALSE
+"Fat, cattle",869,OtherMeat_Fish,FALSE
+"Fat, goats",1019,OtherMeat_Fish,FALSE
+"Fat, pigs",1037,OtherMeat_Fish,FALSE
+"Fat, sheep",979,OtherMeat_Fish,FALSE
+"Fish, Body Oil",2781,OtherMeat_Fish,FALSE
+"Fish, Liver Oil",2782,OtherMeat_Fish,FALSE
+Freshwater Fish,2761,OtherMeat_Fish,FALSE
+"Honey, natural",1182,OtherMeat_Fish,TRUE
+"Marine Fish, Other",2764,OtherMeat_Fish,FALSE
+Meat nes,1166,OtherMeat_Fish,TRUE
+"Meat, Aquatic Mammals",2768,OtherMeat_Fish,TRUE
+"Meat, ass",1108,OtherMeat_Fish,TRUE
+"Meat, bird nes",1089,OtherMeat_Fish,TRUE
+"Meat, camel",1127,OtherMeat_Fish,TRUE
+"Meat, game",1163,OtherMeat_Fish,TRUE
+"Meat, horse",1097,OtherMeat_Fish,TRUE
+"Meat, mule",1111,OtherMeat_Fish,TRUE
+"Meat, other camelids",1158,OtherMeat_Fish,TRUE
+"Meat, other rodents",1151,OtherMeat_Fish,TRUE
+"Meat, rabbit",1141,OtherMeat_Fish,TRUE
+"Molluscs, Other",2767,OtherMeat_Fish,FALSE
+"Offals, edible, buffaloes",948,OtherMeat_Fish,FALSE
+"Offals, edible, camels",1128,OtherMeat_Fish,FALSE
+"Offals, edible, cattle",868,OtherMeat_Fish,FALSE
+"Offals, edible, goats",1018,OtherMeat_Fish,FALSE
+"Offals, horses",1098,OtherMeat_Fish,FALSE
+"Offals, pigs, edible",1036,OtherMeat_Fish,FALSE
+"Offals, sheep,edible",978,OtherMeat_Fish,FALSE
+Pelagic Fish,2763,OtherMeat_Fish,FALSE
+"Snails, not sea",1176,OtherMeat_Fish,FALSE
+"Meat, pig",1035,Pork,TRUE
+"Eggs, hen, in shell",1062,Poultry,TRUE
+"Eggs, other bird, in shell",1091,Poultry,TRUE
+"Meat, chicken",1058,Poultry,TRUE
+"Meat, duck",1069,Poultry,TRUE
+"Meat, goose and guinea fowl",1073,Poultry,TRUE
+"Meat, turkey",1080,Poultry,TRUE
+"Meat, goat",1017,SheepGoat,TRUE
+"Meat, sheep",977,SheepGoat,TRUE
+Beeswax,1183,,
+Hair of Horses,,,
+"Hides, buffalo, fresh",957,,
+"Hides, cattle, fresh",919,,
+Offals Nes,,,
+"Silk, raw",1186,,
+"Silk-worm cocoons, reelable",1185,,
+Skin Furs,,,
+Skins With Wool Sheep,,,
+"Skins, goat, fresh",1025,,
+"Skins, sheep, fresh",995,,
+"Wool, greasy",987,,

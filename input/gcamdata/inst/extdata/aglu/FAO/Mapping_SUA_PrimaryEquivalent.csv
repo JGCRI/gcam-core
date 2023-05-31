@@ -1,0 +1,446 @@
+# File: Mapping_SUA_PrimaryEquivalent.csv
+# Title: Mapping of SUA items to primary products by level of nestings
+# Units: NA
+# Description: The mapping is constructed for aggregating items across supply chain in primary equivalent.
+# There are 21 GCAM_commodity but 71 APE_comm (aggregated primary equivalent for 2010 onwards). 
+# For each APE_comm nest levels souce and sink items are specified. 
+# The mapping or processing is not one to one. For each level source and sink items shoud be viewed as an aggregate.
+# Primary product (land based or primary meat) is indicated by source_primary. 
+# In few cases output_specific_extraction_rate is specifies to prescale the data as the extraction rate for coproducts are not fixed.
+# Sink item mapping to FAO FBS FBSH and CB items is provided in sink_FBS_item.
+# GCAM_FBSH_CB_item is the mapping between GCAM_commodity and FBSH and CB
+# GCAM_FBSH_CB_item is a unique set of sink_FBS_item and these items will be directly aggregated to GCAM_commodity for data before 2010
+# To add in new GCAM commodity simply change GCAM_commodity
+# However it requires that the new GCAM commodity should be independent in APE_comm and GCAM_FBSH_CB_item Eg Tomato Barley etc.
+# extraction_rate_Q25 is 25 percent quantile value across regions and years
+# When Q25asMin is TRUE (minimium is smaller than 0.5) extraction_rate_Q25 is used as min to avoid unrealistic scale of processed balance to primary equivalent. It is used in Get_GROSS_EXTRACTION_RATE.
+# Need to make sure that when nest_level is not 0 Q25asMin extraction_rate_Q25 and extraction_rate_world2019 have values
+# Jojoba seed Poppy seed and Oil castor beans did not have quality extraction rate so 1 was used here.
+# Last update: 8-15-2022 (XZ)
+# Column types: ccilccncnnl
+# ----------
+GCAM_commodity,APE_comm,nest_level,source_primary,source_item,sink_item,output_specific_extraction_rate,sink_FBS_item,extraction_rate_Q25,extraction_rate_world2019,Q25asMin
+Wheat,Wheat,1,TRUE,Wheat,"Food preparations, flour, malt extract",,Wheat and products,0.942971612,0.985277283,FALSE
+Wheat,Wheat,1,TRUE,Wheat,Bulgur,,Wheat and products,0.942971612,0.985277283,FALSE
+Wheat,Wheat,1,TRUE,Wheat,"Cereals, breakfast",,Wheat and products,0.942971612,0.985277283,FALSE
+Wheat,Wheat,1,TRUE,Wheat,"Bran, wheat",,Wheat and products,0.942971612,0.985277283,FALSE
+Wheat,Wheat,1,TRUE,Wheat,"Germ, wheat",,Wheat and products,0.942971612,0.985277283,FALSE
+Wheat,Wheat,1,TRUE,Wheat,"Flour, wheat",,Wheat and products,0.942971612,0.985277283,FALSE
+Wheat,Wheat,2,FALSE,"Flour, wheat","Gluten, wheat",,Wheat and products,0.931353174,0.955290621,FALSE
+Wheat,Wheat,2,FALSE,"Flour, wheat","Starch, wheat",,Wheat and products,0.931353174,0.955290621,FALSE
+Wheat,Wheat,2,FALSE,"Flour, wheat",Bread,,Wheat and products,0.931353174,0.955290621,FALSE
+Wheat,Wheat,2,FALSE,"Flour, wheat",Pastry,,Wheat and products,0.931353174,0.955290621,FALSE
+Wheat,Wheat,2,FALSE,"Flour, wheat",Macaroni,,Wheat and products,0.931353174,0.955290621,FALSE
+Wheat,Wheat,2,FALSE,"Flour, wheat",Wafers,,Wheat and products,0.931353174,0.955290621,FALSE
+Wheat,Wheat,2,FALSE,"Flour, wheat",Mixes and doughs,,Wheat and products,0.931353174,0.955290621,FALSE
+Rice,Rice,1,TRUE,"Rice, paddy","Rice, milled",,Rice and products,0.729998701,0.745755411,FALSE
+Rice,Rice,1,TRUE,"Rice, paddy","Rice, husked",,Rice and products,0.729998701,0.745755411,FALSE
+Rice,Rice,1,TRUE,"Rice, paddy","Bran, rice",,Rice and products,0.729998701,0.745755411,FALSE
+Rice,Rice,2,FALSE,"Rice, husked","Rice, milled/husked",,Rice and products,0.850005939,0.900653718,FALSE
+Rice,Rice,3,FALSE,"Rice, milled","Rice, broken",,Rice and products,0.969999272,0.981589176,TRUE
+Rice,Rice,4,FALSE,"Rice, broken","Flour, rice",,Rice and products,0.397122047,0.277035807,TRUE
+Rice,Rice,4,FALSE,"Rice, broken","Starch, rice",,Rice and products,0.397122047,0.277035807,TRUE
+Rice,Rice,4,FALSE,"Rice, broken","Gluten, rice",,Rice and products,0.397122047,0.277035807,TRUE
+Rice,Rice,5,FALSE,"Bran, rice","Oil, rice bran",,Ricebran Oil and products,0.912379877,0.933843219,FALSE
+Rice,Rice,5,FALSE,"Bran, rice","Cake, rice bran",,Estimated,0.912379877,0.933843219,FALSE
+Corn,Corn,1,TRUE,Maize,"Flour, maize",,Maize and products (including white maize),0.888833647,0.918793595,FALSE
+Corn,Corn,1,TRUE,Maize,"Germ, maize",,Maize and products (including white maize),0.888833647,0.918793595,FALSE
+Corn,Corn,1,TRUE,Maize,"Bran, maize",,Maize and products (including white maize),0.888833647,0.918793595,FALSE
+Corn,Corn,2,FALSE,"Flour, maize","Starch, maize",,Maize and products (including white maize),0.908000215,0.896879812,TRUE
+Corn,Corn,2,FALSE,"Flour, maize","Gluten, maize",,Maize and products (including white maize),0.908000215,0.896879812,TRUE
+Corn,Corn,3,FALSE,"Bran, maize","Feed and meal, gluten",,Maize and products (including white maize),1,1.058352856,FALSE
+Corn,Corn,3,FALSE,"Gluten, maize","Feed and meal, gluten",,Maize and products (including white maize),1,1.058352856,FALSE
+Corn,Corn,4,FALSE,"Germ, maize","Oil, maize",,Maize Germ Oil and products,0.881612035,0.938040357,TRUE
+Corn,Corn,4,FALSE,"Germ, maize","Cake, maize",,Estimated,0.881612035,0.938040357,TRUE
+OtherGrain,Barley,1,TRUE,Barley,"Barley, pot",,Barley and products,0.776986262,0.755403899,TRUE
+OtherGrain,Barley,1,TRUE,Barley,"Bran, barley",,Barley and products,0.776986262,0.755403899,TRUE
+OtherGrain,Barley,1,TRUE,Barley,Malt,,Barley and products,0.776986262,0.755403899,TRUE
+OtherGrain,Barley,2,FALSE,"Barley, pot","Barley, pearled",,Barley and products,0.9203936,0.896950677,TRUE
+OtherGrain,Barley,2,FALSE,"Barley, pot","Flour, barley and grits",,Barley and products,0.9203936,0.896950677,TRUE
+OtherGrain,Barley,3,FALSE,Malt,Beer of barley,,Barley and products,6,8.09720345,FALSE
+OtherGrain,Barley,3,FALSE,Malt,Malt extract,,Barley and products,6,8.09720345,FALSE
+OtherGrain,Millet,1,TRUE,Millet,"Flour, millet",,Millet and products,0.900046664,0.937459232,FALSE
+OtherGrain,Millet,1,TRUE,Millet,"Bran, millet",,Millet and products,0.900046664,0.937459232,FALSE
+OtherGrain,Rye,1,TRUE,Rye,"Flour, rye",,Rye and products,0.832489814,0.874079778,TRUE
+OtherGrain,Rye,1,TRUE,Rye,"Bran, rye",,Rye and products,0.832489814,0.874079778,TRUE
+OtherGrain,Oats,1,TRUE,Oats,Oats rolled,,Oats and products,0.679656244,0.761934386,TRUE
+OtherGrain,Oats,1,TRUE,Oats,"Bran, oats",,Oats and products,0.679656244,0.761934386,TRUE
+OtherGrain,Sorghum,1,TRUE,Sorghum,"Flour, sorghum",,Sorghum and products,0.930002898,0.84623475,FALSE
+OtherGrain,Sorghum,1,TRUE,Sorghum,"Bran, sorghum",,Sorghum and products,0.930002898,0.84623475,FALSE
+OtherGrain,CerealsNES,0,TRUE,Quinoa,Quinoa,,"Cereals, Other and products",,,
+OtherGrain,CerealsNES,0,TRUE,Canary seed,Canary seed,,"Cereals, Other and products",,,
+OtherGrain,CerealsNES,1,TRUE,Buckwheat,"Flour, buckwheat",,"Cereals, Other and products",0.875070881,0.951067665,FALSE
+OtherGrain,CerealsNES,1,TRUE,Buckwheat,"Bran, buckwheat",,"Cereals, Other and products",0.875070881,0.951067665,FALSE
+OtherGrain,CerealsNES,2,TRUE,Fonio,"Flour, fonio",,"Cereals, Other and products",0.918882346,0.919164351,FALSE
+OtherGrain,CerealsNES,2,TRUE,Fonio,"Bran, fonio",,"Cereals, Other and products",0.918882346,0.919164351,FALSE
+OtherGrain,CerealsNES,3,TRUE,Triticale,"Flour, triticale",,"Cereals, Other and products",0.919885057,0.967297604,FALSE
+OtherGrain,CerealsNES,3,TRUE,Triticale,"Bran, triticale",,"Cereals, Other and products",0.919885057,0.967297604,FALSE
+OtherGrain,CerealsNES,4,TRUE,"Grain, mixed","Flour, mixed grain",,"Cereals, Other and products",0.760321865,0.633760079,FALSE
+OtherGrain,CerealsNES,4,TRUE,"Grain, mixed","Bran, mixed grains",,"Cereals, Other and products",0.760321865,0.633760079,FALSE
+OtherGrain,CerealsNES,5,TRUE,Cereals nes,"Flour, cereals",,"Cereals, Other and products",1.068507066,1.289136893,FALSE
+OtherGrain,CerealsNES,5,TRUE,Cereals nes,"Bran, cereals nes",,"Cereals, Other and products",1.068507066,1.289136893,FALSE
+OtherGrain,CerealsNES,5,TRUE,Cereals nes,Cereal preparations nes,,"Cereals, Other and products",1.068507066,1.289136893,FALSE
+Soybean,Soybean,1,TRUE,Soybeans,"Oil, soybean",,Soyabean Oil and products,0.938210713,1.001923596,TRUE
+Soybean,Soybean,1,TRUE,Soybeans,"Cake, soybeans",,Soyabean Cake,0.938210713,1.001923596,TRUE
+Soybean,Soybean,1,TRUE,Soybeans,Soya sauce,,Soyabeans and products,0.938210713,1.001923596,TRUE
+Soybean,Soybean,1,TRUE,Soybeans,Soya paste,,Soyabeans and products,0.938210713,1.001923596,TRUE
+Soybean,Soybean,1,TRUE,Soybeans,Soya curd,,Soyabeans and products,0.938210713,1.001923596,TRUE
+OilPalm,OilPalm,1,TRUE,Oil palm fruit,"Oil, palm",,Palm Oil and products,0.229783485,0.266953101,TRUE
+OilPalm,OilPalm,1,TRUE,Oil palm fruit,Palm kernels,,Palm kernels and products,0.229783485,0.266953101,TRUE
+OilPalm,OilPalm,2,FALSE,Palm kernels,"Oil, palm kernel",,Palmkernel Oil and products,0.931997389,0.998701612,TRUE
+OilPalm,OilPalm,2,FALSE,Palm kernels,"Cake, palm kernel",,Palmkernel Cake,0.931997389,0.998701612,TRUE
+OilCrop,Sunflower seed,1,TRUE,Sunflower seed,"Oil, sunflower",,Sunflower seed and products,0.83448627,0.882079224,TRUE
+OilCrop,Sunflower seed,1,TRUE,Sunflower seed,"Cake, sunflower",,Sunflowerseed Cake,0.83448627,0.882079224,TRUE
+OilCrop,Rapeseed,1,TRUE,Rapeseed,"Oil, rapeseed",,Rape and Mustard Oil and products,0.921894704,0.964325659,FALSE
+OilCrop,Rapeseed,1,TRUE,Rapeseed,"Cake, rapeseed",,Rape and Mustard Cake,0.921894704,0.964325659,FALSE
+OilCrop,Mustard seed,1,TRUE,Mustard seed,"Oil, mustard",,Rape and Mustard Oil and products,0.772188199,0.906606832,FALSE
+OilCrop,Mustard seed,1,TRUE,Mustard seed,"Flour, mustard",,Rape and Mustard Oil and products,0.772188199,0.906606832,FALSE
+OilCrop,Mustard seed,1,TRUE,Mustard seed,"Cake, mustard",,Rape and Mustard Cake,0.772188199,0.906606832,FALSE
+OilCrop,Coconuts,1,TRUE,Coconuts,Copra,,Coconuts (including copra) and products,0.199996942,0.250353462,TRUE
+OilCrop,Coconuts,1,TRUE,Coconuts,"Coconuts, desiccated",,Coconuts (including copra) and products,0.199996942,0.250353462,TRUE
+OilCrop,Coconuts,1,TRUE,Coconuts,Coir,,QCL,0.199996942,0.250353462,TRUE
+OilCrop,Coconuts,2,FALSE,Copra,"Oil, coconut (copra)",,Coconut Oil and products,0.949594442,1.021711161,TRUE
+OilCrop,Coconuts,2,FALSE,Copra,"Cake, copra",,Copra Cake,0.949594442,1.021711161,TRUE
+OilCrop,Sesame seed,1,TRUE,Sesame seed,"Oil, sesame",,Sesameseed Oil and products,0.921607193,0.974784023,FALSE
+OilCrop,Sesame seed,1,TRUE,Sesame seed,"Cake, sesame seed",,Sesameseed Cake,0.921607193,0.974784023,FALSE
+OilCrop,Olives,1,TRUE,Olives,Olives preserved,,Olives (including preserved) and products,0.346509871,0.475683954,TRUE
+OilCrop,Olives,1,TRUE,Olives,"Oil, olive, virgin",,Olive Oil and products,0.346509871,0.475683954,TRUE
+OilCrop,Olives,1,TRUE,Olives,"Oil, olive residues",,Olive Oil and products,0.346509871,0.475683954,TRUE
+OilCrop,Olives,1,TRUE,Olives,"Cake, olive residues",,Estimated,0.346509871,0.475683954,TRUE
+OilCrop,Linseed,1,TRUE,Linseed,"Oil, linseed",,"Oilcrops, Other and products",0.917542006,0.956329598,TRUE
+OilCrop,Linseed,1,TRUE,Linseed,"Cake, linseed",,Estimated,0.917542006,0.956329598,TRUE
+OilCrop,Castor oil seed,1,TRUE,Castor oil seed,"Oil, castor beans",,"Oilcrops Oil, Other and products",0.4,0.43961813,TRUE
+OilCrop,Castor oil seed,2,FALSE,"Oil, castor beans","Castor oil, hydrogenated (opal wax)",,"Oilcrops Oil, Other and products",1,1,FALSE
+OilCrop,Tallowtree seed,1,TRUE,Tallowtree seed,Vegetable tallow,,"Oilcrops Oil, Other and products",0.15,0.15,TRUE
+OilCrop,Karite nuts (sheanuts),1,TRUE,Karite nuts (sheanuts),Butter of karite nuts,,"Oilcrops Oil, Other and products",0.299163129,0.292599938,TRUE
+OilCrop,Kapok fruit,1,TRUE,Kapok fruit,Kapokseed in shell,,"Oilcrops, Other and products",1.029837176,1.040012446,FALSE
+OilCrop,Kapok fruit,1,TRUE,Kapok fruit,Kapok fibre,,QCL,1.029837176,1.040012446,FALSE
+OilCrop,Kapok fruit,2,FALSE,Kapokseed in shell,Kapokseed shelled,,"Oilcrops, Other and products",0.659998607,0.659998455,FALSE
+OilCrop,Kapok fruit,3,FALSE,Kapokseed shelled,"Oil, kapok",,"Oilcrops Oil, Other and products",0.749993466,0.792471231,FALSE
+OilCrop,Kapok fruit,3,FALSE,Kapokseed shelled,"Cake, kapok",,Estimated,0.749993466,0.792471231,FALSE
+OilCrop,OilCropNES,0,TRUE,Melonseed,Melonseed,,"Oilcrops, Other and products",,,
+OilCrop,OilCropNES,1,TRUE,Safflower seed,"Oil, safflower",,"Oilcrops Oil, Other and products",0.710838072,0.84546635,TRUE
+OilCrop,OilCropNES,1,TRUE,Safflower seed,"Cake, safflower",,Estimated,0.710838072,0.84546635,TRUE
+OilCrop,OilCropNES,2,TRUE,Jojoba seed,"Oil, jojoba",,"Oilcrops Oil, Other and products",1,1,FALSE
+OilCrop,OilCropNES,2,TRUE,Jojoba seed,"Cake, jojoba",,Estimated,1,1,FALSE
+OilCrop,OilCropNES,3,TRUE,Poppy seed,"Oil, poppy",,"Oilcrops Oil, Other and products",1,1,FALSE
+OilCrop,OilCropNES,3,TRUE,Poppy seed,"Cake, poppy",,Estimated,1,1,FALSE
+OilCrop,OilCropNES,4,TRUE,Hempseed,"Oil, hempseed",,"Oilcrops Oil, Other and products",0.560643519,0.673878058,FALSE
+OilCrop,OilCropNES,4,TRUE,Hempseed,"Cake, hempseed",,Estimated,0.560643519,0.673878058,FALSE
+OilCrop,OilCropNES,5,TRUE,Oilseeds nes,"Oil, vegetable origin nes",,"Oilcrops Oil, Other and products",0.76104,2.60284622,TRUE
+OilCrop,OilCropNES,5,TRUE,Oilseeds nes,"Cake, vegetable origin nes",,"Oilseed Cakes, Other",0.76104,2.60284622,TRUE
+OilCrop,OilCropNES,5,TRUE,Oilseeds nes,"Flour, oilseeds",,"Oilcrops, Other and products",0.76104,2.60284622,TRUE
+OilCrop,OilCropNES,6,TRUE,Tung nuts,"Oil, tung nuts",,"Oilcrops Oil, Other and products",0.174239784,0.170890194,TRUE
+FiberCrop,Seed cotton,1,TRUE,Seed cotton,Cottonseed,,QCL,0.881238445,0.844809987,TRUE
+FiberCrop,Seed cotton,1,TRUE,Seed cotton,Cotton lint,,QCL,0.881238445,0.844809987,TRUE
+FiberCrop,Seed cotton,2,FALSE,Cottonseed,"Oil, cottonseed",,Cottonseed Oil and products,0.653978909,0.693275286,TRUE
+FiberCrop,Seed cotton,2,FALSE,Cottonseed,"Cake, cottonseed",,Cottonseed Cake,0.653978909,0.693275286,TRUE
+FiberCrop,Seed cotton,2,FALSE,Cottonseed,"Fiber, cottonseed",,Estimated,0.653978909,0.693275286,TRUE
+FiberCrop,FiberCropNES,0,TRUE,Agave fibres nes,Agave fibres nes,,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,"Bastfibres, other","Bastfibres, other",,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,Fibre crops nes,Fibre crops nes,,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,Flax fibre and tow,Flax fibre and tow,,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,Hemp tow waste,Hemp tow waste,,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,Jute,Jute,,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,Manila fibre (abaca),Manila fibre (abaca),,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,Ramie,Ramie,,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,Sisal,Sisal,,QCL,,,
+NutsSeeds,"Groundnuts, with shell",1,TRUE,"Groundnuts, with shell","Groundnuts, shelled",,Groundnuts (Shelled Eq) and products,0.699976399,0.69951945,TRUE
+NutsSeeds,"Groundnuts, with shell",2,FALSE,"Groundnuts, shelled","Cake, groundnuts",,Groundnut Cake,0.925590681,0.824645889,TRUE
+NutsSeeds,"Groundnuts, with shell",2,FALSE,"Groundnuts, shelled","Groundnuts, prepared",,Groundnuts (Shelled Eq) and products,0.925590681,0.824645889,TRUE
+NutsSeeds,"Groundnuts, with shell",2,FALSE,"Groundnuts, shelled",Peanut butter,,Groundnuts (Shelled Eq) and products,0.925590681,0.824645889,TRUE
+NutsSeeds,"Groundnuts, with shell",2,FALSE,"Groundnuts, shelled","Oil, groundnut",,Groundnut Oil and products,0.925590681,0.824645889,TRUE
+NutsSeeds,NutsSeedsNES,0,TRUE,Chestnut,Chestnut,,Nuts and products,,,
+NutsSeeds,NutsSeedsNES,0,TRUE,Areca nuts,Areca nuts,,Nuts and products,,,
+NutsSeeds,NutsSeedsNES,0,TRUE,Kola nuts,Kola nuts,,Nuts and products,,,
+NutsSeeds,NutsSeedsNES,1,TRUE,"Brazil nuts, with shell","Brazil nuts, shelled",,Nuts and products,0.54998659,0.549990383,FALSE
+NutsSeeds,NutsSeedsNES,2,TRUE,"Walnuts, with shell","Walnuts, shelled",,Nuts and products,0.418449069,0.483226707,TRUE
+NutsSeeds,NutsSeedsNES,3,TRUE,"Cashew nuts, with shell","Cashew nuts, shelled",,Nuts and products,0.249908103,0.297210095,TRUE
+NutsSeeds,NutsSeedsNES,4,TRUE,"Almonds, with shell",Almonds shelled,,Nuts and products,0.494881028,0.535778845,TRUE
+NutsSeeds,NutsSeedsNES,5,TRUE,"Hazelnuts, with shell","Hazelnuts, shelled",,Nuts and products,0.499196224,0.498477673,TRUE
+NutsSeeds,NutsSeedsNES,6,FALSE,"Brazil nuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,6,FALSE,"Walnuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,6,FALSE,"Cashew nuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,6,TRUE,Nuts nes,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,6,TRUE,Pistachios,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,6,FALSE,Almonds shelled,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,6,FALSE,"Hazelnuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+Legumes,Legumes,1,TRUE,"Beans, dry","Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,"Peas, dry","Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,"Broad beans, horse beans, dry","Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,Chick peas,"Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,Lentils,"Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,"Cow peas, dry","Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,Pigeon peas,"Bran, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,Bambara beans,"Bran, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,Vetches,"Bran, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,Lupins,"Bran, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+Legumes,Legumes,1,TRUE,Pulses nes,"Bran, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
+RootTuber,Potatoes,1,TRUE,Potatoes,"Potatoes, frozen",,Potatoes and products,0.180310461,0.321982533,TRUE
+RootTuber,Potatoes,1,TRUE,Potatoes,"Flour, potatoes",,Potatoes and products,0.180310461,0.321982533,TRUE
+RootTuber,Potatoes,1,TRUE,Potatoes,"Starch, potatoes",,Potatoes and products,0.180310461,0.321982533,TRUE
+RootTuber,Potatoes,1,TRUE,Potatoes,"Tapioca, potatoes",,Potatoes and products,0.180310461,0.321982533,TRUE
+RootTuber,Cassava,1,TRUE,Cassava,Cassava dried,,Cassava and products,0.25,0.28767134,TRUE
+RootTuber,Cassava,1,TRUE,Cassava,"Flour, cassava",,Cassava and products,0.25,0.28767134,TRUE
+RootTuber,Cassava,1,TRUE,Cassava,"Starch, cassava",,Cassava and products,0.25,0.28767134,TRUE
+RootTuber,Cassava,1,TRUE,Cassava,"Tapioca, cassava",,Cassava and products,0.25,0.28767134,TRUE
+RootTuber,Sweet potatoes,0,TRUE,Sweet potatoes,Sweet potatoes,,Sweet potatoes and products,,,
+RootTuber,Yams,0,TRUE,Yams,Yams,,Yams and products,,,
+RootTuber,Roots and tubers nes,0,TRUE,Taro (cocoyam),Taro (cocoyam),,"Roots, Other and products",,,
+RootTuber,Roots and tubers nes,0,TRUE,Yautia (cocoyam),Yautia (cocoyam),,"Roots, Other and products",,,
+RootTuber,Roots and tubers nes,1,TRUE,Roots and tubers nes,Roots and tubers dried,,"Roots, Other and products",0.261715065,0.448975879,TRUE
+RootTuber,Roots and tubers nes,1,TRUE,Roots and tubers nes,"Flour, roots and tubers nes",,"Roots, Other and products",0.261715065,0.448975879,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar cane,Sugar non-centrifugal,,Sugar non-centrifugal and products,0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar cane,Sugar Raw Centrifugal,,Sugar (Raw Equivalent) and products,0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar cane,Molasses,,"Sweeteners, Other and products",0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar beet,Sugar non-centrifugal,,Sugar non-centrifugal and products,0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar beet,Sugar Raw Centrifugal,,Sugar (Raw Equivalent) and products,0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar beet,Molasses,,"Sweeteners, Other and products",0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar crops nes,Sugar non-centrifugal,,Sugar non-centrifugal and products,0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar crops nes,Sugar Raw Centrifugal,,Sugar (Raw Equivalent) and products,0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,1,TRUE,Sugar crops nes,Molasses,,"Sweeteners, Other and products",0.147197243,0.166534583,TRUE
+SugarCrop,SugarCrop,2,FALSE,Sugar Raw Centrifugal,Sugar refined,,Sugar (Raw Equivalent) and products,0.919999956,0.922708303,FALSE
+SugarCrop,SugarCrop,3,FALSE,Sugar refined,Sugar confectionery,,Sugar (Raw Equivalent) and products,0.399504543,0.397100961,TRUE
+SugarCrop,SugarCrop,3,FALSE,Sugar refined,Sugar nes,,"Sweeteners, Other and products",0.399504543,0.397100961,TRUE
+Vegetables,Tomatoes,1,TRUE,Tomatoes,"Juice, tomato",,Tomatoes and products,0.311226649,0.365140358,TRUE
+Vegetables,Tomatoes,1,TRUE,Tomatoes,"Tomatoes, paste",,Tomatoes and products,0.311226649,0.365140358,TRUE
+Vegetables,Tomatoes,1,TRUE,Tomatoes,"Tomatoes, peeled",,Tomatoes and products,0.311226649,0.365140358,TRUE
+Vegetables,"Maize, green",1,TRUE,"Maize, green",Sweet corn frozen,,"Vegetables, Other and products",0.4,0.3817711,TRUE
+Vegetables,"Maize, green",1,TRUE,"Maize, green",Sweet corn prep or preserved,,"Vegetables, Other and products",0.4,0.3817711,TRUE
+Vegetables,Mushrooms and truffles,1,TRUE,Mushrooms and truffles,"Mushrooms, dried",,"Vegetables, Other and products",0.373450077,0.427985642,TRUE
+Vegetables,Mushrooms and truffles,1,TRUE,Mushrooms and truffles,"Mushrooms, canned",,"Vegetables, Other and products",0.373450077,0.427985642,TRUE
+Vegetables,VegetablesNES,0,TRUE,Lettuce and chicory,Lettuce and chicory,,"Vegetables, Other and products",,,
+Vegetables,VegetablesNES,0,TRUE,Cassava leaves,Cassava leaves,,"Vegetables, Other and products",,,
+Vegetables,VegetablesNES,1,TRUE,"Chillies and peppers, dry","Juice, vegetables nes",,Pimento and products,0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Onions, dry",Vegetables in vinegar,,Onions and products,0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Onions, shallots, green","Vegetables, dehydrated",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Asparagus,"Vegetables, temporarily preserved",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Cabbages and other brassicas,"Coffee, substitutes containing coffee",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Cauliflowers and broccoli,"Vegetables, homogenized preparations",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Spinach,"Vegetables, preserved nes",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Artichokes,"Vegetables, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Watermelons,"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Melons, other (inc.cantaloupes)","Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Chillies and peppers, green","Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Cucumbers and gherkins,"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Eggplants (aubergines),"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Pumpkins, squash and gourds","Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Peas, green","Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Carrots and turnips,"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Garlic,"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Leeks, other alliaceous vegetables","Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Carobs,"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Chicory roots,"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,Okra,"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,String beans,"Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Beans, green","Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Vegetables, leguminous nes","Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Vegetables,VegetablesNES,1,TRUE,"Vegetables, fresh nes","Vegetables, preserved, frozen",,"Vegetables, Other and products",0.709929554,0.803273208,TRUE
+Fruits,Oranges,1,TRUE,Oranges,"Juice, orange, single strength",,"Oranges, Mandarines and products",0.170600118,0.214586992,TRUE
+Fruits,Oranges,1,TRUE,"Tangerines, mandarins, clementines, satsumas","Juice, orange, concentrated",,"Oranges, Mandarines and products",0.170600118,0.214586992,TRUE
+Fruits,Oranges,1,TRUE,"Tangerines, mandarins, clementines, satsumas","Juice, tangerine",,"Oranges, Mandarines and products",0.170600118,0.214586992,TRUE
+Fruits,"Fruit, citrus nes",1,TRUE,"Fruit, citrus nes","Juice, citrus, single strength",,"Citrus, Other and products",0.219728444,0.52761965,TRUE
+Fruits,"Fruit, citrus nes",1,TRUE,"Fruit, citrus nes","Juice, citrus, concentrated",,"Citrus, Other and products",0.219728444,0.52761965,TRUE
+Fruits,Lemons and limes,1,TRUE,Lemons and limes,"Juice, lemon, single strength",,"Lemons, Limes and products",0.079779048,0.098793329,TRUE
+Fruits,Lemons and limes,1,TRUE,Lemons and limes,"Juice, lemon, concentrated",,"Lemons, Limes and products",0.079779048,0.098793329,TRUE
+Fruits,Grapefruit,1,TRUE,Grapefruit (inc. pomelos),"Juice, grapefruit",,Grapefruit and products,0.085280324,0.238875,TRUE
+Fruits,Grapefruit,1,TRUE,Grapefruit (inc. pomelos),"Juice, grapefruit, concentrated",,Grapefruit and products,0.085280324,0.238875,TRUE
+Fruits,Bananas,0,TRUE,Bananas,Bananas,,Bananas and products,,,
+Fruits,Plantains and others,0,TRUE,Plantains and others,Plantains and others,,Plantains and products,,,
+Fruits,Dates,0,TRUE,Dates,Dates,,Dates and products,,,
+Fruits,Apples,1,TRUE,Apples,"Juice, apple, single strength",,Apples and products,0.138791116,0.153287256,TRUE
+Fruits,Apples,1,TRUE,Apples,"Juice, apple, concentrated",,Apples and products,0.138791116,0.153287256,TRUE
+Fruits,Pineapples,1,TRUE,Pineapples,"Juice, pineapple",,Pineapples and products,0.274980822,0.299192613,TRUE
+Fruits,Pineapples,1,TRUE,Pineapples,Pineapples canned,,Pineapples and products,0.274980822,0.299192613,TRUE
+Fruits,Pineapples,1,TRUE,Pineapples,"Juice, pineapple, concentrated",,Pineapples and products,0.274980822,0.299192613,TRUE
+Fruits,Grapes,1,TRUE,Grapes,Raisins,,Grapes and products (excludingexcl wine) and products,0.02158648,0.202178004,TRUE
+Fruits,Grapes,1,TRUE,Grapes,"Juice, grape",,Grapes and products (excludingexcl wine) and products,0.02158648,0.202178004,TRUE
+Fruits,Grapes,1,TRUE,Grapes,"Grapes, must",,Grapes and products (excludingexcl wine) and products,0.02158648,0.202178004,TRUE
+Fruits,FruitsNES,0,TRUE,Pears,Pears,,"Fruits, Other and products",,,
+Fruits,FruitsNES,0,TRUE,Papayas,Papayas,,"Fruits, Other and products",,,
+Fruits,FruitsNES,0,TRUE,Peaches and nectarines,Peaches and nectarines,,"Fruits, Other and products",,,
+Fruits,FruitsNES,0,TRUE,Avocados,Avocados,,"Fruits, Other and products",,,
+Fruits,FruitsNES,1,TRUE,"Cherries, sour","Fruits, nuts, peel, sugar preserved",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Cherries,"Fruit, cooked, homogenized preparations",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Strawberries,"Fruit, tropical dried nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Kiwi fruit,"Fruit, dried nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Quinces,"Juice, fruit nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Currants,"Flour, fruit",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Gooseberries,"Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Raspberries,"Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Blueberries,"Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Cranberries,"Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Berries nes,"Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Persimmons,"Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,Cashewapple,"Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,"Fruit, fresh nes","Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,"Fruit, tropical fresh nes","Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,"Fruit, pome nes","Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,1,TRUE,"Fruit, stone nes","Fruit, prepared nes",,"Fruits, Other and products",0.714237324,1.196438313,TRUE
+Fruits,FruitsNES,2,TRUE,Apricots,"Apricots, dry",,"Fruits, Other and products",0.152231786,0.266753062,TRUE
+Fruits,FruitsNES,2,TRUE,Figs,Figs dried,,"Fruits, Other and products",0.152231786,0.266753062,TRUE
+Fruits,FruitsNES,3,TRUE,"Mangoes, mangosteens, guavas","Juice, mango",,"Fruits, Other and products",0.060836107,0.071881098,TRUE
+Fruits,FruitsNES,4,TRUE,Plums and sloes,Plums dried (prunes),,"Fruits, Other and products",0.249143466,0.193750393,TRUE
+Fruits,FruitsNES,4,TRUE,Plums and sloes,"Juice, plum, single strength",,"Fruits, Other and products",0.249143466,0.193750393,TRUE
+Fruits,FruitsNES,4,TRUE,Plums and sloes,"Juice, plum, concentrated",,"Fruits, Other and products",0.249143466,0.193750393,TRUE
+MiscCrop,"Coffee, green",1,TRUE,"Coffee, green","Coffee, roasted",,Coffee and products,0.38000016,0.651764179,TRUE
+MiscCrop,"Coffee, green",1,TRUE,"Coffee, green","Coffee, extracts",,Coffee and products,0.38000016,0.651764179,TRUE
+MiscCrop,"Cocoa, beans",1,TRUE,"Cocoa, beans","Cocoa, paste",,Cocoa Beans and products,0.799978398,0.799828386,FALSE
+MiscCrop,"Cocoa, beans",2,FALSE,"Cocoa, paste","Cocoa, butter",,Cocoa Beans and products,0.99993497,1.015388297,FALSE
+MiscCrop,"Cocoa, beans",2,FALSE,"Cocoa, paste","Cocoa, powder & cake",,Cocoa Beans and products,0.99993497,1.015388297,FALSE
+MiscCrop,"Cocoa, beans",3,FALSE,"Cocoa, butter",Chocolate products nes,,Cocoa Beans and products,4.697977987,4.454539454,FALSE
+MiscCrop,"Cocoa, beans",3,FALSE,"Cocoa, powder & cake",Chocolate products nes,,Cocoa Beans and products,4.697977987,4.454539454,FALSE
+MiscCrop,MiscCropNES,0,TRUE,Tea,Tea,,Tea (including mate) and products,,,
+MiscCrop,MiscCropNES,0,TRUE,Mate,Mate,,Tea (including mate) and products,,,
+MiscCrop,MiscCropNES,0,TRUE,Pepper (piper spp.),Pepper (piper spp.),,Pepper and products,,,
+MiscCrop,MiscCropNES,0,TRUE,Cloves,Cloves,,Cloves and products,,,
+MiscCrop,MiscCropNES,0,TRUE,"Nutmeg, mace and cardamoms","Nutmeg, mace and cardamoms",,"Spices, Other and products",,,
+MiscCrop,MiscCropNES,0,TRUE,"Anise, badian, fennel, coriander","Anise, badian, fennel, coriander",,"Spices, Other and products",,,
+MiscCrop,MiscCropNES,0,TRUE,Cinnamon (cannella),Cinnamon (cannella),,"Spices, Other and products",,,
+MiscCrop,MiscCropNES,0,TRUE,Ginger,Ginger,,"Spices, Other and products",,,
+MiscCrop,MiscCropNES,0,TRUE,Vanilla,Vanilla,,"Spices, Other and products",,,
+MiscCrop,MiscCropNES,0,TRUE,Spices nes,Spices nes,,"Spices, Other and products",,,
+MiscCrop,MiscCropNES,0,TRUE,Peppermint,Peppermint,,QCL,,,
+MiscCrop,MiscCropNES,0,TRUE,Hops,Hops,,QCL,,,
+MiscCrop,MiscCropNES,0,TRUE,"Tobacco, unmanufactured","Tobacco, unmanufactured",,QCL,,,
+MiscCrop,MiscCropNES,0,TRUE,"Rubber, natural","Rubber, natural",,QCL,,,
+MiscCrop,MiscCropNES,0,TRUE,"Pyrethrum, dried","Pyrethrum, dried",,QCL,,,
+Beef,BeefAnMeatEq,0,FALSE,"AnMeatEq, cattle","AnMeatEq, cattle",,QCL,,,
+Beef,BeefAnMeatEq,0,FALSE,"AnMeatEq, buffalo","AnMeatEq, buffalo",,QCL,,,
+Beef,Beef,1,TRUE,"Meat, cattle","Meat, beef, dried, salted, smoked",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, cattle","Meat, extracts",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, cattle","Meat, cattle, boneless (beef & veal)",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, cattle","Meat, beef and veal sausages",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, cattle","Meat, homogenized preparations",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, cattle","Meat, beef, preparations",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, cattle","Fat, cattle butcher",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, buffalo","Meat, beef, dried, salted, smoked",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, buffalo","Meat, extracts",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, buffalo","Meat, cattle, boneless (beef & veal)",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, buffalo","Meat, beef and veal sausages",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, buffalo","Meat, homogenized preparations",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, buffalo","Meat, beef, preparations",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,1,TRUE,"Meat, buffalo","Fat, cattle butcher",,Bovine Meat and products,0.688422511,0.836132861,TRUE
+Beef,Beef,2,FALSE,"Fat, cattle butcher",Tallow,,"Fats, Animals, Raw and products",1.746713306,2.458083614,FALSE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Milk, skimmed cow",,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Milk, whole dried",0.15,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Milk, whole evaporated",0.4,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Milk, whole condensed",0.33,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow",Yoghurt,,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Whey, fresh",,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Cheese, whole cow milk",,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Milk, skimmed cow",,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow",Cream fresh,,Milk - (Excluding excluding Butter butter) and products,0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Butter, cow milk",,"Butter, Ghee and products",0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",1,TRUE,"Milk, whole fresh cow","Ghee, butteroil of cow milk",,"Butter, Ghee and products",0.739010126,0.857196004,TRUE
+Dairy,"Milk, whole fresh cow",2,FALSE,Cream fresh,Ice cream and edible ice,,Milk - (Excluding excluding Butter butter) and products,1,18.13888677,FALSE
+Dairy,"Milk, whole fresh cow",2,FALSE,Cream fresh,"Cheese, processed",,Milk - (Excluding excluding Butter butter) and products,1,18.13888677,FALSE
+Dairy,"Milk, whole fresh cow",3,FALSE,"Milk, skimmed cow","Cheese, skimmed cow milk",,Milk - (Excluding excluding Butter butter) and products,0.086607747,0.105683292,TRUE
+Dairy,"Milk, whole fresh cow",3,FALSE,"Milk, skimmed cow","Milk, skimmed condensed",,Milk - (Excluding excluding Butter butter) and products,0.086607747,0.105683292,TRUE
+Dairy,"Milk, whole fresh cow",3,FALSE,"Milk, skimmed cow","Milk, skimmed evaporated",,Milk - (Excluding excluding Butter butter) and products,0.086607747,0.105683292,TRUE
+Dairy,"Milk, whole fresh cow",3,FALSE,"Milk, skimmed cow","Milk, skimmed dried",,Milk - (Excluding excluding Butter butter) and products,0.086607747,0.105683292,TRUE
+Dairy,"Milk, whole fresh cow",3,FALSE,"Milk, skimmed cow","Milk, dry buttermilk",,Milk - (Excluding excluding Butter butter) and products,0.086607747,0.105683292,TRUE
+Dairy,"Milk, whole fresh cow",3,FALSE,"Milk, skimmed cow",Casein,,Milk - (Excluding excluding Butter butter) and products,0.086607747,0.105683292,TRUE
+Dairy,"Milk, whole fresh camel",0,TRUE,"Milk, whole fresh camel","Milk, whole fresh camel",,Milk - (Excluding excluding Butter butter) and products,,,
+Dairy,"Milk, whole fresh buffalo",1,TRUE,"Milk, whole fresh buffalo","Ghee, buffalo milk",,"Butter, Ghee and products",0.823862301,0.9799144,TRUE
+Dairy,"Milk, whole fresh buffalo",1,TRUE,"Milk, whole fresh buffalo","Butter, buffalo milk",,"Butter, Ghee and products",0.823862301,0.9799144,TRUE
+Dairy,"Milk, whole fresh buffalo",1,TRUE,"Milk, whole fresh buffalo","Cheese, buffalo milk",,Milk - (Excluding excluding Butter butter) and products,0.823862301,0.9799144,TRUE
+Dairy,"Milk, whole fresh buffalo",1,TRUE,"Milk, whole fresh buffalo","Milk, skimmed buffalo",,Milk - (Excluding excluding Butter butter) and products,0.823862301,0.9799144,TRUE
+Dairy,"Milk, whole fresh goat",1,TRUE,"Milk, whole fresh goat","Butter, goat milk",,"Butter, Ghee and products",0.144438676,0.212862378,TRUE
+Dairy,"Milk, whole fresh goat",1,TRUE,"Milk, whole fresh goat","Cheese, goat milk",,Milk - (Excluding excluding Butter butter) and products,0.144438676,0.212862378,TRUE
+Dairy,"Milk, whole fresh goat",1,TRUE,"Milk, whole fresh goat","Milk, skimmed goat",,Milk - (Excluding excluding Butter butter) and products,0.144438676,0.212862378,TRUE
+Dairy,"Milk, whole fresh sheep",1,TRUE,"Milk, whole fresh sheep","Butter and ghee, sheep milk",,"Butter, Ghee and products",0.193182289,0.444776412,TRUE
+Dairy,"Milk, whole fresh sheep",1,TRUE,"Milk, whole fresh sheep","Cheese, sheep milk",,Milk - (Excluding excluding Butter butter) and products,0.193182289,0.444776412,TRUE
+Dairy,"Milk, whole fresh sheep",1,TRUE,"Milk, whole fresh sheep","Milk, skimmed sheep",,Milk - (Excluding excluding Butter butter) and products,0.193182289,0.444776412,TRUE
+Pork,PorkAnMeatEq,0,FALSE,"AnMeatEq, pig","AnMeatEq, pig",,QCL,,,
+Pork,Pork,1,TRUE,"Meat, pig","Meat, pork",,Pigmeat and products,0.837720197,0.926485113,FALSE
+Pork,Pork,1,TRUE,"Meat, pig","Meat, pig sausages",,Pigmeat and products,0.837720197,0.926485113,FALSE
+Pork,Pork,1,TRUE,"Meat, pig","Meat, pig, preparations",,Pigmeat and products,0.837720197,0.926485113,FALSE
+Pork,Pork,1,TRUE,"Meat, pig",Bacon and ham,,Pigmeat and products,0.837720197,0.926485113,FALSE
+Pork,Pork,1,TRUE,"Meat, pig","Fat, pig butcher",,"Fats, Animals, Raw and products",0.837720197,0.926485113,FALSE
+Pork,Pork,2,FALSE,"Fat, pig butcher",Lard stearine oil,,"Fats, Animals, Raw and products",0.811702355,1.40447783,TRUE
+Pork,Pork,2,FALSE,"Fat, pig butcher",Lard,,"Fats, Animals, Raw and products",0.811702355,1.40447783,TRUE
+Poultry,PoultryAnMeatEq,0,FALSE,"AnMeatEq, duck","AnMeatEq, duck",,QCL,,,
+Poultry,PoultryAnMeatEq,0,FALSE,"AnMeatEq, chicken","AnMeatEq, chicken",,QCL,,,
+Poultry,PoultryAnMeatEq,0,FALSE,"AnMeatEq, goose and guinea fowl","AnMeatEq, goose and guinea fowl",,QCL,,,
+Poultry,PoultryAnMeatEq,0,FALSE,"AnMeatEq, turkey","AnMeatEq, turkey",,QCL,,,
+Poultry,PoultryMeat,0,TRUE,"Meat, duck","Meat, duck",,Poultry Meat and products,,,
+Poultry,PoultryMeat,0,TRUE,"Meat, goose and guinea fowl","Meat, goose and guinea fowl",,Poultry Meat and products,,,
+Poultry,PoultryMeat,0,TRUE,"Meat, turkey","Meat, turkey",,Poultry Meat and products,,,
+Poultry,PoultryMeat,1,TRUE,"Meat, chicken","Fat, liver prepared (foie gras)",,Poultry Meat and products,0.789787391,0.751975427,TRUE
+Poultry,PoultryMeat,1,TRUE,"Meat, chicken","Meat, chicken, canned",,Poultry Meat and products,0.789787391,0.751975427,TRUE
+Poultry,PoultryMeat,1,TRUE,"Meat, chicken","Fat, poultry",,"Fats, Animals, Raw and products",0.789787391,0.751975427,TRUE
+Poultry,PoultryMeat,2,FALSE,"Fat, poultry","Fat, poultry, rendered",,"Fats, Animals, Raw and products",0.8,0.806951132,FALSE
+Poultry,PoultryEgg,0,TRUE,"Eggs, other bird, in shell","Eggs, other bird, in shell",,Eggs and products,,,
+Poultry,PoultryEgg,1,TRUE,"Eggs, hen, in shell",Egg albumine,,Eggs and products,0.525059714,0.5850148,TRUE
+Poultry,PoultryEgg,1,TRUE,"Eggs, hen, in shell","Eggs, liquid",,Eggs and products,0.525059714,0.5850148,TRUE
+Poultry,PoultryEgg,1,TRUE,"Eggs, hen, in shell","Eggs, dried",,Eggs and products,0.525059714,0.5850148,TRUE
+SheepGoat,SheepGoatAnMeatEq,0,FALSE,"AnMeatEq, sheep","AnMeatEq, sheep",,QCL,,,
+SheepGoat,SheepGoatAnMeatEq,0,FALSE,"AnMeatEq, goat","AnMeatEq, goat",,QCL,,,
+SheepGoat,SheepGoat,0,TRUE,"Meat, sheep","Meat, sheep",,Mutton & and Goat Meat and products,,,
+SheepGoat,SheepGoat,0,TRUE,"Meat, goat","Meat, goat",,Mutton & and Goat Meat and products,,,
+OtherMeat_Fish,Fish,0,TRUE,Freshwater Fish,Freshwater Fish,,Freshwater Fish,,,
+OtherMeat_Fish,Fish,0,TRUE,"Fish, Body Oil","Fish, Body Oil",,"Fish, Body Oil",,,
+OtherMeat_Fish,Fish,0,TRUE,"Fish, Liver Oil","Fish, Liver Oil",,"Fish, Liver Oil",,,
+OtherMeat_Fish,Fish,0,TRUE,Demersal Fish,Demersal Fish,,Demersal Fish,,,
+OtherMeat_Fish,Fish,0,TRUE,Pelagic Fish,Pelagic Fish,,Pelagic Fish,,,
+OtherMeat_Fish,Fish,0,TRUE,"Marine Fish, Other","Marine Fish, Other",,"Marine Fish, Other",,,
+OtherMeat_Fish,Fish,0,TRUE,Crustaceans,Crustaceans,,Crustaceans,,,
+OtherMeat_Fish,Fish,0,TRUE,Cephalopods,Cephalopods,,Cephalopods,,,
+OtherMeat_Fish,Fish,0,TRUE,"Molluscs, Other","Molluscs, Other",,"Molluscs, Other",,,
+OtherMeat_Fish,Fish,0,TRUE,"Aquatic Animals, Others","Aquatic Animals, Others",,"Aquatic Animals, Others",,,
+OtherMeat_Fish,Fish,0,TRUE,Aquatic Plants,Aquatic Plants,,Aquatic Plants,,,
+OtherMeat_Fish,Fish,0,TRUE,"Meat, Aquatic Mammals","Meat, Aquatic Mammals",,"Meat, Aquatic Mammals",,,
+OtherMeat_Fish,OtherMeatAnMeatEq,0,FALSE,"AnMeatEq, rabbit","AnMeatEq, rabbit",,QCL,,,
+OtherMeat_Fish,OtherMeatAnMeatEq,0,FALSE,"AnMeatEq, camel","AnMeatEq, camel",,QCL,,,
+OtherMeat_Fish,OtherMeatAnMeatEq,0,FALSE,"AnMeatEq, other camelids","AnMeatEq, other camelids",,QCL,,,
+OtherMeat_Fish,OtherMeatAnMeatEq,0,FALSE,"AnMeatEq, horse","AnMeatEq, horse",,QCL,,,
+OtherMeat_Fish,OtherMeatAnMeatEq,0,FALSE,"AnMeatEq, ass","AnMeatEq, ass",,QCL,,,
+OtherMeat_Fish,OtherMeatAnMeatEq,0,FALSE,"AnMeatEq, mule","AnMeatEq, mule",,QCL,,,
+OtherMeat_Fish,OtherMeatAnMeatEq,0,FALSE,"AnMeatEq, other rodents","AnMeatEq, other rodents",,QCL,,,
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, rabbit","Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, camel","Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, other camelids","Meat nes, preparations",,QCL,0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, horse","Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, ass","Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, mule","Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, other rodents","Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, bird nes","Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, game","Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,Meat nes,"Meat nes, preparations",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, rabbit","Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, camel","Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, other camelids","Meat, dried nes",,QCL,0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, horse","Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, ass","Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, mule","Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, other rodents","Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, bird nes","Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,"Meat, game","Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatMeat,1,TRUE,Meat nes,"Meat, dried nes",,"Meat, Other and products",0.631443499,4.400217214,TRUE
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, edible, cattle","Offals, edible, cattle",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, edible, buffaloes","Offals, edible, buffaloes",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, pigs, edible","Offals, pigs, edible",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, sheep,edible","Offals, sheep,edible",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, edible, goats","Offals, edible, goats",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, horses","Offals, horses",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, edible, camels","Offals, edible, camels",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, liver chicken","Offals, liver chicken",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, liver geese","Offals, liver geese",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, liver duck","Offals, liver duck",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,"Offals, liver turkeys","Offals, liver turkeys",,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,Offals nes,Offals nes,,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatOffals,0,TRUE,Liver prep.,Liver prep.,,"Offals, Edible and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Fat, cattle","Fat, cattle",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Fat, buffaloes","Fat, buffaloes",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Fat, sheep","Fat, sheep",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Fat, goats","Fat, goats",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Fat, pigs","Fat, pigs",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Fat, camels","Fat, camels",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Fat, other camelids","Fat, other camelids",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Oils, fats of animal nes","Oils, fats of animal nes",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,Degras,Degras,,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,Grease incl. lanolin wool,Grease incl. lanolin wool,,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatFat,0,TRUE,"Fat nes, prepared","Fat nes, prepared",,"Fats, Animals, Raw and products",,,
+OtherMeat_Fish,OtherMeatOther,0,TRUE,"Honey, natural","Honey, natural",,Honey and products,,,
+OtherMeat_Fish,OtherMeatOther,0,TRUE,"Snails, not sea","Snails, not sea",,"Meat, Other and products",,,

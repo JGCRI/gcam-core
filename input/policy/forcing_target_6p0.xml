@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<policy-target-runner name="forcing_4p5">
+<policy-target-runner name="forcing_6p0">
     <!-- tax-name | default: CO2 | The market name to change the price on --> 
 	<tax-name>CO2_LTG</tax-name> 
     <!-- target-value | no default | The target value such as concentration 

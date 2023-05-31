@@ -709,11 +709,13 @@ void Marketplace::init_to_last( const int period ) {
         for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
             double forecastedPrice = mMarkets[ i ]->forecastPrice( period );
             double lastPeriodPrice = mMarkets[ i ]->getMarket( period - 1 )->getPrice();
+            double forecastToLastRatio = abs(forecastedPrice) / abs(lastPeriodPrice);
             // Only use the forecast price if it is reliable.
             if( (forecastedPrice < 0.0 && lastPeriodPrice > 0.0) ||
-                abs( forecastedPrice ) > 5.0 * abs( lastPeriodPrice ) )
+                (forecastToLastRatio > 5.0 || forecastToLastRatio < 0.2) )
             {
                 mMarkets[ i ]->getMarket( period )->set_price_to_last( lastPeriodPrice );
+                mMarkets[ i ]->getMarket( period )->setForecastPrice( lastPeriodPrice );
             }
             else {
                 mMarkets[ i ]->getMarket( period )->set_price_to_last( forecastedPrice );

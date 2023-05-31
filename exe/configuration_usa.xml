@@ -32,6 +32,7 @@
 		<Value name = "industry_income_elas">../input/gcamdata/xml/other_industry_incelas_gssp2.xml</Value>
  		<Value name = "iron_steel">../input/gcamdata/xml/iron_steel.xml</Value>
 		<Value name = "iron_steel_income_elas">../input/gcamdata/xml/iron_steel_incelas_gssp2.xml</Value>   
+		<Value name = "iron_steel trade">../input/gcamdata/xml/iron_steel_trade.xml</Value>
  		<Value name = "Off_road">../input/gcamdata/xml/Off_road.xml</Value>
 		<Value name = "Off_road_income_elas">../input/gcamdata/xml/Off_road_incelas_gssp2.xml</Value>  
  		<Value name = "chemical">../input/gcamdata/xml/chemical.xml</Value>
@@ -100,7 +101,7 @@
 		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>
 		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
         <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
-
+        <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 
 		<Value name = "socio_usa">../input/gcamdata/xml/socioeconomics_USA.xml</Value>
 		<Value name = "resource_usa">../input/gcamdata/xml/resources_USA.xml</Value>
@@ -138,11 +139,6 @@
 		<Value name = "municipal_water_usa">../input/gcamdata/xml/water_demand_municipal_USA.xml</Value>
 		<Value name = "ind_water_usa">../input/gcamdata/xml/water_demand_industry_USA.xml</Value>
 		
-		<!--GHG EMISSIONS USA-->
-		<Value name = "ghg_usa">../input/gcamdata/xml/ghg_emissions_USA.xml</Value>
-		<Value name = "ghg_usa">../input/gcamdata/xml/elecS_ghg_emissions_water_USA.xml</Value>
-		<Value name = "ghg_usa">../input/gcamdata/xml/trn_ghg_emissions_USA.xml</Value>
-
 		<!--nonGHG EMISSIONS USA-->
 		<Value name = "bld_emiss_USA">../input/gcamdata/xml/bld_emissions_USA.xml</Value>
 		<Value name = "othertrn_emiss_USA">../input/gcamdata/xml/othertrn_emissions_USA.xml</Value>
@@ -152,6 +148,12 @@
 		<Value name = "prc_usa">../input/gcamdata/xml/ind_urb_processing_sectors_USA.xml</Value>
 		<Value name = "process_emiss_USA">../input/gcamdata/xml/ind_urb_proc_emissions_USA.xml</Value>
 		<Value name = "refining_emiss_USA">../input/gcamdata/xml/refinery_emissions_USA.xml</Value>
+		
+		<!--GHG EMISSIONS USA-->
+		<Value name = "ghg_usa">../input/gcamdata/xml/ghg_emissions_USA.xml</Value>
+		<Value name = "ghg_usa">../input/gcamdata/xml/elecS_ghg_emissions_water_USA.xml</Value>
+		<Value name = "ghg_usa">../input/gcamdata/xml/trn_ghg_emissions_USA.xml</Value>
+		<Value name = "ghg_usa">../input/gcamdata/xml/ind_urb_proc_ghg_emissions_USA.xml</Value>
 	
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		

@@ -1,0 +1,116 @@
+# File: WSA_direct_reduced_iron_2008_2019.csv
+# Title: Direct reduced iron production, imports, exports by country
+# Units: thousand tons
+# Description: Direct reduced iron production, imports, exports by country (2008-2019)
+# Source: World Steel Association Statistical Year Books (2019)
+# Column types: cnnnnnnnnnnnnc
+# ----------
+country_name,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,metric
+Australia,81,0,,1,0,0,0,,0,0,0,0,DRI exports
+Belgium,1,0,11,4,0,0,0,0,0,113,203,226,DRI exports
+Bulgaria,9,3,3,0,0,0,0,0,0,0,0,0,DRI exports
+Canada,0,0,0,0,13,83,85,0,68,0,2,2,DRI exports
+China,12,5,213,151,112,224,60,41,1,15,0,0,DRI exports
+"Korea, Democratic Peoples Republic of",0,6,10,9,5,10,12,2,0,0,0,0,DRI exports
+France,9,1,15,3,6,3,13,16,0,0,0,1,DRI exports
+Germany,72,3,15,0,0,0,0,0,0,0,0,1,DRI exports
+India,29,17,69,70,126,117,167,132,262,500,658,861,DRI exports
+Indonesia,,0,1,0,42,0,21,1,,1,2,1,DRI exports
+"Iran, Islamic Republic of",137,,0,30,,32,,,34,6,372,325,DRI exports
+Japan,1,1,1,1,1,1,1,1,0,0,0,0,DRI exports
+Libyan Arab Jamahiriya,103,106,212,59,34,206,285,120,130,108,123,187,DRI exports
+Malaysia,322,255,473,570,861,479,703,391,522,570,717,573,DRI exports
+Mexico,0,0,0,0,55,0,0,0,0,0,0,0,DRI exports
+Netherlands,93,111,0,1,0,8,8,13,0,2,0,65,DRI exports
+Oman,0,0,0,591,916,426,184,196,561,873,494,693,DRI exports
+Other Africa,34,,151,,0,0,2,10,46,126,0,0,DRI exports
+Other Asia,16,0,8,1,1,2,1,10,0,1,11,7,DRI exports
+Other CIS,46,0,3,0,0,0,0,0,0,0,0,24,DRI exports
+Other EU,8,0,1,26,7,7,7,65,52,18,35,16,DRI exports
+Other Europe,1,0,7,5,1,4,4,4,0,0,14,23,DRI exports
+Other Middle East,0,,0,0,0,83,51,21,489,518,927,491,DRI exports
+Other North America,1,0,1,0,0,0,0,0,0,0,0,0,DRI exports
+Other Oceania,0,1,0,0,0,0,0,0,0,0,0,0,DRI exports
+Other South America,5,1,,,0,0,0,0,,0,0,0,DRI exports
+Qatar,119,207,145,170,36,46,41,18,0,91,0,2,DRI exports
+Russian Federation,2482,1675,1915,2144,2132,2062,2192,2207,2289,2848,3637,4092,DRI exports
+Saudi Arabia,0,2,42,4,39,33,66,10,17,3,0,28,DRI exports
+South Africa,2,1,0,0,1,1,45,63,32,51,37,38,DRI exports
+"Korea, Republic of",0,0,2,42,70,66,79,18,12,0,0,0,DRI exports
+Spain,3,0,2,2,2,2,4,3,1,0,0,0,DRI exports
+Sweden,12,6,13,10,2,3,2,3,3,2,2,2,DRI exports
+Trinidad and Tobago,1837,1351,2266,2504,2414,2308,2784,2609,1708,1746,1601,1847,DRI exports
+Turkey,0,0,0,0,0,0,0,0,0,0,0,0,DRI exports
+United Arab Emirates,0,0,30,2,1,187,50,13,25,73,82,126,DRI exports
+United States of America,28,36,9,14,8,5,4,21,178,640,554,314,DRI exports
+Venezuela,2875,1406,1802,1768,2117,800,56,928,1156,1233,590,663,DRI exports
+Argentina,0,92,118,0,32,0,38,93,0,0,,0,DRI imports
+Australia,101,1,51,1,1,0,0,0,0,1,1,2,DRI imports
+Austria,41,3,0,5,69,37,42,29,89,425,265,171,DRI imports
+Belgium,1,0,23,30,18,31,12,37,43,125,286,343,DRI imports
+Belarus,82,72,,96,51,58,90,42,70,179,265,298,DRI imports
+Canada,286,253,417,198,160,64,40,5,1,0,14,15,DRI imports
+China,600,1779,1379,1383,1071,606,405,182,67,20,108,1365,DRI imports
+Czech Republic,22,7,12,20,15,9,6,6,3,3,5,5,DRI imports
+Denmark,3,1,2,2,2,27,36,26,13,6,5,2,DRI imports
+Egypt,,148,158,172,187,86,67,0,32,55,0,0,DRI imports
+Finland,1,217,0,0,0,0,0,0,0,0,6,22,DRI imports
+France,78,18,47,80,34,42,33,74,59,198,249,361,DRI imports
+Germany,28,248,425,232,127,335,537,640,590,951,791,767,DRI imports
+India,0,1,39,422,1069,671,178,38,22,90,53,58,DRI imports
+Indonesia,290,223,156,178,350,182,37,34,3,59,28,30,DRI imports
+"Iran, Islamic Republic of",138,39,0,0,0,0,0,0,0,0,0,0,DRI imports
+Italy,362,147,241,499,509,652,663,1042,1122,1123,1236,1014,DRI imports
+Japan,76,,226,242,84,63,124,29,25,9,22,19,DRI imports
+Malaysia,276,195,185,36,14,59,46,54,16,35,57,84,DRI imports
+Mexico,5,26,,130,185,109,159,203,549,577,815,466,DRI imports
+"Moldova, Republic of",46,60,,33,15,12,11,0,0,0,1,6,DRI imports
+Netherlands,339,328,370,398,414,189,189,82,15,60,0,85,DRI imports
+Other Africa,2,1,11,3,2,2,1,50,221,489,500,148,DRI imports
+Other Asia,54,24,16,25,97,131,189,174,459,561,719,852,DRI imports
+Other CIS,0,0,0,0,0,0,30,25,22,96,228,273,DRI imports
+Other EU,182,26,15,27,1,1,2,37,9,19,7,32,DRI imports
+Other Europe,5,0,3,39,36,24,7,33,0,0,0,0,DRI imports
+Other Middle East,1,0,1,5,7,8,287,42,90,125,987,400,DRI imports
+Other North America,0,,4,40,0,1,,2,,47,0,2,DRI imports
+Other Oceania,0,,,0,,0,0,,0,33,0,0,DRI imports
+Other South America,0,0,1221,0,35,0,0,0,,,0,0,DRI imports
+Peru,,43,47,29,52,41,40,55,,33,1,0,DRI imports
+Portugal,0,38,6,37,27,30,0,280,123,129,81,216,DRI imports
+Saudi Arabia,0,,91,0,0,80,126,13,1255,1713,1184,15179,DRI imports
+South Africa,2,0,0,0,1,0,1,0,,40,3,0,DRI imports
+"Korea, Republic of",365,323,676,442,439,644,636,346,383,417,449,406,DRI imports
+Spain,564,253,578,590,441,640,596,734,299,426,426,434,DRI imports
+Sweden,0,0,0,17,33,37,30,32,30,31,27,24,DRI imports
+Turkey,88,21,14,0,5,29,46,47,77,250,182,398,DRI imports
+Ukraine,530,128,346,326,260,61,39,11,45,2,2,3,DRI imports
+United Arab Emirates,0,,1,5,,0,1,0,0,0,51,1,DRI imports
+United Kingdom,0,1,79,138,194,24,0,15,16,1,,,DRI imports
+United States of America,2555,1016,1643,1852,2762,2364,2392,1866,1598,1789,1752,1762,DRI imports
+Algeria,0,0,0,0,0,0,0,0,0,0,110,1540,DRI production
+Argentina,1847,807,1566,1670,1607,1466,1663,1252,773,1231,1606,1086,DRI production
+Bahrain,0,0,0,0,0,780,1440,1230,1260,1300,1600,1450,DRI production
+Brazil,302,11,0,0,0,0,0,0,0,0,0,0,DRI production
+Canada,704,342,600,702,842,1250,1550,1502,1399,1608,1670,1440,DRI production
+China,150,42,0,0,0,0,1000,0,0,0,0,0,DRI production
+Egypt,2643,3051,2965,2932,3068,3432,2882,2451,2618,4667,5753,4426,DRI production
+Germany,518,389,448,380,555,498,566,551,600,600,560,470,DRI production
+India,20914,23445,24931,25332,23438,22615,24542,22644,26982,29505,34213,36818,DRI production
+Indonesia,1209,1119,1274,1228,524,757,155,53,,22,237,120,DRI production
+"Iran, Islamic Republic of",7399,8099,9350,10368,11582,14458,14551,14546,16013,19401,25745,28522,DRI production
+Libyan Arab Jamahiriya,1569,1077,1270,165,508,956,998,449,699,560,612,856,DRI production
+Malaysia,1958,2388,2390,2877,2329,1399,1007,957,656,570,743,595,DRI production
+Mexico,6012,4147,5368,5854,5586,6100,5979,5499,5306,6011,5972,5974,DRI production
+Oman,0,0,0,1242,1520,1468,1420,1509,1439,1526,1500,1750,DRI production
+Pakistan,0,0,0,0,0,60,0,0,0,0,0,0,DRI production
+Peru,121,100,100,94,96,93,88,72,11,0,0,0,DRI production
+Qatar,1681,2097,2250,2350,2420,2386,2549,2631,2506,2548,2526,2423,DRI production
+Russian Federation,4500,4600,4700,5200,5125,5329,5350,5436,5820,7200,7901,8030,DRI production
+Saudi Arabia,4970,5030,5510,5810,5660,6070,6460,5800,5119,4812,6000,5780,DRI production
+South Africa,1178,1340,1120,1414,1493,1295,1612,1125,702,925,835,661,DRI production
+Sweden,125,96,123,117,105,113,105,109,102,103,109,110,DRI production
+Trinidad and Tobago,2780,1990,3080,3030,3250,3290,3240,2520,1500,1590,1540,1700,DRI production
+United Arab Emirates,0,0,1180,1800,2699,3075,2409,3190,3479,3608,3784,3667,DRI production
+United States of America,260,0,0,0,0,0,1300,1100,1810,2000,3350,3240,DRI production
+Venezuela,6826,5508,3793,4159,4472,2727,1402,1356,908,491,442,393,DRI production
+Zambia,0,0,0,0,0,0,0,0,0,0,100,100,DRI production

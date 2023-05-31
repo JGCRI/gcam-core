@@ -93,7 +93,7 @@ protected:
         
         //! Max iterations for bracketing
         DEFINE_VARIABLE( SIMPLE, "max-bracket-iterations", mMaxBracketIterations, unsigned int ),
-                            
+        
         //! Flag to configure if we should use the secant method to find brackets (default false)
         DEFINE_VARIABLE( SIMPLE, "use-secant-brackets", mUseSecantBrackets, bool ),
         
