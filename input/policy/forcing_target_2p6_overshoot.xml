@@ -38,7 +38,7 @@
                                           significantly.
      -->
     <!-- Note, the value chosen here is the solved price from the last GCAM release. -->
-    <initial-tax-guess>4000</initial-tax-guess>
+    <initial-tax-guess>270</initial-tax-guess>
     <!-- forward-look | default: 0 | Allow forward looking behavior by skipping
          this many periods.
      -->
@@ -60,5 +60,5 @@
                                    the max-tax.  If the actual solution price
                                    lies above max-tax the algorithm will fail.
      -->
-    <max-tax>270</max-tax>
+    <max-tax>7999</max-tax>
 </policy-target-runner>
