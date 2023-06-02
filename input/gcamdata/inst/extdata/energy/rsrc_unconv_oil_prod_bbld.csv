@@ -1,6 +1,6 @@
 # File: rsrc_unconv_oil_prod_bbld.csv
 # Title: Historical unconventional oil production by country where applicable
-# Units: billion barrels of oil per day
+# Units: million barrels of oil per day
 # Source: For Canada, http://earlywarn.blogspot.com/2010/01/tar-sands-production-graph.html; for Venezuala, IEA World Energy Outlook 2010, http://www.worldenergyoutlook.org/media/weo2010.pdf
 # Column types: ciiinnnnnn 
 # ----------
