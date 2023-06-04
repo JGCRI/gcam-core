@@ -1,0 +1,39 @@
+# File: TZ_steel_cost_gcam_mapping.csv
+# Title: GCAM region to TZ country/region mapping
+# Units: NA
+# Description: Maps GCAM_region to TZ (transition zero) countries and OECD regions
+# Column types: cc
+# ----------
+region,Country
+Africa_Eastern,NonOECD
+Africa_Northern,NonOECD
+Africa_Southern,NonOECD
+Africa_Western,NonOECD
+Argentina,NonOECD
+Australia_NZ,OECD
+Brazil,Brazil
+Canada,OECD
+Central America and Caribbean,NonOECD
+Central Asia,NonOECD
+China,China
+Colombia,OECD
+EU-12,Germany
+EU-15,Germany
+Europe_Eastern,Ukraine
+Europe_Non_EU,Turkey
+European Free Trade Association,OECD
+India,India
+Indonesia,NonOECD
+Japan,Japan
+Mexico,Mexico
+Middle East,NonOECD
+Pakistan,NonOECD
+Russia,Russia
+South Africa,NonOECD
+South America_Northern,NonOECD
+South America_Southern,NonOECD
+South Asia,NonOECD
+South Korea,South Korea
+Southeast Asia,NonOECD
+Taiwan,China
+USA,United States

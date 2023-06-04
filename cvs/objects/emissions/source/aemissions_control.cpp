@@ -98,6 +98,6 @@ const string& AEmissionsControl::getName() const {
     return mName;
 }
 
-double AEmissionsControl::getEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ){
-    return calcEmissionsReduction( aRegionName, aPeriod, aGDP );
+double AEmissionsControl::getEmissionsReduction( const std::string& aRegionName, const int aPeriod ){
+    return calcEmissionsReduction( aRegionName, aPeriod );
 }

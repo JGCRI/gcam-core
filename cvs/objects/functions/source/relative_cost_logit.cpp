@@ -89,7 +89,7 @@ void RelativeCostLogit::initCalc( const string& aRegionName, const string& aCont
         // Illegal value.  For relative cost logit it will not affect sharing and
         // we can continue operating the model normally so just generate a warning
         ILogger &calibrationLog = ILogger::getLogger("calibration_log");
-        ILogger::WarningLevel oldlvl = calibrationLog.setLevel(ILogger::WARNING);
+        ILogger::WarningLevel oldlvl = calibrationLog.setLevel(ILogger::DEBUG);
         calibrationLog << "In " << aRegionName << ", " << aContainerName<< ":  invalid or uninitialized base value parameter  "
                        << mBaseValue << endl;
         calibrationLog.setLevel(oldlvl);

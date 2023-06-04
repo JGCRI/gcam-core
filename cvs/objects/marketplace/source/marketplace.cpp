@@ -709,11 +709,13 @@ void Marketplace::init_to_last( const int period ) {
         for ( unsigned int i = 0; i < mMarkets.size(); i++ ) {
             double forecastedPrice = mMarkets[ i ]->forecastPrice( period );
             double lastPeriodPrice = mMarkets[ i ]->getMarket( period - 1 )->getPrice();
+            double forecastToLastRatio = abs(forecastedPrice) / abs(lastPeriodPrice);
             // Only use the forecast price if it is reliable.
             if( (forecastedPrice < 0.0 && lastPeriodPrice > 0.0) ||
-                abs( forecastedPrice ) > 5.0 * abs( lastPeriodPrice ) )
+                (forecastToLastRatio > 5.0 || forecastToLastRatio < 0.2) )
             {
                 mMarkets[ i ]->getMarket( period )->set_price_to_last( lastPeriodPrice );
+                mMarkets[ i ]->getMarket( period )->setForecastPrice( lastPeriodPrice );
             }
             else {
                 mMarkets[ i ]->getMarket( period )->set_price_to_last( forecastedPrice );
@@ -853,11 +855,11 @@ IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegio
  *         be a valid object regardless of if the market was not found.
  * \see CachedMarket
  */
-auto_ptr<CachedMarket> Marketplace::locateMarket( const string& aGoodName, const string& aRegionName,
+unique_ptr<CachedMarket> Marketplace::locateMarket( const string& aGoodName, const string& aRegionName,
                                                   const int aPeriod ) const
 {
     const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
-    auto_ptr<CachedMarket> locatedMarket( new CachedMarket( aGoodName, aRegionName, aPeriod,
+    unique_ptr<CachedMarket> locatedMarket( new CachedMarket( aGoodName, aRegionName, aPeriod,
                                                             marketNumber != MarketLocator::MARKET_NOT_FOUND ?
                                                             mMarkets[ marketNumber ]->getMarket( aPeriod ) : 0 ) );
     return locatedMarket;

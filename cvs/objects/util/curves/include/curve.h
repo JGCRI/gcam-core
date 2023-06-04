@@ -137,7 +137,7 @@ protected:
     * \brief Binary comparison operator which compares two Curves by least minimum X value.
     * \author Josh Lurz
     */  
-    struct LesserMinX: public std::binary_function<Curve*,Curve*,bool>
+    struct LesserMinX
     {
         //! Operator which performs comparison. 
         bool operator()( const Curve* lhs, const Curve* rhs ) const
@@ -149,7 +149,7 @@ protected:
     * \brief Binary comparison operator which compares two Curves by least minimum Y value.
     * \author Josh Lurz
     */  
-    struct LesserMinY: public std::binary_function<Curve*,Curve*,bool>
+    struct LesserMinY
     {
         //! Operator which performs comparison. 
         bool operator()( const Curve* lhs, const Curve* rhs ) const
@@ -161,7 +161,7 @@ protected:
     * \brief Binary comparison operator which compares two Curves by least maximum X value.
     * \author Josh Lurz
     */  
-    struct LesserMaxX: public std::binary_function<Curve*,Curve*,bool>
+    struct LesserMaxX
     {
         //! Operator which performs comparison. 
         bool operator()( const Curve* lhs, const Curve* rhs ) const
@@ -173,7 +173,7 @@ protected:
     * \brief Binary comparison operator which compares two Curves by least maximum Y value.
     * \author Josh Lurz
     */  
-    struct LesserMaxY: public std::binary_function<Curve*,Curve*,bool>
+    struct LesserMaxY
     {
         //! Operator which performs comparison. 
         bool operator()( const Curve* lhs, const Curve* rhs ) const

@@ -21,6 +21,8 @@ inst/doc
 # Proprietary files
 IEA_EnergyBalances_2019.csv.gz
 *CEDS_emissions.csv
+GTAPv10_baseview_SF01_VFA.csv.gz
+GTAPv10_basedata_VKB_SAVE_VDEP.csv.gz
 
 # OS files
 .DS_Store

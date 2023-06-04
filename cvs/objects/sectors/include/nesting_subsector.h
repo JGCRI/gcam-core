@@ -74,7 +74,7 @@ protected:
 
     )
     
-    const std::vector<double> calcChildShares( const GDP* aGDP, const int aPeriod ) const;
+    const std::vector<double> calcChildShares( const int aPeriod ) const;
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
 public:
@@ -91,20 +91,18 @@ public:
     virtual void completeInit( const IInfo* aSectorInfo,
                                ILandAllocator* aLandAllocator );
     
-    virtual void initCalc( NationalAccount* aNationalAccount,
-                           const Demographic* aDemographics,
+    virtual void initCalc( const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
+    virtual double getPrice( const int aPeriod ) const;
     virtual bool allOutputFixed( const int period ) const;
     virtual bool containsOnlyFixedOutputTechnologies( const int period ) const;
-    virtual double getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) const;
+    virtual double getAverageFuelPrice( const int aPeriod ) const;
 
     virtual void calcCost( const int aPeriod );
 
     virtual void setOutput( const double aVariableDemand,
                             const double aFixedOutputScaleFactor,
-                            const GDP* aGDP,
                             const int aPeriod );
 
     virtual bool isAllCalibrated( const int aPeriod, double aCalAccuracy, const bool aPrintWarnings ) const;

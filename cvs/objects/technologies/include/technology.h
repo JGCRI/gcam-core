@@ -58,7 +58,6 @@
 
 // Forward declaration
 class AGHG;
-class GDP;
 class ICaptureComponent;
 class IShutdownDecider;
 class IInput;
@@ -150,7 +149,6 @@ class Technology: public ITechnology
     // interfaces.
     friend class XMLDBOutputter;
     friend class MarginalProfitCalculator;
-    friend class EnergyBalanceTable;
 public:
     Technology( const std::string& aName, const int aYear );
     Technology();
@@ -159,6 +157,8 @@ public:
 
     virtual void setYear( const int aNewYear );
     virtual int getYear() const;
+    
+    virtual bool isVintagingActive() const;
     
     virtual bool isSameType( const std::string& aType ) const;
 
@@ -188,11 +188,10 @@ public:
                              const std::string& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
-                             const GDP* aGDP,
                              const int aPeriod );
 
-    virtual double calcShare( const IDiscreteChoice* aChoiceFn,
-                              const GDP* aGDP,
+    virtual double calcShare( const std::string& aRegionName,
+                              const IDiscreteChoice* aChoiceFn,
                               int aPeriod ) const;
     
     virtual void calcCost( const std::string& aRegionName,
@@ -343,7 +342,7 @@ protected:
     )
 
     //! The technology's information store.
-    std::auto_ptr<IInfo> mTechnologyInfo;
+    std::unique_ptr<IInfo> mTechnologyInfo;
     
     //! Production function for the technology.
     const IFunction* mProductionFunction;
@@ -363,13 +362,17 @@ protected:
                                const int aPeriod ) const;
 
     virtual void calcEmissionsAndOutputs( const std::string& aRegionName,
-                                  const double aPrimaryOutput,
-                                  const GDP* aGDP,
-                                  const int aPeriod );
+                                          const std::string& aSectorName,
+                                          const double aPrimaryOutput,
+                                          const int aPeriod );
 
     // TODO: Make this non-virtual when transportation is fixed by units.
     virtual double calcSecondaryValue( const std::string& aRegionName,
                                        const int aPeriod ) const;
+    
+    virtual double getCurrencyConversionPrice( const std::string& aRegionName,
+                                               const std::string& aSectorName,
+                                               const int aPeriod ) const;
 
     bool hasNoInputOrOutput( const int aPeriod ) const;
 

@@ -1,0 +1,11 @@
+# File: A81.factor_productivity.csv
+# Title: Assumptions wrt per factor productivity
+# Units: improvement rate per year
+# Source: Assumption
+# Description: An annual producitivy rate which adjusts the factors impact on gross output; note that total factor productivity is also assumed (in gcam_macro_TFP_open.csv) which are set per scenario (SSP) as that is typically used for GDP tuning.
+# Column types: cccnnn 
+# ----------
+fn.name,node.name,leaf.name,1971,2020,2100
+nested-CES,energy,energy,0,0,0
+nested-CES,capital-labor,capital,0,0,0
+nested-CES,capital-labor,labor,0,0,0

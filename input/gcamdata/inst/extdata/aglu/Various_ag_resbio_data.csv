@@ -1,114 +1,117 @@
 # File: Various_ag_resbio_data.csv
 # Title: Various_ag_resbio_data
-# Units: Varied, see below
+# Units: Varied see below
 # Description: Residue biomass characteristics by crop type
 # Harvest Index (unitless): mass of harvested crop divided by total above-ground biomass.
 # ErosCtrl (tonnes per hectare): minimum residue required to be left in situ for erosion control.
 # ResEnergy (Gigajoules per tonne): energy content of residue biomass at time of harvest
 # Root_Shoot (unitless): Mass of roots (below-ground biomass) divided by mass of shoots (above-ground biomass)
 # WaterContent (unitless): Water content of aboveground crop biomass
+# item and item_code are both updated for primary (land-based) crops; need to include all crops later
+# also consider differentiating tree crops later
 # Original source: see aglu data documentation
-# Column types: cnnnnn 
+# Date of last update: 2022-03-15
+# Column types: cinnnnn 
 # ----------
-item,HarvestIndex,ErosCtrl_tHa,ResEnergy_GJt,Root_Shoot,WaterContent
-"Almonds, with shell",0.42,0.013,16.8,0.15,0.2
-"Anise, badian, fennel, corian.",1,0,0,0.15,0
-Apples,0.85,0.019,17.3,0.15,0.8
-Apricots,0.68,0.034,17.3,0.15,0.8
-Artichokes,0.77,0.8,6.9,0.15,0.7
-Asparagus,0.49,1.116,6.9,0.15,0.7
-Avocados,0.71,0.031,6.9,0.15,0.8
-Bananas,0.4,0.225,6.9,0.415,0.7
-Barley,0.46,1.787,16.2,0.11,0.87
-"Beans, green",0.46,1.344,6.9,0.08,0.79
-"Beans, dry",0.46,0,6.9,0.08,0.26
-"Broad beans, horse beans, dry",0.46,1.344,6.9,0.08,0.26
-Cabbages and other brassicas,0.8,1.349,6.9,0.15,0.92
-Carrots and turnips,0.53,0.986,6.9,0.15,0.87
-"Cashew nuts, with shell",0.4,0.009,18.4,0.15,0.2
-Cassava,0.5,0.886,6.9,0.15,0.1227
-Cauliflowers and broccoli,0.8,1.025,6.9,0.15,0.92
-"Cereals, nes",0.4,1.03,16.5,0.15,0.05
-Cherries,0.85,0.225,17.3,0.15,0.8
-Chestnuts,0.4,0.043,18.4,0.15,0.2
-Chick peas,0.46,0.283,6.9,0.08,0.13
-"Chillies and peppers, dry",0.6,0.222,6.9,0.15,0.1
-"Chillies and peppers, green",0.6,2.057,6.9,0.15,0.91
-Cinnamon (canella),1,0,6.9,0.15,0
-"Citrus fruit, nes",0.93,0.004,17.3,0.15,0.8
-Cloves,1,0,0,0.15,0
-Cocoa beans,1,0,20.9,0.15,0
-Coconuts,0.66,0.627,17.3,0.15,0.8
-"Coffee, green",1,0,20.9,0.15,0
-Seed cotton,0.4,0,15.1,0.17,0.08
-Cranberries,1,0,6.9,0.15,0.9
-Cucumbers and gherkins,0.8,1.004,6.9,0.15,0.96
-Currants,1,0,6.9,0.15,0.8
-Dates,0.8,0.014,17.3,0.15,0.23
-Eggplants (aubergines),0.59,2.692,6.9,0.15,0.8
-Figs,0.62,0.016,17.3,0.15,0.7
-Fruit Fresh Nes,1,0,6.9,0.15,0.7
-Garlic,1,0,6.9,0.15,0.64
-Ginger,1,0,6.9,0.15,0.7
-Grapefruit (inc. pomelos),0.93,0.012,17.3,0.15,0.8
-Grapes,0.79,0.022,15.3,0.15,0.81
-"Groundnuts, with shell",0.4,0.871,17.7,0.07,0.09
-"Mangoes, mangosteens, guavas",0.45,0.078,17.3,0.15,0.8
-"Hazelnuts, with shell",0.4,0.019,18.4,0.15,0.2
-Kiwi fruit,0.72,0.057,17.3,0.15,0.8
-"Leeks, other alliaceous veg",1,0,6.9,0.15,0.7
-"Leguminous vegetables, nes",1,0,6.9,0.15,0.7
-Lemons and limes,0.95,0.008,17.3,0.15,0.8
-Lentils,0.61,0.143,6.9,0.15,0.16
-Lettuce and chicory,0.94,0.344,6.9,0.15,0.96
-Linseed,0.26,1.671,16.2,0.15,0.08
-Maize,0.53,2.754,16.9,0.18,0.14
-Millet,0.45,0.714,15.2,0.25,0.11
-Mushrooms and truffles,1,0,6.9,0.15,0
-"Nutmeg, mace and cardamoms",1,0,0,0.15,0
-"Nuts, nes",0.4,0.018,18.4,0.15,0.2
-Oats,0.52,1.298,16.2,0.4,0.13
-"Oilseeds, Nes",0.3,0.726,16.2,0.15,0
-Olives,0.69,0.007,17.3,0.15,0.7
-"Onions (inc. shallots), green",0.56,3.283,6.9,0.15,0.9
-Oranges,0.91,0.016,17.3,0.15,0.8
-Other melons (inc.cantaloupes),0.91,0.451,6.9,0.15,0.9
-"Oil, palm fruit",0.46,0.517,17.3,0.15,0.35
-Papayas,0.99,0.002,17.3,0.15,0.8
-Peaches and nectarines,0.86,0.015,17.3,0.15,0.8
-Pears,0.88,0.014,17.3,0.15,0.8
-"Peas, dry",0.3,1.066,6.9,0.08,0.13
-"Peas, green",0.3,4.344,6.9,0.08,0.79
-Pepper (Piper spp.),1,0,0,0.15,0.12
-Pineapples,0.26,13.844,6.9,0.15,0.8
-Pistachios,0.4,0.339,18.4,0.15,0.2
-Plantains,0.4,0.09,6.9,0.415,0.65
-Plums and sloes,0.8,0.01,17.3,0.15,0.8
-Potatoes,0.5,0.715,6.9,0.07,0.8
-"Pulses, nes",0.35,0.314,6.9,0.15,0.7
-"Pumpkins, squash and gourds",0.88,0.413,6.9,0.15,0.7
-Rapeseed,0.3,2.609,16.2,0.15,0.07
-Raspberries,1,0,6.9,0.15,0.87
-"Rice, paddy",0.42,0.99,13.6,0.22,0.09
-Rye,0.5,2.938,16.8,0.14,0.1
-Sesame seed,0.27,0.283,16.2,0.15,0.05
-Sorghum,0.44,0.884,14,0.18,0.14
-Soybeans,0.42,2.037,6.9,0.19,0.12
-"Spices, nes",1,0,6.9,0.15,0
-Spinach,0.95,0.187,6.9,0.15,0.92
-"Roots and Tubers, nes",0.94,0.051,6.9,0.15,0.8
-Strawberries,0.45,4.01,6.9,0.15,0.92
-Sugar beet,0.4,1.028,6.9,0.43,0.85
-Sugar cane,0.7,4.679,16.6,0.18,0.74
-Sunflower seed,0.27,1.389,6.9,0.06,0.09
-Sweet potatoes,0.53,0.616,6.9,0.15,0.8
-"Tangerines, mandarins, clem.",0.91,0.011,17.3,0.15,0.8
-Tea,1,0,0,0.15,0
-"Tobacco, unmanufactured",0.6,0,6.9,0.8,0.2
-Tomatoes,0.33,13.793,6.9,0.14,0.95
-Vanilla,1,0,0,0.15,0
-Vegetables fresh nes,1,0,6.9,0.15,0
-"Walnuts, with shell",0.4,0.036,18.4,0.15,0.2
-Watermelons,0.91,0.549,6.9,0.15,0.92
-Wheat,0.39,2.96,16.2,0.2,0.13
-Yams,0.53,0.458,6.9,0.15,0.8
+item,item_code,HarvestIndex,ErosCtrl_tHa,ResEnergy_GJt,Root_Shoot,WaterContent
+"Almonds, with shell",221,0.42,0.013,16.8,0.15,0.2
+"Anise, badian, fennel, coriander",711,1,0,0,0.15,0
+Apples,515,0.85,0.019,17.3,0.15,0.8
+Apricots,526,0.68,0.034,17.3,0.15,0.8
+Artichokes,366,0.77,0.8,6.9,0.15,0.7
+Asparagus,367,0.49,1.116,6.9,0.15,0.7
+Avocados,572,0.71,0.031,6.9,0.15,0.8
+Bananas,486,0.4,0.225,6.9,0.415,0.7
+Barley,44,0.46,1.787,16.2,0.11,0.87
+"Beans, green",414,0.46,1.344,6.9,0.08,0.79
+"Beans, dry",176,0.46,0,6.9,0.08,0.26
+"Broad beans, horse beans, dry",181,0.46,1.344,6.9,0.08,0.26
+Cabbages and other brassicas,358,0.8,1.349,6.9,0.15,0.92
+Carrots and turnips,426,0.53,0.986,6.9,0.15,0.87
+"Cashew nuts, with shell",217,0.4,0.009,18.4,0.15,0.2
+Cassava,125,0.5,0.886,6.9,0.15,0.1227
+Cauliflowers and broccoli,393,0.8,1.025,6.9,0.15,0.92
+Cereals nes,108,0.4,1.03,16.5,0.15,0.05
+Cherries,531,0.85,0.225,17.3,0.15,0.8
+Chestnut,220,0.4,0.043,18.4,0.15,0.2
+Chick peas,191,0.46,0.283,6.9,0.08,0.13
+"Chillies and peppers, dry",689,0.6,0.222,6.9,0.15,0.1
+"Chillies and peppers, green",401,0.6,2.057,6.9,0.15,0.91
+Cinnamon (cannella),693,1,0,6.9,0.15,0
+"Fruit, citrus nes",512,0.93,0.004,17.3,0.15,0.8
+Cloves,698,1,0,0,0.15,0
+"Cocoa, beans",661,1,0,20.9,0.15,0
+Coconuts,249,0.66,0.627,17.3,0.15,0.8
+"Coffee, green",656,1,0,20.9,0.15,0
+Seed cotton,328,0.4,0,15.1,0.17,0.08
+Cranberries,554,1,0,6.9,0.15,0.9
+Cucumbers and gherkins,397,0.8,1.004,6.9,0.15,0.96
+Currants,550,1,0,6.9,0.15,0.8
+Dates,577,0.8,0.014,17.3,0.15,0.23
+Eggplants (aubergines),399,0.59,2.692,6.9,0.15,0.8
+Figs,569,0.62,0.016,17.3,0.15,0.7
+"Fruit, fresh nes",619,1,0,6.9,0.15,0.7
+Garlic,406,1,0,6.9,0.15,0.64
+Ginger,720,1,0,6.9,0.15,0.7
+Grapefruit (inc. pomelos),507,0.93,0.012,17.3,0.15,0.8
+Grapes,560,0.79,0.022,15.3,0.15,0.81
+"Groundnuts, with shell",242,0.4,0.871,17.7,0.07,0.09
+"Mangoes, mangosteens, guavas",571,0.45,0.078,17.3,0.15,0.8
+"Hazelnuts, with shell",225,0.4,0.019,18.4,0.15,0.2
+Kiwi fruit,592,0.72,0.057,17.3,0.15,0.8
+"Leeks, other alliaceous vegetables",407,1,0,6.9,0.15,0.7
+"Vegetables, leguminous nes",420,1,0,6.9,0.15,0.7
+Lemons and limes,497,0.95,0.008,17.3,0.15,0.8
+Lentils,201,0.61,0.143,6.9,0.15,0.16
+Lettuce and chicory,372,0.94,0.344,6.9,0.15,0.96
+Linseed,333,0.26,1.671,16.2,0.15,0.08
+Maize,56,0.53,2.754,16.9,0.18,0.14
+Millet,79,0.45,0.714,15.2,0.25,0.11
+Mushrooms and truffles,449,1,0,6.9,0.15,0
+"Nutmeg, mace and cardamoms",702,1,0,0,0.15,0
+Nuts nes,234,0.4,0.018,18.4,0.15,0.2
+Oats,75,0.52,1.298,16.2,0.4,0.13
+Oilseeds nes,339,0.3,0.726,16.2,0.15,0
+Olives,260,0.69,0.007,17.3,0.15,0.7
+"Onions, shallots, green",402,0.56,3.283,6.9,0.15,0.9
+Oranges,490,0.91,0.016,17.3,0.15,0.8
+"Melons, other (inc.cantaloupes)",568,0.91,0.451,6.9,0.15,0.9
+Oil palm fruit,254,0.46,0.517,17.3,0.15,0.35
+Papayas,600,0.99,0.002,17.3,0.15,0.8
+Peaches and nectarines,534,0.86,0.015,17.3,0.15,0.8
+Pears,521,0.88,0.014,17.3,0.15,0.8
+"Peas, dry",187,0.3,1.066,6.9,0.08,0.13
+"Peas, green",417,0.3,4.344,6.9,0.08,0.79
+Pepper (piper spp.),687,1,0,0,0.15,0.12
+Pineapples,574,0.26,13.844,6.9,0.15,0.8
+Pistachios,223,0.4,0.339,18.4,0.15,0.2
+Plantains and others,489,0.4,0.09,6.9,0.415,0.65
+Plums and sloes,536,0.8,0.01,17.3,0.15,0.8
+Potatoes,116,0.5,0.715,6.9,0.07,0.8
+Pulses nes,211,0.35,0.314,6.9,0.15,0.7
+"Pumpkins, squash and gourds",394,0.88,0.413,6.9,0.15,0.7
+Rapeseed,270,0.3,2.609,16.2,0.15,0.07
+Raspberries,547,1,0,6.9,0.15,0.87
+"Rice, paddy",27,0.42,0.99,13.6,0.22,0.09
+Rye,71,0.5,2.938,16.8,0.14,0.1
+Sesame seed,289,0.27,0.283,16.2,0.15,0.05
+Sorghum,83,0.44,0.884,14,0.18,0.14
+Soybeans,236,0.42,2.037,6.9,0.19,0.12
+Spices nes,723,1,0,6.9,0.15,0
+Spinach,373,0.95,0.187,6.9,0.15,0.92
+Roots and tubers nes,149,0.94,0.051,6.9,0.15,0.8
+Strawberries,544,0.45,4.01,6.9,0.15,0.92
+Sugar beet,157,0.4,1.028,6.9,0.43,0.85
+Sugar cane,156,0.7,4.679,16.6,0.18,0.74
+Sunflower seed,267,0.27,1.389,6.9,0.06,0.09
+Sweet potatoes,122,0.53,0.616,6.9,0.15,0.8
+"Tangerines, mandarins, clementines, satsumas",495,0.91,0.011,17.3,0.15,0.8
+Tea,667,1,0,0,0.15,0
+"Tobacco, unmanufactured",826,0.6,0,6.9,0.8,0.2
+Tomatoes,388,0.33,13.793,6.9,0.14,0.95
+Vanilla,692,1,0,0,0.15,0
+"Vegetables, fresh nes",463,1,0,6.9,0.15,0
+"Walnuts, with shell",222,0.4,0.036,18.4,0.15,0.2
+Watermelons,567,0.91,0.549,6.9,0.15,0.92
+Wheat,15,0.39,2.96,16.2,0.2,0.13
+Yams,137,0.53,0.458,6.9,0.15,0.8

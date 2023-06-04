@@ -61,6 +61,13 @@ class IInfo;
  */
 class SectorUtils {
 public:
+    
+    static void addGDPDependency( const std::string& aRegionName, const std::string& aSectorName );
+    static double getGDP( const std::string& aRegionName, const int aPeriod );
+    static double getGDPPerCap( const std::string& aRegionName, const int aPeriod );
+    static double getGDPPerCapScaled( const std::string& aRegionName, const int aPeriod );
+    static double getGDPPPP( const std::string& aRegionName, const int aPeriod );
+    
     static bool createTrialSupplyMarket( const std::string& aRegionName,
                                          const std::string& aSectorName,
                                          const IInfo* aTechnologyInfo,

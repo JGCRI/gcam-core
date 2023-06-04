@@ -29,6 +29,8 @@
 	</Strings>
 	<Bools>
 		<Value name="CalibrationActive">1</Value>
+		<!-- Fixed GDP will calibrate to exogenous path -->
+		<Value name="FixedGDP-Path">1</Value>
 		<Value name="BatchMode">1</Value>
 		<Value name="find-path">0</Value>
 		<Value name="createCostCurve">0</Value>

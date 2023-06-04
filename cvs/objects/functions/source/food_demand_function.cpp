@@ -124,7 +124,7 @@ double FoodDemandFunction::calcDemand( InputSet& aInput, double income, const st
     }
     
     // calculate the adjusted income (x)
-    double adjIncome = foodInputs[ 0 ]->getSubregionalIncome() / priceMaterials;
+    double adjIncome = foodInputs[ 0 ]->getSubregionalIncome( aRegionName, aPeriod ) / priceMaterials;
 
     // calculate demands
     double demandMaterials = adjIncome;

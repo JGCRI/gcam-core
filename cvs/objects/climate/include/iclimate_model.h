@@ -201,10 +201,24 @@ public:
     *          and returns the value. If the climate model is unavailable the
     *          value returned is -1.
     * \param aYear The year for which to return the temperature.
+    * \param aAdjHistoricalPeriod A flag if the climate model should adjust the temperature
+    *             value to be relative to the mean from 1850 - 1900.
     * \return The temperature for the period, -1 if the climate model is
     *         unavailable.
     */
-    virtual double getTemperature( const int aYear ) const = 0;
+    virtual double getTemperature( const int aYear, const bool aAdjHistoricalPeriod = false ) const = 0;
+    
+    /*! \brief Returns the surface temperature in a given period from the climate model.
+    * \details Queries the climate model for the surface temperature for a given period
+    *          and returns the value. If the climate model is unavailable the
+    *          value returned is -1.
+    * \param aYear The year for which to return the surface temperature.
+    * \param aAdjHistoricalPeriod A flag if the climate model should adjust the temperature
+    *             value to be relative to the mean from 1850 - 1900.
+    * \return The surface temperature for the period, -1 if the climate model is
+    *         unavailable.
+    */
+    virtual double getGmst( const int aYear, const bool aAdjHistoricalPeriod = false ) const = 0;
 
     /*! \brief Returns the forcing of a specific gas in a given period from the
     *          climate model.

@@ -31,6 +31,7 @@
 		<Value name = "industry_income_elas">../input/gcamdata/xml/other_industry_incelas_gssp2.xml</Value>
  		<Value name = "iron_steel">../input/gcamdata/xml/iron_steel.xml</Value>
 		<Value name = "iron_steel_income_elas">../input/gcamdata/xml/iron_steel_incelas_gssp2.xml</Value>   
+		<Value name = "iron_steel trade">../input/gcamdata/xml/iron_steel_trade.xml</Value>
  		<Value name = "Off_road">../input/gcamdata/xml/Off_road.xml</Value>
 		<Value name = "Off_road_income_elas">../input/gcamdata/xml/Off_road_incelas_gssp2.xml</Value>  
  		<Value name = "chemical">../input/gcamdata/xml/chemical.xml</Value>
@@ -45,6 +46,7 @@
 		<Value name = "transportation">../input/gcamdata/xml/transportation_UCD_CORE.xml</Value>
 		<Value name = "carbon_content">../input/gcamdata/xml/Ccoef.xml</Value>
 		<Value name = "carbon_storage">../input/gcamdata/xml/Cstorage.xml</Value>
+        <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
 
 
 		<Value name = "ag_base">../input/gcamdata/xml/ag_For_Past_bio_base_IRR_MGMT.xml</Value>
@@ -92,13 +94,14 @@
 		<Value name = "nonco2_fgas">../input/gcamdata/xml/all_fgas_emissions_MAC.xml</Value>
 		<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT_MAC.xml</Value> 
 		<Value name = "nonco2_proc">../input/gcamdata/xml/ind_urb_processing_sectors_MAC.xml</Value> 
+
+		<Value name = "macro">../input/gcamdata/xml/socioeconomics_macro.xml</Value>
 		
 		<Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
 		<Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
-		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>
 		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
+        <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 
-        <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		
 	</ScenarioComponents>
@@ -111,6 +114,8 @@
 	</Strings>
 	<Bools>
 		<Value name="CalibrationActive">1</Value>
+		<!-- Fixed GDP will calibrate to exogenous path -->
+		<Value name="FixedGDP-Path">1</Value>
 		<Value name="BatchMode">0</Value>
 		<Value name="find-path">0</Value>
 		<Value name="createCostCurve">0</Value>

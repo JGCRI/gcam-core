@@ -113,7 +113,7 @@ protected:
     SingleScenarioRunner();
     static const std::string& getXMLNameStatic();
     //! The scenario which will be run.
-    std::auto_ptr<Scenario> mScenario;
+    std::unique_ptr<Scenario> mScenario;
     
     // Not totally intuitive but this define data is here for XML parse of scenario
     // components and the contained Scenario *doesn't* get initialized from

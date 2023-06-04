@@ -52,7 +52,10 @@ using namespace std;
 */
 LUCEmissionsSummer::LUCEmissionsSummer( const string& aGHGName ):
     mGHGName( aGHGName ),
-    mEmissionsByYear( scenario->getModeltime()->getStartYear(), scenario->getModeltime()->getEndYear() )
+    mPositiveEmissionsByYear( scenario->getModeltime()->getStartYear(), scenario->getModeltime()->getEndYear() ),
+    mNegativeEmissionsByYear( scenario->getModeltime()->getStartYear(), scenario->getModeltime()->getEndYear() ),
+    mBelowTotalEmissionsByYear( scenario->getModeltime()->getStartYear(), scenario->getModeltime()->getEndYear() )
+
 {
 }
 
@@ -64,35 +67,63 @@ void LUCEmissionsSummer::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc,
     if( mGHGName == "CO2NetLandUse" ){
         const int startYear = currYear - scenario->getModeltime()->gettimestep( aPeriod ) + 1;
         for ( int year = startYear; year <= currYear; year++ ) {
-            mEmissionsByYear[ year ] += aCarbonCalc->getNetLandUseChangeEmission( year );
+            // note that ICarbonCalc keeps track of net above LUC emissions
+            // and gross positive above LUC emissions
+            // thus we will back out the gross negative above from these
+            double netAboveLUC = aCarbonCalc->getNetLandUseChangeEmissionAbove( year );
+            double belowLUC = aCarbonCalc->getNetLandUseChangeEmissionBelow( year );
+            double grossPositiveAboveLUC = aCarbonCalc->getGrossPositiveLandUseChangeEmissionAbove( year );
+            double grossNegativeAbove = netAboveLUC - grossPositiveAboveLUC;
+            mPositiveEmissionsByYear[ year ] += grossPositiveAboveLUC;
+            mNegativeEmissionsByYear[ year ] += grossNegativeAbove;
+            mBelowTotalEmissionsByYear[ year ] += belowLUC;
         }
-    }
-    else if( mGHGName == MagiccModel::getnetDefor80sName() ){
-        double netDef80s = 0;
-        for( int year = 1980; year < 1990; ++year){
-            netDef80s += ( aCarbonCalc->getNetLandUseChangeEmission( year ) + 
-                aCarbonCalc->getNetLandUseChangeEmission( year + 1 ) ) / 2;
-        }
-        mEmissionsByYear[ currYear ] += netDef80s / 10; // Return decadal average
     }
 }
 
-/*! \brief Get the current emissions sum.
-* \param aYear Model year for which to get emissions.
-* \return The emissions sum.
-*/
+/*! \brief Get the net LUC emissions sum.
+ * \param aYear Model year for which to get emissions.
+ * \return The emissions sum.
+ */
 double LUCEmissionsSummer::getEmissions( const int aYear ) const {
     // The value may not be initialized if there were no GHGs, or no AgLU for
     // net land use change emissions. The default zero will be correct though.
 
     // The emissions sum may be negative if uptake is occurring.
-    return mEmissionsByYear[ aYear ];
+    return mPositiveEmissionsByYear[ aYear ] + mNegativeEmissionsByYear[ aYear ] + mBelowTotalEmissionsByYear[ aYear ];
+}
+
+/*! \brief Get the gross positive LUC emissions sum.
+ * \param aYear Model year for which to get emissions.
+ * \return The positive emissions sum.
+ */
+double LUCEmissionsSummer::getEmissionsPositive( const int aYear ) const {
+    // The value may not be initialized if there were no GHGs, or no AgLU for
+    // net land use change emissions. The default zero will be correct though.
+
+    // The emissions sum may be negative if uptake is occurring.
+    double belowPosEmiss = std::max(mBelowTotalEmissionsByYear[ aYear ].get(), 0.0);
+    return mPositiveEmissionsByYear[ aYear ] + belowPosEmiss;
+}
+
+/*! \brief Get the gross negative LUC emissions sum.
+ * \details The value returned is akin to uptake but negative.
+ * \param aYear Model year for which to get emissions.
+ * \return The emissions sum.
+ */
+double LUCEmissionsSummer::getEmissionsNegative( const int aYear ) const {
+    // The value may not be initialized if there were no GHGs, or no AgLU for
+    // net land use change emissions. The default zero will be correct though.
+
+    // The emissions sum may be negative if uptake is occurring.
+    double belowNegEmiss = std::min(mBelowTotalEmissionsByYear[ aYear ].get(), 0.0);
+    return mNegativeEmissionsByYear[ aYear ] + belowNegEmiss;
 }
 
 /*! \brief Return whether any emissions were set for the year.
-* \param aYear Model year.
-* \return Whether any emissions were set.
-*/
+ * \param aYear Model year.
+ * \return Whether any emissions were set.
+ */
 double LUCEmissionsSummer::areEmissionsSet( const int aYear ) const {
-    return mEmissionsByYear[ aYear ].isInited();
+    return mPositiveEmissionsByYear[ aYear ].isInited() || mNegativeEmissionsByYear[ aYear ].isInited();
 }

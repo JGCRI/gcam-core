@@ -350,6 +350,10 @@ void World::setEmissions( int period ) {
     EmissionsSummer ocSummer( "OC" );
     EmissionsSummer bcawbSummer( "BC_AWB" );
     EmissionsSummer ocawbSummer( "OC_AWB" );
+    EmissionsSummer nh3Summer( "NH3" );
+    EmissionsSummer nh3agrSummer( "NH3_AGR" );
+    EmissionsSummer nh3awbSummer( "NH3_AWB" );
+
     
     // Group the EmissionsSummer together for improved performance.
     GroupedEmissionsSummer allSummer;
@@ -396,6 +400,10 @@ void World::setEmissions( int period ) {
     allSummer.addEmissionsSummer( &ocSummer );
     allSummer.addEmissionsSummer( &bcawbSummer );
     allSummer.addEmissionsSummer( &ocawbSummer );
+    allSummer.addEmissionsSummer( &nh3Summer );
+    allSummer.addEmissionsSummer( &nh3agrSummer );
+    allSummer.addEmissionsSummer( &nh3awbSummer );
+
 
    const double TG_TO_PG = 1000;
    const double N_TO_N2O = 1.571132; 
@@ -416,9 +424,21 @@ void World::setEmissions( int period ) {
     // Only set emissions if they are valid. If these are not set
     // MAGICC will use the default values.
     if( co2Summer.areEmissionsSet( period ) ){
+        // Note: a climate model will either take the net or gross +/-
+        // but not both, thus we make both available
         mClimateModel->setEmissions( "CO2", period,
                                      ( co2Summer.getEmissions( period ) +
                                        co2fugSummer.getEmissions( period ) )
+                                     / TG_TO_PG );
+        mClimateModel->setEmissions( "CO2FFIEmissions", period,
+                                     ( co2Summer.getEmissionsPositive( period ) +
+                                      co2fugSummer.getEmissions( period ) )
+                                     / TG_TO_PG );
+        // the emissions summer will produce negative emissions
+        // however the climate model wants positive uptake so we apply the
+        // negate here
+        mClimateModel->setEmissions( "CO2DACCCSUptake", period,
+                                     -co2Summer.getEmissionsNegative( period )
                                      / TG_TO_PG );
     }
     
@@ -426,8 +446,19 @@ void World::setEmissions( int period ) {
     const int startYear = currYear - scenario->getModeltime()->gettimestep( period ) + 1;
     for ( int i = startYear; i <= currYear; i++ ) {
         if( co2LandUseSummer.areEmissionsSet( i ) ){
+            // Note: a climate model will either take the net or gross +/-
+            // but not both, thus we make both available
             mClimateModel->setLUCEmissions( "CO2NetLandUse", i,
                                             co2LandUseSummer.getEmissions( i )
+                                            / TG_TO_PG );
+            mClimateModel->setLUCEmissions( "CO2EmissionsLandUse", i,
+                                            co2LandUseSummer.getEmissionsPositive( i )
+                                            / TG_TO_PG );
+            // the emissions summer will produce negative emissions
+            // however the climate model wants positive uptake so we apply the
+            // negate here
+            mClimateModel->setLUCEmissions( "CO2UptakeLandUse", i,
+                                            -co2LandUseSummer.getEmissionsNegative( i )
                                             / TG_TO_PG );
         }
     }
@@ -540,9 +571,11 @@ void World::setEmissions( int period ) {
         // For models that need ktonnes of HFC245fa (no single model should implement both of these):
         mClimateModel->setEmissions("HFC245fa", period,
                                     hfc245faSummer.getEmissions(period)+
-                                    hfc32Summer.getEmissions( period ) * HFC32_TO_245 +
                                     hfc365mfcSummer.getEmissions( period ) * HFC365_TO_245 +
                                     hfc152aSummer.getEmissions( period ) * HFC152_TO_245);
+        // hector will take HFC32 seperately
+        mClimateModel->setEmissions( "HFC32", period,
+                                     hfc32Summer.getEmissions( period ));
     }
     
     // MAGICC needs this in tons of VOC. Input is in TgC
@@ -575,11 +608,23 @@ void World::setEmissions( int period ) {
                                      hfc227eaSummer.getEmissions( period ) );
     }
     
-    if( hfc143aSummer.areEmissionsSet( period ) && hfc23Summer.areEmissionsSet( period ) && hfc236faSummer.areEmissionsSet( period ) ){
+    if( hfc143aSummer.areEmissionsSet( period ) && hfc236faSummer.areEmissionsSet( period ) ){
         mClimateModel->setEmissions( "HFC143a", period,
                                      hfc143aSummer.getEmissions( period ) +
-                                     hfc23Summer.getEmissions( period ) * HFC23_TO_143 +
                                      hfc236faSummer.getEmissions( period ) * HFC236_TO_143);
+    }
+    
+    if( hfc23Summer.areEmissionsSet( period ) ){
+        mClimateModel->setEmissions( "HFC23", period,
+                                     hfc23Summer.getEmissions( period ) );
+    }
+    
+    if( nh3Summer.areEmissionsSet(period) ) {
+        mClimateModel->setEmissions( "NH3",
+                                    period,
+                                    nh3Summer.getEmissions( period ) +
+                                    nh3awbSummer.getEmissions( period ) +
+                                    nh3agrSummer.getEmissions( period ) );
     }
 }
     
@@ -732,6 +777,21 @@ const GlobalTechnologyDatabase* World::getGlobalTechnologyDatabase() const {
         abort();
     }
     return mGlobalTechDB;
+}
+
+/*!
+ * \brief Gets access to the Region object by name or null if not found.
+ * \param aRegionName The name of the region to get.
+ * \return A const pointer to the requested region or null if not found.
+ */
+Region const* World::getRegion( const string& aRegionName ) const {
+    for( auto region : mRegions ) {
+        if( region->getName() == aRegionName ) {
+            return region;
+        }
+    }
+    
+    return 0;
 }
 
 /*! \brief Update a visitor for the World.

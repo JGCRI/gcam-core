@@ -99,12 +99,11 @@ public:
                              const std::string& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
-                             const GDP* aGDP,
                              const int aPeriod );
 
     virtual void calcEmissionsAndOutputs( const std::string& aRegionName,
+                                          const std::string& aSectorName,
                                   const double aPrimaryOutput,
-                                  const GDP* aGDP,
                                   const int aPeriod );
 
 protected:

@@ -70,9 +70,9 @@ public:
     virtual bool solve( const int aPeriod, const SolutionInfoParamParser* aSolutionInfoParamParser );
     
 private:
-    std::auto_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
-    std::auto_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
-    std::auto_ptr<SolverComponent> mLogNewtonRaphsonSaveDeriv; //!< LogNewtonRaphsonSaveDerivatives solver component.
+    std::unique_ptr<SolverComponent> mLogNewtonRaphson; //!< LogNewtonRaphson solver component.
+    std::unique_ptr<SolverComponent> mBisectAll; //!< BisectAll solver component.
+    std::unique_ptr<SolverComponent> mLogNewtonRaphsonSaveDeriv; //!< LogNewtonRaphsonSaveDerivatives solver component.
     
     //! Default solution tolerance, this value may be overridden at the SolutionInfo level
     double mDefaultSolutionTolerance;

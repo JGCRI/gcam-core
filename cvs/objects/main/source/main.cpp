@@ -170,9 +170,9 @@ int main( int argc, char *argv[] ) {
     // created.
     list<string> exclusionList;
 
-    // Create an auto_ptr to the scenario runner. This will automatically
+    // Create an unique_ptr to the scenario runner. This will automatically
     // deallocate memory.
-    auto_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
+    unique_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
     
     // Setup the scenario.
     success = runner->setupScenarios( timer );

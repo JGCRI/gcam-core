@@ -42,13 +42,11 @@
 
 #include "emissions/include/gdp_control.h"
 #include "containers/include/scenario.h"
-#include "containers/include/gdp.h"
 #include "util/base/include/xml_helper.h"
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/model_time.h"
-//#include "containers/include/iinfo.h"
-//#include "technologies/include/ioutput.h"
-//#include "functions/include/function_utils.h"
+#include "sectors/include/sector_utils.h"
+
 
 using namespace std;
 
@@ -117,7 +115,7 @@ void GDPControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTab
 void GDPControl::completeInit( const string& aRegionName, const string& aSectorName,
                                const IInfo* aTechIInfo )
 {
-
+    SectorUtils::addGDPDependency( aRegionName, aSectorName );
 }
 
 void GDPControl::initCalc( const string& aRegionName,
@@ -133,15 +131,16 @@ void GDPControl::initCalc( const string& aRegionName,
     }    
 }
 
-double GDPControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
+double GDPControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod ) {
+    const Modeltime* modeltime = scenario->getModeltime();
     double reduction = 0.0;
     
     // Calculate reduction
     // we only make adjustments in future model periods
-    int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
+    int finalCalibPer = modeltime->getFinalCalibrationPeriod();
     if( aPeriod > finalCalibPer && !mDisableEmControl ) {
-        double baseGDP = aGDP->getGDPperCap( finalCalibPer );
-        double currGDP = aGDP->getGDPperCap( aPeriod );
+        double baseGDP = SectorUtils::getGDPPerCap( aRegionName, finalCalibPer );
+        double currGDP = SectorUtils::getGDPPerCap( aRegionName, aPeriod );
         reduction = 1 - ( 1.0 / ( 1.0 + ( currGDP - baseGDP ) / mSteepness ));
             
         // Ensure reduction doesn't exceed maximum allowed

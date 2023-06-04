@@ -153,176 +153,6 @@ namespace objects {
         return iter;
     }
 
-    template <class U, class T>
-    struct InterfaceGetter {
-    public:
-        const U* operator()( const T& aObject ){
-            return &aObject;
-        }
-    };
-
-    template <class U,class T>
-    struct InterfaceGetter<U,T*> {
-    public:
-        const U* operator()( const T* aObject ){
-            return aObject;
-        }
-    };
-
-    /*! 
-     * \ingroup Objects
-     * \brief Helper struct which implements the equals operator for INamed pointers.
-     * \todo Is this worth a source file?
-     * \author Josh Lurz
-     */
-    template <class T>
-    struct NameEquals: public std::unary_function<const T,bool> {
-        NameEquals( const std::string& aName );
-        bool operator()( const T& aObject );
-
-        //! Stored name to compare against.
-        const std::string mName;
-    };
-
-    /*!
-     * \brief Constructor for the operator which stores the name to compare against
-     *        the name of another object.
-     * \param aName Name of the object which is being compared against.
-     */
-    template <class T>
-    inline NameEquals<T>::NameEquals( const std::string& aName ):mName( aName ){
-        /*! \pre Object name is not empty. */
-        assert( !mName.empty() );
-    }
-
-    /*! \brief Equals operator which determines if the given object has the same
-     *         name as another object.
-     * \param aObject Object to compare against.
-     * \return Whether the object is equal to the stored object.
-     */
-    template <class T>
-    inline bool NameEquals<T>::operator()( const T& aObject ){
-        /*! \pre Object is non-null. */
-        assert( aObject );
-        /*! \pre Object name is not empty. */
-        assert( !aObject->getName().empty() );
-
-        return InterfaceGetter<INamed,T>()( aObject )->getName() == mName;
-    }
-    
-    /*!
-     * \brief A binary functor to compare named components by name so that they can be sorted.
-     * \note If objects correctly inherited from the INamed interface this could
-     *       just use that as the template argument instead of templating NameComparator.
-     */
-    template<class T>
-    struct NameComparator : public std::binary_function<T*, T*, bool> {
-        /*!
-         * \brief Determine if the left hand operand is less than the
-         *        right.
-         * \param lhs The left hand side operand for the sort comparison.
-         * \param rhs The right hand side operand for the sort comparison.
-         * \return True if lhs is less than rhs, false otherwise.
-         */
-        bool operator()( const T* lhs, const T* rhs ){
-            return lhs->getName() < rhs->getName();
-        }
-    };
-
-    /*! \brief Reorder a container based on an ordering of names.
-     *  \details This function is used to reorder a a container using a supplied
-     *          ordering. This function handles errors as follows:
-     *          <ul>
-     *            <li>
-     *              If an object is not specified in the list, the function
-     *              will output an error.
-     *            </li>
-     *            <li>
-     *              If an object name in the ordering list is not an
-     *              existing sector in the model, a debugging warning will
-     *              be issued and the name will be skipped.
-     *            </li>
-     *          </ul>
-     * \param aFirst An InputIterator pointing to the start of the container.
-     * \param aLast An InputIterator pointing to the end of the container.
-     * \param aOrderList A list of names in the order in which the objects in
-     *        the container should be put. 
-     * \return Whether all objects had orderings in the passed in order list.
-     * \warning This function requires that all the strings in aOrderList are
-     *          unique.  It's behavior is undefined if the vector contains
-     *          duplicate strings.
-     */
-    template <class InputIterator, class T>
-    bool reorderContainer( InputIterator aFirst,
-                           InputIterator aLast,
-                           const std::vector<std::string>& aOrderList ){
-        bool success = true;
-
-        if( aOrderList.empty() ){
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::NOTICE );
-            mainLog << "Skipping object reordering due to an empty order list."
-                    << std::endl;
-            return false;
-        }
-
-        // Get the dependency finder logger.
-        ILogger& depFinderLog = ILogger::getLogger( "dependency_finder_log" );
-
-        // Construct a map of strings to bools that represent an object in the
-        // container NOT being mapped.  The bool is irrelevant because mappings
-        // will be removed as they are ordered.
-        std::map<std::string,bool> isOrdered;
-        for( InputIterator containerIter = aFirst;
-            containerIter != aLast; ++containerIter ){
-            isOrdered.insert( 
-                std::make_pair( objects::InterfaceGetter<INamed,T>()( *containerIter )->getName(), true ) );
-        }
-
-        // This loop functions much like insertion sort.  aFirst initially
-        // points to the first location in the container.  The loop iterates
-        // over the name list.  During each iteration we attempt to find
-        // an iterator that points to object in the container that has the
-        // right name. If this iterator is found the values are swapped.  Otherwise
-        // a warning is emitted.
-        typedef std::vector<std::string>::const_iterator OrderIter;
-        for( OrderIter nameIter = aOrderList.begin(); 
-             nameIter != aOrderList.end(); ++nameIter ){
-
-            // Note that find_if uses a predicate to find the appropriate item.
-            // Consult the NameEquals class and the STL documentation for details.
-            InputIterator containerIter = std::find_if( aFirst,
-                                                        aLast,
-                                                        NameEquals<T>( *nameIter ) );
-            if( containerIter != aLast ){
-                std::swap( *aFirst, *containerIter );
-                ++aFirst;
-                // Remove it from the isOrdered vector
-                isOrdered.erase( *nameIter );
-            }
-            else {
-                // There was a name in the order that did not correspond to
-                // and object in the container.
-                depFinderLog.setLevel( ILogger::DEBUG );
-                depFinderLog << *nameIter << " is not the name of an "
-                             << "object in the container. "
-                             << "It will not be included in the ordering."
-                             << std::endl;
-            }
-        }
-        // Output an error if there was an item in the container that was not
-        // in the ordering.
-        for( std::map<std::string,bool>::iterator orderIter = isOrdered.begin();
-             orderIter != isOrdered.end(); ++orderIter ){
-            ILogger& mainLog = ILogger::getLogger( "main_log");
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << orderIter->first
-                    << " was not assigned a position in the explicit ordering list." << std::endl;
-            success = false;
-        }
-        return success;
-    }
-
     /*! \brief Returns whether a value with the given key exists.
     * \details This function takes as its input a map and a key for which to
     *          search, and returns whether the key exists. 
@@ -333,6 +163,25 @@ namespace objects {
     template <class K, class V> bool hasValue( const std::map<K,V>& aCurrMap, const K& aKey ){
         return ( aCurrMap.find( aKey ) != aCurrMap.end() );
     }
+
+    /*!
+     * \brief A binary functor to compare named components by name so that they can be sorted.
+     * \note If objects correctly inherited from the INamed interface this could
+     *       just use that as the template argument instead of templating NameComparator.
+     */
+    struct NameComparator {
+        /*!
+         * \brief Determine if the left hand operand is less than the
+         *        right.
+         * \param lhs The left hand side operand for the sort comparison.
+         * \param rhs The right hand side operand for the sort comparison.
+         * \return True if lhs is less than rhs, false otherwise.
+         */
+        template<class T>
+        bool operator()(const T* lhs, const T* rhs) {
+            return lhs->getName() < rhs->getName();
+        }
+    };
 
     /*! \brief A function to determine the sign of a number.
     * \param number A templated parameter which must be comparable to 0.

@@ -58,9 +58,8 @@ extern Scenario* scenario;
  * \param aGDP The regional gdp needed to calculate the sector.
  * \param aRegionName The name of the region in which this activity is contained.
  */
-SectorActivity::SectorActivity( Sector* aSector, const GDP* aGDP, const string& aRegionName ):
+SectorActivity::SectorActivity( Sector* aSector, const string& aRegionName ):
 mSector( aSector ),
-mGDP( aGDP ),
 mRegionName( aRegionName )
 {
     // Create a shared pointer such that when both the price and supply activities
@@ -85,10 +84,10 @@ void SectorActivity::setPrices( const int aPeriod ) {
     const bool calibrationPeriod = aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod();
     static const bool calibrationActive = Configuration::getInstance()->getBool( "CalibrationActive" );
     if( calibrationActive && calibrationPeriod ) {
-        CalibrateShareWeightVisitor calibrator( mRegionName, mGDP );
+        CalibrateShareWeightVisitor calibrator( mRegionName );
         mSector->accept( &calibrator, aPeriod );
     }
-    mSector->calcFinalSupplyPrice( mGDP, aPeriod );
+    mSector->calcFinalSupplyPrice( aPeriod );
 }
 
 /*!
@@ -96,7 +95,7 @@ void SectorActivity::setPrices( const int aPeriod ) {
  * \param aPeriod Model period to calculate.
  */
 void SectorActivity::setDemands( const int aPeriod ) {
-    mSector->supply( mGDP, aPeriod );
+    mSector->supply( aPeriod );
 }
 
 /*!

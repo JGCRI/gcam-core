@@ -52,7 +52,6 @@
 #include <map>
 #include <boost/core/noncopyable.hpp>
 
-#include "technologies/include/expenditure.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/value.h"
 #include "containers/include/iinfo.h"
@@ -213,8 +212,6 @@ protected:
     std::vector<IInput*> mLeafInputs;
     std::vector<AGHG*> mGhgs; //!< Green-House gases.
 
-    std::vector<Expenditure> expenditures; //!< Keep track of expenditures
-
     //! The share weight used to bias investment
     double mShareWeight;
 
@@ -225,10 +222,10 @@ protected:
     mutable bool mPricePaidCached;
 
     //! A sequestration device to capture emissions
-    std::auto_ptr<ICaptureComponent> mSequestrationDevice;
+    std::unique_ptr<ICaptureComponent> mSequestrationDevice;
     
     //! Technology info store.
-    std::auto_ptr<IInfo> mTechInfo;
+    std::unique_ptr<IInfo> mTechInfo;
 private:
     void clear();
     bool doCalibration;

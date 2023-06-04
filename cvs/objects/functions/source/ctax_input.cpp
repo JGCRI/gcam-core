@@ -95,7 +95,7 @@ CTaxInput::CTaxInput()
  * \brief Destructor.
  * \note An explicit constructor must be defined to avoid the compiler inlining
  *       it in the header file before the header file for the type contained in
- *       the auto_ptr is included.
+ *       the unique_ptr is included.
  */
 CTaxInput::~CTaxInput() {
 }
@@ -182,7 +182,12 @@ void CTaxInput::setPhysicalDemand( double aPhysicalDemand,
     double ctax = marketplace->getPrice( "CO2", aRegionName, aPeriod, false );
     double priceAdjust = 0.0;
     if( taxFraction != Marketplace::NO_MARKET_PRICE && ctax != Marketplace::NO_MARKET_PRICE ) {
-        priceAdjust = (1.0 - std::min( taxFraction, 1.0 )) * ctax * mCachedCCoef;
+        // Note: we do not attempt to ensure taxFraction is within bounds
+        // and we could get thrown a price > 1, for instance.  However, that
+        // will send the demand negative and given the supply will always be
+        // positive it could not solve to such a value.  And more importantly,
+        // we will always have continuous behavior even at "invalid" prices
+        priceAdjust = (1.0 - taxFraction) * ctax * mCachedCCoef;
     }
     mNetTransferAdjust = aPhysicalDemand * priceAdjust;
     marketplace->addToDemand( mName, aRegionName, mNetTransferAdjust, aPeriod );

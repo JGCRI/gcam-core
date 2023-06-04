@@ -65,8 +65,7 @@ public:
                                ILandAllocator* aLandAllocator );
 
 
-    virtual void initCalc( NationalAccount* aNationalAccount,
-                           const Demographic* aDemographics,
+    virtual void initCalc( const Demographic* aDemographics,
                            const int aPeriod );
 
 protected:

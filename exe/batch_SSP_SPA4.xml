@@ -3,7 +3,6 @@
 	<ComponentSet name="base">
 		<FileSet name="GCAM_"> 
             <Value name = "climate">../input/gcamdata/xml/hector.xml</Value>
-			<Value name = "socioeconomics">../input/gcamdata/xml/socioeconomics_gSSP2.xml</Value>
 			
 			<Value name = "resources">../input/gcamdata/xml/resources.xml</Value>
 			<Value name = "energy_supply">../input/gcamdata/xml/en_supply.xml</Value>
@@ -15,7 +14,8 @@
 			<Value name = "industry">../input/gcamdata/xml/other_industry.xml</Value>
 			<Value name = "industry_income_elas">../input/gcamdata/xml/other_industry_incelas_gssp2.xml</Value>
  			<Value name = "iron_steel">../input/gcamdata/xml/iron_steel.xml</Value>
-			<Value name = "iron_steel_income_elas">../input/gcamdata/xml/iron_steel_incelas_gssp2.xml</Value>   
+			<Value name = "iron_steel_income_elas">../input/gcamdata/xml/iron_steel_incelas_gssp2.xml</Value>
+			<Value name = "iron_steel trade">../input/gcamdata/xml/iron_steel_trade.xml</Value>   
  			<Value name = "Off_road">../input/gcamdata/xml/Off_road.xml</Value>
 			<Value name = "Off_road_income_elas">../input/gcamdata/xml/Off_road_incelas_gssp2.xml</Value>  
  			<Value name = "chemical">../input/gcamdata/xml/chemical.xml</Value>
@@ -77,6 +77,8 @@
             <Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
             <Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
 			<Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
+            <Value name = "macro">../input/gcamdata/xml/socioeconomics_macro.xml</Value>
+            <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 			
 			<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 
@@ -143,7 +145,7 @@
 			<Value name="link">../input/policy/2025_target_finder_phasein.xml</Value>
 			<Value name="bio_tax">../input/policy/regional_uct_spa4.xml</Value>
 			<Value name="bio_trade">../input/gcamdata/xml/ssp4_ag_bio_trade.xml</Value>
-            <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_SSP4.xml</Value>
+            <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget.xml</Value>
             <Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
 		</FileSet>
 		

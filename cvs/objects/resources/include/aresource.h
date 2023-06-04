@@ -50,13 +50,13 @@
 #include "util/base/include/data_definition_util.h"
 
 class Tabs;
-class GDP;
 class IInfo;
 
 // Need to forward declare the subclasses as well.
 class Resource;
 class RenewableResource;
 class UnlimitedResource;
+class TrialValueResource;
 
 /*! 
 * \ingroup Objects
@@ -85,7 +85,6 @@ public:
                            const int aPeriod ) = 0;
     
     virtual void calcSupply( const std::string& aRegionName,
-                             const GDP* aGDP,
                              const int period ) = 0;
 
     virtual double getAnnualProd( const std::string& aRegionName,
@@ -103,7 +102,8 @@ protected:
         /* Declare all subclasses of AResource to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( AResource, Resource, RenewableResource, UnlimitedResource ),
+        DEFINE_SUBCLASS_FAMILY( AResource, Resource, RenewableResource, UnlimitedResource,
+                                TrialValueResource ),
 
         //! Resource name.
         DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),

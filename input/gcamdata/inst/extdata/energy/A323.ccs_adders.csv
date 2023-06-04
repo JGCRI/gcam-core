@@ -1,0 +1,15 @@
+# File: A323.ccs_adders.csv
+# Title: IRONSTL CCS adders
+# Units: 1975$/kg for supplysector IRONSTL
+# Column types: ccccn
+# ----------
+supplysector,subsector,stub.technology,minicam.non.energy.input,ccs_cost_adder
+iron and steel,BLASTFUR,BLASTFUR,non-energy,0
+iron and steel,BLASTFUR,BLASTFUR CCS,non-energy,0.00689
+iron and steel,BLASTFUR,Biomass-based,non-energy,0
+iron and steel,BLASTFUR,BLASTFUR with hydrogen,non-energy,0
+iron and steel,EAF with DRI,EAF with DRI,non-energy,0
+iron and steel,EAF with DRI,EAF with DRI CCS,non-energy,0.00689
+iron and steel,EAF with DRI,Hydrogen-based DRI,non-energy,0
+iron and steel,EAF with scrap,EAF with scrap,non-energy,0
+iron and steel,BLASTFUR,BLASTFUR CCS with hydrogen,non-energy,0.00689

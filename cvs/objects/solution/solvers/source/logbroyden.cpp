@@ -401,6 +401,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     const int TRACK_NUM_PAST_F_VALUES = 4;
     std::queue<double> past_f_values;
     past_f_values.push(f0);
+    const double LARGE_DIAG_THRESHOLD = 100.0;
   if(f0 < FTINY) {
     // Guard against F=0 since it can cause a NaN in our solver.  This
     // is a more stringent test than our regular convergence test
@@ -415,7 +416,18 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     solverLog << "Internal iteration count ( mPerIter )= " << mPerIter << "\n";
     cSolInfo->printMarketInfo("Broyden ", calcCounter->getPeriodCount(), singleLog);
     for(int j=0;j<F.narg();++j) {
-      jdiag[j] = B(j,j);
+        double currDiag = B(j,j);
+        // avoid very large / small diagonal values in the jacobian which are
+        // almost always due to discontinous behavior in the underlying market
+        // this should help avoid having to spin our wheels with excessive
+        // backtracking / slow progress + getting kicked out
+        if(currDiag != 0 && fabs(currDiag) > LARGE_DIAG_THRESHOLD) {
+            currDiag *= LARGE_DIAG_THRESHOLD / fabs(currDiag);
+        }
+        else if(currDiag != 0 && fabs(currDiag) < 1.0/LARGE_DIAG_THRESHOLD) {
+            currDiag /= fabs(currDiag) * LARGE_DIAG_THRESHOLD;
+        }
+      jdiag[j] = currDiag;
     }
     static_cast<LogEDFun&>(F).setSlope(jdiag);
     double jdmax=0.0, jdmin=0.0;
@@ -492,12 +504,12 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           solverLog << "Doing SVD, old dxmag:  " << dxmag;
           Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
           // SVD uses a threshold to determine which elements to treat as singular
-          // however it is applied relative to the largest diaganol element and we seem
+          // however it is applied relative to the largest diagonal element and we seem
           // to have some really large ones.  So even when setting what seems like a small
           // value here it normalizes to something large enough that it suppresses behavior
-          // in markets which should be fine to operate on.  Thus we have set it explicitly
-          // to zero, a.k.a only the elements that truly have no behavior get suppressed
-          // ideally we could improve upon this
+          // in markets which should be fine to operate on.  Given we have added a separate
+          // suppression on large diagonal values above we can apply a reasonable threshold.
+          // without that we should set this to zero (i.e. only suppress truly singular cols)
           const double small_threshold = 0;
           svdSolver.setThreshold(small_threshold);
           dx = svdSolver.solve(-1.0 * fx);
@@ -532,8 +544,8 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           solverLog << "Taking a chance to try to jump out of local min.\n";
           // very little progress, might be stuck in a local minima
           // let's take a chance and take a step out of our comfort zone
-          // by accepting a step that makes f(x) at most 1000 time worse
-          fxIncr = 1000.0;
+          // by accepting a step that makes f(x) at most 100 time worse
+          fxIncr = 100.0;
           past_f_values = std::queue<double>();
       }
       UBVECTOR fxnew(fx.size());

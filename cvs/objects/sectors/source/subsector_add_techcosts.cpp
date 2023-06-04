@@ -97,7 +97,7 @@ const string& SubsectorAddTechCosts::getXMLNameStatic() {
 * \param regionName region name
 * \param period Model period
 */
-double SubsectorAddTechCosts::getPrice( const GDP* aGDP, const int aPeriod ) const {
+double SubsectorAddTechCosts::getPrice( const int aPeriod ) const {
     double subsectorPrice = 0;
     for ( unsigned int i = 0; i < mTechContainers.size(); ++i) {
         const ITechnology* newVintageTech = mTechContainers[ i ]->getNewVintageTechnology( aPeriod );

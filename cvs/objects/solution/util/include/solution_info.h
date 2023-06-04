@@ -150,7 +150,7 @@ public:
     * \brief Binary function used to order SolutionInfo* pointers by decreasing relative excess demand. 
     * \author Josh Lurz
     */   
-    struct GreaterRelativeED : public std::binary_function<SolutionInfo*, SolutionInfo*, bool>
+    struct GreaterRelativeED
     {
         //! Constructor
         GreaterRelativeED(){}

@@ -76,10 +76,9 @@ public:
     virtual void completeInit( const IInfo* aRegionInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void supply( const GDP* aGDP, const int aPeriod );
+    virtual void supply( const int aPeriod );
 protected:
-	virtual double getPrice( const GDP* aGDP,
-                             const int aPeriod ) const;
+	virtual double getPrice( const int aPeriod ) const;
 
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     virtual const std::string& getXMLName() const;

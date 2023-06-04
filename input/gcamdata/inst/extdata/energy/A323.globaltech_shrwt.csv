@@ -6,10 +6,10 @@
 supplysector,subsector,technology,1971,2015,2020,2025,2050,2100
 iron and steel,BLASTFUR,BLASTFUR,1,1,1,1,1,1
 iron and steel,BLASTFUR,BLASTFUR CCS,0,0,0,0.2,1,1
-iron and steel,BLASTFUR,Biomass-based,0,0,0,0.2,0.2,0.2
+iron and steel,BLASTFUR,Biomass-based,0,0,0,0.1,0.2,0.2
 iron and steel,EAF with DRI,EAF with DRI,1,1,1,1,1,1
 iron and steel,EAF with DRI,EAF with DRI CCS,0,0,0,0.2,1,1
-iron and steel,EAF with DRI,Hydrogen-based DRI,0,0,0,1,1,1
+iron and steel,EAF with DRI,Hydrogen-based DRI,0,0,0,0.1,0.2,0.2
 iron and steel,EAF with scrap,EAF with scrap,1,1,1,1,1,1
-iron and steel,BLASTFUR,BLASTFUR with hydrogen,0,0,0,1,1,1
-iron and steel,BLASTFUR,BLASTFUR CCS with hydrogen,0,0,0,0.2,1,1
+iron and steel,BLASTFUR,BLASTFUR with hydrogen,0,0,0,0.1,0.2,0.2
+iron and steel,BLASTFUR,BLASTFUR CCS with hydrogen,0,0,0,0,0,0

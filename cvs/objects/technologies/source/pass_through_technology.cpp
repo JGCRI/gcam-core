@@ -48,6 +48,8 @@
 #include "containers/include/iinfo.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/market_dependency_finder.h"
+#include "technologies/include/iproduction_state.h"
+#include "functions/include/iinput.h"
 
 using namespace std;
 
@@ -138,13 +140,28 @@ void PassThroughTechnology::production( const string& aRegionName,
                                         const string& aSectorName,
                                         double aVariableDemand,
                                         double aFixedOutputScaleFactor,
-                                        const GDP* aGDP,
                                         const int aPeriod )
 {
     // The total output that should be passed on to the pass-through sector is the
     // fixed (potentially scaled) + variable
     double totalDemand = aVariableDemand + mPassThroughFixedOutput * aFixedOutputScaleFactor;
-    Technology::production( aRegionName, aSectorName, totalDemand, 1, aGDP, aPeriod );
+    
+    // ideally we would just call Technology::production with totalDemand and scale factor of 1
+    // however we may have capital inputs here and when tracking new investments we need to
+    // make sure it is calculating demands based off of just aVariableDemand
+    if( !mProductionState[ aPeriod ]->isOperating() ) {
+        return;
+    }
+    
+    for(auto input : mInputs) {
+        // standard Leontief assumptions except for capital inputs, drive demands with
+        // new instead of total
+        double inputDemand = input->getCoefficient(aPeriod) *
+            (input->hasTypeFlag(IInput::CAPITAL) ? aVariableDemand : totalDemand);
+        input->setPhysicalDemand(inputDemand, aRegionName, aPeriod);
+    }
+    
+    calcEmissionsAndOutputs( aRegionName, aSectorName, totalDemand, aPeriod );
 }
 
 double PassThroughTechnology::getFixedOutput( const string& aRegionName,

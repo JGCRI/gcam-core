@@ -58,9 +58,7 @@
 
 // Forward declarations
 class ITechnologyContainer;
-class GDP;
 class IInfo;
-class NationalAccount;
 class Demographic;
 class Tabs;
 class ILandAllocator;
@@ -136,13 +134,13 @@ protected:
     // Some typedefs to make using interpolation rules more readable.
     typedef std::vector<InterpolationRule*>::const_iterator CInterpRuleIterator;
     
-    std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
+    std::unique_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
 
     virtual void interpolateShareWeights( const int aPeriod );
 
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {};
     
-    virtual const std::vector<double> calcTechShares ( const GDP* gdp, const int period ) const;
+    virtual const std::vector<double> calcTechShares ( const int period ) const;
     
     void clear();
     void clearInterpolationRules();
@@ -161,25 +159,23 @@ public:
     virtual void completeInit( const IInfo* aSectorInfo,
                                ILandAllocator* aLandAllocator );
     
-    virtual void initCalc( NationalAccount* aNationalAccount,
-                           const Demographic* aDemographics,
+    virtual void initCalc( const Demographic* aDemographics,
                            const int aPeriod );
 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
     static const std::string& getXMLNameStatic();
-    virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
+    virtual double getPrice( const int aPeriod ) const;
     virtual bool allOutputFixed( const int period ) const;
     virtual bool containsOnlyFixedOutputTechnologies( const int period ) const;
-    virtual double getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) const;
+    virtual double getAverageFuelPrice( const int aPeriod ) const;
 
     virtual void calcCost( const int aPeriod );
 
-    virtual double calcShare( const IDiscreteChoice* aChoiceFn, const GDP* aGDP, const int aPeriod) const;
+    virtual double calcShare( const IDiscreteChoice* aChoiceFn, const int aPeriod) const;
     virtual double getShareWeight( const int period ) const;
 
     virtual void setOutput( const double aVariableDemand,
                             const double aFixedOutputScaleFactor,
-                            const GDP* aGDP,
                             const int aPeriod );
 
     virtual bool isAllCalibrated( const int aPeriod, double aCalAccuracy, const bool aPrintWarnings ) const;

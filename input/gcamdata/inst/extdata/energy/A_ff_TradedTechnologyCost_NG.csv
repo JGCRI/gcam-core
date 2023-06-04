@@ -1,0 +1,17 @@
+# File: A_ff_TradedTechnologyCost_NG.csv
+# Title: Technology-level cost assumptions of traded natural gas trade (LNG and pipeline gas)
+# Units: 1975$/GJ
+# Comments: Natural gas trade cost assumptions.  Some costs are added on producer side while others are on consumer side.
+# Source: NA
+# Column types: ccccnnn
+# ----------
+supplysector,subsector,technology,cost.component,1975,2015,2100
+traded LNG,traded LNG,traded LNG,liquefaction,0.27,0.27,0.27
+traded LNG,traded LNG,traded LNG,shipping,0.17,0.17,0.17
+traded N.Amer pipeline gas,traded N.Amer pipeline gas,traded N.Amer pipeline gas,pipeline,0.15,0.15,0.15
+traded LA pipeline gas,traded LA pipeline gas,traded LA pipeline gas,pipeline,0.15,0.15,0.15
+traded EUR pipeline gas,traded EUR pipeline gas,traded EUR pipeline gas,pipeline,0.15,0.15,0.15
+traded RUS pipeline gas,traded RUS pipeline gas,traded RUS pipeline gas,pipeline,0.15,0.15,0.15
+traded Afr_MidE pipeline gas,traded Afr_MidE pipeline gas,traded Afr_MidE pipeline gas,pipeline,0.15,0.15,0.15
+traded PAC pipeline gas,traded PAC pipeline gas,traded PAC pipeline gas,pipeline,0.15,0.15,0.15
+gas trade statistical differences,statistical differences,statistical differences,pipeline,0.15,0.15,0.15

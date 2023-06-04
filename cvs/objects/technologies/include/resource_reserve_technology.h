@@ -105,7 +105,6 @@ public:
                             const std::string& aSectorName,
                             double aVariableDemand,
                             double aFixedOutputScaleFactor,
-                            const GDP* aGDP,
                             const int aPeriod);
     
     virtual double getFixedOutput(const std::string& aRegionName,
@@ -114,6 +113,10 @@ public:
                                   const std::string& aRequiredInput,
                                   const double aMarginalRevenue,
                                   const int aPeriod) const;
+    
+    virtual void calcCost(const std::string& aRegionName,
+                          const std::string& aSectorName,
+                          const int aPeriod);
     
     virtual double getEnergyCost( const std::string& aRegionName,
                                   const std::string& aSectorName,
@@ -133,12 +136,6 @@ protected:
 
         //! The total reserve which was calculated during investment to produce from.
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "total-reserve", mTotalReserve, Value ),
-        
-        //! The "investment" cost which is the cost of where on the supply curve the
-        //! containing resource was when it invested in this technology.  We use this
-        //! as a way to reflect the costs captured in the supply curve when calculating
-        //! the profit shutdown.
-        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "investment-cost", mInvestmentCost, Value ),
                             
         //! An expected average lifetime to fully produce the total reserve.  This
         //! value is calculate an annualized production.  Note this value is generally
@@ -156,16 +153,25 @@ protected:
         //! A parameter which can be used to linearly phase out annual production
         //! after the remaining reserve has reached the configured percent.
         DEFINE_VARIABLE( SIMPLE, "decline-phase-percent", mDeclinePhasePct, Value ),
-        
+
         //! A flag that indicates if this resource in currently calibrating which we can use to disable
         //! certain dynamics such as decline phase or profit shutdown to ensure values match.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "is-calibrating", mIsResourceCalibrating, bool )
     )
     
+    //! The non-energy input which will track the "investment" cost, which is the cost
+    //! of where on the supply curve the containing resource was when it invested in this
+    //! technology.  We use this as a way to reflect the costs captured in the supply curve
+    //! when calculating the profit shutdown.
+    IInput* mInvestmentCostInput;
+    
     virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;
     virtual const std::string& getXMLName() const;
     void copy( const ResourceReserveTechnology& aOther );
     virtual void setProductionState( const int aPeriod );
+    virtual double getCurrencyConversionPrice( const std::string& aRegionName,
+                                               const std::string& aSectorName,
+                                               const int aPeriod ) const;
 };
 
 #endif // _RESOURCE_RESERVE_TECHNOLOGY_H_

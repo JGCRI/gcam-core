@@ -91,7 +91,7 @@ void NodeInput::completeInit( const string& aRegionName,
 
     // we sort the child inputs now to make things easier on us when it comes time to merge
     // node inputs in copyParamsInto.
-    util::NameComparator<IInput> comp;
+    util::NameComparator comp;
     sort( mNestedInputs.begin(), mNestedInputs.end(), comp );
 
     // have all contained inputs do completeInit as well

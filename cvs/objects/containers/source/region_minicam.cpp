@@ -50,7 +50,7 @@
 #include <stack>
 
 #include "containers/include/region_minicam.h"
-#include "containers/include/gdp.h"
+#include "containers/include/national_account_container.h"
 #include "containers/include/scenario.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
@@ -81,6 +81,7 @@
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
 
+#include "containers/include/national_account_container_activity.h"
 #include "containers/include/resource_activity.h"
 #include "containers/include/sector_activity.h"
 #include "containers/include/final_demand_activity.h"
@@ -108,7 +109,7 @@ extern Scenario* scenario;
 
 //! Default constructor
 RegionMiniCAM::RegionMiniCAM() {
-    mGDP = 0;
+    mNationalAccountContainer = 0;
     mLandAllocator = 0;
 
     mInterestRate = 0;
@@ -133,7 +134,7 @@ void RegionMiniCAM::clear(){
         delete *consumerIter;
     }
     
-    delete mGDP;
+    delete mNationalAccountContainer;
     delete mLandAllocator;
 }
 
@@ -176,10 +177,10 @@ void RegionMiniCAM::completeInit() {
     if( mDemographic ){
         mDemographic->completeInit();
     }
-
-    // Initialize the GDP
-    if( mGDP ){
-        mGDP->initData( mDemographic );
+    
+    // Complete initialization for national accounts for all periods
+    if( mNationalAccountContainer ){
+        mNationalAccountContainer->completeInit( mName, mDemographic );
     }
 
     for( SectorIterator sectorIter = mSupplySector.begin(); sectorIter != mSupplySector.end(); ++sectorIter ) {
@@ -218,18 +219,18 @@ void RegionMiniCAM::completeInit() {
     MarketDependencyFinder* markDepFinder = scenario->getMarketplace()->getDependencyFinder();
     for( int i = 0; i < mResources.size(); ++i ) {
         markDepFinder->resolveActivityToDependency( mName, mResources[ i ]->getName(),
-            new ResourceActivity( mResources[ i ], mGDP, mName ) );
+            new ResourceActivity( mResources[ i ], mName ) );
     }
     for( int i = 0; i < mSupplySector.size(); ++i ) {
         SectorActivity* tempSectorActivity(
-            new SectorActivity( mSupplySector[ i ], mGDP, mName ) );
+            new SectorActivity( mSupplySector[ i ], mName ) );
         markDepFinder->resolveActivityToDependency( mName, mSupplySector[ i ]->getName(),
             tempSectorActivity->getSectorDemandActivity(),
             tempSectorActivity->getSectorPriceActivity() );
     }
     for( int i = 0; i < mFinalDemands.size(); ++i ) {
         markDepFinder->resolveActivityToDependency( mName, mFinalDemands[ i ]->getName(),
-            new FinalDemandActivity( mFinalDemands[ i ], mGDP, mDemographic, mName ) );
+            new FinalDemandActivity( mFinalDemands[ i ], mDemographic, mName ) );
     }
     if( mLandAllocator ) {
         markDepFinder->resolveActivityToDependency( mName, "land-allocator",
@@ -239,6 +240,9 @@ void RegionMiniCAM::completeInit() {
         markDepFinder->resolveActivityToDependency( mName, mConsumers[ i ]->getName(),
             new ConsumerActivity( mConsumers[ i ], mDemographic, mName ) );
     }
+    //for dynamic in-period GDP calculation or GDP Calibration
+    markDepFinder->resolveActivityToDependency( mName, mNationalAccountContainer->getGDPActivityName(), new NationalAccountContainerActivity( mNationalAccountContainer, mName ) );
+
 }
 
 void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const {
@@ -246,21 +250,17 @@ void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs
     XMLWriteElement( mInterestRate, "interest-rate", out, tabs );
     XMLWriteElement( mSocialDiscountRate, "social-discount-rate", out, tabs );
     XMLWriteElement( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs );
-
-    XMLWriteElement( mCalibrationGDPs[ period ], "calibrationGDPs", out, tabs );
-    XMLWriteElement( getEndUseServicePrice( period ), "priceSer", out, tabs );
     
     // Write out the Co2 Coefficients.
     for( map<string,double>::const_iterator coefAllIter = mPrimaryFuelCO2Coef.begin(); coefAllIter != mPrimaryFuelCO2Coef.end(); coefAllIter++ ) {
         XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
     }
-
-    // write the xml for the class members.
-    // write out the single population object.
-    if( mGDP ){
-        mGDP->toDebugXML( period, out, tabs );
+    
+    // write out national accounts
+    if( mNationalAccountContainer ){
+        mNationalAccountContainer->toDebugXML(period, out, tabs);
     }
-
+    
     // Write out the land allocator.
     if ( mLandAllocator ) {
         mLandAllocator->toDebugXML( period, out, tabs );
@@ -306,68 +306,8 @@ const std::string& RegionMiniCAM::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! Calculate initial gdp value (without feedbacks)
-*
-* \param period Model time period
-*/
-void RegionMiniCAM::calcGDP( const int period ){
-    if( !ensureGDP() || !ensureDemographics() ){
-        return;
-    }
-    mGDP->initialGDPcalc( period, mDemographic->getTotal( period ) );
-}
-
-/*! \brief Calculate forward-looking gdp (without feedbacks) for AgLU use.
-* \details It is necessary to have a gdp without feedbacks so that all values
-*          are known and AgLU can calibrate. This routine runs through each
-*          period and calculates a series of gdp values without use of the
-*          energy price feedback.
-* \author Steve Smith, Josh Lurz
-* \warning This will interfere with the normal gdp calculation if this is used
-*          after model calc starts.
-* \todo check to see if this works with AgLU. Not sure about conversions.
-*/
-const vector<double> RegionMiniCAM::calcFutureGDP() const {
-    if( !ensureGDP() || !ensureDemographics() ){
-        return vector<double>( 0 );
-    }
-
-    const Modeltime* modeltime = scenario->getModeltime();
-    vector<double> gdps( modeltime->getmaxper() );
-
-    for ( int period = 0; period < modeltime->getmaxper(); period++ ) {
-        mGDP->initialGDPcalc( period, mDemographic->getTotal( period ) );
-        gdps[ period ] = mGDP->getApproxScaledGDPperCap( period );
-    }
-    return gdps;
-}
-
-double RegionMiniCAM::getEndUseServicePrice( const int period ) const {
-    double servicePrice = 0;
-    for ( CFinalDemandIterator currDemSector = mFinalDemands.begin(); currDemSector != mFinalDemands.end(); ++currDemSector ) {
-        servicePrice += (*currDemSector)->getWeightedEnergyPrice( mName, period );
-    }
-
-    return servicePrice;
-}
-
-/*! Adjust regional gdp for energy.
-*
-* \param period Model time period
-* \todo Move this calculation down to GDP
-*/
-void RegionMiniCAM::adjustGDP( const int period ){
-    if( !ensureGDP() ){
-        return;
-    }
-
-    const Modeltime* modeltime = scenario->getModeltime();
-
-    double tempratio = 1;
-    if ( period > modeltime->getFinalCalibrationPeriod() ){
-        tempratio = getEndUseServicePrice( period ) / getEndUseServicePrice( period - 1 );
-    }
-    mGDP->adjustGDP( period, tempratio );
+NationalAccountContainer const* RegionMiniCAM::getNationalAccounts() const {
+    return mNationalAccountContainer;
 }
 
 /*! \brief Test to see if calibration worked for all sectors in this region
@@ -411,24 +351,24 @@ bool RegionMiniCAM::isAllCalibrated( const int period, double calAccuracy, const
 void RegionMiniCAM::initCalc( const int period )
 {
     Region::initCalc( period );
+    if( mNationalAccountContainer ){
+        mNationalAccountContainer->initCalc( mDemographic, period );
+    }
+    
     for( SectorIterator currSector = mSupplySector.begin(); currSector != mSupplySector.end(); ++currSector ){
-        (*currSector)->initCalc( 0, mDemographic, period );
+        (*currSector)->initCalc( mDemographic, period );
     }
     for ( FinalDemandIterator currSector = mFinalDemands.begin(); currSector != mFinalDemands.end(); ++currSector ) {
-        (*currSector)->initCalc( mName, mGDP, mDemographic, period  );
+        (*currSector)->initCalc( mName, mDemographic, period );
     }
     for( ResourceIterator currResource = mResources.begin(); currResource != mResources.end(); ++currResource ){
         (*currResource)->initCalc( mName, period );
     }
-
-    calcGDP( period );
-    mGDP->adjustGDP( period, 1.0 );
     
     for( ConsumerIterator currConsumer = mConsumers.begin(); currConsumer != mConsumers.end(); ++currConsumer ) {
+        // TODO: pass correct container?
         NationalAccount nationalAccount;
-        // Note that we are using the unadjusted gdp for these equations and so
-        // gdp price feedbacks will be ignored.
-        (*currConsumer)->initCalc( mName, "", nationalAccount, mDemographic, mGDP, 0, period );
+        (*currConsumer)->initCalc( mName, "", nationalAccount, mDemographic, 0, period );
     }
 
     // Call initCalc for land allocator last. It needs profit from the ag sectors
@@ -483,21 +423,8 @@ void RegionMiniCAM::postCalc( const int aPeriod ) {
     if( mLandAllocator ) {
         mLandAllocator->postCalc( mName, aPeriod );
     }
-}
+    mNationalAccountContainer->postCalc( aPeriod );
 
-/*! \brief Check whether the GDP object exists and report a warning if it does not.
-* \return Whether the GDP object exists.
-* \author Josh Lurz
-*/
-bool RegionMiniCAM::ensureGDP() const {
-    if( !mGDP ){
-        ILogger& mainLog = ILogger::getLogger( "main_log" );
-        mainLog.setLevel( ILogger::ERROR );
-        mainLog << "GDP object has not been created and is required. "
-            << "Check for a region name mismatch." << endl;
-        return false;
-    }
-    return true;
 }
 
 /*! \brief Check whether the Demographics object exists and report a warning if it does not.
@@ -523,11 +450,11 @@ void RegionMiniCAM::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitRegionMiniCAM( this, aPeriod );
     Region::accept( aVisitor, aPeriod );
 
-    // Visit GDP object
-    if ( mGDP ){
-        mGDP->accept( aVisitor, aPeriod );
+    // Visit national accounts
+    if( mNationalAccountContainer ){
+        mNationalAccountContainer->accept( aVisitor, aPeriod );
     }
-
+    
     // Visit LandAllocator object
     if ( mLandAllocator ){
         mLandAllocator->accept( aVisitor, aPeriod );

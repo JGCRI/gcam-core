@@ -1,0 +1,126 @@
+# File: Mapping_item_FBS_GCAM.csv
+# Title: Mapping of FBS items to GCAM commodities
+# Units: NA
+# Description: Rice and products and Groundnuts are adjusted to primary products to match FBH using milling rate of 0.667 and a shell rate of 0.7.
+# There are 118 FBSH and CB items and 9 items were not mapped.
+# Last update: 8-25-2022 (XZ)
+# Column types: cic
+GCAM_commodity,item_code,FBSH_CB_items
+Beef,2731,Bovine Meat
+Corn,2514,Maize and products
+Corn,2582,Maize Germ Oil
+Dairy,2740,"Butter, Ghee"
+Dairy,2743,Cream
+Dairy,2848,Milk - Excluding Butter
+FiberCrop,2559,Cottonseed
+FiberCrop,2575,Cottonseed Oil
+FiberCrop,2661,Cotton lint
+FiberCrop,2594,Cottonseed Cake
+FiberCrop,2663,Jute-Like Fibres
+FiberCrop,2666,Abaca
+FiberCrop,2667,"Hard Fibres, Other"
+FiberCrop,2664,"Soft-Fibres, Other"
+FiberCrop,2665,Sisal
+FiberCrop,2662,Jute
+Fruits,2611,"Oranges, Mandarines"
+Fruits,2614,"Citrus, Other"
+Fruits,2615,Bananas
+Fruits,2617,Apples and products
+Fruits,2618,Pineapples and products
+Fruits,2619,Dates
+Fruits,2620,Grapes and products (excl wine)
+Fruits,2625,"Fruits, other"
+Fruits,2612,"Lemons, Limes and products"
+Fruits,2613,Grapefruit and products
+Fruits,2616,Plantains
+Legumes,2549,"Pulses, Other and products"
+Legumes,2546,Beans
+Legumes,2547,Peas
+MiscCrop,2630,Coffee and products
+MiscCrop,2633,Cocoa Beans and products
+MiscCrop,2635,Tea (including mate)
+MiscCrop,2640,Pepper
+MiscCrop,2645,"Spices, Other"
+MiscCrop,2642,Cloves
+MiscCrop,2672,Rubber
+MiscCrop,2671,Tobacco
+NutsSeeds,2552,Groundnuts
+NutsSeeds,2572,Groundnut Oil
+NutsSeeds,2591,Groundnut Cake
+NutsSeeds,2551,Nuts and products
+OilCrop,2557,Sunflower seed
+OilCrop,2560,Coconuts - Incl Copra
+OilCrop,2578,Coconut Oil
+OilCrop,2596,Copra Cake
+OilCrop,2561,Sesame seed
+OilCrop,2563,Olives (including preserved)
+OilCrop,2570,"Oilcrops, Other"
+OilCrop,2573,Sunflowerseed Oil
+OilCrop,2574,Rape and Mustard Oil
+OilCrop,2579,Sesameseed Oil
+OilCrop,2580,Olive Oil
+OilCrop,2586,"Oilcrops Oil, Other"
+OilCrop,2558,Rape and Mustardseed
+OilCrop,2592,Sunflowerseed Cake
+OilCrop,2593,Rape and Mustard Cake
+OilCrop,2598,"Oilseed Cakes, Other"
+OilCrop,2597,Sesameseed Cake
+OilPalm,2577,Palm Oil
+OilPalm,2562,Palm kernels
+OilPalm,2576,Palmkernel Oil
+OilPalm,2595,Palmkernel Cake
+OtherGrain,2513,Barley and products
+OtherGrain,2517,Millet and products
+OtherGrain,2520,"Cereals, Other"
+OtherGrain,2515,Rye and products
+OtherGrain,2516,Oats
+OtherGrain,2518,Sorghum and products
+OtherMeat_Fish,2745,Honey
+OtherMeat_Fish,2735,"Meat, Other"
+OtherMeat_Fish,2736,"Offals, Edible"
+OtherMeat_Fish,2737,"Fats, Animals, Raw"
+OtherMeat_Fish,2761,Freshwater Fish
+OtherMeat_Fish,2781,"Fish, Body Oil"
+OtherMeat_Fish,2782,"Fish, Liver Oil"
+OtherMeat_Fish,2762,Demersal Fish
+OtherMeat_Fish,2763,Pelagic Fish
+OtherMeat_Fish,2764,"Marine Fish, Other"
+OtherMeat_Fish,2765,Crustaceans
+OtherMeat_Fish,2766,Cephalopods
+OtherMeat_Fish,2767,"Molluscs, Other"
+OtherMeat_Fish,2769,"Aquatic Animals, Others"
+OtherMeat_Fish,2775,Aquatic Plants
+OtherMeat_Fish,2768,"Meat, Aquatic Mammals"
+Pork,2733,Pigmeat
+Poultry,2734,Poultry Meat
+Poultry,2744,Eggs
+Rice,2807,Rice and products
+Rice,2581,Ricebran Oil
+RootTuber,2531,Potatoes and products
+RootTuber,2532,Cassava and products
+RootTuber,2533,Sweet potatoes
+RootTuber,2534,"Roots, Other"
+RootTuber,2535,Yams
+SheepGoat,2732,Mutton & Goat Meat
+Soybean,2555,Soyabeans
+Soybean,2571,Soyabean Oil
+Soybean,2590,Soyabean Cake
+SugarCrop,2536,Sugar cane
+SugarCrop,2537,Sugar beet
+SugarCrop,2542,Sugar (Raw Equivalent)
+SugarCrop,2541,Sugar non-centrifugal
+SugarCrop,2543,"Sweeteners, Other"
+Vegetables,2601,Tomatoes and products
+Vegetables,2605,"Vegetables, other"
+Vegetables,2602,Onions
+Vegetables,2641,Pimento
+Wheat,2511,Wheat and products
+,2655,Wine
+,2656,Beer
+,2658,"Beverages, Alcoholic"
+,2680,Infant food
+,2657,"Beverages, Fermented"
+,2659,"Alcohol, Non-Food"
+,2746,Wool (Clean Eq.)
+,2747,Silk
+,2600,Brans

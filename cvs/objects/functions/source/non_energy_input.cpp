@@ -42,7 +42,10 @@
 #include "functions/include/non_energy_input.h"
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
+#include "containers/include/iinfo.h"
 #include "util/base/include/model_time.h"
+#include "marketplace/include/marketplace.h"
+#include "containers/include/market_dependency_finder.h"
 
 using namespace std;
 
@@ -137,12 +140,12 @@ void NonEnergyInput::toDebugXML( const int aPeriod,
                                  ostream& aOut,
                                  Tabs* aTabs ) const
 {
-    XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
+    XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
     XMLWriteElement( mCost, "input-cost", aOut, aTabs );
     XMLWriteElement( mTechChange, "tech-change", aOut, aTabs );
     XMLWriteElement( mAdjustedCosts[ aPeriod ], "adjusted-cost", aOut, aTabs );
     XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "adjusted-coef", aOut, aTabs );
-    XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
+    XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
 void NonEnergyInput::completeInit( const string& aRegionName,
@@ -258,6 +261,74 @@ void NonEnergyInput::doInterpolations( const int aYear, const int aPreviousYear,
     // interpolate the base cost
     mCost.set( util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
                                          prevNonEneInput->mCost, nextNonEneInput->mCost ) );
+}
+
+TrackingNonEnergyInput::TrackingNonEnergyInput():
+mTrackingMarketName("capital"),
+mIsActive(false)
+{
+}
+
+TrackingNonEnergyInput::~TrackingNonEnergyInput() {
+}
+
+NonEnergyInput* TrackingNonEnergyInput::clone() const {
+    TrackingNonEnergyInput* clone = new TrackingNonEnergyInput();
+    clone->mCapitalCoef = mCapitalCoef;
+    clone->mTrackingMarketName = mTrackingMarketName;
+    clone->mDepreciationRate = mDepreciationRate;
+    clone->copy( *this );
+    return clone;
+}
+
+const string& TrackingNonEnergyInput::getXMLNameStatic() {
+    const static string XML_NAME = "tracking-non-energy-input";
+    return XML_NAME;
+}
+
+const string& TrackingNonEnergyInput::getXMLReportingName() const {
+    return getXMLNameStatic();
+}
+
+const string& TrackingNonEnergyInput::getXMLName() const {
+    return getXMLNameStatic();
+}
+
+void TrackingNonEnergyInput::completeInit( const string& aRegionName,
+                                   const string& aSectorName,
+                                   const string& aSubsectorName,
+                                   const string& aTechName,
+                                   const IInfo* aTechInfo )
+{
+    NonEnergyInput::completeInit(aRegionName, aSectorName,
+            aSubsectorName, aTechName, aTechInfo);
+    // Note: given we are just tracking capital we do not need to log a dependency
+    // on mTrackingMarketName, however if we had price feedbacks we would
+}
+
+void TrackingNonEnergyInput::initCalc( const string& aRegionName,
+                               const string& aSectorName,
+                               const bool aIsNewInvestmentPeriod,
+                               const bool aIsTrade,
+                               const IInfo* aTechInfo,
+                               const int aPeriod )
+{
+    mIsActive = aTechInfo->getBoolean("new-vintage-tech", true);
+    mPrevOutput = mIsActive ? aTechInfo->getDouble("prev-output-for-investment", 0.0) : 0.0;
+    NonEnergyInput::initCalc(aRegionName, aSectorName, aIsNewInvestmentPeriod,
+            aIsTrade, aTechInfo, aPeriod);
+}
+
+void TrackingNonEnergyInput::setPhysicalDemand(const double aValue,
+        const string& aRegionName,
+        const int aPeriod )
+{
+    if(mIsActive) {
+        double depreciation = mDepreciationRate * scenario->getModeltime()->gettimestep(aPeriod);
+        mCapitalValue = std::max(aValue - mPrevOutput + mPrevOutput * depreciation, 0.0) * mCapitalCoef * mAdjustedCosts[aPeriod];
+        scenario->getMarketplace()->addToDemand(mTrackingMarketName, aRegionName, mCapitalValue, aPeriod, false);
+
+    }
 }
 
 

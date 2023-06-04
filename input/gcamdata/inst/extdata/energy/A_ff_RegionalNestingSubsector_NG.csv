@@ -1,0 +1,10 @@
+# File: A_ff_RegionalNestingSubsector_NG.csv
+# Title: Nesting Subsector (subsector0) assumptions for regional natural gas markets
+# Units: Various
+# Comments: These subsectors' shareweights evolve over time. They are calibrated to 2010 shares, but become 1 in some to.year following an interpolation.function
+# Source: NA
+# Column types: ccncncccncc
+# ----------
+supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,to.value,interpolation.function,logit.type
+regional natural gas,domestic natural gas,-6,start-year,1,share-weight,final-calibration-year,2300,1,s-curve,
+regional natural gas,imported natural gas,-6,start-year,1,share-weight,final-calibration-year,2100,1,linear,

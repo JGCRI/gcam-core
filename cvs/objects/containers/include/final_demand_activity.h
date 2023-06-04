@@ -48,7 +48,6 @@
 #include "containers/include/iactivity.h"
 
 class AFinalDemand;
-class GDP;
 class Demographic;
 
 /*! 
@@ -59,9 +58,7 @@ class Demographic;
 class FinalDemandActivity : public IActivity
 {
 public:
-    FinalDemandActivity( AFinalDemand* aFinalDemand, const GDP* aGDP, 
-                         const Demographic* aDemographic, const std::string& aRegionName );
-    virtual ~FinalDemandActivity();
+    FinalDemandActivity( AFinalDemand* aFinalDemand, const Demographic* aDemographic, const std::string& aRegionName );    virtual ~FinalDemandActivity();
     
     // IActivity methods
     virtual void calc( const int aPeriod );
@@ -70,9 +67,6 @@ public:
 private:
     //! The wrapped final demand.
     AFinalDemand* mFinalDemand;
-    
-    //! The regional GDP object which is required for the final demand to calculate.
-    const GDP* mGDP;
     
     //! The regional demographics which is required for the final demand to calculate.
     const Demographic* mDemographic;

@@ -67,6 +67,7 @@
 
 #include "resources/include/resource.h"
 #include "resources/include/unlimited_resource.h"
+#include "resources/include/trial_value_resource.h"
 
 #include "containers/include/iinfo.h"
 
@@ -288,7 +289,7 @@ const Curve* Region::getEmissionsQuantityCurve( const string& ghgName ) const {
     /*! \pre The run has been completed. */
     const Modeltime* modeltime = scenario->getModeltime();
 
-    auto_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
+    unique_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
 
     // Note the GroupedEmissionsSummer will update all years
     GroupedEmissionsSummer emissGroup;
@@ -325,7 +326,7 @@ const Curve* Region::getEmissionsPriceCurve( const string& ghgName ) const {
     const Modeltime* modeltime = scenario->getModeltime();
     const Marketplace* marketplace = scenario->getMarketplace();
 
-    auto_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
+    unique_ptr<ExplicitPointSet> emissionsPoints( new ExplicitPointSet() );
 
     for( int i = 0; i < modeltime->getmaxper(); i++ ) {
         XYDataPoint* currPoint = new XYDataPoint( modeltime->getper_to_yr( i ), marketplace->getPrice( ghgName, mName, i ) );

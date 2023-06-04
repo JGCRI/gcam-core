@@ -73,7 +73,7 @@ public:
     virtual void initCalc( const std::string& aRegionName, const int aPeriod );
     virtual void postCalc( const std::string& aRegionName, const int aPeriod );
     
-    void calcSupply( const std::string& aRegionName, const GDP* aGdp, const int aPeriod );
+    void calcSupply( const std::string& aRegionName, const int aPeriod );
     virtual double getAnnualProd( const std::string& aRegionName, const int aPeriod ) const;
     virtual double getPrice( const int aPeriod ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
@@ -101,11 +101,11 @@ protected:
     )
     
     //! Pointer to the resource's information store.
-    std::auto_ptr<IInfo> mResourceInfo;
+    std::unique_ptr<IInfo> mResourceInfo;
 
     virtual const std::string& getXMLName() const;
     void setMarket( const std::string& aRegionName );
-    virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice );
+    virtual void annualsupply( const std::string& aRegionName, int aPeriod, double aPrice );
     void cumulsupply( const std::string& aRegionName, double aPrice, int aPeriod );
 };
 
@@ -127,7 +127,7 @@ protected:
     )
 
     virtual const std::string& getXMLName() const;
-    virtual void annualsupply( const std::string& aRegionName, int aPeriod, const GDP* aGdp, double aPrice );
+    virtual void annualsupply( const std::string& aRegionName, int aPeriod, double aPrice );
 };
 
 #endif // _RESOURCE_H_

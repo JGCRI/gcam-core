@@ -1,38 +1,38 @@
 # File: A323.inc_elas_parameter.csv
-# Title: IRONSTL demand income elasticity as a function of  per capita steel=aexp(b/per-capita gdp)(1-m)^(T-base year)+(delta-delta x exp(-Phi x exp(- miu x ( t- base year)))); delta is difference between real and project data in base year
+# Title: IRONSTL demand income elasticity as a function of  per capita steel=a*exp(b/per-capita gdp)*((1-m)^(T-base year))
 # Units: pcgdp_90thousUSD: Thousand 1990$; inc_elas:unitless (% change in service demand / % change in income
-# Column types: cnnnnn
+# Column types: cnnn
 # ----------
-region,a,b,Phi,miu,m
-Africa_Eastern,100,-4882.271694,8,0.8,0.01
-Africa_Northern,1.00E+02,-2813.459331,8,0.8,0.01
-Africa_Southern,100,-11891,8,0.8,0.01
-Africa_Western,100,-8498.946643,8,0.8,0.01
-Argentina,634.7,-18506.22659,8,0.8,0.01
-Australia_NZ,270.0457832,-11891,8,0.8,0.01
-Brazil,634.7,-13251.98689,8,0.8,0.01
-Canada,475.0116069,-11891,8,0.8,0.01
-Central America and Caribbean,634.7,-14997.3906,8,0.8,0.01
-Central Asia,634.7,-10131.29061,8,0.8,0.01
-China,890,-2182.10749,8,0.8,0.01
-Colombia,634.7,-21189.7154,8,0.8,0.01
-EU-12,634.7,-11215.07512,8,0.8,0.01
-EU-15,515.7,-12141.61177,8,0.8,0.01
-Europe_Eastern,634.7,-847.3624891,8,0.8,0.01
-Europe_Non_EU,634.7,-5492.370183,8,0.8,0.01
-European Free Trade Association,634.7,-98529.42617,8,0.8,0.01
-India,634.7,-3558.315549,8,0.8,0.01
-Indonesia,634.7,-11575.21906,8,0.8,0.01
-Japan,1170.957516,-11891,8,0.8,0.01
-Mexico,634.7,-12647.87556,8,0.8,0.01
-Middle East,634.7,-14089.32426,8,0.8,0.01
-Pakistan,634.7,-3786.134582,8,0.8,0.01
-Russia,634.7,-2004.164335,8,0.8,0.01
-South Africa,634.7,-11244.86106,8,0.8,0.01
-South America_Northern,634.7,-28964.67645,8,0.8,0.01
-South America_Southern,634.7,-19118.95654,8,0.8,0.01
-South Asia,634.7,-6501.279206,8,0.8,0.01
-South Korea,1170.957516,5820.452936,8,0.8,0.01
-Southeast Asia,634.7,-9794.254108,8,0.8,0.01
-Taiwan,634.7,8040.521285,8,0.8,0.01
-USA,327.6743108,-11891,8,0.8,0.01
+region,a,b,m
+Africa_Eastern,300,-2179,0.0088
+Africa_Northern,616,-4105,0.0088
+Africa_Southern,616,-3000,0.0088
+Africa_Western,100,-1500,0.0088
+Argentina,616,-11867,0.0088
+Australia_NZ,299,-6848,0.0088
+Brazil,616,-11585,0.0088
+Canada,574,-6848,0.0088
+Central America and Caribbean,616,-8636,0.0088
+Central Asia,616,-5638,0.0088
+China,1160,-2360,0.0030
+Colombia,616,-11311,0.0088
+EU-12,616,-4389,0.0088
+EU-15,428,-6848,0.0088
+Europe_Eastern,616,-3338,0.0088
+Europe_Non_EU,616,-3581,0.0088
+European Free Trade Association,375,-6848,0.0088
+India,616,-3106,0.0088
+Indonesia,616,-6632,0.0088
+Japan,668,-6848,0.0088
+Mexico,616,-7115,0.0088
+Middle East,350,-3000,0.0088
+Pakistan,350,-2268,0.0088
+Russia,616,-3895,0.0088
+South Africa,616,-9998,0.0088
+South America_Northern,616,-12495,0.0088
+South America_Southern,616,-9624,0.0088
+South Asia,500,-2525,0.0088
+South Korea,1627,-8222,0.0030
+Southeast Asia,616,-3652,0.0088
+Taiwan,1592,-6848,0.0088
+USA,373,-6848,0.0088

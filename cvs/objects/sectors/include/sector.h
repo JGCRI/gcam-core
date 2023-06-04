@@ -60,11 +60,9 @@
 // Forward declarations
 class Subsector;
 class ILogger;
-class GDP;
 class Tabs;
 class IInfo;
 class Demographic;
-class NationalAccount;
 class ILandAllocator;
 class AGHG;
 class IDiscreteChoice;
@@ -142,7 +140,7 @@ protected:
     typedef std::vector<Subsector*>::const_iterator CSubsectorIterator;
 
     //! Pointer to the sector's information store.
-    std::auto_ptr<IInfo> mSectorInfo;
+    std::unique_ptr<IInfo> mSectorInfo;
 
     typedef ObjECTS::TObjectMetaInfo object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;
@@ -150,13 +148,13 @@ protected:
     virtual void toDebugXMLDerived( const int period, std::ostream& aOut, Tabs* aTabs ) const = 0;
 
     virtual double getFixedOutput( const int aPeriod ) const;
-    const std::vector<double> calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const;
+    const std::vector<double> calcSubsectorShares( const int aPeriod ) const;
 
     bool outputsAllFixed( const int period ) const;
     
     double getCalOutput( const int period ) const;
 
-    virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
+    virtual double getPrice( const int aPeriod ) const;
 
 public:
     explicit Sector();
@@ -172,20 +170,18 @@ public:
     virtual void completeInit( const IInfo* aRegionInfo,
                                ILandAllocator* aLandAllocator ) = 0;
 
-    virtual void initCalc( NationalAccount* aNationalAccount,
-                           const Demographic* aDemographics,
+    virtual void initCalc( const Demographic* aDemographics,
                            const int aPeriod ) = 0;
 
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
 
-    virtual void supply( const GDP* aGDP,
-                         const int aPeriod ) = 0;
+    virtual void supply( const int aPeriod ) = 0;
 
     void calcCosts( const int aPeriod );
 
     virtual double getOutput( const int period ) const = 0;
 
-    virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ) = 0;
+    virtual void calcFinalSupplyPrice( const int aPeriod ) = 0;
 
     virtual void postCalc( const int aPeriod );
 

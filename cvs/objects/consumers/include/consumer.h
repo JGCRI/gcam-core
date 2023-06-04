@@ -51,7 +51,6 @@
 
 class NationalAccount;
 class Demographic;
-class GDP;
 class Tabs;
 class IVisitor;
 class IExpectedProfitRateCalculator;
@@ -81,14 +80,6 @@ public:
                            const std::string& aSectorName,
                            NationalAccount& nationalAccount,
                            const Demographic* aDemographics,
-                           const double aCapitalStock,
-                           const int aPeriod );
-    
-    virtual void initCalc( const std::string& aRegionName, 
-                           const std::string& aSectorName,
-                           NationalAccount& nationalAccount,
-                           const Demographic* aDemographics,
-                           const GDP* aGDP,
                            const double aCapitalStock,
                            const int aPeriod );
 

@@ -64,14 +64,24 @@ public:
 
     // Non-IVisitor interface methods.
     double getEmissions( const int aYear ) const;
+    
+    double getEmissionsPositive( const int aYear ) const;
+    
+    double getEmissionsNegative( const int aYear ) const;
 
     double areEmissionsSet( const int aYear ) const;
 private:
     //! The name of the GHG being summed.
     const std::string mGHGName;
 
-    //! The current sum.
-	objects::YearVector<Value> mEmissionsByYear;
+    //! The gross positive above ground LUC emissions
+    objects::YearVector<Value> mPositiveEmissionsByYear;
+    
+    //! The gross negative above ground LUC *emissions* (i.e. uptake however values contained are  < 0)
+    objects::YearVector<Value> mNegativeEmissionsByYear;
+    
+    // The net below ground LUC emissions
+    objects::YearVector<Value> mBelowTotalEmissionsByYear;
 };
 
 #endif // _LUC_EMISSIONS_SUMMER_H_

@@ -42,14 +42,21 @@
 * \ingroup Objects
 * \brief The NationalAccount class header file.
 * \author Pralit Patel
-* \author Sonny Kim
+ Sonny Kim
 */
 
 #include <vector>
 #include <string>
 #include "util/base/include/ivisitable.h"
+#include "util/base/include/iyeared.h"
+#include "util/base/include/aparsable.h"
+#include "util/base/include/value.h"
+#include "util/base/include/data_definition_util.h"
 
 class Tabs;
+class NestedCESProductionFunctionMacro;
+class Demographic;
+class NationalAccount;
 
 /*! 
  * \ingroup Objects
@@ -92,59 +99,77 @@ class Tabs;
  *
  * \author Pralit Patel, Sonny Kim
  */
-class NationalAccount: public IVisitable
+class NationalAccount: public IVisitable, public IYeared, public AParsable
 {
     friend class IVisitor;
     friend class XMLDBOutputter;
 public:
     //! All the accounts contained in a NationalAccount
     enum AccountType {
-        RETAINED_EARNINGS,
-        SUBSIDY,
-        CORPORATE_PROFITS,
-        CORPORATE_RETAINED_EARNINGS,
-        CORPORATE_INCOME_TAXES,
-        CORPORATE_INCOME_TAX_RATE,
-        PERSONAL_INCOME_TAXES,
-        INVESTMENT_TAX_CREDIT,
-        DIVIDENDS,
+        SAVINGS_RATE,
+        DEPRECIATION_RATE,
+        SAVINGS,
+        INVESTMENT,
+        DEPRECIATION,
+        CAPITAL_STOCK,
+        CAPITAL_ENERGY_INV,
+        CONSUMER_DURABLE_INV,
+        GDP,
+        VALUE_ADDED,
+        GROSS_OUTPUT,
         LABOR_WAGES,
-        LAND_RENTS,
-        TRANSFERS,
-        SOCIAL_SECURITY_TAX,
-        INDIRECT_BUSINESS_TAX,
-        GNP_NOMINAL,
-        GNP_VA,
-        GNP_REAL,
-        CONSUMPTION_NOMINAL,
-        GOVERNMENT_NOMINAL,
-        INVESTMENT_NOMINAL,
-        NET_EXPORT_NOMINAL,
-        CONSUMPTION_REAL,
-        GOVERNMENT_REAL,
-        INVESTMENT_REAL,
-        NET_EXPORT_REAL,
-        EXCHANGE_RATE,
-        ANNUAL_INVESTMENT,
-        CARBON_TAX,
-        EXPORT_NOMINAL,
-        EXPORT_REAL,
-        IMPORT_NOMINAL,
-        IMPORT_REAL,
+        LABOR_FORCE,
+        LABOR_FORCE_SHARE,
+        TOTAL_FACTOR_PRODUCTIVITY,
+        FR_SHARE_LABOR,
+        FR_SHARE_CAPITAL,
+        FR_SHARE_ENERGY,
+        POPULATION,
+        GDP_PER_CAPITA,
+        GDP_PER_CAPITA_PPP,
+        ENERGY_SERVICE,
+        ENERGY_SERVICE_VALUE,
+        ENERGY_NET_EXPORT,
+        MATERIALS_NET_EXPORT,
+        CAPITAL_NET_EXPORT,
         // Insert new values before END marker.
         END
     };
     NationalAccount();
+    NationalAccount* cloneAndInterpolate( const int aNewYear ) const;
     static const std::string& getXMLNameStatic();
+    int getYear() const;
+    const std::string getName() const;
+    bool XMLParse( rapidxml::xml_node<char>* & aNode );
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
+    void completeInit();
+    void completeInitHist();
+    void initCalc( const NationalAccount* aNationalAccount, const int aPeriod );
+    void postCalc();
+    void postCalcHist();
     void reset();
     void addToAccount( const AccountType aType, const double aValue );
     void setAccount( const AccountType aType, const double aValue );
     double getAccountValue( const AccountType aType ) const;
-    void accept( IVisitor* aVisitor, const int aPeriod ) const;
-private:
-    const std::string& enumToName( const AccountType aType ) const;
     const std::string& enumToXMLName( const AccountType aType ) const;
+    void accept( IVisitor* aVisitor, const int aPeriod ) const;
+    const std::string& enumToName( const AccountType aType ) const;
+
+protected:
+    
+    DEFINE_DATA(
+        /*! \brief National account is the only member of this container hierarchy. */
+        DEFINE_SUBCLASS_FAMILY( NationalAccount ),
+                
+        //! The year of accounts held in this object
+        DEFINE_VARIABLE( SIMPLE, "year", mYear, int ),
+                
+        //! A Savings rate adjustment scaler to allow us to move "consumer durable" investments from consumption
+        //! over to the investment side
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "consumer-durable-SR-adj", mConsumerDurableSRAdj, Value )
+    )
+    
+private:
     //! Vector to hold national account values
     std::vector<double> mAccounts;
 };

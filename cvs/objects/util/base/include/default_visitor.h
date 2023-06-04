@@ -139,11 +139,11 @@ public:
     virtual void startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ){}
     virtual void endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ){}
 
+    virtual void startVisitNationalAccountContainer( const NationalAccountContainer* aNationalAccountContainer, const int aPeriod ) {};
+    virtual void endVisitNationalAccountContainer( const NationalAccountContainer* aNationalAccountContainer, const int aPeriod ) {};
+
     virtual void startVisitInput( const IInput* aInput, const int aPeriod ){}
     virtual void endVisitInput( const IInput* aInput, const int aPeriod ){}
-
-    virtual void startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ){}
-    virtual void endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ){}
 
     virtual void startVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ){}
     virtual void endVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ){}
@@ -159,9 +159,6 @@ public:
 
     virtual void startVisitMarket( const Market* aMarket, const int aPeriod ){}
     virtual void endVisitMarket( const Market* aMarket, const int aPeriod ){}
-
-    virtual void startVisitGDP( const GDP* aGDP, const int aPeriod ){}
-    virtual void endVisitGDP( const GDP* aGDP, const int aPeriod ){}
 
     virtual void startVisitLandNode( const LandNode* aLandNode, const int aPeriod ){}
     virtual void endVisitLandNode( const LandNode* aLandNode, const int aPeriod ){}
@@ -201,6 +198,15 @@ public:
 
     virtual void startVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod ){}
     virtual void endVisitNoEmissCarbonCalc( const NoEmissCarbonCalc* aNoEmissCarbonCalc, const int aPeriod ){}
+    
+    virtual void startVisitNestedCESProductionFunctionMacro( const NestedCESProductionFunctionMacro* aNestedCESProductionFunctionMacro, const int aPeriod ) {};
+    virtual void endVisitNestedCESProductionFunctionMacro( const NestedCESProductionFunctionMacro* aNestedCESProductionFunctionMacro, const int aPeriod ) {};
+    
+    virtual void startVisitFactorInputNode( const FactorInputNode* aFactorInputNode, const int aPeriod ) {};
+    virtual void endVisitFactorInputNode( const FactorInputNode* aFactorInputNode, const int aPeriod ) {};
+    
+    virtual void startVisitFactorInputLeaf( const FactorInputLeaf* aFactorInputLeaf, const int aPeriod ) {};
+    virtual void endVisitFactorInputLeaf( const FactorInputLeaf* aFactorInputLeaf, const int aPeriod ) {};    
 };
 
 #endif // _DEFAULT_VISITOR_H_

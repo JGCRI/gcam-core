@@ -105,7 +105,7 @@ private:
     typedef std::vector<Population*>::const_iterator CPopulationIterator;
 
     //! A binary functor to compare Population years so that they can be sorted.
-    struct YearComparator : public std::binary_function<Population*, Population*, bool> {
+    struct YearComparator {
         /*!
         * \brief Determine if the left hand operand is less than the right.
         * \param lhs The left hand side operand for the sort comparison.

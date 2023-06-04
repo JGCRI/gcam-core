@@ -641,6 +641,171 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
 }
 
 
+
+#' Moving average
+#' @description function to calculate moving average
+#'
+#' @param x A data frame contain the variable for calculation
+#' @param periods An odd number of the periods in MA. The default is 5, i.e., 2 lags and 2 leads
+#'
+#' @return A data frame
+#' @export
+
+Moving_average <- function(x, periods = 5){
+  if (periods == 1) {
+    return(x)
+  }
+
+  if ((periods %% 2) == 0) {
+    stop("Periods should be an odd value")
+  } else{
+    (x +
+       Reduce(`+`, lapply(seq(1, (periods -1 )/2), function(a){lag(x, n = a)})) +
+       Reduce(`+`,lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)}))
+    )/periods
+  }
+}
+
+# Function to dissaggregate dissolved regions in historical years ----
+# copyed in gcamdata
+
+#' FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION
+#'
+#' @param .DF dataframe to disaggregate
+#' @param AFFECTED_AREA_CODE  FAO area codes for regions affected; first one should be pre-dissolved region (e.g., USSR) followed by post-dissolved regions.
+#' @param YEAR_DISSOLVE_DONE  First year after dissolution
+#' @param YEAR_AFTER_DISSOLVE_ACCOUNT Number of years of data after dissolution used for sharing historical data
+#'
+#' @return Disaggregated data for the historical period for of the dissolved region
+#'
+FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION <-
+  function(.DF,
+           AFFECTED_AREA_CODE, #first one should be dissolved area
+           YEAR_DISSOLVE_DONE,
+           # using 3 year data after dissolution for sharing
+           YEAR_AFTER_DISSOLVE_ACCOUNT = 3){
+
+    .DF %>%
+      # filter dissolved region related areas by their years
+      filter((area_code %in% AFFECTED_AREA_CODE[-1] & year >= YEAR_DISSOLVE_DONE)|
+               (area_code %in% AFFECTED_AREA_CODE[1] & year <= YEAR_DISSOLVE_DONE)) ->
+      .DF1
+
+    Number_of_Regions_After_Dissolution <- AFFECTED_AREA_CODE %>% length -1
+
+    .DF1 %>% filter(year < YEAR_DISSOLVE_DONE) %>%
+      select(-area_code, -area) %>%
+      right_join(
+        .DF1 %>% filter(year %in% c(YEAR_DISSOLVE_DONE:(YEAR_DISSOLVE_DONE + YEAR_AFTER_DISSOLVE_ACCOUNT))) %>%
+          dplyr::group_by_at(dplyr::vars(-year, -value)) %>%
+          replace_na(list(value = 0)) %>%
+          summarise(value = sum(value)) %>% ungroup() %>%
+          dplyr::group_by_at(dplyr::vars(-value, -area, -area_code)) %>%
+          mutate(Share = value/sum(value)) %>%
+          # using average share if data after dissolved does not exist
+          mutate(NODATA = if_else(sum(value) == 0, T, F)) %>%
+          mutate(Share = if_else(NODATA == T, 1/Number_of_Regions_After_Dissolution, Share)) %>%
+          ungroup() %>%select(-value, -NODATA),
+        by = names(.) %>% setdiff(c("year", "value", "area", "area_code"))
+      ) %>% mutate(value = value * Share) %>% select(-Share)
+
+  }
+
+
+#' FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL
+#'
+#' @param .DF
+#' @param SUDAN2012_BREAK If T break Sudan before 2012 based on 2013- 2016 data
+#' @param SUDAN2012_MERGE If T merge South Sudan into Sudan
+#'
+#' @return data with historical periods of dissolved region disaggregated to small pieces.
+
+FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL <- function(.DF,
+                                                       SUDAN2012_BREAK = F,
+                                                       SUDAN2012_MERGE = T){
+
+  assertthat::assert_that("area_code" %in% names(.DF),
+                          msg = "Date frame is required and need a col of area_code")
+
+  # Define area code based on FAO ----
+  # first one is dissolved area
+  # In 1991 USSR(228) collapsed into 15 countries
+  area_code_USSR = c(228, 1, 52, 57, 63, 73, 108, 113, 119, 126, 146, 185, 208, 213, 230, 235)
+  # first one is Russia
+
+  # In 1992 Yugoslav SFR dissolved into 5 countries
+  # Yugoslav SFR (248)
+  # Croatia (98)
+  # North Macedonia (154)
+  # Slovenia (198)
+  # Bosnia and Herzegovina (80)
+  # Serbia and Montenegro (186)
+  # In 2006 further broke into 2:
+  # Montenegro (273)
+  # Serbia (272)
+  # These regions will be merged for all years in data as most models aggregated them into a single region
+  area_code_Yugoslav <- c(248, 98, 154, 198, 80, 186)
+  area_code_SerbiaandMontenegro <- c(186, 273, 272)
+  # In 1999/2000 Belgium-Luxembourg (15) partitioned in 1999 to 255 (Belgium) and 256 (Luxembourg)
+  area_code_Belgium_Luxembourg <- c(15, 255, 256)
+  # In 1993 Czechoslovakia (51) to Czechia (167) and Slovakia (199)
+  area_code_Czechoslovakia <- c(51, 167, 199)
+  # In 2011 Sudan (former) (206) broke into South Sudan (277) and Sudan (276)
+  area_code_Sudan <- c(206, 276, 277)
+  # Ethiopia PDR (62) dissolved into Ethiopia (238) and Eritrea (178) in 1993
+  area_code_Ethiopia <- c(62, 238, 178)
+
+  .DF %>%
+    # remove Yugoslav by their years first and area_code_SerbiaandMontenegro later
+    filter(!(area_code %in% area_code_Yugoslav[1] )) %>%
+    bind_rows(FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION(.DF, area_code_Yugoslav, 1992, 3))->
+    .DF1
+
+
+  FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION(.DF1, area_code_USSR, 1992, 3) %>%
+    bind_rows(FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION(.DF1, area_code_SerbiaandMontenegro, 2006, 3)) %>%
+    bind_rows(FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION(.DF1, area_code_Belgium_Luxembourg, 2000, 3)) %>%
+    bind_rows(FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION(.DF1, area_code_Czechoslovakia, 1993, 3)) %>%
+    bind_rows(FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION(.DF1, area_code_Ethiopia, 1993, 3)) ->
+    DF_FAO_AREA_DISAGGREGATE_HIST
+
+  .DF1 %>%
+    # remove USSR by their years
+    filter(!(area_code %in% area_code_USSR[1])) %>%
+    # remove Serbia & Montenegro by their years
+    filter(!(area_code %in% area_code_SerbiaandMontenegro[1] )) %>%
+    # remove Belgium_Luxembourg by their years
+    filter(!(area_code %in% area_code_Belgium_Luxembourg[1])) %>%
+    # remove area_code_Czechoslovakia by their years
+    filter(!(area_code %in% area_code_Czechoslovakia[1] )) %>%
+    # remove area_code_Ethiopia by their years
+    filter(!(area_code %in% area_code_Ethiopia[1] )) %>%
+    bind_rows(DF_FAO_AREA_DISAGGREGATE_HIST) ->
+    .DF2
+
+  if (SUDAN2012_BREAK == T) {
+    .DF2 %>%
+      # remove area_code_Sudan by their years
+      filter(!(area_code %in% area_code_Sudan[1] )) %>%
+      bind_rows(FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION(.DF1, area_code_Sudan, 2012, 3)) ->
+      .DF2
+  }
+
+  if (SUDAN2012_MERGE == T) {
+
+    .DF2 %>%
+      mutate(area_code = replace(area_code, area_code %in% area_code_Sudan, area_code_Sudan[1])) %>%
+      dplyr::group_by_at(dplyr::vars(-value, -area)) %>%
+      summarise(value = sum(value, na.rm = T), .groups = "drop") %>%
+      ungroup() %>%
+      # Get area back
+      left_join(.DF2 %>% distinct(area, area_code), by = "area_code") -> .DF2
+  }
+
+  return(.DF2)
+
+}
+
 #' evaluate_smooth_res_curve
 #'
 #' Helper function to calculate the smooth renewable resource supply available at a particular price point from
@@ -1000,4 +1165,95 @@ compute_BC_OC_elc <- function(df, BC_OC_assumptions) {
   df <- bind_rows(df, BC_df, OC_df)
   return (df)
 
+}
+
+
+#' join.gdp.ts
+#'
+#' Join past GDP time series to future.
+#'
+#' When we have to join two GDP time series, we usually find that they don't
+#' match up at year of overlap (the "base year").  What we do in these cases is
+#' we compute, for the later time series, ratios of GDPs in the future years to
+#' those in the base year.  We then multiply the future ratios by the past base
+#' year value.  That future time series can then be grafted onto the past
+#' without leaving a seam.
+#'
+#' In practice, the past is often a single time series, while the future is
+#' often a collection of scenarios.  Therefore, we assume that the past time
+#' series has no scenario column.  If the future does not have a scenario
+#' column, it is given a dummy one, which is dropped before the new table is
+#' returned.  Note that we look for lower-case 'scenario' for this.
+#'
+#' The base year is calculated automatically.  It is the maximum of the years
+#' that overlap between the two data sets.
+#'
+#' We also have to know how to group the data for calculating the gdp ratios.
+#' Normally this will be either by country ('iso') or by GCAM region
+#' ('GCAM_region_ID').  The choice of which is passed in as the 'grouping'
+#' argument.
+#'
+#' Finally, although we have discussed this function in terms of joining two GDP
+#' time series, in the future time series we use only the ratios of GDP to base
+#' year GDP.  Therefore, any time series with the correct ratios will work.  For
+#' example, if we have a time series of growth rates, we can convert those to
+#' ratios using \code{\link[base]{cumprod}} and pass those ratios as the future
+#' time series.  For similar reasons, even if the two time series have different
+#' units (e.g., different dollar-years or PPP vs. MER), they can still be
+#' joined.  The units of the output time series will be the same as the units of
+#' \code{past}.
+#'
+#' @param past Tibble with the past time series (year, gdp, and grouping).
+#' @param future Tibble with the future data (year, gdp, scenario, and
+#' grouping).
+#' @param grouping Name of the grouping column (generally either 'iso' or
+#' 'GCAM_region_ID', but could be anything
+#' @return Time series with the past and future joined as described in details.
+join.gdp.ts <- function(past, future, grouping) {
+
+  year <- gdp <- base.gdp <- gdp.ratio <- . <- scenario <-
+    NULL                            # silence notes on package check.
+
+  if(! 'scenario' %in% names(future)) {
+    ## This saves us having to make a bunch of exceptions below when we
+    ## include 'scenario' among the columns to join by.
+    future$scenario <- 'scen'
+    drop.scenario <- TRUE
+  }
+  else {
+    drop.scenario <- FALSE
+  }
+
+  ## Find the base year
+  base.year <- max(intersect(past$year, future$year))
+  assert_that(is.finite(base.year))
+
+  ## Base year gdp from the future dataset
+  baseyear.future.gdp <- filter(future, year == base.year) %>%
+    rename(base.gdp = gdp) %>%
+    select(-year)
+
+  gdp.future.ratio <- filter(future, year > base.year) %>%
+    left_join_error_no_match(baseyear.future.gdp, by = c('scenario', grouping)) %>%
+    mutate(gdp.ratio = gdp / base.gdp) %>%
+    select('scenario', grouping, 'year', 'gdp.ratio')
+
+  ## add the scenario column to the past
+  gdp.past <- tidyr::crossing(past, scenario = unique(gdp.future.ratio[['scenario']]))
+  baseyear.past.gdp <- filter(gdp.past, year == base.year) %>%
+    rename(base.gdp = gdp) %>%
+    select(-year)
+
+  rslt <- left_join(baseyear.past.gdp, gdp.future.ratio,
+                    by = c('scenario', grouping)) %>%
+    mutate(gdp = base.gdp * gdp.ratio) %>%
+    select('scenario', grouping, 'year', 'gdp') %>%
+    bind_rows(gdp.past, .)
+
+  if(drop.scenario) {
+    select(rslt, -scenario)
+  }
+  else {
+    rslt
+  }
 }

@@ -62,7 +62,7 @@ class Modeltime;
 class TargetFactory { 
 public:
     static bool isOfType( const std::string& aType );
-    static std::auto_ptr<ITarget> create( const std::string& aType,
+    static std::unique_ptr<ITarget> create( const std::string& aType,
                                           const IClimateModel* aClimateModel,
                                           double aTargetValue,
                                           int aFirstTaxYear );

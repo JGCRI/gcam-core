@@ -50,8 +50,6 @@
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/xml_helper.h"
-#include "marketplace/include/marketplace.h"
-#include "containers/include/gdp.h"
 #include "demographics/include/demographic.h"
 #include "technologies/include/itechnology_container.h"
 #include "technologies/include/itechnology.h"
@@ -130,6 +128,9 @@ void TranSubsector::completeInit( const IInfo* aSectorInfo,
 
     SectorUtils::fillMissingPeriodVectorInterpolated( mSpeed );
     SectorUtils::fillMissingPeriodVectorInterpolated( mTimeValueMult );
+    
+    // Add dependency on GDP
+    SectorUtils::addGDPDependency( mRegionName, mSectorName );
 }
 
 /*!
@@ -140,12 +141,10 @@ void TranSubsector::completeInit( const IInfo* aSectorInfo,
 * \warning The ghg part of this routine assumes the existence of technologies in
 *          the previous and future periods
 * \author Steve Smith, Sonny Kim
-* \param aNationalAccount National accounts container.
 * \param aDemographics Regional demographics container.
 * \param aPeriod Model period
 */
-void TranSubsector::initCalc( NationalAccount* aNationalAccount,
-							 const Demographic* aDemographics,
+void TranSubsector::initCalc(const Demographic* aDemographics,
 							 const int aPeriod )
 {
     // Check if illegal values have been read in
@@ -161,7 +160,7 @@ void TranSubsector::initCalc( NationalAccount* aNationalAccount,
     // TODO: revise access to population to avoid statement below
     mPopulation[ aPeriod ] = aDemographics->getTotal( aPeriod );
 
-    Subsector::initCalc( aNationalAccount, aDemographics, aPeriod );
+    Subsector::initCalc( aDemographics, aPeriod );
 }
 
 /*! \brief returns the subsector price.
@@ -172,14 +171,14 @@ void TranSubsector::initCalc( NationalAccount* aNationalAccount,
 * \param aPeriod Model period
 * \return The subsector price with or without value of time. 
 */
-double TranSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
+double TranSubsector::getPrice( const int aPeriod ) const {
     // mAddTimeValue is a boolean that determines whether the service price includes
     // the value of time
     if (mAddTimeValue) {
-        return getGeneralizedPrice( aGDP, aPeriod );
+        return getGeneralizedPrice( aPeriod );
     }
     // normal share-weighted total technology cost only
-    return Subsector::getPrice( aGDP, aPeriod );
+    return Subsector::getPrice( aPeriod );
 }
 
 /*! \brief Get the time value for the period.
@@ -188,14 +187,13 @@ double TranSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
 * \author Sonny Kim
 * \return The time value.
 */
-double TranSubsector::getTimeValue( const GDP* aGDP, const int aPeriod ) const {
+double TranSubsector::getTimeValue( const int aPeriod ) const {
     const double WEEKS_PER_YEAR = 50;
     const double HOURS_PER_WEEK = 40;
-    // calculate time value based on hours worked per year Convert GDPperCap
-    // into dollars (instead of 1000's of $'s) GDP value at this point in the
-    // code does not include energy feedback calculation for this year, so is,
-    // therefore, approximate
-    return aGDP->getApproxGDPperCap( aPeriod ) * 1000 * mTimeValueMult[ aPeriod ] / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / mSpeed[ aPeriod ];
+
+    // proxy for income and hourly wage
+    double GDPperCapita = SectorUtils::getGDPPerCap( mRegionName, aPeriod );
+    return GDPperCapita * 1000 * mTimeValueMult[ aPeriod ] / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / mSpeed[ aPeriod ];
 }
 
 /*! \brief Calculate the generalized service price for the mode that includes time value.
@@ -204,15 +202,13 @@ double TranSubsector::getTimeValue( const GDP* aGDP, const int aPeriod ) const {
 * \param aPeriod The model period.
 * \return The the generalized price.
 */
-double TranSubsector::getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) const {
+double TranSubsector::getGeneralizedPrice( const int aPeriod ) const {
     // add cost of time spent on travel by converting gdp/cap into an hourly
     // wage and multiplying by average speed.
     // The price unit is $ per service, e.g. $/pass-mi or $/ton-mi
     
-    // Save time value so can print out
-    // Maybe also write to XML DB?
-    double timeValue =  getTimeValue( aGDP, aPeriod );
-    return Subsector::getPrice( aGDP, aPeriod ) + timeValue;
+    double timeValue =  getTimeValue( aPeriod );
+    return Subsector::getPrice( aPeriod ) + timeValue;
 }
 
 /*! \brief Get the time in transit per day per person for the period.
@@ -244,13 +240,9 @@ double TranSubsector::getServicePerCapita( const int aPeriod ) const {
 
 void TranSubsector::setOutput( const double aVariableSubsectorDemand,
                                const double aFixedOutputScaleFactor,
-                               const GDP* aGDP,
                                const int aPeriod )
 {
-    Subsector::setOutput( aVariableSubsectorDemand,
-                          aFixedOutputScaleFactor,
-                          aGDP,
-                          aPeriod );
+    Subsector::setOutput( aVariableSubsectorDemand, aFixedOutputScaleFactor, aPeriod );
 }
 
 void TranSubsector::accept( IVisitor* aVisitor, const int period ) const {

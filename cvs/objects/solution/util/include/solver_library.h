@@ -99,7 +99,7 @@ public:
 
 private:
     //! A function object to compare to values and see if they are approximately equal. 
-    struct ApproxEqual : public std::unary_function<double, bool> {
+    struct ApproxEqual {
         const double compareValue; //!< A value to compare the argument value against.
         const double tolerance; //!< The tolerance within which to return that the values are equal.
         ApproxEqual( double compareValueIn, double toleranceIn ):

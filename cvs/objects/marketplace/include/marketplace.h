@@ -182,7 +182,7 @@ public:
     IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
                          const int aPeriod, const bool aMustExist );
     
-    std::auto_ptr<CachedMarket> locateMarket( const std::string& aGoodName, const std::string& aRegionName,
+    std::unique_ptr<CachedMarket> locateMarket( const std::string& aGoodName, const std::string& aRegionName,
                                                const int aPeriod ) const;
 
    void accept( IVisitor* aVisitor, const int aPeriod ) const;
@@ -215,13 +215,13 @@ protected:
     )
 
     //! An object which determines the correct market number.
-    std::auto_ptr<MarketLocator> mMarketLocator;
+    std::unique_ptr<MarketLocator> mMarketLocator;
     
     //! A gobal object which tracks dependencies between all of the model activities
     //! and their linkages to their respective markets.  It can be used to create a
     //! sorted global ordering or get an inorder list of model activities that are
     //! affected by changing the price of a single market.
-    std::auto_ptr<MarketDependencyFinder> mDependencyFinder;
+    std::unique_ptr<MarketDependencyFinder> mDependencyFinder;
     
     //! Flag indicating whether the next call to world->calc() will be part of a partial derivative calculation 
     static bool mIsDerivativeCalc;

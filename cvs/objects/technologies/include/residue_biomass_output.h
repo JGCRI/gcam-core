@@ -117,7 +117,10 @@ public :
     virtual void setPhysicalOutput( const double aPrimaryOutput, const std::string& aRegionName,
                                     ICaptureComponent* aCaptureComponent, const int aPeriod );
 
-    virtual void setCurrencyOutput( const std::string& aRegionName,  const double aOutput, const int aPeriod ) { }
+    virtual void setCurrencyOutput( const double aPysicalOutput,
+                                    const double aCurrencyConversionPrice,
+                                    const std::string& aRegionName,
+                                    const int aPeriod ) { }
     virtual double getCurrencyOutput( const int aPeriod ) const { return 0; }
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;

@@ -252,11 +252,6 @@ public:
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,
                                 const int aPeriod ) {}
-
-    virtual double calcTaxes( const std::string& aRegionName,
-                            NationalAccount* aNationalAccount,
-                            Expenditure* aExpenditure,
-                            const int aPeriod ) const { return 0; }
    
     virtual void copyParamsInto( EnergyInput& aInput,
         const int aPeriod ) const {}

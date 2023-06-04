@@ -102,7 +102,6 @@ void FixedFinalDemand::completeInit( const string& aRegionName,
 
 
 void FixedFinalDemand::initCalc( const string& aRegionName,
-                                  const GDP* aGDP,
                                   const Demographic* aDemographics,
                                   const int aPeriod )
 {
@@ -116,13 +115,11 @@ void FixedFinalDemand::initCalc( const string& aRegionName,
 /*! \brief Set the final demand for service into the marketplace.
  * \detail This is just a fixed value read in by the user.
  * \param string& aRegionName region name.
- * \param GDP* aGDP object.
  * \param Demographic* aDemographicss.
  * \param aPeriod Model aPeriod
  */
 void FixedFinalDemand::setFinalDemand( const string& aRegionName,
                                         const Demographic* aDemographics,
-                                        const GDP* aGDP,
                                         const int aPeriod )
 {
     // Set the service demand into the marketplace.

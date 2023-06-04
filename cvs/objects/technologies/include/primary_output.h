@@ -122,8 +122,9 @@ public:
 
     virtual double getPhysicalOutput( const int aPeriod ) const;
 
-    virtual void setCurrencyOutput( const std::string& aRegionName,
-                                    const double aOutput,
+    virtual void setCurrencyOutput( const double aPysicalOutput,
+                                    const double aCurrencyConversionPrice,
+                                    const std::string& aRegionName,
                                     const int aPeriod )
     {
         // TODO: This could work by converting from physical to currency with
@@ -174,7 +175,7 @@ protected:
     )
     
     //! A pre-located market which has been cached from the marketplace to add supply to.
-    std::auto_ptr<CachedMarket> mCachedMarket;
+    std::unique_ptr<CachedMarket> mCachedMarket;
     
     void copy( const PrimaryOutput& aOther );
 };
