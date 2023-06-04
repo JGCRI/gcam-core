@@ -220,15 +220,14 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
 * \author Steve Smith
 * \param aPeriod Model period
 */
-void Sector::initCalc( NationalAccount* aNationalAccount,
-                      const Demographic* aDemographics,
-                      const int aPeriod )
+void Sector::initCalc( const Demographic* aDemographics,
+                       const int aPeriod )
 {
     mDiscreteChoiceModel->initCalc( mRegionName, mName, false, aPeriod );
     
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        mSubsectors[ i ]->initCalc( aNationalAccount, aDemographics, aPeriod );
+        mSubsectors[ i ]->initCalc( aDemographics, aPeriod );
     }
 }
 
@@ -277,11 +276,11 @@ void Sector::calcCosts( const int aPeriod ){
 * \param aPeriod Model period.
 * \return A vector of normalized shares, one per subsector, ordered by subsector.
 */
-const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPeriod ) const {
+const vector<double> Sector::calcSubsectorShares( const int aPeriod ) const {
     // Calculate unnormalized shares.
     vector<double> subsecShares( mSubsectors.size() );
     for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
-        subsecShares[ i ] = mSubsectors[ i ]->calcShare( mDiscreteChoiceModel, aGDP, aPeriod );
+        subsecShares[ i ] = mSubsectors[ i ]->calcShare( mDiscreteChoiceModel, aPeriod );
     }
 
     // Normalize the shares.  After normalization they will be true shares, not log(shares).
@@ -298,10 +297,10 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
         // minimum cost subsector.
         assert( subsec.size() > 0 );
         int minPriceIndex = 0;
-        double minPrice = mSubsectors[ minPriceIndex ]->getPrice( aGDP, aPeriod );
+        double minPrice = mSubsectors[ minPriceIndex ]->getPrice( aPeriod );
         subsecShares[ 0 ] = 0.0;
         for( int i = 1; i < mSubsectors.size(); ++i ) {
-            double currPrice = mSubsectors[ i ]->getPrice( aGDP, aPeriod );
+            double currPrice = mSubsectors[ i ]->getPrice( aPeriod );
             subsecShares[ i ] = 0.0;                  // zero out all subsector shares ...
             if( currPrice < minPrice ) {
                 minPrice = currPrice;
@@ -322,8 +321,8 @@ const vector<double> Sector::calcSubsectorShares( const GDP* aGDP, const int aPe
 * \param period Model period
 * \return Weighted sector price.
 */
-double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
-    const vector<double>& subsecShares = calcSubsectorShares( aGDP, aPeriod );
+double Sector::getPrice( const int aPeriod ) const {
+    const vector<double>& subsecShares = calcSubsectorShares( aPeriod );
     double sectorPrice = 0;
     double sumSubsecShares = 0;
     for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){
@@ -331,7 +330,7 @@ double Sector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         // is constant so skipping it will not have any side effects.
         if( subsecShares[ i ] > util::getSmallNumber() ){
             sumSubsecShares += subsecShares[ i ];
-            double currPrice = mSubsectors[ i ]->getPrice( aGDP, aPeriod );
+            double currPrice = mSubsectors[ i ]->getPrice( aPeriod );
             sectorPrice += subsecShares[ i ] * currPrice;
         }
     }
@@ -434,8 +433,9 @@ void Sector::postCalc( const int aPeriod ){
         (*subsector)->postCalc( aPeriod );
     }
     // Set member price vector to solved market prices
+    Marketplace* marketplace = scenario->getMarketplace();
     if( aPeriod > 0 ){
-        mPrice[ aPeriod ] = scenario->getMarketplace()->getPrice( mName, mRegionName, aPeriod, true );
+        mPrice[ aPeriod ] = marketplace->getPrice( mName, mRegionName, aPeriod, true );
     }
 }
 

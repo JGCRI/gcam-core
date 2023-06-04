@@ -55,9 +55,10 @@ module_energy_L2325.chemical <- function(command, ...) {
              "L2325.GlobalTechCoef_chemical",
              "L2325.GlobalTechEff_chemical",
              "L2325.GlobalTechCost_chemical",
+             "L2325.GlobalTechTrackCapital_chemical",
              "L2325.GlobalTechCapture_chemical",
              "L2325.GlobalTechCSeq_ind",
-			 "L2325.GlobalTechShutdown_chemical",
+             "L2325.GlobalTechShutdown_chemical",
              "L2325.GlobalTechSCurve_chemical",
              "L2325.GlobalTechLifetime_chemical",
              "L2325.GlobalTechProfitShutdown_chemical",
@@ -66,8 +67,8 @@ module_energy_L2325.chemical <- function(command, ...) {
              "L2325.StubTechCoef_chemical",
              "L2325.PerCapitaBased_chemical",
              "L2325.BaseService_chemical",
-			 "L2325.PriceElasticity_chemical",
-			 "L2325.GlobalTechSecOut_chemical"))
+             "L2325.PriceElasticity_chemical",
+             "L2325.GlobalTechSecOut_chemical"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -257,6 +258,18 @@ module_energy_L2325.chemical <- function(command, ...) {
              subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L2325.GlobalTechCost_chemical # intermediate tibble
+
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
+    L2325.GlobalTechCost_chemical %>%
+      # we only want to track investments in energy, otherwise we double accounting with materials
+      filter(grepl('energy use', sector.name)) %>%
+      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # vintaging is active so no need for depreciation
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L2325.GlobalTechTrackCapital_chemical
 
     A325.nonenergy_Cseq %>%
       repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
@@ -603,6 +616,13 @@ module_energy_L2325.chemical <- function(command, ...) {
       add_precursors("energy/A325.globaltech_cost", "energy/A325.globaltech_coef") ->
       L2325.GlobalTechCost_chemical
 
+    L2325.GlobalTechTrackCapital_chemical %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L2325.GlobalTechCost_chemical) ->
+      L2325.GlobalTechTrackCapital_chemical
+
     L2325.GlobalTechEff_chemical %>%
       add_title("Energy inputs and efficiency of global chemical energy use and feedstocks technologies") %>%
       add_units("Unitless") %>%
@@ -691,7 +711,8 @@ module_energy_L2325.chemical <- function(command, ...) {
                   L2325.GlobalTechSCurve_chemical, L2325.GlobalTechLifetime_chemical, L2325.GlobalTechProfitShutdown_chemical,
                   L2325.StubTechCalInput_chemical,L2325.StubTechCoef_chemical,L2325.StubTechProd_chemical,
                   L2325.PerCapitaBased_chemical, L2325.BaseService_chemical,L2325.GlobalTechSecOut_chemical,
-                  L2325.PriceElasticity_chemical,L2325.GlobalTechCapture_chemical,L2325.GlobalTechEff_chemical)
+                  L2325.PriceElasticity_chemical,L2325.GlobalTechCapture_chemical,L2325.GlobalTechEff_chemical,
+                  L2325.GlobalTechTrackCapital_chemical)
 
 
   } else {

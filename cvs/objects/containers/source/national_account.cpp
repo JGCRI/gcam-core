@@ -45,18 +45,32 @@
 #include "containers/include/national_account.h"
 #include "util/base/include/ivisitor.h"
 #include "util/base/include/xml_helper.h"
+#include "util/base/include/xml_parse_helper.h"
 #include "util/base/include/util.h"
 #include "util/logger/include/ilogger.h"
+#include "demographics/include/demographic.h"
+#include "containers/include/iinfo.h"
 
 using namespace std;
+
+extern Scenario* scenario;
 
 //! Default Constructor
 NationalAccount::NationalAccount():
 // Size the accounts to one after the last valid value in the vector,
 // represented by END.
-mAccounts( END )
+mAccounts( END, 0 )
 {
 }
+
+NationalAccount* NationalAccount::cloneAndInterpolate( const int aNewYear ) const {
+    
+    NationalAccount* newNationalAccount = new NationalAccount();
+    newNationalAccount->mYear = aNewYear;
+    newNationalAccount->mAccounts = this->mAccounts;
+    return newNationalAccount;
+}
+
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
 *
@@ -72,6 +86,55 @@ const std::string& NationalAccount::getXMLNameStatic() {
     return XML_NAME;
 }
 
+//! Return year of national account
+int NationalAccount::getYear() const {
+    return mYear;
+}
+
+//! Returns name (year as a string)
+const std::string NationalAccount::getName() const {
+    return util::toString( mYear );
+}
+
+
+bool NationalAccount::XMLParse( rapidxml::xml_node<char>* & aNode ) {
+    /*! \pre make sure we were passed a valid node. */
+    assert( node );
+    
+    string nodeName = XMLParseHelper::getNodeName(aNode);
+
+    if  ( nodeName == enumToXMLName( SAVINGS_RATE ) ) {
+        setAccount( SAVINGS_RATE, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if  ( nodeName == enumToXMLName( CAPITAL_STOCK ) ) {
+        setAccount( CAPITAL_STOCK, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if  ( nodeName == enumToXMLName( DEPRECIATION_RATE ) ) {
+        setAccount( DEPRECIATION_RATE, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if  ( nodeName == enumToXMLName( CAPITAL_ENERGY_INV) ) {
+        setAccount( CAPITAL_ENERGY_INV, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if  ( nodeName == enumToXMLName( GDP ) ) {
+        setAccount( GDP, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if  ( nodeName == enumToXMLName( LABOR_WAGES ) ) {
+        setAccount( LABOR_WAGES, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if  ( nodeName == enumToXMLName( LABOR_FORCE_SHARE ) ) {
+        setAccount( LABOR_FORCE_SHARE, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if  ( nodeName == enumToXMLName( CAPITAL_NET_EXPORT ) ) {
+        setAccount( CAPITAL_NET_EXPORT, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else if  ( nodeName == enumToXMLName( TOTAL_FACTOR_PRODUCTIVITY ) ) {
+        setAccount( TOTAL_FACTOR_PRODUCTIVITY, XMLParseHelper::getValue<double>( aNode ) );
+    }
+    else {
+        return false;
+    }
+    return true;
+}
 
 //! Output debug info to XML
 void NationalAccount::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
@@ -86,19 +149,100 @@ void NationalAccount::toDebugXML( const int period, ostream& out, Tabs* tabs ) c
     XMLWriteClosingTag( getXMLNameStatic(), out, tabs );
 }
 
+void NationalAccount::completeInit() {
+}
+
+/*!
+ * \brief Complete initializations for the national account for base year
+ */
+void NationalAccount::completeInitHist( ) {
+}
+
+
+/*!
+ * \brief Complete initializations for the national account
+ */
+void NationalAccount::initCalc( const NationalAccount* aNationalAccountPrevious, const int aPeriod ) {
+    
+    const Modeltime* modeltime = scenario->getModeltime();
+
+    // note these are last period rates
+    // TODO: may want to use current period savings and depreciation rates instead
+    double savings_rate = aNationalAccountPrevious->getAccountValue(SAVINGS_RATE);
+    double depreciation_rate = aNationalAccountPrevious->getAccountValue(DEPRECIATION_RATE);
+    
+    double prevGDP = aNationalAccountPrevious->getAccountValue(GDP);
+    double capital = aNationalAccountPrevious->getAccountValue(CAPITAL_STOCK);
+    double prevEneInv = aNationalAccountPrevious->getAccountValue(CAPITAL_ENERGY_INV);
+    double prevConsDurableInv = aNationalAccountPrevious->getAccountValue(CONSUMER_DURABLE_INV);
+    
+    // "move" consumer durable investment value from consumption to investment by inflating the
+    // savings rate to accommodate so that it can be included in the investment constraint
+    int prevPeriod = aPeriod - 1;
+    if(prevPeriod <= modeltime->getFinalCalibrationPeriod()) {
+        mConsumerDurableSRAdj = prevConsDurableInv / prevGDP;
+    }
+    else {
+        mConsumerDurableSRAdj = aNationalAccountPrevious->mConsumerDurableSRAdj;
+    }
+
+    mAccounts[SAVINGS] = prevGDP * (savings_rate + mConsumerDurableSRAdj); // annual savings based on lagged gdp
+    // CAPITAL_NET_EXPORT could be significantly negative (from historical data) so we
+    // should take care to ensure it doesn't take the "investment" negative.
+    mAccounts[INVESTMENT] = std::max(mAccounts[SAVINGS] + mAccounts[CAPITAL_NET_EXPORT], 0.0);
+    mAccounts[DEPRECIATION] = capital * depreciation_rate; // annual depreciation based on lagged capital
+    
+    // Calculate for future periods only
+    if( aPeriod > modeltime->getFinalCalibrationPeriod() ){
+        // Depreciate capital and add new investments.
+        // Calculate annual changes for cumulative capital stock.
+        // Assumes constant GDP within period.
+        // Given capital stock is cumulative we need to apply the annual changes for
+        // each year in the time step.
+        double savings = mAccounts[INVESTMENT] - prevEneInv - prevConsDurableInv;
+        for(unsigned int i=0; i < scenario->getModeltime()->gettimestep(aPeriod); ++i){
+            capital = capital * (1 - depreciation_rate) + savings;
+        }
+        
+        // protect against negative capital stock, note: in such a case the social
+        // account matrix will not balance thus signaling an issue
+        const double MIN_CAPITAL_STOCK = 100.0;
+        mAccounts[CAPITAL_STOCK] = std::max(capital, MIN_CAPITAL_STOCK);
+    }
+}
+
+/*!
+ * \brief Post calculations for the national account
+ */
+void NationalAccount::postCalc( ) {
+     mAccounts[ GDP_PER_CAPITA ] = mAccounts[GDP] / mAccounts[POPULATION];
+}
+
+/*!
+ * \brief Post calculations for the national account for historical periods
+ */
+void NationalAccount::postCalcHist( ) {
+    
+    // Historical GDP is read-in, remove energy net exports to determine
+    // domestic GDP.
+    // Add energy expenditure to domestic GDP for gross output.
+     
+    mAccounts[ GROSS_OUTPUT ] = mAccounts[GDP] - mAccounts[ENERGY_NET_EXPORT] ;
+}
+
 /*!
  * \brief Add to the value for the national account specified by the account type key.
  * \param aType The account which will be added to.
  * \param aValue The value which will be added to account aType.
  */
 void NationalAccount::addToAccount( const AccountType aType, const double aValue ){
-    mAccounts[ aType ]+= aValue;
+    mAccounts[ aType ] += aValue;
 }
 
 /*!
  * \brief Set the value for the national account specified by the account type key.
  * \param aType The account for which value will be set.
- * \param aValue The value which wil be set to account aType.
+ * \param aValue The value which will be set to account aType.
  */
 void NationalAccount::setAccount( const AccountType aType, const double aValue ){
     mAccounts[ aType ] = aValue;
@@ -119,68 +263,9 @@ double NationalAccount::getAccountValue( const AccountType aType ) const {
  * \note The accounts TRANSFERS and INVESTMENT_TAX_CREDIT do not get reset.
  */
 void NationalAccount::reset() {
-    // save transfer amount calculated from government's initCalc
-    // this is a giant hack. store the values that should not be reset.
-    double tempTransfers = mAccounts[ TRANSFERS ];
-    assert( tempTransfers > 0 );
-    double tempInvTaxCreditRate = mAccounts[ INVESTMENT_TAX_CREDIT ];
-    
     // Clear the values.
     mAccounts.clear();
     mAccounts.resize( END );
-
-    // Restore the two values that were saved.
-    mAccounts[ TRANSFERS ] = tempTransfers;
-    mAccounts[ INVESTMENT_TAX_CREDIT ] = tempInvTaxCreditRate;
-}
-
-/*!
- * \brief Convert between the NationalAccount enum type to the String representation
- * \param aType The enum NationalAccount type
- * \return The string representation of the type
- * \author Pralit Patel
- */
-const string& NationalAccount::enumToName( const AccountType aType ) const {
-    /*! \pre aType is a valid account type. */
-    assert( aType < END );
-    // Create a static array of values. This will only on the first entrance to
-    // the function since this is a const static.
-    const static string names[] = {
-            "Retained Earnings",
-            "Subsidy",
-            "Corporate Profits",
-            "Corporate Retained Earnings",
-            "Corporate Income Taxes",
-            "Corporate Income Tax Rate",
-            "Personal Income Taxes",
-            "Investment Tax Credit",
-            "Dividends",
-            "Labor Wages",
-            "Land Rents",
-            "Transfers",
-            "Social Security Tax",
-            "Indirect Buisness Tax",
-            "GNP Nominal",
-            "GNP VA",
-            "GNP Real",
-            "Consumption Nominal",
-            "Government Nominal",
-            "Investment Nominal",
-            "Net Export Nominal",
-            "Consumption Real",
-            "Government Real",
-            "Investment Real",
-            "Net Export Real",
-            "Exchange Rate",
-            "Annual Investment",
-            "Carbon Tax",
-            "Export Nominal",
-            "Export Real",
-            "Import Nominal",
-            "Import Real"
-    };
-    // Return the string in the static array at the index.
-    return names[ aType ];
 }
 
 /*!
@@ -196,38 +281,32 @@ const string& NationalAccount::enumToXMLName( const AccountType aType ) const {
     // the function since this is a const static.
 
     const static string names[] = {
-            "retainedEarning",
-            "subsidy",
-            "corpProfits",
-            "corpRetainedEarnings",
-            "corporateIncomeTax",
-            "corporateIncomeTaxRate",
-            "personalIncomeTax",
-            "investmentTaxCredit",
-            "dividends",
-            "laborWages",
-            "landRents",
-            "transfers",
-            "socialSecurityTax",
-            "indirectBusinessTax",
-            "GNP-nominal",
-            "GNPVA",
-            "GNP-real",
-            "consumption-nominal",
-            "government-nominal",
-            "investment-nominal",
-            "netExport-nominal",
-            "consumption-real",
-            "government-real",
-            "investment-real",
-            "netExport-real",
-            "exchangeRate",
-            "annualInvestment",
-            "carbon-tax",
-            "export-nominal",
-            "export-real",
-            "import-nominal",
-            "import-real"
+            "savings-rate",
+            "depreciation-rate",
+            "savings",
+            "investment",
+            "depreciation",
+            "capital-stock",
+            "energy-investment",
+            "consumer-durable",
+            "GDP",
+            "value-added",
+            "gross-output",
+            "labor-wages",
+            "labor-force",
+            "labor-force-share",
+            "total-factor-productivity",
+            "fac-share-labor",
+            "fac-share-capital",
+            "fac-share-energy",
+            "population",
+            "gdp-per-capita",
+            "gdp-per-capita-ppp",
+            "energy-service",
+            "energy-service-value",
+            "energy-net-export",
+            "materials-net-export",
+            "capital-net-export"
     };
     // Return the string in the static array at the index.
     return names[ aType ];

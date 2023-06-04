@@ -91,6 +91,7 @@ module_energy_L244.building_det <- function(command, ...) {
              "L244.StubTechIntGainOutputRatio",
              "L244.GlobalTechShrwt_bld",
              "L244.GlobalTechCost_bld",
+             "L244.GlobalTechTrackCapital_bld",
              "L244.DeleteGenericService",
              "L244.Satiation_flsp_SSP1",
              "L244.SatiationAdder_SSP1",
@@ -723,6 +724,17 @@ module_energy_L244.building_det <- function(command, ...) {
       mutate(minicam.non.energy.input = "non-energy") %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]])
 
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.BUILDINGS_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.BUILDINGS_CAP_PAYMENTS -1)
+    L244.GlobalTechCost_bld %>%
+      mutate(capital.coef = socioeconomics.BUILDINGS_CAPITAL_RATIO / FCR,
+             # note consumer ACs, etc are technically not investment but rather "consumer durable"
+             tracking.market = if_else(grepl('resid', sector.name),
+                                       socioeconomics.EN_DURABLE_MARKET_NAME, socioeconomics.EN_CAPITAL_MARKET_NAME),
+             depreciation.rate = socioeconomics.BUILDINGS_DEPRECIATION_RATE) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L244.GlobalTechTrackCapital_bld
+
     # L244.StubTechIntGainOutputRatio: Output ratios of internal gain energy from non-thermal building services
     L244.StubTechIntGainOutputRatio <- L144.internal_gains %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -1050,6 +1062,13 @@ module_energy_L244.building_det <- function(command, ...) {
       add_precursors("L144.NEcost_75USDGJ") ->
       L244.GlobalTechCost_bld
 
+    L244.GlobalTechTrackCapital_bld %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L244.GlobalTechCost_bld) ->
+      L244.GlobalTechTrackCapital_bld
+
     if(exists("L244.DeleteGenericService")) {
       L244.DeleteGenericService %>%
         add_title("Removing non-existent services") %>%
@@ -1110,7 +1129,7 @@ module_energy_L244.building_det <- function(command, ...) {
                 L244.Satiation_flsp_SSP5, L244.SatiationAdder_SSP5, L244.GenericServiceSatiation_SSP5, L244.FuelPrefElast_bld_SSP15,
                 L244.DeleteThermalService, L244.SubsectorLogit_bld, L244.StubTechIntGainOutputRatio,
                 L244.HDDCDD_A2_CCSM3x, L244.HDDCDD_A2_HadCM3, L244.HDDCDD_B1_CCSM3x, L244.HDDCDD_B1_HadCM3, L244.HDDCDD_constdd_no_GCM,
-                L244.GompFnParam)
+                L244.GompFnParam, L244.GlobalTechTrackCapital_bld)
   } else {
     stop("Unknown command")
   }

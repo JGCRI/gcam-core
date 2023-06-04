@@ -63,6 +63,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L223.StubTechEff_elec",
              "L223.StubTech_elec",
              "L223.StubTechSecOut_desal",
+             "L223.StubTechCapFactor_elec",
              "L270.CreditInput_elec",
              paste0("L223.", L223_fileNames)
     ))
@@ -85,6 +86,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
              "L2233.ElecReserve_elec_cool",
              "L2233.SubsectorShrwtFllt_elec_cool",
              "L2233.SubsectorLogit_elec_cool",
+             "L2233.StubTechTrackCapital_elec",
              "L2233.StubTech_elec_cool",
              "L2233.StubTechEff_elec_cool",
              "L2233.StubTechSecOut_desal_elec_cool",
@@ -143,6 +145,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
     L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec",strip_attributes = TRUE)
     L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec",strip_attributes = TRUE)
     L223.StubTechSecOut_desal <- get_data(all_data, "L223.StubTechSecOut_desal", strip_attributes = TRUE)
+    L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec", strip_attributes = TRUE)
     L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec",strip_attributes = TRUE)
 
     # Use get_data function with sapply to read in all "L223." inputs at once
@@ -379,6 +382,30 @@ module_water_L2233.electricity_water <- function(command, ...) {
                  technology %in% L2233.GlobalIntTechCapital_elec$technology)) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCapital"]]) ->
       L2233.GlobalTechCapital_elecPassthru # --OUTPUT--
+
+    # some adjustments for rooftop_pv because it does not have vintaging we need to switch
+    # from a input.capital to a standard non-energy input and add assumptions about
+    # depreciation to be able to properly calculate capital demands
+    L223.StubTechCapFactor_elec %>%
+      filter(stub.technology == "rooftop_pv") %>%
+      left_join_error_no_match(L2233.GlobalIntTechCapital_elec, by=c("supplysector" = "sector.name",
+                                                                     "subsector" = "subsector.name",
+                                                                     "stub.technology" = "technology",
+                                                                     "year")) %>%
+      mutate(input.cost = capital.overnight * fixed.charge.rate / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ),
+             capital.coef = 1 / fixed.charge.rate,
+             tracking.market = "capital",
+             depreciation.rate = 1 / 15) %>%
+      select(-capacity.factor, -capital.overnight, -fixed.charge.rate) %>%
+      rename(minicam.non.energy.input = input.capital) ->
+      L2233.StubTechTrackCapital_elec
+    # now remove rooftop_pv from the global tech to avoid double accounting
+    L2233.GlobalIntTechCapital_elec %>%
+      filter(technology != "rooftop_pv") ->
+      L2233.GlobalIntTechCapital_elec
+    L2233.GlobalTechCapital_elecPassthru %>%
+      filter(technology != "rooftop_pv") ->
+      L2233.GlobalTechCapital_elecPassthru
 
     # OMfixed costs of intermittent technologies applied in the electricity sector
     GlobalTechOMfixed_elecPassthru %>%
@@ -946,6 +973,14 @@ module_water_L2233.electricity_water <- function(command, ...) {
       add_precursors("L223.StubTech_elec") ->
       L2233.StubTech_elecPassthru
 
+    L2233.StubTechTrackCapital_elec %>%
+      add_title("Stub tech to treat capital tracking for rooftop_pv seperately") %>%
+      add_units("1975$/GJ") %>%
+      add_comments("Since rooftop_pv does not have vintaging we need to track its capital") %>%
+      add_comments("with explicit assumptions about depreciation.") %>%
+      add_precursors("L223.StubTechCapFactor_elec", "L223.GlobalIntTechCapital_elec") ->
+      L2233.StubTechTrackCapital_elec
+
     L2233.StubTech_elec_cool %>%
       add_title("Stub technologies for cooling system options") %>%
       add_units("NA") %>%
@@ -1088,6 +1123,7 @@ module_water_L2233.electricity_water <- function(command, ...) {
                 L2233.ElecReserve_elec_cool,
                 L2233.SubsectorShrwtFllt_elec_cool,
                 L2233.SubsectorLogit_elec_cool,
+                L2233.StubTechTrackCapital_elec,
                 L2233.StubTech_elec_cool,
                 L2233.StubTechEff_elec_cool,
                 L2233.StubTechSecOut_desal_elec_cool,

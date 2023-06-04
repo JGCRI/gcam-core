@@ -47,8 +47,6 @@
 
 #include "technologies/include/technology.h"
 
-class GDP;
-
 /*! 
 * \ingroup Objects
 * \brief This nuclear fuel technology class is based on the MiniCAM description
@@ -82,8 +80,7 @@ public:
     double getNonEnergyCost( const int aPeriod ) const;
 
 	virtual void production( const std::string& aRegionName,const std::string& aSectorName, 
-							 double aVariableDemand, double aFixedOutputScaleFactor, const GDP* aGDP,
-							 const int aPeriod );
+							 double aVariableDemand, double aFixedOutputScaleFactor, int aPeriod );
 
 protected:
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;

@@ -121,7 +121,7 @@ public:
     virtual ~FoodDemandInput();
 
 	// FoodDemandInput specific methods
-	Value getSubregionalIncome() const;
+	double getSubregionalIncome( const std::string& aRegionName, const int aPeriod ) const;
     
     double getAnnualDemandConversionFactor( const int aPeriod ) const;
 
@@ -326,11 +326,6 @@ public:
                                 const int aLifetimeYears,
                                 const int aPeriod ) {}
 
-    virtual double calcTaxes( const std::string& aRegionName,
-                            NationalAccount* aNationalAccount,
-                            Expenditure* aExpenditure,
-                            const int aPeriod ) const { return 0; }
-
     virtual void copyParamsInto( EnergyInput& aInput,
         const int aPeriod ) const {}
 
@@ -398,7 +393,7 @@ protected:
 
         //! Current Subregional income (in PPP).  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-income", mCurrentSubregionalIncome, Value )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-income-share", mCurrentSubregionalIncomeShare, Value )
 
     )
                            

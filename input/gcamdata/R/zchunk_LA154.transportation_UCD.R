@@ -46,6 +46,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
              "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",
              "L154.loadfactor_R_trn_m_sz_tech_F_Y",
              "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y",
+             "L154.capcoef_usdvkm_R_trn_m_sz_tech_F_Y",
              "L154.speed_kmhr_R_trn_m_sz_tech_F_Y",
              "L154.out_mpkm_R_trn_nonmotor_Yh",
              "L154.IEA_histfut_data_times_UCD_shares",
@@ -317,12 +318,22 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       #kbn 2020-01-29 Updated with sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
       left_join(UCD_trn_data_vkm_veh, by = c("UCD_region", "UCD_sector", "mode", "size.class", "year","sce")) %>%
       mutate(value = if_else(unit == "2005$/veh/yr", value / vkt_veh_yr, value),
+             cap_ann_vkt = value / fcr_veh,
+             cap_ann_vkt = if_else(variable %in% c("CAPEX and non-fuel OPEX", "CAPEX", "Locomotive CAPEX", "Capital costs (purchase)", "Capital costs (total)", "Capital costs (other)"), cap_ann_vkt, 0),
              unit = if_else(unit == "2005$/veh/yr", "2005$/vkt", unit)) %>%
       #kbn 2020-01-29 Updated with sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
       group_by(UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, unit, year,sce) %>%
-      summarise(value = sum(value)) %>%
+      summarise(value = sum(value),
+                cap_ann_vkt = sum(cap_ann_vkt)) %>%
       ungroup() %>%
       mutate(variable = "non-fuel costs")
+    UCD_trn_cost_data %>%
+      mutate(value = cap_ann_vkt,
+             variable = "annual-capital costs",
+             unit = "2005$/vkt") %>%
+      bind_rows(UCD_trn_cost_data) %>%
+      select(-cap_ann_vkt) ->
+      UCD_trn_cost_data
 
 
     #kbn 2019-10-18. We drop some columns in the above calculation with the summarise. To fix the same, we are adding back the original UCD_trn_data below.
@@ -461,7 +472,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       #kbn 2020-01-29 Adding sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
       fast_left_join(UCD_trn_data_variable_spread ,
                      by = c("UCD_sector", (energy.TRAN_UCD_MODE), (energy.TRAN_UCD_SIZE_CLASS), "UCD_technology", "UCD_fuel", "year", "UCD_region")) %>%
-      replace_na(list(`non-fuel costs` = 0))
+      replace_na(list(`non-fuel costs` = 0, `annual-capital costs` = 0))
 
     # Adding in speed - this is matched by the mode and (for some) size class. Match size class first
     speed_data <- UCD_trn_data_variable_spread %>%
@@ -492,15 +503,19 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
     ALL_ctry_var_CORE <- ALL_ctry_var %>%
       filter(sce=="CORE") %>%
       select(-sce) %>%
-      select("UCD_technology","UCD_fuel", "UCD_sector", "rev.mode", "rev_size.class","mode","size.class", "year", "GCAM_region_ID","load factor","weight_EJ","intensity","non-fuel costs") %>%
-      rename(loadfactor_CORE = `load factor`, weight_EJ_core = weight_EJ, intensity_CORE =intensity, non_fuel_cost_core = `non-fuel costs`)
+      select("UCD_technology","UCD_fuel", "UCD_sector", "rev.mode", "rev_size.class","mode","size.class", "year", "GCAM_region_ID","load factor","weight_EJ","intensity","non-fuel costs", "annual-capital costs") %>%
+      rename(loadfactor_CORE = `load factor`, weight_EJ_core = weight_EJ, intensity_CORE =intensity, non_fuel_cost_core = `non-fuel costs`, ann_cap_cost_core = `annual-capital costs`)
 
 
     ALL_ctry_var %>%
       filter(sce != "CORE") %>%
       left_join_keep_first_only(ALL_ctry_var_CORE, by= c("UCD_technology","UCD_fuel", "UCD_sector", "mode", "size.class","rev.mode","rev_size.class", "year", "GCAM_region_ID")) %>%
-      mutate(weight_EJ =if_else(is.na(weight_EJ),weight_EJ_core,weight_EJ),intensity =if_else(is.na(intensity),intensity_CORE,intensity), `load factor`=if_else(is.na(`load factor`),loadfactor_CORE,`load factor`), `non-fuel costs`=if_else(`non-fuel costs` == 0,non_fuel_cost_core,`non-fuel costs`)) %>%
-      select(-loadfactor_CORE,-weight_EJ_core,-intensity_CORE,-non_fuel_cost_core) %>%
+      mutate(weight_EJ = if_else(is.na(weight_EJ), weight_EJ_core, weight_EJ),
+             intensity = if_else(is.na(intensity), intensity_CORE, intensity),
+             `load factor`= if_else(is.na(`load factor`), loadfactor_CORE, `load factor`),
+             `non-fuel costs`= if_else(`non-fuel costs` == 0, non_fuel_cost_core, `non-fuel costs`),
+             `annual-capital costs`= if_else(`annual-capital costs` == 0, ann_cap_cost_core, `annual-capital costs`)) %>%
+      select(-loadfactor_CORE,-weight_EJ_core,-intensity_CORE,-non_fuel_cost_core, -ann_cap_cost_core) %>%
       filter(`non-fuel costs` != 0)-> ALL_ctry_var_SSPS
 
 
@@ -514,11 +529,12 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       mutate(Tvkm = weight_EJ / intensity,
              Tpkm = Tvkm * `load factor`,
              Tusd = Tvkm * `non-fuel costs`,
+             Tann_cap = Tvkm * `annual-capital costs`,
              Thr = Tvkm / speed.x) %>%
       #kbn 2019-10-09 calculate weighted volumes below using revised size classes
       #kbn 2020-01-29 Adding sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
       group_by(UCD_technology,UCD_fuel, UCD_sector, !!(as.name(energy.TRAN_UCD_MODE)), !!(as.name(energy.TRAN_UCD_SIZE_CLASS)), year, GCAM_region_ID,sce) %>%
-      summarise(weight_EJ = sum(weight_EJ), Tvkm = sum(Tvkm), Tpkm = sum(Tpkm),Tusd = sum(Tusd), Thr = sum(Thr)) %>%
+      summarise(weight_EJ = sum(weight_EJ), Tvkm = sum(Tvkm), Tpkm = sum(Tpkm),Tusd = sum(Tusd),Tann_cap = sum(Tann_cap), Thr = sum(Thr)) %>%
       ungroup()
 
 
@@ -529,10 +545,11 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
       mutate(intensity_MJvkm = weight_EJ / Tvkm,
              loadfactor = Tpkm / Tvkm,
              cost_usdvkm = Tusd / Tvkm,
+             ann_capvkm = Tann_cap / Tvkm,
              speed_kmhr = Tvkm / Thr) %>%
       # Dropping unnecessary columns
-      select(-Tvkm, -Tpkm, -Tusd, -Thr, -weight_EJ) %>%
-      gather(variable, value, intensity_MJvkm, loadfactor, cost_usdvkm, speed_kmhr) %>%
+      select(-Tvkm, -Tpkm, -Tusd, -Tann_cap, -Thr, -weight_EJ) %>%
+      gather(variable, value, intensity_MJvkm, loadfactor, cost_usdvkm, ann_capvkm, speed_kmhr) %>%
       # Reordering columns
       #kbn 2019-10-09 use user defined mode and size classes below. Changes described in detail in comment with search string,kbn 2020-03-26.
       #kbn 2020-01-29 Adding sce below. Changes described in detail in comment with search string,kbn 2020-03-26.
@@ -668,6 +685,20 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                      "L131.in_EJ_R_Senduse_F_Yh") ->
       L154.cost_usdvkm_R_trn_m_sz_tech_F_Y
 
+    out_var_df[["cost_usdvkm"]] %>%
+      mutate(variable="total.ne") %>%
+      bind_rows(out_var_df[["ann_capvkm"]] %>% mutate(variable="ann.cap")) %>%
+      spread(variable, value) %>%
+      mutate(capital.coef = ann.cap / total.ne) %>%
+      select(-ann.cap, -total.ne) %>%
+      # coal freight rail generates NAs
+      filter(!is.na(capital.coef)) %>%
+      add_title("Transportation annual investment ratio") %>%
+      add_units("ratio") %>%
+      add_comments("A ratio to convert from total non-energy cost per vkm to total annual investment") %>%
+      same_precursors_as(L154.cost_usdvkm_R_trn_m_sz_tech_F_Y) ->
+      L154.capcoef_usdvkm_R_trn_m_sz_tech_F_Y
+
     out_var_df[["speed_kmhr"]] %>%
       add_title("Transportation vehicle speeds") %>%
       add_units("km/hr") %>%
@@ -708,7 +739,7 @@ module_energy_LA154.transportation_UCD <- function(command, ...) {
                 L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y, L154.loadfactor_R_trn_m_sz_tech_F_Y,
                 L154.cost_usdvkm_R_trn_m_sz_tech_F_Y, L154.speed_kmhr_R_trn_m_sz_tech_F_Y,
                 L154.out_mpkm_R_trn_nonmotor_Yh,L154.IEA_histfut_data_times_UCD_shares,
-                UCD_trn_data)
+                UCD_trn_data, L154.capcoef_usdvkm_R_trn_m_sz_tech_F_Y)
   } else {
     stop("Unknown command")
   }

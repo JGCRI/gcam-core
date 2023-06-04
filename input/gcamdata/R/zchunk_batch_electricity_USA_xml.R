@@ -23,8 +23,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
              "L223.Production_elec_FERC",
              "L223.InterestRate_FERC",
              "L223.Pop_FERC",
-             "L223.BaseGDP_FERC",
-             "L223.LaborForceFillout_FERC",
+             "L223.GDP_FERC",
              "L223.Supplysector_elec_USA",
              "L223.ElecReserve_USA",
              "L223.SubsectorLogit_elec_USA",
@@ -85,8 +84,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
     L223.Production_elec_FERC <- get_data(all_data, "L223.Production_elec_FERC")
     L223.InterestRate_FERC <- get_data(all_data, "L223.InterestRate_FERC")
     L223.Pop_FERC <- get_data(all_data, "L223.Pop_FERC")
-    L223.BaseGDP_FERC <- get_data(all_data, "L223.BaseGDP_FERC")
-    L223.LaborForceFillout_FERC <- get_data(all_data, "L223.LaborForceFillout_FERC")
+    L223.GDP_FERC <- get_data(all_data, "L223.GDP_FERC")
     L223.Supplysector_elec_USA <- get_data(all_data, "L223.Supplysector_elec_USA")
     L223.ElecReserve_USA <- get_data(all_data, "L223.ElecReserve_USA")
     L223.SubsectorLogit_elec_USA <- get_data(all_data, "L223.SubsectorLogit_elec_USA")
@@ -148,8 +146,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
       add_xml_data(L223.Production_elec_FERC, "Production") %>%
       add_xml_data(L223.InterestRate_FERC, "InterestRate") %>%
       add_xml_data(L223.Pop_FERC, "Pop") %>%
-      add_xml_data(L223.BaseGDP_FERC, "BaseGDP") %>%
-      add_xml_data(L223.LaborForceFillout_FERC, "LaborForceFillout") %>%
+      add_xml_data(L223.GDP_FERC, "GDP") %>%
       add_logit_tables_xml(L223.Supplysector_elec_USA, "Supplysector") %>%
       add_xml_data(L223.ElecReserve_USA, "ElecReserve") %>%
       add_logit_tables_xml(L223.SubsectorLogit_elec_USA, "SubsectorLogit") %>%
@@ -200,8 +197,7 @@ module_gcamusa_batch_electricity_USA_xml <- function(command, ...) {
                      "L223.Production_elec_FERC",
                      "L223.InterestRate_FERC",
                      "L223.Pop_FERC",
-                     "L223.BaseGDP_FERC",
-                     "L223.LaborForceFillout_FERC",
+                     "L223.GDP_FERC",
                      "L223.Supplysector_elec_USA",
                      "L223.ElecReserve_USA",
                      "L223.SubsectorLogit_elec_USA",

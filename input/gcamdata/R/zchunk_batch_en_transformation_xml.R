@@ -21,6 +21,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
              "L222.GlobalTechInterp_en",
              "L222.GlobalTechCoef_en",
              "L222.GlobalTechCost_en",
+             "L222.GlobalTechTrackCapital_en",
              "L222.GlobalTechShrwt_en",
              "L222.GlobalTechCapture_en",
              "L222.GlobalTechSCurve_en",
@@ -45,6 +46,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
     L222.GlobalTechInterp_en <- get_data(all_data, "L222.GlobalTechInterp_en")
     L222.GlobalTechCoef_en <- get_data(all_data, "L222.GlobalTechCoef_en")
     L222.GlobalTechCost_en <- get_data(all_data, "L222.GlobalTechCost_en")
+    L222.GlobalTechTrackCapital_en <- get_data(all_data, "L222.GlobalTechTrackCapital_en")
     L222.GlobalTechShrwt_en <- get_data(all_data, "L222.GlobalTechShrwt_en")
     L222.GlobalTechCapture_en <- get_data(all_data, "L222.GlobalTechCapture_en")
     L222.GlobalTechSCurve_en <- get_data(all_data, "L222.GlobalTechSCurve_en")
@@ -70,6 +72,9 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
       add_xml_data(L222.StubTech_en, "StubTech") %>%
       add_xml_data(L222.GlobalTechInterp_en, "GlobalTechInterp") %>%
       add_xml_data(L222.GlobalTechCoef_en, "GlobalTechCoef") %>%
+      # set non-energy inputs to be read as tracking
+      add_node_equiv_xml("input") %>%
+      add_xml_data(L222.GlobalTechTrackCapital_en, "GlobalTechTrackCapital") %>%
       add_xml_data(L222.GlobalTechCost_en, "GlobalTechCost") %>%
       add_xml_data(L222.GlobalTechShrwt_en, "GlobalTechShrwt") %>%
       add_xml_data(L222.GlobalTechCapture_en, "GlobalTechCapture") %>%
@@ -88,6 +93,7 @@ module_energy_batch_en_transformation_xml <- function(command, ...) {
                      "L222.GlobalTechInterp_en",
                      "L222.GlobalTechCoef_en",
                      "L222.GlobalTechCost_en",
+                     "L222.GlobalTechTrackCapital_en",
                      "L222.GlobalTechShrwt_en",
                      "L222.GlobalTechCapture_en",
                      "L222.GlobalTechSCurve_en",

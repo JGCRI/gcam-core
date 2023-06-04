@@ -48,9 +48,9 @@
 #include "sectors/include/subsector.h"
 #include "sectors/include/nesting_subsector.h"
 #include "sectors/include/sector.h"
-#include "containers/include/gdp.h"
 #include "util/logger/include/ilogger.h"
 #include "functions/include/idiscrete_choice.hpp"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 
@@ -61,8 +61,8 @@ extern Scenario* scenario;
  * \param aRegionName Name of the region if starting the visiting below the
  *        region level.
  */
-CalibrateShareWeightVisitor::CalibrateShareWeightVisitor( const string& aRegionName, const GDP* aGDP )
-:mCurrentRegionName( aRegionName ), mGDP( aGDP )
+CalibrateShareWeightVisitor::CalibrateShareWeightVisitor( const string& aRegionName )
+:mCurrentRegionName( aRegionName )
 {
 }
 
@@ -165,7 +165,8 @@ void CalibrateShareWeightVisitor::calibrateShareWeights( const ContainerType* aC
     if( hasCalValues && numCalChildren > 1 ) {
         // we should have found a child to have share weights anchored
         assert( anchorIndex != -1 );
-        const double scaledGdpPerCapita = mGDP->getBestScaledGDPperCap( aPeriod );
+        double scaledGdpPerCapita = SectorUtils::getGDPPerCapScaled( mCurrentRegionName, aPeriod );
+
         const double anchorCost = getCost( childrenVec[ anchorIndex ], aPeriod );
         const double anchorShare = ( getCalValue( childrenVec[ anchorIndex ], aPeriod )
                                     / totalCalValue ) / pow( scaledGdpPerCapita, getFuelPrefElasticity( childrenVec[ anchorIndex ], aPeriod ) );
@@ -224,7 +225,7 @@ double CalibrateShareWeightVisitor::getCalValue( const ITechnology* aTechnology,
 }
 
 double CalibrateShareWeightVisitor::getCost( const Subsector* aSubsector, const int aPeriod ) const {
-    return aSubsector->getPrice( mGDP, aPeriod );
+    return aSubsector->getPrice( aPeriod );
 }
 double CalibrateShareWeightVisitor::getCost( const ITechnology* aTechnology, const int aPeriod ) const {
     return aTechnology->getCost( aPeriod );

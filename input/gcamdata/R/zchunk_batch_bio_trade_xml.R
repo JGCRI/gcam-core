@@ -26,7 +26,9 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
              "L243.StubTechCoef_ImportedBio",
              "L243.StubTechCoef_DomesticBio",
              "L243.TechCoef_TradedBio",
-             "L243.TechShrwt_TradedBio"))
+             "L243.TechShrwt_TradedBio",
+             "L281.TechAccountOutput_entrade",
+             "L281.GlobalTechAccountInput_entrade"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "bio_trade.xml"))
   } else if(command == driver.MAKE) {
@@ -49,8 +51,12 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
     L243.StubTechCoef_DomesticBio <- get_data(all_data, "L243.StubTechCoef_DomesticBio")
     L243.TechCoef_TradedBio <- get_data(all_data, "L243.TechCoef_TradedBio")
     L243.TechShrwt_TradedBio <- get_data(all_data, "L243.TechShrwt_TradedBio")
+    L281.GlobalTechAccountInput_entrade <- get_data(all_data, "L281.GlobalTechAccountInput_entrade")
 
     market <- NULL # Silence package check
+
+    L281.TechAccountOutput_entrade <- get_data(all_data, "L281.TechAccountOutput_entrade") %>%
+        filter(supplysector %in% unique(L243.TechCoef_TradedBio$supplysector))
 
     # ===================================================
     # Rename tibble columns to match header info.
@@ -66,6 +72,8 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
       add_logit_tables_xml(L243.SubsectorLogit_Bio, "SubsectorLogit") %>%
       add_xml_data(L243.SubsectorShrwt_TotBio, "SubsectorShrwt") %>%
       add_xml_data(L243.SubsectorShrwtFllt_TradedBio, "SubsectorShrwtFllt") %>%
+      add_node_equiv_xml("input") %>%
+      add_xml_data(L281.GlobalTechAccountInput_entrade, "GlobalTechAccountInput") %>%
       add_xml_data(L243.GlobalTechCoef_TotBio, "GlobalTechCoef") %>%
       add_xml_data(L243.GlobalTechShrwt_TotBio, "GlobalTechShrwt") %>%
       add_xml_data(L243.StubTech_TotBio, "StubTech") %>%
@@ -74,6 +82,7 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
       add_xml_data(L243.StubTechCoef_DomesticBio, "StubTechCoef") %>%
       add_xml_data(L243.TechCoef_TradedBio, "TechCoef") %>%
       add_xml_data(L243.TechShrwt_TradedBio, "TechShrwt") %>%
+      add_xml_data(L281.TechAccountOutput_entrade, "TechAccountOutput") %>%
       add_precursors("L243.DeleteInput_RegBio",
                      "L243.TechCoef_RegBio",
                      "L243.Supplysector_Bio",
@@ -88,7 +97,9 @@ module_aglu_batch_bio_trade_xml <- function(command, ...) {
                      "L243.StubTechCoef_ImportedBio",
                      "L243.StubTechCoef_DomesticBio",
                      "L243.TechCoef_TradedBio",
-                     "L243.TechShrwt_TradedBio") ->
+                     "L243.TechShrwt_TradedBio",
+                     "L281.TechAccountOutput_entrade",
+                     "L281.GlobalTechAccountInput_entrade") ->
       bio_trade.xml
 
     return_data(bio_trade.xml)

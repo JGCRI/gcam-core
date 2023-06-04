@@ -48,7 +48,9 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
              "L239.Production_reg_imp",
              "L239.Production_reg_dom",
              "L239.Consumption_intraregional",
-             "L239.CarbonCoef"))
+             "L239.CarbonCoef",
+             "L281.TechAccountOutput_entrade",
+             "L281.TechAccountInput_entrade"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "en_supply.xml"))
   } else if(command == driver.MAKE) {
@@ -93,6 +95,10 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
     L239.Production_reg_dom <- get_data(all_data, "L239.Production_reg_dom")
     L239.Consumption_intraregional <- get_data(all_data, "L239.Consumption_intraregional")
     L239.CarbonCoef <- get_data(all_data, "L239.CarbonCoef")
+    L281.TechAccountInput_entrade <- get_data(all_data, "L281.TechAccountInput_entrade")
+    # constrain to only the sectors that are in this XML (i.e. filter out gas trade)
+    L281.TechAccountOutput_entrade <- get_data(all_data, "L281.TechAccountOutput_entrade") %>%
+        filter(supplysector %in% unique(L239.TechCoef_tra$supplysector))
     # ===================================================
 
     # Produce outputs
@@ -145,12 +151,15 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
       add_logit_tables_xml(L239.SubsectorAll_tra, "SubsectorAllTo", base_logit_header = "SubsectorLogit") %>%
       add_xml_data(L239.TechShrwt_tra, "TechShrwt") %>%
       add_xml_data(L239.TechCost_tra, "TechCost") %>%
+      add_node_equiv_xml("input") %>%
+      add_xml_data(L281.TechAccountInput_entrade, "TechAccountInput") %>%
       add_xml_data(L239.TechCoef_tra, "TechCoef") %>%
       add_xml_data(L239.Production_tra, "Production") %>%
       add_logit_tables_xml(L239.Supplysector_reg, "Supplysector") %>%
       add_logit_tables_xml(L239.SubsectorAll_reg, "SubsectorAllTo", base_logit_header = "SubsectorLogit") %>%
       add_xml_data(L239.TechShrwt_reg, "TechShrwt") %>%
       add_xml_data(L239.TechCoef_reg, "TechCoef") %>%
+      add_xml_data(L281.TechAccountOutput_entrade, "TechAccountOutput") %>%
       add_xml_data(L239.Production_reg_imp, "Production") %>%
       add_xml_data(L239.Production_reg_dom, "Production") %>%
       add_xml_data(L239.Consumption_intraregional, "Production") %>%
@@ -180,7 +189,9 @@ module_energy_batch_en_supply_xml <- function(command, ...) {
                      "L239.Production_reg_imp",
                      "L239.Production_reg_dom",
                      "L239.Consumption_intraregional",
-                     "L239.CarbonCoef") ->
+                     "L239.CarbonCoef",
+                     "L281.TechAccountOutput_entrade",
+                     "L281.TechAccountInput_entrade") ->
       en_supply.xml
 
     return_data(en_supply.xml)

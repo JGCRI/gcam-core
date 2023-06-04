@@ -734,6 +734,21 @@ const GlobalTechnologyDatabase* World::getGlobalTechnologyDatabase() const {
     return mGlobalTechDB;
 }
 
+/*!
+ * \brief Gets access to the Region object by name or null if not found.
+ * \param aRegionName The name of the region to get.
+ * \return A const pointer to the requested region or null if not found.
+ */
+Region const* World::getRegion( const string& aRegionName ) const {
+    for( auto region : mRegions ) {
+        if( region->getName() == aRegionName ) {
+            return region;
+        }
+    }
+    
+    return 0;
+}
+
 /*! \brief Update a visitor for the World.
 * \param aVisitor Visitor to update.
 * \param aPeriod Period to update.

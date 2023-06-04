@@ -46,7 +46,7 @@
 */
 #include <string>
 #include "sectors/include/sector.h"
-class NationalAccount;
+
 class IInfo;
 /*! 
 * \ingroup Objects
@@ -65,22 +65,17 @@ public:
                                ILandAllocator* aLandAllocator );
 
     
-    virtual void initCalc( NationalAccount* aNationalAccount,
-                           const Demographic* aDemographics,
+    virtual void initCalc( const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod );
-    
-    virtual void supply( const GDP* aGDP,
-                         const int aPeriod );
+    virtual void calcFinalSupplyPrice( const int aPeriod );
 
-    virtual void operate( NationalAccount& aNationalAccount, const Demographic* aDemographic,
-                          const int aPeriod ){};
+    virtual void supply( const int aPeriod );
 
 protected:
     virtual double getEnergyInput( const int aPeriod ) const;
     virtual double getOutput( const int aPeriod ) const;
-    virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
+    virtual double getPrice( const int aPeriod ) const;
     virtual void setMarket();
 
     virtual void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;

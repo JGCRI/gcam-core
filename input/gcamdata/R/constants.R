@@ -596,6 +596,7 @@ energy.IRON_STEEL.TRADED_SW <- c("Africa_Southern traded iron and steel","Indone
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
 socioeconomics.UN_HISTORICAL_YEARS       <- c(1950, 1971:2015)  # Years for which to use UN data
+socioeconomics.PWT_CONSTANT_CURRENCY_YEAR <- 2011 # Currency base year in Penn World Table data
 
 # Final historical year, we use this because it's also the first year of the SSP database.
 # Using a different year if the final historical year in the UN historical years changes, this would result in
@@ -605,16 +606,75 @@ socioeconomics.FINAL_HIST_YEAR <- 2015
 
 # Sets the years during which the IMF projections are used over-riding the default (generally SSP) assumptions.
 socioeconomics.IMF_GDP_YEARS <- 2015:2024
+# There will be an imblance of trade by region historically which is implicitly balanced by
+# capital flows.  We can phase this out by the year assumed below (linearly).  Note, setting a value
+# beyond the final model year will hold the final historical net capital flows constant.  Either
+# approach could be reasonable
+socioeconomics.TRADE_BALANCE_YEAR <- 2035
+
+# CES elasticity of substitution parameter governing sharing behavior between energy
+# and "value added" (the capital-labor nest)
+socioeconomics.CES_RHO <- 0.5
+# CES elasticity of substitution parameter governing sharing behavior between capital and labor
+socioeconomics.CES_GAMMA <- -0.3
 
 socioeconomics.BASE_POP_SCEN         <- "SSP2"
 socioeconomics.BASE_GDP_SCENARIO     <- "SSP2"
-socioeconomics.DEFAULT_INTEREST_RATE <- 0.05
+socioeconomics.DEFAULT_MEDIAN_HOURS_WORKED <- 1944
+
+# Asumptions related to tracking capital investments
+socioeconomics.DEFAULT_INTEREST_RATE <- 0.10
+socioeconomics.RESOURCE_CAPITAL_RATIO <- 0.6 # loosley based on GTAP capital shares of total cost
+socioeconomics.REFINING_CAPITAL_RATIO <- 0.6 # loosley based on GTAP capital shares of total cost
+socioeconomics.REFINING_CAP_PAYMENTS <- 30
+socioeconomics.H2_CAPITAL_RATIO <- 0.8
+socioeconomics.H2_CAP_PAYMENTS <- 30
+socioeconomics.INDUSTRY_CAPITAL_RATIO <- 0.9
+socioeconomics.INDUSTRY_CAP_PAYMENTS <- 30
+socioeconomics.BUILDINGS_CAPITAL_RATIO <- 1.0
+socioeconomics.BUILDINGS_CAP_PAYMENTS <- 1
+socioeconomics.BUILDINGS_DEPRECIATION_RATE <- 1/15
+socioeconomics.TRANSPORT_LDV_DEPRECIATION_RATE <- 1/15
+socioeconomics.TRANSPORT_DEPRECIATION_RATE <- 1/30
+
 
 # Digits for rounding into XMLs
 socioeconomics.DEFAULT_LABORFORCE        <- 0.5
 socioeconomics.GDP_DIGITS                <- 0
 socioeconomics.LABOR_PRODUCTIVITY_DIGITS <- 5
 socioeconomics.POP_DIGITS                <- 0
+
+# Names for GDP energy accounting
+socioeconomics.EN_SERVICE_NAME <- "energy service"
+socioeconomics.EN_TRADE_NAME <- "energy net export"
+socioeconomics.EN_CAPITAL_MARKET_NAME <- "capital"
+socioeconomics.EN_DURABLE_MARKET_NAME <- "consumer durable"
+# list of final energy sectors which will serve as "energy service" used in the macro model
+socioeconomics.FINAL_DEMAND_SECTORS <- c("other industrial energy use",
+                                         "process heat cement",
+                                         "agricultural energy use",
+                                         "construction energy use",
+                                         "mining energy use",
+                                         "chemical energy use",
+                                         "alumina",
+                                         "iron and steel",
+                                         "resid cooling",
+                                         "resid heating",
+                                         "resid others",
+                                         "comm cooling",
+                                         "comm heating",
+                                         "comm others",
+                                         "trn_freight",
+                                         "trn_freight_road",
+                                         "trn_shipping_intl",
+                                         "trn_aviation_intl",
+                                         "trn_pass",
+                                         "trn_pass_road",
+                                         "trn_pass_road_LDV",
+                                         "trn_pass_road_LDV_4W")
+
+# for filling missing socioeconomic data
+socioeconomics.TAIWAN_REGION_ID <- 30
 
 
 # Water constants ======================================================================

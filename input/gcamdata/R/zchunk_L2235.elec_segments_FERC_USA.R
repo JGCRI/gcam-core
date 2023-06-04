@@ -49,8 +49,7 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     return(c("L2235.DeleteSupplysector_elec_USA",
              "L2235.InterestRate_FERC_USA",
              "L2235.Pop_FERC_USA",
-             "L2235.BaseGDP_FERC_USA",
-             "L2235.LaborForceFillout_FERC_USA",
+             "L2235.GDP_FERC_USA",
              "L2235.Supplysector_elec_USA",
              "L2235.ElecReserve_elecS_grid_vertical_USA",
              "L2235.SubsectorLogit_elec_USA",
@@ -490,17 +489,10 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     # Base GDP in FERC grid regions
     states_subregions %>%
       distinct(grid_region) %>%
-      mutate(baseGDP = 1) %>%
+      mutate(GDP = 1) %>%
       rename(region = grid_region) %>%
-      arrange(region) -> L2235.BaseGDP_FERC_USA
-
-    # Labor force in the FERC grid regions
-    states_subregions %>%
-      distinct(grid_region) %>%
-      mutate(year.fillout = min(MODEL_BASE_YEARS),
-             laborforce = socioeconomics.DEFAULT_LABORFORCE) %>%
-      rename(region = grid_region) %>%
-      arrange(region) -> L2235.LaborForceFillout_FERC_USA
+      arrange(region) %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS))-> L2235.GDP_FERC_USA
 
     # Supplysector information for electricity passthru sectors in the FERC regions
     A232.structure %>%
@@ -650,23 +642,13 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
       add_precursors("gcam-usa/states_subregions") ->
       L2235.Pop_FERC_USA
 
-    L2235.BaseGDP_FERC_USA %>%
+    L2235.GDP_FERC_USA %>%
       add_title("FERC Grid Region Base Year GDP") %>%
       add_units("million 1990 USD") %>%
       add_comments("Base year GDP in the FERC grid regions") %>%
       add_comments("Value is arbitrary and does not matter; but a value must be read in") %>%
-      add_legacy_name("L2235.BaseGDP_FERC") %>%
       add_precursors("gcam-usa/states_subregions") ->
-      L2235.BaseGDP_FERC_USA
-
-    L2235.LaborForceFillout_FERC_USA %>%
-      add_title("FERC Grid Region Labor Force") %>%
-      add_units("unitless") %>%
-      add_comments("Labor force in the FERC grid regions") %>%
-      add_comments("Default labor force assumption used") %>%
-      add_legacy_name("L2235.LaborForceFillout_FERC") %>%
-      add_precursors("gcam-usa/states_subregions") ->
-      L2235.LaborForceFillout_FERC_USA
+      L2235.GDP_FERC_USA
 
     L2235.Supplysector_elec_USA %>%
       add_title("Electricity Supply Sectors for USA Electricity Trade and Grid Region Vertical Load Segments") %>%
@@ -888,8 +870,7 @@ module_gcamusa_L2235.elec_segments_FERC_USA <- function(command, ...) {
     return_data(L2235.DeleteSupplysector_elec_USA,
                 L2235.InterestRate_FERC_USA,
                 L2235.Pop_FERC_USA,
-                L2235.BaseGDP_FERC_USA,
-                L2235.LaborForceFillout_FERC_USA,
+                L2235.GDP_FERC_USA,
                 L2235.Supplysector_elec_USA,
                 L2235.ElecReserve_elecS_grid_vertical_USA,
                 L2235.SubsectorLogit_elec_USA,

@@ -123,7 +123,7 @@ public:
     // Building NodeInput specific methods
     Value getSubregionalPopulation() const;
 
-    Value getSubregionalIncome() const;
+    double getSubregionalIncome( const std::string& aRegionName, const int aPeriod ) const;
 
     Value getShellConductance( const int aPeriod ) const;
 
@@ -314,11 +314,6 @@ public:
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,
                                 const int aPeriod ) {}
-
-    virtual double calcTaxes( const std::string& aRegionName,
-                            NationalAccount* aNationalAccount,
-                            Expenditure* aExpenditure,
-                            const int aPeriod ) const { return 0; }
       
     virtual void copyParamsInto( EnergyInput& aInput,
         const int aPeriod ) const {}
@@ -402,7 +397,7 @@ protected:
 
         //! Current Subregional income.  Note that this is just a
         //! temporary value used during demand calculations
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-income", mCurrentSubregionalIncome, Value ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "subregional-income-share", mCurrentSubregionalIncomeShare, Value ),
 
         //! The sum product of energy service price necessary to drive demands.
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "price", mPrice, objects::PeriodVector<Value> ),

@@ -61,7 +61,7 @@ double BuildingServiceFunction::calcCoefficient( InputSet& input, double consump
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const BuildingNodeInput* buildingParentInput = static_cast<const BuildingNodeInput*>( aParentInput );
     // income is 1990 thousand $ and service price is 1975 $
-    double income = buildingParentInput->getSubregionalIncome() * 1000 / CVRT90;
+    double income = buildingParentInput->getSubregionalIncome(regionName, period) * 1000 / CVRT90;
     const double floorSpace = buildingParentInput->getPhysicalDemand( period );
     const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( regionName, period )
         / floorSpace;
@@ -91,7 +91,7 @@ double BuildingServiceFunction::calcDemand( InputSet& input, double consumption,
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const BuildingNodeInput* buildingParentInput = static_cast<const BuildingNodeInput*>( aParentInput );
     // income is 1990 thousand $ and service price is 1975 $
-    double income = buildingParentInput->getSubregionalIncome() * 1000 / CVRT90;
+    double income = buildingParentInput->getSubregionalIncome(regionName, period) * 1000 / CVRT90;
     const double floorSpace = buildingParentInput->getPhysicalDemand( period );
     const double internalGainsPerSqMeter = buildingParentInput->getInternalGains( regionName, period )
         / floorSpace;
@@ -125,7 +125,7 @@ double BuildingServiceFunction::calcLevelizedCost( const InputSet& aInputs, cons
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
     const BuildingNodeInput* buildingParentInput = static_cast<const BuildingNodeInput*>( aParentInput );
     // income is 1990 thousand $ and service price is 1975 $
-    double income = buildingParentInput->getSubregionalIncome() * 1000 / CVRT90;
+    double income = buildingParentInput->getSubregionalIncome(aRegionName, aPeriod) * 1000 / CVRT90;
     for( InputSet::const_iterator inputIter = aInputs.begin(); inputIter != aInputs.end(); ++inputIter ) {
         // calculation for energy services
         BuildingServiceInput* buildingServiceInput = static_cast<BuildingServiceInput*>( *inputIter );

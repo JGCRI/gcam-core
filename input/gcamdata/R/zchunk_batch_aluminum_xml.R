@@ -21,7 +21,8 @@ module_energy_batch_aluminum_xml <- function(command, ...) {
              "L2326.GlobalTechShrwt_aluminum",
              "L2326.GlobalTechCoef_aluminum",
              "L2326.GlobalTechCost_aluminum",
-			 "L2326.GlobalTechSCurve_aluminum",
+             "L2326.GlobalTechTrackCapital_aluminum",
+			       "L2326.GlobalTechSCurve_aluminum",
              "L2326.GlobalTechProfitShutdown_aluminum",
              "L2326.StubTechProd_aluminum",
              "L2326.StubTechCalInput_aluminum",
@@ -46,6 +47,7 @@ module_energy_batch_aluminum_xml <- function(command, ...) {
     L2326.GlobalTechShrwt_aluminum <- get_data(all_data, "L2326.GlobalTechShrwt_aluminum")
     L2326.GlobalTechCoef_aluminum <- get_data(all_data, "L2326.GlobalTechCoef_aluminum")
     L2326.GlobalTechCost_aluminum <- get_data(all_data, "L2326.GlobalTechCost_aluminum")
+    L2326.GlobalTechTrackCapital_aluminum <- get_data(all_data, "L2326.GlobalTechTrackCapital_aluminum")
 	  L2326.GlobalTechSCurve_aluminum <- get_data(all_data, "L2326.GlobalTechSCurve_aluminum")
     L2326.GlobalTechProfitShutdown_aluminum <- get_data(all_data, "L2326.GlobalTechProfitShutdown_aluminum")
     L2326.GlobalTechCapture_aluminum <- get_data(all_data, "L2326.GlobalTechCapture_aluminum")
@@ -66,7 +68,9 @@ module_energy_batch_aluminum_xml <- function(command, ...) {
       add_xml_data(L2326.SubsectorInterp_aluminum, "SubsectorInterp") %>%
       add_xml_data(L2326.StubTech_aluminum, "StubTech") %>%
       add_xml_data(L2326.GlobalTechShrwt_aluminum, "GlobalTechShrwt") %>%
+      add_node_equiv_xml("input") %>%
       add_xml_data(L2326.GlobalTechCoef_aluminum, "GlobalTechCoef") %>%
+      add_xml_data(L2326.GlobalTechTrackCapital_aluminum, "GlobalTechTrackCapital") %>%
       add_xml_data(L2326.GlobalTechCost_aluminum, "GlobalTechCost") %>%
 	    add_xml_data(L2326.GlobalTechSCurve_aluminum, "GlobalTechSCurve") %>%
       add_xml_data(L2326.GlobalTechProfitShutdown_aluminum, "GlobalTechProfitShutdown") %>%
@@ -85,7 +89,7 @@ module_energy_batch_aluminum_xml <- function(command, ...) {
                      "L2326.GlobalTechProfitShutdown_aluminum", "L2326.GlobalTechSCurve_aluminum",
                      "L2326.StubTechCalInput_aluminum","L2326.GlobalTechCapture_aluminum",
                      "L2326.PerCapitaBased_aluminum", "L2326.BaseService_aluminum",
-                     "L2326.PriceElasticity_aluminum") ->
+                     "L2326.PriceElasticity_aluminum", "L2326.GlobalTechTrackCapital_aluminum") ->
       aluminum.xml
 
     return_data(aluminum.xml)

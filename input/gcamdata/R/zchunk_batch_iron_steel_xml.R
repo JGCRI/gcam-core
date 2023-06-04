@@ -21,6 +21,7 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
              "L2323.GlobalTechShrwt_iron_steel",
              "L2323.GlobalTechCoef_iron_steel",
              "L2323.GlobalTechCost_iron_steel",
+             "L2323.GlobalTechTrackCapital_iron_steel",
              "L2323.GlobalTechCapture_iron_steel",
              "L2323.GlobalTechSCurve_en",
              "L2323.GlobalTechProfitShutdown_en",
@@ -46,6 +47,7 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
     L2323.GlobalTechShrwt_iron_steel <- get_data(all_data, "L2323.GlobalTechShrwt_iron_steel")
     L2323.GlobalTechCoef_iron_steel <- get_data(all_data, "L2323.GlobalTechCoef_iron_steel")
     L2323.GlobalTechCost_iron_steel <- get_data(all_data, "L2323.GlobalTechCost_iron_steel")
+    L2323.GlobalTechTrackCapital_iron_steel <- get_data(all_data, "L2323.GlobalTechTrackCapital_iron_steel")
     L2323.GlobalTechCapture_iron_steel <- get_data(all_data, "L2323.GlobalTechCapture_iron_steel")
     L2323.GlobalTechSCurve_en <- get_data(all_data, "L2323.GlobalTechSCurve_en")
     L2323.GlobalTechProfitShutdown_en <- get_data(all_data, "L2323.GlobalTechProfitShutdown_en")
@@ -55,6 +57,7 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
     L2323.PerCapitaBased_iron_steel <- get_data(all_data, "L2323.PerCapitaBased_iron_steel")
     L2323.BaseService_iron_steel <- get_data(all_data, "L2323.BaseService_iron_steel")
     L2323.PriceElasticity_iron_steel <- get_data(all_data, "L2323.PriceElasticity_iron_steel")
+
     # ===================================================
 
     # Produce outputs
@@ -66,7 +69,9 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
       add_xml_data(L2323.SubsectorInterp_iron_steel, "SubsectorInterp") %>%
       add_xml_data(L2323.StubTech_iron_steel, "StubTech") %>%
       add_xml_data(L2323.GlobalTechShrwt_iron_steel, "GlobalTechShrwt") %>%
+      add_node_equiv_xml("input") %>%
       add_xml_data(L2323.GlobalTechCoef_iron_steel, "GlobalTechCoef") %>%
+      add_xml_data(L2323.GlobalTechTrackCapital_iron_steel, "GlobalTechTrackCapital") %>%
       add_xml_data(L2323.GlobalTechCost_iron_steel, "GlobalTechCost") %>%
       add_xml_data(L2323.GlobalTechCapture_iron_steel, "GlobalTechCapture") %>%
       add_xml_data(L2323.GlobalTechSCurve_en, "GlobalTechSCurve") %>%
@@ -85,7 +90,8 @@ module_energy_batch_iron_steel_xml <- function(command, ...) {
                      "L2323.GlobalTechCapture_iron_steel", "L2323.GlobalTechSCurve_en",
                      "L2323.GlobalTechProfitShutdown_en", "L2323.StubTechProd_iron_steel",
                      "L2323.StubTechCoef_iron_steel", "L2323.PerCapitaBased_iron_steel", "L2323.BaseService_iron_steel",
-                     "L2323.PriceElasticity_iron_steel","L2323.StubTechCost_iron_steel") ->
+                     "L2323.PriceElasticity_iron_steel","L2323.StubTechCost_iron_steel",
+                     "L2323.GlobalTechTrackCapital_iron_steel") ->
       iron_steel.xml
     return_data(iron_steel.xml)
   } else {

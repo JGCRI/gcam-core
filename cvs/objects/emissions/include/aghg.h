@@ -58,7 +58,6 @@
 #include "util/base/include/data_definition_util.h"
 
 // Forward declarations
-class GDP;
 class IInfo;
 class IOutput;
 class ICaptureComponent;
@@ -169,7 +168,6 @@ public:
     virtual void calcEmission( const std::string& aRegionName, 
                                const std::vector<IInput*>& aInputs,
                                const std::vector<IOutput*>& aOutputs,
-                               const GDP* aGDP,
                                ICaptureComponent* aSequestrationDevice,
                                const int aPeriod ) = 0;
     

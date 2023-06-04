@@ -37,7 +37,9 @@ module_energy_batch_gas_trade_xml <- function(command, ...) {
              "L2392.TechInterp_reg_NG",
              "L2392.Production_tra_NG",
              "L2392.Production_reg_imp_NG",
-             "L2392.Production_reg_dom_NG"))
+             "L2392.Production_reg_dom_NG",
+             "L281.TechAccountOutput_entrade",
+             "L281.TechAccountInput_NG_entrade"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "gas_trade.xml"))
   } else if(command == driver.MAKE) {
@@ -78,6 +80,11 @@ module_energy_batch_gas_trade_xml <- function(command, ...) {
     L2392.Production_reg_imp_NG <- get_data(all_data, "L2392.Production_reg_imp_NG")
     L2392.Production_reg_dom_NG <- get_data(all_data, "L2392.Production_reg_dom_NG")
     L2392.CarbonCoef_NG <- get_data(all_data, "L2392.CarbonCoef_NG")
+    L281.TechAccountInput_NG_entrade <- get_data(all_data, "L281.TechAccountInput_NG_entrade")
+
+    # filter for only gas trade
+    L281.TechAccountOutput_entrade <- get_data(all_data, "L281.TechAccountOutput_entrade") %>%
+        filter(supplysector %in% unique(L2392.TechCoef_tra_NG$supplysector))
 
     # ===================================================
 
@@ -98,6 +105,7 @@ module_energy_batch_gas_trade_xml <- function(command, ...) {
       add_xml_data(L2392.TechSCurve_tra_NG, "TechSCurve") %>%
       add_xml_data(L2392.ProfitShutdown_tra_NG, "TechProfitShutdown") %>%
       add_xml_data(L2392.TechCoef_tra_NG, "TechCoef") %>%
+      add_xml_data(L281.TechAccountOutput_entrade, "TechAccountOutput") %>%
       add_xml_data(L2392.Production_tra_NG, "Production") %>%
       add_logit_tables_xml(L2392.Supplysector_reg_NG, "Supplysector") %>%
       add_logit_tables_xml(L2392.NestingSubsectorAll_reg_NG, "SubsectorAllTo", base_logit_header = "SubsectorLogit") %>%
@@ -110,6 +118,9 @@ module_energy_batch_gas_trade_xml <- function(command, ...) {
 
       add_xml_data_generate_levels(L2392.TechShrwt_reg_NG,
                                    "TechShrwt", "subsector","nesting-subsector",1,FALSE) %>%
+      add_node_equiv_xml("input") %>%
+      add_xml_data_generate_levels(L281.TechAccountInput_NG_entrade,
+                                   "TechAccountInput", "subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2392.TechCoef_reg_NG,
                                    "TechCoef", "subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2392.TechCost_reg_NG,
@@ -154,7 +165,9 @@ module_energy_batch_gas_trade_xml <- function(command, ...) {
                      "L2392.TechInterp_reg_NG",
                      "L2392.Production_tra_NG",
                      "L2392.Production_reg_imp_NG",
-                     "L2392.Production_reg_dom_NG") ->
+                     "L2392.Production_reg_dom_NG",
+                     "L281.TechAccountOutput_entrade",
+                     "L281.TechAccountInput_NG_entrade") ->
       gas_trade.xml
 
     return_data(gas_trade.xml)

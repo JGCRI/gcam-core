@@ -9,7 +9,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L226.SectorLogitTables[[ curr_table ]]$data}, \code{L226.Supplysector_en}, \code{L226.SubsectorLogitTables[[ curr_table ]]$data}, \code{L226.SubsectorLogit_en}, \code{L226.SubsectorShrwt_en}, \code{L226.SubsectorShrwtFllt_en}, \code{L226.SubsectorInterp_en}, \code{L226.SubsectorInterpTo_en}, \code{L226.StubTech_en}, \code{L226.GlobalTechEff_en}, \code{L226.GlobalTechCost_en}, \code{L226.GlobalTechShrwt_en}, \code{L226.StubTechCoef_elecownuse}, \code{L226.StubTechCoef_electd}, \code{L226.StubTechCoef_gaspipe}. The corresponding file in the
+#' the generated outputs: \code{L226.SectorLogitTables[[ curr_table ]]$data}, \code{L226.Supplysector_en}, \code{L226.SubsectorLogitTables[[ curr_table ]]$data}, \code{L226.SubsectorLogit_en}, \code{L226.SubsectorShrwt_en}, \code{L226.SubsectorShrwtFllt_en}, \code{L226.SubsectorInterp_en}, \code{L226.SubsectorInterpTo_en}, \code{L226.StubTech_en}, \code{L226.GlobalTechEff_en}, \code{L226.GlobalTechCost_en}, \code{L226.GlobalTechTrackCapital_en}, \code{L226.GlobalTechShrwt_en}, \code{L226.StubTechCoef_elecownuse}, \code{L226.StubTechCoef_electd}, \code{L226.StubTechCoef_gaspipe}. The corresponding file in the
 #' original data system was \code{L226.en_distribution.R} (energy level2).
 #' @details Prepares Level 2 data on energy distribution sector for the generation of en_distribution.xml.
 #' Creates global technology database info--cost, shareweight, logit, efficiencies, and interpolations--and regional values where applicable for electricity net ownuse, gas pipelines, and transmission and distribution.
@@ -42,6 +42,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
              "L226.StubTech_en",
              "L226.GlobalTechEff_en",
              "L226.GlobalTechCost_en",
+             "L226.GlobalTechTrackCapital_en",
              "L226.GlobalTechShrwt_en",
              "L226.StubTechCoef_elecownuse",
              "L226.StubTechCoef_electd",
@@ -166,6 +167,18 @@ module_energy_L226.en_distribution <- function(command, ...) {
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       mutate(input.cost = round(input.cost, DIGITS_COST)) ->
       L226.GlobalTechCost_en
+
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
+    L226.GlobalTechCost_en %>%
+      # we only want to track investments in backup electricity, not cost adders or distribution networks (yet)
+      filter(grepl("backup", sector.name)) %>%
+      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # vintaging is active so no need for depreciation
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L226.GlobalTechTrackCapital_en
 
     # Generates L226.GlobalTechShrwt_en: Shareweights of global technologies for energy distribution by interpolating values for all model years
     A26.globaltech_shrwt %>%
@@ -379,6 +392,13 @@ module_energy_L226.en_distribution <- function(command, ...) {
       add_precursors("energy/A26.globaltech_cost") ->
       L226.GlobalTechCost_en
 
+    L226.GlobalTechTrackCapital_en %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L226.GlobalTechCost_en) ->
+      L226.GlobalTechTrackCapital_en
+
     L226.GlobalTechShrwt_en %>%
       add_title("global energy distribution technology shareweights") %>%
       add_units("unitless") %>%
@@ -416,7 +436,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     return_data(L226.Supplysector_en, L226.SubsectorLogit_en, L226.SubsectorShrwt_en,
                 L226.SubsectorShrwtFllt_en, L226.SubsectorInterp_en, L226.SubsectorInterpTo_en,
-                L226.StubTech_en, L226.GlobalTechEff_en, L226.GlobalTechCost_en, L226.GlobalTechShrwt_en,
+                L226.StubTech_en, L226.GlobalTechEff_en, L226.GlobalTechCost_en, L226.GlobalTechTrackCapital_en, L226.GlobalTechShrwt_en,
                 L226.StubTechCoef_elecownuse, L226.StubTechCoef_electd, L226.StubTechCoef_gaspipe)
   } else {
     stop("Unknown command")

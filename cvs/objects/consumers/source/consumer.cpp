@@ -99,18 +99,6 @@ void Consumer::initCalc( const string& aRegionName,
     mLeafInputs = FunctionUtils::getLeafInputs( mNestedInputRoot );
 }
 
-void Consumer::initCalc( const string& aRegionName,
-                         const string& aSectorName,
-                         NationalAccount& nationalAccount,
-                         const Demographic* aDemographics,
-                         const GDP* aGDP,
-                         const double aCapitalStock,
-                         const int aPeriod )
-{
-    initCalc( aRegionName, aSectorName, nationalAccount, aDemographics,
-              aCapitalStock, aPeriod );
-}
-
 //! Calculate Demand
 void Consumer::calcInputDemand( double aConsumption, const string& aRegionName, 
                                 const string& aSectorName, int aPeriod ) 
@@ -146,7 +134,7 @@ void Consumer::calcEmissions( const string& aGoodName, const string& aRegionName
     for( GHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         assert( *ghg );
         // Consumers have no physical output so pass in zero.
-        (*ghg)->calcEmission( aRegionName, mLeafInputs, mOutputs, 0, 0, aPeriod );
+        (*ghg)->calcEmission( aRegionName, mLeafInputs, mOutputs, 0, aPeriod );
     }
 }
 
@@ -215,7 +203,6 @@ double Consumer::calcRealGNP( NationalAccount& aNationalAccount, const string& a
             //mLeafInputs[ i ]->getPricePaid( aRegionName, basePeriod );
         }
     }
-    aNationalAccount.addToAccount( NationalAccount::GNP_REAL, realTotal );
     return realTotal;
 }
 

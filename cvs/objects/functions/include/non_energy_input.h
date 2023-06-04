@@ -179,4 +179,65 @@ private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
 };
 
+class TrackingNonEnergyInput : public NonEnergyInput {
+    friend class XMLDBOutputter;
+public:
+    TrackingNonEnergyInput();
+    ~TrackingNonEnergyInput();
+
+    static const std::string& getXMLNameStatic();
+
+    virtual const std::string& getXMLReportingName() const;
+    
+    virtual const std::string& getXMLName() const;
+
+    NonEnergyInput* clone() const;
+
+    virtual void completeInit( const std::string& aRegionName,
+                               const std::string& aSectorName,
+                               const std::string& aSubsectorName,
+                               const std::string& aTechName,
+                               const IInfo* aTechInfo );
+
+    virtual void initCalc( const std::string& aRegionName,
+                           const std::string& aSectorName,
+                           const bool aIsNewInvestmentPeriod,
+                           const bool aIsTrade,
+                           const IInfo* aTechInfo,
+                           const int aPeriod );
+
+
+    virtual void setPhysicalDemand( const double aPhysicalDemand,
+                            const std::string& aRegionName,
+                            const int aPeriod );
+
+protected:
+    DEFINE_DATA_WITH_PARENT (
+        NonEnergyInput,
+                         
+        //! The market name to which to add the capital investment value
+        DEFINE_VARIABLE( SIMPLE, "tracking-market", mTrackingMarketName, std::string ),
+
+        //! A coefficient applied to the total levelized non-energy cost, this will encompase breaking out the fraction
+        //! of that total that was capital as well as dividing by the FCR to get the total capital value.
+        DEFINE_VARIABLE( SIMPLE, "capital-coef", mCapitalCoef, Value ),
+
+        //! A state variable to keep track of the capital investment value
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "capital-value", mCapitalValue, Value ),
+        
+        // Note: the following are only needed if the technology does not explicitly vintage
+                             
+        //! Save the previous technology output to back calculate a value for new investment
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "previous-output", mPrevOutput, Value ),
+                             
+        //! An assumed depreciation rate to apply to the previous output as part of the calculation to
+        //! back calculate a value for new investment
+        DEFINE_VARIABLE( SIMPLE, "depreciation-rate", mDepreciationRate, Value )
+    )
+
+    // We need a flag to let us know if we are in a new vintage tech in which case we
+    // need to calculate and add to market the capital investment value
+    bool mIsActive;
+};
+
 #endif // _NON_ENERGY_INPUT_H_

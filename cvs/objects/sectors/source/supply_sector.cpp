@@ -150,15 +150,13 @@ void SupplySector::setMarket() {
 
 /*! \brief Initialize the SupplySector.
 * \details Currently only calls the base class initCalc.
-* \param aNationalAccount National accounts container.
 * \param aDemographics Regional demographics object.
 * \param aPeriod Period for which to initialize the SupplySector.
 */
-void SupplySector::initCalc( NationalAccount* aNationalAccount,
-                            const Demographic* aDemographics,
-                            const int aPeriod )
+void SupplySector::initCalc( const Demographic* aDemographics,
+                             const int aPeriod )
 {
-    Sector::initCalc( aNationalAccount, aDemographics, aPeriod );
+    Sector::initCalc( aDemographics, aPeriod );
 }
 
 /*! \brief returns Sector output.
@@ -194,8 +192,8 @@ double SupplySector::getOutput( const int aPeriod ) const {
 * \return Price.
 * \todo Move entire calculation here once demand sectors are rewritten.
 */
-double SupplySector::getPrice( const GDP* aGDP, const int aPeriod ) const {
-    return Sector::getPrice( aGDP, aPeriod );
+double SupplySector::getPrice( const int aPeriod ) const {
+    return Sector::getPrice( aPeriod );
 }
 
 /*! \brief Calculate the final supply price.
@@ -204,7 +202,7 @@ double SupplySector::getPrice( const GDP* aGDP, const int aPeriod ) const {
 * \param aGDP The regional GDP container.
 * \param aPeriod The period in which to calculate the final supply price.
 */
-void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
+void SupplySector::calcFinalSupplyPrice( const int aPeriod ){
     // Instruct all subsectors to calculate their costs. This must be done
     // before prices can be calculated.
     calcCosts( aPeriod );
@@ -212,7 +210,7 @@ void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
     // Set the price into the market.
     Marketplace* marketplace = scenario->getMarketplace();
 
-    double avgMarginalPrice = getPrice( aGDP, aPeriod );
+    double avgMarginalPrice = getPrice( aPeriod );
 
     marketplace->setPrice( mName, mRegionName, avgMarginalPrice, aPeriod, true );
 }
@@ -225,7 +223,7 @@ void SupplySector::calcFinalSupplyPrice( const GDP* aGDP, const int aPeriod ){
 * \param aGDP GDP object uses to calculate various types of GDPs.
 * \param aPeriod Model period
 */
-void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
+void SupplySector::supply( const int aPeriod ) {
 	Marketplace* marketplace = scenario->getMarketplace();
 	// demand for the good produced by this Sector
 	double marketDemand = max( marketplace->getDemand( mName, mRegionName, aPeriod ), 0.0 );
@@ -237,12 +235,12 @@ void SupplySector::supply( const GDP* aGDP, const int aPeriod ) {
 
 	// Calculate the demand for new investment.
 	double newInvestment = max( marketDemand - fixedOutput, 0.0 );
-	const vector<double>& subsecShares = calcSubsectorShares( aGDP, aPeriod );
+	const vector<double>& subsecShares = calcSubsectorShares( aPeriod );
 
 	// This is where subsector and technology outputs are set
 	for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
 		// set subsector output from Sector demand
-		mSubsectors[ i ]->setOutput( subsecShares[ i ] * newInvestment, scaleFactor, aGDP, aPeriod );
+		mSubsectors[ i ]->setOutput( subsecShares[ i ] * newInvestment, scaleFactor, aPeriod );
 	}
 
 	const static bool debugChecking = Configuration::getInstance()->getBool( "debugChecking" );

@@ -57,6 +57,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
              FILE = "energy/A54.globaltranTech_retire",
              "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
              "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y",
+             "L154.capcoef_usdvkm_R_trn_m_sz_tech_F_Y",
              "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",
              "L154.loadfactor_R_trn_m_sz_tech_F_Y",
              "L154.speed_kmhr_R_trn_m_sz_tech_F_Y",
@@ -89,6 +90,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
              "L254.StubTranTechCalInput",
              "L254.StubTranTechLoadFactor",
              "L254.StubTranTechCost",
+             "L254.StubTechTrackCapital",
              "L254.StubTranTechCoef",
              "L254.StubTechCalInput_passthru",
              "L254.StubTechProd_nonmotor",
@@ -172,6 +174,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh",strip_attributes = TRUE)
     L154.cost_usdvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y",strip_attributes = TRUE)
+    L154.capcoef_usdvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.capcoef_usdvkm_R_trn_m_sz_tech_F_Y", strip_attributes = TRUE)
     L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y",strip_attributes = TRUE)
     L154.loadfactor_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.loadfactor_R_trn_m_sz_tech_F_Y",strip_attributes = TRUE)
     L154.speed_kmhr_R_trn_m_sz_tech_F_Y <- get_data(all_data, "L154.speed_kmhr_R_trn_m_sz_tech_F_Y",strip_attributes = TRUE)
@@ -584,6 +587,28 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTranTechCost"]],sce) ->
       L254.StubTranTechCost # OUTPUT
 
+    L154.capcoef_usdvkm_R_trn_m_sz_tech_F_Y %>%
+      filter(year %in% MODEL_YEARS) %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_keep_first_only(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
+      rename(subsector = tranSubsector,
+             stub.technology = tranTechnology) %>%
+      # note: the units for transport output / costs will yield a dollar
+      # amount of million 1990$, the rest of the capital market will be in billion 1975$
+      # so we need to include the unit conversion here to make it consistent
+      mutate(capital.coef = capital.coef / 1000 / gdp_deflator(1990, 1975),
+             minicam.non.energy.input = "non-energy",
+             # note consumer vehicles are technically not investment but rather "consumer durable"
+             tracking.market = if_else(grepl('trn_pass_road_LDV', supplysector),
+                                       socioeconomics.EN_DURABLE_MARKET_NAME, socioeconomics.EN_CAPITAL_MARKET_NAME),
+             # include a reasonable depreciation rate here, even if some techs will
+             # ignore it due to vintaging to ensure we still generate reasonable values
+             # in the historical years when no technologies will include vintaging
+             depreciation.rate = if_else(grepl('trn_pass_road_LDV', supplysector),
+                                         socioeconomics.TRANSPORT_LDV_DEPRECIATION_RATE, socioeconomics.TRANSPORT_DEPRECIATION_RATE)) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechTrackCapital"]],sce) ->
+      L254.StubTechTrackCapital # OUTPUT
+
     # L254.StubTranTechCoef: tranTechnology coefficients (intensities; all periods)
     # L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y reports vehicle energy intensity by GCAM region / mode / size class / technology / fuel / year
     #kbn 2019-10-14 Switching to left_join_keep_first, since we have fewer mode categories now.
@@ -986,6 +1011,13 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs", "energy/mappings/UCD_techs_revised", "energy/mappings/UCD_size_class_revisions", "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y") ->
       L254.StubTranTechCost
 
+    L254.StubTechTrackCapital %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs", "energy/mappings/UCD_techs_revised", "energy/mappings/UCD_size_class_revisions", "L154.capcoef_usdvkm_R_trn_m_sz_tech_F_Y") ->
+      L254.StubTechTrackCapital
+
     L254.StubTranTechCoef %>%
       add_title("TranTechnology coefficients (intensities; all periods)") %>%
       add_units("BTU / vkm") %>%
@@ -1057,7 +1089,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                 L254.GlobalTranTechSCurve, L254.GlobalTranTechProfitShutdown, L254.StubTranTechCalInput, L254.StubTranTechLoadFactor,
                 L254.StubTranTechCost, L254.StubTranTechCoef, L254.StubTechCalInput_passthru,
                 L254.StubTechProd_nonmotor, L254.PerCapitaBased_trn, L254.PriceElasticity_trn,
-                L254.IncomeElasticity_trn, L254.BaseService_trn)
+                L254.IncomeElasticity_trn, L254.BaseService_trn, L254.StubTechTrackCapital)
   } else {
     stop("Unknown command")
   }

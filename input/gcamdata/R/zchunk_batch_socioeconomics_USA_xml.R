@@ -13,12 +13,9 @@
 module_gcamusa_batch_socioeconomics_USA_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L201.Pop_GCAMUSA",
-             "L201.BaseGDP_GCAMUSA",
-             "L201.LaborForceFillout_GCAMUSA",
-             "L201.LaborProductivity_GCAMUSA",
+             "L201.GDP_GCAMUSA",
              "L201.Pop_national_updated_USA",
-             "L201.BaseGDP_national_updated_USA",
-             "L201.LaborProductivity_national_updated_USA"))
+             "L201.GDP_national_updated_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "socioeconomics_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -27,31 +24,22 @@ module_gcamusa_batch_socioeconomics_USA_xml <- function(command, ...) {
 
     # Load required inputs
     L201.Pop_GCAMUSA <- get_data(all_data, "L201.Pop_GCAMUSA")
-    L201.BaseGDP_GCAMUSA <- get_data(all_data, "L201.BaseGDP_GCAMUSA")
-    L201.LaborForceFillout_GCAMUSA <- get_data(all_data, "L201.LaborForceFillout_GCAMUSA")
-    L201.LaborProductivity_GCAMUSA <- get_data(all_data, "L201.LaborProductivity_GCAMUSA")
+    L201.GDP_GCAMUSA <- get_data(all_data, "L201.GDP_GCAMUSA")
     L201.Pop_national_updated_USA <- get_data(all_data, "L201.Pop_national_updated_USA")
-    L201.BaseGDP_national_updated_USA <- get_data(all_data, "L201.BaseGDP_national_updated_USA")
-    L201.LaborProductivity_national_updated_USA <- get_data(all_data, "L201.LaborProductivity_national_updated_USA")
+    L201.GDP_national_updated_USA <- get_data(all_data, "L201.GDP_national_updated_USA")
 
     # ===================================================
 
     # Produce outputs
     create_xml("socioeconomics_USA.xml") %>%
       add_xml_data(L201.Pop_GCAMUSA, "Pop") %>%
-      add_xml_data(L201.BaseGDP_GCAMUSA, "BaseGDP") %>%
-      add_xml_data(L201.LaborForceFillout_GCAMUSA, "LaborForceFillout") %>%
-      add_xml_data(L201.LaborProductivity_GCAMUSA, "LaborProductivity") %>%
+      add_xml_data(L201.GDP_GCAMUSA, "GDP") %>%
       add_xml_data(L201.Pop_national_updated_USA, "Pop") %>%
-      add_xml_data(L201.BaseGDP_national_updated_USA, "BaseGDP") %>%
-      add_xml_data(L201.LaborProductivity_national_updated_USA, "LaborProductivity") %>%
+      add_xml_data(L201.GDP_national_updated_USA, "GDP") %>%
       add_precursors("L201.Pop_GCAMUSA",
-                     "L201.BaseGDP_GCAMUSA",
-                     "L201.LaborForceFillout_GCAMUSA",
-                     "L201.LaborProductivity_GCAMUSA",
+                     "L201.GDP_GCAMUSA",
                      "L201.Pop_national_updated_USA",
-                     "L201.BaseGDP_national_updated_USA",
-                     "L201.LaborProductivity_national_updated_USA") ->
+                     "L201.GDP_national_updated_USA") ->
       socioeconomics_USA.xml
 
     return_data(socioeconomics_USA.xml)

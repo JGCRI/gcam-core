@@ -45,10 +45,9 @@
 
 using namespace std;
 
-FinalDemandActivity::FinalDemandActivity( AFinalDemand* aFinalDemand, const GDP* aGDP, 
-                                          const Demographic* aDemographic, const string& aRegionName ):
+FinalDemandActivity::FinalDemandActivity( AFinalDemand* aFinalDemand,
+const Demographic* aDemographic, const string& aRegionName ):
 mFinalDemand( aFinalDemand ),
-mGDP( aGDP ),
 mDemographic( aDemographic ),
 mRegionName( aRegionName )
 {
@@ -59,7 +58,7 @@ FinalDemandActivity::~FinalDemandActivity() {
 }
 
 void FinalDemandActivity::calc( const int aPeriod ) {
-    mFinalDemand->setFinalDemand( mRegionName, mDemographic, mGDP, aPeriod );
+    mFinalDemand->setFinalDemand( mRegionName, mDemographic, aPeriod );
 }
 
 string FinalDemandActivity::getDescription() const {

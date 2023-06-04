@@ -502,4 +502,18 @@ void ManageStateVariables::DoCollect::popFilterStep<Market*>( Market* const& aDa
     // Moving out of the current Market so reset the ignore flag.
     mIgnoreCurrValue = false;
 }
+            
+template<>
+void ManageStateVariables::DoCollect::pushFilterStep<NationalAccount*>( NationalAccount* const& aData ) {
+    // Ignore any data set within a NationalAccount which is not for the current model year.
+    if( aData->getYear() != mParentClass->mYearToCollect ) {
+        mIgnoreCurrValue = true;
+    }
+}
+
+template<>
+void ManageStateVariables::DoCollect::popFilterStep<NationalAccount*>( NationalAccount* const& aData ) {
+    // Moving out of the current NationalAccount so reset the ignore flag.
+    mIgnoreCurrValue = false;
+}
 

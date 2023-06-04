@@ -163,9 +163,6 @@ public:
     void startVisitGender( const Gender* aGender, const int aPeriod );
     void endVisitGender( const Gender* aGender, const int aPeriod );
 
-    void startVisitGDP( const GDP* aGDP, const int aPeriod );
-    void endVisitGDP( const GDP* aGDP, const int aPeriod );
-
     void startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod );
     void endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod );
 
@@ -175,15 +172,11 @@ public:
     void startVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod );
     void endVisitLandLeaf( const LandLeaf* aLandLeaf, const int aPeriod );
 
-    void startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod );
-    void endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod );
-
     virtual void startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod );
     virtual void endVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod );
 
     virtual void startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod );
     virtual void endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod );
-
 
     virtual void startVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod );
     virtual void endVisitGCAMConsumer( const GCAMConsumer* aGCAMConsumer, const int aPeriod );
@@ -226,10 +219,7 @@ private:
 
     //! Tabs object.
     std::auto_ptr<Tabs> mTabs;
-
-    //! Weak pointer to the current region's GDP object.
-    const GDP* mGDP;
-
+    
     //! Weak pointer to the current technology object.
     const Technology* mCurrentTechnology;
     

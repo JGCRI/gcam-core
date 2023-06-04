@@ -55,8 +55,9 @@ module_energy_L2324.Off_road <- function(command, ...) {
              "L2324.GlobalTechCoef_Off_road",
              "L2324.GlobalTechEff_Off_road",
              "L2324.GlobalTechCost_Off_road",
+             "L2324.GlobalTechTrackCapital_Off_road",
              "L2324.GlobalTechCSeq_ind",
-			 "L2324.GlobalTechShutdown_Off_road",
+             "L2324.GlobalTechShutdown_Off_road",
              "L2324.GlobalTechSCurve_Off_road",
              "L2324.GlobalTechLifetime_Off_road",
              "L2324.GlobalTechProfitShutdown_Off_road",
@@ -237,6 +238,18 @@ module_energy_L2324.Off_road <- function(command, ...) {
              subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L2324.GlobalTechCost_Off_road # intermediate tibble
+
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^energy.NPER_AMORT_VEH) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^energy.NPER_AMORT_VEH -1)
+    L2324.GlobalTechCost_Off_road %>%
+      # we only want to track investments in energy, otherwise we double accounting with materials
+      filter(grepl('energy use', sector.name)) %>%
+      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # vintaging is active so no need for depreciation
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L2324.GlobalTechTrackCapital_Off_road
 
     A324.nonenergy_Cseq %>%
       repeat_add_columns(tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS))) %>%
@@ -561,6 +574,13 @@ module_energy_L2324.Off_road <- function(command, ...) {
       add_precursors("energy/A324.globaltech_cost", "energy/A324.globaltech_coef") ->
       L2324.GlobalTechCost_Off_road
 
+    L2324.GlobalTechTrackCapital_Off_road %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L2324.GlobalTechCost_Off_road) ->
+      L2324.GlobalTechTrackCapital_Off_road
+
     L2324.GlobalTechCSeq_ind %>%
       add_title("CO2 capture fractions from global electricity generation technologies") %>%
       add_units("Unitless") %>%
@@ -683,7 +703,7 @@ module_energy_L2324.Off_road <- function(command, ...) {
                   L2324.StubTechCalInput_Off_road,L2324.StubTechCoef_Off_road,
                   L2324.StubTechProd_Off_road,L2324.GlobalTechCSeq_ind,
                   L2324.PerCapitaBased_Off_road, L2324.BaseService_Off_road,
-                  L2324.PriceElasticity_Off_road)
+                  L2324.PriceElasticity_Off_road, L2324.GlobalTechTrackCapital_Off_road)
 
 
   } else {

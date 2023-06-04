@@ -15,11 +15,11 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
     return(c("L270.CTaxInput",
              "L270.LandRootNegEmissMkt",
               "L270.NegEmissBudgetMaxPrice",
-              paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5))) ))
+              "L270.NegEmissBudgetDefaultPrice",
+              "L270.NegEmissBudget",
+              "L270.NegEmissBudgetFraction"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    xml_files = paste0("negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")
-    names(xml_files) <- rep("XML", length(xml_files))
-    return(xml_files)
+    return(c("XML" = "negative_emissions_budget.xml"))
   } else if(command == driver.MAKE) {
 
     . <- NULL # silence package check note
@@ -30,36 +30,23 @@ module_energy_batch_negative_emissions_budget_xml <- function(command, ...) {
     L270.CTaxInput <- get_data(all_data, "L270.CTaxInput")
     L270.LandRootNegEmissMkt <- get_data(all_data, "L270.LandRootNegEmissMkt")
     L270.NegEmissBudgetMaxPrice <- get_data(all_data, "L270.NegEmissBudgetMaxPrice")
+    L270.NegEmissBudgetDefaultPrice <- get_data(all_data, "L270.NegEmissBudgetDefaultPrice")
+    L270.NegEmissBudget <- get_data(all_data, "L270.NegEmissBudget")
+    L270.NegEmissBudgetFraction <- get_data(all_data, "L270.NegEmissBudgetFraction")
 
     # ===================================================
 
-    scenarios <- c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5))
-    xml_files = paste0("negative_emissions_budget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")
+    create_xml("negative_emissions_budget.xml") %>%
+      add_xml_data(L270.CTaxInput, "GlobalTechCTaxInput") %>%
+      add_xml_data(L270.LandRootNegEmissMkt, "LandRootNegEmissMkt") %>%
+      add_xml_data(L270.NegEmissBudgetMaxPrice, "PortfolioStdMaxPrice") %>%
+      add_xml_data(L270.NegEmissBudgetDefaultPrice, "PortfolioStdFixedTax") %>%
+      add_xml_data(L270.NegEmissBudget, "PortfolioStd") %>%
+      add_xml_data(L270.NegEmissBudgetFraction, "NegEmissBudgetFraction") %>%
+      add_precursors("L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissBudgetMaxPrice", "L270.NegEmissBudget", "L270.NegEmissBudgetFraction") ->
+      negative_emissions_budget.xml
 
-    # Produce outputs
-    ret_data <- c()
-    curr_env <- environment()
-    for(scen in scenarios) {
-      curr_data_name <- paste0("L270.NegEmissBudget_", scen)
-      curr_xml_name <- paste0("negative_emissions_budget_", scen, ".xml")
-      create_xml(curr_xml_name) %>%
-        add_xml_data(L270.CTaxInput, "GlobalTechCTaxInput") %>%
-        add_xml_data(L270.LandRootNegEmissMkt, "LandRootNegEmissMkt") %>%
-        add_xml_data(L270.NegEmissBudgetMaxPrice, "PortfolioStdMaxPrice") %>%
-        add_xml_data(get_data(all_data, curr_data_name), "PortfolioStd") %>%
-        add_precursors("L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissBudgetMaxPrice", curr_data_name) %>%
-        assign(curr_xml_name, ., envir = curr_env)
-
-      ret_data <- c(ret_data, curr_xml_name)
-    }
-
-    # Call return_data but we need to jump through some hoops since we generated the
-    # xml from the scenarios so we will generate the call to return_data
-    ret_data %>%
-      paste(collapse = ", ") %>%
-      paste0("return_data(", ., ")") %>%
-      parse(text = .) %>%
-      eval()
+    return_data(negative_emissions_budget.xml)
   } else {
     stop("Unknown command")
   }

@@ -66,6 +66,7 @@ class InternalGains;
 class ResidueBiomassOutput;
 class FractionalSecondaryOutput;
 class GenericOutput;
+class OutputAccounting;
 
 /*! 
 * \ingroup Objects
@@ -212,12 +213,14 @@ public:
 
     /*!
      * \brief Set the output in currency units.
+     * \param aPysicalOutput The output in physical units.
+     * \param aCurrencyConversionPrice An appropriate price to potentially use to convert to currency.
      * \param aRegionName Region name.
-     * \param aOutput Currency output.
      * \param aPeriod Period.
      */
-    virtual void setCurrencyOutput( const std::string& aRegionName,
-                                    const double aOutput,
+    virtual void setCurrencyOutput( const double aPysicalOutput,
+                                    const double aCurrencyConversionPrice,
+                                    const std::string& aRegionName,
                                     const int aPeriod ) = 0;
 
     /*!
@@ -291,7 +294,7 @@ protected:
          */
         DEFINE_SUBCLASS_FAMILY( IOutput, PrimaryOutput, SecondaryOutput, RESSecondaryOutput,
                                 InternalGains, ResidueBiomassOutput, FractionalSecondaryOutput,
-                                GenericOutput )
+                                GenericOutput, OutputAccounting )
     )
 };
 

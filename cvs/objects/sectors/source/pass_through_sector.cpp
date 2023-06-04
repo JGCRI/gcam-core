@@ -132,11 +132,10 @@ void PassThroughSector::completeInit( const IInfo* aRegionInfo,
     }
 }
 
-void PassThroughSector::initCalc( NationalAccount* aNationalAccount,
-                                  const Demographic* aDemographics,
+void PassThroughSector::initCalc( const Demographic* aDemographics,
                                   const int aPeriod )
 {
-    SupplySector::initCalc( aNationalAccount, aDemographics, aPeriod );
+    SupplySector::initCalc( aDemographics, aPeriod );
 }
 
 double PassThroughSector::getFixedOutput( const int aPeriod ) const {

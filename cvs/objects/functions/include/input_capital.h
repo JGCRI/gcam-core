@@ -75,6 +75,7 @@ class Tabs;
  */
 class InputCapital: public MiniCAMInput
 {
+    friend class XMLDBOutputter;
 public:
     InputCapital();
 
@@ -188,8 +189,18 @@ protected:
         
         //! Technology capacity factor.
         // TODO: create one in technology and use that instead.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "capacity-factor", mCapacityFactor, double )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "capacity-factor", mCapacityFactor, double ),
+
+        //! A state variable to keep track of the capital investment value
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "capital-value", mCapitalValue, Value ),
+                            
+        //! The market name to which to add the capital investment value
+        DEFINE_VARIABLE( SIMPLE, "tracking-market", mTrackingMarketName, std::string )
     )
+
+    // We need a flag to let us know if we are in a new vintage tech in which case we
+    // need to calculate and add to market the capital investment value
+    bool mIsActive;
     
     void copy( const InputCapital& aOther );
 

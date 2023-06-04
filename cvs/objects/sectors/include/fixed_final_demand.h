@@ -89,12 +89,10 @@ public:
      * \details This method is called at the beginning of each period so that
      *          the object may perform any initializations for the model period.
      * \param aRegionName Region name.
-     * \param aGDP Regional GDP.
      * \param aDemograhics Region demographics.
      * \param aPeriod Model period.
      */
     virtual void initCalc( const std::string& aRegionName,
-                           const GDP* aGDP,
                            const Demographic* aDemographics,
                            const int aPeriod );
     
@@ -106,12 +104,10 @@ public:
      *          final good is then added to the marketplace.
      * \param aRegionName Region name.
      * \param aDemographics Regional demographics.
-     * \param aGDP Regional GDP container.
      * \param aPeriod Model period.
      */
     virtual void setFinalDemand( const std::string& aRegionName,
                                  const Demographic* aDemographics,
-                                 const GDP* aGDP,
                                  const int aPeriod );
 
     /*!

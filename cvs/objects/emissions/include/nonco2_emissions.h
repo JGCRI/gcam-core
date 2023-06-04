@@ -92,7 +92,6 @@ public:
 	virtual void calcEmission( const std::string& aRegionName, 
                                const std::vector<IInput*>& aInputs,
                                const std::vector<IOutput*>& aOutputs,
-					           const GDP* aGDP,
 					           ICaptureComponent* aSequestrationDevice,
                                const int aPeriod );
     
@@ -130,10 +129,6 @@ protected:
         //! Emissions driver delegate
         DEFINE_VARIABLE( CONTAINER, "emissions-driver", mEmissionsDriver, IEmissionsDriver* )
     )
-
-    //! A weark reference to the regional GDP object which needs to be stashed to be
-    //! able to calculate the emissions controls.
-    const GDP* mGDP;
 
     // typdef to help simplify code
     typedef std::vector<AEmissionsControl*>::const_iterator CControlIterator;

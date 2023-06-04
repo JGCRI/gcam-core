@@ -21,6 +21,7 @@ module_energy_batch_en_distribution_xml <- function(command, ...) {
               "L226.StubTech_en",
               "L226.GlobalTechEff_en",
               "L226.GlobalTechCost_en",
+              "L226.GlobalTechTrackCapital_en",
               "L226.GlobalTechShrwt_en",
               "L226.StubTechCoef_elecownuse",
               "L226.StubTechCoef_electd",
@@ -41,6 +42,7 @@ module_energy_batch_en_distribution_xml <- function(command, ...) {
     L226.StubTech_en <- get_data(all_data, "L226.StubTech_en")
     L226.GlobalTechEff_en <- get_data(all_data, "L226.GlobalTechEff_en")
     L226.GlobalTechCost_en <- get_data(all_data, "L226.GlobalTechCost_en")
+    L226.GlobalTechTrackCapital_en <- get_data(all_data, "L226.GlobalTechTrackCapital_en")
     L226.GlobalTechShrwt_en <- get_data(all_data, "L226.GlobalTechShrwt_en")
     L226.StubTechCoef_elecownuse <- get_data(all_data, "L226.StubTechCoef_elecownuse")
     L226.StubTechCoef_electd <- get_data(all_data, "L226.StubTechCoef_electd")
@@ -82,6 +84,8 @@ module_energy_batch_en_distribution_xml <- function(command, ...) {
     en_distribution.xml %>%
       add_xml_data(L226.StubTech_en, "StubTech") %>%
       add_xml_data(L226.GlobalTechEff_en, "GlobalTechEff") %>%
+      add_node_equiv_xml("input") %>%
+      add_xml_data(L226.GlobalTechTrackCapital_en, "GlobalTechTrackCapital") %>%
       add_xml_data(L226.GlobalTechCost_en, "GlobalTechCost") %>%
       add_xml_data(L226.GlobalTechShrwt_en, "GlobalTechShrwt") %>%
       add_xml_data(L226.StubTechCoef_elecownuse, "StubTechCoef") %>%
@@ -96,6 +100,7 @@ module_energy_batch_en_distribution_xml <- function(command, ...) {
                      "L226.StubTech_en",
                      "L226.GlobalTechEff_en",
                      "L226.GlobalTechCost_en",
+                     "L226.GlobalTechTrackCapital_en",
                      "L226.GlobalTechShrwt_en",
                      "L226.StubTechCoef_elecownuse",
                      "L226.StubTechCoef_electd",

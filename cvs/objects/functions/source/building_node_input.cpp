@@ -138,7 +138,7 @@ void BuildingNodeInput::initCalc( const string& aRegionName,
     // Get the subregional population and income from the info object which is where
     // the consumer stored them.
     mCurrentSubregionalPopulation = aTechInfo->getDouble( "subregional-population", true );
-    mCurrentSubregionalIncome = aTechInfo->getDouble( "subregional-income", true );
+    mCurrentSubregionalIncomeShare = aTechInfo->getDouble( "subregional-income-share", true );
 
     // create a cache of the child INestedInput* as IInput* since the production function
     // needs a vector of those and the compiler can not be conviced it is safe to use a
@@ -223,7 +223,7 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement(mIncomeParam, "income-param", aOut, aTabs);
     XMLWriteElement(mBiasAdjustParam, "bias-adjust-param", aOut, aTabs);
     XMLWriteElement(mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs);
-    XMLWriteElement(mCurrentSubregionalIncome, "subregional-income", aOut, aTabs);
+    XMLWriteElement(mCurrentSubregionalIncomeShare, "subregional-income-share", aOut, aTabs);
 
     XMLWriteElement( mFunctionType, "prodDmdFnType", aOut, aTabs );
     for( CNestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
@@ -282,11 +282,13 @@ Value BuildingNodeInput::getSubregionalPopulation() const {
 /*!
  * \brief Get the currently set Subregional income.  Note that this
  *          is the per capita income.
+ * \param aRegionName The name of the containing region.
+ * \param aPeriod Model period.
  * \return Subregional income that has been set from
  *           the consumer.
  */
-Value BuildingNodeInput::getSubregionalIncome() const {
-    return mCurrentSubregionalIncome;
+double BuildingNodeInput::getSubregionalIncome( const string& aRegionName, const int aPeriod ) const {
+    return mCurrentSubregionalIncomeShare * SectorUtils::getGDP( aRegionName, aPeriod ) / mCurrentSubregionalPopulation;
 }
 
 /*!

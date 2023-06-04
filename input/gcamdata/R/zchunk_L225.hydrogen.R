@@ -41,6 +41,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
              "L225.StubTech_h2",
              "L225.GlobalTechCoef_h2",
              "L225.GlobalTechCost_h2",
+             "L225.GlobalTechTrackCapital_h2",
              "L225.GlobalTechShrwt_h2",
              "L225.PrimaryRenewKeyword_h2",
              "L225.AvgFossilEffKeyword_h2",
@@ -138,6 +139,20 @@ module_energy_L225.hydrogen <- function(command, ...) {
              subsector.name = subsector,
              input.cost = cost) %>%
       mutate(input.cost = round(input.cost,energy.DIGITS_COST))-> L225.GlobalTechCost_h2
+
+    # L225.GlobalTechTrackCapital_h2: We want track capital investments for these technologies thus
+    # we will change the object type accordingly and add the market name which will track investments
+    # and the fraction of the total non-energy cost we should assume is annual investment in capital
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.H2_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.H2_CAP_PAYMENTS -1)
+    L225.GlobalTechCost_h2 %>%
+      filter(sector.name == "H2 central production") %>%
+      mutate(capital.coef = socioeconomics.H2_CAPITAL_RATIO / FCR,
+             tracking.market =socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # note: vintaging is active so depreciation.rate is ignored
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L225.GlobalTechTrackCapital_h2
 
     # L225.GlobalTechShrwt_h2: Shareweights of global technologies for hydrogen
     # Shareweights of global technologies
@@ -403,6 +418,14 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_comments("Interpolated orginal data into all model years") %>%
       add_precursors("L125.globaltech_cost",'energy/A25.globaltech_cost')  -> L225.GlobalTechCost_h2
 
+    L225.GlobalTechTrackCapital_h2 %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      add_comments("Note for capital tracking we are interested only in the H2 production techs") %>%
+      add_precursors("energy/A25.globaltech_cost") ->
+      L225.GlobalTechTrackCapital_h2
+
     L225.GlobalTechShrwt_h2 %>%
       add_title("Shareweights of global technologies for hydrogen") %>%
       add_units("Unitless") %>%
@@ -469,7 +492,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       L225.StubTechCost_h2
 
     return_data(L225.Supplysector_h2, L225.SectorUseTrialMarket_h2, L225.SubsectorLogit_h2, L225.StubTech_h2,
-                L225.GlobalTechCoef_h2, L225.GlobalTechCost_h2, L225.GlobalTechShrwt_h2,
+                L225.GlobalTechCoef_h2, L225.GlobalTechCost_h2, L225.GlobalTechTrackCapital_h2, L225.GlobalTechShrwt_h2,
                 L225.PrimaryRenewKeyword_h2, L225.AvgFossilEffKeyword_h2,
                 L225.GlobalTechCapture_h2, L225.SubsectorShrwtFllt_h2,
                 L225.GlobalTechInputPMult_h2,

@@ -88,20 +88,26 @@ public:
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
 
-    virtual double calcShare( const IDiscreteChoice* aChoiceFn,
-                              const GDP* aGDP,
+    virtual double calcShare( const std::string& aRegionName,
+                              const IDiscreteChoice* aChoiceFn,
                               int aPeriod ) const; 
     
     virtual void production( const std::string& aRegionName,
                              const std::string& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
-                             const GDP* aGDP,
                              const int aPeriod );
 
     virtual void calcCost( const std::string& aRegionName,
                            const std::string& aSectorName,
                            const int aPeriod );
+    
+    virtual double getFixedOutput( const std::string& aRegionName,
+                                   const std::string& aSectorName,
+                                   const bool aHasRequiredInput,
+                                   const std::string& aRequiredInput,
+                                   const double aMarginalRevenue,
+                                   const int aPeriod ) const;
 
     virtual double getNonEnergyCost( const std::string& aRegionName,
                                      const int aPeriod ) const;

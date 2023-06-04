@@ -48,7 +48,6 @@
 #include "containers/include/iactivity.h"
 
 class AResource;
-class GDP;
 
 /*! 
  * \ingroup Objects
@@ -58,7 +57,7 @@ class GDP;
 class ResourceActivity : public IActivity
 {
 public:
-    ResourceActivity( AResource* aResource, const GDP* aGDP, const std::string& aRegionName );
+    ResourceActivity( AResource* aResource, const std::string& aRegionName );
     virtual ~ResourceActivity();
     
     // IActivity methods
@@ -68,9 +67,6 @@ public:
 private:
     //! The wrapped resource.
     AResource* mResource;
-    
-    //! The regional GDP object which may be required for the resource to calculate.
-    const GDP* mGDP;
     
     //! The name of the region this resource is contained in.
     const std::string& mRegionName;

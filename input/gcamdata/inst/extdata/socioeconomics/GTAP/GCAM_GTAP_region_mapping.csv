@@ -1,0 +1,148 @@
+# File: GCAM_GTAP_region_mapping.csv
+# Title: GTAP141 to GCAM32 region names
+# Units: NA
+# Description: Maps GCAM region to GTAP regions
+# Column types: ccc 
+# ----------
+GTAPv10_region,GTAP_Long_Name,GCAM_region
+aus,Australia,Australia_NZ
+nzl,New Zealand,Australia_NZ
+xoc,Rest of Oceania,Southeast Asia
+chn,China,China
+hkg,Hong Kong,China
+jpn,Japan,Japan
+kor,Korea,South Korea
+mng,Mongolia,Central Asia
+twn,Taiwan,Taiwan
+xea,Rest of East Asia,Central Asia
+brn,Brunei Darussalam,Southeast Asia
+khm,Cambodia,Southeast Asia
+idn,Indonesia,Indonesia
+lao,Lao People's Democratic Republ,Southeast Asia
+mys,Malaysia,Southeast Asia
+phl,Philippines,Southeast Asia
+sgp,Singapore,Southeast Asia
+tha,Thailand,Southeast Asia
+vnm,Viet Nam,Southeast Asia
+xse,Rest of Southeast Asia,Southeast Asia
+bgd,Bangladesh,South Asia
+ind,India,India
+npl,Nepal,South Asia
+pak,Pakistan,Pakistan
+lka,Sri Lanka,South Asia
+xsa,Rest of South Asia,South Asia
+can,Canada,Canada
+usa,United States of America,USA
+mex,Mexico,Mexico
+xna,Rest of North America,Central America and Caribbean
+arg,Argentina,Argentina
+bol,Bolivia,South America_Southern
+bra,Brazil,Brazil
+chl,Chile,South America_Southern
+col,Colombia,Colombia
+ecu,Ecuador,South America_Southern
+pry,Paraguay,South America_Southern
+per,Peru,South America_Southern
+ury,Uruguay,South America_Southern
+ven,Venezuela,South America_Northern
+xsm,Rest of South America,South America_Northern
+cri,Costa Rica,Central America and Caribbean
+gtm,Guatemala,Central America and Caribbean
+hnd,Honduras,Central America and Caribbean
+nic,Nicaragua,Central America and Caribbean
+pan,Panama,Central America and Caribbean
+slv,El Salvador,Central America and Caribbean
+xca,Rest of Central America,Central America and Caribbean
+dom,Dominican Republic,Central America and Caribbean
+jam,Jamaica,Central America and Caribbean
+pri,Puerto Rico,USA
+tto,Trinidad and Tobago,Central America and Caribbean
+xcb,Caribbean,Central America and Caribbean
+aut,Austria,EU-15
+bel,Belgium,EU-15
+bgr,Bulgaria,EU-12
+hrv,Croatia,Europe_Non_EU
+cyp,Cyprus,EU-12
+cze,Czech Republic,EU-12
+dnk,Denmark,EU-15
+est,Estonia,EU-12
+fin,Finland,EU-15
+fra,France,EU-15
+deu,Germany,EU-15
+grc,Greece,EU-15
+hun,Hungary,EU-12
+irl,Ireland,EU-15
+ita,Italy,EU-15
+lva,Latvia,EU-12
+ltu,Lithuania,EU-12
+lux,Luxembourg,EU-15
+mlt,Malta,EU-12
+nld,Netherlands,EU-15
+pol,Poland,EU-12
+prt,Portugal,EU-15
+rou,Romania,EU-12
+svk,Slovakia,EU-12
+svn,Slovenia,EU-12
+esp,Spain,EU-15
+swe,Sweden,EU-15
+gbr,United Kingdom,EU-15
+che,Switzerland,European Free Trade Association
+nor,Norway,European Free Trade Association
+xef,Rest of EFTA,European Free Trade Association
+alb,Albania,Europe_Non_EU
+blr,Belarus,Europe_Eastern
+rus,Russian Federation,Russia
+ukr,Ukraine,Europe_Eastern
+xee,Rest of Eastern Europe,Europe_Eastern
+xer,Rest of Europe,Europe_Non_EU
+kaz,Kazakhstan,Central Asia
+kgz,Kyrgyzstan,Central Asia
+tjk,Tajikistan,Central Asia
+xsu,Rest of Former Soviet Union,Central Asia
+arm,Armenia,Central Asia
+aze,Azerbaijan,Central Asia
+geo,Georgia,Central Asia
+bhr,Bahrain,Middle East
+irn,Iran Islamic Republic of,Middle East
+isr,Israel,Middle East
+jor,Jordan,Middle East
+kwt,Kuwait,Middle East
+omn,Oman,Middle East
+qat,Qatar,Middle East
+sau,Saudi Arabia,Middle East
+tur,Turkey,Europe_Non_EU
+are,United Arab Emirates,Middle East
+xws,Rest of Western Asia,Middle East
+egy,Egypt,Africa_Northern
+mar,Morocco,Africa_Northern
+tun,Tunisia,Africa_Northern
+xnf,Rest of North Africa,Africa_Northern
+ben,Benin,Africa_Western
+bfa,Burkina Faso,Africa_Western
+cmr,Cameroon,Africa_Western
+civ,Cote d'Ivoire,Africa_Western
+gha,Ghana,Africa_Western
+gin,Guinea,Africa_Western
+nga,Nigeria,Africa_Western
+sen,Senegal,Africa_Western
+tgo,Togo,Africa_Western
+xwf,Rest of Western Africa,Africa_Western
+xcf,Central Africa,Africa_Western
+xac,South Central Africa,Africa_Southern
+eth,Ethiopia,Africa_Eastern
+ken,Kenya,Africa_Eastern
+mdg,Madagascar,Africa_Eastern
+mwi,Malawi,Africa_Southern
+mus,Mauritius,Africa_Eastern
+moz,Mozambique,Africa_Southern
+rwa,Rwanda,Africa_Eastern
+tza,Tanzania,Africa_Southern
+uga,Uganda,Africa_Eastern
+zmb,Zambia,Africa_Southern
+zwe,Zimbabwe,Africa_Southern
+xec,Rest of Eastern Africa,Africa_Eastern
+bwa,Botswana,Africa_Southern
+nam,Namibia,Africa_Southern
+zaf,South Africa,South Africa
+xsc,Rest of South African Customs ,Africa_Southern
+xtw,Rest of the World,Africa_Southern

@@ -23,6 +23,7 @@ module_energy_batch_other_industry_xml <- function(command, ...) {
              "L232.GlobalTechEff_ind",
              "L232.GlobalTechCoef_ind",
              "L232.GlobalTechCost_ind",
+             "L232.GlobalTechTrackCapital_ind",
              "L232.GlobalTechSecOut_ind",
              "L232.GlobalTechCSeq_ind",
              "L232.StubTechCalInput_indenergy",
@@ -55,6 +56,7 @@ module_energy_batch_other_industry_xml <- function(command, ...) {
     L232.GlobalTechEff_ind <- get_data(all_data, "L232.GlobalTechEff_ind")
     L232.GlobalTechCoef_ind <- get_data(all_data, "L232.GlobalTechCoef_ind")
     L232.GlobalTechCost_ind <- get_data(all_data, "L232.GlobalTechCost_ind")
+    L232.GlobalTechTrackCapital_ind <- get_data(all_data, "L232.GlobalTechTrackCapital_ind")
     L232.GlobalTechSecOut_ind <- get_data(all_data, "L232.GlobalTechSecOut_ind")
     L232.GlobalTechCSeq_ind <- get_data(all_data, "L232.GlobalTechCSeq_ind")
     L232.StubTechCalInput_indenergy <- get_data(all_data, "L232.StubTechCalInput_indenergy")
@@ -83,11 +85,13 @@ module_energy_batch_other_industry_xml <- function(command, ...) {
       # add_xml_data(L232.SubsectorInterpTo_ind, "SubsectorInterpTo") %>%
       add_xml_data(L232.StubTech_ind, "StubTech") %>%
       add_xml_data(L232.GlobalTechShrwt_ind, "GlobalTechShrwt") %>%
+      add_node_equiv_xml("input") %>%
       add_xml_data(L232.GlobalTechSCurve_en, "GlobalTechSCurve") %>%
       add_xml_data(L232.GlobalTechProfitShutdown_en, "GlobalTechProfitShutdown") %>%
       add_xml_data(L232.StubTechInterp_ind, "StubTechInterp") %>%
       add_xml_data(L232.GlobalTechEff_ind, "GlobalTechEff") %>%
       add_xml_data(L232.GlobalTechCoef_ind, "GlobalTechCoef") %>%
+      add_xml_data(L232.GlobalTechTrackCapital_ind, "GlobalTechTrackCapital") %>%
       add_xml_data(L232.GlobalTechCost_ind, "GlobalTechCost") %>%
       add_xml_data(L232.GlobalTechSecOut_ind, "GlobalTechSecOut") %>%
       add_xml_data(L232.GlobalTechCSeq_ind, "GlobalTechCSeq") %>%
@@ -108,7 +112,8 @@ module_energy_batch_other_industry_xml <- function(command, ...) {
                      "L232.GlobalTechSCurve_en", "L232.GlobalTechProfitShutdown_en",
                      "L232.StubTechProd_industry", "L232.StubTechCoef_industry", "L232.FuelPrefElast_indenergy",
                      "L232.PerCapitaBased_ind", "L232.PriceElasticity_ind", "L232.BaseService_ind",
-                     "L232.SubsectorShrwtFllt_ind", "L232.Supplysector_ind") ->
+                     "L232.SubsectorShrwtFllt_ind", "L232.Supplysector_ind",
+                     "L232.GlobalTechTrackCapital_ind") ->
       other_industry.xml
 
     return_data(other_industry.xml)

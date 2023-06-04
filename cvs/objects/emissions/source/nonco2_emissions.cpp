@@ -59,8 +59,7 @@ extern Scenario* scenario;
 //! Default constructor.
 NonCO2Emissions::NonCO2Emissions():
 AGHG(),
-mEmissionsDriver( 0 ),
-mGDP( 0 )
+mEmissionsDriver( 0 )
 {
     // default unit for emissions
     mEmissionsUnit = "Tg";
@@ -92,7 +91,6 @@ void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
     AGHG::copy( aOther );
     
     mEmissionsCoef = aOther.mEmissionsCoef;
-    mGDP = aOther.mGDP;
     
     // Deep copy the auto_ptr
     if( aOther.mEmissionsDriver ){
@@ -136,9 +134,7 @@ void NonCO2Emissions::copyGHGParameters( const AGHG* aPrevGHG ){
     if( !mEmissionsCoef.isInited() ) {
         mEmissionsCoef = prevComplexGHG->mEmissionsCoef;
     }
-    
-    mGDP = prevComplexGHG->mGDP;
-    
+        
     // Always copy control objects from previous period except for those read in for this period that
     // have the same name and type as an object from the previous period. In that latter case, use
     // the newer one instead of copying the older one.
@@ -274,7 +270,7 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
     double emissMult = 1.0;
     if ( aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ) {
         for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
-            emissMult *= 1.0 - (*controlIt)->getEmissionsReduction( aRegionName, aPeriod, mGDP );
+            emissMult *= 1.0 - (*controlIt)->getEmissionsReduction( aRegionName, aPeriod );
         }
     }
     
@@ -297,22 +293,16 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
 void NonCO2Emissions::calcEmission( const string& aRegionName,
                                     const vector<IInput*>& aInputs,
                                     const vector<IOutput*>& aOutputs,
-                                    const GDP* aGDP,
                                     ICaptureComponent* aSequestrationDevice,
                                     const int aPeriod )
 {
-    // Stash the GDP object if it has not been already.
-    if( !mGDP ) {
-        mGDP = aGDP;
-    }
-    
     // calculate the emissions driver
     const double emissDriver = mEmissionsDriver->calcEmissionsDriver( aInputs, aOutputs, aPeriod );
     
     // Compute emissions reductions.
     double emissMult = 1.0;
     for ( CControlIterator controlIt = mEmissionsControls.begin(); controlIt != mEmissionsControls.end(); ++controlIt ) {
-            emissMult *= 1.0 - (*controlIt)->getEmissionsReduction( aRegionName, aPeriod, mGDP );
+            emissMult *= 1.0 - (*controlIt)->getEmissionsReduction( aRegionName, aPeriod );
     }
     
     // Compute emissions, including any reductions.
@@ -346,7 +336,7 @@ void NonCO2Emissions::postCalc( const string& aRegionName,
         // on this GHG) while trying to calibrate input emissions as that creates a simultaneous equation,
         // therefore postponing this to postCalc is safe to do.
         // We explicitly check to make sure this wasn't attempted here
-        calcEmission(aRegionName, aInputs, aOutputs, mGDP, aSequestrationDevice, aPeriod);
+        calcEmission(aRegionName, aInputs, aOutputs, aSequestrationDevice, aPeriod);
         if(getGHGValue(aRegionName, aInputs, aOutputs, aSequestrationDevice, aPeriod) != 0.0) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );

@@ -58,6 +58,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
              "L2323.GlobalTechShrwt_iron_steel",
              "L2323.GlobalTechCoef_iron_steel",
              "L2323.GlobalTechCost_iron_steel",
+             "L2323.GlobalTechTrackCapital_iron_steel",
              "L2323.GlobalTechCapture_iron_steel",
              "L2323.GlobalTechShutdown_en",
              "L2323.GlobalTechSCurve_en",
@@ -332,6 +333,34 @@ module_energy_L2323.iron_steel <- function(command, ...) {
         L2323.GlobalTechProfitShutdown_en
     }
 
+    # L2323.GlobalTechCost_iron_steel: Non-energy costs of global iron_steel manufacturing technologies
+    A323.globaltech_cost %>%
+      gather_years %>%
+      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      arrange(supplysector, subsector, technology, minicam.non.energy.input, year) %>%
+      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
+      mutate(input.cost = approx_fun(year, value, rule = 1),
+             input.cost = round(input.cost, energy.DIGITS_COST)) %>%
+      ungroup %>%
+      filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      rename(sector.name = supplysector,
+             subsector.name = subsector) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
+      L2323.GlobalTechCost_iron_steel
+
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
+    L2323.GlobalTechCost_iron_steel %>%
+      # note: the units for iron and steel output / costs will yield a dollar
+      # amount of million 1975$, the rest of the capital market will be in billion 1975$
+      # so we need to include the unit conversion here to make it consistent
+      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR / 1000,
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # vintaging is active so no need for depreciation
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L2323.GlobalTechTrackCapital_iron_steel
+
     # Calibration and region-specific data
     # L2323.StubTechProd_iron_steel: calibrated iron_steel production
     calibrated_techs %>%
@@ -489,6 +518,13 @@ module_energy_L2323.iron_steel <- function(command, ...) {
       add_precursors("energy/A323.globaltech_cost", "energy/A323.globaltech_co2capture", "energy/A323.globaltech_coef") ->
       L2323.GlobalTechCost_iron_steel
 
+    L2323.GlobalTechTrackCapital_iron_steel %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L2323.GlobalTechCost_iron_steel) ->
+      L2323.GlobalTechTrackCapital_iron_steel
+
     L2323.StubTechCost_iron_steel %>%
       add_title("Regionally varying non-energy costs of iron and steel manufacturing technologies") %>%
       add_units("1975$/kg for supplysector iron_steel") %>%
@@ -610,7 +646,8 @@ module_energy_L2323.iron_steel <- function(command, ...) {
                   L2323.GlobalTechSCurve_en, L2323.GlobalTechLifetime_en, L2323.GlobalTechProfitShutdown_en,
                   L2323.StubTechProd_iron_steel, L2323.StubTechCoef_iron_steel,
                   L2323.PerCapitaBased_iron_steel, L2323.BaseService_iron_steel,
-                  L2323.PriceElasticity_iron_steel,L2323.StubTechCost_iron_steel)
+                  L2323.PriceElasticity_iron_steel,L2323.StubTechCost_iron_steel,
+                  L2323.GlobalTechTrackCapital_iron_steel)
   } else {
     stop("Unknown command")
   }

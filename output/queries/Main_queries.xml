@@ -3945,6 +3945,7 @@ element input {
                     <comments/>
                 </supplyDemandQuery>
             </queryGroup>
+
         </queryGroup>
         <queryGroup name="bioenergy">
             <supplyDemandQuery title="purpose-grown biomass production">
@@ -4087,7 +4088,7 @@ element input {
                     <comments/>
                 </supplyDemandQuery>
             </queryGroup>
-        </queryGroup>
+        </queryGroup> 
         <queryGroup name="ag demands">
             <supplyDemandQuery title="food consumption by type (general)">
                 <axis1 name="sector">sector</axis1>
@@ -4696,22 +4697,52 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
         </demographicsQuery>
         <gdpQueryBuilder title="GDP MER by region">
             <axis1 name="region">region</axis1>
-            <axis2 name="Year">gdp-mer</axis2>
-            <xPath buildList="true" dataName="gdp-mer" group="false" sumAll="false">GDP/gdp-mer/text()</xPath>
+            <axis2 name="Year">nationalAccount[@year]</axis2>
+            <xPath buildList="true" dataName="gdp-mer" group="false" sumAll="false">nationalAccount/account[@name = 'GDP']/node()</xPath>
             <comments/>
         </gdpQueryBuilder>
         <gdpQueryBuilder title="GDP per capita MER by region">
             <axis1 name="region">region</axis1>
-            <axis2 name="Year">gdp-per-capita-mer</axis2>
-            <xPath buildList="true" dataName="gdp-per-capita-mer" group="false" sumAll="false">GDP/gdp-per-capita-mer/text()</xPath>
+            <axis2 name="Year">nationalAccount[@year]</axis2>
+            <xPath buildList="true" dataName="gdp-per-capita-mer" group="false" sumAll="false">nationalAccount/account[@name = 'gdp-per-capita']/node()</xPath>
             <comments/>
         </gdpQueryBuilder>
         <gdpQueryBuilder title="GDP per capita PPP by region">
             <axis1 name="region">region</axis1>
-            <axis2 name="Year">gdp-per-capita-ppp</axis2>
-            <xPath buildList="true" dataName="gdp-per-capita-ppp" group="false" sumAll="false">GDP/gdp-per-capita-ppp/text()</xPath>
+            <axis2 name="Year">nationalAccount[@year]</axis2>
+            <xPath buildList="true" dataName="gdp-per-capita-ppp" group="false" sumAll="false">nationalAccount/account[@name = 'gdp-per-capita-ppp']/node()</xPath>
             <comments/>
         </gdpQueryBuilder>
+        <query title="National Account">
+            <axis1 name="Account">account[@name]</axis1>
+            <axis2 name="Year">nationalAccount[@year]</axis2>
+            <xPath buildList="true" dataName="all accounts" group="false" sumAll="false">nationalAccount/account/node()</xPath>
+            <comments/>
+        </query>
+        <query title="Social Accounting Matrix">
+            <axis1 name="column">social-accounting-matrix-col[@name]</axis1>
+            <axis2 name="Year">nationalAccount[@year]</axis2>
+            <xPath buildList="false" dataName="all accounts" group="false" sumAll="false">nationalAccount/social-accounting-matrix-row/social-accounting-matrix-col/node()</xPath>
+            <comments/>
+        </query>
+        <supplyDemandQuery title="Tracking accounts by tech">
+            <axis1 name="technology">technology[@name]</axis1>
+            <axis2 name="Year">currency-output[@vintage]</axis2>
+            <xPath buildList="true" dataName="account" group="false" sumAll="false">*[@type='sector']//*[@type='subsector']/*[@type='technology']/*[@type='output']/currency-output/node()</xPath>
+            <comments/>
+        </supplyDemandQuery>
+        <supplyDemandQuery title="Capital investment demands by tech">
+            <axis1 name="technology">technology[@name]</axis1>
+            <axis2 name="Year">technology[@year]</axis2>
+            <xPath buildList="true" dataName="capital" group="false" sumAll="false">*[@type='sector']/*[@type = 'subsector']/*[@type = 'technology']/*[@type='input' (: collapse :)]/capital/text()</xPath>
+            <comments>Note: these are investment demands per timestep</comments>
+        </supplyDemandQuery>
+        <supplyDemandQuery title="Capital investment demands by resource">
+            <axis1 name="technology">technology[@name]</axis1>
+            <axis2 name="Year">technology[@year]</axis2>
+            <xPath buildList="true" dataName="capital" group="false" sumAll="false">*[@type='resource']/*[@type = 'subresource']/*[@type = 'technology']/*[@type='input' (: collapse :)]/capital/text()</xPath>
+            <comments>Note: these are investment demands per timestep</comments>
+        </supplyDemandQuery>
     </queryGroup>
     <queryGroup name="policy">
         <marketQuery title="CO2 prices">

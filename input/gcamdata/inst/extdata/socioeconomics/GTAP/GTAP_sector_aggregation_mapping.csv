@@ -1,0 +1,94 @@
+# File: GTAP_sector_aggregation_mapping.csv
+# Title: GTAP_Power to aggregated GCAM sector names
+# Units: NA
+# Description: Maps sectors in GTAP_Power (VFA items and CGDS) to GCAM _macro sectors
+# Column types: cccc
+# ----------
+GTAPv10,GTAP_Long_Name,GCAM_sector,GCAM_sector_micro
+Land,Land,Land,Land
+tech_aspros,Technicians/AssocProfessional,Labor,Labor
+clerks,Clerks,Labor,Labor
+service_shop,Service/Shop workers,Labor,Labor
+off_mgr_pros,Officials and Managers,Labor,Labor
+ag_othlowsk,Agricultural and Unskilled,Labor,Labor
+Capital,Capital,Capital,Capital
+NatlRes,Natural Resources,Capital,Capital
+pdr,Paddy rice,AgLU,Rice
+wht,Wheat,AgLU,Wheat
+gro,Cereal grains nec,AgLU,OtherGrain
+v_f,"Vegetables, fruit, nuts",AgLU,VFN
+osd,Oil seeds,AgLU,OilCrops
+c_b,"Sugar cane, sugar beet",AgLU,SugarCrop
+pfb,Plant-based fibers,AgLU,FiberCrop
+ocr,Crops nec,AgLU,MiscCrop
+ctl,"Bovine cattle, sheep and goats, horses",AgLU,Beef
+oap,Animal products nec,AgLU,PorkPoultry
+rmk,Raw milk,AgLU,Dairy
+wol,"Wool, silk-worm cocoons",AgLU,Wool
+frs,Forestry,AgLU,Forest
+fsh,Fishing,AgLU,Fishing
+coa,Coal,Energy,Coal
+oil,Oil,Energy,Oil
+gas,Gas,Energy,Gas
+oxt,Minerals nec,MA,MA
+cmt,Bovine meat products,MA,Proc_Food
+omt,Meat products nec,MA,Proc_Food
+vol,Vegetable oils and fats,MA,Proc_Food
+mil,Dairy products,MA,Proc_Food
+pcr,Processed rice,MA,Proc_Food
+sgr,Sugar,MA,Proc_Food
+ofd,Food products nec,MA,Proc_Food
+b_t,Beverages and tobacco products,MA,Proc_Food
+tex,Textiles,MA,MA
+wap,Wearing apparel,MA,MA
+lea,Leather products,MA,MA
+lum,Wood products,MA,MA
+ppp,"Paper products, publishing",MA,MA
+p_c,"Petroleum, coal products",Energy,Proc_CoalOil
+chm,Chemical products,Chemicals,Chemicals
+bph,Basic pharmaceutical products,MA,MA
+rpp,Rubber and plastic products,MA,MA
+nmm,Mineral products nec,MA,MA
+i_s,Ferrous metals,MA,MA
+nfm,Metals nec,MA,MA
+fmp,Metal products,MA,MA
+ele,"Computer, electronic and optical products",MA,MA
+eeq,Electrical equipment,MA,MA
+ome,Machinery and equipment nec,MA,MA
+mvh,Motor vehicles and parts,MA,MA
+otn,Transport equipment nec,MA,MA
+omf,Manufactures nec,MA,MA
+TnD,Electricity: Transmission and Distribution,Energy,Elec_TranDist
+NuclearBL,Nuclear base load,Energy,Elec_NuclearBase
+CoalBL,Coal base load,Energy,Elec_CoalBase
+GasBL,Gas base load,Energy,Elec_GasBase
+WindBL,Wind base load,Energy,Elec_WindBase
+HydroBL,Hydro base load,Energy,Elec_HydroBase
+OilBL,Oil base load,Energy,Elec_OilBase
+OtherBL,Other base load,Energy,Elec_OtherBase
+GasP,Gas peak load,Energy,Elec_GasPeak
+HydroP,Hydro peak load,Energy,Elec_HydroPeak
+OilP,Oil peak load,Energy,Elec_OilPeak
+SolarP,Solar peak load,Energy,Elec_SolarPeak
+gdt,"Gas manufacture, distribution",Energy,Gas_ManuDist
+wtr,Water,Water,Water
+cns,Construction,MA,MA
+trd,Trade,MA,MA
+afs,"Accommodation, Food and service activities",MA,MA
+otp,Transport nec,Energy,Transport
+wtp,Water transport,Energy,Transport
+atp,Air transport,Energy,Transport
+whs,Warehousing and support activities,MA,MA
+cmn,Communication,MA,MA
+ofi,Financial services nec,MA,MA
+ins,Insurance,MA,MA
+rsa,Real estate activities,MA,MA
+obs,Business services nec,MA,MA
+ros,Recreational and other services,MA,MA
+osg,Public Administration and defense,MA,MA
+edu,Education,MA,MA
+hht,Human health and social work activities,MA,MA
+dwe,Dwellings,MA,MA
+CGDS,Investment goods,CGDS,CGDS
+HHD,Household consumption,HHD_GOV,HHD_GOV
+GOV,Government consumption,HHD_GOV,HHD_GOV

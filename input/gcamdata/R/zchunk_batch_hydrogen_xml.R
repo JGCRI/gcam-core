@@ -20,6 +20,7 @@ module_energy_batch_hydrogen_xml <- function(command, ...) {
               "L225.StubTechCost_h2",
               "L225.GlobalTechCoef_h2",
               "L225.GlobalTechCost_h2",
+              "L225.GlobalTechTrackCapital_h2",
               "L225.GlobalTechShrwt_h2",
               "L225.PrimaryRenewKeyword_h2",
               "L225.AvgFossilEffKeyword_h2",
@@ -41,6 +42,7 @@ module_energy_batch_hydrogen_xml <- function(command, ...) {
     L225.StubTech_h2 <- get_data(all_data, "L225.StubTech_h2")
     L225.GlobalTechCoef_h2 <- get_data(all_data, "L225.GlobalTechCoef_h2")
     L225.GlobalTechCost_h2 <- get_data(all_data, "L225.GlobalTechCost_h2")
+    L225.GlobalTechTrackCapital_h2 <- get_data(all_data, "L225.GlobalTechTrackCapital_h2")
     L225.GlobalTechShrwt_h2 <- get_data(all_data, "L225.GlobalTechShrwt_h2")
     L225.PrimaryRenewKeyword_h2 <- get_data(all_data, "L225.PrimaryRenewKeyword_h2")
     L225.AvgFossilEffKeyword_h2 <- get_data(all_data, "L225.AvgFossilEffKeyword_h2")
@@ -62,6 +64,9 @@ module_energy_batch_hydrogen_xml <- function(command, ...) {
       add_xml_data(L225.StubTech_h2, "StubTech") %>%
       add_xml_data(L225.StubTechCost_h2, "StubTechCost") %>%
       add_xml_data(L225.GlobalTechCoef_h2, "GlobalTechCoef") %>%
+      # set non-energy inputs to be read as tracking
+      add_node_equiv_xml("input") %>%
+      add_xml_data(L225.GlobalTechTrackCapital_h2, "GlobalTechTrackCapital") %>%
       add_xml_data(L225.GlobalTechCost_h2, "GlobalTechCost") %>%
       add_xml_data(L225.GlobalTechShrwt_h2, "GlobalTechShrwt") %>%
       add_xml_data(L225.PrimaryRenewKeyword_h2, "PrimaryRenewKeyword") %>%
@@ -77,6 +82,7 @@ module_energy_batch_hydrogen_xml <- function(command, ...) {
                      "L225.StubTech_h2",
                      "L225.StubTechCost_h2",
                      "L225.GlobalTechCoef_h2",
+                     "L225.GlobalTechTrackCapital_h2",
                      "L225.GlobalTechCost_h2",
                      "L225.GlobalTechShrwt_h2",
                      "L225.PrimaryRenewKeyword_h2",

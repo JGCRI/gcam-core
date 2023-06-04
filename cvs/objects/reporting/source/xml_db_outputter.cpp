@@ -74,7 +74,6 @@
 #include "demographics/include/age_cohort.h"
 #include "demographics/include/gender.h"
 #include "util/base/include/configuration.h"
-#include "containers/include/gdp.h"
 #include "land_allocator/include/land_leaf.h"
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/icarbon_calc.h"
@@ -84,7 +83,6 @@
 #include "technologies/include/ioutput.h"
 #include "technologies/include/base_technology.h"
 #include "technologies/include/ag_production_technology.h"
-#include "technologies/include/expenditure.h"
 #include "functions/include/node_input.h"
 #include "containers/include/national_account.h"
 #include "util/base/include/util.h"
@@ -94,6 +92,8 @@
 #include "technologies/include/ioutput.h"
 #include "functions/include/minicam_input.h"
 #include "functions/include/iinput.h"
+#include "functions/include/non_energy_input.h"
+#include "functions/include/input_capital.h"
 #include "sectors/include/tran_subsector.h"
 #include "technologies/include/tran_technology.h"
 #include "land_allocator/include/land_use_history.h"
@@ -104,6 +104,7 @@
 #include "functions/include/building_service_input.h"
 #include "functions/include/satiation_demand_function.h"
 #include "functions/include/food_demand_input.h"
+#include "functions/include/nested_ces_production_function_macro.h"
 #include <typeinfo>
 
 // Whether to write a text file with the contents that are to be inserted
@@ -174,7 +175,6 @@ XMLDBOutputter::JNIContainer::~JNIContainer() {
 */
 XMLDBOutputter::XMLDBOutputter():
 mTabs( new Tabs ),
-mGDP( 0 ),
 mSubsectorDepth( 0 )
 #if( __HAVE_JAVA__ )
 ,mJNIContainer( createContainer( false ) )
@@ -514,10 +514,6 @@ void XMLDBOutputter::endVisitRegion( const Region* aRegion,
 }
 
 void XMLDBOutputter::startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) {
-    // Store the region's GDP object.
-    assert( !mGDP );
-    mGDP = aRegionMiniCAM->mGDP;
-
     // Write the opening region tag and the type of the base class.
     XMLWriteOpeningTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get(),
         aRegionMiniCAM->getName(), 0, Region::getXMLNameStatic() );
@@ -525,11 +521,9 @@ void XMLDBOutputter::startVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCA
 
 void XMLDBOutputter::endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM, const int aPeriod ) {
     assert( !mCurrentRegion.empty() );
-    assert( mGDP );
 
     // Clear the region name.
     mCurrentRegion.clear();
-    mGDP = 0;
 
     // Write the closing region tag.
     XMLWriteClosingTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get() );
@@ -667,7 +661,7 @@ void XMLDBOutputter::startVisitSector( const Sector* aSector, const int aPeriod 
     // Loop over the periods to output sector information.
     const Modeltime* modeltime = scenario->getModeltime();
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        double currCost = aSector->getPrice( mGDP, i );
+        double currCost = aSector->getPrice( i );
         if( !std::isnan( currCost ) ) {
             writeItem( "cost", mCurrentPriceUnit, currCost, i );
         }
@@ -714,7 +708,7 @@ void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
         writeItem( "share-weight", "none", aSubsector->getShareWeight( i ), i );
     }
     for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        double currValue = aSubsector->getPrice( mGDP, i );
+        double currValue = aSubsector->getPrice( i );
         if( !objects::isEqual<double>( currValue, 0.0 ) && !std::isnan( currValue ) ) {
             writeItem( "cost", mCurrentPriceUnit, currValue, i );
         }
@@ -988,6 +982,24 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
             attrs[ "unit" ] = "MTC";
             XMLWriteElementWithAttributes( currValue, "carbon-content", *childBuffer,
                 mTabs.get(), attrs );
+        }
+    }
+    const TrackingNonEnergyInput* trackInput = dynamic_cast<const TrackingNonEnergyInput*>(aInput);
+    if(trackInput) {
+        double currValue = trackInput->mCapitalValue;
+        if(currValue > 0) {
+            attrs.clear();
+            attrs["unit"] = "1975$";
+            XMLWriteElementWithAttributes( currValue, "capital", *childBuffer, mTabs.get(), attrs);
+        }
+    }
+    const InputCapital* capInput = dynamic_cast<const InputCapital*>(aInput);
+    if(capInput) {
+        double currValue = capInput->mCapitalValue;
+        if(currValue > 0) {
+            attrs.clear();
+            attrs["unit"] = "1975$";
+            XMLWriteElementWithAttributes( currValue, "capital", *childBuffer, mTabs.get(), attrs);
         }
     }
 }
@@ -1560,38 +1572,6 @@ void XMLDBOutputter::endVisitGender( const Gender* aGender, const int aPeriod ){
     XMLWriteClosingTag( aGender->getXMLName(), mBuffer, mTabs.get() );
 }
 
-void XMLDBOutputter::startVisitGDP( const GDP* aGDP, const int aPeriod ){
-    // Write the opening gdp tag.
-    XMLWriteOpeningTag( GDP::getXMLNameStatic(), mBuffer, mTabs.get() );
-
-    // Loop over the periods to output GDP information.
-    // The loops are separated so the types are grouped together, as is required for
-    // valid XML.
-    const Modeltime* modeltime = scenario->getModeltime();
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "total-labor-productivity", "%/yr",
-                   aGDP->getTotalLaborProductivity( i ), i );
-    }
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "gdp-mer", aGDP->mGDPUnit, aGDP->getGDP( i ), i );
-    }
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "gdp-per-capita-mer", "Thous90US$/per", aGDP->getGDPperCap( i ),
-                   i );
-    }
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "gdp-per-capita-ppp", "Thous90US$/per",
-                   aGDP->getPPPGDPperCap( i ), i );
-    }
-    for( int i = 0; i < modeltime->getmaxper(); ++i ){
-        writeItem( "gdp-mer-no-priceadj", aGDP->mGDPUnit, aGDP->getGDPNotAdjusted( i ), i );
-    }
-}
-
-void XMLDBOutputter::endVisitGDP( const GDP* aGDP, const int aPeriod ){
-    XMLWriteClosingTag( GDP::getXMLNameStatic(), mBuffer, mTabs.get() );
-}
-
 void XMLDBOutputter::startVisitLandNode( const LandNode* aLandNode,
                                          const int aPeriod ){
     XMLWriteOpeningTag( LandNode::getXMLNameStatic(), mBuffer, mTabs.get(),
@@ -1692,53 +1672,6 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
 
 void XMLDBOutputter::endVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const int aPeriod ){
     XMLWriteClosingTag( LandCarbonDensities::getXMLNameStatic(), mBuffer, mTabs.get() );
-} 
-
-void XMLDBOutputter::startVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) {
-    // write the expenditure tag and it's children in temp buffers so that we can
-    // check if anything was really written out and avoid writing blank expenditures
-    stringstream* parentBuffer = new stringstream();
-    stringstream* childBuffer = new stringstream();
-
-    // the opening tag gets written in the parent buffer
-    const Modeltime* modeltime = scenario->getModeltime();
-    // should I make and getXMLNameStatic() form expenditure?
-    XMLWriteOpeningTag( "expenditure", *parentBuffer, mTabs.get(), "", modeltime->getper_to_yr( aPeriod ) );
-
-    // put the buffers on a stack so that we have the correct ordering
-    mBufferStack.push( parentBuffer );
-    mBufferStack.push( childBuffer );
-
-    double currValue = 0.0;
-    for( int i = 0; i < Expenditure::END; ++i ) {
-        currValue = aExpenditure->getValue( static_cast< Expenditure::ExpenditureType >( i ) );
-        if( !objects::isEqual<double>( currValue, 0.0 ) ) {
-            XMLWriteElement( currValue,
-                aExpenditure->enumToXMLName( static_cast< Expenditure::ExpenditureType >( i ) ),
-                *childBuffer, mTabs.get() );
-        }
-    }
-}
-
-void XMLDBOutputter::endVisitExpenditure( const Expenditure* aExpenditure, const int aPeriod ) {
-    // Write the expenditure (open tag, children, and closing tag) to the buffer at
-    // the top of the stack only if the child buffer is not empty
-    iostream* childBuffer = popBufferStack();
-    iostream* parentBuffer = popBufferStack();
-    if( /*!childBuffer->str().empty()*/childBuffer->rdbuf()->in_avail() ){
-        // retBuffer is still at the top of the stack
-        iostream* retBuffer = mBufferStack.top();
-        (*retBuffer) << parentBuffer->rdbuf() << childBuffer->rdbuf();
-        XMLWriteClosingTag( "expenditure", *retBuffer, mTabs.get() );
-    }
-    else {
-        // if we don't write the closing tag we still need to decrease the indent
-        mTabs->decreaseIndent();
-    }
-    
-    // clean up any extra buffers
-    delete childBuffer;
-    delete parentBuffer;
 }
 
 void XMLDBOutputter::startVisitNodeInput( const NodeInput* aNodeInput, const int aPeriod ) {
@@ -1786,22 +1719,165 @@ void XMLDBOutputter::endVisitNodeInput( const NodeInput* aNodeInput, const int a
 }
 
 void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) {
-    // national accounts are visited by period so the year attribute can be converted from aPeriod
-    const Modeltime* modeltime = scenario->getModeltime();
-    XMLWriteOpeningTag( NationalAccount::getXMLNameStatic(), mBuffer, mTabs.get(), "", modeltime->getper_to_yr( aPeriod ) );
+    map<string, string> attrs;
+    
+    XMLWriteOpeningTag( NationalAccount::getXMLNameStatic(), mBuffer, mTabs.get(), "", aNationalAccount->getYear() );
+    
+    attrs[ "unit" ] = "million 1990$";
+    // actual account values
+    double currValue = aNationalAccount->getAccountValue( NationalAccount::GDP );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_ENERGY_INV);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CAPITAL_ENERGY_INV);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::CONSUMER_DURABLE_INV);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CONSUMER_DURABLE_INV);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
-    // TODO: move enumToXMLName to public so these element names are not hard coded here
-    double currValue = aNationalAccount->getAccountValue( NationalAccount::GNP_NOMINAL );
-    if( !objects::isEqual<double>( currValue, 0.0 ) ) {
-        XMLWriteElement( currValue, "GNP-nominal", mBuffer, mTabs.get() );
+    currValue = aNationalAccount->getAccountValue( NationalAccount::GDP_PER_CAPITA );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP_PER_CAPITA);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::GDP_PER_CAPITA_PPP );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP_PER_CAPITA_PPP);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    currValue = aNationalAccount->getAccountValue( NationalAccount::VALUE_ADDED );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::VALUE_ADDED);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::GROSS_OUTPUT );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GROSS_OUTPUT);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::SAVINGS );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::SAVINGS);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::INVESTMENT);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::INVESTMENT);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    currValue = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_STOCK );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CAPITAL_STOCK);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    currValue = aNationalAccount->getAccountValue( NationalAccount::DEPRECIATION );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::DEPRECIATION);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::ENERGY_SERVICE_VALUE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::ENERGY_SERVICE_VALUE);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    currValue = aNationalAccount->getAccountValue( NationalAccount::ENERGY_NET_EXPORT);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::ENERGY_NET_EXPORT);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_NET_EXPORT);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::MATERIALS_NET_EXPORT);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_NET_EXPORT);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CAPITAL_NET_EXPORT);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    // value of labor from the materials function in
+    currValue = aNationalAccount->getAccountValue( NationalAccount::LABOR_WAGES );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::LABOR_WAGES);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    attrs[ "unit" ] = "mil pers";
+    // labor force in persons
+    currValue = aNationalAccount->getAccountValue( NationalAccount::LABOR_FORCE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::LABOR_FORCE);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    // total population
+    currValue = aNationalAccount->getAccountValue( NationalAccount::POPULATION );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::POPULATION);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    // savings rate
+    attrs[ "unit" ] = "rate annual";
+    currValue = aNationalAccount->getAccountValue( NationalAccount::SAVINGS_RATE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::SAVINGS_RATE);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    // factor reward shares
+    attrs[ "unit" ] = "share";
+    currValue = aNationalAccount->getAccountValue( NationalAccount::FR_SHARE_LABOR );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::FR_SHARE_LABOR);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    currValue = aNationalAccount->getAccountValue( NationalAccount::FR_SHARE_CAPITAL );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::FR_SHARE_CAPITAL);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    currValue = aNationalAccount->getAccountValue( NationalAccount::FR_SHARE_ENERGY );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::FR_SHARE_ENERGY);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    // energy service output and value
+    attrs[ "unit" ] = "million 1990$";
+    currValue = aNationalAccount->getAccountValue( NationalAccount::ENERGY_SERVICE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::ENERGY_SERVICE);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    currValue = aNationalAccount->getAccountValue( NationalAccount::TOTAL_FACTOR_PRODUCTIVITY );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::TOTAL_FACTOR_PRODUCTIVITY);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    enum SAM_COL_ENUM { cEnergy, cMaterials, cHHGov, cCapMat, cCapEne, cRow, cSum};
+    enum SAM_ROW_ENUM { rEnergy, rMaterials, rHHGov, rCap, rRow, rSum, rDiff};
+    const string colNames[] = { "Energy", "Materials", "HH+Gov", "Capital-Materials", "Capital-Energy", "ROW", "Sum" };
+    const string rowNames[] = { "Energy", "Materials", "HH+Gov", "Capital", "ROW", "Sum", "Diff"};
+    double samData[7][7];
+    for(int row = 0; row < 7; ++row) {
+        for(int col = 0; col < 7; ++col) {
+            samData[row][col] = 0.0;
+        }
     }
-    currValue = aNationalAccount->getAccountValue( NationalAccount::GNP_REAL );
-    if( !objects::isEqual<double>( currValue, 0.0 ) ) {
-        XMLWriteElement( currValue, "GNP-real", mBuffer, mTabs.get() );
-    }
-    currValue = aNationalAccount->getAccountValue( NationalAccount::CARBON_TAX );
-    if( !objects::isEqual<double>( currValue, 0.0 ) ) {
-        XMLWriteElement( currValue, "carbon-tax", mBuffer, mTabs.get() );
+    samData[rEnergy][cMaterials] = aNationalAccount->getAccountValue( NationalAccount::ENERGY_SERVICE_VALUE );;
+    samData[rEnergy][cRow] = aNationalAccount->getAccountValue( NationalAccount::ENERGY_NET_EXPORT );
+    samData[rEnergy][cSum] = samData[rEnergy][cMaterials] + samData[rEnergy][cRow];
+    samData[rMaterials][cHHGov] = aNationalAccount->getAccountValue( NationalAccount::VALUE_ADDED ) +
+        samData[rEnergy][cSum] -
+        aNationalAccount->getAccountValue( NationalAccount::SAVINGS );
+    samData[rMaterials][cCapMat] = aNationalAccount->getAccountValue( NationalAccount::INVESTMENT ) -
+        aNationalAccount->getAccountValue( NationalAccount::CAPITAL_ENERGY_INV ) -
+        aNationalAccount->getAccountValue( NationalAccount::CONSUMER_DURABLE_INV );
+    samData[rMaterials][cCapEne] = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_ENERGY_INV ) +
+        aNationalAccount->getAccountValue( NationalAccount::CONSUMER_DURABLE_INV );
+    samData[rMaterials][cRow] = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_NET_EXPORT );
+    samData[rMaterials][cSum] = samData[rMaterials][cHHGov] + samData[rMaterials][cCapMat] + samData[rMaterials][cCapEne] + samData[rMaterials][cRow];
+    samData[rHHGov][cEnergy] = samData[rEnergy][cSum];
+    samData[rHHGov][cMaterials] = aNationalAccount->getAccountValue( NationalAccount::VALUE_ADDED );
+    samData[rHHGov][cSum] = samData[rHHGov][cEnergy] + samData[rHHGov][cMaterials];
+    samData[rCap][cHHGov] = aNationalAccount->getAccountValue( NationalAccount::SAVINGS );
+    samData[rCap][cRow] = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_NET_EXPORT );
+    samData[rCap][cSum] = samData[rCap][cHHGov] + samData[rCap][cRow];
+    samData[rSum][cEnergy] = samData[rHHGov][cEnergy];
+    samData[rSum][cMaterials] = samData[rEnergy][cMaterials] + samData[rHHGov][cMaterials];
+    samData[rSum][cHHGov] = samData[rMaterials][cHHGov] + samData[rCap][cHHGov];
+    samData[rSum][cCapMat] = samData[rMaterials][cCapMat] + samData[rMaterials][cCapEne];
+    samData[rSum][cRow] = samData[rEnergy][cRow] + samData[rMaterials][cRow] + samData[rCap][cRow];
+    samData[rDiff][cEnergy] = samData[rEnergy][cSum] - samData[rSum][cEnergy];
+    samData[rDiff][cMaterials] = samData[rMaterials][cSum] - samData[rSum][cMaterials];
+    samData[rDiff][cHHGov] = samData[rHHGov][cSum] - samData[rSum][cHHGov];
+    samData[rDiff][cCapMat] = samData[rCap][cSum] - samData[rSum][cCapMat];
+    samData[rDiff][cRow] = samData[rRow][cSum] - samData[rSum][cRow];
+    attrs[ "unit" ] = "million 1990$";
+    
+    for(int row = 0; row < 7; ++row) {
+        XMLWriteOpeningTag("social-accounting-matrix-row", mBuffer, mTabs.get(), rowNames[row]);
+        for(int col = 0; col < 7; ++col) {
+            attrs["name"] = colNames[col];
+            XMLWriteElementWithAttributes( samData[row][col], "social-accounting-matrix-col", mBuffer, mTabs.get(), attrs );
+        }
+        XMLWriteClosingTag("social-accounting-matrix-row", mBuffer, mTabs.get());
     }
 }
 

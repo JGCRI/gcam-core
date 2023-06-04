@@ -13,7 +13,9 @@
 module_energy_batch_solar_low_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L223.GlobalTechCapital_sol_low",
-              "L223.GlobalIntTechCapital_sol_low"))
+              "L223.GlobalIntTechCapital_sol_low",
+             # for adjusting rooftop_pv for capital tracking purposes
+             "L223.StubTechCapFactor_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "solar_low.xml"))
   } else if(command == driver.MAKE) {
@@ -23,6 +25,22 @@ module_energy_batch_solar_low_xml <- function(command, ...) {
     # Load required inputs
     L223.GlobalTechCapital_sol_low <- get_data(all_data, "L223.GlobalTechCapital_sol_low")
     L223.GlobalIntTechCapital_sol_low <- get_data(all_data, "L223.GlobalIntTechCapital_sol_low")
+    L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
+
+    # need to convert to standard non energy input for rooftop_pv for capital tracking purposes
+    L223.StubTechCapFactor_elec %>%
+      filter(stub.technology == "rooftop_pv") %>%
+      left_join_error_no_match(L223.GlobalIntTechCapital_sol_low, by=c("supplysector" = "sector.name",
+                                                                       "subsector" = "subsector.name",
+                                                                       "stub.technology" = "intermittent.technology",
+                                                                       "year")) %>%
+      mutate(input.cost = capital.overnight * fixed.charge.rate / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ)) %>%
+      select(-capacity.factor, -capital.overnight, -fixed.charge.rate) %>%
+      rename(minicam.non.energy.input = input.capital) ->
+      rooftop_pv_low
+    L223.GlobalIntTechCapital_sol_low %>%
+      filter(subsector.name != "rooftop_pv") ->
+      L223.GlobalIntTechCapital_sol_low
 
     # ===================================================
 
@@ -30,7 +48,9 @@ module_energy_batch_solar_low_xml <- function(command, ...) {
     create_xml("solar_low.xml") %>%
       add_xml_data(L223.GlobalTechCapital_sol_low, "GlobalTechCapital") %>%
       add_xml_data(L223.GlobalIntTechCapital_sol_low, "GlobalIntTechCapital") %>%
-      add_precursors("L223.GlobalTechCapital_sol_low", "L223.GlobalIntTechCapital_sol_low") ->
+      add_xml_data(rooftop_pv_low, "StubTechCost") %>%
+      add_precursors("L223.GlobalTechCapital_sol_low", "L223.GlobalIntTechCapital_sol_low",
+                     "L223.StubTechCapFactor_elec") ->
       solar_low.xml
 
     return_data(solar_low.xml)

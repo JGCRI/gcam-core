@@ -203,8 +203,8 @@ module_energy_LA125.hydrogen <- function(command, ...) {
               min_cost = value[year == 2015]*(1 - max_improvement[year == 2015]),
               cost = if_else(year <= 2015,value[year == 2015],
                              value[year == 2015]*(1 + improvement_rate) ^ (year - 2015)),
-              cost = if_else(cost >= min_cost, cost, min_cost)) %>%
-       fill(units,.direction='downup') -> coal_chem_costs_GCAM_years
+              cost = if_else(cost >= min_cost, cost, min_cost),
+              units = first(na.omit(units))) -> coal_chem_costs_GCAM_years
 
 
      H2A_prod_cost_conv %>%
@@ -230,8 +230,8 @@ module_energy_LA125.hydrogen <- function(command, ...) {
               cost = if_else(year <= 2015,value[year==2015],
                              value[year == 2015]*(1 + improvement_rate) ^ (year - 2015)), #apply calculated CAGR from above to calculate cost declination pathway
               cost = if_else(cost >= min_cost,cost,
-                             min_cost))%>%
-       fill(units,.direction='downup') %>% #fillout strings
+                             min_cost),
+              units = first(na.omit(units)))%>%
        bind_rows(coal_chem_costs_GCAM_years) %>% #add back coal chem
        ungroup() -> H2A_NE_cost_GCAM_years
 
@@ -262,8 +262,8 @@ module_energy_LA125.hydrogen <- function(command, ...) {
              cost = if_else(year <= 2015,value[year == 2015],
                             value[year == 2015] * (1 + improvement_rate) ^ (year - 2015)), #apply calculated CAGR from above to calculate cost declination pathway
              ccs_incr_cost = if_else(cost >= min_cost,cost,
-                                     min_cost))%>%
-      fill(units,.direction='downup') %>%
+                                     min_cost),
+             units = first(na.omit(units))) %>%
       ungroup() %>%
       select(subsector.name, year, ccs_incr_cost)-> ccs_incr_cost
 
@@ -299,7 +299,6 @@ module_energy_LA125.hydrogen <- function(command, ...) {
       group_by(sector.name, subsector.name, technology, minicam.energy.input) %>%
       mutate(value = 1 / value) %>%
       mutate(units = if_else(minicam.energy.input %in% c( 'water_td_ind_C','water_td_ind_W' ),'GJ H2 / M3 H2O','GJ H2 / GJ input')) %>%
-      fill(units,.direction='downup') %>%
       mutate(improvement_to_2040 = (value[year == 2040] - value[year == 2015]) / value[year == 2015],
              improvement_rate = (1 + improvement_to_2040) ^ (1 / (2040 - 2015)) - 1) %>%
       ungroup() -> H2A_eff_improvement
@@ -422,10 +421,10 @@ module_energy_LA125.hydrogen <- function(command, ...) {
       mutate(max_improvement = max_improvement[year == 2015],
              improvement_rate = (1 - max_improvement) ^ (1 / (2100 - 2015)) - 1,
              ccs_eff_loss = if_else(year <= 2015, ccs_eff_loss[year == 2015],
-                                    ccs_eff_loss[year == 2015]*(1 + improvement_rate) ^ (year - 2015))) %>%
+                                    ccs_eff_loss[year == 2015]*(1 + improvement_rate) ^ (year - 2015)),
+             units = first(na.omit(units))) %>%
       select(sector.name, subsector.name, minicam.energy.input,year,technology,units,ccs_eff_loss)%>%
-      ungroup() %>%
-      fill(units,.direction='downup')-> ccs_eff
+      ungroup() -> ccs_eff
 
     H2A_eff_GCAM_years %>%
       filter(technology == 'biomass to H2') %>%

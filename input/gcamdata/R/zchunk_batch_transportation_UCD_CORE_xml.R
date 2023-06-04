@@ -40,6 +40,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
              "L254.StubTranTechCalInput",
              "L254.StubTranTechLoadFactor",
              "L254.StubTranTechCost",
+             "L254.StubTechTrackCapital",
              "L254.StubTranTechCoef",
              "L254.StubTechCalInput_passthru",
              "L254.StubTechProd_nonmotor",
@@ -64,6 +65,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
     L254.StubTranTech <- get_data(all_data, "L254.StubTranTech")
     L254.StubTranTechLoadFactor <- get_data(all_data, "L254.StubTranTechLoadFactor")
     L254.StubTranTechCost <- get_data(all_data, "L254.StubTranTechCost")
+    L254.StubTechTrackCapital <- get_data(all_data, "L254.StubTechTrackCapital")
 
     L254.Supplysector_trn <- get_data(all_data, "L254.Supplysector_trn")
     L254.FinalEnergyKeyword_trn <- get_data(all_data, "L254.FinalEnergyKeyword_trn")
@@ -148,6 +150,9 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
       L254.StubTranTechCost_SSP <- L254.StubTranTechCost %>%  filter(sce== i)
       if (i != "CORE"){L254.StubTranTechCost_SSP<-L254.StubTranTechCost %>%  filter(sce== i) %>% filter(year>MODEL_FINAL_BASE_YEAR)}
 
+      L254.StubTechTrackCapital_SSP <- L254.StubTechTrackCapital %>%  filter(sce== i)
+      if (i != "CORE"){L254.StubTechTrackCapital_SSP<-L254.StubTechTrackCapital %>%  filter(sce== i) %>% filter(year>MODEL_FINAL_BASE_YEAR)}
+
       L254.StubTranTechCoef_SSP <- L254.StubTranTechCoef %>%  filter(sce== i)
 
       if (i != "CORE"){L254.StubTranTechCoef_SSP<-L254.StubTranTechCoef %>%  filter(sce== i) %>% filter(year>MODEL_FINAL_BASE_YEAR)}
@@ -192,8 +197,12 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
         add_xml_data(L254.GlobalTranTechInterp_SSP, "GlobalTranTechInterp") %>%
         add_xml_data(L254.GlobalTranTechShrwt_SSP, "GlobalTranTechShrwt") %>%
         add_xml_data(L254.GlobalTranTechSCurve, "GlobalTranTechSCurve") %>%
+        add_node_equiv_xml("technology") %>%
+        add_node_equiv_xml("input") %>%
         add_xml_data(L254.StubTranTechCalInput_SSP, "StubTranTechCalInput") %>%
         add_xml_data(L254.StubTranTechLoadFactor_SSP, "StubTranTechLoadFactor") %>%
+        add_node_equiv_xml("subsector") %>%
+        add_xml_data(L254.StubTechTrackCapital_SSP, "StubTechTrackCapital") %>%
         add_xml_data(L254.StubTranTechCost_SSP, "StubTranTechCost") %>%
         add_xml_data(L254.StubTranTechCoef_SSP, "StubTranTechCoef") %>%
         add_xml_data(L254.StubTechCalInput_passthru, "StubTranTechCalInput") %>%
@@ -226,6 +235,7 @@ module_energy_batch_transportation_UCD_CORE_xml <- function(command, ...) {
                        "L254.StubTranTechCalInput",
                        "L254.StubTranTechLoadFactor",
                        "L254.StubTranTechCost",
+                       "L254.StubTechTrackCapital",
                        "L254.StubTranTechCoef",
                        "L254.StubTechCalInput_passthru",
                        "L254.StubTechProd_nonmotor",

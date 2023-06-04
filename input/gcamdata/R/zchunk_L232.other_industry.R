@@ -74,6 +74,7 @@ module_energy_L232.other_industry <- function(command, ...) {
              "L232.GlobalTechEff_ind",
              "L232.GlobalTechCoef_ind",
              "L232.GlobalTechCost_ind",
+             "L232.GlobalTechTrackCapital_ind",
              "L232.GlobalTechSecOut_ind",
              "L232.GlobalTechCSeq_ind",
              "L232.StubTechCalInput_indenergy",
@@ -283,6 +284,18 @@ module_energy_L232.other_industry <- function(command, ...) {
              subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L232.GlobalTechCost_ind
+
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
+    L232.GlobalTechCost_ind %>%
+      # we only want to track investments in energy, otherwise we double accounting with materials
+      filter(grepl('energy use', sector.name)) %>%
+      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # vintaging is active so no need for depreciation
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L232.GlobalTechTrackCapital_ind
 
     # Carbon capture from feedstock carbon sequestration
     # L232.GlobalTechCSeq_ind: CO2 capture fractions from global electricity generation technologies
@@ -711,6 +724,14 @@ module_energy_L232.other_industry <- function(command, ...) {
       add_precursors("energy/A32.globaltech_cost") ->
       L232.GlobalTechCost_ind
 
+    L232.GlobalTechTrackCapital_ind
+    L232.GlobalTechTrackCapital_ind %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L232.GlobalTechCost_ind) ->
+      L232.GlobalTechTrackCapital_ind
+
     L232.GlobalTechSecOut_ind %>%
       add_title("Secondary output ratios of industrial cogeneration technologies") %>%
       add_units("Unitless") %>%
@@ -862,7 +883,7 @@ module_energy_L232.other_industry <- function(command, ...) {
                 L232.IncomeElasticity_ind_gssp4, L232.IncomeElasticity_ind_gssp5,
                 L232.IncomeElasticity_ind_ssp1, L232.IncomeElasticity_ind_ssp2,
                 L232.IncomeElasticity_ind_ssp3, L232.IncomeElasticity_ind_ssp4,
-                L232.IncomeElasticity_ind_ssp5)
+                L232.IncomeElasticity_ind_ssp5, L232.GlobalTechTrackCapital_ind)
   } else {
     stop("Unknown command")
   }

@@ -510,7 +510,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           // in markets which should be fine to operate on.  Given we have added a separate
           // suppression on large diagonal values above we can apply a reasonable threshold.
           // without that we should set this to zero (i.e. only suppress truly singular cols)
-          const double small_threshold = util::getSmallNumber();
+          const double small_threshold = 0;
           svdSolver.setThreshold(small_threshold);
           dx = svdSolver.solve(-1.0 * fx);
           dxmag = sqrt(dx.dot(dx));

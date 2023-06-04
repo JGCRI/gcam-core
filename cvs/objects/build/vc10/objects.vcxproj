@@ -72,7 +72,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -106,7 +106,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>Windows7.1SDK</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -543,15 +543,17 @@
     <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp" />
     <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp" />
     <ClCompile Include="..\..\containers\source\batch_runner.cpp" />
+    <ClCompile Include="..\..\containers\source\calc_base_price.cpp" />
     <ClCompile Include="..\..\containers\source\consumer_activity.cpp" />
     <ClCompile Include="..\..\containers\source\final_demand_activity.cpp" />
-    <ClCompile Include="..\..\containers\source\gdp.cpp" />
     <ClCompile Include="..\..\containers\source\info.cpp" />
     <ClCompile Include="..\..\containers\source\info_factory.cpp" />
     <ClCompile Include="..\..\containers\source\land_allocator_activity.cpp" />
     <ClCompile Include="..\..\containers\source\mac_generator_scenario_runner.cpp" />
     <ClCompile Include="..\..\containers\source\market_dependency_finder.cpp" />
     <ClCompile Include="..\..\containers\source\national_account.cpp" />
+    <ClCompile Include="..\..\containers\source\national_account_container.cpp" />
+    <ClCompile Include="..\..\containers\source\national_account_container_activity.cpp" />
     <ClCompile Include="..\..\containers\source\region.cpp" />
     <ClCompile Include="..\..\containers\source\region_minicam.cpp" />
     <ClCompile Include="..\..\containers\source\resource_activity.cpp" />
@@ -590,6 +592,8 @@
     <ClCompile Include="..\..\functions\source\ctax_input.cpp" />
     <ClCompile Include="..\..\functions\source\food_demand_function.cpp" />
     <ClCompile Include="..\..\functions\source\food_demand_input.cpp" />
+    <ClCompile Include="..\..\functions\source\input_accounting.cpp" />
+    <ClCompile Include="..\..\functions\source\nested_ces_production_function_macro.cpp" />
     <ClCompile Include="..\..\functions\source\relative_cost_logit.cpp" />
     <ClCompile Include="..\..\functions\source\satiation_demand_function.cpp" />
     <ClCompile Include="..\..\functions\source\thermal_building_service_input.cpp" />
@@ -620,6 +624,7 @@
     <ClCompile Include="..\..\resources\source\resource.cpp" />
     <ClCompile Include="..\..\resources\source\smooth_renewable_subresource.cpp" />
     <ClCompile Include="..\..\resources\source\subresource.cpp" />
+    <ClCompile Include="..\..\resources\source\trial_value_resource.cpp" />
     <ClCompile Include="..\..\resources\source\unlimited_resource.cpp" />
     <ClCompile Include="..\..\sectors\source\ag_supply_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\ag_supply_subsector.cpp" />
@@ -680,7 +685,6 @@
     <ClCompile Include="..\..\technologies\source\default_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\empty_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\exogenous_shutdown_decider.cpp" />
-    <ClCompile Include="..\..\technologies\source\expenditure.cpp" />
     <ClCompile Include="..\..\technologies\source\fixed_production_state.cpp" />
     <ClCompile Include="..\..\technologies\source\fractional_secondary_output.cpp" />
     <ClCompile Include="..\..\technologies\source\generic_output.cpp" />
@@ -690,6 +694,7 @@
     <ClCompile Include="..\..\technologies\source\marginal_profit_calculator.cpp" />
     <ClCompile Include="..\..\technologies\source\non_energy_use_capture_component.cpp" />
     <ClCompile Include="..\..\technologies\source\nuke_fuel_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\output_accounting.cpp" />
     <ClCompile Include="..\..\technologies\source\pass_through_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\phased_shutdown_decider.cpp" />
     <ClCompile Include="..\..\technologies\source\power_plant_capture_component.cpp" />
@@ -800,9 +805,9 @@
     <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h" />
     <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />
     <ClInclude Include="..\..\containers\include\batch_runner.h" />
+    <ClInclude Include="..\..\containers\include\calc_base_price.h" />
     <ClInclude Include="..\..\containers\include\consumer_activity.h" />
     <ClInclude Include="..\..\containers\include\final_demand_activity.h" />
-    <ClInclude Include="..\..\containers\include\gdp.h" />
     <ClInclude Include="..\..\containers\include\iactivity.h" />
     <ClInclude Include="..\..\containers\include\iinfo.h" />
     <ClInclude Include="..\..\containers\include\imodel_feedback_calc.h" />
@@ -813,6 +818,8 @@
     <ClInclude Include="..\..\containers\include\mac_generator_scenario_runner.h" />
     <ClInclude Include="..\..\containers\include\market_dependency_finder.h" />
     <ClInclude Include="..\..\containers\include\national_account.h" />
+    <ClInclude Include="..\..\containers\include\national_account_container.h" />
+    <ClInclude Include="..\..\containers\include\national_account_container_activity.h" />
     <ClInclude Include="..\..\containers\include\region.h" />
     <ClInclude Include="..\..\containers\include\region_minicam.h" />
     <ClInclude Include="..\..\containers\include\resource_activity.h" />
@@ -854,6 +861,8 @@
     <ClInclude Include="..\..\functions\include\food_demand_function.h" />
     <ClInclude Include="..\..\functions\include\food_demand_input.h" />
     <ClInclude Include="..\..\functions\include\idiscrete_choice.hpp" />
+    <ClInclude Include="..\..\functions\include\input_accounting.h" />
+    <ClInclude Include="..\..\functions\include\nested_ces_production_function_macro.h" />
     <ClInclude Include="..\..\functions\include\relative_cost_logit.hpp" />
     <ClInclude Include="..\..\functions\include\satiation_demand_function.h" />
     <ClInclude Include="..\..\functions\include\thermal_building_service_input.h" />
@@ -894,6 +903,7 @@
     <ClInclude Include="..\..\resources\include\resource.h" />
     <ClInclude Include="..\..\resources\include\smooth_renewable_subresource.h" />
     <ClInclude Include="..\..\resources\include\subresource.h" />
+    <ClInclude Include="..\..\resources\include\trial_value_resource.h" />
     <ClInclude Include="..\..\resources\include\unlimited_resource.h" />
     <ClInclude Include="..\..\sectors\include\afinal_demand.h" />
     <ClInclude Include="..\..\sectors\include\ag_supply_sector.h" />
@@ -963,7 +973,6 @@
     <ClInclude Include="..\..\technologies\include\default_technology.h" />
     <ClInclude Include="..\..\technologies\include\empty_technology.h" />
     <ClInclude Include="..\..\technologies\include\exogenous_shutdown_decider.h" />
-    <ClInclude Include="..\..\technologies\include\expenditure.h" />
     <ClInclude Include="..\..\technologies\include\fixed_production_state.h" />
     <ClInclude Include="..\..\technologies\include\fractional_secondary_output.h" />
     <ClInclude Include="..\..\technologies\include\generic_output.h" />
@@ -981,6 +990,7 @@
     <ClInclude Include="..\..\technologies\include\marginal_profit_calculator.h" />
     <ClInclude Include="..\..\technologies\include\non_energy_use_capture_component.h" />
     <ClInclude Include="..\..\technologies\include\nuke_fuel_technology.h" />
+    <ClInclude Include="..\..\technologies\include\output_accounting.h" />
     <ClInclude Include="..\..\technologies\include\pass_through_technology.h" />
     <ClInclude Include="..\..\technologies\include\phased_shutdown_decider.h" />
     <ClInclude Include="..\..\technologies\include\power_plant_capture_component.h" />

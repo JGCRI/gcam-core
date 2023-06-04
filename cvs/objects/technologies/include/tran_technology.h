@@ -47,7 +47,6 @@
 
 #include "technologies/include/technology.h"
 
-class GDP;
 class IInfo;
 /*! 
 * \ingroup Objects
@@ -76,7 +75,6 @@ public:
         const std::string& aSectorName, 
         double aVariableDemand,
         double aFixedOutputScaleFactor,
-        const GDP* aGDP,
         const int aPeriod );
 
     virtual void calcCost( const std::string& aRegionName,
@@ -116,6 +114,10 @@ protected:
     double getTotalInputCost( const std::string& aRegionName,
         const std::string& aSectorName,
         const int aPeriod ) const;
+    
+    virtual double getCurrencyConversionPrice( const std::string& aRegionName,
+                                               const std::string& aSectorName,
+                                               const int aPeriod ) const;
 
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
     double getNonEnergyCost( const std::string& aRegionName,

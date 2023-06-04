@@ -43,7 +43,7 @@ module_energy_L2321.cement <- function(command, ...) {
              FILE = "energy/A321.globaltech_shrwt",
              FILE = "energy/A321.globaltech_co2capture",
              FILE = "energy/A321.demand",
-			 FILE = "energy/A321.globaltech_retirement",
+             FILE = "energy/A321.globaltech_retirement",
              FILE = "socioeconomics/A321.inc_elas_output",
              "L1321.out_Mt_R_cement_Yh",
              "L1321.IO_GJkg_R_cement_F_Yh",
@@ -61,8 +61,9 @@ module_energy_L2321.cement <- function(command, ...) {
              "L2321.GlobalTechShrwt_cement",
              "L2321.GlobalTechCoef_cement",
              "L2321.GlobalTechCost_cement",
+             "L2321.GlobalTechTrackCapital_cement",
              "L2321.GlobalTechCapture_cement",
-			 "L2321.GlobalTechShutdown_en",
+             "L2321.GlobalTechShutdown_en",
              "L2321.GlobalTechSCurve_en",
              "L2321.GlobalTechLifetime_en",
              "L2321.GlobalTechProfitShutdown_en",
@@ -252,6 +253,18 @@ module_energy_L2321.cement <- function(command, ...) {
       bind_rows(filter(L2321.GlobalTechCost_cement, !(technology %in% L2321.GlobalTechCapture_cement[["technology"]]))) %>%
       mutate(input.cost = round(input.cost, energy.DIGITS_COST)) ->
       L2321.GlobalTechCost_cement
+
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
+    L2321.GlobalTechCost_cement %>%
+      # we need to track investments in "energy" only, cement is technically materials
+      filter(sector.name == "process heat cement") %>%
+      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # vintaging is active in cement so no need for depreciation
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L2321.GlobalTechTrackCapital_cement
 
     # Calibration and region-specific data
     # L2321.StubTechProd_cement: calibrated cement production
@@ -538,6 +551,13 @@ module_energy_L2321.cement <- function(command, ...) {
       add_precursors("energy/A321.globaltech_cost", "energy/A321.globaltech_co2capture", "energy/A321.globaltech_coef", "emissions/A_PrimaryFuelCCoef") ->
       L2321.GlobalTechCost_cement
 
+    L2321.GlobalTechTrackCapital_cement %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L2321.GlobalTechCost_cement) ->
+      L2321.GlobalTechTrackCapital_cement
+
     L2321.GlobalTechCapture_cement %>%
       add_title("CO2 capture fractions from global cement production technologies with CCS") %>%
       add_units("Unitless") %>%
@@ -663,7 +683,8 @@ module_energy_L2321.cement <- function(command, ...) {
                 L2321.IncomeElasticity_cement_gssp3, L2321.IncomeElasticity_cement_gssp4,
                 L2321.IncomeElasticity_cement_gssp5, L2321.IncomeElasticity_cement_ssp1,
                 L2321.IncomeElasticity_cement_ssp2, L2321.IncomeElasticity_cement_ssp3,
-                L2321.IncomeElasticity_cement_ssp4, L2321.IncomeElasticity_cement_ssp5)
+                L2321.IncomeElasticity_cement_ssp4, L2321.IncomeElasticity_cement_ssp5,
+                L2321.GlobalTechTrackCapital_cement)
   } else {
     stop("Unknown command")
   }

@@ -61,7 +61,7 @@ extern Scenario* scenario;
 /*! \brief Default constructor. */
 PolicyPortfolioStandard::PolicyPortfolioStandard():
 mMinPrice( 0.0 ),
-mMaxPrice( util::getLargeNumber() ),
+mMaxPrice( std::numeric_limits<double>::signaling_NaN() ),
 mPriceUnits( "1975$/GJ" ),
 mOutputUnits( "EJ_or_Share" )
 {

@@ -118,7 +118,6 @@ public:
                              const std::string& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
-                             const GDP* aGDP,
                              const int aPeriod );
 
     

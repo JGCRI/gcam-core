@@ -56,6 +56,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
              "L222.GlobalTechInterp_en",
              "L222.GlobalTechCoef_en",
              "L222.GlobalTechCost_en",
+             "L222.GlobalTechTrackCapital_en",
              "L222.GlobalTechShrwt_en",
              "L222.GlobalTechCapture_en",
              "L222.GlobalTechShutdown_en",
@@ -198,6 +199,19 @@ module_energy_L222.en_transformation <- function(command, ...) {
       L222.GlobalTechCost_en
     # reorders columns to match expected model interface input
     L222.GlobalTechCost_en <- L222.GlobalTechCost_en[LEVEL2_DATA_NAMES[["GlobalTechCost"]]]
+
+    # L222.GlobalTechTrackCapital_en: We want track capital investments for these technologies thus
+    # we will change the object type accordingly and add the market name which will track investments
+    # and the fraction of the total non-energy cost we should assume is annual investment in capital
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.REFINING_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.REFINING_CAP_PAYMENTS -1)
+    L222.GlobalTechCost_en %>%
+      mutate(capital.coef = socioeconomics.REFINING_CAPITAL_RATIO / FCR,
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # refining has vintaging so no need to for depreciation rate (although will get ignored)
+             depreciation.rate = if_else(sector.name == "refining", 0, 1/30)) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L222.GlobalTechTrackCapital_en
 
     # L222.GlobalTechCost_low_en: Costs of global technologies for energy transformation -- low tech/high cost option
     A22.globaltech_cost_low %>%
@@ -525,6 +539,13 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.globaltech_cost") ->
       L222.GlobalTechCost_en
 
+    L222.GlobalTechTrackCapital_en %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L222.GlobalTechCost_en) ->
+      L222.GlobalTechTrackCapital_en
+
     L222.GlobalTechShrwt_en %>%
       add_title("Shareweights of global technologies for energy transformation") %>%
       add_units("Unitless") %>%
@@ -639,7 +660,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
 
     return_data(L222.Supplysector_en, L222.SectorUseTrialMarket_en, L222.SubsectorLogit_en, L222.SubsectorShrwt_en,
                 L222.SubsectorShrwtFllt_en, L222.SubsectorInterp_en, L222.SubsectorInterpTo_en,
-                L222.StubTech_en, L222.GlobalTechInterp_en, L222.GlobalTechCoef_en, L222.GlobalTechCost_en,
+                L222.StubTech_en, L222.GlobalTechInterp_en, L222.GlobalTechCoef_en, L222.GlobalTechCost_en, L222.GlobalTechTrackCapital_en,
                 L222.GlobalTechShrwt_en, L222.GlobalTechCapture_en, L222.GlobalTechShutdown_en,
                 L222.GlobalTechSCurve_en, L222.GlobalTechLifetime_en, L222.GlobalTechProfitShutdown_en,
                 L222.StubTechProd_gasproc, L222.StubTechProd_refining, L222.StubTechCoef_refining,

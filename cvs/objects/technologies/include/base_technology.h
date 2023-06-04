@@ -52,7 +52,6 @@
 #include <map>
 #include <boost/core/noncopyable.hpp>
 
-#include "technologies/include/expenditure.h"
 #include "util/base/include/inamed.h"
 #include "util/base/include/value.h"
 #include "containers/include/iinfo.h"
@@ -212,8 +211,6 @@ protected:
     //! A temporary list of the leaf inputs from mNestedInputRoot
     std::vector<IInput*> mLeafInputs;
     std::vector<AGHG*> mGhgs; //!< Green-House gases.
-
-    std::vector<Expenditure> expenditures; //!< Keep track of expenditures
 
     //! The share weight used to bias investment
     double mShareWeight;

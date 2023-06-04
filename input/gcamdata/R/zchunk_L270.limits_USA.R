@@ -20,8 +20,6 @@
 #' @importFrom dplyr anti_join filter
 #' @author PLP June 2018
 module_gcamusa_L270.limits_USA <- function(command, ...) {
-  negative_emiss_input_names <- paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)) )
-  negative_emiss_output_names <- sub('NegEmissBudget', 'NegEmissBudget_USA', negative_emiss_input_names)
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
@@ -29,17 +27,12 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
              "L270.CreditOutput",
              "L270.CreditMkt",
              "L270.CreditInput_elec",
-             "L270.NegEmissBudgetMaxPrice",
-             negative_emiss_input_names))
+             "L270.NegEmissBudget"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L270.CreditMkt_USA",
              "L270.CreditOutput_USA",
              "L270.CreditInput_elecS_USA",
-             "L270.NegEmissBudgetMaxPrice_USA",
-             # TODO: might just be easier to keep the scenarios in a single
-             # table here and split when making XMLs but to match the old
-             # data system we will split here
-             negative_emiss_output_names))
+             "L270.NegEmissBudget_USA"))
   } else if(command == driver.MAKE) {
 
     value <- subsector <- supplysector <- year <- GCAM_region_ID <- sector.name <-
@@ -56,7 +49,7 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
     L270.CreditMkt <- get_data(all_data, "L270.CreditMkt", strip_attributes = TRUE)
     L270.CreditOutput <- get_data(all_data, "L270.CreditOutput", strip_attributes = TRUE)
     L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec", strip_attributes = TRUE)
-    L270.NegEmissBudgetMaxPrice <- get_data(all_data, "L270.NegEmissBudgetMaxPrice", strip_attributes = TRUE)
+    L270.NegEmissBudget <- get_data(all_data, "L270.NegEmissBudget")
 
     # ===================================================
     # Data Processing
@@ -91,10 +84,11 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
              subsector.name = Electric.sector.technology, technology = to.technology) ->
       L270.CreditInput_elecS_USA
 
-    L270.NegEmissBudgetMaxPrice %>%
+    L270.NegEmissBudget %>%
       filter(region == gcam.USA_REGION) %>%
-      write_to_all_states(names(L270.NegEmissBudgetMaxPrice)) ->
-      L270.NegEmissBudgetMaxPrice_USA
+      # market is unchanged so as to share the USA policy
+      write_to_all_states(names(L270.NegEmissBudget)) ->
+      L270.NegEmissBudget_USA
 
     # ===================================================
     # Produce outputs
@@ -126,48 +120,15 @@ module_gcamusa_L270.limits_USA <- function(command, ...) {
                      "L270.CreditInput_elec") ->
       L270.CreditInput_elecS_USA
 
-    L270.NegEmissBudgetMaxPrice_USA %>%
-      add_title("A hint for the solver for what the max price of this market is") %>%
-      add_units("%") %>%
-      add_comments("This value is just used to give the solver a hint of the") %>%
-      add_comments("range of prices which are valid.  For the negative emissions") %>%
-      add_comments("budget constraint the price is a fraction from 0 to 1") %>%
-      add_precursors("L270.NegEmissBudgetMaxPrice") ->
-      L270.NegEmissBudgetMaxPrice_USA
+    L270.NegEmissBudget_USA %>%
+      # inherit most attributes
+      add_precursors("gcam-usa/states_subregions", "L270.NegEmissBudget") ->
+      L270.NegEmissBudget_USA
 
-    ret_data <- c("L270.CreditMkt_USA",
-                  "L270.CreditOutput_USA",
-                  "L270.CreditInput_elecS_USA",
-                  "L270.NegEmissBudgetMaxPrice_USA")
-
-    # Create the negative emissions GDP budget constraint limits
-
-    # We will generate a bunch of tibbles for the negative emissions budgets for each scenario
-    # and use assign() to save them to variables with names as L270.NegEmissBudget_[SCENARIO]
-    # Note that since the call to assign() is in the for loop we must explicitly set the
-    # environment to just outside of the loop:
-    curr_env <- environment()
-    for(i in seq_along(negative_emiss_input_names)) {
-      curr_data <- get_data(all_data, negative_emiss_input_names[i], strip_attributes = TRUE)
-      curr_data %>%
-        filter(region == gcam.USA_REGION) %>%
-        write_to_all_states(names(curr_data)) %>%
-        add_title(paste0("The negative emissions budget in scenario ", negative_emiss_input_names[i])) %>%
-        add_units("mil 1990$") %>%
-        add_comments("The budget a market is willing to subsidize negative emissions") %>%
-        add_precursors(negative_emiss_input_names[i]) %>%
-        assign(negative_emiss_output_names[i], ., envir = curr_env)
-
-      ret_data <- c(ret_data, negative_emiss_output_names[i])
-    }
-
-    # Call return_data but we need to jump through some hoops since we generated some of the
-    # tibbles from the scenarios so we will generate the call to return_data
-    ret_data %>%
-      paste(collapse = ", ") %>%
-      paste0("return_data(", ., ")") %>%
-      parse(text = .) %>%
-      eval()
+    return_data(L270.CreditMkt_USA,
+                L270.CreditOutput_USA,
+                L270.CreditInput_elecS_USA,
+                L270.NegEmissBudget_USA)
   } else {
     stop("Unknown command")
   }

@@ -65,6 +65,7 @@
 #include "containers/include/imodel_feedback_calc.h"
 #include "util/base/include/manage_state_variables.hpp"
 #include "util/base/include/supply_demand_curve_saver.h"
+#include "containers/include/calc_base_price.h"
 
 #if GCAM_PARALLEL_ENABLED && PARALLEL_DEBUG
 #include <stdlib.h>
@@ -176,6 +177,16 @@ bool Scenario::XMLParse(rapidxml::xml_node<char>* & aNode) {
                 mSolvers[ fillOutPeriod ] = retSolver;
             }
         }
+        return true;
+    }
+    else if ( nodeName == CalcBasePrice::getXMLNameStatic()) {
+        // Note IModelFeedback objects (i.e. CalcBasePrice) are not GCAMFusion'ed as they
+        // typically use it to create feedbacks instead.  This means we have to manually
+        // write the XMLParse code.
+        CalcBasePrice* currFeedback = new CalcBasePrice();
+        rapidxml::xml_node<char>* firstChild = aNode->first_node();
+        currFeedback->XMLParse(firstChild);
+        mModelFeedbacks.push_back(currFeedback);
         return true;
     }
     else {

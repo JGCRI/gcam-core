@@ -54,6 +54,7 @@
 #include "util/base/include/ivisitor.h"
 #include "technologies/include/itechnology_container.h"
 #include "technologies/include/itechnology.h"
+#include "sectors/include/sector_utils.h"
 #include <cassert>
 #include <cmath>
 
@@ -106,6 +107,10 @@ void SmoothRenewableSubresource::completeInit( const std::string& aRegionName, c
       mainLog << "Invalid input parameter(s) to " << getXMLNameStatic() << std::endl;
       exit( -1 );
    }
+    
+    if( mGdpSupplyElasticity != 0.0 ) {
+        SectorUtils::addGDPDependency( aRegionName, aResourceName );
+    }
 }
 
 /*! \brief Perform any initializations needed for each period.
@@ -139,8 +144,10 @@ void SmoothRenewableSubresource::initCalc(const std::string& aRegionName, const 
 
 // SmoothRenewableSubresource::annualsupply
 void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, const std::string& aResourceName,
-                                               int aPeriod, const GDP* aGDP, double aPrice )
+                                               int aPeriod, double aPrice )
 {
+    const Modeltime* modeltime = scenario->getModeltime();
+
     ITechnology* currTech = mTechnology->getNewVintageTechnology( aPeriod );
     currTech->calcCost( aRegionName, aResourceName, aPeriod );
     const double effectivePrice = aPrice + mPriceAdder[ aPeriod ] - currTech->getCost( aPeriod );
@@ -165,10 +172,14 @@ void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, c
         }
     }
     
+    // We should not have this hidden behavior and scaling of resource with GDP.
+    // Keeping originial behavior for reproducability for now (SHK).
     // Calculate expansion in supply due to GDP increase
-    double gpdSupplyExpansion = std::pow( aGDP->getApproxGDP( aPeriod ) / aGDP->getApproxGDP( 0 ),
-                                         mGdpSupplyElasticity );
-    
+    double GDPscaled = SectorUtils::getGDP( aRegionName, aPeriod )
+                     / SectorUtils::getGDP( aRegionName, modeltime->getBasePeriod() );
+
+    double gpdSupplyExpansion = std::pow( GDPscaled, mGdpSupplyElasticity );
+
     // now convert to absolute value of production
     double annualProd = fractionAvailable * mMaxAnnualSubResource[aPeriod] * gpdSupplyExpansion;
     if( annualProd < util::getSmallNumber() ) {
@@ -181,14 +192,13 @@ void SmoothRenewableSubresource::annualsupply( const std::string& aRegionName, c
     }
     mAnnualProd[ aPeriod ] = annualProd;
     
-    currTech->production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aGDP, aPeriod );
+    currTech->production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aPeriod );
     
     // This subresource does not utilize a cumualtive supply curve.
     // Calculate cumulative production from annunal production values.
     //
     if ( aPeriod == 0 ) {
         mCumulProd[ aPeriod ] = 0.0;
-        //mAnnualProd[ aPeriod ] = 0.0;
     }
     else {
         mCumulProd[ aPeriod ] = ( mAnnualProd[aPeriod] + mAnnualProd[aPeriod - 1] ) / 2

@@ -85,7 +85,7 @@ protected:
     
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
-    virtual double calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP );
+    virtual double calcEmissionsReduction( const std::string& aRegionName, const int aPeriod );
 
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

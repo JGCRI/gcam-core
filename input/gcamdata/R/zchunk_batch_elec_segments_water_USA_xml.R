@@ -72,8 +72,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
              "L2235.DeleteSupplysector_elec_USA",
              "L2235.InterestRate_FERC_USA",
              "L2235.Pop_FERC_USA",
-             "L2235.BaseGDP_FERC_USA",
-             "L2235.LaborForceFillout_FERC_USA",
+             "L2235.GDP_FERC_USA",
              "L2235.Supplysector_elec_USA",
              "L2235.ElecReserve_elecS_grid_vertical_USA",
              "L2235.SubsectorLogit_elec_USA",
@@ -98,7 +97,9 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
              "L2235.TechCoef_elec_FERC_USA",
              "L2235.TechCoef_elecownuse_FERC_USA",
              "L2235.Production_imports_FERC_USA",
-             "L2235.Production_elec_gen_FERC_USA"))
+             "L2235.Production_elec_gen_FERC_USA",
+             # to replace capital tracking rooftop PV with regular
+             "L223.StubTechCapFactor_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "elec_segments_water_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -170,8 +171,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
     L2235.DeleteSupplysector_elec_USA <- get_data(all_data, "L2235.DeleteSupplysector_elec_USA")
     L2235.InterestRate_FERC_USA <- get_data(all_data, "L2235.InterestRate_FERC_USA")
     L2235.Pop_FERC_USA <- get_data(all_data, "L2235.Pop_FERC_USA")
-    L2235.BaseGDP_FERC_USA <- get_data(all_data, "L2235.BaseGDP_FERC_USA")
-    L2235.LaborForceFillout_FERC_USA <- get_data(all_data, "L2235.LaborForceFillout_FERC_USA")
+    L2235.GDP_FERC_USA <- get_data(all_data, "L2235.GDP_FERC_USA")
     L2235.Supplysector_elec_USA <- get_data(all_data, "L2235.Supplysector_elec_USA")
     L2235.ElecReserve_elecS_grid_vertical_USA <- get_data(all_data, "L2235.ElecReserve_elecS_grid_vertical_USA")
     L2235.SubsectorLogit_elec_USA <- get_data(all_data, "L2235.SubsectorLogit_elec_USA")
@@ -256,6 +256,16 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
 
     L2234.TechProd_elecS_grid_USA <- rename(L2234.TechProd_elecS_grid_USA, tech.share.weight = share.weight)
 
+    # we will have conflicting definitions of the capital input for rooftop PV with the
+    # global model due to capital tracking requirements
+    # given GCAM-USA is already replicating the full rooftop PV structure and macro is
+    # turned off when running GCAM-USA the easiest thing is to just replace the global
+    # version
+    get_data(all_data, "L223.StubTechCapFactor_elec") %>%
+      filter(region != gcam.USA_REGION,
+             subsector == "rooftop_pv") ->
+      L223.StubTechCapFactor_elec
+
     # ===================================================
 
 
@@ -269,6 +279,9 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
       add_xml_data(L2234.ElecReserve_elecS_USA, "ElecReserve") %>%
       add_xml_data(L2233.AvgFossilEffKeyword_elecS_cool_USA, "AvgFossilEffKeyword") %>%
       add_xml_data(L2233.GlobalTechCapital_elecS_USA, "GlobalTechCapital") %>%
+      # replace global rooftop_pv to avoid capital tracking input
+      add_xml_data(L223.StubTechCapFactor_elec, "DeleteStubTech") %>%
+      add_xml_data(L223.StubTechCapFactor_elec, "StubTechCapFactor") %>%
       add_xml_data(L2233.GlobalTechCapital_elecS_cool_USA, "GlobalTechCapital") %>%
       add_xml_data(L2233.GlobalIntTechCapital_elecS_USA, "GlobalIntTechCapital") %>%
       add_xml_data(L2233.GlobalIntTechCapital_elecS_cool_USA, "GlobalIntTechCapital") %>%
@@ -339,8 +352,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
       add_xml_data(L2235.DeleteSupplysector_elec_USA, "DeleteSupplysector") %>%
       add_xml_data(L2235.InterestRate_FERC_USA, "InterestRate") %>%
       add_xml_data(L2235.Pop_FERC_USA, "Pop") %>%
-      add_xml_data(L2235.BaseGDP_FERC_USA, "BaseGDP") %>%
-      add_xml_data(L2235.LaborForceFillout_FERC_USA, "LaborForceFillout") %>%
+      add_xml_data(L2235.GDP_FERC_USA, "GDP") %>%
       add_logit_tables_xml(L2235.Supplysector_elec_USA, "Supplysector") %>%
       add_xml_data(L2235.ElecReserve_elecS_grid_vertical_USA, "ElecReserve") %>%
       add_logit_tables_xml(L2235.SubsectorLogit_elec_USA, "SubsectorLogit") %>%
@@ -425,8 +437,7 @@ module_gcamusa_batch_elec_segments_water_USA_xml <- function(command, ...) {
                      "L2235.DeleteSupplysector_elec_USA",
                      "L2235.InterestRate_FERC_USA",
                      "L2235.Pop_FERC_USA",
-                     "L2235.BaseGDP_FERC_USA",
-                     "L2235.LaborForceFillout_FERC_USA",
+                     "L2235.GDP_FERC_USA",
                      "L2235.Supplysector_elec_USA",
                      "L2235.ElecReserve_elecS_grid_vertical_USA",
                      "L2235.SubsectorLogit_elec_USA",

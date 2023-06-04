@@ -55,6 +55,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
              "L2233.ElecReserve_elec_cool",
              "L2233.SubsectorShrwtFllt_elec_cool",
              "L2233.SubsectorLogit_elec_cool",
+             "L2233.StubTechTrackCapital_elec",
              "L2233.StubTech_elec_cool",
              "L2233.StubTechEff_elec_cool",
              "L2233.StubTechProd_elec_cool",
@@ -115,6 +116,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
     L2233.ElecReserve_elec_cool <- get_data(all_data, "L2233.ElecReserve_elec_cool")
     L2233.SubsectorShrwtFllt_elec_cool <- get_data(all_data, "L2233.SubsectorShrwtFllt_elec_cool")
     L2233.SubsectorLogit_elec_cool <- get_data(all_data, "L2233.SubsectorLogit_elec_cool")
+    L2233.StubTechTrackCapital_elec <- get_data(all_data, "L2233.StubTechTrackCapital_elec")
     L2233.StubTech_elec_cool <- get_data(all_data, "L2233.StubTech_elec_cool")
     L2233.StubTechEff_elec_cool <- get_data(all_data, "L2233.StubTechEff_elec_cool")
     L2233.StubTechSecOut_desal_elec_cool <- get_data(all_data, "L2233.StubTechSecOut_desal_elec_cool")
@@ -188,6 +190,8 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
       add_xml_data(L2233.SubsectorShrwtFllt_elec_cool, "SubsectorShrwtFllt") %>%
       add_logit_tables_xml(L2233.SubsectorLogit_elec_cool, "SubsectorLogit") %>%
       add_xml_data(L2233.StubTech_elec_cool, "StubTech") %>%
+      add_xml_data(L2233.StubTechTrackCapital_elec, "StubTechTrackCapital") %>%
+      add_xml_data(L2233.StubTechTrackCapital_elec, "StubTechCost") %>%
       add_xml_data(L2233.StubTechEff_elec_cool, "StubTechEff") %>%
       add_xml_data(L2233.StubTechSecOut_desal_elec_cool, "StubTechSecOut") %>%
       add_xml_data(L2233.StubTechProd_elec_cool, "StubTechProd") %>%
@@ -240,6 +244,7 @@ module_water_batch_electricity_water_xml <- function(command, ...) {
                      "L2233.ElecReserve_elec_cool",
                      "L2233.SubsectorShrwtFllt_elec_cool",
                      "L2233.SubsectorLogit_elec_cool",
+                     "L2233.StubTechTrackCapital_elec",
                      "L2233.StubTech_elec_cool",
                      "L2233.StubTechEff_elec_cool",
                      "L2233.StubTechProd_elec_cool",

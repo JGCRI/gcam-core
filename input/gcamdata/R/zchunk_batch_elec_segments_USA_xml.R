@@ -58,8 +58,7 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
              "L2235.DeleteSupplysector_elec_USA",
              "L2235.InterestRate_FERC_USA",
              "L2235.Pop_FERC_USA",
-             "L2235.BaseGDP_FERC_USA",
-             "L2235.LaborForceFillout_FERC_USA",
+             "L2235.GDP_FERC_USA",
              "L2235.Supplysector_elec_USA",
              "L2235.ElecReserve_elecS_grid_vertical_USA",
              "L2235.SubsectorLogit_elec_USA",
@@ -142,8 +141,7 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
     L2235.DeleteSupplysector_elec_USA <- get_data(all_data, "L2235.DeleteSupplysector_elec_USA")
     L2235.InterestRate_FERC_USA <- get_data(all_data, "L2235.InterestRate_FERC_USA")
     L2235.Pop_FERC_USA <- get_data(all_data, "L2235.Pop_FERC_USA")
-    L2235.BaseGDP_FERC_USA <- get_data(all_data, "L2235.BaseGDP_FERC_USA")
-    L2235.LaborForceFillout_FERC_USA <- get_data(all_data, "L2235.LaborForceFillout_FERC_USA")
+    L2235.GDP_FERC_USA <- get_data(all_data, "L2235.GDP_FERC_USA")
     L2235.Supplysector_elec_USA <- get_data(all_data, "L2235.Supplysector_elec_USA")
     L2235.ElecReserve_elecS_grid_vertical_USA <- get_data(all_data, "L2235.ElecReserve_elecS_grid_vertical_USA")
     L2235.SubsectorLogit_elec_USA <- get_data(all_data, "L2235.SubsectorLogit_elec_USA")
@@ -261,8 +259,7 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
       add_xml_data(L2235.DeleteSupplysector_elec_USA, "DeleteSupplysector") %>%
       add_xml_data(L2235.InterestRate_FERC_USA, "InterestRate") %>%
       add_xml_data(L2235.Pop_FERC_USA, "Pop") %>%
-      add_xml_data(L2235.BaseGDP_FERC_USA, "BaseGDP") %>%
-      add_xml_data(L2235.LaborForceFillout_FERC_USA, "LaborForceFillout") %>%
+      add_xml_data(L2235.GDP_FERC_USA, "GDP") %>%
       add_logit_tables_xml(L2235.Supplysector_elec_USA, "Supplysector") %>%
       add_xml_data(L2235.ElecReserve_elecS_grid_vertical_USA, "ElecReserve") %>%
       add_logit_tables_xml(L2235.SubsectorLogit_elec_USA, "SubsectorLogit") %>%
@@ -334,8 +331,7 @@ module_gcamusa_batch_elec_segments_USA_xml <- function(command, ...) {
                      "L2235.DeleteSupplysector_elec_USA",
                      "L2235.InterestRate_FERC_USA",
                      "L2235.Pop_FERC_USA",
-                     "L2235.BaseGDP_FERC_USA",
-                     "L2235.LaborForceFillout_FERC_USA",
+                     "L2235.GDP_FERC_USA",
                      "L2235.Supplysector_elec_USA",
                      "L2235.ElecReserve_elecS_grid_vertical_USA",
                      "L2235.SubsectorLogit_elec_USA",

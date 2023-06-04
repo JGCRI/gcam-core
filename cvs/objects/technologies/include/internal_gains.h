@@ -130,8 +130,9 @@ public:
 
     virtual double getPhysicalOutput( const int aPeriod ) const;
 
-    virtual void setCurrencyOutput( const std::string& aRegionName,
-                                    const double aOutput,
+    virtual void setCurrencyOutput( const double aPysicalOutput,
+                                    const double aCurrencyConversionPrice,
+                                    const std::string& aRegionName,
                                     const int aPeriod )
     {
     }

@@ -89,6 +89,7 @@ module_energy_L210.resources <- function(command, ...) {
              "L210.ResReserveTechLifetime",
              "L210.ResReserveTechDeclinePhase",
              "L210.ResReserveTechProfitShutdown",
+             "L210.ResReserveTechInvestmentInput",
              "L210.ResTechShrwt",
              "L210.ResTechShrwt_EGS",
              "L210.ResTechCoef",
@@ -576,6 +577,17 @@ module_energy_L210.resources <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ResReserveTechProfitShutdown"]]) ->
       L210.ResReserveTechProfitShutdown
 
+    L210.ResSubresourceProdLifetime %>%
+      mutate(resource.reserve.technology = reserve.subresource,
+             invest_lifetime = avg.prod.lifetime / 2,
+             FCR = (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^invest_lifetime) / ((1+socioeconomics.DEFAULT_INTEREST_RATE)^invest_lifetime -1),
+             capital.coef = socioeconomics.RESOURCE_CAPITAL_RATIO / FCR,
+             minicam.non.energy.input = "investment-cost",
+             tracking.market = "capital") %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      select(LEVEL2_DATA_NAMES[["ResReserveTechInvestmentInput"]]) ->
+      L210.ResReserveTechInvestmentInput
+
     A21.globalrsrctech_cost %>%
       repeat_add_columns(GCAM_region_names) %>%
       select(LEVEL2_DATA_NAMES[["ResReserveTechCost"]]) -> L210.ResTechCost
@@ -853,6 +865,16 @@ module_energy_L210.resources <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A10.ResReserveTechProfitShutdown") ->
       L210.ResReserveTechProfitShutdown
 
+    L210.ResReserveTechInvestmentInput %>%
+      add_title("Non-energy input to keep track of resource curve investment cost") %>%
+      add_units("NA") %>%
+      add_comments("A resource reserve tech needs an input to keep track of the resource") %>%
+      add_comments("curves cost that was used when the tech was invested.  It will be") %>%
+      add_comments("for calculating shutdown deciders but also, this input will track") %>%
+      add_comments("capital demands so those parameters are also read in") %>%
+      same_attributes_as(L210.ResSubresourceProdLifetime) ->
+      L210.ResReserveTechInvestmentInput
+
     L210.ResTechShrwt %>%
       add_title("Share weights for technologies in resources") %>%
       add_units("NA") %>%
@@ -876,7 +898,7 @@ module_energy_L210.resources <- function(command, ...) {
                 L210.GrdRenewRsrcCurves_EGS, L210.GrdRenewRsrcMax_EGS, L210.GrdRenewRsrcCurves_tradbio, L210.GrdRenewRsrcMax_tradbio, L210.RsrcTechChange_SSP1,
                 L210.RsrcEnvironCost_SSP1, L210.RsrcTechChange_SSP2, L210.RsrcEnvironCost_SSP2, L210.RsrcTechChange_SSP3, L210.RsrcEnvironCost_SSP3,
                 L210.RsrcTechChange_SSP4, L210.RsrcEnvironCost_SSP4, L210.RsrcTechChange_SSP5, L210.RsrcEnvironCost_SSP5,
-                L210.ResSubresourceProdLifetime, L210.SubresourcePriceAdder, L210.ResReserveTechLifetime, L210.ResReserveTechDeclinePhase, L210.ResReserveTechProfitShutdown,
+                L210.ResSubresourceProdLifetime, L210.SubresourcePriceAdder, L210.ResReserveTechLifetime, L210.ResReserveTechDeclinePhase, L210.ResReserveTechProfitShutdown, L210.ResReserveTechInvestmentInput,
                 L210.ResTechShrwt, L210.ResTechShrwt_EGS, L210.ResTechCoef, L210.ResTechCost)
   } else {
     stop("Unknown command")

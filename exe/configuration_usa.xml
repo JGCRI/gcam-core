@@ -98,7 +98,7 @@
 		
 		<Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
 		<Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
-		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>
+		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget.xml</Value>
 		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
         <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
         <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
@@ -131,7 +131,7 @@
 		<Value name = "geothermal_usa">../input/gcamdata/xml/geothermal_fixed_USA.xml</Value>
 
 		<Value name = "liq_lim_usa">../input/gcamdata/xml/liquids_limits_USA.xml</Value>
-		<Value name = "neg_emiss_usa">../input/gcamdata/xml/negative_emissions_budget_USA_gSSP2.xml</Value>
+		<Value name = "neg_emiss_usa">../input/gcamdata/xml/negative_emissions_budget_USA.xml</Value>
 		<Value name = "USA_regional_bio">../input/gcamdata/xml/regional_biomass_USA.xml</Value>
 		
 		<!--WATER DATA-->
@@ -168,6 +168,8 @@
 	</Strings>
 	<Bools>
 		<Value name="CalibrationActive">1</Value>
+		<!-- Fixed GDP will calibrate to exogenous path -->
+		<Value name="FixedGDP-Path">1</Value>
 		<Value name="BatchMode">0</Value>
 		<Value name="find-path">0</Value>
 		<Value name="createCostCurve">0</Value>

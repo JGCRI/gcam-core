@@ -162,6 +162,9 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
                                          PreviousPeriodInfo& aPrevPeriodInfo,
                                          const int aPeriod )
 {
+    // grab the previous tech before anything updates it in aPrevPeriodInfo
+    const AgProductionTechnology* prevAgTech = static_cast<const AgProductionTechnology*>( aPrevPeriodInfo.mPrevVintage );
+    
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
                           aDemographics, aPrevPeriodInfo, aPeriod );
   
@@ -177,7 +180,6 @@ void AgProductionTechnology::initCalc( const string& aRegionName,
     // Compute tech change values for this period for both ag productivity and
     // the nonLandVariableCost.
     int timestep = modeltime->gettimestep( aPeriod );
-    const AgProductionTechnology* prevAgTech = static_cast<const AgProductionTechnology*>( aPrevPeriodInfo.mPrevVintage );
 
     // If no nonLandVariableCost is read in, get the previous period cost from previous vintage.
     // Note: you can never overwrite a positive yield with a zero yield. If the model sees a
@@ -347,8 +349,8 @@ void AgProductionTechnology::setCalYields(const std::string& aRegionName) {
 * \return The log of the technology share, always 1 for AgProductionTechnologies.
 * \author James Blackwood, Steve Smith
 */
-double AgProductionTechnology::calcShare( const IDiscreteChoice* aChoiceFn,
-                                          const GDP* aGDP,
+double AgProductionTechnology::calcShare( const std::string& aRegionName,
+                                          const IDiscreteChoice* aChoiceFn,
                                           int aPeriod ) const
 {
     assert( mProductionState[ aPeriod ]->isNewInvestment() );
@@ -401,7 +403,6 @@ void AgProductionTechnology::production( const string& aRegionName,
                                            const string& aSectorName,
                                            const double aVariableDemand,
                                            const double aFixedOutputScaleFactor,
-                                           const GDP* aGDP,
                                            const int aPeriod )
 {
     // This code is also in the technology class, but we do not
@@ -423,8 +424,21 @@ void AgProductionTechnology::production( const string& aRegionName,
 	
     // This call to the technology::calcEmissionsAndOutputs() is where the physical output
     // of the ag technology is set.
-    calcEmissionsAndOutputs( aRegionName, primaryOutput, aGDP, aPeriod );
+    calcEmissionsAndOutputs( aRegionName, aSectorName, primaryOutput, aPeriod );
 
+}
+
+double AgProductionTechnology::getFixedOutput( const string& aRegionName,
+                                               const string& aSectorName,
+                                               const bool aHasRequiredInput,
+                                               const string& aRequiredInput,
+                                               const double aMarginalRevenue,
+                                               const int aPeriod ) const
+{
+    // AgProductionTechnology do not have fixed outputs however we will
+    // take this oportunity to store the marginal revenue
+    const_cast<AgProductionTechnology*>(this)->mMarginalRevenue = aMarginalRevenue;
+    return 0.0;
 }
 
 /*! \brief Calculate the profit rate for the technology.

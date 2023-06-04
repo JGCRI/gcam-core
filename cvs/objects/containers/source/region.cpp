@@ -67,6 +67,7 @@
 
 #include "resources/include/resource.h"
 #include "resources/include/unlimited_resource.h"
+#include "resources/include/trial_value_resource.h"
 
 #include "containers/include/iinfo.h"
 

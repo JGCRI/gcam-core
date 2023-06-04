@@ -54,6 +54,7 @@ module_energy_L2326.aluminum <- function(command, ...) {
              "L2326.GlobalTechShrwt_aluminum",
              "L2326.GlobalTechCoef_aluminum",
              "L2326.GlobalTechCost_aluminum",
+             "L2326.GlobalTechTrackCapital_aluminum",
              "L2326.GlobalTechCapture_aluminum",
 			       "L2326.GlobalTechShutdown_aluminum",
              "L2326.GlobalTechSCurve_aluminum",
@@ -301,6 +302,18 @@ module_energy_L2326.aluminum <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L2326.GlobalTechCost_aluminum # intermediate tibble
 
+    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
+      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
+    L2326.GlobalTechCost_aluminum %>%
+      # we only want to track investments in energy, otherwise we double accounting with materials
+      filter(sector.name == "alumina") %>%
+      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             # vintaging is active so no need for depreciation
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
+      L2326.GlobalTechTrackCapital_aluminum
+
     # L2326.StubTechCalInput_aluminum: calibrated input of aluminum energy use technologies (including cogen)
     L2326.GlobalTechCoef_aluminum %>%
       rename(supplysector = sector.name,
@@ -541,6 +554,13 @@ module_energy_L2326.aluminum <- function(command, ...) {
       add_precursors("energy/A326.globaltech_cost", "energy/A326.globaltech_coef") ->
       L2326.GlobalTechCost_aluminum
 
+    L2326.GlobalTechTrackCapital_aluminum %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      same_precursors_as(L2326.GlobalTechCost_aluminum) ->
+      L2326.GlobalTechTrackCapital_aluminum
+
 
     if(exists("L2326.GlobalTechShutdown_aluminum")) {
       L2326.GlobalTechShutdown_aluminum %>%
@@ -670,7 +690,8 @@ module_energy_L2326.aluminum <- function(command, ...) {
                   L2326.StubTechCalInput_aluminum,L2326.StubTechCoef_aluminum,L2326.GlobalTechShutdown_aluminum,
                   L2326.GlobalTechSCurve_aluminum, L2326.GlobalTechLifetime_aluminum, L2326.GlobalTechProfitShutdown_aluminum,
                   L2326.PerCapitaBased_aluminum, L2326.BaseService_aluminum,L2326.StubTechProd_aluminum,
-                  L2326.PriceElasticity_aluminum,L2326.GlobalTechCapture_aluminum,L2326.GlobalTechSecOut_aluminum)
+                  L2326.PriceElasticity_aluminum,L2326.GlobalTechCapture_aluminum,L2326.GlobalTechSecOut_aluminum,
+                  L2326.GlobalTechTrackCapital_aluminum)
 
 
   } else {

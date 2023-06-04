@@ -38,6 +38,7 @@ module_energy_batch_resources_xml <- function(command, ...) {
              "L210.ResReserveTechLifetime",
              "L210.ResReserveTechDeclinePhase",
              "L210.ResReserveTechProfitShutdown",
+             "L210.ResReserveTechInvestmentInput",
              "L210.ResTechShrwt",
              "L210.ResTechCoef",
              "L210.ResTechCost"))
@@ -74,6 +75,7 @@ module_energy_batch_resources_xml <- function(command, ...) {
     L210.ResReserveTechLifetime <- get_data(all_data, "L210.ResReserveTechLifetime")
     L210.ResReserveTechDeclinePhase <- get_data(all_data, "L210.ResReserveTechDeclinePhase")
     L210.ResReserveTechProfitShutdown <- get_data(all_data, "L210.ResReserveTechProfitShutdown")
+    L210.ResReserveTechInvestmentInput <- get_data(all_data, "L210.ResReserveTechInvestmentInput")
     L210.ResTechShrwt <- get_data(all_data, "L210.ResTechShrwt")
     L210.ResTechCost <- get_data(all_data, "L210.ResTechCost")
     L210.ResTechCoef <- get_data(all_data, "L210.ResTechCoef")
@@ -92,6 +94,7 @@ module_energy_batch_resources_xml <- function(command, ...) {
       add_xml_data(L210.SubresourcePriceAdder, "SubresourcePriceAdder") %>%
       add_xml_data(L210.ReserveCalReserve, "ReserveCalReserve") %>%
       add_xml_data(L210.ResReserveTechLifetime, "ResReserveTechLifetime") %>%
+      add_xml_data(L210.ResReserveTechInvestmentInput, "ResReserveTechInvestmentInput") %>%
       add_xml_data(L210.ResTechCost, "ResReserveTechCost") %>%
       add_xml_data(L210.ResTechCoef, "ResReserveTechCoef") %>%
       add_xml_data(L210.ResReserveTechDeclinePhase, "ResReserveTechDeclinePhase") %>%
@@ -119,7 +122,8 @@ module_energy_batch_resources_xml <- function(command, ...) {
                      "L210.RsrcCurves_fos", "L210.RsrcCurves_U", "L210.SmthRenewRsrcCurves_MSW", "L210.SmthRenewRsrcCurves_wind", "L210.SmthRenewRsrcCurves_offshore_wind",
                      "L210.SmthRenewRsrcCurvesGdpElast_roofPV", "L210.GrdRenewRsrcCurves_geo", "L210.GrdRenewRsrcMax_geo",
                      "L210.GrdRenewRsrcCurves_tradbio", "L210.GrdRenewRsrcMax_tradbio", "L210.ResSubresourceProdLifetime", "L210.SubresourcePriceAdder",
-                     "L210.ResReserveTechLifetime", "L210.ResReserveTechDeclinePhase", "L210.ResReserveTechProfitShutdown", "L210.ResTechShrwt","L210.ResTechCoef","L210.ResTechCost") ->
+                     "L210.ResReserveTechLifetime", "L210.ResReserveTechDeclinePhase", "L210.ResReserveTechProfitShutdown", "L210.ResTechShrwt","L210.ResTechCoef","L210.ResTechCost",
+                     "L210.ResReserveTechInvestmentInput") ->
       resources.xml
 
     return_data(resources.xml)

@@ -76,8 +76,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
              "L223.Production_elec_FERC",
              "L223.InterestRate_FERC",
              "L223.Pop_FERC",
-             "L223.BaseGDP_FERC",
-             "L223.LaborForceFillout_FERC",
+             "L223.GDP_FERC",
              "L223.Supplysector_elec_USA",
              "L223.ElecReserve_USA",
              "L223.SubsectorLogit_elec_USA",
@@ -282,16 +281,11 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_YEARS)) ->
       L223.Pop_FERC
 
-    # L223.BaseGDP_FERC: Base GDP in FERC grid regions
+    # L223.GDP_FERC: GDP in FERC grid regions
     tibble(region = grid_regions,
-           baseGDP = 1)  ->
-      L223.BaseGDP_FERC
-
-    # L223.LaborForceFillout_FERC: labor force in the grid regions
-    tibble(region = grid_regions,
-           year.fillout = min(MODEL_BASE_YEARS),
-           laborforce = socioeconomics.DEFAULT_LABORFORCE) ->
-      L223.LaborForceFillout_FERC
+           GDP = 1)  %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS))->
+      L223.GDP_FERC
 
 
     # PART 3: THE STATES
@@ -759,21 +753,12 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
       add_precursors("gcam-usa/states_subregions") ->
       L223.Pop_FERC
 
-    L223.BaseGDP_FERC %>%
-      add_title("Base GDP in grid regions") %>%
+    L223.GDP_FERC %>%
+      add_title("GDP in grid regions") %>%
       add_units("Unitless") %>%
       add_comments("") %>%
-      add_legacy_name("L223.BaseGDP_FERC") %>%
       add_precursors("gcam-usa/states_subregions") ->
-      L223.BaseGDP_FERC
-
-    L223.LaborForceFillout_FERC %>%
-      add_title("Labor force in grid regions") %>%
-      add_units("Unitless") %>%
-      add_comments("Use the default labor force") %>%
-      add_legacy_name("L223.LaborForceFillout_FERC") %>%
-      add_precursors("gcam-usa/states_subregions") ->
-      L223.LaborForceFillout_FERC
+      L223.GDP_FERC
 
     L223.Supplysector_elec_USA %>%
       add_title("Supplysector information of electricity sector in the states") %>%
@@ -1028,8 +1013,7 @@ module_gcamusa_L223.electricity_USA <- function(command, ...) {
                 L223.Production_elec_FERC,
                 L223.InterestRate_FERC,
                 L223.Pop_FERC,
-                L223.BaseGDP_FERC,
-                L223.LaborForceFillout_FERC,
+                L223.GDP_FERC,
                 L223.Supplysector_elec_USA,
                 L223.ElecReserve_USA,
                 L223.SubsectorLogit_elec_USA,

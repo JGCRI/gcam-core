@@ -47,12 +47,11 @@
 #include "resources/include/grade.h"
 #include "resources/include/renewable_subresource.h"
 #include "resources/include/subresource.h"
-#include "containers/include/gdp.h"
 #include "containers/include/iinfo.h"
-#include "marketplace/include/marketplace.h"
 #include "util/base/include/ivisitor.h"
 #include "technologies/include/itechnology_container.h"
 #include "technologies/include/itechnology.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 
@@ -108,6 +107,10 @@ void SubRenewableResource::completeInit( const string& aRegionName, const string
         mainLog << "Non-zero initial grade available is ignored in " << getXMLNameStatic()
                 << " " << mName << "." << endl;
     }
+    
+    if( mGdpSupplyElasticity != 0.0 ) {
+        SectorUtils::addGDPDependency( aRegionName, aResourceName );
+    }
 }
 
 //! Cumulative Production
@@ -131,8 +134,10 @@ void SubRenewableResource::cumulsupply( const string& aRegionName, const string&
 * Note that the cost curve needs to be in the form of price, and cumulative fraction available.
 */
 void SubRenewableResource::annualsupply( const string& aRegionName, const string& aResourceName,
-                                         int aPeriod, const GDP* aGdp, double aPrice )
+                                         int aPeriod, double aPrice )
 {
+    const Modeltime* modeltime = scenario->getModeltime();
+
     ITechnology* currTech = mTechnology->getNewVintageTechnology( aPeriod );
     currTech->calcCost( aRegionName, aResourceName, aPeriod );
     double fractionAvailable = -1;
@@ -175,14 +180,17 @@ void SubRenewableResource::annualsupply( const string& aRegionName, const string
         fractionAvailable = maxFraction;
     }
 
+    // We should not have this hidden behavior and scaling of resources with GDP (SHK)
     // Calculate the amount of resource expansion due to GDP increase.
-    double resourceSupplyIncrease = pow( aGdp->getApproxGDP( aPeriod ) / aGdp->getApproxGDP( 0 ),
-                                         mGdpSupplyElasticity );
+    double GDPscaled = SectorUtils::getGDP( aRegionName, aPeriod )
+                     / SectorUtils::getGDP( aRegionName, modeltime->getBasePeriod() );
+
+    double resourceSupplyIncrease = std::pow( GDPscaled, mGdpSupplyElasticity );
 
     // now convert to absolute value of production
     mAnnualProd[ aPeriod ] = fractionAvailable * mMaxAnnualSubResource[aPeriod] * resourceSupplyIncrease;
     
-    currTech->production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aGdp, aPeriod );
+    currTech->production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aPeriod );
 
     // This subresource does not utilize a cumualtive supply curve.
     // Calculate cumulative production from annunal production values.
