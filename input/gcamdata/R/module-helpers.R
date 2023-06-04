@@ -1166,3 +1166,94 @@ compute_BC_OC_elc <- function(df, BC_OC_assumptions) {
   return (df)
 
 }
+
+
+#' join.gdp.ts
+#'
+#' Join past GDP time series to future.
+#'
+#' When we have to join two GDP time series, we usually find that they don't
+#' match up at year of overlap (the "base year").  What we do in these cases is
+#' we compute, for the later time series, ratios of GDPs in the future years to
+#' those in the base year.  We then multiply the future ratios by the past base
+#' year value.  That future time series can then be grafted onto the past
+#' without leaving a seam.
+#'
+#' In practice, the past is often a single time series, while the future is
+#' often a collection of scenarios.  Therefore, we assume that the past time
+#' series has no scenario column.  If the future does not have a scenario
+#' column, it is given a dummy one, which is dropped before the new table is
+#' returned.  Note that we look for lower-case 'scenario' for this.
+#'
+#' The base year is calculated automatically.  It is the maximum of the years
+#' that overlap between the two data sets.
+#'
+#' We also have to know how to group the data for calculating the gdp ratios.
+#' Normally this will be either by country ('iso') or by GCAM region
+#' ('GCAM_region_ID').  The choice of which is passed in as the 'grouping'
+#' argument.
+#'
+#' Finally, although we have discussed this function in terms of joining two GDP
+#' time series, in the future time series we use only the ratios of GDP to base
+#' year GDP.  Therefore, any time series with the correct ratios will work.  For
+#' example, if we have a time series of growth rates, we can convert those to
+#' ratios using \code{\link[base]{cumprod}} and pass those ratios as the future
+#' time series.  For similar reasons, even if the two time series have different
+#' units (e.g., different dollar-years or PPP vs. MER), they can still be
+#' joined.  The units of the output time series will be the same as the units of
+#' \code{past}.
+#'
+#' @param past Tibble with the past time series (year, gdp, and grouping).
+#' @param future Tibble with the future data (year, gdp, scenario, and
+#' grouping).
+#' @param grouping Name of the grouping column (generally either 'iso' or
+#' 'GCAM_region_ID', but could be anything
+#' @return Time series with the past and future joined as described in details.
+join.gdp.ts <- function(past, future, grouping) {
+
+  year <- gdp <- base.gdp <- gdp.ratio <- . <- scenario <-
+    NULL                            # silence notes on package check.
+
+  if(! 'scenario' %in% names(future)) {
+    ## This saves us having to make a bunch of exceptions below when we
+    ## include 'scenario' among the columns to join by.
+    future$scenario <- 'scen'
+    drop.scenario <- TRUE
+  }
+  else {
+    drop.scenario <- FALSE
+  }
+
+  ## Find the base year
+  base.year <- max(intersect(past$year, future$year))
+  assert_that(is.finite(base.year))
+
+  ## Base year gdp from the future dataset
+  baseyear.future.gdp <- filter(future, year == base.year) %>%
+    rename(base.gdp = gdp) %>%
+    select(-year)
+
+  gdp.future.ratio <- filter(future, year > base.year) %>%
+    left_join_error_no_match(baseyear.future.gdp, by = c('scenario', grouping)) %>%
+    mutate(gdp.ratio = gdp / base.gdp) %>%
+    select('scenario', grouping, 'year', 'gdp.ratio')
+
+  ## add the scenario column to the past
+  gdp.past <- tidyr::crossing(past, scenario = unique(gdp.future.ratio[['scenario']]))
+  baseyear.past.gdp <- filter(gdp.past, year == base.year) %>%
+    rename(base.gdp = gdp) %>%
+    select(-year)
+
+  rslt <- left_join(baseyear.past.gdp, gdp.future.ratio,
+                    by = c('scenario', grouping)) %>%
+    mutate(gdp = base.gdp * gdp.ratio) %>%
+    select('scenario', grouping, 'year', 'gdp') %>%
+    bind_rows(gdp.past, .)
+
+  if(drop.scenario) {
+    select(rslt, -scenario)
+  }
+  else {
+    rslt
+  }
+}

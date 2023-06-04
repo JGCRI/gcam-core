@@ -818,7 +818,7 @@ emissions.ZERO_EM_TECH  <- c("electricity", "Electric", "BEV","FCEV","district h
 emissions.HIGH_EM_FACTOR_THRESHOLD <- 1000  # All emission factors above this threshold are replaced with the global median of emission factors.
 emissions.GFED_NODATA <- c("ala","bes","blm","ggy","jey","maf","xad","xko","xnc")  # GFED LULC dataset does not contaian data for these isos. These get filtered out so we can use the left_join_error_no_match.
 emissions.UNMGD_LAND_AVG_YRS <- 30 # Years for climatological average for the GFED LULC data.
-emissions.CEDS_scale    <- "usa" # iso's that will be scaled to CEDS emissions
+emissions.CEDS_SCALE    <- "usa" # iso's that will be scaled to CEDS emissions
 emissions.CH4.GWP.AR4 <- 25 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
 emissions.N2O.GWP.AR4 <- 298 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
 
@@ -1066,7 +1066,7 @@ gcamusa.TRN_MARKAL_EMISSION_YEARS <- seq(2005,2050, 5)
 gcamusa.TRN_EMISSION_YEARS <- seq(2005,2100, 5)
 
 # emission factor timestep
-gcamusa.TRN_EF_timestep <- 5
+gcamusa.TRN_EF_TIMESTEP <- 5
 
 # GCAM-USA StubTranTech missing lifetime
 gcamusa.STUBTRANTECH_LIFETIME_2045V <- 25 # lifetime for missing vehicles vintages 2045 and earlier
@@ -1084,10 +1084,10 @@ gcamusa.INTL_SHIP_PM_RATIO <- 0.92 # this is the ratio of PM2.5 to PM10 for inte
 gcamusa.IND_PROC_EM_NEI_GCAM_SECTORS <- c("industry_processes", "solvents")
 gcamusa.URB_PROC_EM_NEI_GCAM_SECTORS <- c("landfills", "wastewater", "waste_incineration")
 gcamusa.CEMENT_NEI_GCAM_SECTORS <- c("cement")
-gcamusa.NONGHG_PROC_SECTORS.missing_pollutants <- c("PM2.5", "PM10", "NH3")
-gcamusa.NONGHG_PROC_SECTORS.missing_subsectors <- c("wastewater")
-gcamusa.NONGHG_PROC_SECTORS.gdp_max_reduction <- 30
-gcamusa.NONGHG_PROC_SECTORS.gdp_steepness <- 3.5
+gcamusa.NONGHG_PROC_SECTORS.MISSING_POLLUTANTS <- c("PM2.5", "PM10", "NH3")
+gcamusa.NONGHG_PROC_SECTORS.MISSING_SUBSECTORS <- c("wastewater")
+gcamusa.NONGHG_PROC_SECTORS.GDP_MAX_REDUCTION <- 30
+gcamusa.NONGHG_PROC_SECTORS.GDP_STEEPNESS <- 3.5
 
 gcamusa.PROC_DEFAULT_SECTOR <- "industrial processes"
 gcamusa.PROC_DEFAULT_S_T <- "other industrial processes"
