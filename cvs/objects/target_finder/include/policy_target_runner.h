@@ -142,10 +142,10 @@ public:
 protected:
     //! The scenario runner which controls running the initial scenario, and all
     //! fixed taxed scenarios after.
-    std::auto_ptr<SingleScenarioRunner> mSingleScenario;
+    std::unique_ptr<SingleScenarioRunner> mSingleScenario;
 
     //! The delegate object which calculates total costs.
-    std::auto_ptr<TotalPolicyCostCalculator> mPolicyCostCalculator;
+    std::unique_ptr<TotalPolicyCostCalculator> mPolicyCostCalculator;
     
     DEFINE_DATA_WITH_PARENT(
         IScenarioRunner,

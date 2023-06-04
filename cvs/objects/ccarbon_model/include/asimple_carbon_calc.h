@@ -81,6 +81,8 @@ public:
     virtual double getNetLandUseChangeEmissionAbove( const int aYear ) const;
     
     virtual double getNetLandUseChangeEmissionBelow( const int aYear ) const;
+    
+    virtual double getGrossPositiveLandUseChangeEmissionAbove( const int aYear ) const;
 
     virtual double getActualAboveGroundCarbonDensity( const int aYear ) const = 0;
     
@@ -123,6 +125,10 @@ protected:
         
         //! Above ground carbon stock
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "above-ground-carbon-stock", mCarbonStock, objects::YearVector<Value> ),
+        
+        //! Track gross positive above ground emissions explicitly so we can partition the net emissions to gross
+        //! to report to the climate model
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "gross-positive-above-ground-land-use-change-emissions", mPositiveEmissionsAbove, objects::YearVector<double> ),
         
         //! Time scale for soil carbon emissions
         DEFINE_VARIABLE( SIMPLE, "soil-time-scale", mSoilTimeScale, int ),
@@ -173,11 +179,32 @@ protected:
     //! expensive operations during calc.
     precalc_sigmoid_type precalc_sigmoid_diff;
     
+    
+    // Some boiler plate to be able to take advantage of boost::flyweight to share
+    // the precalc exp soil curve between instances that have the same soil timescale
+    struct precalc_expsoil_helper {
+        precalc_expsoil_helper( const int aSoilTimeScale );
+        std::vector<double> mData;
+        
+        const double& operator[]( const size_t aPos ) const {
+            return mData[ aPos ];
+        }
+    };
+    using precalc_expsoil_type = boost::flyweights::flyweight<
+        boost::flyweights::key_value<int, precalc_expsoil_helper>,
+        boost::flyweights::no_tracking>;
+    
+    //! The difference in the exp soil curve by year offset + 1 - year offset.
+    //! This value get precomputed during initcalc to avoid doing the computationally
+    //! expensive operations during calc.
+    precalc_expsoil_type precalc_expsoil_diff;
+    
     //! Flag to ensure historical emissions are only calculated a single time
     //! since they can not be reset.
     bool mHasCalculatedHistoricEmiss;
 
-    void calcAboveGroundCarbonEmission(const double aPrevCarbonStock,
+    void calcAboveGroundCarbonEmission(const CarbonCalcMode aCalcMode,
+                                       const double aPrevCarbonStock,
                                        const double aPrevLandArea,
                                        const double aCurrLandArea,
                                        const double aPrevCarbonDensity,

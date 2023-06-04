@@ -77,6 +77,7 @@ varchk:
 
 clean :
 	-$(RM) libgcam.a
+	-$(RM) libhector.a
 	-$(RM) objs/*.o
 	-$(MAKE) -C ../../containers/source  clean 
 	-$(MAKE) -C ../../demographics/source  clean 

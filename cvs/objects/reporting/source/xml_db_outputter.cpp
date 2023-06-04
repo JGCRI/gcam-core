@@ -218,7 +218,7 @@ XMLDBOutputter::~XMLDBOutputter(){
  */
 bool XMLDBOutputter::checkJavaWorking() {
 #if( __HAVE_JAVA__ )
-    auto_ptr<JNIContainer> testContainer = createContainer( true );
+    unique_ptr<JNIContainer> testContainer = createContainer( true );
     // if we get back a null container then some error occured
     // createContainer would have already print any error messages.
     return testContainer.get();
@@ -298,9 +298,9 @@ void XMLDBOutputter::finalizeAndClose() {
  *         ready to accept data to write/alter to the database.  If an error occurs
  *         a null container will be returned.
  */
-auto_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bool aTestingOnly ) {
+unique_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const bool aTestingOnly ) {
     // Create a Java instance.
-    auto_ptr<JNIContainer> jniContainer( new JNIContainer );
+    unique_ptr<JNIContainer> jniContainer( new JNIContainer );
 
     // Ensure the user wants this output
     const Configuration* conf = Configuration::getInstance();
@@ -1501,12 +1501,39 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
                              year );
     }
 
-    // Global-mean temperature
+    // Global-mean air temperature
     for( int year = scenario->getModeltime()->getStartYear();
          year <= endingYear; year += outputInterval )
     {
-        writeItemUsingYear( "global-mean-temperature", "degreesC",
-                             aClimateModel->getTemperature( year ),
+        writeItemUsingYear( "global-mean-air-temperature-native", "degreesC",
+                             aClimateModel->getTemperature( year, false ),
+                             year );
+    }
+    
+    // Global-mean surface temperature
+    for( int year = scenario->getModeltime()->getStartYear();
+         year <= endingYear; year += outputInterval )
+    {
+        writeItemUsingYear( "global-mean-surface-temperature-native", "degreesC",
+                             aClimateModel->getGmst( year, false ),
+                             year );
+    }
+    
+    // Global-mean air temperature relative to 1850-1900 mean
+    for( int year = scenario->getModeltime()->getStartYear();
+         year <= endingYear; year += outputInterval )
+    {
+        writeItemUsingYear( "global-mean-air-temperature", "degreesC",
+                             aClimateModel->getTemperature( year, true ),
+                             year );
+    }
+    
+    // Global-mean surface temperature relative to 1850-1900 mean
+    for( int year = scenario->getModeltime()->getStartYear();
+         year <= endingYear; year += outputInterval )
+    {
+        writeItemUsingYear( "global-mean-surface-temperature", "degreesC",
+                             aClimateModel->getGmst( year, true ),
                              year );
     }
 }
@@ -1651,11 +1678,12 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
         writeItemUsingYear( "land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmission( aYear ), aYear );
         writeItemUsingYear( "above-land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmissionAbove( aYear ), aYear );
         writeItemUsingYear( "below-land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmissionBelow( aYear ), aYear );
-     }
+        writeItemUsingYear( "above-gross-positive-luc", "MtC/yr", aCarbonCalc->getGrossPositiveLandUseChangeEmissionAbove( aYear ), aYear );
+    }
     
-    for( int aYear = modeltime->getStartYear(); 
-             aYear <= modeltime->getper_to_yr( modeltime->getmaxper() - 1 ) || aYear == modeltime->getper_to_yr( modeltime->getmaxper() - 1 ); 
-             aYear += outputInterval ){
+    {
+        // carbon densities are not actually changing over time
+        int aYear = modeltime->getStartYear();
         XMLWriteElement( aCarbonCalc->getActualAboveGroundCarbonDensity( aYear ),
                         "above-ground-carbon-density", mBuffer, mTabs.get(), aYear );
         XMLWriteElement( aCarbonCalc->getActualBelowGroundCarbonDensity( aYear ),

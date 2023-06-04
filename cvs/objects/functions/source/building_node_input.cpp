@@ -82,7 +82,7 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
                                       const IInfo* aTechInfo)
 {
     // create internal gains market for this type of building
-    auto_ptr<IInfo> internalGainsInfo( InfoFactory::constructInfo( aTechInfo, mInternalGainsMarketname ) );
+    unique_ptr<IInfo> internalGainsInfo( InfoFactory::constructInfo( aTechInfo, mInternalGainsMarketname ) );
     internalGainsInfo->setString( "output-unit", mInternalGainsUnit );
     if( SectorUtils::createTrialSupplyMarket( aRegionName, mInternalGainsMarketname, internalGainsInfo.get() ) ){
         // set initial trial supplies from the parsed vector
@@ -100,7 +100,7 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
 
     // we sort the child inputs now to make things easier on us when it comes time to merge
     // node inputs in copyParamsInto.
-    util::NameComparator<IInput> comp;
+    util::NameComparator comp;
     sort( mNestedInputs.begin(), mNestedInputs.end(), comp );
 
     // have all contained inputs do completeInit as well

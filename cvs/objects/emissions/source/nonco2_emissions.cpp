@@ -92,7 +92,7 @@ void NonCO2Emissions::copy( const NonCO2Emissions& aOther ) {
     
     mEmissionsCoef = aOther.mEmissionsCoef;
     
-    // Deep copy the auto_ptr
+    // Deep copy the unique_ptr
     if( aOther.mEmissionsDriver ){
         delete mEmissionsDriver;
         mEmissionsDriver = aOther.mEmissionsDriver->clone();

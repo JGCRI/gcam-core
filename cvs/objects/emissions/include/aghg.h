@@ -208,7 +208,7 @@ protected:
     
     //! Pre-located market which has been cached from the marketplace to get the price
     //! of this ghg and add demands to the market.
-    std::auto_ptr<CachedMarket> mCachedMarket;
+    std::unique_ptr<CachedMarket> mCachedMarket;
    
     /*!
      * \brief XML debug output stream for derived classes

@@ -660,7 +660,18 @@ double MagiccModel::getConcentration( const string& aGasName,
     return -1;
 }
 
-double MagiccModel::getTemperature( const int aYear ) const {
+double MagiccModel::getTemperature( const int aYear, const bool aAdjHistoricalPeriod ) const {
+    // Check if the climate model has been run and that valid year is passed in.
+    if( !mIsValid || !isValidClimateModelYear( aYear ) ){
+        return -1;
+    }
+
+    // Need to store the year locally so it can be passed by reference.
+    int year = aYear;
+    return GETGMTEMP( year );
+}
+
+double MagiccModel::getGmst(const int aYear, const bool aAdjHistoricalPeriod) const {
     // Check if the climate model has been run and that valid year is passed in.
     if( !mIsValid || !isValidClimateModelYear( aYear ) ){
         return -1;

@@ -107,7 +107,11 @@ double NoClimateModel::getConcentration( const string& aGasName, const int aYear
     return 0.0;
 }
 
-double NoClimateModel::getTemperature( const int aYear ) const {
+double NoClimateModel::getTemperature( const int aYear, const bool aAdjHistoricalPeriod ) const {
+    return 0.0;
+}
+
+double NoClimateModel::getGmst( const int aYear, const bool aAdjHistoricalPeriod ) const {
     return 0.0;
 }
 

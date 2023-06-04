@@ -145,7 +145,7 @@ protected:
     )
     
     //!< The subsector's information store.
-    std::auto_ptr<IInfo> mSubresourceInfo;
+    std::unique_ptr<IInfo> mSubresourceInfo;
 };
 
 #endif // _SUBRESOURCE_H_

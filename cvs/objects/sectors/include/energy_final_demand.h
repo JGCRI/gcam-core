@@ -208,7 +208,7 @@ protected:
     )
 
     //! Demand function used to calculate unscaled demand.
-    std::auto_ptr<IDemandFunction> mDemandFunction;
+    std::unique_ptr<IDemandFunction> mDemandFunction;
     
     virtual double calcFinalDemand( const std::string& aRegionName,
                                     const Demographic* aDemographics,

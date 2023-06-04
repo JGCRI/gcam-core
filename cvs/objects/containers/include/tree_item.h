@@ -37,7 +37,6 @@
 */
 
 
-
 /*! 
 * \file tree_item.h
 * \ingroup Objects
@@ -69,8 +68,6 @@ enum SearchType {
 template<class T> 
 class TreeItem {
 public:
-
-    typedef typename std::unary_function<const T*, bool> MatchesFunction;
 
     /*! \brief Get the number of children which the tree item has.
     * \details Returns the number of children which the tree item has. In the

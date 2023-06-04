@@ -89,7 +89,7 @@ double TemperatureTarget::getStatus( const int aYear ) const {
      *      ability to change the status in that year.
      */
     assert( year >= mFirstTaxYear );
-    const double currTemperature = mClimateModel->getTemperature( year );
+    const double currTemperature = mClimateModel->getGmst( year, true );
 
     // Determine how how far away from the target the current estimate is.
     double percentOff = ( currTemperature - mTargetValue ) / mTargetValue * 100;
@@ -110,8 +110,8 @@ int TemperatureTarget::getYearOfMaxTargetValue() const {
     
     // Loop over possible year and find the max temp and the year it occurs in.
     for( int year = mFirstTaxYear; year <= finalYearToCheck; ++year ) {
-        if( maxTemp < mClimateModel->getTemperature( year ) ) {
-            maxTemp = mClimateModel->getTemperature( year );
+        if( maxTemp < mClimateModel->getGmst( year, true ) ) {
+            maxTemp = mClimateModel->getGmst( year, true );
             maxYear = year;
         }
     }

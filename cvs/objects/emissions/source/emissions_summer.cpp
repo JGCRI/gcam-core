@@ -60,28 +60,56 @@ mGHGName( aGHGName ){
 */
 void EmissionsSummer::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
     if( aGHG->getName() == mGHGName ){
-        mEmissionsByPeriod[ aPeriod ] += aGHG->getEmission( aPeriod );
+        double currEmissions = aGHG->getEmission( aPeriod );
+        if(currEmissions >= 0) {
+            mEmissionsByPeriodPositive[ aPeriod ] += currEmissions;
+        }
+        else {
+            mEmissionsByPeriodNegative[ aPeriod ] += currEmissions;
+        }
     }
 }
 
-/*! \brief Get the current emissions sum.
-* \param aPeriod Model period for which to get emissions.
-* \return The emissions sum.
-*/
+/*! \brief Get the total net emissions sum.
+ * \param aPeriod Model period for which to get emissions.
+ * \return The emissions sum.
+ */
 double EmissionsSummer::getEmissions( const int aPeriod ) const {
     // The value may not be initialized if there were no GHGs.  
     // The default zero will be correct though.
 
     // The emissions sum may be negative if uptake is occurring.
-    return mEmissionsByPeriod[ aPeriod ];
+    return mEmissionsByPeriodPositive[ aPeriod ] + mEmissionsByPeriodNegative[ aPeriod ];
+}
+
+/*! \brief Get the gross positive emissions sum.
+ * \param aPeriod Model period for which to get emissions.
+ * \return The emissions sum.
+ */
+double EmissionsSummer::getEmissionsPositive( const int aPeriod ) const {
+    // The value may not be initialized if there were no GHGs.
+    // The default zero will be correct though.
+
+    return mEmissionsByPeriodPositive[ aPeriod ];
+}
+
+/*! \brief Get the gross negative emissions sum.
+ * \param aPeriod Model period for which to get emissions.
+ * \return The emissions sum.
+ */
+double EmissionsSummer::getEmissionsNegative( const int aPeriod ) const {
+    // The value may not be initialized if there were no GHGs.
+    // The default zero will be correct though.
+
+    return mEmissionsByPeriodNegative[ aPeriod ];
 }
 
 /*! \brief Return whether any emissions were set for the period.
-* \param aPeriod Model period.
-* \return Whether any emissions were set.
-*/
+ * \param aPeriod Model period.
+ * \return Whether any emissions were set.
+ */
 double EmissionsSummer::areEmissionsSet( const int aPeriod ) const {
-    return mEmissionsByPeriod[ aPeriod ].isInited();
+    return mEmissionsByPeriodPositive[ aPeriod ].isInited() || mEmissionsByPeriodNegative[ aPeriod ].isInited();
 }
 
 /*! \brief Get the GHG name.

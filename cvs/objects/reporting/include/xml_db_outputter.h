@@ -218,8 +218,8 @@ private:
     objects::PeriodVector<double> mCurrIndirectEmissions;
 
     //! Tabs object.
-    std::auto_ptr<Tabs> mTabs;
-    
+    std::unique_ptr<Tabs> mTabs;
+
     //! Weak pointer to the current technology object.
     const Technology* mCurrentTechnology;
     
@@ -257,9 +257,9 @@ private:
 
     //! An auto pointer to all the JNI data that needs to be maintained through out
     //! the like of the XMLDBOutputter.
-    const std::auto_ptr<JNIContainer> mJNIContainer;
+    const std::unique_ptr<JNIContainer> mJNIContainer;
 
-    static std::auto_ptr<JNIContainer> createContainer( const bool aTestingOnly );
+    static std::unique_ptr<JNIContainer> createContainer( const bool aTestingOnly );
 #endif
     static const std::string createContainerName( const std::string& aScenarioName );
 

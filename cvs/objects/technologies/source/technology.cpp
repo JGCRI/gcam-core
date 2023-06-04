@@ -1580,7 +1580,7 @@ void interpolateChildVector( std::vector<T*> aInterpolated, std::vector<T*> aPre
     // Sort each vector by name to help identify mismatches.
     // Note that the vectors are passed by value on purpose so that these sorts
     // do not mess with ordering.
-    util::NameComparator<T> comp;
+    util::NameComparator comp;
     sort( aInterpolated.begin(), aInterpolated.end(), comp );
     sort( aPrev.begin(), aPrev.end(), comp );
     sort( aNext.begin(), aNext.end(), comp );

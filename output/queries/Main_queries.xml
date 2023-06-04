@@ -4677,9 +4677,15 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
         </ClimateQuery>
         <ClimateQuery title="global mean temperature">
             <axis1 name="temperature">none</axis1>
-            <axis2 name="Year">global-mean-temperature[@year]</axis2>
-            <xPath buildList="true" dataName="global-mean-temperature" group="false" sumAll="false">climate-model/global-mean-temperature/text()</xPath>
-            <comments/>
+            <axis2 name="Year">global-mean-surface-temperature[@year]</axis2>
+            <xPath buildList="true" dataName="global-mean-temperature" group="false" sumAll="false">climate-model/global-mean-surface-temperature/text()</xPath>
+            <comments>Returns global mean surface temp anomaly relative to the 1850-1900 mean.
+Also available is global mean air temperature; in both climate model native or relative to 1850-1900 mean.
+A user can adjust the query to search for any of:
+  * global-mean-surface-temperature
+  * global-mean-air-temperature
+  * global-mean-surface-temperature-native
+  * global-mean-air-temperature-native</comments>
         </ClimateQuery>
         <ClimateQuery title="net terrestrial C uptake">
             <axis1 name="net-terrestrial-uptake">none</axis1>

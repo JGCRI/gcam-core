@@ -104,11 +104,11 @@ namespace objects {
 		*          can be forward declared to prevent excessive recompilation
         *          when the internal hashmap class changes. The Atoms are stored
 		*          with a shared_ptr so that they are deallocated automatically.
-		*          A standard auto_ptr is not used because that could cause an
+		*          A standard unique_ptr is not used because that could cause an
 		*          Atom to be unintentionally deallocated during a hashmap
 		*          resize operation.
         */
-		std::auto_ptr<AtomMap> mAtoms;
+		std::unique_ptr<AtomMap> mAtoms;
 	};
 }
 

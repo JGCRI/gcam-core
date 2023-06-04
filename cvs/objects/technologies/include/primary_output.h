@@ -175,7 +175,7 @@ protected:
     )
     
     //! A pre-located market which has been cached from the marketplace to add supply to.
-    std::auto_ptr<CachedMarket> mCachedMarket;
+    std::unique_ptr<CachedMarket> mCachedMarket;
     
     void copy( const PrimaryOutput& aOther );
 };

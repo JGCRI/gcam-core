@@ -78,48 +78,48 @@ bool TargetFactory::isOfType( const string& aType ) {
  * \param aClimateModel Scenario's climate model.
  * \param aTargetValue The target value.
  * \param aFirstTaxYear The first year in which the target could be checked.
- * \return A newly created ITarget wrapped in an auto_ptr. The pointer
+ * \return A newly created ITarget wrapped in an unique_ptr. The pointer
  *         is null if the type is unknown.
  */
-auto_ptr<ITarget> TargetFactory::create( const string& aType,
+unique_ptr<ITarget> TargetFactory::create( const string& aType,
                                          const IClimateModel* aClimateModel,
                                          double aTargetValue,
                                          int aFirstTaxYear )
 {
     // Search the list of known types.
     if( aType == ConcentrationTarget::getXMLNameStatic() ) {
-        return auto_ptr<ITarget>( new ConcentrationTarget( aClimateModel,
+        return unique_ptr<ITarget>( new ConcentrationTarget( aClimateModel,
                                                            aTargetValue,
                                                            aFirstTaxYear ) );
     }
     if( aType == ForcingTarget::getXMLNameStatic() ){
-        return auto_ptr<ITarget>( new ForcingTarget( aClimateModel,
+        return unique_ptr<ITarget>( new ForcingTarget( aClimateModel,
                                                      aTargetValue,
                                                      aFirstTaxYear ) );
     }
     if( aType == RCPForcingTarget::getXMLNameStatic() ){
-        return auto_ptr<ITarget>( new RCPForcingTarget( aClimateModel,
+        return unique_ptr<ITarget>( new RCPForcingTarget( aClimateModel,
                                                     aTargetValue,
                                                     aFirstTaxYear ) );
     }
     if( aType == TemperatureTarget::getXMLNameStatic() ){
-        return auto_ptr<ITarget>( new TemperatureTarget( aClimateModel,
+        return unique_ptr<ITarget>( new TemperatureTarget( aClimateModel,
                                                          aTargetValue,
                                                          aFirstTaxYear ) );
     }
     
     if( aType == KyotoForcingTarget::getXMLNameStatic() ){
-        return auto_ptr<ITarget>( new KyotoForcingTarget( aClimateModel,
+        return unique_ptr<ITarget>( new KyotoForcingTarget( aClimateModel,
                                                           aTargetValue,
                                                           aFirstTaxYear ) );
     }
     if( aType == CumulativeEmissionsTarget::getXMLNameStatic() ){
-        return auto_ptr<ITarget>( new CumulativeEmissionsTarget( aClimateModel,
+        return unique_ptr<ITarget>( new CumulativeEmissionsTarget( aClimateModel,
                                                                  aTargetValue,
                                                                  aFirstTaxYear ) );
     }
     if( aType == EmissionsStabalizationTarget::getXMLNameStatic() ){
-        return auto_ptr<ITarget>( new EmissionsStabalizationTarget( aClimateModel,
+        return unique_ptr<ITarget>( new EmissionsStabalizationTarget( aClimateModel,
                                                                     aTargetValue,
                                                                     aFirstTaxYear ) );
     }
@@ -131,5 +131,5 @@ auto_ptr<ITarget> TargetFactory::create( const string& aType,
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::ERROR );
     mainLog << "Could not create Target of type " << aType << "." << endl;
-    return auto_ptr<ITarget>();
+    return unique_ptr<ITarget>();
 }

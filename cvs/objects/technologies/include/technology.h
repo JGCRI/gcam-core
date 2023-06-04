@@ -342,7 +342,7 @@ protected:
     )
 
     //! The technology's information store.
-    std::auto_ptr<IInfo> mTechnologyInfo;
+    std::unique_ptr<IInfo> mTechnologyInfo;
     
     //! Production function for the technology.
     const IFunction* mProductionFunction;

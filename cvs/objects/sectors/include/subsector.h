@@ -134,7 +134,7 @@ protected:
     // Some typedefs to make using interpolation rules more readable.
     typedef std::vector<InterpolationRule*>::const_iterator CInterpRuleIterator;
     
-    std::auto_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
+    std::unique_ptr<IInfo> mSubsectorInfo; //!< The subsector's information store.
 
     virtual void interpolateShareWeights( const int aPeriod );
 

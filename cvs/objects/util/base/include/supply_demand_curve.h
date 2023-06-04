@@ -101,7 +101,7 @@ public:
 * \brief Binary comparison operator used for SavePoint pointers to order by increasing price. 
 * \author Josh Lurz
 */  
-   struct LesserPrice : public std::binary_function<SupplyDemandPoint*,SupplyDemandPoint*,bool>
+   struct LesserPrice
    {
       //! Operator which performs comparison. 
       bool operator()( const SupplyDemandPoint* lhs, const SupplyDemandPoint* rhs ) const
