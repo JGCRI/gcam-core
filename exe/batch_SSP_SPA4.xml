@@ -147,6 +147,7 @@
 			<Value name="bio_trade">../input/gcamdata/xml/ssp4_ag_bio_trade.xml</Value>
             <Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget.xml</Value>
             <Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
+            <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
 		</FileSet>
 		
 	</ComponentSet>	
