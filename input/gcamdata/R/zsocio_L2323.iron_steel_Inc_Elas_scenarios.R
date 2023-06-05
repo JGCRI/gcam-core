@@ -202,31 +202,32 @@ module_socio_L2323.iron_steel_Inc_Elas_scenarios <- function(command, ...) {
     L2323.pcgdp_thous90USD_Scen_R_Y[["gSSP1"]] %>%
       add_title("iron_steel Income Elasticity: gssp1") %>%
       add_legacy_name("L2323.iron_steel_incelas_gssp1")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A323.inc_elas_parameter") ->
+      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A323.inc_elas_parameter",
+                     "L101.Pop_thous_R_Yh") ->
       L2323.iron_steel_incelas_gssp1
 
     L2323.pcgdp_thous90USD_Scen_R_Y[["gSSP2"]] %>%
       add_title("iron_steel Income Elasticity: gssp2") %>%
       add_legacy_name("L2323.iron_steel_incelas_gssp2")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A323.inc_elas_parameter") ->
+      same_precursors_as(L2323.iron_steel_incelas_gssp1) ->
       L2323.iron_steel_incelas_gssp2
 
     L2323.pcgdp_thous90USD_Scen_R_Y[["gSSP3"]] %>%
       add_title("iron_steel Income Elasticity: gssp3") %>%
       add_legacy_name("L2323.iron_steel_incelas_gssp3")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A323.inc_elas_parameter") ->
+      same_precursors_as(L2323.iron_steel_incelas_gssp1) ->
       L2323.iron_steel_incelas_gssp3
 
     L2323.pcgdp_thous90USD_Scen_R_Y[["gSSP4"]] %>%
       add_title("iron_steel Income Elasticity: gssp4") %>%
       add_legacy_name("L2323.iron_steel_incelas_gssp4")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A323.inc_elas_parameter") ->
+      same_precursors_as(L2323.iron_steel_incelas_gssp1) ->
       L2323.iron_steel_incelas_gssp4
 
     L2323.pcgdp_thous90USD_Scen_R_Y[["gSSP5"]] %>%
       add_title("iron_steel Income Elasticity: gssp5") %>%
       add_legacy_name("L2323.iron_steel_incelas_gssp5")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A323.inc_elas_parameter") ->
+      same_precursors_as(L2323.iron_steel_incelas_gssp1) ->
       L2323.iron_steel_incelas_gssp5
 
     L2323.pcgdp_thous90USD_Scen_R_Y[["SSP1"]] %>%

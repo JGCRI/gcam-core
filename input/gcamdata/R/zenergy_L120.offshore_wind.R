@@ -25,7 +25,7 @@ module_energy_L120.offshore_wind <- function(command, ...) {
              FILE = "common/GCAM_region_names",
              FILE = "energy/A20.wind_class_CFs",
              FILE = "energy/A20.offshore_wind_depth_cap_cost",
-             FILE =  "energy/mappings/NREL_wind_ctry",
+             FILE = "energy/mappings/NREL_wind_ctry",
              FILE = "energy/NREL_offshore_energy",
              FILE = "energy/NREL_wind_energy_distance_range",
              FILE = "energy/offshore_wind_grid_cost",
@@ -331,7 +331,7 @@ module_energy_L120.offshore_wind <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names", "energy/NREL_offshore_energy",
                      "energy/A20.wind_class_CFs", "L113.globaltech_capital_ATB",
                      "L113.globaltech_OMfixed_ATB", "energy/A20.offshore_wind_depth_cap_cost",
-                     "energy/offshore_wind_potential_scaler") ->
+                     "energy/offshore_wind_potential_scaler", "energy/mappings/NREL_wind_ctry") ->
       L120.RsrcCurves_EJ_R_offshore_wind
 
     L120.TechChange_offshore_wind %>%

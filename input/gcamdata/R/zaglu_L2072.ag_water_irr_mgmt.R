@@ -26,7 +26,6 @@ module_aglu_L2072.ag_water_irr_mgmt <- function(command, ...) {
   MODULE_INPUTS <-
     c(FILE = "common/GCAM_region_names",
       FILE = "water/basin_to_country_mapping",
-      "L2012.AgSupplySector",
       "L161.ag_irrProd_Mt_R_C_Y_GLU",
       "L161.ag_rfdProd_Mt_R_C_Y_GLU",
       "L165.BlueIrr_m3kg_R_C_GLU",

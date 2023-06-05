@@ -43,7 +43,8 @@ module_energy_negative_emissions_budget_xml <- function(command, ...) {
       add_xml_data(L270.NegEmissBudgetDefaultPrice, "PortfolioStdFixedTax") %>%
       add_xml_data(L270.NegEmissBudget, "PortfolioStd") %>%
       add_xml_data(L270.NegEmissBudgetFraction, "NegEmissBudgetFraction") %>%
-      add_precursors("L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissBudgetMaxPrice", "L270.NegEmissBudget", "L270.NegEmissBudgetFraction") ->
+      add_precursors("L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissBudgetMaxPrice", "L270.NegEmissBudget", "L270.NegEmissBudgetFraction",
+                     "L270.NegEmissBudgetDefaultPrice") ->
       negative_emissions_budget.xml
 
     return_data(negative_emissions_budget.xml)

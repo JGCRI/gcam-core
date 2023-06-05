@@ -714,38 +714,34 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
                                     "Food", "Feed", "Other uses") %in%
                                     c(.DF %>% distinct(element) %>% pull)))
       # 0. Check NA
-      if (isTRUE(.DF %>% filter(is.na(value)) %>% nrow == 0)) {
-        message("Good! No NA in value") } else{
-          warning("NA in value")
-        }
+      if (.DF %>% filter(is.na(value)) %>% nrow() > 0) {
+        warning("NA values in SUA Balance")
+      }
 
 
       # 1. Positive value except stock variation and residues
-      if (isTRUE(.DF %>% filter(!element %in% c("Stock Variation", "Other uses")) %>%
+      if (isFALSE(.DF %>% filter(!element %in% c("Stock Variation", "Other uses")) %>%
                  summarise(min = min(value, na.rm = T)) %>% pull(min) >= -0.001)) {
-        message("Good! Signs checked") } else{
-          warning("Negative values in key elements (not including stock variation and other uses)")
-        }
+        warning("Negative values in key elements (not including stock variation and other uses)")
+      }
 
       # 2. Trade balance in all year and items
-      if (isTRUE(.DF %>% filter(element %in% c("Import", "Export")) %>%
+      if (isFALSE(.DF %>% filter(element %in% c("Import", "Export")) %>%
                  group_by(year, GCAM_commodity, element) %>%
                  summarise(value = sum(value), .groups = "drop") %>%
                  spread(element, value) %>% filter(abs(Import - Export) > 0.0001) %>% nrow() == 0)) {
-        message("Good! Gross trade in balance") } else{
-          warning("Gross trade imbalance")
-        }
+        warning("Gross trade imbalance")
+      }
 
       # 3. SUA balance check
-      if (isTRUE(.DF %>%
+      if (isFALSE(.DF %>%
                  spread(element, value) %>%
                  mutate(`Regional supply` = Production + `Import`,
                         `Regional demand` = `Export` + Feed + Food  + `Other uses`,
                         bal = abs(`Regional supply` -  `Regional demand`)) %>%
                  filter(bal > 0.0001) %>% nrow() == 0)) {
-        message("Good! Regional supply = Regional demand + Residuals") } else{
-          warning("Regional supply != Regional demand + Residuals")
-        }
+        warning("Regional supply != Regional demand + Residuals")
+      }
 
       # 4. Balanced in all dimensions
       assertthat::assert_that(.DF %>% nrow() ==

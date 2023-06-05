@@ -462,7 +462,8 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
                      "L2235.TechCoef_elec_FERC_USA",
                      "L2235.TechCoef_elecownuse_FERC_USA",
                      "L2235.Production_imports_FERC_USA",
-                     "L2235.Production_elec_gen_FERC_USA") ->
+                     "L2235.Production_elec_gen_FERC_USA",
+                     "L223.StubTechCapFactor_elec") ->
       elec_segments_water_USA.xml
 
     return_data(elec_segments_water_USA.xml)

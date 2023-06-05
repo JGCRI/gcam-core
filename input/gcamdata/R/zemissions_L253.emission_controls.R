@@ -453,7 +453,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
             add_title("U.S. States Delete GDP Control") %>%
             add_units("Various") %>%
             add_comments("Delete GDP control in U.S. states because new control is in place") %>%
-            same_precursors_as(L253.Retrofit_off_USA) -> L253.delete_gdp_control_USA
+            same_precursors_as(L253.Retrofit_off_USA) %>%
+            add_precursors("L277.nonghg_steepness_USA")-> L253.delete_gdp_control_USA
         } else {
           missing_data() -> L253.delete_gdp_control_USA
         }

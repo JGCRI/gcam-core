@@ -196,7 +196,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
                          "emissions/CEDS/NH3_total_CEDS_emissions","emissions/CEDS/NMVOC_total_CEDS_emissions","emissions/CEDS/NOx_total_CEDS_emissions",
                          "emissions/CEDS/SO2_total_CEDS_emissions","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                          "common/iso_GCAM_regID","emissions/CEDS/CH4_total_CEDS_emissions","emissions/CEDS/GFED-CMIP6_LUC_emissions","emissions/CEDS/LULUC_to_sector_Mapping","emissions/CEDS/N2O_total_CEDS_emissions",
-                         "L154.IEA_histfut_data_times_UCD_shares") ->
+                         "L154.IEA_histfut_data_times_UCD_shares", "emissions/CEDS/CO2_total_CEDS_emissions") ->
           L102.ceds_GFED_nonco2_tg_C_S_F
 
         L102.CEDS_GCAM_GFED %>%
@@ -206,7 +206,7 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
                          "emissions/CEDS/NH3_total_CEDS_emissions","emissions/CEDS/NMVOC_total_CEDS_emissions","emissions/CEDS/NOx_total_CEDS_emissions",
                          "emissions/CEDS/SO2_total_CEDS_emissions","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                          "common/iso_GCAM_regID","emissions/CEDS/CH4_total_CEDS_emissions","emissions/CEDS/GFED-CMIP6_LUC_emissions","emissions/CEDS/LULUC_to_sector_Mapping","emissions/CEDS/N2O_total_CEDS_emissions",
-                         "L154.IEA_histfut_data_times_UCD_shares") ->
+                         "L154.IEA_histfut_data_times_UCD_shares", "emissions/CEDS/CO2_total_CEDS_emissions") ->
           L102.ceds_GFED_nonco2_tg_R_S_F
 
         CEDS_int_shipping %>%

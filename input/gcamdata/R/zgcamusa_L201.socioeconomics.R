@@ -18,8 +18,7 @@
 #' @author RLH October 2017
 module_gcamusa_L201.socioeconomics <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "gcam-usa/states_subregions",
-             "L100.Pop_thous_state",
+    return(c("L100.Pop_thous_state",
              "L100.GDP_mil90usd_state"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L201.Pop_GCAMUSA",
@@ -35,7 +34,6 @@ module_gcamusa_L201.socioeconomics <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state", strip_attributes = TRUE)
     L100.GDP_mil90usd_state <- get_data(all_data, "L100.GDP_mil90usd_state", strip_attributes = TRUE)
 

@@ -25,8 +25,6 @@ module_aglu_L100.GTAP_downscale_ctry <- function(command, ...) {
       FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
       "L100.LDS_value_milUSD",
       "L100.LDS_ag_prod_t",
-      FILE = "common/iso_GCAM_regID",
-      FILE = "common/GCAM_region_names",
       FILE = "socioeconomics/GTAP/GCAM_GTAP_region_mapping",
       FILE = "socioeconomics/GTAP/GTAP_sector_aggregation_mapping",
       OPTIONAL_FILE = "socioeconomics/GTAP/GTAPv10_basedata_VKB_SAVE_VDEP",
