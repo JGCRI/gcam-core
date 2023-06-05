@@ -22,7 +22,7 @@ Calculate the adjusted fertilizer production by country / year, fertilizer net e
 and fertilizer input-output coefficients by GCAM region / commodity / year / GLU.
 }
 \details{
-This chunk calculates fertilizer prodcution by country / year (adjusted to global total consumption),
+This chunk calculates fertilizer production by country / year (adjusted to global total consumption),
 fertilizer net exports by GCAM region / year as production minus consumption, and fertilizer input-output coefficients
 by GCAM region / commodity / year / GLU.
 }

@@ -33,5 +33,5 @@ food and non-food demand in calibration years, forest product demand, net export
 income elasticities for future years in core and SSP scenarios, as well as price elasticities.
 }
 \author{
-RC July 2017
+RC July 2017 XZ 2022
 }

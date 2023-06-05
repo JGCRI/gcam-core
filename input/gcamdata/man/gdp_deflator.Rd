@@ -18,7 +18,7 @@ gdp_deflator(year, base_year)
 \item{base_year}{Year to convert FROM.}
 }
 \value{
-GDP Deflator.  Multiply to convert FROM \code{base_year} dollars TO
+US GDP Deflator.  Multiply to convert FROM \code{base_year} dollars TO
 \code{year} dollars.
 }
 \description{

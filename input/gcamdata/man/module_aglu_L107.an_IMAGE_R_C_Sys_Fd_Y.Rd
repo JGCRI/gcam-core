@@ -14,7 +14,7 @@ module_aglu_L107.an_IMAGE_R_C_Sys_Fd_Y(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L107.an_Prod_Mt_R_C_Sys_Fd_Y}, \code{L107.an_Feed_Mt_R_C_Sys_Fd_Y}, \code{L107.an_FeedIO_R_C_Sys_Fd_Y}. The corresponding file in the
+the generated outputs: \code{L107.an_Prod_Mt_R_C_Sys_Fd_Y}, \code{L107.an_Feed_Mt_R_C_Sys_Fd_Y}. The corresponding file in the
 original data system was \code{LA107.an_IMAGE_R_C_Sys_Fd_Y.R} (aglu level1).
 }
 \description{

@@ -25,5 +25,5 @@ This chunk combines all flow tables of GCAM agricultural commodities, calculates
 GCAM region, commodity and year, and adjusts global and regional net exports to remove negative other uses.
 }
 \author{
-RC April 2017
+RC April 2017 XZ 2022
 }
