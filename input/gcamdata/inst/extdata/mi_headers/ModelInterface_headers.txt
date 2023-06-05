@@ -608,6 +608,7 @@ AgMkt, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+market
 
 AgCalMinProfitRate, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+cal-min-profit-rate, scenario, scenario/world
 
+AgTechDelete, world/+{name}region, region/+{name}AgSupplySector, AgSupplySector/+{name}AgSupplySubsector, AgSupplySubsector/+{name;delete=1}AgProductionTechnology, scenario, scenario/world
 
 #####, POLICY
 
@@ -645,6 +646,14 @@ LN0_Land, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoo
 LN0_SoilTimeScale, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+soilTimeScale, scenario, scenario/world
 
 LN1_Delete, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name;delete=1}LandNode, scenario, scenario/world
+
+LN2_Delete, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode, LandNode/+{name;delete=1}LandNode1, scenario, scenario/world
+
+LN3_Delete, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode, LandNode/+{name}LandNode1, LandNode1/+{name;delete=1}LandNode2, scenario, scenario/world
+
+LN4_Delete, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode, LandNode/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name;delete=1}LandNode3, scenario, scenario/world
+
+LN5_Delete, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode, LandNode/+{name}LandNode1, LandNode1/+{name}LandNode2, LandNode2/+{name}LandNode3, LandNode3/+{name;delete=1}LandNode4, scenario, scenario/world
 
 LN1_ValueLogit, world/+{name}region, region/+{name}LandAllocatorRoot, LandAllocatorRoot/+{name}LandNode1, LandNode1/+unManagedLandValue, dummy-logit-tag/+{year;fillout=1}logit-exponent, dummy-logit-tag/+logit-exponent, LandNode1/dummy-logit-tag, scenario, scenario/world
 
