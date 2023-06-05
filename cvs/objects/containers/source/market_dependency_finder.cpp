@@ -537,7 +537,9 @@ void MarketDependencyFinder::createOrdering() {
     // activities in the model as it may be an indication of misconfiguration.
     ILogger& depLog = ILogger::getLogger( "dependency_finder_log" );
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
-        if( !(*it)->mHasIncomingDependency && (*it)->mDependentList.empty() ) {
+        // less than ideal but our heuristics do not properly deal with link CO2 markets
+        // so explicitly avoid warning about CO2_LUC (potentially others here)
+        if( !(*it)->mHasIncomingDependency && (*it)->mDependentList.empty() && (*it)->mName != "CO2_LUC" ) {
             depLog.setLevel( ILogger::SEVERE );
             depLog << (*it)->mName << " in " << (*it)->mLocatedInRegion << " is not related to any other activities." << endl;
         }
