@@ -14,7 +14,7 @@ module_aglu_L122.LC_R_Cropland_Yh_GLU(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L122.ag_HA_to_CropLand_R_Y_GLU}, \code{L122.ag_EcYield_kgm2_R_C_Y_GLU},
+the generated outputs: \code{L122.ag_HA_bm2_R_Y_GLU_AnnualCHF}, \code{L122.ag_EcYield_kgm2_R_C_Y_GLU},
                        \code{L122.LC_bm2_R_OtherArableLand_Yh_GLU}, \code{L122.LC_bm2_R_ExtraCropLand_Yh_GLU},
                        \code{L122.LC_bm2_R_HarvCropLand_C_Yh_GLU}, \code{L122.LC_bm2_R_HarvCropLand_Yh_GLU}.
 The corresponding file in the original data system was \code{LB122.LC_R_Cropland_Yh_GLU.R} (aglu level1).

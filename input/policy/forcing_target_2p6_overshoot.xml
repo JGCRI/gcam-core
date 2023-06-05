@@ -8,7 +8,7 @@
     <target-value>2.6</target-value>
     <!-- target-tolerance | default: 0.01 | The solution tolerance -->
     <target-tolerance>0.05</target-tolerance> 
-    <!-- path-discount-rate | default: 0.05 | The hotelling rate -->
+    <!-- path-discount-rate | default: 0.03 | The hotelling rate -->
 	<path-discount-rate>0.03</path-discount-rate>
     <!-- max-iterations | default: 100 | The maximum  number of attempts to
          solve any given period.
@@ -38,7 +38,7 @@
                                           significantly.
      -->
     <!-- Note, the value chosen here is the solved price from the last GCAM release. -->
-    <initial-tax-guess>270.0</initial-tax-guess>
+    <initial-tax-guess>330.0</initial-tax-guess>
     <!-- forward-look | default: 0 | Allow forward looking behavior by skipping
          this many periods.
      -->

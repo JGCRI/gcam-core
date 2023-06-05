@@ -102,6 +102,8 @@
 		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
         <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 
+        <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
+
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		
 	</ScenarioComponents>

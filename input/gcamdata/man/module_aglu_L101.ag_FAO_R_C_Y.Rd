@@ -14,7 +14,7 @@ module_aglu_L101.ag_FAO_R_C_Y(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L101.ag_Food_Mt_R_C_Y}, \code{L101.ag_Food_Pcal_R_C_Y}, \code{L101.ag_kcalg_R_C_Y}, \code{L101.ag_HA_bm2_R_C_Y}, \code{L101.ag_Prod_Mt_R_C_Y}. The corresponding file in the
+the generated outputs: \code{L101.ag_HA_bm2_R_C_Y}, \code{L101.ag_Prod_Mt_R_C_Y}. The corresponding file in the
 original data system was \code{LA101.ag_FAO_R_C_Y.R} (aglu level1).
 }
 \description{
@@ -29,7 +29,8 @@ FAO's alfalfa production in the USA is divided by 4 "for consistency with USDA".
 Note (August 2018 GPK revision) - The FAO production and harvested area are disaggregated
 to basin PRIOR to aggregation by GCAM region. This reduces the bias from using a single
 year (around 2000) to disaggregate to basin, in multi-country regions.
+XZ 03-2022 Food related processing was moved so this chunk only downscales prod and area to GLU level ----
 }
 \author{
-KVC March 2017 (revised August 2018 by GPK)
+KVC March 2017 (revised August 2018 by GPK); XZ 2022
 }

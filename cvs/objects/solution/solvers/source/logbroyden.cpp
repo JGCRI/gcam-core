@@ -401,7 +401,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     const int TRACK_NUM_PAST_F_VALUES = 4;
     std::queue<double> past_f_values;
     past_f_values.push(f0);
-    const double LARGE_DIAG_THRESHOLD = 100.0;
+    const double LARGE_DIAG_THRESHOLD = 1000000.0;
   if(f0 < FTINY) {
     // Guard against F=0 since it can cause a NaN in our solver.  This
     // is a more stringent test than our regular convergence test
@@ -497,7 +497,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // start with partial pivot LU decomposition as it is so fast to execute and
       // see if we need to fall back to an alternative if it doesn't "perform" well
       Eigen::PartialPivLU<UBMATRIX> luPartialPiv(B);
-      dx = luPartialPiv.solve(-1.0 * fx);
+      dx = luPartialPiv.solve(-fx);
       double dxmag = sqrt(dx.dot(dx));
       if(luPartialPiv.determinant() == 0 || !util::isValidNumber(dxmag)) {
           // singular or badly messed up Jacobian, going to have to use SVD
@@ -512,7 +512,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           // without that we should set this to zero (i.e. only suppress truly singular cols)
           const double small_threshold = 0;
           svdSolver.setThreshold(small_threshold);
-          dx = svdSolver.solve(-1.0 * fx);
+          dx = svdSolver.solve(-fx);
           dxmag = sqrt(dx.dot(dx));
           solverLog << " new dxmag: " << dxmag << std::endl;
       }
@@ -558,7 +558,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       // 1) B is not a descent direction.  If this is the first
       // failure starting from this x value, try a finite difference
       // jacobian
-      if(!lsfail) {
+      /*if(!lsfail) {
           // linesearch will have left off on some other price vector thus we
           // could have bad state data from which we calculate derivatives or
           // check if we we can return due to a relaxed convergence test
@@ -590,7 +590,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           past_f_values.push(f0);
         // start the next iteration *without* updating x
         continue;
-      }
+      }*/
 
       // 2) The descent only continues for a very short distance
       // (roughly TOL*x0).  Maybe we're really close to a solution and

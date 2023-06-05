@@ -24,5 +24,5 @@ Extrapolate IMAGE data to all AGLU historical years and countries.
 Each IMAGE table is extrapolated to all AGLU historical years and then downscaled from IMAGE region to all AGLU countries.
 }
 \author{
-BBL June 2017
+BBL June 2017 XZ 2022
 }

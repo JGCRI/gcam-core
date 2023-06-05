@@ -42,5 +42,5 @@ from L125 land cover data, L121 carbon content data, and GCAMLandLeaf_CdensityLT
 }
 }
 \author{
-ACS August 2017
+ACS August 2017 XZ (2022)
 }

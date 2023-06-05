@@ -25,5 +25,5 @@ This chunk calculates the production-weighted average
 residue biomass parameters by GCAM region and commodity.
 }
 \author{
-RC March 2017
+RC March 2017 XZ 2022
 }

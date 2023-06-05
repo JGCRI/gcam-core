@@ -123,5 +123,5 @@ bool DemandMarket::shouldSolveNR() const {
     // A demand market is solving an equality constraint, so it should
     // be solved even if it has negative values in it (edfun.cpp makes
     // special allowances for price, demand, and trial value markets)
-    return shouldSolve();
+    return shouldSolve() && fabs(mPrice) > util::getSmallNumber() && fabs(mDemand) > util::getSmallNumber();
 }

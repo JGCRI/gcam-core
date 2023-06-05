@@ -141,5 +141,5 @@ bool PriceMarket::shouldSolveNR() const {
     // A price market is solving an equality constraint, so we should
     // try to solve it even when price, supply, and demand are all
     // negative.
-    return shouldSolve();
+    return shouldSolve() && fabs(mPrice) > util::getSmallNumber() && fabs(mDemand) > util::getSmallNumber();
 }

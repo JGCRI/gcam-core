@@ -137,6 +137,7 @@
 			<!-- WASTEWATER TREATMENT FRACTIONS -->
 			<Value name="wwtrt">../input/gcamdata/xml/EFW_WWtrt_coefs_SSP4.xml</Value>
 
+            <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP5">
@@ -174,6 +175,7 @@
 			<!-- WASTEWATER TREATMENT FRACTIONS -->
 			<Value name="wwtrt">../input/gcamdata/xml/EFW_WWtrt_coefs_SSP5.xml</Value>
 
+            <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP1">
@@ -229,6 +231,7 @@
 			<!-- WASTEWATER TREATMENT FRACTIONS -->
 			<Value name="wwtrt">../input/gcamdata/xml/EFW_WWtrt_coefs_SSP1.xml</Value>
 
+            <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP2">
@@ -264,6 +267,7 @@
 			<!-- WASTEWATER TREATMENT FRACTIONS -->
 			<Value name="wwtrt">../input/gcamdata/xml/EFW_WWtrt_coefs_SSP2.xml</Value>
 
+            <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
 		</FileSet>
 		
 		<FileSet name="SSP3">
@@ -321,6 +325,7 @@
 			<!-- WASTEWATER TREATMENT FRACTIONS -->
 			<Value name="wwtrt">../input/gcamdata/xml/EFW_WWtrt_coefs_SSP3.xml</Value>
 
+            <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
 		</FileSet>		
 	</ComponentSet>
 	

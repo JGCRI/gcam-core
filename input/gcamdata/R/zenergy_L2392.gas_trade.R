@@ -44,8 +44,7 @@ if(command == driver.DECLARE_INPUTS) {
            "L2391.NG_import_calOutput_pipeline",
            "L2391.NG_import_calOutput_statdiff",
            "L2391.NG_export_calOutput_statdiff",
-           "L239.Production_reg_dom",
-           "L210.RsrcPrice"))
+           "L239.Production_reg_dom"))
 } else if(command == driver.DECLARE_OUTPUTS) {
   return(c("L2392.PrimaryConsKeyword_en_NG",
            "L2392.CarbonCoef_NG",
@@ -99,7 +98,6 @@ if(command == driver.DECLARE_INPUTS) {
   L2391.NG_import_calOutput_statdiff <- get_data(all_data, "L2391.NG_import_calOutput_statdiff", strip_attributes = TRUE)
   L2391.NG_export_calOutput_statdiff <- get_data(all_data, "L2391.NG_export_calOutput_statdiff", strip_attributes = TRUE)
   L239.Production_reg_dom <- get_data(all_data, "L239.Production_reg_dom", strip_attributes = TRUE)
-  L210.RsrcPrice <- get_data(all_data, "L210.RsrcPrice", strip_attributes = TRUE)
 
   # Delete natural gas from regional and traded supplysectors
   L2392.Delete_Supplysector_tra_NG <- L239.Supplysector_tra %>%

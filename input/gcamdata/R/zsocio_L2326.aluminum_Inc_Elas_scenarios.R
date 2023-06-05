@@ -208,13 +208,14 @@ module_socio_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...) {
     L2326.pcgdp_thous90USD_Scen_R_Y[["gSSP1"]] %>%
       add_title("aluminum Income Elasticity: gssp1") %>%
       add_legacy_name("L2326.aluminum_incelas_gssp1")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter",
+                     "L101.Pop_thous_R_Yh") ->
       L2326.aluminum_incelas_gssp1
 
     L2326.pcgdp_thous90USD_Scen_R_Y[["gSSP2"]] %>%
       add_title("aluminum Income Elasticity: gssp2") %>%
       add_legacy_name("L2326.aluminum_incelas_gssp2")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      same_precursors_as(L2326.aluminum_incelas_gssp1) ->
       L2326.aluminum_incelas_gssp2
 
     L2326.pcgdp_thous90USD_Scen_R_Y[["gSSP3"]] %>%
@@ -225,43 +226,43 @@ module_socio_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...) {
     L2326.pcgdp_thous90USD_Scen_R_Y[["gSSP4"]] %>%
       add_title("aluminum Income Elasticity: gssp4") %>%
       add_legacy_name("L2326.aluminum_incelas_gssp4")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      same_precursors_as(L2326.aluminum_incelas_gssp1) ->
       L2326.aluminum_incelas_gssp4
 
     L2326.pcgdp_thous90USD_Scen_R_Y[["gSSP5"]] %>%
       add_title("aluminum Income Elasticity: gssp5") %>%
       add_legacy_name("L2326.aluminum_incelas_gssp5")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      same_precursors_as(L2326.aluminum_incelas_gssp1) ->
       L2326.aluminum_incelas_gssp5
 
     L2326.pcgdp_thous90USD_Scen_R_Y[["SSP1"]] %>%
       add_title("aluminum Income Elasticity: ssp1") %>%
       add_legacy_name("L2326.aluminum_incelas_ssp1")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      same_precursors_as(L2326.aluminum_incelas_gssp1) ->
       L2326.aluminum_incelas_ssp1
 
     L2326.pcgdp_thous90USD_Scen_R_Y[["SSP2"]] %>%
       add_title("aluminum Income Elasticity: ssp2") %>%
       add_legacy_name("L2326.aluminum_incelas_ssp2")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      same_precursors_as(L2326.aluminum_incelas_gssp1) ->
       L2326.aluminum_incelas_ssp2
 
     L2326.pcgdp_thous90USD_Scen_R_Y[["SSP3"]] %>%
       add_title("aluminum Income Elasticity: ssp3") %>%
       add_legacy_name("L2326.aluminum_incelas_ssp3")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      same_precursors_as(L2326.aluminum_incelas_gssp1) ->
       L2326.aluminum_incelas_ssp3
 
     L2326.pcgdp_thous90USD_Scen_R_Y[["SSP4"]] %>%
       add_title("aluminum Income Elasticity: ssp4") %>%
       add_legacy_name("L2326.aluminum_incelas_ssp4")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      same_precursors_as(L2326.aluminum_incelas_gssp1) ->
       L2326.aluminum_incelas_ssp4
 
     L2326.pcgdp_thous90USD_Scen_R_Y[["SSP5"]] %>%
       add_title("aluminum Income Elasticity: ssp5") %>%
       add_legacy_name("L2326.aluminum_incelas_ssp5")%>%
-      add_precursors("L102.pcgdp_thous90USD_Scen_R_Y","L101.Pop_thous_Scen_R_Yfut","socioeconomics/A326.inc_elas_parameter") ->
+      same_precursors_as(L2326.aluminum_incelas_gssp1) ->
       L2326.aluminum_incelas_ssp5
 
     L2326.aluminum_incelas_gcam3 %>%

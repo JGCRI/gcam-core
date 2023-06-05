@@ -74,8 +74,8 @@ module_energy_L1323.iron_steel <- function(command, ...) {
     All_steel %>%
       left_join(DRI_stats,by=c("country_name","year")) %>%
       replace(is.na(.), 0) %>%
-      rename(`EAF with DRI`=DRI_consumption,
-             `EAF with scrap`=EAF-`EAF with DRI`,
+      rename(`EAF with DRI`=DRI_consumption) %>%
+      mutate(`EAF with scrap`=EAF-`EAF with DRI`,
              `EAF with DRI`=ifelse(`EAF with scrap`<=0,EAF,`EAF with DRI`),
              `EAF with scrap`=ifelse(`EAF with scrap`<0,0,`EAF with scrap`))%>%
       select(-EAF)%>%

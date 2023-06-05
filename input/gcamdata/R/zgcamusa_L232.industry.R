@@ -177,7 +177,8 @@ module_gcamusa_L232.industry <- function(command, ...) {
       left_join(L238.Production_tra %>%
                   filter(subsector =="USA traded iron and steel") %>%
                   rename(Exports=calOutputValue)%>%
-                  select(region,year,Exports))%>%
+                  select(region,year,Exports),
+                by=c("region", "year"))%>%
       mutate(calOutputValue=calOutputValue-Exports)%>%
       select(-Exports)-> L232.Production_reg_imp
 
@@ -186,7 +187,8 @@ module_gcamusa_L232.industry <- function(command, ...) {
       filter(region == gcam.USA_REGION) %>%
       left_join(L232.Production_reg_imp %>%
                   select(region,year,calOutputValue) %>%
-                  rename(Net_Imports=calOutputValue))%>%
+                  rename(Net_Imports=calOutputValue),
+                by=c("region", "year"))%>%
       mutate(base.service=Net_Imports)%>%
       select(-Net_Imports)-> L232.BaseService_iron_steel
 

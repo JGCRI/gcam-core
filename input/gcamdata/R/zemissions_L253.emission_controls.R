@@ -37,6 +37,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
              user_em_control_files, # All files in user_emission_controls folder
              "L102.pcgdp_thous90USD_Scen_R_Y",
              "L201.nonghg_steepness",
+             "L277.nonghg_steepness_USA",
              "L223.StubTechEff_elec",
              "L223.GlobalTechEff_elec",
              "L224.Supplysector_heat"))
@@ -73,6 +74,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     pcGDP_MER <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y", strip_attributes = TRUE)
     L201.nonghg_steepness <- get_data(all_data, "L201.nonghg_steepness", strip_attributes = TRUE)
+    L277.nonghg_steepness_USA <- get_data(all_data, "L277.nonghg_steepness_USA", strip_attributes = TRUE)
     base_year_eff <- get_data(all_data, "L223.StubTechEff_elec", strip_attributes = TRUE)
     future_year_eff <- get_data(all_data, "L223.GlobalTechEff_elec", strip_attributes = TRUE) %>%
       filter(year %in% MODEL_FUTURE_YEARS)
@@ -134,6 +136,24 @@ module_emissions_L253.emission_controls <- function(command, ...) {
 
     bind_rows(so2_reg_names_global, so2_reg_names_states) -> so2_reg_names
 
+    # Get all technologies that have a default generic GDP control, which will be removed if there are new controls in place
+    L201.nonghg_steepness %>%
+      select(region, supplysector, subsector, stub.technology) %>%
+      bind_rows(select(L277.nonghg_steepness_USA, region, supplysector, subsector, stub.technology)) -> GDP_controlled_techs
+
+    # Define a utility function that returns the next model year.
+    # Because we vectorize the function, the argument can be a vector (or column) of years
+    # If year passed in is last model year, return last model year
+    get_next_model_year <- Vectorize(function(year) {
+      if(!year %in% MODEL_YEARS) {
+        stop("Year is not a GCAM model year")
+      }
+      else if(year != tail(MODEL_YEARS, n = 1)){
+        MODEL_YEARS[which(MODEL_YEARS == year)+1]
+      }
+      else {return(year)}
+    })
+
     # Function that processes emission control data
     process_em_control_data <- function(em_control_data) {
 
@@ -157,8 +177,6 @@ module_emissions_L253.emission_controls <- function(command, ...) {
           filter(GCAM_region %in% dist_heat_regions$region |
                    !supplysector %in% dist_heat_regions$supplysector) %>%
           mutate(region = if_else(is.na(GCAM_region), region, GCAM_region)) %>%
-          semi_join(L201.nonghg_steepness,
-                    by = c("region", "supplysector", "subsector", "stub.technology")) %>%
           select(-GCAM_region) -> em_control_data
 
         # Stop if regions aren't valid regions
@@ -178,15 +196,24 @@ module_emissions_L253.emission_controls <- function(command, ...) {
         # Note NSPS can be applied to all model future years which is already defined
         retrofit_years <- c(tail(MODEL_BASE_YEARS, n=1), MODEL_FUTURE_YEARS)
 
+        # Check to make sure users didn't specify GDP start level for US States
+        em_control_data %>%
+          filter(region %in% unique(states_subregions$state),
+                 !is.na(pcGDP_start_NSPS) | !is.na(pcGDP_start_retrofit)) -> check_US_starts
+        if(nrow(check_US_starts) != 0){
+          stop("GDP per capita start option not supported for US states")
+        }
+
         # RETROFITS
         # Extract only the data we need for retrofits from emission control data. Use row number to keep track of order.
         # Join in regional GDP data and filter for retrofit years. If there is no user-inputted retrofit start year,
         # we calculate it by finding all years where GDP is at least the inputted start GDP value, and keep the first
         # occurrence, which is the year at which each region reaches pcGDP of the "pcGDP_start_retrofit" value
+        # Using left_join to avoid errors with US states, since we don't use state-level GDP data
         em_control_data %>%
           mutate(id = row_number()) %>%
           select(-c(pcGDP_start_NSPS, NSPS_start_year, NSPS_em_coeff, 'Notes and sources')) %>%
-          left_join_error_no_match(pcGDP_MER, by = "region") %>%
+          left_join(pcGDP_MER, by = "region") %>%
           tidyr::gather(year, GDP, as.character(MODEL_YEARS)) %>%
           arrange(id) %>%
           filter(year %in% retrofit_years) %>%
@@ -213,7 +240,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
         em_control_data %>%
           mutate(id = row_number()) %>%
           select(-c(pcGDP_start_retrofit, retrofit_start_year, retrofit_time, retrofit_vintage, retrofit_em_coeff, 'Notes and sources')) %>%
-          left_join_error_no_match(pcGDP_MER, by = "region")%>%
+          left_join(pcGDP_MER, by = "region")%>%
           tidyr::gather(year, GDP, as.character(MODEL_YEARS)) %>%
           arrange(id) %>%
           filter(year %in% MODEL_FUTURE_YEARS) %>%
@@ -232,6 +259,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
 
         # Remove the default generic control since more specific control is in place
         em_control_data %>%
+          semi_join(GDP_controlled_techs,
+                   by = c("region", "supplysector", "subsector", "stub.technology")) %>%
           select(region, supplysector, subsector, stub.technology, linear.control, Non.CO2) %>%
           mutate(period = head(MODEL_YEARS, n=1),
                  gdp.control = "GDP_control") -> L253.delete_gdp_control
@@ -248,19 +277,6 @@ module_emissions_L253.emission_controls <- function(command, ...) {
           distinct(region, supplysector, subsector, stub.technology, Non.CO2,
                    linear.control, period, .keep_all = TRUE) %>%
           arrange(desc(row_number())) -> L253.EF_NSPS_new_vintage
-
-        # Define a utility function that returns the next model year.
-        # Because we vectorize the function, the argument can be a vector (or column) of years
-        # If year passed in is last model year, return last model year
-        get_next_model_year <- Vectorize(function(year) {
-          if(!year %in% MODEL_YEARS) {
-            stop("Year is not a GCAM model year")
-          }
-          else if(year != tail(MODEL_YEARS, n = 1)){
-            MODEL_YEARS[which(MODEL_YEARS == year)+1]
-          }
-          else {return(year)}
-        })
 
         # Turn off retrofits after end year of the last retrofit for that emission/technology/region
         L253.EF_retrofit %>%
@@ -437,7 +453,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
             add_title("U.S. States Delete GDP Control") %>%
             add_units("Various") %>%
             add_comments("Delete GDP control in U.S. states because new control is in place") %>%
-            same_precursors_as(L253.Retrofit_off_USA) -> L253.delete_gdp_control_USA
+            same_precursors_as(L253.Retrofit_off_USA) %>%
+            add_precursors("L277.nonghg_steepness_USA")-> L253.delete_gdp_control_USA
         } else {
           missing_data() -> L253.delete_gdp_control_USA
         }

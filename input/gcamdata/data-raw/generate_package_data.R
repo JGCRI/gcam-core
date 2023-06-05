@@ -408,6 +408,10 @@ generate_level2_data_names <- function() {
   level2_data_names[["LN5_NodeGhostShare"]] <- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "year", "ghost.unnormalized.share")
   level2_data_names[["LN5_LeafGhostShare"]]<- c("region", "LandAllocatorRoot", "LandNode1", "LandNode2", "LandNode3", "LandNode4", "LandNode5", "LandLeaf", "year", "ghost.unnormalized.share")
   level2_data_names[["LN1_Delete"]] <- c("region", "LandAllocatorRoot", "LandNode1")
+  level2_data_names[["LN2_Delete"]] <- c(level2_data_names[["LN1_Delete"]], "LandNode2")
+  level2_data_names[["LN3_Delete"]] <- c(level2_data_names[["LN2_Delete"]], "LandNode3")
+  level2_data_names[["LN4_Delete"]] <- c(level2_data_names[["LN3_Delete"]], "LandNode4")
+  level2_data_names[["LN5_Delete"]] <- c(level2_data_names[["LN4_Delete"]], "LandNode5")
   level2_data_names[["LandRootNegEmissMkt"]] <- c("region", "LandAllocatorRoot", "negative.emiss.market")
   level2_data_names[["LandLeafNegEmissMkt"]] <- c("region", "LandAllocatorRoot", "LandNode" ,"LandLeaf", "negative.emiss.market")
 

@@ -14,7 +14,7 @@ module_energy_L226.en_distribution(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L226.SectorLogitTables[[ curr_table ]]$data}, \code{L226.Supplysector_en}, \code{L226.SubsectorLogitTables[[ curr_table ]]$data}, \code{L226.SubsectorLogit_en}, \code{L226.SubsectorShrwt_en}, \code{L226.SubsectorShrwtFllt_en}, \code{L226.SubsectorInterp_en}, \code{L226.SubsectorInterpTo_en}, \code{L226.StubTech_en}, \code{L226.GlobalTechEff_en}, \code{L226.GlobalTechCost_en}, \code{L226.GlobalTechShrwt_en}, \code{L226.StubTechCoef_elecownuse}, \code{L226.StubTechCoef_electd}, \code{L226.StubTechCoef_gaspipe}. The corresponding file in the
+the generated outputs: \code{L226.SectorLogitTables[[ curr_table ]]$data}, \code{L226.Supplysector_en}, \code{L226.SubsectorLogitTables[[ curr_table ]]$data}, \code{L226.SubsectorLogit_en}, \code{L226.SubsectorShrwt_en}, \code{L226.SubsectorShrwtFllt_en}, \code{L226.SubsectorInterp_en}, \code{L226.SubsectorInterpTo_en}, \code{L226.StubTech_en}, \code{L226.GlobalTechEff_en}, \code{L226.GlobalTechCost_en}, \code{L226.GlobalTechTrackCapital_en}, \code{L226.GlobalTechShrwt_en}, \code{L226.StubTechCoef_elecownuse}, \code{L226.StubTechCoef_electd}, \code{L226.StubTechCoef_gaspipe}. The corresponding file in the
 original data system was \code{L226.en_distribution.R} (energy level2).
 }
 \description{

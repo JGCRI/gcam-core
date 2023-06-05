@@ -14,16 +14,17 @@ module_aglu_L100.GTAP_downscale_ctry(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L100.GTAP_LV_milUSD}. The corresponding file in the
+the generated outputs: \code{L100.GTAP_LV_milUSD}, \code{L100.GTAP_capital_stock},
+\code{L100.GTAPCostShare_ResourceRefine_GCAMReg_share}. The corresponding file in the
 original data system was \code{LA100.GTAP_downscale_ctry.R} (aglu level1).
 }
 \description{
-Downscale GTAP region-level land value data to all countries.
+Downscale GTAP region-level land value data to all countries and get GTAP VFA data.
 }
 \details{
 This chunk downscales the GTAP region-level land value to all countries
 based on production share by GLU and GTAP commodity class.
 }
 \author{
-RC April 2017
+RC April 2017 XZ 2023 March
 }

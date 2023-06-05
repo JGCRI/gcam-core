@@ -26,7 +26,6 @@ module_energy_L239.ff_trade <- function(command, ...) {
       FILE = "energy/A_ff_TradedSector",
       FILE = "energy/A_ff_TradedSubsector",
       FILE = "energy/A_ff_TradedTechnology",
-      FILE = "energy/A10.rsrc_info",
       "L202.CarbonCoef",
       "L2011.ff_GrossTrade_EJ_R_C_Y",
       "L2011.ff_ALL_EJ_R_C_Y")

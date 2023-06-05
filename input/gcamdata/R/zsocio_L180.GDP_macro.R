@@ -297,7 +297,8 @@ module_socio_L180.GDP_macro <- function(command, ...) {
                labor wages, labor productivity, labor force, and labor force share, energy investment") %>%
       add_legacy_name("NA") %>%
       add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names",
-                     "socioeconomics/pwt91", "L100.GTAP_capital_stock") ->
+                     "socioeconomics/pwt91", "socioeconomics/pwt91_na",
+                     "L100.GTAP_capital_stock") ->
       L180.nationalAccounts
 
     return_data(L180.nationalAccounts, L180.laborForceSSP)

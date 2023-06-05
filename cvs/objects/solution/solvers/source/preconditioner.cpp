@@ -287,7 +287,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         chg = true;
                         ++nchg;
                     } 
-                    else if (oldprice > ub &&
+                    /*else if (oldprice > ub &&
                              oldsply > olddmnd) {
                       // price is above the top of the supply curve,
                       // and there little demand.  This is not
@@ -317,7 +317,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       solvable[i].setPrice(newprice);
                       chg = true;
                       ++nchg;
-                    }
+                    }*/
                     else if(fd < mFTOL && oldsply >= mFTOL && olddmnd >= mFTOL) {
                         // reset a small demand scale when it looked like a market was "off"
                         // but the supplies and demands are now in a normal range
@@ -351,6 +351,17 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         solvable[i].setForecastDemand(olddmnd);
                         fp = olddmnd;
                         fd = oldprice;
+                        chg = true;
+                        ++nchg;
+                    }
+                    else if(abs(fp) != abs(fd)) {
+                        // not sure why the price and quantity scales divereged but they should
+                        // be the same so reset them to be
+                        double newScale = abs(fp) > util::getSmallNumber() ? fp : fd;
+                        fp = newScale;
+                        fd = newScale;
+                        solvable[i].setForecastPrice(newScale);
+                        solvable[i].setForecastDemand(newScale);
                         chg = true;
                         ++nchg;
                     }

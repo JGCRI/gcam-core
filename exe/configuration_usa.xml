@@ -103,6 +103,8 @@
         <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
         <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 
+        <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
+
 		<Value name = "socio_usa">../input/gcamdata/xml/socioeconomics_USA.xml</Value>
 		<Value name = "resource_usa">../input/gcamdata/xml/resources_USA.xml</Value>
 		<Value name = "Cstorage_usa">../input/gcamdata/xml/Cstorage_USA.xml</Value>

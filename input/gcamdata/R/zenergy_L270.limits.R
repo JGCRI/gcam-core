@@ -340,6 +340,14 @@ module_energy_L270.limits <- function(command, ...) {
       add_precursors("common/GCAM_region_names") ->
       L270.NegEmissBudgetDefaultPrice
 
+    L270.NegEmissBudget %>%
+      add_title("Sets up the negative emissions budget RES market") %>%
+      add_units("NA") %>%
+      add_comments("Sets up the RES constraint market including boiler plate such") %>%
+      add_comments("as the policy name and market as well as unit strings") %>%
+      add_precursors("common/GCAM_region_names") ->
+      L270.NegEmissBudget
+
     L270.NegEmissBudgetFraction %>%
       add_title("Sets the negative emissions budget fraction.") %>%
       add_units("%") %>%
