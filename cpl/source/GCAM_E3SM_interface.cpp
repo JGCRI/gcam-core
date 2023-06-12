@@ -218,7 +218,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss,
                                    std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup )
 {
-    int z, num_it, spinup;
+    int z, p, num_it, spinup;
     int row, lurow, r, l;
     ofstream oFile;
 
@@ -239,173 +239,175 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     // original condition:
     // if( modeltime->isModelYear( e3smYear ) || e3smYear == 1970) {
 
-    // run GCAM each year, starting in 2015: GCAM failed to solve in 2016 because of whack scalars 
-    //if( modeltime->isModelYear( e3smYear ) || e3smYear == 1970) {
-    if( e3smYear >= 2015) {
+    // run GCAM each year, starting in 2015 
+    //if( e3smYear >= 2015) {
 
     // run on GCAM interval
-    //if( modeltime->isModelYear( e3smYear ) ) {
+    if( modeltime->isModelYear( e3smYear ) ) {
 
         if ( e3smYear == 2015 && aSpinup) {
-           // do a spinup loop first and save the base year data (2015)
-           num_it = 2;
-           spinup = 1;
+            // do a spinup loop first and save the base year data (2015)
+            num_it = 2;
+            spinup = 1;
         } else {
-           num_it = 1;
-           spinup = 0;
+            num_it = 1;
+            spinup = 0;
         }
 
         // do the indent if this works
 	for( z = 0; z < num_it; z++) {
 
-        // If the e3smYear is a GCAM model period, then we need to increment GCAM's model period
-        // unless this is the spinup loop
-        if ( modeltime->isModelYear( e3smYear ) & spinup == 0) {
-            gcamPeriod = gcamPeriod + 1;
-        }
+            // If the e3smYear is a GCAM model period, then we need to increment GCAM's model period
+            // unless this is the spinup loop
+            if ( modeltime->isModelYear( e3smYear ) & spinup == 0) {
+                gcamPeriod = gcamPeriod + 1;
+            }
 
-        int gcamYear = modeltime->getper_to_yr( gcamPeriod );
+            int gcamYear = modeltime->getper_to_yr( gcamPeriod );
     
-        bool success = false;
+            bool success = false;
     
-        if ( gcamYear < gcamStartYear ) {
-            coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is before GCAM starting date: " << gcamStartYear << endl;
-            return;
-        }
-        if ( gcamYear > gcamEndYear ) {
-            coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is after GCAM ending date: " << gcamEndYear << endl;
-            return;
-        }
+            if ( gcamYear < gcamStartYear ) {
+                coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is before GCAM starting date: " << gcamStartYear << endl;
+                return;
+            }
+            if ( gcamYear > gcamEndYear ) {
+                coupleLog << "returning from runGCAM: E3SM year: " << *yyyymmdd << " (GCAM year: " << gcamYear << ") is after GCAM ending date: " << gcamEndYear << endl;
+                return;
+            }
     
-        coupleLog << "Current E3SM Year is " << e3smYear << ", Current GCAM Year is " << gcamYear << endl;
+            coupleLog << "Current E3SM Year is " << e3smYear << ", Current GCAM Year is " << gcamYear << endl;
 
-        int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
-  
-        // set restart period
-        // run the calibration if this is the first year
-        // make a namelist item to toggle this?
-        if ( spinup == 1 ) {
-           restartPeriod = -1;
-        } else {
-           restartPeriod = gcamPeriod;
-        }
-
-        Timer timer;
-        
-        coupleLog << "Running GCAM for year " << gcamYear;
-        coupleLog << ", calculating period = " << gcamPeriod << endl;
-        
-        coupleLog.precision(20);
-        
-        // Initialize the timer.  Create an object of the Timer class.
-        timer.start();
-        
-        // Run this GCAM period
-        success = runner->runScenarios( gcamPeriod, true, timer );
-        
-        // Stop the timer
-        timer.stop();
-        
-        coupleLog << "Getting CO2 Emissions" << endl;
-        double *co2 = mCO2EmissData.getData();
-        // be sure to reset any data set previously
-        fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
-        GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mCO2EmissData);
-        getCo2.run(runner->getInternalScenario());
-        std::copy(co2, co2+mCO2EmissData.getArrayLength(), gcamoemiss);
-        coupleLog << mCO2EmissData << endl;
-
-        // write the 2015 CO2 to a table
-        // this is the actual co2 base file - so the name comes from the namelist
-        if (spinup == 1) {
-           std::string co2_oname(aBaseCO2GcamFileName);
-           oFile.open(co2_oname);
-           mCO2EmissData.printAsTable(oFile);
-           oFile.close();
-        }
-        
-        coupleLog << "Getting LUC" << endl;
-        double *luc = mLUCData.getData();
-        // be sure to reset any data set previously
-        fill(luc, luc+mLUCData.getArrayLength(), 0.0);
-        GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mLUCData);
-        getLUC.run(runner->getInternalScenario());
-        coupleLog << mLUCData << endl;
-       
-        // write the 2015 LUC to a table
-        // this is diagnostic so hardcode the file name
-        if (spinup == 1) {
-           std::string luc_oname = "luc_2015_out.csv";
-           oFile.open(luc_oname);
-           mLUCData.printAsTable(oFile);
-           oFile.close();
-        } 
-
-        coupleLog << "Getting Wood harvest" << endl;
-        double *woodHarvest = mWoodHarvestData.getData();
-        // be sure to reset any data set previously
-        fill(woodHarvest, woodHarvest+mWoodHarvestData.getArrayLength(), 0.0);
-        GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[IndexFilter,IntEquals,0]/physical-output[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mWoodHarvestData);
-        getWH.run(runner->getInternalScenario());
-        coupleLog << mWoodHarvestData << endl;
-
-        // write the 2015 wood harvest to a table for a base file
-        // this is diagnostic so hardcode the file name 
-        if (spinup == 1) {
-           std::string wh_oname = "wh_2015_out.csv";
-           oFile.open(wh_oname);
-           mWoodHarvestData.printAsTable(oFile);
-           oFile.close();
-        }       
+            int finalCalibrationYear = modeltime->getper_to_yr( modeltime->getFinalCalibrationPeriod() );
  
-        // Set data in the gcamoluc* arrays
-        // also write the baseline csv file if in spinup mode
+            coupleLog << "finalCalibrationYear is " << finalCalibrationYear << endl;
+ 
+            // set restart period
+            // run the calibration if this is the first year
+            if ( spinup == 1 ) {
+                restartPeriod = -1;
+            } else {
+                // run this period without restart if it is the first time
+                if ( modeltime->isModelYear( e3smYear ) ) {
+                    restartPeriod = gcamPeriod;
+                } else {
+                    // get the beginning of this period again, rather than the end of the previous run
+                    // don't force a restart read cuz it overwrites the yield-scaler state
+                    //restartPeriod = gcamPeriod+1;
+                    restartPeriod = gcamPeriod;
+                }
+            }
 
-        if (spinup == 1) {
-           oFile.open(aBaseLucGcamFileName);
-           oFile << "glu,type,Year,value" << endl;
-           //oFile.close();
-        }
+            Timer timer;
+        
+            coupleLog << "Running GCAM for year " << gcamYear;
+            coupleLog << ", calculating period = " << gcamPeriod << endl;
+        
+            coupleLog.precision(20);
+       
+            // Initialize the timer.  Create an object of the Timer class.
+            timer.start();
+        
+            // Run this GCAM period
+            success = runner->runScenarios( gcamPeriod, true, timer );
+        
+            // Stop the timer
+            timer.stop();
+        
+            coupleLog << "Getting CO2 Emissions" << endl;
+            double *co2 = mCO2EmissData.getData();
+            // be sure to reset any data set previously
+            fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
+            GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mCO2EmissData);
+            getCo2.run(runner->getInternalScenario());
+            std::copy(co2, co2+mCO2EmissData.getArrayLength(), gcamoemiss);
+            coupleLog << mCO2EmissData << endl;
 
-        // only needed for spinup, but doesn't like being in an if statement
-        //         ILogger& baseLucFile = ILogger::getLogger(aBaseLucGcamFileName);
-        //                 baseLucFile.setLevel( ILogger::NOTICE );
-        //                         baseLucFile << "glu,type,Year,value" << endl;
-        //                                 baseLucFile.precision(20);
+            // write the 2015 CO2 to a table
+            // this is the actual co2 base file - so the name comes from the namelist
+            if (spinup == 1) {
+                std::string co2_oname(aBaseCO2GcamFileName);
+                oFile.open(co2_oname);
+                mCO2EmissData.printAsTable(oFile);
+                oFile.close();
+            }
+        
+            coupleLog << "Getting LUC" << endl;
+            double *luc = mLUCData.getData();
+            // be sure to reset any data set previously
+            fill(luc, luc+mLUCData.getArrayLength(), 0.0);
+            GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mLUCData);
+            getLUC.run(runner->getInternalScenario());
+            coupleLog << mLUCData << endl;
+       
+            // write the 2015 LUC to a table
+            // this is diagnostic so hardcode the file name
+            if (spinup == 1) {
+                std::string luc_oname = "luc_2015_out.csv";
+                oFile.open(luc_oname);
+                mLUCData.printAsTable(oFile);
+                oFile.close();
+            } 
 
-        const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-        row = 0;
-        lurow = 0;
-        // The variables below are read in, but to get them from the namelist would require changes to the runGCAM call
-        // For now, we'll derive them from data already accessible
-        int numRegions = mWoodHarvestData.getArrayLength();
-        int numLUTypes = mLUCData.getArrayLength() / mWoodHarvestData.getArrayLength();
-        for( r = 0; r < numRegions; r++) {
-            for( l = 0; l < numLUTypes; l++) {
-                gcamoluc[row] = luc[lurow];
+            coupleLog << "Getting Wood harvest" << endl;
+            double *woodHarvest = mWoodHarvestData.getData();
+            // be sure to reset any data set previously
+            fill(woodHarvest, woodHarvest+mWoodHarvestData.getArrayLength(), 0.0);
+            GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[IndexFilter,IntEquals,0]/physical-output[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mWoodHarvestData);
+            getWH.run(runner->getInternalScenario());
+            coupleLog << mWoodHarvestData << endl;
+
+            // write the 2015 wood harvest to a table for a base file
+            // this is diagnostic so hardcode the file name 
+            if (spinup == 1) {
+                std::string wh_oname = "wh_2015_out.csv";
+                oFile.open(wh_oname);
+                mWoodHarvestData.printAsTable(oFile);
+                oFile.close();
+            }       
+ 
+            // Set data in the gcamoluc* arrays
+            // also write the baseline csv file if in spinup mode
+
+            if (spinup == 1) {
+                oFile.open(aBaseLucGcamFileName);
+                oFile << "glu,type,Year,value" << endl;
+                //oFile.close();
+            }
+
+            const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
+            row = 0;
+            lurow = 0;
+            // The variables below are read in, but to get them from the namelist would require changes to the runGCAM call
+            // For now, we'll derive them from data already accessible
+            int numRegions = mWoodHarvestData.getArrayLength();
+            int numLUTypes = mLUCData.getArrayLength() / mWoodHarvestData.getArrayLength();
+            for( r = 0; r < numRegions; r++) {
+                for( l = 0; l < numLUTypes; l++) {
+                    gcamoluc[row] = luc[lurow];
+                    if (spinup == 1) {
+                        oFile << r+1 << "," << l+1 << "," << gcamYear << "," << gcamoluc[row] << endl;
+                    }
+                    lurow++;
+                    row++;
+                }
+                // Convert to tC and set wood harvest data to output vector
+                // this is the factor that GCAM uses; it is an intermediate value
+                gcamoluc[row] = mWoodHarvestData.getData()[r] * 250000000;
                 if (spinup == 1) {
                     oFile << r+1 << "," << l+1 << "," << gcamYear << "," << gcamoluc[row] << endl;
                 }
-                lurow++;
                 row++;
             }
-            // Convert to tC and set wood harvest data to output vector
-            // this is the factor that GCAM uses; it is an intermediate value
-            gcamoluc[row] = mWoodHarvestData.getData()[r] * 250000000;
+
             if (spinup == 1) {
-                oFile << r+1 << "," << l+1 << "," << gcamYear << "," << gcamoluc[row] << endl;
+                oFile.close();
             }
-            row++;
-        }
-
-        if (spinup == 1) {
-            oFile.close();
-        }
         
-        // Print output
-        runner->printOutput(timer);
+            // Print output
+            runner->printOutput(timer);
 
-        spinup = 0;
+            spinup = 0;
 
         } // end for z loop for spinup option
 
@@ -454,18 +456,17 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     // set carbon densities each year to calc and write them and to match running gcam each year
     //if( modeltime->isModelYear( gcamYear ) && e3smYear >=  *aFirstCoupledYear ) {
     if( e3smYear >=  *aFirstCoupledYear ) {
-        coupleLog << "Setting carbon density in year: " << gcamYear << endl;
         CarbonScalers e3sm2gcam(*aNumLon, *aNumLat, *aNumPFT);
         
         // Get scaler information
         if ( aReadScalars ) {
-            coupleLog << "Reading scalars from file." << endl;
+            coupleLog << "In setDensityGCAM, Reading scalars from file." << endl;
             fName = "./scalers_" + std::to_string(e3smYear) + ".csv";
             e3sm2gcam.readScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         } else {
-            coupleLog << "Calculating scalers from data." << endl;
+            coupleLog << "In setDensityGCAM, Calculating scalers from data." << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
-            e3sm2gcam.calcScalers(e3smYear, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
+            e3sm2gcam.calcScalers(gcamYear, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
                                   scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData,
                                   aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
         }

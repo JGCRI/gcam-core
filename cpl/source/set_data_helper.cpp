@@ -43,6 +43,14 @@ public:
     StringVecEquals( const vector<string>& aStr, size_t& row ):mStr( aStr ), mRow( row ) {}
     virtual ~StringVecEquals() {}
     virtual bool matchesString( const std::string& aStrToTest ) const {
+
+        ILogger& sdhLog = ILogger::getLogger( "SetDataHelper_log" );
+        sdhLog.setLevel( ILogger::NOTICE );
+
+        if(mRow == 1) {
+           sdhLog << "StringVecEquals mStr[1]=" << mStr[mRow] << endl;
+        }
+
         return mStr[mRow] == aStrToTest;
     }
 protected:
@@ -55,6 +63,14 @@ public:
     StringVecStartsWith( const vector<string>& aStr, size_t& row ):StringVecEquals( aStr, row ) { }
     virtual ~StringVecStartsWith() { }
     virtual bool matchesString( const std::string& aStrToTest ) const {
+
+        ILogger& sdhLog = ILogger::getLogger( "SetDataHelper_log" );
+        sdhLog.setLevel( ILogger::NOTICE );
+
+        if(mRow == 1) {
+           sdhLog << "StringVecStartsWithEquals mStr[1]=" << mStr[mRow] << endl;
+        }
+
         return boost::starts_with( aStrToTest, mStr[mRow] );
     }
 };
@@ -72,10 +88,26 @@ private:
 };
 
 void SetDataHelper::run(Scenario* aScenario) {
-  GCAMFusion<SetDataHelper> fusion(*this, mFilterSteps);
+    GCAMFusion<SetDataHelper> fusion(*this, mFilterSteps);
+
+    ILogger& sdhLog = ILogger::getLogger( "SetDataHelper_log" );
+    sdhLog.setLevel( ILogger::NOTICE );
+
     mRow = 0;
     for(auto row : mDataVector) {
+        // first release the memory allocated for previous mFilterSteps (it was allocated on construction also)
+        //for( size_t i = 0; i < mFilterSteps.size(); i++ ) {
+        //    sdhLog << "mFilterSteps " << i << " mDataName=" << mFilterSteps[i]->mDataName << endl;
+        //    delete mFilterSteps[i];
+        //}
+        //mFilterSteps = parseFilterString(mHeader);
+        //GCAMFusion<SetDataHelper> fusion(*this, mFilterSteps);
+        sdhLog << "before filter mRow=" << mRow << " Region=" << mRegionColumn[mRow] << " LandTech=" << mLandTechColumn[mRow];
+        sdhLog << " Year=" << mYearColumn[mRow] << " mDataVector scalar=" << mDataVector[mRow] << endl;
+        sdhLog << "mFilterSteps[1]region=" << boost::fusion::at_key<NamedFilter>(mFilterSteps[1]->mFilterMap)->mMatcher->matchesString(mRegionColumn[mRow]) << endl;
+        sdhLog << "mFilterSteps[2]technology=" << boost::fusion::at_key<NamedFilter>(mFilterSteps[4]->mFilterMap)->mMatcher->matchesString(mLandTechColumn[mRow]) << endl;
         fusion.startFilter(aScenario);
+        sdhLog << "after filter mDataVector size =" << mDataVector.size() << endl;
         mRow++;
     }
 }
@@ -88,6 +120,12 @@ SetDataHelper::~SetDataHelper() {
 
 template<>
 void SetDataHelper::processData(double& aData) {
+
+    ILogger& sdhLog = ILogger::getLogger( "SetDataHelper_log" );
+    sdhLog.setLevel( ILogger::NOTICE );
+
+    sdhLog << "double aData=" << aData << endl;
+
     aData = mDataVector[mRow];
 }
 template<>
@@ -96,15 +134,16 @@ void SetDataHelper::processData(Value& aData) {
     ILogger& sdhLog = ILogger::getLogger( "SetDataHelper_log" );
     sdhLog.setLevel( ILogger::NOTICE );
 
+    sdhLog << "Value aData=" << aData << endl;
+
     if(mDataVector[mRow] != 1.0) {
-       sdhLog << "Region" << mRegionColumn[mRow] << "LandTech" << mLandTechColumn[mRow] << "Year" << mYearColumn[mRow] << "mDataVector scalar:" << mDataVector[mRow] << endl;
+       sdhLog << "Region=" << mRegionColumn[mRow] << " LandTech=" << mLandTechColumn[mRow] << " Year=" << mYearColumn[mRow] << " mDataVector scalar=" << mDataVector[mRow] << endl;
     }
 
-    aData.set(mDataVector[mRow]);
-    //aData = mDataVector[mRow];
+    aData = mDataVector[mRow];
 
     if(aData != 1.0) {
-       sdhLog << "Region" << mRegionColumn[mRow] << "LandTech" << mLandTechColumn[mRow] << "Year" << mYearColumn[mRow] << "aData scalar:" << aData << endl;
+       sdhLog << "Region=" << mRegionColumn[mRow] << " LandTech=" << mLandTechColumn[mRow] << " Year=" << mYearColumn[mRow] << " aData scalar=" << aData << endl;
     }
 }
 template<>
@@ -118,8 +157,15 @@ void SetDataHelper::processData(T& aData) {
 }
 
 FilterStep* SetDataHelper::parseFilterStepStr( const std::string& aFilterStepStr, int& aCol ) {
+
+    ILogger& sdhLog = ILogger::getLogger( "SetDataHelper_log" );
+    sdhLog.setLevel( ILogger::NOTICE );
+
     auto openBracketIter = std::find( aFilterStepStr.begin(), aFilterStepStr.end(), '[' );
     if( openBracketIter == aFilterStepStr.end() ) {
+
+sdhLog << "parseFilterStepStr col=" << aCol << " nobracket aFilterStepStr=" << aFilterStepStr << endl;
+
         // no filter just the data name
         return new FilterStep( aFilterStepStr );
     }
@@ -149,6 +195,11 @@ FilterStep* SetDataHelper::parseFilterStepStr( const std::string& aFilterStepStr
             mainLog << "Unknown subclass of AMatchesValue: " << filterStr << std::endl;
         }
         
+sdhLog << "parseFilterStepStr col=" << aCol << " filter aFilterStepStr=" << aFilterStepStr << endl;
+sdhLog << "parseFilterStepStr col=" << aCol << " filter mRegionColumn[" << mRow << "]=" << mRegionColumn[mRow] << endl;
+sdhLog << "parseFilterStepStr col=" << aCol << " filter mLandTechColumn[" << mRow << "]=" << mLandTechColumn[mRow] << endl;
+sdhLog << "parseFilterStepStr col=" << aCol << " filter mYearColumn[" << mRow << "]=" << mYearColumn[mRow] << endl;
+
         if(isRead) {
             ++aCol;
         }

@@ -49,9 +49,9 @@ public:
     ~CarbonScalers();
     void readScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                       std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers);
-    void calcScalers(int aE3SMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+    void calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                      std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
-    void createScalerVectors(int aE3SMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+    void createScalerVectors(int aGCAMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                             std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
                                             std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
                                             std::map<std::pair<std::string,std::string>, double> aBelowScalarMap);
