@@ -1,0 +1,35 @@
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+SmthRenewRsrcCurves,,,,,
+,,,,,
+region,renewresource,smooth.renewable.subresource,maxSubResource,mid.price,curve.exponent
+Africa_Eastern,offshore wind resource c6,offshore wind resource c6,1.903955617,2.754281092,7.129210788
+Africa_Northern,offshore wind resource c6,offshore wind resource c6,0.353297961,2.811894021,8.853977652
+Africa_Southern,offshore wind resource c6,offshore wind resource c6,1.550874137,3.11294186,3.748676144
+Africa_Western,offshore wind resource c6,offshore wind resource c6,0.483186917,1.475638611,1.000000003
+Australia_NZ,offshore wind resource c6,offshore wind resource c6,29.76167302,2.908679579,4.474448063
+Brazil,offshore wind resource c6,offshore wind resource c6,1.390461276,3.393585208,34.46444914
+Canada,offshore wind resource c6,offshore wind resource c6,35.48955951,2.899965134,3.832622789
+Central America and Caribbean,offshore wind resource c6,offshore wind resource c6,0.601385867,2.817180539,8.664577172
+China,offshore wind resource c6,offshore wind resource c6,6.666983641,21.58536902,2.061582456
+EU-12,offshore wind resource c6,offshore wind resource c6,0.959229942,2.946389734,13.79817883
+EU-15,offshore wind resource c6,offshore wind resource c6,18.31845598,2.694225603,4.768665801
+European Free Trade Association,offshore wind resource c6,offshore wind resource c6,25.55197195,48.6140678,2.664030307
+India,offshore wind resource c6,offshore wind resource c6,0.270601992,2.007983621,1.00000001
+Japan,offshore wind resource c6,offshore wind resource c6,2.160702787,2.926487546,10.07119183
+Mexico,offshore wind resource c6,offshore wind resource c6,0.074253187,1.484828439,1.531413337
+Middle East,offshore wind resource c6,offshore wind resource c6,1.291312706,2.722910761,6.70183112
+Russia,offshore wind resource c6,offshore wind resource c6,50.68310368,2.959524046,3.882792363
+South Africa,offshore wind resource c6,offshore wind resource c6,3.761367691,3.235263819,4.322232824
+South America_Northern,offshore wind resource c6,offshore wind resource c6,0.928706037,2.639197654,4.92505978
+South America_Southern,offshore wind resource c6,offshore wind resource c6,0.668711643,2.645835496,15.25275872
+South Asia,offshore wind resource c6,offshore wind resource c6,0.584933266,1.365357143,1
+Southeast Asia,offshore wind resource c6,offshore wind resource c6,3.231853712,2.741216452,4.602086935
+Taiwan,offshore wind resource c6,offshore wind resource c6,3.858134963,3.0552327,3.941038124
+Argentina,offshore wind resource c6,offshore wind resource c6,5.578297707,19.73296356,2.060391744
+Colombia,offshore wind resource c6,offshore wind resource c6,0.345288142,1.565370398,1.074335733
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
