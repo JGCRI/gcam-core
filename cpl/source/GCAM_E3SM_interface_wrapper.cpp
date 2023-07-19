@@ -27,6 +27,8 @@ extern "C" {
     p_obj->initGCAM(CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap);
   }
 
+// todo: delete setdensitycgcam
+
   // Set Carbon Densities in GCAM using scalers from E3SM
   void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                           int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
@@ -49,13 +51,28 @@ extern "C" {
   }
     
   // Run GCAM
-  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, char* aBaseLucGcamFileName, char* aBaseCO2GcamFileName, int *aSpinup) {
+  void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, char* aBaseLucGcamFileName, char* aBaseCO2GcamFileName, int *aSpinup,
+                 double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                 int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
+                 int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile, int *aRestartRun) {
   
+      // convert to strings and bools where appropriate
       std::string BaseLucGcamFileName(aBaseLucGcamFileName);
       std::string BaseCO2GcamFileName(aBaseCO2GcamFileName);
       bool Spinup = *aSpinup == 1 ? true : false;
+      std::string MappingFile(aMappingFile);
+      std::string baseNPPFile(aBaseNPPFile);
+      std::string baseHRFile(aBaseHRFile);
+      std::string basePFTwtFile(aBasePFTwtFile);
+      bool readScalars = *aReadScalars == 1 ? true : false;
+      bool writeScalars = *aWriteScalars == 1 ? true : false;
+      bool scaleCarbon = *aScaleCarbon == 1 ? true : false;
+      bool restartRun = *aRestartRun == 1 ? true : false;
   
-      p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, BaseLucGcamFileName, BaseCO2GcamFileName, Spinup);
+      p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, BaseLucGcamFileName, BaseCO2GcamFileName, Spinup,
+                     aELMArea, aELMPFTFract, aELMNPP, aELMHR,
+                     aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
+                     scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile, restartRun);
   }
 
   // Downscale Emissions

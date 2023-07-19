@@ -65,7 +65,7 @@ ofstream outFile;
 // Pointer for a scenario
 Scenario* scenario; // model scenario info
 
-int restartPeriod; // Restart period is set externally and used in manage state variables
+int restartPeriod; // Restart period is set during run and used in manage state variables
 
 /*! \brief Constructor
  * \details This is the constructor for the E3SM_driver class.
@@ -214,13 +214,19 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
  * \param yr2 Year index used in GLM?
  * \param sneakermode integer indicating sneakernet mode is on
  * \param write_rest integer indicating restarts should be written
+ * \This now controls the setting of scalars, otherwise they get overwritten by restart data
  */
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss,
-                                   std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup )
+                                   std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
+                                   double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                                   int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
+                                   bool aWriteScalars, bool aScaleCarbon,
+                                   std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun )
 {
     int z, p, num_it, spinup;
     int row, lurow, r, l;
     ofstream oFile;
+    Timer timer;
 
     // Get year only of the current date
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -236,11 +242,11 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     // and write the base file data (or the base file itself)
     // should get this year and a flag for doing this from namelist
 
+    // if this is a restart run then do not do spinup
+    if (aRestartRun) {aSpinup = 0;}
+
     // original condition:
     // if( modeltime->isModelYear( e3smYear ) || e3smYear == 1970) {
-
-    // run GCAM each year, starting in 2015 
-    //if( e3smYear >= 2015) {
 
     // run on GCAM interval
     if( modeltime->isModelYear( e3smYear ) ) {
@@ -254,7 +260,6 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             spinup = 0;
         }
 
-        // do the indent if this works
 	for( z = 0; z < num_it; z++) {
 
             // If the e3smYear is a GCAM model period, then we need to increment GCAM's model period
@@ -287,18 +292,37 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             if ( spinup == 1 ) {
                 restartPeriod = -1;
             } else {
-                // run this period without restart if it is the first time
-                if ( modeltime->isModelYear( e3smYear ) ) {
-                    restartPeriod = gcamPeriod;
-                } else {
+                // run this period without restart
+                // note that the restart files are used up through gcamPeriod-1
+                // in a continuous run (after the initial year) the previous state is stored and no restarts are used to run gcamPeriod
+                restartPeriod = gcamPeriod;
+
+//                if ( modeltime->isModelYear( e3smYear ) ) {
+  //                  restartPeriod = gcamPeriod;
+    //            } else {
                     // get the beginning of this period again, rather than the end of the previous run
                     // don't force a restart read cuz it overwrites the yield-scaler state
                     //restartPeriod = gcamPeriod+1;
                     restartPeriod = gcamPeriod;
-                }
+      //          }
             }
 
-            Timer timer;
+            // if it is a restart run need to run up to previous period first using restarts
+            // note that restart files include yield scalars (and carbon densities)
+            if (aRestartRun) {
+                coupleLog << "Restart run: first running through period " << gcamPeriod-1 << endl;
+                timer.start();
+                success = runner->runScenarios( gcamPeriod-1, true, timer );
+                timer.stop();
+            }
+
+            // now set scalars for the current period
+            setDensityGCAM(yyyymmdd, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
+                            aNumLon, aNumLat, aNumPFT, aMappingFile, aFirstCoupledYear, aReadScalars, aWriteScalars,
+                            aScaleCarbon, aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
+
+            // now run the current period
+            //Timer timer;
         
             coupleLog << "Running GCAM for year " << gcamYear;
             coupleLog << ", calculating period = " << gcamPeriod << endl;
@@ -324,9 +348,11 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             coupleLog << mCO2EmissData << endl;
 
             // write the 2015 CO2 to a table
-            // this is the actual co2 base file - so the name comes from the namelist
+            // this is the actual co2 base file, but don't use the namelist value
+            // write this to hardcoded name within run directory
+            // this eliminates overwrite of the standard baseline file
             if (spinup == 1) {
-                std::string co2_oname(aBaseCO2GcamFileName);
+                std::string co2_oname = "gcam_co2_2015_base_file.csv";
                 oFile.open(co2_oname);
                 mCO2EmissData.printAsTable(oFile);
                 oFile.close();
@@ -368,11 +394,14 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
  
             // Set data in the gcamoluc* arrays
             // also write the baseline csv file if in spinup mode
+            // but don't use the namelist value
+            // write this to hardcoded name within run directory
+            // this eliminates overwrite of the standard baseline file
 
             if (spinup == 1) {
-                oFile.open(aBaseLucGcamFileName);
+                std::string luwh_oname = "gcam_lu_wh_2015_base_file.csv";
+                oFile.open(luwh_oname);
                 oFile << "glu,type,Year,value" << endl;
-                //oFile.close();
             }
 
             const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -393,6 +422,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                 }
                 // Convert to tC and set wood harvest data to output vector
                 // this is the factor that GCAM uses; it is an intermediate value
+                // conversion from m^3 of biomass to MgC (0.250 tonnes (Mg) C per m^3))
                 gcamoluc[row] = mWoodHarvestData.getData()[r] * 250000000;
                 if (spinup == 1) {
                     oFile << r+1 << "," << l+1 << "," << gcamYear << "," << gcamoluc[row] << endl;

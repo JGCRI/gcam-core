@@ -196,9 +196,9 @@ sdhLog << "parseFilterStepStr col=" << aCol << " nobracket aFilterStepStr=" << a
         }
         
 sdhLog << "parseFilterStepStr col=" << aCol << " filter aFilterStepStr=" << aFilterStepStr << endl;
-sdhLog << "parseFilterStepStr col=" << aCol << " filter mRegionColumn[" << mRow << "]=" << mRegionColumn[mRow] << endl;
-sdhLog << "parseFilterStepStr col=" << aCol << " filter mLandTechColumn[" << mRow << "]=" << mLandTechColumn[mRow] << endl;
-sdhLog << "parseFilterStepStr col=" << aCol << " filter mYearColumn[" << mRow << "]=" << mYearColumn[mRow] << endl;
+//sdhLog << "parseFilterStepStr col=" << aCol << " filter mRegionColumn[" << mRow << "]=" << mRegionColumn[mRow] << endl;
+//sdhLog << "parseFilterStepStr col=" << aCol << " filter mLandTechColumn[" << mRow << "]=" << mLandTechColumn[mRow] << endl;
+//sdhLog << "parseFilterStepStr col=" << aCol << " filter mYearColumn[" << mRow << "]=" << mYearColumn[mRow] << endl;
 
         if(isRead) {
             ++aCol;

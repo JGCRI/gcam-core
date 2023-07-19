@@ -160,19 +160,19 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     excludeOutliers(aELMNPP, aELMHR);
    
     // generate diagnostic files for the incoming elm data
-    string nppName = "./npp2GCAM_" + std::to_string(aGCAMYear) + ".csv";
+    string nppName = "./npp2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
     ILogger& npp2GCAM = ILogger::getLogger( nppName );
     npp2GCAM.setLevel( ILogger::NOTICE );
     npp2GCAM.precision(20);
     npp2GCAM << "pft_id,lon_ind,lat_ind,npp_gC_per_m2_per_s" << endl;
 
-    string hrName = "./hr2GCAM_" + std::to_string(aGCAMYear) + ".csv";
+    string hrName = "./hr2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
     ILogger& hr2GCAM = ILogger::getLogger( hrName );
     hr2GCAM.setLevel( ILogger::NOTICE );
     hr2GCAM.precision(20);
     hr2GCAM << "pft_id,lon_ind,lat_ind,hr_gC_per_m2_per_s" << endl;
 
-    string pftName = "./pft2GCAM_" + std::to_string(aGCAMYear) + ".csv";
+    string pftName = "./pft2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
     ILogger& pft2GCAM = ILogger::getLogger( pftName );
     pft2GCAM.setLevel( ILogger::NOTICE );
     pft2GCAM.precision(20);
@@ -182,8 +182,8 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     ILogger& area2GCAM = ILogger::getLogger( areaName );
     area2GCAM.setLevel( ILogger::NOTICE );
     area2GCAM.precision(20);
-    // only do this once, and the first call is in 2016
-    if(aGCAMYear == 2020) {
+    // only do this once, and the first call is in 2020, but GCAMYear is 2025
+    if(aGCAMYear == 2025) {
         area2GCAM << "lon_ind,lat_ind,cell_area_km2" << endl;
     }
 
@@ -226,7 +226,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                 npp2GCAM << pft << "," << j << "," << k << "," << aELMNPP[valIndex] << endl;
                 hr2GCAM << pft << "," << j << "," << k << "," << aELMHR[valIndex] << endl;
                 pft2GCAM << pft << "," << j << "," << k << "," << aELMPFTFract[valIndex] << endl;
-                if(aGCAMYear == 2020 && pft == 0) {
+                if(aGCAMYear == 2025 && pft == 0) {
                     area2GCAM << j << "," << k << "," << aELMArea[gridIndex] << endl;
                 }
 
@@ -348,7 +348,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
         }
     
         // check the essential data
-        if(aGCAMYear == 2020) {
+        if(aGCAMYear == 2025) {
            Sd << regID << "," << crop << endl;
            Sd << "CASE: total area " << totalArea[std::make_pair(regID,crop)];
            Sd << " total npp " << totalNPP[std::make_pair(regID,crop)] << " total hr " << totalHR[std::make_pair(regID,crop)];
