@@ -47,7 +47,7 @@ public:
     int gcamStartYear;
     int gcamEndYear;
     LoggerFactoryWrapper loggerFactoryWrapper;
-    
+
     ReMapData mCO2EmissData;
     ReMapData mLUCData;
     ReMapData mWoodHarvestData;

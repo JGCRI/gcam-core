@@ -336,13 +336,12 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
         if ( baseAvgHR > 0 ) {
             // The belowground scalar is a combination of NPP and HR...BUT HR needs to be "flipped" around 1
             // This is because higher heterotrophic respiration means lower C density, everything else being equal
-            // Check for values that would send this negative, but don't change anything yet
+            // Check for negative final scalar and set these to zero
             hrScalar = 2.0 - ( avgHR / baseAvgHR );
-            if(hrScalar <= 0) {
-               //hrScalar = 0.0;
-               Sd << "Bad hrScalar" << hrScalar << "for region" << regID << "crop" << crop << endl;
-            }
             belowScalarMap[std::make_pair(regID,crop)] = ( aboveScalarMap[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
+            if(belowScalarMap[std::make_pair(regID,crop)] <= 0.0) {
+                belowScalarMap[std::make_pair(regID,crop)] = 0.0;
+            }
         } else {
             belowScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
@@ -497,7 +496,22 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     // Compute the median and median absolute deviation
     // See: Davies, P.L. and Gather, U. (1993), "The identification of multiple outliers"
     // J. Amer. Statist. Assoc., 88:782-801.
-    double madLimit = 5.2;
+    // this is based on eq 15 for the hampel identifier with alpha-n and alpha = 0.05 and N=100
+    //    (which matches the table for standardization 3, prob of a selected outlier being an outlier is 0.95): 
+    //       madLimit = 2.906+11.99*(N-6)^-0.05651 for even N; 2.906+12.99*(N-5)^-0.5781 for odd N
+    // OR the hampel identifier with alpha-n and alpha = 0.01 and N = 1000000
+    //    (which means prob of a selected outlier being an outlier is 0.99):
+    //       madLimit = 3.819+24.09*(N-7)^-0.5936 for even N; 3.819+26.50*(N-7)^-0.6089 for odd N
+    // Using a fixed value for now (it used to be 5.2, and some very high final scalars still resulted)
+    //    the equations (16) for standardization 4 (which is based on the prob that no outliers are in the sample)
+    //    do not match the table values at all, so not using those
+    // The limit generally goes up with lower alpha (less outliers) and down with higher N
+    // It makes more sense to use standardization 3 because we have a sample and want to identify the outliers
+    // Note that alpha-n is the defined probability of the normal distribution that is considered an outlier
+    //   and that alpha is the respective null hypothesis probablitity (not an outlier or that there is an outlier in the sample)
+    // Note that the max N at ~1deg is 55296, at 0.5deg is 259200, and at 1/8deg is on the order of 1 million,
+    //    and many of these get filtered out because they are not land 
+    double madLimit = 3.83;
 
     // First, sort the scaler and find median
     std::sort(scaledNPP.begin(), scaledNPP.end());

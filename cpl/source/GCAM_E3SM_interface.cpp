@@ -245,9 +245,6 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     // if this is a restart run then do not do spinup
     if (aRestartRun) {aSpinup = 0;}
 
-    // original condition:
-    // if( modeltime->isModelYear( e3smYear ) || e3smYear == 1970) {
-
     // run on GCAM interval
     if( modeltime->isModelYear( e3smYear ) ) {
 
@@ -296,15 +293,6 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                 // note that the restart files are used up through gcamPeriod-1
                 // in a continuous run (after the initial year) the previous state is stored and no restarts are used to run gcamPeriod
                 restartPeriod = gcamPeriod;
-
-//                if ( modeltime->isModelYear( e3smYear ) ) {
-  //                  restartPeriod = gcamPeriod;
-    //            } else {
-                    // get the beginning of this period again, rather than the end of the previous run
-                    // don't force a restart read cuz it overwrites the yield-scaler state
-                    //restartPeriod = gcamPeriod+1;
-                    restartPeriod = gcamPeriod;
-      //          }
             }
 
             // if it is a restart run need to run up to previous period first using restarts
