@@ -58,10 +58,12 @@ mNumLon( aNumLon ),
 mNumLat( aNumLat ),
 mNumPFT( aNumPFT )
 {
+   mELMArea = new double[aNumLat * aNumLon * aNumPFT];
 }
 
 // Destructor
 CarbonScalers::~CarbonScalers() {
+   delete[] mELMArea;
 }
 
 // Read each component of the base year data
@@ -155,7 +157,16 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                                 std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
-    
+   
+    // first copy the area into the local array, expanded to all pfts
+    // this is because the area needs to be zeroed out also for outliers
+    // an outlier may be for one pft in a cell, but not for another
+    for (int z=0; z < mNumPFT; z++) {
+        for (int i=0; i < (mNumLat*mNumLon); i++) {
+            mELMArea[(z*mNumLat*mNumLon)+i] = aELMArea[(z*mNumLat*mNumLon)+i];
+        }
+    } 
+
     // Exclude outliers from the scalar calculation
     excludeOutliers(aELMNPP, aELMHR);
    
@@ -212,6 +223,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     int valIndex = 0; // Index used for PFT x Grid vectors
     double scalar = 0.0; // Define the scalar
     double base_scalar = 0.0; // Define the base scalar
+    int num_outliers = 0;
     for( int pft = 0; pft < mNumPFT; pft++ ) {
         for ( int k = 1; k <= mNumLat; k++ ) {
             for ( int j = 1; j <= mNumLon; j++ ) {
@@ -227,6 +239,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                 hr2GCAM << pft << "," << j << "," << k << "," << aELMHR[valIndex] << endl;
                 pft2GCAM << pft << "," << j << "," << k << "," << aELMPFTFract[valIndex] << endl;
                 if(aGCAMYear == 2025 && pft == 0) {
+                    // this is still the original because it is output only once
                     area2GCAM << j << "," << k << "," << aELMArea[gridIndex] << endl;
                 }
 
@@ -243,8 +256,8 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                         // area is in km^2, but npp and hr are in gC/m^2/sec
                         // the average below includes area in both numerator and denominator
                         //  so no need to convert to m^2
-                        scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * aELMArea[gridIndex];
-                        base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * aELMArea[gridIndex];
+                        scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * mELMArea[valIndex];
+                        base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * mELMArea[valIndex];
                       
                         // the annual average do not have bad npp values anymore, at least when res matches
                         //    so do not need to check for base_scalar == 0 and then set scalar to 0
@@ -297,6 +310,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     double avgHR;
     double baseAvgHR;
     double hrScalar;
+    double NODATA = -9999;    // this must be a large negative value
     for(const auto &curr : totalArea) {
         regID = curr.first.first;
         crop = curr.first.second;
@@ -306,42 +320,55 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
             avgNPP = totalNPP[std::make_pair(regID,crop)] / totalArea[std::make_pair(regID,crop)];
             avgHR = totalHR[std::make_pair(regID,crop)] / totalArea[std::make_pair(regID,crop)];
         } else {
-            avgNPP = 0.0;
-            avgHR = 0.0;
+            avgNPP = NODATA;
+            avgHR = NODATA;
         }
         
         if ( baseTotalArea[std::make_pair(regID,crop)] > 0.0 ) {
             baseAvgNPP = baseTotalNPP[std::make_pair(regID,crop)] / baseTotalArea[std::make_pair(regID,crop)];
             baseAvgHR = baseTotalHR[std::make_pair(regID,crop)] / baseTotalArea[std::make_pair(regID,crop)];
         } else {
-            baseAvgNPP = 0.0;
-            baseAvgHR = 0.0;
+            baseAvgNPP = NODATA;
+            baseAvgHR = NODATA;
         }
         
-        // Calculate scalar
+        // Calculate scalars
+        // From a physical perspective we want to limit scalars between a min of 0.125 and a max of 2
+        // Select 0.125 for the above min (and zero for below ratio min),
+        //    and 2 for the above max ( 1.875 for the below ratio max)
+        // GCAM only has positive accumulation
+        // Also do not create zero-value scalars as this would be an artificial forcing of GCAM
+        // Must ignore negative and zero base values, and nodata values
+        
+        // Above scalar
         // npp can be negative
         // gcam only have positive accumulation
-        // so have to ignore negative base values
-        // but if a case npp value goes negative then the scalar should go to zero
-        // TODO: check this
-        if ( baseAvgNPP > 0 && avgNPP > 0 ) {
+        // but if a case npp value goes negative then the scalar goes to the min
+        if ( baseAvgNPP > 0.0 && avgNPP != NODATA) {
             aboveScalarMap[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
-        } else if ( avgNPP < 0 ) {
-            aboveScalarMap[std::make_pair(regID,crop)] = 0.0;
+            if (aboveScalarMap[std::make_pair(regID,crop)] < 0.125) {
+                aboveScalarMap[std::make_pair(regID,crop)] = 0.125;
+            }
+            if (aboveScalarMap[std::make_pair(regID,crop)] > 2.0) {
+                aboveScalarMap[std::make_pair(regID,crop)] = 2.0;
+            }
         } else {
             aboveScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
         
-        // Calculate scalar
-        if ( baseAvgHR > 0 ) {
+        // Below scalar
+        if ( baseAvgHR > 0.0 && avgHR != NODATA) {
             // The belowground scalar is a combination of NPP and HR...BUT HR needs to be "flipped" around 1
             // This is because higher heterotrophic respiration means lower C density, everything else being equal
-            // Check for negative final scalar and set these to zero
+            // Constrain these as described above: min ratio is zero and max ratio is 1.875
             hrScalar = 2.0 - ( avgHR / baseAvgHR );
-            belowScalarMap[std::make_pair(regID,crop)] = ( aboveScalarMap[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
-            if(belowScalarMap[std::make_pair(regID,crop)] <= 0.0) {
-                belowScalarMap[std::make_pair(regID,crop)] = 0.0;
+            if (hrScalar < 0.125) {
+                hrScalar = 0.125;
             }
+            if (hrScalar > 2.0) {
+                hrScalar = 2.0;
+            }
+            belowScalarMap[std::make_pair(regID,crop)] = ( aboveScalarMap[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
         } else {
             belowScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
@@ -477,7 +504,7 @@ void CarbonScalers::readScalers(std::string aFileName, std::vector<int>& aYears,
     
 }
 
-void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
+void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR) {
     int length = mNumLat * mNumLon * mNumPFT;
     std::vector<double> scaledNPP(aELMNPP+0, aELMNPP+length);
     std::vector<double> scaledHR(aELMHR+0, aELMHR+length);
@@ -509,9 +536,12 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     // It makes more sense to use standardization 3 because we have a sample and want to identify the outliers
     // Note that alpha-n is the defined probability of the normal distribution that is considered an outlier
     //   and that alpha is the respective null hypothesis probablitity (not an outlier or that there is an outlier in the sample)
-    // Note that the max N at ~1deg is 55296, at 0.5deg is 259200, and at 1/8deg is on the order of 1 million,
+    // Note that the max N at ~1deg is 55296*17, at 0.5deg is 259200*17, and at 1/8deg is on the order of 1*17 million,
     //    and many of these get filtered out because they are not land 
-    double madLimit = 3.83;
+    //double madLimit = 3.83;
+
+    // returning to the original value because it retains 5% more npp values and they are fine
+    double madLimit = 5.2;
 
     // First, sort the scaler and find median
     std::sort(scaledNPP.begin(), scaledNPP.end());
@@ -541,6 +571,7 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
             mBaseNPPVector[i] = 0;
             aELMHR[i] = 0;
             mBaseHRVector[i] = 0;
+            mELMArea[i] = 0;
         }
     }
     

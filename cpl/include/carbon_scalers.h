@@ -69,6 +69,9 @@ private:
     int mNumLat;
     int mNumLon;
     int mNumPFT;
+
+    // the cell area associated with each pft in each cell; memory dealt with on construction and destruction
+    double *mELMArea;
     
     // Map grid cells to regions. Key is a string with longitude and latitude ("lon_lat").
     // Key maps to a vector of strings containing the region and subregion
