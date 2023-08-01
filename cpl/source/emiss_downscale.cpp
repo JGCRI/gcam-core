@@ -46,166 +46,289 @@
 using namespace std;
 
 // Constructor
-EmissDownscale::EmissDownscale(int aSize, int aNumReg, int aNumSector):
-ASpatialData(aSize),
-mBaseYearEmissVector(aSize, 0),
-mCurrYearEmissVector(aSize, 0),
-mBaseYearRegionSfcEmissVector(aNumReg, 0),
-mBaseYearRegionAirEmissVector(aNumReg, 0) {
-    // let the sector and region  vectors deal with their own memory
-    mSectors.push_back(string("surface"));
-    mSectors.push_back(string("aircraft"));
+EmissDownscale::EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLev, int aNumReg, int aNumSector) : ASpatialData(aNumLat * aNumLon * aNumMon * aNumLev),
+                                            mBaseYearEmissVector(aNumLat * aNumLon * aNumMon * aNumLev, 0),
+                                            mCurrYearEmissVector(aNumLat * aNumLon * aNumMon * aNumLev, 0),
+                                            mNumLon( aNumLon ),
+                                            mNumLat( aNumLat ),
+                                            mNumMon( aNumMon ),
+                                            mNumLev( aNumLev ),
+                                            mNumReg( aNumReg ),
+                                            mNumSector(  aNumSector )
+                                            {
 }
 
 // Destructor
 EmissDownscale::~EmissDownscale() {
 }
 
-
-// Read the base year GCAM CO2 emissions data
-// This is used to calculate the scalar baseline
-// This file is a csv with a unique format so code it here - it is output directly from the data structure
-// The value vectors are the length of the number of regions
-void EmissDownscale::readBaseYearCO2Data(std::string aBaseCO2GcamFileName){
-    // Read in the CO2 data (PgC)
-    // The format is region, sector, year, value
-    // Sector varies faster, and year is constant
-    // The values are in order of co2.xml output mapping, with only two sectors: surface and aircraft
-    // sum up each sector and store them in object varibles 
-
-    mGlobalSfcCO2Emiss = 0.0;
-    mGlobalAirCO2Emiss = 0.0;
-
-    ifstream data(aBaseCO2GcamFileName);
+// Read in a regional mapping data from a file
+void EmissDownscale::readRegionalMappingData(std::string aFileName)
+{
+    ifstream data(aFileName);
     if (!data.is_open())
     {
         ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
         coupleLog.setLevel( ILogger::ERROR );
-        coupleLog << "File not found: " << aBaseCO2GcamFileName << endl;
+        coupleLog << "File not found: " << aFileName << endl;
         exit(EXIT_FAILURE);
     }
     string str;
     getline(data, str); // skip the first line
-    int row = 0;
     while (getline(data, str))
     {
         istringstream iss(str);
         string token;
         double value;
+        int lon;
+        int lat;
         string region;
-        string sector;
-        int year;
+        string subregion;
 
-        // Parse region - store the region names in order
+        // Skip region & GLU ID
+        getline(iss, token, ',');
+        getline(iss, token, ',');
+
+        // Parse longitude
+        getline(iss, token, ',');
+        lon = std::stoi(token);
+
+        // Parse latitude
+        getline(iss, token, ',');
+        lat = std::stoi(token);
+
+        string gridID = std::to_string(lon) + "_" + std::to_string(lat);
+
+        // Parse Region Name
         getline(iss, token, ',');
         region = token;
-        region.erase( remove( region.begin(), region.end(), '\"' ), region.end() );
-        mRegions.push_back(region);   // this should be stored in order of row
-        //std::strcpy(&mRegions[row],region);
+        region.erase(remove(region.begin(), region.end(), '\"'), region.end());
 
-        // Parse sector - sectors are already defined
+        // Skip SubRegion Name
         getline(iss, token, ',');
-        sector = token;
-        sector.erase( remove( sector.begin(), sector.end(), '\"' ), sector.end() );
 
-        // Parse year - don't need to store this
-        getline(iss, token, ',');
-        year = std::stoi(token);
+        // Create region ID
+        string regID = region;
 
-        // Parse value
+        // Add region ID to the mapping vector.
+        // Note that there maybe more than one regID per gridID (hence, a vector)
+        if (mRegionMapping.find(gridID) == mRegionMapping.end())
+        {
+            // If gridID is not found, then add it with this regID in its vector
+            vector<string> temp;
+            temp.push_back(regID);
+            mRegionMapping[gridID] = temp;
+        }
+        else
+        {
+            // If gridID is found, then add to the existing regID vector
+            auto currGrid = mRegionMapping.find(gridID);
+            (*currGrid).second.push_back(regID);
+        }
+
+        // Parse Weight -- this is the fraction of the grid cell in a particular GCAM region
         getline(iss, token, ',');
         value = std::stod(token);
 
-        // store values in apropriate base sector vectors
-        if (sector == "surface") {
-            mBaseYearRegionSfcEmissVector[row] = value;
-            mGlobalSfcCO2Emiss += value;
-        } else if (sector == "aircraft") {
-            mBaseYearRegionAirEmissVector[row] = value;
-            mGlobalAirCO2Emiss += value;
-            // only advance output row after last sector
-            row++;
-        } else {
+        mRegionWeights[std::make_pair(gridID, regID)] = value;
+    }
+
+    return;
+}
+
+// Read in regional Base-Year Emission Data from a file
+void EmissDownscale::readRegionalBaseYearEmissionData(std::string aFileName)
+{
+     mBaseYearGlobalSfcCO2Emiss = 0.0;
+    maseYearGlobalAirCO2Emiss = 0.0;
+
+    ifstream data(aFileName);
+    if (!data.is_open())
+    {
+        ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+        coupleLog.setLevel( ILogger::ERROR );
+        coupleLog << "File not found: " << aFileName << endl;
+        exit(EXIT_FAILURE);
+    }
+    string str;
+    getline(data, str); // skip the first line
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        double value;
+        string regID;
+        string sectorID;
+
+        // Parse Region Name
+        getline(iss, token, ',');
+        regID = token;
+        regID.erase(remove(regID.begin(), regID.end(), '\"'), regID.end());
+
+        // Parse Sector
+        getline(iss, token, ',');
+        sectorID = token;
+        sectorID.erase(remove(sectorID.begin(), sectorID.end(), '\"'), sectorID.end());
+
+        // Skip Year
+        getline(iss, token, ',');
+
+        // Parse Base-Year Emission
+        getline(iss, token, ',');
+        value = std::stod(token);
+
+       // Get the index of the region
+        auto currReg = mRegionIDName.find(regID);
+        int regIndex = (*currReg).second - 1;
+        
+        if (sectorID == "surface")
+        { aBaseYearEmissions_sfc[regIndex] = value;
+        mBaseYearGlobalSfcCO2Emiss += value;}
+        else if (sectorID == "aircraft")
+        { aBaseYearEmissions_air[regIndex] = value;
+          mBaseYearGlobalAirCO2Emiss += value;}
+          else {
             ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
             coupleLog.setLevel( ILogger::ERROR );
-            coupleLog << "Sector" << sector << " in" << aBaseCO2GcamFileName << "not present in current co2.xml output mapping" << endl;
+            coupleLog << "Sector" << sectorID << " in" << aFileName << "not present in current co2.xml output mapping" << endl;
             exit(EXIT_FAILURE);
         }
+        
+        
+    }
 
-    } // end while loop
-
+    return;
 }
 
 
 // Downscale emissions
-void EmissDownscale::downscaleCO2Emissions(const std::string sector, std::vector<double> aCurrYearRegionEmissVector) {
+void EmissDownscale::downscaleSurfaceCO2Emissions(double *aCurrYearEmissions)
+{ // baseYearEmission need to be updated
 
-    std::vector<double> baseYearRegionEmissVector;
-    
     // First, set the values that were read in as the BaseYearEmissions
     mBaseYearEmissVector = getValueVector();
-    
+
     // Calculate current year emissions vector by scaling base year emissions up
     mCurrYearEmissVector = mBaseYearEmissVector;
+    // double scaler = aCurrYearEmissions / aBaseYearEmissions;
+    // std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
+    //                 mCurrYearEmissVector.begin(), [scaler](double i) { return i * scaler; });
 
-    // get the sector specific base emissions by region
-    if (sector == "surface" ) {
-        baseYearRegionEmissVector = mBaseYearRegionSfcEmissVector;
-    } else if (sector == "aircraft") {
-        baseYearRegionEmissVector = mBaseYearRegionAirEmissVector;
-    } else {
-        ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-        coupleLog.setLevel( ILogger::ERROR );
-        coupleLog << "Sector" << sector << " not available in EmissDownscale::downscaleCO2Emissions" << endl;
-        exit(EXIT_FAILURE);
+    int gridIndex = 0;   // Index used for Grid vectors
+    int valIndex = 0;    // Index used for PFT x Grid vectors
+    double scalar = 0.0; // Define the scalar
+    double weight = 0.0; // Define the weight
+
+    for (int k = 1; k <= mNumLat; k++)
+    {
+        for (int j = 1; j <= mNumLon; j++)
+        {
+
+            gridIndex = (k - 1) * mNumLon + (j - 1);
+
+            // Get region for this entry
+            string gridID = std::to_string(j) + "_" + std::to_string(k);
+            auto tempGrid = mRegionMapping.find(gridID);
+            if (mRegionMapping.find(gridID) == mRegionMapping.end())
+            {
+                // Grid isn't found in the mapping. Currently, this probably means it is an ocean grid.
+                // TODO: set up loop only over land grids, either using the mRegionMapping or one of the files from ELM
+            }
+            else
+            {
+                vector<string> regInGrd = (*tempGrid).second;
+                scalar = 0;
+                weight = 0;
+                // Loop over all regions this grid is mapped to and calculate the scalars
+                for (auto regID : regInGrd)
+                {
+                    // Calculate total as NPP/HR of the PFT * area of the PFT
+                    // pft value is fraction of grid cell
+                    auto currReg = mRegionIDName.find(regID);
+                    int regIndex = (*currReg).second - 1;
+
+                    scalar += aCurrYearEmissions[regIndex] / aBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
+                    weight += mRegionWeights[std::make_pair(gridID, regID)];
+                }
+                scalar = scalar / weight; // normalized by the total eright
+                for (int mon = 1; mon <= mNumMon; mon++)
+                {
+                    valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
+                    mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
+                }
+            }
+        }
     }
 
-    // ToDo:
-    // This needs to be set up like the region mapping for the luc scalars
-    // for now just extract the first (and only) element of the input arrays, which are the global values 
-    double scaler = aCurrYearRegionEmissVector[0] / baseYearRegionEmissVector[0];
-    std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
-                   mCurrYearEmissVector.begin(), [scaler](double i) { return i * scaler; });
-    
     // Finally, re-set the value vector to be the final emissions, since this will be written out
-    setValueVector( mCurrYearEmissVector );  
-    
+    setValueVector(mCurrYearEmissVector);
+
     return;
 }
 
+// Downscale emissions
+void EmissDownscale::downscaleAircraftCO2Emissions(double *aCurrYearEmissions)
+{ // baseYearEmission need to be updated
+
+    // First, set the values that were read in as the BaseYearEmissions
+    mBaseYearEmissVector = getValueVector();
+
+    // Calculate current year emissions vector by scaling base year emissions up
+    mCurrYearEmissVector = mBaseYearEmissVector;
+
+    double scalar = 0.0; // Define the scalar
+    
+    double aCurrYearGlobalAirCO2Emiss = 0.0;
+
+    for((int k = 1; k <= mNumReg; k++))
+        aCurrYearGlobalAirCO2Emiss += aCurrYearEmissions[k-1];
+
+    scalar =  aCurrYearGlobalAirCO2Emiss / mBaseYearGlobalAirCO2Emiss;
+
+    std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
+                   mCurrYearEmissVector.begin(), [scaler](double i) { return i * scalar; });
+
+    // Finally, re-set the value vector to be the final emissions, since this will be written out
+    setValueVector(mCurrYearEmissVector);
+
+    return;
+}
+
+
 // Separate the emissions vectors into individual months
 void EmissDownscale::separateMonthlyEmissions(double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
-                              double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
-                              double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
-                              double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
-                              int aNumLon, int aNumLat) {
-    
+                                              double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
+                                              double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
+                                              double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
+                                              int aNumLon, int aNumLat)
+{
+
     int gridPerMonth = aNumLat * aNumLon;
     std::copy(mCurrYearEmissVector.begin(),
-              mCurrYearEmissVector.begin() + gridPerMonth - 1, gcamoco2sfcjan);
+              mCurrYearEmissVector.begin() + gridPerMonth, gcamoco2sfcjan);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth,
-              mCurrYearEmissVector.begin() + gridPerMonth * 2 - 1, gcamoco2sfcfeb);
+              mCurrYearEmissVector.begin() + gridPerMonth * 2, gcamoco2sfcfeb);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 2,
-              mCurrYearEmissVector.begin() + gridPerMonth * 3 - 1, gcamoco2sfcmar);
+              mCurrYearEmissVector.begin() + gridPerMonth * 3, gcamoco2sfcmar);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 3,
-              mCurrYearEmissVector.begin() + gridPerMonth * 4 - 1, gcamoco2sfcapr);
+              mCurrYearEmissVector.begin() + gridPerMonth * 4, gcamoco2sfcapr);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 4,
-              mCurrYearEmissVector.begin() + gridPerMonth * 5 - 1, gcamoco2sfcmay);
+              mCurrYearEmissVector.begin() + gridPerMonth * 5, gcamoco2sfcmay);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 5,
-              mCurrYearEmissVector.begin() + gridPerMonth * 6 - 1, gcamoco2sfcjun);
+              mCurrYearEmissVector.begin() + gridPerMonth * 6, gcamoco2sfcjun);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 6,
-              mCurrYearEmissVector.begin() + gridPerMonth * 7 - 1, gcamoco2sfcjul);
+              mCurrYearEmissVector.begin() + gridPerMonth * 7, gcamoco2sfcjul);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 7,
-              mCurrYearEmissVector.begin() + gridPerMonth * 8 - 1, gcamoco2sfcaug);
+              mCurrYearEmissVector.begin() + gridPerMonth * 8, gcamoco2sfcaug);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 8,
-              mCurrYearEmissVector.begin() + gridPerMonth * 9 - 1, gcamoco2sfcsep);
+              mCurrYearEmissVector.begin() + gridPerMonth * 9, gcamoco2sfcsep);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 9,
-              mCurrYearEmissVector.begin() + gridPerMonth * 10 - 1, gcamoco2sfcoct);
+              mCurrYearEmissVector.begin() + gridPerMonth * 10, gcamoco2sfcoct);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 10,
-              mCurrYearEmissVector.begin() + gridPerMonth * 11 - 1, gcamoco2sfcnov);
+              mCurrYearEmissVector.begin() + gridPerMonth * 11, gcamoco2sfcnov);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 11,
-              mCurrYearEmissVector.begin() + gridPerMonth * 12 - 1, gcamoco2sfcdec);
- }
+              mCurrYearEmissVector.begin() + gridPerMonth * 12, gcamoco2sfcdec);
+}
 
 // Separate the emissions vectors into individual months
 void EmissDownscale::separateMonthlyEmissionsWithVertical(double *gcamoco2airlojan, double *gcamoco2airlofeb, double *gcamoco2airlomar,
@@ -216,58 +339,58 @@ void EmissDownscale::separateMonthlyEmissionsWithVertical(double *gcamoco2airloj
                                                           double *gcamoco2airhiapr, double *gcamoco2airhimay, double *gcamoco2airhijun,
                                                           double *gcamoco2airhijul, double *gcamoco2airhiaug, double *gcamoco2airhisep,
                                                           double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                                                          int aNumLon, int aNumLat) {
-    
+                                                          int aNumLon, int aNumLat)
+{
+
     int gridPerMonth = aNumLat * aNumLon;
     std::copy(mCurrYearEmissVector.begin(),
-              mCurrYearEmissVector.begin() + gridPerMonth - 1, gcamoco2airlojan);
+              mCurrYearEmissVector.begin() + gridPerMonth, gcamoco2airlojan);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth,
-              mCurrYearEmissVector.begin() + gridPerMonth * 2 - 1, gcamoco2airlofeb);
+              mCurrYearEmissVector.begin() + gridPerMonth * 2, gcamoco2airlofeb);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 2,
-              mCurrYearEmissVector.begin() + gridPerMonth * 3 - 1, gcamoco2airlomar);
+              mCurrYearEmissVector.begin() + gridPerMonth * 3, gcamoco2airlomar);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 3,
-              mCurrYearEmissVector.begin() + gridPerMonth * 4 - 1, gcamoco2airloapr);
+              mCurrYearEmissVector.begin() + gridPerMonth * 4, gcamoco2airloapr);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 4,
-              mCurrYearEmissVector.begin() + gridPerMonth * 5 - 1, gcamoco2airlomay);
+              mCurrYearEmissVector.begin() + gridPerMonth * 5, gcamoco2airlomay);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 5,
-              mCurrYearEmissVector.begin() + gridPerMonth * 6 - 1, gcamoco2airlojun);
+              mCurrYearEmissVector.begin() + gridPerMonth * 6, gcamoco2airlojun);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 6,
-              mCurrYearEmissVector.begin() + gridPerMonth * 7 - 1, gcamoco2airlojul);
+              mCurrYearEmissVector.begin() + gridPerMonth * 7, gcamoco2airlojul);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 7,
-              mCurrYearEmissVector.begin() + gridPerMonth * 8 - 1, gcamoco2airloaug);
+              mCurrYearEmissVector.begin() + gridPerMonth * 8, gcamoco2airloaug);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 8,
-              mCurrYearEmissVector.begin() + gridPerMonth * 9 - 1, gcamoco2airlosep);
+              mCurrYearEmissVector.begin() + gridPerMonth * 9, gcamoco2airlosep);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 9,
-              mCurrYearEmissVector.begin() + gridPerMonth * 10 - 1, gcamoco2airlooct);
+              mCurrYearEmissVector.begin() + gridPerMonth * 10, gcamoco2airlooct);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 10,
-              mCurrYearEmissVector.begin() + gridPerMonth * 11 - 1, gcamoco2airlonov);
+              mCurrYearEmissVector.begin() + gridPerMonth * 11, gcamoco2airlonov);
     std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 11,
-              mCurrYearEmissVector.begin() + gridPerMonth * 12 - 1, gcamoco2airlodec);
-    
+              mCurrYearEmissVector.begin() + gridPerMonth * 12, gcamoco2airlodec);
+
     int gridPerYear = gridPerMonth * 12; // Offset for the second height emissions
     std::copy(gridPerYear + mCurrYearEmissVector.begin(),
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth - 1, gcamoco2airhijan);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth, gcamoco2airhijan);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 2 - 1, gcamoco2airhifeb);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 2, gcamoco2airhifeb);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 2,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 3 - 1, gcamoco2airhimar);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 3, gcamoco2airhimar);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 3,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 4 - 1, gcamoco2airhiapr);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 4, gcamoco2airhiapr);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 4,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 5 - 1, gcamoco2airhimay);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 5, gcamoco2airhimay);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 5,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 6 - 1, gcamoco2airhijun);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 6, gcamoco2airhijun);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 6,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 7 - 1, gcamoco2airhijul);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 7, gcamoco2airhijul);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 7,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 8 - 1, gcamoco2airhiaug);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 8, gcamoco2airhiaug);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 8,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 9 - 1, gcamoco2airhisep);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 9, gcamoco2airhisep);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 9,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 10 - 1, gcamoco2airhioct);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 10, gcamoco2airhioct);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 10,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 11 - 1, gcamoco2airhinov);
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 11, gcamoco2airhinov);
     std::copy(gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 11,
-              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 12 - 1, gcamoco2airhidec);
-    
- }
+              gridPerYear + mCurrYearEmissVector.begin() + gridPerMonth * 12, gcamoco2airhidec);
+}

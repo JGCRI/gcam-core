@@ -87,12 +87,14 @@ extern "C" {
                               double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                               double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
                               char *aBaseCO2GcamFileName, char *aBaseCO2SfcFile, char *aBaseCO2AirFile,
+                              char* aMappingFile,
                               int *aNumReg, int *aNumSector, int *aNumLon, int *aNumLat, int* aWriteCO2, int *aCurrYear) {
       
       // Convert to string - fortran doesn't handle string
       std::string BaseCO2SfcFile(aBaseCO2SfcFile);
       std::string BaseCO2AirFile(aBaseCO2AirFile);
       std::string BaseCO2GcamFileName(aBaseCO2GcamFileName);
+      std::string MappingFile(aMappingFile);
       
       // Convert to bool - fortran doesn't have a bool
       bool writeCO2 = *aWriteCO2 == 1 ? true : false;
@@ -108,6 +110,7 @@ extern "C" {
                                   gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
                                   gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
                                   BaseCO2GcamFileName, BaseCO2SfcFile, BaseCO2AirFile,
+                                  MappingFile,
                                   aNumReg, aNumSector, aNumLon, aNumLat, writeCO2, aCurrYear);
 }
 

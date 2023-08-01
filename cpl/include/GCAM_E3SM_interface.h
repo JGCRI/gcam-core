@@ -42,6 +42,7 @@ public:
                                 double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                                 double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
                                 std::string aBaseCO2GcamFileName, std::string aBaseCO2SfcFile, std::string aBaseCO2AirFile,
+                                std::string aMappingFile,
                                 int *aNumReg, int *aNumSector, int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear);
     void finalizeGCAM();
     int gcamStartYear;
@@ -55,4 +56,7 @@ public:
 private:
     std::unique_ptr<IScenarioRunner> runner;
     typedef std::vector<Region*>::iterator RegionIterator;
+
+    double gcamoemissPreviousGCAMYear[64];
+    double gcamoemissCurrentGCAMYear[64];
 };
