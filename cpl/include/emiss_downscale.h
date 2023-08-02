@@ -130,7 +130,7 @@ private:
         {"Taiwan", 30},
         {"Argentina", 31},
         {"Colombia", 32}
-
+    };
 };
 
 #endif // __EMISS_DOWNSCALE__

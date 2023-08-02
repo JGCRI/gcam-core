@@ -139,8 +139,8 @@ void EmissDownscale::readRegionalMappingData(std::string aFileName)
 // Read in regional Base-Year Emission Data from a file
 void EmissDownscale::readRegionalBaseYearEmissionData(std::string aFileName)
 {
-     mBaseYearGlobalSfcCO2Emiss = 0.0;
-    maseYearGlobalAirCO2Emiss = 0.0;
+    mBaseYearGlobalSfcCO2Emiss = 0.0;
+    mBaseYearGlobalAirCO2Emiss = 0.0;
 
     ifstream data(aFileName);
     if (!data.is_open())
@@ -280,13 +280,13 @@ void EmissDownscale::downscaleAircraftCO2Emissions(double *aCurrYearEmissions)
     
     double aCurrYearGlobalAirCO2Emiss = 0.0;
 
-    for((int k = 1; k <= mNumReg; k++))
+    for(int k = 1; k <= mNumReg; k++)
         aCurrYearGlobalAirCO2Emiss += aCurrYearEmissions[k-1];
 
     scalar =  aCurrYearGlobalAirCO2Emiss / mBaseYearGlobalAirCO2Emiss;
 
     std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
-                   mCurrYearEmissVector.begin(), [scaler](double i) { return i * scalar; });
+                   mCurrYearEmissVector.begin(), [scalar](double i) { return i * scalar; });
 
     // Finally, re-set the value vector to be the final emissions, since this will be written out
     setValueVector(mCurrYearEmissVector);

@@ -230,6 +230,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     int row, lurow, r, l;
     ofstream oFile;
     Timer timer;
+    double *co2 = mCO2EmissData.getData();
 
     // Get year only of the current date
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -238,9 +239,12 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     // If the e3smYear is not a GCAM model year, then GCAM will automatically run ahead
     int gcamPeriod = modeltime->getyr_to_per( e3smYear );
 
+    int gcamYear = modeltime->getper_to_yr( gcamPeriod );
+
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
 
+    coupleLog << "Current E3SM Year is " << e3smYear << ", Current GCAM Year is " << gcamYear << endl;
     // If this is the initial year 2015 then run spinup first
     // and write the base file data (or the base file itself)
     // should get this year and a flag for doing this from namelist
@@ -268,7 +272,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                 gcamPeriod = gcamPeriod + 1;
             }
 
-            int gcamYear = modeltime->getper_to_yr( gcamPeriod );
+            gcamYear = modeltime->getper_to_yr( gcamPeriod );
     
             bool success = false;
     
@@ -324,8 +328,10 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             if (e3smYear == 2015 & spinup == 0) {
                 EmissDownscale surfaceCO2(288, 192, 12, 1, 32, 2); // Emissions data is monthly now
         
+                coupleLog << aBaseCO2GcamFileName << endl;
                 surfaceCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
                 coupleLog << "GCAM run: Finish read Base year emission data" << endl;
+                
 
                 for (int i = 0; i < 32; ++i) {
                     gcamoemissPreviousGCAMYear[i*2] = surfaceCO2.aBaseYearEmissions_sfc[i];
@@ -348,7 +354,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             timer.stop();
         
             coupleLog << "Getting CO2 Emissions" << endl;
-            double *co2 = mCO2EmissData.getData();
+            //double *co2 = mCO2EmissData.getData();
             // be sure to reset any data set previously
             fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
             GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mCO2EmissData);
@@ -371,33 +377,13 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                 oFile.close();
             }
         
-              // interpolate the year to current e3sm year
-            double ratio = (gcamYear - e3smYear)/5.0;
-            coupleLog << "Ratio:" << endl;
-            coupleLog << ratio << endl;
-            for (int i = 0; i < 64; ++i)
-                co2[i] = ratio * gcamoemissPreviousGCAMYear[i] +  (1 - ratio) * gcamoemissCurrentGCAMYear[i];
-
-            std::copy(co2, co2 + mCO2EmissData.getArrayLength(), gcamoemiss);
-            coupleLog << "Interpolated one: " << endl;
-            coupleLog << gcamoemiss[0] << endl;
-            coupleLog << gcamoemiss[1] << endl;
-            coupleLog << gcamoemiss[2] << endl;
-
-            if(e3smYear == (gcamYear-1)) {
-                // set previous year CO2 emission
-                coupleLog << "Set previous year CO2 Emissions" << endl;  
-                std::copy(gcamoemissCurrentGCAMYear, gcamoemissCurrentGCAMYear + mCO2EmissData.getArrayLength(), gcamoemissPreviousGCAMYear);
-             }
-
-
             coupleLog << "Getting LUC" << endl;
             double *luc = mLUCData.getData();
             // be sure to reset any data set previously
             fill(luc, luc+mLUCData.getArrayLength(), 0.0);
             GetDataHelper getLUC("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/land-allocation[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mLUCData);
             getLUC.run(runner->getInternalScenario());
-            coupleLog << mLUCData << endl;
+            //coupleLog << mLUCData << endl;
        
             // write the 2015 LUC to a table
             // this is diagnostic so hardcode the file name
@@ -414,7 +400,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             fill(woodHarvest, woodHarvest+mWoodHarvestData.getArrayLength(), 0.0);
             GetDataHelper getWH("world/region[+NamedFilter,MatchesAny]/sector[NamedFilter,StringEquals,Forest]/subsector/technology[+NamedFilter,MatchesAny]//output[IndexFilter,IntEquals,0]/physical-output[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mWoodHarvestData);
             getWH.run(runner->getInternalScenario());
-            coupleLog << mWoodHarvestData << endl;
+            //coupleLog << mWoodHarvestData << endl;
 
             // write the 2015 wood harvest to a table for a base file
             // this is diagnostic so hardcode the file name 
@@ -475,6 +461,27 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         } // end for z loop for spinup option
 
     } // end if valid year
+
+    fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
+    // interpolate the year to current e3sm year
+    double ratio = (gcamYear - e3smYear)/5.0;
+    coupleLog << "Ratio:" << endl;
+    coupleLog << ratio << endl;
+    for (int i = 0; i < 64; ++i)
+         co2[i] = ratio * gcamoemissPreviousGCAMYear[i] +  (1 - ratio) * gcamoemissCurrentGCAMYear[i];
+
+    std::copy(co2, co2 + mCO2EmissData.getArrayLength(), gcamoemiss);
+    coupleLog << "Interpolated one: " << endl;
+    coupleLog << gcamoemiss[0] << endl;
+    coupleLog << gcamoemiss[1] << endl;
+    coupleLog << gcamoemiss[2] << endl;
+
+    if(e3smYear == (gcamYear-1)) {
+        // set previous year CO2 emission
+        coupleLog << "Set previous year CO2 Emissions" << endl;  
+        std::copy(gcamoemissCurrentGCAMYear, gcamoemissCurrentGCAMYear + mCO2EmissData.getArrayLength(), gcamoemissPreviousGCAMYear);
+    }
+
         
 }
 
@@ -571,6 +578,11 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     int r, s, row;
     //std::vector<double> gcamoSfcEmissVector((*aNumReg),0);
     //std::vector<double> gcamoAirEmissVector((*aNumReg),0);
+   
+    // Downscale surface CO2 emissions
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
+    coupleLog << "Downscaling CO2 emissions" << endl;
 
     double gcamoemiss_sfc[*aNumReg];
     double gcamoemiss_air[*aNumReg];
@@ -588,16 +600,13 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         }
     }
 
-    for(int tmp = 1; tmp <= aNumReg; tmp++) {
+    for(int tmp = 1; tmp <= (*aNumReg); tmp++) {
         coupleLog << "Diagnostics: regional surface CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss_sfc[tmp - 1] << endl;
         coupleLog << "Diagnostics: regional aircraft CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss_air[tmp - 1] << endl;
     }
 
-    // Downscale surface CO2 emissions
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::NOTICE );
-    coupleLog << "Downscaling CO2 emissions" << endl;
-    EmissDownscale surfaceCO2((*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumSector); // Emissions data is monthly now
+
+    EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumSector); // Emissions data is monthly now
     // Read in the GCAM regionXsector base CO2 data
     //surfaceCO2.readBaseYearCO2Data(aBaseCO2GcamFileName);
     // read in the gridded eam baseline co2 data
@@ -609,7 +618,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     surfaceCO2.readRegionalMappingData(aMappingFile);
     coupleLog << "Finish read mapping data" << endl;
 
-    surfaceCO2.readRegionalBaseYearEmissionData(aGCAMBaseCO2EmisFile);
+    surfaceCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
 
     surfaceCO2.downscaleSurfaceCO2Emissions(gcamoemiss_sfc);
     // These regions are in order of the output regions in co2.xml 
