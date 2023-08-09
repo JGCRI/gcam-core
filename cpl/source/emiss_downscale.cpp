@@ -164,6 +164,7 @@ void EmissDownscale::readRegionalBaseYearEmissionData(std::string aFileName)
         getline(iss, token, ',');
         regID = token;
         regID.erase(remove(regID.begin(), regID.end(), '\"'), regID.end());
+	regID.erase(remove(regID.begin(), regID.end(), ' '), regID.end()); // remove spaces in the region names
 
         // Parse Sector
         getline(iss, token, ',');
