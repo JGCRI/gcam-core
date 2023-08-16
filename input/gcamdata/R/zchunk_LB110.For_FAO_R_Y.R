@@ -63,8 +63,7 @@ module_aglu_LB110.For_FAO_R_Y <- function(command, ...) {
 
     # Combine all three L100.FAO_For_X tibbles into a single tibble
     # this tibble will be summed over by flow later, calculating export-import to give net export
-    L110.FAO_For_ALL_m3 <- bind_rows(L100.FAO_For_Prod_m3, L100.FAO_For_Imp_m3, L100.FAO_For_Exp_m3) %>%
-                           mutate(value= if_else(item =="Wood fuel",value*0.3,value))
+    L110.FAO_For_ALL_m3 <- bind_rows(L100.FAO_For_Prod_m3, L100.FAO_For_Imp_m3, L100.FAO_For_Exp_m3)
 
     # Lines 41-60 in original file
     # Add regionID lookup vectors and GCAM_commodity label to the For_ALL tibble

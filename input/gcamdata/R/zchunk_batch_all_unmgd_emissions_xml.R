@@ -33,9 +33,11 @@ module_emissions_batch_all_unmgd_emissions_xml <- function(command, ...) {
     L212.GRASSEmissions <- get_data(all_data, "L212.GRASSEmissions")
     L212.FORESTEmissions_FF <- get_data(all_data, "L212.FORESTEmissions_FF")
     L212.FORESTEmissions_D <- get_data(all_data, "L212.FORESTEmissions_D")
+
+    #We have hard and softwood forests under regular forests now, so get the emissions factor after doing a group_by.
     L212.FORESTEmissionsFactors_future <- get_data(all_data, "L212.FORESTEmissionsFactors_future") %>%
       group_by(region,AgSupplySector,AgSupplySubsector,UnmanagedLandTechnology,year,Non.CO2) %>%
-      mutate(emiss.coef=sum(emiss.coef)) %>%
+      mutate(emiss.coef=mean(emiss.coef)) %>%
       ungroup() %>%
       distinct()
 
