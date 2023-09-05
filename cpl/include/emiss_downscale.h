@@ -68,8 +68,8 @@ public:
                                                               int aNumLon, int aNumLat);
     void readRegionalMappingData(std::string aFileName);
     void readRegionalBaseYearEmissionData(std::string aFileName);
-    double aBaseYearEmissions_sfc[32];
-    double aBaseYearEmissions_air[32];
+    std::vector<double> mBaseYearEmissions_sfc;
+    std::vector<double> mBaseYearEmissions_air;
 private:
     std::vector<double> mBaseYearEmissVector;
     std::vector<double> mCurrYearEmissVector;

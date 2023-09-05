@@ -49,6 +49,8 @@ using namespace std;
 EmissDownscale::EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLev, int aNumReg, int aNumSector) : ASpatialData(aNumLat * aNumLon * aNumMon * aNumLev),
                                             mBaseYearEmissVector(aNumLat * aNumLon * aNumMon * aNumLev, 0),
                                             mCurrYearEmissVector(aNumLat * aNumLon * aNumMon * aNumLev, 0),
+                                            mBaseYearEmissions_sfc(aNumReg, 0),
+                                            mBaseYearEmissions_air(aNumReg, 0),
                                             mNumLon( aNumLon ),
                                             mNumLat( aNumLat ),
                                             mNumMon( aNumMon ),
@@ -164,7 +166,7 @@ void EmissDownscale::readRegionalBaseYearEmissionData(std::string aFileName)
         getline(iss, token, ',');
         regID = token;
         regID.erase(remove(regID.begin(), regID.end(), '\"'), regID.end());
-	regID.erase(remove(regID.begin(), regID.end(), ' '), regID.end()); // remove spaces in the region names
+        regID.erase(remove(regID.begin(), regID.end(), ' '), regID.end()); // remove spaces in the region names
 
         // Parse Sector
         getline(iss, token, ',');
@@ -183,10 +185,10 @@ void EmissDownscale::readRegionalBaseYearEmissionData(std::string aFileName)
         int regIndex = (*currReg).second - 1;
         
         if (sectorID == "surface")
-        { aBaseYearEmissions_sfc[regIndex] = value;
+        { mBaseYearEmissions_sfc[regIndex] = value;
         mBaseYearGlobalSfcCO2Emiss += value;}
         else if (sectorID == "aircraft")
-        { aBaseYearEmissions_air[regIndex] = value;
+        { mBaseYearEmissions_air[regIndex] = value;
           mBaseYearGlobalAirCO2Emiss += value;}
           else {
             ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
@@ -211,7 +213,7 @@ void EmissDownscale::downscaleSurfaceCO2Emissions(double *aCurrYearEmissions)
 
     // Calculate current year emissions vector by scaling base year emissions up
     mCurrYearEmissVector = mBaseYearEmissVector;
-    // double scaler = aCurrYearEmissions / aBaseYearEmissions;
+    // double scaler = mCurrYearEmissions / mBaseYearEmissions;
     // std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
     //                 mCurrYearEmissVector.begin(), [scaler](double i) { return i * scaler; });
 
@@ -248,7 +250,7 @@ void EmissDownscale::downscaleSurfaceCO2Emissions(double *aCurrYearEmissions)
                     auto currReg = mRegionIDName.find(regID);
                     int regIndex = (*currReg).second - 1;
 
-                    scalar += aCurrYearEmissions[regIndex] / aBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
+                    scalar += aCurrYearEmissions[regIndex] / mBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
                     weight += mRegionWeights[std::make_pair(gridID, regID)];
                 }
                 scalar = scalar / weight; // normalized by the total eright
