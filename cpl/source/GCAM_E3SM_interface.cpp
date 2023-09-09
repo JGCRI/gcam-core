@@ -362,7 +362,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mCO2EmissData);
             getCo2.run(runner->getInternalScenario());
             std::copy(co2, co2+mCO2EmissData.getArrayLength(), mGcamCO2EmissCurrentGCAMYear.begin());
-            coupleLog << mGcamCO2EmissCurrentGCAMYear << endl;
+            
             coupleLog << "mCO2EmissData.getArrayLength:" << endl;
             coupleLog << mCO2EmissData.getArrayLength() << endl;
             coupleLog << mGcamCO2EmissCurrentGCAMYear[0] << endl;
