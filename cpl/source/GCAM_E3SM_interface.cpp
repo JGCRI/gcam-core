@@ -361,7 +361,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
             GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mCO2EmissData);
             getCo2.run(runner->getInternalScenario());
-            std::copy(co2, co2+mCO2EmissData.getArrayLength(), mGcamCO2EmissCurrentGCAMYear);
+            std::copy(co2, co2+mCO2EmissData.getArrayLength(), mGcamCO2EmissCurrentGCAMYear.begin());
             coupleLog << mGcamCO2EmissCurrentGCAMYear << endl;
             coupleLog << "mCO2EmissData.getArrayLength:" << endl;
             coupleLog << mCO2EmissData.getArrayLength() << endl;
@@ -481,7 +481,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     if(e3smYear == (gcamYear-1)) {
         // set previous year CO2 emission
         coupleLog << "Set previous year CO2 Emissions" << endl;  
-        std::copy(mGcamCO2EmissCurrentGCAMYear, mGcamCO2EmissCurrentGCAMYear + mCO2EmissData.getArrayLength(), mGcamCO2EmissPreviousGCAMYear);
+        std::copy(mGcamCO2EmissCurrentGCAMYear.begin(), mGcamCO2EmissCurrentGCAMYear.end(), mGcamCO2EmissPreviousGCAMYear.begin());
     }
 
         
