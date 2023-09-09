@@ -174,7 +174,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     mCO2EmissData.addYearColumn("Year", years, yearRemap);
     mCO2EmissData.finalizeColumns();
     // Initialize GCAM CO2 emission
-    for (int i = 0; i < (*aNumReg)*(*aNumSector); ++i){
+    for (int i = 0; i < (*aNumReg)*(*aNumSector); ++i) {
         mGcamCO2EmissPreviousGCAMYear.push_back(0.0);
         mGcamCO2EmissCurrentGCAMYear.push_back(0.0);
     }
@@ -339,7 +339,6 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                         mGcamCO2EmissPreviousGCAMYear[i*(*aNumSector)] = surfaceCO2.mBaseYearEmissions_sfc[i];
                         mGcamCO2EmissPreviousGCAMYear[i*(*aNumSector)+1] = surfaceCO2.mBaseYearEmissions_air[i];
                     }
-                } 
             }
             coupleLog << "Previous GCAM Year Emission: " << endl;
             coupleLog << mGcamCO2EmissPreviousGCAMYear[0] << endl;
