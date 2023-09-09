@@ -185,8 +185,7 @@ void MACControl::initCalc( const string& aRegionName,
 {
 }
 
-double MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod, const GDP* aGDP ) {
-    
+double MACControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod ) {
     int finalCalibPer = scenario->getModeltime()->getFinalCalibrationPeriod();
     // Check first if MAC curve operation should be turned off
     // we do not apply the MAC curve in calibration model periods

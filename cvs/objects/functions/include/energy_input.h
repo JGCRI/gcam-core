@@ -205,7 +205,7 @@ protected:
     
     //! A pre-located market which has been cahced from the marketplace to get
     //! the price and add demands to.
-    std::auto_ptr<CachedMarket> mCachedMarket;
+    std::unique_ptr<CachedMarket> mCachedMarket;
 
 private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 

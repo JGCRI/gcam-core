@@ -96,7 +96,6 @@ public:
                            const int aPeriod );
 
     virtual void calcSupply( const std::string& aRegionName,
-                             const GDP* aGDP,
                              const int aPeriod );
 
     virtual double getAnnualProd( const std::string& aRegionName,

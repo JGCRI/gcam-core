@@ -71,7 +71,6 @@ typedef vector<AGHG*>::iterator GHGIterator;
 BaseTechnology::BaseTechnology():
   mShareWeight( 1.0 ),
   mIsInitialYear( false ),
-  mSequestrationDevice( 0 ),
   doCalibration( false )
 {
     mNestedInputRoot = 0 ;
@@ -175,7 +174,6 @@ void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) co
     for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
         (*ghg)->toDebugXML( period, out, tabs );
     }
-    //expenditures[ period ].toDebugXML( period, out, tabs );
 
     toDebugXMLDerived( period, out, tabs );
 
@@ -328,19 +326,6 @@ void BaseTechnology::accept( IVisitor* aVisitor, const int aPeriod ) const
 
     mNestedInputRoot->accept( aVisitor, aPeriod );
 
-    /*
-    if( aPeriod == -1 ) {
-        int currPeriod = 0;
-        for( vector<Expenditure>::const_iterator cExpenditure = expenditures.begin(); cExpenditure !=
-            expenditures.end(); ++cExpenditure )
-        {
-            (*cExpenditure).accept( aVisitor, currPeriod );
-            ++currPeriod;
-        }
-    } else {
-        expenditures[ aPeriod].accept( aVisitor, aPeriod );
-    }
-    */
     for( unsigned int iter = 0; iter < mOutputs.size(); iter++ ){
         mOutputs[ iter ]->accept( aVisitor, aPeriod );
     }

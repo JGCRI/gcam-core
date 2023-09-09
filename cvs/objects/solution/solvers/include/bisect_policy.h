@@ -81,7 +81,7 @@ protected:
     
     //! A filter which will be used to determine which SolutionInfos this solver component
     //! will look through to determine the worst off market to work on if no policy is found.
-    std::auto_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
+    std::unique_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
 };
 
 #endif // _BISECT_POLICY_H_

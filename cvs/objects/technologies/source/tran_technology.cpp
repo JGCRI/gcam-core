@@ -52,6 +52,7 @@
 #include "technologies/include/ioutput.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/marginal_profit_calculator.h"
+#include "functions/include/function_utils.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
@@ -109,8 +110,7 @@ void TranTechnology::initCalc( const string& aRegionName,
                                PreviousPeriodInfo& aPrevPeriodInfo,
 							   const int aPeriod )   
 {
-
-
+    const ITechnology* prevTech = aPrevPeriodInfo.mPrevVintage;
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
                           aDemographics, aPrevPeriodInfo, aPeriod );
 
@@ -120,6 +120,23 @@ void TranTechnology::initCalc( const string& aRegionName,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "LoadFactor was zero in technology: " << mName << ". Reset to 1." << endl;
+    }
+    
+    // we may need to reset the previous output for investment to adjust for the load factor
+    // this means calling initCalc on inputs twice but this should be ok
+    if(isOperating(aPeriod) && !(aPeriod == 0 || !prevTech || (isVintagingActive() &&
+          // cover the case of transition from history with no vintaging
+          prevTech->isVintagingActive())))
+    {
+        double prevOutputForInvestment = prevTech->getOutput(aPeriod -1) / mLoadFactor;
+        mTechnologyInfo->setDouble( "prev-output-for-investment", prevOutputForInvestment );
+        for(auto input : mInputs) {
+            // reset the previous investment by calling initCalc again
+            if(input->hasTypeFlag(IInput::CAPITAL)) {
+                input->initCalc(aRegionName, aSectorName, mProductionState[ aPeriod ]->isNewInvestment(), false,
+                                mTechnologyInfo.get(), aPeriod );
+            }
+        }
     }
 }
 
@@ -257,7 +274,7 @@ void TranTechnology::calcCost( const string& aRegionName,
 
 void TranTechnology::production( const string& aRegionName, const string& aSectorName,
                                  double aVariableDemand, double aFixedOutputScaleFactor,
-                                 const GDP* aGDP, const int aPeriod )
+                                 const int aPeriod )
 {
     // Can't have a scale factor and positive demand.
     assert( aFixedOutputScaleFactor == 1 || aVariableDemand == 0 );
@@ -305,12 +322,17 @@ void TranTechnology::production( const string& aRegionName, const string& aSecto
     // This conversion is necessary to account for the intensity unit.
     const double fuelUsage = vehicleOutput * ECONV;
 
-    // TODO: Would need to calculate the shutdown coef here if transportation
-    //       stocks were vintaged.
-    mProductionFunction->calcDemand( mInputs, fuelUsage, aRegionName,
-                                     aSectorName, 1, aPeriod, 0, 1 );
+    // we need to run input demands seperately such that fuel demands can be
+    // set using fuelUsage while non-energy inputs will be using service demand
+    for(auto input : mInputs) {
+        // standard Leontief assumptions except for capital inputs, drive demands with
+        // new instead of total
+        double inputDemand = input->getCoefficient(aPeriod) *
+            (input->hasTypeFlag(IInput::CAPITAL) ? vehicleOutput : fuelUsage);
+        input->setPhysicalDemand(inputDemand, aRegionName, aPeriod);
+    }
 
-    calcEmissionsAndOutputs( aRegionName, primaryOutput, aGDP, aPeriod );  
+    calcEmissionsAndOutputs( aRegionName, aSectorName, primaryOutput, aPeriod );  
 }
 
 double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
@@ -360,6 +382,30 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
         }
     }
     return totalCalOutput;
+}
+
+/*!
+* \brief Return good or service price for converting quantity to dollar unit.
+* \details This is used to convert quantitites of different goods or services
+*          into common currency units. Currently use to convert to 1975 billion dollars
+*          which is the native units given the price and quantity units used accross the
+*          energy system.  Note, the macro calculations will be responsible for converting
+*          to 1990 million dollars which are the units it operates in.
+* \param aRegionName Region name.
+* \param aSectorName Sector name.
+* \param aPeriod Period.
+*/
+double TranTechnology::getCurrencyConversionPrice( const string& aRegionName,
+                                                   const string& aSectorName,
+                                                   const int aPeriod ) const
+{
+    // transportation costs will be in 1990$/service and the output units
+    // will be million-service
+    // given the value derived will need to be consistent with the rest of the
+    // energy system we will need to back in the conversion to 1975$ and
+    // million to billion
+    const double CVRT90 = FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
+    return getCost( aPeriod ) / 1000.0 / CVRT90;
 }
 
 

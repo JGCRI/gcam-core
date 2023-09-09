@@ -855,11 +855,11 @@ IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegio
  *         be a valid object regardless of if the market was not found.
  * \see CachedMarket
  */
-auto_ptr<CachedMarket> Marketplace::locateMarket( const string& aGoodName, const string& aRegionName,
+unique_ptr<CachedMarket> Marketplace::locateMarket( const string& aGoodName, const string& aRegionName,
                                                   const int aPeriod ) const
 {
     const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
-    auto_ptr<CachedMarket> locatedMarket( new CachedMarket( aGoodName, aRegionName, aPeriod,
+    unique_ptr<CachedMarket> locatedMarket( new CachedMarket( aGoodName, aRegionName, aPeriod,
                                                             marketNumber != MarketLocator::MARKET_NOT_FOUND ?
                                                             mMarkets[ marketNumber ]->getMarket( aPeriod ) : 0 ) );
     return locatedMarket;

@@ -64,7 +64,7 @@ AgeCohort::AgeCohort() {
     mUpperAgeBound = -1;
 }
 
-//! Default Destructor. Needed because we are using auto_ptr so that we avoid
+//! Default Destructor. Needed because we are using unique_ptr so that we avoid
 //! destroying incomplete types.
 AgeCohort::~AgeCohort(){
 }

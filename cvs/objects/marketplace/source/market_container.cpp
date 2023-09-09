@@ -370,6 +370,9 @@ double MarketContainer::forecastDemand( const int aPeriod )
     else if( mMarkets[ aPeriod ]->getType() == IMarketType::SUBSIDY && mMarkets[ aPeriod ]->isSolvable() ) {
         forecastedDemand = abs( mMarkets[ aPeriod ]->getDemand() );
     }
+    else if( mMarkets[ aPeriod ]->getType() == IMarketType::RES && mMarkets[ aPeriod ]->isSolvable() && !mMarkets[ aPeriod -1 ]->isSolvable()) {
+        forecastedDemand = abs( mMarkets[ aPeriod ]->getSupply() );
+    }
     else {
         forecastedDemand = extrapolate( aPeriod, &Market::getSolverDemand );
         // set some reasonable limits on what kinds of forecast you get

@@ -97,16 +97,21 @@
 		
 		<Value name = "bio_feedstock_limit">../input/gcamdata/xml/liquids_limits.xml</Value>
 		<Value name = "bio_elec_w_feed_limit">../input/gcamdata/xml/water_elec_liquids_limits.xml</Value>
-		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget_gSSP2.xml</Value>
+		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget.xml</Value>
 		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
 		<Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
         <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 
+		<Value name = "macro">../input/gcamdata/xml/socioeconomics_macro.xml</Value>
+
+        <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
+
         <!-- set up the near-term / long-term policy inputs -->
 		<Value name = "long-term-co2">../input/policy/carbon_tax_0.xml</Value>
 		<Value name = "near-term-co2">../input/policy/spa14_tax.xml</Value>
 		<Value name = "co2-link">../input/policy/2025_target_finder_phasein.xml</Value>
+		<Value name = "co2luc-link">../input/policy/global_uct_phasein_no_constraint.xml</Value>
 	</ScenarioComponents>
 	<Strings>
 		<Value name="scenarioName">4p5</Value>
@@ -117,6 +122,8 @@
 	</Strings>
 	<Bools>
 		<Value name="CalibrationActive">1</Value>
+		<!-- Fixed GDP will calibrate to exogenous path -->
+		<Value name="FixedGDP-Path">1</Value>
 		<Value name="BatchMode">0</Value>
 		<Value name="find-path">1</Value>
 		<Value name="createCostCurve">0</Value>

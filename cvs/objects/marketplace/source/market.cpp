@@ -113,7 +113,7 @@ mMarketInfo( InfoFactory::constructInfo( 0, aContainer->getName() ) )
     mOriginal_price = 0.0;
 }
 
-//! Destructor. This is needed because of the auto_ptr.
+//! Destructor. This is needed because of the unique_ptr.
 Market::~Market(){
 }
 

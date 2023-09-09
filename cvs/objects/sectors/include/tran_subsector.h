@@ -51,7 +51,6 @@
 #include "util/base/include/value.h"
 
 // Forward declarations
-class GDP;
 class Demographic;
 class IInfo;
 
@@ -72,14 +71,12 @@ public:
     virtual void completeInit( const IInfo* aSectorInfo,
                                ILandAllocator* aLandAllocator );
     
-    virtual void initCalc( NationalAccount* aNationalAccount,
-                           const Demographic* aDemographics,
+    virtual void initCalc( const Demographic* aDemographics,
                            const int aPeriod );
-    double getPrice( const GDP* aGDP, const int aPeriod ) const;
+    double getPrice( const int aPeriod ) const;
 
     virtual void setOutput( const double aVariableSubsectorDemand,
                             const double aFixedOutputScaleFactor,
-                            const GDP* aGDP,
                             const int aPeriod );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 protected:
@@ -107,10 +104,10 @@ protected:
     
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
 
-    double getTimeValue( const GDP* aGDP, const int aPeriod ) const;
+    double getTimeValue( const int aPeriod ) const;
     double getTimeInTransit( const int aPeriod ) const;
     double getServicePerCapita( const int aPeriod ) const;
-    double getGeneralizedPrice( const GDP* aGDP, const int aPeriod ) const;
+    double getGeneralizedPrice( const int aPeriod ) const;
 };
 
 

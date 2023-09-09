@@ -66,8 +66,8 @@ class SubsectorAddTechCosts : public Subsector
 public:
     SubsectorAddTechCosts();
     static const std::string& getXMLNameStatic();
+	virtual double getPrice( const int aPeriod ) const;
     virtual const std::string& getXMLName() const;
-	virtual double getPrice( const GDP* aGDP, const int aPeriod ) const;
 protected:
     
     // Define data such that introspection utilities can process the data from this

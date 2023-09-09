@@ -509,5 +509,7 @@ XML_NODE_EQUIV <- list(
   "carbon-calc" = c("land-carbon-densities", "no-emiss-carbon-calc"),
   "resource" = c("resource", "renewresource", "unlimited-resource"),
   "subresource" = c("subresource", "sub-renewable-resource", "smooth-renewable-subresource",
-                    "reserve-subresource")
+                    "reserve-subresource"),
+  "input" = c("minicam-energy-input", "input-accounting",
+              "minicam-non-energy-input", "tracking-non-energy-input")
 )

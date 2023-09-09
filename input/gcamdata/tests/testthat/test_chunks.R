@@ -59,3 +59,12 @@ test_that("doesn't use forbidden calls", {
                  info = infostr)
   }
 })
+
+test_that("chunk names are correct", {
+
+  files_to_rename <- data.frame(orig_file_name = list.files("../../R/", full.names = TRUE)) %>%
+    filter(grepl("zchunk", orig_file_name))
+  expect_true(nrow(files_to_rename) == 0)
+
+})
+

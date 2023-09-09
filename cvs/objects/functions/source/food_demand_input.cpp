@@ -124,7 +124,7 @@ void FoodDemandInput::initCalc( const string& aRegionName,
     // drivers when calculating demands. We will need to income to run the food demand
     // equations and the population to convert from per capita demands to total.
     mSubregionalPopulation[ aPeriod ] = aTechInfo->getDouble( "subregional-population", true );
-    mCurrentSubregionalIncome = aTechInfo->getDouble( "subregional-income-ppp", true );
+    mCurrentSubregionalIncomeShare = aTechInfo->getDouble( "subregional-income-share", true );
     
     if( aPeriod == ( scenario->getModeltime()->getFinalCalibrationPeriod() + 1 ) ) {        
         // Fill in regional bias values for future model periods which may just copy
@@ -163,7 +163,7 @@ void FoodDemandInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTabs 
     XMLWriteElement( mFoodDemandQuantity[ aPeriod ], "service", aOut, aTabs );
     XMLWriteElement( mFoodDemandQuantity[ aPeriod ] / getAnnualDemandConversionFactor( aPeriod ), "food-demand-percap", aOut, aTabs );
     XMLWriteElement( mSubregionalPopulation[ aPeriod ], "subregional-population", aOut, aTabs );
-    XMLWriteElement( mCurrentSubregionalIncome, "subregional-income-ppp", aOut, aTabs );
+    XMLWriteElement( mCurrentSubregionalIncomeShare, "subregional-income-share", aOut, aTabs );
     XMLWriteElement( mRegionalBias[ aPeriod ], "regional-bias", aOut, aTabs );
 
     // write the closing tag.
@@ -291,11 +291,13 @@ double FoodDemandInput::getAnnualDemandConversionFactor( const int aPeriod ) con
 /*!
  * \brief Get the currently set Subregional income.  Note that this
  *          is the PPP per capita income.
+ * \param aRegionName The current region name.
+ * \param aPeriod The current model period.
  * \return Subregional income that has been set from
  *           the consumer.
  */
-Value FoodDemandInput::getSubregionalIncome() const {
-    return mCurrentSubregionalIncome;
+double FoodDemandInput::getSubregionalIncome( const string& aRegionName, const int aPeriod ) const {
+    return mCurrentSubregionalIncomeShare * SectorUtils::getGDPPPP( aRegionName, aPeriod ) / mSubregionalPopulation[ aPeriod ];
 }
 
 /*!

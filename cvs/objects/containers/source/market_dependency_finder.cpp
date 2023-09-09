@@ -126,7 +126,7 @@ bool MarketDependencyFinder::addDependency( const string& aDependentName,
                                             const bool aCanBeBroken )
 {
     // Find/create a DependencyItem entry for the dependent item
-    auto_ptr<DependencyItem> item( new DependencyItem( aDependentName, aDependentRegion ) );
+    unique_ptr<DependencyItem> item( new DependencyItem( aDependentName, aDependentRegion ) );
     ItemIterator dependentIter = mDependencyItems.find( item.get() );
     if( dependentIter == mDependencyItems.end() ) {
         dependentIter = mDependencyItems.insert( item.release() ).first;
@@ -171,7 +171,7 @@ void MarketDependencyFinder::resolveActivityToDependency( const string& aRegionN
                                                           IActivity* aDemandActivity,
                                                           IActivity* aPriceActivity )
 {
-    auto_ptr<DependencyItem> item( new DependencyItem( aActivityName, aRegionName ) );
+    unique_ptr<DependencyItem> item( new DependencyItem( aActivityName, aRegionName ) );
     ItemIterator itemIter = mDependencyItems.find( item.get() );
     if( itemIter == mDependencyItems.end() ){
         // No dependencies have been added for this activity yet.  They may get added
@@ -208,7 +208,7 @@ const vector<IActivity*> MarketDependencyFinder::getOrdering( const int aMarketN
     }
     else {
         // Find the entry points into the graph for the given market.
-        auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( aMarketNumber ) );
+        unique_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( aMarketNumber ) );
         CMarketToDepIterator mrktIter = mMarketsToDep.find( marketToDep.get() );
         if( mrktIter == mMarketsToDep.end() ) {
             // Somehow this market was not linked to any entry points into the graph.
@@ -281,7 +281,7 @@ GcamFlowGraph* MarketDependencyFinder::getFlowGraph( const int aMarketNumber ) {
     }
     else {
         // Find the entry points into the graph for the given market.
-        auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( aMarketNumber ) );
+        unique_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( aMarketNumber ) );
         CMarketToDepIterator mrktIter = mMarketsToDep.find( marketToDep.get() );
         if( mrktIter == mMarketsToDep.end() ) {
             // Somehow this market was not linked to any entry points into the graph.
@@ -367,7 +367,7 @@ void MarketDependencyFinder::createOrdering() {
         int marketNumber = mMarketplace->mMarketLocator->getMarketNumber( (*it)->mLocatedInRegion, (*it)->mName );
         if( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
             // Find/create an entry for the market to dependency struct
-            auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( marketNumber ) );
+            unique_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( marketNumber ) );
             MarketToDepIterator mrktIter = mMarketsToDep.find( marketToDep.get() );
             if( mrktIter == mMarketsToDep.end() ) {
                 mrktIter = mMarketsToDep.insert( marketToDep.release() ).first;
@@ -442,7 +442,7 @@ void MarketDependencyFinder::createOrdering() {
     // Connect the graph by setting the out edges.
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
         if( (*it)->mIsSolved ) {
-            auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( (*it)->mLinkedMarket ) );
+            unique_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( (*it)->mLinkedMarket ) );
             MarketToDepIterator mrktIter = mMarketsToDep.find( marketToDep.get() );
             assert( mrktIter != mMarketsToDep.end() );
             if( !(*it)->mPriceVertices.empty() ) {
@@ -537,7 +537,9 @@ void MarketDependencyFinder::createOrdering() {
     // activities in the model as it may be an indication of misconfiguration.
     ILogger& depLog = ILogger::getLogger( "dependency_finder_log" );
     for( CItemIterator it = mDependencyItems.begin(); it != mDependencyItems.end(); ++it ) {
-        if( !(*it)->mHasIncomingDependency && (*it)->mDependentList.empty() ) {
+        // less than ideal but our heuristics do not properly deal with link CO2 markets
+        // so explicitly avoid warning about CO2_LUC (potentially others here)
+        if( !(*it)->mHasIncomingDependency && (*it)->mDependentList.empty() && (*it)->mName != "CO2_LUC" ) {
             depLog.setLevel( ILogger::SEVERE );
             depLog << (*it)->mName << " in " << (*it)->mLocatedInRegion << " is not related to any other activities." << endl;
         }
@@ -860,7 +862,7 @@ void MarketDependencyFinder::createTrialsForItem( CItemIterator aItemToReset, Ca
 
     // Lookup/create the associated market linkages to the price and demand
     // vertices.
-    auto_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( (*aItemToReset)->mLinkedMarket ) );
+    unique_ptr<MarketToDependencyItem> marketToDep( new MarketToDependencyItem( (*aItemToReset)->mLinkedMarket ) );
     MarketToDepIterator priceMrktIter = mMarketsToDep.find( marketToDep.get() );
     assert( priceMrktIter != mMarketsToDep.end() );
     MarketToDepIterator demandMrktIter = mMarketsToDep.insert( new MarketToDependencyItem( demandMrkt ) ).first;

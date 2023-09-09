@@ -47,10 +47,10 @@
 #include "functions/include/node_input.h"
 #include "containers/include/iinfo.h"
 #include "demographics/include/demographic.h"
-#include "containers/include/gdp.h"
 #include "sectors/include/sector_utils.h"
 #include "technologies/include/generic_output.h"
 #include "emissions/include/aghg.h"
+#include "marketplace/include/marketplace.h"
 
 #include "util/base/include/initialize_tech_vector_helper.hpp"
 
@@ -143,20 +143,21 @@ void GCAMConsumer::completeInit( const string& aRegionName, const string& aSecto
     // Interpolate shares for missing periods.
     SectorUtils::fillMissingPeriodVectorInterpolated( mSubregionalPopulationShare );
     SectorUtils::fillMissingPeriodVectorInterpolated( mSubregionalIncomeShare );
+    
+    // add dependency on GDP
+    SectorUtils::addGDPDependency( aRegionName, name );
 }
 
 void GCAMConsumer::initCalc( const string& aRegionName,
                              const string& aSectorName, NationalAccount& aNationalAccount,
-                             const Demographic* aDemographics, const GDP* aGDP,
+                             const Demographic* aDemographics,
                              const double aCapitalStock, const int aPeriod )
 {
     double population = aDemographics->getTotal( aPeriod );
-    double gdp = aGDP->getGDP( aPeriod );
-    double gdpPPP = aGDP->getPPPGDPperCap( aPeriod ) * population;
+    double gdp = SectorUtils::getGDP( aRegionName, aPeriod );
 
     double subregionalPopulation = mSubregionalPopulationShare[ aPeriod ] * population;
     double subregionalIncome = mSubregionalIncomeShare[ aPeriod ] * gdp / subregionalPopulation;
-    double subregionalIncomePPP = mSubregionalIncomeShare[ aPeriod ] * gdpPPP / subregionalPopulation;
     
     // store the subregional population and income for reporting
     mSubregionalPopulation[ aPeriod ] = subregionalPopulation;
@@ -165,8 +166,7 @@ void GCAMConsumer::initCalc( const string& aRegionName,
     // Set the subregional income and population into an info object so that nodes in the
     // nesting structure can have access to the values.
     mTechInfo->setDouble( "subregional-population", subregionalPopulation );
-    mTechInfo->setDouble( "subregional-income", subregionalIncome );
-    mTechInfo->setDouble( "subregional-income-ppp", subregionalIncomePPP );
+    mTechInfo->setDouble( "subregional-income-share", mSubregionalIncomeShare[ aPeriod ] );
     Consumer::initCalc( aRegionName, aSectorName, aNationalAccount,
                         aDemographics, aCapitalStock, aPeriod );
 }

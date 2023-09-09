@@ -142,7 +142,6 @@ const string& UnlimitedResource::getName() const {
 }
 
 void UnlimitedResource::calcSupply( const string& aRegionName,
-                                    const GDP* aGDP,
                                     const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();

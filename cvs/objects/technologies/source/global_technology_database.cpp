@@ -149,14 +149,13 @@ const ITechnologyContainer* GlobalTechnologyDatabase::getTechnology( const strin
                                                                      const string& aTechnologyName ) const
 {
     const pair<string, string> locationToFind( aSectorName, aSubsectorName );
-    // functor to find a technology in a vector by name
-    util::NameEquals<INamed*> nameComparison( aTechnologyName );
     
     CTechLocationIterator techLocationIter = mTechnologyList.find( locationToFind );
     if( techLocationIter != mTechnologyList.end() ) {
         const vector<ITechnologyContainer*>& tempTechContainers = ( *techLocationIter ).second;
-        CTechListIterator techIter = find_if( tempTechContainers.begin(), tempTechContainers.end(),
-                                              nameComparison );
+        CTechListIterator techIter = find_if(tempTechContainers.begin(), tempTechContainers.end(), [aTechnologyName](auto aCurrTech) -> bool {
+            return aCurrTech->getName() == aTechnologyName;
+            });
         if( techIter != tempTechContainers.end() ) {
             return *techIter;
         }

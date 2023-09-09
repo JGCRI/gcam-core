@@ -74,7 +74,6 @@ public:
 	virtual void calcEmission( const std::string& aRegionName, 
                                const std::vector<IInput*>& aInputs,
                                const std::vector<IOutput*>& aOutputs,
-					           const GDP* aGDP,
 					           ICaptureComponent* aSequestrationDevice,
                                const int aPeriod );
 

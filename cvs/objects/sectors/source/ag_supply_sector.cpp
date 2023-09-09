@@ -115,7 +115,7 @@ void AgSupplySector::completeInit( const IInfo* aRegionInfo,
 * \param aPeriod model period.
 * \return The sector price.
 */
-double AgSupplySector::getPrice( const GDP* aGDP, const int aPeriod ) const {
+double AgSupplySector::getPrice( const int aPeriod ) const {
     return scenario->getMarketplace()->getPrice( mName, mRegionName, aPeriod, true );
 }
 
@@ -145,15 +145,19 @@ const string& AgSupplySector::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void AgSupplySector::supply( const GDP* aGDP, const int aPeriod ) {
+void AgSupplySector::supply( const int aPeriod ) {
     // The demand value passed to setOutput does not matter as the 
     // supply and demand will be made equal by the market.
 	/* for agSupplySectors, output is summed from technology output rather than shared
 	  like it is for default GCAM sector */
+    double sectorPrice = getPrice(aPeriod);
     for( unsigned int i = 0; i < mSubsectors.size(); ++i ){
+        // calling getFixedOutput really only to set the sector price
+        // into the technologies
+        mSubsectors[ i ]->getFixedOutput(aPeriod, sectorPrice);
         // set subsector output from Sector demand
-        mSubsectors[ i ]->setOutput( 1, 1, aGDP, aPeriod );
-    }  
+        mSubsectors[ i ]->setOutput( 1, 1, aPeriod );
+    }
 }
 
 //! Create markets

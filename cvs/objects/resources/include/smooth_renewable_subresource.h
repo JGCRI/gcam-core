@@ -53,7 +53,6 @@
 
 #include "util/base/include/xml_helper.h"
 #include "util/curves/include/cost_curve.h"
-#include "containers/include/gdp.h"
 #include "resources/include/renewable_subresource.h"
 
 // class: SmoothRenewableSubresource ***************************************
@@ -90,7 +89,7 @@ public:
     virtual void initCalc( const std::string& aRegionName, const std::string& aResourceName,
                            const IInfo* aSectorInfo, const int aPeriod );
     virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
-                               int aPeriod, const GDP* aGDP, double aPrice );
+                               int aPeriod, double aPrice );
     virtual double getLowestPrice( const int aPeriod ) const;
     virtual double getHighestPrice( const int aPeriod ) const;
 

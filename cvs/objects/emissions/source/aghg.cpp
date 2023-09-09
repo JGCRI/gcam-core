@@ -113,8 +113,7 @@ void AGHG::completeInit( const string& aRegionName, const string& aSectorName,
     scenario->getMarketplace()->getDependencyFinder()->addDependency( aSectorName,
                                                                       aRegionName,
                                                                       getName(),
-                                                                      aRegionName,
-                                                                      false );
+                                                                      aRegionName );
 }
 
 /*!

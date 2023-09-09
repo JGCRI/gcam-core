@@ -48,9 +48,14 @@
 #include "sectors/include/sector_utils.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/market_dependency_finder.h"
 #include "util/base/include/model_time.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/util.h"
+#include "containers/include/region.h"
+#include "containers/include/world.h"
+#include "containers/include/national_account_container.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
@@ -59,6 +64,65 @@ extern Scenario* scenario; // for marketplace and modeltime.
 HashMap<std::string, std::string> SectorUtils::sTrialMarketNames;
 
 typedef HashMap<string, string>::const_iterator NameIterator;
+
+/*!
+ * \brief Find the national accounts for the given region.
+ * \param aRegionName The region name to find.
+ * \return A pointer to the national account for the requested region or null if not found.
+ */
+NationalAccountContainer const* getNationalAccountContainer( const string& aRegionName ) {
+    Region const* region = scenario->getWorld()->getRegion( aRegionName );
+    if( region ) {
+        NationalAccountContainer const* ret = region->getNationalAccounts();
+        if( ret ) {
+            return ret;
+        }
+        else {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::ERROR );
+            mainLog << "NationalAccountContainer not initialized in " << aRegionName << endl;
+            return 0;
+        }
+    }
+    else {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::ERROR );
+        mainLog << "Could not find region " << aRegionName << endl;
+        return 0;
+    }
+}
+
+void SectorUtils::addGDPDependency(const string &aRegionName, const string &aSectorName) {
+    NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
+    // error messages would have already been printed if not found
+    if( gdp ) {
+        scenario->getMarketplace()->getDependencyFinder()->addDependency(aSectorName, aRegionName, gdp->getGDPMarketName(), aRegionName);
+    }
+}
+
+double SectorUtils::getGDP( const string& aRegionName, const int aPeriod ) {
+    NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
+    // error messages would have already been printed if not found
+    return gdp ? gdp->getMarketGDP( aPeriod ) : 0.0;
+}
+
+double SectorUtils::getGDPPerCap( const string& aRegionName, const int aPeriod ) {
+    NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
+    // error messages would have already been printed if not found
+    return gdp ? gdp->getMarketGDPperCapita( aPeriod ) : 0.0;
+}
+
+double SectorUtils::getGDPPerCapScaled( const string& aRegionName, const int aPeriod ) {
+    NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
+    // error messages would have already been printed if not found
+    return gdp ? gdp->getMarketGDPperCapitaNorm( aPeriod ) : 0.0;
+}
+
+double SectorUtils::getGDPPPP( const string& aRegionName, const int aPeriod ) {
+    NationalAccountContainer const* gdp = getNationalAccountContainer( aRegionName );
+    // error messages would have already been printed if not found
+    return gdp ? gdp->getGDPPPP( aPeriod ) : 0.0;
+}
 
 /*!
  * \brief Create a trial value market
@@ -531,16 +595,16 @@ void SectorUtils::setSupplyBehaviorBounds( const string& aGoodName, const string
         util::getLargeNumber();
     if( util::isValidNumber( aLowerPriceBound ) ) {
         lowerPriceBound = min( lowerPriceBound, aLowerPriceBound );
+        sectorInfo->setDouble( LOWER_BOUND_KEY, lowerPriceBound );
     }
-    sectorInfo->setDouble( LOWER_BOUND_KEY, lowerPriceBound );
 
     // Set the upper price bound.
     double upperPriceBound = sectorInfo->hasValue( UPPER_BOUND_KEY ) ? sectorInfo->getDouble( UPPER_BOUND_KEY, false ) :
         -util::getLargeNumber();
     if( util::isValidNumber( aUpperPriceBound ) ) {
         upperPriceBound = max( upperPriceBound, aUpperPriceBound );
+        sectorInfo->setDouble( UPPER_BOUND_KEY, upperPriceBound );
     }
-    sectorInfo->setDouble( UPPER_BOUND_KEY, upperPriceBound );
 }
 
 

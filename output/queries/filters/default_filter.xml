@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<stx:transform xmlns:stx="http://stx.sourceforge.net/2002/ns" version="1.0" pass-through="all" strip-space="yes">
+    <!-- This transformation uses the pass-through="all" option so by default
+         all results are copied.  The following template will match the LUC emissions
+         tag and by virtue of template being empty those tags and all of their child
+         nodes will be filtered out.
+      -->
+    <stx:template match="above-gross-positive-luc" />
+    <stx:template match="above-land-use-change-emission" />
+    <stx:template match="below-land-use-change-emission" />
+    <stx:template match="above-ground-carbon-stock" />
+</stx:transform>

@@ -236,7 +236,7 @@ protected:
 #endif
     
     //! Object containing information related to the market.
-    std::auto_ptr<IInfo> mMarketInfo;
+    std::unique_ptr<IInfo> mMarketInfo;
     
     //! Weak pointer to the container that hold this market.  The container will
     //! keep shared market data such as name and contained regions so we hold a

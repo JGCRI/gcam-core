@@ -8,7 +8,7 @@ data to XML can treat tags in the same class as the same when enabled, thus not
 requiring multiple headers for instance to read in a share-weight into a technology
 intermittent-technology or tranTechnology.}
 \format{
-An object of class \code{list} of length 8.
+An object of class \code{list} of length 9.
 }
 \usage{
 XML_NODE_EQUIV

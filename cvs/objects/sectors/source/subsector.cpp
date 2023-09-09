@@ -56,8 +56,6 @@
 #include "util/base/include/model_time.h"
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/xml_parse_helper.h"
-#include "marketplace/include/marketplace.h"
-#include "containers/include/gdp.h"
 #include "containers/include/info_factory.h"
 #include "containers/include/iinfo.h"
 #include "util/base/include/ivisitor.h"
@@ -243,6 +241,14 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
            mShareWeights[ per ] = mParsedShareWeights[ per ];
        }
     }
+    
+    bool found = false;
+    for( int per = 0; per < modeltime->getmaxper() && !found; ++per ) {
+        if( mFuelPrefElasticity[ per ] != 0.0 ) {
+            SectorUtils::addGDPDependency( mRegionName, mSectorName );
+            found = true;
+        }
+    }
 }
 
 /*!
@@ -253,12 +259,10 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
 * \warning The ghg part of this routine assumes the existence of technologies in
 *          the previous and future periods
 * \author Steve Smith, Sonny Kim
-* \param aNationalAccount National accounts container.
 * \param aDemographics Regional demographics container.
 * \param aPeriod Model period
 */
-void Subsector::initCalc( NationalAccount* aNationalAccount,
-                          const Demographic* aDemographics,
+void Subsector::initCalc( const Demographic* aDemographics,
                           const int aPeriod )
 {
     mDiscreteChoiceModel->initCalc( mRegionName, mName, false, aPeriod );
@@ -312,10 +316,10 @@ void Subsector::initCalc( NationalAccount* aNationalAccount,
 * \param aGDP Regional GDP object.
 * \param aPeriod Model period
 */
-double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
+double Subsector::getPrice( const int aPeriod ) const {
     double subsectorPrice = 0.0; // initialize to 0 for summing
     double sharesum = 0.0;
-    const vector<double>& techShares = calcTechShares( aGDP, aPeriod );
+    const vector<double>& techShares = calcTechShares( aPeriod );
     for ( unsigned int i = 0; i < mTechContainers.size(); ++i ) {
         double currCost = mTechContainers[i]->getNewVintageTechnology(aPeriod)->getCost( aPeriod );
         // calculate weighted average price for Subsector.
@@ -348,7 +352,7 @@ double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
 * \param aPeriod Model period.
 * \return share-weighted fuel price
 */
-double Subsector::getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) const {
+double Subsector::getAverageFuelPrice( const int aPeriod ) const {
     // Determine the average fuel price.
     double fuelPrice = 0;
 
@@ -357,7 +361,7 @@ double Subsector::getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) cons
     // current period's are unknown.
     const int sharePeriod = ( aPeriod == 0 ) ? aPeriod : aPeriod - 1;
 
-    const vector<double>& techShares = calcTechShares( aGDP, sharePeriod );
+    const vector<double>& techShares = calcTechShares( sharePeriod );
     for ( unsigned int i = 0; i < mTechContainers.size(); ++i) {
         // calculate weighted average price of fuel only
         // Technology shares are based on total cost
@@ -377,13 +381,13 @@ double Subsector::getAverageFuelPrice( const GDP* aGDP, const int aPeriod ) cons
 * \param period model period
 * \return A vector of technology shares.
 */
-const vector<double> Subsector::calcTechShares( const GDP* aGDP, const int aPeriod ) const {
+const vector<double> Subsector::calcTechShares( const int aPeriod ) const {
     vector<double> logTechShares ( mTechContainers.size() ); 
 
     for( unsigned int i = 0; i < mTechContainers.size(); ++i ){
         // determine shares based on Technology costs
         double lts = mTechContainers[ i ]->getNewVintageTechnology( aPeriod )->
-            calcShare( mDiscreteChoiceModel, aGDP, aPeriod );
+            calcShare( mRegionName, mDiscreteChoiceModel, aPeriod );
 
         // Check that Technology shares are valid.
         assert( util::isValidNumber( lts ) || lts == -numeric_limits<double>::infinity() );
@@ -427,29 +431,31 @@ void Subsector::calcCost( const int aPeriod ){
  * \return The log of the subsector share.
  * \sa Technology::calcShare()
 */
-double Subsector::calcShare( const IDiscreteChoice* aChoiceFn, const GDP* aGDP, const int aPeriod ) const {
-    double subsectorPrice = getPrice( aGDP, aPeriod );
+double Subsector::calcShare( const IDiscreteChoice* aChoiceFn, const int aPeriod ) const {
+    double subsectorPrice = getPrice( aPeriod );
 
     if( std::isnan( subsectorPrice ) ) {
         // Check for a NaN sentinel value.  If we find it, set the
         // subsector's share to zero.
         return -numeric_limits<double>::infinity();
     }
-
     
-    double scaledGdpPerCapita = aGDP->getBestScaledGDPperCap( aPeriod );
+    double fuelPrefTerm = mFuelPrefElasticity[ aPeriod ]  != 0.0 ?
+        mFuelPrefElasticity[ aPeriod ] * log( SectorUtils::getGDPPerCapScaled( mRegionName, aPeriod ) ) :
+        0.0;
     assert( scaledGdpPerCapita > 0.0 );
 
     double logshare = aChoiceFn->calcUnnormalizedShare( mShareWeights[ aPeriod ], subsectorPrice, aPeriod )
-        + mFuelPrefElasticity[ aPeriod ] * log( scaledGdpPerCapita );
-
+        + fuelPrefTerm;
+    
     /*! \post logshare is finite or minus-infinity. */
     // Check for invalid shares.
     if( !( util::isValidNumber( logshare ) || logshare == -numeric_limits<double>::infinity() ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Invalid share for " << mName << " in " << mRegionName 
-                << " log(share) =  " << logshare << endl;
+                << " log(share) =  " << logshare << "  fuelPrefElasticity " << mFuelPrefElasticity[aPeriod]
+                << "  fuelPrefTerm " << fuelPrefTerm << endl;
     }
     return logshare;
 }
@@ -539,13 +545,12 @@ void Subsector::interpolateShareWeights( const int aPeriod ) {
 */
 void Subsector::setOutput( const double aSubsectorVariableDemand, 
                            const double aFixedOutputScaleFactor,
-                           const GDP* aGDP,
                            const int aPeriod )
 {
     assert( util::isValidNumber( aSubsectorVariableDemand ) && aSubsectorVariableDemand >= 0 );
     
     // Calculate the technology shares.
-    const vector<double>& shares = calcTechShares( aGDP, aPeriod );
+    const vector<double>& shares = calcTechShares( aPeriod );
     for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {
         ITechnologyContainer::TechRangeIterator vintageIter = (*techIter)->getVintageBegin( aPeriod );
         
@@ -554,7 +559,7 @@ void Subsector::setOutput( const double aSubsectorVariableDemand,
         if( vintageIter != (*techIter)->getVintageEnd( aPeriod ) ) {
             (*vintageIter).second->production( mRegionName, mSectorName,
                                             aSubsectorVariableDemand * shares[ techIter - mTechContainers.begin() ],
-                                            aFixedOutputScaleFactor, aGDP, aPeriod );
+                                            aFixedOutputScaleFactor, aPeriod );
             ++vintageIter;
         }
         
@@ -562,7 +567,7 @@ void Subsector::setOutput( const double aSubsectorVariableDemand,
         for( ; vintageIter != (*techIter)->getVintageEnd( aPeriod ); ++vintageIter ) {
             // calculate Technology output and fuel input for past vintages
             (*vintageIter).second->production( mRegionName, mSectorName, 0,
-                                            aFixedOutputScaleFactor, aGDP, aPeriod );
+                                            aFixedOutputScaleFactor, aPeriod );
         }
     }
 }

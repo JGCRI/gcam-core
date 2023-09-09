@@ -259,7 +259,6 @@ void NukeFuelTechnology::production( const string& aRegionName,
                                     const string& aSectorName, 
                                     double aVariableDemand,
                                     double aFixedOutputScaleFactor,
-                                    const GDP* aGDP,
                                     const int aPeriod )
 {
     // Can't have a scale factor and positive demand.
@@ -309,7 +308,7 @@ void NukeFuelTechnology::production( const string& aRegionName,
     // heavy metal (mass of nuclear fuel) output unit (EJ) is thermal energy
     // content of nuclear fuel kg/GJ equal to MMT/EJ. byProduct coeffcient is
     // composition of waste in percentage.
-    calcEmissionsAndOutputs( aRegionName, primaryOutput, aGDP, aPeriod );
+    calcEmissionsAndOutputs( aRegionName, aSectorName, primaryOutput, aPeriod );
 }
 
 

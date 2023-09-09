@@ -57,8 +57,6 @@ class ICaptureComponent;
 class IInfo;
 class AGHG;
 class ICaptureComponent;
-class NationalAccount;
-class Expenditure;
 
 // Need to forward declare the subclasses as well.
 class MiniCAMInput;
@@ -72,6 +70,8 @@ class InputOMVar;
 class InputOMFixed;
 class InputCapital;
 class CTaxInput;
+class InputAccounting;
+class TrackingNonEnergyInput;
 
 /*! 
  * \ingroup Objects
@@ -391,21 +391,6 @@ public:
                                              const int aPeriod ) const = 0;
 
     /*!
-     * \brief Calculate taxes from the input.
-     * \details Calculates the taxes and places them into the appropriate
-     *          accounting structure.
-     * \param aRegionName Name of the region containing the input.
-     * \param aNationalAccount The national account to add taxes into if avaiable.
-     * \param aExpenditure The current period expenditure to track technology expenses if availabe.
-     * \param aPeriod The period in which to calculate taxes.
-     * \return The amount of non-emission taxes collected.
-     */
-    virtual double calcTaxes( const std::string& aRegionName,
-                            NationalAccount* aNationalAccount,
-                            Expenditure* aExpenditure,
-                            const int aPeriod ) const = 0;
-
-    /*!
      * \brief Get the current calibration quantity.
      * \param aPeriod The period for which to get the calibration quantity.
      * \details
@@ -485,9 +470,10 @@ protected:
         /* Declare all subclasses of IInput to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( IInput, MiniCAMInput, EnergyInput, NonEnergyInput,
-                                RenewableInput, InputSubsidy, InputTax, InputOMVar,
-                                InputOMFixed, InputCapital, CTaxInput )
+         DEFINE_SUBCLASS_FAMILY( IInput, MiniCAMInput, EnergyInput, NonEnergyInput,
+                                 RenewableInput, InputSubsidy, InputTax, InputOMVar,
+                                 InputOMFixed, InputCapital, CTaxInput, InputAccounting,
+                                 TrackingNonEnergyInput )
     )
 };
 

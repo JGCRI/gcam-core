@@ -18,6 +18,16 @@ CXXBASEOPTS     = $(CXXDEBUG)
 ARCH_FLAGS      = 
 ENVLIBS         = 
 
+# only hector is using C++ 17 features and even then only to replace
+# the need to link the Boost system and filesystem libraries
+# however we can easily fall back to C++ 14 if needed (but then will need
+# to link those Boost libraries)
+ifeq ($(strip $(NO_CXX17)),)
+  CXXSTD = c++17
+else
+  CXXSTD = c++14
+endif
+
 ## sets if we have Java which is required to GCAM output into a BaseX database
 ## should a user not be able to use Java they could concievably turn this off
 ## and set DEBUG_XML_DB in xml_db_outputter.ccp to just have the data written
@@ -52,17 +62,22 @@ ifeq ($(USE_HECTOR),1)
 
   # hector Makefile is looking for slightly different names for BOOST
   # include and lib
-  BOOSTROOT=$(BOOST_INCLUDE)
+  BOOSTINC=$(BOOST_INCLUDE)
   BOOSTLIB=$(BOOST_LIB)
-  export BOOSTROOT BOOSTLIB
+  export BOOSTINC BOOSTLIB
 
   HECTOR_INCLUDE = -I../../climate/source/hector/headers
-
-  ifeq ($(strip $(BOOST_LIB)),)
-    $(error Unable to detect Boost lib path, please set env variable BOOST_LIB)
+  # hector allows us to fall back to the C++ 14 standard if we do not have it
+  # however, we then need to link the Boost system and filesystem libraries
+  ifeq ($(strip $(NO_CXX17)),)
+      HECTOR_LIB = -lhector
+  else
+      ifeq ($(strip $(BOOST_LIB)),)
+        $(error Unable to detect Boost lib path, please set env variable BOOST_LIB)
+      endif
+      HECTOR_LIB = -L$(BOOST_LIB) -Wl,-rpath,$(BOOST_LIB) -lhector -lboost_system -lboost_filesystem
   endif
 
-  HECTOR_LIB = -L$(BOOST_LIB) -Wl,-rpath,$(BOOST_LIB) -lhector -lboost_system -lboost_filesystem
 endif  # if(USE_HECTOR==1)
 
 # we may want to not use TBB in which case we have guard against empty -I or -L directives
@@ -143,7 +158,7 @@ LIBDIR		= -L/usr/local/lib -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY)
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
 CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
-CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=c++14 -Wno-deprecated
+CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=$(CXXSTD) -Wno-deprecated
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
 LDFLAGS         = $(CXXFLAGS) $(JAVA_RPATH) $(TBB_RPATH) $(MKL_LDFLAGS)

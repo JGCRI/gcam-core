@@ -118,7 +118,6 @@ public:
                              const std::string& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
-                             const GDP* aGDP,
                              const int aPeriod );
 
     
@@ -177,7 +176,7 @@ protected:
     )
     
     //! Info object used to pass parameter information into backup calculators.
-    std::auto_ptr<IInfo> mIntermittTechInfo;
+    std::unique_ptr<IInfo> mIntermittTechInfo;
     
     void copy( const IntermittentTechnology& aOther );
 

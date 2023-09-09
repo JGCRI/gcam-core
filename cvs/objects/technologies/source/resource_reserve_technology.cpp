@@ -42,12 +42,14 @@
 #include "technologies/include/resource_reserve_technology.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
+#include "containers/include/market_dependency_finder.h"
 #include "util/base/include/xml_helper.h"
 #include "technologies/include/iproduction_state.h"
 #include "technologies/include/production_state_factory.h"
 #include "technologies/include/ioutput.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
+#include "util/logger/include/ilogger.h"
 
 using namespace std;
 
@@ -61,17 +63,17 @@ extern Scenario* scenario;
 ResourceReserveTechnology::ResourceReserveTechnology(const string& aName, const int aYear) :
 Technology(aName, aYear),
 mTotalReserve( 0.0 ),
-mInvestmentCost( 0.0 ),
 mBuildupYears( 0 ),
-mDeclinePhasePct( 1.0 )
+mDeclinePhasePct( 1.0 ),
+mInvestmentCostInput( 0 )
 {
 }
 
 ResourceReserveTechnology::ResourceReserveTechnology() :
 mTotalReserve( 0.0 ),
-mInvestmentCost( 0.0 ),
 mBuildupYears( 0 ),
-mDeclinePhasePct( 1.0 )
+mDeclinePhasePct( 1.0 ),
+mInvestmentCostInput( 0 )
 {
 }
 
@@ -95,7 +97,6 @@ ResourceReserveTechnology::~ResourceReserveTechnology() {
 //! write object to xml output stream
 void ResourceReserveTechnology::toDebugXMLDerived(const int aPeriod, ostream& aOut, Tabs* aTabs) const {
 	XMLWriteElement(mTotalReserve, "total-resource-reserve", aOut, aTabs);
-    XMLWriteElement(mInvestmentCost, "investment-cost", aOut, aTabs);
 	XMLWriteElement(mCumulProd[ aPeriod ], "cumulative-production", aOut, aTabs);
 	XMLWriteElement(mBuildupYears, "buildup-years", aOut, aTabs);
     XMLWriteElement(mDeclinePhasePct, "decline-phase-percent", aOut, aTabs);
@@ -143,6 +144,21 @@ void ResourceReserveTechnology::completeInit(const std::string& aRegionName,
     
 	Technology::completeInit(aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
 		aLandAllocator);
+    
+    // find the non-energy input which will be used to track the "investment"
+    for(IInput* currInput : mInputs) {
+        if(!mInvestmentCostInput && currInput->hasTypeFlag(IInput::CAPITAL)) {
+            mInvestmentCostInput = currInput;
+        }
+    }
+    if(!mInvestmentCostInput) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "No non-energy input which is required to track investment for "
+                << getXMLName() << " in " << aRegionName << ", " << aSectorName
+                << ", " << mName << endl;
+        abort();
+    }
 }
 
 void ResourceReserveTechnology::initCalc( const string& aRegionName,
@@ -159,6 +175,12 @@ void ResourceReserveTechnology::initCalc( const string& aRegionName,
     mIsResourceCalibrating = productInfo->getBoolean( "fully-calibrated", false );
     
     Technology::initCalc(aRegionName, aSectorName, aSubsectorInfo, aDemographics, aPrevPeriodInfo, aPeriod);
+
+    if(isOperating(aPeriod) && !mProductionState[ aPeriod ]->isNewInvestment()) {
+        // pass forward the investment cost which gets set during new investment
+        double investmentCost = mInvestmentCostInput->getPrice(aRegionName, aPeriod -1);
+        mInvestmentCostInput->setPrice(aRegionName, investmentCost, aPeriod);
+    }
 }
 
 
@@ -183,7 +205,6 @@ void ResourceReserveTechnology::production(const string& aRegionName,
 	const string& aSectorName,
 	const double aVariableDemand,
 	const double aFixedOutputScaleFactor,
-	const GDP* aGDP,
 	const int aPeriod)
 {
     // Set the total resource reserve base if this is a new investment technology
@@ -197,7 +218,7 @@ void ResourceReserveTechnology::production(const string& aRegionName,
     // need to do so in order to match calibration.
     double annualizedProd = aVariableDemand / mAvgProdLifetime * aFixedOutputScaleFactor;
     Technology::production( aRegionName, aSectorName, annualizedProd,
-                            aFixedOutputScaleFactor, aGDP, aPeriod );
+                            aFixedOutputScaleFactor, aPeriod );
 }
 
 /*!
@@ -283,14 +304,41 @@ double ResourceReserveTechnology::getFixedOutput( const string& aRegionName,
                                   const double aMarginalRevenue,
                                   const int aPeriod ) const
 {
+    double investmentCost;
     if( mProductionState[ aPeriod ]->isNewInvestment() ) {
-        const_cast<ResourceReserveTechnology*>(this)->mInvestmentCost = aMarginalRevenue;
+        investmentCost = aMarginalRevenue;
+        mInvestmentCostInput->setPrice(aRegionName, aMarginalRevenue, aPeriod);
+    }
+    else {
+        investmentCost = mInvestmentCostInput->getPrice(aRegionName, aPeriod);
     }
     
-    double margRevTest = mIsResourceCalibrating ? 50.0 : aMarginalRevenue + mInvestmentCost;
+    double margRevTest = aMarginalRevenue + investmentCost;
 
     return Technology::getFixedOutput( aRegionName, aSectorName, aHasRequiredInput, aRequiredInput,
                                        margRevTest, aPeriod );
+}
+
+double ResourceReserveTechnology::getCurrencyConversionPrice( const string& aRegionName,
+                                                              const string& aSectorName,
+                                                              const int aPeriod ) const
+{
+    // the price will be in 1975$/GJ
+    return scenario->getMarketplace()->getPrice( aSectorName, aRegionName, aPeriod );
+}
+
+/*!
+ * \brief The same as the Technology calcCost except we need to subtract off the investment cost to avoid double accounting.
+ * \param aRegionName The region containing the Technology.
+ * \param aSectorName The sector containing the Technology.
+ * \param aPeriod Period in which to calculate the energy cost.
+ */
+void ResourceReserveTechnology::calcCost(const string& aRegionName,
+                                         const string& aSectorName,
+                                         const int aPeriod)
+{
+    Technology::calcCost(aRegionName, aSectorName, aPeriod);
+    mCosts[aPeriod] -= mInvestmentCostInput->getPrice(aRegionName, aPeriod);
 }
 
 /*!
@@ -308,7 +356,7 @@ double ResourceReserveTechnology::getEnergyCost( const string& aRegionName,
     // Calculates the energy cost by first calculating the total cost including
     // all inputs and then removing the non-energy costs.
     double cost = Technology::getEnergyCost( aRegionName, aSectorName, aPeriod ) +
-        mInvestmentCost;
+        mInvestmentCostInput->getPrice(aRegionName, aPeriod);
 
     return cost;
 }

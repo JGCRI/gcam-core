@@ -49,7 +49,6 @@
 #include "util/base/include/time_vector.h"
 
 // Forward declarations
-class GDP;
 class Demographic;
 
 /*! 
@@ -63,7 +62,6 @@ class Demographic;
 class EnergyFinalDemand: public AFinalDemand
 {
     friend class XMLDBOutputter;
-    friend class EnergyBalanceTable; // TODO: currently only to get mServiceDemands
 
 public:
     static const std::string& getXMLNameStatic();
@@ -84,13 +82,11 @@ public:
                                const IInfo* aRegionInfo );
 
     virtual void initCalc( const std::string& aRegionName,
-                           const GDP* aGDP,
                            const Demographic* aDemographics,
                            const int aPeriod );
 
     virtual void setFinalDemand( const std::string& aRegionName,
                                  const Demographic* aDemographics,
-                                 const GDP* aGDP,
                                  const int aPeriod );
 
     virtual double getWeightedEnergyPrice( const std::string& aRegionName,
@@ -106,8 +102,8 @@ protected:
         // TODO: Remove this function once construction is cleanly implemented.
         virtual bool isPerCapitaBased() const = 0;
 
-        virtual double calcDemand( const Demographic* aDemographics,
-                                   const GDP* aGDP,
+        virtual double calcDemand( const std::string& aRegionName,
+                                   const Demographic* aDemographics,
                                    const double aPriceElasticity,
                                    const double aIncomeElasticity,
                                    const double aPriceRatio,
@@ -120,8 +116,8 @@ protected:
             return true;
         }
 
-        virtual double calcDemand( const Demographic* aDemographics,
-                                   const GDP* aGDP,
+        virtual double calcDemand( const std::string& aRegionName,
+                                   const Demographic* aDemographics,
                                    const double aPriceElasticity,
                                    const double aIncomeElasticity,
                                    const double aPriceRatio,
@@ -134,8 +130,8 @@ protected:
             return false;
         }
 
-        virtual double calcDemand( const Demographic* aDemographics,
-                                   const GDP* aGDP,
+        virtual double calcDemand( const std::string& aRegionName,
+                                   const Demographic* aDemographics,
                                    const double aPriceElasticity,
                                    const double aIncomeElasticity,
                                    const double aPriceRatio,
@@ -212,16 +208,14 @@ protected:
     )
 
     //! Demand function used to calculate unscaled demand.
-    std::auto_ptr<IDemandFunction> mDemandFunction;
+    std::unique_ptr<IDemandFunction> mDemandFunction;
     
     virtual double calcFinalDemand( const std::string& aRegionName,
                                     const Demographic* aDemographics,
-                                    const GDP* aGDP,
                                     const int aPeriod );
 
     virtual double calcMacroScaler( const std::string& aRegionName,
                                     const Demographic* aDemographics,
-                                    const GDP* aGDP,
                                     const int aPeriod ) const;
 
     // Methods for deriving from EnergyFinalDemand.

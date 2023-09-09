@@ -217,7 +217,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                     solvable[i].setForecastDemand(newScale);
                     fp = fd = newScale;
                 }
-                else if(isSolved && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY)) {
+                else if(isSolved && !(solvable[i].getType() == IMarketType::TAX || solvable[i].getType() == IMarketType::SUBSIDY || solvable[i].getType() == IMarketType::RES)) {
                     double solutionFloor = solvable[i].getSolutionFloor();
                     // Check if the market is solved to the solution floor in which case don't let
                     // NR make a big deal out of relative differences by reseting the demand scale to 1
@@ -287,7 +287,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         chg = true;
                         ++nchg;
                     } 
-                    else if (oldprice > ub &&
+                    /*else if (oldprice > ub &&
                              oldsply > olddmnd) {
                       // price is above the top of the supply curve,
                       // and there little demand.  This is not
@@ -317,7 +317,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                       solvable[i].setPrice(newprice);
                       chg = true;
                       ++nchg;
-                    }
+                    }*/
                     else if(fd < mFTOL && oldsply >= mFTOL && olddmnd >= mFTOL) {
                         // reset a small demand scale when it looked like a market was "off"
                         // but the supplies and demands are now in a normal range
@@ -351,6 +351,17 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         solvable[i].setForecastDemand(olddmnd);
                         fp = olddmnd;
                         fd = oldprice;
+                        chg = true;
+                        ++nchg;
+                    }
+                    else if(abs(fp) != abs(fd)) {
+                        // not sure why the price and quantity scales divereged but they should
+                        // be the same so reset them to be
+                        double newScale = abs(fp) > util::getSmallNumber() ? fp : fd;
+                        fp = newScale;
+                        fd = newScale;
+                        solvable[i].setForecastPrice(newScale);
+                        solvable[i].setForecastDemand(newScale);
                         chg = true;
                         ++nchg;
                     }
@@ -412,22 +423,12 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                 case IMarketType::SUBSIDY:
                     lb = solvable[i].getLowerBoundSupplyPrice();
                     ub = solvable[i].getUpperBoundSupplyPrice();
-                    if( olddmnd < 0.0 && olddmnd < oldsply && oldprice > ub ) {
-                        newprice = lb - 0.1;
-                        solvable[i].setPrice(newprice);
-                        chg = true;
-                        ++nchg;
-                    } else if(oldprice > ub && olddmnd < oldsply) {
-                        newprice = ub - 0.1;
-                        solvable[i].setPrice(newprice);
-                        chg = true;
-                        ++nchg;
-                    }
-                    else if(oldprice > lb && fp <= lb && (1.3*olddmnd) < oldsply) {
+                    if(oldprice > lb && fp <= lb && (1.3*olddmnd) < oldsply) {
                         // reset the price back to "unconstrained" if it wasn't constraining in the last period
                         // and it still is not now
                         newprice = fp;
                         solvable[i].setPrice(newprice);
+                        // guard against unreasonably small price/quantity scales
                         if(fp == 0.0) {
                             // don't set the scale to zero
                             fp = 1.0;
@@ -446,7 +447,17 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         solvable[i].setPrice(newprice);
                         chg = true;
                         ++nchg;
+                    } else if(oldprice > ub && olddmnd < oldsply) {
+                        // the case where we overshot the upper bound but the market should be active
+                        newprice = ub - 0.1;
+                        solvable[i].setPrice(newprice);
+                        chg = true;
+                        ++nchg;
                     }
+                    // Some additional heuristic may be possible to help in the situation where a
+                    // constraint is on the edge of binding / not-binding but knowing which way to
+                    // go is hard and we may cause problems in the general case where the constraint
+                    // is solving normally.  Thus we do nothing and let the solvers just deal with it.
 
                     break;
 

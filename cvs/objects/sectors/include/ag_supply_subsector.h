@@ -61,7 +61,7 @@ public:
     static const std::string& getXMLNameStatic();
     virtual const std::string& getXMLName() const;
 
-    virtual double calcShare( const IDiscreteChoice* aChoiceFun, const GDP* aGDP, const int aPeriod ) const;
+    virtual double calcShare( const IDiscreteChoice* aChoiceFun, const int aPeriod ) const;
     
     virtual void interpolateShareWeights( const int aPeriod );
 protected:

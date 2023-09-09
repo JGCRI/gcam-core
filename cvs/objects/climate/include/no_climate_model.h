@@ -93,7 +93,9 @@ public:
     virtual double getConcentration( const std::string& aGasName,
                                      const int aYear ) const;
 
-    virtual double getTemperature( const int aYear ) const;
+    virtual double getTemperature( const int aYear, const bool aAdjHistoricalPeriod = false ) const;
+    
+    virtual double getGmst( const int aYear, const bool aAdjHistoricalPeriod = false ) const;
 
     virtual double getForcing( const std::string& aGasName,
                                const int aYear ) const;

@@ -201,8 +201,7 @@ void LinearControl::initCalc( const string& aRegionName,
     // Electricity inputs, for example, should never be associated with non-CO2 emissions.
 }
 
-double LinearControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod,
-                                            const GDP* aGDP )
+double LinearControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod )
 {
     // The actual work of calculating the reduction is done by the call to calcEmissionsReductionInternal
     // which is called during initCalc since the reduction will not be changing during World.calc.

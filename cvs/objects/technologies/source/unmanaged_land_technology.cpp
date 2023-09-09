@@ -238,7 +238,6 @@ void UnmanagedLandTechnology::production( const string& aRegionName,
                                              const string& aSectorName,
                                              const double aVariableDemand,
                                              const double aFixedOutputScaleFactor,
-                                             const GDP* aGDP,
                                              const int aPeriod )
 {
     // If the product does not exist then no calculations need to occur.
@@ -268,7 +267,7 @@ void UnmanagedLandTechnology::production( const string& aRegionName,
       annualLandUseDecrease = 0;
     }
 
-    calcEmissionsAndOutputs( aRegionName, annualLandUseDecrease, aGDP, aPeriod );
+    calcEmissionsAndOutputs( aRegionName, aSectorName, annualLandUseDecrease, aPeriod );
 }
 
 
@@ -286,9 +285,9 @@ void UnmanagedLandTechnology::production( const string& aRegionName,
 * \author Steve Smith
  */
 void UnmanagedLandTechnology::calcEmissionsAndOutputs( const string& aRegionName,
-                                          const double aPrimaryOutput,
-                                          const GDP* aGDP,
-                                          const int aPeriod )
+                                                       const string& aSectorName,
+                                                       const double aPrimaryOutput,
+                                                       const int aPeriod )
 {
     // Sets the "output" equal to the average annual land use change
     // This is used as an emissions driver
@@ -301,7 +300,7 @@ void UnmanagedLandTechnology::calcEmissionsAndOutputs( const string& aRegionName
 
     // calculate emissions for each gas
     for ( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        mGHG[ i ]->calcEmission( aRegionName, mInputs , mOutputs, aGDP, mCaptureComponent, aPeriod );
+        mGHG[ i ]->calcEmission( aRegionName, mInputs , mOutputs, mCaptureComponent, aPeriod );
     }
 }
 

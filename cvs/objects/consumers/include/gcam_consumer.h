@@ -100,7 +100,6 @@ public:
                            const std::string& aSectorName,
                            NationalAccount& nationalAccount,
                            const Demographic* aDemographics,
-                           const GDP* aGDP,
                            const double aCapitalStock,
                            const int aPeriod );
     

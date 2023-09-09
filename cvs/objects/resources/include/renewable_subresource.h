@@ -71,7 +71,7 @@ public:
     virtual void cumulsupply( const std::string& aRegionName, const std::string& aResourceName,
                               double aPrice, int aPeriod );
     virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
-                               int aPeriod, const GDP* aGdp, double aPrice );
+                               int aPeriod, double aPrice );
     virtual double getMaxAnnualSubResource( const int aPeriod ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
     virtual double getLowestPrice( const int aPeriod ) const;

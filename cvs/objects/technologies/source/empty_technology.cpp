@@ -72,6 +72,10 @@ const string& EmptyTechnology::getXMLName() const {
     return getXMLNameStatic();
 }
 
+bool EmptyTechnology::isVintagingActive() const {
+    return false;
+}
+
 void EmptyTechnology::completeInit( const string& aRegionName,
                               const string& aSectorName,
                               const string& aSubsectorName,
@@ -102,8 +106,8 @@ double EmptyTechnology::getTotalGHGCost( const string& aRegionName,
     return 0;
 }
 
-double EmptyTechnology::calcShare( const IDiscreteChoice* aChoiceFn,
-                                   const GDP* aGDP,
+double EmptyTechnology::calcShare( const std::string& aRegionName,
+                                   const IDiscreteChoice* aChoiceFn,
                                    int aPeriod ) const
 {
     return -numeric_limits<double>::infinity();
@@ -123,7 +127,6 @@ void EmptyTechnology::production( const string& aRegionName,
                             const string& aSectorName,
                             double aVariableDemand,
                             double aFixedOutputScaleFactor,
-                            const GDP* aGDP,
                             const int aPeriod )
 {
 }

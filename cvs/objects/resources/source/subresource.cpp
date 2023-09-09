@@ -382,7 +382,7 @@ void SubResource::updateAvailable( const int aPeriod ){
 /*! Takes into account short-term capacity limits.
 Note that cumulsupply() must be called before calling this function. */
 void SubResource::annualsupply( const string& aRegionName, const string& aResourceName,
-                                int aPeriod, const GDP* aGdp, double aPrice )
+                                int aPeriod, double aPrice )
 {
     const Modeltime* modeltime = scenario->getModeltime();
     // For period 0 use initial annual supply. Cumulative production is 0 for period 0
@@ -402,7 +402,7 @@ void SubResource::annualsupply( const string& aRegionName, const string& aResour
         }
         
         mTechnology->getNewVintageTechnology( aPeriod )->
-            production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aGdp, aPeriod );
+            production( aRegionName, aResourceName, mAnnualProd[ aPeriod ], 1.0, aPeriod );
 
         // mAvailable is the total resource (stock) remaining
         mAvailable[ aPeriod ] = mAvailable[ aPeriod - 1 ] - ( mAnnualProd[ aPeriod ] * modeltime->gettimestep( aPeriod ) );
@@ -519,3 +519,10 @@ double SubResource::getLowestPrice( const int aPeriod ) const
         return value;
     }
 }
+
+//! return the price adder by period
+double SubResource::getPriceAdder(int per) const {
+    return mPriceAdder[per];
+}
+
+

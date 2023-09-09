@@ -111,7 +111,7 @@ void GcamParallel::makeTBBFlowGraph( const MarketDependencyFinder& aDependencyFi
     tbb::flow::broadcast_node<tbb::flow::continue_msg>& head = aTBBGraph.mHead;
     
     ILogger& pgLog = ILogger::getLogger( "parallel-grain-log" );
-    pgLog.setLevel( ILogger::NOTICE );
+    pgLog.setLevel( ILogger::DEBUG );
     
     // first read the information out of the dependency finder into an
     // adjacency matrix for easy as we are going to have to take multiple
