@@ -334,8 +334,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                 
 
                 for (int i = 0; i < 32; ++i) {
-                    gcamoemissPreviousGCAMYear[i*2] = surfaceCO2.aBaseYearEmissions_sfc[i];
-                    gcamoemissPreviousGCAMYear[i*2+1] = surfaceCO2.aBaseYearEmissions_air[i];
+                    gcamoemissPreviousGCAMYear[i*2] = surfaceCO2.mBaseYearEmissions_sfc[i];
+                    gcamoemissPreviousGCAMYear[i*2+1] = surfaceCO2.mBaseYearEmissions_air[i];
                 } 
             }
             coupleLog << "Previous GCAM Year Emission: " << endl;
