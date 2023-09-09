@@ -224,7 +224,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss,
                                    std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                                    double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                   int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, *aNumSector, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
+                                   int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumSector, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
                                    bool aWriteScalars, bool aScaleCarbon,
                                    std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun )
 {
