@@ -15,7 +15,7 @@ extern "C" {
   }
     
   // Call the GCAM initialization
-  void initcgcam_(char* aCaseName, char* aGCAMConfig, char* aGCAM2ELMCO2Map, char* aGCAM2ELMLUCMap, char* aGCAM2ELMWHMap) {
+  void initcgcam_(char* aCaseName, char* aGCAMConfig, char* aGCAM2ELMCO2Map, char* aGCAM2ELMLUCMap, char* aGCAM2ELMWHMap, int *aNumReg, int *aNumSector) {
       
       // Convert to string - fortran doesn't handle string
       std::string CaseName(aCaseName);
@@ -24,7 +24,7 @@ extern "C" {
       std::string GCAM2ELMLUCMap(aGCAM2ELMLUCMap);
       std::string GCAM2ELMWHMap(aGCAM2ELMWHMap);
       
-    p_obj->initGCAM(CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap);
+    p_obj->initGCAM(CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap, aNumReg, aNumSector);
   }
 
 // todo: delete setdensitycgcam
@@ -53,7 +53,7 @@ extern "C" {
   // Run GCAM
   void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, char* aBaseLucGcamFileName, char* aBaseCO2GcamFileName, int *aSpinup,
                  double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                 int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
+                 int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumSector, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
                  int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile, int *aRestartRun) {
   
       // convert to strings and bools where appropriate
@@ -71,7 +71,7 @@ extern "C" {
   
       p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, BaseLucGcamFileName, BaseCO2GcamFileName, Spinup,
                      aELMArea, aELMPFTFract, aELMNPP, aELMHR,
-                     aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
+                     aNumLon, aNumLat, aNumPFT, aNumReg, aNumSector, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
                      scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile, restartRun);
   }
 

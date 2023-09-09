@@ -57,6 +57,6 @@ private:
     std::unique_ptr<IScenarioRunner> runner;
     typedef std::vector<Region*>::iterator RegionIterator;
 
-    double gcamoemissPreviousGCAMYear[64];
-    double gcamoemissCurrentGCAMYear[64];
+    std::vector<double>  mGcamCO2EmissPreviousGCAMYear;
+    std::vector<double>  mGcamCO2EmissCurrentGCAMYear;
 };

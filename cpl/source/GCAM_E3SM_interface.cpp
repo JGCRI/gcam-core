@@ -83,7 +83,7 @@ GCAM_E3SM_interface::~GCAM_E3SM_interface(){
  *  and base model information.  Create and setup scenario
  */
 
-void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap)
+void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap, int *aNumReg, int *aNumSector)
 {
     // identify default file names for control input and logging controls
     string configurationArg = aGCAMConfig;
@@ -174,8 +174,10 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     mCO2EmissData.addYearColumn("Year", years, yearRemap);
     mCO2EmissData.finalizeColumns();
     // Initialize GCAM CO2 emission
-    for (int i = 0; i < 64; ++i)
-        gcamoemissPreviousGCAMYear[i] =0.0;
+    for (int i = 0; i < (*aNumReg)*(*aNumSector); ++i){
+        mGcamCO2EmissPreviousGCAMYear.push_back(0.0);
+        mGcamCO2EmissCurrentGCAMYear.push_back(0.0);
+    }
 
     // Setup the land use change mappings
     success = parseXMLInternal(aGCAM2ELMLUCMap, &mLUCData);
@@ -222,7 +224,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss,
                                    std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                                    double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                   int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
+                                   int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, *aNumSector, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
                                    bool aWriteScalars, bool aScaleCarbon,
                                    std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun )
 {
@@ -326,22 +328,23 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
        
             // be sure to reset any data set previously
             if (e3smYear == 2015 & spinup == 0) {
-                EmissDownscale surfaceCO2(288, 192, 12, 1, 32, 2); // Emissions data is monthly now
+                EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumSector); // Emissions data is monthly now
         
                 coupleLog << aBaseCO2GcamFileName << endl;
                 surfaceCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
                 coupleLog << "GCAM run: Finish read Base year emission data" << endl;
                 
 
-                for (int i = 0; i < 32; ++i) {
-                    gcamoemissPreviousGCAMYear[i*2] = surfaceCO2.mBaseYearEmissions_sfc[i];
-                    gcamoemissPreviousGCAMYear[i*2+1] = surfaceCO2.mBaseYearEmissions_air[i];
+                for (int i = 0; i < (*aNumReg); ++i) {
+                        mGcamCO2EmissPreviousGCAMYear[i*(*aNumSector)] = surfaceCO2.mBaseYearEmissions_sfc[i];
+                        mGcamCO2EmissPreviousGCAMYear[i*(*aNumSector)+1] = surfaceCO2.mBaseYearEmissions_air[i];
+                    }
                 } 
             }
             coupleLog << "Previous GCAM Year Emission: " << endl;
-            coupleLog << gcamoemissPreviousGCAMYear[0] << endl;
-            coupleLog << gcamoemissPreviousGCAMYear[1] << endl;
-            coupleLog << gcamoemissPreviousGCAMYear[2] << endl;
+            coupleLog << mGcamCO2EmissPreviousGCAMYear[0] << endl;
+            coupleLog << mGcamCO2EmissPreviousGCAMYear[1] << endl;
+            coupleLog << mGcamCO2EmissPreviousGCAMYear[2] << endl;
         //coupleLog << mCO2EmissData << endl;
         
             // Initialize the timer.  Create an object of the Timer class.
@@ -359,13 +362,13 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
             GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mCO2EmissData);
             getCo2.run(runner->getInternalScenario());
-            std::copy(co2, co2+mCO2EmissData.getArrayLength(), gcamoemissCurrentGCAMYear);
-            coupleLog << gcamoemissCurrentGCAMYear << endl;
+            std::copy(co2, co2+mCO2EmissData.getArrayLength(), mGcamCO2EmissCurrentGCAMYear);
+            coupleLog << mGcamCO2EmissCurrentGCAMYear << endl;
             coupleLog << "mCO2EmissData.getArrayLength:" << endl;
             coupleLog << mCO2EmissData.getArrayLength() << endl;
-            coupleLog << gcamoemissCurrentGCAMYear[0] << endl;
-            coupleLog << gcamoemissCurrentGCAMYear[1] << endl;
-            coupleLog << gcamoemissCurrentGCAMYear[2] << endl;
+            coupleLog << mGcamCO2EmissCurrentGCAMYear[0] << endl;
+            coupleLog << mGcamCO2EmissCurrentGCAMYear[1] << endl;
+            coupleLog << mGcamCO2EmissCurrentGCAMYear[2] << endl;
             // write the 2015 CO2 to a table
             // this is the actual co2 base file, but don't use the namelist value
             // write this to hardcoded name within run directory
@@ -467,8 +470,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     double ratio = (gcamYear - e3smYear)/5.0;
     coupleLog << "Ratio:" << endl;
     coupleLog << ratio << endl;
-    for (int i = 0; i < 64; ++i)
-         co2[i] = ratio * gcamoemissPreviousGCAMYear[i] +  (1 - ratio) * gcamoemissCurrentGCAMYear[i];
+    for (int i = 0; i < (*aNumReg)*(*aNumSector); ++i)
+         co2[i] = ratio * mGcamCO2EmissPreviousGCAMYear[i] +  (1 - ratio) * mGcamCO2EmissCurrentGCAMYear[i];
 
     std::copy(co2, co2 + mCO2EmissData.getArrayLength(), gcamoemiss);
     coupleLog << "Interpolated one: " << endl;
@@ -479,7 +482,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     if(e3smYear == (gcamYear-1)) {
         // set previous year CO2 emission
         coupleLog << "Set previous year CO2 Emissions" << endl;  
-        std::copy(gcamoemissCurrentGCAMYear, gcamoemissCurrentGCAMYear + mCO2EmissData.getArrayLength(), gcamoemissPreviousGCAMYear);
+        std::copy(mGcamCO2EmissCurrentGCAMYear, mGcamCO2EmissCurrentGCAMYear + mCO2EmissData.getArrayLength(), mGcamCO2EmissPreviousGCAMYear);
     }
 
         
