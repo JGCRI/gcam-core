@@ -1,5 +1,6 @@
 # File: A_an_input_technology.csv
 # Title: Technologies of inputs to animal production
+# Comments: Note, forest product parameters are included here as well granted the processing steps are largely independent from animal production.
 # Units: NA
 # Source: NA
 # Column types: cccccccci 

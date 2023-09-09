@@ -1,5 +1,6 @@
 # File: A_an_input_supplysector.csv
 # Title: Supplysectors of inputs to animal production - name / unit
+# Comments: Note, forest product parameters are included here as well granted the processing steps are largely independent from animal production.
 # Units: Various
 # Original source: NA
 # Column types: ccccnc 
