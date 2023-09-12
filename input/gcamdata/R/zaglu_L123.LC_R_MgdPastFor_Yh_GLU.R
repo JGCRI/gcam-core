@@ -166,6 +166,13 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
              Yield_m3m2 = VegVolume_m3m2 / `mature age`) ->
       L123.For_Yield_m3m2_R_GLU
 
+
+     L123.For_Yield_m3m2_R_GLU %>%
+       filter(Yield_m3m2>0) ->dat_for_min_yield
+
+     min_forest_yield <- min(dat_for_min_yield$Yield_m3m2)
+
+
     # Use total forest land and yields to calculate potential forest biomass production
     L120.LC_bm2_R_LT_Yh_GLU %>%
       # Filter total forest land
@@ -174,6 +181,9 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       left_join_error_no_match(select(L123.For_Yield_m3m2_R_GLU, GCAM_region_ID, GLU, Yield_m3m2,Land_Type),
                                by = c("GCAM_region_ID", "GLU","Land_Type")) %>%
       # Calculate potential forest biomass production as total forest land times yields
+      #Add check here to make sure we add a small seed yield for Forests when we have forest land but no carbon data (which is chained to the BY)
+       mutate(Yield_m3m2= if_else(is.na(Yield_m3m2),min_forest_yield,Yield_m3m2),
+              Yield_m3m2= if_else(Yield_m3m2==0,min_forest_yield,Yield_m3m2)) %>%
       mutate(value = value * Yield_m3m2) ->L123.For_potentialProd_bm3_R_Y_GLU
 
 
@@ -192,7 +202,8 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       # Match in regional wood production
       left_join_error_no_match(L110.For_ALL_bm3_R_Y, by = c("GCAM_region_ID",  "year","GCAM_commodity")) %>%
       # Calculate logging production as the regional total times the GLU-wise forest biomass production fractions
-      mutate(value = Prod_bm3 * frac) %>%
+      mutate(value = Prod_bm3 * frac,
+             value=round(value, aglu.DIGITS_CALOUTPUT)) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, year, value, Land_Type) ->
       L123.For_Prod_bm3_R_Y_GLU
 
@@ -205,6 +216,9 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       distinct() %>%
       left_join_error_no_match(L123.For_Yield_m3m2_R_GLU,
                                by = c("GCAM_region_ID", "Land_Type", "GLU")) %>%
+      #Add check here to make sure we add a small seed yield for Forests when we have forest land but no carbon data (which is chained to the BY)
+      mutate(Yield_m3m2= if_else(is.na(Yield_m3m2),min_forest_yield,Yield_m3m2),
+             Yield_m3m2= if_else(Yield_m3m2==0,min_forest_yield,Yield_m3m2)) %>%
       # Managed forest land cover as wood production divided by yields
       mutate(MgdFor = value / Yield_m3m2) %>%
       select(GCAM_region_ID, Land_Type, GLU, year, MgdFor) ->
@@ -282,16 +296,12 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       L123.For_Yield_m3m2_R_GLU
 
     # Set missing values to an assumed minimum forestry yield (from the data where available)
-    L123.For_Yield_m3m2_R_GLU %>%
-      # Use the yields in final historical year
-      filter(year == max(HISTORICAL_YEARS)) %>%
-      select(value) %>%
-      na.omit %>%
-      # Get the minimum yield value
-      min -> min_forest_yield
+
     # Replace missing value with the minimum yield value
     L123.For_Yield_m3m2_R_GLU %>%
-      replace_na(list(value = min_forest_yield)) ->
+      replace_na(list(value = min_forest_yield)) %>%
+      #Add check here to make sure we add a small seed yield for Forests when we have forest land but no carbon data (which is chained to the BY)
+      mutate(value= if_else(value==0,min_forest_yield,value))->
       L123.For_Yield_m3m2_R_GLU
 
     # Produce outputs
