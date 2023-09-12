@@ -254,13 +254,14 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       ungroup() %>%
-      select(GCAM_region_ID, region, year, Cons_bm3) -> # Select forest demand
+      select(GCAM_region_ID, region, year, Cons_bm3,GCAM_commodity) %>%
+      mutate(GCAM_commodity = paste0("NonFoodDemand_",GCAM_commodity))-> # Select forest demand
       L203.For_ALL_bm3_R_Y
 
     A_demand_technology_R_Yh %>%
-      filter(supplysector == "NonFoodDemand_Forest") %>%
+      filter(supplysector %in% aglu.FOREST_demand_sectors) %>%
       # Map in forest product demand in bm3
-      left_join_error_no_match(L203.For_ALL_bm3_R_Y, by = c("region", "year")) %>%
+      left_join_error_no_match(L203.For_ALL_bm3_R_Y, by = c("region", "year","supplysector"="GCAM_commodity")) %>%
       mutate(calOutputValue = round(Cons_bm3, aglu.DIGITS_CALOUTPUT),
              share.weight.year = year,
              # Subsector and technology shareweights (subsector requires the year as well)

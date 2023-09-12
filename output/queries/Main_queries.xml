@@ -3584,6 +3584,8 @@ element input {
                         <rewrite from="Soybean" to="crops"/>
                         <rewrite from="FodderGrass" to="crops"/>
                         <rewrite from="ProtectedGrassland" to="grass"/>
+                        <rewrite from="ProtectedUnmanagedHardwood_Forest" to="forest (unmanaged)"/>
+                        <rewrite from="ProtectedUnmanagedSoftwood_Forest" to="forest (unmanaged)"/>
                         <rewrite from="Fruits" to="crops"/>
                         <rewrite from="FodderHerbC4" to="crops"/>
                         <rewrite from="ProtectedUnmanagedForest" to="forest (unmanaged)"/>
@@ -3604,9 +3606,14 @@ element input {
                         <rewrite from="OilCrop" to="crops"/>
                         <rewrite from="ProtectedShrubland" to="shrubs"/>
                         <rewrite from="SugarCrop" to="crops"/>
+                        <rewrite from="SugarCropC4" to="crops"/>
+                        <rewrite from="UnmanagedHardwood_Forest" to="forest (unmanaged)"/>
+                        <rewrite from="UnmanagedSoftwood_Forest" to="forest (unmanaged)"/>
                         <rewrite from="UnmanagedForest" to="forest (unmanaged)"/>
                         <rewrite from="SugarCropC4" to="crops"/>
                         <rewrite from="Pasture" to="pasture (grazed)"/>
+                        <rewrite from="Hardwood_Forest" to="forest (managed)"/>
+                        <rewrite from="Softwood_Forest" to="forest (managed)"/>
                         <rewrite from="Forest" to="forest (managed)"/>
                         <rewrite from="biomassGrass" to="biomass"/>
                         <rewrite from="Shrubland" to="shrubs"/>

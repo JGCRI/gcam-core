@@ -49,7 +49,7 @@ module_gcamusa_L270.limits <- function(command, ...) {
     L270.CreditMkt <- get_data(all_data, "L270.CreditMkt", strip_attributes = TRUE)
     L270.CreditOutput <- get_data(all_data, "L270.CreditOutput", strip_attributes = TRUE)
     L270.CreditInput_elec <- get_data(all_data, "L270.CreditInput_elec", strip_attributes = TRUE)
-    L270.NegEmissBudget <- get_data(all_data, "L270.NegEmissBudget")
+    L270.NegEmissBudget <- get_data(all_data, "L270.NegEmissBudget", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing
@@ -121,7 +121,10 @@ module_gcamusa_L270.limits <- function(command, ...) {
       L270.CreditInput_elecS_USA
 
     L270.NegEmissBudget_USA %>%
-      # inherit most attributes
+      add_title("Sets up the negative emissions budget RES market") %>%
+      add_units("NA") %>%
+      add_comments("Sets up the RES constraint market including boiler plate such") %>%
+      add_comments("as the policy name and market as well as unit strings") %>%
       add_precursors("gcam-usa/states_subregions", "L270.NegEmissBudget") ->
       L270.NegEmissBudget_USA
 

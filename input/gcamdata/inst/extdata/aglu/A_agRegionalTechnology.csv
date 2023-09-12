@@ -3,7 +3,7 @@
 # Units: Various
 # Comments: pass-through subsectors; there is no technology competition
 # Source: NA
-# Column types: ccccnnnc 
+# Column types: ccccnnnc
 # ----------
 supplysector,subsector,technology,minicam.energy.input,coefficient,input.cost,share.weight,market.name
 regional corn,domestic corn,domestic corn,Corn,1,0,1,regional
@@ -46,5 +46,9 @@ regional poultry,domestic poultry,domestic poultry,Poultry,1,0,1,regional
 regional poultry,imported poultry,imported poultry,traded poultry,1,0,1,USA
 regional sheepgoat,domestic sheepgoat,domestic sheepgoat,SheepGoat,1,0,1,regional
 regional sheepgoat,imported sheepgoat,imported sheepgoat,traded sheepgoat,1,0,1,USA
-regional forest,domestic forest,domestic forest,Forest,1,0,1,regional
-regional forest,imported forest,imported forest,traded forest,1,0,1,USA
+regional sawnwood,domestic sawnwood,domestic sawnwood,sawnwood,1,0,1,regional
+regional sawnwood,imported sawnwood,imported sawnwood,traded sawnwood,1,0,1,USA
+regional woodpulp,domestic woodpulp,domestic woodpulp,woodpulp,1,0,1,regional
+regional woodpulp,imported woodpulp,imported woodpulp,traded woodpulp,1,0,1,USA
+regional industrial_roundwood,domestic industrial_roundwood,domestic industrial_roundwood,Forest,1,0,1,regional
+regional industrial_roundwood,imported industrial_roundwood,imported industrial_roundwood,traded industrial_roundwood,1,0,1,USA

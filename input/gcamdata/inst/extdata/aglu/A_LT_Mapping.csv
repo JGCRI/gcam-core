@@ -6,8 +6,10 @@
 # Column types: ccccccc
 # ----------
 LandNode1,LandNode2,LandNode3,Land_Type,LandLeaf,GCAM_commodity,GCAM_subsector
-AgroForestLand,AgroForest_NonPasture,AllForestLand,Forest,Forest,Forest,Forest
-AgroForestLand,AgroForest_NonPasture,AllForestLand,UnmanagedForest,UnmanagedForest,,
+AgroForestLand,AgroForest_NonPasture,AllForestLand,Hardwood_Forest,Hardwood_Forest,Forest,Forest
+AgroForestLand,AgroForest_NonPasture,AllForestLand,UnmanagedHardwood_Forest,UnmanagedHardwood_Forest,,
+AgroForestLand,AgroForest_NonPasture,AllForestLand,Softwood_Forest,Softwood_Forest,Forest,Forest
+AgroForestLand,AgroForest_NonPasture,AllForestLand,UnmanagedSoftwood_Forest,UnmanagedSoftwood_Forest,,
 AgroForestLand,AgroForest_NonPasture,AllForestLand,biomassTree,biomassTree,biomassTree,biomassTree
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,CornC4,Corn,CornC4
 AgroForestLand,AgroForest_NonPasture,CropLand,HarvCropLand,FiberCrop,FiberCrop,FiberCrop

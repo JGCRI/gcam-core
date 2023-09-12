@@ -84,13 +84,13 @@ module_aglu_L124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
     # Calculate initial estimate of unmanaged forest = total
     # forest from SAGE/Hyde minus managed forest
     L120.LC_bm2_R_LT_Yh_GLU %>%
-      filter(Land_Type == "Forest") %>%
+      filter(Land_Type %in% c(aglu.FOREST_NODE_NAMES)) %>%
       rename(TotForest = value) %>%
       left_join_error_no_match(L123.LC_bm2_R_MgdFor_Yh_GLU, by = c("GCAM_region_ID", "GLU", "Land_Type", "year")) %>%
       rename(MgdForest = value) %>%
       # have to use value instead of more informative name so that binding all unmanaged land later goes smoothly:
       mutate(value = TotForest - MgdForest,
-             Land_Type = "UnmanagedForest") %>%
+             Land_Type = paste0("Unmanaged",Land_Type)) %>%
       select(-TotForest, -MgdForest) ->
       L124.LC_bm2_R_UnMgdFor_Yh_GLU
 
@@ -190,7 +190,7 @@ module_aglu_L124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       L124.LC_bm2_R_UnMgdPast_Yh_GLU_adj
 
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%
-      filter(Land_Type == "UnmanagedForest") %>%
+      filter(Land_Type %in% c("UnmanagedHardwood_Forest", "UnmanagedSoftwood_Forest")) %>%
       add_title("Unmanaged Forest land cover by GCAM region / historical year / GLU") %>%
       add_units("billion square meters (bm2)") %>%
       add_comments("Initial unmanaged forest area in each region-glu-year is calculated as total forest are in ") %>%

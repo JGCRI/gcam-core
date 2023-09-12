@@ -1,0 +1,12 @@
+# File: A_forest_mapping.csv
+# Title: Maps FAO forest products to GCAM commoditties
+# Units: NA
+# Source: Defined by authors
+# Column types: cccn
+# ----------
+item,GCAM_commodity,GCAM_supplysector,tonnes_to_m3
+Sawnwood,sawnwood,sawnwood,1
+Veneer sheets,sawnwood,sawnwood,1
+Wood pulp,woodpulp,woodpulp,1
+Wood-based panels,sawnwood,sawnwood,1
+Industrial roundwood,Forest,Forest,1

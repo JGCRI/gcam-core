@@ -226,6 +226,34 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
                                L100.LDS_ag_prod_t$GTAP_crop == "VgtbFrshNES" &
                                L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
 
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "Potatoes" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "Potatoes" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "SugarCane" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "SugarCane" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "Watermelons" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "Watermelons" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
+    L100.LDS_ag_HA_ha$value[L100.LDS_ag_HA_ha$iso == "twn" &
+                              L100.LDS_ag_HA_ha$GTAP_crop == "Soybeans" &
+                              L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+    L100.LDS_ag_prod_t$value[L100.LDS_ag_prod_t$iso == "twn" &
+                               L100.LDS_ag_prod_t$GTAP_crop == "Soybeans" &
+                               L100.LDS_ag_HA_ha$GLU == "GLU078"] <- 1
+
 
     #6. Adjustment for small yield crops in small region ----
     # yield too small: GTAP_crop == "FrgProdNES", GLU %in% c("GLU049", "GLU021"), iso == "pol"

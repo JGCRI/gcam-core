@@ -64,6 +64,13 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
     # Load required inputs ----
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
+    L123.For_Prod_bm3_R_Y_GLU %>%
+      group_by(GCAM_region_ID,GLU,year) %>%
+      mutate(value= sum(value),
+             GCAM_commodity= "Forest") %>%
+      ungroup() %>%
+      distinct()->L123.For_Prod_bm3_R_Y_GLU_for_biomass
+
     # L2012.AgSupplySector: Generic AgSupplySector characteristics (units, calprice, market, logit)
     # Set up the regional price data to be joined in to the ag supplysector table
     L2012.P_R_C <- L1321.ag_prP_R_C_75USDkg%>%
@@ -98,7 +105,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
              GCAM_subsector = "biomassGrass") ->
       L201.R_C_GLU_biograss
     # Second, biotree: available anywhere that has any forest production at all
-    L123.For_Prod_bm3_R_Y_GLU %>%
+    L123.For_Prod_bm3_R_Y_GLU_for_biomass %>%
       select(GCAM_region_ID, GLU) %>%
       unique %>%
       mutate(GCAM_commodity = "biomass",
@@ -109,8 +116,8 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique %>%
       bind_rows(
-        bind_rows(L123.For_Prod_bm3_R_Y_GLU, L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
-          transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector = GCAM_commodity, GLU) %>%
+        bind_rows(L123.For_Prod_bm3_R_Y_GLU %>%mutate(GCAM_subsector=Land_Type), L123.ag_Prod_Mt_R_Past_Y_GLU%>%mutate(GCAM_subsector=GCAM_commodity)) %>%
+          transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector , GLU) %>%
           unique,
         L201.R_C_GLU_biograss, L201.R_C_GLU_biotree
       ) %>%
@@ -154,13 +161,19 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     # L2012.AgProduction_For and L2012.AgProduction_Past: Forest and pasture product calibration (output)
     L123.For_Prod_bm3_R_Y_GLU %>%
+      filter(GCAM_commodity== aglu.FOREST_supply_sector) %>%
       # Combine forest and pasture production by region x GLU
       bind_rows(L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
+      group_by(GCAM_region_ID, GCAM_commodity,year,GLU,Land_Type) %>%
+      mutate(value=sum(value)) %>%
+      ungroup() %>%
+      distinct() %>%
       mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
-      mutate(AgProductionTechnology = paste(GCAM_commodity, GLU_name, sep = aglu.CROP_GLU_DELIMITER)) ->
+      mutate(Land_Type = if_else(is.na(Land_Type),GCAM_commodity,Land_Type),
+            AgProductionTechnology = paste(Land_Type, GLU_name, sep = aglu.CROP_GLU_DELIMITER)) ->
       L201.For_Past_Prod_R_Y_GLU
 
     # Subset only forest and pasture products from the main subsector table and paste in calibrated production, rounded
@@ -171,7 +184,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(AgProductionTechnology = AgSupplySubsector) %>%
       # Copy to all base years
       repeat_add_columns(tibble(year = MODEL_BASE_YEARS)) %>%
-      left_join_error_no_match(L201.For_Past_Prod_R_Y_GLU, by = c("region", "AgProductionTechnology", "year")) %>%
+      left_join_error_no_match(L201.For_Past_Prod_R_Y_GLU, by = c("region", "AgProductionTechnology", "year","AgSupplySector"="GCAM_commodity")) %>%
       # Subsector and technology shareweights (subsector requires the year as well)
       mutate(share.weight.year = year,
              subs.share.weight = if_else(calOutputValue > 0, 1, 0),
@@ -394,7 +407,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       L2012.AgProduction_ag_irr_mgmt
 
     L2012.AgProduction_For_Past %>%
-      filter(AgSupplySector == "Forest") %>%
+      filter(AgSupplySector %in% aglu.FOREST_supply_sector) %>%
       add_title("Input table for forest production") %>%
       add_units("bm3") %>%
       add_comments("Calibrated ouputs or shareweights are not specify by technology") %>%

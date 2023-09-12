@@ -308,14 +308,14 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
                   left_join(L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust %>% select(-Land_Type),
 			by = c("GCAM_region_ID", "GLU", "year")) %>%
                   mutate(nonForScaler =
-                           if_else((Forest - MgdFor) < 0 & Forest > 0,
-                                   1 + (Forest - MgdFor)/(Grassland + Shrubland + Pasture), 1),
-                         ForScaler = if_else((Forest - MgdFor) < 0 & Forest > 0,  MgdFor/Forest ,1)) %>%
+                           if_else(((Hardwood_Forest+Softwood_Forest) - MgdFor) < 0 & (Hardwood_Forest+Softwood_Forest) > 0,
+                                   1 + ((Hardwood_Forest+Softwood_Forest) - MgdFor)/(Grassland + Shrubland + Pasture), 1),
+                         ForScaler = if_else(((Hardwood_Forest+Softwood_Forest) - MgdFor) < 0 & (Hardwood_Forest+Softwood_Forest) > 0,  MgdFor/(Hardwood_Forest+Softwood_Forest) ,1)) %>%
                   select(GCAM_region_ID, GLU, year, nonForScaler, ForScaler),
                 by = c("GCAM_region_ID", "GLU", "year") ) %>%
-      mutate(value = if_else(Land_Type %in% c("Grassland", "Shrubland" , "Pasture"),
+      mutate(ForScaler=1,nonForScaler=1,value = if_else(Land_Type %in% c("Grassland", "Shrubland" , "Pasture"),
                              value * nonForScaler,
-                             if_else(Land_Type == "Forest", value * ForScaler, value) )) %>%
+                             if_else(Land_Type %in% aglu.FOREST_NODE_NAMES, value * ForScaler, value) )) %>%
       select(-nonForScaler, -ForScaler) ->
       L120.LC_bm2_R_LT_Yh_GLU
 

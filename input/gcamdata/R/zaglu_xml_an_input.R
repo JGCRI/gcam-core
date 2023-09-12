@@ -34,7 +34,9 @@ module_aglu_an_input_xml <- function(command, ...) {
       "L202.StubTechInterp_an",
       "L202.StubTechProd_an",
       "L202.StubTechCoef_an",
-      "L202.StubTechCost_an")
+      "L202.StubTechCost_an",
+       "L202.StubTechCost_For_proc",
+      "L202.StubTechProd_in_Forest")
 
   MODULE_OUTPUTS <-
     c(XML = "an_input.xml")
@@ -70,6 +72,8 @@ module_aglu_an_input_xml <- function(command, ...) {
     L202.StubTechProd_an <- get_data(all_data, "L202.StubTechProd_an")
     L202.StubTechCoef_an <- get_data(all_data, "L202.StubTechCoef_an")
     L202.StubTechCost_an <- get_data(all_data, "L202.StubTechCost_an")
+    L202.StubTechCost_For_proc <- get_data(all_data,"L202.StubTechCost_For_proc")
+    L202.StubTechProd_in_Forest <- get_data(all_data,"L202.StubTechProd_in_Forest")
 
 
     # ===================================================
@@ -93,6 +97,7 @@ module_aglu_an_input_xml <- function(command, ...) {
       add_xml_data(L202.GlobalTechCoef_in, "GlobalTechCoef") %>%
       add_xml_data(L202.GlobalTechShrwt_in, "GlobalTechShrwt") %>%
       add_xml_data(L202.StubTechProd_in, "StubTechProd") %>%
+      add_xml_data(L202.StubTechProd_in_Forest, "StubTechProd") %>%
       add_logit_tables_xml(L202.Supplysector_an, "Supplysector") %>%
       add_logit_tables_xml(L202.SubsectorAll_an, "SubsectorAll", "SubsectorLogit") %>%
       add_xml_data(L202.GlobalTechShrwt_an, "GlobalTechShrwt") %>%
@@ -100,6 +105,7 @@ module_aglu_an_input_xml <- function(command, ...) {
       add_xml_data(L202.StubTechProd_an, "StubTechProd") %>%
       add_xml_data(L202.StubTechCoef_an, "StubTechCoef") %>%
       add_xml_data(L202.StubTechCost_an, "StubTechCost") %>%
+      add_xml_data(L202.StubTechCost_For_proc, "StubTechCost") %>%
       add_precursors("L202.RenewRsrc",
                      "L202.RenewRsrcPrice",
                      "L202.maxSubResource",
@@ -121,7 +127,9 @@ module_aglu_an_input_xml <- function(command, ...) {
                      "L202.StubTechInterp_an",
                      "L202.StubTechProd_an",
                      "L202.StubTechCoef_an",
-                     "L202.StubTechCost_an"
+                     "L202.StubTechCost_an",
+                     "L202.StubTechCost_For_proc",
+                  "L202.StubTechProd_in_Forest"
                      ) ->
       an_input.xml
 

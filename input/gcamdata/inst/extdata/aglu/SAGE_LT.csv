@@ -5,14 +5,14 @@
 # Column types: cc 
 # ----------
 LT_SAGE,Land_Type
-TropicalEvergreenForest/Woodland,Forest
-TropicalDeciduousForest/Woodland,Forest
-TemperateBroadleafEvergreenForest/Woodland,Forest
-TemperateNeedleleafEvergreenForest/Woodland,Forest
-TemperateDeciduousForest/Woodland,Forest
-BorealEvergreenForest/Woodland,Forest
-BorealDeciduousForest/Woodland,Forest
-Evergreen/DeciduousMixedForest/Woodland,Forest
+TropicalEvergreenForest/Woodland,Softwood_Forest
+TropicalDeciduousForest/Woodland,Hardwood_Forest
+TemperateBroadleafEvergreenForest/Woodland,Softwood_Forest
+TemperateNeedleleafEvergreenForest/Woodland,Hardwood_Forest
+TemperateDeciduousForest/Woodland,Hardwood_Forest
+BorealEvergreenForest/Woodland,Softwood_Forest
+BorealDeciduousForest/Woodland,Hardwood_Forest
+Evergreen/DeciduousMixedForest/Woodland,Softwood_Forest
 Savanna,Grassland
 Grassland/Steppe,Grassland
 DenseShrubland,Shrubland

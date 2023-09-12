@@ -23,10 +23,11 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
     c(FILE = "common/iso_GCAM_regID",
       "L100.FAO_For_Prod_m3",
       "L100.FAO_For_Imp_m3",
-      "L100.FAO_For_Exp_m3")
+      "L100.FAO_For_Exp_m3",
+      FILE="aglu/A_forest_mapping")
 
   MODULE_OUTPUTS <-
-    c("L110.For_ALL_bm3_R_Y")
+    c("L110.For_ALL_bm3_R_Y","L110.IO_Coefs_pulp")
 
   if(command == driver.DECLARE_INPUTS) {
     return(MODULE_INPUTS)
@@ -69,12 +70,15 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
     # convert units and aggregate over flow to form Production and Net Export in units of bm3
     # Use spread to have columns for Prod and NetExp instead of flow and value
     # Add a column for the variable consumption, Cons=Prod-NetExp
-    L110.FAO_For_ALL_m3 %>%                                   # take the combined tibble
+    L110.FAO_For_ALL_m3 %>%
+      left_join_error_no_match(A_forest_mapping, by = c("item")) %>%
+      # take the combined tibble
       # do a left join on For_ALL tibble, match up the iso labels from the iso tibble,
       #   This appends to the For_ALL tibble all of the information from the iso_GCAM_regID, including the column we actually
       #   want, GCAM_region_ID. This column is all that we save:
-      mutate(GCAM_commodity = "Forest",                   # add the forest commodity label
-             value = CONV_M3_BM3 * value,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
+      mutate(
+             # add the forest commodity label
+             value = CONV_M3_BM3 * value*tonnes_to_m3,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
              flow = sub("_m3", "_bm3", flow)) %>%         # update the labels in flow to reflect the new units of bm3
       #
       # we don't care about other identifiers anymore, only region id, commodity, flow and year corresponding to value:
@@ -91,7 +95,9 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
       #   The new DSR eliminates the use of L110.For_ALL_bm3_R_Y.prelim
       spread(flow, value) %>%
       #
-      mutate(Cons_bm3 = Prod_bm3 - NetExp_bm3) %>%                                     # form a new variable, consumption Cons = Prod-NetExp
+      mutate(Prod_bm3= if_else(is.na(Prod_bm3),0,Prod_bm3),
+             NetExp_bm3= if_else(is.na(NetExp_bm3),0,NetExp_bm3),
+             Cons_bm3 = Prod_bm3 - NetExp_bm3) %>%                                     # form a new variable, consumption Cons = Prod-NetExp
       select(GCAM_region_ID, GCAM_commodity, year, Prod_bm3, NetExp_bm3, Cons_bm3) ->  # reorder columns
       L110.For_ALL_bm3_R_Y                                                             # save it in the region year R_Y tibble
 
@@ -130,6 +136,51 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
       unique ->
       L110.For_ALL_bm3_R_Y
 
+    ##Add calculations of wood pulp IO coefficients
+
+    #First separate out roundwood consumption
+    L110.For_ALL_bm3_R_Y %>%
+      filter(GCAM_commodity==aglu.FOREST_supply_sector) %>%
+      select(GCAM_region_ID,year,roundwood_cons=Cons_bm3)->L110.Roundwood_Cons
+
+    #Join the same with commoditties.
+    L110.For_ALL_bm3_R_Y %>%
+      filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
+      select(GCAM_region_ID,year,GCAM_commodity,Prod_bm3) %>%
+      spread(GCAM_commodity,Prod_bm3) %>%
+      left_join_error_no_match(L110.Roundwood_Cons, by = c("GCAM_region_ID","year")) %>%
+      #Assume that pulpwood has a coeff of 5.14 sawtimber is the remaining. There are a couple of adjustments that need to be made.
+      mutate(#First adjust sawnwood production here
+             #sawnwood= if_else(sawnwood > 2 *roundwood_cons, roundwood_cons *0.05,sawnwood),
+             after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_pulp_conversion),
+             #If a country does not have enough roundwood cons to produce saw, increase it.
+             roundwood_cons=if_else(after_pulp <0, woodpulp*aglu.FOREST_pulp_conversion*1.1,roundwood_cons),
+             after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_pulp_conversion),
+             #Now calculate pulp IO here
+             IO=after_pulp/sawnwood,
+             #We are going to run in a scenario where the coef is less than 1 in some places.
+             IO= if_else(IO < 1,1,IO),
+             #Add a max value on the IO here,
+             IO= if_else(IO > 10,10,IO),
+             IO= if_else(sawnwood==0, 0,IO),
+             roundwood_cons=(woodpulp*aglu.FOREST_pulp_conversion)+(IO*sawnwood)) ->L110.IO_Coefs_pulp
+
+    #Since we increased roundwood cons in some places, increase production proportionately
+    L110.For_ALL_bm3_R_Y %>%
+      filter(GCAM_commodity==aglu.FOREST_supply_sector) %>%
+      left_join_error_no_match(L110.IO_Coefs_pulp %>% select(GCAM_region_ID,year,roundwood_cons), by = c("GCAM_region_ID","year")) %>%
+      mutate(diff=roundwood_cons-Cons_bm3,
+             Prod_bm3= Prod_bm3+diff,
+             Cons_bm3=roundwood_cons) %>%
+      select(colnames(L110.For_ALL_bm3_R_Y))->L110.For_ALL_bm3_R_Y_Primary
+
+    L110.For_ALL_bm3_R_Y %>%
+      filter(GCAM_commodity!=aglu.FOREST_supply_sector) %>%
+      bind_rows(L110.For_ALL_bm3_R_Y_Primary)->L110.For_ALL_bm3_R_Y
+
+
+
+    # Produce outputs
 
     # Move this code from L240 to here to reduce dependency ----
     # Back out gross trade using forest export
@@ -138,7 +189,8 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
     L110.For_ALL_bm3_R_Y %>%
       left_join(
         L100.FAO_For_Exp_m3 %>%
-          mutate(GCAM_commodity = "Forest",                   # add the forest commodity label
+          left_join_error_no_match(A_forest_mapping, by = c("item")) %>%
+          mutate(                   # add the forest commodity label
                  value = CONV_M3_BM3 * value,                 # convert the value units from m3 to bm3, had to add this constant to constants.R
                  flow = "GrossExp") %>%
           select(GCAM_region_ID, GCAM_commodity, flow, year, value) %>%
@@ -148,7 +200,6 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
           spread(flow, value),
         by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
       replace_na(list(GrossExp = 0)) %>%
-      filter(GCAM_commodity %in% aglu.TRADED_FORESTS) %>%
       mutate(GrossImp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
              GrossExp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
       select(-GrossExp) ->
@@ -165,8 +216,23 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "L100.FAO_For_Prod_m3",
                      "L100.FAO_For_Imp_m3",
-                     "L100.FAO_For_Exp_m3") ->
+                     "L100.FAO_For_Exp_m3",
+                     "aglu/A_forest_mapping") ->
       L110.For_ALL_bm3_R_Y
+
+    L110.IO_Coefs_pulp %>%
+      select(GCAM_region_ID,year,IO) %>%
+      add_title("Wood pulp IO coefficients in m3/tonne") %>%
+      add_units("m3/tonne") %>%
+      add_comments("FAO production data is used to scale Net Exports (FAO Exports - FAO Imports) at the Region level") %>%
+      add_comments("such that Global Production equals Consumption (Production - Net Exports).") %>%
+      add_legacy_name("L110.IO_Coefs_pulp") %>%
+      add_precursors("common/iso_GCAM_regID",
+                     "L100.FAO_For_Prod_m3",
+                     "L100.FAO_For_Imp_m3",
+                     "L100.FAO_For_Exp_m3",
+                     "aglu/A_forest_mapping") ->
+      L110.IO_Coefs_pulp
 
     return_data(MODULE_OUTPUTS)
   } else {

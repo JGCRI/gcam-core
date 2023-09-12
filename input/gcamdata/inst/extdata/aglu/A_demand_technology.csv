@@ -50,4 +50,5 @@ NonFoodDemand_Meat,Pork,Pork,Pork,share-weight,final-calibration-year,end-year,f
 NonFoodDemand_Meat,Poultry,Poultry,Poultry,share-weight,final-calibration-year,end-year,fixed,regional poultry,1
 NonFoodDemand_Meat,SheepGoat,SheepGoat,SheepGoat,share-weight,final-calibration-year,end-year,fixed,regional sheepgoat,1
 NonFoodDemand_Meat,OtherMeat_Fish,OtherMeat_Fish,OtherMeat_Fish,share-weight,final-calibration-year,end-year,fixed,OtherMeat_Fish,1
-NonFoodDemand_Forest,Forest,Forest,Forest,share-weight,final-calibration-year,end-year,fixed,regional forest,1
+NonFoodDemand_sawnwood,Forest,Forest,Forest,share-weight,final-calibration-year,end-year,fixed,regional sawnwood,1
+NonFoodDemand_woodpulp,Forest,Forest,Forest,share-weight,final-calibration-year,end-year,fixed,regional woodpulp,1

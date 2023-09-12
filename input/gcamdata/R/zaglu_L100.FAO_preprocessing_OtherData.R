@@ -77,6 +77,17 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
         filter(year %in% aglu.AGLU_HISTORICAL_YEARS)
     }
 
+    #Currently using sum below since the forestry data is not processed via Xin's tool. Once that is done, revisit this.
+    FAO_REG_YEAR_MAP_FOREST <- function(.DF, MA_period = aglu.MODEL_MEAN_PERIOD_LENGTH){
+      .DF %>%
+        # disaggregate dissolved region
+        FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL %>%
+        # the iso mapping in AGLU_ctry works good now
+        inner_join(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
+        left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
+        filter(year %in% aglu.AGLU_HISTORICAL_YEARS)
+    }
+
 
     # Section1. Animal stocks ----
     # corrected the unit issue in the old data
@@ -127,7 +138,7 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
       gather_years() %>%
       # NA area values that should not exist, e.g., USSR after 1991
       filter(!is.na(value)) %>%
-      FAO_REG_YEAR_MAP ->
+      FAO_REG_YEAR_MAP_FOREST ->
       L100.For_bal
 
 

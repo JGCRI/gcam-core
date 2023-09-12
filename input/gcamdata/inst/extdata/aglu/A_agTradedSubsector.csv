@@ -25,4 +25,6 @@ traded dairy,traded dairy,-6,start-year,1,share-weight,final-calibration-year,en
 traded pork,traded pork,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
 traded poultry,traded poultry,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
 traded sheepgoat,traded sheepgoat,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
-traded forest,traded forest,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded sawnwood,traded sawnwood,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded woodpulp,traded woodpulp,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,
+traded industrial_roundwood,traded industrial_roundwood,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,1,

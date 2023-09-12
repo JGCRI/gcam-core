@@ -99,7 +99,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
     #This chunk just deals with the unmanaged forest nodes. Therefore we filter the protected area fractions just for unmanaged forests.
     L120.LC_prot_land_frac_GLU <- get_data(all_data, "L120.LC_prot_land_frac_GLU", strip_attributes = TRUE) %>%
-      mutate(Land_Type =if_else(Land_Type == aglu.FOREST_NODE_NAMES, "UnmanagedForest" ,Land_Type)) %>%
+      mutate(Land_Type =if_else(Land_Type %in% aglu.FOREST_NODE_NAMES, paste0("Unmanaged", Land_Type) ,Land_Type)) %>%
       filter(Land_Type %in% c(A_LandLeaf_Unmgd3$UnmanagedLandLeaf)) %>%
       left_join_error_no_match(basin_to_country_mapping %>%rename(GLU=GLU_code) %>%  select(GLU,GLU_name),by=c("GLU")) %>%
       mutate(UnmanagedLandLeaf = paste0(Land_Type,"_",GLU_name)) %>%
@@ -237,8 +237,8 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # L223.LN3_MgdCarbon_noncrop: Carbon content info, managed land in the third nest, non-crop (forest)
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
-      left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
-      rename(Cdensity_LT = Land_Type.y) %>%
+      #left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
+      mutate(Cdensity_LT = Land_Type) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       reduce_mgd_carbon() %>%
       select(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]]) ->

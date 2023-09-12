@@ -1,5 +1,6 @@
 # File: A_an_input_subsector.csv
 # Title: Subsectors of inputs to animal production
+# Comments: Note, forest product parameters are included here as well granted the processing steps are largely independent from animal production.
 # Units: Various
 # Source: NA
 # Column types: ccicicccccc
@@ -26,3 +27,5 @@ FeedCrops,Vegetables,-6,start-year,1,share-weight,final-calibration-year,end-yea
 FeedCrops,Wheat,-6,start-year,1,share-weight,final-calibration-year,end-year,,fixed,
 FeedCrops,DDGS and feedcakes,-6,initial-future-year,1,share-weight,final-calibration-year,2150,1,s-curve,
 Scavenging_Other,Scavenging_Other,-6,start-year,1,share-weight,final-calibration-year,end-year,,fixed,
+sawnwood_processing,sawnwood,-6,start-year,1,share-weight,final-calibration-year,end-year,,fixed,
+woodpulp_processing,woodpulp,-6,start-year,1,share-weight,final-calibration-year,end-year,,fixed,
