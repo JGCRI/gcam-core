@@ -51,6 +51,7 @@ EmissDownscale::EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLe
                                             mCurrYearEmissVector(aNumLat * aNumLon * aNumMon * aNumLev, 0),
                                             mBaseYearEmissions_sfc(aNumReg, 0),
                                             mBaseYearEmissions_air(aNumReg, 0),
+                                            mBaseYearEmissions_ship(aNumReg, 0),
                                             mCountryBaseYearEmissions_sfc(aNumCty, 0),
                                             mCountryCurrYearEmissions_sfc(aNumCty, 0),
                                             mPOPCountryIIASA(aNumCty, std::vector<double> (aNumPeriod, 0)),
