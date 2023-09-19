@@ -154,7 +154,9 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 
 // Calculate scalers
 void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
+                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers,
+                                 std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName,
+                                 int& aNumScalars) {
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
    
@@ -389,10 +391,13 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
 
     createScalerVectors(aGCAMYear, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
 
+    // set the number of actual records, which is the same for both above and below, based on totalarea>0
+    aNumScalars = static_cast<int>(aboveScalarMap.size());
+ 
     // check the vectors
     Sd << endl << "Check vectors" << endl;
     Sd << "year " << "region " << "tech_basin " << "above scalar " << "below scalar" << endl;
-    for (int r = 0; r < 17722; r++) {
+    for (int r = 0; r < aNumScalars; r++) {
        Sd << aYears[r] << " "  << aRegions[r] << " " << aLandTechs[r] << " " << aAboveScalers[r] << " " << aBelowScalers[r] << endl;
     }
 
@@ -405,7 +410,7 @@ void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears,
                                         std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
                                         std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
                                         std::map<std::pair<std::string,std::string>, double> aBelowScalarMap) {
-    
+
     // Loop through the map and create the vectors
     std::string regID;
     std::string crop;
@@ -427,7 +432,7 @@ void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears,
 
         aAboveScalers[row] = curr.second;
         aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
-    
+   
         row++;
     }
     
@@ -441,6 +446,8 @@ void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears
     {
         exit(EXIT_FAILURE);
     }
+    // include a header line
+    oFile << "Year" << ",Region" << ",LandType_Basin" << ",Vegetation" << ",Soil" << endl;
     for(int i = 0; i < aLength; i++) {
         oFile << aYears[i] << "," << aRegions[i] << "," << aLandTechs[i] << "," << aAboveScalers[i] << "," << aBelowScalers[i] << endl;
     }
@@ -450,7 +457,7 @@ void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears
 // Read in scalers from a csv file
 // Note: this is used for diagnostics or special experiments. In fully coupled E3SM-GCAM, these scalers
 // are calculated based on data passed in code through the wrapper
-void CarbonScalers::readScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+int CarbonScalers::readScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                  std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers) {
     
     // TODO: Also, do we need to worry about length?
@@ -501,7 +508,7 @@ void CarbonScalers::readScalers(std::string aFileName, std::vector<int>& aYears,
         row++;
     }
     
-    
+    return row;
 }
 
 void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR) {
