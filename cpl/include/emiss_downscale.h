@@ -53,11 +53,12 @@ public:
     void downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYearEmissions);
     
     // Convergence-based method
+    void calculateCountryBaseYearEmissionData();
     void downscaleSurfaceCO2EmissionsFromRegion2Country(double *aCurrYearEmissions, int CurrentYear);
     void downscaleSurfaceCO2EmissionsFromCountry2Grid();
     
     // downscale international shipment and aircraft CO2 emission from global to grid
-    void downscaleInternationalShipmentCO2Emissions (double *aCurrYearEmissions);
+    void downscaleInternationalShipmentCO2Emissions(double *aCurrYearEmissions);
     void downscaleAircraftCO2Emissions(double *aCurrYearEmissions);
     
     void separateMonthlyEmissions(double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
@@ -89,7 +90,6 @@ public:
     
 private:
     void readRegionGCAMData(std::string aFileName, std::string aVariableName);
-    void calculateCountryBaseYearEmissionData();
     void calculateRegionPOPIIASAData();
     void calculateRegionBaseYearGDPIIASAData();
     void downscalePOPFromRegion2Country();

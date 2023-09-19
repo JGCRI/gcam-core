@@ -676,7 +676,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     shipmentCO2.readRegionMappingData(aRegionMappingFile);
     shipmentCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
 
-    shipmentCO2.downscaleShipmentCO2Emissions(gcamoemiss_ship);
+    shipmentCO2.downscaleInternationalShipmentCO2Emissions(gcamoemiss_ship);
     // These regions are in order of the output regions in co2.xml
     for( r=0; r<(*aNumReg); r++ ) {
         coupleLog << "Diagnostics: Regional shipment CO2 Emissions (PgC) in " << *aCurrYear << endl;

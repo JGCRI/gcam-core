@@ -868,7 +868,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid()
                     auto currCty = mCountryIDName.find(ctyID);
                     int ctyIndex = (*currCty).second - 1;
                     
-                    scalar += mCountryCurrYearEmissions_sfc[ctyIndex] / mBaseYearCountryEmissions_sfc[ctyIndex] * mCountryWeights[std::make_pair(gridID, ctyID)];
+                    scalar += mCountryCurrYearEmissions_sfc[ctyIndex] / mCountryBaseYearEmissions_sfc[ctyIndex] * mCountryWeights[std::make_pair(gridID, ctyID)];
                     weight += mCountryWeights[std::make_pair(gridID, ctyID)];
                 }
                 scalar = scalar / weight; // normalized by the total eright
