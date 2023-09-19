@@ -253,8 +253,10 @@ pair<double, double> SectorUtils::normalizeLogShares( vector<double>& alogShares
 
     // rescale and get normalization sum
     for( size_t i = 0; i < alogShares.size(); ++i ) {
-        alogShares[ i ] -= lfac;
-        sum += exp( alogShares[ i ] );
+        if( alogShares[i] != -numeric_limits<double>::infinity() ) {
+            alogShares[ i ] -= lfac;
+            sum += exp( alogShares[ i ] );
+        }
     }
     double unnormAdjustedSum = sum;
     double norm = log( sum );

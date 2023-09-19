@@ -241,7 +241,7 @@ double NestingSubsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         // with a NaN price gets a share of zero.  Therefore, as long
         // as you use only subsectors with positive shares, you will
         // never see the NaN price.
-        return numeric_limits<double>::signaling_NaN();
+        return numeric_limits<double>::quiet_NaN();
     }
     else {
         return subsectorPrice;
