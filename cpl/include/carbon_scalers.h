@@ -47,15 +47,18 @@ class CarbonScalers : public ASpatialData {
 public:
     CarbonScalers(int aNumLat, int aNumLon, int aNumPFT);
     ~CarbonScalers();
-    void readScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+    int readScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                       std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers);
     void calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                     std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
+                     std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers,
+                     std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName,
+                     int& aNumScalars);
     void createScalerVectors(int aGCAMYear, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                             std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
                                             std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
                                             std::map<std::pair<std::string,std::string>, double> aBelowScalarMap);
-    void writeScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, int aLength);
+    void writeScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+                      std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, int aLength);
     void readBaseYearData(std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
     void readRegionalMappingData(std::string aFileName);
     void excludeOutliers(double *aELMNPP, double *aELMHR);

@@ -41,6 +41,7 @@
 #include "util/base/include/xml_helper.h"
 #include "util/base/include/xml_parse_helper.h"
 #include "reporting/include/xml_db_outputter.h"
+#include <boost/algorithm/string.hpp>
 
 using namespace std;
 
@@ -259,9 +260,19 @@ void ReMapData::setData(vector<string>& aColValues, const int aYearValue, const 
     // TODO: assume columns are in order?  If not we will want a vector<pair> and map column to index
     // TODO: error checking such as column lengths match
     
+    // this assumes there are two factors being matched when retrieving data (size aColValues.size()==2)
+    //    the first is region and the second is the land leaf
+    // this also assumes that there are 2 or 4 columns and that columns 3 and 4 are water and mgmt, in that order
+    //    the resetting of aColValues means that region and land type do not have to be in order
+
+
+    std::string water;
+    std::string mgmt;
+
     // For land allocation, we need to split and recombine column names.
     if( mLandNameColumn ) {
         // First figure out which column has the region names and which has the land types
+        // land type in aColValues is currently the land leaf, so it inclues type_basin_water_mgmt
         size_t regionIndex = 0;
         size_t landTypeIndex = 1;
         for(size_t colIndex = aColValues.size(); colIndex-- > 0; ) {
@@ -275,16 +286,43 @@ void ReMapData::setData(vector<string>& aColValues, const int aYearValue, const 
         
         // Next, use `decomposeLandName` to determine the region and land type.
         // Update the column values to reflect these names.
+        // also store the water and mgmt names; 'none' if not available
         map<string, string> landNames = XMLDBOutputter::decomposeLandName(aColValues[landTypeIndex]);
         aColValues[regionIndex] = aColValues[regionIndex] + "_" + landNames["land-region"];
         aColValues[landTypeIndex] = landNames["crop"];
-    }
+        if(landNames.count("water")>0) {
+            water = landNames["water"];
+        } else {
+            water = "none";
+        }
+        if(landNames.count("mgmt-tech")>0) {
+            mgmt = landNames["mgmt-tech"];
+        } else {
+            mgmt = "none";
+        }
+    } // end if mLandNameColumn
 
     // Only set data if value is non-zero
     if ( aValue != 0 ) {
         // Find the index for this particular data element
         size_t index = mYearColumn.getIndex(aYearValue);
         size_t currStride = mYearColumn.getStrideLength();
+        // if more mColumns than aColValues start with mgmt-tech then water
+        size_t objColIndex = mColumns.size();
+        size_t dataColIndex = aColValues.size();
+        if (objColIndex > dataColIndex) {
+            if (objColIndex - dataColIndex != 2){
+                // abort if the difference is not the expected two columns
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::WARNING );
+                mainLog << "Wrong number of additional object columns in ReMapData::setData" << endl;
+                abort();
+            }
+            index += mColumns[--objColIndex].getIndex(mgmt) * currStride;
+            currStride *= mColumns[objColIndex].getStrideLength();
+            index += mColumns[--objColIndex].getIndex(water) * currStride;
+            currStride *= mColumns[objColIndex].getStrideLength();
+        }
         for(size_t colIndex = aColValues.size(); colIndex-- > 0; ) {
             index += mColumns[colIndex].getIndex(aColValues[colIndex]) * currStride;
             currStride *= mColumns[colIndex].getStrideLength();
@@ -308,6 +346,77 @@ void ReMapData::setData(vector<string>& aColValues, const int aYearValue, const 
  */
 double* ReMapData::getData() {
     return mData;
+}
+
+/*! \brief Get pointer to named column
+ *
+ * \return pointer to named column
+ *
+ * \author Alan Di Vittorio
+ */
+ReMapDataHelper<std::string>* ReMapData::getColumn(std::string aColName) {
+    for ( int i=0; i < static_cast<int>(mColumns.size()); i++ ) {
+        if (mColumns[i].getName() == aColName) {
+            return &mColumns[i];
+        }
+    }
+    // abort if named column does not exist
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::SEVERE );
+    mainLog << "Can't find " << aColName << " column in carbon density data object" << endl;
+    abort();
+}
+
+/*! \brief Get index of element in column
+ *
+ * \return index of element in column
+ *
+ * \author Alan Di Vittorio
+ */
+size_t ReMapData::getIndexInColumn(std::string aColName, std::string aGCAMName) {
+    for ( int i=0; i < static_cast<int>(mColumns.size()); i++ ) {
+        if (mColumns[i].getName() == aColName) {
+            return mColumns[i].getIndex(aGCAMName);
+        }
+    }
+    // abort if named column does not exist
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::SEVERE );
+    mainLog << "Can't find " << aColName << " column in carbon density data object" << endl;
+    abort();
+}
+
+/*! \brief Get indices in column of elements starting with text
+ *
+ * \return vector of indeces of elements in column
+ *
+ * \author Alan Di Vittorio
+ */
+std::vector<size_t> ReMapData::getStartsWithIndicesInColumn(std::string aColName, std::string aGCAMName) {
+    std::vector<size_t> indices;
+    for ( int i=0; i < static_cast<int>(mColumns.size()); i++ ) {
+        if (mColumns[i].getName() == aColName) {
+            for ( int j=0; j < static_cast<int>(mColumns[i].getStrideLength()); j++ ) {
+                if (boost::starts_with(mColumns[i].mInOrderOutputNames[j], aGCAMName)) {
+                    indices.push_back(j);
+                }
+            }
+        }
+        // abort if no record matches
+        if (indices.empty()) {
+            ILogger& mainLog = ILogger::getLogger( "main_log" );
+            mainLog.setLevel( ILogger::SEVERE );
+            mainLog << "Can't find record starting with" << aGCAMName << " in " << mColumns[i].mDataName << " mapping." << endl;
+            abort();
+        } else {
+            return indices;
+        }
+    }
+    // abort if named column does not exist
+    ILogger& mainLog = ILogger::getLogger( "main_log" );
+    mainLog.setLevel( ILogger::SEVERE );
+    mainLog << "Can't find " << aColName << " column in carbon density data object" << endl;
+    abort();
 }
 
 /*! \brief Get length of array

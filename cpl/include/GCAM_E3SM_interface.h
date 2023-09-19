@@ -23,14 +23,15 @@ class GCAM_E3SM_interface {
 public:
     GCAM_E3SM_interface();
     ~GCAM_E3SM_interface();
-    void initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap);
+    void initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap,
+                  std::string aGCAM2ELMWHMap, std::string aGCAM2ELMCDENMap);
     void runGCAM(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                  double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                  int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars,
-                 bool aScaleCarbon,  std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool restart_run);
-    void setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                 bool aScaleAgYield, bool aScaleCarbon,  std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun);
+    void setLandProductivityScalingGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                         int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars,
-                        bool aScaleCarbon,  std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
+                        bool aScaleAgYield, bool aScaleCarbon, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
     void downscaleEmissionsGCAM(double *gcamoemiss,
                                 double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar, double *gcamoco2sfcapr,
                                 double *gcamoco2sfcmay, double *gcamoco2sfcjun, double *gcamoco2sfcjul, double *gcamoco2sfcaug,
@@ -51,7 +52,9 @@ public:
     ReMapData mCO2EmissData;
     ReMapData mLUCData;
     ReMapData mWoodHarvestData;
-    
+    ReMapData mAGCDensityData;
+    ReMapData mBGCDensityData;   
+ 
 private:
     std::unique_ptr<IScenarioRunner> runner;
     typedef std::vector<Region*>::iterator RegionIterator;

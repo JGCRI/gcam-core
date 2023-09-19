@@ -397,54 +397,56 @@
         <output-data>USA_UsaPacNW</output-data>
     </column>
     <column name="land-type">
-        <output-data>Shrubland</output-data>
-        <output-data>Grassland</output-data>
-        <output-data>Urban</output-data>
+        <output-data>CornC4</output-data>
+        <output-data>FiberCrop</output-data>
+        <output-data>FodderGrass</output-data>
+        <output-data>FodderHerb</output-data>
+        <output-data>FodderHerbC4</output-data>
         <output-data>Forest</output-data>
+        <output-data>Fruits</output-data>
+        <output-data>FruitsTree</output-data>
+        <output-data>Grassland</output-data>
+        <output-data>Legumes</output-data>
+        <output-data>MiscCrop</output-data>
+        <output-data>MiscCropC4</output-data>
+        <output-data>MiscCropTree</output-data>
+        <output-data>NutsSeeds</output-data>
+        <output-data>NutsSeedsTree</output-data>
+        <output-data>OilCrop</output-data>
+        <output-data>OilCropTree</output-data>
+        <output-data>OilPalmTree</output-data>
+        <output-data>OtherArableLand</output-data>
+        <output-data>OtherGrain</output-data>
+        <output-data>OtherGrainC4</output-data>
         <output-data>Pasture</output-data>
-        <output-data>Cropland</output-data>
-        <output-data>Barren</output-data>
+        <output-data>ProtectedGrassland</output-data>
+        <output-data>ProtectedShrubland</output-data>
+        <output-data>ProtectedUnmanagedPasture</output-data>
+        <output-data>ProtectedUnmanagedForest</output-data>
+        <output-data>Rice</output-data>
+        <output-data>RockIceDesert</output-data>
+        <output-data>RootTuber</output-data>
+        <output-data>Shrubland</output-data>
+        <output-data>Soybean</output-data>
+        <output-data>SugarCrop</output-data>
+        <output-data>SugarCropC4</output-data>
         <output-data>Tundra</output-data>
-        <map from="CornC4" to="Cropland"/>
-        <map from="FiberCrop" to="Cropland"/>
-        <map from="FodderGrass" to="Cropland"/>
-        <map from="FodderHerb" to="Cropland"/>
-        <map from="FodderHerbC4" to="Cropland"/>
-        <map from="Forest" to="Forest"/>
-        <map from="Fruits" to="Cropland"/>
-        <map from="FruitsTree" to="Cropland"/>
-        <map from="Grassland" to="Grassland"/>
-        <map from="Legumes" to="Cropland"/>
-        <map from="MiscCrop" to="Cropland"/>
-        <map from="MiscCropC4" to="Cropland"/>
-        <map from="MiscCropTree" to="Cropland"/>
-        <map from="NutsSeeds" to="Cropland"/>
-        <map from="NutsSeedsTree" to="Cropland"/>
-        <map from="OilCrop" to="Cropland"/>
-        <map from="OilCropTree" to="Cropland"/>
-        <map from="OilPalmTree" to="Cropland"/>
-        <map from="OtherArableLand" to="Cropland"/>
-        <map from="OtherGrain" to="Cropland"/>
-        <map from="OtherGrainC4" to="Cropland"/>
-        <map from="Pasture" to="Pasture"/>
-        <map from="ProtectedGrassland" to="Grassland"/>
-        <map from="ProtectedShrubland" to="Shrubland"/>
-        <map from="ProtectedUnmanagedPasture" to="Pasture"/>
-        <map from="ProtectedUnmanagedForest" to="Forest"/>
-        <map from="Rice" to="Cropland"/>
-        <map from="RockIceDesert" to="Barren"/>
-        <map from="RootTuber" to="Cropland"/>
-        <map from="Shrubland" to="Shrubland"/>
-        <map from="Soybean" to="Cropland"/>
-        <map from="SugarCrop" to="Cropland"/>
-        <map from="SugarCropC4" to="Cropland"/>
-        <map from="Tundra" to="Tundra"/>
-        <map from="UnmanagedForest" to="Forest"/>
-        <map from="UnmanagedPasture" to="Pasture"/>
-        <map from="UrbanLand" to="Urban"/>
-        <map from="Vegetables" to="Cropland"/>
-        <map from="Wheat" to="Cropland"/>
-        <map from="biomassGrass" to="Cropland"/>
-        <map from="biomassTree" to="Cropland"/>
+        <output-data>UnmanagedForest</output-data>
+        <output-data>UnmanagedPasture</output-data>
+        <output-data>UrbanLand</output-data>
+        <output-data>Vegetables</output-data>
+        <output-data>Wheat</output-data>
+        <output-data>biomassGrass</output-data>
+        <output-data>biomassTree</output-data>
+    </column>
+    <column name="water">
+        <output-data>IRR</output-data>
+        <output-data>RFD</output-data>
+        <output-data>none</output-data>
+    </column>
+    <column name="mgmt">
+        <output-data>lo</output-data>
+        <output-data>hi</output-data>
+        <output-data>none</output-data>
     </column>
 </remap-data>

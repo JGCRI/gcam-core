@@ -15,7 +15,7 @@ extern "C" {
   }
     
   // Call the GCAM initialization
-  void initcgcam_(char* aCaseName, char* aGCAMConfig, char* aGCAM2ELMCO2Map, char* aGCAM2ELMLUCMap, char* aGCAM2ELMWHMap) {
+  void initcgcam_(char* aCaseName, char* aGCAMConfig, char* aGCAM2ELMCO2Map, char* aGCAM2ELMLUCMap, char* aGCAM2ELMWHMap, char* aGCAM2ELMCDENMap) {
       
       // Convert to string - fortran doesn't handle string
       std::string CaseName(aCaseName);
@@ -23,38 +23,41 @@ extern "C" {
       std::string GCAM2ELMCO2Map(aGCAM2ELMCO2Map);
       std::string GCAM2ELMLUCMap(aGCAM2ELMLUCMap);
       std::string GCAM2ELMWHMap(aGCAM2ELMWHMap);
+      std::string GCAM2ELMCDENMap(aGCAM2ELMCDENMap);
       
-    p_obj->initGCAM(CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap);
+    p_obj->initGCAM(CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap, GCAM2ELMCDENMap);
   }
 
 // todo: delete setdensitycgcam
 
   // Set Carbon Densities in GCAM using scalers from E3SM
-  void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                          int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
-                          int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile) {
+//  void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+//                          int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
+//                          int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile) {
       
       // Convert to string - fortran doesn't handle string
-      std::string MappingFile(aMappingFile);
-      std::string baseNPPFile(aBaseNPPFile);
-      std::string baseHRFile(aBaseHRFile);
-      std::string basePFTwtFile(aBasePFTwtFile);
+//      std::string MappingFile(aMappingFile);
+//      std::string baseNPPFile(aBaseNPPFile);
+//      std::string baseHRFile(aBaseHRFile);
+//      std::string basePFTwtFile(aBasePFTwtFile);
       
       // Convert to bool - fortran doesn't have a bool
-      bool readScalars = *aReadScalars == 1 ? true : false;
-      bool writeScalars = *aWriteScalars == 1 ? true : false;
-      bool scaleCarbon = *aScaleCarbon == 1 ? true : false;     
+//      bool readScalars = *aReadScalars == 1 ? true : false;
+//      bool writeScalars = *aWriteScalars == 1 ? true : false;
+//      bool scaleCarbon = *aScaleCarbon == 1 ? true : false;     
  
-      p_obj->setDensityGCAM(yyyymmdd, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
-                            aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
-                            scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile);
-  }
+//      p_obj->setDensityGCAM(yyyymmdd, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
+//                            aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
+//                            scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile);
+//  }
+/// end delete
+
     
   // Run GCAM
   void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, char* aBaseLucGcamFileName, char* aBaseCO2GcamFileName, int *aSpinup,
                  double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                  int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
-                 int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile, int *aRestartRun) {
+                 int *aScaleAgYield, int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile, int *aRestartRun) {
   
       // convert to strings and bools where appropriate
       std::string BaseLucGcamFileName(aBaseLucGcamFileName);
@@ -66,13 +69,14 @@ extern "C" {
       std::string basePFTwtFile(aBasePFTwtFile);
       bool readScalars = *aReadScalars == 1 ? true : false;
       bool writeScalars = *aWriteScalars == 1 ? true : false;
+      bool scaleAgYield = *aScaleAgYield == 1 ? true : false;
       bool scaleCarbon = *aScaleCarbon == 1 ? true : false;
       bool restartRun = *aRestartRun == 1 ? true : false;
   
       p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, BaseLucGcamFileName, BaseCO2GcamFileName, Spinup,
                      aELMArea, aELMPFTFract, aELMNPP, aELMHR,
                      aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
-                     scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile, restartRun);
+                     scaleAgYield, scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile, restartRun);
   }
 
   // Downscale Emissions

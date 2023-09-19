@@ -98,10 +98,10 @@ protected:
         ASimpleCarbonCalc,
                             
         //! Average above ground carbon content (read in).
-        DEFINE_VARIABLE( SIMPLE, "above-ground-carbon-density", mAvgAboveGroundCarbon, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "above-ground-carbon-density", mAvgAboveGroundCarbon, double ),
         
         //! Average below ground carbon content (read in).
-        DEFINE_VARIABLE( SIMPLE, "below-ground-carbon-density", mAvgBelowGroundCarbon, double ),
+        DEFINE_VARIABLE( SIMPLE | STATE, "below-ground-carbon-density", mAvgBelowGroundCarbon, double ),
         
         //! Age at maturity.  This is used to grow forests slowly.
         DEFINE_VARIABLE( SIMPLE, "mature-age", mMatureAge, int )
