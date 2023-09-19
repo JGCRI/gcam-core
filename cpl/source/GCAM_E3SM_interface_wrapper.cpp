@@ -90,7 +90,7 @@ extern "C" {
                               char *aRegionMappingFile, char *aCountryMappingFile,char *aCountry2RegionMappingFile,
                               char *aPOPIIASAFileName, char *aGDPIIASAFileName,
                               char *aPOPGCAMFileName, char *aGDPGCAMFileName, char *aCO2GCAMFileName,
-                              int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear,
+                              int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, int *aNumLon, int *aNumLat, int *aWriteCO2, int *aCurrYear,
                               char *aCO2DownscalingMethod) {
       
       // Convert to string - fortran doesn't handle string
@@ -124,7 +124,7 @@ extern "C" {
                                   BaseCO2GcamFileName, BaseCO2SfcFile, BaseCO2ShipFile, BaseCO2AirFile,
                                   RegionMappingFile, CountryMappingFile, Country2RegionMappingFile,
                                   POPIIASAFileName,GDPIIASAFileName,
-                                  POPGCAMFileName,GDPGCAMFileName,CO2GCAMFileName
+                                  POPGCAMFileName,GDPGCAMFileName,CO2GCAMFileName,
                                   aNumReg, aNumCty, aNumSector, aNumPeriod, aNumLon, aNumLat, writeCO2, aCurrYear, CO2DownscalingMethod);
 }
 

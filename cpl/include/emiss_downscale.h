@@ -115,8 +115,8 @@ private:
     std::vector<std::vector<double>> mPOPRegionIIASA;
     std::vector<std::vector<double>> mPOPCountryGCAM;
     std::vector<std::vector<double>> mPOPRegionGCAM;
-    std::vector<std::vector<double>> mGDPCountryGCAM;
-    std::vector<std::vector<double>> mGDPRegionGCAM;
+    std::vector<std::vector<double>> mGDPCountryIIASA;
+    std::vector<std::vector<double>> mGDPRegionIIASA;
     std::vector<std::vector<double>> mGDPCountryGCAM;
     std::vector<std::vector<double>> mGDPRegionGCAM;
     std::vector<std::vector<double>> mSfcCO2CountryGCAM;
