@@ -2,7 +2,7 @@
 <remap-data>
     <column name="region">
         <!-- order matters here! -->
-        <output-data>Global</output-data>
+        <!--output-data>Global</output-data -->
         <!-- no mappings implies no data will get remapped -->
         <output-data>USA</output-data>
         <output-data>Africa_Eastern</output-data>
@@ -40,6 +40,7 @@
     <column name="sector">
         <output-data>surface</output-data>
         <output-data>aircraft</output-data>
+        <output-data>shipment</output-data>
         <map from="H2 central production" to="surface"/>
         <map from="H2 forecourt production" to="surface"/>
         <map from="H2 wholesale dispensing" to="surface"/>
@@ -93,7 +94,7 @@
         <map from="trn_pass_road" to="surface"/>
         <map from="trn_pass_road_LDV" to="surface"/>
         <map from="trn_pass_road_LDV_4W" to="surface"/>
-        <map from="trn_shipping_intl" to="surface"/>
+        <map from="trn_shipping_intl" to="shipment"/>
         <map from="unconventional oil production" to="surface"/>
     </column>
 </remap-data>
