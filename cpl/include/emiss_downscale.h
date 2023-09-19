@@ -45,11 +45,19 @@
 
 class EmissDownscale : public ASpatialData {
 public:
-    EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLev, int aNumReg, int aNumSector);
+    EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLev, int aNumReg, int aNumCty, int aNumSector);
     ~EmissDownscale();
     // TODO: Eventually these will need to be vectors of regional emissions instead of global totals
     // void downscaleCO2Emissions(const std::string sector, std::vector<double> aCurrYearRegionEmissVector);
-    void downscaleSurfaceCO2Emissions(double *aCurrYearEmissions);
+    // Proportion-based method directly from regional to grid
+    void downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYearEmissions);
+    
+    // Convergence-based method
+    void downscaleSurfaceCO2EmissionsFromRegion2Country(double *aCurrYearEmissions, int CurrentYear);
+    void downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aCountryCurrYearEmissions);
+    
+    // downscale international shipment and aircraft CO2 emission from global to grid
+    void downscaleInternationalShipmentCO2Emissions (double *aCurrYearEmissions);
     void downscaleAircraftCO2Emissions(double *aCurrYearEmissions);
     
     void separateMonthlyEmissions(double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
@@ -66,15 +74,29 @@ public:
                                                               double *gcamoco2airhijul, double *gcamoco2airhiaug, double *gcamoco2airhisep,
                                                               double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
                                                               int aNumLon, int aNumLat);
-    void readRegionalMappingData(std::string aFileName);
-    void readRegionalBaseYearEmissionData(std::string aFileName);
+    void readRegionMappingData(std::string aFileName);
+    void readRegionBaseYearEmissionData(std::string aFileName);
+    void readCountryMappingData(std::string aFileName);
+    void readCountry2RegionMappingData(std::string aFileName);
+    void readPOPGDPCO2Data(std::string POPIIASAFileName, std::string GDPIIASAFileName, std::string POPGCAMFileName, std::string GDPGCAMFileName, std::string CO2GCAMFileName);
+    
     std::vector<double> mBaseYearEmissions_sfc;
     std::vector<double> mBaseYearEmissions_air;
-private:
-    std::vector<double> mBaseYearEmissVector;
+    std::vector<double> mBaseYearEmissions_ship;
+    std::vector<double> mCountryCurrYearEmissions_sfc;
     std::vector<double> mCurrYearEmissVector;
+    
+private:
+    void readRegionGCAMData(std::string aFileName, std::string aVariableName);
+    void calculateRegionPOPIIASAData();
+    void calculateRegionBaseYearGDPIIASAData();
+    void downscalePOPFromRegion2Country();
+    void downscaleGDPFromRegion2Country();
+    
+    std::vector<double> mBaseYearEmissVector;
 
     double mBaseYearGlobalSfcCO2Emiss;
+    double mBaseYearGlobalShipCO2Emiss;
     double mBaseYearGlobalAirCO2Emiss;
     //std::vector<std::string> mSectors;
     //std::vector<std::string> mRegions;
@@ -85,17 +107,34 @@ private:
     int mNumMon;
     int mNumLev;
     int mNumReg;
+    int mNumCty;
     int mNumSector;
-
+    int mNumPeriod;
+    
+    std::vector<std::vector<double>> mPOPCountryIIASA;
+    std::vector<std::vector<double>> mPOPRegionIIASA;
+    std::vector<std::vector<double>> mPOPCountryGCAM;
+    std::vector<std::vector<double>> mPOPRegionGCAM;
+    std::vector<std::vector<double>> mGDPCountryGCAM;
+    std::vector<std::vector<double>> mGDPRegionGCAM;
+    std::vector<std::vector<double>> mGDPCountryGCAM;
+    std::vector<std::vector<double>> mGDPRegionGCAM;
+    std::vector<std::vector<double>> mSfcCO2CountryGCAM;
+    std::vector<std::vector<double>> mSfcCO2RegionGCAM;
+    
     // Map grid cells to regions. Key is a string with longitude and latitude ("lon_lat").
     // Key maps to a vector of strings containing the region
     // Note that this map will be longer than lat * lon since some grid cells map to multiple regions
     std::map<std::string, std::vector<std::string>> mRegionMapping;
+    std::map<std::string, std::vector<std::string>> mCountryMapping;
+    std::map<std::string, std::string> mCountry2RegionNameMapping;
+    std::map<std::string, std::string> mCountry2RegionIDMapping;
 
     // Map region weights (these indicate the fraction of a grid cell assigned to each region)
     // Key is a pair indicating the grid cell and the region/subregion
     // Key maps to a double representing the fraction of the grid cell in that region/subregion
     std::map<std::pair<std::string,std::string>, double> mRegionWeights;
+    std::map<std::pair<std::string,std::string>, double> mCountryWeights;
     
     std::map<std::string, int> mRegionIDName{
         {"USA", 1},
@@ -131,6 +170,8 @@ private:
         {"Argentina", 31},
         {"Colombia", 32}
     };
+    
+    std::map<std::string, int> mCountryIDName;
 };
 
 #endif // __EMISS_DOWNSCALE__

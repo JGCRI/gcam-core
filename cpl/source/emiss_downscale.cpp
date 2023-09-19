@@ -46,33 +46,44 @@
 using namespace std;
 
 // Constructor
-EmissDownscale::EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLev, int aNumReg, int aNumSector) : ASpatialData(aNumLat * aNumLon * aNumMon * aNumLev),
+EmissDownscale::EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLev, int aNumReg, int aNumCty, int aNumSector, int aNumPeriod) : ASpatialData(aNumLat * aNumLon * aNumMon * aNumLev),
                                             mBaseYearEmissVector(aNumLat * aNumLon * aNumMon * aNumLev, 0),
                                             mCurrYearEmissVector(aNumLat * aNumLon * aNumMon * aNumLev, 0),
                                             mBaseYearEmissions_sfc(aNumReg, 0),
                                             mBaseYearEmissions_air(aNumReg, 0),
+                                            mCountryCurrYearEmissions_sfc(aNumCty, 0),
+                                            mPOPCountryIIASA(aNumCty, std::vector<double> (aNumPeriod, 0)),
+                                            mPOPRegionIIASA(aNumReg, std::vector<double> (aNumPeriod, 0)),
+                                            mPOPCountryGCAM(aNumCty, std::vector<double> (aNumPeriod, 0)),
+                                            mPOPRegionGCAM(aNumReg, std::vector<double> (aNumPeriod, 0)),
+                                            mGDPCountryGCAM(aNumCty, std::vector<double> (aNumPeriod, 0)),
+                                            mGDPRegionGCAM(aNumReg, std::vector<double> (aNumPeriod, 0)),
+                                            mGDPCountryIIASA(aNumCty, std::vector<double> (aNumPeriod, 0)),
+                                            mGDPRegionIIASA(aNumReg, std::vector<double> (aNumPeriod, 0)),
+                                            mSfcCO2CountryGCAM(aNumCty, std::vector<double> (aNumPeriod, 0)),
+                                            mSfcCO2RegionGCAM(aNumReg, std::vector<double> (aNumPeriod, 0)),
                                             mNumLon( aNumLon ),
                                             mNumLat( aNumLat ),
                                             mNumMon( aNumMon ),
                                             mNumLev( aNumLev ),
                                             mNumReg( aNumReg ),
-                                            mNumSector(  aNumSector )
-                                            {
+                                            mNumCty( aNumCty ),
+                                            mNumSector( aNumSector ),
+                                            mNumPeriod( aNumPeriod )
+{
 }
 
 // Destructor
-EmissDownscale::~EmissDownscale() {
+EmissDownscale::~EmissDownscale()
+{
 }
 
 // Read in a regional mapping data from a file
-void EmissDownscale::readRegionalMappingData(std::string aFileName)
+void EmissDownscale::readRegionMappingData(std::string aFileName)
 {
     ifstream data(aFileName);
     if (!data.is_open())
     {
-        ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-        coupleLog.setLevel( ILogger::ERROR );
-        coupleLog << "File not found: " << aFileName << endl;
         exit(EXIT_FAILURE);
     }
     string str;
@@ -138,10 +149,133 @@ void EmissDownscale::readRegionalMappingData(std::string aFileName)
     return;
 }
 
+// Read in a country mapping data from a file
+void EmissDownscale::readCountryMappingData(std::string aFileName)
+{
+    ifstream data(aFileName);
+    if (!data.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
+    string str;
+    getline(data, str); // skip the first line
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        double value;
+        int lon;
+        int lat;
+        string country;
+
+        // Parse country index
+        getline(iss, token, ',');
+        // Parse country name
+        getline(iss, token, ',');
+        // Parse country iso code
+        getline(iss, token, ',');
+        country = token;
+        country.erase(remove(country.begin(), country.end(), '\"'), country.end());
+
+        // Parse longitude
+        getline(iss, token, ',');
+        lon = std::stoi(token);
+
+        // Parse latitude
+        getline(iss, token, ',');
+        lat = std::stoi(token);
+
+        string gridID = std::to_string(lon) + "_" + std::to_string(lat);
+        
+
+        // Create country ID
+        string ctyID = country;
+
+        // Add country ID to the mapping vector.
+        // Note that there maybe more than one rctyID per gridID (hence, a vector)
+        if (mCountryMapping.find(gridID) == mCountryMapping.end())
+        {
+            // If gridID is not found, then add it with this ctyID in its vector
+            vector<string> temp;
+            temp.push_back(ctyID);
+            mCountryMapping[gridID] = temp;
+        }
+        else
+        {
+            // If gridID is found, then add to the existing ctyID vector
+            auto currGrid = mCountryMapping.find(gridID);
+            (*currGrid).second.push_back(ctyID);
+        }
+
+        // Parse Weight -- this is the fraction of the grid cell in a particular GCAM Country
+        getline(iss, token, ',');
+        value = std::stod(token);
+
+        mCountryWeights[std::make_pair(gridID, ctyID)] = value;
+    }
+
+    return;
+}
+
+// Read in a country mapping data from a file
+void EmissDownscale::readCountry2RegionMappingData(std::string aFileName)
+{
+    ifstream data(aFileName);
+    if (!data.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
+    string str;
+    getline(data, str); // skip the first line
+    getline(data, str); // skip the second line
+    getline(data, str); // skip the third line
+    getline(data, str); // skip the fourth line
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        string countryName;
+        string regionName;
+        int countryID;
+        int regionID;
+        // Parse country iso code
+        getline(iss, token, ',');
+        countryName = token;
+        countryName.erase(remove(countryName.begin(), countryName.end(), '\"'), countryName.end());
+
+        // Parse country name
+        getline(iss, token, ',');
+        lon = std::stoi(token);
+ 
+        // Parse country ID
+        getline(iss, token, ',');
+        countryID = std::stoi(token);
+
+        // Parse gcam region name
+        getline(iss, token, ',');
+        regionName = token;
+        regionName.erase(remove(regionName.begin(), regionName.end(), '\"'), regionName.end());
+
+        // Parse the regional ID number
+        getline(iss, token, ',');
+        regionID = std::stoi(token);
+        
+        // Add country ID to the mapping vector.
+        // Note that one country just belongs to one region.
+        mCountry2RegionIDMapping[countryID] = regionID;
+        mCountry2RegionNameMapping[countryName] = regionName;
+        mCountryIDName[countryName] = countryID;
+
+    }
+
+    return;
+}
+
 // Read in regional Base-Year Emission Data from a file
-void EmissDownscale::readRegionalBaseYearEmissionData(std::string aFileName)
+void EmissDownscale::readRegionBaseYearEmissionData(std::string aFileName)
 {
     mBaseYearGlobalSfcCO2Emiss = 0.0;
+    mBaseYearGlobalShipCO2Emiss = 0.0;
     mBaseYearGlobalAirCO2Emiss = 0.0;
 
     ifstream data(aFileName);
@@ -187,25 +321,511 @@ void EmissDownscale::readRegionalBaseYearEmissionData(std::string aFileName)
         if (sectorID == "surface")
         { mBaseYearEmissions_sfc[regIndex] = value;
         mBaseYearGlobalSfcCO2Emiss += value;}
+        else if (sectorID == "shipment")
+        { mBaseYearEmissions_ship[regIndex] = value;
+          mBaseYearGlobalShipCO2Emiss += value;}
         else if (sectorID == "aircraft")
         { mBaseYearEmissions_air[regIndex] = value;
           mBaseYearGlobalAirCO2Emiss += value;}
-          else {
+        else {
             ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
             coupleLog.setLevel( ILogger::ERROR );
             coupleLog << "Sector" << sectorID << " in" << aFileName << "not present in current co2.xml output mapping" << endl;
             exit(EXIT_FAILURE);
         }
         
-        
     }
 
     return;
 }
 
+// Read POP, GDP and CO2 emission Data from files
+void EmissDownscale::readPOPGDPCO2Data(std::string aPOPIIASAFileName, std::string aGDPIIASAFileName, std::string aPOPGCAMFileName, std::string aGDPGCAMFileName, std::string aCO2GCAMFileName)
+{
+    string str;
+    
+    // read country IIASA POP data
+    ifstream data(aPOPIIASAFileName);
+    if (!data.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
+    
+    getline(data, str); // skip the first line
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        double value;
+        int ctyID;
+        int ctyIndex;
+        int yearIndex;
+        
+        // Parse country ID
+        getline(iss, token, ',');
+        ctyID = std::stod(token);
+        
+        // Parse Value
+        for (int yearID = 2015; yearID <= 2100; yearID = yearID + 5)
+        {
+            
+            ctyIndex = ctyID - 1;
+            yearIndex = ceil((yearID - 2015) / 5);
+            
+            getline(iss, token, ',');
+            value = std::stod(token);
+            
+            mPOPCountryIIASA[ctyIndex][yearIndex] = value;
+        }
+    }
+    
+    
+    // calculate regional IIASA POP
+    calculateRegionPOPIIASAData();
+    
+    // read country base-year IIASA GDP data
+    ifstream data(GDPIIASAFileName);
+    if (!data.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
+    
+    getline(data, str); // skip the first line
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        double value;
+        int ctyID;
+        int ctyIndex;
+        int yearIndex;
+        
+        // Parse country ID
+        getline(iss, token, ',');
+        ctyID = std::stod(token);
+        
+        // Parse Value
+        yearID = 2015;
+        ctyIndex = ctyID - 1;
+        yearIndex = ceil((yearID - 2015) / 5);
+        
+        getline(iss, token, ',');
+        value = std::stod(token);
+        
+        GDPCountryIIASA[ctyIndex][yearIndex] = value;
+    }
+    
+    // calculate regional IIASA GDP
+    calculateRegionBaseYearGDPIIASAData();
+    
+    // read regional GCAM output
+    // read regional POP data
+    readRegionGCAMData(aPOPGCAMFileName, "POP");
+    
+    //read regional GDP data
+    readRegionGCAMData(aGDPGCAMFileName, "GDP");
+    
+    //read regional surface CO2 emission data
+    readRegionGCAMData(aCO2GCAMFileName, "CO2");
+    
+    return;
+}
+
+
+// Read in country POP Data from a file
+void EmissDownscale::readRegionGCAMData(std::string aFileName, std::string aVariableName)
+{
+    string str;
+    
+    ifstream data(aFileName);
+    if (!data.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
+    
+    getline(data, str); // skip the first line
+    while (getline(data, str))
+    {
+        istringstream iss(str);
+        string token;
+        double value;
+        int regID;
+        int regIndex;
+        int yearIndex;
+        
+        // Parse region ID
+        getline(iss, token, ',');
+        regID = std::stod(token);
+        
+        // Parse Value
+        for (int yearID = 2015; yearID <= 2100; yearID = yearID + 5)
+        {
+            
+            regIndex = regID - 1;
+            yearIndex = ceil((yearID - 2015) / 5);
+            
+            getline(iss, token, ',');
+            value = std::stod(token);
+            
+            if(aVariableName == "POP")
+            {mPOPRegionGCAM[regID][yearIndex] = value;}
+            else if(aVariableName == "GDP")
+            {mGDPRegionGCAM[regID][yearIndex] = value;}
+            else if(aVariableName == "CO2")
+            {mCO2RegionGCAM[regID][yearIndex] = value;}
+            else
+            {
+                ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+                coupleLog.setLevel( ILogger::ERROR );
+                coupleLog << "Variable not found: " << aVariableName << endl;
+                exit(EXIT_FAILURE);
+            }
+        }
+    }
+    return;
+}
+
+
+// Calculate regional POP  from country POP
+void EmissDownscale::calculateRegionPOPIIASAData()
+{
+    int yearIndex = 0;
+    int ctyIndex = 0;
+    int regIndex = 0;
+    
+    // initialize variables
+    for (int yearID = 2015; yearID <= 2100; yearID = yearID + 5)
+    {
+        
+        for (int regID = 1; regID <= mNumReg; regID++)
+        {
+            regIndex = regID - 1;
+            yearIndex = ceil((yearID - 2015) / 5);
+            
+            mPOPRegionIIASA[regIndex][yearIndex] = 0.0;
+        }
+    }
+    // aggregate values from country- to regional levels
+    for (int yearID = 2015; yearID <= 2100; yearID = yearID + 5)
+    {
+        for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+        {
+            ctyIndex = ctyID - 1;
+            regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+            yearIndex = ceil((yearID - 2015) / 5);
+            
+            mPOPRegionIIASA[regIndex][yearIndex] = POPRegionIIASA[regIndex][yearIndex]  + POPCountryIIASA[ctyIndex][yearIndex];
+        }
+    }
+    return;
+}
+
+
+// Calculate regional POP from country POP
+void EmissDownscale::calculateRegionBaseYearGDPIIASAData()
+{
+    int yearIndex = 0;
+    int ctyIndex = 0;
+    int regIndex = 0;
+    
+    
+    yearID = 2015;
+    yearIndex = ceil((yearID - 2015) / 5);
+    // initialize variables
+    for (int regID = 1; regID <= mNumReg; regID++)
+    {
+        regIndex = regID - 1;
+        
+        mGDPRegionIIASA[regIndex][yearIndex] = 0.0;
+    }
+    
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        ctyIndex = ctyID - 1;
+        regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+        
+        mGDPRegionIIASA[regIndex][yearIndex] = GDPRegionIIASA[regIndex][yearIndex]  + GDPCountryIIASA[ctyIndex][yearIndex];
+    }
+    return;
+}
+
+// Downscale POP using the IIASA Data
+void EmissDownscale::downscalePOPFromRegion2Country()
+{
+    int yearIndex = 0;
+    int ctyIndex = 0;
+    int regIndex = 0;
+    
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        ctyIndex = ctyID - 1;
+        regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+        
+        for (int yearID = 2015; yearID <= 2100; yearID = yearID + 5)
+        {
+            yearIndex = ceil((yearID - 2015)/5);
+            mPOPCountryGCAM[ctyIndex][yearIndex] = mPOPCountryIIASA[ctyIndex][yearIndex] * mPOPRegionGCAM[regIndex][yearIndex] / mPOPRegionIIASA[regIndex][yearIndex];
+        }
+    }
+    return;
+}
+
+// Downscale GDP using the convergence method
+void EmissDownscale::downscaleGDPFromRegion2Country()
+{
+    int regIndex = 0;
+    int ctyIndex = 0;
+    int yearIndex = 0;
+    int yearIndex1 = 0;
+    int yearIndex2 = 0;
+    double tmp = 0.0;
+    double PPPGrowthRate = 0.0;
+    double GDPRegionPred[mNumReg][mNumPeriod], GDPRegionIncrease[mNumReg][mNumPeriod], GDPRegionDiff[mNumReg][mNumPeriod];
+    double GDPCountryShare[mNumCty][mNumPeriod], PPPCountryGCAM[mNumCty][mNumPeriod];
+    
+    //initialize the variables
+    for (int regID = 1; regID <= mNumReg; regID++)
+    {
+        for (yearID = 2015; yearID <= 2100; yearID = yearID + 5)
+        {
+            regIndex = regID - 1;
+            yearIndex = ceil((yearID - 2015) / 5);
+            
+            GDPRegionPred[regIndex][yearIndex] = 0.0;
+            GDPRegionIncrease[regIndex][yearIndex] = 0.0;
+            GDPRegionDiff[regIndex][yearIndex] = 0.0;
+        }
+    }
+    
+    //initialize the variables
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        for (yearID = 2015; yearID <= 2100; yearID = yearID + 5)
+        {
+            ctyIndex = ctyID - 1;
+            yearIndex = ceil((yearID - 2015) / 5);
+            
+            GDPCountryShare[ctyIndex][yearIndex] = 0.0;
+        }
+    }
+    
+    
+    //calculate Base-year GDP
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        ctyIndex = ctyID - 1;
+        regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+        
+        yearIndex = ceil((2015 - 2015)/5);
+        mGDPCountryGCAM[ctyIndex][yearIndex] = mGDPCountryIIASA[ctyIndex][yearIndex] * mGDPRegionGCAM[regIndex][yearIndex] /mGDPRegionIIASA[regIndex][yearIndex];
+    }
+    
+    // predict future GDP using the partial convergence methods
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        ctyIndex = ctyID - 1;
+        regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+        
+        // calculate growth rate from 2090 to 2100
+        yearIndex1 = ceil((2100 - 2015)/5);
+        yearIndex2 = ceil((2090 - 2015)/5);
+        tmp = pow((mGDPRegionGCAM[regIndex][yearIndex1] / mPOPRegionGCAM[regIndex][yearIndex1]) / (mGDPRegionGCAM[regIndex][yearIndex2] / mPOPRegionGCAM[regIndex][yearIndex2]), 1.0/(10.0));
+        
+        // calculate GDP per capital in 2150
+        tmp =  (mGDPRegionGCAM[regIndex][yearIndex1] / mPOPRegionGCAM[regIndex][yearIndex1]) * pow(temp, 2150-2100);
+        
+        // calculate growth rate from 2015 to 2150
+        yearIndex1 = ceil((2015 - 2015)/5); //Base year index
+        PPPGrowthRate = (tmp / (mGDPCountryGCAM[regIndex][yearIndex1] / mPOPCountryGCAM[regIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
+        
+        for (yearID = 2020; yearID <= 2100; yearID = yearID + 5)
+        {
+            yearIndex = ceil((yearID - 2015) / 5);
+            PPPCountryGCAM[ctyIndex][yearIndex] = (GDPCountryGCAM[ctyIndex][yearIndex1] / POPCountryGCAM[regIndex][yearIndex1]) * pow(PPPGrowthRate, yearID - 2015);
+            GDPRegionPred[regIndex][yearIndex] = GDPRegionPred[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * POPCountryGCAM[ctyIndex][yearIndex];
+            GDPRegionIncrease[regIndex][yearIndex] = GDPRegionIncrease[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * POPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * POPCountryGCAM[ctyIndex][yearIndex-1];;
+        }
+    }
+    
+    // calculate regional difference between GCAM estimates and predicted as above
+    for (int regID = 1; regID <= mNumRegion; regID++)
+    {
+        regIndex = regID - 1;
+        for (yearID = 2020; yearID <= 2100; yearID = yearID + 5)
+        {
+            yearIndex = ceil((yearID - 2015) / 5);
+            GDPRegionDiff[regIndex][yearIndex] = GDPRegionGCAM[regIndex][yearIndex]  - GDPRegionPred[regIndex][yearIndex];
+        }
+    }
+    
+    
+    // adjust bias
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        ctyIndex = ctyID - 1;
+        regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+        
+        for (yearID = 2020; yearID <= 2100; yearID = yearID + 5)
+        {
+            yearIndex = ceil((yearID - 2015) / 5);
+            GDPCountryShare[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] * POPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * POPCountryGCAM[ctyIndex][yearIndex-1];
+            PPPCountryGCAM[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] + GDPRegionDiff[regIndex][yearIndex] * GDPCountryShare[ctyIndex][yearIndex] / POPCountryGCAM[ctyIndex][yearIndex];
+            mGDPCountryGCAM[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] * POPCountryGCAM[ctyIndex][yearIndex];
+        }
+    }
+    
+    return;
+}
+
+// Downscale emissions using the convergence method
+void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aRegionCurrYearEmissions, int currentYear)
+{
+    //calculate Future Country-level POP and GPP data
+    downscalePOPFromRegion2Country();
+    downscaleGDPFromRegion2Country();
+    
+    //define variables
+    int regIndex = 0;
+    int ctyIndex = 0;
+    int yearIndex1 = 0;
+    int yearIndex2 = 0;
+    double currentYearGDP = 0.0;
+    double EIGrowthRate = 0.0;
+    double weight = 0.0; // Define the weight
+    double CO2RegionPred[mNumReg], CO2RegionShare[mNumReg], CO2RegionDiff[mNumReg];
+    double EICountryGCAM[mNumCty];
+    
+    //initize the variables
+    for (int regID = 1; regID <= mNumReg; regID++)
+    {
+        regIndex = regID - 1;
+        CO2RegionPred[regIndex] = 0.0;
+        CO2RegionShare[regIndex] = 0.0;
+        CO2RegionDiff[regIndex] = 0.0;
+    }
+    
+    //initize the variables
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        ctyIndex = ctyID - 1;
+        
+        EICountryGCAM[ctyIndex] = 0.0;
+    }
+    
+    
+    // predict future co2 emission using the partial convergence methods
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        ctyIndex = ctyID - 1;
+        regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+        
+        // calculate growth rate from 2090 to 2100; need to check whether it is smaller than zero
+        yearIndex1 = 2100;
+        yearIndex2 = 2090;
+        tmp = pow((CO2RegionGCAM[regIndex][yearIndex1] / GDPRegionGCAM[regIndex][yearIndex1]) / (CO2RegionGCAM[regIndex][yearIndex2] / GDPRegionGCAM[regIndex][yearIndex2]), 1.0/(10.0));
+        // calculate GDP per capital in 2150
+        tmp =  (CO2RegionGCAM[regIndex][yearIndex1] / GDPRegionGCAM[regIndex][yearIndex1]) * pow(temp, 2150-2100);
+        // calculate growth rate from 2015 to 2150
+        yearIndex1 = 2015; //Base year index
+        EIGrowthRate = (tmp / (CO2CountryGCAM[ctyIndex][yearIndex1] / GDPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
+        
+        EICountryGCAM[ctyIndex] = (CO2CountryGCAM[regIndex][yearIndex1] / GDPCountryGCAM[regIndex][yearIndex1]) * pow(EIGrowthRate, currentYear - 2015);
+        
+        yearIndex1 = floor((currentYear - 2015)/5);   // need interploate
+        weight = (currentYear - yearIndex1)/5;
+        
+        currentYearGDP = GDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + GDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
+        CO2RegionPred[regIndex] = CO2RegionPred[regIndex] + EICountryGCAM[ctyIndex] * currentYearGDP;
+        CO2RegionShare[regIndex] = CO2RegionShare[regIndex] + EICountryGCAM[ctyIndex] * currentYearGDP;
+    }
+    
+    // calculate regional difference between GCAM estimates and predicted as above
+    for (int regIndex = 1; regIndex <= mNumReg; regIndex++)
+    {
+        CO2RegionDiff[regIndex] = aRegionCurrYearEmissions[regIndex]  - CO2RegionPred[regIndex];
+    }
+    
+    // adjust bias
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        ctyIndex = ctyID - 1;
+        regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+        
+        currentYearGDP = GDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + GDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
+        aCountryCurrYearEmissions_sfc[ctyIndex] = EICountryGCAM[ctyIndex] * currentYearGDP + CO2Diff[regIndex] * EICountryGCAM[ctyIndex] * currentYearGDP / CO2RegionShare[regIndex];
+    }
+    
+    return;
+}
+
+// Downscale emissions using the convergence method
+void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aCountryCurrYearEmissions)
+{ // baseYearEmission need to be updated
+    
+    // First, set the values that were read in as the BaseYearEmissions
+    mBaseYearEmissVector = getValueVector();
+    
+    // Calculate current year emissions vector by scaling base year emissions up
+    mCurrYearEmissVector = mBaseYearEmissVector;
+    // double scaler = aCurrYearEmissions / aBaseYearEmissions;
+    // std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
+    //                 mCurrYearEmissVector.begin(), [scaler](double i) { return i * scaler; });
+    
+    int gridIndex = 0;   // Index used for Grid vectors
+    int valIndex = 0;    // Index used for PFT x Grid vectors
+    double scalar = 0.0; // Define the scalar
+    double weight = 0.0; // Define the weight
+    
+    for (int k = 1; k <= mNumLat; k++)
+    {
+        for (int j = 1; j <= mNumLon; j++)
+        {
+            
+            gridIndex = (k - 1) * mNumLon + (j - 1);
+            
+            // Get country for this entry
+            string gridID = std::to_string(j) + "_" + std::to_string(k);
+            auto tempGrid = mCountryMapping.find(gridID);
+            if (mCountryMapping.find(gridID) == mCountryMapping.end())
+            {
+                // Grid isn't found in the mapping. Currently, this probably means it is an ocean grid.
+                // TODO: set up loop only over land grids, either using the mCountryMapping or one of the files from ELM
+            }
+            else
+            {
+                vector<string> ctyInGrd = (*tempGrid).second;
+                scalar = 0;
+                weight = 0;
+                // Loop over all regions this grid is mapped to and calculate the scalars
+                for (auto ctyID : ctyInGrd)
+                {
+                    // Calculate total as NPP/HR of the PFT * area of the PFT
+                    // pft value is fraction of grid cell
+                    auto currCty = mCountryIDName.find(ctyID);
+                    int ctyIndex = (*currCty).second - 1;
+                    
+                    scalar += aCurrYearCountryEmissions[ctyIndex] / aBaseYearCountryEmissions_sfc[ctyIndex] * mCountryWeights[std::make_pair(gridID, ctyID)];
+                    weight += mCountryWeights[std::make_pair(gridID, ctyID)];
+                }
+                scalar = scalar / weight; // normalized by the total eright
+                for (int mon = 1; mon <= mNumMon; mon++)
+                {
+                    valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
+                    mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
+                }
+            }
+        }
+    }
+    
+    // Finally, re-set the value vector to be the final emissions, since this will be written out
+    setValueVector(mCurrYearEmissVector);
+    
+    return;
+}
+
 
 // Downscale emissions
-void EmissDownscale::downscaleSurfaceCO2Emissions(double *aCurrYearEmissions)
+void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYearEmissions)
 { // baseYearEmission need to be updated
 
     // First, set the values that were read in as the BaseYearEmissions
@@ -262,6 +882,35 @@ void EmissDownscale::downscaleSurfaceCO2Emissions(double *aCurrYearEmissions)
             }
         }
     }
+
+    // Finally, re-set the value vector to be the final emissions, since this will be written out
+    setValueVector(mCurrYearEmissVector);
+
+    return;
+}
+
+
+// Downscale emissions
+void EmissDownscale::downscaleInternationalShipmentCO2Emissions(double *aCurrYearEmissions)
+{ // baseYearEmission need to be updated
+
+    // First, set the values that were read in as the BaseYearEmissions
+    mBaseYearEmissVector = getValueVector();
+
+    // Calculate current year emissions vector by scaling base year emissions up
+    mCurrYearEmissVector = mBaseYearEmissVector;
+
+    double scalar = 0.0; // Define the scalar
+    
+    double aCurrYearGlobalShipCO2Emiss = 0.0;
+
+    for(int k = 1; k <= mNumReg; k++)
+        aCurrYearGlobalShipCO2Emiss += aCurrYearEmissions[k-1];
+
+    scalar =  aCurrYearGlobalShipCO2Emiss / mBaseYearGlobalShipCO2Emiss;
+
+    std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
+                   mCurrYearEmissVector.begin(), [scalar](double i) { return i * scalar; });
 
     // Finally, re-set the value vector to be the final emissions, since this will be written out
     setValueVector(mCurrYearEmissVector);
