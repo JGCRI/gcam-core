@@ -53,7 +53,7 @@ extern "C" {
   // Run GCAM
   void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, char* aBaseLucGcamFileName, char* aBaseCO2GcamFileName, int *aSpinup,
                  double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                 int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumSector, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
+                 int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
                  int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile, int *aRestartRun) {
   
       // convert to strings and bools where appropriate
@@ -71,7 +71,7 @@ extern "C" {
   
       p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, BaseLucGcamFileName, BaseCO2GcamFileName, Spinup,
                      aELMArea, aELMPFTFract, aELMNPP, aELMHR,
-                     aNumLon, aNumLat, aNumPFT, aNumReg, aNumSector, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
+                     aNumLon, aNumLat, aNumPFT, aNumReg, aNumCty, aNumSector, aNumPeriod, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
                      scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile, restartRun);
   }
 
@@ -86,15 +86,27 @@ extern "C" {
                               double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                               double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                               double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                              char *aBaseCO2GcamFileName, char *aBaseCO2SfcFile, char *aBaseCO2AirFile,
-                              char* aMappingFile,
-                              int *aNumReg, int *aNumSector, int *aNumLon, int *aNumLat, int* aWriteCO2, int *aCurrYear) {
+                              char *aBaseCO2GcamFileName, char *aBaseCO2SfcFile, char *aBaseCO2ShipFile, char *aBaseCO2AirFile,
+                              char *aRegionMappingFile, char *aCountryMappingFile,char *aCountry2RegionMappingFile,
+                              char *aPOPIIASAFileName, char *aGDPIIASAFileName,
+                              char *aPOPGCAMFileName, char *aGDPGCAMFileName, char *aCO2GCAMFileName,
+                              int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear,
+                              char *aCO2DownscalingMethod) {
       
       // Convert to string - fortran doesn't handle string
       std::string BaseCO2SfcFile(aBaseCO2SfcFile);
+      std::string BaseCO2ShipFile(aBaseCO2ShipFile);
       std::string BaseCO2AirFile(aBaseCO2AirFile);
       std::string BaseCO2GcamFileName(aBaseCO2GcamFileName);
-      std::string MappingFile(aMappingFile);
+      std::string RegionMappingFile(aRegionMappingFile);
+      std::string CountryMappingFile(aCountryMappingFile);
+      std::string Country2RegionMappingFile(aCountry2RegionMappingFile);
+      std::string POPIIASAFileName(aPOPIIASAFileName);
+      std::string GDPIIASAFileName(aGDPIIASAFileName);
+      std::string POPGCAMFileName(aPOPGCAMFileName);
+      std::string GDPGCAMFileName(aGDPGCAMFileName);
+      std::string CO2GCAMFileName(aCO2GCAMFileName);
+      std::string CO2DownscalingMethod(aCO2DownscalingMethod);
       
       // Convert to bool - fortran doesn't have a bool
       bool writeCO2 = *aWriteCO2 == 1 ? true : false;
@@ -109,9 +121,11 @@ extern "C" {
                                   gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
                                   gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
                                   gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
-                                  BaseCO2GcamFileName, BaseCO2SfcFile, BaseCO2AirFile,
-                                  MappingFile,
-                                  aNumReg, aNumSector, aNumLon, aNumLat, writeCO2, aCurrYear);
+                                  BaseCO2GcamFileName, BaseCO2SfcFile, BaseCO2ShipFile, BaseCO2AirFile,
+                                  RegionMappingFile, CountryMappingFile, Country2RegionMappingFile,
+                                  POPIIASAFileName,GDPIIASAFileName,
+                                  POPGCAMFileName,GDPGCAMFileName,CO2GCAMFileName
+                                  aNumReg, aNumCty, aNumSector, aNumPeriod, aNumLon, aNumLat, writeCO2, aCurrYear, CO2DownscalingMethod);
 }
 
     

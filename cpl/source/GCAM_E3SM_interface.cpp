@@ -224,7 +224,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss,
                                    std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                                    double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                   int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumSector, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
+                                   int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
                                    bool aWriteScalars, bool aScaleCarbon,
                                    std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun )
 {
@@ -328,8 +328,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
        
             // be sure to reset any data set previously
             if (e3smYear == 2015 & spinup == 0) {
-                EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumSector); // Emissions data is monthly now
-        
+                EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumcty, *aNumSector, *aNumPeriod); // Emissions data is monthly now
+                
                 coupleLog << aBaseCO2GcamFileName << endl;
                 surfaceCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
                 coupleLog << "GCAM run: Finish read Base year emission data" << endl;
@@ -338,6 +338,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                 for (int i = 0; i < (*aNumReg); ++i) {
                         mGcamCO2EmissPreviousGCAMYear[i*(*aNumSector)] = surfaceCO2.mBaseYearEmissions_sfc[i];
                         mGcamCO2EmissPreviousGCAMYear[i*(*aNumSector)+1] = surfaceCO2.mBaseYearEmissions_air[i];
+                        mGcamCO2EmissPreviousGCAMYear[i*(*aNumSector)+2] = surfaceCO2.mBaseYearEmissions_ship[i];
                     }
             }
             coupleLog << "Previous GCAM Year Emission: " << endl;
@@ -573,9 +574,12 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
                                                  double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                                                  double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                                                  double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                                                 std::string aBaseCO2GcamFileName, std::string aBaseCO2SfcFile, std::string aBaseCO2AirFile,
-                                                 std::string aMappingFile,
-                                                 int *aNumReg, int *aNumSector, int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear) {
+                                                 std::string aBaseCO2GcamFileName, std::string aBaseCO2SfcFile, std::string aBaseCO2ShipFile, std::string aBaseCO2AirFile,
+                                                 std::string aRegionMappingFile, std::string aCountryMappingFile, std::string aCountry2RegionMappingFile,
+                                                 std::string aPOPIIASAFileName, std::string aGDPIIASAFileName,
+                                                 std::string aPOPGCAMFileName, std::string aGDPGCAMFileName, std::string aCO2GCAMFileName,
+                                                 int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear,
+                                                 std::string aCO2DownscalingMethod) {
 
     int r, s, row;
     //std::vector<double> gcamoSfcEmissVector((*aNumReg),0);
@@ -588,6 +592,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
 
     double gcamoemiss_sfc[*aNumReg];
     double gcamoemiss_air[*aNumReg];
+    double gcamoemiss_ship[*aNumReg];
 
     // separate gcamoemiss into surface and aircraft sector vectors
     row = 0;
@@ -599,16 +604,21 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
                 gcamoemiss_air[r]=gcamoemiss[row];
                 row++;
             }
+            else if(s==2){
+                gcamoemiss_ship[r]=gcamoemiss[row];
+                row++;
+            }
         }
     }
 
     for(int tmp = 1; tmp <= (*aNumReg); tmp++) {
         coupleLog << "Diagnostics: regional surface CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss_sfc[tmp - 1] << endl;
         coupleLog << "Diagnostics: regional aircraft CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss_air[tmp - 1] << endl;
+        coupleLog << "Diagnostics: regional shipment CO2 Emissions in " << *aCurrYear << " = " << gcamoemiss_ship[tmp - 1] << endl;
     }
 
 
-    EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumSector); // Emissions data is monthly now
+    EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumCty, *aNumSector, *aNumPeriod); // Emissions data is monthly now
     // Read in the GCAM regionXsector base CO2 data
     //surfaceCO2.readBaseYearCO2Data(aBaseCO2GcamFileName);
     // read in the gridded eam baseline co2 data
@@ -617,12 +627,28 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
 
     surfaceCO2.readSpatialData(aBaseCO2SfcFile, true, true, false);
     coupleLog << "Finish read spatial data" << endl;
-    surfaceCO2.readRegionalMappingData(aMappingFile);
-    coupleLog << "Finish read mapping data" << endl;
+    
+    if (aCO2DownscalingMethod == "Convergence")
+    {
+        surfaceCO2.readCountryMappingData(aCountryMappingFile);
+        surfaceCO2.readCountry2RegionMappingData(aCountry2RegionMappingFile);
+        coupleLog << "Finish read country mapping data" << endl;
+        surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
+        
+        surfaceCO2.readPOPGDPCO2Data(aPOPIIASAFileName, aGDPIIASAFileName, aPOPGCAMFileName, aGDPGCAMFileName, aCO2GCAMFileName);
+        surfaceCO2.downscaleSurfaceCO2EmissionsFromRegion2Country(gcamoemiss_sfc, *aCurrYear);
+        surfaceCO2.downscaleSurfaceCO2EmissionsFromCountry2Grid();
+    }
+    else
+    {
+        surfaceCO2.readRegionMappingData(aRegionMappingFile);
+        coupleLog << "Finish read regional mapping data" << endl;
+        
+        surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
+        
+        surfaceCO2.downscaleSurfaceCO2EmissionsFromRegion2Grid(gcamoemiss_sfc);
+    }
 
-    surfaceCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
-
-    surfaceCO2.downscaleSurfaceCO2Emissions(gcamoemiss_sfc);
     // These regions are in order of the output regions in co2.xml 
     for( r=0; r<(*aNumReg); r++ ) {
         coupleLog << "Diagnostics: Regional surface CO2 Emissions (PgC) in " << *aCurrYear << endl;
@@ -636,13 +662,41 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     }
     
     // Set the gcamoco2 monthly vector data to the output of this
-    surfaceCO2.separateMonthlyEmissions(gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
-                                       gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
-                                       gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, *aNumLon, *aNumLat);
+    //surfaceCO2.separateMonthlyEmissions(gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+    //                                   gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
+    //                                   gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, *aNumLon, *aNumLat);
+
     
-    EmissDownscale aircraftCO2(*aNumLon, *aNumLat, 12, 2, *aNumReg, *aNumSector); // Emissions data is monthly now; we're using two different height levels for aircraft
+    // shipment co2 emission
+    EmissDownscale shipmentCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumCty, *aNumSector, *aNumPeriod); // Emissions data is monthly now
+
+    shipmentCO2.readSpatialData(aBaseCO2ShipFile, true, true, false);
+    coupleLog << "Finish read spatial data" << endl;
+    shipmentCO2.readRegionalMappingData(aRegionMappingFile);
+    shipmentCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
+
+    shipmentCO2.downscaleShipmentCO2Emissions(gcamoemiss_ship);
+    // These regions are in order of the output regions in co2.xml
+    for( r=0; r<(*aNumReg); r++ ) {
+        coupleLog << "Diagnostics: Regional shipment CO2 Emissions (PgC) in " << *aCurrYear << endl;
+        coupleLog << "Region " << r+1  << " = " << gcamoemiss_ship[r] << endl;
+    }
+
+    if ( aWriteCO2 ) {
+        // TODO: Set name of file based on case name?
+        string fNameAir = "./gridded_co2_ship_" + std::to_string(*aCurrYear) + ".txt";
+        shipmentCO2.writeSpatialData(fNameAir, false);
+    }
+    
+    // Set the surface (surface + shipment) co2 data to the output of this
+    aircraftCO2.separateSurfaceMonthlyEmissions(surfaceCO2, shipmentCO2, gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+                                                gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
+                                                gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, *aNumLon, *aNumLat);
+    
+    // aircraft co2 emission
+    EmissDownscale aircraftCO2(*aNumLon, *aNumLat, 12, 2, *aNumReg, *aNumCty, *aNumSector, *aNumPeriod); // Emissions data is monthly now; we're using two different height levels for aircraft
     aircraftCO2.readSpatialData(aBaseCO2AirFile, true, true, false);
-    aircraftCO2.readRegionalMappingData(aMappingFile);
+    aircraftCO2.readRegionalMappingData(aRegionMappingFile);
     aircraftCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
     
     aircraftCO2.downscaleAircraftCO2Emissions(gcamoemiss_air);
@@ -658,7 +712,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         aircraftCO2.writeSpatialData(fNameAir, false);
     }
     
-    // Set the gcamoco2 data to the output of this
+    // Set the aircraft data to the output of this
     aircraftCO2.separateMonthlyEmissionsWithVertical( gcamoco2airlojan, gcamoco2airlofeb, gcamoco2airlomar, gcamoco2airloapr,
                                          gcamoco2airlomay, gcamoco2airlojun, gcamoco2airlojul, gcamoco2airloaug,
                                          gcamoco2airlosep, gcamoco2airlooct, gcamoco2airlonov, gcamoco2airlodec,
@@ -669,6 +723,46 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     
     
     
+}
+
+// Separate the emissions vectors into individual months
+void GCAM_E3SM_interface::separateSurfaceMonthlyEmissions(EmissDownscale surfaceCO2, EmissDownscale shipmentCO2, double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
+                                              double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
+                                              double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
+                                              double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
+                                              int aNumLon, int aNumLat)
+{
+    std::vector<double> mCurrYearEmissVector;
+    
+    // Perform element-wise addition
+    for (int i = 0; i < gridPerMonth; i++) {
+        mCurrYearEmissVector.push_back(surfaceCO2.mCurrYearEmissVector[i] + shipmentCO2.mCurrYearEmissVector[i]);
+    }
+    
+    std::copy(mCurrYearEmissVector.begin(),
+              mCurrYearEmissVector.begin() + gridPerMonth, gcamoco2sfcjan);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth,
+              mCurrYearEmissVector.begin() + gridPerMonth * 2, gcamoco2sfcfeb);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 2,
+              mCurrYearEmissVector.begin() + gridPerMonth * 3, gcamoco2sfcmar);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 3,
+              mCurrYearEmissVector.begin() + gridPerMonth * 4, gcamoco2sfcapr);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 4,
+              mCurrYearEmissVector.begin() + gridPerMonth * 5, gcamoco2sfcmay);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 5,
+              mCurrYearEmissVector.begin() + gridPerMonth * 6, gcamoco2sfcjun);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 6,
+              mCurrYearEmissVector.begin() + gridPerMonth * 7, gcamoco2sfcjul);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 7,
+              mCurrYearEmissVector.begin() + gridPerMonth * 8, gcamoco2sfcaug);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 8,
+              mCurrYearEmissVector.begin() + gridPerMonth * 9, gcamoco2sfcsep);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 9,
+              mCurrYearEmissVector.begin() + gridPerMonth * 10, gcamoco2sfcoct);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 10,
+              mCurrYearEmissVector.begin() + gridPerMonth * 11, gcamoco2sfcnov);
+    std::copy(mCurrYearEmissVector.begin() + gridPerMonth * 11,
+              mCurrYearEmissVector.begin() + gridPerMonth * 12, gcamoco2sfcdec);
 }
 
 
