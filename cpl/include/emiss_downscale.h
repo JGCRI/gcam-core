@@ -54,7 +54,7 @@ public:
     
     // Convergence-based method
     void downscaleSurfaceCO2EmissionsFromRegion2Country(double *aCurrYearEmissions, int CurrentYear);
-    void downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aCountryCurrYearEmissions);
+    void downscaleSurfaceCO2EmissionsFromCountry2Grid();
     
     // downscale international shipment and aircraft CO2 emission from global to grid
     void downscaleInternationalShipmentCO2Emissions (double *aCurrYearEmissions);
@@ -128,7 +128,7 @@ private:
     std::map<std::string, std::vector<std::string>> mRegionMapping;
     std::map<std::string, std::vector<std::string>> mCountryMapping;
     std::map<std::string, std::string> mCountry2RegionNameMapping;
-    std::map<std::string, std::string> mCountry2RegionIDMapping;
+    std::map<int, int> mCountry2RegionIDMapping;
 
     // Map region weights (these indicate the fraction of a grid cell assigned to each region)
     // Key is a pair indicating the grid cell and the region/subregion

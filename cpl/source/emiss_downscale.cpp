@@ -752,14 +752,14 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
         
         currentYearGDP = GDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + GDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
-        aCountryCurrYearEmissions_sfc[ctyIndex] = EICountryGCAM[ctyIndex] * currentYearGDP + CO2Diff[regIndex] * EICountryGCAM[ctyIndex] * currentYearGDP / CO2RegionShare[regIndex];
+        mCountryCurrYearEmissions_sfc[ctyIndex] = EICountryGCAM[ctyIndex] * currentYearGDP + CO2Diff[regIndex] * EICountryGCAM[ctyIndex] * currentYearGDP / CO2RegionShare[regIndex];
     }
     
     return;
 }
 
 // Downscale emissions using the convergence method
-void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aCountryCurrYearEmissions)
+void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid()
 { // baseYearEmission need to be updated
     
     // First, set the values that were read in as the BaseYearEmissions
@@ -804,7 +804,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aCount
                     auto currCty = mCountryIDName.find(ctyID);
                     int ctyIndex = (*currCty).second - 1;
                     
-                    scalar += aCurrYearCountryEmissions[ctyIndex] / aBaseYearCountryEmissions_sfc[ctyIndex] * mCountryWeights[std::make_pair(gridID, ctyID)];
+                    scalar += mCountryCurrYearEmissions_sfc[ctyIndex] / aBaseYearCountryEmissions_sfc[ctyIndex] * mCountryWeights[std::make_pair(gridID, ctyID)];
                     weight += mCountryWeights[std::make_pair(gridID, ctyID)];
                 }
                 scalar = scalar / weight; // normalized by the total eright
