@@ -45,7 +45,7 @@
 
 class EmissDownscale : public ASpatialData {
 public:
-    EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLev, int aNumReg, int aNumCty, int aNumSector);
+    EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLev, int aNumReg, int aNumCty, int aNumSector, int aNumPeriod);
     ~EmissDownscale();
     // TODO: Eventually these will need to be vectors of regional emissions instead of global totals
     // void downscaleCO2Emissions(const std::string sector, std::vector<double> aCurrYearRegionEmissVector);
