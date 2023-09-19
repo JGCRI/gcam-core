@@ -689,7 +689,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     }
     
     // Set the surface (surface + shipment) co2 data to the output of this
-    aircraftCO2.separateSurfaceMonthlyEmissions(surfaceCO2, shipmentCO2, gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
+    separateSurfaceMonthlyEmissions(surfaceCO2, shipmentCO2, gcamoco2sfcjan, gcamoco2sfcfeb, gcamoco2sfcmar, gcamoco2sfcapr,
                                                 gcamoco2sfcmay, gcamoco2sfcjun, gcamoco2sfcjul, gcamoco2sfcaug,
                                                 gcamoco2sfcsep, gcamoco2sfcoct, gcamoco2sfcnov, gcamoco2sfcdec, *aNumLon, *aNumLat);
     
