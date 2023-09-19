@@ -83,11 +83,13 @@ public:
     std::vector<double> mBaseYearEmissions_sfc;
     std::vector<double> mBaseYearEmissions_air;
     std::vector<double> mBaseYearEmissions_ship;
+    std::vector<double> mCountryBaseYearEmissions_sfc;
     std::vector<double> mCountryCurrYearEmissions_sfc;
     std::vector<double> mCurrYearEmissVector;
     
 private:
     void readRegionGCAMData(std::string aFileName, std::string aVariableName);
+    void calculateCountryBaseYearEmissionData();
     void calculateRegionPOPIIASAData();
     void calculateRegionBaseYearGDPIIASAData();
     void downscalePOPFromRegion2Country();
@@ -119,7 +121,6 @@ private:
     std::vector<std::vector<double>> mGDPRegionIIASA;
     std::vector<std::vector<double>> mGDPCountryGCAM;
     std::vector<std::vector<double>> mGDPRegionGCAM;
-    std::vector<std::vector<double>> mSfcCO2CountryGCAM;
     std::vector<std::vector<double>> mSfcCO2RegionGCAM;
     
     // Map grid cells to regions. Key is a string with longitude and latitude ("lon_lat").

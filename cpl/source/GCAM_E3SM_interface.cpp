@@ -328,10 +328,10 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
        
             // be sure to reset any data set previously
             if (e3smYear == 2015 & spinup == 0) {
-                EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumcty, *aNumSector, *aNumPeriod); // Emissions data is monthly now
+                EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumCty, *aNumSector, *aNumPeriod); // Emissions data is monthly now
                 
                 coupleLog << aBaseCO2GcamFileName << endl;
-                surfaceCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
+                surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
                 coupleLog << "GCAM run: Finish read Base year emission data" << endl;
                 
 
@@ -632,6 +632,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     {
         surfaceCO2.readCountryMappingData(aCountryMappingFile);
         surfaceCO2.readCountry2RegionMappingData(aCountry2RegionMappingFile);
+        surfaceCO2.calculateCountryBaseYearEmissionData();
         coupleLog << "Finish read country mapping data" << endl;
         surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
         
@@ -672,8 +673,8 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
 
     shipmentCO2.readSpatialData(aBaseCO2ShipFile, true, true, false);
     coupleLog << "Finish read spatial data" << endl;
-    shipmentCO2.readRegionalMappingData(aRegionMappingFile);
-    shipmentCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
+    shipmentCO2.readRegionMappingData(aRegionMappingFile);
+    shipmentCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
 
     shipmentCO2.downscaleShipmentCO2Emissions(gcamoemiss_ship);
     // These regions are in order of the output regions in co2.xml
@@ -696,8 +697,8 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     // aircraft co2 emission
     EmissDownscale aircraftCO2(*aNumLon, *aNumLat, 12, 2, *aNumReg, *aNumCty, *aNumSector, *aNumPeriod); // Emissions data is monthly now; we're using two different height levels for aircraft
     aircraftCO2.readSpatialData(aBaseCO2AirFile, true, true, false);
-    aircraftCO2.readRegionalMappingData(aRegionMappingFile);
-    aircraftCO2.readRegionalBaseYearEmissionData(aBaseCO2GcamFileName);
+    aircraftCO2.readRegionMappingData(aRegionMappingFile);
+    aircraftCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
     
     aircraftCO2.downscaleAircraftCO2Emissions(gcamoemiss_air);
     // These regions are in order of the output regions in co2.xml
@@ -733,6 +734,7 @@ void GCAM_E3SM_interface::separateSurfaceMonthlyEmissions(EmissDownscale surface
                                               int aNumLon, int aNumLat)
 {
     std::vector<double> mCurrYearEmissVector;
+    int gridPerMonth = aNumLat * aNumLon;
     
     // Perform element-wise addition
     for (int i = 0; i < gridPerMonth; i++) {

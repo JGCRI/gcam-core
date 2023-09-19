@@ -51,6 +51,7 @@ EmissDownscale::EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLe
                                             mCurrYearEmissVector(aNumLat * aNumLon * aNumMon * aNumLev, 0),
                                             mBaseYearEmissions_sfc(aNumReg, 0),
                                             mBaseYearEmissions_air(aNumReg, 0),
+                                            mCountryBaseYearEmissions_sfc(aNumCty, 0),
                                             mCountryCurrYearEmissions_sfc(aNumCty, 0),
                                             mPOPCountryIIASA(aNumCty, std::vector<double> (aNumPeriod, 0)),
                                             mPOPRegionIIASA(aNumReg, std::vector<double> (aNumPeriod, 0)),
@@ -60,7 +61,6 @@ EmissDownscale::EmissDownscale(int aNumLon, int aNumLat, int aNumMon, int aNumLe
                                             mGDPRegionGCAM(aNumReg, std::vector<double> (aNumPeriod, 0)),
                                             mGDPCountryIIASA(aNumCty, std::vector<double> (aNumPeriod, 0)),
                                             mGDPRegionIIASA(aNumReg, std::vector<double> (aNumPeriod, 0)),
-                                            mSfcCO2CountryGCAM(aNumCty, std::vector<double> (aNumPeriod, 0)),
                                             mSfcCO2RegionGCAM(aNumReg, std::vector<double> (aNumPeriod, 0)),
                                             mNumLon( aNumLon ),
                                             mNumLat( aNumLat ),
@@ -338,6 +338,68 @@ void EmissDownscale::readRegionBaseYearEmissionData(std::string aFileName)
     return;
 }
 
+// Calculate country Base year surface CO2 emission
+void EmissDownscale::calculateCountryBaseYearEmissionData()
+{
+    // First, set the values that were read in as the BaseYearEmissions
+    mBaseYearEmissVector = getValueVector();
+        
+    int gridIndex = 0;   // Index used for Grid vectors
+    int valIndex = 0;    // Index used for PFT x Grid vectors
+    double weight = 0.0; // Define the total weight
+    
+    for (int k = 1; k <= mNumLat; k++)
+    {
+        for (int j = 1; j <= mNumLon; j++)
+        {
+            
+            gridIndex = (k - 1) * mNumLon + (j - 1);
+            
+            // Get country for this entry
+            string gridID = std::to_string(j) + "_" + std::to_string(k);
+            auto tempGrid = mCountryMapping.find(gridID);
+            if (mCountryMapping.find(gridID) == mCountryMapping.end())
+            {
+                // Grid isn't found in the mapping. Currently, this probably means it is an ocean grid.
+                // TODO: set up loop only over land grids, either using the mCountryMapping or one of the files from ELM
+            }
+            else
+            {
+                vector<string> ctyInGrd = (*tempGrid).second;
+                weight = 0;
+                // Loop over all regions this grid is mapped to and calculate the scalars
+                for (auto ctyID : ctyInGrd)
+                {
+                    // Calculate total as NPP/HR of the PFT * area of the PFT
+                    // pft value is fraction of grid cell
+                    auto currCty = mCountryIDName.find(ctyID);
+                    int ctyIndex = (*currCty).second - 1;
+                    
+                    weight += mCountryWeights[std::make_pair(gridID, ctyID)];
+                }
+                
+                for (auto ctyID : ctyInGrd)
+                {
+                    // Calculate total as NPP/HR of the PFT * area of the PFT
+                    // pft value is fraction of grid cell
+                    auto currCty = mCountryIDName.find(ctyID);
+                    int ctyIndex = (*currCty).second - 1;
+                    
+                    for (int mon = 1; mon <= mNumMon; mon++)
+                    {
+                        valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
+                        mCountryBaseYearEmissions_sfc[ctyIndex] = mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight;
+                    }
+                }
+            }
+        }
+    }
+    
+    // Finally, re-set the value vector to be the final emissions, since this will be written out
+    setValueVector(mCurrYearEmissVector);
+    
+    return;
+}
 // Read POP, GDP and CO2 emission Data from files
 void EmissDownscale::readPOPGDPCO2Data(std::string aPOPIIASAFileName, std::string aGDPIIASAFileName, std::string aPOPGCAMFileName, std::string aGDPGCAMFileName, std::string aCO2GCAMFileName)
 {
@@ -549,6 +611,7 @@ void EmissDownscale::calculateRegionBaseYearGDPIIASAData()
     return;
 }
 
+
 // Downscale POP using the IIASA Data
 void EmissDownscale::downscalePOPFromRegion2Country()
 {
@@ -731,9 +794,9 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         tmp =  (mSfcCO2RegionGCAM[regIndex][yearIndex1] / mGDPRegionGCAM[regIndex][yearIndex1]) * pow(tmp, 2150-2100);
         // calculate growth rate from 2015 to 2150
         yearIndex1 = 2015; //Base year index
-        EIGrowthRate = (tmp / (mSfcCO2CountryGCAM[ctyIndex][yearIndex1] / mGDPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
+        EIGrowthRate = (tmp / (mCountryCurrYearEmissions_sfc[ctyIndex] / mGDPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
         
-        EICountryGCAM[ctyIndex] = (mSfcCO2CountryGCAM[regIndex][yearIndex1] / mGDPCountryGCAM[regIndex][yearIndex1]) * pow(EIGrowthRate, currentYear - 2015);
+        EICountryGCAM[ctyIndex] = (mCountryCurrYearEmissions_sfc[regIndex] / mGDPCountryGCAM[regIndex][yearIndex1]) * pow(EIGrowthRate, currentYear - 2015);
         
         currentYearGDP = mGDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + mGDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
         CO2RegionPred[regIndex] = CO2RegionPred[regIndex] + EICountryGCAM[ctyIndex] * currentYearGDP;
