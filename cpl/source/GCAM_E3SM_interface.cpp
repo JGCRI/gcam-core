@@ -26,6 +26,8 @@
 #include "../include/emiss_downscale.h"
 
 #include <boost/iostreams/device/mapped_file.hpp>
+#include <boost/algorithm/string/split.hpp>
+#include <boost/algorithm/string/classification.hpp>
 
 using namespace std;
 
@@ -83,7 +85,8 @@ GCAM_E3SM_interface::~GCAM_E3SM_interface(){
  *  and base model information.  Create and setup scenario
  */
 
-void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap)
+void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap,
+                                   std::string aGCAM2ELMWHMap, std::string aGCAM2ELMCDENMap)
 {
     // identify default file names for control input and logging controls
     string configurationArg = aGCAMConfig;
@@ -92,7 +95,10 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     // Add OS dependent prefixes to the arguments.
     const string configurationFileName = configurationArg;
     const string loggerFileName = loggerFactoryArg;
-    
+   
+    // for diagnostic output
+    ofstream oFile;
+ 
     // Initialize the LoggerFactory
     XMLParseHelper::initParser();
     bool success = XMLParseHelper::parseXML( loggerFileName, &loggerFactoryWrapper );
@@ -101,6 +107,10 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::WARNING );
     
+    // Get the coupler log
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );    
+
     // print disclaimer
     mainLog << "LEGAL NOTICE" << endl;
     mainLog << "This computer software was prepared by Battelle Memorial Institute," << endl;
@@ -141,7 +151,7 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     Configuration* conf = Configuration::getInstance();
     success = XMLParseHelper::parseXML( configurationFileName, conf );
     // TODO: Check if parsing succeeded.
-       
+    
     // Initialize the timer.  Create an object of the Timer class.
     Timer timer;
     timer.start();
@@ -184,6 +194,51 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     mWoodHarvestData.addYearColumn("Year", years, yearRemap);
     mWoodHarvestData.finalizeColumns();
 
+    // currently, there is no year associated with the carbon density values
+    //    but include because helper functions expect it
+    // also, get the data from the land-use-history variable here because it should
+    //    not be affected by the restarts because it is not the state variable
+
+    // actually, since this is called on init before any run/restart, the land-carbon-densities should be fine
+
+    // Setup the above ground carbon density  mappings
+    success = parseXMLInternal(aGCAM2ELMCDENMap, &mAGCDensityData);
+    mAGCDensityData.addYearColumn("Year", years, yearRemap);
+    mAGCDensityData.finalizeColumns();
+
+    // Setup the below ground carbon density  mappings
+    success = parseXMLInternal(aGCAM2ELMCDENMap, &mBGCDensityData);
+    mBGCDensityData.addYearColumn("Year", years, yearRemap);
+    mBGCDensityData.finalizeColumns();
+
+    // get base above ground carbon density
+    coupleLog << "Getting above ground carbon density" << endl;
+    // initialize data to zero
+    double *agcd = mAGCDensityData.getData();
+    fill(agcd, agcd+mAGCDensityData.getArrayLength(), 0.0);
+    GetDataHelper getAGCD("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/carbon-calc/above-ground-carbon-density", mAGCDensityData);
+    getAGCD.run(runner->getInternalScenario());
+    coupleLog << mAGCDensityData << endl;
+    // write a diagnostic table
+    std::string agcd_oname = "carbon_agcd_data_base.csv";
+    oFile.open(agcd_oname);
+    mAGCDensityData.printAsTable(oFile);
+    oFile.close();
+
+    // get base below ground carbon density
+    coupleLog << "Getting below ground carbon density" << endl;
+    // initialize data to zero
+    double *bgcd = mBGCDensityData.getData();
+    fill(bgcd, bgcd+mBGCDensityData.getArrayLength(), 0.0);
+    GetDataHelper getBGCD("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/carbon-calc/below-ground-carbon-density", mBGCDensityData);
+    getBGCD.run(runner->getInternalScenario());
+    coupleLog << mBGCDensityData << endl;
+    // write a diagnostic table
+    std::string bgcd_oname = "carbon_bgcd_data_base.csv";
+    oFile.open(bgcd_oname);
+    mBGCDensityData.printAsTable(oFile);
+    oFile.close();
+
     // Clean up
     XMLParseHelper::cleanupParser();
     
@@ -220,7 +275,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                                    std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                                    double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                    int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
-                                   bool aWriteScalars, bool aScaleCarbon,
+                                   bool aWriteScalars, bool aScaleAgYield, bool aScaleCarbon,
                                    std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun )
 {
     int z, p, num_it, spinup;
@@ -261,7 +316,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 
             // If the e3smYear is a GCAM model period, then we need to increment GCAM's model period
             // unless this is the spinup loop
-            if ( modeltime->isModelYear( e3smYear ) & spinup == 0) {
+            if ( modeltime->isModelYear( e3smYear ) && spinup == 0) {
                 gcamPeriod = gcamPeriod + 1;
             }
 
@@ -305,9 +360,9 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             }
 
             // now set scalars for the current period
-            setDensityGCAM(yyyymmdd, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
+            setLandProductivityScalingGCAM(yyyymmdd, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
                             aNumLon, aNumLat, aNumPFT, aMappingFile, aFirstCoupledYear, aReadScalars, aWriteScalars,
-                            aScaleCarbon, aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
+                            aScaleAgYield, aScaleCarbon, aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
 
             // now run the current period
             //Timer timer;
@@ -433,9 +488,9 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
         
 }
 
-void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                          int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
-                                          bool aWriteScalars, bool aScaleCarbon,
+                                          bool aWriteScalars, bool aScaleAgYield, bool aScaleCarbon,
                                           std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
     // Get year only of the current date
     // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
@@ -449,6 +504,7 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     }
 
     std::string fName;
+    int numScalars=0;
 
     int gcamYear = modeltime->getper_to_yr( gcamPeriod );
     const int finalCalibrationPeriod = modeltime->getFinalCalibrationPeriod();
@@ -456,19 +512,27 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
     
     // Create scalar vectors
     // TODO: Find a better way to determine the length
-    std::vector<int> scalarYears(17722);
-    vector<std::string> scalarRegion(17722);
-    vector<std::string> scalarLandTech(17722);
-    vector<double> aboveScalarData(17722);
-    vector<double> belowScalarData(17722);
+    int max_size = 17722;
+    std::vector<int> scalarYears(max_size);
+    vector<std::string> scalarRegion(max_size);
+    vector<std::string> scalarLandTech(max_size);
+    vector<double> aboveScalarData(max_size);
+    vector<double> belowScalarData(max_size);
+    // need additional records because RFD and IRR have different agcd
+    std::vector<int> cdensityYears;
+    std::vector<std::string> cdensityRegion;
+    std::vector<std::string> cdensityLandTech;
+    std::vector<double> AGCD_scaled;
+    std::vector<double> BGCD_scaled;
     
     // Open the coupling log
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
    
-    coupleLog << "In setDensityGCAM, e3smYear is: " << e3smYear << endl;
-    coupleLog << "In setDensityGCAM, gcamYear is: " << gcamYear << endl; 
-    coupleLog << "In setDensityGCAM, before first year check, aScaleCarbon is: " << aScaleCarbon << endl;
+    coupleLog << "In setLandProductivityScalingGCAM, e3smYear is: " << e3smYear << endl;
+    coupleLog << "In setLandProductivityScalingGCAM, gcamYear is: " << gcamYear << endl; 
+    coupleLog << "In setLandProductivityScalingGCAM, before first year check, aScaleAgYield is: " << aScaleAgYield << endl;
+    coupleLog << "In setLandProductivityScalingGCAM, before first year check, aScaleCarbon is: " << aScaleCarbon << endl;
 
     // Only set carbon densities during GCAM model years after the first coupled year
     // set carbon densities each year to calc and write them and to match running gcam each year
@@ -477,35 +541,134 @@ void GCAM_E3SM_interface::setDensityGCAM(int *yyyymmdd, double *aELMArea, double
         CarbonScalers e3sm2gcam(*aNumLon, *aNumLat, *aNumPFT);
         
         // Get scaler information
+        // The scalar file name and the year inside refer to the GCAM year they are being applied to
         if ( aReadScalars ) {
-            coupleLog << "In setDensityGCAM, Reading scalars from file." << endl;
-            fName = "./scalers_" + std::to_string(e3smYear) + ".csv";
-            e3sm2gcam.readScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
+            coupleLog << "In setLandProductivityScalingGCAM, Reading scalars from file." << endl;
+            fName = "./scalars_" + std::to_string(gcamYear) + ".csv";
+            numScalars = e3sm2gcam.readScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         } else {
-            coupleLog << "In setDensityGCAM, Calculating scalers from data." << endl;
+            coupleLog << "In setLandProductivityScalingGCAM, Calculating scalars from data." << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
             e3sm2gcam.calcScalers(gcamYear, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
                                   scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData,
-                                  aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
+                                  aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName, numScalars);
         }
         
         // Optional: write scaler information to a file
         // TODO?: make the file name an input instead of hardcoded
         if( aWriteScalars ) {
-            fName = "./scalers_" + std::to_string(e3smYear) + ".csv";
-            e3sm2gcam.writeScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, 17722);
+            fName = "./scalars_" + std::to_string(gcamYear) + ".csv";
+            e3sm2gcam.writeScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, numScalars);
         }
       
-        // TODO: What happens if there is no scalarData or if the elements are blank?
-        // check and then don't call setdatahelper 
-        if( aScaleCarbon ) { 
+        // Note that the arrays used below are filled only with records that have existing locations/types and values between:
+        //    0.125 and 2; values are set to 1.0 if something is invalid but there is a valid location/type 
+        // Empty records are not found when passed through SetDataHelper, so nothing in GCAM changes for these
+        
+        if( aScaleAgYield ) { 
 
-           coupleLog << "In setDensityGCAM, setting scalars, aScaleCarbon is: " << aScaleCarbon << endl;
+           coupleLog << "In setLandProductivityScalingGCAM, setting ag yield scalars, aScaleAgYield is: " << aScaleAgYield;
+           coupleLog << "; numScalars is " << numScalars << endl;
 
-           SetDataHelper setScaler(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
-           setScaler.run(runner->getInternalScenario());
+           SetDataHelper setAgYieldScaler(scalarYears, scalarRegion, scalarLandTech, aboveScalarData, "world/region[+name]/sector/subsector/technology[+name]/period[+year]/yield-scaler");
+           setAgYieldScaler.run(runner->getInternalScenario());
         }
-    }
+
+        if(aScaleCarbon){
+           coupleLog << "In setLandProductivityScalingGCAM, setting scaled carbon density, aScaleCarbon is: " << aScaleCarbon;
+           coupleLog << "; numScalars is " << numScalars << endl;
+
+           // should write a function to do the first part before setdatahelper
+
+           // scale the base above and below ground carbon densities
+           // do this here so it addresses readScalers as well as calcScalers
+           // need to  match the region and basin and landtype
+           //    scalarRegion is just the region
+           //    scalarLandTech is basin_landtype (from the mapping files, so no irriation or fertilzer tags)
+           // the density data objects have a 'region' column that is region_basin and 'land-type' column that is land type (no irr and fert tags)
+           //    and a 'water' column (none, IRR, RFD) and an 'mgmt' column (none, IRR, RFD)
+           // note that above and below scalarData have the same number and order of records, and so will AGCD_ and BGCD_scaled
+
+           // scale the carbon density
+           // only need the same valid locations/land types below, as for valid scalars
+           double* agcd = mAGCDensityData.getData();
+           double* bgcd = mBGCDensityData.getData();
+           // mColumns==0 is region_basin (i.e., regID); 32 of these
+           // mColumns==1 is land type (sans irr and fert tags); 41 of these
+           // need to make sure locations and land types match the input carbon density data,
+           //    as the carbon density data likely is not in the order and selection of these scalar data
+           //    but store the result in the same order as for the yield scalars to utilize the region/landtech arrays
+           // don't need the year data because there is only one year (it is included in the object for diagnostic purposes)
+
+           std::string regID;
+           std::string landType;
+           std::vector<string> strs;
+           int cdCount=0;
+           for (int i=0; i<numScalars; i++) {
+              // need to recombine the region_basin and extract the land type
+              // split the land tech into basin and land type
+              // currently no "_" in either basein abr or land type name
+              boost::split(strs, scalarLandTech[i], boost::is_any_of("_"));
+              // set the appropriate strings
+              regID = scalarRegion[i] + "_" + strs[1];
+              landType = strs[0];
+
+              // need to get the nonzero elements across the water and mgmt options!
+              // currently values across water and mgmt options are the same (if they exist)
+              //    but non-crops do not have any water/mgmt
+              // note that these abort if the value is not found
+              // these are the same for agcd and bgcd cuz they are defined by the same mapping file
+              size_t regID_ind = mAGCDensityData.getIndexInColumn("region", regID);
+              size_t landType_ind = mAGCDensityData.getIndexInColumn("land-type", landType);
+              size_t cdenRow;
+              size_t numLandType = (*mAGCDensityData.getColumn("land-type")).mInOrderOutputNames.size();
+              size_t numWater = (*mAGCDensityData.getColumn("water")).mInOrderOutputNames.size();
+              size_t numMgmt = (*mAGCDensityData.getColumn("mgmt")).mInOrderOutputNames.size();
+
+              coupleLog << "region ind: " << regID_ind << " " << regID << "; landType ind: " << landType_ind << " " << landType << endl;
+              coupleLog << "scalar ind: " << i << "; numLandType=" << numLandType << "; numWater=" << numWater << "; numMgmt=" << numMgmt << endl; 
+
+              // loop over the 9 water/mgmt indices and store non-zero values
+              // these can be the same for agcd and bgcd
+              for (size_t water_ind=0; water_ind < numWater; water_ind++) {
+                  for (size_t mgmt_ind=0; mgmt_ind < numMgmt; mgmt_ind++) {
+
+                      // math ok cuz all positive and size_t is unsigned long
+                      cdenRow = regID_ind * numLandType * numWater * numMgmt + landType_ind * numWater * numMgmt + water_ind * numMgmt + mgmt_ind;
+
+                      // keep if either agcd or bgcd are non-zero
+                      if(agcd[cdenRow] != 0 || bgcd[cdenRow] !=0) {
+                          coupleLog << "cdenRow=" << cdenRow << "; water_ind=" << water_ind << "; mgmt_ind=" << mgmt_ind << endl;
+
+                          AGCD_scaled.push_back(agcd[cdenRow] * aboveScalarData[i]);
+                          BGCD_scaled.push_back(bgcd[cdenRow] * belowScalarData[i]);
+                          cdensityYears.push_back(scalarYears[i]);
+                          cdensityRegion.push_back(scalarRegion[i]);
+                          cdensityLandTech.push_back(scalarLandTech[i] + "_" +
+                              (*mAGCDensityData.getColumn("water")).mInOrderOutputNames[water_ind] + "_" + (*mAGCDensityData.getColumn("mgmt")).mInOrderOutputNames[mgmt_ind] );
+
+                          coupleLog << "cdCount=" << cdCount << "; cdenRow=" << cdenRow  <<  "; cdYears=" << cdensityYears[cdCount] << "; cdRegion=" << cdensityRegion[cdCount];
+                          coupleLog << "; cdLandTech=" << cdensityLandTech[cdCount] << "; AGCD_scaled=" << AGCD_scaled[cdCount] << "; BGCD_scaled=" << BGCD_scaled[cdCount] << endl;
+
+                          cdCount += 1;
+                      }                 
+                  } // end for mgmt_ind loop
+              } // end for water_ind loop
+
+           } // end for i loop over scalar values
+
+           // set the scaled above ground carbon density to the state variable; the year data are not used
+           SetDataHelper setAGCD(cdensityYears, cdensityRegion, cdensityLandTech, AGCD_scaled,
+              "world/region[+name]/land-allocator//child-nodes[+name]/carbon-calc/above-ground-carbon-density");
+           setAGCD.run(runner->getInternalScenario());
+
+           // set the scaled below ground carbon density to the state variable; the year data are not used
+           SetDataHelper setBGCD(cdensityYears, cdensityRegion, cdensityLandTech, BGCD_scaled,
+              "world/region[+name]/land-allocator//child-nodes[+name]/carbon-calc/below-ground-carbon-density");
+           setBGCD.run(runner->getInternalScenario());
+        }
+
+    } // end if >= first coupled year
     
 }
 

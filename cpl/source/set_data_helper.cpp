@@ -95,15 +95,8 @@ void SetDataHelper::run(Scenario* aScenario) {
 
     mRow = 0;
     for(auto row : mDataVector) {
-        // first release the memory allocated for previous mFilterSteps (it was allocated on construction also)
-        //for( size_t i = 0; i < mFilterSteps.size(); i++ ) {
-        //    sdhLog << "mFilterSteps " << i << " mDataName=" << mFilterSteps[i]->mDataName << endl;
-        //    delete mFilterSteps[i];
-        //}
-        //mFilterSteps = parseFilterString(mHeader);
-        //GCAMFusion<SetDataHelper> fusion(*this, mFilterSteps);
-        sdhLog << "before filter mRow=" << mRow << " Region=" << mRegionColumn[mRow] << " LandTech=" << mLandTechColumn[mRow];
-        sdhLog << " Year=" << mYearColumn[mRow] << " mDataVector scalar=" << mDataVector[mRow] << endl;
+        sdhLog << "before filter mRow=" << mRow << " Region=" << mRegionColumn[mRow] << " LandTech=" << mLandTechColumn[mRow] << endl;
+        //sdhLog << " Year=" << mYearColumn[mRow] << " mDataVector scalar=" << mDataVector[mRow] << endl;
         sdhLog << "mFilterSteps[1]region=" << boost::fusion::at_key<NamedFilter>(mFilterSteps[1]->mFilterMap)->mMatcher->matchesString(mRegionColumn[mRow]) << endl;
         sdhLog << "mFilterSteps[2]technology=" << boost::fusion::at_key<NamedFilter>(mFilterSteps[4]->mFilterMap)->mMatcher->matchesString(mLandTechColumn[mRow]) << endl;
         fusion.startFilter(aScenario);
@@ -126,7 +119,11 @@ void SetDataHelper::processData(double& aData) {
 
     sdhLog << "double aData=" << aData << endl;
 
+    sdhLog << "Region=" << mRegionColumn[mRow] << " LandTech=" << mLandTechColumn[mRow] << " Year=" << mYearColumn[mRow] << " mDataVector=" << mDataVector[mRow] << endl;
+
     aData = mDataVector[mRow];
+
+    sdhLog << "Region=" << mRegionColumn[mRow] << " LandTech=" << mLandTechColumn[mRow] << " Year=" << mYearColumn[mRow] << " aData=" << aData << endl;
 }
 template<>
 void SetDataHelper::processData(Value& aData) {
