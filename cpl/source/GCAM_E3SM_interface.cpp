@@ -602,12 +602,11 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
                 gcamoemiss_sfc[r]=gcamoemiss[row];
             } else if(s==1){
                 gcamoemiss_air[r]=gcamoemiss[row];
-                row++;
             }
             else if(s==2){
                 gcamoemiss_ship[r]=gcamoemiss[row];
-                row++;
             }
+            row++;
         }
     }
 
@@ -647,6 +646,8 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         
         surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
         
+        coupleLog << "GCAM run: Finish read Base year emission data" << endl;
+        
         surfaceCO2.downscaleSurfaceCO2EmissionsFromRegion2Grid(gcamoemiss_sfc);
     }
 
@@ -658,7 +659,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
 
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
-        string fNameSfc = "./gridded_co2_sfc" + std::to_string(*aCurrYear) + ".txt";
+        string fNameSfc = "./gridded_co2_sfc_" + std::to_string(*aCurrYear) + ".txt";
         surfaceCO2.writeSpatialData(fNameSfc, false);
     }
     
@@ -674,8 +675,9 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     shipmentCO2.readSpatialData(aBaseCO2ShipFile, true, true, false);
     coupleLog << "Finish read spatial data" << endl;
     shipmentCO2.readRegionMappingData(aRegionMappingFile);
+    coupleLog << "Finish read spatial data" << endl;
     shipmentCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
-
+    coupleLog << "start downscaling" << endl;
     shipmentCO2.downscaleInternationalShipmentCO2Emissions(gcamoemiss_ship);
     // These regions are in order of the output regions in co2.xml
     for( r=0; r<(*aNumReg); r++ ) {

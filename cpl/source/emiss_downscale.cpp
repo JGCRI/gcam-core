@@ -117,6 +117,7 @@ void EmissDownscale::readRegionMappingData(std::string aFileName)
         getline(iss, token, ',');
         region = token;
         region.erase(remove(region.begin(), region.end(), '\"'), region.end());
+        region.erase(remove(region.begin(), region.end(), ' '), region.end()); // remove spaces in the region names
 
         // Skip SubRegion Name
         getline(iss, token, ',');
@@ -323,7 +324,8 @@ void EmissDownscale::readRegionBaseYearEmissionData(std::string aFileName)
         mBaseYearGlobalSfcCO2Emiss += value;}
         else if (sectorID == "shipment")
         { mBaseYearEmissions_ship[regIndex] = value;
-          mBaseYearGlobalShipCO2Emiss += value;}
+          mBaseYearGlobalShipCO2Emiss += value;
+        }
         else if (sectorID == "aircraft")
         { mBaseYearEmissions_air[regIndex] = value;
           mBaseYearGlobalAirCO2Emiss += value;}
@@ -944,6 +946,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYe
                     valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
                     mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
                 }
+                
             }
         }
     }
