@@ -970,12 +970,12 @@ void EmissDownscale::downscaleInternationalShipmentCO2Emissions(double *aCurrYea
 
     double scalar = 0.0; // Define the scalar
     
-    double aCurrYearGlobalShipCO2Emiss = 0.0;
+    double CurrYearGlobalShipCO2Emiss = 0.0;
 
     for(int k = 1; k <= mNumReg; k++)
-        aCurrYearGlobalShipCO2Emiss += aCurrYearEmissions[k-1];
+        CurrYearGlobalShipCO2Emiss += aCurrYearEmissions[k-1];
 
-    scalar =  aCurrYearGlobalShipCO2Emiss / mBaseYearGlobalShipCO2Emiss;
+    scalar =  CurrYearGlobalShipCO2Emiss / mBaseYearGlobalShipCO2Emiss;
 
     std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
                    mCurrYearEmissVector.begin(), [scalar](double i) { return i * scalar; });
@@ -998,12 +998,12 @@ void EmissDownscale::downscaleAircraftCO2Emissions(double *aCurrYearEmissions)
 
     double scalar = 0.0; // Define the scalar
     
-    double aCurrYearGlobalAirCO2Emiss = 0.0;
+    double CurrYearGlobalAirCO2Emiss = 0.0;
 
     for(int k = 1; k <= mNumReg; k++)
-        aCurrYearGlobalAirCO2Emiss += aCurrYearEmissions[k-1];
+        CurrYearGlobalAirCO2Emiss += aCurrYearEmissions[k-1];
 
-    scalar =  aCurrYearGlobalAirCO2Emiss / mBaseYearGlobalAirCO2Emiss;
+    scalar =  CurrYearGlobalAirCO2Emiss / mBaseYearGlobalAirCO2Emiss;
 
     std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
                    mCurrYearEmissVector.begin(), [scalar](double i) { return i * scalar; });
