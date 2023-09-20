@@ -217,13 +217,13 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     mBGCDensityData.finalizeColumns();
 
     // get base above ground carbon density
-    coupleLog << "Getting above ground carbon density" << endl;
+    coupleLog << "initGCAM: Getting above ground carbon density" << endl;
     // initialize data to zero
     double *agcd = mAGCDensityData.getData();
     fill(agcd, agcd+mAGCDensityData.getArrayLength(), 0.0);
     GetDataHelper getAGCD("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/carbon-calc/above-ground-carbon-density", mAGCDensityData);
     getAGCD.run(runner->getInternalScenario());
-    coupleLog << mAGCDensityData << endl;
+    //coupleLog << mAGCDensityData << endl;
     // write a diagnostic table
     std::string agcd_oname = "carbon_agcd_data_base.csv";
     oFile.open(agcd_oname);
@@ -231,13 +231,13 @@ void GCAM_E3SM_interface::initGCAM(std::string aCaseName, std::string aGCAMConfi
     oFile.close();
 
     // get base below ground carbon density
-    coupleLog << "Getting below ground carbon density" << endl;
+    coupleLog << "initGCAM: Getting below ground carbon density" << endl;
     // initialize data to zero
     double *bgcd = mBGCDensityData.getData();
     fill(bgcd, bgcd+mBGCDensityData.getArrayLength(), 0.0);
     GetDataHelper getBGCD("world/region[+NamedFilter,MatchesAny]/land-allocator//child-nodes[+NamedFilter,MatchesAny]/carbon-calc/below-ground-carbon-density", mBGCDensityData);
     getBGCD.run(runner->getInternalScenario());
-    coupleLog << mBGCDensityData << endl;
+    //coupleLog << mBGCDensityData << endl;
     // write a diagnostic table
     std::string bgcd_oname = "carbon_bgcd_data_base.csv";
     oFile.open(bgcd_oname);
@@ -611,7 +611,7 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
         
         // Optional: write scaler information to a file
         // TODO?: make the file name an input instead of hardcoded
-        if( aWriteScalars ) {
+        if( aWriteScalars && !aReadScalars) {
             fName = "./scalars_" + std::to_string(gcamYear) + ".csv";
             e3sm2gcam.writeScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData, numScalars);
         }
@@ -680,8 +680,8 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
               size_t numWater = (*mAGCDensityData.getColumn("water")).mInOrderOutputNames.size();
               size_t numMgmt = (*mAGCDensityData.getColumn("mgmt")).mInOrderOutputNames.size();
 
-              coupleLog << "region ind: " << regID_ind << " " << regID << "; landType ind: " << landType_ind << " " << landType << endl;
-              coupleLog << "scalar ind: " << i << "; numLandType=" << numLandType << "; numWater=" << numWater << "; numMgmt=" << numMgmt << endl; 
+              //coupleLog << "region ind: " << regID_ind << " " << regID << "; landType ind: " << landType_ind << " " << landType << endl;
+              //coupleLog << "scalar ind: " << i << "; numLandType=" << numLandType << "; numWater=" << numWater << "; numMgmt=" << numMgmt << endl; 
 
               // loop over the 9 water/mgmt indices and store non-zero values
               // these can be the same for agcd and bgcd
@@ -693,7 +693,7 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
 
                       // keep if either agcd or bgcd are non-zero
                       if(agcd[cdenRow] != 0 || bgcd[cdenRow] !=0) {
-                          coupleLog << "cdenRow=" << cdenRow << "; water_ind=" << water_ind << "; mgmt_ind=" << mgmt_ind << endl;
+                          //coupleLog << "cdenRow=" << cdenRow << "; water_ind=" << water_ind << "; mgmt_ind=" << mgmt_ind << endl;
 
                           AGCD_scaled.push_back(agcd[cdenRow] * aboveScalarData[i]);
                           BGCD_scaled.push_back(bgcd[cdenRow] * belowScalarData[i]);
@@ -702,8 +702,8 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
                           cdensityLandTech.push_back(scalarLandTech[i] + "_" +
                               (*mAGCDensityData.getColumn("water")).mInOrderOutputNames[water_ind] + "_" + (*mAGCDensityData.getColumn("mgmt")).mInOrderOutputNames[mgmt_ind] );
 
-                          coupleLog << "cdCount=" << cdCount << "; cdenRow=" << cdenRow  <<  "; cdYears=" << cdensityYears[cdCount] << "; cdRegion=" << cdensityRegion[cdCount];
-                          coupleLog << "; cdLandTech=" << cdensityLandTech[cdCount] << "; AGCD_scaled=" << AGCD_scaled[cdCount] << "; BGCD_scaled=" << BGCD_scaled[cdCount] << endl;
+                          //coupleLog << "cdCount=" << cdCount << "; cdenRow=" << cdenRow  <<  "; cdYears=" << cdensityYears[cdCount] << "; cdRegion=" << cdensityRegion[cdCount];
+                          //coupleLog << "; cdLandTech=" << cdensityLandTech[cdCount] << "; AGCD_scaled=" << AGCD_scaled[cdCount] << "; BGCD_scaled=" << BGCD_scaled[cdCount] << endl;
 
                           cdCount += 1;
                       }                 
@@ -713,11 +713,13 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
            } // end for i loop over scalar values
 
            // set the scaled above ground carbon density to the state variable; the year data are not used
+           coupleLog << "In setLandProductivityScalingGCAM: Setting scaled vegetation vegetation carbon density" << endl;
            SetDataHelper setAGCD(cdensityYears, cdensityRegion, cdensityLandTech, AGCD_scaled,
               "world/region[+name]/land-allocator//child-nodes[+name]/carbon-calc/above-ground-carbon-density");
            setAGCD.run(runner->getInternalScenario());
 
            // set the scaled below ground carbon density to the state variable; the year data are not used
+           coupleLog << "In setLandProductivityScalingGCAM: Setting scaled soil carbon density" << endl;
            SetDataHelper setBGCD(cdensityYears, cdensityRegion, cdensityLandTech, BGCD_scaled,
               "world/region[+name]/land-allocator//child-nodes[+name]/carbon-calc/below-ground-carbon-density");
            setBGCD.run(runner->getInternalScenario());
