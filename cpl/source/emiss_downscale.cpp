@@ -34,7 +34,7 @@
  * \file emiss_downscale.cpp
  * \brief This file processes gridded data from E3SM into region/land type specific scalers
  *
- * \author Kate Calvin
+ * \author Kate Calvin and Dalei Hao and Alan Di Vittorio
  */
 
 #include <iostream>
@@ -342,12 +342,11 @@ void EmissDownscale::readRegionBaseYearEmissionData(std::string aFileName)
 }
 
 // Calculate country Base year surface CO2 emission
-void EmissDownscale::calculateCountryBaseYearEmissionData()
+void EmissDownscale::calculateCountryBaseYearEmissionData(std::vector<double>& aBaseYearEmissions_sfc, std::vector<double>& aBaseYearEmissionsGrid_sfc)
 {
     // First, set the values that were read in as the BaseYearEmissions
-    mBaseYearEmissVector = getValueVector();
+    //mBaseYearEmissVector = getValueVector();
         
-    int gridIndex = 0;   // Index used for Grid vectors
     int valIndex = 0;    // Index used for PFT x Grid vectors
     double weight = 0.0; // Define the total weight
     double RegionBaseYearEmissions_sfc[mNumReg];
@@ -356,8 +355,6 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
     {
         for (int j = 1; j <= mNumLon; j++)
         {
-            
-            gridIndex = (k - 1) * mNumLon + (j - 1);
             
             // Get country for this entry
             string gridID = std::to_string(j) + "_" + std::to_string(k);
@@ -394,7 +391,7 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
                         for (int mon = 1; mon <= mNumMon; mon++)
                         {
                             valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
-                            mCountryBaseYearEmissions_sfc[ctyIndex] += mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight * 360.0/288.0 * 100.0 * 180.0/192.0 * 100.0 * 1000000.0 * 3600.0 * 24.0 * 365.0 / 1000.0 / 1000000.0; // unit conversion from kgCO2/m2/s to MTC
+                            mCountryBaseYearEmissions_sfc[ctyIndex] += aBaseYearEmissionsGrid_sfc[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight * 360.0/288.0 * 100.0 * 180.0/192.0 * 100.0 * 1000000.0 * 3600.0 * 24.0 * 365.0 / 1000.0 / 1000000.0; // unit conversion from kgCO2/m2/s to MTC
                         }
                     }
                 }
@@ -425,7 +422,7 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
         int ctyIndex = ctyID - 1;
         int regIndex = mCountry2RegionIDMapping[ctyID] - 1;
         
-        mCountryBaseYearEmissions_sfc[ctyIndex] = mCountryBaseYearEmissions_sfc[ctyIndex] / RegionBaseYearEmissions_sfc[regIndex] * mBaseYearEmissions_sfc[regIndex];
+        mCountryBaseYearEmissions_sfc[ctyIndex] = mCountryBaseYearEmissions_sfc[ctyIndex] / RegionBaseYearEmissions_sfc[regIndex] * aBaseYearEmissions_sfc[regIndex];
     }
     
     return;
@@ -894,19 +891,19 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
 }
 
 // Downscale emissions using the convergence method
-void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegionCurrYearEmissions)
+void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegionCurrYearEmissions, std::vector<double>& aBaseYearEmissions_sfc,
+                                                                  std::vector<double>& aBaseYearEmissionsGrid_sfc)
 { // baseYearEmission need to be updated
     
     // First, set the values that were read in as the BaseYearEmissions
-    mBaseYearEmissVector = getValueVector();
+    //mBaseYearEmissVector = getValueVector();
     
     // Calculate current year emissions vector by scaling base year emissions up
-    mCurrYearEmissVector = mBaseYearEmissVector;
+    mCurrYearEmissVector = aBaseYearEmissionsGrid_sfc;
     // double scaler = aCurrYearEmissions / aBaseYearEmissions;
     // std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
     //                 mCurrYearEmissVector.begin(), [scaler](double i) { return i * scaler; });
     
-    int gridIndex = 0;   // Index used for Grid vectors
     int valIndex = 0;    // Index used for PFT x Grid vectors
     double scalar = 0.0; // Define the scalar
     double weight = 0.0; // Define the weight
@@ -915,8 +912,6 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegio
     {
         for (int j = 1; j <= mNumLon; j++)
         {
-            
-            gridIndex = (k - 1) * mNumLon + (j - 1);
             
             // Get country for this entry
             string gridID = std::to_string(j) + "_" + std::to_string(k);
@@ -954,12 +949,12 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegio
                     for (int mon = 1; mon <= mNumMon; mon++)
                     {
                         valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
-                        mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
+                        mCurrYearEmissVector[valIndex] = aBaseYearEmissionsGrid_sfc[valIndex] * scalar;
                     }
                 }
             }
             
-            // downscale the gird with the country-level emisison of 0 using the region-level values
+            // downscale the grid with the country-level emisison of 0 using the region-level values
             // Get region for this entry
             auto tempGrid2 = mRegionMapping.find(gridID);
             if (mRegionMapping.find(gridID) == mRegionMapping.end())
@@ -980,7 +975,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegio
                     auto currReg = mRegionIDName.find(regID);
                     int regIndex = (*currReg).second - 1;
 
-                    scalar += aRegionCurrYearEmissions[regIndex] / mBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
+                    scalar += aRegionCurrYearEmissions[regIndex] / aBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
                     weight += mRegionWeights[std::make_pair(gridID, regID)];
                 }
                 scalar = scalar / weight; // normalized by the total eright
@@ -990,7 +985,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegio
                     
                     if(mCurrYearEmissVector[valIndex] <= 0)
                     {
-                        mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
+                        mCurrYearEmissVector[valIndex] = aBaseYearEmissionsGrid_sfc[valIndex] * scalar;
                     }
                 }
                 
@@ -1007,19 +1002,14 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegio
 
 
 // Downscale emissions
-void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYearEmissions)
+void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYearEmissions, std::vector<double>& aBaseYearEmissions_sfc, std::vector<double>& aBaseYearEmissionsGrid_sfc)
 { // baseYearEmission need to be updated
 
     // First, set the values that were read in as the BaseYearEmissions
-    mBaseYearEmissVector = getValueVector();
+    //mBaseYearEmissVector = getValueVector();
 
     // Calculate current year emissions vector by scaling base year emissions up
-    mCurrYearEmissVector = mBaseYearEmissVector;
-    // double scaler = mCurrYearEmissions / mBaseYearEmissions;
-    // std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
-    //                 mCurrYearEmissVector.begin(), [scaler](double i) { return i * scaler; });
-
-    int gridIndex = 0;   // Index used for Grid vectors
+    mCurrYearEmissVector = aBaseYearEmissionsGrid_sfc;
     int valIndex = 0;    // Index used for PFT x Grid vectors
     double scalar = 0.0; // Define the scalar
     double weight = 0.0; // Define the weight
@@ -1028,8 +1018,6 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYe
     {
         for (int j = 1; j <= mNumLon; j++)
         {
-
-            gridIndex = (k - 1) * mNumLon + (j - 1);
 
             // Get region for this entry
             string gridID = std::to_string(j) + "_" + std::to_string(k);
@@ -1047,19 +1035,23 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYe
                 // Loop over all regions this grid is mapped to and calculate the scalars
                 for (auto regID : regInGrd)
                 {
-                    // Calculate total as NPP/HR of the PFT * area of the PFT
-                    // pft value is fraction of grid cell
+                    // Calculate total as regional scalar times weight in grid cell
                     auto currReg = mRegionIDName.find(regID);
                     int regIndex = (*currReg).second - 1;
 
-                    scalar += aCurrYearEmissions[regIndex] / mBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
+                    scalar += aCurrYearEmissions[regIndex] / aBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
                     weight += mRegionWeights[std::make_pair(gridID, regID)];
                 }
-                scalar = scalar / weight; // normalized by the total eright
+                scalar = scalar / weight; // normalized by the total weight 
                 for (int mon = 1; mon <= mNumMon; mon++)
                 {
                     valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
-                    mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
+                    // replace nans with zero
+                    if (isfinite(aBaseYearEmissionsGrid_sfc[valIndex] * scalar)) {
+                       mCurrYearEmissVector[valIndex] = aBaseYearEmissionsGrid_sfc[valIndex] * scalar;
+                    } else {
+                       mCurrYearEmissVector[valIndex] = 0.0;
+                    }
                 }
                 
             }
@@ -1074,14 +1066,17 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYe
 
 
 // Downscale emissions
-void EmissDownscale::downscaleInternationalShipmentCO2Emissions(double *aCurrYearEmissions)
+void EmissDownscale::downscaleInternationalShipmentCO2Emissions(double *aCurrYearEmissions, double aBaseYearGlobalShipCO2Emiss, std::vector<double>& aBaseYearEmissionsGrid_ship)
 { // baseYearEmission need to be updated
 
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
+
     // First, set the values that were read in as the BaseYearEmissions
-    mBaseYearEmissVector = getValueVector();
+    //mBaseYearEmissVector = getValueVector();
 
     // Calculate current year emissions vector by scaling base year emissions up
-    mCurrYearEmissVector = mBaseYearEmissVector;
+    mCurrYearEmissVector = aBaseYearEmissionsGrid_ship;
 
     double scalar = 0.0; // Define the scalar
     
@@ -1090,10 +1085,14 @@ void EmissDownscale::downscaleInternationalShipmentCO2Emissions(double *aCurrYea
     for(int k = 1; k <= mNumReg; k++)
         CurrYearGlobalShipCO2Emiss += aCurrYearEmissions[k-1];
 
-    scalar =  CurrYearGlobalShipCO2Emiss / mBaseYearGlobalShipCO2Emiss;
+    scalar =  CurrYearGlobalShipCO2Emiss / aBaseYearGlobalShipCO2Emiss;
+
+    coupleLog << "shipment scalar = " << scalar << endl;
 
     std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
                    mCurrYearEmissVector.begin(), [scalar](double i) { return i * scalar; });
+    // replace nans with zero
+    std::replace_if (mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(), [](double x){return !isfinite(x);}, 0);
 
     // Finally, re-set the value vector to be the final emissions, since this will be written out
     setValueVector(mCurrYearEmissVector);
@@ -1102,14 +1101,17 @@ void EmissDownscale::downscaleInternationalShipmentCO2Emissions(double *aCurrYea
 }
 
 // Downscale emissions
-void EmissDownscale::downscaleAircraftCO2Emissions(double *aCurrYearEmissions)
+void EmissDownscale::downscaleAircraftCO2Emissions(double *aCurrYearEmissions, double aBaseYearGlobalAirCO2Emiss, std::vector<double>& aBaseYearEmissionsGrid_air)
 { // baseYearEmission need to be updated
 
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
+
     // First, set the values that were read in as the BaseYearEmissions
-    mBaseYearEmissVector = getValueVector();
+    //mBaseYearEmissVector = getValueVector();
 
     // Calculate current year emissions vector by scaling base year emissions up
-    mCurrYearEmissVector = mBaseYearEmissVector;
+    mCurrYearEmissVector = aBaseYearEmissionsGrid_air;
 
     double scalar = 0.0; // Define the scalar
     
@@ -1118,10 +1120,14 @@ void EmissDownscale::downscaleAircraftCO2Emissions(double *aCurrYearEmissions)
     for(int k = 1; k <= mNumReg; k++)
         CurrYearGlobalAirCO2Emiss += aCurrYearEmissions[k-1];
 
-    scalar =  CurrYearGlobalAirCO2Emiss / mBaseYearGlobalAirCO2Emiss;
+    scalar =  CurrYearGlobalAirCO2Emiss / aBaseYearGlobalAirCO2Emiss;
+
+    coupleLog << "aircraft scalar = " << scalar << endl;
 
     std::transform(mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(),
                    mCurrYearEmissVector.begin(), [scalar](double i) { return i * scalar; });
+    // replace nans with zero
+    std::replace_if (mCurrYearEmissVector.begin(), mCurrYearEmissVector.end(), [](double x){return !isfinite(x);}, 0);
 
     // Finally, re-set the value vector to be the final emissions, since this will be written out
     setValueVector(mCurrYearEmissVector);

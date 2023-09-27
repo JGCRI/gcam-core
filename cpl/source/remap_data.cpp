@@ -34,7 +34,7 @@
  * \file remap_data.cpp
  * \brief This file remaps and aggregates data to pre-specified region, sector combinations
  *
- * \author Pralit Patel
+ * \author Pralit Patel and Alan Di Vittorio
  */
 
 #include "../include/remap_data.h"
@@ -439,11 +439,15 @@ size_t ReMapData::getArrayLength() const {
  *        diagnostics.
  * \details This method will produce column headers and seperate
  *          output with a comma.
+ *          The values will be rounded to 7 fixed decimal digits
  * \param aOut The output stream to send data to.
  * \return The given output stream for chaining
  */
 ostream& ReMapData::printAsTable( ostream& aOut ) const {
     const string DELIM = ",";
+
+    aOut << fixed << setprecision(7);
+
     if( !mIsInitialized ) {
         aOut << "No initialized." << endl;
     }

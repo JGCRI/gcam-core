@@ -34,7 +34,7 @@
  * \file carbon_scalers.cpp
  * \brief This file processes gridded data from E3SM into region/land type specific scalers
  *
- * \author Kate Calvin
+ * \author Kate Calvin and Alan Di Vittorio
  */
 
 #include <iostream>
