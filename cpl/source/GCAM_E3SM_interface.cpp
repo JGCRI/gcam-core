@@ -602,6 +602,8 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
 
            std::string regID;
            std::string landType;
+           std::string water_tag;
+           std::string mgmt_tag;
            std::vector<string> strs;
            int cdCount=0;
            for (int i=0; i<numScalars; i++) {
@@ -644,9 +646,14 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
                           BGCD_scaled.push_back(bgcd[cdenRow] * belowScalarData[i]);
                           cdensityYears.push_back(scalarYears[i]);
                           cdensityRegion.push_back(scalarRegion[i]);
-                          cdensityLandTech.push_back(scalarLandTech[i] + "_" +
-                              (*mAGCDensityData.getColumn("water")).mInOrderOutputNames[water_ind] + "_" + (*mAGCDensityData.getColumn("mgmt")).mInOrderOutputNames[mgmt_ind] );
-
+                          // do not append 'none' to the non-crop types
+                          water_tag = (*mAGCDensityData.getColumn("water")).mInOrderOutputNames[water_ind];
+                          mgmt_tag = (*mAGCDensityData.getColumn("mgmt")).mInOrderOutputNames[mgmt_ind];
+                          if(water_tag != "none" && mgmt_tag != "none") {
+                             cdensityLandTech.push_back( scalarLandTech[i] + "_" + water_tag + "_" + mgmt_tag );
+                          } else {
+                             cdensityLandTech.push_back( scalarLandTech[i] );
+                          }
                           //coupleLog << "cdCount=" << cdCount << "; cdenRow=" << cdenRow  <<  "; cdYears=" << cdensityYears[cdCount] << "; cdRegion=" << cdensityRegion[cdCount];
                           //coupleLog << "; cdLandTech=" << cdensityLandTech[cdCount] << "; AGCD_scaled=" << AGCD_scaled[cdCount] << "; BGCD_scaled=" << BGCD_scaled[cdCount] << endl;
 
