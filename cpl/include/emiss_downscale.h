@@ -55,7 +55,7 @@ public:
     // Convergence-based method
     void calculateCountryBaseYearEmissionData();
     void downscaleSurfaceCO2EmissionsFromRegion2Country(double *aCurrYearEmissions, int CurrentYear);
-    void downscaleSurfaceCO2EmissionsFromCountry2Grid();
+    void downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aCurrYearEmissions);
     
     // downscale international shipment and aircraft CO2 emission from global to grid
     void downscaleInternationalShipmentCO2Emissions(double *aCurrYearEmissions);

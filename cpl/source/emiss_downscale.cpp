@@ -846,7 +846,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
 }
 
 // Downscale emissions using the convergence method
-void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid()
+void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegionCurrYearEmissions)
 { // baseYearEmission need to be updated
     
     // First, set the values that were read in as the BaseYearEmissions
@@ -932,7 +932,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid()
                     auto currReg = mRegionIDName.find(regID);
                     int regIndex = (*currReg).second - 1;
 
-                    scalar += aCurrYearEmissions[regIndex] / mBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
+                    scalar += aRegionCurrYearEmissions[regIndex] / mBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
                     weight += mRegionWeights[std::make_pair(gridID, regID)];
                 }
                 scalar = scalar / weight; // normalized by the total eright
