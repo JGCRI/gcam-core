@@ -391,7 +391,7 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
                     for (int mon = 1; mon <= mNumMon; mon++)
                     {
                         valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
-                        mCountryBaseYearEmissions_sfc[ctyIndex] = mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight;
+                        mCountryBaseYearEmissions_sfc[ctyIndex] += mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight * 360/288 * 100 * 180/192 * 100 * 1000000 * 3600 * 24 * 365 / 1000 / 1000000; // unit conversion from kgCO2/m2/s to MTC
                     }
                 }
             }
@@ -689,8 +689,16 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
     // predict future GDP using the partial convergence methods
     for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
     {
+            
         ctyIndex = ctyID - 1;
         regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
+        
+        // check whether the value population in 2015 is 0 or not
+        yearIndex = ceil((2015 - 2015)/5);
+        if (mPOPCountryGCAM[ctyIndex][yearIndex] <= 0 | mGDPCountryGCAM[ctyIndex][yearIndex] <= 0)
+        {
+            continue;
+        }
         
         // calculate growth rate from 2090 to 2100
         yearIndex1 = ceil((2100 - 2015)/5);
@@ -731,10 +739,17 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         ctyIndex = ctyID - 1;
         regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
         
+        // check whether the value population in 2015 is 0 or not
+        yearIndex = ceil((2015 - 2015)/5);
+        if (mPOPCountryGCAM[ctyIndex][yearIndex] <= 0 | mGDPCountryGCAM[ctyIndex][yearIndex] <= 0)
+        {
+            continue;
+        }
+        
         for (int yearID = 2020; yearID <= 2100; yearID = yearID + 5)
         {
             yearIndex = ceil((yearID - 2015) / 5);
-            GDPCountryShare[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1];
+            GDPCountryShare[ctyIndex][yearIndex] = (PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1]) / GDPRegionIncrease[regIndex][yearIndex];
             PPPCountryGCAM[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] + GDPRegionDiff[regIndex][yearIndex] * GDPCountryShare[ctyIndex][yearIndex] / mPOPCountryGCAM[ctyIndex][yearIndex];
             mGDPCountryGCAM[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex];
         }
@@ -759,7 +774,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
     double EIGrowthRate = 0.0;
     double weight = 0.0; // Define the weight
     double tmp = 0.0;
-    double CO2RegionPred[mNumReg], CO2RegionShare[mNumReg], CO2RegionDiff[mNumReg];
+    double CO2RegionPred[mNumReg], CO2RegionDiff[mNumReg];
     double EICountryGCAM[mNumCty];
     
     int yearIndex = floor((currentYear - 2015)/5);   // need interploate
@@ -770,7 +785,6 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
     {
         regIndex = regID - 1;
         CO2RegionPred[regIndex] = 0.0;
-        CO2RegionShare[regIndex] = 0.0;
         CO2RegionDiff[regIndex] = 0.0;
     }
     
@@ -789,6 +803,13 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         ctyIndex = ctyID - 1;
         regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
         
+        // check whether the value population in 2015 is 0 or not
+        yearIndex1 = ceil((2015 - 2015)/5);
+        if (mGDPCountryGCAM[ctyIndex][yearIndex1] <= 0 | mCountryBaseYearEmissions_sfc[ctyIndex] <= 0)
+        {
+            continue;
+        }
+        
         // calculate growth rate from 2090 to 2100; need to check whether it is smaller than zero
         yearIndex1 = 2100;
         yearIndex2 = 2090;
@@ -797,13 +818,12 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         tmp =  (mSfcCO2RegionGCAM[regIndex][yearIndex1] / mGDPRegionGCAM[regIndex][yearIndex1]) * pow(tmp, 2150-2100);
         // calculate growth rate from 2015 to 2150
         yearIndex1 = 2015; //Base year index
-        EIGrowthRate = (tmp / (mCountryCurrYearEmissions_sfc[ctyIndex] / mGDPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
+        EIGrowthRate = (tmp / (mCountryBaseYearEmissions_sfc[ctyIndex] / mGDPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
         
-        EICountryGCAM[ctyIndex] = (mCountryCurrYearEmissions_sfc[regIndex] / mGDPCountryGCAM[regIndex][yearIndex1]) * pow(EIGrowthRate, currentYear - 2015);
+        EICountryGCAM[ctyIndex] = (mCountryBaseYearEmissions_sfc[ctyIndex] / mGDPCountryGCAM[regIndex][yearIndex1]) * pow(EIGrowthRate, currentYear - 2015);
         
         currentYearGDP = mGDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + mGDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
         CO2RegionPred[regIndex] = CO2RegionPred[regIndex] + EICountryGCAM[ctyIndex] * currentYearGDP;
-        CO2RegionShare[regIndex] = CO2RegionShare[regIndex] + EICountryGCAM[ctyIndex] * currentYearGDP;
     }
     
     // calculate regional difference between GCAM estimates and predicted as above
@@ -819,7 +839,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         regIndex = mCountry2RegionIDMapping[ctyIndex] - 1;
         
         currentYearGDP = mGDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + mGDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
-        mCountryCurrYearEmissions_sfc[ctyIndex] = EICountryGCAM[ctyIndex] * currentYearGDP + CO2RegionDiff[regIndex] * EICountryGCAM[ctyIndex] * currentYearGDP / CO2RegionShare[regIndex];
+        mCountryCurrYearEmissions_sfc[ctyIndex] = EICountryGCAM[ctyIndex] * currentYearGDP + CO2RegionDiff[regIndex] * EICountryGCAM[ctyIndex] * currentYearGDP / CO2RegionPred[regIndex];
     }
     
     return;
@@ -871,16 +891,63 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid()
                     auto currCty = mCountryIDName.find(ctyID);
                     int ctyIndex = (*currCty).second - 1;
                     
+                    if(mCountryBaseYearEmissions_sfc[ctyIndex] <= 0)
+                    {
+                        continue;
+                    }
+                    
                     scalar += mCountryCurrYearEmissions_sfc[ctyIndex] / mCountryBaseYearEmissions_sfc[ctyIndex] * mCountryWeights[std::make_pair(gridID, ctyID)];
                     weight += mCountryWeights[std::make_pair(gridID, ctyID)];
+                }
+                
+                if (weight > 0 & scalar > 0)
+                {
+                    scalar = scalar / weight; // normalized by the total eright
+                    for (int mon = 1; mon <= mNumMon; mon++)
+                    {
+                        valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
+                        mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
+                    }
+                }
+            }
+            
+            // downscale the gird with the country-level emisison of 0 using the region-level values
+            // Get region for this entry
+            auto tempGrid2 = mRegionMapping.find(gridID);
+            if (mRegionMapping.find(gridID) == mRegionMapping.end())
+            {
+                // Grid isn't found in the mapping. Currently, this probably means it is an ocean grid.
+                // TODO: set up loop only over land grids, either using the mRegionMapping or one of the files from ELM
+            }
+            else
+            {
+                vector<string> regInGrd = (*tempGrid2).second;
+                scalar = 0;
+                weight = 0;
+                // Loop over all regions this grid is mapped to and calculate the scalars
+                for (auto regID : regInGrd)
+                {
+                    // Calculate total as NPP/HR of the PFT * area of the PFT
+                    // pft value is fraction of grid cell
+                    auto currReg = mRegionIDName.find(regID);
+                    int regIndex = (*currReg).second - 1;
+
+                    scalar += aCurrYearEmissions[regIndex] / mBaseYearEmissions_sfc[regIndex] * mRegionWeights[std::make_pair(gridID, regID)];
+                    weight += mRegionWeights[std::make_pair(gridID, regID)];
                 }
                 scalar = scalar / weight; // normalized by the total eright
                 for (int mon = 1; mon <= mNumMon; mon++)
                 {
                     valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
-                    mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
+                    
+                    if(mCurrYearEmissVector[valIndex] <= 0)
+                    {
+                        mCurrYearEmissVector[valIndex] = mBaseYearEmissVector[valIndex] * scalar;
+                    }
                 }
+                
             }
+            
         }
     }
     
