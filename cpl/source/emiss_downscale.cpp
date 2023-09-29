@@ -504,8 +504,8 @@ void EmissDownscale::readPOPGDPCO2Data(std::string aPOPIIASAFileName, std::strin
         
         for (int regID = 1; regID <= mNumReg; regID++)
         {
-            regIndex = regID - 1;
-            yearIndex = ceil((yearID - 2015) / 5);
+            int regIndex = regID - 1;
+            int yearIndex = ceil((yearID - 2015) / 5);
             
             coupleLog << "IIASA POP Region " << regID  << " = " << mPOPRegionIIASA[regIndex][yearIndex] << endl;
             
@@ -526,8 +526,8 @@ void EmissDownscale::readPOPGDPCO2Data(std::string aPOPIIASAFileName, std::strin
         
         for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
         {
-            ctyIndex = ctyID - 1;
-            yearIndex = ceil((yearID - 2015) / 5);
+            int ctyIndex = ctyID - 1;
+            int yearIndex = ceil((yearID - 2015) / 5);
             
             coupleLog << "IIASA POP Country" << ctyID  << " = " << mPOPCountryIIASA[ctyIndex][yearIndex] << endl;
             
