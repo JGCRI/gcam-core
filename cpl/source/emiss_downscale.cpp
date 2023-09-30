@@ -350,6 +350,7 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
     int gridIndex = 0;   // Index used for Grid vectors
     int valIndex = 0;    // Index used for PFT x Grid vectors
     double weight = 0.0; // Define the total weight
+    double RegionBaseYearEmissions_sfc[mNumReg];
     
     for (int k = 1; k <= mNumLat; k++)
     {
@@ -398,8 +399,31 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
         }
     }
     
-    // Finally, re-set the value vector to be the final emissions, since this will be written out
-    setValueVector(mCurrYearEmissVector);
+    // initialize variables
+    for (int regID = 1; regID <= mNumReg; regID++)
+    {
+        int regIndex = regID - 1;
+        
+        RegionBaseYearEmissions_sfc[regIndex] = 0.0;
+    }
+    
+    // aggragate from country to region
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        int ctyIndex = ctyID - 1;
+        int regIndex = mCountry2RegionIDMapping[ctyID] - 1;
+        
+        RegionBaseYearEmissions_sfc[regIndex] += mCountryBaseYearEmissions_sfc[ctyIndex];
+    }
+    
+    // calculate GCAM country level CO2 emission in base year
+    for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+    {
+        int ctyIndex = ctyID - 1;
+        int regIndex = mCountry2RegionIDMapping[ctyID] - 1;
+        
+        mCountryBaseYearEmissions_sfc[regIndex] = mCountryBaseYearEmissions_sfc[regIndex] / RegionBaseYearEmissions_sfc[regIndex] * mBaseYearEmissions_sfc[regIndex];
+    }
     
     return;
 }
