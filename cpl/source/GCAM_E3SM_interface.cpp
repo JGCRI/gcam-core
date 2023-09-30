@@ -629,14 +629,24 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     
     if (aCO2DownscalingMethod == "Convergence")
     {
+        coupleLog << "Start Convergence-based downscaling" << endl;
+        surfaceCO2.readRegionMappingData(aRegionMappingFile);
+        coupleLog << "Finish read regional mapping data" << aRegionMappingFile << endl;
+        
+        coupleLog << "Start readCountryMappingData:" << aCountryMappingFile << endl;
         surfaceCO2.readCountryMappingData(aCountryMappingFile);
+        coupleLog << "Start readCountry2RegionMappingData:" << aCountry2RegionMappingFile << endl;
         surfaceCO2.readCountry2RegionMappingData(aCountry2RegionMappingFile);
+        coupleLog << "Start calculateCountryBaseYearEmissionData:" << endl;
         surfaceCO2.calculateCountryBaseYearEmissionData();
-        coupleLog << "Finish read country mapping data" << endl;
+        coupleLog << "Start rreadRegionBaseYearEmissionData" << endl;
         surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
         
+        coupleLog << "Start readPOPGDPCO2Data" << aCO2GCAMFileName << endl;
         surfaceCO2.readPOPGDPCO2Data(aPOPIIASAFileName, aGDPIIASAFileName, aPOPGCAMFileName, aGDPGCAMFileName, aCO2GCAMFileName);
+        coupleLog << "Start downscaleSurfaceCO2EmissionsFromRegion2Country" << endl;
         surfaceCO2.downscaleSurfaceCO2EmissionsFromRegion2Country(gcamoemiss_sfc, *aCurrYear);
+        coupleLog << "Start downscaleSurfaceCO2EmissionsFromCountry2Grid" << endl;
         surfaceCO2.downscaleSurfaceCO2EmissionsFromCountry2Grid(gcamoemiss_sfc);
     }
     else
