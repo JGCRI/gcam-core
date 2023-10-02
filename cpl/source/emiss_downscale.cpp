@@ -439,7 +439,8 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
             int yearIndex = ceil((yearID - 2015) / 5);
         
             coupleLog << "IIASA co2 EMISSION Country in 2015: " << ctyID  << " = " << mCountryBaseYearEmissions_sfc[ctyIndex] << endl;
-            coupleLog << "GCAM co2 EMISSION Country in 2015: " << regID  << " = " << mBaseYearEmissions_sfc[regIndex] << endl;
+            coupleLog << "IIASA co2 EMISSION Region in 2015: " << regID  << " = " << RegionBaseYearEmissions_sfc[regIndex] << endl;
+            coupleLog << "GCAM co2 EMISSION Region in 2015: " << regID  << " = " << mBaseYearEmissions_sfc[regIndex] << endl;
         }
     }
     
@@ -873,7 +874,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
     double EICountryGCAM[mNumCty];
     
     int yearIndex = floor((currentYear - 2015)/5);   // need interploate
-    weight = (currentYear - yearIndex1)/5;   // define the weight
+    weight = (currentYear - 2015 - yearIndex * 5)/5;   // define the weight
     
     //initize the variables
     for (int regID = 1; regID <= mNumReg; regID++)
