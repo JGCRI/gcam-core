@@ -937,8 +937,9 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
     }
     
     // calculate regional difference between GCAM estimates and predicted as above
-    for (int regIndex = 1; regIndex <= mNumReg; regIndex++)
+    for (int regID = 1; regID <= mNumReg; regID++)
     {
+        regIndex = regID - 1;
         CO2RegionDiff[regIndex] = aRegionCurrYearEmissions[regIndex]  - CO2RegionPred[regIndex];
     }
     
