@@ -752,7 +752,11 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         
         yearIndex = ceil((2015 - 2015)/5);
         mGDPCountryGCAM[ctyIndex][yearIndex] = mGDPCountryIIASA[ctyIndex][yearIndex] * mGDPRegionGCAM[regIndex][yearIndex] /mGDPRegionIIASA[regIndex][yearIndex];
-        PPPCountryGCAM[ctyIndex][yearIndex] = mGDPCountryGCAM[ctyIndex][yearIndex] / mPOPCountryGCAM[regIndex][yearIndex];
+        
+        if (mPOPCountryGCAM[ctyIndex][yearIndex] > 0)
+        {
+            PPPCountryGCAM[ctyIndex][yearIndex] = mGDPCountryGCAM[ctyIndex][yearIndex] / mPOPCountryGCAM[ctyIndex][yearIndex];
+        }
     }
     
     // predict future GDP using the partial convergence methods
