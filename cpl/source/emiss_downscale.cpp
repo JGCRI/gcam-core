@@ -344,6 +344,9 @@ void EmissDownscale::readRegionBaseYearEmissionData(std::string aFileName)
 // Calculate country Base year surface CO2 emission
 void EmissDownscale::calculateCountryBaseYearEmissionData()
 {
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::ERROR );
+    
     // First, set the values that were read in as the BaseYearEmissions
     mBaseYearEmissVector = getValueVector();
         
@@ -382,17 +385,29 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
                     weight += mCountryWeights[std::make_pair(gridID, ctyID)];
                 }
                 
-                for (auto ctyID : ctyInGrd)
+                if(weight > 0)
                 {
-                    // Calculate total as NPP/HR of the PFT * area of the PFT
-                    // pft value is fraction of grid cell
-                    auto currCty = mCountryIDName.find(ctyID);
-                    int ctyIndex = (*currCty).second - 1;
-                    
-                    for (int mon = 1; mon <= mNumMon; mon++)
+                    for (auto ctyID : ctyInGrd)
                     {
-                        valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
-                        mCountryBaseYearEmissions_sfc[ctyIndex] += mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight * 360/288 * 100 * 180/192 * 100 * 1000000 * 3600 * 24 * 365 / 1000 / 1000000; // unit conversion from kgCO2/m2/s to MTC
+                        // Calculate total as NPP/HR of the PFT * area of the PFT
+                        // pft value is fraction of grid cell
+                        auto currCty = mCountryIDName.find(ctyID);
+                        int ctyIndex = (*currCty).second - 1;
+                        
+                        for (int mon = 1; mon <= mNumMon; mon++)
+                        {
+                            valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
+                            mCountryBaseYearEmissions_sfc[ctyIndex] += mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight * 360/288 * 100 * 180/192 * 100 * 1000000 * 3600 * 24 * 365 / 1000 / 1000000; // unit conversion from kgCO2/m2/s to MTC
+                            
+                            if(ctyIndex == 5)
+                            {   
+                                coupleLog << "  2015: month " << mon << endl;
+                                coupleLog << "  2015: ctyIndex " << ctyIndex << endl;
+                                coupleLog << "  2015: mBaseYearEmissVector " << ctyID  << " = " << mBaseYearEmissVector[valIndex] << endl;
+                                coupleLog << "  2015: mCountryWeights[std::make_pair(gridID, ctyID) " << ctyID  << " = " << mCountryWeights[std::make_pair(gridID, ctyID)] << endl;
+                                coupleLog << "  2015: weight " << ctyID  << " = " << weight << endl;
+                            }
+                        }
                     }
                 }
             }
@@ -425,8 +440,7 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
         mCountryBaseYearEmissions_sfc[ctyIndex] = mCountryBaseYearEmissions_sfc[ctyIndex] / RegionBaseYearEmissions_sfc[regIndex] * mBaseYearEmissions_sfc[regIndex];
     }
     
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::ERROR );
+   
     coupleLog << "Country's base-year co2 emission:" << endl;
     for (int yearID = 2015; yearID <= 2015; yearID = yearID + 5)
     {

@@ -646,7 +646,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         coupleLog << "Start readPOPGDPCO2Data" << aCO2GCAMFileName << endl;
         surfaceCO2.readPOPGDPCO2Data(aPOPIIASAFileName, aGDPIIASAFileName, aPOPGCAMFileName, aGDPGCAMFileName, aCO2GCAMFileName);
         coupleLog << "Start downscaleSurfaceCO2EmissionsFromRegion2Country" << endl;
-        surfaceCO2.downscaleSurfaceCO2EmissionsFromRegion2Country(gcamoemiss_sfc, *aCurrYear);
+        surfaceCO2.downscaleSurfaceCO2EmissionsFromRegion2Country(gcamoemiss_sfc, *aCurrYear/10000);
         coupleLog << "Start downscaleSurfaceCO2EmissionsFromCountry2Grid" << endl;
         surfaceCO2.downscaleSurfaceCO2EmissionsFromCountry2Grid(gcamoemiss_sfc);
     }
