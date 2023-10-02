@@ -637,10 +637,11 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         surfaceCO2.readCountryMappingData(aCountryMappingFile);
         coupleLog << "Start readCountry2RegionMappingData:" << aCountry2RegionMappingFile << endl;
         surfaceCO2.readCountry2RegionMappingData(aCountry2RegionMappingFile);
+        coupleLog << "Start readRegionBaseYearEmissionData" << endl;
+        surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
         coupleLog << "Start calculateCountryBaseYearEmissionData:" << endl;
         surfaceCO2.calculateCountryBaseYearEmissionData();
-        coupleLog << "Start rreadRegionBaseYearEmissionData" << endl;
-        surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
+       
         
         coupleLog << "Start readPOPGDPCO2Data" << aCO2GCAMFileName << endl;
         surfaceCO2.readPOPGDPCO2Data(aPOPIIASAFileName, aGDPIIASAFileName, aPOPGCAMFileName, aGDPGCAMFileName, aCO2GCAMFileName);

@@ -438,8 +438,8 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
             int regIndex = regID - 1;
             int yearIndex = ceil((yearID - 2015) / 5);
         
-            coupleLog << "IIASA co2 EMISSION Country in 2015" << ctyID  << " = " << mCountryBaseYearEmissions_sfc[ctyIndex] << endl;
-            coupleLog << "GCAM co2 EMISSION Country in 2015" << regID  << " = " << mBaseYearEmissions_sfc[regIndex] << endl;
+            coupleLog << "IIASA co2 EMISSION Country in 2015: " << ctyID  << " = " << mCountryBaseYearEmissions_sfc[ctyIndex] << endl;
+            coupleLog << "GCAM co2 EMISSION Country in 2015: " << regID  << " = " << mBaseYearEmissions_sfc[regIndex] << endl;
         }
     }
     
