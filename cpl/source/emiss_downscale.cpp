@@ -871,6 +871,8 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
 // Downscale emissions using the convergence method
 void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aRegionCurrYearEmissions, int currentYear)
 {
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::ERROR );
     //calculate Future Country-level POP and GPP data
     downscalePOPFromRegion2Country();
     downscaleGDPFromRegion2Country();
@@ -888,7 +890,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
     double EICountryGCAM[mNumCty];
     
     int yearIndex = floor((currentYear - 2015)/5);   // need interploate
-    weight = (currentYear - 2015 - yearIndex * 5)/5;   // define the weight
+    weight = (currentYear - 2015 - yearIndex * 5)/5.0;   // define the weight
     
     //initize the variables
     for (int regID = 1; regID <= mNumReg; regID++)
@@ -913,6 +915,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         ctyIndex = ctyID - 1;
         regIndex = mCountry2RegionIDMapping[ctyID] - 1;
         
+        coupleLog << "predict future co2 emission" << ctyID  << " regIndex " << regIndex << endl;
         // check whether the value population in 2015 is 0 or not
         yearIndex1 = ceil((2015 - 2015)/5);
         if (mGDPCountryGCAM[ctyIndex][yearIndex1] <= 0 || mCountryBaseYearEmissions_sfc[ctyIndex] <= 0)
@@ -920,12 +923,20 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
             continue;
         }
         
+        coupleLog << "mGDPCountryGCAM[ctyIndex][yearIndex1]" << mGDPCountryGCAM[ctyIndex][yearIndex1] << endl;
+        coupleLog << "mCountryBaseYearEmissions_sfc[ctyIndex]" << mCountryBaseYearEmissions_sfc[ctyIndex] << endl;
+        
+        
         // calculate growth rate from 2090 to 2100; need to check whether it is smaller than zero
         yearIndex1 = ceil((2100 - 2015)/5);
         yearIndex2 = ceil((2090 - 2015)/5);
+        coupleLog << "mSfcCO2RegionGCAM[regIndex][yearIndex1]" << mSfcCO2RegionGCAM[regIndex][yearIndex1] << endl;
+        coupleLog << "mGDPRegionGCAM[regIndex][yearIndex1]" << mGDPRegionGCAM[regIndex][yearIndex1] << endl;
+        
         tmp = pow((mSfcCO2RegionGCAM[regIndex][yearIndex1] / mGDPRegionGCAM[regIndex][yearIndex1]) / (mSfcCO2RegionGCAM[regIndex][yearIndex2] / mGDPRegionGCAM[regIndex][yearIndex2]), 1.0/(10.0));
         // calculate GDP per capital in 2150
         tmp =  (mSfcCO2RegionGCAM[regIndex][yearIndex1] / mGDPRegionGCAM[regIndex][yearIndex1]) * pow(tmp, 2150-2100);
+        coupleLog << "tmp" << tmp << endl;
         // calculate growth rate from 2015 to 2150
         yearIndex1 = ceil((2015 - 2015)/5); //Base year index
         EIGrowthRate = (tmp / (mCountryBaseYearEmissions_sfc[ctyIndex] / mGDPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
@@ -934,7 +945,12 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         
         currentYearGDP = mGDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + mGDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
         CO2RegionPred[regIndex] = CO2RegionPred[regIndex] + EICountryGCAM[ctyIndex] * currentYearGDP;
+        
+        coupleLog << "EICountryGCAM" << EICountryGCAM << endl;
+        coupleLog << "currentYearGDP" << currentYearGDP << endl;
     }
+    
+    coupleLog << "CO2RegionPred[regIndex]" << CO2RegionPred[regIndex] << endl;
     
     // calculate regional difference between GCAM estimates and predicted as above
     for (int regID = 1; regID <= mNumReg; regID++)
@@ -954,11 +970,9 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
     }
     
     // Diagnostics outout for checking
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::ERROR );
     coupleLog << "Diagnostics: Country-level downscaled GCAM POP-GDP-CO2 data" << endl;
     
-    for (int yearID = 2015; yearID <= 2100; yearID = yearID + 5)
+    for (int yearID = 2015; yearID <= 2015; yearID = yearID + 5)
     {
         
         for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
