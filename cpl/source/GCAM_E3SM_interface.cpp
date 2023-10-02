@@ -270,7 +270,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 
             // If the e3smYear is a GCAM model period, then we need to increment GCAM's model period
             // unless this is the spinup loop
-            if ( modeltime->isModelYear( e3smYear ) & spinup == 0) {
+            if ( modeltime->isModelYear( e3smYear ) && spinup == 0) {
                 gcamPeriod = gcamPeriod + 1;
             }
 
@@ -327,7 +327,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             coupleLog.precision(20);
        
             // be sure to reset any data set previously
-            if (e3smYear == 2015 & spinup == 0) {
+            if (e3smYear == 2015 && spinup == 0) {
                 EmissDownscale surfaceCO2(*aNumLon, *aNumLat, 12, 1, *aNumReg, *aNumCty, *aNumSector, *aNumPeriod); // Emissions data is monthly now
                 
                 coupleLog << aBaseCO2GcamFileName << endl;

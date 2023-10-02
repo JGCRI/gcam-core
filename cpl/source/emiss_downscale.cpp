@@ -422,7 +422,25 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
         int ctyIndex = ctyID - 1;
         int regIndex = mCountry2RegionIDMapping[ctyID] - 1;
         
-        mCountryBaseYearEmissions_sfc[regIndex] = mCountryBaseYearEmissions_sfc[regIndex] / RegionBaseYearEmissions_sfc[regIndex] * mBaseYearEmissions_sfc[regIndex];
+        mCountryBaseYearEmissions_sfc[ctyIndex] = mCountryBaseYearEmissions_sfc[ctyIndex] / RegionBaseYearEmissions_sfc[regIndex] * mBaseYearEmissions_sfc[regIndex];
+    }
+    
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::ERROR );
+    coupleLog << "Country's base-year co2 emission:" << endl;
+    for (int yearID = 2015; yearID <= 2015; yearID = yearID + 5)
+    {
+        
+        for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
+        {
+            int ctyIndex = ctyID - 1;
+            int regID = mCountry2RegionIDMapping[ctyID];
+            int regIndex = regID - 1;
+            int yearIndex = ceil((yearID - 2015) / 5);
+        
+            coupleLog << "IIASA co2 EMISSION Country in 2015" << ctyID  << " = " << mCountryBaseYearEmissions_sfc[ctyIndex] << endl;
+            coupleLog << "GCAM co2 EMISSION Country in 2015" << regID  << " = " << mBaseYearEmissions_sfc[regIndex] << endl;
+        }
     }
     
     return;
@@ -772,7 +790,7 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         
         // check whether the value population in 2015 is 0 or not
         yearIndex = ceil((2015 - 2015)/5);
-        if (mPOPCountryGCAM[ctyIndex][yearIndex] <= 0 | mGDPCountryGCAM[ctyIndex][yearIndex] <= 0)
+        if (mPOPCountryGCAM[ctyIndex][yearIndex] <= 0 || mGDPCountryGCAM[ctyIndex][yearIndex] <= 0)
         {
             continue;
         }
@@ -818,7 +836,7 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         
         // check whether the value population in 2015 is 0 or not
         yearIndex = ceil((2015 - 2015)/5);
-        if (mPOPCountryGCAM[ctyIndex][yearIndex] <= 0 | mGDPCountryGCAM[ctyIndex][yearIndex] <= 0)
+        if (mPOPCountryGCAM[ctyIndex][yearIndex] <= 0 || mGDPCountryGCAM[ctyIndex][yearIndex] <= 0)
         {
             continue;
         }
@@ -882,19 +900,19 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         
         // check whether the value population in 2015 is 0 or not
         yearIndex1 = ceil((2015 - 2015)/5);
-        if (mGDPCountryGCAM[ctyIndex][yearIndex1] <= 0 | mCountryBaseYearEmissions_sfc[ctyIndex] <= 0)
+        if (mGDPCountryGCAM[ctyIndex][yearIndex1] <= 0 || mCountryBaseYearEmissions_sfc[ctyIndex] <= 0)
         {
             continue;
         }
         
         // calculate growth rate from 2090 to 2100; need to check whether it is smaller than zero
-        yearIndex1 = 2100;
-        yearIndex2 = 2090;
+        yearIndex1 = ceil((2100 - 2015)/5);
+        yearIndex2 = ceil((2090 - 2015)/5);
         tmp = pow((mSfcCO2RegionGCAM[regIndex][yearIndex1] / mGDPRegionGCAM[regIndex][yearIndex1]) / (mSfcCO2RegionGCAM[regIndex][yearIndex2] / mGDPRegionGCAM[regIndex][yearIndex2]), 1.0/(10.0));
         // calculate GDP per capital in 2150
         tmp =  (mSfcCO2RegionGCAM[regIndex][yearIndex1] / mGDPRegionGCAM[regIndex][yearIndex1]) * pow(tmp, 2150-2100);
         // calculate growth rate from 2015 to 2150
-        yearIndex1 = 2015; //Base year index
+        yearIndex1 = ceil((2015 - 2015)/5); //Base year index
         EIGrowthRate = (tmp / (mCountryBaseYearEmissions_sfc[ctyIndex] / mGDPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
         
         EICountryGCAM[ctyIndex] = (mCountryBaseYearEmissions_sfc[ctyIndex] / mGDPCountryGCAM[regIndex][yearIndex1]) * pow(EIGrowthRate, currentYear - 2015);
@@ -996,7 +1014,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aRegio
                     weight += mCountryWeights[std::make_pair(gridID, ctyID)];
                 }
                 
-                if (weight > 0 & scalar > 0)
+                if (weight > 0 && scalar > 0)
                 {
                     scalar = scalar / weight; // normalized by the total eright
                     for (int mon = 1; mon <= mNumMon; mon++)
