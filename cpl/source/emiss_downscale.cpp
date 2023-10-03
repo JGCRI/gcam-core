@@ -786,7 +786,7 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         for (int yearID = 2020; yearID <= 2100; yearID = yearID + 5)
         {
             yearIndex = ceil((yearID - 2015) / 5);
-            PPPCountryGCAM[ctyIndex][yearIndex] = (mGDPCountryGCAM[ctyIndex][yearIndex1] / mPOPCountryGCAM[regIndex][yearIndex1]) * pow(PPPGrowthRate, yearID - 2015);
+            PPPCountryGCAM[ctyIndex][yearIndex] = (mGDPCountryGCAM[ctyIndex][yearIndex1] / mPOPCountryGCAM[ctyIndex][yearIndex1]) * pow(PPPGrowthRate, yearID - 2015);
             GDPRegionPred[regIndex][yearIndex] = GDPRegionPred[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex];
             GDPRegionIncrease[regIndex][yearIndex] = GDPRegionIncrease[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1];
             
