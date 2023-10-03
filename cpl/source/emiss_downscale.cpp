@@ -843,8 +843,7 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
             
             
             GDPCountryShare[ctyIndex][yearIndex] = (PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1]) / GDPRegionIncrease[regIndex][yearIndex];
-            PPPCountryGCAM[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] + GDPRegionDiff[regIndex][yearIndex] * GDPCountryShare[ctyIndex][yearIndex] / mPOPCountryGCAM[ctyIndex][yearIndex];
-            mGDPCountryGCAM[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex];
+            mGDPCountryGCAM[ctyIndex][yearIndex] = (PPPCountryGCAM[ctyIndex][yearIndex] + GDPRegionDiff[regIndex][yearIndex] * GDPCountryShare[ctyIndex][yearIndex] / mPOPCountryGCAM[ctyIndex][yearIndex]) * mPOPCountryGCAM[ctyIndex][yearIndex];
             
 
             coupleLog << "GDPCountryShare[ctyIndex][yearIndex] " << GDPCountryShare[ctyIndex][yearIndex]  << endl;
