@@ -777,7 +777,11 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         
         // calculate growth rate from 2015 to 2150
         yearIndex1 = ceil((2015 - 2015)/5); //Base year index
-        PPPGrowthRate = pow(tmp / (mGDPCountryGCAM[regIndex][yearIndex1] / mPOPCountryGCAM[regIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
+        PPPGrowthRate = pow(tmp / (mGDPCountryGCAM[ctyIndex][yearIndex1] / mPOPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
+        
+        coupleLog << "ctyIndex" << ctyIndex << endl;
+        coupleLog << "mGDPCountryGCAM[ctyIndex][yearIndex1]" << mGDPCountryGCAM[ctyIndex][yearIndex1] << endl;
+        coupleLog << "mPOPCountryGCAM[ctyIndex][yearIndex1]" << mPOPCountryGCAM[ctyIndex][yearIndex1] << endl;
         
         for (int yearID = 2020; yearID <= 2100; yearID = yearID + 5)
         {
