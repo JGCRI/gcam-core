@@ -1,5 +1,5 @@
-/*
- * LEGAL NOTICE
+.0/*
+ * 0LEGAL NOTICE
  * This computer software was prepared by Battelle Memorial Institute,
  * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
  * with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
@@ -398,12 +398,6 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
                         {
                             valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
                             mCountryBaseYearEmissions_sfc[ctyIndex] += mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight * 360/288 * 100 * 180/192 * 100 * 1000000 * 3600 * 24 * 365 / 1000 / 1000000; // unit conversion from kgCO2/m2/s to MTC
-                            
-                            coupleLog << "  2015: month " << mon << endl;
-                            coupleLog << "  2015: ctyIndex " << ctyIndex << endl;
-                            coupleLog << "  2015: mBaseYearEmissVector " << ctyID  << " = " << mBaseYearEmissVector[valIndex] << endl;
-                            coupleLog << "  2015: mCountryWeights[std::make_pair(gridID, ctyID) " << ctyID  << " = " << mCountryWeights[std::make_pair(gridID, ctyID)] << endl;
-                            coupleLog << "  2015: weight " << ctyID  << " = " << weight << endl;
                         }
                     }
                 }
@@ -790,7 +784,11 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
             yearIndex = ceil((yearID - 2015) / 5);
             PPPCountryGCAM[ctyIndex][yearIndex] = (mGDPCountryGCAM[ctyIndex][yearIndex1] / mPOPCountryGCAM[regIndex][yearIndex1]) * pow(PPPGrowthRate, yearID - 2015);
             GDPRegionPred[regIndex][yearIndex] = GDPRegionPred[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex];
-            GDPRegionIncrease[regIndex][yearIndex] = GDPRegionIncrease[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1];;
+            GDPRegionIncrease[regIndex][yearIndex] = GDPRegionIncrease[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1];
+            
+            coupleLog << "PPPCountryGCAM[ctyIndex][yearIndex]" << PPPCountryGCAM[ctyIndex][yearIndex] << endl;
+            coupleLog << "GDPRegionPred[regIndex][yearIndex]" << GDPRegionPred[regIndex][yearIndex] << endl;
+            coupleLog << "GDPRegionIncrease[regIndex][yearIndex]" << GDPRegionIncrease[regIndex][yearIndex] << endl;
         }
         
         coupleLog << "PPPGrowthRate" << PPPGrowthRate << endl;
