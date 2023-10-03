@@ -344,9 +344,6 @@ void EmissDownscale::readRegionBaseYearEmissionData(std::string aFileName)
 // Calculate country Base year surface CO2 emission
 void EmissDownscale::calculateCountryBaseYearEmissionData()
 {
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::ERROR );
-    
     // First, set the values that were read in as the BaseYearEmissions
     mBaseYearEmissVector = getValueVector();
         
@@ -397,7 +394,7 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
                         for (int mon = 1; mon <= mNumMon; mon++)
                         {
                             valIndex = (mon - 1) * mNumLon * mNumLat + (k - 1) * mNumLon + (j - 1);
-                            mCountryBaseYearEmissions_sfc[ctyIndex] += mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight * 360/288 * 100 * 180/192 * 100 * 1000000 * 3600 * 24 * 365 / 1000 / 1000000; // unit conversion from kgCO2/m2/s to MTC
+                            mCountryBaseYearEmissions_sfc[ctyIndex] += mBaseYearEmissVector[valIndex] * mCountryWeights[std::make_pair(gridID, ctyID)] / weight * 360.0/288.0 * 100.0 * 180.0/192.0 * 100.0 * 1000000.0 * 3600.0 * 24.0 * 365.0 / 1000.0 / 1000000.0; // unit conversion from kgCO2/m2/s to MTC
                         }
                     }
                 }
@@ -431,31 +428,13 @@ void EmissDownscale::calculateCountryBaseYearEmissionData()
         mCountryBaseYearEmissions_sfc[ctyIndex] = mCountryBaseYearEmissions_sfc[ctyIndex] / RegionBaseYearEmissions_sfc[regIndex] * mBaseYearEmissions_sfc[regIndex];
     }
     
-   
-    coupleLog << "Country's base-year co2 emission:" << endl;
-    for (int yearID = 2015; yearID <= 2015; yearID = yearID + 5)
-    {
-        
-        for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
-        {
-            int ctyIndex = ctyID - 1;
-            int regID = mCountry2RegionIDMapping[ctyID];
-            int regIndex = regID - 1;
-            int yearIndex = ceil((yearID - 2015) / 5);
-        
-            coupleLog << "IIASA co2 EMISSION Country in 2015: " << ctyID  << " = " << mCountryBaseYearEmissions_sfc[ctyIndex] << endl;
-            coupleLog << "IIASA co2 EMISSION Region in 2015: " << regID  << " = " << RegionBaseYearEmissions_sfc[regIndex] << endl;
-            coupleLog << "GCAM co2 EMISSION Region in 2015: " << regID  << " = " << mBaseYearEmissions_sfc[regIndex] << endl;
-        }
-    }
-    
     return;
 }
 // Read POP, GDP and CO2 emission Data from files
 void EmissDownscale::readPOPGDPCO2Data(std::string aPOPIIASAFileName, std::string aGDPIIASAFileName, std::string aPOPGCAMFileName, std::string aGDPGCAMFileName, std::string aCO2GCAMFileName)
 {
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::ERROR );
+    coupleLog.setLevel( ILogger::NOTICE );
     coupleLog << "Start POP IIASA read" << endl;
     
     string str;
@@ -697,9 +676,6 @@ void EmissDownscale::downscalePOPFromRegion2Country()
 // Downscale GDP using the convergence method
 void EmissDownscale::downscaleGDPFromRegion2Country()
 {
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::ERROR );
-    
     int regIndex = 0;
     int ctyIndex = 0;
     int yearIndex = 0;
@@ -779,9 +755,6 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         yearIndex1 = ceil((2015 - 2015)/5); //Base year index
         PPPGrowthRate = pow(tmp / (mGDPCountryGCAM[ctyIndex][yearIndex1] / mPOPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
         
-        coupleLog << "ctyIndex" << ctyIndex << endl;
-        coupleLog << "mGDPCountryGCAM[ctyIndex][yearIndex1]" << mGDPCountryGCAM[ctyIndex][yearIndex1] << endl;
-        coupleLog << "mPOPCountryGCAM[ctyIndex][yearIndex1]" << mPOPCountryGCAM[ctyIndex][yearIndex1] << endl;
         
         for (int yearID = 2020; yearID <= 2100; yearID = yearID + 5)
         {
@@ -789,15 +762,7 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
             PPPCountryGCAM[ctyIndex][yearIndex] = (mGDPCountryGCAM[ctyIndex][yearIndex1] / mPOPCountryGCAM[ctyIndex][yearIndex1]) * pow(PPPGrowthRate, yearID - 2015);
             GDPRegionPred[regIndex][yearIndex] = GDPRegionPred[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex];
             GDPRegionIncrease[regIndex][yearIndex] = GDPRegionIncrease[regIndex][yearIndex] + PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1];
-            
-            coupleLog << "yearIndex" << yearIndex << endl;
-            coupleLog << "PPPCountryGCAM[ctyIndex][yearIndex]" << PPPCountryGCAM[ctyIndex][yearIndex] << endl;
-            coupleLog << "GDPRegionPred[regIndex][yearIndex]" << GDPRegionPred[regIndex][yearIndex] << endl;
-            coupleLog << "GDPRegionIncrease[regIndex][yearIndex]" << GDPRegionIncrease[regIndex][yearIndex] << endl;
         }
-        
-        coupleLog << "PPPGrowthRate" << PPPGrowthRate << endl;
-        coupleLog << "tmp" << tmp << endl;
     }
     
     // calculate regional difference between GCAM estimates and predicted as above
@@ -829,26 +794,8 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         {
             yearIndex = ceil((yearID - 2015) / 5);
             
-            coupleLog << "yearIndex  " << yearIndex << endl;
-            coupleLog << "ctyIndex " << ctyIndex << endl;
-            coupleLog << "regIndex " << regIndex << endl;
-            coupleLog << "PPPCountryGCAM[ctyIndex][yearIndex] " << PPPCountryGCAM[ctyIndex][yearIndex] << endl;
-            coupleLog << "mPOPCountryGCAM[ctyIndex][yearIndex] " << mPOPCountryGCAM[ctyIndex][yearIndex] << endl;
-            coupleLog << "PPPCountryGCAM[ctyIndex][yearIndex-1] " << PPPCountryGCAM[ctyIndex][yearIndex-1] << endl;
-            coupleLog << "mPOPCountryGCAM[ctyIndex][yearIndex-1] " << mPOPCountryGCAM[ctyIndex][yearIndex-1] << endl;
-            coupleLog << "GDPRegionIncrease[regIndex][yearIndex] " <<GDPRegionIncrease[regIndex][yearIndex] << endl;
-            coupleLog << "GDPRegionDiff[regIndex][yearIndex] " << GDPRegionDiff[regIndex][yearIndex] << endl;
-            coupleLog << "mGDPRegionGCAM[regIndex][yearIndex]  " << mGDPRegionGCAM[regIndex][yearIndex]  << endl;
-            coupleLog << "GDPRegionPred[regIndex][yearIndex]  " << GDPRegionPred[regIndex][yearIndex]  << endl;
-            
-            
             GDPCountryShare[ctyIndex][yearIndex] = (PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1]) / GDPRegionIncrease[regIndex][yearIndex];
             mGDPCountryGCAM[ctyIndex][yearIndex] = (PPPCountryGCAM[ctyIndex][yearIndex] + GDPRegionDiff[regIndex][yearIndex] * GDPCountryShare[ctyIndex][yearIndex] / mPOPCountryGCAM[ctyIndex][yearIndex]) * mPOPCountryGCAM[ctyIndex][yearIndex];
-            
-
-            coupleLog << "GDPCountryShare[ctyIndex][yearIndex] " << GDPCountryShare[ctyIndex][yearIndex]  << endl;
-            coupleLog << "PPPCountryGCAM[ctyIndex][yearIndex] " << PPPCountryGCAM[ctyIndex][yearIndex]  << endl;
-            coupleLog << "mGDPCountryGCAM[ctyIndex][yearIndex] " << mGDPCountryGCAM[ctyIndex][yearIndex]  << endl;
         }
     }
     
@@ -858,8 +805,6 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
 // Downscale emissions using the convergence method
 void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aRegionCurrYearEmissions, int currentYear)
 {
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::ERROR );
     //calculate Future Country-level POP and GPP data
     downscalePOPFromRegion2Country();
     downscaleGDPFromRegion2Country();
@@ -879,10 +824,6 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
     int yearIndex = floor((currentYear - 2015)/5);   // need interploate
     weight = (currentYear - 2015 - yearIndex * 5)/5.0;   // define the weight
     
-   
-    coupleLog << "currentYear" << currentYear << endl;
-    coupleLog << "yearIndex" << yearIndex  << " weight " << weight << endl;
-   
     //initize the variables
     for (int regID = 1; regID <= mNumReg; regID++)
     {
@@ -906,28 +847,22 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         ctyIndex = ctyID - 1;
         regIndex = mCountry2RegionIDMapping[ctyID] - 1;
         
-        coupleLog << "predict future co2 emission" << ctyID  << " regIndex " << regIndex << endl;
         // check whether the value population in 2015 is 0 or not
         yearIndex1 = ceil((2015 - 2015)/5);
         if (mGDPCountryGCAM[ctyIndex][yearIndex1] <= 0 || mCountryBaseYearEmissions_sfc[ctyIndex] <= 0)
         {
             continue;
         }
-        
-        coupleLog << "mGDPCountryGCAM[ctyIndex][yearIndex1]" << mGDPCountryGCAM[ctyIndex][yearIndex1] << endl;
-        coupleLog << "mCountryBaseYearEmissions_sfc[ctyIndex]" << mCountryBaseYearEmissions_sfc[ctyIndex] << endl;
-        
+       
         
         // calculate growth rate from 2090 to 2100; need to check whether it is smaller than zero
         yearIndex1 = ceil((2100 - 2015)/5);
         yearIndex2 = ceil((2090 - 2015)/5);
-        coupleLog << "mSfcCO2RegionGCAM[regIndex][yearIndex1]" << mSfcCO2RegionGCAM[regIndex][yearIndex1] << endl;
-        coupleLog << "mGDPRegionGCAM[regIndex][yearIndex1]" << mGDPRegionGCAM[regIndex][yearIndex1] << endl;
         
         tmp = pow((mSfcCO2RegionGCAM[regIndex][yearIndex1] / mGDPRegionGCAM[regIndex][yearIndex1]) / (mSfcCO2RegionGCAM[regIndex][yearIndex2] / mGDPRegionGCAM[regIndex][yearIndex2]), 1.0/(10.0));
         // calculate GDP per capital in 2150
         tmp =  (mSfcCO2RegionGCAM[regIndex][yearIndex1] / mGDPRegionGCAM[regIndex][yearIndex1]) * pow(tmp, 2150-2100);
-        coupleLog << "tmp" << tmp << endl;
+
         // calculate growth rate from 2015 to 2150
         yearIndex1 = ceil((2015 - 2015)/5); //Base year index
         EIGrowthRate = pow(tmp / (mCountryBaseYearEmissions_sfc[ctyIndex] / mGDPCountryGCAM[ctyIndex][yearIndex1]), 1.0/(2150.0 - 2015.0));
@@ -936,16 +871,7 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         
         currentYearGDP = mGDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + mGDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
         CO2RegionPred[regIndex] = CO2RegionPred[regIndex] + EICountryGCAM[ctyIndex] * currentYearGDP;
-        
-        coupleLog << "EICountryGCAM" << EICountryGCAM[ctyIndex] << endl;
-        coupleLog << "currentYearGDP" << currentYearGDP << endl;
-        coupleLog << "mGDPCountryGCAM[ctyIndex][yearIndex]" << mGDPCountryGCAM[ctyIndex][yearIndex] << endl;
-        coupleLog << "mGDPCountryGCAM[ctyIndex][yearIndex+1]" << mGDPCountryGCAM[ctyIndex][yearIndex+1] << endl;
-        coupleLog << "mPOPCountryGCAM[ctyIndex][yearIndex]" << mPOPCountryGCAM[ctyIndex][yearIndex] << endl;
-        coupleLog << "mPOPCountryGCAM[ctyIndex][yearIndex+1]" << mPOPCountryGCAM[ctyIndex][yearIndex+1] << endl;
     }
-    
-    coupleLog << "CO2RegionPred[regIndex]" << CO2RegionPred[regIndex] << endl;
     
     // calculate regional difference between GCAM estimates and predicted as above
     for (int regID = 1; regID <= mNumReg; regID++)
@@ -962,23 +888,6 @@ void EmissDownscale::downscaleSurfaceCO2EmissionsFromRegion2Country(double *aReg
         
         currentYearGDP = mGDPCountryGCAM[ctyIndex][yearIndex] * (1-weight) + mGDPCountryGCAM[ctyIndex][yearIndex+1] * weight;
         mCountryCurrYearEmissions_sfc[ctyIndex] = EICountryGCAM[ctyIndex] * currentYearGDP + CO2RegionDiff[regIndex] * EICountryGCAM[ctyIndex] * currentYearGDP / CO2RegionPred[regIndex];
-    }
-    
-    // Diagnostics outout for checking
-    coupleLog << "Diagnostics: Country-level downscaled GCAM POP-GDP-CO2 data" << endl;
-    
-    for (int yearID = 2015; yearID <= 2100; yearID = yearID + 5)
-    {
-        
-        for (int ctyID = 1; ctyID <= mNumCty; ctyID++)
-        {
-            ctyIndex = ctyID - 1;
-            yearIndex = ceil((yearID - 2015) / 5);
-            
-            coupleLog << "Downscaled GCAM POP Country" << ctyID  << " = " << mPOPCountryGCAM[ctyIndex][yearIndex] << endl;
-            coupleLog << "Downscaled GCAM GDP Country" << ctyID  << " = " << mGDPCountryGCAM[ctyIndex][yearIndex] << endl;
-            coupleLog << "GCAM Surface CO2 emission Country in current year" << ctyID  << " = " << mCountryCurrYearEmissions_sfc[ctyIndex] << endl;
-        }
     }
     
     return;
