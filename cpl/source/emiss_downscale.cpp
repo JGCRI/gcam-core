@@ -1,5 +1,5 @@
-.0/*
- * 0LEGAL NOTICE
+/*
+ * LEGAL NOTICE
  * This computer software was prepared by Battelle Memorial Institute,
  * hereinafter the Contractor, under Contract No. DE-AC05-76RL0 1830
  * with the Department of Energy (DOE). NEITHER THE GOVERNMENT NOR THE
