@@ -828,12 +828,25 @@ void EmissDownscale::downscaleGDPFromRegion2Country()
         for (int yearID = 2020; yearID <= 2100; yearID = yearID + 5)
         {
             yearIndex = ceil((yearID - 2015) / 5);
+            
+            coupleLog << "yearIndex  " << yearIndex << endl;
+            coupleLog << "ctyIndex " << ctyIndex << endl;
+            coupleLog << "regIndex " << regIndex << endl;
+            coupleLog << "PPPCountryGCAM[ctyIndex][yearIndex] " << PPPCountryGCAM[ctyIndex][yearIndex] << endl;
+            coupleLog << "mPOPCountryGCAM[ctyIndex][yearIndex] " << mPOPCountryGCAM[ctyIndex][yearIndex] << endl;
+            coupleLog << "PPPCountryGCAM[ctyIndex][yearIndex-1] " << PPPCountryGCAM[ctyIndex][yearIndex-1] << endl;
+            coupleLog << "mPOPCountryGCAM[ctyIndex][yearIndex-1] " << mPOPCountryGCAM[ctyIndex][yearIndex-1] << endl;
+            coupleLog << "GDPRegionIncrease[regIndex][yearIndex] " <<GDPRegionIncrease[regIndex][yearIndex] << endl;
+            coupleLog << "GDPRegionDiff[regIndex][yearIndex] " << GDPRegionDiff[regIndex][yearIndex] << endl;
+            coupleLog << "mGDPRegionGCAM[regIndex][yearIndex]  " << mGDPRegionGCAM[regIndex][yearIndex]  << endl;
+            coupleLog << "GDPRegionPred[regIndex][yearIndex]  " << GDPRegionPred[regIndex][yearIndex]  << endl;
+            
+            
             GDPCountryShare[ctyIndex][yearIndex] = (PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex] - PPPCountryGCAM[ctyIndex][yearIndex-1] * mPOPCountryGCAM[ctyIndex][yearIndex-1]) / GDPRegionIncrease[regIndex][yearIndex];
             PPPCountryGCAM[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] + GDPRegionDiff[regIndex][yearIndex] * GDPCountryShare[ctyIndex][yearIndex] / mPOPCountryGCAM[ctyIndex][yearIndex];
             mGDPCountryGCAM[ctyIndex][yearIndex] = PPPCountryGCAM[ctyIndex][yearIndex] * mPOPCountryGCAM[ctyIndex][yearIndex];
             
-            coupleLog << "yearIndex  " << yearIndex << endl;
-            coupleLog << "ctyIndex " << ctyIndex << endl;
+
             coupleLog << "GDPCountryShare[ctyIndex][yearIndex] " << GDPCountryShare[ctyIndex][yearIndex]  << endl;
             coupleLog << "PPPCountryGCAM[ctyIndex][yearIndex] " << PPPCountryGCAM[ctyIndex][yearIndex]  << endl;
             coupleLog << "mGDPCountryGCAM[ctyIndex][yearIndex] " << mGDPCountryGCAM[ctyIndex][yearIndex]  << endl;
