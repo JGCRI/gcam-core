@@ -18,3 +18,4 @@ wholesale gas,wholesale gas,wholesale gas,gas pipeline,1,1,1
 delivered gas,delivered gas,delivered gas,gas pipeline,1,1,1
 refined liquids enduse,refined liquids enduse,refined liquids enduse,refining,1,1,1
 refined liquids industrial,refined liquids industrial,refined liquids industrial,refining,1,1,1
+backup_electricity,hydrogen,hydrogen combustion turbine,H2 industrial,0.377,0.377,0.428

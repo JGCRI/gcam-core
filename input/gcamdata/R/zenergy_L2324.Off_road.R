@@ -215,7 +215,7 @@ module_energy_L2324.Off_road <- function(command, ...) {
       complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, subsector, technology, year) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(share.weight = approx_fun(year, value, rule = 1)) %>%
+      mutate(share.weight = round(approx_fun(year, value, rule = 1), energy.DIGITS_SHRWT)) %>%
       ungroup %>%
       filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       rename(sector.name = supplysector,

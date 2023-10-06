@@ -13,7 +13,7 @@ other industrial energy use,electricity,electricity,elect_td_ind,,0.934196861,1,
 other industrial energy use,gas,gas,wholesale gas,,0.825830025,0.884,0.898,0.913,0.926,0.941,0.955,0.969,0.969
 other industrial energy use,gas,gas cogen,wholesale gas,electricity,0.563320707,0.603,0.612,0.621,0.63,0.64,0.649,0.659,0.659
 other industrial energy use,hydrogen,hydrogen,H2 industrial,,1,1,1,1.015,1.03,1.046,1.062,1.078,1.078
-other industrial energy use,hydrogen,hydrogen cogen,H2 wholesale delivery,electricity,0.457,0.457,0.457,0.464,0.471,0.478,0.485,0.492,0.492
+other industrial energy use,hydrogen,hydrogen cogen,H2 wholesale delivery,electricity,0.563320707,0.603,0.612,0.621,0.63,0.64,0.649,0.659,0.659
 other industrial energy use,refined liquids,refined liquids,refined liquids industrial,,0.917381318,0.982,1.001,1.018,1.033,1.047,1.062,1.077,1.077
 other industrial energy use,refined liquids,refined liquids cogen,refined liquids industrial,electricity,0.565189101,0.605,0.614,0.623,0.632,0.642,0.652,0.662,0.662
 other industrial feedstocks,coal,coal,delivered coal,,1,1,1,1,1,1,1,1,1

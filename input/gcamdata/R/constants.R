@@ -8,7 +8,7 @@ COMMENT_CHAR             <- "#"
 UNDER_TIMESHIFT          <- FALSE
 YEAR_PATTERN             <- "^(1|2)[0-9]{3}$"   # a 1 or 2 followed by three digits, and nothing else
 LOGIT_TYPE_COLNAME       <- "logit.type"        # will be removed by test code before old-new comparison
-DISABLED_MODULES         <- "NONE"
+DISABLED_MODULES         <- "NONE"              # Any functions containing this case-sensitive string will be disabled. "none" will disable module_gcamusa_L2231.nonewcoal
 
 
 # Flags ======================================================================

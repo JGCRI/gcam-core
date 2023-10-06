@@ -16,7 +16,7 @@ H2 liquid truck,H2 liquid truck,start-year,,0
 H2 wholesale delivery,H2 pipeline,start-year,,0
 H2 wholesale delivery,H2 liquid truck,start-year,,0
 H2 industrial,H2 delivery,start-year,,0
-H2 industrial,forecourt production,start-year,,0
+H2 industrial,onsite production,start-year,,0
 H2 retail delivery,H2 retail delivery,start-year,,0
 H2 wholesale dispensing,H2 delivery,start-year,,0
 H2 wholesale dispensing,forecourt production,start-year,,0
@@ -33,7 +33,7 @@ H2 liquid truck,H2 liquid truck,2020,,1
 H2 wholesale delivery,H2 pipeline,2020,,1
 H2 wholesale delivery,H2 liquid truck,2020,,1
 H2 industrial,H2 delivery,2020,,1
-H2 industrial,forecourt production,2020,,1
+H2 industrial,onsite production,2020,,1
 H2 retail delivery,H2 retail delivery,2020,,1
 H2 wholesale dispensing,H2 delivery,2020,,1
 H2 wholesale dispensing,forecourt production,2020,,1

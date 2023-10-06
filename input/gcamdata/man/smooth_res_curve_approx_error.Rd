@@ -4,13 +4,8 @@
 \alias{smooth_res_curve_approx_error}
 \title{smooth_res_curve_approx_error}
 \usage{
-smooth_res_curve_approx_error(
-  curve.exponent,
-  mid.price,
-  base.price,
-  maxSubResource,
-  supply_points
-)
+smooth_res_curve_approx_error(curve.exponent, mid.price, base.price,
+  maxSubResource, supply_points)
 }
 \arguments{
 \item{curve.exponent}{smooth renewable resource curve shape parameter, numeric}

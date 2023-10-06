@@ -4,11 +4,8 @@
 \alias{add_carbon_info}
 \title{add_carbon_info}
 \usage{
-add_carbon_info(
-  data,
-  carbon_info_table,
-  matchvars = c("region", "GLU", Cdensity_LT = "Land_Type")
-)
+add_carbon_info(data, carbon_info_table, matchvars = c("region", "GLU",
+  Cdensity_LT = "Land_Type"))
 }
 \arguments{
 \item{data}{= input data tibble to receive carbon info}

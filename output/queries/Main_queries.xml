@@ -1752,7 +1752,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                     <comments/>
                 </supplyDemandQuery>
             </queryGroup>
-            <queryGroup name="other energy transformation">
+            <queryGroup name="hydrogen">
                 <supplyDemandQuery title="hydrogen production by tech">
                     <axis1 name="technology">technology</axis1>
                     <axis2 name="Year">physical-output[@vintage]</axis2>
@@ -1782,11 +1782,12 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                *[@type='subsector']/*[@type='technology']/cost/text()</xPath>
                     <comments/>
                 </supplyDemandQuery>
-                <supplyDemandQuery title="hydrogen technology IO coefficients">
+				<supplyDemandQuery title="hydrogen technology IO coefficients">
                     <axis1 name="sector">sector</axis1>
                     <axis2 name="Year">IO-coefficient[@vintage]</axis2>
-                    <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'H2')]/*[@type='subsector']/
-               *[@type='technology']/*[@type='input']/IO-coefficient/node()</xPath>
+                    <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name,'H2')]/*[@type='subsector']/
+               *[@type='technology']/*[@type='input']/IO-coefficient[
+               @vintage=parent::*/parent::*/@year]/node()</xPath>
                     <comments/>
                 </supplyDemandQuery>
                 <supplyDemandQuery title="hydrogen utilization by technology">
@@ -1812,7 +1813,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                physical-output/node()</xPath>
                     <comments/>
                 </supplyDemandQuery>
-                <supplyDemandQuery title="Hydrogen dispensing energy by primary fuel">
+                <supplyDemandQuery title="hydrogen dispensing energy by primary fuel">
                     <axis1 name="Primary Fuel">input[@name]</axis1>
                     <axis2 name="Year">demand-physical[@vintage]</axis2>
                     <xPath buildList="true" dataName="input" group="true" sumAll="false"><![CDATA[
@@ -1899,6 +1900,8 @@ element input {
                     ]]></xPath>
                     <comments/>
                 </supplyDemandQuery>
+            </queryGroup>
+            <queryGroup name="other energy transformation">
                 <supplyDemandQuery title="gas production by tech">
                     <axis1 name="technology">technology</axis1>
                     <axis2 name="Year">physical-output[@vintage]</axis2>
@@ -5119,6 +5122,13 @@ A user can adjust the query to search for any of:
                 <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='output']/physical-output/node()</xPath>
                 <comments/>
             </supplyDemandQuery>
+            <supplyDemandQuery title="input-output coefficients by tech">
+                <axis1 name="input">input</axis1>
+                <axis2 name="Year">IO-coefficient[@vintage]</axis2>
+                <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector']/*[@type='subsector']/*[@type='technology']/*[@type='input']/IO-coefficient[@vintage=parent::*/parent::*/@year]/node()</xPath>
+                <comments/>
+            </supplyDemandQuery>
+
         </queryGroup>
     </queryGroup>
     <queryGroup name="GCAM USA">

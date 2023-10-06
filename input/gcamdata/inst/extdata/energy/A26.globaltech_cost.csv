@@ -6,8 +6,8 @@
 # Column types: ccccnnnn 
 # ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,1975,2005,2100
-backup_electricity,gas,gas (steam/CT),non-energy,1.84,1.84,1.84,1.69
-csp_backup,gas,CSP gas hybrid mode,non-energy,0,0,0,0
+backup_electricity,gas,gas (steam/CT),fixed and variable OM,1.84,1.84,1.84,1.69
+csp_backup,gas,CSP gas hybrid mode,fixed and variable OM,0,0,0,0
 delivered biomass,delivered biomass,delivered biomass,non-energy,0.14,0.14,0.14,0.14
 delivered coal,delivered coal,delivered coal,non-energy,0.14,0.14,0.14,0.14
 electricity_net_ownuse,electricity_net_ownuse,electricity_net_ownuse,non-energy,0,0,0,0
@@ -19,3 +19,5 @@ wholesale gas,wholesale gas,wholesale gas,non-energy,0,0,0,0
 delivered gas,delivered gas,delivered gas,non-energy,1.25,1.25,1.25,1.25
 refined liquids enduse,refined liquids enduse,refined liquids enduse,non-energy,1.1,1.1,1.1,1.1
 refined liquids industrial,refined liquids industrial,refined liquids industrial,non-energy,0,0,0,0
+backup_electricity,hydrogen,hydrogen combustion turbine,fixed and variable OM,1.84,1.84,1.84,1.69
+backup_electricity,hydrogen,hydrogen combustion turbine,additional levelized capital,2.28,2.28,2.28,2.28

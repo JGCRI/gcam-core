@@ -6,9 +6,7 @@
 \title{A suffix to be appended to the XML name in \code{set_xml_file_helper}.  Potentially
 useful when used to generate permutations of inputs.  We need to go through a package
 data so as to do this in a way that is opaque to drake}
-\format{
-An object of class \code{NULL} of length 0.
-}
+\format{An object of class \code{NULL} of length 0.}
 \usage{
 xml.XML_SUFFIX
 }

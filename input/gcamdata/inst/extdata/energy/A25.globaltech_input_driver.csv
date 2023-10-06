@@ -8,13 +8,13 @@ supplysector,subsector,technology,input.name
 H2 central production,coal,coal chemical,regional coal
 H2 central production,coal,coal chemical CCS,regional coal
 H2 central production,gas,natural gas steam reforming,regional natural gas
-H2 central production,gas,natural gas steam reforming CCS,regional natural gas
+H2 central production,gas,gas ATR CCS,regional natural gas
 H2 central production,biomass,biomass to H2,regional biomass
 H2 central production,biomass,biomass to H2 CCS,regional biomass
-H2 central production,nuclear,thermal splitting,nuclearFuelGenIII
+H2 central production,nuclear,electrolysis,nuclearFuelGenIII
 H2 central production,electricity,electrolysis,elect_td_ind
 H2 central production,wind,electrolysis,onshore wind resource
 H2 central production,solar,electrolysis,global solar resource
 H2 wholesale dispensing,forecourt production,natural gas steam reforming,delivered gas
 H2 wholesale dispensing,forecourt production,electrolysis,elect_td_trn
-H2 industrial,forecourt production,electrolysis,elect_td_ind
+H2 industrial,onsite production,electrolysis,elect_td_ind

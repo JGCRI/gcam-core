@@ -1,0 +1,11 @@
+# File: A25.globaltech_losses.csv
+# Title: Hydrogen losses 
+# Units: GJ losses / GJ output
+# Comments: estimated from various literature sources
+# Column types: cccccnnn
+# ----------
+supplysector,subsector,technology,minicam.energy.input,Non.CO2,2025,2050,2100
+H2 pipeline,H2 pipeline,H2 pipeline,H2 central production,H2,1.02,1.01,1.007
+H2 liquid truck,H2 liquid truck,H2 liquid truck,H2 central production,H2,1.05,1.04,1.02
+H2 wholesale dispensing,H2 delivery,H2 pipeline,H2 pipeline,H2,1.02,1.02,1.02
+H2 wholesale dispensing,H2 delivery,H2 liquid truck,H2 liquid truck,H2,1.05,1.04,1.02

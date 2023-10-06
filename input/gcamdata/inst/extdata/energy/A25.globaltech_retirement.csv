@@ -12,13 +12,13 @@ supplysector,subsector,technology,year,lifetime,half.life,steepness,median.shutd
 H2 central production,coal,coal chemical,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,coal,coal chemical CCS,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,gas,natural gas steam reforming,initial-future-year,40,30,0.1,-0.1,6
-H2 central production,gas,natural gas steam reforming CCS,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,gas,gas ATR CCS,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,biomass,biomass to H2,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,biomass,biomass to H2 CCS,initial-future-year,40,30,0.1,-0.1,6
-H2 central production,nuclear,thermal splitting,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,nuclear,electrolysis,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,electricity,electrolysis,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,wind,electrolysis,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,solar,electrolysis,initial-future-year,40,30,0.1,-0.1,6
-H2 industrial,forecourt production,electrolysis,initial-future-year,20,15,0.1,-0.1,6
+H2 industrial,onsite production,electrolysis,initial-future-year,20,15,0.1,-0.1,6
 H2 wholesale dispensing,forecourt production,natural gas steam reforming,initial-future-year,20,15,0.1,-0.1,6
 H2 wholesale dispensing,forecourt production,electrolysis,initial-future-year,20,15,0.1,-0.1,6

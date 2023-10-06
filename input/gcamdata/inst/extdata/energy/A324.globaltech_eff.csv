@@ -18,20 +18,20 @@ agricultural energy use,stationary,refined liquids,refined liquids industrial,0.
 agricultural energy use,stationary,gas,wholesale gas,0.82583,0.884,0.898,0.913,0.926,0.941,0.955,0.969,0.969
 agricultural energy use,stationary,biomass,delivered biomass,0.746423,0.799,0.797,0.804,0.81,0.816,0.823,0.828,0.828
 agricultural energy use,stationary,electricity,elect_td_ind,0.934197,1,1.015,1.03,1.046,1.062,1.078,1.094,1.094
-agricultural energy use,stationary,hydrogen,H2 retail delivery,1.3760715,1.473,1.5015,1.527,1.5495,1.5705,1.593,1.6155,1.6155
+agricultural energy use,stationary,hydrogen,H2 wholesale delivery,1.3760715,1.473,1.5015,1.527,1.5495,1.5705,1.593,1.6155,1.6155
 agricultural energy use,stationary,coal,delivered coal,0.80808,0.865,0.891,0.901,0.909,0.917,0.926,0.936,0.936
 agricultural energy use,stationary,heat,district heat,1,1,1,1,1,1,1,1,1
 mining energy use,stationary,refined liquids,refined liquids industrial,0.917381,0.982,1.001,1.018,1.033,1.047,1.062,1.077,1.077
 mining energy use,stationary,gas,wholesale gas,0.82583,0.884,0.898,0.913,0.926,0.941,0.955,0.969,0.969
 mining energy use,stationary,biomass,delivered biomass,0.746423,0.799,0.797,0.804,0.81,0.816,0.823,0.828,0.828
 mining energy use,stationary,electricity,elect_td_ind,0.934197,1,1.015,1.03,1.046,1.062,1.078,1.094,1.094
-mining energy use,stationary,hydrogen,H2 retail delivery,1.3760715,1.473,1.5015,1.527,1.5495,1.5705,1.593,1.6155,1.6155
+mining energy use,stationary,hydrogen,H2 wholesale delivery,1.3760715,1.473,1.5015,1.527,1.5495,1.5705,1.593,1.6155,1.6155
 mining energy use,stationary,coal,delivered coal,0.80808,0.865,0.891,0.901,0.909,0.917,0.926,0.936,0.936
 mining energy use,stationary,heat,district heat,1,1,1,1,1,1,1,1,1
 construction energy use,stationary,refined liquids,refined liquids industrial,0.917381,0.982,1.001,1.018,1.033,1.047,1.062,1.077,1.077
 construction energy use,stationary,gas,wholesale gas,0.82583,0.884,0.898,0.913,0.926,0.941,0.955,0.969,0.969
 construction energy use,stationary,biomass,delivered biomass,0.746423,0.799,0.797,0.804,0.81,0.816,0.823,0.828,0.828
 construction energy use,stationary,electricity,elect_td_ind,0.934197,1,1.015,1.03,1.046,1.062,1.078,1.094,1.094
-construction energy use,stationary,hydrogen,H2 retail delivery,1.3760715,1.473,1.5015,1.527,1.5495,1.5705,1.593,1.6155,1.6155
+construction energy use,stationary,hydrogen,H2 wholesale delivery,1.3760715,1.473,1.5015,1.527,1.5495,1.5705,1.593,1.6155,1.6155
 construction energy use,stationary,coal,delivered coal,0.80808,0.865,0.891,0.901,0.909,0.917,0.926,0.936,0.936
 construction energy use,stationary,heat,district heat,1,1,1,1,1,1,1,1,1

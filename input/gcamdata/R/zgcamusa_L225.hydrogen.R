@@ -22,7 +22,8 @@ module_gcamusa_L225.hydrogen <- function(command, ...) {
              "L225.SubsectorLogit_h2",
              "L225.SubsectorShrwtFllt_h2",
              "L225.StubTech_h2",
-             "L225.GlobalTechCoef_h2"))
+             "L225.GlobalTechCoef_h2",
+             "L201.Pop_GCAMUSA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L225.DeleteSupplysector_h2_USA",
              "L225.Supplysector_h2_USA",
@@ -31,7 +32,12 @@ module_gcamusa_L225.hydrogen <- function(command, ...) {
              "L225.SubsectorShrwtFllt_h2_USA",
              "L225.StubTech_h2_USA",
              "L225.StubTechMarket_h2_USA",
-             "L225.DeleteStubTechMinicamEnergyInput_H2_USA"))
+             "L225.DeleteStubTechMinicamEnergyInput_H2_USA",
+             "L225.Supplysector_h2_ind_USA",
+             "L225.SubsectorLogit_h2_ind_USA",
+             "L225.SubsectorShrwtFllt_h2_ind_USA",
+             "L225.TechCoef_h2_ind_USA",
+             "L225.TechShrwt_h2_ind_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -47,6 +53,7 @@ module_gcamusa_L225.hydrogen <- function(command, ...) {
     L225.SubsectorShrwtFllt_h2 <- get_data(all_data, "L225.SubsectorShrwtFllt_h2", strip_attributes = TRUE)
     L225.StubTech_h2 <- get_data(all_data, "L225.StubTech_h2", strip_attributes = TRUE)
     L225.GlobalTechCoef_h2 <- get_data(all_data, "L225.GlobalTechCoef_h2", strip_attributes = TRUE)
+    L201.Pop_GCAMUSA <- get_data(all_data, "L201.Pop_GCAMUSA", strip_attributes = TRUE)
 
     # ===================================================
 
@@ -107,6 +114,52 @@ module_gcamusa_L225.hydrogen <- function(command, ...) {
       mutate(minicam.energy.input = "global solar resource") %>%
       select(region, supplysector, subsector, stub.technology, year, minicam.energy.input) ->
       L225.DeleteStubTechMinicamEnergyInput_H2_USA
+
+    # create "H2 industrial" supplysector in USA region with subsectors/technologies for each state
+    L225.Supplysector_h2_ind_USA <- L225.Supplysector_h2_USA %>%
+      filter(supplysector == 'H2 industrial') %>%
+      mutate(region = gcam.USA_REGION)
+
+    L225.SubsectorLogit_h2_ind_USA <- L225.SubsectorLogit_h2_USA %>%
+      filter(supplysector == 'H2 industrial') %>%
+      distinct(region,.keep_all=TRUE) %>%
+      mutate(subsector = paste0(region,' ',supplysector),
+             region = gcam.USA_REGION)
+
+    L225.PopShrwts <- L201.Pop_GCAMUSA %>%
+      group_by(year) %>%
+      mutate(popShrwt = totalPop / sum(totalPop)) %>%
+      ungroup()
+
+    # These share-weights are revised each model time period, according to the population share over time.
+    # Full_join is used as an expanding join is wanted here (expanding by year)
+    L225.SubsectorShrwtFllt_h2_ind_USA <- L225.SubsectorShrwtFllt_h2_USA %>%
+      filter(supplysector == 'H2 industrial') %>%
+      distinct(region,year.fillout,.keep_all=TRUE) %>%
+      full_join(L225.PopShrwts, by = c('region')) %>%
+      mutate(subsector = paste0(region,' ',supplysector),
+             region = gcam.USA_REGION,
+             share.weight = if_else(as.numeric(share.weight) != 0, round(popShrwt,energy.DIGITS_SHRWT), as.numeric(share.weight)))
+
+    # Full_join is used here in order to expand a global technology table by region (state)
+    L225.TechCoef_h2_ind_USA <- L225.GlobalTechCoef_h2 %>%
+      filter(sector.name == 'H2 industrial') %>%
+      full_join(states_subregions %>%
+                  select(state) %>%
+                  mutate(sector.name = 'H2 industrial'),by = c('sector.name')) %>%
+      distinct(state,year,.keep_all=TRUE) %>%
+      mutate(subsector.name = paste0(state,' ',sector.name),
+             technology = paste0(state,' ',sector.name),
+             minicam.energy.input = 'H2 industrial',
+             region = gcam.USA_REGION,
+             market.name = state) %>%
+      rename(supplysector = sector.name,
+             subsector = subsector.name) %>%
+      select(LEVEL2_DATA_NAMES[["TechCoef"]])
+
+    L225.TechShrwt_h2_ind_USA <- L225.TechCoef_h2_ind_USA %>%
+      mutate(share.weight = 1) %>%
+      select(LEVEL2_DATA_NAMES[["TechShrwt"]])
 
     # ===================================================
 
@@ -174,6 +227,44 @@ module_gcamusa_L225.hydrogen <- function(command, ...) {
                      "L225.GlobalTechCoef_h2") ->
       L225.StubTechMarket_h2_USA
 
+    L225.Supplysector_h2_ind_USA %>%
+      add_title("Add back H2 industrial to USA region") %>%
+      add_units("Unitless") %>%
+      add_comments("Mirror of information in all regions") %>%
+      add_precursors("L225.Supplysector_h2") ->
+      L225.Supplysector_h2_ind_USA
+
+    L225.SubsectorLogit_h2_ind_USA %>%
+      add_title("State-level logit exponents for H2 industrial in GCAM-USA") %>%
+      add_units("Unitless") %>%
+      add_comments("Mirror of information in all regions") %>%
+      add_precursors("L225.SubsectorLogit_h2") ->
+      L225.SubsectorLogit_h2_ind_USA
+
+    L225.SubsectorShrwtFllt_h2_ind_USA %>%
+      add_title("Subsector shareweight fillout for state-level H2 industrial in GCAM-USA") %>%
+      add_units("Unitless") %>%
+      add_comments("Shareweights based on relative population in each state") %>%
+      add_precursors("L225.SubsectorShrwtFllt_h2",
+                     "L201.Pop_GCAMUSA") ->
+      L225.SubsectorShrwtFllt_h2_ind_USA
+
+    L225.TechCoef_h2_ind_USA %>%
+      add_title("Technology market names for inputs to state-level H2 industrial technologies in GCAM-USA") %>%
+      add_units("Unitless") %>%
+      add_comments("Mirror of information in all regions") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "L225.GlobalTechCoef_h2") ->
+      L225.TechCoef_h2_ind_USA
+
+    L225.TechShrwt_h2_ind_USA %>%
+      add_title("Technology market names for inputs to state-level H2 industrial technologies in GCAM-USA") %>%
+      add_units("Unitless") %>%
+      add_comments("Mirror of information in all regions") %>%
+      add_precursors("gcam-usa/states_subregions",
+                     "L225.GlobalTechCoef_h2") ->
+      L225.TechShrwt_h2_ind_USA
+
     return_data(L225.DeleteSupplysector_h2_USA,
                 L225.Supplysector_h2_USA,
                 L225.SectorUseTrialMarket_h2_USA,
@@ -181,7 +272,12 @@ module_gcamusa_L225.hydrogen <- function(command, ...) {
                 L225.SubsectorShrwtFllt_h2_USA,
                 L225.StubTech_h2_USA,
                 L225.StubTechMarket_h2_USA,
-                L225.DeleteStubTechMinicamEnergyInput_H2_USA)
+                L225.DeleteStubTechMinicamEnergyInput_H2_USA,
+                L225.Supplysector_h2_ind_USA,
+                L225.SubsectorLogit_h2_ind_USA,
+                L225.SubsectorShrwtFllt_h2_ind_USA,
+                L225.TechCoef_h2_ind_USA,
+                L225.TechShrwt_h2_ind_USA)
   } else {
     stop("Unknown command")
   }

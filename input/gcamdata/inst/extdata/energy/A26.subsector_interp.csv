@@ -3,7 +3,7 @@
 # Units: NA
 # Description: form of interpolation function to calculate shareweights for future years for final energy delivery subsectors
 # Source: NA
-# Column types: ccccccc 
+# Column types: ccccccc
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
 delivered biomass,delivered biomass,share-weight,final-calibration-year,end-year,,linear
@@ -17,3 +17,5 @@ wholesale gas,wholesale gas,share-weight,final-calibration-year,end-year,,linear
 delivered gas,delivered gas,share-weight,final-calibration-year,end-year,,linear
 refined liquids enduse,refined liquids enduse,share-weight,final-calibration-year,end-year,,linear
 refined liquids industrial,refined liquids industrial,share-weight,final-calibration-year,end-year,,linear
+backup_electricity,hydrogen,share-weight,final-calibration-year,initial-future-year,,linear
+backup_electricity,hydrogen,share-weight,initial-future-year,2025,,linear

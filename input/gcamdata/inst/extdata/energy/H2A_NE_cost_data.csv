@@ -11,11 +11,11 @@ H2 central production,biomass,biomass to H2 CCS,non-energy,$2016/kg H2,,,,,H2A 2
 H2 central production,coal,coal chemical,non-energy,$2016/kg H2,,,,,H2A 2018 did not report Coal without CCS assumptions.
 H2 central production,coal,coal chemical CCS,non-energy,$2016/kg H2,1.6153,,,,H2A  2018 did not report future Coal + CCS assumptions.
 H2 central production,electricity,electrolysis,non-energy,$2016/kg H2,1.1801,0.5164,0.5624,0.66,Method of electrolysis utilized: PEM Electrolysis.
-H2 central production,solar,electrolysis,electrolyzer,$2016/kg H2,5.5855,2.3746,0.5749,0.67,"Method of electrolysis utilized: PEM Electrolysis powered by solar PV created electricity. Electrolyzer costs only are provided here, assuming a capacity factor of 20% (matching solar panels)."
-H2 central production,wind,electrolysis,electrolyzer,$2016/kg H2,2.4487,1.0515,0.5706,0.67,"Method of electrolysis utilized: PEM Electrolysis powered by wind created electricity. Electrolyzer costs only are provided here, assuming a capacity factor of 46% (matching wind turbines)."
+H2 central production,solar,electrolysis,electrolyzer,$2016/kg H2,5.5855,2.3746,0.5749,0.67,Method of electrolysis utilized: PEM Electrolysis powered by solar PV created electricity. Electrolyzer costs only are provided here assuming a capacity factor of 20% (matching solar panels).
+H2 central production,wind,electrolysis,electrolyzer,$2016/kg H2,2.4487,1.0515,0.5706,0.67,Method of electrolysis utilized: PEM Electrolysis powered by wind created electricity. Electrolyzer costs only are provided here assuming a capacity factor of 46% (matching wind turbines).
 H2 central production,gas,natural gas steam reforming,non-energy,$2016/kg H2,0.3207,0.2835,0.1162,0.22,
-H2 central production,gas,natural gas steam reforming CCS,non-energy,$2016/kg H2,0.733,0.707,0.0355,0.14,
-H2 central production,nuclear,thermal splitting,non-energy,$2005/kg H2,2.9887,2.9022,0.029,,Non-energy cost = required selling price. Source: H2A 2008.
-H2 industrial,forecourt production,electrolysis,non-energy,$2016/kg H2,1.2889,0.5395,0.5815,0.68,Method of electrolysis utilized: PEM Electrolysis - Forecourt model for larger (1500kG/H2/day) plant.
+H2 central production,gas,gas ATR CCS,non-energy,$2016/kg H2,0.6649,0.6413,0.0355,0.14,Assumes improvement from H2A gas SMR + CCS
+H2 central production,nuclear,electrolysis,electrolyzer,$2016/kg H2,1.59,0.64,0.5975,,Non-energy costs for electrolyzer only from H2A central solid oxide electrolysis technology (capital costs + fixed O&M only)  Additional costs associated with nuclear electricity generation are added downstream
+H2 industrial,onsite production,electrolysis,non-energy,$2016/kg H2,1.2889,0.5395,0.5815,0.68,Method of electrolysis utilized: PEM Electrolysis - Forecourt model for larger (1500kG/H2/day) plant.
 H2 wholesale dispensing,forecourt production,electrolysis,production,$2016/kg H2,1.2889,0.5395,0.5815,0.68,Method of electrolysis utilized: PEM Electrolysis - Forecourt model for larger (1500kG/H2/day) plant.
-H2 wholesale dispensing,forecourt production,natural gas steam reforming,production,$2016/kg H2,0.7251,0.6875,0.0518,0.15,Forecourt model for larger (1500kG/H2/day) plant.
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,production,$2016/kg H2,0.7251,0.6875,0.0518,0.15,Forecourt model for larger (1500kG/H2/day) plant

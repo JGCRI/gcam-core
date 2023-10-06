@@ -130,3 +130,6 @@ Freight,Truck,Medium truck,Liquids,Liquids,trn_road and rail,refined liquids,trn
 Freight,Truck,Medium truck,NG,Natural Gas,trn_road and rail,gas,trn_freight_road,Medium truck,NG,delivered gas
 Freight,Truck,Heavy truck,Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Heavy truck,Liquids,refined liquids enduse
 Freight,Truck,Heavy truck,NG,Natural Gas,trn_road and rail,gas,trn_freight_road,Heavy truck,NG,delivered gas
+Freight,Truck,Light truck,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Light truck,Hybrid Liquids,refined liquids enduse
+Freight,Truck,Medium truck,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Medium truck,Hybrid Liquids,refined liquids enduse
+Freight,Truck,Heavy truck,Hybrid Liquids,Liquids,trn_road and rail,refined liquids,trn_freight_road,Heavy truck,Hybrid Liquids,refined liquids enduse

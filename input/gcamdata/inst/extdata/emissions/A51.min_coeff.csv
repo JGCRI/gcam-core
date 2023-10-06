@@ -43,7 +43,7 @@ H2 central production,biomass,biomass to H2 CCS,0.009,0.0002,0.0002,0,0,0
 H2 central production,coal,coal chemical,0.009,0.0002,0.0002,0,0,0
 H2 central production,coal,coal chemical CCS,0.009,0.0002,0.0002,0,0,0
 H2 central production,gas,natural gas steam reforming,,0.0042,0.0004,0,0,
-H2 central production,gas,natural gas steam reforming CCS,,0.0042,0.0004,0,0,
+H2 central production,gas,gas ATR CCS,,0.0042,0.0004,0,0,
 H2 wholesale dispensing,forecourt production,natural gas steam reforming,,0.0042,0.0004,0,0,
 industrial energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
 industrial energy use,biomass,biomass cogen,,,,,,

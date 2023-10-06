@@ -19,20 +19,20 @@ agricultural energy use,stationary,refined liquids,1,1,1,1
 agricultural energy use,stationary,gas,1,1,1,1
 agricultural energy use,stationary,biomass,1,1,1,1
 agricultural energy use,stationary,electricity,1,1,1,1
-agricultural energy use,stationary,hydrogen,0,0,1,1
+agricultural energy use,stationary,hydrogen,0,0,0.05,0.05
 agricultural energy use,stationary,coal,1,1,1,1
 agricultural energy use,stationary,heat,1,1,1,1
 mining energy use,stationary,refined liquids,1,1,1,1
 mining energy use,stationary,gas,1,1,1,1
 mining energy use,stationary,biomass,1,1,1,1
 mining energy use,stationary,electricity,1,1,1,1
-mining energy use,stationary,hydrogen,0,0,1,1
+mining energy use,stationary,hydrogen,0,0,0.05,0.05
 mining energy use,stationary,coal,1,1,1,1
 mining energy use,stationary,heat,1,1,1,1
 construction energy use,stationary,refined liquids,1,1,1,1
 construction energy use,stationary,gas,1,1,1,1
 construction energy use,stationary,biomass,1,1,1,1
 construction energy use,stationary,electricity,1,1,1,1
-construction energy use,stationary,hydrogen,0,0,0.1,0.1
+construction energy use,stationary,hydrogen,0,0,0.05,0.05
 construction energy use,stationary,coal,1,1,1,1
 construction energy use,stationary,heat,1,1,1,1

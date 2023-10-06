@@ -185,7 +185,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
       gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       arrange(supplysector, year) %>%
-      group_by(supplysector) %>%
+      group_by(supplysector,subsector, technology) %>%
       mutate (share.weight = approx_fun(as.numeric(year), share.weight)) %>%
       ungroup() %>%
       filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
