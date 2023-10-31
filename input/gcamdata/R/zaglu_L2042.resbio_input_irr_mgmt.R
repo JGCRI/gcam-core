@@ -108,8 +108,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
         left_join(L120.Rotation.Age, by = c("GCAM_region_ID","GLU","LT")) %>%
         mutate(rotation= if_else(is.na(rotation),35,rotation)) %>%
         left_join(L110.IO_Coefs_pulp %>% filter(year==MODEL_FINAL_BASE_YEAR) %>% select(-year), by= c("GCAM_region_ID")) %>%
-        mutate(IO=if_else(is.na(IO),1,IO)) %>%
-        mutate(eros.ctrl = erosCtrl/rotation,
+        mutate(IO=if_else(is.na(IO),1,IO),
+               eros.ctrl = erosCtrl/rotation,
                harvest.index= harvest.index/IO) %>%
         group_by(GCAM_region_ID, GCAM_commodity, GLU,LT) %>%
         mutate(mass.conversion= mean(mass.conversion)) %>%
@@ -121,7 +121,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
         group_by(GCAM_region_ID) %>%
         arrange(year) %>%
         mutate(harvest.index= if_else(year==tail(MODEL_FUTURE_YEARS,n=1),aglu.FOREST_HARVEST_INDEX,harvest.index),
-               harvest.index= ifelse(is.na(harvest.index), approx_fun(year,harvest.index),harvest.index)) %>%
+               harvest.index= if_else(is.na(harvest.index), approx_fun(year,harvest.index),harvest.index)) %>%
         ungroup()
     } # end add_bio_res_params_For_Mill_Forest
 
@@ -156,7 +156,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
     # 1. Form a table of Forest Residue Biomass Paramters by region-glu-year
     L123.For_Prod_bm3_R_Y_GLU %>%
-      filter(GCAM_commodity== aglu.FOREST_supply_sector) %>%
+      filter(GCAM_commodity== aglu.FOREST_SUPPLY_SECTOR) %>%
       mutate(LT= Land_Type
              ) %>%
       # Set up identifying information to fill in with parameters, incl 2.
@@ -174,7 +174,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     # 2. Form a table of global Mill Residue Biomass Paramters by year
     A_demand_technology %>%
       #Filter here only for sawmills. Don't calculate this for pulpwood
-      filter(supplysector %in% aglu.FOREST_demand_sectors[1]) %>%
+      filter(supplysector %in% aglu.FOREST_DEMAND_SECTORS[1]) %>%
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
@@ -185,12 +185,12 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
     #Create a separate table for pulping residues
     A_demand_technology %>%
       #Filter here only for sawmills. Don't calculate this for pulpwood
-      filter(supplysector %in% aglu.FOREST_demand_sectors[2]) %>%
+      filter(supplysector %in% aglu.FOREST_DEMAND_SECTORS[2]) %>%
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
       add_bio_res_params_For_Mill(erosCtrl = aglu.MILL_EROSION_CTRL_KGM2,
-                                  massConversion = (mean(c(aglu.AVG_WOOD_DENSITY_KGM3_HARDWOOD,aglu.AVG_WOOD_DENSITY_KGM3_SOFTWOOD)))*aglu.FOREST_pulp_conversion) ->
+                                  massConversion = (mean(c(aglu.AVG_WOOD_DENSITY_KGM3_HARDWOOD,aglu.AVG_WOOD_DENSITY_KGM3_SOFTWOOD)))*aglu.FOREST_PULP_CONVERSION) ->
       L204.GlobalResBio_Mill_pulp
 
     L204.GlobalResBio_Mill %>% bind_rows(L204.GlobalResBio_Mill_pulp)->L204.GlobalResBio_Mill

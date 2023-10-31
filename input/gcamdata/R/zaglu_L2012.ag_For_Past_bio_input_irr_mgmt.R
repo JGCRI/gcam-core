@@ -116,7 +116,11 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       select(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU) %>%
       unique %>%
       bind_rows(
-        bind_rows(L123.For_Prod_bm3_R_Y_GLU %>%mutate(GCAM_subsector=Land_Type), L123.ag_Prod_Mt_R_Past_Y_GLU%>%mutate(GCAM_subsector=GCAM_commodity)) %>%
+        bind_rows(L123.For_Prod_bm3_R_Y_GLU %>%
+                    mutate(GCAM_subsector=Land_Type) %>%
+                    rename(GCAM_subsector = GCAM_subsector),
+                  L123.ag_Prod_Mt_R_Past_Y_GLU %>%
+                    mutate(GCAM_subsector=GCAM_commodity)) %>%
           transmute(GCAM_region_ID, GCAM_commodity, GCAM_subsector , GLU) %>%
           unique,
         L201.R_C_GLU_biograss, L201.R_C_GLU_biotree
@@ -161,7 +165,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
 
     # L2012.AgProduction_For and L2012.AgProduction_Past: Forest and pasture product calibration (output)
     L123.For_Prod_bm3_R_Y_GLU %>%
-      filter(GCAM_commodity== aglu.FOREST_supply_sector) %>%
+      filter(GCAM_commodity== aglu.FOREST_SUPPLY_SECTOR) %>%
       # Combine forest and pasture production by region x GLU
       bind_rows(L123.ag_Prod_Mt_R_Past_Y_GLU) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
@@ -407,7 +411,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       L2012.AgProduction_ag_irr_mgmt
 
     L2012.AgProduction_For_Past %>%
-      filter(AgSupplySector %in% aglu.FOREST_supply_sector) %>%
+      filter(AgSupplySector %in% aglu.FOREST_SUPPLY_SECTOR) %>%
       add_title("Input table for forest production") %>%
       add_units("bm3") %>%
       add_comments("Calibrated ouputs or shareweights are not specify by technology") %>%

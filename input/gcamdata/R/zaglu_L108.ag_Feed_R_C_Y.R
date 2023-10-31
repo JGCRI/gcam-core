@@ -215,13 +215,13 @@ module_aglu_L108.ag_Feed_R_C_Y <- function(command, ...) {
     # Other use of FodderGrass will be reflected in L109 balance
     # Note that Japan has no pasture land after 2004, the demand should also be removed
 
-    iso_GCAM_regID %>% filter(iso %in% aglu.Zero_Min_PastureFeed_Share_iso) %>%
+    iso_GCAM_regID %>% filter(iso %in% aglu.ZERO_MIN_PASTUREFEED_SHARE_ISO) %>%
       distinct(GCAM_region_ID) %>% pull -> aglu.Zero_Min_PastureFeed_Share_region_ID
 
     assertthat::assert_that(
       iso_GCAM_regID %>% filter(GCAM_region_ID %in% aglu.Zero_Min_PastureFeed_Share_region_ID) %>%
-        distinct(iso) %>% pull %in% aglu.Zero_Min_PastureFeed_Share_iso %>% all,
-      msg = "aglu.Zero_Min_PastureFeed_Share_iso should have unique GCAM_region_ID is this adjustment"
+        distinct(iso) %>% pull %in% aglu.ZERO_MIN_PASTUREFEED_SHARE_ISO %>% all,
+      msg = "aglu.ZERO_MIN_PASTUREFEED_SHARE_ISO should have unique GCAM_region_ID is this adjustment"
     )
 
     an_Feed_Mt_R_C_Y %>%
@@ -230,7 +230,7 @@ module_aglu_L108.ag_Feed_R_C_Y <- function(command, ...) {
       left_join(filter(L101.ag_Prod_Mt_R_C_Y, GCAM_commodity == "FodderGrass"),
                 by = c("GCAM_region_ID", "year")) %>%                                                          # Map in FodderGrass production
       mutate(MinPasture = if_else(GCAM_region_ID %in% aglu.Zero_Min_PastureFeed_Share_region_ID, 0,
-                                  PastFodderGrass_Demand * aglu.Min_Share_PastureFeed_in_PastureFodderGrass),
+                                  PastFodderGrass_Demand * aglu.MIN_SHARE_PASTUREFEED_IN_PASTUREFODDERGRASS),
              Pasture = if_else(PastFodderGrass_Demand - value < MinPasture,
                                MinPasture,
                              PastFodderGrass_Demand - value),

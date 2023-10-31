@@ -216,8 +216,8 @@ aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultur
 aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others
 aglu.TREECROP_MATURE_AGE <- 10 # Number of years for vegetation carbon to reach peak, for tree crops
 
-aglu.Min_Share_PastureFeed_in_PastureFodderGrass <- 0.1 # minimum share of pasture in Pasture_FodderGrass for feed uses to avoid negative or zero (not including Japan now); USA has ~30%
-aglu.Zero_Min_PastureFeed_Share_iso <- c("jpn")         # mapped to GCAM_region_ID of Japan; Japan has zero unmanaged and protected pasture
+aglu.MIN_SHARE_PASTUREFEED_IN_PASTUREFODDERGRASS <- 0.1 # minimum share of pasture in Pasture_FodderGrass for feed uses to avoid negative or zero (not including Japan now); USA has ~30%
+aglu.ZERO_MIN_PASTUREFEED_SHARE_ISO <- c("jpn")         # mapped to GCAM_region_ID of Japan; Japan has zero unmanaged and protected pasture
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -339,19 +339,19 @@ aglu.MILL_EROSION_CTRL_KGM2 <- 0
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 
 
-aglu.FOREST_commodities <- c("sawnwood","woodpulp")
-aglu.FOREST_demand_sectors <- c("NonFoodDemand_sawnwood","NonFoodDemand_woodpulp")
-aglu.FOREST_supply_sector <- "Forest"
+aglu.FOREST_COMMODITIES <- c("sawnwood","woodpulp")
+aglu.FOREST_DEMAND_SECTORS <- c("NonFoodDemand_sawnwood","NonFoodDemand_woodpulp")
+aglu.FOREST_SUPPLY_SECTOR <- "Forest"
 #Below is a default amount of roundwood required to produce sawnwood.The model will calculate the IO using data. This will get used if and only if
 # the IO calculated by the model is an NA. This is taken as an everage across countries from a UNECE report on forest products. Available here- https://unece.org/fileadmin/DAM/timber/publications/DP-49.pdf
-aglu.FOREST_sawtimber_conversion <- 2.17
+aglu.FOREST_SAWTIMBER_CONVERSION <- 2.17
 
 #90% of pulp processing is chemical which has an IO of 5.44 and 10% is mechanical which is 2.55. Taking weighted average of the two,
 # we get 5.15. These are calculated as averages across countries.
 #Source- https://unece.org/fileadmin/DAM/timber/publications/DP-49.pdf
-aglu.FOREST_pulp_conversion <- 5.15
+aglu.FOREST_PULP_CONVERSION <- 5.15
 
-aglu.FOREST_max_price <- 165
+aglu.FOREST_MAX_PRICE <- 165
 # wood water content
 # Unitless (mass of water / total wood mass)
 aglu.WOOD_WATER_CONTENT <- 0.065

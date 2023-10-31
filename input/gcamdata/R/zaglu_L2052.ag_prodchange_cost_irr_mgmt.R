@@ -149,7 +149,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
       unique() %>%
       # Copy costs to all model years
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      repeat_add_columns(tibble(GCAM_commodity= aglu.FOREST_supply_sector)) %>%
+      repeat_add_columns(tibble(GCAM_commodity= aglu.FOREST_SUPPLY_SECTOR)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(basin_to_country_mapping[c("GLU_code", "GLU_name")], by = c("GLU" = "GLU_code")) %>%
       # Add sector, subsector, technology names
