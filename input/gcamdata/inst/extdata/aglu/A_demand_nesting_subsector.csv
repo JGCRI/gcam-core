@@ -3,20 +3,19 @@
 # Unit: NA
 # Description: Generic information for nesting subsectors of agricultural production
 # Source: GCAM assumptions
-# Column types: cciciccccc 
+# Column types: ccnciccccc 
 # ----------
 supplysector,subsector,logit.exponent,year.fillout,share.weight,apply.to,from.year,to.year,interpolation.function,logit.type
-FoodDemand_Staples,Corn,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_Staples,OtherGrain,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_Staples,Rice,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_Staples,RootTuber,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_Staples,Wheat,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_NonStaples,FiberCrop,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_NonStaples,FruitsVeg,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_NonStaples,Protein,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_NonStaples,MiscCrop,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_NonStaples,Oil,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
-FoodDemand_NonStaples,SugarCrop,0,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,Corn,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,OtherGrain,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,Rice,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,RootTuber,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_Staples,Wheat,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,FruitsVeg,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,Protein,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,MiscCrop,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,Oil,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
+FoodDemand_NonStaples,SugarCrop,-0.25,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 NonFoodDemand_Crops,Corn,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 NonFoodDemand_Crops,FiberCrop,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
 NonFoodDemand_Crops,FodderGrass,-6,start-year,1,share-weight,final-calibration-year,end-year,fixed,
