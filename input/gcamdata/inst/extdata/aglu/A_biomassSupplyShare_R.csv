@@ -1,0 +1,40 @@
+# File: A_biomassSupplyShare_R.csv
+# Title: Whether a region currently has bioenergy supports
+# Units: NA
+# Comments: These data are assumptions to adjust supply side shareweights by region
+# Source: NA
+# Column types: ccc
+# ----------
+GCAM_region_ID,region,preference
+1,USA,High
+2,Africa_Eastern,Low
+3,Africa_Northern,Low
+4,Africa_Southern,Low
+5,Africa_Western,Low
+6,Australia_NZ,High
+7,Brazil,High
+8,Canada,High
+9,Central America and Caribbean,Low
+10,Central Asia,Low
+11,China,High
+12,EU-12,High
+13,EU-15,High
+14,Europe_Eastern,High
+15,Europe_Non_EU,High
+16,European Free Trade Association,High
+17,India,Low
+18,Indonesia,Low
+19,Japan,Low
+20,Mexico,Low
+21,Middle East,Low
+22,Pakistan,Low
+23,Russia,Low
+24,South Africa,Low
+25,South America_Northern,Low
+26,South America_Southern,Low
+27,South Asia,Low
+28,South Korea,Low
+29,Southeast Asia,Low
+30,Taiwan,Low
+31,Argentina,High
+32,Colombia,Low

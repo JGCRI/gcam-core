@@ -1,0 +1,41 @@
+# File: A22.SubsectorInterp_en_R.csv
+# Title: Region-specific refining subsector shareweights interpolation rules 
+# Descreption: adjust biomass liquid share weight for few regions with palm biodiesel to lower values. This is needed due to data update.
+# Units: Unitless share-weights
+# Source: EMRE
+# Comment:
+# Column types: ccccnnc
+# ----------
+region,supplysector,subsector,apply.to,from.year,to.year,interpolation.function
+USA,refining,biomass liquids,share-weight,2015,2050,linear
+Africa_Eastern,refining,biomass liquids,share-weight,2015,2050,linear
+Africa_Northern,refining,biomass liquids,share-weight,2015,2050,linear
+Africa_Southern,refining,biomass liquids,share-weight,2015,2050,linear
+Africa_Western,refining,biomass liquids,share-weight,2015,2050,linear
+Australia_NZ,refining,biomass liquids,share-weight,2015,2050,linear
+Brazil,refining,biomass liquids,share-weight,2015,2050,linear
+Canada,refining,biomass liquids,share-weight,2015,2050,linear
+Central America and Caribbean,refining,biomass liquids,share-weight,2015,2050,linear
+Central Asia,refining,biomass liquids,share-weight,2015,2050,linear
+China,refining,biomass liquids,share-weight,2015,2050,linear
+EU-12,refining,biomass liquids,share-weight,2015,2050,linear
+EU-15,refining,biomass liquids,share-weight,2015,2050,linear
+Europe_Eastern,refining,biomass liquids,share-weight,2015,2050,linear
+Europe_Non_EU,refining,biomass liquids,share-weight,2015,2050,linear
+European Free Trade Association,refining,biomass liquids,share-weight,2015,2050,linear
+India,refining,biomass liquids,share-weight,2015,2050,linear
+Indonesia,refining,biomass liquids,share-weight,2015,2050,linear
+Japan,refining,biomass liquids,share-weight,2015,2050,linear
+Mexico,refining,biomass liquids,share-weight,2015,2050,linear
+Middle East,refining,biomass liquids,share-weight,2015,2050,linear
+Pakistan,refining,biomass liquids,share-weight,2015,2050,linear
+Russia,refining,biomass liquids,share-weight,2015,2050,linear
+South Africa,refining,biomass liquids,share-weight,2015,2050,linear
+South America_Northern,refining,biomass liquids,share-weight,2015,2050,linear
+South America_Southern,refining,biomass liquids,share-weight,2015,2050,linear
+South Asia,refining,biomass liquids,share-weight,2015,2050,linear
+South Korea,refining,biomass liquids,share-weight,2015,2050,linear
+Southeast Asia,refining,biomass liquids,share-weight,2015,2050,linear
+Taiwan,refining,biomass liquids,share-weight,2015,2050,linear
+Argentina,refining,biomass liquids,share-weight,2015,2050,linear
+Colombia,refining,biomass liquids,share-weight,2015,2050,linear

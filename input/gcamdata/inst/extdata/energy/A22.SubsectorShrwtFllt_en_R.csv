@@ -1,0 +1,41 @@
+# File: A22.SubsectorShrwtFllt_en_R.csv
+# Title: Region-specific refining subsector shareweights interpolation rules 
+# Descreption: adjust biomass liquid share weight for few regions with palm biodiesel to lower values. This is needed due to data update.
+# Units: Unitless share-weights
+# Source: EMRE
+# Comment:
+# Column types: cccnn
+# ----------
+region,supplysector,subsector,year.fillout,share.weight
+USA,refining,biomass liquids,2050,0.5
+Africa_Eastern,refining,biomass liquids,2050,0.3
+Africa_Northern,refining,biomass liquids,2050,0.3
+Africa_Southern,refining,biomass liquids,2050,0.3
+Africa_Western,refining,biomass liquids,2050,0.1
+Australia_NZ,refining,biomass liquids,2050,0.5
+Brazil,refining,biomass liquids,2050,0.5
+Canada,refining,biomass liquids,2050,0.5
+Central America and Caribbean,refining,biomass liquids,2050,0.5
+Central Asia,refining,biomass liquids,2050,0.5
+China,refining,biomass liquids,2050,0.5
+EU-12,refining,biomass liquids,2050,0.5
+EU-15,refining,biomass liquids,2050,0.3
+Europe_Eastern,refining,biomass liquids,2050,0.5
+Europe_Non_EU,refining,biomass liquids,2050,0.5
+European Free Trade Association,refining,biomass liquids,2050,0.5
+India,refining,biomass liquids,2050,0.5
+Indonesia,refining,biomass liquids,2050,0.06
+Japan,refining,biomass liquids,2050,0.5
+Mexico,refining,biomass liquids,2050,0.5
+Middle East,refining,biomass liquids,2050,0.1
+Pakistan,refining,biomass liquids,2050,0.5
+Russia,refining,biomass liquids,2050,0.5
+South Africa,refining,biomass liquids,2050,0.5
+South America_Northern,refining,biomass liquids,2050,0.5
+South America_Southern,refining,biomass liquids,2050,0.5
+South Asia,refining,biomass liquids,2050,0.5
+South Korea,refining,biomass liquids,2050,0.5
+Southeast Asia,refining,biomass liquids,2050,0.06
+Taiwan,refining,biomass liquids,2050,0.5
+Argentina,refining,biomass liquids,2050,0.5
+Colombia,refining,biomass liquids,2050,0.5
