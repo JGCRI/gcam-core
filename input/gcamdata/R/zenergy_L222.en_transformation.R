@@ -32,6 +32,9 @@ module_energy_L222.en_transformation <- function(command, ...) {
              FILE = "energy/A22.subsector_logit",
              FILE = "energy/A22.subsector_shrwt",
              FILE = "energy/A22.subsector_interp",
+             # temp regional parameters
+             FILE = "energy/A22.SubsectorShrwtFllt_en_R",
+             FILE = "energy/A22.SubsectorInterp_en_R",
              FILE = "energy/A22.globaltech_coef",
              FILE = "energy/A22.globaltech_cost",
              # Note: Low indicates low tech. Costs are actually higher than core
@@ -88,6 +91,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
     A22.subsector_logit <- get_data(all_data, "energy/A22.subsector_logit", strip_attributes = TRUE)
     A22.subsector_shrwt <- get_data(all_data, "energy/A22.subsector_shrwt", strip_attributes = TRUE)
     A22.subsector_interp <- get_data(all_data, "energy/A22.subsector_interp", strip_attributes = TRUE)
+    A22.SubsectorShrwtFllt_en_R <- get_data(all_data, "energy/A22.SubsectorShrwtFllt_en_R", strip_attributes = TRUE)
+    A22.SubsectorInterp_en_R <- get_data(all_data, "energy/A22.SubsectorInterp_en_R", strip_attributes = TRUE)
     A22.globaltech_coef <- get_data(all_data, "energy/A22.globaltech_coef", strip_attributes = TRUE)
     A22.globaltech_cost <- get_data(all_data, "energy/A22.globaltech_cost")
     A22.globaltech_cost_low  <- get_data(all_data, "energy/A22.globaltech_cost_low")
@@ -133,6 +138,11 @@ module_energy_L222.en_transformation <- function(command, ...) {
         filter(!is.na(year.fillout)) %>%
         write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]), GCAM_region_names) ->
         L222.SubsectorShrwtFllt_en
+
+      L222.SubsectorShrwtFllt_en %>%
+        anti_join(A22.SubsectorShrwtFllt_en_R, by = c("region", "supplysector", "subsector")) %>%
+        bind_rows(A22.SubsectorShrwtFllt_en_R[, names(L222.SubsectorShrwtFllt_en)] ) ->
+        L222.SubsectorShrwtFllt_en
       }
 
     # L222.SubsectorInterp_en and L222.SubsectorInterpTo_en: Subsector shareweight interpolation of energy transformation sectors
@@ -142,6 +152,11 @@ module_energy_L222.en_transformation <- function(command, ...) {
       filter(is.na(to.value)) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorInterp"]]), GCAM_region_names) ->
       L222.SubsectorInterp_en
+
+      L222.SubsectorInterp_en %>%
+        anti_join(A22.SubsectorInterp_en_R, by = c("region", "supplysector", "subsector")) %>%
+        bind_rows(A22.SubsectorInterp_en_R[, names(L222.SubsectorInterp_en)] ) ->
+        L222.SubsectorInterp_en
     }
 
     if(any(!is.na(A22.subsector_interp$to.value))) {
@@ -469,7 +484,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_comments("Conditionally created from the subset of A22.subsector_shrwt with values in column 'year.fillout'.") %>%
       add_comments("by default contains all values from A22.subsector_shrwt") %>%
       add_legacy_name("L222.SubsectorShrwtFllt_en") %>%
-      add_precursors("energy/A22.subsector_shrwt", "common/GCAM_region_names") ->
+      add_precursors("energy/A22.subsector_shrwt", "energy/A22.SubsectorShrwtFllt_en_R",  "common/GCAM_region_names") ->
       L222.SubsectorShrwtFllt_en
     } else {
       missing_data() %>%

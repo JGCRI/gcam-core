@@ -23,6 +23,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
              FILE = "aglu/A_bio_ghost_share",
              FILE = "aglu/A_LT_Mapping",
              FILE = "aglu/A_LandLeaf3",
+             FILE = "aglu/A_biomassSupplyShare_R",
              "L2012.AgYield_bio_ref",
              "L2012.AgProduction_ag_irr_mgmt"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -45,6 +46,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
     A_LandLeaf3 <- get_data(all_data, "aglu/A_LandLeaf3")
     L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref", strip_attributes = TRUE)
     L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
+    A_biomassSupplyShare_R <- get_data(all_data, "aglu/A_biomassSupplyShare_R")
 
     # L2242.LN4_Logit: Logit exponent of the fourth land nest by region
     # There are no technologies that are disaggregated to irrigated and rainfed but not to lo- and hi-input techs,
@@ -66,6 +68,11 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["LN4_Logit"]], LOGIT_TYPE_COLNAME) ->
       L2242.LN4_Logit
 
+    A_biomassSupplyShare_R %>%
+      left_join(A_bio_ghost_share, by = "preference") %>%
+      select(region, year, ghost.share) ->
+      A_bio_ghost_share_R
+
     # L2242.LN4_NodeGhostShare:
     # Specify ghost node share for bioenergy node in future years (starting with first bio year).
     L2012.AgYield_bio_ref %>%
@@ -81,8 +88,11 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
              LandNode4 = paste(LandLeaf, GLU_name, sep = aglu.LT_GLU_DELIMITER)) %>%
       repeat_add_columns(tibble::tibble(year = MODEL_FUTURE_YEARS)) %>%
       filter(year >= aglu.BIO_START_YEAR) %>%
-      left_join(A_bio_ghost_share, by = "year") %>%
+      left_join(A_bio_ghost_share_R, by = c("year", "region")) %>%
+      group_by(region, AgSupplySubsector, GCAM_commodity, GLU_name, LandNode1, LandNode2, LandNode3, LandNode4,
+               Land_Type, LandLeaf, LandAllocatorRoot) %>%
       mutate(ghost.unnormalized.share = approx_fun(year, ghost.share)) %>%
+      ungroup() %>%
       select(LEVEL2_DATA_NAMES[["LN4_NodeGhostShare"]]) ->
       L2242.LN4_NodeGhostShare
 
@@ -117,6 +127,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       add_legacy_name("L2242.LN4_NodeGhostShare") %>%
       add_precursors("L2012.AgYield_bio_ref",
                      "aglu/A_bio_ghost_share",
+                     "aglu/A_biomassSupplyShare_R",
                      "aglu/A_LT_Mapping") ->
       L2242.LN4_NodeGhostShare
 
