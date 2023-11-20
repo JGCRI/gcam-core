@@ -47,7 +47,12 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       "L125.LC_bm2_R_LT_Yh_GLU",
       "L125.LC_bm2_R",
       "L131.LV_USD75_m2_R_GLU",
-      "L120.LC_soil_veg_carbon_GLU")
+      "L120.LC_soil_veg_carbon_GLU",
+      # Inputs for calculating cropland rental profits
+      "L2252.LN5_MgdAllocation_crop",
+      "L2012.AgProduction_ag_irr_mgmt",
+      "L2012.AgSupplySector",
+      "L2052.AgCost_ag_irr_mgmt")
 
   MODULE_OUTPUTS <-
     c("L221.LN0_Logit",
@@ -201,6 +206,70 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent, logit.type) ->
       L221.LN1_ValueLogit
 
+    # Update shadow price of cropland for unmanaged land rental price ----
+    UsingGCAMCroplandRentalProfit = TRUE
+    # Other with, the default values from GTAP (year 2000) will be used
+
+    if (UsingGCAMCroplandRentalProfit == TRUE) {
+
+      # Formula:
+      # Rental profit (1975$ per thousand km2)
+      # Rental profit = (P - NLC) * yield
+      # (1975$/kg - 1975$/kg) * kg/thousand km2
+      # (1975$/kg - 1975$/kg) * Mt * 10^9/bm2
+
+
+      # Calculate P - NLC
+      # Note that water cost is not included in NLC; it is ignored here
+      L2052.AgCost_ag_irr_mgmt %>%
+        left_join_error_no_match(select(L2012.AgSupplySector, region, AgSupplySector, calPrice),
+                                 by = c("region", "AgSupplySector")) %>%
+        mutate(Profit = calPrice - nonLandVariableCost) ->
+        L2052.UnAdjProfits
+
+      # Calculate yield can rental profit
+      L2252.LN5_MgdAllocation_crop %>%
+        rename(bm2 = allocation) %>%
+        left_join(
+          L2012.AgProduction_ag_irr_mgmt %>%
+            select(region, year, LandLeaf = AgProductionTechnology, Mt = calOutputValue),
+          by = c("region", "LandLeaf", "year")
+        ) %>%
+        left_join(
+          L2052.UnAdjProfits %>%
+            select(region, year, LandLeaf = AgProductionTechnology, USDPerKg = Profit),
+          by = c("region", "LandLeaf", "year")) %>%
+        mutate(RentalProfit = USDPerKg * Mt * 10^9 / bm2) ->
+        Cropland_RentalProfit_GLU_C_Y_IRR_MGMT
+
+      Cropland_RentalProfit_GLU_C_Y_IRR_MGMT %>%
+        group_by(region, year) %>%
+        summarize(unManagedLandValue = weighted.mean(RentalProfit, w = bm2)) %>%
+        ungroup() %>%
+        filter(year == max(MODEL_BASE_YEARS)) %>%
+        select(-year) -> Cropland_RentalProfit_R
+
+      Cropland_RentalProfit_GLU_C_Y_IRR_MGMT %>%
+        group_by(region, LandAllocatorRoot, LandNode1, year) %>%
+        summarize(unManagedLandValue = weighted.mean(RentalProfit, w = bm2)) %>%
+        ungroup() %>%
+        filter(year == max(MODEL_BASE_YEARS)) %>%
+        select(-year) -> Cropland_RentalProfit_GLU
+
+
+      # Update the value ----
+      L221.LN1_ValueLogit %>%
+        rename(unManagedLandValue_GTAP = unManagedLandValue) %>%
+        left_join(Cropland_RentalProfit_GLU, by = c("region", "LandAllocatorRoot", "LandNode1")) %>%
+        left_join_error_no_match(Cropland_RentalProfit_R %>% rename(unManagedLandValue_R = unManagedLandValue),
+                                 by = c("region")) %>%
+        mutate(unManagedLandValue = if_else(is.na(unManagedLandValue), unManagedLandValue_R, unManagedLandValue)) %>%
+        # The difference can be analysed here
+        # In short, much smaller variation with the new data
+        select(names(L221.LN1_ValueLogit)) ->
+        L221.LN1_ValueLogit
+    }
+
 
     # Land use history
     # Build a temporary table of Land Cover allocated for Unmanaged Land, and then split into different
@@ -236,7 +305,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%
-      add_carbon_info(., carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
+      add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       select(LEVEL2_DATA_NAMES[["LN1_UnmgdCarbon"]]) ->
       L221.LN1_UnmgdCarbon
 

@@ -11,28 +11,29 @@
 #' the generated outputs: \code{land_input_2.xml}. The corresponding file in the
 #' original data system was \code{batch_land_input_2.xml.R} (aglu XML).
 module_aglu_land_input_2_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L222.LN2_Logit",
+      "L222.LN2_HistUnmgdAllocation",
+      "L222.LN2_UnmgdAllocation",
+      "L222.LN2_HistMgdAllocation",
+      "L222.LN2_MgdAllocation",
+      "L222.LN2_UnmgdCarbon",
+      "L222.LN2_MgdCarbon")
+
+  MODULE_OUTPUTS <-
+    c(XML = "land_input_2.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L222.LN2_Logit",
-              "L222.LN2_HistUnmgdAllocation",
-              "L222.LN2_UnmgdAllocation",
-              "L222.LN2_HistMgdAllocation",
-              "L222.LN2_MgdAllocation",
-              "L222.LN2_UnmgdCarbon",
-              "L222.LN2_MgdCarbon"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "land_input_2.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L222.LN2_Logit <- get_data(all_data, "L222.LN2_Logit")
-    L222.LN2_HistUnmgdAllocation <- get_data(all_data, "L222.LN2_HistUnmgdAllocation")
-    L222.LN2_UnmgdAllocation <- get_data(all_data, "L222.LN2_UnmgdAllocation")
-    L222.LN2_HistMgdAllocation <- get_data(all_data, "L222.LN2_HistMgdAllocation")
-    L222.LN2_MgdAllocation <- get_data(all_data, "L222.LN2_MgdAllocation")
-    L222.LN2_UnmgdCarbon <- get_data(all_data, "L222.LN2_UnmgdCarbon")
-    L222.LN2_MgdCarbon <- get_data(all_data, "L222.LN2_MgdCarbon")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -49,7 +50,7 @@ module_aglu_land_input_2_xml <- function(command, ...) {
       add_precursors("L222.LN2_Logit", "L222.LN2_HistUnmgdAllocation", "L222.LN2_UnmgdAllocation", "L222.LN2_HistMgdAllocation", "L222.LN2_MgdAllocation", "L222.LN2_UnmgdCarbon", "L222.LN2_MgdCarbon") ->
       land_input_2.xml
 
-    return_data(land_input_2.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

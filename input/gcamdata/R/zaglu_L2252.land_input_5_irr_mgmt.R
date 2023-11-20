@@ -36,53 +36,49 @@
 #' @importFrom tibble tibble
 #' @author ACS September 2017
 module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/basin_to_country_mapping",
+      FILE = "aglu/GCAMLandLeaf_CdensityLT",
+      FILE = "aglu/A_Fodderbio_chars",
+      FILE = "aglu/A_LandLeaf3",
+      "L171.ag_irrEcYield_kgm2_R_C_Y_GLU",
+      "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU",
+      "L181.LandShare_R_bio_GLU_irr",
+      "L181.LC_bm2_R_C_Yh_GLU_irr_level",
+      "L2242.LN4_Logit",
+      "L111.ag_resbio_R_C",
+      "L121.CarbonContent_kgm2_R_LT_GLU",
+      "L120.LC_soil_veg_carbon_GLU",
+      "L121.CarbonContent_kgm2_R_TreeCrop_GLU",
+      "L2012.AgYield_bio_ref",
+      "L2012.AgProduction_ag_irr_mgmt")
+
+  MODULE_OUTPUTS <-
+    c("L2252.LN5_Logit",
+      "L2252.LN5_HistMgdAllocation_crop",
+      "L2252.LN5_MgdAllocation_crop",
+      "L2252.LN5_HistMgdAllocation_bio",
+      "L2252.LN5_MgdAllocation_bio",
+      "L2252.LN5_MgdCarbon_crop",
+      "L2252.LN5_MgdCarbon_bio",
+      "L2252.LN5_LeafGhostShare",
+      "L2252.LN5_NodeGhostShare")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             FILE = "aglu/GCAMLandLeaf_CdensityLT",
-             FILE = "aglu/A_Fodderbio_chars",
-             FILE = "aglu/A_LandLeaf3",
-             "L171.ag_irrEcYield_kgm2_R_C_Y_GLU",
-             "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU",
-             "L181.LandShare_R_bio_GLU_irr",
-             "L181.LC_bm2_R_C_Yh_GLU_irr_level",
-             "L2242.LN4_Logit",
-             "L111.ag_resbio_R_C",
-             "L121.CarbonContent_kgm2_R_LT_GLU",
-             "L120.LC_soil_veg_carbon_GLU",
-             "L121.CarbonContent_kgm2_R_TreeCrop_GLU",
-             "L2012.AgYield_bio_ref",
-             "L2012.AgProduction_ag_irr_mgmt"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2252.LN5_Logit",
-             "L2252.LN5_HistMgdAllocation_crop",
-             "L2252.LN5_MgdAllocation_crop",
-             "L2252.LN5_HistMgdAllocation_bio",
-             "L2252.LN5_MgdAllocation_bio",
-             "L2252.LN5_MgdCarbon_crop",
-             "L2252.LN5_MgdCarbon_bio",
-             "L2252.LN5_LeafGhostShare",
-             "L2252.LN5_NodeGhostShare"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    GCAMLandLeaf_CdensityLT <- get_data(all_data, "aglu/GCAMLandLeaf_CdensityLT")
-    A_Fodderbio_chars <- get_data(all_data, "aglu/A_Fodderbio_chars")
-    A_LandLeaf3 <- get_data(all_data, "aglu/A_LandLeaf3")
-    L181.LandShare_R_bio_GLU_irr <- get_data(all_data, "L181.LandShare_R_bio_GLU_irr")
-    L181.LC_bm2_R_C_Yh_GLU_irr_level <- get_data(all_data, "L181.LC_bm2_R_C_Yh_GLU_irr_level")
-    L2242.LN4_Logit <- get_data(all_data, "L2242.LN4_Logit", strip_attributes = TRUE)
-    L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
-    L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
-    L121.CarbonContent_kgm2_R_TreeCrop_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_TreeCrop_GLU")
-    L171.ag_irrEcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L171.ag_irrEcYield_kgm2_R_C_Y_GLU", strip_attributes = TRUE)
-    L171.ag_rfdEcYield_kgm2_R_C_Y_GLU <- get_data(all_data, "L171.ag_rfdEcYield_kgm2_R_C_Y_GLU", strip_attributes = TRUE)
-    L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref")
-    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
+    # Load required inputs ----
+    get_data_list(all_data,
+                  MODULE_INPUTS[!MODULE_INPUTS %in% c("L120.LC_soil_veg_carbon_GLU",
+                                                      "L121.CarbonContent_kgm2_R_LT_GLU")],
+                  strip_attributes = TRUE)
 
     # silence package check notes
     GCAM_commodity <- GCAM_region_ID <- region <- value <- year <- GLU <- GLU_name <- GLU_code <-
@@ -258,7 +254,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     L171.ag_EcYield_kgm2_R_C_Y_GLU %>%
       rename(yield = value) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("GCAM_subsector" = "LandLeaf")) %>%
-      rename(Cdensity_LT = Land_Type) %>%
+      rename(Cdensity_LT = Land_Type) %>% select(-GCAM_region_ID) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       # Replacing missing values in places with harvested area and production but no assigned cropland
       # If regions have harvested area and production but no cropland assigned in Hyde, we take "unmanaged" land and re-assign it to cropland.
@@ -331,6 +327,19 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       select(c(LEVEL2_DATA_NAMES[["LN5_MgdCarbon"]], "GLU", "Irr_Rfd", "level")) %>%
       mutate(Irr_Rfd = tolower(Irr_Rfd)) ->
       L2252.LN5_MgdCarbon_bio
+
+    # update Biomass mature_age
+    # Carbon density of biomass is mapped to pasture as is for mature_age
+    # But mature_age for biomass should be different
+    # uniform assumption is made in this update based on poplar tree and switchgrass
+    biomassGrass_mature_age = 5
+    biomassTree_mature_age = 8
+
+    L2252.LN5_MgdCarbon_bio %>%
+      mutate(mature.age = if_else(grepl("biomassGrass", LandNode4), (biomassGrass_mature_age), mature.age),
+             mature.age = if_else(grepl("biomassTree", LandNode4), (biomassTree_mature_age), mature.age)) ->
+      L2252.LN5_MgdCarbon_bio
+
 
     # L2252.LN5_LeafGhostShare: Ghost share of the new landleaf (lo-input versus hi-input)
     # NOTE: The ghost shares are inferred from average land shares allocated to hi-input
@@ -504,7 +513,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       add_precursors("L181.LC_bm2_R_C_Yh_GLU_irr_level") ->
       L2252.LN5_NodeGhostShare
 
-    return_data(L2252.LN5_Logit, L2252.LN5_HistMgdAllocation_crop, L2252.LN5_MgdAllocation_crop, L2252.LN5_HistMgdAllocation_bio, L2252.LN5_MgdAllocation_bio, L2252.LN5_MgdCarbon_crop, L2252.LN5_MgdCarbon_bio, L2252.LN5_LeafGhostShare, L2252.LN5_NodeGhostShare)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

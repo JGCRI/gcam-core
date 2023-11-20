@@ -18,18 +18,25 @@
 #' @importFrom tidyr separate
 #' @author RC August 2017
 module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "aglu/A_LandNode_logit_irr",
+      FILE = "aglu/A_bio_ghost_share",
+      FILE = "aglu/A_LT_Mapping",
+      FILE = "aglu/A_LandLeaf3",
+      FILE = "aglu/A_biomassSupplyShare_R",
+      "L2012.AgYield_bio_ref",
+      "L2012.AgProduction_ag_irr_mgmt")
+
+  MODULE_OUTPUTS <-
+    c("L2242.LN4_Logit",
+      "L2242.LN4_NodeGhostShare",
+      "L2242.LN4_NodeIsGhostShareRel")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "aglu/A_LandNode_logit_irr",
-             FILE = "aglu/A_bio_ghost_share",
-             FILE = "aglu/A_LT_Mapping",
-             FILE = "aglu/A_LandLeaf3",
-             FILE = "aglu/A_biomassSupplyShare_R",
-             "L2012.AgYield_bio_ref",
-             "L2012.AgProduction_ag_irr_mgmt"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2242.LN4_Logit",
-             "L2242.LN4_NodeGhostShare",
-             "L2242.LN4_NodeIsGhostShareRel"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     # silence package check notes
@@ -39,14 +46,8 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    A_LandNode_logit_irr <- get_data(all_data, "aglu/A_LandNode_logit_irr")
-    A_bio_ghost_share <- get_data(all_data, "aglu/A_bio_ghost_share")
-    A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
-    A_LandLeaf3 <- get_data(all_data, "aglu/A_LandLeaf3")
-    L2012.AgYield_bio_ref <- get_data(all_data, "L2012.AgYield_bio_ref", strip_attributes = TRUE)
-    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
-    A_biomassSupplyShare_R <- get_data(all_data, "aglu/A_biomassSupplyShare_R")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # L2242.LN4_Logit: Logit exponent of the fourth land nest by region
     # There are no technologies that are disaggregated to irrigated and rainfed but not to lo- and hi-input techs,
@@ -140,7 +141,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       same_precursors_as("L2242.LN4_NodeGhostShare") ->
       L2242.LN4_NodeIsGhostShareRel
 
-    return_data(L2242.LN4_Logit, L2242.LN4_NodeGhostShare, L2242.LN4_NodeIsGhostShareRel)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }
