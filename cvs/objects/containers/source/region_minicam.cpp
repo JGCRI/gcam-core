@@ -101,7 +101,7 @@ typedef std::vector<Sector*>::const_iterator CSectorIterator;
 typedef std::vector<Consumer*>::iterator ConsumerIterator;
 typedef std::vector<Consumer*>::const_iterator CConsumerIterator;
 
-const double DEFAULT_SOCIAL_DISCOUNT_RATE = 0.02;
+const double DEFAULT_SOCIAL_DISCOUNT_RATE = 0.03;
 const double DEFAULT_PRIVATE_DISCOUNT_RATE = 0.1;
 
 
