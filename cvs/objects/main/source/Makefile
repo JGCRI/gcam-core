@@ -10,7 +10,7 @@ include ${PATHOFFSET}/build/linux/configure.gcam
 
 OBJS       = main.o
 
-main_dir: ${OBJS} gcam.exe
+main_dir_standalone: ${OBJS} gcam.exe
 
 -include $(DEPS)
 
