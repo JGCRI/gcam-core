@@ -50,16 +50,16 @@ public:
     // TODO: Eventually these will need to be vectors of regional emissions instead of global totals
     // void downscaleCO2Emissions(const std::string sector, std::vector<double> aCurrYearRegionEmissVector);
     // Proportion-based method directly from regional to grid
-    void downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYearEmissions);
+    void downscaleSurfaceCO2EmissionsFromRegion2Grid(double *aCurrYearEmissions, std::vector<double>& aBaseYearEmissions_sfc, std::vector<double>& aBaseYearEmissionsGrid_sfc);
     
     // Convergence-based method
-    void calculateCountryBaseYearEmissionData();
+    void calculateCountryBaseYearEmissionData(std::vector<double>& aBaseYearEmissions_sfc, std::vector<double>& aBaseYearEmissionsGrid_sfc);
     void downscaleSurfaceCO2EmissionsFromRegion2Country(double *aCurrYearEmissions, int CurrentYear);
-    void downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aCurrYearEmissions);
+    void downscaleSurfaceCO2EmissionsFromCountry2Grid(double *aCurrYearEmissionsi, std::vector<double>& aBaseYearEmissions_sfc, std::vector<double>& aBaseYearEmissionsGrid_sfc);
     
     // downscale international shipment and aircraft CO2 emission from global to grid
-    void downscaleInternationalShipmentCO2Emissions(double *aCurrYearEmissions);
-    void downscaleAircraftCO2Emissions(double *aCurrYearEmissions);
+    void downscaleInternationalShipmentCO2Emissions(double *aCurrYearEmissions, double aBaseYearGlobalShipCO2Emiss, std::vector<double>& aBaseYearEmissionsGrid_ship);
+    void downscaleAircraftCO2Emissions(double *aCurrYearEmissions, double aBaseYearGlobalAirCO2Emiss, std::vector<double>& aBaseYearEmissionsGrid_air);
     
     void separateMonthlyEmissions(double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
                                   double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,

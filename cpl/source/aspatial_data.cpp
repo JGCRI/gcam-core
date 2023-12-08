@@ -35,11 +35,12 @@
  * \brief This file processes gridded data either from file or from memory. It is an abstract
  * class from which the carbon scaler and emissions downscale code is derived.
  *
- * \author Kate Calvin
+ * \author Kate Calvin and Alan Di Vittorio
  */
 
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 
 #include "util/base/include/auto_file.h"
 #include "../include/aspatial_data.h"
@@ -307,11 +308,19 @@ double ASpatialData::readSpatialDataCSV(std::string aFileName, bool aHasLatLon, 
 void ASpatialData::writeSpatialData(std::string aFileName, bool aWriteID) {
     ofstream oFile;
     oFile.open(aFileName);
+
+    if( aWriteID ) {
+       oFile << "yyyymm<ll>,lon_deg,lat_deg,";
+    }
+    oFile << "co2_kg/m2/s" << endl;
+
     for (int i = 0; i < mValueVector.size(); i++) {
         if( aWriteID ) {
-            oFile << mLonVector[i] << "," << mLatVector[i] << "," << mIDVector[i] << ",";
+            oFile << mIDVector[i] << "," <<  mLonVector[i] << "," << mLatVector[i] << ",";
         }
+        oFile << fixed << setprecision(20); 
         oFile << mValueVector[i] << endl;
+        oFile << defaultfloat;
     }
     oFile.close();
     
@@ -325,6 +334,21 @@ void ASpatialData::readMapping(std::string aFileName) {
 
 void ASpatialData::setValueVector(std::vector<double> aValueVector) {
     mValueVector = aValueVector;
+    return;
+}
+
+void ASpatialData::setIDVector(std::vector<int> aIDVector) {
+    mIDVector = aIDVector;
+    return;
+}
+
+void ASpatialData::setLonVector(std::vector<double> aLonVector) {
+    mLonVector = aLonVector;
+    return;
+}
+
+void ASpatialData::setLatVector(std::vector<double> aLatVector) {
+    mLatVector = aLatVector;
     return;
 }
 

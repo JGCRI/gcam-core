@@ -52,6 +52,9 @@ public:
     virtual double readSpatialDataCSV(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aValueArray);
     virtual void writeSpatialData(std::string aFileName, bool aWriteID);
     virtual void setValueVector(std::vector<double> aValueVector);
+    virtual void setIDVector(std::vector<int> aIDVector);
+    virtual void setLonVector(std::vector<double> aLonVector);
+    virtual void setLatVector(std::vector<double> aLatVector);
     virtual std::vector<double> getValueVector();
     virtual std::vector<int> getIDVector();
     virtual std::vector<double> getLatVector();

@@ -1,5 +1,5 @@
 /*
-* \author Kate Calvin
+* \author Kate Calvin and Alan Di Vittorio
 */
 
 #include "util/base/include/definitions.h"
@@ -22,10 +22,12 @@ class Region;
 
 class GCAM_E3SM_interface {
 public:
-    GCAM_E3SM_interface();
+    GCAM_E3SM_interface(int *aNumLon, int *aNumLat, int *aNumReg, int *aNumSector);
     ~GCAM_E3SM_interface();
-    void initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap,
-                  std::string aGCAM2ELMWHMap, std::string aGCAM2ELMCDENMap, int *aNumReg, int *aNumSector);
+    void initGCAM(int *yyyymmdd, std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap,
+                  std::string aGCAM2ELMWHMap, std::string aGCAM2ELMCDENMap,
+                  std::string aBaseCO2GcamFileName, std::string aBaseCO2SfcFile, std::string aBaseCO2ShipFile, std::string aBaseCO2AirFile,
+                  double *aELMArea, int *aNumLon, int *aNumLat, int *aNumReg, int *aNumSector, bool aRestartRun);
     void runGCAM(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                  double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                  int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod,
@@ -44,7 +46,6 @@ public:
                                 double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                                 double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                                 double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                                std::string aBaseCO2GcamFileName, std::string aBaseCO2SfcFile, std::string aBaseCO2ShipFile, std::string aBaseCO2AirFile,
                                 std::string aRegionMappingFile,std::string aCountryMappingFile,std::string aCountry2RegionMappingFile,
                                 std::string aPOPIIASAFileName, std::string aGDPIIASAFileName,
                                 std::string aPOPGCAMFileName, std::string aGDPGCAMFileName, std::string aCO2GCAMFileName,
@@ -55,6 +56,12 @@ public:
                                                               double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
                                                               double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
                                                               int aNumLon, int aNumLat);
+
+    void readRegionGcamYearEmissionData(std::string aFileName);
+
+    double readCO2DataGridCSV(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aELMArea, int *aNumLon, int *aNumLat,
+                              std::string aSectorName);
+
     void finalizeGCAM();
     int gcamStartYear;
     int gcamEndYear;
@@ -65,11 +72,41 @@ public:
     ReMapData mWoodHarvestData;
     ReMapData mAGCDensityData;
     ReMapData mBGCDensityData;   
+
+    std::vector<double> mBaseYearEmissions_sfc;
+    std::vector<double> mBaseYearEmissions_air;
+    std::vector<double> mBaseYearEmissions_ship;
+
+    double mBaseYearGlobalSfcCO2Emiss;
+    double mBaseYearGlobalShipCO2Emiss;
+    double mBaseYearGlobalAirCO2Emiss;
+
+    std::vector<double> mBaseYearEmissionsGrid_sfc;
+    std::vector<double> mBaseYearEmissionsGrid_air;
+    std::vector<double> mBaseYearEmissionsGrid_ship;
+    std::vector<int> mBaseYearEmissionsGridID_sfc;
+    std::vector<int> mBaseYearEmissionsGridID_air;
+    std::vector<int> mBaseYearEmissionsGridID_ship;
+    std::vector<double> mBaseYearEmissionsGridLat_sfc;
+    std::vector<double> mBaseYearEmissionsGridLat_ship;
+    std::vector<double> mBaseYearEmissionsGridLat_air;
+    std::vector<double> mBaseYearEmissionsGridLon_sfc;
+    std::vector<double> mBaseYearEmissionsGridLon_ship;
+    std::vector<double> mBaseYearEmissionsGridLon_air;
+
+    double mBaseYearGridGlobalSfcCO2Emiss;
+    double mBaseYearGridGlobalShipCO2Emiss;
+    double mBaseYearGridGlobalAirCO2Emiss;
  
 private:
+
     std::unique_ptr<IScenarioRunner> runner;
     typedef std::vector<Region*>::iterator RegionIterator;
 
     std::vector<double>  mGcamCO2EmissPreviousGCAMYear;
     std::vector<double>  mGcamCO2EmissCurrentGCAMYear;
+
+    std::vector<double> mGcamYearEmissions_sfc;
+    std::vector<double> mGcamYearEmissions_air;
+    std::vector<double> mGcamYearEmissions_ship;
 };

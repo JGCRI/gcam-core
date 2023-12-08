@@ -1,12 +1,14 @@
 #include "../include/GCAM_E3SM_interface.h"
 
+using namespace std;
+
 GCAM_E3SM_interface *p_obj;
 
 extern "C" {
 
   // Initialize a GCAM_E3SM_interface object
-  void inite3sminterface_() {
-    p_obj = new GCAM_E3SM_interface();
+  void inite3sminterface_(int *aNumLon, int *aNumLat, int *aNumReg, int *aNumSector) {
+    p_obj = new GCAM_E3SM_interface(aNumLon, aNumLat, aNumReg, aNumSector);
   }
   
   // Delete the GCAM_E3SM_interface object
@@ -15,9 +17,15 @@ extern "C" {
   }
     
   // Call the GCAM initialization
-  void initcgcam_(char* aCaseName, char* aGCAMConfig, char* aGCAM2ELMCO2Map, char* aGCAM2ELMLUCMap, char* aGCAM2ELMWHMap, char* aGCAM2ELMCDENMap,
-		  int *aNumReg, int *aNumSector) {
-      
+  void initcgcam_(int *yyyymmdd, char* aCaseName, char* aGCAMConfig, char* aGCAM2ELMCO2Map, char* aGCAM2ELMLUCMap, char* aGCAM2ELMWHMap, char* aGCAM2ELMCDENMap,
+		  char *aBaseCO2GcamFileName, char *aBaseCO2SfcFile, char *aBaseCO2ShipFile, char *aBaseCO2AirFile,
+                  double *aELMArea, int *aNumLon, int *aNumLat, int *aNumReg, int *aNumSector, int *aRestartRun) {
+
+      ofstream oFile;
+      oFile.open("init_log");
+
+      oFile << "initcgcam_: before conversions" << endl;
+
       // Convert to string - fortran doesn't handle string
       std::string CaseName(aCaseName);
       std::string GCAMConfig(aGCAMConfig);
@@ -25,8 +33,21 @@ extern "C" {
       std::string GCAM2ELMLUCMap(aGCAM2ELMLUCMap);
       std::string GCAM2ELMWHMap(aGCAM2ELMWHMap);
       std::string GCAM2ELMCDENMap(aGCAM2ELMCDENMap);
+      std::string BaseCO2GcamFileName(aBaseCO2GcamFileName);
+      std::string BaseCO2SfcFile(aBaseCO2SfcFile);
+      std::string BaseCO2ShipFile(aBaseCO2ShipFile);
+      std::string BaseCO2AirFile(aBaseCO2AirFile);
+      bool restartRun = *aRestartRun == 1 ? true : false;
       
-    p_obj->initGCAM(CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap, GCAM2ELMCDENMap, aNumReg, aNumSector);
+      oFile << "initcgcam_: before initGCAM call" << endl;
+
+    p_obj->initGCAM(yyyymmdd, CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap, GCAM2ELMCDENMap,
+                     BaseCO2GcamFileName, BaseCO2SfcFile, BaseCO2ShipFile, BaseCO2AirFile,
+                    aELMArea, aNumLon, aNumLat, aNumReg, aNumSector, restartRun);
+
+     
+      oFile << "initcgcam_: after initGCAM call" << endl;
+      oFile.close();
   }
 
   // Run GCAM
@@ -68,7 +89,6 @@ extern "C" {
                               double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                               double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                               double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                              char *aBaseCO2GcamFileName, char *aBaseCO2SfcFile, char *aBaseCO2ShipFile, char *aBaseCO2AirFile,
                               char *aRegionMappingFile, char *aCountryMappingFile,char *aCountry2RegionMappingFile,
                               char *aPOPIIASAFileName, char *aGDPIIASAFileName,
                               char *aPOPGCAMFileName, char *aGDPGCAMFileName, char *aCO2GCAMFileName,
@@ -76,10 +96,10 @@ extern "C" {
                               int *aWriteCO2, int *aCurrYear, char *aCO2DownscalingMethod) {
       
       // Convert to string - fortran doesn't handle string
-      std::string BaseCO2SfcFile(aBaseCO2SfcFile);
-      std::string BaseCO2ShipFile(aBaseCO2ShipFile);
-      std::string BaseCO2AirFile(aBaseCO2AirFile);
-      std::string BaseCO2GcamFileName(aBaseCO2GcamFileName);
+      //std::string BaseCO2SfcFile(aBaseCO2SfcFile);
+      //std::string BaseCO2ShipFile(aBaseCO2ShipFile);
+      //std::string BaseCO2AirFile(aBaseCO2AirFile);
+      //std::string BaseCO2GcamFileName(aBaseCO2GcamFileName);
       std::string RegionMappingFile(aRegionMappingFile);
       std::string CountryMappingFile(aCountryMappingFile);
       std::string Country2RegionMappingFile(aCountry2RegionMappingFile);
@@ -103,7 +123,6 @@ extern "C" {
                                   gcamoco2airhijan, gcamoco2airhifeb, gcamoco2airhimar, gcamoco2airhiapr,
                                   gcamoco2airhimay, gcamoco2airhijun, gcamoco2airhijul, gcamoco2airhiaug,
                                   gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
-                                  BaseCO2GcamFileName, BaseCO2SfcFile, BaseCO2ShipFile, BaseCO2AirFile,
                                   RegionMappingFile, CountryMappingFile, Country2RegionMappingFile,
                                   POPIIASAFileName,GDPIIASAFileName,
                                   POPGCAMFileName,GDPGCAMFileName,CO2GCAMFileName,
