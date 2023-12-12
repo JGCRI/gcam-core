@@ -17,7 +17,7 @@
 #' which is used by \code{dstrace} and various other graphing and diagnostic utilities.
 #' @author BBL
 #' @format A tibble with columns: name (chunk that produces the data), output (name of the data object),
-#' precursors (colon seperated list of precursors), title, units, comments, flags (typically metadata for processing)
+#' precursors (colon separated list of precursors), title, units, comments, flags (typically metadata for processing)
 "GCAM_DATA_MAP"
 
 #' A list of prebuilt data objects. These are used when the proprietary IEA

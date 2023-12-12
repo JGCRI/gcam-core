@@ -10,7 +10,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L132.in_EJ_R_indenergy_F_Yh}, \code{L132.in_EJ_R_indfeed_F_Yh}. The corresponding file in the
 #' original data system was \code{LA132.industry.R} (energy level1).
-#' @details The chunk calculates industrial feedstock consumption directly separated from enduse energy comsuption and
+#' @details The chunk calculates industrial feedstock consumption directly separated from enduse energy consumption and
 #'          industrial energy consumption by deducting net energy use by unconventional oil production, gas processing, refining, and CHP
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join bind_rows filter group_by left_join mutate select summarise

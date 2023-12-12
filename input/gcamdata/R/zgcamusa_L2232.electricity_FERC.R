@@ -2,7 +2,7 @@
 
 #' module_gcamusa_L2232.electricity_FERC
 #'
-#' Generate GCAM-USA model inputs for electrcity trade sectors at the level of grid regions.
+#' Generate GCAM-USA model inputs for electricity trade sectors at the level of grid regions.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

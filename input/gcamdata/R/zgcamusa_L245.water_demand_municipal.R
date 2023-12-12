@@ -2,7 +2,7 @@
 
 #' module_gcamusa_L245.water_demand_municipal
 #'
-#' Genereate GCAM-USA municipal water sector input files.
+#' Generate GCAM-USA municipal water sector input files.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

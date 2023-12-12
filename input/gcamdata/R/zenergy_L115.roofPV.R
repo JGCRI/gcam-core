@@ -10,7 +10,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L115.RsrcCurves_EJ_R_roofPV}. The corresponding file in the
 #' original data system was \code{LA115.roofPV.R} (energy level1).
-#' @details Rooftop PV resources are given in the input file according to the 14 GCAM regions, i.e., "region_GCAM3." Because some regions span mutliple GCAM region IDs, population in 2010 was used to allocate proportionally.
+#' @details Rooftop PV resources are given in the input file according to the 14 GCAM regions, i.e., "region_GCAM3." Because some regions span multiple GCAM region IDs, population in 2010 was used to allocate proportionally.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter group_by mutate select summarise
 #' @author AJS April 2017

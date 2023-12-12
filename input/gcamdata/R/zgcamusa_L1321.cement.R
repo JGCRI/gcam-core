@@ -12,7 +12,7 @@
 #' original data system was \code{LA1321.Cement.R} (gcam-usa level1).
 #' @details The tables for cement production, i.e., out, and energy inputs, i.e., in, were calculated by applying state shares to national data.
 #' @details The state shares were determined by the states' relative values of cement shipments.
-#' @details The input-out coefficients were downscaled to the states in proportation to the national data.
+#' @details The input-out coefficients were downscaled to the states in proportion to the national data.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate pull select summarise
 #' @importFrom tidyr gather

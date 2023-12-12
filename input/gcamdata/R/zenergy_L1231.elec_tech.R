@@ -11,7 +11,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L1231.in_EJ_R_elec_F_tech_Yh}, \code{L1231.out_EJ_R_elec_F_tech_Yh}, \code{L1231.eff_R_elec_F_tech_Yh}. The corresponding file in the
 #' original data system was \code{LA1231.elec_tech.R} (energy level1).
-#' @details This chunk obtaines inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
+#' @details This chunk obtains inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join arrange bind_rows distinct filter full_join if_else group_by left_join mutate select semi_join
 #' @author FF, May 2017

@@ -10,7 +10,7 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L232.TechCoef}. The corresponding file in the
 #' original data system was \code{L232.water_demand_manufacturing.R} (water level2).
-#' @details Water widthdrawal and consumption coefficients for manufacturing for GCAM regions.
+#' @details Water withdrawal and consumption coefficients for manufacturing for GCAM regions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange distinct filter if_else group_by left_join mutate select
 #' @importFrom tidyr complete nesting

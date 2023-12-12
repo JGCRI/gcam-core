@@ -394,7 +394,7 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
 #' Reduce the carbon density of a managed land type from its unmanaged land
 #' type's carbon density using constant multipliers
 #'
-#' @param data Unput data tibble to adjust carbon densities for
+#' @param data Input data tibble to adjust carbon densities for
 #' @param LTfor Land_Type name to use for Forest land types
 #' @param LTpast Land_Type name to use for Pasture land types
 #' @return The original table with carbon density adjusted for the managed land types
@@ -463,7 +463,7 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
 #' Takes a wide format tibble with years as columns, coverts to long format, and
 #' ensures values are filled in for all \code{out_years} using the following rules:
 #'   - Linearly interpolated for missing values that have end points
-#'   - Extrapolated using an exponential decay function paramaterized by the columns
+#'   - Extrapolated using an exponential decay function parameterized by the columns
 #'     \code{improvement.rate} and \code{improvement.max} using the following formulation
 #'     \code{v_0*max+(v_0-v_0*max)*(1-rate)^(y-y_0)}
 #'   - For rows that specify a char value in the column \code{improvement.shadow.technology}
