@@ -1171,14 +1171,16 @@ void GCAM_E3SM_interface::separateSurfaceMonthlyEmissions(EmissDownscale surface
 void GCAM_E3SM_interface::readRegionGcamYearEmissionData(std::string aFileName)
 {
     // zero out the read-in arrays
-    memset(&mGcamYearEmissions_sfc[0], 0.0, mGcamYearEmissions_sfc.size() * sizeof mGcamYearEmissions_sfc[0]);
-    memset(&mGcamYearEmissions_air[0], 0.0, mGcamYearEmissions_air.size() * sizeof mGcamYearEmissions_air[0]);
-    memset(&mGcamYearEmissions_ship[0], 0.0, mGcamYearEmissions_ship.size() * sizeof mGcamYearEmissions_ship[0]);
+    //memset(&mGcamYearEmissions_sfc[0], 0.0, mGcamYearEmissions_sfc.size() * sizeof mGcamYearEmissions_sfc[0]);
+    //memset(&mGcamYearEmissions_air[0], 0.0, mGcamYearEmissions_air.size() * sizeof mGcamYearEmissions_air[0]);
+    //memset(&mGcamYearEmissions_ship[0], 0.0, mGcamYearEmissions_ship.size() * sizeof mGcamYearEmissions_ship[0]);
+
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
 
     ifstream data(aFileName);
     if (!data.is_open())
     {
-        ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
         coupleLog.setLevel( ILogger::ERROR );
         coupleLog << "File not found: " << aFileName << endl;
         exit(EXIT_FAILURE);
@@ -1217,17 +1219,19 @@ void GCAM_E3SM_interface::readRegionGcamYearEmissionData(std::string aFileName)
        if (sectorID == "surface")
        {
           mGcamYearEmissions_sfc[regID_ind] = value;
+          //coupleLog << "readRegionGcamYearEmissionData: region " << regID << " sfc co2 = " << mGcamYearEmissions_sfc[regID_ind] << endl;
        }
        else if (sectorID == "shipment")
        {
           mGcamYearEmissions_ship[regID_ind] = value;
+          //coupleLog << "readRegionGcamYearEmissionData: region " << regID << " ship co2 = " << mGcamYearEmissions_ship[regID_ind] << endl;
        }
        else if (sectorID == "aircraft")
        {
           mGcamYearEmissions_air[regID_ind] = value;
+          //coupleLog << "readRegionGcamYearEmissionData: region " << regID << " air co2 = " << mGcamYearEmissions_air[regID_ind] << endl;
        }
        else {
-            ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
             coupleLog.setLevel( ILogger::ERROR );
             coupleLog << "Sector" << sectorID << " in" << aFileName << "not present in current co2.xml output mapping" << endl;
             exit(EXIT_FAILURE);
@@ -1386,9 +1390,9 @@ double GCAM_E3SM_interface::readCO2DataGridCSV(std::string aFileName, bool aHasL
     }
 
     if(aCalcTotal){
-       coupleLog << aSectorName << " before conversion total = " << total << endl;
+       //coupleLog << aSectorName << " before conversion total = " << total << endl;
        total = total * km22m2 * co22c * k2T;
-       coupleLog << aSectorName << " total = " << total << endl;
+       //coupleLog << aSectorName << " total = " << total << endl;
     }
 
     return total;

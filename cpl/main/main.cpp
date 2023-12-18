@@ -73,9 +73,9 @@ int main( ) {
     std::string BASE_CO2_SURFACE_FILE = "../cpl/data/CO2-em-SFC-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_CO2_AIRCRAFT_FILE = "../cpl/data/CO2-em-AIR-2lvl-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_CO2_SHIPMENT_FILE = "../cpl/data/CO2-em-SHIP-anthro_0.9x1.25_input4MIPs_2014.csv";
-    std::string BASE_GCAM_CO2_FILE = "../cpl/data/co2_2015_gcam_out.csv";
+    std::string BASE_GCAM_CO2_FILE = "../cpl/data/co2_2015_gcam_out_regional.csv";
     std::string BASE_GCAM_LU_WH_FILE = "../cpl/data/lu_wh_2015_gcam_out.csv";
-    std::string GCAM2ELM_CO2_MAPPING_FILE = "../cpl/mappings/co2.xml";
+    std::string GCAM2ELM_CO2_MAPPING_FILE = "../cpl/mappings/co2_regional.xml";
     std::string GCAM2ELM_LUC_MAPPING_FILE = "../cpl/mappings/luc.xml";
     std::string GCAM2ELM_WOODHARVEST_MAPPING_FILE = "../cpl/mappings/woodharvest.xml";
     std::string GCAM2ELM_CDENSITY_MAPPING_FILE = "../cpl/mappings/cdensity.xml";
