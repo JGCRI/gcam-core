@@ -40,7 +40,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["PPPConvert"]] <- c("region", "PPP.convert")
   level2_data_names[["InterestRate"]] <- c("region", "interest.rate")
   level2_data_names[["NationalAccount"]] <- c("region", "year", "capital", "depreciation.rate", "savings.rate", "energy.investment",
-                                              "wages", "labor.force.share", "capital.net.export")
+                                              "wages", "capital.value", "labor.force.share", "capital.net.export")
   level2_data_names[["GDPMacroFunction"]] <- c("region", "fn.name", "rho", "node.name", "gamma", "leaf.name", "is.primary.factor",
                                                "is.capital", "is.labor", "is.energy")
   level2_data_names[["SavingsRateParams"]] <- c("region",  "saving.rate.param.base", "saving.rate.param.GR.coef", "saving.rate.param.SR.coef")

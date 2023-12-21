@@ -59,13 +59,14 @@ module_socio_L280.GDP_macro <- function(command, ...) {
       rename(labor.force.tot = labor.force) -> labor.force.gcam.reg.tbl
     L180.nationalAccounts %>% left_join_error_no_match(labor.force.gcam.reg.tbl,
                                                        by=c("GCAM_region_ID", "year")) %>%
-      mutate(wage.rate.fraction = labor.force/labor.force.tot * wage.rate) %>%
+      mutate(wage.rate.fraction = labor.force/labor.force.tot * wage.rate,
+             capital.value = capital.stock * interest.rate) %>%
       select(-labor.force.tot) -> L180.nationalAccounts
 
     #Aggregate national accounts from country to GCAM region
     #Remove all shares and rates by country, sum by GCAM region and recalculate
     L180.nationalAccounts %>% select(-iso, -country_name, -labor.force.share, -wage.rate,
-                                     -hrs.worked.annual, -depreciation.rate, -savings.rate) %>%
+                                     -hrs.worked.annual, -depreciation.rate, -savings.rate, -interest.rate) %>%
       group_by(GCAM_region_ID, year) %>%
       summarise_all(sum, na.rm = TRUE) %>%
       ungroup() %>%
@@ -136,6 +137,7 @@ module_socio_L280.GDP_macro <- function(command, ...) {
              depreciation = depreciation * gdp.scaler,
              savings = savings * gdp.scaler,
              wages = wages * gdp.scaler,
+             capital.value = replace_na(capital.value * gdp.scaler, 0),
              energy.investment = replace_na(energy.investment * gdp.scaler, 0),
              capital.net.export = replace_na(capital.net.export * gdp.scaler, 0)) ->
       national.accounts.hist
@@ -317,11 +319,11 @@ module_socio_L280.GDP_macro <- function(command, ...) {
 
     national.accounts.BaseYrs %>% rename(capital = capital.stock) %>%
       select(GCAM_region_ID, region, year, capital, depreciation.rate,
-      savings.rate, energy.investment, wages, labor.force.share, capital.net.export) -> national.accounts.BaseYrs
+      savings.rate, energy.investment, wages, capital.value, labor.force.share, capital.net.export) -> national.accounts.BaseYrs
 
-    national.accounts.FutureYrs %>% mutate(capital = 0, wages = 0, energy.investment = 0, capital.net.export = NA_real_) %>%
+    national.accounts.FutureYrs %>% mutate(capital = 0, wages = 0, capital.value = 0, energy.investment = 0, capital.net.export = NA_real_) %>%
       select(GCAM_region_ID, region, year, capital, depreciation.rate,
-      savings.rate, energy.investment, wages, labor.force.share, capital.net.export) -> national.accounts.FutureYrs
+      savings.rate, energy.investment, wages, capital.value, labor.force.share, capital.net.export) -> national.accounts.FutureYrs
 
     #combine historical and future national accounts
     national.accounts.BaseYrs %>% bind_rows(national.accounts.FutureYrs)  %>%
@@ -399,10 +401,10 @@ module_socio_L280.GDP_macro <- function(command, ...) {
       L280.FactorProductivity
 
     L280.nationalAccounts %>% select(region, year, capital, depreciation.rate,
-                                savings.rate, energy.investment, wages, labor.force.share,
+                                savings.rate, energy.investment, wages, capital.value, labor.force.share,
                                 capital.net.export) -> L280.nationalAccounts
     # use 3 decimal places
-    L280.nationalAccounts %>% dplyr::mutate_at(vars(capital, wages, energy.investment), list(~ round(.,3))) %>%
+    L280.nationalAccounts %>% dplyr::mutate_at(vars(capital, wages, capital.value, energy.investment), list(~ round(.,3))) %>%
       dplyr::mutate_at(vars(depreciation.rate, savings.rate, labor.force.share), list(~ round(.,6))) ->
       L280.nationalAccounts
 

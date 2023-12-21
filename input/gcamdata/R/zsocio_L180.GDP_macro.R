@@ -72,7 +72,7 @@ module_socio_L180.GDP_macro <- function(command, ...) {
     #
 
     PWT91.raw %>% select(countrycode, country, year, pop, emp, avh, rgdpna, rconna, rdana,
-                         rnna, labsh, delta) %>%
+                         rnna, labsh, delta, irr) %>%
       rename(iso = countrycode,
              labor.force = emp,
              hrs.worked.annual = avh,
@@ -82,7 +82,8 @@ module_socio_L180.GDP_macro <- function(command, ...) {
              cons.plus.invest = rdana,
              capital.stock = rnna,
              labor.share.gdp = labsh,
-             depreciation.rate = delta) %>%
+             depreciation.rate = delta,
+             interest.rate = irr) %>%
       mutate(iso = tolower(iso)) %>%
       gather(var, value, -iso, -country, -year) %>%
       filter(!is.na(value)) -> pwt
@@ -222,6 +223,15 @@ module_socio_L180.GDP_macro <- function(command, ...) {
       L180.nationalAccounts
 
 
+    # Some ISOs have missing interest rates, attempt to fill them using
+    # rule=2 and if still missing (i.e. the country has no data for any
+    # year) just fall back to the global mean
+    L180.nationalAccounts %>%
+      group_by(iso) %>%
+      mutate(interest.rate = approx_fun(year, interest.rate, rule=2)) %>%
+      ungroup() %>%
+      mutate(interest.rate = if_else(is.na(interest.rate), mean(interest.rate, na.rm=T), interest.rate)) ->
+      L180.nationalAccounts
 
 
     #Future labor force share of population from SSP population by cohort
@@ -276,7 +286,7 @@ module_socio_L180.GDP_macro <- function(command, ...) {
                                      cons.plus.invest, capital.stock, depreciation,
                                      savings, wages, hrs.worked.annual, wage.rate,
                                      labor.force.share, depreciation.rate, savings.rate,
-                                     energy.investment, capital.net.export ) -> L180.nationalAccounts
+                                     interest.rate, energy.investment, capital.net.export ) -> L180.nationalAccounts
 
     # ===================================================
 
