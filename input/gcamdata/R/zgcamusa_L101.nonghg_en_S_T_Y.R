@@ -31,7 +31,7 @@ module_gcamusa_L101.nonghg_en_S_T_Y <- function(command, ...) {
              "L1322.in_EJ_R_indenergy_F_Yh",
              "L144.in_EJ_R_bld_serv_F_Yh",
              "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
-             "L1322.Fert_Prod_MtN_R_F_Y",
+             "L1322.Fert_Prod_MtNH3_R_F_Y",
              "L1321.in_EJ_R_cement_F_Y",
              "L124.in_EJ_R_heat_F_Yh",
              "L111.Prod_EJ_R_F_Yh",
@@ -77,14 +77,14 @@ module_gcamusa_L101.nonghg_en_S_T_Y <- function(command, ...) {
     L144.in_EJ_R_bld_serv_F_Yh <- get_data(all_data, "L144.in_EJ_R_bld_serv_F_Yh")
     L154.in_EJ_R_trn_m_sz_tech_F_Yh <- get_data(all_data, "L154.in_EJ_R_trn_m_sz_tech_F_Yh") %>%
       spread(year, value)
-    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtN_R_F_Y")
+    L1322.Fert_Prod_MtNH3_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtNH3_R_F_Y")
     L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y")
     L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh")
     L111.Prod_EJ_R_F_Yh <- get_data(all_data, "L111.Prod_EJ_R_F_Yh")
 
     # Add technology columns and combine all energy driver data into a single dataframe
     bind_rows(spread(L1322.in_EJ_R_indenergy_F_Yh, year, value),
-              spread(L1322.Fert_Prod_MtN_R_F_Y, year, value),
+              spread(L1322.Fert_Prod_MtNH3_R_F_Y, year, value),
               spread(L1321.in_EJ_R_cement_F_Y, year, value),
               spread(L124.in_EJ_R_heat_F_Yh, year, value),
               spread(L111.Prod_EJ_R_F_Yh, year, value),
@@ -205,7 +205,7 @@ module_gcamusa_L101.nonghg_en_S_T_Y <- function(command, ...) {
                      "L1322.in_EJ_R_indenergy_F_Yh",
                      "L144.in_EJ_R_bld_serv_F_Yh",
                      "L154.in_EJ_R_trn_m_sz_tech_F_Yh",
-                     "L1322.Fert_Prod_MtN_R_F_Y",
+                     "L1322.Fert_Prod_MtNH3_R_F_Y",
                      "L1321.in_EJ_R_cement_F_Y",
                      "L124.in_EJ_R_heat_F_Yh",
                      "L111.Prod_EJ_R_F_Yh") ->

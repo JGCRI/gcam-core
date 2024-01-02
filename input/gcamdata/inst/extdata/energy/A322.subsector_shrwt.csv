@@ -1,14 +1,16 @@
 # File: A322.subsector_shrwt.csv
-# Title: Fertilizer default subsector shareweights
+# Title: ammonia / traded ammonia / regional ammonia / N fertilizer default subsector shareweights
 # Units: Unitless
-# Column types: cccci 
+# Column types: cciccn
 # ----------
-supplysector,subsector,year.fillout,year,share.weight
-N fertilizer,coal,start-year,,1
-N fertilizer,gas,start-year,,1
-N fertilizer,refined liquids,start-year,,1
-N fertilizer,refined liquids,2035,,0
-N fertilizer,hydrogen,start-year,,0
-N fertilizer,hydrogen,2050,,1
-N fertilizer,Imports,start-year,,0
-Exports_fertilizer,N fertilizer,start-year,,0
+supplysector,subsector,traded,year.fillout,year,share.weight
+ammonia,coal,0,start-year,,1
+ammonia,gas,0,start-year,,1
+ammonia,refined liquids,0,start-year,,1
+ammonia,refined liquids,0,2035,,0
+ammonia,hydrogen,0,start-year,,0
+ammonia,hydrogen,0,2050,,1
+traded ammonia,traded ammonia,1,start-year,,1
+regional ammonia,domestic ammonia,0,start-year,,1
+regional ammonia,imported ammonia,0,start-year,,1
+N fertilizer,N fertilizer,0,start-year,,1

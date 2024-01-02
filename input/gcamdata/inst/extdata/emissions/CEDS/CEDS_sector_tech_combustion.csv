@@ -11,9 +11,9 @@ other industrial energy use,biomass,biomass,industry_energy,biomass
 other industrial energy use,coal,coal,industry_energy,coal
 other industrial energy use,gas,gas,industry_energy,gas
 other industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids
-N fertilizer,coal,coal,industry_energy,coal
-N fertilizer,gas,gas,industry_energy,gas
-N fertilizer,refined liquids,refined liquids,industry_energy,refined liquids
+ammonia,coal,coal,industry_energy,coal
+ammonia,gas,gas,industry_energy,gas
+ammonia,refined liquids,refined liquids,industry_energy,refined liquids
 process heat cement,biomass,biomass,cement,biomass
 process heat cement,coal,coal,cement,coal
 process heat cement,gas,gas,cement,gas

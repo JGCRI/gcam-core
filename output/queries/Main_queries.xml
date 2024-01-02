@@ -2564,32 +2564,47 @@ element input {
                     </supplyDemandQuery>
                 </queryGroup>
                 <queryGroup name="fertilizer production">
-                    <supplyDemandQuery title="fertilizer production by region">
+                    <supplyDemandQuery title="ammonia production by region">
                         <axis1 name="sector">sector</axis1>
                         <axis2 name="Year">physical-output[@vintage]</axis2>
-                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='N fertilizer')]/
-               *[@type='subsector' (:collapse:) and not(@name='Imports')]//
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='ammonia')]//
                *[@type='output' (:collapse:)]/physical-output/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
-                    <supplyDemandQuery title="fertilizer production by tech">
+                    <supplyDemandQuery title="ammonia production by tech">
                         <axis1 name="technology">technology</axis1>
                         <axis2 name="Year">physical-output[@vintage]</axis2>
-                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='N fertilizer')]/
-               *[@type='subsector' and not(@name='Imports')]/*[@type='technology']/
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='ammonia')]/
+               *[@type='subsector']/*[@type='technology']/
                *[@type='output']/physical-output/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
-                    <supplyDemandQuery title="fertilizer inputs by tech (energy and feedstocks)">
+                    <supplyDemandQuery title="ammonia inputs by tech (energy and feedstocks)">
                         <axis1 name="input">input</axis1>
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
-                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='N fertilizer')]//*[@type='input']/demand-physical/node()</xPath>
+                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='ammonia')]//*[@type='input']/demand-physical/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
-                    <supplyDemandQuery title="fertilizer prices">
+                    <supplyDemandQuery title="ammonia and N fertilizer prices">
                         <axis1 name="sector">sector</axis1>
                         <axis2 name="Year">cost</axis2>
-                        <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='N fertilizer')]/cost/text()</xPath>
+                        <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='N fertilizer') or contains(@name, 'ammonia')]/cost/text()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="ammonia domestic supply">
+                        <axis1 name="subsector">subsector</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='regional ammonia')]/
+               *[@type='subsector']//
+               *[@type='output']/physical-output/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="ammonia exports (query USA region)">
+                        <axis1 name="subsector">subsector</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='traded ammonia')]/
+               *[@type='subsector']//
+               *[@type='output']/physical-output/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
                 </queryGroup>
@@ -2631,18 +2646,18 @@ element input {
                         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='iron and steel')]/cost/text()</xPath>
                         <comments/>
                     </supplyDemandQuery>
-				 	<supplyDemandQuery title="traded iron and steel">
-    					<axis1 name="input">input</axis1>
-    					<axis2 name="Year">demand-physical[@vintage]</axis2>
-    					<xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'traded iron and steel')]/*[@type='subsector']//*[@type='input']/demand-physical/node()</xPath>
-    					<comments/>
-					</supplyDemandQuery>
-  					<supplyDemandQuery title="regional iron and steel sources">
-        				<axis1 name="input">input</axis1>
-        				<axis2 name="Year">demand-physical[@vintage]</axis2>
-        				<xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'regional iron and steel')]/*[@type='subsector']//*[@type='input']/demand-physical/node()</xPath>
-        				<comments/>
-    				</supplyDemandQuery>
+                    <supplyDemandQuery title="traded iron and steel">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'traded iron and steel')]/*[@type='subsector']//*[@type='input']/demand-physical/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="regional iron and steel sources">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and contains(@name, 'regional iron and steel')]/*[@type='subsector']//*[@type='input']/demand-physical/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
                 </queryGroup>
                 <queryGroup name="chemicals">
                     <supplyDemandQuery title="chemical production by region">

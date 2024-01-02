@@ -299,7 +299,7 @@ aglu.BIO_ENERGY_CONTENT_GJT <- 17.5
 # kbn 2019/09/25 Took taiwan out from below since we have data for Taiwan now.
 aglu.NO_AGLU_REGIONS <- ""
 
-# Define GCAM category name of fertilizer
+# Define GCAM category name of fertilizer for input to the agricultural sector
 aglu.FERT_NAME <- "N fertilizer"
 
 # Average Wood Density kg/m^3 for mass conversion
@@ -985,7 +985,7 @@ gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 # GCAM-USA fertlizer constants
 gcamusa.FERT_LOGIT_EXP  <- -3             # Define default logit expoent used in the fertlizer subsector
 gcamusa.FERT_LOGIT_TYPE <- NA
-gcamusa.FERT_NAME       <- "N fertilizer" # Define GCAM-USA category name of fertilizer
+gcamusa.FERT_NAME       <- "ammonia" # Define GCAM-USA category name of fertilizer
 
 # Fuels whose markets will be modeled at the level of the FERC regions, with prices calibrated
 gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale gas", "delivered gas",

@@ -537,8 +537,8 @@ module_energy_L210.resources <- function(command, ...) {
     L210.RsrcEnvironCost_SSP4 %>%
       # Set environmental costs for coal to 0 for low growth regions,
       # 10 * environcost for high growth regions
-      mutate(environCost = if_else(resource == "coal" & region %in% L210.low_reg, 0, input.cost),
-             environCost = if_else(resource == "coal" & region %in% L210.high_reg, 10 * environCost, environCost)) %>%
+      mutate(input.cost = if_else(resource == "coal" & region %in% L210.low_reg, 0, input.cost),
+             input.cost = if_else(resource == "coal" & region %in% L210.high_reg, 10 * input.cost, input.cost)) %>%
       add_title("Environmental Costs for Depletable Resources: SSP4", overwrite = TRUE) %>%
       add_units("$/GJ") %>%
       add_comments("A10.EnvironCost_SSPs written to all regions") %>%

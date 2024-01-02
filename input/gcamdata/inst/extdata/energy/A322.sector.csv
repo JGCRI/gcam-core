@@ -1,8 +1,10 @@
 # File: A322.sector.csv
-# Title: Fertilizer default supplysector information (units and logit exponents)
+# Title: ammonia / traded ammonia / regional ammonia / N fertilizer default supplysector information (units and logit exponents)
 # Units: Units-in-table
-# Column types: ccccicc 
+# Column types: ccccincc 
 # ----------
-supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
-N fertilizer,Mt N,EJ,1975$/kgN,-3,industry,
-Exports_fertilizer,Mt N,Mt N,1975$/kgN,-3,,
+supplysector,output.unit,input.unit,price.unit,traded,logit.exponent,final.energy,logit.type
+ammonia,Mt NH3,EJ,1975$/kgNH3,0,-3,industry,
+traded ammonia,Mt NH3,Mt NH3,1975$/kgNH3,1,-3,,
+regional ammonia,Mt NH3,Mt NH3,1975$/kgNH3,0,-3,,
+N fertilizer,Mt N,Mt NH3,1975$/kgN,0,-3,,

@@ -18,9 +18,9 @@ other industrial energy use,biomass,biomass,Combustion_Bio
 other industrial energy use,coal,coal,Combustion_general
 other industrial energy use,gas,gas,Combustion_general
 other industrial energy use,refined liquids,refined liquids,Combustion_general
-N fertilizer,coal,coal,Combustion_general
-N fertilizer,gas,gas,Combustion_general
-N fertilizer,refined liquids,refined liquids,Combustion_general
+ammonia,coal,coal,Combustion_general
+ammonia,gas,gas,Combustion_general
+ammonia,refined liquids,refined liquids,Combustion_general
 out_resources,coal,coal,Fugitive_coal
 out_resources,crude oil,crude oil,Fugitive_oil
 out_resources,natural gas,natural gas,Fugitive_gas

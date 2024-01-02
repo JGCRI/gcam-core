@@ -3,7 +3,7 @@
 #' module_gcamusa_L273.en_ghg_emissions
 #'
 #' Define non-CO2 GHG emissions for GCAM-USA states, including 1. CH4 and N2O in refinery,
-#' buildings, N fertilizer, industrial energy use; 2. F-gases in cooling and power
+#' buildings, ammonia, industrial energy use; 2. F-gases in cooling and power
 #' transmission; 3. MACs for F-gases
 #'
 #' @param command API command to execute

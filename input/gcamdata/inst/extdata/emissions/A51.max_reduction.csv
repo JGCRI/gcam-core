@@ -58,9 +58,9 @@ industrial energy use,refined liquids,refined liquids cogen,,,,,,
 industrial feedstocks,coal,coal,,,,,,
 industrial feedstocks,gas,gas,,,,,,
 industrial feedstocks,refined liquids,refined liquids,,,,,,
-N fertilizer,coal,coal,10,82,80,50,50,60
-N fertilizer,gas,gas,,23.5,15,50,50,
-N fertilizer,refined liquids,refined liquids,10,82,80,50,50,60
+ammonia,coal,coal,10,82,80,50,50,60
+ammonia,gas,gas,,23.5,15,50,50,
+ammonia,refined liquids,refined liquids,10,82,80,50,50,60
 process heat cement,biomass,biomass,,,,,,
 process heat cement,coal,coal,,,,,,
 process heat cement,gas,gas,,,,,,

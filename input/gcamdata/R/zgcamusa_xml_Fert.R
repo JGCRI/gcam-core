@@ -26,7 +26,7 @@ module_gcamusa_Fert_xml <- function(command, ...) {
              "L2322.TechShrwt_USAFert",
              "L2322.Production_USAFert",
              "L2322.TechCoef_USAFert",
-             "L2322.StubTechProd_Fert_USA",
+             "L2322.StubTechProd_FertProd_USA",
              "L2322.StubTechCoef_Fert_USA",
              "L2322.StubTechMarket_Fert_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -50,7 +50,7 @@ module_gcamusa_Fert_xml <- function(command, ...) {
     L2322.TechShrwt_USAFert <- get_data(all_data, "L2322.TechShrwt_USAFert")
     L2322.Production_USAFert <- get_data(all_data, "L2322.Production_USAFert")
     L2322.TechCoef_USAFert <- get_data(all_data, "L2322.TechCoef_USAFert")
-    L2322.StubTechProd_Fert_USA <- get_data(all_data, "L2322.StubTechProd_Fert_USA")
+    L2322.StubTechProd_FertProd_USA <- get_data(all_data, "L2322.StubTechProd_FertProd_USA")
     L2322.StubTechCoef_Fert_USA <- get_data(all_data, "L2322.StubTechCoef_Fert_USA")
     L2322.StubTechMarket_Fert_USA <- get_data(all_data, "L2322.StubTechMarket_Fert_USA")
 
@@ -72,7 +72,7 @@ module_gcamusa_Fert_xml <- function(command, ...) {
       add_xml_data(L2322.TechShrwt_USAFert, "TechShrwt") %>%
       add_xml_data(L2322.Production_USAFert, "Production") %>%
       add_xml_data(L2322.TechCoef_USAFert, "TechCoef") %>%
-      add_xml_data(L2322.StubTechProd_Fert_USA, "StubTechProd") %>%
+      add_xml_data(L2322.StubTechProd_FertProd_USA, "StubTechProd") %>%
       add_xml_data(L2322.StubTechCoef_Fert_USA, "StubTechCoef") %>%
       add_xml_data(L2322.StubTechMarket_Fert_USA, "StubTechMarket") %>%
       add_precursors("L2322.DeleteSubsector_USAFert",
@@ -89,7 +89,7 @@ module_gcamusa_Fert_xml <- function(command, ...) {
                      "L2322.TechShrwt_USAFert",
                      "L2322.Production_USAFert",
                      "L2322.TechCoef_USAFert",
-                     "L2322.StubTechProd_Fert_USA",
+                     "L2322.StubTechProd_FertProd_USA",
                      "L2322.StubTechCoef_Fert_USA",
                      "L2322.StubTechMarket_Fert_USA") ->
       Fert_USA.xml
