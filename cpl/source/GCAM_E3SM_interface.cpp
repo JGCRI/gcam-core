@@ -1135,7 +1135,7 @@ void GCAM_E3SM_interface::separateSurfaceMonthlyEmissions(EmissDownscale surface
     int gridPerMonth = aNumLat * aNumLon;
     
     // Perform element-wise addition
-    for (int i = 0; i < gridPerMonth; i++) {
+    for (int i = 0; i < gridPerMonth * 12; i++) {
         mCurrYearEmissVector.push_back(surfaceCO2.mCurrYearEmissVector[i] + shipmentCO2.mCurrYearEmissVector[i]);
     }
     
