@@ -1,11 +1,11 @@
-# File: A_resbio_curves.csv,
-# Original source: NA,
-# Title: A_resbio_curves,
-# Units: NA,
-# Description: Residue biomass fraction produced by price,
+# File: A_resbio_curves.csv
+# Original source: NA
+# Title: A_resbio_curves
+# Units: NA
+# Description: Residue biomass fraction produced by price
 # Prices updated based on Steef Hanssen et al (2020 Climatic Change), e.g. about 15 2005$ per ton ceiling
-# Column types: nnnni ,
-# ----------,
+# Column types: nnnni
+# ----------
 price,ag,For,Mill,Jatr
 0,0,0,0,0
 1.2,0.25,0.6,0.8,1
