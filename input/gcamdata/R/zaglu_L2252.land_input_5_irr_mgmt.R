@@ -332,8 +332,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # Carbon density of biomass is mapped to pasture as is for mature_age
     # But mature_age for biomass should be different
     # uniform assumption is made in this update based on poplar tree and switchgrass
-    biomassGrass_mature_age = 5
-    biomassTree_mature_age = 8
+    # see biomassGrass_mature_age and biomassTree_mature_age in constants.R
 
     L2252.LN5_MgdCarbon_bio %>%
       mutate(mature.age = if_else(grepl("biomassGrass", LandNode4), (biomassGrass_mature_age), mature.age),

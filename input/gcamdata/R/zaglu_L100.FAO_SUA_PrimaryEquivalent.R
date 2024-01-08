@@ -99,7 +99,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       group_by(GCAM_region_ID, item_code, year) %>%
       summarize(value = sum(value)) %>%
       ungroup() %>%
-      mutate(value = -value / 1000.0) ->
+      mutate(value = -value) ->
       DF_INTRA_REG_TRADE
 
     # #' Adjust gross trade in SUA data to ensure regional export is smaller than production for an SUA item
