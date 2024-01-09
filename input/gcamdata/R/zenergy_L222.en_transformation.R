@@ -24,53 +24,60 @@
 #' @importFrom tidyr complete nesting
 #' @author CWR Sept 2017
 module_energy_L222.en_transformation <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(c(FILE = "common/GCAM_region_names",
+        FILE = "energy/calibrated_techs",
+        FILE = "energy/A_regions",
+        FILE = "energy/A22.sector",
+        FILE = "energy/A22.subsector_logit",
+        FILE = "energy/A22.subsector_shrwt",
+        FILE = "energy/A22.subsector_interp",
+        # temp regional parameters
+        FILE = "energy/A22.SubsectorShrwtFllt_en_R",
+        FILE = "energy/A22.SubsectorInterp_en_R",
+        FILE = "energy/A22.globaltech_coef",
+        FILE = "energy/A22.globaltech_cost",
+        # Note: Low indicates low tech. Costs are actually higher than core
+        FILE = "energy/A22.globaltech_cost_low",
+        FILE = "energy/A22.globaltech_shrwt",
+        FILE = "energy/A22.globaltech_interp",
+        FILE = "energy/A22.globaltech_co2capture",
+        FILE = "energy/A22.globaltech_retirement",
+        FILE = "energy/A22.globaltech_keyword",
+        "L122.out_EJ_R_gasproc_F_Yh",
+        "L122.out_EJ_R_refining_F_Yh",
+        "L122.IO_R_oilrefining_F_Yh"))
+
+  MODULE_OUTPUTS <-
+    c("L222.Supplysector_en",
+      "L222.SectorUseTrialMarket_en",
+      "L222.SubsectorLogit_en",
+      "L222.SubsectorShrwt_en",
+      "L222.SubsectorShrwtFllt_en",
+      "L222.SubsectorInterp_en",
+      "L222.SubsectorInterpTo_en",
+      "L222.StubTech_en",
+      "L222.GlobalTechInterp_en",
+      "L222.GlobalTechCoef_en",
+      "L222.GlobalTechCost_en",
+      "L222.GlobalTechTrackCapital_en",
+      "L222.GlobalTechShrwt_en",
+      "L222.GlobalTechCapture_en",
+      "L222.GlobalTechShutdown_en",
+      "L222.GlobalTechSCurve_en",
+      "L222.GlobalTechLifetime_en",
+      "L222.GlobalTechProfitShutdown_en",
+      "L222.GlobalTechKeyword_en",
+      "L222.StubTechProd_gasproc",
+      "L222.StubTechProd_refining",
+      "L222.StubTechCoef_refining",
+      "L222.GlobalTechCost_low_en")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/calibrated_techs",
-             FILE = "energy/A_regions",
-             FILE = "energy/A22.sector",
-             FILE = "energy/A22.subsector_logit",
-             FILE = "energy/A22.subsector_shrwt",
-             FILE = "energy/A22.subsector_interp",
-             # temp regional parameters
-             FILE = "energy/A22.SubsectorShrwtFllt_en_R",
-             FILE = "energy/A22.SubsectorInterp_en_R",
-             FILE = "energy/A22.globaltech_coef",
-             FILE = "energy/A22.globaltech_cost",
-             # Note: Low indicates low tech. Costs are actually higher than core
-             FILE = "energy/A22.globaltech_cost_low",
-             FILE = "energy/A22.globaltech_shrwt",
-             FILE = "energy/A22.globaltech_interp",
-             FILE = "energy/A22.globaltech_co2capture",
-             FILE = "energy/A22.globaltech_retirement",
-             FILE = "energy/A22.globaltech_keyword",
-             "L122.out_EJ_R_gasproc_F_Yh",
-             "L122.out_EJ_R_refining_F_Yh",
-             "L122.IO_R_oilrefining_F_Yh"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L222.Supplysector_en",
-             "L222.SectorUseTrialMarket_en",
-             "L222.SubsectorLogit_en",
-             "L222.SubsectorShrwt_en",
-             "L222.SubsectorShrwtFllt_en",
-             "L222.SubsectorInterp_en",
-             "L222.SubsectorInterpTo_en",
-             "L222.StubTech_en",
-             "L222.GlobalTechInterp_en",
-             "L222.GlobalTechCoef_en",
-             "L222.GlobalTechCost_en",
-             "L222.GlobalTechTrackCapital_en",
-             "L222.GlobalTechShrwt_en",
-             "L222.GlobalTechCapture_en",
-             "L222.GlobalTechShutdown_en",
-             "L222.GlobalTechSCurve_en",
-             "L222.GlobalTechLifetime_en",
-             "L222.GlobalTechProfitShutdown_en",
-             "L222.GlobalTechKeyword_en",
-             "L222.StubTechProd_gasproc",
-             "L222.StubTechProd_refining",
-             "L222.StubTechCoef_refining",
-             "L222.GlobalTechCost_low_en"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -83,27 +90,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
     technology <- to.value <- value <- year <- year.fillout <- year.share.weight <- year.x <- year.y <-
       primary.consumption <- NULL
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
-    A_regions <- get_data(all_data, "energy/A_regions")
-    A22.sector <- get_data(all_data, "energy/A22.sector", strip_attributes = TRUE)
-    A22.subsector_logit <- get_data(all_data, "energy/A22.subsector_logit", strip_attributes = TRUE)
-    A22.subsector_shrwt <- get_data(all_data, "energy/A22.subsector_shrwt", strip_attributes = TRUE)
-    A22.subsector_interp <- get_data(all_data, "energy/A22.subsector_interp", strip_attributes = TRUE)
-    A22.SubsectorShrwtFllt_en_R <- get_data(all_data, "energy/A22.SubsectorShrwtFllt_en_R", strip_attributes = TRUE)
-    A22.SubsectorInterp_en_R <- get_data(all_data, "energy/A22.SubsectorInterp_en_R", strip_attributes = TRUE)
-    A22.globaltech_coef <- get_data(all_data, "energy/A22.globaltech_coef", strip_attributes = TRUE)
-    A22.globaltech_cost <- get_data(all_data, "energy/A22.globaltech_cost")
-    A22.globaltech_cost_low  <- get_data(all_data, "energy/A22.globaltech_cost_low")
-    A22.globaltech_shrwt <- get_data(all_data, "energy/A22.globaltech_shrwt", strip_attributes = TRUE)
-    A22.globaltech_interp <- get_data(all_data, "energy/A22.globaltech_interp", strip_attributes = TRUE)
-    A22.globaltech_co2capture <- get_data(all_data, "energy/A22.globaltech_co2capture")
-    A22.globaltech_retirement <- get_data(all_data, "energy/A22.globaltech_retirement", strip_attributes = TRUE)
-    A22.globaltech_keyword <- get_data(all_data, "energy/A22.globaltech_keyword", strip_attributes = TRUE)
-    L122.out_EJ_R_gasproc_F_Yh <- get_data(all_data, "L122.out_EJ_R_gasproc_F_Yh")
-    L122.out_EJ_R_refining_F_Yh <- get_data(all_data, "L122.out_EJ_R_refining_F_Yh", strip_attributes = TRUE)
-    L122.IO_R_oilrefining_F_Yh <- get_data(all_data, "L122.IO_R_oilrefining_F_Yh")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -139,8 +127,27 @@ module_energy_L222.en_transformation <- function(command, ...) {
         write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]]), GCAM_region_names) ->
         L222.SubsectorShrwtFllt_en
 
+
+      # assert that all regions in GCAM_region_names are in A22.SubsectorShrwtFllt_en_R
+      if (GCAM_region_names %>% distinct(region) %>% dplyr::setdiff(A22.SubsectorShrwtFllt_en_R %>% distinct(region)) %>% nrow > 0) {
+        warning("Regions doesn't exist in A_biomassSupplyShare_R follow USA assumptions. Consider adding all GCAM regions to energy/A22.SubsectorShrwtFllt_en_R to avoid this warning.")
+      }
+
+      A22.SubsectorShrwtFllt_en_R %>%
+        right_join(GCAM_region_names %>% distinct(region) %>%
+                     left_join(A22.SubsectorShrwtFllt_en_R %>% distinct(supplysector, subsector), by = character()),
+                    by = c("region", "supplysector", "subsector")) %>%
+        group_by(supplysector, subsector) %>%
+        # set missing to USA's value so region breakout won't have any issue
+        replace_na(list(year.fillout = .$year.fillout[.$region == "USA"],
+                        share.weight = .$share.weight[.$region == "USA"]))  %>%
+        ungroup ->
+        A22.SubsectorShrwtFllt_en_R
+
       L222.SubsectorShrwtFllt_en %>%
+        # remove biomass liquids in refining
         anti_join(A22.SubsectorShrwtFllt_en_R, by = c("region", "supplysector", "subsector")) %>%
+        # bind back region-specific values for biomass liquids in refining
         bind_rows(A22.SubsectorShrwtFllt_en_R[, names(L222.SubsectorShrwtFllt_en)] ) ->
         L222.SubsectorShrwtFllt_en
       }
@@ -152,6 +159,24 @@ module_energy_L222.en_transformation <- function(command, ...) {
       filter(is.na(to.value)) %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorInterp"]]), GCAM_region_names) ->
       L222.SubsectorInterp_en
+
+      # assert that all regions in GCAM_region_names are in A22.SubsectorInterp_en_R
+      if (GCAM_region_names %>% distinct(region) %>% dplyr::setdiff(A22.SubsectorInterp_en_R %>% distinct(region)) %>% nrow > 0) {
+        warning("Regions doesn't exist in A_biomassSupplyShare_R follow USA assumptions. Consider adding all GCAM regions to energy/A22.SubsectorInterp_en_R to avoid this warning.")
+      }
+
+      A22.SubsectorInterp_en_R %>%
+        right_join(GCAM_region_names %>% distinct(region) %>%
+                     left_join(A22.SubsectorInterp_en_R %>% distinct(supplysector, subsector), by = character()),
+                   by = c("region", "supplysector", "subsector")) %>%
+        group_by(supplysector, subsector) %>%
+        # set missing to USA's value so region breakout won't have any issue
+        replace_na(list(apply.to = .$apply.to[.$region == "USA"],
+                        from.year = .$from.year[.$region == "USA"],
+                        to.year = .$to.year[.$region == "USA"],
+                        interpolation.function = .$interpolation.function[.$region == "USA"])) %>%
+        ungroup ->
+        A22.SubsectorInterp_en_R
 
       L222.SubsectorInterp_en %>%
         anti_join(A22.SubsectorInterp_en_R, by = c("region", "supplysector", "subsector")) %>%
@@ -673,13 +698,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
       add_precursors("energy/A22.globaltech_cost_low") ->
       L222.GlobalTechCost_low_en
 
-    return_data(L222.Supplysector_en, L222.SectorUseTrialMarket_en, L222.SubsectorLogit_en, L222.SubsectorShrwt_en,
-                L222.SubsectorShrwtFllt_en, L222.SubsectorInterp_en, L222.SubsectorInterpTo_en,
-                L222.StubTech_en, L222.GlobalTechInterp_en, L222.GlobalTechCoef_en, L222.GlobalTechCost_en, L222.GlobalTechTrackCapital_en,
-                L222.GlobalTechShrwt_en, L222.GlobalTechCapture_en, L222.GlobalTechShutdown_en,
-                L222.GlobalTechSCurve_en, L222.GlobalTechLifetime_en, L222.GlobalTechProfitShutdown_en,
-                L222.StubTechProd_gasproc, L222.StubTechProd_refining, L222.StubTechCoef_refining,
-                L222.GlobalTechCost_low_en, L222.GlobalTechKeyword_en)
+    return_data(MODULE_OUTPUTS)
+
   } else {
     stop("Unknown command")
   }

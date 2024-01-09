@@ -20,7 +20,8 @@
 module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
 
   MODULE_INPUTS <-
-    c(FILE = "aglu/A_LandNode_logit_irr",
+    c(FILE = "common/GCAM_region_names",
+      FILE = "aglu/A_LandNode_logit_irr",
       FILE = "aglu/A_bio_ghost_share",
       FILE = "aglu/A_LT_Mapping",
       FILE = "aglu/A_LandLeaf3",
@@ -69,7 +70,17 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["LN4_Logit"]], LOGIT_TYPE_COLNAME) ->
       L2242.LN4_Logit
 
+
+
+    # assert that all regions in GCAM_region_names are in A_biomassSupplyShare_R
+    if (GCAM_region_names %>% distinct(region) %>% dplyr::setdiff(A_biomassSupplyShare_R %>% distinct(region)) %>% nrow > 0) {
+      warning("Regions doesn't exist in A_biomassSupplyShare_R follow USA assumptions (High). Consider adding all GCAM regions to aglu/A_biomassSupplyShare_R to avoid this warning.")
+    }
+
     A_biomassSupplyShare_R %>%
+      right_join(GCAM_region_names %>% distinct(region), by = "region") %>%
+      # set missing to USA's value so region breakout won't have any issue
+      replace_na(list(preference = A_biomassSupplyShare_R$preference[A_biomassSupplyShare_R$region == "USA"])) %>%
       left_join(A_bio_ghost_share, by = "preference") %>%
       select(region, year, ghost.share) ->
       A_bio_ghost_share_R

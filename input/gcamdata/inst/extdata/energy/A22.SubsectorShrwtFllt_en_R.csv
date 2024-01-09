@@ -3,7 +3,7 @@
 # Descreption: adjust biomass liquid share weight for few regions with palm biodiesel to lower values. This is needed due to data update.
 # Units: Unitless share-weights
 # Source: EMRE
-# Comment:
+# Comment:note that for regions not included (e.g., new regions) USA assumptions are used by default.
 # Column types: cccnn
 # ----------
 region,supplysector,subsector,year.fillout,share.weight

@@ -1,7 +1,7 @@
 # File: A_biomassSupplyShare_R.csv
 # Title: Whether a region currently has bioenergy supports
 # Units: NA
-# Comments: These data are assumptions to adjust supply side shareweights by region
+# Comments: These data are assumptions to adjust supply side shareweights by region. Regions not included here are set to USA's value
 # Source: NA
 # Column types: ccc
 # ----------
