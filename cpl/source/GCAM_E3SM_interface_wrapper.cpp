@@ -21,11 +21,6 @@ extern "C" {
 		  char *aBaseCO2GcamFileName, char *aBaseCO2SfcFile, char *aBaseCO2ShipFile, char *aBaseCO2AirFile,
                   double *aELMArea, int *aNumLon, int *aNumLat, int *aNumReg, int *aNumSector, int *aRestartRun) {
 
-      ofstream oFile;
-      oFile.open("init_log");
-
-      oFile << "initcgcam_: before conversions" << endl;
-
       // Convert to string - fortran doesn't handle string
       std::string CaseName(aCaseName);
       std::string GCAMConfig(aGCAMConfig);
@@ -39,15 +34,9 @@ extern "C" {
       std::string BaseCO2AirFile(aBaseCO2AirFile);
       bool restartRun = *aRestartRun == 1 ? true : false;
       
-      oFile << "initcgcam_: before initGCAM call" << endl;
-
     p_obj->initGCAM(yyyymmdd, CaseName, GCAMConfig, GCAM2ELMCO2Map, GCAM2ELMLUCMap, GCAM2ELMWHMap, GCAM2ELMCDENMap,
                      BaseCO2GcamFileName, BaseCO2SfcFile, BaseCO2ShipFile, BaseCO2AirFile,
                     aELMArea, aNumLon, aNumLat, aNumReg, aNumSector, restartRun);
-
-     
-      oFile << "initcgcam_: after initGCAM call" << endl;
-      oFile.close();
   }
 
   // Run GCAM

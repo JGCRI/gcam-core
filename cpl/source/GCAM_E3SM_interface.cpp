@@ -132,10 +132,6 @@ void GCAM_E3SM_interface::initGCAM(int *yyyymmdd, std::string aCaseName, std::st
     // for diagnostic output
     ofstream oFile;
 
-    oFile.open("init2_log");
-    oFile << "initGCAM: before initParser" << endl;
-    oFile.close(); 
-
     // Initialize the LoggerFactory
     XMLParseHelper::initParser();
     bool success = XMLParseHelper::parseXML( loggerFileName, &loggerFactoryWrapper );
@@ -221,21 +217,6 @@ void GCAM_E3SM_interface::initGCAM(int *yyyymmdd, std::string aCaseName, std::st
     success = parseXMLInternal(aGCAM2ELMCO2Map, &mCO2EmissData);
     mCO2EmissData.addYearColumn("Year", years, yearRemap);
     mCO2EmissData.finalizeColumns();
-    // Initialize GCAM CO2 emission
-/*    for (int i = 0; i < (*aNumReg)*(*aNumSector); ++i) {
-        mGcamCO2EmissPreviousGCAMYear.push_back(0.0);
-        mGcamCO2EmissCurrentGCAMYear.push_back(0.0);
-        // these are used for reading in values and also to store the base year data
-        if (i < *aNumReg) {
-           mBaseYearEmissions_sfc.push_back(0.0);
-           mBaseYearEmissions_air.push_back(0.0);
-           mBaseYearEmissions_ship.push_back(0.0);
-           mGcamYearEmissions_sfc.push_back(0.0);
-           mGcamYearEmissions_air.push_back(0.0);
-           mGcamYearEmissions_ship.push_back(0.0);
-        }
-    }
-*/
 
     // read in any needed co2 restart data
     if (aRestartRun) {
@@ -1034,7 +1015,6 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         // TODO: Set name of file based on case name?
         // note that the downscaleEmissions functions set the value data vector
         // need to set the lat, lon, and id vector for writing out co2 to file
-        // these spatial vectors manage their own memory (they are not allocated on construction)
         surfaceCO2.setIDVector(mBaseYearEmissionsGridID_sfc);
         surfaceCO2.setLonVector(mBaseYearEmissionsGridLon_sfc);
         surfaceCO2.setLatVector(mBaseYearEmissionsGridLat_sfc);
@@ -1070,7 +1050,6 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         // TODO: Set name of file based on case name?
         // note that the downscaleEmissions functions set the value data vector
         // need to set the lat, lon, and id vector for writing out co2 to file
-        // these spatial vectors manage their own memory (they are not allocated on construction)
         shipmentCO2.setIDVector(mBaseYearEmissionsGridID_ship);
         shipmentCO2.setLonVector(mBaseYearEmissionsGridLon_ship);
         shipmentCO2.setLatVector(mBaseYearEmissionsGridLat_ship);
@@ -1103,7 +1082,6 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         // TODO: Set name of file based on case name?
         // note that the downscaleEmissions functions set the value data vector
         // need to set the lat, lon, and id vector for writing out co2 to file
-        // these spatial vectors manage their own memory (they are not allocated on construction)
         aircraftCO2.setIDVector(mBaseYearEmissionsGridID_air);
         aircraftCO2.setLonVector(mBaseYearEmissionsGridLon_air);
         aircraftCO2.setLatVector(mBaseYearEmissionsGridLat_air);
