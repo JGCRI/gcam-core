@@ -8,3 +8,7 @@
 [submodule "util/testing-framework"]
 	path = util/testing-framework
 	url = https://stash.pnnl.gov/scm/jgcri/gcam-testing-framework.git
+[submodule "cpl/deps/eigen"]
+	path = cpl/deps/eigen
+	url = git@github.com:PX4/eigen
+	branch = 3.4
