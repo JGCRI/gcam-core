@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251.ssp2_ef}, \code{L251.ssp34_ef}, \code{L251.ssp15_ef_vin}, \code{L251.ssp2_ef_vin}, \code{L251.ssp34_ef_vin}. The corresponding file in the
+#' the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251.ssp2_ef}, \code{L251.ssp2_ef_residTradBio}, \code{L251.ssp34_ef}, \code{L251.ssp15_ef_vin}, \code{L251.ssp2_ef_vin}, \code{L251.ssp34_ef_vin}. The corresponding file in the
 #' original data system was \code{L251.en_ssp_nonco2.R} (emissions level2).
 #' @details This section takes in the non-CO2 emissions factors for SSP 1/5, 2, and 3/4 across sectors.
 #' First, create data that spans the years 2010-2100 in five year increments by interpolation of input data.
@@ -44,7 +44,8 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              "L251.ssp34_ef_elec",
              "L251.ssp15_ef_vin",
              "L251.ssp2_ef_vin",
-             "L251.ssp34_ef_vin"))
+             "L251.ssp34_ef_vin",
+             "L251.ssp2_ef_residTradBio"))
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- Non.CO2 <- supplysector <- subsector <-
@@ -279,6 +280,10 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                 by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) ->
       L251.ctrl.delete
 
+    # Write SSP2 EFs for TradBio
+    L251.ssp2_ef_residTradBio <- L251.ssp2_ef %>%
+      filter(grepl("TradBio", supplysector))
+
     # ===================================================
     # Produce outputs
     # No flags are necessary because old data is in 'long' format.
@@ -320,6 +325,21 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "socioeconomics/income_shares",
                      UCD_tech_map_name) ->
       L251.ssp2_ef
+
+    L251.ssp2_ef_residTradBio %>%
+      add_title("Regional non-CO2 emissions coefficient data for SSP2 for TradBio") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 2 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, regional non-CO2 emission species information is added.") %>%
+      add_legacy_name("L251.ssp2_ef") %>%
+      add_precursors("L161.SSP2_EF",
+                     "emissions/A_regions",
+                     "energy/calibrated_techs",
+                     "energy/calibrated_techs_bld_det",
+                     "socioeconomics/income_shares",
+                     UCD_tech_map_name) ->
+      L251.ssp2_ef_residTradBio
+
     L251.ssp34_ef %>%
       add_title("Regional non-CO2 emissions coefficient data for SSP3 and SSP4.") %>%
       add_units("Tg / EJ") %>%
@@ -400,7 +420,8 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "emissions/A_regions") ->
       L251.ssp34_ef_vin
 
-    return_data(L251.ctrl.delete, L251.ssp15_ef, L251.ssp2_ef, L251.ssp34_ef, L251.ssp15_ef_elec, L251.ssp2_ef_elec, L251.ssp34_ef_elec, L251.ssp15_ef_vin, L251.ssp2_ef_vin, L251.ssp34_ef_vin)
+    return_data(L251.ctrl.delete, L251.ssp15_ef, L251.ssp2_ef, L251.ssp2_ef_residTradBio,
+                L251.ssp34_ef, L251.ssp15_ef_elec, L251.ssp2_ef_elec, L251.ssp34_ef_elec, L251.ssp15_ef_vin, L251.ssp2_ef_vin, L251.ssp34_ef_vin)
   } else {
     stop("Unknown command")
   }
