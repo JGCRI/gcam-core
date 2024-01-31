@@ -93,7 +93,7 @@ protected:
     
     //! A filter which will be used to determine which SolutionInfos with solver component
     //! will work on.
-    std::auto_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
+    std::unique_ptr<ISolutionInfoFilter> mSolutionInfoFilter;
     
     virtual ReturnCode calculateDerivatives( SolutionInfoSet& aSolutionSet, Matrix& JF, PermutationMatrix& aPermMatrix, int aPeriod );
     

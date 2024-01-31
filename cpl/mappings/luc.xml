@@ -416,6 +416,7 @@
         <map from="Grassland" to="Grassland"/>
         <map from="Legumes" to="Cropland"/>
         <map from="MiscCrop" to="Cropland"/>
+        <map from="MiscCropC4" to="Cropland"/>
         <map from="MiscCropTree" to="Cropland"/>
         <map from="NutsSeeds" to="Cropland"/>
         <map from="NutsSeedsTree" to="Cropland"/>
