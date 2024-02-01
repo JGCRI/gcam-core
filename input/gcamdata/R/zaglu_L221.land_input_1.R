@@ -211,7 +211,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     # Adding a module-specific variable UsingGCAMCroplandRentalProfit
     # If TRUE, calculating a mean rental profit for cropland for all water basins and use that as unmanaged land rental prices
 
-    UsingGCAMCroplandRentalProfit = TRUE
+    UsingGCAMCroplandRentalProfit <- TRUE
     # Otherwise, the default values from GTAP (year 2000) will be used
     # The variable is only added here since it is module-specific
     # The original GTAP approach can be superseded. Keeping them now, but they can be removed later.
