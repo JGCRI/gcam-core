@@ -206,52 +206,66 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       select(region, LandAllocatorRoot, LandNode1, unManagedLandValue, logit.year.fillout, logit.exponent, logit.type) ->
       L221.LN1_ValueLogit
 
-    # Update shadow price of cropland for unmanaged land rental price ----
+    # 3. Adding options of using GCAM data for unmanaged land rental prices ----
+
+    # Adding a module-specific variable UsingGCAMCroplandRentalProfit
+    # If TRUE, calculating a mean rental profit for cropland for all water basins and use that as unmanaged land rental prices
+
     UsingGCAMCroplandRentalProfit = TRUE
-    # Other with, the default values from GTAP (year 2000) will be used
+    # Otherwise, the default values from GTAP (year 2000) will be used
+    # The variable is only added here since it is module-specific
+    # The original GTAP approach can be superseded. Keeping them now, but they can be removed later.
 
     if (UsingGCAMCroplandRentalProfit == TRUE) {
+
+      # 3.1. Calculate rental profits for cropland
 
       # Formula:
       # Rental profit (1975$ per thousand km2)
       # Rental profit = (P - NLC) * yield
-      # (1975$/kg - 1975$/kg) * kg/thousand km2
-      # (1975$/kg - 1975$/kg) * Mt * 10^9/bm2
-
+      # Units
+      # (1975$/kg - 1975$/kg) * kg/thousand km2 or
+      # (1975$/kg - 1975$/kg) * Mt * 10^9/bm2 or
+      # (1975$/t - 1975$/t) * t /bm2
 
       # Calculate P - NLC
       # Note that water cost is not included in NLC; it is ignored here
+      # L2052 cost should be the NLC for this calculation
       L2052.AgCost_ag_irr_mgmt %>%
         left_join_error_no_match(select(L2012.AgSupplySector, region, AgSupplySector, calPrice),
                                  by = c("region", "AgSupplySector")) %>%
-        mutate(Profit = calPrice - nonLandVariableCost) ->
+        #(P - NLC)
+        mutate(Profit_USDPerKg = calPrice - nonLandVariableCost) ->
         L2052.UnAdjProfits
 
-      # Calculate yield can rental profit
+      # Calculate yield and rental profit at the technology level
       L2252.LN5_MgdAllocation_crop %>%
-        rename(bm2 = allocation) %>%
+        rename(Area_bm2 = allocation) %>%
         left_join(
           L2012.AgProduction_ag_irr_mgmt %>%
-            select(region, year, LandLeaf = AgProductionTechnology, Mt = calOutputValue),
+            select(region, year, LandLeaf = AgProductionTechnology, Prod_Mt = calOutputValue),
           by = c("region", "LandLeaf", "year")
         ) %>%
         left_join(
           L2052.UnAdjProfits %>%
-            select(region, year, LandLeaf = AgProductionTechnology, USDPerKg = Profit),
+            select(region, year, LandLeaf = AgProductionTechnology, Profit_USDPerKg),
           by = c("region", "LandLeaf", "year")) %>%
-        mutate(RentalProfit = USDPerKg * Mt * 10^9 / bm2) ->
+        # (P - NLC) * yield
+        mutate(RentalProfit = Profit_USDPerKg * CONV_T_KG * Prod_Mt / CONV_T_MT / Area_bm2) ->
         Cropland_RentalProfit_GLU_C_Y_IRR_MGMT
 
+      # Calculate rental profit (weighted average) at the regional level
       Cropland_RentalProfit_GLU_C_Y_IRR_MGMT %>%
         group_by(region, year) %>%
-        summarize(unManagedLandValue = weighted.mean(RentalProfit, w = bm2)) %>%
+        summarize(unManagedLandValue = weighted.mean(RentalProfit, w = Area_bm2)) %>%
         ungroup() %>%
         filter(year == max(MODEL_BASE_YEARS)) %>%
         select(-year) -> Cropland_RentalProfit_R
 
+      # Calculate rental profit (weighted average) at the basin level
       Cropland_RentalProfit_GLU_C_Y_IRR_MGMT %>%
         group_by(region, LandAllocatorRoot, LandNode1, year) %>%
-        summarize(unManagedLandValue = weighted.mean(RentalProfit, w = bm2)) %>%
+        summarize(unManagedLandValue = weighted.mean(RentalProfit, w = Area_bm2)) %>%
         ungroup() %>%
         filter(year == max(MODEL_BASE_YEARS)) %>%
         select(-year) -> Cropland_RentalProfit_GLU
@@ -261,6 +275,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       L221.LN1_ValueLogit %>%
         rename(unManagedLandValue_GTAP = unManagedLandValue) %>%
         left_join(Cropland_RentalProfit_GLU, by = c("region", "LandAllocatorRoot", "LandNode1")) %>%
+        # join regional rental profit and use to fill in NA at basin level
         left_join_error_no_match(Cropland_RentalProfit_R %>% rename(unManagedLandValue_R = unManagedLandValue),
                                  by = c("region")) %>%
         mutate(unManagedLandValue = if_else(is.na(unManagedLandValue), unManagedLandValue_R, unManagedLandValue)) %>%
