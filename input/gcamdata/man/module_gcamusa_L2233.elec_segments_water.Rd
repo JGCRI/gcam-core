@@ -17,13 +17,13 @@ a vector of output names, or (if \code{command} is "MAKE") all
 the generated outputs: \code{L2233.GlobalTechEff_elecS_cool_USA}, \code{L2233.GlobalTechShrwt_elecS_cool_USA}, \code{L2233.GlobalTechProfitShutdown_elecS_cool_USA},
 \code{L2233.GlobalTechOMvar_elecS_cool_USA}, \code{L2233.GlobalTechOMfixed_elecS_cool_USA}, \code{L2233.GlobalTechCapital_elecS_USA}, \code{L2233.GlobalTechCapital_elecS_cool_USA},
 \code{L2233.GlobalTechCapFac_elecS_cool_USA}, \code{L2233.GlobalTechSCurve_elecS_cool_USA}, \code{L2233.GlobalTechCoef_elecS_cool_USA}, \code{L2233.GlobalTechCapture_elecS_cool_USA},
-\code{L2233.GlobalTechLifetime_elecS_cool_USA}, \code{L2233.AvgFossilEffKeyword_elecS_cool_USA}, \code{L2233.GlobalIntTechBackup_elecS_cool_USA}, \code{L2233.GlobalIntTechCapital_elecS_USA},
+\code{L2233.GlobalTechLifetime_elecS_cool_USA}, \code{L2233.AvgFossilEffKeyword_elecS_cool_USA}, \code{L2233.GlobalIntTechValueFactor_elecS_cool_USA}, \code{L2233.GlobalIntTechCapital_elecS_USA},
 \code{L2233.GlobalIntTechCapital_elecS_cool_USA}, \code{L2233.GlobalIntTechEff_elecS_USA}, \code{L2233.GlobalIntTechEff_elecS_cool_USA}, \code{L2233.GlobalIntTechLifetime_elecS_cool_USA},
 \code{L2233.GlobalIntTechOMfixed_elecS_cool_USA}, \code{L2233.GlobalIntTechOMvar_elecS_cool_USA}, \code{L2233.GlobalIntTechShrwt_elecS_cool_USA}, \code{L2233.GlobalIntTechCoef_elecS_cool_USA},
 \code{L2233.PrimaryRenewKeyword_elecS_cool_USA}, \code{L2233.PrimaryRenewKeywordInt_elecS_cool_USA}, \code{L2233.StubTechEff_elecS_cool_USA}, \code{L2233.StubTechCoef_elecS_cool_USA},
 \code{L2233.StubTechMarket_elecS_cool_USA}, \code{L2233.StubTechProd_elecS_cool_USA}, \code{L2233.StubTechSCurve_elecS_cool_USA}, \code{L2233.StubTechCapFactor_elecS_solar_USA},
 \code{L2233.StubTechCapFactor_elecS_wind_USA}, \code{L2233.StubTechElecMarket_backup_elecS_cool_USA}, \code{L2233.StubTechFixOut_elecS_cool_USA}, \code{L2233.StubTechFixOut_hydro_elecS_cool_USA},
-\code{L2233.StubTechMarket_backup_elecS_cool_USA}, \code{L2233.StubTechProfitShutdown_elecS_cool_USA}, \code{L2233.StubTechShrwt_elecS_cool_USA}, \code{L2233.StubTechInterp_elecS_cool_USA},
+\code{L2233.StubTechProfitShutdown_elecS_cool_USA}, \code{L2233.StubTechShrwt_elecS_cool_USA}, \code{L2233.StubTechInterp_elecS_cool_USA},
 \code{L2233.StubTechCost_offshore_wind_elecS_cool_USA}, \code{L2233.SubsectorLogit_elecS_USA}, \code{L2233.SubsectorLogit_elecS_cool_USA}, \code{L2233.SubsectorShrwt_elecS_USA},
 \code{L2233.SubsectorShrwt_elecS_cool_USA}, \code{L2233.SubsectorShrwtInterp_elecS_USA}, \code{L2233.SubsectorShrwtInterpTo_elecS_USA}, \code{L2233.Supplysector_elecS_cool_USA}.
 The corresponding file in the original data system was \code{LA2233.electricity_water_USA} (gcam-usa level2)

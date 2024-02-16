@@ -41,7 +41,7 @@ module_energy_electricity_xml <- function(command, ...) {
               "L223.PrimaryRenewKeywordInt_elec",
               "L223.AvgFossilEffKeyword_elec",
               "L223.GlobalTechCapture_elec",
-              "L223.GlobalIntTechBackup_elec",
+              "L223.GlobalIntTechValueFactor_elec",
               "L223.StubTechCapFactor_elec",
               "L223.StubTechCost_offshore_wind",
               "L223.GlobalTechSCurve_elec",
@@ -90,7 +90,7 @@ module_energy_electricity_xml <- function(command, ...) {
     L223.PrimaryRenewKeywordInt_elec <- get_data(all_data, "L223.PrimaryRenewKeywordInt_elec")
     L223.AvgFossilEffKeyword_elec <- get_data(all_data, "L223.AvgFossilEffKeyword_elec")
     L223.GlobalTechCapture_elec <- get_data(all_data, "L223.GlobalTechCapture_elec")
-    L223.GlobalIntTechBackup_elec <- get_data(all_data, "L223.GlobalIntTechBackup_elec")
+    L223.GlobalIntTechValueFactor_elec <- get_data(all_data, "L223.GlobalIntTechValueFactor_elec")
     L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
     L223.StubTechCost_offshore_wind<- get_data(all_data, "L223.StubTechCost_offshore_wind")
     L223.GlobalTechSCurve_elec <- get_data(all_data, "L223.GlobalTechSCurve_elec")
@@ -145,7 +145,7 @@ module_energy_electricity_xml <- function(command, ...) {
       add_xml_data(L223.PrimaryRenewKeywordInt_elec, "PrimaryRenewKeywordInt") %>%
       add_xml_data(L223.AvgFossilEffKeyword_elec, "AvgFossilEffKeyword") %>%
       add_xml_data(L223.GlobalTechCapture_elec, "GlobalTechCapture") %>%
-      add_xml_data(L223.GlobalIntTechBackup_elec, "GlobalIntTechBackup") %>%
+      add_xml_data(L223.GlobalIntTechValueFactor_elec, "GlobalIntTechValueFactor") %>%
       add_xml_data(L223.StubTechCapFactor_elec, "StubTechCapFactor") %>%
       add_xml_data(L223.StubTechCost_offshore_wind, "StubTechCost") %>%
       add_xml_data(L223.GlobalTechSCurve_elec, "GlobalTechSCurve") %>%
@@ -187,7 +187,7 @@ module_energy_electricity_xml <- function(command, ...) {
                      "L223.PrimaryRenewKeywordInt_elec",
                      "L223.AvgFossilEffKeyword_elec",
                      "L223.GlobalTechCapture_elec",
-                     "L223.GlobalIntTechBackup_elec",
+                     "L223.GlobalIntTechValueFactor_elec",
                      "L223.StubTechCapFactor_elec",
                      "L223.StubTechCost_offshore_wind",
                      "L223.GlobalTechSCurve_elec",

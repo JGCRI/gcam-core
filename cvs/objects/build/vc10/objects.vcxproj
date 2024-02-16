@@ -630,8 +630,6 @@
     <ClCompile Include="..\..\resources\source\unlimited_resource.cpp" />
     <ClCompile Include="..\..\sectors\source\ag_supply_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\ag_supply_subsector.cpp" />
-    <ClCompile Include="..\..\sectors\source\capacity_limit_backup_calculator.cpp" />
-    <ClCompile Include="..\..\sectors\source\CSP_backup_calculator.cpp" />
     <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp" />
     <ClCompile Include="..\..\sectors\source\fixed_final_demand.cpp" />
     <ClCompile Include="..\..\sectors\source\nesting_subsector.cpp" />
@@ -642,6 +640,7 @@
     <ClCompile Include="..\..\sectors\source\subsector_add_techcosts.cpp" />
     <ClCompile Include="..\..\sectors\source\supply_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp" />
+    <ClCompile Include="..\..\sectors\source\value_factor_calculator.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_one.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy.cpp" />
@@ -910,8 +909,6 @@
     <ClInclude Include="..\..\sectors\include\afinal_demand.h" />
     <ClInclude Include="..\..\sectors\include\ag_supply_sector.h" />
     <ClInclude Include="..\..\sectors\include\ag_supply_subsector.h" />
-    <ClInclude Include="..\..\sectors\include\capacity_limit_backup_calculator.h" />
-    <ClInclude Include="..\..\sectors\include\CSP_backup_calculator.h" />
     <ClInclude Include="..\..\sectors\include\energy_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\fixed_final_demand.h" />
     <ClInclude Include="..\..\sectors\include\ibackup_calculator.h" />
@@ -923,6 +920,7 @@
     <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h" />
     <ClInclude Include="..\..\sectors\include\supply_sector.h" />
     <ClInclude Include="..\..\sectors\include\tran_subsector.h" />
+    <ClInclude Include="..\..\sectors\include\value_factor_calculator.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_all.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_one.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_policy.h" />

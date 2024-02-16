@@ -51,6 +51,7 @@
 #include "util/base/include/xml_helper.h"
 #include "marketplace/include/marketplace.h"
 #include "sectors/include/ibackup_calculator.h"
+#include "sectors/include/value_factor_calculator.h"
 #include "sectors/include/sector_utils.h"
 #include "functions/include/iinput.h"
 #include "functions/include/non_energy_input.h"
@@ -70,31 +71,21 @@ IntermittentTechnology::IntermittentTechnology( const string& aName, const int a
 :Technology( aName, aYear )
 {
     mElectricSectorName = "electricity";
-    mBackupCapacityFactor = 0.05;
-    mBackupCapitalCost = 0.0;
     mElecReserveMargin = 0.15;
-    mAveGridCapacityFactor = 0.60;
     
-    mBackupCalculator = 0;
+    mValueFactorCalculator = 0;
     
     mResourceInput = mInputs.end();
-    mBackupInput = mInputs.end();
-    mBackupCapCostInput = mInputs.end();
     mTechCostInput = mInputs.end();
 }
 
 IntermittentTechnology::IntermittentTechnology() {
     mElectricSectorName = "electricity";
-    mBackupCapacityFactor = 0.05;
-    mBackupCapitalCost = 0.0;
     mElecReserveMargin = 0.15;
-    mAveGridCapacityFactor = 0.60;
     
-    mBackupCalculator = 0;
+    mValueFactorCalculator = 0;
     
     mResourceInput = mInputs.end();
-    mBackupInput = mInputs.end();
-    mBackupCapCostInput = mInputs.end();
     mTechCostInput = mInputs.end();
 }
 
@@ -102,7 +93,7 @@ IntermittentTechnology::IntermittentTechnology() {
  * \brief Destructor.
  */
 IntermittentTechnology::~IntermittentTechnology() {
-    delete mBackupCalculator;
+    delete mValueFactorCalculator;
 }
     
 IntermittentTechnology* IntermittentTechnology::clone() const {
@@ -116,12 +107,10 @@ void IntermittentTechnology::copy( const IntermittentTechnology& aOther ) {
     mElectricSectorName = aOther.mElectricSectorName;
     mElectricSectorMarket = aOther.mElectricSectorMarket;
     mTrialMarketNameParsed = aOther.mTrialMarketNameParsed;
-    mBackupCapacityFactor = aOther.mBackupCapacityFactor;
-    mBackupCapitalCost = aOther.mBackupCapitalCost;
     
-    if( aOther.mBackupCalculator ) {
-        delete mBackupCalculator;
-        mBackupCalculator = aOther.mBackupCalculator->clone();
+    if( aOther.mValueFactorCalculator) {
+        delete mValueFactorCalculator;
+        mValueFactorCalculator = aOther.mValueFactorCalculator->clone();
     }
     
     /*!
@@ -149,15 +138,6 @@ const string& IntermittentTechnology::getXMLNameStatic() {
     return XML_NAME;
 }
 
-/*! \brief Return name to be used for input object containing backup capital costs.
-*
-* \author Steve Smith
-* \return The constant XML_NAME as a static.
-*/
-const string& IntermittentTechnology::getBackupCapCostName( ) const {
-   const static string BACKUP_CAPCOST_NAME = "backup-cap-cost";
-   return BACKUP_CAPCOST_NAME;
-}
 
 /*! \brief Return name to be used for input object containing technology costs.
 *
@@ -177,16 +157,6 @@ void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut,
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
     XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
     XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
-    if( mBackupCapacityFactor.isInited() ){
-        XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs );
-    }
-    if( mBackupCapitalCost.isInited() ){
-        XMLWriteElement( mBackupCapitalCost.get(), "backup-capital-cost", aOut, aTabs );
-    }
-    XMLWriteElement( calcEnergyFromBackup(), "energy-to-backup", aOut, aTabs );
-    if( mBackupCalculator ){
-        mBackupCalculator->toDebugXML( period, aOut, aTabs );
-    }
 }
 
 /*! \brief Create a trial market for the technology and complete the initialization.
@@ -222,12 +192,14 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     mElecReserveMargin = aSubsectorInfo->getDouble( "electricity-reserve-margin", true );
     mAveGridCapacityFactor = aSubsectorInfo->getDouble( "average-grid-capacity-factor", true );
 
+    /*
     // Initialize a non-energy input to hold backup capacity charges
     // This needs be be done before calling other methods so that 1) input vector size is fixed 
     // (so references won't change) and 2) so that initCalc() methods for new objects can be called.
     if( util::searchForValue( mInputs, getBackupCapCostName() ) == mInputs.end() ){
         mInputs.push_back( new NonEnergyInput( getBackupCapCostName() ) );
     }
+    */
 
     // Inititalize info object
     mIntermittTechInfo.reset( InfoFactory::constructInfo( 0, getName() ) );
@@ -248,7 +220,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
 
     // Create trial market for intermettent technology if backup exists and needs to be
     // calculated.
-    if( mBackupCalculator ){
+    if(mValueFactorCalculator){
         SectorUtils::createTrialSupplyMarket( aRegionName, mTrialMarketName, mIntermittTechInfo.get(), mElectricSectorMarket );
         MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
         depFinder->addDependency( aSectorName, aRegionName,
@@ -262,12 +234,13 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     }
 
     // Warn if a backup calculator was not read-in.
-    if( !mBackupCalculator ){
+    if( !mValueFactorCalculator){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
                 << " in region " << aRegionName
-                << " did not read in a backup calculator. Backup costs will default to zero. " << endl;
+                << " did not read in a value factor calculator."
+                << "Results will not reflect decreasing value of intermittent generation as technology shares increase." << endl;
     }
     
     initializeInputLocations( aRegionName, aSectorName, 0 );
@@ -285,8 +258,8 @@ void IntermittentTechnology::initCalc( const string& aRegionName,
     // Note: initCalc is called for all past, current and future technologies.
     Technology::initCalc( aRegionName, aSectorName, aSubsectorInfo,
         aDemographics, aPrevPeriodInfo, aPeriod );
-    if ( mBackupCalculator ) {
-        mBackupCalculator->initCalc( mIntermittTechInfo.get() );
+    if (mValueFactorCalculator) {
+        mValueFactorCalculator->initCalc( mIntermittTechInfo.get() );
 
         // The renewable trial market is a share calculation so we can give the
         // solver some additional hints that the range should be between 0 and 1.
@@ -338,59 +311,18 @@ void IntermittentTechnology::production( const string& aRegionName,
     SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, mIntermitOutTechRatio, aPeriod );
 }
 
-/*! \brief Set tech shares based on backup energy needs for an intermittent
-*          resource.
-* \author Marshall Wise
-* \param aPeriod Model period.
-*/
-void IntermittentTechnology::setCoefficients( const string& aRegionName,
-                                              const string& aSectorName,
-                                              const int aPeriod )
-{
-    // Convert backup capacity per unit of resource energy to energy required
-    // (in EJ) per unit of resource energy (in EJ) using backup capacity factor.
-    // Based on average backup capacity as this is multiplied by sector output
-    // to get total backup electricity.
-    double backupEnergyFraction = getAverageBackupCapacity( aRegionName, aSectorName,
-                                  aPeriod ) * calcEnergyFromBackup();
-
-    /*! \invariant Backup energy fraction must be positive. */
-    assert( util::isValidNumber( backupEnergyFraction ) &&
-              backupEnergyFraction >= 0 );
-
-    // The inputs will only be invalid if the dataset was invalid.
-    if( mResourceInput != mInputs.end() && mBackupInput != mInputs.end() ){
-        // Normalize coefficients so that the energy output of the sector is apportioned appropriately to the two energy inputs.
-        //
-        // NOTE: the version currently in the multi-inputs branch only changes the coefficient for 
-        // backup, leaving the coefficient for the resource 1. This, essentially, assumes that as backup comes in 
-        // some of the resource energy is lost. This assumption makes relatively little difference for wind
-        // (since the amount of energy from backup is small), but is not correct for CSP, where sector output is split between
-        // CSP and backup mode. 
-        double newCoefficient = getResourceToEnergyRatio(aRegionName, aSectorName, aPeriod ) /
-                                ( 1.0 + backupEnergyFraction );
-        ( *mResourceInput )->setCoefficient( newCoefficient, aPeriod );
-        double newBackupCoef = aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ?
-            backupEnergyFraction / ( 1.0 + backupEnergyFraction ) :
-            // we do not include the back up energy in the calibration energy balance so we
-            // will have to turn off the energy demand in the historical years
-            0.0;
-        ( *mBackupInput )->setCoefficient( newBackupCoef, aPeriod );
-    }
-}
-
 /*! \brief Return amount of resource needed per unit of energy output.
 *  This method should be used when a technology uses a resource that is
-*  not in energy units. 
+*  not in energy units.
 * \author Steve Smith
 * \param aPeriod Model period.
 */
-double IntermittentTechnology::getResourceToEnergyRatio( const string& aRegionName,
-                                                         const string& aSectorName,
-                                                         const int aPeriod )
+double IntermittentTechnology::getResourceToEnergyRatio(const string& aRegionName,
+    const string& aSectorName,
+    const int aPeriod)
 {
     // Default assumpion is that resource is in energy units
-   return 1.0;
+    return 1.0;
 }
 
 /*! \brief Computes weighted cost of all technologies in Subsector plus backup
@@ -406,90 +338,22 @@ void IntermittentTechnology::calcCost( const string& aRegionName,
                                        const string& aSectorName,
                                        const int aPeriod )
 {
-    // Set marginal cost for backup to the input object set asside for this
-    ( *mBackupCapCostInput )->setPrice( aRegionName, 
-                              getMarginalBackupCapCost( aRegionName, mTrialMarketName, aPeriod ), 
-                              aPeriod );
-   
-    // Set the coefficients for energy and backup in the production function.
-    // Must call this after costs for backup capital and technology have been set.
-    setCoefficients( aRegionName, mTrialMarketName, aPeriod );
+    if (mProductionState[aPeriod]->isOperating()) {
 
-    // Calculate the base technology cost. This will use the standard leontief
-    // production function with updated coefficients for the fuel and the
-    // backup.
-    Technology::calcCost( aRegionName, aSectorName, aPeriod );
-}
+        double cost = getTotalInputCost(aRegionName, aSectorName, aPeriod)
+            * mPMultiplier -
+            calcSecondaryValue(aRegionName, aPeriod);
 
-/*! \brief Returns marginal cost for backup capacity
-* \author Marshall Wise, Steve Smith
-* \param aSectorName Sector name.
-* \param aRegionName Region name.
-* \param aPeriod Model period.
-*/
-double IntermittentTechnology::getMarginalBackupCapCost( const string& aRegionName,
-                                                         const string& aSectorName,
-                                                         const int aPeriod ) const
-{
-    // Add per unit cost of backup capacity to subsector price backup capacity
-    // is in GW/EJ, so have to convert to kW/GJ (multiply numerator by 1E6 and
-    // denominator by 1E9 to get * 1/1000) to make consistent with market price
-    // which is in $/GJ. BackupCost is in $/kw/yr.
-    double backupCost = getMarginalBackupCapacity( aRegionName, aSectorName, aPeriod )
-                        / 1000 * mBackupCapitalCost;   
-   return backupCost;
-}
+        double valueFactor = 1;
 
-/*!
- * \brief Get the marginal backup capacity required per unit of energy output.
- * \details Uses the internal backup calculator to determine the marginal backup
- *          capacity per unit output. If a backup calculator was not read-in,
- *          this is assumed to be zero. 
- * \author Marshall Wise, Steve Smith, Sonny Kim
- * \param aPeriod Model period.
- * \return Marginal backup capacity per unit of energy output.
- */
-double IntermittentTechnology::getMarginalBackupCapacity( const string& aRegionName,
-                                                          const string& aSectorName,
-                                                          const int aPeriod ) const {
-    double backupCapacity = 0;
-    if( mBackupCalculator && mResourceInput != mInputs.end() ){
-        const string& resourceName = ( *mResourceInput )->getName();
-        backupCapacity = mBackupCalculator->getMarginalBackupCapacity( aSectorName,
-                         mElectricSectorName, resourceName, aRegionName,
-                         mCapacityFactor, mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
+        if ( mValueFactorCalculator ) {
+            valueFactor = mValueFactorCalculator->getValueFactor(mTrialMarketName, mElectricSectorMarket, aRegionName, aPeriod);
+        }
+
+        mCosts[aPeriod] = cost / valueFactor;
+
+        assert(util::isValidNumber(mCosts[aPeriod]));
     }
-
-    /*! \post Backup capacity is a valid number and positive. */
-    assert( backupCapacity >= 0 && util::isValidNumber( backupCapacity ) );
-    return backupCapacity;
-}
-
-/*!
- * \brief Get the average backup capacity per unit output for the intermittent
- *        subsector.
- * \details Uses the internal backup calculator to determine the average backup
- *          capacity per unit output. If a backup calculator was not read-in,
- *          this is assumed to be zero.
- * \author Marshall Wise, Steve Smith, Sonny Kim
- * \param aPeriod Model period.
- * \return Average backup capacity per unit output.
- */
-double IntermittentTechnology::getAverageBackupCapacity( const string& aRegionName,
-                                                         const string& aSectorName,
-                                                         const int aPeriod ) const
-{
-    double backupCapacity = 0;
-    if( mBackupCalculator ){
-        const string& resourceName = ( *mResourceInput )->getName();
-        backupCapacity = mBackupCalculator->getAverageBackupCapacity( aSectorName,
-                         mElectricSectorName, resourceName, aRegionName,
-                         mCapacityFactor, mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
-    }
-
-    /*! \post Backup capacity is a valid number and positive. */
-    assert( backupCapacity >= 0 && util::isValidNumber( backupCapacity ) );
-    return backupCapacity;
 }
 
 /*! 
@@ -508,7 +372,7 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
                                                        const int aPeriod )
 {
     // Set the inputs to the error value.
-    mBackupCapCostInput = mTechCostInput = mResourceInput = mBackupInput = mInputs.end();
+    mTechCostInput = mResourceInput = mInputs.end();
 
     for( InputIterator i = mInputs.begin(); i != mInputs.end(); ++i ){
         // Parse location for energy inputs.
@@ -524,25 +388,10 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
                 mResourceInput = i;
             }
         }
-        else if( ( *i )->hasTypeFlag( IInput::ENERGY | IInput::BACKUP_ENERGY ) ){
-            if( mBackupInput != mInputs.end() ){
-                // There already was a resource input.
-                ILogger& mainLog = ILogger::getLogger( "main_log" );
-                mainLog.setLevel( ILogger::NOTICE );
-                mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
-                << " in region " << aRegionName << " has more than one backup input." << endl;
-            }
-            else {
-                mBackupInput = i;
-            }
-        }
+
         // Parse location for non-energy inputs.
         else{
-            if ( ( *i )->getName() == getBackupCapCostName() && ( getBackupCapCostName() != "" ) ) {
-               mBackupCapCostInput = i;
-               continue;
-            } 
-            else if ( ( *i )->getName() == getTechCostName() && ( getTechCostName() != "" ) ) {
+            if ( ( *i )->getName() == getTechCostName() && ( getTechCostName() != "" ) ) {
                mTechCostInput = i;
                continue;
             }
@@ -550,30 +399,14 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
     }
 
     // Check that both the resource and backup input were set.
-    if( mResourceInput == mInputs.end() || mBackupInput == mInputs.end() ){
+    if( mResourceInput == mInputs.end() ){
         // There already was a resource input.
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
         mainLog << "Intermittent technology " << mName << " in sector " << aSectorName
-                << " in region " << aRegionName << " does not have the required resource and backup inputs."
+                << " in region " << aRegionName << " does not have the required resource inputs."
                 << endl;
         abort();
     }
 }
 
-/*!
- * \brief Determine the amount of energy produced by the backup per unit of
- *        capacity.
- * \details Determines the amount of energy produced per unit of backup capacity
- *          by adjusting for the backup capacity factor and converting the
- *          resulting operating backup into energy.
- * \return Capacity to energy production conversion factor.
- * \todo Move all units conversion to utilities.
- */
-double IntermittentTechnology::calcEnergyFromBackup() const {
-    // Conversion: 1 gigaWattHour of electricity = 3.6E-6 ExaJoules
-    const double EJ_PER_GWH = 0.0000036;
-    // Number of hours in a year.
-    const int HOURS_PER_YEAR = 8760;
-    return HOURS_PER_YEAR * mBackupCapacityFactor * EJ_PER_GWH;
-}

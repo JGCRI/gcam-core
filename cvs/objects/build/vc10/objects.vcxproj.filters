@@ -269,12 +269,6 @@
     <ClCompile Include="..\..\resources\source\unlimited_resource.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\sectors\source\capacity_limit_backup_calculator.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\sectors\source\CSP_backup_calculator.cpp">
-      <Filter>Source Files\sectors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\sectors\source\energy_final_demand.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
@@ -935,6 +929,9 @@
     <ClCompile Include="..\..\resources\source\trial_value_resource.cpp">
       <Filter>Source Files\resources</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sectors\source\value_factor_calculator.cpp">
+      <Filter>Source Files\sectors</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -1070,12 +1067,6 @@
       <Filter>Header Files\resources</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\afinal_demand.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\capacity_limit_backup_calculator.h">
-      <Filter>Header Files\sectors</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\sectors\include\CSP_backup_calculator.h">
       <Filter>Header Files\sectors</Filter>
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\energy_final_demand.h">
@@ -1896,6 +1887,9 @@
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\output_accounting.h">
       <Filter>Header Files\technologies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sectors\include\value_factor_calculator.h">
+      <Filter>Header Files\sectors</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
