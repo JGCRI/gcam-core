@@ -5997,5 +5997,21 @@ A user can adjust the query to search for any of:
                 <comments/>
             </supplyDemandQuery>
         </queryGroup>
+        <queryGroup name="CO2 emissions">
+            <emissionsQueryBuilder title="CO2 emissions by tech (nested subsector) (excluding resource production)">
+                <axis1 name="technology">technology</axis1>
+                <axis2 name="Year">emissions</axis2>
+                <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]/*[@type='subsector']//*[@type='technology']//
+            CO2/emissions/node()</xPath>
+                <comments/>
+            </emissionsQueryBuilder>
+            <emissionsQueryBuilder title="CO2 sequestration by tech (nested subsector)">
+                <axis1 name="subsector">subsector</axis1>
+                <axis2 name="Year">emissions-sequestered</axis2>
+                <xPath buildList="true" dataName="emissions" group="false" sumAll="false">*[@type = 'sector' ]/*[@type='subsector']//*[@type='technology']//
+            CO2/emissions-sequestered/node()</xPath>
+                <comments/>
+            </emissionsQueryBuilder>
+        </queryGroup>
     </queryGroup>
 </queries>
