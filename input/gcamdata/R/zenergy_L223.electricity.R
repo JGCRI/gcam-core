@@ -1352,6 +1352,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_units("value.factor.intercept = fraction of PLCOE observed at 0% market share (LCOE is divided by this value);
                 value.factor.slope = % reduction in PLCOE obsrved per % increase in market share") %>%
       add_comments("Assumptions contained within A23.globalinttech") %>%
+      add_legacy_name("L223.GlobalIntTechValueFactor_elec") %>%
       add_precursors("energy/A23.globalinttech") ->
       L223.GlobalIntTechValueFactor_elec
 
