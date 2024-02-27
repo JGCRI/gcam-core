@@ -31,6 +31,7 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
              "L2324.GlobalTechEff_Off_road",
              "L2325.GlobalTechEff_chemical",
              "L2326.GlobalTechCoef_aluminum",
+             "L2327.GlobalTechCoef_paper",
              "L244.StubTechEff_bld",
              "L254.StubTranTechCoef",
              # Net energy trade tracking
@@ -69,6 +70,7 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
                                  "L2324.GlobalTechEff_Off_road",
                                  "L2325.GlobalTechEff_chemical",
                                  "L2326.GlobalTechCoef_aluminum",
+                                 "L2327.GlobalTechCoef_paper",
                                  "L244.StubTechEff_bld",
                                  "L254.StubTranTechCoef")
 
@@ -122,6 +124,14 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
       bind_rows() %>%
       filter(sector.name %in% socioeconomics.FINAL_DEMAND_SECTORS) ->
       fd_global_tech_input_all
+
+    # there are a few places that need to be updated if a new sector is broken out:
+    # 1. socioeconomics.FINAL_DEMAND_SECTORS needs to be updated
+    # 2. An appropriate input for the new sector needs to be included
+    # 3. all_fd_globaltech_names also needs to be updated
+    # given all of this it is a good idea to assert all the names match, granted this does
+    # not protect against the case that a user didn't update any of these
+    assertthat::assert_that(all.equal(sort(unique(fd_global_tech_input_all$sector.name)), sort(socioeconomics.FINAL_DEMAND_SECTORS)))
 
     fd_global_tech_input_all %>%
       select(-input.accounting) %>%

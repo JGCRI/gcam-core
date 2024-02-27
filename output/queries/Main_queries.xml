@@ -126,6 +126,7 @@
                         <rewrite from="exotic-elect" to="j breakthrough"/>
                         <rewrite from="wind-H2" to="g wind"/>
                         <rewrite from="biomass" to="d biomass"/>
+                        <rewrite from="woodpulp_energy" to="d biomass"/>
                         <rewrite from="crude oil" to="a oil"/>
                         <rewrite from="nuclear-elect" to="e nuclear"/>
                         <rewrite from="solar-H2" to="h solar"/>
@@ -231,6 +232,7 @@
                         <rewrite from="exotic-elect" to="j breakthrough"/>
                         <rewrite from="wind-H2" to="g wind"/>
                         <rewrite from="biomass" to="d biomass"/>
+                        <rewrite from="woodpulp_energy" to="d biomass"/>
                         <rewrite from="crude oil" to="a oil"/>
                         <rewrite from="nuclear-elect" to="e nuclear"/>
                         <rewrite from="solar-H2" to="h solar"/>
@@ -281,7 +283,7 @@
 	       	 	 declare function local:generate-sector-input-coefs($outputNameQueue as xs:string*, $currTree as node(), $coefs as node()*, $is_usa as xs:boolean) as node()* {
                  if(empty($outputNameQueue)) then $coefs
                  else if( exists($coefs[@name = $outputNameQueue[1]]) or exists(index-of(('biomass',
-'traded oil', 'traded coal', 'traded natural gas', 'traded Afr_MidE pipeline gas', 'traded LA pipeline gas', 'traded PAC pipeline gas', 'traded N.Amer pipeline gas', 'traded RUS pipeline gas', 'traded EUR pipeline gas', 'traded LNG', 'regional corn for ethanol', 'regional biomassOil', 'regional sugar for ethanol', 'regional sugarbeet for ethanol'),
+'traded oil', 'traded coal', 'traded natural gas', 'traded Afr_MidE pipeline gas', 'traded LA pipeline gas', 'traded PAC pipeline gas', 'traded N.Amer pipeline gas', 'traded RUS pipeline gas', 'traded EUR pipeline gas', 'traded LNG', 'regional corn for ethanol', 'regional biomassOil', 'regional sugar for ethanol', 'regional sugarbeet for ethanol', 'regional woodpulp for energy'),
 $outputNameQueue[1])) or not($currTree/*[@type='sector' and @name=$outputNameQueue[1]]))
 then 
 (:if(not($is_usa) and string-length($currTree/@name) = 2) then
@@ -422,7 +424,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
 			 	 $region in $regionsG 	
 			 	 let $scenario_split := tokenize($scenario, ' '), 	    
 				 $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
-                 $currInputs := $currTree/*[@type='sector' and (@name='unconventional oil production' or exists(child::keyword/@final-energy))]//*[@type='input' and empty(index-of(('trn_pass_road', 'limestone', 'process heat cement', 'industrial energy use', 'industrial feedstocks', 'renewable', 'trn_freight_road', 'trn_pass_road_LDV', 'trn_pass_road_LDV_2W', 'trn_pass_road_LDV_4W', 'unconventional oil', 'oil-credits', 'scrap', 'alumina'), @name))],
+                 $currInputs := $currTree/*[@type='sector' and (@name='unconventional oil production' or exists(child::keyword/@final-energy))]//*[@type='input' and empty(index-of(('trn_pass_road', 'limestone', 'process heat cement', 'industrial energy use', 'industrial feedstocks', 'renewable', 'trn_freight_road', 'trn_pass_road_LDV', 'trn_pass_road_LDV_2W', 'trn_pass_road_LDV_4W', 'unconventional oil', 'oil-credits', 'scrap', 'alumina', 'process heat paper', 'waste biomass for paper', 'water_td_ind_W', 'water_td_ind_C'), @name))],
                  $coefs := local:generate-sector-input-coefs(distinct-values($currInputs/@name), $currTree, (), false()),
                  $ccs_coefs := local:generate-ccs-coefs($currTree, $coefs)
 				 return 
@@ -456,6 +458,8 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                         <rewrite from="traded coal CCS" to="c coal CCS"/>
                         <rewrite from="natural gas CCS" to="b natural gas CCS"/>
                         <rewrite from="traded biomass" to="d biomass"/>
+                        <rewrite from="regional woodpulp for energy" to="d biomass"/>
+                        <rewrite from="regional woodpulp for energy CCS" to="d biomass CCS"/>
                         <rewrite from="geothermal-elect" to="i geothermal"/>
                         <rewrite from="water consumption" to=""/>
                         <rewrite from="renewable" to=""/>
@@ -2060,7 +2064,7 @@ element input {
                     <axis2 name="Year">demand-physical[@vintage]</axis2>
                     <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' (:collapse:) and
-            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
+            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='process heat paper' or @name='waste biomass for paper' or 
                 @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
                     <comments/>
@@ -2070,7 +2074,7 @@ element input {
                     <axis2 name="Year">demand-physical[@vintage]</axis2>
                     <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' (:collapse:) and
-            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
+            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='process heat paper' or @name='waste biomass for paper' or 
                 @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
                     <comments/>
@@ -2110,6 +2114,9 @@ element input {
                             <rewrite from="trn_pass" to="transportation"/>
                             <rewrite from="cement" to="industry"/>
                             <rewrite from="N fertilizer" to="industry"/>
+ 		           			<rewrite from="paper" to="industry"/>
+ 		           			<rewrite from="process heat paper" to="industry"/>
+ 		           			<rewrite from="waste biomass for paper" to="industry"/>
                             <rewrite from="resid others" to="building"/>
                             <rewrite from="resid cooling" to="building"/>
                             <rewrite from="construction energy use" to="industry"/>
@@ -2123,7 +2130,7 @@ element input {
                     <axis2 name="Year">demand-physical[@vintage]</axis2>
                     <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' (:collapse:) and
-            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
+            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='process heat paper' or @name='waste biomass for paper' or 
                 @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
                     <comments/>
@@ -2133,7 +2140,7 @@ element input {
                     <axis2 name="Year">demand-physical[@vintage]</axis2>
                     <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' and
-            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
+            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='process heat paper' or @name='waste biomass for paper' or 
                 @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
                     <comments/>
@@ -2155,6 +2162,7 @@ element input {
                             <rewrite from="delivered biomass" to="biomass"/>
                             <rewrite from="refined liquids industrial" to="refined liquids"/>
                             <rewrite from="H2 wholesale delivery" to="hydrogen"/>
+                            <rewrite from="regional woodpulp for energy" to="biomass"/>
                         </level>
                     </labelRewriteList>
                 </supplyDemandQuery>
@@ -2163,7 +2171,7 @@ element input {
                     <axis2 name="Year">demand-physical[@vintage]</axis2>
                     <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and ((@name='building' or @name='industry' or @name='transportation') or
             (exists(child::keyword/@final-energy)))]//*[@type='input' and
-            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or
+            not(@name='limestone' or @name='process heat cement' or @name='industrial energy use' or @name='process heat paper' or @name='waste biomass for paper' or 
                 @name='industrial feedstocks' or @name='renewable' or contains(@name, 'trn_') or @name='oil-credits')]/
             demand-physical[@unit='EJ']/node()</xPath>
                     <comments/>
@@ -2185,6 +2193,7 @@ element input {
                             <rewrite from="delivered biomass" to="biomass"/>
                             <rewrite from="refined liquids industrial" to="refined liquids"/>
                             <rewrite from="H2 wholesale delivery" to="hydrogen"/>
+                            <rewrite from="regional woodpulp for energy" to="biomass"/>
                         </level>
                     </labelRewriteList>
                 </supplyDemandQuery>
@@ -2195,7 +2204,7 @@ element input {
             @name='delivered coal' or @name='delivered biomass' or @name='traditional biomass' or
             @name='elect_td_ind' or @name='elect_td_bld' or @name='elect_td_trn' or
             @name='H2 wholesale dispensing' or @name='H2 wholesale delivery' or @name='H2 retail dispensing' or @name='H2 retail delivery' or
-            @name='refined liquids industrial' or @name='refined liquids enduse')]/
+            @name='refined liquids industrial' or @name='refined liquids enduse' or @name='waste biomass for paper')]/
             cost/text()</xPath>
                     <comments/>
                 </supplyDemandQuery>
@@ -2423,7 +2432,7 @@ element input {
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
                *[@type='input' (:collapse:) and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
-               @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
+               @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or @name='regional woodpulp for energy' or
                @name='elect_td_ind' or @name='wholesale gas' or @name='refined liquids industrial')]/demand-physical/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
@@ -2433,12 +2442,14 @@ element input {
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
                *[@type='input' (:collapse:) and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
-               @name='elect_td_ind' or @name='wholesale gas' or
+               @name='elect_td_ind' or @name='wholesale gas' or @name='regional woodpulp for energy' or
                @name='refined liquids industrial')]/demand-physical/node()</xPath>
-                        <comments>process heat cement assigned to cement</comments>
+                        <comments>process heat cement assigned to cement, process heat paper assigned to paper</comments>
                         <labelRewriteList append-values="false">
                             <level name="sector">
                                 <rewrite from="process heat cement" to="cement"/>
+                                <rewrite from="process heat paper" to="paper"/>
+                                <rewrite from="waste biomass for paper" to="paper"/>
                             </level>
                         </labelRewriteList>
                     </supplyDemandQuery>
@@ -2448,7 +2459,7 @@ element input {
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' (:collapse:) and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
                *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
-               @name='elect_td_ind' or @name='wholesale gas' or
+               @name='elect_td_ind' or @name='wholesale gas' or @name='regional woodpulp for energy' or
                @name='refined liquids industrial')]/demand-physical/node()</xPath>
                         <comments/>
                     </supplyDemandQuery>
@@ -2458,12 +2469,14 @@ element input {
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='industry' or (exists(child::keyword[@final-energy='industry'])))]//
                *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
-               @name='elect_td_ind' or @name='wholesale gas' or
+               @name='elect_td_ind' or @name='wholesale gas' or @name='regional woodpulp for energy' or
                @name='refined liquids industrial')]/demand-physical/node()</xPath>
-                        <comments>process heat cement assigned to cement</comments>
+                        <comments>process heat cement assigned to cement, process heat paper assigned to paper</comments>
                         <labelRewriteList append-values="false">
                             <level name="sector">
                                 <rewrite from="process heat cement" to="cement"/>
+                                <rewrite from="process heat paper" to="paper"/>
+                                <rewrite from="waste biomass for paper" to="paper"/>
                             </level>
                         </labelRewriteList>
                     </supplyDemandQuery>
@@ -2474,9 +2487,14 @@ element input {
                *[@type='subsector']/*[@type='technology']/
                *[@type='input' and (@name='delivered biomass' or @name='delivered coal' or @name='district heat' or
                @name='H2 wholesale delivery' or @name='H2 wholesale dispensing' or @name='H2 industrial' or
-               @name='elect_td_ind' or @name='wholesale gas' or
+               @name='elect_td_ind' or @name='wholesale gas' or @name='regional woodpulp for energy' or
                @name='refined liquids industrial')]/demand-physical/node()</xPath>
-                        <comments/>
+                        <comments>paper technology direct input assigned to electricity</comments>
+                        <labelRewriteList append-values="false">
+                            <level name="technology">
+                                <rewrite from="paper" to="electricity"/>
+                            </level>
+                        </labelRewriteList>
                     </supplyDemandQuery>
                     <supplyDemandQuery title="industry feedstocks by type">
                         <axis1 name="input">input</axis1>
@@ -2737,6 +2755,35 @@ element input {
                         <axis1 name="input">input</axis1>
                         <axis2 name="Year">demand-physical[@vintage]</axis2>
                         <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='mining energy use')]//*[@type='input']/demand-physical/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                </queryGroup>
+                <queryGroup name="paper">
+                    <supplyDemandQuery title="paper production by region">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='paper')]/
+               				*[@type='subsector' (:collapse:) and not(@name='Imports')]//
+               				*[@type='output' (:collapse:)]/physical-output/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="inputs to paper production">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='paper' or @name='process heat paper' or @name='waste biomass for paper')]//
+               			*[@type='input' and not(@name='process heat paper' or @name='waste biomass for paper')]/demand-physical/node()</xPath>
+                        <comments>process heat paper assigned to paper</comments>
+                        <labelRewriteList append-values="false">
+                            <level name="sector">
+                                <rewrite from="process heat paper" to="paper"/>
+                                <rewrite from="waste biomass for paper" to="paper"/>
+                            </level>
+                        </labelRewriteList>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="paper prices">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">cost</axis2>
+                        <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='paper')]/cost/text()</xPath>
                         <comments/>
                     </supplyDemandQuery>
                 </queryGroup>
@@ -4138,7 +4185,7 @@ element input {
                or @name='regional misccrop' or @name='regional nuts_seeds' or @name='regional oilcrop' or @name='regional othergrain'
                or @name='regional oilpalm' or @name='regional rice' or @name='regional root_tuber'
                or @name='regional soybean' or @name='regional sugarcrop' or @name='regional vegetables' or @name='regional wheat'
-               or @name='FodderGrass' or @name='FodderHerb' or @name='Forest' or @name='Pasture')]/
+               or @name='FodderGrass' or @name='FodderHerb' or @name='Forest' or @name='Pasture' or @name='regional sawnwood' or @name='regional woodpulp')]/
                demand-physical/node()</xPath>
                 <comments/>
             </supplyDemandQuery>
@@ -4280,6 +4327,7 @@ element input {
             <PrimaryFuelCO2Coef name="regional natural gas">14.2</PrimaryFuelCO2Coef>,
             <PrimaryFuelCO2Coef name="regional oil">19.6</PrimaryFuelCO2Coef>,
             <PrimaryFuelCO2Coef name="regional sugar for ethanol">19.6</PrimaryFuelCO2Coef>,
+            <PrimaryFuelCO2Coef name="regional woodpulp for energy">23</PrimaryFuelCO2Coef>,
             <PrimaryFuelCO2Coef name="traded unconventional oil">19.6</PrimaryFuelCO2Coef>,
             <PrimaryFuelCO2Coef name="unconventional oil">21.1</PrimaryFuelCO2Coef>,
             <PrimaryFuelCO2Coef name="unconventional oil production">19.6</PrimaryFuelCO2Coef>,
@@ -4394,8 +4442,8 @@ element input {
             $region in $regionsG 	
             let $scenario_split := tokenize($scenario, ' '), 	    
             $currTree := collection($collection)/scenario[@name = $scenario_split[1] and @date = $scenario_split[2]]/world/*[@type='region' and @name=$region],
-            $sector_emiss := $currTree/*[@type='sector' and not(@name='regional biomass' or @name='regional biomassOil' or @name='regional corn for ethanol' or @name='regional sugar for ethanol' or @name='regional sugarbeet for ethanol')]//CO2[@type='GHG' (:collapse:) and @name='CO2']/emissions/text(),
-            $currEmissSectors := $currTree/*[@type='sector' and (@name='regional biomass' or @name='regional biomassOil' or @name='regional corn for ethanol' or @name='regional sugar for ethanol' or @name='regional sugarbeet for ethanol')],
+            $sector_emiss := $currTree/*[@type='sector' and not(@name='regional biomass' or @name='regional biomassOil' or @name='regional corn for ethanol' or @name='regional sugar for ethanol' or @name='regional sugarbeet for ethanol' or @name='regional woodpulp for energy')]//CO2[@type='GHG' (:collapse:) and @name='CO2']/emissions/text(),
+            $currEmissSectors := $currTree/*[@type='sector' and (@name='regional biomass' or @name='regional biomassOil' or @name='regional corn for ethanol' or @name='regional sugar for ethanol' or @name='regional sugarbeet for ethanol' or @name='regional woodpulp for energy')],
             $coefs := local:generate-sector-output-coefs(distinct-values($currEmissSectors/@name), $currTree, (), false()),
             $downstream_emiss := for $sectorName in distinct-values($currEmissSectors/@name)
             return local:append-heirarchy($currTree, local:apply-coefs($sectorName, $currEmissSectors[@name=$sectorName]//CO2[@name='CO2']/emissions, $coefs))//text() 
@@ -4562,6 +4610,7 @@ local:generate-sector-output-coefs(remove($inputNameQueue, 1), $currTree, $coefs
                         <rewrite from="trn_freight" to="transportation"/>
                         <rewrite from="comm others" to="buildings"/>
                         <rewrite from="other industry" to="industry"/>
+                        <rewrite from="paper" to="industry"/>
                         <rewrite from="trn_pass" to="transportation"/>
                         <rewrite from="chemical" to="industry"/>
                         <rewrite from="N fertilizer" to="industry"/>

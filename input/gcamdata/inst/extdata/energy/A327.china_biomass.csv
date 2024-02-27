@@ -1,0 +1,8 @@
+# File: A327.china_biomass.csv
+# Title: Biomass consumption in China pulp and paper industry
+# Units: EJ
+# Source: Man et al. 2020. Energy transition for the low-carbon pulp and paper industry in China
+# Column types: cccnnnnnnnnnnnnnnnnn
+# ----------
+iso,fuel,sector,2000,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016
+chn,biomass,paper,0.222434,0.1990757,0.2237622,0.2353132,0.2401199,0.2749204,0.3044673,0.3182634,0.3292072,0.2905974,0.3357786,0.3421971,0.3105657,0.2793787,0.2798131,0.2669674,0.2578427

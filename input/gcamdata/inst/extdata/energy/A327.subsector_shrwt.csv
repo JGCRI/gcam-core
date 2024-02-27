@@ -1,0 +1,18 @@
+# File: A327.subsector_shrwt.csv
+# Title: Paper default subsector shareweights
+# Units: Unitless
+# Column types: ccccn
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+paper,paper,start-year,,1
+waste biomass for paper,biomass,start-year,,1
+process heat paper,coal,start-year,,0.5
+process heat paper,gas,start-year,,1
+process heat paper,refined liquids,start-year,,1
+process heat paper,heat,start-year,,1
+process heat paper,electricity,start-year,,0
+process heat paper,electricity,2020,,0
+process heat paper,electricity,2030,,1
+process heat paper,hydrogen,start-year,,0
+process heat paper,hydrogen,2020,,0
+process heat paper,hydrogen,2050,,0.5
