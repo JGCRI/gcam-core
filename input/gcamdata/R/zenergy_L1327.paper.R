@@ -64,7 +64,6 @@ module_energy_L1327.paper <- function(command, ...) {
     china_biomass <- get_data(all_data, "energy/A327.china_biomass", strip_attributes = TRUE)
     L110.For_ALL_bm3_R_Y <- get_data(all_data, "L110.For_ALL_bm3_R_Y", strip_attributes = TRUE)
 
-
     # ===================================================
     # 2. Perform computations
 

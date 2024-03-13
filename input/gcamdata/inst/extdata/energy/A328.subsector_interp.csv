@@ -1,0 +1,15 @@
+# File: A328.subsector_interp.csv
+# Title: Food processing default subsector shareweight interpolation
+# Units: NA
+# Column types: cccccnc
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+process heat food processing,biomass,share-weight,final-calibration-year,end-year,,fixed
+process heat food processing,gas,share-weight,final-calibration-year,end-year,,fixed
+process heat food processing,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+process heat food processing,heat,share-weight,final-calibration-year,end-year,,fixed
+process heat food processing,coal,share-weight,final-calibration-year,end-year,,fixed
+process heat food processing,electricity,share-weight,final-calibration-year,2020,,fixed
+process heat food processing,electricity,share-weight,2020,2050,,linear
+process heat food processing,electricity,share-weight,2050,end-year,,fixed
+food processing,food processing,share-weight,final-calibration-year,end-year,,fixed

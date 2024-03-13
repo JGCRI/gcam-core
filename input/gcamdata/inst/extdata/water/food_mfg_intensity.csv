@@ -1,0 +1,12 @@
+# File: food_mfg_intensity.csv
+# Title: Specific water withdrawal intensity of food manufacturing
+# Units: km^3 per Pcal
+# Source: Water withdrawal values are from the 2011 Industrial Water Use report from Statistics Canada (Canada data); Rehkamp et al. 2021 (US data); and Rehkamp and Canning 2018 (US data) 
+# Comments: Water withdrawal values are divided by calorie consumption from GCAM data to get withdrawal intensities 
+# Column types: ccn
+# ----------
+region,sector,intensity
+USA,food processing,0.006539224
+Canada,food processing,0.009788424
+
+

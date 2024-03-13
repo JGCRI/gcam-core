@@ -54,12 +54,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
              "L124.LC_bm2_R_Grass_Yh_GLU_adj",
              "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
              "L154.IEA_histfut_data_times_UCD_shares",
-             "L1327.in_EJ_R_indenergy_F_Yh",
+             "L1328.in_EJ_R_indenergy_F_Yh",
              "L1323.in_EJ_R_iron_steel_F_Y",
              "L1324.in_EJ_R_Off_road_F_Y",
              "L1325.in_EJ_R_chemical_F_Y",
              "L1326.in_EJ_R_aluminum_Yh",
              "L1327.in_EJ_R_paper_F_Yh",
+             "L1328.in_EJ_R_food_F_Yh",
+             "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh",
              "L270.nonghg_tg_state_refinery_F_Yb",
              FILE = "emissions/CEDS/ceds_sector_map",
              FILE = "emissions/CEDS/ceds_fuel_map",
@@ -207,12 +209,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     calibrated_techs_bld_det <- get_data(all_data, "energy/calibrated_techs_bld_det")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
       gather_years(value_col = "energy")
-    L1327.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1327.in_EJ_R_indenergy_F_Yh")
+    L1328.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1328.in_EJ_R_indenergy_F_Yh")
     L1323.in_EJ_R_iron_steel_F_Y <- get_data(all_data, "L1323.in_EJ_R_iron_steel_F_Y")
     L1324.in_EJ_R_Off_road_F_Y <- get_data(all_data, "L1324.in_EJ_R_Off_road_F_Y")
     L1325.in_EJ_R_chemical_F_Y <- get_data(all_data, "L1325.in_EJ_R_chemical_F_Y")
     L1326.in_EJ_R_aluminum_Yh <- get_data(all_data, "L1326.in_EJ_R_aluminum_Yh")
     L1327.in_EJ_R_paper_F_Yh <- get_data(all_data, "L1327.in_EJ_R_paper_F_Yh")
+    L1328.in_EJ_R_food_F_Yh <- get_data(all_data, "L1328.in_EJ_R_food_F_Yh")
+    L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh <- get_data(all_data, "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh")
     CEDS_sector_map <- get_data(all_data, "emissions/CEDS/ceds_sector_map")
     CEDS_fuel_map <- get_data(all_data, "emissions/CEDS/ceds_fuel_map")
 
@@ -531,13 +535,18 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       filter(!technology %in% emissions.ZERO_EM_TECH) ->
       L1327.in_EJ_R_paper_F_Yh
 
+    L1328.in_EJ_R_food_F_Yh %>%
+      mutate(technology = fuel) ->
+      L1328.in_EJ_R_food_F_Yh
 
-    L1327.in_EJ_R_indenergy_F_Yh %>% mutate(technology = fuel) %>%
+
+    L1328.in_EJ_R_indenergy_F_Yh %>% mutate(technology = fuel) %>%
       bind_rows(L1323.in_EJ_R_iron_steel_F_Y,
                 L1324.in_EJ_R_Off_road_F_Y,
                 L1325.in_EJ_R_chemical_F_Y,
                 L1326.in_EJ_R_aluminum_Yh,
-                L1327.in_EJ_R_paper_F_Yh) %>%
+                L1327.in_EJ_R_paper_F_Yh,
+                L1328.in_EJ_R_food_F_Yh) %>%
       complete(nesting(GCAM_region_ID, sector, fuel, technology), year = HISTORICAL_YEARS) %>%
       replace_na(list(value = 0)) %>%
       select(GCAM_region_ID, fuel, technology, sector, year, energy = value) ->
@@ -646,9 +655,47 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       mutate(enshare = energy/totalenergy) ->
       L112.in_EJ_R_en_S_F_Yh_calib_enshare
 
+    ### ADDITION FOR FOOD PROCESSING ENERGY SECTOR BREAKOUT
+    # Some infilling is performed for regions lacking adequate data on food processing energy use, where energy use for food processing
+    # is estimated and some energy is pulled from other industrial energy use and added to food processing.
+    # For consistency with this energy data infilling, we also need to infill some non-CO2 emissions for food processing by pulling from
+    # other industrial energy use non-CO2 emissions.
+    # We will use the fraction of the remaining other industrial energy use (by fuel) that is removed and reallocated to food processing in the infilling
+    # process to set the fraction of other industrial non-CO2 emissions (by fuel) that are removed and reallocated to food processing here
+    L112.CEDS_GCAM_emissions %>%
+      filter(CEDS_agg_sector == "industry_energy") %>%
+      left_join(L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh %>%
+                  select(GCAM_region_ID, CEDS_agg_fuel = fuel, year, CEDS_agg_sector = sector, removed_frac),
+                by = c("GCAM_region_ID", "CEDS_agg_fuel", "year", "CEDS_agg_sector")) %>%
+      # calculate the emissions that need to be removed from other industry and added to food processing
+      mutate(removed_frac = replace_na(removed_frac, 0),
+             emissions_to_infill = emissions * removed_frac) ->
+      L112.CEDS_GCAM_emissions_to_infill_for_food
+
+    L112.CEDS_GCAM_emissions %>%
+      # join emissions to remove (from other industry)
+      left_join(L112.CEDS_GCAM_emissions_to_infill_for_food %>%
+                  select(Non.CO2, GCAM_region_ID, CEDS_agg_sector, CEDS_agg_fuel,
+                         year, emissions_to_remove = emissions_to_infill),
+                by = c("Non.CO2", "GCAM_region_ID", "CEDS_agg_sector", "CEDS_agg_fuel",
+                       "year")) %>%
+      # join emissions to add (for food processing)
+      left_join(L112.CEDS_GCAM_emissions_to_infill_for_food %>%
+                  mutate(CEDS_agg_sector = "food processing") %>%
+                  select(Non.CO2, GCAM_region_ID, CEDS_agg_sector, CEDS_agg_fuel,
+                         year, emissions_to_infill),
+                by = c("Non.CO2", "GCAM_region_ID", "CEDS_agg_sector", "CEDS_agg_fuel",
+                       "year")) %>%
+      mutate(emissions_to_remove = replace_na(emissions_to_remove, 0),
+             emissions_to_infill = replace_na(emissions_to_infill, 0),
+             emissions = emissions - emissions_to_remove + emissions_to_infill) %>%
+      select(Non.CO2, GCAM_region_ID, CEDS_agg_sector, CEDS_agg_fuel, year, emissions) ->
+      L112.CEDS_GCAM_emissions_food_infill
+
+
     # Attach CEDS emissions to those sector fuel combos
     L112.in_EJ_R_en_S_F_Yh_calib_enshare %>%
-      left_join(L112.CEDS_GCAM_emissions,
+      left_join(L112.CEDS_GCAM_emissions_food_infill,
                 by = c("GCAM_region_ID", "year", "CEDS_agg_sector", "CEDS_agg_fuel")) ->
       L112.CEDSGCAM_emissions
 
@@ -1733,8 +1780,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                      "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/Trn_subsector_revised",
                      "emissions/mappings/CEDS_sector_tech_proc","emissions/mappings/calibrated_outresources","emissions/mappings/CEDS_sector_tech_proc_revised",
-                     "L101.in_EJ_R_en_Si_F_Yh", "L1327.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
-                     "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh", "L1327.in_EJ_R_paper_F_Yh", "emissions/CEDS/CEDS_sector_tech_combustion_revised",
+                     "L101.in_EJ_R_en_Si_F_Yh", "L1328.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
+                     "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh", "L1327.in_EJ_R_paper_F_Yh", "L1328.in_EJ_R_food_F_Yh", "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh", "emissions/CEDS/CEDS_sector_tech_combustion_revised",
                      "emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                      "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions",
                      "L270.nonghg_tg_state_refinery_F_Yb", "gcam-usa/emissions/BC_OC_assumptions", "gcam-usa/emissions/BCOC_PM25_ratios") ->
@@ -1757,8 +1804,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","L102.ceds_int_shipping_nonco2_tg_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                      "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                      "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/calibrated_outresources",
-                     "L101.in_EJ_R_en_Si_F_Yh", "L1327.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
-                     "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh", "L1327.in_EJ_R_paper_F_Yh","emissions/mappings/Trn_subsector_revised",
+                     "L101.in_EJ_R_en_Si_F_Yh", "L1328.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
+                     "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh", "L1327.in_EJ_R_paper_F_Yh", "L1328.in_EJ_R_food_F_Yh", "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh", "emissions/mappings/Trn_subsector_revised",
                      "L101.in_EJ_R_en_Si_F_Yh", "emissions/mappings/Trn_subsector_revised", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map",
                      "emissions/CEDS/CEDS_sector_tech_combustion_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                      "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions",
@@ -1785,12 +1832,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/mappings/calibrated_outresources",
                      "emissions/mappings/Trn_subsector_revised",
                      "L101.in_EJ_R_en_Si_F_Yh",
-                     "L1327.in_EJ_R_indenergy_F_Yh",
+                     "L1328.in_EJ_R_indenergy_F_Yh",
                      "L1323.in_EJ_R_iron_steel_F_Y",
                      "L1324.in_EJ_R_Off_road_F_Y",
                      "L1325.in_EJ_R_chemical_F_Y",
                      "L1326.in_EJ_R_aluminum_Yh",
                      "L1327.in_EJ_R_paper_F_Yh",
+                     "L1328.in_EJ_R_food_F_Yh",
+                     "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh",
                      "emissions/EPA/EPA_2019_raw",
                      "emissions/EPA_CH4N2O_map",
                      "L111.Prod_EJ_R_F_Yh",

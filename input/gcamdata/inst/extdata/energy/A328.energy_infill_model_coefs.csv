@@ -1,0 +1,10 @@
+# File: A328.energy_infill_model_coefs.csv
+# Title: Food processing energy use infilling model coefficients
+# Description: Coefficients from the derived linear model relating food processing energy use to GDP and non-staples calorie consumption on a GCAM region level
+# Units: Listed in file
+# Source: Derived from FAO food consumption data and IEA energy use data on a GCAM region level
+# Column types: cnc
+# ----------
+variable,coefficient,units
+nonstaples calories,0.001519,EJ per Pcal
+GDP,9.77E-08,EJ per million 1990 USD

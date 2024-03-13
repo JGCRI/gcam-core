@@ -1,0 +1,39 @@
+# File: A328.regionaltech_cost.csv
+# Title: Food processing default regional costs
+# Units: 1975$/Mcal for supplysector food processing
+# Source: Estimated from Global Trade Analysis Project data for household and government expenditures on processed food; see CMP and accompanying scripts for how these were calculated. By default any region not specified in this file will use the global value (which is the weighted average of regional values); if a new region is added and a regionally-specific value is desired it must be added to this file
+# Column types: cccccnnnn
+# ----------
+region,supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2050,2100
+Africa_Eastern,food processing,food processing,food processing,non-energy,0.0293,0.0293,0.0293,0.0293
+Africa_Northern,food processing,food processing,food processing,non-energy,0.0633,0.0633,0.0633,0.0633
+Africa_Southern,food processing,food processing,food processing,non-energy,0.0705,0.0705,0.0705,0.0705
+Africa_Western,food processing,food processing,food processing,non-energy,0.0198,0.0198,0.0198,0.0198
+Argentina,food processing,food processing,food processing,non-energy,0.1261,0.1261,0.1261,0.1261
+Australia_NZ,food processing,food processing,food processing,non-energy,0.515,0.515,0.515,0.515
+Brazil,food processing,food processing,food processing,non-energy,0.0955,0.0955,0.0955,0.0955
+Canada,food processing,food processing,food processing,non-energy,0.3881,0.3881,0.3881,0.3881
+Central America and Caribbean,food processing,food processing,food processing,non-energy,0.1209,0.1209,0.1209,0.1209
+Central Asia,food processing,food processing,food processing,non-energy,0.0632,0.0632,0.0632,0.0632
+China,food processing,food processing,food processing,non-energy,0.0616,0.0616,0.0616,0.0616
+Colombia,food processing,food processing,food processing,non-energy,0.0879,0.0879,0.0879,0.0879
+EU-12,food processing,food processing,food processing,non-energy,0.2039,0.2039,0.2039,0.2039
+EU-15,food processing,food processing,food processing,non-energy,0.3718,0.3718,0.3718,0.3718
+Europe_Eastern,food processing,food processing,food processing,non-energy,0.0334,0.0334,0.0334,0.0334
+Europe_Non_EU,food processing,food processing,food processing,non-energy,0.116,0.116,0.116,0.116
+European Free Trade Association,food processing,food processing,food processing,non-energy,0.3691,0.3691,0.3691,0.3691
+India,food processing,food processing,food processing,non-energy,0.0145,0.0145,0.0145,0.0145
+Indonesia,food processing,food processing,food processing,non-energy,0.0522,0.0522,0.0522,0.0522
+Japan,food processing,food processing,food processing,non-energy,0.4934,0.4934,0.4934,0.4934
+Mexico,food processing,food processing,food processing,non-energy,0.2154,0.2154,0.2154,0.2154
+Middle East,food processing,food processing,food processing,non-energy,0.0941,0.0941,0.0941,0.0941
+Pakistan,food processing,food processing,food processing,non-energy,0.0134,0.0134,0.0134,0.0134
+Russia,food processing,food processing,food processing,non-energy,0.1226,0.1226,0.1226,0.1226
+South Africa,food processing,food processing,food processing,non-energy,0.1243,0.1243,0.1243,0.1243
+South America_Northern,food processing,food processing,food processing,non-energy,0.2655,0.2655,0.2655,0.2655
+South America_Southern,food processing,food processing,food processing,non-energy,0.118,0.118,0.118,0.118
+South Asia,food processing,food processing,food processing,non-energy,0.0196,0.0196,0.0196,0.0196
+South Korea,food processing,food processing,food processing,non-energy,0.1815,0.1815,0.1815,0.1815
+Southeast Asia,food processing,food processing,food processing,non-energy,0.0633,0.0633,0.0633,0.0633
+Taiwan,food processing,food processing,food processing,non-energy,0.1128,0.1128,0.1128,0.1128
+USA,food processing,food processing,food processing,non-energy,0.3258,0.3258,0.3258,0.3258

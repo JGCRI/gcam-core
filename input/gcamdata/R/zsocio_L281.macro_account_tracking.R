@@ -31,6 +31,7 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
              "L2324.GlobalTechEff_Off_road",
              "L2325.GlobalTechEff_chemical",
              "L2326.GlobalTechCoef_aluminum",
+             "L2328.GlobalTechCoef_food",
              "L2327.GlobalTechCoef_paper",
              "L244.StubTechEff_bld",
              "L254.StubTranTechCoef",
@@ -70,6 +71,7 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
                                  "L2324.GlobalTechEff_Off_road",
                                  "L2325.GlobalTechEff_chemical",
                                  "L2326.GlobalTechCoef_aluminum",
+                                 "L2328.GlobalTechCoef_food",
                                  "L2327.GlobalTechCoef_paper",
                                  "L244.StubTechEff_bld",
                                  "L254.StubTranTechCoef")
@@ -249,6 +251,7 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
                      "L2324.GlobalTechEff_Off_road",
                      "L2325.GlobalTechEff_chemical",
                      "L2326.GlobalTechCoef_aluminum",
+                     "L2328.GlobalTechCoef_food",
                      "L244.StubTechEff_bld",
                      "L254.StubTranTechCoef") ->
       L281.GlobalTechAccountOutputUseBasePrice_fd
