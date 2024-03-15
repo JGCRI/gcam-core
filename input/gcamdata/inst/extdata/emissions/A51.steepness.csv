@@ -277,3 +277,14 @@ iron and steel,refined liquids,BLASTFUR,3.5,3.5,3.5,3.5,3.5,3.5
 iron and steel,refined liquids,EAF with DRI,3.5,3.5,3.5,3.5,3.5,3.5
 iron and steel,refined liquids,EAF with scrap,3.5,3.5,3.5,3.5,3.5,3.5
 iron and steel,gas,EAF with scrap,3.5,3.5,3.5,3.5,3.5,3.5
+waste biomass for paper,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
+waste biomass for paper,biomass,biomass cogen,,,,,,
+process heat paper,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
+process heat paper,coal,coal cogen,,,,,,
+process heat paper,district heat,district heat,,,,,,
+process heat paper,electricity,electric boiler,,,,,,
+process heat paper,electricity,electric heat pump,,,,,,
+process heat paper,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
+process heat paper,gas,gas cogen,,,,,,
+process heat paper,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+process heat paper,refined liquids,refined liquids cogen,,,,,,

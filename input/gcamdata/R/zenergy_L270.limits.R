@@ -116,7 +116,7 @@ module_energy_L270.limits <- function(command, ...) {
 
     # L270.CTaxInput: Create ctax-input for all biomass
     L221.GlobalTechCoef_en %>%
-      filter(grepl("(biomass|ethanol)", sector.name)) %>%
+      filter(grepl("(biomass|ethanol|woodpulp)", sector.name)) %>%
       mutate(ctax.input = energy.NEG_EMISS_POLICY_NAME) %>%
       left_join_error_no_match(L202.CarbonCoef %>%
                                  distinct(PrimaryFuelCO2Coef.name, PrimaryFuelCO2Coef),

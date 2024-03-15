@@ -45,9 +45,9 @@ H2 central production,coal,coal chemical CCS,0.009,0.0002,0.0002,0,0,0
 H2 central production,gas,natural gas steam reforming,,0.0042,0.0004,0,0,
 H2 central production,gas,gas ATR CCS,,0.0042,0.0004,0,0,
 H2 wholesale dispensing,forecourt production,natural gas steam reforming,,0.0042,0.0004,0,0,
-industrial energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
-industrial energy use,biomass,biomass cogen,,,,,,
-industrial energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+other industrial energy use,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+other industrial energy use,biomass,biomass cogen,,,,,,
+other industrial energy use,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
 other industrial energy use,coal,coal cogen,,,,,,
 other industrial energy use,district heat,district heat,,,,,,
 other industrial energy use,electricity,electricity,,,,,,
@@ -280,3 +280,14 @@ iron and steel,refined liquids,BLASTFUR,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
 iron and steel,refined liquids,EAF with DRI,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
 iron and steel,refined liquids,EAF with scrap,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
 iron and steel,gas,EAF with scrap,0.0238,0.0468,0.0067,0,0,0.0038
+waste biomass for paper,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+waste biomass for paper,biomass,biomass cogen,,,,,,
+process heat paper,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+process heat paper,coal,coal cogen,,,,,,
+process heat paper,district heat,district heat,,,,,,
+process heat paper,electricity,electric boiler,,,,,,
+process heat paper,electricity,electric heat pump,,,,,,
+process heat paper,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
+process heat paper,gas,gas cogen,,,,,,
+process heat paper,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+process heat paper,refined liquids,refined liquids cogen,,,,,,

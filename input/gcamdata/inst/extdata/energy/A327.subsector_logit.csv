@@ -1,0 +1,14 @@
+# File: A327.subsector_logit.csv
+# Title: paper default subsector logit exponents
+# Units: Unitless
+# Column types: ccic
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+paper,paper,-1,
+waste biomass for paper,biomass,-6,
+process heat paper,coal,-6,
+process heat paper,gas,-6,
+process heat paper,refined liquids,-6,
+process heat paper,heat,-6,
+process heat paper,electricity,-6,
+process heat paper,hydrogen,-6,

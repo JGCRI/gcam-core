@@ -173,7 +173,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
 
     # 2. Form a table of global Mill Residue Biomass Paramters by year
     A_demand_technology %>%
-      #Filter here only for sawmills. Don't calculate this for pulpwood
+      #Filter here only for sawmills. Don't calculate this for pulpwood. Now GCAM will calculate black liquor from pulping explicitly.
       filter(supplysector %in% aglu.FOREST_demand_sectors[1]) %>%
       select(supplysector, subsector, technology) %>%
       rename(sector.name = supplysector,

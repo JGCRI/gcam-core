@@ -1,0 +1,21 @@
+# File: A327.globaltech_cost.csv
+# Title: Paper industry default costs
+# Units: 1975$/kg for supplysector paper; 1975$/GJ for supplysector process heat paper
+# Source: Rissman 2020 for gas and electric; assumed same conventional and CHP costs for refined liquids and coal based on GCAM-USA detailed industry. IEAGHG 2016 for biomass
+# Column types: ccccnnnn
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2050,2100
+paper,paper,paper,non-energy,0.09,0.09,0.09,0.09
+waste biomass for paper,biomass,biomass,non-energy,1.28,1.28,1.28,1.28
+waste biomass for paper,biomass,biomass cogen,non-energy,1.69,1.69,1.69,1.69
+waste biomass for paper,biomass,biomass CCS,non-energy,3.31,3.31,2.74,2.04
+process heat paper,gas,gas,non-energy,0.92,0.92,0.92,0.92
+process heat paper,gas,gas cogen,non-energy,2.09,2.09,2.09,2.09
+process heat paper,refined liquids,refined liquids,non-energy,0.92,0.92,0.92,0.92
+process heat paper,refined liquids,refined liquids cogen,non-energy,2.09,2.09,2.09,2.09
+process heat paper,heat,heat,non-energy,1.5,1.5,1.5,1.5
+process heat paper,coal,coal,non-energy,0.92,0.92,0.92,0.92
+process heat paper,coal,coal cogen,non-energy,2.09,2.09,2.09,2.09
+process heat paper,electricity,electric boiler,non-energy,0.58,0.58,0.58,0.58
+process heat paper,electricity,electric heat pump,non-energy,2.03,2.03,2.03,2.03
+process heat paper,hydrogen,hydrogen,non-energy,10,10,10,10

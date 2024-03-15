@@ -138,6 +138,7 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
       summarise(water_km3 = sum(water_km3)) %>%
       ungroup()
 
+
     # ===================================================
 
     L132.water_km3_ctry_ind_Yh %>%

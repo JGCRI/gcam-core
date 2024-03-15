@@ -47,10 +47,14 @@ module_gcamusa_L232.industry <- function(command, ...) {
              "L2324.Supplysector_Off_road",
              "L2325.Supplysector_chemical",
              "L2326.Supplysector_aluminum",
+             "L2327.Supplysector_paper",
              "L2323.PerCapitaBased_iron_steel",
              "L2324.PerCapitaBased_Off_road",
              "L2325.PerCapitaBased_chemical",
              "L2326.PerCapitaBased_aluminum",
+             "L2327.PerCapitaBased_paper",
+             "L202.StubTechProd_in_pulp_energy",
+             "L221.Supplysector_en",
              "L238.SubsectorAll_tra",
              "L238.SubsectorAll_reg",
              "L238.Production_reg_imp",
@@ -116,10 +120,14 @@ module_gcamusa_L232.industry <- function(command, ...) {
     L2324.Supplysector_Off_road <- get_data(all_data, "L2324.Supplysector_Off_road", strip_attributes = TRUE)
     L2325.Supplysector_chemical <- get_data(all_data, "L2325.Supplysector_chemical", strip_attributes = TRUE)
     L2326.Supplysector_aluminum <- get_data(all_data, "L2326.Supplysector_aluminum", strip_attributes = TRUE)
+    L2327.Supplysector_paper <- get_data(all_data, "L2327.Supplysector_paper", strip_attributes = TRUE)
     L2323.PerCapitaBased_iron_steel <- get_data(all_data, "L2323.PerCapitaBased_iron_steel", strip_attributes = TRUE)
     L2324.PerCapitaBased_Off_road <- get_data(all_data, "L2324.PerCapitaBased_Off_road", strip_attributes = TRUE)
     L2325.PerCapitaBased_chemical <- get_data(all_data, "L2325.PerCapitaBased_chemical", strip_attributes = TRUE)
     L2326.PerCapitaBased_aluminum <- get_data(all_data, "L2326.PerCapitaBased_aluminum", strip_attributes = TRUE)
+    L2327.PerCapitaBased_paper <- get_data(all_data, "L2327.PerCapitaBased_paper", strip_attributes = TRUE)
+    L202.StubTechProd_in_pulp_energy <- get_data(all_data, "L202.StubTechProd_in_pulp_energy", strip_attributes = TRUE)
+    L221.Supplysector_en <- get_data(all_data, "L221.Supplysector_en", strip_attributes = TRUE)
     L238.SubsectorAll_tra <- get_data(all_data, "L238.SubsectorAll_tra", strip_attributes = TRUE)
     L238.SubsectorAll_reg <- get_data(all_data, "L238.SubsectorAll_reg", strip_attributes = TRUE)
     L238.Production_reg_imp <- get_data(all_data, "L238.Production_reg_imp", strip_attributes = TRUE)
@@ -139,17 +147,32 @@ module_gcamusa_L232.industry <- function(command, ...) {
       bind_rows(L2323.Supplysector_iron_steel,
                 L2324.Supplysector_Off_road,
                 L2325.Supplysector_chemical,
-                L2326.Supplysector_aluminum) %>%
+                L2326.Supplysector_aluminum,
+                L2327.Supplysector_paper) %>%
       mutate(region = region) %>% # strip attributes from object
       filter(region == gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) ->
-      L232.DeleteSupplysector_USAind  ## OUTPUT
+      L232.DeleteSupplysector_USAind
+
+    # Also delete woodpulp_energy intermediate sector
+    L202.StubTechProd_in_pulp_energy %>%
+      bind_rows(L221.Supplysector_en) %>%
+      filter(region == gcam.USA_REGION,
+             supplysector %in% aglu.PAPER_delete_ag_demand_USA) %>%
+      select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) %>%
+      distinct ->
+      L232.DeleteSupplysector_USAwoodpulp
+
+    L232.DeleteSupplysector_USAind %>%
+      bind_rows(L232.DeleteSupplysector_USAwoodpulp) ->
+      L232.DeleteSupplysector_USAind ## OUTPUT
 
     # deleting energy final demand sectors in the full USA region
     L232.PerCapitaBased_ind %>%
       bind_rows(L2324.PerCapitaBased_Off_road,
                 L2325.PerCapitaBased_chemical,
-                L2326.PerCapitaBased_aluminum) %>%
+                L2326.PerCapitaBased_aluminum,
+                L2327.PerCapitaBased_paper) %>%
       mutate(region = region) %>% # strip attributes from object
       filter(region == gcam.USA_REGION) %>%
       select(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]]) ->
@@ -405,7 +428,10 @@ module_gcamusa_L232.industry <- function(command, ...) {
                      "L2323.Supplysector_iron_steel",
                      "L2324.Supplysector_Off_road",
                      "L2325.Supplysector_chemical",
-                     "L2326.Supplysector_aluminum") ->
+                     "L2326.Supplysector_aluminum",
+                     "L2327.Supplysector_paper",
+                     "L202.StubTechProd_in_pulp_energy",
+                     "L221.Supplysector_en") ->
       L232.DeleteSupplysector_USAind
 
     L232.DeleteFinalDemand_USAind %>%
@@ -417,7 +443,8 @@ module_gcamusa_L232.industry <- function(command, ...) {
                      "L2323.PerCapitaBased_iron_steel",
                      "L2324.PerCapitaBased_Off_road",
                      "L2325.PerCapitaBased_chemical",
-                     "L2326.PerCapitaBased_aluminum") ->
+                     "L2326.PerCapitaBased_aluminum",
+                     "L2327.PerCapitaBased_paper") ->
       L232.DeleteFinalDemand_USAind
 
     L232.DeleteDomSubsector_USAind %>%

@@ -1,0 +1,18 @@
+# File: A327.subsector_interp.csv
+# Title: Paper default subsector shareweight interpolation
+# Units: NA
+# Column types: ccccccc
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
+paper,paper,share-weight,final-calibration-year,end-year,,fixed
+waste biomass for paper,biomass,share-weight,final-calibration-year,end-year,,fixed
+process heat paper,coal,share-weight,final-calibration-year,end-year,,fixed
+process heat paper,gas,share-weight,final-calibration-year,end-year,,fixed
+process heat paper,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+process heat paper,heat,share-weight,final-calibration-year,end-year,,fixed
+process heat paper,electricity,share-weight,final-calibration-year,2020,,fixed
+process heat paper,electricity,share-weight,2020,2030,,linear
+process heat paper,electricity,share-weight,2030,end-year,,fixed
+process heat paper,hydrogen,share-weight,final-calibration-year,2020,,fixed
+process heat paper,hydrogen,share-weight,2020,2050,,linear
+process heat paper,hydrogen,share-weight,2050,end-year,,fixed

@@ -156,3 +156,14 @@ iron and steel,refined liquids,EAF with DRI CCS,iron and steel,refined liquids
 iron and steel,gas,EAF with DRI CCS,iron and steel,gas
 iron and steel,refined liquids,EAF with scrap,iron and steel,refined liquids
 iron and steel,gas,EAF with scrap,iron and steel,gas
+waste biomass for paper,biomass,biomass,paper,biomass
+waste biomass for paper,biomass,biomass cogen,paper,biomass
+waste biomass for paper,biomass,biomass CCS,paper,biomass
+waste biomass for paper,biomass,biomass cogen CCS,paper,biomass
+process heat paper,gas,gas,paper,gas
+process heat paper,gas,gas cogen,paper,gas
+process heat paper,refined liquids,refined liquids,paper,refined liquids
+process heat paper,refined liquids,refined liquids cogen,paper,refined liquids
+process heat paper,heat,heat,paper,heat
+process heat paper,coal,coal,paper,coal
+process heat paper,coal,coal cogen,paper,coal

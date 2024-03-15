@@ -1,0 +1,9 @@
+# File: paper_mfg_intensity.csv
+# Title: Specific water withdrawal intensity of pulp and paper manufacturing
+# Units: m^3/ton
+# Comments: Average of country-level intensities is used
+# Source: Vassolo and Doll 2005
+# Column types: ccn
+# ----------
+country,sector,intensity
+Average,paper,120

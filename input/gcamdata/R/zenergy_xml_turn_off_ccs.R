@@ -21,6 +21,7 @@ module_energy_turn_off_ccs_xml <- function(command, ...) {
              "L2323.GlobalTechCapture_iron_steel",
              "L2325.GlobalTechCapture_chemical",
              'L2326.GlobalTechCapture_aluminum',
+             "L2327.GlobalTechCapture_paper",
              "L262.GlobalTechCapture_dac"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "turn_off_ccs.xml"))
@@ -30,6 +31,7 @@ module_energy_turn_off_ccs_xml <- function(command, ...) {
 
     # Load data
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    reg <- as_tibble(c(unique(GCAM_region_names$region)))
     L222.GlobalTechCapture_en <- get_data(all_data, "L222.GlobalTechCapture_en")
     L223.GlobalTechCapture_elec <- get_data(all_data, "L223.GlobalTechCapture_elec")
     L225.GlobalTechCapture_h2 <- get_data(all_data, "L225.GlobalTechCapture_h2")
@@ -38,6 +40,7 @@ module_energy_turn_off_ccs_xml <- function(command, ...) {
     L2323.GlobalTechCapture_iron_steel <- get_data(all_data, "L2323.GlobalTechCapture_iron_steel")
     L2325.GlobalTechCapture_chemical <- get_data(all_data, "L2325.GlobalTechCapture_chemical")
     L2326.GlobalTechCapture_aluminum <- get_data(all_data, "L2326.GlobalTechCapture_aluminum")
+    L2327.GlobalTechCapture_paper <- get_data(all_data, "L2327.GlobalTechCapture_paper")
     L262.GlobalTechCapture_dac <- get_data(all_data, "L262.GlobalTechCapture_dac")
 
     # Get all CCS technologies for each region in one dataframe
@@ -45,13 +48,14 @@ module_energy_turn_off_ccs_xml <- function(command, ...) {
                            L225.GlobalTechCapture_h2, L2321.GlobalTechCapture_cement,
                            L2322.GlobalTechCapture_Fert, L2323.GlobalTechCapture_iron_steel,
                            L2325.GlobalTechCapture_chemical, L2326.GlobalTechCapture_aluminum,
-                           L262.GlobalTechCapture_dac) %>%
+                           L2327.GlobalTechCapture_paper, L262.GlobalTechCapture_dac) %>%
       select(sector.name, subsector.name, technology) %>%
       unique() %>%
       rename(supplysector = sector.name,
              subsector = subsector.name,
              stub.technology = technology) %>%
-      full_join(select(GCAM_region_names, region), by = character())
+      repeat_add_columns(reg) %>%
+      rename(region=value)
 
     # Set share weights to 0
     CCS_Techs %>%
@@ -94,6 +98,7 @@ module_energy_turn_off_ccs_xml <- function(command, ...) {
                      "L2323.GlobalTechCapture_iron_steel",
                      "L2325.GlobalTechCapture_chemical",
                      'L2326.GlobalTechCapture_aluminum',
+                     "L2327.GlobalTechCapture_paper",
                      "L262.GlobalTechCapture_dac") ->
       turn_off_ccs.xml
 

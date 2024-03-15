@@ -38,6 +38,8 @@
 		<Value name = "chemical_income_elas">../input/gcamdata/xml/chemical_incelas_gssp2.xml</Value>   
  		<Value name = "aluminum">../input/gcamdata/xml/aluminum.xml</Value>
 		<Value name = "aluminum_income_elas">../input/gcamdata/xml/aluminum_incelas_gssp2.xml</Value> 
+ 		<Value name = "paper">../input/gcamdata/xml/paper.xml</Value>
+		<Value name = "paper_income_elas">../input/gcamdata/xml/paper_incelas_gssp2.xml</Value> 
 		<Value name = "cement">../input/gcamdata/xml/cement.xml</Value>
 		<Value name = "cement_income_elas">../input/gcamdata/xml/cement_incelas_gssp2.xml</Value>
 		<Value name = "fertilizer_energy">../input/gcamdata/xml/en_Fert.xml</Value>
@@ -63,6 +65,7 @@
 		<Value name = "protected_land2">../input/gcamdata/xml/protected_land_input_2.xml</Value>
 		<Value name = "protected_land3">../input/gcamdata/xml/protected_land_input_3.xml</Value>
 		<Value name = "demand">../input/gcamdata/xml/ag_an_demand_input.xml</Value>
+		<Value name = "demand_paper">../input/gcamdata/xml/paper_delete_ag_demand.xml</Value>
 		<Value name = "bio_trade">../input/gcamdata/xml/bio_trade.xml</Value>
 		<Value name = "ag_trade">../input/gcamdata/xml/ag_trade.xml</Value>
 

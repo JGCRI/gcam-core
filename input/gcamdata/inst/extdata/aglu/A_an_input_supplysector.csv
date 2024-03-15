@@ -3,7 +3,7 @@
 # Comments: Note, forest product parameters are included here as well granted the processing steps are largely independent from animal production.
 # Units: Various
 # Original source: NA
-# Column types: ccccnc 
+# Column types: ccccnc
 # ----------
 supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
 FodderHerb_Residue,Mt,Mt,1975$/kg,-1.5,
@@ -12,3 +12,4 @@ FeedCrops,Mt,Mt,1975$/kg,-2.5,
 Scavenging_Other,Mt,Mt,1975$/kg,-1.5,
 sawnwood_processing,m3,m3,$/m3,-1.5,
 woodpulp_processing,tonnes,m3,$/ton,-1.5,
+woodpulp_energy,EJ,Mt,$/GJ,-1.5,

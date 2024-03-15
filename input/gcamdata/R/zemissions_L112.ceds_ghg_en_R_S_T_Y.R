@@ -54,11 +54,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
              "L124.LC_bm2_R_Grass_Yh_GLU_adj",
              "L124.LC_bm2_R_UnMgdFor_Yh_GLU_adj",
              "L154.IEA_histfut_data_times_UCD_shares",
-             "L1326.in_EJ_R_indenergy_F_Yh",
+             "L1327.in_EJ_R_indenergy_F_Yh",
              "L1323.in_EJ_R_iron_steel_F_Y",
              "L1324.in_EJ_R_Off_road_F_Y",
              "L1325.in_EJ_R_chemical_F_Y",
              "L1326.in_EJ_R_aluminum_Yh",
+             "L1327.in_EJ_R_paper_F_Yh",
              "L270.nonghg_tg_state_refinery_F_Yb",
              FILE = "emissions/CEDS/ceds_sector_map",
              FILE = "emissions/CEDS/ceds_fuel_map",
@@ -206,11 +207,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     calibrated_techs_bld_det <- get_data(all_data, "energy/calibrated_techs_bld_det")
     L101.in_EJ_R_en_Si_F_Yh <- get_data(all_data, "L101.in_EJ_R_en_Si_F_Yh") %>%
       gather_years(value_col = "energy")
-    L1326.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1326.in_EJ_R_indenergy_F_Yh")
+    L1327.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1327.in_EJ_R_indenergy_F_Yh")
     L1323.in_EJ_R_iron_steel_F_Y <- get_data(all_data, "L1323.in_EJ_R_iron_steel_F_Y")
     L1324.in_EJ_R_Off_road_F_Y <- get_data(all_data, "L1324.in_EJ_R_Off_road_F_Y")
     L1325.in_EJ_R_chemical_F_Y <- get_data(all_data, "L1325.in_EJ_R_chemical_F_Y")
     L1326.in_EJ_R_aluminum_Yh <- get_data(all_data, "L1326.in_EJ_R_aluminum_Yh")
+    L1327.in_EJ_R_paper_F_Yh <- get_data(all_data, "L1327.in_EJ_R_paper_F_Yh")
     CEDS_sector_map <- get_data(all_data, "emissions/CEDS/ceds_sector_map")
     CEDS_fuel_map <- get_data(all_data, "emissions/CEDS/ceds_fuel_map")
 
@@ -524,11 +526,18 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       mutate(technology = fuel) ->
       L1326.in_EJ_R_aluminum_Yh
 
-    L1326.in_EJ_R_indenergy_F_Yh %>% mutate(technology = fuel) %>%
+    L1327.in_EJ_R_paper_F_Yh %>%
+      mutate(technology = fuel) %>%
+      filter(!technology %in% emissions.ZERO_EM_TECH) ->
+      L1327.in_EJ_R_paper_F_Yh
+
+
+    L1327.in_EJ_R_indenergy_F_Yh %>% mutate(technology = fuel) %>%
       bind_rows(L1323.in_EJ_R_iron_steel_F_Y,
                 L1324.in_EJ_R_Off_road_F_Y,
                 L1325.in_EJ_R_chemical_F_Y,
-                L1326.in_EJ_R_aluminum_Yh) %>%
+                L1326.in_EJ_R_aluminum_Yh,
+                L1327.in_EJ_R_paper_F_Yh) %>%
       complete(nesting(GCAM_region_ID, sector, fuel, technology), year = HISTORICAL_YEARS) %>%
       replace_na(list(value = 0)) %>%
       select(GCAM_region_ID, fuel, technology, sector, year, energy = value) ->
@@ -1724,8 +1733,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                      "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/Trn_subsector_revised",
                      "emissions/mappings/CEDS_sector_tech_proc","emissions/mappings/calibrated_outresources","emissions/mappings/CEDS_sector_tech_proc_revised",
-                     "L101.in_EJ_R_en_Si_F_Yh", "L1326.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
-                     "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh","emissions/CEDS/CEDS_sector_tech_combustion_revised",
+                     "L101.in_EJ_R_en_Si_F_Yh", "L1327.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
+                     "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh", "L1327.in_EJ_R_paper_F_Yh", "emissions/CEDS/CEDS_sector_tech_combustion_revised",
                      "emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                      "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions",
                      "L270.nonghg_tg_state_refinery_F_Yb", "gcam-usa/emissions/BC_OC_assumptions", "gcam-usa/emissions/BCOC_PM25_ratios") ->
@@ -1748,8 +1757,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       add_precursors("L102.ceds_GFED_nonco2_tg_R_S_F","L102.ceds_int_shipping_nonco2_tg_S_F","emissions/CEDS/ceds_sector_map","emissions/CEDS/ceds_fuel_map", "common/GCAM_region_names",
                      "common/iso_GCAM_regID","energy/mappings/UCD_techs","energy/calibrated_techs","energy/calibrated_techs_bld_det",
                      "emissions/mappings/Trn_subsector","emissions/CEDS/CEDS_sector_tech_combustion","emissions/mappings/calibrated_outresources",
-                     "L101.in_EJ_R_en_Si_F_Yh", "L1326.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
-                     "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh","emissions/mappings/Trn_subsector_revised",
+                     "L101.in_EJ_R_en_Si_F_Yh", "L1327.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
+                     "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh", "L1327.in_EJ_R_paper_F_Yh","emissions/mappings/Trn_subsector_revised",
                      "L101.in_EJ_R_en_Si_F_Yh", "emissions/mappings/Trn_subsector_revised", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map",
                      "emissions/CEDS/CEDS_sector_tech_combustion_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                      "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions",
@@ -1776,11 +1785,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/mappings/calibrated_outresources",
                      "emissions/mappings/Trn_subsector_revised",
                      "L101.in_EJ_R_en_Si_F_Yh",
-                     "L1326.in_EJ_R_indenergy_F_Yh",
+                     "L1327.in_EJ_R_indenergy_F_Yh",
                      "L1323.in_EJ_R_iron_steel_F_Y",
                      "L1324.in_EJ_R_Off_road_F_Y",
                      "L1325.in_EJ_R_chemical_F_Y",
                      "L1326.in_EJ_R_aluminum_Yh",
+                     "L1327.in_EJ_R_paper_F_Yh",
                      "emissions/EPA/EPA_2019_raw",
                      "emissions/EPA_CH4N2O_map",
                      "L111.Prod_EJ_R_F_Yh",
