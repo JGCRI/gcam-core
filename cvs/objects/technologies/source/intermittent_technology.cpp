@@ -32,10 +32,10 @@
 
 
 /*!
-* \file interm_subsector.cpp
+* \file intermittent_technology.cpp
 * \ingroup Objects
-* \brief IntermittentSubsector class source file.
-* \author Marshall Wise, Sonny Kim
+* \brief IntermittentTechnology class source file.
+* \author Marshall Wise, Sonny Kim, Matthew Binsted, Matt Mowers
 */
 
 #include "util/base/include/definitions.h"
@@ -142,7 +142,7 @@ const string& IntermittentTechnology::getXMLNameStatic() {
 /*! \brief Return name to be used for input object containing technology costs.
 *
 * This input object will contain technology capital, operation, and any other costs
-* exclusive of backup or fuel costs. Setting to blank indicates that this object does
+* exclusive of fuel costs. Setting to blank indicates that this object does
 * not use this cost.
 *
 * \author Steve Smith
@@ -174,9 +174,9 @@ void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut,
 *         trial market name is not given.
 *         Use techInfo to pass infomation to SectorUtils for setting
 *         market parameters, such as units.
-* \todo Member constant values (Backup Capacity Factor, Backup Cost,
-*       Electricity Reserve Margin, and Ave grid Capacity Factor) could
-*       be dynamically calculated and utilized by intermittent technology.
+* \todo Member constant values (Electricity Reserve Margin, and Ave grid
+*       Capacity Factor) could be dynamically calculated and utilized by
+*       intermittent technology.
 */
 void IntermittentTechnology::completeInit( const string& aRegionName,
                                            const string& aSectorName,
@@ -191,15 +191,6 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
 	// Initialize electric reserve margin and average grid capacity factor from the Sector.
     mElecReserveMargin = aSubsectorInfo->getDouble( "electricity-reserve-margin", true );
     mAveGridCapacityFactor = aSubsectorInfo->getDouble( "average-grid-capacity-factor", true );
-
-    /*
-    // Initialize a non-energy input to hold backup capacity charges
-    // This needs be be done before calling other methods so that 1) input vector size is fixed 
-    // (so references won't change) and 2) so that initCalc() methods for new objects can be called.
-    if( util::searchForValue( mInputs, getBackupCapCostName() ) == mInputs.end() ){
-        mInputs.push_back( new NonEnergyInput( getBackupCapCostName() ) );
-    }
-    */
 
     // Inititalize info object
     mIntermittTechInfo.reset( InfoFactory::constructInfo( 0, getName() ) );
@@ -218,8 +209,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
         mElectricSectorMarket = aRegionName;
     }
 
-    // Create trial market for intermettent technology if backup exists and needs to be
-    // calculated.
+    // Create trial market for intermittent technology
     if(mValueFactorCalculator){
         SectorUtils::createTrialSupplyMarket( aRegionName, mTrialMarketName, mIntermittTechInfo.get(), mElectricSectorMarket );
         MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
@@ -233,7 +223,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
         }
     }
 
-    // Warn if a backup calculator was not read-in.
+    // Warn if a value factor calculator was not read-in.
     if( !mValueFactorCalculator){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
@@ -307,7 +297,7 @@ void IntermittentTechnology::production( const string& aRegionName,
     }
 
     // Multiple vintaged intermittent technology ratios are additive. This gives one 
-    // share for backup calculation and proper behavior for vintaging intermittent technologies.
+    // share for value factor calculation and proper behavior for vintaging intermittent technologies.
     SectorUtils::addToTrialDemand( aRegionName, mTrialMarketName, mIntermitOutTechRatio, aPeriod );
 }
 
@@ -325,12 +315,12 @@ double IntermittentTechnology::getResourceToEnergyRatio(const string& aRegionNam
     return 1.0;
 }
 
-/*! \brief Computes weighted cost of all technologies in Subsector plus backup
-*          costs.
-* \details Computes a total cost of the subsector by adding the weighted
-*          technology costs and adding the additional backup cost based on the
-*          backup capacity required.
-* \author Marshall Wise, Sonny Kim
+/*! \brief Computes weighted cost of all technologies in Subsector,
+*          adjusted by value factor.
+* \details Computes a total cost of the subsector by adjusting the weighted
+*          technology costs by value factor. The result is
+*          "profitability-adjusted LCOE" (PLCOE = LCOE/VF).
+* \author Marshall Wise, Sonny Kim, Matthew Binsted, Matt Mowers
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 */
@@ -357,11 +347,10 @@ void IntermittentTechnology::calcCost( const string& aRegionName,
 }
 
 /*! 
- * \brief Initialize the cached locations of the resource and backup inputs.
- * \details Determines and caches the locations of the resource and backup
- *          inputs. The resource input is assumed to be the input with a
- *          variance. The backup input is assumed to be the remaining energy
- *          input.
+ * \brief Initialize the cached locations of the resource input.
+ * \details Determines and caches the locations of the resource
+ *          input. The resource input is assumed to be the input with a
+ *          variance.
  * \param aRegionName Name of the containing region.
  * \param aSectorName Name of the containing sector.
  * \param aPeriod Period.
@@ -398,7 +387,7 @@ void IntermittentTechnology::initializeInputLocations( const string& aRegionName
         }
     }
 
-    // Check that both the resource and backup input were set.
+    // Check that the resource input was set.
     if( mResourceInput == mInputs.end() ){
         // There already was a resource input.
         ILogger& mainLog = ILogger::getLogger( "main_log" );

@@ -41,7 +41,7 @@
  * \file value_factor_calculator.h
  * \ingroup Objects
  * \brief The ValueFactorCalculator class header file.
- * \author Josh Lurz
+ * \author Matthew Binsted, Matt Mowers
  */
 
 #include <string>
@@ -53,14 +53,13 @@ class IInfo;
 
 /*!
  * \ingroup Objects
- * \brief Interface which defines methods for calculating an average and
- *        marginal amount of backup capacity required per unit of output.
- * \details Defines an interface to an object which determines the backup
- *          capacity required for a Sector. The backup capacity is determined
- *          per unit of output, but may use trial values to allow computation
- *          based on the total output. Backup requirements are specific to
- *          sectors that produce electricity.
- * \author Josh Lurz
+ * \brief Interface which defines methods for calculating value factor
+ *        of a technology depending on its market share.
+ * \details Defines an interface to an object which determines the value
+ *          factor for a technology. The value factor may use trial values of
+ *          market share. Value factors are specific to electricity sector
+ *          technologies.
+ * \author Matthew Binsted, Matt Mowers
  */
 class ValueFactorCalculator : public IBackupCalculator {
 public:

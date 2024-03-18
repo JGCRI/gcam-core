@@ -1,7 +1,7 @@
 # File: A23.globalinttech.csv
 # Title: Electricity sector intermittent technology information
 # Units: unitless for value factor intercept and slope
-# Description: parameters used to calculate a value factor for variable techs (bounds = (0;1))
+# Description: parameters used to calculate value factors for variable techs as a linear function of market share (bounds = (0;1))
 # Column types: cccccnn 
 # ----------
 supplysector,subsector,intermittent.technology,electric.sector.name,trial.market.name,value.factor.intercept,value.factor.slope
