@@ -7,4 +7,4 @@
 # ----------
 supplysector,subsector,1975,2020,2050,2100
 total biomass,domestic biomass,1,1,1,1
-total biomass,imported biomass,0.1,0.1,1,1
+total biomass,imported biomass,0.1,0.1,0.5,0.5

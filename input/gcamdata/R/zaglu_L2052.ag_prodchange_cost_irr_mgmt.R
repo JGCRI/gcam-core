@@ -188,7 +188,7 @@ module_aglu_L2052.ag_prodchange_cost_irr_mgmt <- function(command, ...) {
     L2052.UnAdjProfits %>%
       select(region, AgSupplySector) %>%
       distinct() %>%
-      mutate(cal.min.profit.rate = min(L2052.UnAdjProfits$Profit)) ->
+      mutate(cal.min.profit.rate = min(L2052.UnAdjProfits[year = max(MODEL_BASE_YEARS)]$Profit)) ->
       L2052.AgCalMinProfitRate
 
 

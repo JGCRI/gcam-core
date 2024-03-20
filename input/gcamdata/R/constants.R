@@ -239,6 +239,11 @@ aglu.CCONTENT_CELLULOSE    <- 0.45
 # Conversion from peak biomass to average biomass integrated over the course of the year
 aglu.CCONV_PEAK_AVG <- 0.5
 
+# Biomass mature_age (zaglu_L2252)
+biomassGrass_mature_age = 5
+biomassTree_mature_age = 8
+
+
 # Constraints for the minimum and maximum harvested:cropped ratios
 # Source: Dalrymple, D.G. 1971, Survey of Multiple Cropping in Less Developed Nations, Foreign Econ. Dev. Serv., U.S. Dep. of Agricul., Washington, D.C.
 # Cited in: Monfreda et al. 2008, Farming the Planet: 2., Global Biogeochemical Cycles 22, GB1022, http://dx.doi.org/10.1029/2007GB002947
