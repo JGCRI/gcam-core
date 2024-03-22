@@ -533,9 +533,11 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
              year, minicam.energy.input, market.name) -> L2234.StubTechMarket_elecS_USA
 
     # Backup markets
-    L223.StubTechMarket_elec_USA %>%
-      distinct(region, supplysector, subsector, stub.technology, year) %>%
-      semi_join(L223.GlobalIntTechValueFactor_elec, by= c("subsector" = "subsector.name", "stub.technology" = "intermittent.technology")) %>%
+    L2234.StubTechMarket_elecS_USA %>%
+      # filter for intermittent technologies
+      semi_join(L2234.GlobalIntTechShrwt_elecS, by = c("supplysector" = "sector.name",
+                                                       "subsector" = "subsector.name",
+                                                       "stub.technology" = "intermittent.technology")) %>%
       left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%
       select(region, supplysector, subsector, stub.technology, year, electric.sector.market = grid_region) ->
       L2234.StubTechElecMarket_backup_elecS_USA
