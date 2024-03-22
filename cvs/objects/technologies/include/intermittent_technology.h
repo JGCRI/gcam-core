@@ -42,7 +42,7 @@
 * \file intermittent_technology.h
 * \ingroup Objects
 * \brief The IntermittentTechnology class header file.
-* \author Marshall Wise, Sonny Kim
+* \author Marshall Wise, Sonny Kim, Matthew Binsted, Matt Mowers
 */
 
 #include <string>
@@ -58,23 +58,8 @@ class IInfo;
  *        resource.
  * \details An intermittent subsector represents the production of a good, such
  *          as electricity, from an intermittent resource, such as wind or
- *          solar. An intermittent subsector has a pair of technologies. One
- *          Technology consumes the intermittent resource and produces the
- *          majority of the output, and the other Technology produces the backup
- *          required. The backup Technology may produce a small amount of
- *          output, and emissions. The intermittent and backup technologies do
- *          not compete. The intermittent subsector has a backup calculator,
- *          which is responsible for determining the average and marginal quantity
- *          of backup capacity required. The backup calculator sets the shares
- *          of the technologies using the marginal backup requirements. These
- *          shares are used for the cost calculation, but not the output
- *          calculation. Output, and therefore emissions, is based on the
- *          average backup required.
- * \note An intermittent subsector must have two and only two Technologies, one
- *       consuming an intermittent resource and one which is the backup.
- * \note If a backup calculator is not read in, the backup requirement is
- *       assumed to be zero and this subsector will operate exactly the same as
- *       a standard Subsector with one Technology.
+ *          solar. These technologies will have adjusted costs to reflect
+ *          their value factor reduction as a function of market share.
  *          <b>XML specification for IntermittentTechnology</b>
  *          - XML name: \c intermittent-technology
  *          - Contained by: Subsector
@@ -84,7 +69,7 @@ class IInfo;
  *              - \c wind-backup-calculator WindBackupCalculator
  *              - \c capacity-limit-backup-calculator CapacityLimitBackupCalculator
  *
- * \author Marshall Wise, Josh Lurz
+ * \author Marshall Wise, Josh Lurz, Matthew Binsted, Matt Mowers
  */
 class IntermittentTechnology: public Technology {
 public:
@@ -133,8 +118,7 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         Technology,
 
-        //! A calculator which determines the amount of backup per unit output.
-        // DEFINE_VARIABLE( CONTAINER, "backup-calculator", mBackupCalculator, IBackupCalculator* ),
+        //! A calculator which determines the value factor of the technology
         DEFINE_VARIABLE(CONTAINER, "value-factor-calculator", mValueFactorCalculator, ValueFactorCalculator*),
 
         //! Name of the electricity sector which this Technology will supply.
@@ -151,24 +135,8 @@ protected:
         //! Cached input containing the resource.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "resource-input-pointer", mResourceInput, InputIterator ),
 
-        /*
-        //! Cached input containing the backup.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "backup-input-pointer", mBackupInput, InputIterator ),
-
-        //! Cached input containing the capital costs for backup.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "backup-cap-cost-input-pointer", mBackupCapCostInput, InputIterator ),
-        */
-
         //! Cached input containing the technology costs.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "tech-cost-input-pointer", mTechCostInput, InputIterator ),
-
-        /*
-        //! Backup capacity factor read in at the Sector level.
-        DEFINE_VARIABLE( SIMPLE, "backup-capacity-factor", mBackupCapacityFactor, Value ),
-
-        //! Backup capital cost.
-        DEFINE_VARIABLE( SIMPLE, "backup-capital-cost", mBackupCapitalCost, Value ),
-        */
 
         //! Electric reserve cost read in at the Sector level.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "electricity-reserve-margin", mElecReserveMargin, Value ),

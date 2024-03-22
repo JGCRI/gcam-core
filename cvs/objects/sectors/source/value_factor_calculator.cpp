@@ -35,7 +35,7 @@
  * \file value_factor_calculator.cpp
  * \ingroup Objects
  * \brief ValueFactorCalculator class source file.
- * \author Josh Lurz, Sonny Kim
+ * \author Matthew Binsted, Matt Mowers
  */
 
 #include "util/base/include/definitions.h"
@@ -86,7 +86,6 @@ const string& ValueFactorCalculator::getName() const {
 * changed. The "==" operator that is used when parsing, required this second
 * function to return static.
 * \note A function cannot be static and virtual.
-* \author Josh Lurz, James Blackwood
 * \return The constant XML_NAME as a static.
 */
 const string& ValueFactorCalculator::getXMLNameStatic() {
@@ -142,13 +141,14 @@ double ValueFactorCalculator::getAverageBackupCapacity(const string& aSector,
 }
 
 /*!
- * \brief Compute value factor for intermittent technology.
- * \details Compute value factor for intermittent technology,
- *          which will decrease as market share increases.
- *          This value factor will then be used to scale technology cost.
- * \param aSector The name of the sector which requires backup capacity.
- * \param aElectricSector The name of the electricity sector into which the
- *        sector having a backup amount calculated for will feed.
+ * \brief Compute value factor for electricity technology.
+ * \details Compute value factor (VF) for electricity technology,
+ *          which will decrease linearly as market share increases.
+ *          This value factor will then be used to adjust technology
+ *          LCOE into "profitability-adjusted LCOE" (PLCOE), where
+ *          PLCOE = LCOE/VF.
+ * \param aSector The name of the sector.
+ * \param aElectricSector The name of the electricity sector.
  * \param aRegion Name of the containing region.
  * \param aPeriod Model period.
  * \return Value factor scalar for technology cost (range: 0-1).
