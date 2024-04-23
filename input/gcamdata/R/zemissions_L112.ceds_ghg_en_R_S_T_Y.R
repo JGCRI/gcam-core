@@ -112,10 +112,12 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
 
     #Get CEDS_GFED data
-    L112.CEDS_GCAM_no_intl_shipping <- get_data(all_data, "L102.ceds_GFED_nonco2_tg_R_S_F")
+    L112.CEDS_GCAM_no_intl_shipping <- get_data(all_data, "L102.ceds_GFED_nonco2_tg_R_S_F") %>%
+      filter(year >= min(HISTORICAL_YEARS), year <= max(HISTORICAL_YEARS))
 
     #Get CEDS international shipping data
-    L112.CEDS_intl_shipping <- get_data(all_data, "L102.ceds_int_shipping_nonco2_tg_S_F")
+    L112.CEDS_intl_shipping <- get_data(all_data, "L102.ceds_int_shipping_nonco2_tg_S_F") %>%
+      filter(year >= min(HISTORICAL_YEARS), year <= max(HISTORICAL_YEARS))
     Int_shipping_IEA_EIA <- get_data(all_data, "L154.IEA_histfut_data_times_UCD_shares") %>% filter(UCD_category=="trn_international ship")
 
     #Get NEI data for crude oil and natural gas, and BC OC fractions for this
@@ -134,7 +136,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
     #Process data for international shipping to disaggregate to the GCAM regions
     L112.CEDS_intl_shipping %>%
-      right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>% filter(year <= max(HISTORICAL_YEARS)), by=c("year")) %>%
+      right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>%
+                   filter(year >= min(HISTORICAL_YEARS), year <= max(HISTORICAL_YEARS)), by=c("year")) %>%
       mutate(emissions=if_else(is.na(emissions),0,emissions)) %>%
       group_by(Non.CO2,year,sector,fuel) %>%
       mutate(share_in_global_ship= value/sum(value)) %>%
@@ -146,7 +149,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       group_by(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel, year) %>%
       summarise(emissions = sum(emissions)) %>%
       ungroup() %>%
-      na.omit()->CEDS_int_shipping
+      na.omit() ->
+      CEDS_int_shipping
 
     #Combine emissions from all other CEDS sectors with emissions from international shipping
     L112.CEDS_GCAM_no_intl_shipping %>%
@@ -664,7 +668,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     # process to set the fraction of other industrial non-CO2 emissions (by fuel) that are removed and reallocated to food processing here
     L112.CEDS_GCAM_emissions %>%
       filter(CEDS_agg_sector == "industry_energy") %>%
-      left_join(L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh %>%
+      left_join_error_no_match(L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh %>%
                   select(GCAM_region_ID, CEDS_agg_fuel = fuel, year, CEDS_agg_sector = sector, removed_frac),
                 by = c("GCAM_region_ID", "CEDS_agg_fuel", "year", "CEDS_agg_sector")) %>%
       # calculate the emissions that need to be removed from other industry and added to food processing
@@ -673,6 +677,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.CEDS_GCAM_emissions_to_infill_for_food
 
     L112.CEDS_GCAM_emissions %>%
+      # not using LJENM here & NAs are replaced later
       # join emissions to remove (from other industry)
       left_join(L112.CEDS_GCAM_emissions_to_infill_for_food %>%
                   select(Non.CO2, GCAM_region_ID, CEDS_agg_sector, CEDS_agg_fuel,
@@ -695,8 +700,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
     # Attach CEDS emissions to those sector fuel combos
     L112.in_EJ_R_en_S_F_Yh_calib_enshare %>%
-      left_join(L112.CEDS_GCAM_emissions_food_infill,
-                by = c("GCAM_region_ID", "year", "CEDS_agg_sector", "CEDS_agg_fuel")) ->
+      full_join(
+        # using inner join to filter joining columns first
+        L112.CEDS_GCAM_emissions_food_infill %>%
+          inner_join(L112.in_EJ_R_en_S_F_Yh_calib_enshare %>%
+                       distinct(GCAM_region_ID, year, CEDS_agg_sector, CEDS_agg_fuel),
+                     by = c("GCAM_region_ID", "CEDS_agg_sector", "CEDS_agg_fuel", "year")),
+        by = c("GCAM_region_ID", "year", "CEDS_agg_sector", "CEDS_agg_fuel")
+      ) ->
       L112.CEDSGCAM_emissions
 
     L112.CEDSGCAM_emissions %>%

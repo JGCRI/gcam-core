@@ -18,32 +18,39 @@
 #' @importFrom tidyr gather spread
 #' @author SAS Dec 2022
 module_energy_L1328.food_processing <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L1012.en_bal_EJ_R_Si_Fi_Yh",
+      FILE = "energy/A_regions",
+      FILE = "energy/mappings/enduse_fuel_aggregation",
+      "L1327.in_EJ_R_indenergy_F_Yh",
+      FILE = "common/iso_GCAM_regID",
+      FILE = "common/GCAM_region_names",
+      FILE = "energy/A328.globaltech_coef",
+      #"L127.in_EJ_R_indchp_F_Yh",
+      "L101.CropMeat_Food_Pcal_R_C_Y",
+      "L100.IEA_en_bal_ctry_hist",
+      FILE = "energy/mappings/IEA_product_fuel",
+      FILE = "energy/mappings/enduse_fuel_aggregation",
+      FILE = "energy/mappings/IEA_flow_sector",
+      FILE = "energy/A328.energy_infill_model_coefs",
+      FILE = "energy/A328.energy_infill_model_intercepts_R",
+      FILE = "aglu/A_demand_technology",
+      "L102.gdp_mil90usd_Scen_R_Y")
+
+  MODULE_OUTPUTS <-
+    c("L1328.in_EJ_R_food_F_Yh",
+      "L1328.out_Pcal_R_food_Yh",
+      "L1328.IO_EJPcal_R_food_F_Yh",
+      "L1328.in_EJ_R_indenergy_F_Yh",
+      "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh",
+      "L1328.en_bal_frac_industry_food_inonspec_R_Yh")
+      #"L1328.in_EJ_R_indchp_F_Yh"))
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L1012.en_bal_EJ_R_Si_Fi_Yh",
-             FILE = "energy/A_regions",
-             FILE = "energy/mappings/enduse_fuel_aggregation",
-             "L1327.in_EJ_R_indenergy_F_Yh",
-             FILE = "common/iso_GCAM_regID",
-             FILE = "common/GCAM_region_names",
-             FILE = "energy/A328.globaltech_coef",
-             #"L127.in_EJ_R_indchp_F_Yh",
-             "L101.CropMeat_Food_Pcal_R_C_Y",
-             "L100.IEA_en_bal_ctry_hist",
-             FILE = "energy/mappings/IEA_product_fuel",
-             FILE = "energy/mappings/enduse_fuel_aggregation",
-             FILE = "energy/mappings/IEA_flow_sector",
-             FILE = "energy/A328.energy_infill_model_coefs",
-             FILE = "energy/A328.energy_infill_model_intercepts_R",
-             FILE = "aglu/A_demand_technology",
-             "L102.gdp_mil90usd_Scen_R_Y"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1328.in_EJ_R_food_F_Yh",
-             "L1328.out_Pcal_R_food_Yh",
-             "L1328.IO_EJPcal_R_food_F_Yh",
-             "L1328.in_EJ_R_indenergy_F_Yh",
-             "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh",
-             "L1328.en_bal_frac_industry_food_inonspec_R_Yh"))
-             #"L1328.in_EJ_R_indchp_F_Yh"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     # Silence global variable package check
@@ -57,24 +64,8 @@ module_energy_L1328.food_processing <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
-    A_regions <- get_data(all_data, "energy/A_regions")
-    enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
-    L1327.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1327.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A328.globaltech_coef <- get_data(all_data, "energy/A328.globaltech_coef")
-    #L127.in_EJ_R_indchp_F_Yh <- get_data(all_data, "L127.in_EJ_R_indchp_F_Yh", strip_attributes = TRUE)
-    L101.CropMeat_Food_Pcal_R_C_Y <- get_data(all_data, "L101.CropMeat_Food_Pcal_R_C_Y", strip_attributes = TRUE)
-    L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist", strip_attributes = TRUE)
-    IEA_product_fuel <- get_data(all_data, "energy/mappings/IEA_product_fuel")
-    enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
-    IEA_flow_sector <- get_data(all_data, "energy/mappings/IEA_flow_sector")
-    A328.energy_infill_model_coefs <- get_data(all_data, "energy/A328.energy_infill_model_coefs")
-    A328.energy_infill_model_intercepts_R <- get_data(all_data, "energy/A328.energy_infill_model_intercepts_R")
-    A_demand_technology <- get_data(all_data, "aglu/A_demand_technology")
-    L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
     # 2. Perform computations
@@ -111,13 +102,14 @@ module_energy_L1328.food_processing <- function(command, ...) {
 
     # map fuel used to fuel aggregations
     L1328.in_EJ_R_food_F_Yh %>%
-      left_join(select(enduse_fuel_aggregation, fuel, industry), by = "fuel") %>%
+      left_join_error_no_match(
+        select(enduse_fuel_aggregation, fuel, industry) %>% na.omit(), by = "fuel") %>%
       select(-fuel, fuel = industry) %>%
-      na.omit() %>%
       group_by(GCAM_region_ID, year, sector, fuel) %>%
       summarise(value = sum(value)) %>%
       ungroup()->
       L1328.in_EJ_R_food_F_Yh
+
 
     # Drop heat in regions where heat is not modeled as a final fuel
     A_regions %>%
@@ -138,6 +130,7 @@ module_energy_L1328.food_processing <- function(command, ...) {
     L1327.in_EJ_R_indenergy_F_Yh %>%
       complete(GCAM_region_ID, nesting(sector, fuel, year), fill = list(value = 0)) %>%
       rename(raw = value) %>%
+      # NA is expected for fuel = heat sector and replaced with 0
       left_join(L1328.in_EJ_R_food_F_Yh %>% select(-sector), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
       mutate(value = replace_na(value, 0),
@@ -151,7 +144,8 @@ module_energy_L1328.food_processing <- function(command, ...) {
 
     # Adjust negative energy use in remaining industry by adjusting energy in food processing sector downward
     L1328.in_EJ_R_food_F_Yh %>%
-      left_join(indenergy_tmp %>% select(-sector), by = c("GCAM_region_ID", "fuel", "year"))  %>%
+      # NA is expected and replaced with 0 later
+      left_join(indenergy_tmp %>% select(-sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
       mutate(value.y = replace_na(value.y, 0),
              value = value.x + value.y) %>%
       select(GCAM_region_ID, fuel, year, sector, value) ->
@@ -160,6 +154,7 @@ module_energy_L1328.food_processing <- function(command, ...) {
     # Recalculate remaining industrial energy
     L1327.in_EJ_R_indenergy_F_Yh %>%
       rename(raw = value) %>%
+      # NA is expected and replaced with 0 later
       left_join(L1328.in_EJ_R_food_F_Yh_recal %>% select(-sector), by = c("GCAM_region_ID", "year", "fuel")) %>%
       ungroup() %>%
       mutate(value = replace_na(value, 0),
@@ -187,7 +182,8 @@ module_energy_L1328.food_processing <- function(command, ...) {
       L100.IEA_en_bal_ctry_hist %>%
         filter(FLOW %in% energy.FOOD_PROCESSING.IEA_INDUSTRY_FLOWS) %>%
         select(iso, FLOW, PRODUCT, as.character(HISTORICAL_YEARS)) %>%
-        left_join(select(iso_GCAM_regID, iso, GCAM_region_ID, country_name), by = "iso") %>%
+        left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID, country_name), by = "iso") %>%
+        # fuel could has NA
         left_join(select(IEA_product_fuel, fuel, PRODUCT = product), by = "PRODUCT") %>%
         left_join(enduse_fuel_aggregation %>% dplyr::select(fuel, industry), by = "fuel") %>%
         # remap biomass_tradbio to biomass, as is done for industry in other chunks
@@ -215,6 +211,7 @@ module_energy_L1328.food_processing <- function(command, ...) {
         group_by(GCAM_region_ID, year) %>%
         mutate(frac = value / sum(value)) %>%
         ungroup() %>%
+        # there could be NAs in sector mappings; dealed with NAs later
         left_join(IEA_flow_sector %>% select(sector, flow_code), by = c("FLOW" = "flow_code")) ->
         IEA_ind_EJ_sect_R_Yh
 
@@ -302,7 +299,7 @@ module_energy_L1328.food_processing <- function(command, ...) {
                                  distinct(),
                                by = c("GCAM_region_ID", "year")) %>%
       # add the regional intercepts of the model
-      left_join(A328.energy_infill_model_intercepts_R %>%
+      left_join_error_no_match(A328.energy_infill_model_intercepts_R %>%
                   select(GCAM_region_ID, intercept),
                 by = c("GCAM_region_ID")) %>%
       # for any region not explicitly specified in the intercepts input file, use default intercept value
@@ -364,6 +361,7 @@ module_energy_L1328.food_processing <- function(command, ...) {
 
     # Recalculate other industry energy use - subtract off the infilled values allocated to food processing
     L1328.in_EJ_R_indenergy_F_Yh_tmp_2 %>%
+      # replace NA later
       left_join(L1328.EJ_R_food_F_Yh_est_to_infill_adders %>% select(GCAM_region_ID, fuel, year, infill_fuel),
                 by = c("GCAM_region_ID", "fuel", "year")) %>%
       mutate(infill_fuel = replace_na(infill_fuel, 0),
@@ -396,11 +394,12 @@ module_energy_L1328.food_processing <- function(command, ...) {
       filter(grepl("process heat", supplysector)) %>% # only want process heat technologies
       select(technology) %>%
       repeat_add_columns(tibble(year = c(HISTORICAL_YEARS, FUTURE_YEARS))) %>%
-      left_join(A328.globaltech_coef %>%
-                  gather(-c(supplysector, subsector, technology, minicam.energy.input, secondary.output) , key = 'year', value = 'coef') %>%
-                  select(technology, year, coef) %>%
-                  mutate(year = as.numeric(year)),
-                by = c("technology", "year")) %>%
+      full_join(
+        A328.globaltech_coef %>%
+          gather(-c(supplysector, subsector, technology, minicam.energy.input, secondary.output) , key = 'year', value = 'coef') %>%
+          select(technology, year, coef) %>%
+          mutate(year = as.numeric(year)),
+        by = c("technology", "year")) %>%
       group_by(technology) %>%
       mutate(coef = approx_fun(year, coef, rule = 2)) %>%
       filter(year %in% HISTORICAL_YEARS) %>%
@@ -430,6 +429,7 @@ module_energy_L1328.food_processing <- function(command, ...) {
       filter(fuel == "electricity") %>%
       bind_rows(L1328.total_process_heat_calculated) %>%
       rename(input = value) %>%
+      # unimportant year diff & replace NA later
       left_join(L1328.out_Pcal_R_food_Yh %>% rename(output = value), by = c("GCAM_region_ID", "year")) %>%
       mutate(output = replace_na(output, 0),
              value = if_else(output > 0, input / output, 0)) ->
@@ -497,9 +497,7 @@ module_energy_L1328.food_processing <- function(command, ...) {
                      "energy/A328.energy_infill_model_intercepts_R", "aglu/A_demand_technology", "L102.gdp_mil90usd_Scen_R_Y") ->
       L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh
 
-    return_data(L1328.in_EJ_R_food_F_Yh, L1328.out_Pcal_R_food_Yh, L1328.IO_EJPcal_R_food_F_Yh,
-                L1328.in_EJ_R_indenergy_F_Yh, L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh,
-                L1328.en_bal_frac_industry_food_inonspec_R_Yh)
+    return_data(MODULE_OUTPUTS)
 
   } else {
     stop("Unknown command")

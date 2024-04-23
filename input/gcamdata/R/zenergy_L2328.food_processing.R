@@ -24,68 +24,58 @@
 #' @author SAS Dec 2022
 module_energy_L2328.food_processing <- function(command, ...) {
 
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "energy/calibrated_techs",
+      FILE = "energy/A_regions",
+      FILE = "energy/A328.sector",
+      FILE = "energy/A23.chp_elecratio",
+      FILE = "energy/A328.subsector_interp",
+      FILE = "energy/A328.subsector_logit",
+      FILE = "energy/A328.subsector_shrwt",
+      FILE = "energy/A328.globaltech_coef",
+      FILE = "energy/A328.globaltech_cost",
+      FILE = "energy/A328.regionaltech_cost",
+      FILE = "energy/A328.globaltech_shrwt",
+      FILE = "energy/A328.globaltech_retirement",
+      FILE = "energy/A328.demand",
+      "L1328.in_EJ_R_food_F_Yh",
+      "L1328.out_Pcal_R_food_Yh",
+      "L1328.IO_EJPcal_R_food_F_Yh")
+
+  MODULE_OUTPUTS <-
+    c("L2328.Supplysector_food",
+      "L2328.FinalEnergyKeyword_food",
+      "L2328.SubsectorLogit_food",
+      "L2328.SubsectorShrwtFllt_food",
+      "L2328.SubsectorInterp_food",
+      "L2328.StubTech_food",
+      "L2328.GlobalTechShrwt_food",
+      "L2328.GlobalTechCoef_food",
+      "L2328.GlobalTechCost_food",
+      "L2328.StubTechCost_food",
+      "L2328.GlobalTechTrackCapital_food",
+      "L2328.GlobalTechShutdown_food",
+      "L2328.GlobalTechSCurve_food",
+      "L2328.GlobalTechLifetime_food",
+      "L2328.GlobalTechProfitShutdown_food",
+      "L2328.StubTechProd_food",
+      "L2328.StubTechCalInput_food_heat",
+      "L2328.StubTechCoef_food",
+      "L2328.StubCalorieContent",
+      "L2328.StubCaloriePriceConv",
+      "L2328.GlobalTechSecOut_food")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/calibrated_techs",
-             FILE = "energy/A_regions",
-             FILE = "energy/A328.sector",
-             FILE = "energy/A23.chp_elecratio",
-             FILE = "energy/A328.subsector_interp",
-             FILE = "energy/A328.subsector_logit",
-             FILE = "energy/A328.subsector_shrwt",
-             FILE = "energy/A328.globaltech_coef",
-             FILE = "energy/A328.globaltech_cost",
-             FILE = "energy/A328.regionaltech_cost",
-             FILE = "energy/A328.globaltech_shrwt",
-             FILE = "energy/A328.globaltech_retirement",
-             FILE = "energy/A328.demand",
-             "L1328.in_EJ_R_food_F_Yh",
-             "L1328.out_Pcal_R_food_Yh",
-             "L1328.IO_EJPcal_R_food_F_Yh"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2328.Supplysector_food",
-             "L2328.FinalEnergyKeyword_food",
-             "L2328.SubsectorLogit_food",
-             "L2328.SubsectorShrwtFllt_food",
-             "L2328.SubsectorInterp_food",
-             "L2328.StubTech_food",
-             "L2328.GlobalTechShrwt_food",
-             "L2328.GlobalTechCoef_food",
-             "L2328.GlobalTechCost_food",
-             "L2328.StubTechCost_food",
-             "L2328.GlobalTechTrackCapital_food",
-             "L2328.GlobalTechShutdown_food",
-             "L2328.GlobalTechSCurve_food",
-             "L2328.GlobalTechLifetime_food",
-             "L2328.GlobalTechProfitShutdown_food",
-             "L2328.StubTechProd_food",
-             "L2328.StubTechCalInput_food_heat",
-             "L2328.StubTechCoef_food",
-             "L2328.StubCalorieContent",
-             "L2328.StubCaloriePriceConv",
-             "L2328.GlobalTechSecOut_food"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs", strip_attributes = TRUE)
-    A_regions <- get_data(all_data, "energy/A_regions", strip_attributes = TRUE)
-    A328.sector <- get_data(all_data, "energy/A328.sector", strip_attributes = TRUE)
-    A328.subsector_interp <- get_data(all_data, "energy/A328.subsector_interp", strip_attributes = TRUE)
-    A328.subsector_logit <- get_data(all_data, "energy/A328.subsector_logit", strip_attributes = TRUE)
-    A328.subsector_shrwt <- get_data(all_data, "energy/A328.subsector_shrwt", strip_attributes = TRUE)
-    A328.globaltech_coef <- get_data(all_data, "energy/A328.globaltech_coef", strip_attributes = TRUE)
-    A328.globaltech_retirement <- get_data(all_data, "energy/A328.globaltech_retirement", strip_attributes = TRUE)
-    A328.globaltech_cost <- get_data(all_data, "energy/A328.globaltech_cost", strip_attributes = TRUE)
-    A328.regionaltech_cost <- get_data(all_data, "energy/A328.regionaltech_cost", strip_attributes = TRUE)
-    A328.globaltech_shrwt <- get_data(all_data, "energy/A328.globaltech_shrwt", strip_attributes = TRUE)
-    A328.demand <- get_data(all_data, "energy/A328.demand", strip_attributes = TRUE)
-    A23.chp_elecratio  <- get_data(all_data, "energy/A23.chp_elecratio", strip_attributes = TRUE)
-    L1328.in_EJ_R_food_F_Yh <- get_data(all_data, "L1328.in_EJ_R_food_F_Yh", strip_attributes = TRUE)
-    L1328.out_Pcal_R_food_Yh <- get_data(all_data, "L1328.out_Pcal_R_food_Yh", strip_attributes = TRUE)
-    L1328.IO_EJPcal_R_food_F_Yh <- get_data(all_data, "L1328.IO_EJPcal_R_food_F_Yh", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline
@@ -335,7 +325,7 @@ module_energy_L2328.food_processing <- function(command, ...) {
              market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) %>%
       # Fill out the values in the final base year to all future years
-      # TODO: do we want to assume some change with time instead?
+      # Note: Fixed future coefficient for now
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input, market.name) %>%
       complete(year = MODEL_YEARS) %>%
       mutate(coefficient = if_else(year %in% MODEL_FUTURE_YEARS, coefficient[year == max(MODEL_BASE_YEARS)], coefficient)) %>%
@@ -358,6 +348,7 @@ module_energy_L2328.food_processing <- function(command, ...) {
     L1328.in_EJ_R_food_F_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       # remove electricity that is used directly rather than used for process heat
+      # replace na later
       left_join(L1328.IO_EJPcal_R_food_F_Yh %>%
                   filter(fuel == "electricity") %>%
                   select(GCAM_region_ID, fuel, year, sector, non_heat_input = input),
@@ -374,7 +365,9 @@ module_energy_L2328.food_processing <- function(command, ...) {
       L2328.StubTechCalInput_food_heat_tmp
 
     L2328.food_heat_tmp %>%
-      left_join(L2328.StubTechCalInput_food_heat_tmp, by = c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input")) %>%
+      # NA expected and replace with zero later
+      left_join(L2328.StubTechCalInput_food_heat_tmp,
+                by = c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input")) %>%
       mutate(value = replace_na(value, 0),
              calibrated.value = round(value, energy.DIGITS_CALOUTPUT),
              share.weight.year = year,
@@ -395,8 +388,8 @@ module_energy_L2328.food_processing <- function(command, ...) {
 
     L1328.out_Pcal_R_food_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      mutate(sector = "food processing") %>%
-      mutate(calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
+      mutate(sector = "food processing",
+             calOutputValue = round(value, energy.DIGITS_CALOUTPUT)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(calibrated_techs_output, by = "sector") %>%
       mutate(stub.technology = technology,
@@ -621,12 +614,7 @@ module_energy_L2328.food_processing <- function(command, ...) {
       add_precursors("energy/A23.chp_elecratio", "energy/A328.globaltech_coef") ->
       L2328.GlobalTechSecOut_food
 
-    return_data(L2328.Supplysector_food, L2328.FinalEnergyKeyword_food, L2328.SubsectorLogit_food, L2328.SubsectorShrwtFllt_food,
-                L2328.SubsectorInterp_food, L2328.StubTech_food, L2328.GlobalTechShrwt_food, L2328.GlobalTechCoef_food,
-                L2328.GlobalTechCost_food, L2328.StubTechCost_food, L2328.GlobalTechShutdown_food, L2328.GlobalTechSCurve_food,
-                L2328.GlobalTechLifetime_food, L2328.GlobalTechProfitShutdown_food, L2328.StubTechProd_food,
-                L2328.StubTechCalInput_food_heat, L2328.StubTechCoef_food, L2328.StubCalorieContent, L2328.StubCaloriePriceConv,
-                L2328.GlobalTechSecOut_food, L2328.GlobalTechTrackCapital_food)
+    return_data(MODULE_OUTPUTS)
 
   } else {
     stop("Unknown command")

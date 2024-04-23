@@ -16,24 +16,31 @@
 #' @importFrom tidyr complete nesting
 #' @author GPK June 2018
 module_water_L232.water_demand_manufacturing <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/water_td_sectors",
+      FILE = "energy/A32.globaltech_coef",
+      "L132.water_km3_R_ind_Yh",
+      "L232.StubTechProd_industry",
+      FILE = "water/paper_mfg_intensity",
+      FILE = "water/food_mfg_intensity",
+      FILE = "water/mfg_water_ratios",
+      "L1327.out_Mt_R_paper_Yh",
+      "L2327.StubTechProd_paper",
+      "L1328.out_Pcal_R_food_Yh",
+      "L1328.in_EJ_R_food_F_Yh",
+      "L2328.StubTechProd_food")
+
+  MODULE_OUTPUTS <-
+    c("L232.TechCoef",
+      "L2327.TechCoef_paper",
+      "L232.TechCoef_food")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/water_td_sectors",
-             FILE = "energy/A32.globaltech_coef",
-             "L132.water_km3_R_ind_Yh",
-             "L232.StubTechProd_industry",
-             FILE = "water/paper_mfg_intensity",
-             FILE = "water/food_mfg_intensity",
-             FILE = "water/mfg_water_ratios",
-             "L1327.out_Mt_R_paper_Yh",
-             "L2327.StubTechProd_paper",
-             "L1328.out_Pcal_R_food_Yh",
-             "L1328.in_EJ_R_food_F_Yh",
-             "L2328.StubTechProd_food"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L232.TechCoef",
-             "L2327.TechCoef_paper",
-             "L232.TechCoef_food"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -47,20 +54,9 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
       food_water_recal <- water_type <- coefficient <- stub.technology <-
       water_sector <- NULL  # silence package check notes
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    water_td_sectors <- get_data(all_data, "water/water_td_sectors")
-    A32.globaltech_coef <- get_data(all_data, "energy/A32.globaltech_coef")
-    L132.water_km3_R_ind_Yh <- get_data(all_data, "L132.water_km3_R_ind_Yh")
+    # Load required inputs ----
 
-    paper_mfg_intensity <- get_data(all_data, "water/paper_mfg_intensity")
-    food_mfg_intensity <- get_data(all_data, "water/food_mfg_intensity")
-    mfg_water_ratios <- get_data(all_data, "water/mfg_water_ratios")
-    L1327.out_Mt_R_paper_Yh <- get_data(all_data, "L1327.out_Mt_R_paper_Yh")
-    L2327.StubTechProd_paper <- get_data(all_data, "L2327.StubTechProd_paper")
-    L1328.out_Pcal_R_food_Yh <- get_data(all_data, "L1328.out_Pcal_R_food_Yh")
-    L1328.in_EJ_R_food_F_Yh <- get_data(all_data, "L1328.in_EJ_R_food_F_Yh")
-    L2328.StubTechProd_food <- get_data(all_data, "L2328.StubTechProd_food")
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # Extrapolate this one to all model years if necessary
     get_data(all_data, "L232.StubTechProd_industry") %>%
@@ -167,6 +163,8 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
     # Subtract food industry water use from total industry (with paper water use already subtracted)
     L1327.water_km3_R_ind_Yh %>%
       rename(industry_water = water_km3) %>%
+      # Using left join since L1328.water_km3_R_ind_Yh_food starts from 1973 while the other starts from 1971
+      # replaced na years with zero later
       left_join(L1328.water_km3_R_ind_Yh_food %>%
                   select(GCAM_region_ID, year, water_type, food_water = water_km3),
                 by = c("GCAM_region_ID", "year", "water_type")) %>%
@@ -307,7 +305,7 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
                      "L2328.StubTechProd_food") ->
       L232.TechCoef_food
 
-    return_data(L232.TechCoef, L2327.TechCoef_paper, L232.TechCoef_food)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }
