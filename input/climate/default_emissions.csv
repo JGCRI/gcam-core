@@ -1,6 +1,6 @@
 ; default inputs for the emissions & RF implemented in Hector v 3.1 but not in GCAM,,,,,,,,,,,,,,,,,,
 ; date March Tues 21 2023,,,,,,,,,,,,,,,,,,
-; UNITS:,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  W m-2,  W m-2,  ppt,  ppt,  ppt
+; UNITS:,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,Gg  year-1,  W m-2 year-1,  W m-2 year-1,Gg year-1,Gg  year-1,Gg   year-1
 Date,CCl4_emissions,CFC113_emissions,CFC114_emissions,CFC115_emissions,CFC11_emissions,CFC12_emissions,CH3Br_emissions,CH3CCl3_emissions,CH3Cl_emissions,HCFC141b_emissions,HCFC142b_emissions,HCFC22_emissions,HFC4310_emissions,RF_albedo,SV,halon1211_emissions,halon2402_emissions,halon1301_emissions
 1745,0.024856862,0,0,0,0,0,105.08773,0,4275.7449,0,0,0,0,0,0.185745674,0.007723273,0,0
 1746,0.024856862,0,0,0,0,0,105.08773,0,4275.7449,0,0,0,0,0,0.185745674,0.007723273,0,0
