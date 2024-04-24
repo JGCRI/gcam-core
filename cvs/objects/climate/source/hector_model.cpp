@@ -194,7 +194,7 @@ void HectorModel::completeInit( const string& aScenarioName ) {
     // (default emissions will be used for this provided in
     // input/climate/default_emissions.csv)
     
-    // Additional forcings used in Hector v 3.1
+    // Additional forcings used in Hector v 3.2.0
     // Albedo, and Volcanic SO2 (SV)
     
     // Set up the message tables for components (mostly halocarbons)
@@ -607,7 +607,8 @@ double HectorModel::getTemperature( const int aYear, const bool aAdjHistoricalPe
         // WARNING: this is set as a constant here but was derived from a particular
         // set of Hector assumptions.  And therefore should be sensitive to changing
         // Hector parameters.  Getting this value dynamically is issue JGCRI-469.
-        const double GMAT_ADJUST = -0.0411;
+        // Updated to Hector V3.2.0
+        const double GMAT_ADJUST = -0.0493;
         tempval -= GMAT_ADJUST;
     }
     return tempval;
@@ -631,7 +632,8 @@ double HectorModel::getGmst(const int aYear, const bool aAdjHistoricalPeriod ) c
         // WARNING: this is set as a constant here but was derived from a particular
         // set of Hector assumptions.  And therefore should be sensitive to changing
         // Hector parameters.  Getting this value dynamically is issue JGCRI-469.
-        const double GMSAT_ADJUST = -0.0338;
+        // Updated to Hector V3.2.0
+        const double GMSAT_ADJUST = -0.0406;
         tempval -= GMSAT_ADJUST;
     }
     return tempval;
