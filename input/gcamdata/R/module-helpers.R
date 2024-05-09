@@ -854,6 +854,7 @@ smooth_res_curve_approx_error <- function(curve.exponent, mid.price, base.price,
 
 }
 
+
 #' NEI_to_GCAM
 #'
 #' Helper function to convert EPA National Emissions Inventory (NEI) emissions to GCAM emissions in GCAM-USA
@@ -906,6 +907,61 @@ NEI_to_GCAM <- function(NEI_data, CEDS_GCAM_fuel, NEI_pollutant_mapping, names) 
     select(state, sector, fuel, Non.CO2, year, value)
 
 }
+
+
+#' NEI_to_GCAM_transport
+#'
+#' Helper function to convert EPA National Emissions Inventory (NEI) emissions to GCAM emissions in GCAM-USA
+#' Used for emissions in the transport sectors
+#' This function allows the user to filter GCAM transport sectors from the NEI data, maps to GCAM
+#' fuels and pollutants, converts from TON to Tg, and aggregates emissions by state, sector, fuel, year, and pollutant.
+#' @param NEI_data Base tibble to start from (NEI data)
+#' @param CEDS_GCAM_transport CEDS to GCAM fuel mapping file specific to transport stub.technologies
+#' @param NEI_pollutant_mapping NEI to GCAM pollutant mapping file
+#' @param names Character vector indicating the column names of the returned tibble
+#' @importFrom assertthat assert_that
+#' @importFrom dplyr filter left_join rename mutate group_by select summarise_all ungroup
+#' @return tibble with corresponding GCAM sectors
+
+NEI_to_GCAM_Transport <- function(NEI_data, CEDS_GCAM_transport, NEI_pollutant_mapping, names) {
+
+  # silence package check notes
+  GCAM_sector <- GCAM_fuel <- pollutant <- emissions <- state <- sector <-
+    fuel <- Non.CO2 <- year <- value <- stub.technology <- NULL
+
+  assert_that(is_tibble(NEI_data))
+  assert_that(is_tibble(CEDS_GCAM_transport))
+  assert_that(is_tibble(NEI_pollutant_mapping))
+  assert_that(is.character(names))
+  assert_that(has_name(NEI_data, "GCAM_sector"))
+  assert_that(has_name(CEDS_GCAM_transport, "CEDS_Fuel"))
+  assert_that(has_name(NEI_pollutant_mapping, "NEI_pollutant"))
+
+  data_new <- NEI_data %>%
+    #subset relevant sectors
+    filter(GCAM_sector %in% names) %>%
+    # using left_join becuase orignal CEDS fuel in NEI has one called "Process", there's no GCAM fuel corresponding to that,
+    # OK to omit, missing values will be dropped later
+    # TODO: check that the dropped "Process" emissions are not significant
+    left_join(CEDS_GCAM_transport, by = "CEDS_Fuel") %>%
+    na.omit %>%
+    rename(NEI_pollutant = pollutant) %>%
+    # Match on NEI pollutants, using left_join becuase missing values will be produced
+    # The original NEI include filterable PM2.5 and PM10, but here we only need primary ones
+    # OK to omit those filterables
+    left_join(NEI_pollutant_mapping, by = "NEI_pollutant") %>%
+    na.omit %>%
+    # Convert from short ton to Tg
+    mutate(emissions = emissions / CONV_T_METRIC_SHORT / 10 ^ 6, unit = "Tg") %>%
+    # generate file tibble based on standard GCAM column names, sum emissions for the same state/sector/fuel/species
+    rename(sector = GCAM_sector) %>%
+    group_by(state, sector, stub.technology, year, Non.CO2) %>%
+    summarise(value = sum(emissions)) %>%
+    ungroup %>%
+    select(state, sector, stub.technology, Non.CO2, year, value)
+
+}
+
 
 #' compute_BC_OC
 #'
@@ -1256,4 +1312,85 @@ join.gdp.ts <- function(past, future, grouping) {
   else {
     rslt
   }
+}
+
+
+#' replace_outlier_EFs
+#'
+#' Helper function to replace emission factors (EFs) outside a threshold with a median EF
+#' Used for emission factors in several sectors
+#' @param df Base tibble to start from that contains EFs, and may include NAs
+#' @param to_group Character vector indicating the column names to group by.
+#' This relates to how specific the median will be, whether it is by sector, sector and subsector, etc.
+#' @param names Character vector indicating the column names of the returned tibble
+#' @param ef_col_name Name of the column containing emission factors
+#' @importFrom assertthat assert_that
+#' @importFrom dplyr filter anti_join rename mutate group_by_at select summarize ungroup bind_rows
+#' @return tibble with corresponding region, year, Non.CO2, GCAM sector, subsector, stub.technology, and modified EFs
+
+replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
+
+  # silence package check notes
+  region <- Non.CO2 <- year <- supplysector <- subsector0 <- subsector <- stub.technology <-
+    emiss.coef <- NULL
+
+  assert_that(is_tibble(df))
+  assert_that(is.character(to_group))
+  assert_that(is.character(names))
+  assert_that(is.character(ef_col_name))
+
+  # Generate median emissions factors
+  median.true <- df %>%
+    rename(emiss.coef = .data[[ef_col_name]]) %>%
+    # Remove NAs so as to not skew the median
+    filter(!is.na(emiss.coef)) %>%
+    dplyr::group_by_at(to_group) %>%
+    summarize(emiss.coef = median(emiss.coef)) %>%
+    ungroup() %>%
+    rename(medianEF = emiss.coef)
+
+  # Some year / pollutant / sector / subsector / tech are NA for all entries, and should be set to 0
+  median.skewed <- df %>%
+    rename(emiss.coef = .data[[ef_col_name]]) %>%
+    replace_na(list(emiss.coef = 0)) %>%
+    dplyr::group_by_at(to_group) %>%
+    summarize(emiss.coef = median(emiss.coef)) %>%
+    ungroup() %>%
+    rename(medianEF = emiss.coef)
+
+  # We want to join these tables so that only the entries not in median.true are retained from median.skewed
+  # These all have EFs of 0
+  median <- median.skewed %>%
+    anti_join(median.true, by=(to_group)) %>%
+    bind_rows(median.true)
+
+  # Find the standard deviation, which will be used to establish our outlier threshold
+  # TODO: check on this. To find the median, we remove NAs. For SD, also remove NAs.
+  # TODO: how to handle inf EFs here? Currently setting to NA so they aren't included.
+  sd <- df %>%
+    rename(emiss.coef = .data[[ef_col_name]]) %>%
+    dplyr::mutate_if(is.numeric, ~ifelse(abs(.) == Inf,NA,.)) %>%
+    dplyr::group_by_at(to_group) %>%
+    mutate(sd = sd(emiss.coef, na.rm = TRUE)) %>%
+    ungroup() %>%
+    select(to_group, sd) %>%
+    distinct()
+
+  # Replace all emissions factors outside a threshold (one standard deviation from median) or that are NAs with the median emissions factor for that year, non.CO2, and technology
+  # The output table in named "noBCOC" because in several cases where this is currently used, BC and OC EFs are added in at the next step.
+  noBCOC <- df %>%
+    rename(emiss.coef = .data[[ef_col_name]]) %>%
+    left_join_error_no_match(median, by=(to_group)) %>%
+    # we use a left_join here- LJENM results in an errors due to NAs from 1975
+    # TODO: alternatively, remove 1975 all together?
+    left_join(sd, by=(to_group)) %>%
+    # Replace EFs that are one standard deviation from the median or are NA with the median
+    mutate(emiss.coef = if_else(emiss.coef > medianEF + sd | emiss.coef < medianEF - sd,
+                                medianEF, emiss.coef),
+           emiss.coef = if_else(is.infinite(emiss.coef), 1, emiss.coef),
+           emiss.coef = if_else(is.na(emiss.coef), medianEF, emiss.coef)) %>%
+    rename({{ef_col_name}} := emiss.coef) %>%
+    select(all_of(names))
+
+  return (noBCOC)
 }

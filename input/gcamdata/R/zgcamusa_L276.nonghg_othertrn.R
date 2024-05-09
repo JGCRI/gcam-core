@@ -161,44 +161,10 @@ module_gcamusa_L276.nonghg_othertrn <- function(command, ...) {
       left_join_error_no_match( L276.int_nonghg_tech_coeff_Yb_USA_fuel, by = c( "supplysector", "tranSubsector", "stub.technology", "year", "input.name" = "minicam.energy.input" ) ) %>%
       mutate(emiss.coeff = input.emissions / calibrated.value)
 
-
     # Bind the air, rail, and international shipping and aviation EFs into a single table and remove unnecessary columns
     L276.nonghg_othertrn_tech_coeff_Yb_USA.NAs <- bind_rows(L276.rail_nonghg_tech_coeff_Yb_USA, L276.air_nonghg_tech_coeff_Yb_USA, L276.int_nonghg_tech_coeff_Yb_USA) %>%
       select( c( region, supplysector, tranSubsector, stub.technology, year, Non.CO2, emiss.coeff ) ) %>%
-      ungroup()
-
-    # Generate national median emissions factors for base years
-    # Remove NAs so as to not skew the median
-    L276.nonghg_othertrn_tech_coeff_Yb_USA.median.true <- L276.nonghg_othertrn_tech_coeff_Yb_USA.NAs %>%
-      filter(!is.na(emiss.coeff)) %>%
-      group_by(year, Non.CO2, supplysector, tranSubsector, stub.technology) %>%
-      summarise(emiss.coeff = median(emiss.coeff)) %>%
       ungroup() %>%
-      rename(nationalEF = emiss.coeff)
-
-    # Some year / pollutant / sector / subsector / tech are NA for all entries, and should be set to 0
-    L276.nonghg_othertrn_tech_coeff_Yb_USA.median.skewed <- L276.nonghg_othertrn_tech_coeff_Yb_USA.NAs %>%
-      replace_na(list(emiss.coeff = 0)) %>%
-      group_by(year, Non.CO2, supplysector, tranSubsector, stub.technology) %>%
-      summarise(emiss.coeff = median(emiss.coeff)) %>%
-      ungroup() %>%
-      rename(nationalEF = emiss.coeff)
-
-    # We want to join these tables so that only the entries not in median.true are retained from median.skewed
-    # These all have EFs of 0
-    L276.nonghg_othertrn_tech_coeff_Yb_USA.median <- L276.nonghg_othertrn_tech_coeff_Yb_USA.median.skewed %>%
-      anti_join( L276.nonghg_othertrn_tech_coeff_Yb_USA.median.true, by=c("year", "Non.CO2", "supplysector", "tranSubsector", "stub.technology") ) %>%
-      # rebind to median.true
-      bind_rows(L276.nonghg_othertrn_tech_coeff_Yb_USA.median.true)
-
-    # Replace all emissions factors above a given value (20 * median) or that are NAs with the national median emissions factor for that year, non.CO2, and technology
-    L276.nonghg_othertrn_tech_coeff_Yb_USA.noBCOC <- L276.nonghg_othertrn_tech_coeff_Yb_USA.NAs %>%
-      left_join_error_no_match(L276.nonghg_othertrn_tech_coeff_Yb_USA.median, by = c("year", "Non.CO2", "supplysector","tranSubsector", "stub.technology")) %>%
-      # create a new column that has the threshold value
-      mutate( threshold = nationalEF * 20,
-              emiss.coeff = if_else(emiss.coeff > threshold | is.na(emiss.coeff), nationalEF, emiss.coeff)) %>%
-      select(region, Non.CO2, year, supplysector, tranSubsector, stub.technology, emiss.coeff) %>%
-      mutate(emiss.coeff = if_else(is.infinite(emiss.coeff), 1, emiss.coeff)) %>%
       rename( emiss.coef = emiss.coeff)
 
   # Domestic Shipping
@@ -318,7 +284,7 @@ module_gcamusa_L276.nonghg_othertrn <- function(command, ...) {
   # bind EFs for shipping from all years with the table of other subsector EFs
   L276.nonghg_all_othertrn_tech_coeff_Yb_USA.noBCOC <- bind_rows(L276.nonghg_othertrn_tech_coeff_USA_marine_Yb,
                                                              L276.nonghg_othertrn_tech_coeff_USA_marine_new_SO2,
-                                                             L276.nonghg_othertrn_tech_coeff_Yb_USA.noBCOC)
+                                                             L276.nonghg_othertrn_tech_coeff_Yb_USA.NAs)
 
   # Use fractions of PM2.5 to calculate BC/OC emissions.
   # We need to modify the BC_OC_assumptions table, as the BCOC_PM25_ratios table has updated values that are time dependent
@@ -376,7 +342,7 @@ module_gcamusa_L276.nonghg_othertrn <- function(command, ...) {
     bind_rows( L276.nonghg_othertrn_tech_coeff_USA_no_driver )
 
   # Add an input name column to drive emissions
-  L276.nonghg_othertrn_tech_coeff_USA <- L276.nonghg_othertrn_tech_coeff_USA_no_driver_hasPM %>%
+  L276.nonghg_othertrn_tech_coeff_USA_replace.outliers <- L276.nonghg_othertrn_tech_coeff_USA_no_driver_hasPM %>%
     # L254.StubTranTechCalInput_USA has the fuel inputs that should be used to drive emissions
     left_join_error_no_match( L254.StubTranTechCalInput_USA %>%
                                 filter( grepl( "Rail|Aviation|Ship", tranSubsector ) ) %>%
@@ -392,6 +358,17 @@ module_gcamusa_L276.nonghg_othertrn <- function(command, ...) {
     filter( year > min(MODEL_BASE_YEARS) ) %>%
     # distinct to remove any potential duplicate rows
     distinct()
+
+  ## Replace outlier EFs with the national median
+  # Generate national median emissions factors for base years
+  # list columns to group by (emission factor medians will based on this grouping)
+  to_group <- c( "year", "Non.CO2", "supplysector", "tranSubsector", "stub.technology" )
+  # list columns to keep in final table
+  names <- c( "region", "Non.CO2", "year", "supplysector", "tranSubsector", "stub.technology", "emiss.coef", "input.name")
+  # Name of column containing emission factors
+  ef_col_name <- "emiss.coef"
+  L276.nonghg_othertrn_tech_coeff_USA <- replace_outlier_EFs(L276.nonghg_othertrn_tech_coeff_USA_replace.outliers, to_group, names, ef_col_name)
+
 
     # Produce outputs
     L276.nonghg_othertrn_tech_coeff_USA %>%

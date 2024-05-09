@@ -68,33 +68,26 @@ module_gcamusa_L2722.nonghg_elc_linear_control <- function(command, ...) {
       filter( year == max( MODEL_BASE_YEARS ) | year == max( year ) ) %>%
       left_join( NEI_emissions, by = c( "state", "year") ) %>%
       # calculate the emissions factor by dividing emissions by consumption
-      mutate( observed.emission.factor = input.emissions / electricity.consumption ) %>%
+      mutate( emiss.coef = input.emissions / electricity.consumption ) %>%
       select( -c( input.emissions, electricity.consumption ) )
     # this results in some states having NAs or Inf due to having no input emissions (NA), or 0 input emissions (Inf)
     # In these cases, we apply the average emissions factor for that year and pollutant
 
-    # Generate national median emissions factors
-    # Remove NAs so as to not skew the median
-    # Some states (VT, DC, RI, and ID), are not assigned median EFs because they have no electricity consumption from coal.
-    # Some states (ME), are not assigned median EFs because they have no electric generation emissions from coal,
+    ## Replace outlier EFs with the national median
     # Previously, we were assigning medians to these states.
-    elec_emiss_coeffs.median <- elec_emiss_coeffs.NA %>%
-      filter(!is.na(observed.emission.factor)) %>%
-      group_by(year, Non.CO2) %>%
-      summarise(observed.emission.factor = median(observed.emission.factor)) %>%
-      ungroup() %>%
-      rename(nationalEF = observed.emission.factor)
+    elec_emiss_coeffs.check_outlier <- elec_emiss_coeffs.NA %>%
+      # Some states (VT, DC, RI, and ID), are not assigned median EFs because they have no electricity consumption from coal.
+      # Some states (ME), are not assigned median EFs because they have no electric generation emissions from coal.
+      # In these cases, the sector will be NA and should be removed
+      filter(!is.na(sector))
 
-    # Replace all emissions factors above a given value (currently 1000) or that are NAs with the national median emissions factor for that year, non.CO2, and technology
-    elec_emiss_coeffs <- elec_emiss_coeffs.NA %>%
-      # remove NAs so LJENM works
-      # These NAs are the states mentioned above
-      filter(!is.na(observed.emission.factor)) %>%
-      left_join_error_no_match(elec_emiss_coeffs.median, by = c("year", "Non.CO2")) %>%
-      mutate(observed.emission.factor = if_else(observed.emission.factor > emissions.HIGH_EM_FACTOR_THRESHOLD | is.na(observed.emission.factor), nationalEF, observed.emission.factor)) %>%
-      select(state, year, sector, fuel, Non.CO2, observed.emission.factor) %>%
-      mutate(observed.emission.factor = if_else(is.infinite(observed.emission.factor), 1, observed.emission.factor)) %>%
-      rename(final.emissions.coefficient = observed.emission.factor)
+    # list columns to group by (emission factor medians will based on this grouping)
+    to_group <- c( "year", "Non.CO2", "sector", "fuel" )
+    # list columns to keep in final table
+    names <- c( "state", "Non.CO2", "year", "sector", "fuel", "emiss.coef")
+    # Name of column containing emission factors
+    ef_col_name <- "emiss.coef"
+    elec_emiss_coeffs <- replace_outlier_EFs(elec_emiss_coeffs.check_outlier, to_group, names, ef_col_name)
 
     # Assign emission coefficients to the electricity technologies
     # The linear control will not apply to IGCC or CCS technologies
@@ -118,7 +111,8 @@ module_gcamusa_L2722.nonghg_elc_linear_control <- function(command, ...) {
       # Can't use left_join_error_no_match because the technology table includes all states
       left_join(elec_emiss_coeffs, by = c("region" = "state", "subsector0" = "fuel", "Non.CO2")) %>%
       # Set end year for the linear control
-      rename( end.year = year.y ) %>%
+      rename( end.year = year.y,
+              final.emissions.coefficient = emiss.coef) %>%
       select(region, supplysector, subsector0, subsector, technology, Non.CO2, end.year, final.emissions.coefficient) %>%
       # remove NAs (from ME, mentioned above)
       filter( !is.na( end.year ) )

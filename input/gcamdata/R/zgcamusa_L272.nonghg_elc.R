@@ -101,37 +101,14 @@
 	  rename( stub.technology = technology ) %>%
 		select(region, supplysector, subsector0, subsector, stub.technology, year, Non.CO2, emiss.coef)
 
-	# Generate national median emissions factors for base years
-	# Remove NAs so as to not skew the median
-	L272.nonghg_elec_tech_coeff_Yb_USA.median.true <- L272.nonghg_elec_tech_coeff_Yb_USA.NAs %>%
-	  filter(!is.na(emiss.coef)) %>%
-	  group_by(year, Non.CO2, supplysector, subsector0, subsector, stub.technology) %>%
-	  summarise(emiss.coef = median(emiss.coef)) %>%
-	  ungroup() %>%
-	  rename(nationalEF = emiss.coef)
-
-	# Some year / pollutant / sector / subsector / tech are NA for all entries, and should be set to 0
-	L272.nonghg_elec_tech_coeff_Yb_USA.median.skewed <- L272.nonghg_elec_tech_coeff_Yb_USA.NAs %>%
-	  replace_na(list(emiss.coef = 0)) %>%
-	  group_by(year, Non.CO2, supplysector, subsector0, subsector, stub.technology) %>%
-	  summarise(emiss.coef = median(emiss.coef)) %>%
-	  ungroup() %>%
-	  rename(nationalEF = emiss.coef)
-
-	# We want to join these tables so that only the entries not in median.true are retained from median.skewed
-	# These all have EFs of 0
-	L272.nonghg_elec_tech_coeff_Yb_USA.median <- L272.nonghg_elec_tech_coeff_Yb_USA.median.skewed %>%
-	  anti_join( L272.nonghg_elec_tech_coeff_Yb_USA.median.true, by=c("year", "Non.CO2", "supplysector", "subsector0", "subsector", "stub.technology") ) %>%
-	  # rebind to median.true
-	  bind_rows(L272.nonghg_elec_tech_coeff_Yb_USA.median.true)
-
-	# Replace all emissions factors above a given value (20 * median) or that are NAs with the national median emissions factor for that year, non.CO2, and technology
-	L272.nonghg_elec_tech_coeff_Yb_USA.noBCOC <- L272.nonghg_elec_tech_coeff_Yb_USA.NAs %>%
-	  left_join_error_no_match(L272.nonghg_elec_tech_coeff_Yb_USA.median, by = c("year", "Non.CO2", "supplysector", "subsector0", "subsector", "stub.technology")) %>%
-	  # create a new column that has the threshold value
-	  mutate( threshold = nationalEF * 20,
-	          emiss.coef = if_else(emiss.coef > threshold | is.na(emiss.coef), nationalEF, emiss.coef)) %>%
-	  select(region, Non.CO2, year, supplysector, subsector0, subsector, stub.technology, emiss.coef)
+	## Replace outlier EFs with the national median
+	# list columns to group by (emission factor medians will based on this grouping)
+	to_group <- c( "year", "Non.CO2", "supplysector", "subsector0", "subsector", "stub.technology" )
+	# list columns to keep in final table
+	names <- c( "region", "Non.CO2", "year", "supplysector", "subsector0", "subsector", "stub.technology", "emiss.coef")
+	# Name of column containing emission factors
+	ef_col_name <- "emiss.coef"
+	L272.nonghg_elec_tech_coeff_Yb_USA.noBCOC <- replace_outlier_EFs(L272.nonghg_elec_tech_coeff_Yb_USA.NAs, to_group, names, ef_col_name)
 
 	# Use fractions of PM2.5 to calculate BC/OC emissions.
 	# We need to modify the BC_OC_assumptions table, as the BCOC_PM25_ratios table has updated values that are time dependent
@@ -226,38 +203,14 @@
 	  #bind to table that has EFs for NH3
 		bind_rows(L272.nonghg_elec_tech_coeff_Yf_USA.NH3)
 
-	# Generate national median emissions factors for future years
-	# Remove NAs so as to not skew the median
-	L272.nonghg_elec_tech_coeff_Yf_USA.median.true <- L272.nonghg_elec_tech_coeff_Yf_USA.NAs %>%
-	  filter(!is.na(emiss.coef)) %>%
-	  group_by(year, Non.CO2, supplysector, subsector0, subsector, stub.technology) %>%
-	  summarise(emiss.coef = median(emiss.coef)) %>%
-	  ungroup() %>%
-	  rename(nationalEF = emiss.coef)
-
-	# Some year / pollutant / sector / subsector / tech are NA for all entries, and should be set to 0
-	L272.nonghg_elec_tech_coeff_Yf_USA.median.skewed <- L272.nonghg_elec_tech_coeff_Yf_USA.NAs %>%
-	  replace_na(list(emiss.coef = 0)) %>%
-	  group_by(year, Non.CO2, supplysector, subsector0, subsector, stub.technology) %>%
-	  summarise(emiss.coef = median(emiss.coef)) %>%
-	  ungroup() %>%
-	  rename(nationalEF = emiss.coef)
-
-	# We want to join these tables so that only the entries not in median.true are retained from median.skewed
-	# These all have EFs of 0
-	L272.nonghg_elec_tech_coeff_Yf_USA.median <- 	L272.nonghg_elec_tech_coeff_Yf_USA.median.skewed %>%
-	  anti_join( 	L272.nonghg_elec_tech_coeff_Yf_USA.median.true, by=c("year", "Non.CO2", "supplysector", "subsector0", "subsector", "stub.technology") ) %>%
-	  # rebind to median.true
-	  bind_rows(	L272.nonghg_elec_tech_coeff_Yf_USA.median.true)
-
-	# Replace all emissions factors above a given value (20 * median) or that are NAs with the national median emissions factor for that year, non.CO2, and technology
-	L272.nonghg_elec_tech_coeff_Yf_USA.noBCOC <- L272.nonghg_elec_tech_coeff_Yf_USA.NAs %>%
-	  left_join_error_no_match(L272.nonghg_elec_tech_coeff_Yf_USA.median, by = c("year", "Non.CO2", "supplysector", "subsector0", "subsector", "stub.technology")) %>%
-	  # create a new column that has the threshold value
-	  mutate( threshold = nationalEF * 20,
-	          emiss.coef = if_else(emiss.coef > threshold | is.na(emiss.coef), nationalEF, emiss.coef)) %>%
-	  select(region, Non.CO2, year, supplysector, subsector0, subsector, stub.technology, emiss.coef) %>%
-	  mutate(emiss.coef = if_else(is.infinite(emiss.coef), 1, emiss.coef))
+	## Replace outlier EFs with the national median
+	# list columns to group by (emission factor medians will based on this grouping)
+	to_group <- c( "year", "Non.CO2", "supplysector", "subsector0", "subsector", "stub.technology" )
+	# list columns to keep in final table
+	names <- c( "region", "Non.CO2", "year", "supplysector", "subsector0", "subsector", "stub.technology", "emiss.coef")
+	# Name of column containing emission factors
+	ef_col_name <- "emiss.coef"
+	L272.nonghg_elec_tech_coeff_Yf_USA.noBCOC <- replace_outlier_EFs(L272.nonghg_elec_tech_coeff_Yf_USA.NAs, to_group, names, ef_col_name)
 
 	 # Use fractions of PM2.5 to calculate BC/OC emissions.
 	L272.nonghg_elec_tech_coeff_Yf_USA <- compute_BC_OC_elc(L272.nonghg_elec_tech_coeff_Yf_USA.noBCOC, BC_OC_assumptions_years) %>%
