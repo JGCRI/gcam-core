@@ -138,14 +138,29 @@ void EmissDownscale::readRegionMappingData(std::string aFileName)
         {
             // If gridID is found, then add to the existing regID vector
             auto currGrid = mRegionMapping.find(gridID);
-            (*currGrid).second.push_back(regID);
+             auto& regIDs = (*currGrid).second;
+            if (std::find(regIDs.begin(), regIDs.end(), regID) == regIDs.end())
+            {
+               // If regID is not found, add it to the vector
+               regIDs.push_back(regID);
+            }
         }
 
-        // Parse Weight -- this is the fraction of the grid cell in a particular GCAM region
+        // Parse Weight -- this is the proportion of the cell/land occupied the the land unit
+        // The values across land units sum to one within a cell
         getline(iss, token, ',');
         value = std::stod(token);
 
-        mRegionWeights[std::make_pair(gridID, regID)] = value;
+        // if first land unit in this region, then set the first value
+        // otherwise add to existing value to get the proportion of cell/land covered by this region
+        if (mRegionWeights.find(std::make_pair(gridID, regID)) == mRegionWeights.end())
+        {
+            mRegionWeights[std::make_pair(gridID, regID)] = value;
+        }
+        else
+        {
+            mRegionWeights[std::make_pair(gridID, regID)] += value;
+        }
     }
 
     return;
