@@ -1717,7 +1717,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                     <axis1 name="input">input</axis1>
                     <axis2 name="Year">demand-physical[@vintage]</axis2>
                     <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='refining' or @name='regional oil' or
-               @name='regional corn for ethanol' or @name='regional sugar for ethanol')]/
+               @name='regional corn for ethanol' or @name='regional sugar for ethanol' or @name='regional biomassOil')]/
                *[@type='subsector']/*[@type='technology']/
                *[@type='input' and not(contains(@name,'water'))]/demand-physical/node()</xPath>
                     <comments>includes passthrough sectors for refining</comments>

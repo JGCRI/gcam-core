@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcamusa_L164.ag_Costs_C_2005_irr
+#' module_aglu_L164.ag_Costs_C_2005_irr
 #'
 #' This module calculates production costs of GCAM commodities not including purchased irrigation water.
 #'
@@ -23,7 +23,7 @@
 #' @importFrom tidyr spread
 #' @importFrom stats glm predict
 #' @author ACS June 2017
-module_gcamusa_L164.ag_Costs_C_2005_irr <- function(command, ...) {
+module_aglu_L164.ag_Costs_C_2005_irr <- function(command, ...) {
 
   MODULE_INPUTS <-
     c(FILE = "common/iso_GCAM_regID",

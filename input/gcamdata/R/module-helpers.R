@@ -361,10 +361,14 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
 #'
 #' @param data = input data tibble to receive carbon info
 #' @param carbon_info_table = table with veg and soil carbon densities, and mature.age
+#' @param Min_Soil_C_at_Cropland If TRUE (default) using cropland soil carbon density as a minimum threshold in land policy
 #' @param matchvars =  a character vector for by = in left_join(data, carbon_info_table, by = ...)
+#'
 #' @return the original table with carbon density info added
 #' @importFrom dplyr left_join mutate rename
-add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "GLU", "Cdensity_LT" = "Land_Type")) {
+add_carbon_info <- function( data, carbon_info_table,
+                             matchvars = c("region", "GLU", "Cdensity_LT" = "Land_Type"),
+                             Min_Soil_C_at_Cropland = TRUE) {
 
   GCAM_region_names <- veg_c <- soil_c <- hist.veg.carbon.density <- hist.soil.carbon.density <-
     mature.age <- GCAM_region_ID <- NULL  # silence package check notes
@@ -386,7 +390,32 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
            veg.carbon.density = hist.veg.carbon.density,
            soil.carbon.density = hist.soil.carbon.density,
            min.veg.carbon.density = aglu.MIN_VEG_CARBON_DENSITY,
-           min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY)
+           min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY) ->
+    data1
+
+  if (Min_Soil_C_at_Cropland == F) {
+
+    return(data1)
+
+  } else{
+
+    # Min_Soil_C_at_Cropland == TRUE so adding min C as cropland for soil
+    # when NA first using pasture data and then using Default_Cropland_Soil_C_Density
+    Default_Cropland_Soil_C_Density = 9
+
+    data1 %>%
+      left_join(
+        carbon_info_table %>%
+          filter(Land_Type %in% c("Cropland", "Pasture")) %>%
+          select(GCAM_region_ID, GLU, soil_c, Land_Type) %>%
+          spread(Land_Type, soil_c), by = c("GCAM_region_ID", "GLU")) %>%
+      mutate(min.soil.carbon.density = if_else(is.na(Cropland), Pasture, Cropland) ) %>%
+      replace_na(list(min.soil.carbon.density = Default_Cropland_Soil_C_Density)) ->
+      data2
+
+    return(data2)
+  }
+
 }
 
 #' reduce_mgd_carbon

@@ -53,52 +53,54 @@
 #' @importFrom dplyr bind_rows distinct filter if_else left_join mutate select
 #' @author ACS September 2017
 module_aglu_L2231.land_input_3_irr <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/basin_to_country_mapping",
+      FILE = "aglu/GCAMLandLeaf_CdensityLT",
+      FILE = "aglu/A_LT_Mapping",
+      FILE = "aglu/A_LandNode_logit",
+      FILE = "aglu/A_LandLeaf_Unmgd3",
+      FILE = "aglu/A_LandLeaf3",
+      "L121.CarbonContent_kgm2_R_LT_GLU",
+      "L125.LC_bm2_R_LT_Yh_GLU",
+      "L120.LC_prot_land_frac_GLU",
+      "L120.LC_soil_veg_carbon_GLU")
+
+  MODULE_OUTPUTS <-
+    c("L2231.LN3_Logit",
+      "L2231.LN3_HistUnmgdAllocation",
+      "L2231.LN3_UnmgdAllocation",
+      "L2231.LN3_NoEmissCarbon",
+      "L2231.LN3_NodeCarbon",
+      "L2231.LN3_HistMgdAllocation_noncrop",
+      "L2231.LN3_MgdAllocation_noncrop",
+      "L2231.LN3_UnmgdCarbon",
+      "L2231.LN3_MgdCarbon_noncrop",
+      # Protected land related outputs:
+      "L2231.LN3_HistUnmgdAllocation_noprot",
+      "L2231.LN3_UnmgdAllocation_noprot",
+      "L2231.LN1_HistUnmgdAllocation_prot",
+      "L2231.LN1_UnmgdAllocation_prot",
+      "L2231.LN1_UnmgdCarbon_prot",
+      "L2231.LN1_Logit_prot")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             FILE = "aglu/GCAMLandLeaf_CdensityLT",
-             FILE = "aglu/A_LT_Mapping",
-             FILE = "aglu/A_LandNode_logit",
-             FILE = "aglu/A_LandLeaf_Unmgd3",
-             FILE = "aglu/A_LandLeaf3",
-             "L121.CarbonContent_kgm2_R_LT_GLU",
-             "L125.LC_bm2_R_LT_Yh_GLU",
-             "L120.LC_prot_land_frac_GLU",
-             "L120.LC_soil_veg_carbon_GLU"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2231.LN3_Logit",
-             "L2231.LN3_HistUnmgdAllocation",
-             "L2231.LN3_UnmgdAllocation",
-             "L2231.LN3_NoEmissCarbon",
-             "L2231.LN3_NodeCarbon",
-             "L2231.LN3_HistMgdAllocation_noncrop",
-             "L2231.LN3_MgdAllocation_noncrop",
-             "L2231.LN3_UnmgdCarbon",
-             "L2231.LN3_MgdCarbon_noncrop",
-             # Protected land related outputs:
-             "L2231.LN3_HistUnmgdAllocation_noprot",
-             "L2231.LN3_UnmgdAllocation_noprot",
-             "L2231.LN1_HistUnmgdAllocation_prot",
-             "L2231.LN1_UnmgdAllocation_prot",
-             "L2231.LN1_UnmgdCarbon_prot",
-             "L2231.LN1_Logit_prot"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    GCAMLandLeaf_CdensityLT <- get_data(all_data, "aglu/GCAMLandLeaf_CdensityLT")
-    A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
-    A_LandNode_logit <- get_data(all_data, "aglu/A_LandNode_logit")
-    A_LandLeaf_Unmgd3 <- get_data(all_data, "aglu/A_LandLeaf_Unmgd3")
-    A_LandLeaf3 <- get_data(all_data, "aglu/A_LandLeaf3")
-    L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
-    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data,
+                  MODULE_INPUTS[!MODULE_INPUTS %in% c("L120.LC_soil_veg_carbon_GLU",
+                                                      "L121.CarbonContent_kgm2_R_LT_GLU")],
+                  strip_attributes = TRUE)
 
     #This chunk just deals with the unmanaged forest nodes. Therefore we filter the protected area fractions just for unmanaged forests.
-    L120.LC_prot_land_frac_GLU <- get_data(all_data, "L120.LC_prot_land_frac_GLU", strip_attributes = TRUE) %>%
+    L120.LC_prot_land_frac_GLU <- L120.LC_prot_land_frac_GLU %>%
       mutate(Land_Type =if_else(Land_Type %in% aglu.FOREST_NODE_NAMES, paste0("Unmanaged", Land_Type) ,Land_Type)) %>%
       filter(Land_Type %in% c(A_LandLeaf_Unmgd3$UnmanagedLandLeaf)) %>%
       left_join_error_no_match(basin_to_country_mapping %>%rename(GLU=GLU_code) %>%  select(GLU,GLU_name),by=c("GLU")) %>%
@@ -225,7 +227,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
-      rename(Cdensity_LT = Land_Type.y) %>%
+      rename(Cdensity_LT = Land_Type.y) %>% select(-GCAM_region_ID) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       select(LEVEL2_DATA_NAMES[["LN3_UnmgdCarbon"]]) ->
       L223.LN3_UnmgdCarbon
@@ -238,7 +240,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
       filter(year == max(MODEL_BASE_YEARS)) %>%
       #left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
-      mutate(Cdensity_LT = Land_Type) %>%
+      mutate(Cdensity_LT = Land_Type) %>% select(-GCAM_region_ID) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       reduce_mgd_carbon() %>%
       select(LEVEL2_DATA_NAMES[["LN3_MgdCarbon"]]) ->
@@ -542,9 +544,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
       L2231.LN1_Logit_prot
 
 
-    return_data(L2231.LN3_Logit, L2231.LN3_HistUnmgdAllocation, L2231.LN3_UnmgdAllocation, L2231.LN3_NoEmissCarbon, L2231.LN3_NodeCarbon, L2231.LN3_HistMgdAllocation_noncrop, L2231.LN3_MgdAllocation_noncrop, L2231.LN3_UnmgdCarbon, L2231.LN3_MgdCarbon_noncrop,
-                # protected land outputs:
-                L2231.LN3_HistUnmgdAllocation_noprot, L2231.LN3_UnmgdAllocation_noprot, L2231.LN1_HistUnmgdAllocation_prot, L2231.LN1_UnmgdAllocation_prot, L2231.LN1_UnmgdCarbon_prot, L2231.LN1_Logit_prot)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

@@ -11,33 +11,31 @@
 #' the generated outputs: \code{land_input_5_IRR_MGMT.xml}. The corresponding file in the
 #' original data system was \code{batch_land_input_5_IRR_MGMT_xml.R} (aglu XML).
 module_aglu_land_input_5_IRR_MGMT_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L2252.LN5_Logit",
+      "L2252.LN5_HistMgdAllocation_crop",
+      "L2252.LN5_MgdAllocation_crop",
+      "L2252.LN5_HistMgdAllocation_bio",
+      "L2252.LN5_MgdAllocation_bio",
+      "L2252.LN5_MgdCarbon_crop",
+      "L2252.LN5_MgdCarbon_bio",
+      "L2252.LN5_LeafGhostShare",
+      "L2252.LN5_NodeGhostShare")
+
+  MODULE_OUTPUTS <-
+    c(XML = "land_input_5_IRR_MGMT.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2252.LN5_Logit",
-             "L2252.LN5_HistMgdAllocation_crop",
-             "L2252.LN5_MgdAllocation_crop",
-             "L2252.LN5_HistMgdAllocation_bio",
-             "L2252.LN5_MgdAllocation_bio",
-             "L2252.LN5_MgdCarbon_crop",
-             "L2252.LN5_MgdCarbon_bio",
-             "L2252.LN5_LeafGhostShare",
-             "L2252.LN5_NodeGhostShare"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "land_input_5_IRR_MGMT.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L2252.LN5_Logit <- get_data(all_data, "L2252.LN5_Logit")
-    L2252.LN5_HistMgdAllocation_crop <- get_data(all_data, "L2252.LN5_HistMgdAllocation_crop")
-    L2252.LN5_MgdAllocation_crop <- get_data(all_data, "L2252.LN5_MgdAllocation_crop")
-    L2252.LN5_HistMgdAllocation_bio <- get_data(all_data, "L2252.LN5_HistMgdAllocation_bio")
-    L2252.LN5_MgdAllocation_bio <- get_data(all_data, "L2252.LN5_MgdAllocation_bio")
-    L2252.LN5_MgdCarbon_crop <- get_data(all_data, "L2252.LN5_MgdCarbon_crop")
-    L2252.LN5_MgdCarbon_bio <- get_data(all_data, "L2252.LN5_MgdCarbon_bio")
-    L2252.LN5_LeafGhostShare <- get_data(all_data, "L2252.LN5_LeafGhostShare")
-    L2252.LN5_NodeGhostShare <- get_data(all_data, "L2252.LN5_NodeGhostShare")
-
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
     # ===================================================
 
     # Produce outputs
@@ -63,7 +61,7 @@ module_aglu_land_input_5_IRR_MGMT_xml <- function(command, ...) {
                      "L2252.LN5_NodeGhostShare") ->
       land_input_5_IRR_MGMT.xml
 
-    return_data(land_input_5_IRR_MGMT.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

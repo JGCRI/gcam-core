@@ -48,48 +48,48 @@
 #' @importFrom dplyr distinct filter left_join mutate select
 #' @author ACS August 2017
 module_aglu_L222.land_input_2 <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/basin_to_country_mapping",
+      FILE = "aglu/GCAMLandLeaf_CdensityLT",
+      FILE = "aglu/A_LandNode_logit",
+      FILE = "aglu/A_LandLeaf_Unmgd2",
+      FILE = "aglu/A_LandLeaf2",
+      FILE = "aglu/A_LT_Mapping",
+      "L121.CarbonContent_kgm2_R_LT_GLU",
+      "L125.LC_bm2_R_LT_Yh_GLU",
+      "L120.LC_prot_land_frac_GLU",
+      "L120.LC_soil_veg_carbon_GLU")
+
+  MODULE_OUTPUTS <-
+    c("L222.LN2_Logit",
+      "L222.LN2_HistUnmgdAllocation",
+      "L222.LN2_UnmgdAllocation",
+      "L222.LN2_HistMgdAllocation",
+      "L222.LN2_MgdAllocation",
+      "L222.LN2_UnmgdCarbon",
+      "L222.LN2_MgdCarbon",
+      "L222.LN2_HistUnmgdAllocation_noprot",
+      "L222.LN2_UnmgdAllocation_noprot",
+      "L222.LN1_Logit_prot",
+      "L222.LN1_HistUnmgdAllocation_prot",
+      "L222.LN1_UnmgdAllocation_prot",
+      "L222.LN1_UnmgdCarbon_prot")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             FILE = "aglu/GCAMLandLeaf_CdensityLT",
-             FILE = "aglu/A_LandNode_logit",
-             FILE = "aglu/A_LandLeaf_Unmgd2",
-             FILE = "aglu/A_LandLeaf2",
-             FILE = "aglu/A_LT_Mapping",
-             "L121.CarbonContent_kgm2_R_LT_GLU",
-             "L125.LC_bm2_R_LT_Yh_GLU",
-             "L120.LC_prot_land_frac_GLU",
-             "L120.LC_soil_veg_carbon_GLU"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L222.LN2_Logit",
-             "L222.LN2_HistUnmgdAllocation",
-             "L222.LN2_UnmgdAllocation",
-             "L222.LN2_HistMgdAllocation",
-             "L222.LN2_MgdAllocation",
-             "L222.LN2_UnmgdCarbon",
-             "L222.LN2_MgdCarbon",
-             "L222.LN2_HistUnmgdAllocation_noprot",
-             "L222.LN2_UnmgdAllocation_noprot",
-             "L222.LN1_Logit_prot",
-             "L222.LN1_HistUnmgdAllocation_prot",
-             "L222.LN1_UnmgdAllocation_prot",
-             "L222.LN1_UnmgdCarbon_prot"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    GCAMLandLeaf_CdensityLT <- get_data(all_data, "aglu/GCAMLandLeaf_CdensityLT")
-    A_LandNode_logit <- get_data(all_data, "aglu/A_LandNode_logit")
-    A_LandLeaf_Unmgd2 <- get_data(all_data, "aglu/A_LandLeaf_Unmgd2")
-    A_LandLeaf2 <- get_data(all_data, "aglu/A_LandLeaf2")
-    A_LT_Mapping <- get_data(all_data, "aglu/A_LT_Mapping")
-    L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
-
-    L125.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L125.LC_bm2_R_LT_Yh_GLU", strip_attributes = TRUE)
-    L120.LC_prot_land_frac_GLU <- get_data(all_data, "L120.LC_prot_land_frac_GLU",strip_attributes = TRUE)
+    get_data_list(all_data,
+                  MODULE_INPUTS[!MODULE_INPUTS %in% c("L120.LC_soil_veg_carbon_GLU",
+                                                      "L121.CarbonContent_kgm2_R_LT_GLU")],
+                  strip_attributes = TRUE)
 
     # If the carbon data source is set to moirai, use the spatially distinct carbon values. If not, use the Houghton values.
     if(aglu.CARBON_DATA_SOURCE=="moirai"){
@@ -237,7 +237,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
-      rename(Cdensity_LT = Land_Type.y) %>%
+      rename(Cdensity_LT = Land_Type.y) %>% select(-GCAM_region_ID) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       select(LEVEL2_DATA_NAMES[["LN2_UnmgdCarbon"]]) ->
       L222.LN2_UnmgdCarbon
@@ -285,7 +285,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
       filter(year == max(MODEL_BASE_YEARS)) %>%
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
-      rename(Cdensity_LT = Land_Type.y) %>%
+      rename(Cdensity_LT = Land_Type.y) %>% select(-GCAM_region_ID) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
       reduce_mgd_carbon() %>%
       select(LEVEL2_DATA_NAMES[["LN2_MgdCarbon"]]) ->
@@ -460,10 +460,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
                      "L125.LC_bm2_R_LT_Yh_GLU") ->
       L222.LN1_UnmgdCarbon_prot
 
-    return_data(L222.LN2_Logit, L222.LN2_HistUnmgdAllocation, L222.LN2_UnmgdAllocation,
-                L222.LN2_HistMgdAllocation, L222.LN2_MgdAllocation, L222.LN2_UnmgdCarbon, L222.LN2_MgdCarbon,
-                L222.LN2_HistUnmgdAllocation_noprot, L222.LN2_UnmgdAllocation_noprot, L222.LN1_Logit_prot,
-                L222.LN1_HistUnmgdAllocation_prot, L222.LN1_UnmgdAllocation_prot, L222.LN1_UnmgdCarbon_prot)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

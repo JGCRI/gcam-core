@@ -1,6 +1,6 @@
 # Copyright 2019 Battelle Memorial Institute; see the LICENSE file.
 
-#' module_gcamusa_L133.ag_Costs_C_2005
+#' module_aglu_L133.ag_Costs_C_2005
 #'
 #' This module computes costs for each GCAM commodity (used by each region-GLU) using USDA cost
 #' information for USA when available. For commodities without USDA cost data, the average profit
@@ -22,7 +22,7 @@
 #' @importFrom dplyr bind_rows filter if_else group_by left_join mutate select summarise
 #' @importFrom tidyr replace_na spread
 #' @author ACS May 2017
-module_gcamusa_L133.ag_Costs_C_2005 <- function(command, ...) {
+module_aglu_L133.ag_Costs_C_2005 <- function(command, ...) {
 
   MODULE_INPUTS <-
     c(FILE = "aglu/USDA/USDA_crops",
