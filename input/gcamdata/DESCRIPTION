@@ -48,14 +48,13 @@ Imports:
     data.table (>= 1.10.4),
     rlang,
     stringr,
-    devtools
+    devtools,
+    drake (>= 6.2.1)
 Suggests:
     igraph (>= 1.0.1),
     mockr (>= 0.1),
     testthat (>= 1.0.2),
     R.utils (>= 2.6.0),
-    usethis (>= 1.4.0),
-    drake (>= 6.2.1),
     gcamdata.compdata,
     knitr,
     rmarkdown
