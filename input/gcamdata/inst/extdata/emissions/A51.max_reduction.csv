@@ -3,7 +3,7 @@
 # Units: NA
 # Source: NA
 # Description: NA
-# Column types: ccciniiii 
+# Column types: ccciniiii
 # ----------
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
 cement,cement,cement,,,,,,
@@ -185,6 +185,15 @@ iron and steel,refined liquids,BLASTFUR,70,82,80,70,90,60
 iron and steel,refined liquids,EAF with DRI,70,82,80,70,90,60
 iron and steel,refined liquids,EAF with scrap,70,82,80,70,90,60
 iron and steel,gas,EAF with scrap,70,46,80,50,50,60
+process heat food processing,biomass,biomass,70,59.5,80,98,96,60
+process heat food processing,biomass,biomass cogen,,,,,,
+process heat food processing,gas,gas,70,46,80,50,50,60
+process heat food processing,gas,gas cogen,,,,,,
+process heat food processing,gas,gas with solar,,,,,,
+process heat food processing,refined liquids,refined liquids,70,82,80,70,90,60
+process heat food processing,refined liquids,refined liquids cogen,,,,,,
+process heat food processing,coal,coal,95,85,80,90,95,60
+process heat food processing,coal,coal cogen,,,,,,
 waste biomass for paper,biomass,biomass,70,59.5,80,98,96,60
 waste biomass for paper,biomass,biomass cogen,,,,,,
 process heat paper,coal,coal,95,85,80,90,95,60

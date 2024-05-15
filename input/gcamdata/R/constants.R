@@ -613,6 +613,14 @@ energy.IRON_STEEL.RESOURCES <- c("Other semi-finished iron and steel products","
                                  "Iron and steel wire","Iron and steel sections") #finished and semi-finished iron and steel resources
 energy.IRON_STEEL.DOMESTIC_SW <- c("Africa_Southern","Indonesia","Africa_Northern","Africa_Eastern","Africa_Western","South Asia","Southeast Asia")
 energy.IRON_STEEL.TRADED_SW <- c("Africa_Southern traded iron and steel","Indonesia traded iron and steel","Africa_Northern traded iron and steel","Africa_Eastern traded iron and steel","Africa_Western traded iron and steel","South Asia traded iron and steel","Southeast Asia traded iron and steel")
+energy.FOOD_PROCESSING.IEA_INDUSTRY_FLOWS <- c("MINING", "CONSTRUC", "IRONSTL", "CHEMICAL", "NONFERR", "NONMET", "TRANSEQ", "MACHINE", "FOODPRO", "PAPERPRO", "WOODPRO", "TEXTILES", "INONSPEC") # IEA industry flows
+energy.FOOD_PROCESSING.IEA_INONSPEC_FLOW <- "INONSPEC" # IEA non-specified industry flow
+energy.FOOD_PROCESSING.IEA_FOODPRO_FLOW <- "FOODPRO" # IEA food processing industry flow
+energy.FOOD_PROCESSING.ENERGY_INFILL_START_YEAR <- 1990 # year in which to start infilling energy use for regions without good data
+energy.FOOD_PROCESSING.ENERGY_INFILL_MAX_INONSPEC_FRAC <- 0.5 # maximum allowable fraction of total industry energy that is in non-specified industry
+energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_FOODPRO_FRAC <- 0.01 # minimum required fraction of total industry energy that is in food processing
+energy.FOOD_PROCESSING.ENERGY_INFILL_FOODPRO_FRAC_OVERRIDE <- 0.1 # fraction of total industry energy in food processing that indicates the data will be used, regardless of non-specified industry fraction
+energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_EJ_PCAL_COEF <- 0.000413 # minimum value of the EJ per Pcal coefficient from the higher quality historical data, only will infill energy if the coefficient is less than this value
 
 # Socioeconomics constants ======================================================================
 
@@ -654,7 +662,9 @@ socioeconomics.REFINING_CAP_PAYMENTS <- 30
 socioeconomics.H2_CAPITAL_RATIO <- 0.8
 socioeconomics.H2_CAP_PAYMENTS <- 30
 socioeconomics.INDUSTRY_CAPITAL_RATIO <- 0.9
+socioeconomics.FOOD_PROCESSING_CAPITAL_RATIO <- 0.7 # specific to food processing sector
 socioeconomics.INDUSTRY_CAP_PAYMENTS <- 30
+socioeconomics.FOOD_PROCESSING_CAP_PAYMENTS <- 25 # specific to food processing sector
 socioeconomics.BUILDINGS_CAPITAL_RATIO <- 1.0
 socioeconomics.BUILDINGS_CAP_PAYMENTS <- 1
 socioeconomics.BUILDINGS_DEPRECIATION_RATE <- 1/15
@@ -682,6 +692,7 @@ socioeconomics.FINAL_DEMAND_SECTORS <- c("other industrial energy use",
                                          "chemical energy use",
                                          "alumina",
                                          "iron and steel",
+                                         "process heat food processing",
                                          "process heat paper",
                                          "waste biomass for paper",
                                          "resid cooling",
@@ -774,6 +785,9 @@ water.RENEW.COST.GRADE1 <- 0.00001 # Renewable water grade1 cost
 water.RENEW.COST.GRADE2 <- 0.001 # Renewable water grade2 cost
 water.RENEW.COST.GRADE3 <- 10 # Renewable water grade3 cost
 water.DEMAND_FRAC_THRESHOLD <- 1e-4 # Demand fraction of total runoff below which we use a 3-point supply curve to help model solution
+
+# region whose value to use as base when scaling to obtain regional water use coefficients for the food processing industry
+water.FOOD_PROCESSING.REGION_BASE <- "USA"
 
 # Energy-for-water constants ======================================================================
 

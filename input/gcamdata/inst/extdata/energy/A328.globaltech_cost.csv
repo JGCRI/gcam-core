@@ -1,0 +1,21 @@
+# File: A328.globaltech_cost.csv
+# Title: Food processing default costs
+# Units: 1975$/GJ for supplysector process heat food processing; 1975$/Mcal for supplysector food processing
+# Source: Calculated from Rissman 2022 for gas and electric technologies (using assumptions for the capacity factor for food processing boilers from the report Characterization of the U.S. Industrial-Commercial Boiler Population) with multipliers incorporated for refined liquids and coal and biomass and heat technologies; additional costs for technologies with solar calculated using median values for investment costs and average installed capacity for solar industrial process heat installations in the food processing sector in Schoeneberger et al. 2020 with assumptions for OPEX costs as 1.5% of CAPEX based on literature ranges; for supplysector food processing estimated from Global Trade Analysis Project data for household and government expenditures on processed food (see CMP and accompanying scripts for calculations and note the global value is the weighted average of regional values)
+# Column types: ccccnnnn
+# ----------
+supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2050,2100
+process heat food processing,biomass,biomass,non-energy,2.7,2.7,2.7,2.7
+process heat food processing,biomass,biomass cogen,non-energy,6.88,6.88,6.88,6.88
+process heat food processing,gas,gas,non-energy,1.08,1.08,1.08,1.08
+process heat food processing,gas,gas cogen,non-energy,2.75,2.75,2.75,2.75
+process heat food processing,gas,gas with solar,non-energy,1.5,1.5,1.5,1.5
+process heat food processing,refined liquids,refined liquids,non-energy,1.08,1.08,1.08,1.08
+process heat food processing,refined liquids,refined liquids cogen,non-energy,2.75,2.75,2.75,2.75
+process heat food processing,heat,heat,non-energy,1.08,1.08,1.08,1.08
+process heat food processing,coal,coal,non-energy,2.7,2.7,2.7,2.7
+process heat food processing,coal,coal cogen,non-energy,6.88,6.88,6.88,6.88
+process heat food processing,electricity,electricity,non-energy,0.7,0.7,0.7,0.7
+process heat food processing,electricity,electric heat pump,non-energy,2.67,2.67,2.67,2.67
+process heat food processing,electricity,electricity with solar,non-energy,1.12,1.12,1.12,1.12
+food processing,food processing,food processing,non-energy,0.1051,0.1051,0.1051,0.1051

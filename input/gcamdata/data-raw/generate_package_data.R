@@ -235,6 +235,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTechCoef_NM"]] <- c(level2_data_names[["StubTechYr"]], "minicam.energy.input", "coefficient")
   level2_data_names[["StubTechEff"]] <- c(level2_data_names[["StubTechYr"]], "minicam.energy.input", "efficiency", "market.name")
   level2_data_names[["StubTechCalorieContent"]] <- c(level2_data_names[["StubTechEff"]])
+  level2_data_names[["StubTechCaloriePriceConv"]] <- c(level2_data_names[["StubTechYr"]], "minicam.energy.input", "price.unit.conversion", "market.name")
   level2_data_names[["StubTechProd"]] <- c(level2_data_names[["StubTechYr"]], "calOutputValue", "share.weight.year", "subs.share.weight", "tech.share.weight")
   level2_data_names[["StubTechCalInput"]] <- c(level2_data_names[["StubTechYr"]], "minicam.energy.input", "calibrated.value", "share.weight.year", "subs.share.weight", "tech.share.weight")
   level2_data_names[["StubTechCapital"]] <- c(level2_data_names[["StubTechYr"]], "input.capital", "capital.overnight", "fixed.charge.rate")
@@ -244,6 +245,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["StubTechCapFactor"]] <- c(level2_data_names[["StubTechYr"]], "capacity.factor")
   level2_data_names[["StubTechMarket"]] <- c(level2_data_names[["StubTechYr"]], "minicam.energy.input", "market.name")
   level2_data_names[["StubCalorieContent"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input", "efficiency")
+  level2_data_names[["StubCaloriePriceConv"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "minicam.energy.input", "price.unit.conversion")
   level2_data_names[["StubResBioCurve"]] <- c("region", "supplysector", "subsector", "stub.technology", "year", "residue.biomass.production", "price", "fract.harvested")
   level2_data_names[["StubTechCalInputIndUrb"]] <- c("region", "sector.name", "subsector.name", "technology", "year", "minicam.energy.input", "calibrated.value")
   level2_data_names[["StubTechCoefIndUrb"]] <- c("region", "supplysector", "subsector", "technology", "year", "minicam.energy.input", "coefficient")
@@ -545,7 +547,10 @@ prebuilt_data_names <- c(
   "L121.BiomassOilRatios_kgGJ_R_C",
 
   # output of module_aglu_LA100.GTAP_downscale_ctry
-  "L100.GTAP_capital_stock"
+  "L100.GTAP_capital_stock",
+
+  # output of module_energy_L1328.food_processing, based on IEA data
+  "L1328.en_bal_frac_industry_food_inonspec_R_Yh"
 )
 
 #' PREBUILT_DATA

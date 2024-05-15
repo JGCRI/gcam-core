@@ -1,0 +1,13 @@
+# File: A328.subsector_logit.csv
+# Title: Food processing default subsector logit exponents
+# Units: Unitless
+# Column types: ccic
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+food processing,food processing,0,
+process heat food processing,biomass,-6,
+process heat food processing,gas,-6,
+process heat food processing,refined liquids,-6,
+process heat food processing,heat,-6,
+process heat food processing,coal,-6,
+process heat food processing,electricity,-6,

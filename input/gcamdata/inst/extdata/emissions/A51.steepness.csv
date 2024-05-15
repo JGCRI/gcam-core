@@ -2,7 +2,7 @@
 # Title: Steepness of emissions reduction by supply sector, subsector, technology, and gas
 # Units: Percentage
 # Source: Internal
-# Column types: cccnnnnnn 
+# Column types: cccnnnnnn
 # ----------
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
 cement,cement,cement,,,,,,
@@ -277,6 +277,15 @@ iron and steel,refined liquids,BLASTFUR,3.5,3.5,3.5,3.5,3.5,3.5
 iron and steel,refined liquids,EAF with DRI,3.5,3.5,3.5,3.5,3.5,3.5
 iron and steel,refined liquids,EAF with scrap,3.5,3.5,3.5,3.5,3.5,3.5
 iron and steel,gas,EAF with scrap,3.5,3.5,3.5,3.5,3.5,3.5
+process heat food processing,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
+process heat food processing,biomass,biomass cogen,,,,,,
+process heat food processing,gas,gas,3.5,3.5,3.5,3.5,3.5,3.5
+process heat food processing,gas,gas cogen,,,,,,
+process heat food processing,gas,gas with solar,,,,,,
+process heat food processing,refined liquids,refined liquids,3.5,3.5,3.5,3.5,3.5,3.5
+process heat food processing,refined liquids,refined liquids cogen,,,,,,
+process heat food processing,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
+process heat food processing,coal,coal cogen,,,,,,
 waste biomass for paper,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
 waste biomass for paper,biomass,biomass cogen,,,,,,
 process heat paper,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
