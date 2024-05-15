@@ -1,13 +1,13 @@
 # File: A328.demand.csv
 # Title: food processing demand set by agricultural production linkage
 # Unit: NA
-# Description: Sets the food processing demand by linking to agricultural production
+# Description: Sets the food processing demand by linking to agricultural production. The structure should match food demand in aglu demand_subsector 
 # Source: Placeholder
 # Column types: cccccnn
 # ----------
 supplysector,subsector0,subsector,technology,minicam.energy.input,coefficient,price.unit.conversion
 FoodDemand_Staples,Corn,Corn,Corn,food processing,1,0
-FoodDemand_NonStaples,FiberCrop,FiberCrop,FiberCrop,food processing,1,0
+FoodDemand_NonStaples,Oil,FiberCrop,FiberCrop,food processing,1,0
 FoodDemand_NonStaples,FruitsVeg,Fruits,Fruits,food processing,1,0
 FoodDemand_NonStaples,Protein,Plant,Legumes,food processing,1,0
 FoodDemand_NonStaples,MiscCrop,MiscCrop,MiscCrop,food processing,1,0
