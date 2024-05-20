@@ -14,6 +14,6 @@ industrial processes,solvents,solvents,solvents,solvents,Solvents
 industrial processes,HCFC_22_Prod,HCFC_22_Prod,hcfc_22,halo_prod,HFC23
 industrial processes,semiconductors,semiconductors,semiconductors,semiconductors,Semiconductors
 industrial processes,Al_Mg,Al_Mg,metals,metals,Aluminum
-resid cooling,electricity,electricity,refrigeration,refrigeration,Refrigeration
+resid cooling modern,electricity,electricity,refrigeration,refrigeration,Refrigeration
 comm cooling,electricity,electricity,refrigeration,refrigeration,Refrigeration
 industrial processes,other industrial processes,other industrial processes,other,industry_processes,

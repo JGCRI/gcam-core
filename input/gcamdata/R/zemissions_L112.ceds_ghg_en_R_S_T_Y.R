@@ -70,6 +70,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EPA/EPA_2019_raw",
              FILE = "emissions/EPA_CH4N2O_map",
              FILE = "emissions/GCAM_EPA_CH4N2O_energy_map",
+             "L244.GenericShares",
+             "L244.ThermalShares",
              # BC OC assumption files
              FILE = "gcam-usa/emissions/BC_OC_assumptions",
              FILE = "gcam-usa/emissions/BCOC_PM25_ratios"))
@@ -613,9 +615,68 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       ungroup() ->
       L112.in_EJ_R_en_S_F_Yh_calib_all
 
+    # We neeed to allocate residential energy to the diferent consumer groups using the computed shares:
+    L244.GenericShares<- get_data(all_data, "L244.GenericShares",strip_attributes = TRUE) %>%
+      select(region,gcam.consumer,building.service.input,year,gen_share) %>%
+      rename(supplysector=building.service.input,
+             share=gen_share) %>%
+      filter(grepl("resid",supplysector)) %>%
+      separate(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      unite(supplysector,c("supplysector","group"),sep = "_") %>%
+      select(-gcam.consumer) %>%
+      complete(nesting(region,supplysector), year = c(year, unique(L112.in_EJ_R_en_S_F_Yh_calib_all$year))) %>%
+      # Interpolate
+      group_by(region,supplysector) %>%
+      mutate(share = approx_fun(year, share, rule = 2))
+
+    L244.ThermalShares<- get_data(all_data, "L244.ThermalShares",strip_attributes = TRUE) %>%
+      select(region,gcam.consumer,thermal.building.service.input,year,thermal_share) %>%
+      rename(supplysector=thermal.building.service.input,
+             share=thermal_share)%>%
+      filter(grepl("resid",supplysector)) %>%
+      separate(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+      unite(supplysector,c("supplysector","group"),sep = "_") %>%
+      select(-gcam.consumer)%>%
+      complete(nesting(region,supplysector), year = c(year, unique(L112.in_EJ_R_en_S_F_Yh_calib_all$year))) %>%
+      # Interpolate
+      group_by(region,supplysector) %>%
+      mutate(share = approx_fun(year, share, rule = 2))
+
+    L244.Shares<-bind_rows(L244.GenericShares,L244.ThermalShares) %>%
+      left_join_error_no_match(GCAM_region_names, by = "region")
+
+
+    cons.gr.adj<-get_data(all_data, "L244.GenericShares",strip_attributes = TRUE)  %>%
+      select(gcam.consumer) %>%
+      filter(grepl("resid",gcam.consumer)) %>%
+      distinct() %>%
+      mutate(gcam.consumer = gsub("resid_","",gcam.consumer))
+
+    L112.in_EJ_R_en_S_F_Yh_calib_all_resid<- L112.in_EJ_R_en_S_F_Yh_calib_all %>%
+      filter(grepl("resid",supplysector)) %>%
+      repeat_add_columns(tibble(group=unique(cons.gr.adj$gcam.consumer))) %>%
+      unite(supplysector,c("supplysector","group"),sep = "_") %>%
+      # add shares
+      left_join_error_no_match(L244.Shares, by = c("GCAM_region_ID", "year", "supplysector")) %>%
+      mutate(energy = energy * share) %>%
+      select(-region,-share)
+
+    L112.in_EJ_R_en_S_F_Yh_calib_all<-L112.in_EJ_R_en_S_F_Yh_calib_all %>%
+      filter(!grepl("resid",supplysector)) %>%
+      bind_rows(L112.in_EJ_R_en_S_F_Yh_calib_all_resid)
+
 
     # MATCH ENERGY AND EMISSIONS TO AGGREGATE EMISSIONS TO SPLIT OUT EMISSIONS BY GCAM SECTORS
     # ========================================================================================
+
+    CEDS_sector_tech_adj<-CEDS_sector_tech %>%
+      filter(!grepl("resid",supplysector)) %>%
+      bind_rows(L112.in_EJ_R_en_S_F_Yh_calib_all_resid %>%
+                  select(supplysector,subsector,stub.technology) %>%
+                  distinct() %>%
+                  mutate(CEDS_agg_sector = "bld_resid",
+                         CEDS_agg_fuel = stub.technology,
+                         CEDS_agg_fuel = if_else(CEDS_agg_fuel == "traditional biomass","biomass",stub.technology)))
 
     # Append CEDS sector/fuel combinations to GCAM energy
 
@@ -624,7 +685,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       filter(!stub.technology %in% c(emissions.ZERO_EM_TECH),
              !subsector %in% c(emissions.ZERO_EM_TECH, "heat")) %>%
-      left_join_error_no_match(CEDS_sector_tech, by = c("supplysector", "subsector", "stub.technology")) ->
+      left_join_error_no_match(CEDS_sector_tech_adj, by = c("supplysector", "subsector", "stub.technology"))  ->
       L112.in_EJ_R_en_S_F_Yh_calib_all_baseenergy
 
 
@@ -1794,7 +1855,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "L101.in_EJ_R_en_Si_F_Yh", "L1328.in_EJ_R_indenergy_F_Yh", "L1323.in_EJ_R_iron_steel_F_Y", "L1324.in_EJ_R_Off_road_F_Y",
                      "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh", "L1327.in_EJ_R_paper_F_Yh", "L1328.in_EJ_R_food_F_Yh", "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh", "emissions/CEDS/CEDS_sector_tech_combustion_revised",
                      "emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
-                     "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions",
+                     "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions","L244.GenericShares","L244.ThermalShares",
                      "L270.nonghg_tg_state_refinery_F_Yb", "gcam-usa/emissions/BC_OC_assumptions", "gcam-usa/emissions/BCOC_PM25_ratios") ->
       L111.nonghg_tg_R_en_S_F_Yh
 

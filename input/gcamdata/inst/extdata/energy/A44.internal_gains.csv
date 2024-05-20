@@ -4,18 +4,18 @@
 # Column types: cccn 
 # ----------
 supplysector,subsector,technology,input.ratio
-resid others,biomass,biomass,0.5
-resid others,coal,coal,0.5
-resid others,electricity,electric,0.5
-resid others,gas,gas,0.5
-resid others,refined liquids,oil,0.5
-resid others,trad biomass,trad biomass,0.5
-resid others,district heat,district heat,0.5
+resid others modern,biomass,biomass,0.5
+resid others coal,coal,coal,0.5
+resid others modern,electricity,electric,0.5
+resid others modern,gas,gas,0.5
+resid others modern,refined liquids,oil,0.5
+resid others TradBio,trad biomass,trad biomass,0.5
+resid others modern,district heat,district heat,0.5
 comm others,biomass,biomass,0.5
 comm others,coal,coal,0.5
 comm others,electricity,electric,0.5
 comm others,gas,gas,0.5
 comm others,refined liquids,oil,0.5
 comm others,district heat,district heat,0.5
-resid others,gas,hydrogen,0.5
+resid others modern,gas,hydrogen,0.5
 comm others,gas,hydrogen,0.5

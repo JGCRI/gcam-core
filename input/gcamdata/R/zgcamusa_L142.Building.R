@@ -19,7 +19,7 @@ module_gcamusa_L142.Building <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "energy/mappings/enduse_fuel_aggregation",
              "L124.in_EJ_R_heat_F_Yh",
-             "L131.in_EJ_USA_Senduse_F_Yh_noEFW",
+             "L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj",
              "L131.share_R_Senduse_heat_Yh",
              "L101.inEIA_EJ_state_S_F"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -31,7 +31,7 @@ module_gcamusa_L142.Building <- function(command, ...) {
     # Load required inputs
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     L124.in_EJ_R_heat_F_Yh <- get_data(all_data, "L124.in_EJ_R_heat_F_Yh")
-    L131.in_EJ_USA_Senduse_F_Yh_noEFW <- get_data(all_data, "L131.in_EJ_USA_Senduse_F_Yh_noEFW")
+    L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj <- get_data(all_data, "L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj")
     L131.share_R_Senduse_heat_Yh <- get_data(all_data, "L131.share_R_Senduse_heat_Yh")
     L101.inEIA_EJ_state_S_F <- get_data(all_data, "L101.inEIA_EJ_state_S_F", strip_attributes = TRUE)
 
@@ -82,7 +82,7 @@ module_gcamusa_L142.Building <- function(command, ...) {
       select(GCAM_region_ID, sector, fuel, year, value) ->
       L142.in_EJ_R_bldheat_F_Yh
 
-    L131.in_EJ_USA_Senduse_F_Yh_noEFW %>%
+    L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj %>%
       filter(GCAM_region_ID == gcamusa.USA_REGION_NUMBER,
              grepl("bld", sector)) %>% # Filter for only building-related sectors
       inner_join(select(enduse_fuel_aggregation, fuel, bld), by = "fuel") %>% # Mapping first intermediate fuel to sector-specific intermediate fuel
@@ -118,7 +118,7 @@ module_gcamusa_L142.Building <- function(command, ...) {
       add_comments("Scaled national-level building energy consumption by portion of total US building energy use by fuel for each state and sector from the SEDS table.") %>%
       add_legacy_name("L142.in_EJ_state_bld_F") %>%
       add_precursors("energy/mappings/enduse_fuel_aggregation", "L101.inEIA_EJ_state_S_F",
-                     "L124.in_EJ_R_heat_F_Yh", "L131.in_EJ_USA_Senduse_F_Yh_noEFW", "L131.share_R_Senduse_heat_Yh") ->
+                     "L124.in_EJ_R_heat_F_Yh", "L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj", "L131.share_R_Senduse_heat_Yh") ->
       L142.in_EJ_state_bld_F
 
     return_data(L142.in_EJ_state_bld_F)

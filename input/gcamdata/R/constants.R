@@ -539,6 +539,7 @@ energy.WIND_MIN_POTENTIAL <- 0.001
 energy.WIND_ELECTROLYSIS_KGH2_D <- 50000    # kg of h2 produced per day at a wind-electrolysis plant
 
 # Digits for rounding into XMLs
+energy.DIGITS_BIAS_ADDER       <- 9
 energy.DIGITS_CALOUTPUT        <- 7
 energy.DIGITS_CALPRODUCTION    <- 7
 energy.DIGITS_CAPACITY_FACTOR  <- 2
@@ -548,7 +549,7 @@ energy.DIGITS_COST             <- 4
 energy.DIGITS_CURVE_EXPONENT   <- 3
 energy.DIGITS_RESOURCE      <- 2
 energy.DIGITS_EFFICIENCY       <- 3
-energy.DIGITS_FLOORSPACE       <- 6
+energy.DIGITS_FLOORSPACE       <- 9
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
 energy.DIGITS_HDDCDD           <- 0
 energy.DIGITS_INCELAS_IND      <- 3
@@ -559,7 +560,10 @@ energy.DIGITS_MID_PRICE        <- 3
 energy.DIGITS_MPKM             <- 0
 energy.DIGITS_OM               <- 2
 energy.DIGITS_REMOVE.FRACTION  <- 2
-energy.DIGITS_SATIATION_ADDER  <- 9
+energy.DIGITS_SATIATION_ADDER  <- 5
+energy.DIGITS_SATIATION_IMPEDANCE  <- 7
+energy.DIGITS_SERVICE          <- 9
+energy.DIGITS_SHELL            <- 7
 energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
 energy.DIGITS_TECHCHANGE       <- 4
@@ -604,6 +608,7 @@ gcamusa.OBS_UNADJ_SAT <- 150
 gcamusa.LAND_DENSITY_PARAM <- 0
 gcamusa.B_PARAM <- 3.49026
 gcamusa.INCOME_PARAM <- 0.4875
+
 
 # Constants for global detailed industry
 energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
@@ -652,6 +657,11 @@ socioeconomics.CES_GAMMA <- -0.3
 
 socioeconomics.BASE_POP_SCEN         <- "SSP2"
 socioeconomics.BASE_GDP_SCENARIO     <- "SSP2"
+socioeconomics.BASE_INCSHARE_BASE <- "Historical data"
+socioeconomics.BASE_INCSHARE_MODEL <- "PCA algorithm (Two Components)"
+socioeconomics.BASE_INCSHARE_SCENARIO <- "SSP2"
+socioeconomics.INCSHARE_YEARS <- 1967:2100
+socioeconomics.DEFAULT_INTEREST_RATE <- 0.05
 socioeconomics.DEFAULT_MEDIAN_HOURS_WORKED <- 1944
 
 # Asumptions related to tracking capital investments
@@ -695,9 +705,13 @@ socioeconomics.FINAL_DEMAND_SECTORS <- c("other industrial energy use",
                                          "process heat food processing",
                                          "process heat paper",
                                          "waste biomass for paper",
-                                         "resid cooling",
-                                         "resid heating",
-                                         "resid others",
+                                         paste0("resid cooling modern_d", seq(1,10)),
+                                         paste0("resid heating modern_d", seq(1,10)),
+                                         paste0("resid heating coal_d", seq(1,10)),
+                                         paste0("resid heating TradBio_d", seq(1,10)),
+                                         paste0("resid others modern_d", seq(1,10)),
+                                         paste0("resid others coal_d", seq(1,10)),
+                                         paste0("resid others TradBio_d", seq(1,10)),
                                          "comm cooling",
                                          "comm heating",
                                          "comm others",

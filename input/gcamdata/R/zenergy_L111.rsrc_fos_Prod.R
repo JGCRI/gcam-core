@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L111.Prod_EJ_R_F_Yh}, \code{L111.RsrcCurves_EJ_R_Ffos}. The corresponding file in the
+#' the generated outputs: \code{L111.Prod_EJ_R_F_Yh}, \code{L111.RsrcCurves_EJ_R_Ffos}. \code{L210.DeleteRsrcTradBio}. The corresponding file in the
 #' original data system was \code{LA111.rsrc_fos_Prod.R} (energy level1).
 #' @details For historical fossil energy production, determine regional shares of production for each primary fuel,
 #' interpolate unconventional oil production to all historical years, deduct unconventional oil from total oil,
@@ -23,14 +23,17 @@
 module_energy_L111.rsrc_fos_Prod <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
+             FILE = "common/GCAM_region_names",
              FILE = "energy/mappings/IEA_product_rsrc",
+             FILE = "energy/mappings/enduse_fuel_aggregation",
              FILE = "energy/rsrc_unconv_oil_prod_bbld",
              FILE = "energy/A11.fos_curves",
              "L100.IEA_en_bal_ctry_hist",
              "L1012.en_bal_EJ_R_Si_Fi_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L111.Prod_EJ_R_F_Yh",
-             "L111.RsrcCurves_EJ_R_Ffos"))
+             "L111.RsrcCurves_EJ_R_Ffos",
+             "L210.DeleteRsrcTradBio"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -41,7 +44,9 @@ module_energy_L111.rsrc_fos_Prod <- function(command, ...) {
 
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
+    GCAM_region_names <-get_data(all_data, "common/GCAM_region_names")
     IEA_product_rsrc <- get_data(all_data, "energy/mappings/IEA_product_rsrc")
+    end_use_fuel_agg <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     rsrc_unconv_oil_prod_bbld <- get_data(all_data, "energy/rsrc_unconv_oil_prod_bbld")
     A11.fos_curves <- get_data(all_data, "energy/A11.fos_curves")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist", strip_attributes = TRUE)
@@ -120,6 +125,24 @@ module_energy_L111.rsrc_fos_Prod <- function(command, ...) {
       bind_rows(select(L111.Prod_EJ_ctry_unconvOil_Yh, GCAM_region_ID, sector, fuel, year, value, technology)) -> L111.Prod_EJ_R_F_Yh
 
 
+    # -------
+    # Some regions do not have traditional biomass in MODEL historical years
+    # Delete those resources to avoid errors from the dependency_finder_log
+    L210.DeleteRsrcTradBio<-L1012.en_bal_EJ_R_Si_Fi_Yh %>%
+      filter(year %in% MODEL_BASE_YEARS,
+             fuel == "biomass_tradbio") %>%
+      left_join_error_no_match(end_use_fuel_agg %>% select(fuel,bld), by = "fuel") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      mutate(resource = bld) %>%
+      select(-bld,-fuel) %>%
+      group_by(region,resource)%>%
+      summarise(value=sum(value)) %>%
+      ungroup() %>%
+      filter(value==0) %>%
+      select(LEVEL2_DATA_NAMES[["DeleteRsrc"]])
+
+    # -------
+
     # Produce outputs
     L111.Prod_EJ_R_F_Yh %>%
       add_title("Historical fossil energy production") %>%
@@ -131,6 +154,15 @@ module_energy_L111.rsrc_fos_Prod <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID", "L1012.en_bal_EJ_R_Si_Fi_Yh",
                      "energy/rsrc_unconv_oil_prod_bbld") ->
       L111.Prod_EJ_R_F_Yh
+
+    L210.DeleteRsrcTradBio %>%
+      add_title("Delete sectors with no TradBio production in model base years") %>%
+      add_units("unitless") %>%
+      add_comments("Regions with no Primary Solid Fuels according to IEA balances") %>%
+      add_legacy_name("L210.DeleteRsrcTradBio") %>%
+      add_precursors("common/GCAM_region_names", "L1012.en_bal_EJ_R_Si_Fi_Yh",
+                     "energy/mappings/enduse_fuel_aggregation") ->
+      L210.DeleteRsrcTradBio
 
     # ------- RESOURCE PRICES
 
@@ -221,7 +253,7 @@ module_energy_L111.rsrc_fos_Prod <- function(command, ...) {
         L111.RsrcCurves_EJ_R_Ffos
     }
 
-    return_data(L111.Prod_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos)
+    return_data(L111.Prod_EJ_R_F_Yh, L111.RsrcCurves_EJ_R_Ffos,L210.DeleteRsrcTradBio)
   } else {
     stop("Unknown command")
   }
