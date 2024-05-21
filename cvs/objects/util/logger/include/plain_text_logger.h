@@ -69,7 +69,7 @@ class PlainTextLogger: public Logger {
     void logCompleteMessage( const std::string& aMessage );
 private:
     std::ofstream mLogFile; //!< The filestream to which data is written.
-    PlainTextLogger( const std::string& aLoggerName ="" );
+    PlainTextLogger( std::ostream* aCout, const std::string& aLoggerName ="" );
 };
 
 #endif // _PLAIN_TEXT_LOGGER_H_

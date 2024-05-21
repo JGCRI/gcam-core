@@ -70,7 +70,7 @@ public:
 
 private:
     std::ofstream mLogFile; //!< The filestream to which data is written.
-    XMLLogger( const std::string& loggerName ="" );
+    XMLLogger( std::ostream* aCout, const std::string& loggerName ="" );
 };
 
 #endif // _XML_LOGGER_H_
