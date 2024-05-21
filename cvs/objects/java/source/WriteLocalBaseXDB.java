@@ -54,34 +54,34 @@ public class WriteLocalBaseXDB implements Runnable {
     /**
      * The database context needed to run commands on the DB.
      */
-    private Context mContext = null;
+    protected Context mContext = null;
 
     /**
      * The thread on which writing to the DB will take place.
      */
-    private final Thread mWorkerThread = new Thread( this );
+    protected final Thread mWorkerThread = new Thread( this );
 
     /**
      * The command which executes adding the XML to the database.
      * We keep a reference here in case we need to cancel the
      * command incase something went wrong.
      */
-    private Add mAddCommand = null;
+    protected Add mAddCommand = null;
 
     /**
      * The stream that will transfer the XML read from GCAM and write it to the DB.
      */
-    private final PipedInputStream mWriteToDBStream = new PipedInputStream( XMLDBDriver.BUFFER_SIZE );
+    protected final PipedInputStream mWriteToDBStream = new PipedInputStream( XMLDBDriver.BUFFER_SIZE );
 
     /**
      * The location of the database to write the XML to.
      */
-    private final String mDBLocation;
+    protected final String mDBLocation;
 
     /**
      * A unique name to call the document to be added into the DB.
      */
-    private final String mDocName;
+    protected final String mDocName;
 
     /**
      * Constructor which will open the DB and get ready to receive XML to put
@@ -140,7 +140,7 @@ public class WriteLocalBaseXDB implements Runnable {
      *                    attempting to write to a DB which appears to be open. A
      *                    negative value indicates to wait indefinately.
      */
-    private void openDB( final boolean aInMemoryDB, final int aOpenDBWait ) throws Exception {
+    protected void openDB( final boolean aInMemoryDB, final int aOpenDBWait ) throws Exception {
         // We need to seperate the path to the DB and the container name (last name in the path)
         File dbLocationFile = new File( mDBLocation ).getAbsoluteFile();
         // The path may be a relative path so we must convert it to absolute here.

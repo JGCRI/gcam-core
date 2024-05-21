@@ -105,7 +105,9 @@ public class XMLDBDriver {
             // always open the database optionally in memory (off by default)
             boolean inMemDB = Boolean.parseBoolean( config.getProperty( "in-memory", "false" ) );
             int openDBWait = Integer.parseInt( config.getProperty( "open-db-wait", "-1" ) );
-            mWriteDB = new WriteLocalBaseXDB( aDBLocation, aDocName, inMemDB, openDBWait );
+            mWriteDB = aDBLocation.startsWith("basex://") ?
+                new WriteRemoteBaseXDB( aDBLocation, aDocName, inMemDB, openDBWait ) :
+                new WriteLocalBaseXDB( aDBLocation, aDocName, inMemDB, openDBWait );
 
             // optionally filter output using an XSLT style script (off by default)
             String filterScript = config.getProperty( "filter-script", "" );
