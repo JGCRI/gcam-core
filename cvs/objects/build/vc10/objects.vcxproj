@@ -386,7 +386,7 @@
     </ClCompile>
     <Link>
       <SuppressStartupBanner>true</SuppressStartupBanner>
-      <AdditionalLibraryDirectories>..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;..\..\..\..\libs\tbb\lib\intel64\vc14;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;..\..\..\..\libs\tbb\lib\intel64\vc14;..\..\..\..\libs\boost-lib\lib64-msvc-14.1;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
@@ -688,6 +688,7 @@
     <ClCompile Include="..\..\technologies\source\empty_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\exogenous_shutdown_decider.cpp" />
     <ClCompile Include="..\..\technologies\source\fixed_production_state.cpp" />
+    <ClCompile Include="..\..\technologies\source\ag_storage_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\fractional_secondary_output.cpp" />
     <ClCompile Include="..\..\technologies\source\generic_output.cpp" />
     <ClCompile Include="..\..\technologies\source\global_technology_database.cpp" />
@@ -976,6 +977,7 @@
     <ClInclude Include="..\..\technologies\include\empty_technology.h" />
     <ClInclude Include="..\..\technologies\include\exogenous_shutdown_decider.h" />
     <ClInclude Include="..\..\technologies\include\fixed_production_state.h" />
+    <ClInclude Include="..\..\technologies\include\ag_storage_technology.h" />
     <ClInclude Include="..\..\technologies\include\fractional_secondary_output.h" />
     <ClInclude Include="..\..\technologies\include\generic_output.h" />
     <ClInclude Include="..\..\technologies\include\global_technology_database.h" />

@@ -14,8 +14,9 @@ module_energy_L144.building_det_en(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L144.end_use_eff}, \code{L144.shell_eff_R_Y}, \code{L144.in_EJ_R_bld_serv_F_Yh}, \code{L144.NEcost_75USDGJ}, \code{L144.internal_gains}, \code{L144.base_service_EJ_serv}. The corresponding file in the
-original data system was \code{LA144.building_det_en.R} (energy level1).
+the generated outputs: \code{L144.end_use_eff}, \code{L144.shell_eff_R_Y}, \code{L144.in_EJ_R_bld_serv_F_Yh}, \code{L144.NEcost_75USDGJ},
+ \code{L144.internal_gains}, \code{L144.base_service_EJ_serv},\code{L144.base_service_EJ_serv_fuel}, \code{L144.prices_bld}.
+ The corresponding file in the original data system was \code{LA144.building_det_en.R} (energy level1).
 }
 \description{
 Calculates global detailed buildings energy data

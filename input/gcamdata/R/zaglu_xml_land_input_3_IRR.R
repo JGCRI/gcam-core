@@ -11,32 +11,31 @@
 #' the generated outputs: \code{land_input_3_IRR.xml}. The corresponding file in the
 #' original data system was \code{batch_land_input_3_IRR.xml.R} (aglu XML).
 module_aglu_land_input_3_IRR_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L2231.LN3_Logit",
+      "L2231.LN3_HistUnmgdAllocation",
+      "L2231.LN3_UnmgdAllocation",
+      "L2231.LN3_NoEmissCarbon",
+      "L2231.LN3_NodeCarbon",
+      "L2231.LN3_HistMgdAllocation_noncrop",
+      "L2231.LN3_MgdAllocation_noncrop",
+      "L2231.LN3_UnmgdCarbon",
+      "L2231.LN3_MgdCarbon_noncrop")
+
+  MODULE_OUTPUTS <-
+    c(XML = "land_input_3_IRR.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2231.LN3_Logit",
-              "L2231.LN3_HistUnmgdAllocation",
-              "L2231.LN3_UnmgdAllocation",
-              "L2231.LN3_NoEmissCarbon",
-              "L2231.LN3_NodeCarbon",
-              "L2231.LN3_HistMgdAllocation_noncrop",
-              "L2231.LN3_MgdAllocation_noncrop",
-              "L2231.LN3_UnmgdCarbon",
-              "L2231.LN3_MgdCarbon_noncrop"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "land_input_3_IRR.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L2231.LN3_Logit <- get_data(all_data, "L2231.LN3_Logit")
-    L2231.LN3_HistUnmgdAllocation <- get_data(all_data, "L2231.LN3_HistUnmgdAllocation")
-    L2231.LN3_UnmgdAllocation <- get_data(all_data, "L2231.LN3_UnmgdAllocation")
-    L2231.LN3_NoEmissCarbon <- get_data(all_data, "L2231.LN3_NoEmissCarbon")
-    L2231.LN3_NodeCarbon <- get_data(all_data, "L2231.LN3_NodeCarbon")
-    L2231.LN3_HistMgdAllocation_noncrop <- get_data(all_data, "L2231.LN3_HistMgdAllocation_noncrop")
-    L2231.LN3_MgdAllocation_noncrop <- get_data(all_data, "L2231.LN3_MgdAllocation_noncrop")
-    L2231.LN3_UnmgdCarbon <- get_data(all_data, "L2231.LN3_UnmgdCarbon")
-    L2231.LN3_MgdCarbon_noncrop <- get_data(all_data, "L2231.LN3_MgdCarbon_noncrop")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -65,7 +64,7 @@ module_aglu_land_input_3_IRR_xml <- function(command, ...) {
                      "L2231.LN3_MgdCarbon_noncrop") ->
       land_input_3_IRR.xml
 
-    return_data(land_input_3_IRR.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

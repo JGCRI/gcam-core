@@ -17,7 +17,9 @@
 #' Data processing was consistent across scales. Note that GCAM regions and commodities in aggregation mapping can
 #' be changed in corresponding mappings. The output data is not averaged over time.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter if_else inner_join left_join mutate rename select n group_by_at
+#' @importFrom dplyr summarize bind_rows filter if_else inner_join left_join mutate rename select n group_by_at
+#' first case_when vars
+#' @importFrom tibble tibble is_tibble
 #' @importFrom tidyr complete drop_na gather nesting spread replace_na
 #' @author XZ 2022
 module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
@@ -53,6 +55,14 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     year <- value <- Year <- Value <- FAO_country <- iso <- NULL    # silence package check.
+    Mapping_item_FBS_GCAM <- GCAM_commodity <- region <- element <- source_primary <-
+      source_item <- Prod_diff <- Processed <- `Stock Variation` <- Production <-
+      Import <- Export <- Food <- Feed <- `Other uses` <- `Regional supply` <-
+      `Regional demand` <- item <- GCAM_subsector <- GCAM_subsector <-  CropMeat <-
+      FAO_an_items_PRODSTAT <- GCAMDATA_FAOSTAT_ProdArea_96Regs_16FodderItems_1973to2020 <-
+      macronutrient <- macronutrient_value <- calperg <- proteinperc <-
+      macronutrient_value_World <- Food_Kt <- area_code <- area <- AGLU_ctry <-
+      iso_GCAM_regID <- GCAM_region_ID <- GCAM_region_names <-  NULL
 
     all_data <- list(...)[[1]]
 
@@ -60,15 +70,25 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
 
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
+    # Get Supply-utilization account (SUA) elements and use as factor
     All_Bal_element <- levels(GCAMDATA_FAOSTAT_SUA_195Regs_530Items_2010to2019$element)
     All_Bal_element <- factor(All_Bal_element, levels = All_Bal_element)
+
+    # Bilateral trade item indicator is added to SUA_item_code_map
+    # filter GCAMDATA_FAOSTAT_BiTrade_194Regs_400Items_2010to2020 to only include bilateral trade item to be
+    # consistent with GCAMDATA_FAOSTAT_SUA_195Regs_530Items_2010to2019
+    BilaterialTrade_ItemCode <- SUA_item_code_map %>% filter(TM == TRUE) %>% distinct(item_code) %>% pull
+    GCAMDATA_FAOSTAT_BiTrade_194Regs_400Items_2010to2020 %>%
+      filter(item_code %in% BilaterialTrade_ItemCode) ->
+      GCAMDATA_FAOSTAT_BiTrade_194Regs_400Items_2010to2020
+    SUA_item_code_map %>% select(item, item_code) -> SUA_item_code_map
 
     # Section1: [2010-2019] Region aggregation of supply-utilization-accounting data ----
 
     # Note: the volume of data in this processing is quite large.  Therefore we took
     # extra care to be cognizant of processing speed and memory usage through section 1 and 2.
     # In particular we rely on ID codes and factors are much as possible to speed up joins.
-    # In addition, we have filtered zero rows from the raw data to signfinficantly reduce
+    # In addition, we have filtered zero rows from the raw data to significantly reduce
     # the overall volume.  Unfortunately, this change makes the processing riddled with
     # trap doors where we need to be extra careful to complete / refill zeros or risk loosing
     # rows of legitimate data.
@@ -82,12 +102,15 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       left_join(GCAM_region_names, by = "GCAM_region_ID") ->
       Area_Region_Map
 
-    # Aggregate to GCAM regions
-    SUA_Reg_Agg <- function(GCAMDATA_FAOSTAT_SUA_195Regs_530Items_2010to2019, GCAMDATA_FAOSTAT_BiTrade_194Regs_400Items_2010to2020) {
-      GCAMDATA_FAOSTAT_SUA_195Regs_530Items_2010to2019 %>%
+    # 1.1 Regional aggregation for SUA ----
+
+    # Aggregate SUA to GCAM regions
+    # Intra regional trade is removed when bilateral trade data is available
+
+    GCAMDATA_FAOSTAT_SUA_195Regs_530Items_2010to2019 %>%
       left_join_error_no_match(Area_Region_Map %>% select(area_code, GCAM_region_ID), by="area_code") %>%
       group_by(GCAM_region_ID, item_code, element, year) %>%
-      summarize(value = sum(value)) %>%
+      summarize(value = sum(value), .groups = "drop") %>%
       ungroup() ->
       DF_SUA_Agg
 
@@ -97,38 +120,33 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       left_join_error_no_match(Area_Region_Map %>% select(source_code = area_code, source_GCAM_region_ID = GCAM_region_ID), by="source_code") %>%
       filter(GCAM_region_ID == source_GCAM_region_ID) %>%
       group_by(GCAM_region_ID, item_code, year) %>%
-      summarize(value = sum(value)) %>%
+      summarize(value = sum(value), .groups = "drop") %>%
       ungroup() %>%
-      mutate(value = -value / 1000.0) ->
+      mutate(value = -value) ->
       DF_INTRA_REG_TRADE
 
-    # #' Adjust gross trade in SUA data to ensure regional export is smaller than production for an SUA item
-    bind_rows(DF_INTRA_REG_TRADE %>% mutate(element = All_Bal_element[All_Bal_element == "Export"]),
-              DF_INTRA_REG_TRADE %>% mutate(element = All_Bal_element[All_Bal_element == "Import"]),
-              DF_SUA_Agg) %>%
-      group_by(GCAM_region_ID, item_code, element, year) %>%
-      summarize(value = sum(value)) %>%
-      ungroup() ->
-      DF_SUA_Agg_TradeAdj
-
-    # need to remove gross trade when export > production
-    # to maintain triangle the inequality rule
+    # SUA has fewer items and years than the bilateral data set and in addition
+    # there are some small discrepancies zero import/export in SUA vs tiny amounts of trade
+    # in the bilateral.  Doing a left_join here will drop these dependencies which is
+    # what we want.
     bind_rows(DF_INTRA_REG_TRADE %>% mutate(element = All_Bal_element[All_Bal_element == "Export"]),
               DF_INTRA_REG_TRADE %>% mutate(element = All_Bal_element[All_Bal_element == "Import"])) %>%
       rename(TCL = value) %>%
-      # SUA has fewer items and years (2020) than the bilateral data set and in addition
-      # there are some small discrepencies zero import/export in SUA vs tiny amounts of trade
-      # in the bilateral.  Doing a left_join here will drop these descrepencies which is
-      # what we would like to do in this case
-      left_join(DF_SUA_Agg, ., by=c("GCAM_region_ID", "item_code", "year", "element")) %>%
+      right_join(DF_SUA_Agg, by = c("GCAM_region_ID", "item_code", "year", "element")) %>%
+      # equivalent to
+      #left_join(DF_SUA_Agg, ., by=c("GCAM_region_ID", "item_code", "year", "element")) %>%
       mutate(value = if_else(is.na(TCL), value, value + TCL)) %>%
       select(-TCL) %>%
       filter(value != 0.0) ->
       DF_SUA_Agg_TradeAdj
 
+
+    # need to remove gross trade when export > production
+    # to maintain triangle the inequality rule
+    # Note that Prod < export is still possible due to "residuals"
     DF_SUA_Agg_TradeAdj %>%
       filter(element %in% c("Production", "Import", "Export")) %>%
-      spread(element, value, fill=0.0) %>%
+      spread(element, value, fill = 0.0) %>%
       mutate(value = pmax(Production - Export, -Import)) %>%
       filter(value < 0) %>%
       select(-Production, -Import, -Export) ->
@@ -138,17 +156,10 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
               GrossTradeRM %>% mutate(element = All_Bal_element[All_Bal_element == "Import"]),
               DF_SUA_Agg_TradeAdj) %>%
       group_by(GCAM_region_ID, item_code, element, year) %>%
-      summarize(value = sum(value)) %>%
+      summarize(value = sum(value), .groups = "drop") %>%
       ungroup() ->
-      DF_SUA_Agg_TradeAdj_TriagAdj
+      FAO_SUA_Kt_2010to2019_R
 
-    return(DF_SUA_Agg_TradeAdj_TriagAdj)
-    }
-
-    # 1.2. Execution: regional aggregation ----
-    # Get SUA data ready
-    FAO_SUA_Kt_2010to2019_R <- SUA_Reg_Agg(GCAMDATA_FAOSTAT_SUA_195Regs_530Items_2010to2019,
-                                         GCAMDATA_FAOSTAT_BiTrade_194Regs_400Items_2010to2020)
 
     Min_SUA_Year <- min(FAO_SUA_Kt_2010to2019_R$year)
     FAO_SUA_Kt_2010to2019 <- GCAMDATA_FAOSTAT_SUA_195Regs_530Items_2010to2019
@@ -174,7 +185,6 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       OUTPUT_SPECIFIC_EXTRACTION_RATE
 
     # 2.1 Helper functions for SUA primary equivalent aggregation ----
-
 
 
     #' Get extraction rate
@@ -208,7 +218,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
         select(-nest_level) %>%
         bind_rows(DF_CURR_NEST %>% filter(element == "Production" | element == "Export")) %>%
         dplyr::group_by_at(vars(-item_code, -value)) %>%
-        summarize(value=sum(value)) %>%
+        summarize(value=sum(value), .groups = "drop") %>%
         ungroup() %>%
         complete(GCAM_region_ID = GCAM_region_names$GCAM_region_ID, nesting(element, year, APE_comm), fill=list(value=0)) %>%
         spread(element, value, fill = 0.0) %>%
@@ -257,7 +267,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
         spread(is_import, value, fill=0.0) %>%
         group_by(APE_comm, GCAM_region_ID, year, item_code) %>%
         summarize(import = sum(`TRUE`),
-                  import_demand = sum(`FALSE`)) %>%
+                  import_demand = sum(`FALSE`), .groups = "drop") %>%
         ungroup() %>%
         mutate(Import_Demand_Share = import / import_demand,
                # replace NA and inf
@@ -289,7 +299,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
         group_by(APE_comm, GCAM_region_ID, year, item_code, bal_source) %>%
         # Clean the bal items
         summarize(`Regional supply` = sum(value[is_supply]),
-                  `Regional demand` = sum(value[is_demand])) %>%
+                  `Regional demand` = sum(value[is_demand]), .groups = "drop") %>%
         ungroup() %>%
         mutate(`Residuals` = `Regional supply` - `Regional demand`) %>%
         gather(element, value, `Regional supply`, `Regional demand`, `Residuals`) %>%
@@ -322,7 +332,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
         spread(is_opening, value, fill=0.0) %>%
         group_by(APE_comm, GCAM_region_ID, year, item_code) %>%
         summarize(Ostock = sum(`TRUE`),
-                  Ostock_demand = sum(`FALSE`)) %>%
+                  Ostock_demand = sum(`FALSE`), .groups = "drop") %>%
         ungroup() %>%
         mutate(Ostock_Demand_Share = Ostock / Ostock_demand,
                # The share should be small than 1
@@ -356,7 +366,8 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
         summarize(`Regional supply` = sum(value[is_supply]),
                   `Regional demand` = sum(value[is_demand]),
                   # using max to guard against missing Closing stocks row
-                  `Stock Variation` = max(value[element == "Closing stocks"], 0) - max(value[element == "Opening stocks"], 0)) %>%
+                  `Stock Variation` = max(value[element == "Closing stocks"], 0) - max(value[element == "Opening stocks"], 0),
+                  .groups = "drop") %>%
         ungroup() %>%
         mutate(`Residuals` = `Regional supply` - `Regional demand`) %>%
         gather(element, value, `Regional supply`, `Regional demand`, `Stock Variation`, `Residuals`) %>%
@@ -457,7 +468,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
                  item_code = source_item_code) %>%
           select(-share) %>%
           group_by(nest_level, APE_comm, GCAM_region_ID, year, item_code, element) %>%
-          summarize(value = sum(value)) %>%
+          summarize(value = sum(value), .groups = "drop") %>%
           ungroup() %>%
           complete(element=All_Bal_element[All_Bal_element %in% c("Prodution", "Processed")], nesting(nest_level, APE_comm, GCAM_region_ID, year, item_code), fill=list(value=0)) %>%
           group_by(nest_level, APE_comm, GCAM_region_ID, year, item_code) %>%
@@ -477,7 +488,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
             DF_ALL[DF_ALL$nest_level == nest_i, "data", drop=TRUE][[1]],
             df3_nested[df3_nested$nest_level == nest_i, "data", drop=TRUE][[1]]) %>%
             group_by(APE_comm, GCAM_region_ID, year, item_code, element) %>%
-            summarize(value = sum(value)) %>%
+            summarize(value = sum(value), .groups = "drop") %>%
             ungroup() ->
             AGG
           DF_ALL %>%
@@ -487,14 +498,15 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
         }
         # drop the processed tier as the data has now been aggregated and thus
         # no longer needed
-        DF_ALL %<>% filter(nest_level != curr_nest)
+        DF_ALL %>% filter(nest_level != curr_nest) ->
+          DF_ALL
       }
 
       # Combine the remaining items by APE_comm
       DF_ALL %>%
         tidyr::unnest(c("data")) %>%
         group_by(GCAM_region_ID, APE_comm, element, year) %>%
-        summarize(value = sum(value)) %>%
+        summarize(value = sum(value), .groups = "drop") %>%
         ungroup() %>%
         spread(element, value, fill = 0.0) %>%
         # Do a final balance cleaning
@@ -506,12 +518,12 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
 
       # Aggregate by GCAM_commodity
       # At this point we ditch the ID codes and factors as we return the data and
-      # make it available for the rest of the orginal processing
+      # make it available for the rest of the original processing
       APE_AGG %>%
         left_join_error_no_match(Mapping_SUA_PrimaryEquivalent %>% select(GCAM_commodity, APE_comm) %>% distinct(),
                                  by = c("APE_comm")) %>%
         group_by(GCAM_region_ID, GCAM_commodity, element, year) %>%
-        summarize(value = sum(value)) %>%
+        summarize(value = sum(value), .groups = "drop") %>%
         ungroup() %>%
         left_join_error_no_match(GCAM_region_names, by=c("GCAM_region_ID")) %>%
         mutate(element = as.character(element)) %>%
@@ -527,8 +539,11 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
     ## Loop through all GCAM_commodity with available data ----
 
     FAO_SUA_Kt_2010to2019_R %>%
-      left_join(Mapping_SUA_PrimaryEquivalent_ID %>% select(APE_comm, item_code = sink_item_code, nest_level) %>% distinct(), by=c("item_code" = "item_code")) %>%
-      left_join(Mapping_SUA_PrimaryEquivalent_ID %>% select(APE_comm_source = APE_comm, item_code = source_item_code) %>% distinct(), by=c("item_code")) %>%
+      # In both left_join here, APE_comm could be NA after the join and they are removed later
+      left_join(Mapping_SUA_PrimaryEquivalent_ID %>%
+                  select(APE_comm, item_code = sink_item_code, nest_level) %>% distinct(), by = c("item_code")) %>%
+      left_join(Mapping_SUA_PrimaryEquivalent_ID %>%
+                  select(APE_comm_source = APE_comm, item_code = source_item_code) %>% distinct(), by=c("item_code")) %>%
       # find SUA items which are truly not mapped to anything and filter them out
       mutate(APE_comm = if_else(is.na(APE_comm), APE_comm_source, APE_comm)) %>%
       select(-APE_comm_source) %>%
@@ -540,7 +555,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       # we will literally nest by nest level to avoid constant subseting
       # although we end up needed to unnest at times as well so ultimately,
       # it likely makes little difference in performance
-      tidyr::nest(data = -nest_level)  %>%
+      tidyr::nest(data = -nest_level) %>%
       # we are now ready to recursively primarize APE commodities then aggregate
       # to GCAM commodities
       Proc_primarize() ->
@@ -555,56 +570,8 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
 
     # 3.1. Helper functions ----
 
-    #' Balance gross trade
-    #' @description Scale gross export and import in all regions to make them equal at the world level.
-    #' @param .DF An input dataframe with an element col including Import and Export
-    #' @param .MIN_TRADE_PROD_RATIO Trade will be removed if world total export or import over production is smaller than .MIN_TRADE_PROD_RATIO (1% default value)
-    #' @param .Reg_VAR Region variable name; default is ("area_code")
-    #' @param .GROUP_VAR Group variable; default is ("item_code", "year")
-    #' @return The same dataframe with balanced world export and import.
+    # GROSS_TRADE_ADJUST() moved to xfaostat_helper_func.R
 
-    GROSS_TRADE_ADJUST <- function(.DF,
-                                   .MIN_TRADE_PROD_RATIO = 0.01,
-                                   .Reg_VAR = 'area_code',
-                                   .GROUP_VAR = c("item_code", "year")){
-
-      # assert .DF structure
-      assertthat::assert_that(all(c("element", .GROUP_VAR) %in% names(.DF)))
-      assertthat::assert_that(dplyr::is.grouped_df(.DF) == F)
-      assertthat::assert_that(all(c("Import", "Export", "Production") %in%
-                                    c(.DF %>% distinct(element) %>% pull)))
-
-      .DF %>%
-        # Join ExportScaler and ImportScaler
-        left_join(
-          .DF %>%
-            spread(element, value) %>%
-            dplyr::group_by_at(vars(dplyr::all_of(.GROUP_VAR))) %>%
-            # filter out items with zero world trade or production
-            # and replace na to zero later for scaler
-            replace_na(list(Export = 0, Import = 0, Production = 0)) %>%
-            filter(sum(Export) != 0, sum(Import) != 0, sum(Production) != 0) %>%
-            # world trade should be later than .MIN_TRADE_PROD_RATIO to have meaningful data
-            # depending on item group, .MIN_TRADE_PROD_RATIO can be set differently
-            filter(sum(Export) / sum(Production) > .MIN_TRADE_PROD_RATIO) %>%
-            filter(sum(Import) / sum(Production) > .MIN_TRADE_PROD_RATIO) %>%
-            # finally,
-            # use average gross trade value to calculate trade scaler
-            # the trade scalers will be applied to all regions
-            mutate(ExportScaler = (sum(Export) + sum(Import))/ 2 / sum(Export),
-                   ImportScaler = (sum(Export) + sum(Import))/ 2 / sum(Import)) %>%
-            select(dplyr::all_of(c(.Reg_VAR, .GROUP_VAR)), ExportScaler, ImportScaler) %>%
-            ungroup(),
-          by = c(dplyr::all_of(c(.Reg_VAR, .GROUP_VAR)))) %>%
-        replace_na(list(ExportScaler = 0, ImportScaler = 0)) %>%
-        # If world export, import, or prod is 0, trade will be zero
-        mutate(value = case_when(
-          element %in% c("Export") ~ value * ExportScaler,
-          element %in% c("Import") ~ value * ImportScaler,
-          TRUE ~ value)) %>%
-        select(-ExportScaler, -ImportScaler)
-
-    }
 
     # 3.2. Execution ----
     ## a. FBSH_CB aggregate to GCAM commodity and region----
@@ -615,22 +582,27 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       filter(!is.na(value)) ->
       FBSH_CB
 
+    # assert mapping is good
+    assertthat::assert_that(
+      Mapping_item_FBS_GCAM %>% filter(!is.na(GCAM_commodity)) %>%
+        distinct(item_code) %>% pull() %in%
+        c(FBSH_CB %>% distinct(item_code) %>% pull) %>% all)
+
     Mapping_item_FBS_GCAM %>%
       select(item_code, GCAM_commodity)%>%
       filter(!is.na(GCAM_commodity)) %>%
-      left_join(FBSH_CB %>%
-                  # complete element
-                  complete(nesting(area, area_code, item_code, item, year), element,
-                           fill = list(value = 0)),
-                by = "item_code") %>%
-      dplyr::group_by_at(vars(-value, -item, -item_code)) %>%
-      summarise(value = sum(value), .groups = "drop") %>%
-      gcamdata::left_join_error_no_match(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
-      gcamdata::left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
-      gcamdata::left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      # Using inner_join since not all items in FBSH_CB are used; left_join would work the same
+      inner_join(FBSH_CB, by = "item_code") %>%
+      left_join_error_no_match(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
+      left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       dplyr::group_by_at(vars(area = region, year, GCAM_commodity, element)) %>%
-      summarise(value = sum(value), .groups = "drop") ->
+      summarise(value = sum(value), .groups = "drop") %>%
+      # complete element
+      complete(nesting(area, year, GCAM_commodity), element,
+               fill = list(value = 0)) ->
       FBSH_CB_GCAM
+
 
     ## b. Get primary production in GCAM region and sector ----
 
@@ -640,10 +612,12 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       filter(!is.na(value), element == "Production") %>%
       inner_join(
         Mapping_SUA_PrimaryEquivalent %>% filter(source_primary == T) %>%
-          distinct(GCAM_commodity, item = source_item), by = "item") %>%
-      gcamdata::left_join_error_no_match(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
-      gcamdata::left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
-      gcamdata::left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+          distinct(GCAM_commodity, item = source_item) %>%
+          left_join_error_no_match(SUA_item_code_map, by = "item") %>% select(-item),
+        by = "item_code") %>%
+      left_join_error_no_match(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
+      left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       dplyr::group_by_at(vars(area = region, year, GCAM_commodity, element)) %>%
       summarise(value = sum(value), .groups = "drop") ->
       QCL_PROD_GCAM
@@ -653,6 +627,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
     # Primary production could be different due to aggregation or inconsistency
 
     QCL_PROD_GCAM %>%
+      filter(year >= min(unique(FBSH_CB_GCAM$year))) %>%
       # Complete elements in QCL_PROD
       # also GCAM_commodity because no pork production in Pakistan
       complete(area, year, GCAM_commodity,
@@ -708,6 +683,9 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
 
     # 4.1. Helper functions ----
     Check_Balance_SUA <- function(.DF){
+      NULL -> element -> GCAM_commodity -> Import -> Export -> Production -> Food ->
+        Feed -> `Other uses` -> `Regional supply` -> `Regional demand` -> bal ->
+        region
 
       assertthat::assert_that(all(c("element") %in% names(.DF)))
       assertthat::assert_that(all(c("Import", "Export", "Production",
@@ -737,20 +715,29 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       if (isFALSE(.DF %>%
                  spread(element, value) %>%
                  mutate(`Regional supply` = Production + `Import`,
-                        `Regional demand` = `Export` + Feed + Food  + `Other uses`,
+                        `Regional demand` = `Export` + Feed + Food + `Stock Variation` + Loss + `Other uses`,
                         bal = abs(`Regional supply` -  `Regional demand`)) %>%
                  filter(bal > 0.0001) %>% nrow() == 0)) {
         warning("Regional supply != Regional demand + Residuals")
       }
 
       # 4. Balanced in all dimensions
-      assertthat::assert_that(.DF %>% nrow() ==
-                                .DF %>% distinct(year) %>% nrow *
-                                .DF %>% distinct(GCAM_commodity) %>% nrow *
-                                .DF %>% distinct(element) %>% nrow *
-                                .DF %>% distinct(region) %>% nrow)
+      .DF %>% filter(year < 2010) -> .DF1
+      assertthat::assert_that(.DF1 %>% nrow() ==
+                                .DF1 %>% distinct(year) %>% nrow *
+                                .DF1 %>% distinct(GCAM_commodity) %>% nrow *
+                                .DF1 %>% distinct(element) %>% nrow *
+                                .DF1 %>% distinct(region) %>% nrow)
+
+      .DF %>% filter(year >= 2010) -> .DF1
+      assertthat::assert_that(.DF1 %>% nrow() ==
+                                .DF1 %>% distinct(year) %>% nrow *
+                                .DF1 %>% distinct(GCAM_commodity) %>% nrow *
+                                .DF1 %>% distinct(element) %>% nrow *
+                                .DF1 %>% distinct(region) %>% nrow)
 
     }
+
 
     # 4.2. Connect and bind data from two periods ----
 
@@ -759,17 +746,18 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       bind_rows(GCAM_APE_after2010) %>%
       mutate(unit = "1000 tonnes") %>%
       # clean and aggregate elements not using
-      filter(!element %in% c("Regional demand", "Regional supply",
-                             "Opening stocks", "Closing stocks")) %>%
+      filter(!element %in% c("Regional demand", "Regional supply")) %>%
       mutate(element = replace(element,
-                               element %in% c("Stock Variation", "Processed",
-                                              "Seed", "Residuals", "Loss"),
+                               element %in% c("Processed",
+                                              "Seed", "Residuals"),
                                "Other uses")) %>%
       dplyr::group_by_at(dplyr::vars(-value)) %>%
       summarise(value = sum(value), .groups = "drop")
 
     ## Check balance
     GCAM_AgLU_SUA_APE_1973_2019 %>% Check_Balance_SUA
+
+
     rm(GCAM_APE_before2010, GCAM_APE_after2010)
 
 
@@ -787,16 +775,19 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
 
     Primary_Item_CROP <-
       FAO_ag_items_PRODSTAT %>%
-        select(item, GCAM_commodity, GCAM_subsector) %>%
+        select(item, item_code, GCAM_commodity, GCAM_subsector) %>%
         filter(!is.na(item), !is.na(GCAM_commodity)) %>%
         # Fodder grass has a duplicate as it mapped to different GTAP crops
         distinct %>%
         mutate(CropMeat = if_else(GCAM_commodity %in% c("FodderGrass", "FodderHerb"),
                                   "Crop_Fodder", "Crop_NonFodder"))
     assertthat::assert_that(
-      all(Primary_Item_CROP %>% filter(CropMeat == "Crop_NonFodder") %>%  pull(item) %in%
-        c(Mapping_SUA_PrimaryEquivalent %>% filter(source_primary == T) %>%
-          distinct(item = source_item) %>% pull)),
+      all(Primary_Item_CROP %>% filter(CropMeat == "Crop_NonFodder") %>%  pull(item_code) %in%
+        c(Mapping_SUA_PrimaryEquivalent %>%
+            filter(source_primary == T) %>%
+            distinct(item = source_item) %>%
+            left_join_error_no_match(SUA_item_code_map, by = "item") %>% pull(item_code) )
+        ),
       msg = "Inconsistent mapping of primary crops between FAO_ag_items_PRODSTAT and Mapping_SUA_PrimaryEquivalent" )
 
     Primary_Item_MEAT <-
@@ -808,6 +799,7 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
                c(FAO_an_items_PRODSTAT %>%
                    filter(!is.na(GCAM_commodity)) %>%
                    distinct(GCAM_commodity) %>% pull))%>%
+      left_join_error_no_match(SUA_item_code_map, by = "item") %>%
       mutate(CropMeat = "Meat")
 
     # 5.2. Get primary production for all ----
@@ -828,7 +820,8 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
         # filter only primary crop items (all crops with area)
         filter(item_set %in% c("QCL_COMM_CROP_PRIMARY",
                                "QCL_COMM_CROP_PRIMARY_FODDER")) %>%
-        select(-unit) %>% spread(element, value) %>%
+        select(area_code, item_code, year, element, value) %>%
+        spread(element, value) %>%
         filter(is.infinite(Production / `Area harvested`|
                              is.infinite(`Area harvested`/Production)) ) %>%
         nrow == 0,
@@ -878,8 +871,9 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       # Keep subsector info for crops
       inner_join(Primary_Item_CROP %>%
                    bind_rows(Primary_Item_MEAT %>%
-                               mutate(GCAM_subsector = GCAM_commodity)),
-                 by = "item") %>%
+                               mutate(GCAM_subsector = GCAM_commodity)) %>%
+                   select(-item),
+                 by = "item_code") %>%
       # add in iso and gcam regions ID
       left_join_error_no_match(Area_Region_Map, by = "area_code") ->
       FAO_AgProd_Kt_All
@@ -910,18 +904,18 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
     ## b. All area harvested ----
 
     assertthat::assert_that(
-      all(Primary_Item_CROP %>% pull(item) %in%
+      all(Primary_Item_CROP %>% pull(item_code) %in%
             c(FAO_AgProd_Kt_Area_Kha %>%
                 filter(item_set %in% c("QCL_COMM_CROP_PRIMARY",
                                        "QCL_COMM_CROP_PRIMARY_FODDER")) %>%
-                pull(item)) ),
+                pull(item_code)) ),
       msg =  "Not all required primary crop items included in FAO_AgProd_Kt_Area_Kha" )
 
     FAO_AgProd_Kt_Area_Kha %>%
       filter(element == "Area harvested") %>%
       select(c(names(FAO_SUA_Kt_2010to2019), "item")) %>%
       # Keep subsector info for crops
-      inner_join(Primary_Item_CROP, by = "item") %>%
+      inner_join(Primary_Item_CROP %>% select(-item), by = "item_code") %>%
       # add in iso and gcam regions ID
       left_join_error_no_match(Area_Region_Map %>% select(-region), by = "area_code") ->
       FAO_AgArea_Kha_All
@@ -940,11 +934,12 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
       select(GCAM_commodity, item = source_item) %>%
       bind_rows(Mapping_SUA_PrimaryEquivalent %>%
                   select(GCAM_commodity, item = sink_item)) %>%
-      distinct() %>% arrange(GCAM_commodity) ->
+      distinct() %>%
+      left_join_error_no_match(SUA_item_code_map, by = "item") ->
       SUA_Items_GCAM
 
     assertthat::assert_that(
-      SUA_Items_GCAM %>% distinct(item) %>% nrow() == SUA_Items_GCAM %>% nrow(),
+      SUA_Items_GCAM %>% distinct(item_code) %>% nrow() == SUA_Items_GCAM %>% nrow(),
       msg = "Check duplicates in Mapping_SUA_PrimaryEquivalent SUA items"
     )
 
@@ -952,13 +947,14 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
     # (e.g., wine, infant food, or other nonfood items etc.)
 
     SUA_item_code_map %>%
-      filter(!item %in% unique(SUA_Items_GCAM$item)) -> SUA_Items_NonGCAM
+      filter(!item_code %in% unique(SUA_Items_GCAM$item_code)) -> SUA_Items_NonGCAM
 
     # b. There are 426 FAO food items, all included in FAO_SUA_Kt_2010to2019 (530 items)
     # SUA_Items_Food includes both GCAM and NonGCAM(NEC)
     SUA_item_code_map %>%
       filter(item_code %in% unique(GCAMDATA_FAOSTAT_MacroNutrientRate_179Regs_426Items_2010to2019Mean$item_code)) %>%
-      left_join(SUA_Items_GCAM, by = "item") %>%
+      # NA expected here
+      left_join(SUA_Items_GCAM %>% select(-item), by = "item_code") %>%
       # For NA GCAM_commodity: not elsewhere classified (NEC)
       # So we would know % of food calories not included in GCAM commodities
       mutate(GCAM_commodity = if_else(is.na(GCAM_commodity), "NEC", GCAM_commodity)) ->
@@ -992,11 +988,12 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
         tibble(macronutrient = c("calperg", "fatperc", "proteinperc"))) %>%
       left_join(
         GCAMDATA_FAOSTAT_MacroNutrientRate_179Regs_426Items_2010to2019Mean %>%
+          select(-item) %>%
           tidyr::gather(macronutrient, macronutrient_value, calperg:proteinperc),
-        by = c("area_code", "item_code", "item", "macronutrient")
+        by = c("area_code", "item_code", "macronutrient")
       ) %>%
-      left_join_error_no_match(SUA_food_macronutrient_rate_World,
-                               by = c("item_code", "item", "macronutrient")) %>%
+      left_join_error_no_match(SUA_food_macronutrient_rate_World %>% select(-item),
+                               by = c("item_code", "macronutrient")) %>%
       mutate(macronutrient_value = if_else(is.na(macronutrient_value),
                                            macronutrient_value_World,
                                            macronutrient_value),
@@ -1018,8 +1015,8 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent <- function(command, ...) {
     # This will be used later as an upper bound to improve the data
     GCAMDATA_FAOSTAT_MacroNutrientRate_179Regs_426Items_2010to2019Mean %>%
       tidyr::gather(macronutrient, macronutrient_value, calperg:proteinperc) %>%
-      left_join_error_no_match(SUA_Items_Food,
-                               by = c("item_code", "item")) %>%
+      left_join_error_no_match(SUA_Items_Food %>% select(-item),
+                               by = c("item_code")) %>%
       group_by(GCAM_commodity, macronutrient) %>%
       summarise(max_macronutrient_value = max(macronutrient_value), .groups = "drop") ->
       FAO_Food_MacronutrientRate_2010_2019_MaxValue

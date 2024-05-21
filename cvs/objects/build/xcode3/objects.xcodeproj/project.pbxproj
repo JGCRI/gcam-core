@@ -239,6 +239,7 @@
 		CDA0C40D25A7B26200E84153 /* calc_base_price.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA0C40C25A7B26200E84153 /* calc_base_price.cpp */; };
 		CDA481A525E6FC3E0046E143 /* fdjac.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA481A425E6FC3E0046E143 /* fdjac.cpp */; };
 		CDAACD88216C546D00D13FD6 /* supply_demand_curve_saver.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAACD87216C546D00D13FD6 /* supply_demand_curve_saver.cpp */; };
+		CDAC857E2BF30AD60056386E /* ag_storage_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAC857D2BF30AD60056386E /* ag_storage_technology.cpp */; };
 		CDAF62F0130DAB6900D93AFB /* MAGICC_array.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */; };
 		CDAF62F1130DAB6900D93AFB /* MAGICC_IO_helpers.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62ED130DAB6900D93AFB /* MAGICC_IO_helpers.cpp */; };
 		CDAF62F2130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDAF62EE130DAB6900D93AFB /* ObjECTS_MAGICC_others.cpp */; };
@@ -839,6 +840,8 @@
 		CDA481A425E6FC3E0046E143 /* fdjac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fdjac.cpp; sourceTree = "<group>"; };
 		CDAACD84216C545F00D13FD6 /* supply_demand_curve_saver.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = supply_demand_curve_saver.h; sourceTree = "<group>"; };
 		CDAACD87216C546D00D13FD6 /* supply_demand_curve_saver.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = supply_demand_curve_saver.cpp; sourceTree = "<group>"; };
+		CDAC857A2BF30ACD0056386E /* ag_storage_technology.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = ag_storage_technology.h; sourceTree = "<group>"; };
+		CDAC857D2BF30AD60056386E /* ag_storage_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ag_storage_technology.cpp; sourceTree = "<group>"; };
 		CDAF62EA130DAB6100D93AFB /* MAGICC_array.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MAGICC_array.h; sourceTree = "<group>"; };
 		CDAF62EB130DAB6100D93AFB /* ObjECTS_MAGICC.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ObjECTS_MAGICC.h; sourceTree = "<group>"; };
 		CDAF62EC130DAB6900D93AFB /* MAGICC_array.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MAGICC_array.cpp; sourceTree = "<group>"; };
@@ -1803,6 +1806,7 @@
 		CD48866B122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CDAC857A2BF30ACD0056386E /* ag_storage_technology.h */,
 				9CA541B225939D0600CFA8F2 /* output_accounting.h */,
 				CDEE90B5296DD954002FC783 /* exogenous_shutdown_decider.h */,
 				0EDA1125220B73B60066113A /* resource_reserve_technology.h */,
@@ -1858,6 +1862,7 @@
 		CD48869E122873C200F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
+				CDAC857D2BF30AD60056386E /* ag_storage_technology.cpp */,
 				9CA541B025939CF300CFA8F2 /* output_accounting.cpp */,
 				CDEE90B7296DD962002FC783 /* exogenous_shutdown_decider.cpp */,
 				0EDA1123220B73A90066113A /* resource_reserve_technology.cpp */,
@@ -2390,6 +2395,7 @@
 				CD48882D122873C200F5A88A /* s_curve_interpolation_function.cpp in Sources */,
 				CD48882F122873C200F5A88A /* supply_demand_curve.cpp in Sources */,
 				CD488830122873C200F5A88A /* timer.cpp in Sources */,
+				CDAC857E2BF30AD60056386E /* ag_storage_technology.cpp in Sources */,
 				CD488831122873C200F5A88A /* util.cpp in Sources */,
 				CD488832122873C200F5A88A /* curve.cpp in Sources */,
 				CD488833122873C200F5A88A /* data_point.cpp in Sources */,

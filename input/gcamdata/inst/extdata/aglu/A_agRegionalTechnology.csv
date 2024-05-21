@@ -6,46 +6,46 @@
 # Column types: ccccnnnc
 # ----------
 supplysector,subsector,technology,minicam.energy.input,coefficient,input.cost,share.weight,market.name
-regional corn,domestic corn,domestic corn,Corn,1,0,1,regional
-regional corn,imported corn,imported corn,traded corn,1,0,1,USA
-regional fibercrop,domestic fibercrop,domestic fibercrop,FiberCrop,1,0,1,regional
-regional fibercrop,imported fibercrop,imported fibercrop,traded fibercrop,1,0,1,USA
-regional fruits,domestic fruits,domestic fruits,Fruits,1,0,1,regional
-regional fruits,imported fruits,imported fruits,traded fruits,1,0,1,USA
-regional legumes,domestic legumes,domestic legumes,Legumes,1,0,1,regional
-regional legumes,imported legumes,imported legumes,traded legumes,1,0,1,USA
-regional misccrop,domestic misccrop,domestic misccrop,MiscCrop,1,0,1,regional
-regional misccrop,imported misccrop,imported misccrop,traded misccrop,1,0,1,USA
-regional nuts_seeds,domestic nuts_seeds,domestic nuts_seeds,NutsSeeds,1,0,1,regional
-regional nuts_seeds,imported nuts_seeds,imported nuts_seeds,traded nuts_seeds,1,0,1,USA
-regional oilcrop,domestic oilcrop,domestic oilcrop,OilCrop,1,0,1,regional
-regional oilcrop,imported oilcrop,imported oilcrop,traded oilcrop,1,0,1,USA
-regional othergrain,domestic othergrain,domestic othergrain,OtherGrain,1,0,1,regional
-regional othergrain,imported othergrain,imported othergrain,traded othergrain,1,0,1,USA
-regional oilpalm,domestic oilpalm,domestic oilpalm,OilPalm,1,0,1,regional
-regional oilpalm,imported oilpalm,imported oilpalm,traded oilpalm,1,0,1,USA
-regional rice,domestic rice,domestic rice,Rice,1,0,1,regional
-regional rice,imported rice,imported rice,traded rice,1,0,1,USA
-regional root_tuber,domestic root_tuber,domestic root_tuber,RootTuber,1,0,1,regional
-regional root_tuber,imported root_tuber,imported root_tuber,traded root_tuber,1,0,1,USA
-regional soybean,domestic soybean,domestic soybean,Soybean,1,0,1,regional
-regional soybean,imported soybean,imported soybean,traded soybean,1,0,1,USA
-regional sugarcrop,domestic sugarcrop,domestic sugarcrop,SugarCrop,1,0,1,regional
-regional sugarcrop,imported sugarcrop,imported sugarcrop,traded sugarcrop,1,0,1,USA
-regional vegetables,domestic vegetables,domestic vegetables,Vegetables,1,0,1,regional
-regional vegetables,imported vegetables,imported vegetables,traded vegetables,1,0,1,USA
-regional wheat,domestic wheat,domestic wheat,Wheat,1,0,1,regional
-regional wheat,imported wheat,imported wheat,traded wheat,1,0,1,USA
-regional beef,domestic beef,domestic beef,Beef,1,0,1,regional
-regional beef,imported beef,imported beef,traded beef,1,0,1,USA
-regional dairy,domestic dairy,domestic dairy,Dairy,1,0,1,regional
-regional dairy,imported dairy,imported dairy,traded dairy,1,0,1,USA
-regional pork,domestic pork,domestic pork,Pork,1,0,1,regional
-regional pork,imported pork,imported pork,traded pork,1,0,1,USA
-regional poultry,domestic poultry,domestic poultry,Poultry,1,0,1,regional
-regional poultry,imported poultry,imported poultry,traded poultry,1,0,1,USA
-regional sheepgoat,domestic sheepgoat,domestic sheepgoat,SheepGoat,1,0,1,regional
-regional sheepgoat,imported sheepgoat,imported sheepgoat,traded sheepgoat,1,0,1,USA
+total corn,domestic corn,domestic corn,Corn,1,0,1,regional
+total corn,imported corn,imported corn,traded corn,1,0,1,USA
+total fibercrop,domestic fibercrop,domestic fibercrop,FiberCrop,1,0,1,regional
+total fibercrop,imported fibercrop,imported fibercrop,traded fibercrop,1,0,1,USA
+total fruits,domestic fruits,domestic fruits,Fruits,1,0,1,regional
+total fruits,imported fruits,imported fruits,traded fruits,1,0,1,USA
+total legumes,domestic legumes,domestic legumes,Legumes,1,0,1,regional
+total legumes,imported legumes,imported legumes,traded legumes,1,0,1,USA
+total misccrop,domestic misccrop,domestic misccrop,MiscCrop,1,0,1,regional
+total misccrop,imported misccrop,imported misccrop,traded misccrop,1,0,1,USA
+total nuts_seeds,domestic nuts_seeds,domestic nuts_seeds,NutsSeeds,1,0,1,regional
+total nuts_seeds,imported nuts_seeds,imported nuts_seeds,traded nuts_seeds,1,0,1,USA
+total oilcrop,domestic oilcrop,domestic oilcrop,OilCrop,1,0,1,regional
+total oilcrop,imported oilcrop,imported oilcrop,traded oilcrop,1,0,1,USA
+total othergrain,domestic othergrain,domestic othergrain,OtherGrain,1,0,1,regional
+total othergrain,imported othergrain,imported othergrain,traded othergrain,1,0,1,USA
+total oilpalm,domestic oilpalm,domestic oilpalm,OilPalm,1,0,1,regional
+total oilpalm,imported oilpalm,imported oilpalm,traded oilpalm,1,0,1,USA
+total rice,domestic rice,domestic rice,Rice,1,0,1,regional
+total rice,imported rice,imported rice,traded rice,1,0,1,USA
+total root_tuber,domestic root_tuber,domestic root_tuber,RootTuber,1,0,1,regional
+total root_tuber,imported root_tuber,imported root_tuber,traded root_tuber,1,0,1,USA
+total soybean,domestic soybean,domestic soybean,Soybean,1,0,1,regional
+total soybean,imported soybean,imported soybean,traded soybean,1,0,1,USA
+total sugarcrop,domestic sugarcrop,domestic sugarcrop,SugarCrop,1,0,1,regional
+total sugarcrop,imported sugarcrop,imported sugarcrop,traded sugarcrop,1,0,1,USA
+total vegetables,domestic vegetables,domestic vegetables,Vegetables,1,0,1,regional
+total vegetables,imported vegetables,imported vegetables,traded vegetables,1,0,1,USA
+total wheat,domestic wheat,domestic wheat,Wheat,1,0,1,regional
+total wheat,imported wheat,imported wheat,traded wheat,1,0,1,USA
+total beef,domestic beef,domestic beef,Beef,1,0,1,regional
+total beef,imported beef,imported beef,traded beef,1,0,1,USA
+total dairy,domestic dairy,domestic dairy,Dairy,1,0,1,regional
+total dairy,imported dairy,imported dairy,traded dairy,1,0,1,USA
+total pork,domestic pork,domestic pork,Pork,1,0,1,regional
+total pork,imported pork,imported pork,traded pork,1,0,1,USA
+total poultry,domestic poultry,domestic poultry,Poultry,1,0,1,regional
+total poultry,imported poultry,imported poultry,traded poultry,1,0,1,USA
+total sheepgoat,domestic sheepgoat,domestic sheepgoat,SheepGoat,1,0,1,regional
+total sheepgoat,imported sheepgoat,imported sheepgoat,traded sheepgoat,1,0,1,USA
 regional sawnwood,domestic sawnwood,domestic sawnwood,sawnwood,1,0,1,regional
 regional sawnwood,imported sawnwood,imported sawnwood,traded sawnwood,1,0,1,USA
 regional woodpulp,domestic woodpulp,domestic woodpulp,woodpulp,1,0,1,regional

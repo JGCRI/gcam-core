@@ -3,7 +3,7 @@
 # Comments: Note, forest product parameters are included here as well granted the processing steps are largely independent from animal production.
 # Units: NA
 # Source: NA
-# Column types: cccccccci 
+# Column types: cccccccci
 # ----------
 supplysector,subsector,technology,apply.to,from.year,to.year,interpolation.function,minicam.energy.input,coefficient
 FodderHerb_Residue,FodderHerb,FodderHerb,share-weight,final-calibration-year,end-year,fixed,FodderHerb,1
@@ -29,3 +29,4 @@ FeedCrops,DDGS and feedcakes,DDGS and feedcakes,share-weight,initial-future-year
 Scavenging_Other,Scavenging_Other,Scavenging_Other,share-weight,final-calibration-year,end-year,fixed,Scavenging_Other_Rsrc,1
 sawnwood_processing,sawnwood,sawnwood,share-weight,final-calibration-year,end-year,fixed,regional industrial_roundwood,1
 woodpulp_processing,woodpulp,woodpulp,share-weight,final-calibration-year,end-year,fixed,regional industrial_roundwood,1
+woodpulp_energy,woodpulp_energy,woodpulp_energy,share-weight,final-calibration-year,end-year,fixed,regional woodpulp,1

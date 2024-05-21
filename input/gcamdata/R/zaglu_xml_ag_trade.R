@@ -42,6 +42,8 @@ module_aglu_ag_trade_xml <- function(command, ...) {
 
     # ===================================================
 
+
+
     # Produce outputs
     create_xml("ag_trade.xml") %>%
       add_logit_tables_xml(L240.Supplysector_tra, "Supplysector") %>%

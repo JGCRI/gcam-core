@@ -62,6 +62,7 @@
 #include "technologies/include/pass_through_technology.h"
 #include "technologies/include/unmanaged_land_technology.h"
 #include "technologies/include/resource_reserve_technology.h"
+#include "technologies/include/ag_storage_technology.h"
 #include "technologies/include/empty_technology.h"
 
 extern Scenario* scenario;
@@ -134,6 +135,7 @@ bool TechnologyContainer::hasTechnologyType( const string& aTechNodeName ) {
              aTechNodeName == AgProductionTechnology::getXMLNameStatic() ||
              aTechNodeName == PassThroughTechnology::getXMLNameStatic() ||
              aTechNodeName == UnmanagedLandTechnology::getXMLNameStatic() ||
+             aTechNodeName == AgStorageTechnology::getXMLNameStatic() ||
              aTechNodeName == ResourceReserveTechnology::getXMLNameStatic() );
 }
 

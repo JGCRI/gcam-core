@@ -1,14 +1,16 @@
 # File: A322.globaltech_shrwt.csv
-# Title: Fertilizer default shareweights
+# Title: ammonia / traded ammonia / regional ammonia / N fertilizer default technology shareweights
 # Units: Unitless
-# Column types: ccciiiiiii
+# Column types: cccinnnnnnn
 # ----------
-supplysector,subsector,technology,1971,2010,2015,2019,2020,2050,2100
-N fertilizer,coal,coal,1,1,1,1,1,1,1
-N fertilizer,coal,coal CCS,0,0,0,0,0,1,1
-N fertilizer,gas,gas,1,1,1,1,1,1,1
-N fertilizer,gas,gas CCS,0,0,0,0,0,1,1
-N fertilizer,refined liquids,refined liquids,1,1,1,1,1,1,1
-N fertilizer,hydrogen,hydrogen,0,0,0,0,0,1,1
-N fertilizer,Imports,Imports,0,0,0,0,0,0,0
-Exports_fertilizer,N fertilizer,N fertilizer,0,0,0,0,0,0,0
+supplysector,subsector,technology,traded,1971,2010,2015,2019,2020,2050,2100
+ammonia,coal,coal,0,1,1,1,1,1,1,1
+ammonia,coal,coal CCS,0,0,0,0,0,0,1,1
+ammonia,gas,gas,0,1,1,1,1,1,1,1
+ammonia,gas,gas CCS,0,0,0,0,0,0,1,1
+ammonia,refined liquids,refined liquids,0,1,1,1,1,1,1,1
+ammonia,hydrogen,hydrogen,0,0,0,0,0,0,1,1
+traded ammonia,traded ammonia,traded ammonia,1,1,1,1,1,1,1,1
+regional ammonia,domestic ammonia,domestic ammonia,0,1,1,1,1,1,1,1
+regional ammonia,imported ammonia,imported ammonia,0,1,1,1,1,1,1,1
+N fertilizer,N fertilizer,N fertilizer,0,1,1,1,1,1,1,1

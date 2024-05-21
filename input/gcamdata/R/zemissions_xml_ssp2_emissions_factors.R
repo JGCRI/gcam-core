@@ -14,15 +14,18 @@ module_emissions_ssp2_emissions_factors_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L251.ssp2_ef",
              "L251.ssp2_ef_elec",
-              "L251.ssp2_ef_vin"))
+              "L251.ssp2_ef_vin",
+             "L251.ssp2_ef_residTradBio"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "ssp2_emissions_factors.xml"))
+    return(c(XML = "ssp2_emissions_factors.xml",
+             XML = "ssp2_tradBio_emissions_factors.xml"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
     # Load required inputs
     L251.ssp2_ef <- get_data(all_data, "L251.ssp2_ef")
+    L251.ssp2_ef_residTradBio <- get_data(all_data, "L251.ssp2_ef_residTradBio")
     L251.ssp2_ef_elec <- get_data(all_data, "L251.ssp2_ef_elec")
     L251.ssp2_ef_vin <- get_data(all_data, "L251.ssp2_ef_vin")
 
@@ -34,6 +37,7 @@ module_emissions_ssp2_emissions_factors_xml <- function(command, ...) {
     # Rename L251.ssp2_ef column to match the expected column
     # names in the add_xml_data header.
     L251.ssp2_ef <- rename(L251.ssp2_ef, `emiss.coef` = `emiss.coeff`)
+    L251.ssp2_ef_residTradBio <- rename(L251.ssp2_ef_residTradBio, `emiss.coef` = `emiss.coeff`)
 
     # Produce outputs
     create_xml("ssp2_emissions_factors.xml") %>%
@@ -43,7 +47,12 @@ module_emissions_ssp2_emissions_factors_xml <- function(command, ...) {
       add_precursors("L251.ssp2_ef", "L251.ssp2_ef_elec", "L251.ssp2_ef_vin") ->
       ssp2_emissions_factors.xml
 
-    return_data(ssp2_emissions_factors.xml)
+    create_xml("ssp2_emissions_factors_tradBio.xml") %>%
+      add_xml_data(L251.ssp2_ef_residTradBio, "InputEmissCoeff") %>%
+      add_precursors("L251.ssp2_ef_residTradBio") ->
+      ssp2_tradBio_emissions_factors.xml
+
+    return_data(ssp2_emissions_factors.xml, ssp2_tradBio_emissions_factors.xml)
   } else {
     stop("Unknown command")
   }

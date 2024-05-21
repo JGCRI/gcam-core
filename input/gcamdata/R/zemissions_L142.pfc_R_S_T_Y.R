@@ -39,7 +39,10 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
              FILE = "emissions/EPA/EPA_SF6_Semi",
              FILE = "emissions/EPA_fgas_sector_map",
              FILE = "emissions/EPA_GWPs",
-             FILE = "emissions/EPA_country_map"))
+             FILE = "emissions/EPA_country_map",
+             FILE = "socioeconomics/income_shares",
+             "L244.GenericShares",
+             "L244.ThermalShares"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L142.pfc_R_S_T_Yh"))
   } else if(command == driver.MAKE) {
@@ -398,6 +401,62 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
       # Replace original output with scaled values
       L142.pfc_R_S_T_Yh <- L142.EPA_PFC_R_S_T_Yh
 
+
+      # ===============================================================
+      # Need to allocate residential energy to the different consumer groups using the computed shares:
+      L244.GenericShares<- get_data(all_data, "L244.GenericShares",strip_attributes = TRUE) %>%
+        select(region,gcam.consumer,building.service.input,year,gen_share) %>%
+        rename(supplysector=building.service.input,
+               share=gen_share) %>%
+        filter(grepl("resid",supplysector)) %>%
+        separate(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+        unite(supplysector,c("supplysector","group"),sep = "_") %>%
+        select(-gcam.consumer) %>%
+        complete(nesting(region,supplysector), year = c(year, unique(L142.pfc_R_S_T_Yh$year))) %>%
+        # Interpolate
+        group_by(region,supplysector) %>%
+        mutate(share = approx_fun(year, share, rule = 2))
+
+      L244.ThermalShares<- get_data(all_data, "L244.ThermalShares",strip_attributes = TRUE) %>%
+        select(region,gcam.consumer,thermal.building.service.input,year,thermal_share) %>%
+        rename(supplysector=thermal.building.service.input,
+               share=thermal_share)%>%
+        filter(grepl("resid",supplysector)) %>%
+        separate(gcam.consumer,c("gcam.consumer","group"),sep = "_") %>%
+        unite(supplysector,c("supplysector","group"),sep = "_") %>%
+        select(-gcam.consumer)%>%
+        complete(nesting(region,supplysector), year = c(year, unique(L142.pfc_R_S_T_Yh$year))) %>%
+        # Interpolate
+        group_by(region,supplysector) %>%
+        mutate(share = approx_fun(year, share, rule = 2))
+
+      L244.Shares<-bind_rows(L244.GenericShares,L244.ThermalShares) %>%
+        left_join_error_no_match(GCAM_region_names, by = "region")
+
+      # Save subregional categories
+      cons.gr.adj<-get_data(all_data, "socioeconomics/income_shares",strip_attributes = TRUE)  %>%
+        select(category) %>%
+        distinct()
+
+      # Adjust L142.pfc_R_S_T_Yh  for the multiple consumers
+
+      # L142.pfc_R_S_T_Yh: Represents emissions, value needs to be multiplied by the share to allocate across multiple consumers
+      L142.pfc_R_S_T_Yh_resid<- L142.pfc_R_S_T_Yh %>%
+        filter(grepl("resid",supplysector)) %>%
+        repeat_add_columns(tibble(group=unique(cons.gr.adj$category))) %>%
+        unite(supplysector,c("supplysector","group"),sep = "_") %>%
+        # add shares
+        left_join_error_no_match(L244.Shares, by = c("GCAM_region_ID", "year", "supplysector")) %>%
+        mutate(value = value * share) %>%
+        select(-region,-share)
+
+      L142.pfc_R_S_T_Yh<-L142.pfc_R_S_T_Yh %>%
+        filter(!grepl("resid",supplysector)) %>%
+        bind_rows(L142.pfc_R_S_T_Yh_resid)
+
+      # ===============
+
+
     # Produce outputs
     # ===============
     L142.pfc_R_S_T_Yh %>%
@@ -427,7 +486,10 @@ module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
                      "emissions/EPA/EPA_SF6_Semi",
                      "emissions/EPA_fgas_sector_map",
                      "emissions/EPA_GWPs",
-                     "emissions/EPA_country_map") ->
+                     "emissions/EPA_country_map",
+                     "socioeconomics/income_shares",
+                     "L244.GenericShares",
+                     "L244.ThermalShares") ->
       L142.pfc_R_S_T_Yh
 
     return_data(L142.pfc_R_S_T_Yh)

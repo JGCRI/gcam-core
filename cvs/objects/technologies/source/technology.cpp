@@ -1169,7 +1169,7 @@ double Technology::getCalibrationOutput( const bool aHasRequiredInput,
     assert( !aHasRequiredInput || ( !aRequiredInput.empty() && aRequiredInput != "allInputs" ) );
 
     // Check if this is an existing vintage which cannot have a calibration value.
-    if( !mProductionState[ aPeriod ]->isNewInvestment() ) {
+    if(!mProductionState[aPeriod] || !mProductionState[ aPeriod ]->isNewInvestment() ) {
         return -1;
     }
 

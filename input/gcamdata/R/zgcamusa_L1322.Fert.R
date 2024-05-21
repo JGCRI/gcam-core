@@ -17,7 +17,7 @@
 module_gcamusa_L1322.Fert <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/Census_ind_VoS_state",
-             "L1322.Fert_Prod_MtN_R_F_Y",
+             "L1322.Fert_Prod_MtNH3_R_F_Y",
              "L1322.IO_R_Fert_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1322.out_Mt_state_Fert_Yh",
@@ -29,7 +29,7 @@ module_gcamusa_L1322.Fert <- function(command, ...) {
 
     # Load required inputs
     Census_ind_VoS_state <- get_data(all_data, "gcam-usa/Census_ind_VoS_state", strip_attributes = TRUE)
-    L1322.Fert_Prod_MtN_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtN_R_F_Y")
+    L1322.Fert_Prod_MtNH3_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtNH3_R_F_Y")
     L1322.IO_R_Fert_F_Yh <- get_data(all_data, "L1322.IO_R_Fert_F_Yh", strip_attributes = TRUE)
 
     # Silence package check
@@ -56,21 +56,21 @@ module_gcamusa_L1322.Fert <- function(command, ...) {
     # Add GCAM fertilizer name and fuel type to the data frame assume
     # that the only relevant fuel in the US is gas.
     L1322.VoS_share_state_Fert %>%
-      mutate(sector = aglu.FERT_NAME, fuel = "gas") ->
+      mutate(sector = gcamusa.FERT_NAME, fuel = "gas") ->
       L1322.VoS_share_state_Fert
 
     # Select generic fertilizer production data for the US, these
     # values will be scaled by the state NAICS 3273 share to calculate
     # state generic fertilizer production.
-    L1322.Fert_Prod_MtN_R_F_Y %>%
+    L1322.Fert_Prod_MtNH3_R_F_Y %>%
       filter(GCAM_region_ID == gcam.USA_CODE) %>%
       rename(national_val = value) ->
-      L1322.Fert_Prod_MtN_R_F_Y_USA
+      L1322.Fert_Prod_MtNH3_R_F_Y_USA
 
     # Scale national generic fertilizer production by the state share of
     # national NAICS 3273 values.
     L1322.VoS_share_state_Fert %>%
-      left_join(L1322.Fert_Prod_MtN_R_F_Y_USA, by = c("year", "sector", "fuel")) %>%
+      left_join(L1322.Fert_Prod_MtNH3_R_F_Y_USA, by = c("year", "sector", "fuel")) %>%
       mutate(value = national_val * state_share) %>%
       select(state, sector, fuel, year, value) ->
       L1322.out_Mt_state_Fert_Yh
@@ -110,7 +110,7 @@ module_gcamusa_L1322.Fert <- function(command, ...) {
       add_units("value = Mt (megatonnes = teragrams)") %>%
       add_comments("Scaled the US national fertilizer production by the state's share of fertilizer production based on NAICS shipping information") %>%
       add_legacy_name("L1322.out_Mt_state_Fert_Yh") %>%
-      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
+      add_precursors("L1322.Fert_Prod_MtNH3_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
       L1322.out_Mt_state_Fert_Yh
 
     L1322.IO_GJkg_state_Fert_F_Yh %>%
@@ -118,7 +118,7 @@ module_gcamusa_L1322.Fert <- function(command, ...) {
       add_units("value = GJkg (gigajoules used/kg fertilizer produced)") %>%
       add_comments("All states are assumed to have the same fertilizer IO coefficient as the national value") %>%
       add_legacy_name("L1322.IO_GJkg_state_Fert_F_Yh") %>%
-      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
+      add_precursors("L1322.Fert_Prod_MtNH3_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
       L1322.IO_GJkg_state_Fert_F_Yh
 
     L1322.in_EJ_state_Fert_Yh %>%
@@ -126,10 +126,12 @@ module_gcamusa_L1322.Fert <- function(command, ...) {
       add_units("value = EJ (exajoules)") %>%
       add_comments("State fertilizer production multiplied by state fertilizer input-output coefficient") %>%
       add_legacy_name("L1322.in_EJ_state_Fert_Yh") %>%
-      add_precursors("L1322.Fert_Prod_MtN_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
+      add_precursors("L1322.Fert_Prod_MtNH3_R_F_Y", "gcam-usa/Census_ind_VoS_state", "L1322.IO_R_Fert_F_Yh") ->
       L1322.in_EJ_state_Fert_Yh
 
-    return_data(L1322.out_Mt_state_Fert_Yh, L1322.IO_GJkg_state_Fert_F_Yh, L1322.in_EJ_state_Fert_Yh)
+    return_data(L1322.out_Mt_state_Fert_Yh,
+                L1322.IO_GJkg_state_Fert_F_Yh,
+                L1322.in_EJ_state_Fert_Yh)
   } else {
     stop("Unknown command")
   }

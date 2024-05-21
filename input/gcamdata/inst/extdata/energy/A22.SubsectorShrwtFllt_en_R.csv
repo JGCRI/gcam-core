@@ -1,0 +1,41 @@
+# File: A22.SubsectorShrwtFllt_en_R.csv
+# Title: Region-specific refining subsector shareweights interpolation rules 
+# Descreption: adjust biomass liquid share weight for a few regions with palm biodiesel to lower values. This is needed due to data updates. Currently, the same assumption is used across all regions, e.g. same with A22.subsector_shrwt
+# Units: Unitless share-weights
+# Date of last update: 2024-02-26 (XZ)
+# Comment:note that for regions not included (e.g., new regions) USA assumptions are used by default.
+# Column types: cccnn
+# ----------
+region,supplysector,subsector,year.fillout,share.weight
+USA,refining,biomass liquids,2030,1
+Africa_Eastern,refining,biomass liquids,2030,1
+Africa_Northern,refining,biomass liquids,2030,1
+Africa_Southern,refining,biomass liquids,2030,1
+Africa_Western,refining,biomass liquids,2030,1
+Australia_NZ,refining,biomass liquids,2030,1
+Brazil,refining,biomass liquids,2030,1
+Canada,refining,biomass liquids,2030,1
+Central America and Caribbean,refining,biomass liquids,2030,1
+Central Asia,refining,biomass liquids,2030,1
+China,refining,biomass liquids,2030,1
+EU-12,refining,biomass liquids,2030,1
+EU-15,refining,biomass liquids,2030,1
+Europe_Eastern,refining,biomass liquids,2030,1
+Europe_Non_EU,refining,biomass liquids,2030,1
+European Free Trade Association,refining,biomass liquids,2030,1
+India,refining,biomass liquids,2030,1
+Indonesia,refining,biomass liquids,2030,1
+Japan,refining,biomass liquids,2030,1
+Mexico,refining,biomass liquids,2030,1
+Middle East,refining,biomass liquids,2030,1
+Pakistan,refining,biomass liquids,2030,1
+Russia,refining,biomass liquids,2030,1
+South Africa,refining,biomass liquids,2030,1
+South America_Northern,refining,biomass liquids,2030,1
+South America_Southern,refining,biomass liquids,2030,1
+South Asia,refining,biomass liquids,2030,1
+South Korea,refining,biomass liquids,2030,1
+Southeast Asia,refining,biomass liquids,2030,1
+Taiwan,refining,biomass liquids,2030,1
+Argentina,refining,biomass liquids,2030,1
+Colombia,refining,biomass liquids,2030,1

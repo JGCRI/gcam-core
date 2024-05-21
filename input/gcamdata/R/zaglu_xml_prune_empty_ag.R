@@ -20,35 +20,40 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{prune_empty_ag.xml}. (aglu XML).
 module_aglu_prune_empty_ag_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L2012.AgProduction_ag_irr_mgmt",
+      # in case we prune so far that a region no longer has a crop to trade
+      "L240.TechCoef_tra",
+      "L240.TechCoef_reg",
+      "L113.StorageTechAndPassThrough",
+      # in case we prune so far that we need to remove feed options (FodderGrass)
+      "L202.StubTech_in",
+      "L203.StubTech_demand_nonfood",
+      "L2252.LN5_MgdAllocation_crop",
+      "L2252.LN5_MgdCarbon_crop")
+
+  MODULE_OUTPUTS <-
+    c(XML = "prune_empty_ag.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2012.AgProduction_ag_irr_mgmt",
-             # in case we prune so far that a region no longer has a crop to trade
-             "L240.TechCoef_tra",
-             "L240.TechCoef_reg",
-             # in case we prune so far that we need to remove feed options (FodderGrass)
-             "L202.StubTech_in",
-             "L203.StubTech_demand_nonfood",
-             "L2252.LN5_MgdAllocation_crop",
-             "L2252.LN5_MgdCarbon_crop"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "prune_empty_ag.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L2012.AgProduction_ag_irr_mgmt <- get_data(all_data, "L2012.AgProduction_ag_irr_mgmt")
-    L240.TechCoef_tra <- get_data(all_data, "L240.TechCoef_tra")
-    L240.TechCoef_reg <- get_data(all_data, "L240.TechCoef_reg")
-    L202.StubTech_in <- get_data(all_data, "L202.StubTech_in")
-    L203.StubTech_demand_nonfood <- get_data(all_data, "L203.StubTech_demand_nonfood")
-    L2252.LN5_MgdAllocation_crop <- get_data(all_data, "L2252.LN5_MgdAllocation_crop")
-    L2252.LN5_MgdCarbon_crop <- get_data(all_data, "L2252.LN5_MgdCarbon_crop")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
 
     # ===================================================
 
     # start with Ag supply techs picking out instances of zeros across all historical years
     # then we will continually aggregate up to subsector then to sector doing the same checks
+
+    # for storage commodities, domestic supply should not be removed
     L2012.AgProduction_ag_irr_mgmt %>%
       group_by(region, AgSupplySector, AgSupplySubsector, AgProductionTechnology) %>%
       summarize(calOutputValue = sum(calOutputValue)) ->
@@ -101,11 +106,15 @@ module_aglu_prune_empty_ag_xml <- function(command, ...) {
     # do not attempt to get domestic consumption in a region+crop that is empty (imports
     # are left alone, although perhaps checking if those are empty too could lead to further
     # pruning but it is diminishing returns in terms of resources saved)
+
     L240.TechCoef_reg %>%
       inner_join(prune_agsupply, by=c("minicam.energy.input", "market.name")) %>%
       select(region, supplysector, subsector) %>%
       distinct() ->
       empty_ag_reg
+
+
+
 
     # Fodder grass is a special case where if a region didn't have it and we do
     # not clean it up from the feed sector it will result in errors thus we need to
@@ -184,7 +193,71 @@ module_aglu_prune_empty_ag_xml <- function(command, ...) {
       return(xml_back)
     }
 
-    # produce output
+
+    # adding back some tech due to storage carryover----
+
+    # For storage commodities, we will keep at least one basin (if all techs in a region are zero)
+    # Thus empty_ag_sec won't be removed for storage commodities
+    # Prepare a table including techs to add back
+    # NA expected in joining since not all ag tech has storage option
+    empty_ag_tech %>%
+      left_join(L113.StorageTechAndPassThrough %>%
+                  filter(storage_model == TRUE) %>%
+                  distinct(region, AgSupplySector = GCAM_commodity) %>%
+                  mutate(StorageComm = T), by = c("AgSupplySector", "region")) %>%
+      filter(StorageComm == T) %>% select(-StorageComm) %>%
+      inner_join(empty_ag_sec, by = c("region", "AgSupplySector")) %>%
+      group_by(region, AgSupplySector) %>%
+      filter(AgProductionTechnology == first(AgProductionTechnology)) %>%
+      ungroup() ->
+      AddingOneBasinTech
+
+    # When joining AddingOneBasinTech below
+    # NA expected in joining since not all ag tech has storage option and only one basin is kept
+    empty_ag_tech %>%
+      left_join(AddingOneBasinTech %>% select(region, AgSupplySubsector) %>%
+                  mutate(Remove = F), by = c("region", "AgSupplySubsector")) %>%
+      filter(is.na(Remove)) %>%
+      select(-Remove) ->
+      empty_ag_tech
+
+    prune_data %>% ungroup() %>%
+      left_join(AddingOneBasinTech %>% transmute(region, LandNode4 = AgSupplySubsector, Remove = F),
+                by = c("region", "LandNode4")) %>%
+      filter(is.na(Remove))  %>%
+      select(-Remove) %>%
+      dplyr::group_by_at(vars(-LandLeaf,-allocation)) ->
+      # leave it grouped, this is a case where popping groups one at a time is exactly what we want
+      prune_data
+
+    empty_ag_subsec %>%
+      left_join(AddingOneBasinTech %>% select(names(empty_ag_subsec)) %>%
+                  mutate(Remove = F),
+                by = c("region", "AgSupplySector", "AgSupplySubsector") ) %>%
+      filter(is.na(Remove)) %>%
+      select(-Remove) ->
+      empty_ag_subsec
+
+    empty_ag_sec %>%
+      left_join(AddingOneBasinTech %>% select(names(empty_ag_sec)) %>%
+                  mutate(Remove = F), by = c("region", "AgSupplySector")) %>%
+      filter(is.na(Remove)) %>%
+      select(-Remove) ->
+      empty_ag_sec
+
+    # Should not remove regional/total commodities to storage commodities
+    # need to use left_join here in case turning off storage (L113.StorageTechAndPassThrough)
+    empty_ag_reg %>%
+      left_join(L113.StorageTechAndPassThrough %>%
+                  filter(storage_model == TRUE) %>%
+                  distinct(region, supplysector = minicam.energy.input) %>%
+                  mutate(StorageComm = T), by = c("region", "supplysector")) %>%
+      filter(is.na(StorageComm)) %>%
+      select(-StorageComm)->
+      empty_ag_reg
+
+
+    # produce output ----
     create_xml("prune_empty_ag.xml") %>%
       # now call the function to recursively find the empty land node/leaf to prune
       recursive_add_landnode_delete(prune_data, ., LandNode_MaxDepth) %>%
@@ -203,7 +276,8 @@ module_aglu_prune_empty_ag_xml <- function(command, ...) {
                      "L202.StubTech_in",
                      "L203.StubTech_demand_nonfood",
                      "L2252.LN5_MgdAllocation_crop",
-                     "L2252.LN5_MgdCarbon_crop") ->
+                     "L2252.LN5_MgdCarbon_crop",
+                     "L113.StorageTechAndPassThrough") ->
       prune_empty_ag.xml
 
     return_data(prune_empty_ag.xml)

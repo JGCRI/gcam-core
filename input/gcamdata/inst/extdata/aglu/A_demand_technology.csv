@@ -7,7 +7,7 @@
 # ----------
 supplysector,subsector0,subsector,technology,apply.to,from.year,to.year,interpolation.function,minicam.energy.input,coefficient
 FoodDemand_Staples,Corn,Corn,Corn,share-weight,final-calibration-year,end-year,fixed,regional corn,1
-FoodDemand_NonStaples,FiberCrop,FiberCrop,FiberCrop,share-weight,final-calibration-year,end-year,fixed,regional fibercrop,1
+FoodDemand_NonStaples,Oil,FiberCrop,FiberCrop,share-weight,final-calibration-year,end-year,fixed,regional fibercrop,1
 FoodDemand_NonStaples,FruitsVeg,Fruits,Fruits,share-weight,final-calibration-year,end-year,fixed,regional fruits,1
 FoodDemand_NonStaples,Protein,Plant,Legumes,share-weight,final-calibration-year,end-year,fixed,regional legumes,1
 FoodDemand_NonStaples,MiscCrop,MiscCrop,MiscCrop,share-weight,final-calibration-year,end-year,fixed,regional misccrop,1

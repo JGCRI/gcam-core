@@ -1,12 +1,14 @@
 # File: A322.subsector_logit.csv
-# Title: Fertilizer default technology logit exponents
+# Title: ammonia / traded ammonia / regional ammonia / N fertilizer subsector logit exponents for technology competition
 # Units: Unitless
-# Column types: ccic 
+# Column types: ccinc
 # ----------
-supplysector,subsector,logit.exponent,logit.type
-N fertilizer,coal,-12,
-N fertilizer,gas,-12,
-N fertilizer,refined liquids,-12,
-N fertilizer,hydrogen,-12,
-N fertilizer,Imports,-6,
-Exports_fertilizer,N fertilizer,-12,
+supplysector,subsector,traded,logit.exponent,logit.type
+ammonia,coal,0,-8,
+ammonia,gas,0,-8,
+ammonia,refined liquids,0,-8,
+ammonia,hydrogen,0,-8,
+traded ammonia,traded ammonia,1,-6,
+regional ammonia,domestic ammonia,0,-6,
+regional ammonia,imported ammonia,0,-6,
+N fertilizer,N fertilizer,0,-6,

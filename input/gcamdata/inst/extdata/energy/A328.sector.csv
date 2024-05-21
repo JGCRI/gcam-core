@@ -1,0 +1,8 @@
+# File: A328.sector.csv
+# Title:  Food processing sector default supplysector information (units and logit exponents)
+# Units: In file
+# Column types: ccccicc
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,final.energy,logit.type
+food processing,Pcal,EJ,1975$/Mcal,-3,industry,
+process heat food processing,EJ,EJ,1975$/GJ,-3,industry,

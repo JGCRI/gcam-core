@@ -1,7 +1,7 @@
 # File: IEA_flow_sector.csv
 # Title: Mapping from flows in IEA energy balances to intermediate sector names. Includes unit conversion
 # Units: NA
-# Source: International Energy Agency, 2012, Energy Balances of OECD Countries 1960-2010 and Energy Balances of Non-OECD Countries 1971-2010
+# Source: International Energy Agency,2012, Energy Balances of OECD Countries 1960-2010 and Energy Balances of Non-OECD Countries 1971-2010
 # Description: The conversion factors convert from the units in IEA Energy Balances (kilotonnes of oil equivalent, terajoules of heat, and gigawatt-hours of electricity) to exajoules, and all energy inputs are indicated as positive numbers. In the IEA Energy Balances, the standard adopted is that for energy production and transformation sectors, energy inputs are negative and energy outputs are positive, whereas for energy consumption sectors, energy inputs are positive. We don't use that convention in GCAM; all energy inputs (and outputs) are indicated as positive numbers.
 # Column types: cccn 
 # ----------
@@ -66,8 +66,8 @@ NONMET,Non-Metallic Minerals,cement,0.00004186
 TRANSEQ,Transport Equipment,,
 MACHINE,Machinery,,
 MINING,Mining and Quarrying,mining energy use,0.00004186
-FOODPRO,Food and Tobacco,,
-PAPERPRO,"Paper, Pulp and Print",,
+FOODPRO,Food and Tobacco,food processing,0.00004186
+PAPERPRO,"Paper, Pulp and Print",paper,0.00004186
 WOODPRO,Wood and Wood Products,,
 CONSTRUC,Construction,construction energy use,0.00004186
 TEXTILES,Textile and Leather,,

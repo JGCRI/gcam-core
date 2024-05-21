@@ -14,7 +14,7 @@ module_energy_L111.rsrc_fos_Prod(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L111.Prod_EJ_R_F_Yh}, \code{L111.RsrcCurves_EJ_R_Ffos}. The corresponding file in the
+the generated outputs: \code{L111.Prod_EJ_R_F_Yh}, \code{L111.RsrcCurves_EJ_R_Ffos}. \code{L210.DeleteRsrcTradBio}. The corresponding file in the
 original data system was \code{LA111.rsrc_fos_Prod.R} (energy level1).
 }
 \description{

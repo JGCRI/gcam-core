@@ -88,12 +88,14 @@ public:
 
     // Building service specific methods
     void setServiceDensity( const double aServiceDensity, const int aPeriod );
-    
-    SatiationDemandFunction* getSatiationDemandFunction() const;
+
+   SatiationDemandFunction* getSatiationDemandFunction() const;
     
     virtual double calcThermalLoad( const BuildingNodeInput* aBuildingInput,
                                     const double aInternalGainsPerSqMeter,
                                     const int aPeriod ) const;
+
+	virtual double getBiasAdder(const int aPeriod) const;
 
     // INestedInput methods
     // define them to do nothing since a BuildingServiceInput is a leaf in the nesting structure
@@ -188,7 +190,25 @@ public:
     virtual void setPricePaid( const double aPricePaid,
                                const int aPeriod );
 
-    virtual double getCoefficient( const int aPeriod ) const;
+    virtual double getCoefficient(const int aPeriod) const;
+
+	virtual double getCoef() const;
+
+    virtual double getCoalA() const;
+    
+    virtual double getCoalK() const;
+
+    virtual double getCoalBase() const;
+
+    virtual double getTradBioX() const;
+
+    virtual double getTradBioY() const;
+
+    virtual double getTradBioBase() const;
+
+    virtual double getServPriceBase() const;
+
+    virtual double getServBaseDens() const;    
 
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
@@ -293,17 +313,47 @@ protected:
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
-    DEFINE_DATA_WITH_PARENT(
-        INestedInput,
+	DEFINE_DATA_WITH_PARENT(
+		INestedInput,
 
-        //! The name of this input.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+		//! The name of this input.
+		DEFINE_VARIABLE(SIMPLE, "name", mName, std::string),
 
-        //! Building service demand by period.
-        DEFINE_VARIABLE( ARRAY | STATE, "base-service", mServiceDemand, objects::PeriodVector<Value> ),
+		//! Building service demand by period.
+		DEFINE_VARIABLE(ARRAY | STATE, "base-service", mServiceDemand, objects::PeriodVector<Value>),
 
         //! Energy service density for reporting.
-        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "service-density", mServiceDensity, objects::PeriodVector<Value> ),
+        DEFINE_VARIABLE(ARRAY | STATE | NOT_PARSABLE, "service-density", mServiceDensity, objects::PeriodVector<Value>),
+
+		//! Demand function coefficients to capture base year thermal characteristics.
+		DEFINE_VARIABLE(SIMPLE | STATE, "coef", mCoef, Value),
+
+		//! Demand function coefficients to capture base year  characteristics.
+		DEFINE_VARIABLE(ARRAY | STATE, "bias-adder", mBiasAdderEn, objects::PeriodVector<Value>),
+
+        //! Demand function coefficients to capture base year  characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "A-coal", mCoalA, Value),
+
+        //! Demand function coefficients to capture base year  characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "k-coal", mCoalK, Value),
+
+        //! Demand function coefficients to capture base year  characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-coal", mCoalBase, Value),
+
+        //! Demand function coefficients to capture base year  characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "x-TradBio", mTradBioX, Value),
+
+        //! Demand function coefficients to capture base year  characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "y-TradBio", mTradBioY, Value),
+
+        //! Demand function coefficients to capture base year  characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-TradBio", mTradBioBase, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "price", mServPriceBase, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-density", mServBaseDens, Value),
 
         //! Satiation demand function.
         DEFINE_VARIABLE( CONTAINER, "satiation-demand-function", mSatiationDemandFunction, SatiationDemandFunction* )

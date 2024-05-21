@@ -19,25 +19,30 @@
 #' @importFrom stats quantile
 #' @author BBL April 2017
 module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      FILE = "aglu/LDS/LDS_land_types",
+      FILE = "aglu/SAGE_LT",
+      FILE = "aglu/Various_CarbonData_LTsage",
+      "L100.Ref_veg_carbon_Mg_per_ha",
+      # 09-24-2022 XZ: The following  LDS files need updates for Base Year Update later!
+      "L100.Land_type_area_ha")
+
+  MODULE_OUTPUTS <-
+    c("L120.LC_bm2_R_LT_Yh_GLU",
+      "L120.LC_bm2_R_UrbanLand_Yh_GLU",
+      "L120.LC_bm2_R_Tundra_Yh_GLU",
+      "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
+      "L120.LC_bm2_ctry_LTsage_GLU",
+      "L120.LC_bm2_ctry_LTpast_GLU",
+      "L120.LC_prot_land_frac_GLU",
+      "L120.LC_soil_veg_carbon_GLU")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/LDS/LDS_land_types",
-             FILE = "aglu/SAGE_LT",
-             FILE = "aglu/Various_CarbonData_LTsage",
-             "L100.Ref_veg_carbon_Mg_per_ha",
-             # 09-24-2022 XZ
-             # The following two LDS files need updates for Base Year Update later!
-             "L100.Land_type_area_ha",
-             FILE = "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L120.LC_bm2_R_LT_Yh_GLU",
-             "L120.LC_bm2_R_UrbanLand_Yh_GLU",
-             "L120.LC_bm2_R_Tundra_Yh_GLU",
-             "L120.LC_bm2_R_RckIceDsrt_Yh_GLU",
-             "L120.LC_bm2_ctry_LTsage_GLU",
-             "L120.LC_bm2_ctry_LTpast_GLU",
-             "L120.LC_prot_land_frac_GLU",
-             "L120.LC_soil_veg_carbon_GLU"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     iso <- GCAM_region_ID <- Land_Type <- year <- GLU <- Area_bm2 <- LT_HYDE <-
@@ -48,17 +53,12 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
-    get_data(all_data, "common/iso_GCAM_regID") %>%
-      select(iso, GCAM_region_ID) ->
-      iso_GCAM_regID
-    LDS_land_types <- get_data(all_data, "aglu/LDS/LDS_land_types")
-    SAGE_LT <- get_data(all_data, "aglu/SAGE_LT")
-    L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust <- get_data(all_data, "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust")
-    L100.Land_type_area_ha <- get_data(all_data, "L100.Land_type_area_ha")
-    L100.Ref_veg_carbon_Mg_per_ha <- get_data(all_data, "L100.Ref_veg_carbon_Mg_per_ha")
-    Various_CarbonData_LTsage <- get_data(all_data,"aglu/Various_CarbonData_LTsage") %>%
+    iso_GCAM_regID %>% select(iso, GCAM_region_ID) -> iso_GCAM_regID
+
+    Various_CarbonData_LTsage <- Various_CarbonData_LTsage %>%
       filter(variable %in% c("mature age","soil_c","veg_c")) %>%
       select(LT_SAGE,variable,value) %>%
       distinct() %>%
@@ -300,24 +300,6 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       mutate(year = as.integer(year)) ->
       L120.LC_bm2_R_LT_Yh_GLU
 
-    # scale forest to avoid negative unmanaged forest area which caused issue for yield in Pakistan and African regions
-    # L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust, pulled from L123.LC_bm2_R_MgdFor_Yh_GLU before managed forest scaling, was used here.
-    L120.LC_bm2_R_LT_Yh_GLU %>%
-      left_join(L120.LC_bm2_R_LT_Yh_GLU %>%
-                  spread(Land_Type, value, fill = 0) %>%
-                  left_join(L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust %>% select(-Land_Type),
-			by = c("GCAM_region_ID", "GLU", "year")) %>%
-                  mutate(nonForScaler =
-                           if_else(((Hardwood_Forest+Softwood_Forest) - MgdFor) < 0 & (Hardwood_Forest+Softwood_Forest) > 0,
-                                   1 + ((Hardwood_Forest+Softwood_Forest) - MgdFor)/(Grassland + Shrubland + Pasture), 1),
-                         ForScaler = if_else(((Hardwood_Forest+Softwood_Forest) - MgdFor) < 0 & (Hardwood_Forest+Softwood_Forest) > 0,  MgdFor/(Hardwood_Forest+Softwood_Forest) ,1)) %>%
-                  select(GCAM_region_ID, GLU, year, nonForScaler, ForScaler),
-                by = c("GCAM_region_ID", "GLU", "year") ) %>%
-      mutate(ForScaler=1,nonForScaler=1,value = if_else(Land_Type %in% c("Grassland", "Shrubland" , "Pasture"),
-                             value * nonForScaler,
-                             if_else(Land_Type %in% aglu.FOREST_NODE_NAMES, value * ForScaler, value) )) %>%
-      select(-nonForScaler, -ForScaler) ->
-      L120.LC_bm2_R_LT_Yh_GLU
 
     # Subset the land types that are not further modified
     L120.LC_bm2_R_UrbanLand_Yh_GLU <- filter(L120.LC_bm2_R_LT_Yh_GLU, Land_Type == "UrbanLand")
@@ -355,8 +337,7 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_units("bm2") %>%
       add_comments("Land types from SAGE, HYDE, WDPA merged and reconciled; missing zeroes backfilled; interpolated to AGLU land cover years") %>%
       add_legacy_name("L120.LC_bm2_R_LT_Yh_GLU") %>%
-      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha",
-                     "aglu/LDS/L123.LC_bm2_R_MgdFor_Yh_GLU_beforeadjust") ->
+      add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha") ->
       L120.LC_bm2_R_LT_Yh_GLU
 
     L120.LC_bm2_R_UrbanLand_Yh_GLU %>%
@@ -416,7 +397,7 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       add_legacy_name("L120.LC_soil_veg_carbon_GLU") %>%
       add_precursors("common/iso_GCAM_regID", "aglu/LDS/LDS_land_types", "aglu/SAGE_LT", "L100.Land_type_area_ha","L100.Ref_veg_carbon_Mg_per_ha","aglu/Various_CarbonData_LTsage")->L120.LC_soil_veg_carbon_GLU
 
-    return_data(L120.LC_bm2_R_LT_Yh_GLU, L120.LC_bm2_R_UrbanLand_Yh_GLU, L120.LC_bm2_R_Tundra_Yh_GLU, L120.LC_bm2_R_RckIceDsrt_Yh_GLU, L120.LC_bm2_ctry_LTsage_GLU, L120.LC_bm2_ctry_LTpast_GLU, L120.LC_prot_land_frac_GLU, L120.LC_soil_veg_carbon_GLU)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

@@ -18,7 +18,6 @@
 #' @importFrom dplyr distinct filter full_join if_else group_by left_join mutate right_join select summarize
 #' @importFrom tidyr replace_na
 #' @author KVC April 2017
-#' @export
 module_aglu_L151.ag_MIRCA_ctry_C_GLU_irr <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "aglu/AGLU_ctry",

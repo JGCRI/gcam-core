@@ -18,9 +18,9 @@ other industrial energy use,biomass,biomass,Combustion_Bio
 other industrial energy use,coal,coal,Combustion_general
 other industrial energy use,gas,gas,Combustion_general
 other industrial energy use,refined liquids,refined liquids,Combustion_general
-N fertilizer,coal,coal,Combustion_general
-N fertilizer,gas,gas,Combustion_general
-N fertilizer,refined liquids,refined liquids,Combustion_general
+ammonia,coal,coal,Combustion_general
+ammonia,gas,gas,Combustion_general
+ammonia,refined liquids,refined liquids,Combustion_general
 out_resources,coal,coal,Fugitive_coal
 out_resources,crude oil,crude oil,Fugitive_oil
 out_resources,natural gas,natural gas,Fugitive_gas
@@ -28,15 +28,15 @@ process heat cement,biomass,biomass,Combustion_Bio
 process heat cement,coal,coal,Combustion_general
 process heat cement,gas,gas,Combustion_general
 process heat cement,refined liquids,refined liquids,Combustion_general
-resid cooling,gas,gas,Combustion_general
-resid heating,biomass,biomass,Combustion_Bio
-resid heating,coal,coal,Combustion_general
-resid heating,gas,gas,Combustion_general
-resid heating,refined liquids,refined liquids,Combustion_general
-resid others,biomass,biomass,Combustion_Bio
-resid others,coal,coal,Combustion_general
-resid others,gas,gas,Combustion_general
-resid others,refined liquids,refined liquids,Combustion_general
+resid cooling modern,gas,gas,Combustion_general
+resid heating modern,biomass,biomass,Combustion_Bio
+resid heating coal,coal,coal,Combustion_general
+resid heating modern,gas,gas,Combustion_general
+resid heating modern,refined liquids,refined liquids,Combustion_general
+resid others modern,biomass,biomass,Combustion_Bio
+resid others coal,coal,coal,Combustion_general
+resid others modern,gas,gas,Combustion_general
+resid others modern,refined liquids,refined liquids,Combustion_general
 trn_aviation_intl,International Aviation,Liquids,Combustion_general
 trn_freight,Domestic Ship,Liquids,Combustion_general
 trn_freight,Freight Rail,Coal,Combustion_general
@@ -147,8 +147,8 @@ trn_pass_road_LDV_4W,Car,Liquids,Combustion_general
 trn_pass_road_LDV_4W,Car,NG,Combustion_general
 trn_pass_road_LDV_4W,Large Car and Truck,Liquids,Combustion_general
 trn_pass_road_LDV_4W,Large Car and Truck,NG,Combustion_general
-resid heating,traditional biomass,traditional biomass,Combustion_Bio
-resid others,traditional biomass,traditional biomass,Combustion_Bio
+resid heating TradBio,traditional biomass,traditional biomass,Combustion_Bio
+resid others TradBio,traditional biomass,traditional biomass,Combustion_Bio
 trn_pass_road_LDV,2W and 3W,NG,Combustion_general
 agricultural energy use,stationary,biomass,Combustion_general
 agricultural energy use,stationary,coal,Combustion_general

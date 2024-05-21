@@ -16,8 +16,8 @@ CEDS_sector,CEDS_agg_sector
 1A2a_Ind-Comb-Iron-steel,iron and steel
 1A2b_Ind-Comb-Non-ferrous-metals,industry_energy
 1A2c_Ind-Comb-Chemicals,chemical energy use
-1A2d_Ind-Comb-Pulp-paper,industry_energy
-1A2e_Ind-Comb-Food-tobacco,industry_energy
+1A2d_Ind-Comb-Pulp-paper,paper
+1A2e_Ind-Comb-Food-tobacco,food processing
 1A2f_Ind-Comb-Non-metalic-minerals,cement
 1A2g_Ind-Comb-Construction,construction energy use
 1A2g_Ind-Comb-machinery,industry_energy

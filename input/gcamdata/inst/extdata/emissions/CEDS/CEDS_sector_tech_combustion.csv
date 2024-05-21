@@ -11,9 +11,9 @@ other industrial energy use,biomass,biomass,industry_energy,biomass
 other industrial energy use,coal,coal,industry_energy,coal
 other industrial energy use,gas,gas,industry_energy,gas
 other industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids
-N fertilizer,coal,coal,industry_energy,coal
-N fertilizer,gas,gas,industry_energy,gas
-N fertilizer,refined liquids,refined liquids,industry_energy,refined liquids
+ammonia,coal,coal,industry_energy,coal
+ammonia,gas,gas,industry_energy,gas
+ammonia,refined liquids,refined liquids,industry_energy,refined liquids
 process heat cement,biomass,biomass,cement,biomass
 process heat cement,coal,coal,cement,coal
 process heat cement,gas,gas,cement,gas
@@ -36,15 +36,15 @@ comm heating,gas,gas,bld_comm,gas
 comm others,gas,gas,bld_comm,gas
 comm heating,refined liquids,refined liquids,bld_comm,refined liquids
 comm others,refined liquids,refined liquids,bld_comm,refined liquids
-resid heating,biomass,biomass,bld_resid,biomass
-resid others,biomass,biomass,bld_resid,biomass
-resid heating,coal,coal,bld_resid,coal
-resid others,coal,coal,bld_resid,coal
-resid cooling,gas,gas,bld_resid,gas
-resid heating,gas,gas,bld_resid,gas
-resid others,gas,gas,bld_resid,gas
-resid heating,refined liquids,refined liquids,bld_resid,refined liquids
-resid others,refined liquids,refined liquids,bld_resid,refined liquids
+resid heating modern,biomass,biomass,bld_resid,biomass
+resid others modern,biomass,biomass,bld_resid,biomass
+resid heating coal,coal,coal,bld_resid,coal
+resid others coal,coal,coal,bld_resid,coal
+resid cooling modern,gas,gas,bld_resid,gas
+resid heating modern,gas,gas,bld_resid,gas
+resid others modern,gas,gas,bld_resid,gas
+resid heating modern,refined liquids,refined liquids,bld_resid,refined liquids
+resid others modern,refined liquids,refined liquids,bld_resid,refined liquids
 trn_freight,Freight Rail,Coal,trn_rail,coal
 trn_freight,Freight Rail,Liquids,trn_rail,refined liquids
 trn_freight,Domestic Ship,Liquids,trn_domestic ship,refined liquids
@@ -91,8 +91,8 @@ trn_pass_road_LDV_4W,Compact Car,Liquids,LDV_4W,refined liquids
 trn_pass_road_LDV_4W,Van,Liquids,LDV_4W,refined liquids
 trn_pass_road_bus,Light Bus,Liquids,Bus,refined liquids
 trn_pass_road_bus,Heavy Bus,Liquids,Bus,refined liquids
-resid heating,traditional biomass,traditional biomass,bld_resid,biomass
-resid others,traditional biomass,traditional biomass,bld_resid,biomass
+resid heating TradBio,traditional biomass,traditional biomass,bld_resid,biomass
+resid others TradBio,traditional biomass,traditional biomass,bld_resid,biomass
 trn_pass_road_LDV_2W,Motorcycle (50-250cc),Liquids,LDV_2W,refined liquids
 trn_freight_road,Truck,Liquids,Truck,refined liquids
 agricultural energy use,mobile,refined liquids,agricultural energy use,refined liquids
@@ -156,3 +156,23 @@ iron and steel,refined liquids,EAF with DRI CCS,iron and steel,refined liquids
 iron and steel,gas,EAF with DRI CCS,iron and steel,gas
 iron and steel,refined liquids,EAF with scrap,iron and steel,refined liquids
 iron and steel,gas,EAF with scrap,iron and steel,gas
+process heat food processing,biomass,biomass,food processing,biomass
+process heat food processing,biomass,biomass cogen,food processing,biomass
+process heat food processing,gas,gas,food processing,gas
+process heat food processing,gas,gas cogen,food processing,gas
+process heat food processing,gas,gas with solar,food processing,gas
+process heat food processing,refined liquids,refined liquids,food processing,refined liquids
+process heat food processing,refined liquids,refined liquids cogen,food processing,refined liquids
+process heat food processing,coal,coal,food processing,coal
+process heat food processing,coal,coal cogen,food processing,coal
+waste biomass for paper,biomass,biomass,paper,biomass
+waste biomass for paper,biomass,biomass cogen,paper,biomass
+waste biomass for paper,biomass,biomass CCS,paper,biomass
+waste biomass for paper,biomass,biomass cogen CCS,paper,biomass
+process heat paper,gas,gas,paper,gas
+process heat paper,gas,gas cogen,paper,gas
+process heat paper,refined liquids,refined liquids,paper,refined liquids
+process heat paper,refined liquids,refined liquids cogen,paper,refined liquids
+process heat paper,heat,heat,paper,heat
+process heat paper,coal,coal,paper,coal
+process heat paper,coal,coal cogen,paper,coal

@@ -1,0 +1,20 @@
+# File: A327.globaltech_shrwt.csv
+# Title: paper default shareweights
+# Units: Unitless
+# Column types: cccnnnnnn
+# ----------
+supplysector,subsector,technology,1971,2015,2019,2035,2050,2100
+paper,paper,paper,1,1,1,1,1,1
+waste biomass for paper,biomass,biomass,1,1,1,1,1,1
+waste biomass for paper,biomass,biomass cogen,1,1,1,1,1,1
+waste biomass for paper,biomass,biomass CCS,0,0,0,0.5,1,1
+process heat paper,gas,gas,1,1,1,1,1,1
+process heat paper,gas,gas cogen,0.5,0.5,0.5,0.5,0.5,0.5
+process heat paper,refined liquids,refined liquids,1,1,1,1,1,1
+process heat paper,refined liquids,refined liquids cogen,1,1,1,1,1,1
+process heat paper,heat,heat,1,1,1,1,1,1
+process heat paper,coal,coal,1,1,1,1,1,1
+process heat paper,coal,coal cogen,0,0,0,0,0,0
+process heat paper,electricity,electric boiler,0,0,0,1,1,1
+process heat paper,electricity,electric heat pump,0,0,0,0.25,0.5,1
+process heat paper,hydrogen,hydrogen,0,0,0,0,0,0

@@ -77,6 +77,7 @@ BuildingNodeInput::~BuildingNodeInput() {
     delete mSatiationDemandFunction;
 }
 
+
 void BuildingNodeInput::completeInit( const string& aRegionName, const string& aSectorName,
                                       const string& aSubsectorName, const string& aTechName,
                                       const IInfo* aTechInfo)
@@ -216,10 +217,10 @@ void BuildingNodeInput::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement( mFloorToSurfaceRatio[ aPeriod ], "floor-to-surface-ratio", aOut, aTabs );
     XMLWriteElement( mPrice[ aPeriod ], "price", aOut, aTabs );
     XMLWriteElement(mUnadjustSatiation, "unadjust-satiation", aOut, aTabs);
-    XMLWriteElement(mHabitableLand, "habitable-land", aOut, aTabs);
     XMLWriteElement(mBasepcFlsp, "base-pcFlsp", aOut, aTabs);
     XMLWriteElement(mLandDensityParam, "land-density-param", aOut, aTabs);
     XMLWriteElement(mbParam, "b-param", aOut, aTabs);
+    XMLWriteElement(mTotDens, "tot-dens", aOut, aTabs);
     XMLWriteElement(mIncomeParam, "income-param", aOut, aTabs);
     XMLWriteElement(mBiasAdjustParam, "bias-adjust-param", aOut, aTabs);
     XMLWriteElement(mCurrentSubregionalPopulation, "subregional-population", aOut, aTabs);

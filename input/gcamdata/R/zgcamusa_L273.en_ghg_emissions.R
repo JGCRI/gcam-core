@@ -3,7 +3,7 @@
 #' module_gcamusa_L273.en_ghg_emissions
 #'
 #' Define non-CO2 GHG emissions for GCAM-USA states, including 1. CH4 and N2O in refinery,
-#' buildings, N fertilizer, industrial energy use; 2. F-gases in cooling and power
+#' buildings, ammonia, industrial energy use; 2. F-gases in cooling and power
 #' transmission; 3. MACs for F-gases
 #'
 #' @param command API command to execute
@@ -148,7 +148,16 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
       spread(Non.CO2, input.emissions) %>%
       ###NOTE: emissions from coal use in commercial buildings "other" category does not have an equivalent representation
       #in the fifty state data. For now move these emissions over to comm heating
-      mutate(supplysector = if_else(grepl("comm",supplysector) & subsector == "coal","comm heating", supplysector)) ->
+      mutate(supplysector = if_else(grepl("comm",supplysector) & subsector == "coal","comm heating", supplysector)) %>%
+      ###NOTE: multiple consumers implemented in the global version need to be aggregated to estimate emissions in GCAM-USA
+      mutate(supplysector = if_else(grepl("resid heating",supplysector),"resid heating",supplysector),
+             supplysector = if_else(grepl("resid cooling",supplysector),"resid cooling",supplysector),
+             supplysector = if_else(grepl("resid others",supplysector),"resid others",supplysector)) %>%
+      # add up the supplysectors, required due to multiple consumers
+      group_by(region,supplysector,subsector,stub.technology,year,input.name) %>%
+      summarise(CH4 = sum(CH4),
+                N2O = sum(N2O)) %>%
+      ungroup()->
       en_ghg_emissions_USA
 
     # Organize the state fuel input data

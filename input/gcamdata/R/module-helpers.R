@@ -361,10 +361,14 @@ replace_GLU <- function(d, map, GLU_pattern = "^GLU[0-9]{3}$") {
 #'
 #' @param data = input data tibble to receive carbon info
 #' @param carbon_info_table = table with veg and soil carbon densities, and mature.age
+#' @param Min_Soil_C_at_Cropland If TRUE (default) using cropland soil carbon density as a minimum threshold in land policy
 #' @param matchvars =  a character vector for by = in left_join(data, carbon_info_table, by = ...)
+#'
 #' @return the original table with carbon density info added
 #' @importFrom dplyr left_join mutate rename
-add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "GLU", "Cdensity_LT" = "Land_Type")) {
+add_carbon_info <- function( data, carbon_info_table,
+                             matchvars = c("region", "GLU", "Cdensity_LT" = "Land_Type"),
+                             Min_Soil_C_at_Cropland = TRUE) {
 
   GCAM_region_names <- veg_c <- soil_c <- hist.veg.carbon.density <- hist.soil.carbon.density <-
     mature.age <- GCAM_region_ID <- NULL  # silence package check notes
@@ -386,7 +390,32 @@ add_carbon_info <- function( data, carbon_info_table, matchvars = c("region", "G
            veg.carbon.density = hist.veg.carbon.density,
            soil.carbon.density = hist.soil.carbon.density,
            min.veg.carbon.density = aglu.MIN_VEG_CARBON_DENSITY,
-           min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY)
+           min.soil.carbon.density = aglu.MIN_SOIL_CARBON_DENSITY) ->
+    data1
+
+  if (Min_Soil_C_at_Cropland == F) {
+
+    return(data1)
+
+  } else{
+
+    # Min_Soil_C_at_Cropland == TRUE so adding min C as cropland for soil
+    # when NA first using pasture data and then using Default_Cropland_Soil_C_Density
+    Default_Cropland_Soil_C_Density = 9
+
+    data1 %>%
+      left_join(
+        carbon_info_table %>%
+          filter(Land_Type %in% c("Cropland", "Pasture")) %>%
+          select(GCAM_region_ID, GLU, soil_c, Land_Type) %>%
+          spread(Land_Type, soil_c), by = c("GCAM_region_ID", "GLU")) %>%
+      mutate(min.soil.carbon.density = if_else(is.na(Cropland), Pasture, Cropland) ) %>%
+      replace_na(list(min.soil.carbon.density = Default_Cropland_Soil_C_Density)) ->
+      data2
+
+    return(data2)
+  }
+
 }
 
 #' reduce_mgd_carbon
@@ -647,11 +676,12 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
 #'
 #' @param x A data frame contain the variable for calculation
 #' @param periods An odd number of the periods in MA. The default is 5, i.e., 2 lags and 2 leads
+#' @param NA_RM If TRUE, remove NA in calculating mean, otherwise returning NA
 #'
 #' @return A data frame
 #' @export
 
-Moving_average <- function(x, periods = 5){
+Moving_average <- function(x, periods = 5, NA_RM = TRUE){
   if (periods == 1) {
     return(x)
   }
@@ -659,12 +689,29 @@ Moving_average <- function(x, periods = 5){
   if ((periods %% 2) == 0) {
     stop("Periods should be an odd value")
   } else{
-    (x +
-       Reduce(`+`, lapply(seq(1, (periods -1 )/2), function(a){lag(x, n = a)})) +
-       Reduce(`+`,lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)}))
-    )/periods
+
+    # (x +
+    #    Reduce(`+`, lapply(seq(1, (periods -1 )/2), function(a){lag(x, n = a)})) +
+    #    Reduce(`+`,lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)}))
+    # )/periods
+
+
+    #new method to allow na.rm in mean calculation
+    c(lapply(seq((periods -1 )/2, 1), function(a){lag(x, n = a)}),
+      list(x),
+      lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)})) %>% unlist %>%
+      matrix(ncol = periods) %>%
+      rowMeans(na.rm = NA_RM)
+
   }
 }
+
+
+
+
+
+
+
 
 # Function to dissaggregate dissolved regions in historical years ----
 # copyed in gcamdata
@@ -805,6 +852,64 @@ FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL <- function(.DF,
   return(.DF2)
 
 }
+
+#' Balance gross trade
+#' @description Scale gross export and import in all regions to make them equal at the world level.
+#'
+#' @param .DF An input dataframe with an element col including Import and Export
+#' @param .MIN_TRADE_PROD_RATIO Trade will be removed if world total export or import over production is smaller than .MIN_TRADE_PROD_RATIO, 0.01 default value
+#' @param .Reg_VAR Region variable name; default is area_code
+#' @param .GROUP_VAR Group variable; default is item_code and year
+#'
+#' @return The same dataframe with balanced world export and import.
+
+
+GROSS_TRADE_ADJUST <- function(.DF,
+                               .MIN_TRADE_PROD_RATIO = 0.01,
+                               .Reg_VAR = 'area_code',
+                               .GROUP_VAR = c("item_code", "year")){
+
+  element <- value <- Export <- Import <- Production <- ExportScaler <-
+    ImportScaler <-
+
+    # assert .DF structure
+    assertthat::assert_that(all(c("element", .GROUP_VAR) %in% names(.DF)))
+  assertthat::assert_that(dplyr::is.grouped_df(.DF) == F)
+  assertthat::assert_that(all(c("Import", "Export", "Production") %in%
+                                c(.DF %>% distinct(element) %>% pull)))
+
+  .DF %>%
+    # Join ExportScaler and ImportScaler
+    left_join(
+      .DF %>%
+        spread(element, value) %>%
+        dplyr::group_by_at(vars(dplyr::all_of(.GROUP_VAR))) %>%
+        # filter out items with zero world trade or production
+        # and replace na to zero later for scaler
+        replace_na(list(Export = 0, Import = 0, Production = 0)) %>%
+        filter(sum(Export) != 0, sum(Import) != 0, sum(Production) != 0) %>%
+        # world trade should be later than .MIN_TRADE_PROD_RATIO to have meaningful data
+        # depending on item group, .MIN_TRADE_PROD_RATIO can be set differently
+        filter(sum(Export) / sum(Production) > .MIN_TRADE_PROD_RATIO) %>%
+        filter(sum(Import) / sum(Production) > .MIN_TRADE_PROD_RATIO) %>%
+        # finally,
+        # use average gross trade value to calculate trade scaler
+        # the trade scalers will be applied to all regions
+        mutate(ExportScaler = (sum(Export) + sum(Import))/ 2 / sum(Export),
+               ImportScaler = (sum(Export) + sum(Import))/ 2 / sum(Import)) %>%
+        select(dplyr::all_of(c(.Reg_VAR, .GROUP_VAR)), ExportScaler, ImportScaler) %>%
+        ungroup(),
+      by = c(dplyr::all_of(c(.Reg_VAR, .GROUP_VAR)))) %>%
+    replace_na(list(ExportScaler = 0, ImportScaler = 0)) %>%
+    # If world export, import, or prod is 0, trade will be zero
+    mutate(value = case_when(
+      element %in% c("Export") ~ value * ExportScaler,
+      element %in% c("Import") ~ value * ImportScaler,
+      TRUE ~ value)) %>%
+    select(-ExportScaler, -ImportScaler)
+
+}
+
 
 #' evaluate_smooth_res_curve
 #'

@@ -22,6 +22,9 @@
 			<Value name = "chemical_income_elas">../input/gcamdata/xml/chemical_incelas_gssp2.xml</Value>   
  			<Value name = "aluminum">../input/gcamdata/xml/aluminum.xml</Value>
 			<Value name = "aluminum_income_elas">../input/gcamdata/xml/aluminum_incelas_gssp2.xml</Value> 
+ 			<Value name = "paper">../input/gcamdata/xml/paper.xml</Value>
+			<Value name = "paper_income_elas">../input/gcamdata/xml/paper_incelas_gssp2.xml</Value>
+			<Value name = "food_processing">../input/gcamdata/xml/food_processing.xml</Value>
 			<Value name = "cement">../input/gcamdata/xml/cement.xml</Value>
 			<Value name = "cement_income_elas">../input/gcamdata/xml/cement_incelas_gssp2.xml</Value>
 			<Value name = "fertilizer_energy">../input/gcamdata/xml/en_Fert.xml</Value>
@@ -44,8 +47,10 @@
 			<Value name = "land4">../input/gcamdata/xml/land_input_4_IRR_MGMT.xml</Value>
 			<Value name = "land5">../input/gcamdata/xml/land_input_5_IRR_MGMT.xml</Value>
 			<Value name = "demand">../input/gcamdata/xml/ag_an_demand_input.xml</Value>
+			<Value name = "demand_paper">../input/gcamdata/xml/paper_delete_ag_demand.xml</Value>
 			<Value name = "bio_trade">../input/gcamdata/xml/bio_trade.xml</Value>
 			<Value name = "ag_trade">../input/gcamdata/xml/ag_trade.xml</Value>
+		      <Value name = "ag_storage">../input/gcamdata/xml/ag_storage.xml</Value>
 			
 			<Value name = "unlim_supply_water">../input/gcamdata/xml/unlimited_water_supply.xml</Value>
 			<Value name = "water_supply">../input/gcamdata/xml/water_supply_constrained.xml</Value>
@@ -95,6 +100,7 @@
 			<Value name = "Off_road_income_elas">../input/gcamdata/xml/Off_road_incelas_ssp2.xml</Value>  
 			<Value name = "chemical_income_elas">../input/gcamdata/xml/chemical_incelas_ssp2.xml</Value>   
 			<Value name = "aluminum_income_elas">../input/gcamdata/xml/aluminum_incelas_ssp2.xml</Value> 
+			<Value name = "paper_income_elas">../input/gcamdata/xml/paper_incelas_ssp2.xml</Value>
 			<Value name="cement">../input/gcamdata/xml/cement_incelas_ssp2.xml</Value>
 			
 			<!-- TRANSPORTATION -->
@@ -137,6 +143,7 @@
 			<Value name = "Off_road_income_elas">../input/gcamdata/xml/Off_road_incelas_ssp3.xml</Value>  
 			<Value name = "chemical_income_elas">../input/gcamdata/xml/chemical_incelas_ssp3.xml</Value>   
 			<Value name = "aluminum_income_elas">../input/gcamdata/xml/aluminum_incelas_ssp3.xml</Value> 
+			<Value name = "paper_income_elas">../input/gcamdata/xml/paper_incelas_ssp3.xml</Value>
 			<Value name="cement">../input/gcamdata/xml/cement_incelas_ssp3.xml</Value>
 			
 			<!-- TRANSPORTATION -->

@@ -1,0 +1,12 @@
+# File: A327.subsector_shrwt_adj_future_years.csv
+# Title: Paper default subsector shareweights
+# Units: Unitless
+# Column types: ccicn
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+waste biomass for paper,biomass,2020,,1
+process heat paper,coal,2020,,0.5
+process heat paper,gas,2020,,1
+process heat paper,refined liquids,2020,,1
+process heat paper,heat,2020,,1
+process heat paper,electricity,2030,,1
