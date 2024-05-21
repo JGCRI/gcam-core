@@ -33,6 +33,7 @@
 			<Value name = "transportation">../input/gcamdata/xml/transportation_UCD_CORE.xml</Value>
 			<Value name = "carbon_content">../input/gcamdata/xml/Ccoef.xml</Value>
 			<Value name = "carbon_storage">../input/gcamdata/xml/Cstorage.xml</Value>
+		      <Value name = "ag_storage">../input/gcamdata/xml/ag_storage.xml</Value>
 			
 			
 			<Value name = "ag_base">../input/gcamdata/xml/ag_For_Past_bio_base_IRR_MGMT.xml</Value>

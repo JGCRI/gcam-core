@@ -104,6 +104,7 @@
 #include "functions/include/building_service_input.h"
 #include "functions/include/satiation_demand_function.h"
 #include "functions/include/food_demand_input.h"
+#include "technologies/include/ag_storage_technology.h"
 #include "functions/include/nested_ces_production_function_macro.h"
 #include <typeinfo>
 
@@ -833,6 +834,29 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
                     *childBuffer, mTabs.get(), curr, mCurrentPriceUnit );
             }
         }
+    }
+    const AgStorageTechnology* agStorageTech = dynamic_cast <const AgStorageTechnology*> (mCurrentTechnology);
+    if (agStorageTech) {
+        writeItemToBuffer(agStorageTech->mStoredValue, "closing-stock",
+            *childBuffer, mTabs.get(), 0, mCurrentOutputUnit);
+
+        const Modeltime* modeltime = scenario->getModeltime();
+        int techYear = agStorageTech->getYear(); 
+        int techPeriod = modeltime->getyr_to_per(techYear);
+        double openStock = techPeriod <= modeltime->getFinalCalibrationPeriod() ? 
+            agStorageTech->mOpeningStock : 
+            agStorageTech->mStoredValue * agStorageTech->mLossCoefficient;
+        
+        writeItemToBuffer(openStock, "opening-stock",
+            *childBuffer, mTabs.get(), 0, mCurrentOutputUnit);
+
+        writeItemToBuffer(agStorageTech->mStorageCost, "storage-cost",
+            *childBuffer, mTabs.get(), 0, mCurrentOutputUnit);
+
+        writeItemToBuffer(agStorageTech->mAdjExpectedPrice, "adj-exp-price",
+            *childBuffer, mTabs.get(), 0, mCurrentOutputUnit);
+
+
     }
 }
 

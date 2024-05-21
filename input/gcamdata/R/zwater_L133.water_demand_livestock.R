@@ -20,7 +20,7 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
   MODULE_INPUTS <-
     c(FILE = "common/iso_GCAM_regID",
       FILE = "aglu/A_an_supplysector",
-      "L105.an_Prod_Mt_R_C_Y",
+      "L101.an_Prod_Mt_R_C_Y",
       FILE = "water/LivestockWaterFootprint_MH2010",
       FILE = "water/FAO_an_items_Stocks",
       "L100.FAO_an_Stocks",
@@ -139,7 +139,7 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     # horses' water demands are a poor proxy for the remainder of the commodity class, which is mostly fish with some
     # waste products. This is explicitly excluded at this stage.
     L133.water_demand_livestock_R_C_W_km3_Mt %>%
-      left_join_error_no_match(L105.an_Prod_Mt_R_C_Y %>%
+      left_join_error_no_match(L101.an_Prod_Mt_R_C_Y %>%
                                  filter(year == 2000) %>%
                                  select(GCAM_region_ID, GCAM_commodity, year, value),
         by = c("GCAM_region_ID", "GCAM_commodity")) %>%
@@ -168,7 +168,7 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
       L133.water_demand_livestock_R_C_W_km3_Mt
 
     # Final step - write out the water demands by basin
-    L133.water_demand_livestock_R_B_W_km3 <- L105.an_Prod_Mt_R_C_Y %>%
+    L133.water_demand_livestock_R_B_W_km3 <- L101.an_Prod_Mt_R_C_Y %>%
       inner_join(L133.water_demand_livestock_R_C_W_km3_Mt,
                 by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       left_join(filter(L103.water_mapping_R_B_W_Ws_share, water_sector == "Livestock"),
@@ -190,7 +190,7 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
       add_comments("Aggregate the life stock water consumption by GCAM region livestock production.") %>%
       add_legacy_name("L133.water_demand_livestock_R_C_W_km3_Mt") %>%
       add_precursors("common/iso_GCAM_regID",
-                     "L105.an_Prod_Mt_R_C_Y",
+                     "L101.an_Prod_Mt_R_C_Y",
                      "water/LivestockWaterFootprint_MH2010",
                      "water/FAO_an_items_Stocks",
                      "L100.FAO_an_Stocks",

@@ -166,8 +166,7 @@ void SecondaryOutput::postCalc( const string& aRegionName,
 }
 
 void SecondaryOutput::scaleCoefficient( const double aScaler ){
-    // Secondary outputs do not support scaling.
-    // TODO: Should they? This interface is not great.
+    mOutputRatio = aScaler;
 }
 
 IOutput::OutputList SecondaryOutput::calcPhysicalOutput( const double aPrimaryOutput,

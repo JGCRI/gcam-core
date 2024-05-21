@@ -178,6 +178,7 @@
 #include "technologies/include/non_energy_use_capture_component.h"
 #include "technologies/include/nuke_fuel_technology.h"
 #include "technologies/include/pass_through_technology.h"
+#include "technologies/include/ag_storage_technology.h"
 #include "technologies/include/phased_shutdown_decider.h"
 #include "technologies/include/power_plant_capture_component.h"
 #include "technologies/include/primary_output.h"

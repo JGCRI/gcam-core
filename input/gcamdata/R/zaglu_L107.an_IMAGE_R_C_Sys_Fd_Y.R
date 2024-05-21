@@ -24,7 +24,7 @@ module_aglu_L107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     c("L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
       "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
       "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-      "L105.an_Prod_Mt_ctry_C_Y",
+      "L101.an_Prod_Mt_ctry_C_Y",
       "L100.IMAGE_an_watercontent_ctry_C")
 
   MODULE_OUTPUTS <-
@@ -52,8 +52,8 @@ module_aglu_L107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
     # Take the total production table L105 and filter so that the GCAM_commodity in L105 match the commodity in the
     # fraction of mixed production table, L100.IMAGE_an_Prodmixfrac_ctry_C_Y.
     # Fish_othermeat not included in L100.IMAGE_an_Prodmixfrac_ctry_C_Y
-    # Note that GCAM_region_ID in L105.an_Prod_Mt_ctry_C_Y is passed through
-    L105.an_Prod_Mt_ctry_C_Y %>%
+    # Note that GCAM_region_ID in L101.an_Prod_Mt_ctry_C_Y is passed through
+    L101.an_Prod_Mt_ctry_C_Y %>%
       filter(GCAM_commodity %in% L100.IMAGE_an_Prodmixfrac_ctry_C_Y$commodity) ->
       # store in a new table of total production by country, commodity, and year:
       L107.an_Prod_Mt_ctry_C_Y
@@ -138,13 +138,13 @@ module_aglu_L107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
         group_by(GCAM_region_ID, GCAM_commodity,  year) %>%
         summarize(value = sum(value), .groups = "drop" ) %>%
         left_join_error_no_match(
-          L105.an_Prod_Mt_ctry_C_Y %>%
+          L101.an_Prod_Mt_ctry_C_Y %>%
             group_by(GCAM_region_ID, GCAM_commodity,  year) %>%
             summarize(value1 = sum(value), .groups = "drop"), by = c("GCAM_region_ID", "GCAM_commodity", "year")
         ) %>%
         filter(abs(value - value1) >0.0001) %>%
         nrow ==0,
-      msg = "Livestock production at GCAM regional level changed (L105.an_Prod_Mt_ctry_C_Y used in LB109)"
+      msg = "Livestock production at GCAM regional level changed (L101.an_Prod_Mt_ctry_C_Y used in LB109)"
     )
 
 
@@ -174,7 +174,7 @@ module_aglu_L107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       add_precursors("L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                      "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "L105.an_Prod_Mt_ctry_C_Y") ->
+                     "L101.an_Prod_Mt_ctry_C_Y") ->
       L107.an_Prod_Mt_R_C_Sys_Fd_Y
 
     L107.an_Feed_Mt_R_C_Sys_Fd_Y %>%
@@ -186,7 +186,7 @@ module_aglu_L107.an_IMAGE_R_C_Sys_Fd_Y <- function(command, ...) {
       add_precursors("L100.IMAGE_an_Prodmixfrac_ctry_C_Y",
                      "L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
                      "L100.IMAGE_an_FeedIO_ctry_C_Sys_Y",
-                     "L105.an_Prod_Mt_ctry_C_Y",
+                     "L101.an_Prod_Mt_ctry_C_Y",
                      "L100.IMAGE_an_watercontent_ctry_C") ->
       L107.an_Feed_Mt_R_C_Sys_Fd_Y
 

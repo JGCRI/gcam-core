@@ -280,6 +280,21 @@ TechAccountOutput, world/+{name}region, region/+{name}supplysector, supplysector
 
 TechProfitShutdown, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}technology, technology/+{year}period, profit-shutdown-decider/+median-shutdown-point, profit-shutdown-decider/+steepness, scenario, scenario/world, period/{name=profit}profit-shutdown-decider
 
+#####, FOOD STORAGE TECHNOLOGY
+
+FoodStorageTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}food-storage-technology
+
+FoodStorageTechYr, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}food-storage-technology, food-storage-technology/+{year}period
+
+FoodTech, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}food-storage-technology, food-storage-technology/+{year}period, period/+share-weight, period/+logit-exponent, period/+closing-stock, period/+{fillout=1}loss-coefficient, period/+storage-cost, period/+opening-stock, period/+lifetime, scenario, scenario/world
+
+FoodTechCoef, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}food-storage-technology, food-storage-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, minicam-energy-input/+market-name, scenario, scenario/world
+
+FoodTechCost, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}food-storage-technology, food-storage-technology/+{year}period, period/+{name}minicam-non-energy-input, minicam-non-energy-input/+input-cost, scenario, scenario/world
+
+FoodTechInterp, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}food-storage-technology, food-storage-technology/+{apply-to}interpolation-rule, food-storage-technology/+{from-year}interpolation-rule, food-storage-technology/+{to-year}interpolation-rule, interpolation-rule/+{name}interpolation-function, scenario, scenario/world
+
+FoodTechRESSecOut, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{name}food-storage-technology, food-storage-technology/+{year}period, period/+{name}res-secondary-output, res-secondary-output/+output-ratio, res-secondary-output/+pMultiplier, scenario, scenario/world
 
 #####, GLOBAL TECHNOLOGY
 
