@@ -318,25 +318,23 @@ double NestedCESProductionFunctionMacro::calcGrossOutput( const string& aRegionN
         double grossOutput = aNationalAccount->getAccountValue(NationalAccount::GROSS_OUTPUT);
         
         // calcualte value shares
-        // Note: in principle the energy value and quantity could be different but given
-        // energy the Q is just a service index weighted by prices these are indeed the same
-        double energyV = energyQ;
         double laborV = aNationalAccount->getAccountValue(NationalAccount::LABOR_WAGES);
+        double capitalV = aNationalAccount->getAccountValue(NationalAccount::CAPITAL_VALUE);
         
-        double shareE = energyV / grossOutput;
+        double shareK = capitalV / grossOutput;
         double shareL = laborV / grossOutput;
-        double shareK = (1.0 - shareE - shareL);
+        double shareE = (1.0 - shareK - shareL);
         // Given the energy value is being pulled out of GCAM without adjustment
-        // there is a chance for inconsistency and send the remaining value (which is
-        // all attributed to capital) to <= zero.  Instead we will enforce a minimum
-        // capital share and adjust both labor and energy to make up for the shortfall
-        const double MIN_CAPITAL_SHARE = 0.05;
-        if(shareK < MIN_CAPITAL_SHARE) {
-            double shareAdj = MIN_CAPITAL_SHARE - shareK;
+        // there is a chance for inconsistency and send the remaining value to <= zero.
+        // Instead we will enforce a minimum energy share and adjust both labor and capital
+        // to make up for the shortfall
+        const double MIN_SLACK_SHARE = 0.05;
+        if(shareE < MIN_SLACK_SHARE) {
+            double shareAdj = (1.0 - MIN_SLACK_SHARE) / (shareK + shareL);
             // adjust labor and energy uniformily to meet the minimum threshold
-            shareE -= shareAdj / 2.0;
-            shareL -= shareAdj / 2.0;
-            shareK = MIN_CAPITAL_SHARE;
+            shareK *= shareAdj;
+            shareL *= shareAdj;
+            shareE = MIN_SLACK_SHARE;
         }
         
         // calibrate and store scalers
