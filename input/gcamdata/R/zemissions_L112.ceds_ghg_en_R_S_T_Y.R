@@ -924,7 +924,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
              stub.technology, emfact, energy)->
       L112.nonco2_tgej_R_en_S_F_Yh_with_oil_adjustment
 
-    #Generate threshold for replacing emissions factors that are too high
+    # Generate threshold for replacing emissions factors that are too high
     L112.nonco2_tgej_R_en_S_F_Yh_with_oil_adjustment %>%
       replace_na(list(emfact = 0)) %>%
       group_by(year, Non.CO2, supplysector, subsector, stub.technology) %>%
@@ -955,12 +955,11 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                               if_else(emfact >  emissions.HIGH_EM_FACTOR_THRESHOLD | is.na(emfact) , medGlobal, emfact))) %>%
       select(GCAM_region_ID, Non.CO2, year, supplysector, subsector, stub.technology, emfact) %>%
       mutate(emfact = if_else(is.infinite(emfact), 1, emfact)) ->
-      L112.nonco2_tgej_R_en_S_F_Yh_remove_outliers
+      L112.nonco2_tgej_R_en_S_F_Yh_replace_outliers
 
     ## Replace outlier EFs with the global median for all sectors except out_resources, which was replaced above based on a different method
-    # TODO: check on other out_resources technologies
-    L112.nonco2_tgej_R_en_S_F_Yh_remainder <- L112.nonco2_tgej_R_en_S_F_Yh_remove_outliers %>%
-      filter(!(supplysector == "out_resources" & stub.technology == "unconventional oil"))
+    L112.nonco2_tgej_R_en_S_F_Yh_remainder <- L112.nonco2_tgej_R_en_S_F_Yh_replace_outliers %>%
+      filter(supplysector != "out_resources")
 
     # list columns to group by (emission factor medians will based on this grouping)
     to_group <- c( "year", "Non.CO2", "supplysector", "subsector", "stub.technology" )
@@ -970,9 +969,9 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     ef_col_name <- "emfact"
     L112.nonco2_tgej_R_en_S_F_Yh_remainder_out <- replace_outlier_EFs(L112.nonco2_tgej_R_en_S_F_Yh_remainder, to_group, names, ef_col_name)
 
-    L112.nonco2_tgej_R_en_S_F_Yh <-  rbind(L112.nonco2_tgej_R_en_S_F_Yh_remainder_out,
-                                           L112.nonco2_tgej_R_en_S_F_Yh %>%
-                                             filter(supplysector == "out_resources" & stub.technology != "unconventional oil"))
+    L112.nonco2_tgej_R_en_S_F_Yh <-  L112.nonco2_tgej_R_en_S_F_Yh_remainder_out %>%
+      rbind(L112.nonco2_tgej_R_en_S_F_Yh_replace_outliers %>%
+              filter(supplysector == "out_resources"))
 
 
 
