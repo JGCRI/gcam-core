@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L201.en_pol_emissions}, \code{L201.en_ghg_emissions}, \code{L201.en_bcoc_emissions}, \code{L201.OutputEmissions_elec}, \code{L201.nonghg_max_reduction}, \code{L201.nonghg_steepness}, \code{L201.nonghg_max_reduction_res}, \code{L201.nonghg_steepness_res}, \code{L201.nonghg_res}, \code{L201.ghg_res}, \code{L201.ResReadInControl_nonghg_res}, \code{L201.ResReadInControl_ghg_res}. The corresponding file in the
+#' the generated outputs: \code{L201.en_pol_emissions}, \code{L201.en_ghg_emissions}, \code{L201.en_bcoc_emissions}, \code{L201.en_iron_and_steel_ef}, \code{L201.OutputEmissions_elec}, \code{L201.nonghg_max_reduction}, \code{L201.nonghg_steepness}, \code{L201.nonghg_max_reduction_res}, \code{L201.nonghg_steepness_res}, \code{L201.nonghg_res}, \code{L201.ghg_res}, \code{L201.ResReadInControl_nonghg_res}, \code{L201.ResReadInControl_ghg_res}. The corresponding file in the
 #' original data system was \code{L201.en_nonco2.R} (emissions level2).
 #' @details Set up all of the inputs needed for the energy system non-CO2 emissions in GCAM.
 #' This includes historical emissions, drivers (input or output), and pollution controls.
@@ -29,6 +29,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              "L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
              "L114.bcoc_tgej_R_en_S_F_2000",
              "L151.nonghg_ctrl_R_en_S_T",
+             "L2323.StubTechProd_iron_steel",
              FILE = "emissions/A51.steepness",
              "L244.DeleteThermalService",
              "L244.DeleteGenericService",
@@ -42,6 +43,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     return(c("L201.en_pol_emissions",
              "L201.en_ghg_emissions",
              "L201.en_bcoc_emissions",
+             "L201.en_iron_and_steel_ef",
              "L201.OutputEmissions_elec",
              "L201.nonghg_max_reduction",
              "L201.nonghg_steepness",
@@ -73,6 +75,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP <- get_data(all_data, "L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP", strip_attributes = TRUE)
     L114.bcoc_tgej_R_en_S_F_2000 <- get_data(all_data, "L114.bcoc_tgej_R_en_S_F_2000", strip_attributes = TRUE)
     L151.nonghg_ctrl_R_en_S_T <- get_data(all_data, "L151.nonghg_ctrl_R_en_S_T", strip_attributes = TRUE)
+    L2323.StubTechProd_iron_steel <- get_data(all_data, "L2323.StubTechProd_iron_steel", strip_attributes = TRUE)
     A51.steepness <- get_data(all_data, "emissions/A51.steepness", strip_attributes = TRUE)
     L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService", strip_attributes = TRUE)
     L244.DeleteGenericService <- get_data(all_data, "L244.DeleteGenericService", strip_attributes = TRUE)
@@ -117,6 +120,17 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
       L201.en_pol_emissions
 
+    # L201.en_pol_emissions: Pollutant emissions for energy technologies in all regions
+    L111.nonghg_tg_R_en_S_F_Yh %>%
+      filter(supplysector != "out_resources",
+             year %in% emissions.MODEL_BASE_YEARS) %>%
+      # add region name and round output
+      left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
+      left_join_error_no_match(EnTechInputNameMap,by = c("supplysector", "subsector", "stub.technology")) %>%
+      select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
+      mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
+      L201.en_pol_emissions_edit_ss
+
     # L201.en_ghg_emissions: GHG emissions for energy technologies in all regions
     L112.ghg_tg_R_en_S_F_Yh %>%
       filter(supplysector != "out_resources",
@@ -126,26 +140,59 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(EnTechInputNameMap,by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
       mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
-      L201.en_ghg_emissions
+      L201.en_ghg_emissions_edit_ss
 
     # Add back in correct subsector name for iron and steel sector
-    L201.en_pol_emissions %>%
+    L201.en_pol_emissions_edit_ss %>%
       left_join(ind_subsector_revised %>% select(supplysector,subsector.original, technology, minicam.energy.input) %>%
                   rename(stub.technology = technology,
                          input.name = minicam.energy.input),
                 by = c("supplysector", "stub.technology", "input.name")) %>%
       mutate(subsector = if_else(!is.na(subsector.original),subsector.original,subsector)) %>%
       select(-subsector.original) ->
-      L201.en_pol_emissions
+      L201.en_pol_emissions_remove_IS
 
-    L201.en_ghg_emissions %>%
+    L201.en_ghg_emissions_edit_ss %>%
       left_join(ind_subsector_revised %>% select(supplysector,subsector.original, technology, minicam.energy.input) %>%
                   rename(stub.technology = technology,
                          input.name = minicam.energy.input),
                 by = c("supplysector", "stub.technology", "input.name")) %>%
       mutate(subsector = if_else(!is.na(subsector.original),subsector.original,subsector)) %>%
       select(-subsector.original) ->
-      L201.en_ghg_emissions
+      L201.en_ghg_emissions_remove_IS
+
+    # Separate processing for iron and steel. Previously, iron and steel was input driven + input emissions assigned to the
+    # main combustion fuel. This resulted in unexpected behavior, so we are changing them to be output driven EFs, and replacing
+    # outlier EFs with the global median.
+    # Iron and Steel will have their own tables, so we can remove it from the previous tables
+    L201.en_pol_emissions <- L201.en_pol_emissions_remove_IS %>%
+      filter(supplysector != "iron and steel")
+
+    L201.en_ghg_emissions <- L201.en_ghg_emissions_remove_IS %>%
+      filter(supplysector != "iron and steel")
+
+    # Compute output emissions factor for iron and steel
+    L201.en_iron_and_steel_ef_replace_outliers <- L201.en_pol_emissions_remove_IS %>%
+      filter(supplysector == "iron and steel") %>%
+      bind_rows(L201.en_ghg_emissions_remove_IS %>% filter(supplysector == "iron and steel")) %>%
+      # add in the iron and steel output
+      left_join_error_no_match(L2323.StubTechProd_iron_steel, by = c("region", "supplysector", "subsector", "stub.technology", "year")) %>%
+      # compute emissions factors
+      mutate(emiss.coeff = input.emissions/calOutputValue)
+
+    ## Replace outlier EFs with the global median
+    # list columns to group by (emission factor medians will based on this grouping)
+    to_group <- c( "year", "Non.CO2", "supplysector", "subsector", "stub.technology" )
+    # list columns to keep in final table
+    names <- c( "region", "Non.CO2", "year", "supplysector", "subsector", "stub.technology", "emiss.coeff")
+    # Name of column containing emission factors
+    ef_col_name <- "emiss.coeff"
+    L201.en_iron_and_steel_ef_fixINF <- replace_outlier_EFs(L201.en_iron_and_steel_ef_replace_outliers, to_group, names, ef_col_name)
+
+    # Some entries still have "Inf" for the EF. In these cases, a global median could not be calculated because there was no output
+    # in any region within that year. These EFs can be set to 1.
+    L201.en_iron_and_steel_ef <- L201.en_iron_and_steel_ef_fixINF %>%
+      mutate(emiss.coeff = if_else(is.infinite(emiss.coeff), 1, emiss.coeff))
 
     EnTechInputNameMap %>%
       left_join(ind_subsector_revised %>% select(supplysector,subsector.original,fuel,technology, minicam.energy.input) %>%
@@ -362,6 +409,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.ResReadInControl_nonghg_res <- rename_SO2(L201.ResReadInControl_nonghg_res, A_regions, FALSE)
     L201.nonghg_steepness_res <- rename_SO2(L201.nonghg_steepness_res, A_regions, FALSE)
     L201.nonghg_max_reduction_res <- rename_SO2(L201.nonghg_max_reduction_res, A_regions, FALSE)
+    L201.en_iron_and_steel_ef <- rename_SO2(L201.en_iron_and_steel_ef, A_regions, FALSE)
 
 
     # Remove district heat from regions that do have have it
@@ -441,6 +489,21 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "L114.bcoc_tgej_R_en_S_F_2000",
                      "L244.DeleteThermalService") ->
       L201.en_bcoc_emissions
+
+    L201.en_iron_and_steel_ef %>%
+      add_title("Pollutant and GHG emission factor for iron and steel technologies in all regions") %>%
+      add_units("Tg/Mt") %>%
+      add_comments("Emission factors computed using CEDS emissions and iron and steel output") %>%
+      add_precursors("common/GCAM_region_names",
+                     "energy/A_regions",
+                     "energy/calibrated_techs",
+                     "energy/calibrated_techs_bld_det",
+                     UCD_tech_map_name,
+                     "L112.ghg_tg_R_en_S_F_Yh",
+                     "L244.DeleteThermalService",
+                     "emissions/mappings/ind_subsector_revised",
+                     "L2323.StubTechProd_iron_steel") ->
+      L201.en_iron_and_steel_ef
 
     L201.OutputEmissions_elec %>%
       add_title("GHG and pollutant emissions for the electricity sector") %>%
@@ -535,7 +598,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       same_precursors_as(L201.ghg_res) ->
       L201.ResReadInControl_ghg_res
 
-    return_data(L201.en_pol_emissions, L201.en_ghg_emissions, L201.en_bcoc_emissions, L201.OutputEmissions_elec, L201.nonghg_max_reduction, L201.nonghg_steepness, L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, L201.nonghg_res, L201.ghg_res, L201.ResReadInControl_nonghg_res, L201.ResReadInControl_ghg_res)
+    return_data(L201.en_pol_emissions, L201.en_ghg_emissions, L201.en_bcoc_emissions, L201.en_iron_and_steel_ef, L201.OutputEmissions_elec, L201.nonghg_max_reduction, L201.nonghg_steepness, L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, L201.nonghg_res, L201.ghg_res, L201.ResReadInControl_nonghg_res, L201.ResReadInControl_ghg_res)
   } else {
     stop("Unknown command")
   }
