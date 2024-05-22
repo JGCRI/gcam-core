@@ -85,7 +85,10 @@ unique_ptr<IProductionState> ProductionStateFactory::create( const int aInvestYe
 {
     // Initialize the production state.
     unique_ptr<IProductionState> newState;
-    int currYear = scenario->getModeltime()->getper_to_yr( aPeriod );
+    const Modeltime* modeltime = scenario->getModeltime();
+    int currYear = modeltime->getper_to_yr( aPeriod );
+    int investPer = modeltime->getyr_to_per(aInvestYear);
+    int investTimeStep = modeltime->gettimestep(investPer);
 
     if( aInvestYear == currYear ){
         // If the new vintage has fixed output use a fixed output production
@@ -102,7 +105,7 @@ unique_ptr<IProductionState> ProductionStateFactory::create( const int aInvestYe
     }
     // Check if it is a still operating vintage.
     else if( ( currYear > aInvestYear ) &&
-        ( aInvestYear + aLifetimeYears > currYear ) ){
+        ( (aInvestYear + aLifetimeYears - investTimeStep) >= currYear ) ){
         assert( aPeriod > 0 );
         newState.reset( new VintageProductionState );
         // Set the base level of output to the output in the initial investment
