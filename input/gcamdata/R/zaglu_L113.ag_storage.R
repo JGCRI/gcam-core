@@ -111,13 +111,14 @@ module_aglu_L113_ag_storage <- function(command, ...) {
 
     # 3. Prepare a storage tech data table for generating XMLs. ----
 
-    # Calculate lifetime in the carry-over structure
-    # may need adjustments here when years/steps are changing
+    # Calculate lifetime in the carry-over structure to be exactly equal
+    # to two model periods
     L113.StorageLifeTime <-
       tibble(year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
-      mutate(lifetime = lead(year, 2) - year,
-             lifetime = if_else(year == 1990, 16, lifetime),
-             lifetime = if_else(year == 2005, 6, lifetime) )
+      mutate(timestep = replace_na(year - lag(year), modeltime.PERIOD0_TIMESTEP),
+             # the lifetime needs to last the current timestep plus the next
+             lifetime = timestep + lead(timestep)) %>%
+      tidyr::fill(lifetime, .direction="down")
 
     # Construct the key table for storage tech.
     # ToDo: storage.cost
