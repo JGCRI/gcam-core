@@ -93,7 +93,7 @@
 		<Value name = "nonco2_aglu">../input/gcamdata/xml/all_aglu_emissions_IRR_MGMT.xml</Value>
 		<Value name = "nonco2_aglu_prot">../input/gcamdata/xml/all_protected_unmgd_emissions.xml</Value>
 		<Value name = "nonco2_em_controls">../input/gcamdata/xml/emission_factor_controls.xml</Value>
-		<Value name = "nonco2_TradBio">../input/gcamdata/xml/ssp2_tradBio_emissions_factors.xml</Value> 
+		<Value name = "nonco2_TradBio">../input/gcamdata/xml/ssp2_emissions_factors_tradBio.xml</Value> 
 		
 		<!-- Global nonCO2 GHG MAC files -->
 		<Value name = "nonco2_energy">../input/gcamdata/xml/all_energy_emissions_MAC.xml</Value>
