@@ -1481,7 +1481,8 @@ replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
     select(to_group, sd) %>%
     distinct()
 
-  # Replace all emissions factors outside a threshold (one standard deviation from median) or that are NAs with the median emissions factor for that year, non.CO2, and technology
+  # Replace all emissions factors outside a threshold (one standard deviation higher than the median, three lower)
+  # or that are NAs with the median emissions factor for that year, non.CO2, and technology
   # The output table in named "noBCOC" because in several cases where this is currently used, BC and OC EFs are added in at the next step.
   noBCOC <- df %>%
     rename(emiss.coef = .data[[ef_col_name]]) %>%
@@ -1490,7 +1491,7 @@ replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
     # TODO: alternatively, remove 1975 all together?
     left_join(sd, by=(to_group)) %>%
     # Replace EFs that are one standard deviation from the median or are NA with the median
-    mutate(emiss.coef = if_else(emiss.coef > medianEF + sd | emiss.coef < medianEF - sd,
+    mutate(emiss.coef = if_else(emiss.coef > medianEF + sd | emiss.coef < medianEF - (3 * sd),
                                 medianEF, emiss.coef),
            emiss.coef = if_else(is.infinite(emiss.coef), 1, emiss.coef),
            emiss.coef = if_else(is.na(emiss.coef), medianEF, emiss.coef)) %>%
