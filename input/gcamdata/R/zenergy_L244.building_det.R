@@ -232,7 +232,7 @@ module_energy_L244.building_det <- function(command, ...) {
                             select(category)))
 
     # Add a deflator for harmonizing GDPpc with prices
-    def9075<-2.212
+    def9075<-gdp_deflator(1990, 1975)
 
     # ===================================================
     # First, clean and prepare data on current and future income distribution projections

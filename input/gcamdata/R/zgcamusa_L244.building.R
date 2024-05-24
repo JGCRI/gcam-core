@@ -173,7 +173,7 @@ module_gcamusa_L244.building <- function(command, ...) {
     L244.Supplysector_bld<-get_data(all_data, "L244.Supplysector_bld") %>% filter(region == gcam.USA_REGION)
 
     # Add a deflator for harmonizing GDPpc with prices
-    def9075<-2.212
+    def9075<-gdp_deflator(1990, 1975)
 
     # ===================================================
     # Data Processing
