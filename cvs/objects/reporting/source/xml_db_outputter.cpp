@@ -1789,14 +1789,6 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CONSUMER_DURABLE_INV);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
-    currValue = aNationalAccount->getAccountValue( NationalAccount::GDP_PER_CAPITA );
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP_PER_CAPITA);
-    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
-    
-    currValue = aNationalAccount->getAccountValue( NationalAccount::GDP_PER_CAPITA_PPP );
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP_PER_CAPITA_PPP);
-    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
-
     currValue = aNationalAccount->getAccountValue( NationalAccount::VALUE_ADDED );
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::VALUE_ADDED);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
@@ -1842,7 +1834,17 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::LABOR_WAGES);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
-    attrs[ "unit" ] = "mil pers";
+    // per cap values have different units
+    attrs[ "unit" ] = "thous 1990$ percap";
+    currValue = aNationalAccount->getAccountValue( NationalAccount::GDP_PER_CAPITA );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP_PER_CAPITA);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::GDP_PER_CAPITA_PPP );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP_PER_CAPITA_PPP);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+
+    attrs[ "unit" ] = "thous pers";
     // labor force in persons
     currValue = aNationalAccount->getAccountValue( NationalAccount::LABOR_FORCE );
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::LABOR_FORCE);
