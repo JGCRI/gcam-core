@@ -426,7 +426,7 @@ add_logit_tables_xml_generate_levels <- function(dot, data, header, old_tag, new
 #' @export
 cmp_xml_files <- function(fleft, fright, raw = FALSE)
 {
-  cmd <- system2('which', 'python', stdout=TRUE)
+  cmd <- system2('which', 'python3', stdout=TRUE)
   py <- system.file('exec/xml_verify.py', package = 'gcamdata')
   ## normalizePath prints a warning when one of the files doesn't exist, but we'll
   ## catch that as an error below.

@@ -140,6 +140,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       add_precursors("L2012.AgYield_bio_ref",
                      "aglu/A_bio_ghost_share",
                      "aglu/A_biomassSupplyShare_R",
+                     "common/GCAM_region_names",
                      "aglu/A_LT_Mapping") ->
       L2242.LN4_NodeGhostShare
 

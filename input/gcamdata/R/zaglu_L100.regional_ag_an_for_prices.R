@@ -396,7 +396,8 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "aglu/FAO/FAO_an_items_PRODSTAT",
                      "common/FAO_GDP_Deflators",
-                     "aglu/USDA/USDA_Alfalfa_prices_USDt") ->
+                     "aglu/USDA/USDA_Alfalfa_prices_USDt",
+                     "L109.ag_ALL_Mt_R_C_Y") ->
       L1321.ag_prP_R_C_75USDkg
 
     L1321.an_prP_R_C_75USDkg %>%
@@ -409,7 +410,8 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
                      "aglu/FAO/GCAMDATA_FAOSTAT_ProducerPrice_170Regs_185PrimaryItems_2010to2020",
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "aglu/FAO/FAO_an_items_PRODSTAT",
-                     "common/FAO_GDP_Deflators") ->
+                     "common/FAO_GDP_Deflators",
+                     "L109.ag_ALL_Mt_R_C_Y") ->
       L1321.an_prP_R_C_75USDkg
 
     L1321.expP_R_F_75USDm3 %>%

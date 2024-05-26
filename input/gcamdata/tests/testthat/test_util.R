@@ -61,8 +61,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                                           from_file = TRUE), name == chunks),
       chunk_outputs = function(chunks, ...) filter(tibble(name = chunknames,
                                                           output = c("o1", "o2")), name == chunks),
-      expect_identical(inputs_of("test1"), "i1"),
-      expect_identical(outputs_of("test2"), "o2")
+      {
+        expect_identical(inputs_of("test1"), "i1")
+        expect_identical(outputs_of("test2"), "o2")
+      }
     )
   })
 

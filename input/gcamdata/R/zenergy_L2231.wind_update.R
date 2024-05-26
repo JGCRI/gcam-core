@@ -331,7 +331,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Resource curve and prices for onshore wind by region") %>%
       add_legacy_name("L2231.SmthRenewRsrcCurves_onshore_wind") %>%
-      add_precursors( "common/iso_GCAM_regID", "common/GCAM_region_names", "energy/mappings/fuel_energy_input",  "energy/A20.wind_class_CFs", "L113.globaltech_capital_ATB", "L113.globaltech_OMfixed_ATB", "energy/NREL_onshore_energy", "L223.StubTechCapFactor_elec") ->
+      add_precursors( "common/iso_GCAM_regID", "common/GCAM_region_names", "energy/mappings/fuel_energy_input",  "energy/A20.wind_class_CFs", "L113.globaltech_capital_ATB", "L113.globaltech_OMfixed_ATB", "energy/NREL_onshore_energy", "L223.StubTechCapFactor_elec", "energy/mappings/NREL_wind_ctry") ->
       L2231.SmthRenewRsrcCurves_onshore_wind
 
     L2231.StubTechCapFactor_onshore_wind %>%

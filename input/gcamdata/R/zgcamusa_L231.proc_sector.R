@@ -415,7 +415,8 @@ module_gcamusa_L231.proc_sector <- function(command, ...) {
       add_precursors("L231.Ind_globaltech_eff",
                      "L132.in_EJ_state_indchp_F",
                      "L132.in_EJ_state_indnochp_F",
-                     "L132.in_EJ_state_indfeed_F") ->
+                     "L132.in_EJ_state_indfeed_F",
+                     "L201.Pop_GCAMUSA") ->
       L231.IndCoef_USA
 
     return_data(L231.DeleteSupplysector_industry_USA,

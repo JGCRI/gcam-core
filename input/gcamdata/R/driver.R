@@ -636,7 +636,7 @@ driver_drake <- function(
                                    tibble(name = unfound_inputs$input,
                                           output = unfound_inputs$input,
                                           to_xml = FALSE)),
-                         chunkinputs, by=c("output" = "input")) %>%
+                         chunkinputs, by=c("output" = "input"), relationship = "many-to-many") %>%
        select(name.x, name.y) %>%
        unique()
 

@@ -439,8 +439,8 @@ module_aglu_L202.an_input <- function(command, ...) {
       filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(GCAM_region_ID, coefficient) %>%
       # adjusted IO values will be assigned to the year they are fully phased in, and interpolated for years in between. We are basically maintaining calibration values to 2100
-      mutate(year = PHASE_IN_YEAR) %>%
-      mutate(coefficient = coefficient)
+      mutate(year = PHASE_IN_YEAR,
+             coefficient = coefficient)
 
     A_an_input_technology %>%
       write_to_all_regions(c(LEVEL2_DATA_NAMES[["Tech"]], "minicam.energy.input", "market.name"), GCAM_region_names) %>%

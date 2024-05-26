@@ -363,7 +363,11 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
                      "aglu/A_LandNode_logit",
                      "aglu/A_LT_Mapping",
                      "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L131.LV_USD75_m2_R_GLU") ->
+                     "L131.LV_USD75_m2_R_GLU",
+                     "L2252.LN5_MgdAllocation_crop",
+                     "L2012.AgProduction_ag_irr_mgmt",
+                     "L2012.AgSupplySector",
+                     "L2052.AgCost_ag_irr_mgmt") ->
       L221.LN1_ValueLogit
     L221.LN1_HistUnmgdAllocation %>%
       add_title("Historical land cover fora unmanaged land (LT_GLU) in the first nest by region") %>%

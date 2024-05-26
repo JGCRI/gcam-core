@@ -970,7 +970,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     L112.nonco2_tgej_R_en_S_F_Yh_remainder_out <- replace_outlier_EFs(L112.nonco2_tgej_R_en_S_F_Yh_remainder, to_group, names, ef_col_name)
 
     L112.nonco2_tgej_R_en_S_F_Yh <-  L112.nonco2_tgej_R_en_S_F_Yh_remainder_out %>%
-      rbind(L112.nonco2_tgej_R_en_S_F_Yh_replace_outliers %>%
+      bind_rows(L112.nonco2_tgej_R_en_S_F_Yh_replace_outliers %>%
               filter(supplysector == "out_resources"))
 
 

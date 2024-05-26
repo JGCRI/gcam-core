@@ -200,11 +200,11 @@ module_energy_L1327.paper <- function(command, ...) {
                   ungroup(), by = c("GCAM_region_ID", "year")) %>%
 
       left_join(L1327.out_Mt_R_paper_Yh %>% rename(paper_prod=value) %>% select(-sector), by = c("GCAM_region_ID","year")) %>%
-      mutate(paper_prod=ifelse(is.na(paper_prod),0,paper_prod)) %>%
+      mutate(paper_prod=if_else(is.na(paper_prod),0,paper_prod),
       ## Manual adjustment for Africa_Northern - fix extremely high coefficient by setting biomass to zero (will be replaced with default value)
-      mutate(biomass_EJ = if_else(GCAM_region_ID == 3, 0, biomass_EJ)) %>%
+             biomass_EJ = if_else(GCAM_region_ID == 3, 0, biomass_EJ),
 
-      mutate(coefficient = woodpulp_tons / biomass_EJ)
+             coefficient = woodpulp_tons / biomass_EJ)
 
     # Where reported biomass is 0, replace Inf coefficient with global median,
     # scaled by share of woodpulp produced domestically (to estimate black liquor availability).

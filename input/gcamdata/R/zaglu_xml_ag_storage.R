@@ -38,8 +38,8 @@ module_aglu_batch_ag_storage_xml <- function(command, ...) {
     L113.StorageTechAndPassThrough %>%
       filter(storage_model == FALSE) %>%
       rename(technology = food.storage.technology) %>%
-      mutate(technology = "no-storage-pass-through") %>%
-      mutate(minicam.non.energy.input = "border-cost", input.cost = 0) ->
+      mutate(technology = "no-storage-pass-through",
+             minicam.non.energy.input = "border-cost", input.cost = 0) ->
       L113.PassThroughTable
 
     # 0. Shared tables
@@ -125,8 +125,8 @@ module_aglu_batch_ag_storage_xml <- function(command, ...) {
 
     fst_RESSecOut <-
       L113.StorageTechTable %>%
-      mutate(res.secondary.output = GCAM_commodity) %>%
-      mutate(output.ratio = 1, pMultiplier = 0) %>%
+      mutate(res.secondary.output = GCAM_commodity,
+             output.ratio = 1, pMultiplier = 0) %>%
       select(LEVEL2_DATA_NAMES[["FoodTechRESSecOut"]])
 
     fst_RESSecOut <-

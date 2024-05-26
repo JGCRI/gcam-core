@@ -311,7 +311,8 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "L123.For_Prod_bm3_R_Y_GLU",
-                     "L120.LC_soil_veg_carbon_GLU") ->
+                     "L120.LC_soil_veg_carbon_GLU",
+                     "L110.IO_Coefs_pulp") ->
       L2042.AgResBio_For
     L204.AgResBioCurve_For %>%
       add_title("Forest residue biomass supply curves") %>%

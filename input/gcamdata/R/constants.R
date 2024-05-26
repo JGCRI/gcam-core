@@ -241,8 +241,8 @@ aglu.CCONTENT_CELLULOSE    <- 0.45
 aglu.CCONV_PEAK_AVG <- 0.5
 
 # Biomass mature_age (zaglu_L2252)
-biomassGrass_mature_age = 5
-biomassTree_mature_age = 8
+aglu.BIOMASSGRASS_MATURE_AGE = 5
+aglu.BIOMASSTREE_MATURE_AGE = 8
 
 
 # Constraints for the minimum and maximum harvested:cropped ratios
@@ -1178,6 +1178,7 @@ gcamusa.DUST <- TRUE
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
 # # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
-# MODEL_FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
-# MODEL_BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_FUTURE_YEARS <- seq(2005, 2100, 5)  # normally seq(2015, 2100, 5)
+# MODEL_BASE_YEARS <- c(1975, 1990)   # normally (1975, 1990, 2005, 2010)
 # MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
+# MODEL_FINAL_BASE_YEAR <- 1990

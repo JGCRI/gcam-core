@@ -161,16 +161,16 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
       # need to duplicate and separate subsector for fuel table joining purposes.
       # all of this being done is specifically to remediate a gas issue, which has two generation technologies
       mutate(new_sub = subsector) %>%
-      separate(new_sub, into = c("gen_fuel", "delete", "fuel_type"), sep = "_") %>%
+      separate(new_sub, into = c("gen_fuel", "delete", "fuel_type"), sep = "_", extra = "drop") %>%
       select(-delete) %>%
       unite(new_sub, gen_fuel, fuel_type, sep = " ") %>%
       # now, we do renaming to match the fuel table
       # the fuel table has 5 technology options
       mutate(new_sub = gsub("gas CC", "gas (CC)", new_sub),
              new_sub = gsub("gas steam/CT", "gas (steam/CT)", new_sub),
-             new_sub = ifelse(subsector0 == "coal", "coal (conv pul)", new_sub),
-             new_sub = ifelse(subsector0 == "refined liquids", "refined liquids (steam/CT)", new_sub),
-             new_sub = ifelse(subsector0 == "biomass", "biomass (conv)", new_sub)) %>%
+             new_sub = if_else(subsector0 == "coal", "coal (conv pul)", new_sub),
+             new_sub = if_else(subsector0 == "refined liquids", "refined liquids (steam/CT)", new_sub),
+             new_sub = if_else(subsector0 == "biomass", "biomass (conv)", new_sub)) %>%
     # Join with table that has fuel data.
     # If the LJENM fails here, it is likely because the table being joined in was updated to include additional technologies
       left_join_error_no_match(L1231.in_EJ_state_elec_F_tech,

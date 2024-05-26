@@ -550,7 +550,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     select(-year, -value) %>%
     distinct() %>%
     repeat_add_columns(tibble(year=c(unique(c(d$year, out_years))))) %>%
-    left_join(d, by=names(.)) %>%
+    left_join(d, by=names(.), relationship = "many-to-many") %>%
     # for the purposes of interpolating (and later extrapolating) we would like
     # to just group by everything except year and value
     dplyr::group_by_at(dplyr::vars(-year, -value)) %>%
@@ -651,7 +651,7 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
   ctry_years <- years[years < dissolution_year]
   yrs <- as.character(c(ctry_years, dissolution_year))
   data %>%
-    select(item, element, yrs) %>%
+    select(item, element, tidyr::all_of(yrs)) %>%
     group_by(item, element) %>%
     summarise_all(sum) %>%
     ungroup ->
