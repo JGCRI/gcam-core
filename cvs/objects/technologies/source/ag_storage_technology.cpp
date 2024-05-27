@@ -282,9 +282,12 @@ void AgStorageTechnology::calcCost(const string& aRegionName,
     const int aPeriod)
 {
     // we didn't want the price signal to consumption to change due to storage
-    // so we need to re-inflate the price here
+    // so we need to reset it to one here
+    double origCoef = mInputs[0]->getCoefficient(aPeriod);
+    mInputs[0]->setCoefficient(1.0, aPeriod);
     Technology::calcCost(aRegionName, aSectorName, aPeriod);
-    mCosts[aPeriod] /= mInputs[0]->getCoefficient(aPeriod);
+    // restore the previous value in case it is needed
+    mInputs[0]->setCoefficient(origCoef, aPeriod);
 }
 
 //! write object to xml output stream
