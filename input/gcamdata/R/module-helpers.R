@@ -1014,70 +1014,6 @@ NEI_to_GCAM <- function(NEI_data, CEDS_GCAM_fuel, NEI_pollutant_mapping, names) 
 }
 
 
-#' NEI_to_GCAM_transport
-#'
-#' Helper function to convert EPA National Emissions Inventory (NEI) emissions to GCAM emissions in GCAM-USA
-#' Used for emissions in the transport sectors
-#' This function allows the user to filter GCAM transport sectors from the NEI data, maps to GCAM
-#' fuels and pollutants, converts from TON to Tg, and aggregates emissions by state, sector, fuel, year, and pollutant.
-#' @param NEI_data Base tibble to start from (NEI data)
-#' @param CEDS_GCAM_transport CEDS to GCAM fuel mapping file specific to transport stub.technologies
-#' @param NEI_pollutant_mapping NEI to GCAM pollutant mapping file
-#' @param names Character vector indicating the column names of the returned tibble
-#' @importFrom assertthat assert_that
-#' @importFrom dplyr filter left_join rename mutate group_by select summarise_all ungroup
-#' @return tibble with corresponding GCAM sectors
-
-NEI_to_GCAM_Transport <- function(NEI_data, CEDS_GCAM_transport, NEI_pollutant_mapping, names) {
-
-  # silence package check notes
-  GCAM_sector <- GCAM_fuel <- pollutant <- emissions <- state <- sector <-
-    fuel <- Non.CO2 <- year <- value <- stub.technology <- NULL
-
-  assert_that(is_tibble(NEI_data))
-  assert_that(is_tibble(CEDS_GCAM_transport))
-  assert_that(is_tibble(NEI_pollutant_mapping))
-  assert_that(is.character(names))
-  assert_that(has_name(NEI_data, "GCAM_sector"))
-  assert_that(has_name(CEDS_GCAM_transport, "CEDS_Fuel"))
-  assert_that(has_name(NEI_pollutant_mapping, "NEI_pollutant"))
-
-  data_new <- NEI_data %>%
-    #subset relevant sectors
-    filter(GCAM_sector %in% names) %>%
-    # using left_join becuase orignal CEDS fuel in NEI has one called "Process", there's no GCAM fuel corresponding to that,
-    # OK to omit, missing values will be dropped later
-    # TODO: check that the dropped "Process" emissions are not significant
-    left_join(CEDS_GCAM_transport, by = "CEDS_Fuel") %>%
-    na.omit %>%
-    rename(NEI_pollutant = pollutant) %>%
-    # Match on NEI pollutants, using left_join becuase missing values will be produced
-    # The original NEI include filterable PM2.5 and PM10, but here we only need primary ones
-    # OK to omit those filterables
-    left_join(NEI_pollutant_mapping, by = "NEI_pollutant") %>%
-    na.omit %>%
-    # Convert from short ton to Tg
-    mutate(emissions = emissions / CONV_T_METRIC_SHORT / 10 ^ 6, unit = "Tg") %>%
-    # generate file tibble based on standard GCAM column names, sum emissions for the same state/sector/fuel/species
-    rename(sector = GCAM_sector) %>%
-    group_by(state, sector, stub.technology, year, Non.CO2) %>%
-    summarise(value = sum(emissions)) %>%
-    ungroup %>%
-    select(state, sector, stub.technology, Non.CO2, year, value)
-
-}
-
-
-#' compute_BC_OC
-#'
-#' Helper function to compute BC and OC EFs from PM2.5 and a mapping file with BC OC fraction content by sector/subsector/technology
-#' Used for emissions in several sectors.
-#' @param df tibble which contains PM2.5 data to be used to get BC and OC data
-#' @param BC_OC_assumptions tibble which contains BC and OC fractions
-#' @importFrom assertthat assert_that
-#' @importFrom dplyr filter left_join rename mutate group_by select summarise_all ungroup
-#' @return tibble with BC and OC rows added
-
 compute_BC_OC <- function(df, BC_OC_assumptions) {
   #There is no data for BC/OC in the base year, so use fractions of PM2.5 to calculate BC/OC emission factors.
   #Compute BC/OC emission factors in the base year based on PM2.5 emission factors
@@ -1470,8 +1406,6 @@ replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
     bind_rows(median.true)
 
   # Find the standard deviation, which will be used to establish our outlier threshold
-  # TODO: check on this. To find the median, we remove NAs. For SD, also remove NAs.
-  # TODO: how to handle inf EFs here? Currently setting to NA so they aren't included.
   sd <- df %>%
     rename(emiss.coef = .data[[ef_col_name]]) %>%
     dplyr::mutate_if(is.numeric, ~ifelse(abs(.) == Inf,NA,.)) %>%
@@ -1481,7 +1415,7 @@ replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
     select(to_group, sd) %>%
     distinct()
 
-  # Replace all emissions factors outside a threshold (one standard deviation higher than the median, three lower)
+  # Replace all emissions factors outside a threshold (two standard deviations higher than the median, three lower)
   # or that are NAs with the median emissions factor for that year, non.CO2, and technology
   # The output table in named "noBCOC" because in several cases where this is currently used, BC and OC EFs are added in at the next step.
   noBCOC <- df %>%
@@ -1490,10 +1424,10 @@ replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
     # we use a left_join here- LJENM results in an errors due to NAs from 1975
     # TODO: alternatively, remove 1975 all together?
     left_join(sd, by=(to_group)) %>%
-    # Replace EFs that are one standard deviation from the median or are NA with the median
-    mutate(emiss.coef = if_else(emiss.coef > medianEF + sd | emiss.coef < medianEF - (3 * sd),
+    # Replace EFs that are two standard deviation higher or three standard deviations lower than the median or are NA or Inf with the median
+    mutate(emiss.coef = if_else(emiss.coef > medianEF + (2 * sd) | emiss.coef < medianEF - (3 * sd),
                                 medianEF, emiss.coef),
-           emiss.coef = if_else(is.infinite(emiss.coef), 1, emiss.coef),
+           emiss.coef = if_else(is.infinite(emiss.coef), medianEF, emiss.coef),
            emiss.coef = if_else(is.na(emiss.coef), medianEF, emiss.coef)) %>%
     rename({{ef_col_name}} := emiss.coef) %>%
     select(all_of(names))
