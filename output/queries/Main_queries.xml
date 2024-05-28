@@ -100,7 +100,7 @@
 					 	 	 	| (: get renewables from H2ProdDist :)
 					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 forecourt production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output, local:get-weighted-eff($currTree/supplysector[@name='H2 forecourt production']//keyword[fn:exists(@average-fossil-efficiency)]/preceding-sibling::output-primary)) 
 					 	 	 	| (: get the primaries :)
-	 	 						(: local:check-keyword( :) $currTree//keyword[fn:exists(@primary-consumption)]/preceding-sibling::input-energy[not(contains(@name, 'water'))]/demand-physical/text() (: ) :)
+	 	 						(: local:check-keyword( :) $currTree//keyword[fn:exists(@primary-consumption)]/preceding-sibling::*[@type='input' and not(contains(@name, 'water'))]/demand-physical/text() (: ) :)
                                 | (: get traditional biomass :)
 							    $currTree//*[@type='input' and @name='traditional biomass']/demand-physical/node()
 			 	 	 	
@@ -203,7 +203,7 @@
 					 	 	 	| (: get renewables from H2ProdDist :)
 					 	 	 	local:get-primary-renewable($currTree/supplysector[@name='H2 forecourt production'](: /*[@type='subsector' (: collapse :) and fn:not(@name='electrolysis')] :)//keyword[fn:exists(@primary-renewable)]/preceding-sibling::output-primary/physical-output)
 					 	 	 	| (: get the primaries :)
-	 	 						$currTree//keyword[fn:exists(@primary-consumption)]/preceding-sibling::input-energy/demand-physical/text()
+	 	 						$currTree//keyword[fn:exists(@primary-consumption)]/preceding-sibling::*[@type='input']/demand-physical/text()
                                 | (: get traditional biomass :)
 							    $currTree//*[@type='input' and @name='traditional biomass']/demand-physical/node()
 			 	 	 	
@@ -503,6 +503,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                         <rewrite from="regional sugarbeet for ethanol" to="d biomass"/>
                         <rewrite from="water withdrawals" to=""/>
                         <rewrite from="solar-H2 renewable" to="h solar"/>
+                        <rewrite from="global solar resource" to="h solar"/>
                         <rewrite from="wind-elect" to="g wind"/>
                         <rewrite from="traded LNG CCS" to="b natural gas CCS"/>
                         <rewrite from="nuclear-elect renewable CCS" to="e nuclear"/>
@@ -1857,7 +1858,7 @@ element input {
 	       				else
 	       			let $useOutputs := $currTree//output-primary[@type='output' and @name=$outputName]/physical-output,
 	       			    $sectorSums := for $out in $useOutputs
-						   let $currInputs := $out/../following-sibling::input-energy/demand-physical[@vintage=$out/@vintage]
+						   let $currInputs := $out/../following-sibling::*[@type='input']/demand-physical[@vintage=$out/@vintage]
 						   return 
 							for $currInput in $currInputs
 						        return
@@ -1994,7 +1995,7 @@ element input {
 	       				else
 	       			let $useOutputs := $currTree//output-primary[@type='output' and @name=$outputName]/physical-output,
 	       			    $sectorSums := for $out in $useOutputs
-						   let $currInputs := $out/../following-sibling::input-energy/demand-physical[@vintage=$out/@vintage]
+						   let $currInputs := $out/../following-sibling::*[@type='input']/demand-physical[@vintage=$out/@vintage]
 						   return 
 							for $currInput in $currInputs
 						        return
@@ -2420,7 +2421,7 @@ element input {
                 <supplyDemandQuery title="building internal gain energy by service">
                     <axis1 name="sector">sector</axis1>
                     <axis2 name="Year">physical-output[@vintage]</axis2>
-                    <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']//output-internal-gains[@type='output']/physical-output/node()</xPath>
+                    <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector']//internal-gains[@type='output']/physical-output/node()</xPath>
                     <comments/>
                 </supplyDemandQuery>
                 <supplyDemandQuery title="total service cost per unit floorspace">
