@@ -13,7 +13,8 @@
 module_water_water_demand_industry_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L232.TechCoef",
-             "L2327.TechCoef_paper"))
+             "L2327.TechCoef_paper",
+             "L232.TechCoef_food"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "water_demand_industry.xml"))
   } else if(command == driver.MAKE) {
@@ -23,6 +24,7 @@ module_water_water_demand_industry_xml <- function(command, ...) {
     # Load required inputs
     L232.TechCoef <- get_data(all_data, "L232.TechCoef")
     L2327.TechCoef_paper <- get_data(all_data, "L2327.TechCoef_paper")
+    L232.TechCoef_food <- get_data(all_data, "L232.TechCoef_food")
 
     # ===================================================
 
@@ -30,8 +32,10 @@ module_water_water_demand_industry_xml <- function(command, ...) {
     create_xml("water_demand_industry.xml") %>%
       add_xml_data(L232.TechCoef, "TechCoef") %>%
       add_xml_data(L2327.TechCoef_paper, "TechCoef") %>%
+      add_xml_data(L232.TechCoef_food, "TechCoef") %>%
       add_precursors("L232.TechCoef",
-                     "L2327.TechCoef_paper") ->
+                     "L2327.TechCoef_paper",
+                     "L232.TechCoef_food") ->
       water_demand_industry.xml
 
     return_data(water_demand_industry.xml)

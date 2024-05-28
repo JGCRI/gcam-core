@@ -4,605 +4,577 @@
 # Column types: ccccn 
 # ----------
 region_GCAM3,sector,fuel,service,share_TFEbysector
-USA,bld_comm,biomass,comm heating,0.00924934
-USA,bld_comm,coal,comm heating,0
-USA,bld_comm,electricity,comm heating,0.022149504
-USA,bld_comm,gas,comm heating,0.143537572
-USA,bld_comm,refined liquids,comm heating,0.04934104
-USA,bld_comm,heat,comm heating,0
-USA,bld_comm,biomass,comm cooling,0
-USA,bld_comm,coal,comm cooling,0
-USA,bld_comm,electricity,comm cooling,0.066837653
-USA,bld_comm,gas,comm cooling,0.002526509
-USA,bld_comm,refined liquids,comm cooling,0
-USA,bld_comm,heat,comm cooling,0
-USA,bld_comm,biomass,comm others,0
-USA,bld_comm,coal,comm others,0.008885211
-USA,bld_comm,electricity,comm others,0.481445804
-USA,bld_comm,gas,comm others,0.186627404
-USA,bld_comm,refined liquids,comm others,0.029399962
-USA,bld_comm,heat,comm others,0
-USA,bld_resid,biomass,resid heating,0.037587395
-USA,bld_resid,coal,resid heating,0
-USA,bld_resid,electricity,resid heating,0.026704525
-USA,bld_resid,gas,resid heating,0.297132928
-USA,bld_resid,refined liquids,resid heating,0.081668115
-USA,bld_resid,traditional biomass,resid heating,0
-USA,bld_resid,heat,resid heating,0
-USA,bld_resid,biomass,resid cooling,0
-USA,bld_resid,coal,resid cooling,0
-USA,bld_resid,electricity,resid cooling,0.079130435
-USA,bld_resid,gas,resid cooling,0
-USA,bld_resid,refined liquids,resid cooling,0
-USA,bld_resid,traditional biomass,resid cooling,0
-USA,bld_resid,heat,resid cooling,0
-USA,bld_resid,biomass,resid others,0
-USA,bld_resid,coal,resid others,0
-USA,bld_resid,electricity,resid others,0.328501791
-USA,bld_resid,gas,resid others,0.122144117
-USA,bld_resid,refined liquids,resid others,0.027130695
-USA,bld_resid,traditional biomass,resid others,0
-USA,bld_resid,heat,resid others,0
-Canada,bld_comm,biomass,comm heating,0
-Canada,bld_comm,coal,comm heating,0
-Canada,bld_comm,electricity,comm heating,0.0765
-Canada,bld_comm,gas,comm heating,0.204
-Canada,bld_comm,refined liquids,comm heating,0.2295
-Canada,bld_comm,heat,comm heating,0
-Canada,bld_comm,biomass,comm cooling,0
-Canada,bld_comm,coal,comm cooling,0
-Canada,bld_comm,electricity,comm cooling,0.024
-Canada,bld_comm,gas,comm cooling,0.006
-Canada,bld_comm,refined liquids,comm cooling,0
-Canada,bld_comm,heat,comm cooling,0
-Canada,bld_comm,biomass,comm others,0
-Canada,bld_comm,coal,comm others,0
-Canada,bld_comm,electricity,comm others,0.281154451
-Canada,bld_comm,gas,comm others,0.133161569
-Canada,bld_comm,refined liquids,comm others,0.045683981
-Canada,bld_comm,heat,comm others,0
-Canada,bld_resid,biomass,resid heating,0.06382927
-Canada,bld_resid,coal,resid heating,0
-Canada,bld_resid,electricity,resid heating,0.14017073
-Canada,bld_resid,gas,resid heating,0.324
-Canada,bld_resid,refined liquids,resid heating,0.072
-Canada,bld_resid,traditional biomass,resid heating,0
-Canada,bld_resid,heat,resid heating,0
-Canada,bld_resid,biomass,resid cooling,0
-Canada,bld_resid,coal,resid cooling,0
-Canada,bld_resid,electricity,resid cooling,0.01
-Canada,bld_resid,gas,resid cooling,0
-Canada,bld_resid,refined liquids,resid cooling,0
-Canada,bld_resid,traditional biomass,resid cooling,0
-Canada,bld_resid,heat,resid cooling,0
-Canada,bld_resid,biomass,resid others,0
-Canada,bld_resid,coal,resid others,0.000778978
-Canada,bld_resid,electricity,resid others,0.275231318
-Canada,bld_resid,gas,resid others,0.110707268
-Canada,bld_resid,refined liquids,resid others,0.003282437
-Canada,bld_resid,traditional biomass,resid others,0
-Canada,bld_resid,heat,resid others,0
-Western Europe,bld_comm,biomass,comm heating,0.009813915
-Western Europe,bld_comm,coal,comm heating,0.004590893
-Western Europe,bld_comm,electricity,comm heating,0.065595192
-Western Europe,bld_comm,gas,comm heating,0.16
-Western Europe,bld_comm,refined liquids,comm heating,0.08
-Western Europe,bld_comm,heat,comm heating,0
-Western Europe,bld_comm,biomass,comm cooling,0
-Western Europe,bld_comm,coal,comm cooling,0
-Western Europe,bld_comm,electricity,comm cooling,0.05
-Western Europe,bld_comm,gas,comm cooling,0
-Western Europe,bld_comm,refined liquids,comm cooling,0
-Western Europe,bld_comm,heat,comm cooling,0
-Western Europe,bld_comm,biomass,comm others,0
-Western Europe,bld_comm,coal,comm others,0
-Western Europe,bld_comm,electricity,comm others,0.351601113
-Western Europe,bld_comm,gas,comm others,0.180185876
-Western Europe,bld_comm,refined liquids,comm others,0.098213011
-Western Europe,bld_comm,heat,comm others,0
-Western Europe,bld_resid,biomass,resid heating,0.10857292
-Western Europe,bld_resid,coal,resid heating,0
-Western Europe,bld_resid,electricity,resid heating,0.032303092
-Western Europe,bld_resid,gas,resid heating,0.29
-Western Europe,bld_resid,refined liquids,resid heating,0.149123988
-Western Europe,bld_resid,traditional biomass,resid heating,0
-Western Europe,bld_resid,heat,resid heating,0
-Western Europe,bld_resid,biomass,resid cooling,0
-Western Europe,bld_resid,coal,resid cooling,0
-Western Europe,bld_resid,electricity,resid cooling,0.025
-Western Europe,bld_resid,gas,resid cooling,0
-Western Europe,bld_resid,refined liquids,resid cooling,0
-Western Europe,bld_resid,traditional biomass,resid cooling,0
-Western Europe,bld_resid,heat,resid cooling,0
-Western Europe,bld_resid,biomass,resid others,0
-Western Europe,bld_resid,coal,resid others,0.018641998
-Western Europe,bld_resid,electricity,resid others,0.184093879
-Western Europe,bld_resid,gas,resid others,0.127730595
-Western Europe,bld_resid,refined liquids,resid others,0.064533528
-Western Europe,bld_resid,traditional biomass,resid others,0
-Western Europe,bld_resid,heat,resid others,0
-Japan,bld_comm,biomass,comm heating,0
-Japan,bld_comm,coal,comm heating,0.010742635
-Japan,bld_comm,electricity,comm heating,0.009
-Japan,bld_comm,gas,comm heating,0.045
-Japan,bld_comm,refined liquids,comm heating,0.115257365
-Japan,bld_comm,heat,comm heating,0
-Japan,bld_comm,biomass,comm cooling,0
-Japan,bld_comm,coal,comm cooling,0
-Japan,bld_comm,electricity,comm cooling,0.04
-Japan,bld_comm,gas,comm cooling,0
-Japan,bld_comm,refined liquids,comm cooling,0
-Japan,bld_comm,heat,comm cooling,0
-Japan,bld_comm,biomass,comm others,0
-Japan,bld_comm,coal,comm others,0
-Japan,bld_comm,electricity,comm others,0.349655569
-Japan,bld_comm,gas,comm others,0.173822652
-Japan,bld_comm,refined liquids,comm others,0.256521779
-Japan,bld_comm,heat,comm others,0
-Japan,bld_resid,biomass,resid heating,0.000527599
-Japan,bld_resid,coal,resid heating,0
-Japan,bld_resid,electricity,resid heating,0.04356999
-Japan,bld_resid,gas,resid heating,0.051258812
-Japan,bld_resid,refined liquids,resid heating,0.160937658
-Japan,bld_resid,traditional biomass,resid heating,0
-Japan,bld_resid,heat,resid heating,0
-Japan,bld_resid,biomass,resid cooling,0
-Japan,bld_resid,coal,resid cooling,0
-Japan,bld_resid,electricity,resid cooling,0.03
-Japan,bld_resid,gas,resid cooling,0
-Japan,bld_resid,refined liquids,resid cooling,0
-Japan,bld_resid,traditional biomass,resid cooling,0
-Japan,bld_resid,heat,resid cooling,0
-Japan,bld_resid,biomass,resid others,0
-Japan,bld_resid,coal,resid others,0
-Japan,bld_resid,electricity,resid others,0.455027702
-Japan,bld_resid,gas,resid others,0.12470461
-Japan,bld_resid,refined liquids,resid others,0.133973629
-Japan,bld_resid,traditional biomass,resid others,0
-Japan,bld_resid,heat,resid others,0
-Korea,bld_comm,biomass,comm heating,0.014992801
-Korea,bld_comm,coal,comm heating,0
-Korea,bld_comm,electricity,comm heating,0.029661664
-Korea,bld_comm,gas,comm heating,0.088984993
-Korea,bld_comm,refined liquids,comm heating,0.162977185
-Korea,bld_comm,heat,comm heating,0
-Korea,bld_comm,biomass,comm cooling,0
-Korea,bld_comm,coal,comm cooling,0
-Korea,bld_comm,electricity,comm cooling,0.039
-Korea,bld_comm,gas,comm cooling,0.011
-Korea,bld_comm,refined liquids,comm cooling,0
-Korea,bld_comm,heat,comm cooling,0
-Korea,bld_comm,biomass,comm others,0
-Korea,bld_comm,coal,comm others,0
-Korea,bld_comm,electricity,comm others,0.407692789
-Korea,bld_comm,gas,comm others,0.053200011
-Korea,bld_comm,refined liquids,comm others,0.192490557
-Korea,bld_comm,heat,comm others,0
-Korea,bld_resid,biomass,resid heating,0.003520598
-Korea,bld_resid,coal,resid heating,0.016741527
-Korea,bld_resid,electricity,resid heating,0.04
-Korea,bld_resid,gas,resid heating,0.3
-Korea,bld_resid,refined liquids,resid heating,0.139737875
-Korea,bld_resid,traditional biomass,resid heating,0
-Korea,bld_resid,heat,resid heating,0
-Korea,bld_resid,biomass,resid cooling,0
-Korea,bld_resid,coal,resid cooling,0
-Korea,bld_resid,electricity,resid cooling,0.02
-Korea,bld_resid,gas,resid cooling,0
-Korea,bld_resid,refined liquids,resid cooling,0
-Korea,bld_resid,traditional biomass,resid cooling,0
-Korea,bld_resid,heat,resid cooling,0
-Korea,bld_resid,biomass,resid others,0
-Korea,bld_resid,coal,resid others,0.039063563
-Korea,bld_resid,electricity,resid others,0.195982972
-Korea,bld_resid,gas,resid others,0.191927492
-Korea,bld_resid,refined liquids,resid others,0.053025972
-Korea,bld_resid,traditional biomass,resid others,0
-Korea,bld_resid,heat,resid others,0
-Southeast Asia,bld_comm,biomass,comm heating,0
-Southeast Asia,bld_comm,coal,comm heating,0
-Southeast Asia,bld_comm,electricity,comm heating,0
-Southeast Asia,bld_comm,gas,comm heating,0.0125
-Southeast Asia,bld_comm,refined liquids,comm heating,0.0375
-Southeast Asia,bld_comm,heat,comm heating,0
-Southeast Asia,bld_comm,biomass,comm cooling,0
-Southeast Asia,bld_comm,coal,comm cooling,0
-Southeast Asia,bld_comm,electricity,comm cooling,0.15
-Southeast Asia,bld_comm,gas,comm cooling,0
-Southeast Asia,bld_comm,refined liquids,comm cooling,0
-Southeast Asia,bld_comm,heat,comm cooling,0
-Southeast Asia,bld_comm,biomass,comm others,0.105112327
-Southeast Asia,bld_comm,coal,comm others,0.000293438
-Southeast Asia,bld_comm,electricity,comm others,0.468970375
-Southeast Asia,bld_comm,gas,comm others,0.060460361
-Southeast Asia,bld_comm,refined liquids,comm others,0.165163499
-Southeast Asia,bld_comm,heat,comm others,0
-Southeast Asia,bld_resid,biomass,resid heating,0
-Southeast Asia,bld_resid,coal,resid heating,0
-Southeast Asia,bld_resid,electricity,resid heating,0
-Southeast Asia,bld_resid,gas,resid heating,0.016666667
-Southeast Asia,bld_resid,refined liquids,resid heating,0.016666667
-Southeast Asia,bld_resid,traditional biomass,resid heating,0.016666667
-Southeast Asia,bld_resid,heat,resid heating,0
-Southeast Asia,bld_resid,biomass,resid cooling,0
-Southeast Asia,bld_resid,coal,resid cooling,0
-Southeast Asia,bld_resid,electricity,resid cooling,0.07
-Southeast Asia,bld_resid,gas,resid cooling,0
-Southeast Asia,bld_resid,refined liquids,resid cooling,0
-Southeast Asia,bld_resid,traditional biomass,resid cooling,0
-Southeast Asia,bld_resid,heat,resid cooling,0
-Southeast Asia,bld_resid,biomass,resid others,0.026668395
-Southeast Asia,bld_resid,coal,resid others,0.00039985
-Southeast Asia,bld_resid,electricity,resid others,0.044932235
-Southeast Asia,bld_resid,gas,resid others,0.027716673
-Southeast Asia,bld_resid,refined liquids,resid others,0.091600333
-Southeast Asia,bld_resid,traditional biomass,resid others,0.688682514
-Southeast Asia,bld_resid,heat,resid others,0
-India,bld_comm,biomass,comm heating,0
-India,bld_comm,coal,comm heating,0
-India,bld_comm,electricity,comm heating,0.002
-India,bld_comm,gas,comm heating,0
-India,bld_comm,refined liquids,comm heating,0
-India,bld_comm,heat,comm heating,0
-India,bld_comm,biomass,comm cooling,0
-India,bld_comm,coal,comm cooling,0
-India,bld_comm,electricity,comm cooling,0.021
-India,bld_comm,gas,comm cooling,0
-India,bld_comm,refined liquids,comm cooling,0
-India,bld_comm,heat,comm cooling,0
-India,bld_comm,biomass,comm others,0.354052453
-India,bld_comm,coal,comm others,0.324173339
-India,bld_comm,electricity,comm others,0.272365155
-India,bld_comm,gas,comm others,0
-India,bld_comm,refined liquids,comm others,0.026409053
-India,bld_comm,heat,comm others,0
-India,bld_resid,biomass,resid heating,0
-India,bld_resid,coal,resid heating,0
-India,bld_resid,electricity,resid heating,0.001
-India,bld_resid,gas,resid heating,0
-India,bld_resid,refined liquids,resid heating,0
-India,bld_resid,traditional biomass,resid heating,0.001
-India,bld_resid,heat,resid heating,0
-India,bld_resid,biomass,resid cooling,0
-India,bld_resid,coal,resid cooling,0
-India,bld_resid,electricity,resid cooling,0.006
-India,bld_resid,gas,resid cooling,0
-India,bld_resid,refined liquids,resid cooling,0
-India,bld_resid,traditional biomass,resid cooling,0
-India,bld_resid,heat,resid cooling,0
-India,bld_resid,biomass,resid others,0
-India,bld_resid,coal,resid others,0.017549117
-India,bld_resid,electricity,resid others,0.049475725
-India,bld_resid,gas,resid others,0.004041309
-India,bld_resid,refined liquids,resid others,0.133481193
-India,bld_resid,traditional biomass,resid others,0.787452655
-India,bld_resid,heat,resid others,0
-Australia_NZ,bld_comm,biomass,comm heating,0.001470887
-Australia_NZ,bld_comm,coal,comm heating,0
-Australia_NZ,bld_comm,electricity,comm heating,0.024
-Australia_NZ,bld_comm,gas,comm heating,0.082529113
-Australia_NZ,bld_comm,refined liquids,comm heating,0.012
-Australia_NZ,bld_comm,heat,comm heating,0
-Australia_NZ,bld_comm,biomass,comm cooling,0
-Australia_NZ,bld_comm,coal,comm cooling,0
-Australia_NZ,bld_comm,electricity,comm cooling,0.08
-Australia_NZ,bld_comm,gas,comm cooling,0
-Australia_NZ,bld_comm,refined liquids,comm cooling,0
-Australia_NZ,bld_comm,heat,comm cooling,0
-Australia_NZ,bld_comm,biomass,comm others,0
-Australia_NZ,bld_comm,coal,comm others,0.024918564
-Australia_NZ,bld_comm,electricity,comm others,0.601880195
-Australia_NZ,bld_comm,gas,comm others,0.082267962
-Australia_NZ,bld_comm,refined liquids,comm others,0.09093328
-Australia_NZ,bld_comm,heat,comm others,0
-Australia_NZ,bld_resid,biomass,resid heating,0.138806089
-Australia_NZ,bld_resid,coal,resid heating,0
-Australia_NZ,bld_resid,electricity,resid heating,0.034
-Australia_NZ,bld_resid,gas,resid heating,0.150193911
-Australia_NZ,bld_resid,refined liquids,resid heating,0.017
-Australia_NZ,bld_resid,traditional biomass,resid heating,0
-Australia_NZ,bld_resid,heat,resid heating,0
-Australia_NZ,bld_resid,biomass,resid cooling,0
-Australia_NZ,bld_resid,coal,resid cooling,0
-Australia_NZ,bld_resid,electricity,resid cooling,0.04
-Australia_NZ,bld_resid,gas,resid cooling,0
-Australia_NZ,bld_resid,refined liquids,resid cooling,0
-Australia_NZ,bld_resid,traditional biomass,resid cooling,0
-Australia_NZ,bld_resid,heat,resid cooling,0
-Australia_NZ,bld_resid,biomass,resid others,0
-Australia_NZ,bld_resid,coal,resid others,0.002567895
-Australia_NZ,bld_resid,electricity,resid others,0.480173219
-Australia_NZ,bld_resid,gas,resid others,0.119164318
-Australia_NZ,bld_resid,refined liquids,resid others,0.018094567
-Australia_NZ,bld_resid,traditional biomass,resid others,0
-Australia_NZ,bld_resid,heat,resid others,0
-Africa,bld_comm,biomass,comm heating,0
-Africa,bld_comm,coal,comm heating,0.01
-Africa,bld_comm,electricity,comm heating,0
-Africa,bld_comm,gas,comm heating,0
-Africa,bld_comm,refined liquids,comm heating,0.02
-Africa,bld_comm,heat,comm heating,0
 Africa,bld_comm,biomass,comm cooling,0
 Africa,bld_comm,coal,comm cooling,0
 Africa,bld_comm,electricity,comm cooling,0.03
 Africa,bld_comm,gas,comm cooling,0
-Africa,bld_comm,refined liquids,comm cooling,0
 Africa,bld_comm,heat,comm cooling,0
-Africa,bld_comm,biomass,comm others,0.581617423
-Africa,bld_comm,coal,comm others,0.041001379
-Africa,bld_comm,electricity,comm others,0.176083747
-Africa,bld_comm,gas,comm others,0.005640937
-Africa,bld_comm,refined liquids,comm others,0.135656514
+Africa,bld_comm,refined liquids,comm cooling,0
+Africa,bld_comm,biomass,comm heating,0
+Africa,bld_comm,coal,comm heating,0.01
+Africa,bld_comm,electricity,comm heating,0
+Africa,bld_comm,gas,comm heating,0
+Africa,bld_comm,heat,comm heating,0
+Africa,bld_comm,refined liquids,comm heating,0.02
+Africa,bld_comm,biomass,comm others,0.339952889
+Africa,bld_comm,coal,comm others,0.052062422
+Africa,bld_comm,electricity,comm others,0.339888111
+Africa,bld_comm,gas,comm others,0.033304979
 Africa,bld_comm,heat,comm others,0
-Africa,bld_resid,biomass,resid heating,0
-Africa,bld_resid,coal,resid heating,0
-Africa,bld_resid,electricity,resid heating,0
-Africa,bld_resid,gas,resid heating,0
-Africa,bld_resid,refined liquids,resid heating,0
-Africa,bld_resid,traditional biomass,resid heating,0.05
-Africa,bld_resid,heat,resid heating,0
-Africa,bld_resid,biomass,resid cooling,0
-Africa,bld_resid,coal,resid cooling,0
-Africa,bld_resid,electricity,resid cooling,0.02
-Africa,bld_resid,gas,resid cooling,0
-Africa,bld_resid,refined liquids,resid cooling,0
-Africa,bld_resid,traditional biomass,resid cooling,0
-Africa,bld_resid,heat,resid cooling,0
-Africa,bld_resid,biomass,resid others,0.051609501
-Africa,bld_resid,coal,resid others,0.013465941
-Africa,bld_resid,electricity,resid others,0.028534317
-Africa,bld_resid,gas,resid others,0.018568679
-Africa,bld_resid,refined liquids,resid others,0.068994338
-Africa,bld_resid,traditional biomass,resid others,0.748827225
-Africa,bld_resid,heat,resid others,0
-Middle East,bld_comm,biomass,comm heating,0
-Middle East,bld_comm,coal,comm heating,0
-Middle East,bld_comm,electricity,comm heating,0
-Middle East,bld_comm,gas,comm heating,0.015
-Middle East,bld_comm,refined liquids,comm heating,0.015
-Middle East,bld_comm,heat,comm heating,0
-Middle East,bld_comm,biomass,comm cooling,0
-Middle East,bld_comm,coal,comm cooling,0
-Middle East,bld_comm,electricity,comm cooling,0.3
-Middle East,bld_comm,gas,comm cooling,0.1
-Middle East,bld_comm,refined liquids,comm cooling,0
-Middle East,bld_comm,heat,comm cooling,0
-Middle East,bld_comm,biomass,comm others,0.027577367
-Middle East,bld_comm,coal,comm others,0
-Middle East,bld_comm,electricity,comm others,0.265212207
-Middle East,bld_comm,gas,comm others,0.041218834
-Middle East,bld_comm,refined liquids,comm others,0.235991593
-Middle East,bld_comm,heat,comm others,0
-Middle East,bld_resid,biomass,resid heating,0
-Middle East,bld_resid,coal,resid heating,0
-Middle East,bld_resid,electricity,resid heating,0
-Middle East,bld_resid,gas,resid heating,0.05
-Middle East,bld_resid,refined liquids,resid heating,0.05
-Middle East,bld_resid,traditional biomass,resid heating,0
-Middle East,bld_resid,heat,resid heating,0
-Middle East,bld_resid,biomass,resid cooling,0
-Middle East,bld_resid,coal,resid cooling,0
-Middle East,bld_resid,electricity,resid cooling,0.166666667
-Middle East,bld_resid,gas,resid cooling,0.083333333
-Middle East,bld_resid,refined liquids,resid cooling,0
-Middle East,bld_resid,traditional biomass,resid cooling,0
-Middle East,bld_resid,heat,resid cooling,0
-Middle East,bld_resid,biomass,resid others,0.000187993
-Middle East,bld_resid,coal,resid others,0.000278957
-Middle East,bld_resid,electricity,resid others,0.104255366
-Middle East,bld_resid,gas,resid others,0.271724974
-Middle East,bld_resid,refined liquids,resid others,0.273552709
-Middle East,bld_resid,traditional biomass,resid others,0
-Middle East,bld_resid,heat,resid others,0
-Latin America,bld_comm,biomass,comm heating,0.032305645
-Latin America,bld_comm,coal,comm heating,0
-Latin America,bld_comm,electricity,comm heating,0.036570506
-Latin America,bld_comm,gas,comm heating,0.051096716
-Latin America,bld_comm,refined liquids,comm heating,0.080027133
-Latin America,bld_comm,heat,comm heating,0
-Latin America,bld_comm,biomass,comm cooling,0
-Latin America,bld_comm,coal,comm cooling,0
-Latin America,bld_comm,electricity,comm cooling,0.170662363
-Latin America,bld_comm,gas,comm cooling,0.029337637
-Latin America,bld_comm,refined liquids,comm cooling,0
-Latin America,bld_comm,heat,comm cooling,0
-Latin America,bld_comm,biomass,comm others,0
-Latin America,bld_comm,coal,comm others,8.04E-05
-Latin America,bld_comm,electricity,comm others,0.40227557
-Latin America,bld_comm,gas,comm others,0.047307438
-Latin America,bld_comm,refined liquids,comm others,0.150336639
-Latin America,bld_comm,heat,comm others,0
-Latin America,bld_resid,biomass,resid heating,0.015
-Latin America,bld_resid,coal,resid heating,0
-Latin America,bld_resid,electricity,resid heating,0.012
-Latin America,bld_resid,gas,resid heating,0.024
-Latin America,bld_resid,refined liquids,resid heating,0.099
-Latin America,bld_resid,traditional biomass,resid heating,0.15
-Latin America,bld_resid,heat,resid heating,0
-Latin America,bld_resid,biomass,resid cooling,0
-Latin America,bld_resid,coal,resid cooling,0
-Latin America,bld_resid,electricity,resid cooling,0.05
-Latin America,bld_resid,gas,resid cooling,0
-Latin America,bld_resid,refined liquids,resid cooling,0
-Latin America,bld_resid,traditional biomass,resid cooling,0
-Latin America,bld_resid,heat,resid cooling,0
-Latin America,bld_resid,biomass,resid others,0.003579492
-Latin America,bld_resid,coal,resid others,0.000744301
-Latin America,bld_resid,electricity,resid others,0.178714422
-Latin America,bld_resid,gas,resid others,0.086668387
-Latin America,bld_resid,refined liquids,resid others,0.159426821
-Latin America,bld_resid,traditional biomass,resid others,0.220866576
-Latin America,bld_resid,heat,resid others,0
-Former Soviet Union,bld_comm,biomass,comm heating,0.017251119
-Former Soviet Union,bld_comm,coal,comm heating,0
-Former Soviet Union,bld_comm,electricity,comm heating,0.005224811
-Former Soviet Union,bld_comm,gas,comm heating,0.286793066
-Former Soviet Union,bld_comm,refined liquids,comm heating,0
-Former Soviet Union,bld_comm,heat,comm heating,0.270731004
-Former Soviet Union,bld_comm,biomass,comm cooling,0
-Former Soviet Union,bld_comm,coal,comm cooling,0
-Former Soviet Union,bld_comm,electricity,comm cooling,0.001
-Former Soviet Union,bld_comm,gas,comm cooling,0
-Former Soviet Union,bld_comm,refined liquids,comm cooling,0
-Former Soviet Union,bld_comm,heat,comm cooling,0
-Former Soviet Union,bld_comm,biomass,comm others,0
-Former Soviet Union,bld_comm,coal,comm others,0.037165426
-Former Soviet Union,bld_comm,electricity,comm others,0.167935564
-Former Soviet Union,bld_comm,gas,comm others,0.048531505
-Former Soviet Union,bld_comm,refined liquids,comm others,0.165367505
-Former Soviet Union,bld_comm,heat,comm others,0
-Former Soviet Union,bld_resid,biomass,resid heating,0.022766199
-Former Soviet Union,bld_resid,coal,resid heating,0
-Former Soviet Union,bld_resid,electricity,resid heating,0.004958413
-Former Soviet Union,bld_resid,gas,resid heating,0.185210131
-Former Soviet Union,bld_resid,refined liquids,resid heating,0
-Former Soviet Union,bld_resid,traditional biomass,resid heating,0
-Former Soviet Union,bld_resid,heat,resid heating,0.367065258
-Former Soviet Union,bld_resid,biomass,resid cooling,0
-Former Soviet Union,bld_resid,coal,resid cooling,0
-Former Soviet Union,bld_resid,electricity,resid cooling,0.001
-Former Soviet Union,bld_resid,gas,resid cooling,0
-Former Soviet Union,bld_resid,refined liquids,resid cooling,0
-Former Soviet Union,bld_resid,traditional biomass,resid cooling,0
-Former Soviet Union,bld_resid,heat,resid cooling,0
-Former Soviet Union,bld_resid,biomass,resid others,0
-Former Soviet Union,bld_resid,coal,resid others,0.026179869
-Former Soviet Union,bld_resid,electricity,resid others,0.093209847
-Former Soviet Union,bld_resid,gas,resid others,0.247270212
-Former Soviet Union,bld_resid,refined liquids,resid others,0.052340072
-Former Soviet Union,bld_resid,traditional biomass,resid others,0
-Former Soviet Union,bld_resid,heat,resid others,0
-China,bld_comm,biomass,comm heating,0.000233251
-China,bld_comm,coal,comm heating,0.144524782
-China,bld_comm,electricity,comm heating,0.014808961
-China,bld_comm,gas,comm heating,0.043453831
-China,bld_comm,refined liquids,comm heating,0.220950509
-China,bld_comm,heat,comm heating,0.038039217
+Africa,bld_comm,refined liquids,comm others,0.174791599
+Australia_NZ,bld_comm,biomass,comm cooling,0
+Australia_NZ,bld_comm,coal,comm cooling,0
+Australia_NZ,bld_comm,electricity,comm cooling,0.08
+Australia_NZ,bld_comm,gas,comm cooling,0
+Australia_NZ,bld_comm,heat,comm cooling,0
+Australia_NZ,bld_comm,refined liquids,comm cooling,0
+Australia_NZ,bld_comm,biomass,comm heating,0.000771945
+Australia_NZ,bld_comm,coal,comm heating,0
+Australia_NZ,bld_comm,electricity,comm heating,0.024
+Australia_NZ,bld_comm,gas,comm heating,0.083228055
+Australia_NZ,bld_comm,heat,comm heating,0
+Australia_NZ,bld_comm,refined liquids,comm heating,0.012
+Australia_NZ,bld_comm,biomass,comm others,0
+Australia_NZ,bld_comm,coal,comm others,0.003087781
+Australia_NZ,bld_comm,electricity,comm others,0.630671372
+Australia_NZ,bld_comm,gas,comm others,0.076564623
+Australia_NZ,bld_comm,heat,comm others,0
+Australia_NZ,bld_comm,refined liquids,comm others,0.089676224
+Canada,bld_comm,biomass,comm cooling,0
+Canada,bld_comm,coal,comm cooling,0
+Canada,bld_comm,electricity,comm cooling,0.024
+Canada,bld_comm,gas,comm cooling,0.006
+Canada,bld_comm,heat,comm cooling,0
+Canada,bld_comm,refined liquids,comm cooling,0
+Canada,bld_comm,biomass,comm heating,0
+Canada,bld_comm,coal,comm heating,0
+Canada,bld_comm,electricity,comm heating,0.1275
+Canada,bld_comm,gas,comm heating,0.255
+Canada,bld_comm,heat,comm heating,0
+Canada,bld_comm,refined liquids,comm heating,0.1275
+Canada,bld_comm,biomass,comm others,0
+Canada,bld_comm,coal,comm others,0
+Canada,bld_comm,electricity,comm others,0.253990007
+Canada,bld_comm,gas,comm others,0.176956497
+Canada,bld_comm,heat,comm others,0
+Canada,bld_comm,refined liquids,comm others,0.029053495
 China,bld_comm,biomass,comm cooling,0
 China,bld_comm,coal,comm cooling,0
-China,bld_comm,electricity,comm cooling,0.131008688
+China,bld_comm,electricity,comm cooling,0.164240527
 China,bld_comm,gas,comm cooling,0
-China,bld_comm,refined liquids,comm cooling,0
 China,bld_comm,heat,comm cooling,0
-China,bld_comm,biomass,comm others,0.015573911
-China,bld_comm,coal,comm others,0.049200005
-China,bld_comm,electricity,comm others,0.198479991
-China,bld_comm,gas,comm others,0.008969272
-China,bld_comm,refined liquids,comm others,0.13475758
+China,bld_comm,refined liquids,comm cooling,0
+China,bld_comm,biomass,comm heating,0.005527759
+China,bld_comm,coal,comm heating,0.233918564
+China,bld_comm,electricity,comm heating,0.018565422
+China,bld_comm,gas,comm heating,0.059096266
+China,bld_comm,heat,comm heating,0.038616359
+China,bld_comm,refined liquids,comm heating,0.075543527
+China,bld_comm,biomass,comm others,0
+China,bld_comm,coal,comm others,0.086393825
+China,bld_comm,electricity,comm others,0.258465152
+China,bld_comm,gas,comm others,0.013735506
 China,bld_comm,heat,comm others,0
-China,bld_resid,biomass,resid heating,0.001272349
-China,bld_resid,coal,resid heating,0.067351964
-China,bld_resid,electricity,resid heating,0.000233963
-China,bld_resid,gas,resid heating,0.021731184
-China,bld_resid,refined liquids,resid heating,0.009028516
-China,bld_resid,traditional biomass,resid heating,0.314293748
-China,bld_resid,heat,resid heating,0.040943034
-China,bld_resid,biomass,resid cooling,0
-China,bld_resid,coal,resid cooling,0
-China,bld_resid,electricity,resid cooling,0.01628757
-China,bld_resid,gas,resid cooling,0
-China,bld_resid,refined liquids,resid cooling,0
-China,bld_resid,traditional biomass,resid cooling,0
-China,bld_resid,heat,resid cooling,0
-China,bld_resid,biomass,resid others,0
-China,bld_resid,coal,resid others,0.05623696
-China,bld_resid,electricity,resid others,0.055106149
-China,bld_resid,gas,resid others,0.017540837
-China,bld_resid,refined liquids,resid others,0.042269273
-China,bld_resid,traditional biomass,resid others,0.357704454
-China,bld_resid,heat,resid others,0
-Eastern Europe,bld_comm,biomass,comm heating,0.020715273
-Eastern Europe,bld_comm,coal,comm heating,0.067771285
-Eastern Europe,bld_comm,electricity,comm heating,0.00400384
-Eastern Europe,bld_comm,gas,comm heating,0.172
-Eastern Europe,bld_comm,refined liquids,comm heating,0.043
-Eastern Europe,bld_comm,heat,comm heating,0.122509601
+China,bld_comm,refined liquids,comm others,0.045897092
 Eastern Europe,bld_comm,biomass,comm cooling,0
 Eastern Europe,bld_comm,coal,comm cooling,0
 Eastern Europe,bld_comm,electricity,comm cooling,0.03
 Eastern Europe,bld_comm,gas,comm cooling,0
-Eastern Europe,bld_comm,refined liquids,comm cooling,0
 Eastern Europe,bld_comm,heat,comm cooling,0
-Eastern Europe,bld_comm,biomass,comm others,0
+Eastern Europe,bld_comm,refined liquids,comm cooling,0
+Eastern Europe,bld_comm,biomass,comm heating,0.018901304
+Eastern Europe,bld_comm,coal,comm heating,0.048564148
+Eastern Europe,bld_comm,electricity,comm heating,0.044966676
+Eastern Europe,bld_comm,gas,comm heating,0.172
+Eastern Europe,bld_comm,heat,comm heating,0.102567872
+Eastern Europe,bld_comm,refined liquids,comm heating,0.043
+Eastern Europe,bld_comm,biomass,comm others,0.008100559
 Eastern Europe,bld_comm,coal,comm others,0
-Eastern Europe,bld_comm,electricity,comm others,0.312104526
-Eastern Europe,bld_comm,gas,comm others,0.158299122
-Eastern Europe,bld_comm,refined liquids,comm others,0.069596351
+Eastern Europe,bld_comm,electricity,comm others,0.394307067
+Eastern Europe,bld_comm,gas,comm others,0.121345095
 Eastern Europe,bld_comm,heat,comm others,0
-Eastern Europe,bld_resid,biomass,resid heating,0.17360497
-Eastern Europe,bld_resid,coal,resid heating,0.121860557
-Eastern Europe,bld_resid,electricity,resid heating,0.016155978
-Eastern Europe,bld_resid,gas,resid heating,0.104885975
-Eastern Europe,bld_resid,refined liquids,resid heating,0.022257571
-Eastern Europe,bld_resid,traditional biomass,resid heating,0
-Eastern Europe,bld_resid,heat,resid heating,0.184450379
-Eastern Europe,bld_resid,biomass,resid cooling,0
-Eastern Europe,bld_resid,coal,resid cooling,0
-Eastern Europe,bld_resid,electricity,resid cooling,0.02
-Eastern Europe,bld_resid,gas,resid cooling,0
-Eastern Europe,bld_resid,refined liquids,resid cooling,0
-Eastern Europe,bld_resid,traditional biomass,resid cooling,0
-Eastern Europe,bld_resid,heat,resid cooling,0
-Eastern Europe,bld_resid,biomass,resid others,0
-Eastern Europe,bld_resid,coal,resid others,0
-Eastern Europe,bld_resid,electricity,resid others,0.154544803
-Eastern Europe,bld_resid,gas,resid others,0.168619381
-Eastern Europe,bld_resid,refined liquids,resid others,0.033620385
-Eastern Europe,bld_resid,traditional biomass,resid others,0
-Eastern Europe,bld_resid,heat,resid others,0
+Eastern Europe,bld_comm,refined liquids,comm others,0.01624728
+Former Soviet Union,bld_comm,biomass,comm cooling,0
+Former Soviet Union,bld_comm,coal,comm cooling,0
+Former Soviet Union,bld_comm,electricity,comm cooling,0.001
+Former Soviet Union,bld_comm,gas,comm cooling,0
+Former Soviet Union,bld_comm,heat,comm cooling,0
+Former Soviet Union,bld_comm,refined liquids,comm cooling,0
+Former Soviet Union,bld_comm,biomass,comm heating,0.018312528
+Former Soviet Union,bld_comm,coal,comm heating,0
+Former Soviet Union,bld_comm,electricity,comm heating,0.008177715
+Former Soviet Union,bld_comm,gas,comm heating,0.193927502
+Former Soviet Union,bld_comm,heat,comm heating,0.359582254
+Former Soviet Union,bld_comm,refined liquids,comm heating,0
+Former Soviet Union,bld_comm,biomass,comm others,0
+Former Soviet Union,bld_comm,coal,comm others,0.042483329
+Former Soviet Union,bld_comm,electricity,comm others,0.263412799
+Former Soviet Union,bld_comm,gas,comm others,0.005311646
+Former Soviet Union,bld_comm,heat,comm others,0
+Former Soviet Union,bld_comm,refined liquids,comm others,0.107792227
+India,bld_comm,biomass,comm cooling,0
+India,bld_comm,coal,comm cooling,0
+India,bld_comm,electricity,comm cooling,0.021
+India,bld_comm,gas,comm cooling,0
+India,bld_comm,heat,comm cooling,0
+India,bld_comm,refined liquids,comm cooling,0
+India,bld_comm,biomass,comm heating,0
+India,bld_comm,coal,comm heating,0
+India,bld_comm,electricity,comm heating,0.002
+India,bld_comm,gas,comm heating,0.002195936
+India,bld_comm,heat,comm heating,0
+India,bld_comm,refined liquids,comm heating,0
+India,bld_comm,biomass,comm others,0.194295093
+India,bld_comm,coal,comm others,0.244411116
+India,bld_comm,electricity,comm others,0.399859245
+India,bld_comm,gas,comm others,0.019763427
+India,bld_comm,heat,comm others,0
+India,bld_comm,refined liquids,comm others,0.116475183
+Japan,bld_comm,biomass,comm cooling,0
+Japan,bld_comm,coal,comm cooling,0
+Japan,bld_comm,electricity,comm cooling,0.04
+Japan,bld_comm,gas,comm cooling,0
+Japan,bld_comm,heat,comm cooling,0
+Japan,bld_comm,refined liquids,comm cooling,0
+Japan,bld_comm,biomass,comm heating,0.02773961
+Japan,bld_comm,coal,comm heating,0.001573172
+Japan,bld_comm,electricity,comm heating,0.018
+Japan,bld_comm,gas,comm heating,0.045
+Japan,bld_comm,heat,comm heating,0.009618257
+Japan,bld_comm,refined liquids,comm heating,0.078068961
+Japan,bld_comm,biomass,comm others,0.011888404
+Japan,bld_comm,coal,comm others,0
+Japan,bld_comm,electricity,comm others,0.483450107
+Japan,bld_comm,gas,comm others,0.130916522
+Japan,bld_comm,heat,comm others,0
+Japan,bld_comm,refined liquids,comm others,0.153744967
+Korea,bld_comm,biomass,comm cooling,0
+Korea,bld_comm,coal,comm cooling,0
+Korea,bld_comm,electricity,comm cooling,0.039
+Korea,bld_comm,gas,comm cooling,0.011
+Korea,bld_comm,heat,comm cooling,0
+Korea,bld_comm,refined liquids,comm cooling,0
+Korea,bld_comm,biomass,comm heating,0.062378783
+Korea,bld_comm,coal,comm heating,0
+Korea,bld_comm,electricity,comm heating,0.029661664
+Korea,bld_comm,gas,comm heating,0.088984993
+Korea,bld_comm,heat,comm heating,0
+Korea,bld_comm,refined liquids,comm heating,0.115591202
+Korea,bld_comm,biomass,comm others,0
+Korea,bld_comm,coal,comm others,0
+Korea,bld_comm,electricity,comm others,0.521929649
+Korea,bld_comm,gas,comm others,0.069380395
+Korea,bld_comm,heat,comm others,0
+Korea,bld_comm,refined liquids,comm others,0.062073314
+Latin America,bld_comm,biomass,comm cooling,0
+Latin America,bld_comm,coal,comm cooling,0
+Latin America,bld_comm,electricity,comm cooling,0.193547542
+Latin America,bld_comm,gas,comm cooling,0.006452458
+Latin America,bld_comm,heat,comm cooling,0
+Latin America,bld_comm,refined liquids,comm cooling,0
+Latin America,bld_comm,biomass,comm heating,0.024820456
+Latin America,bld_comm,coal,comm heating,0
+Latin America,bld_comm,electricity,comm heating,0.041474473
+Latin America,bld_comm,gas,comm heating,0.031494107
+Latin America,bld_comm,heat,comm heating,0
+Latin America,bld_comm,refined liquids,comm heating,0.102210964
+Latin America,bld_comm,biomass,comm others,0
+Latin America,bld_comm,coal,comm others,2.02E-03
+Latin America,bld_comm,electricity,comm others,0.456219207
+Latin America,bld_comm,gas,comm others,0.040788702
+Latin America,bld_comm,heat,comm others,0
+Latin America,bld_comm,refined liquids,comm others,0.10097612
+Middle East,bld_comm,biomass,comm cooling,0
+Middle East,bld_comm,coal,comm cooling,0
+Middle East,bld_comm,electricity,comm cooling,0.3
+Middle East,bld_comm,gas,comm cooling,0.1
+Middle East,bld_comm,heat,comm cooling,0
+Middle East,bld_comm,refined liquids,comm cooling,0
+Middle East,bld_comm,biomass,comm heating,0
+Middle East,bld_comm,coal,comm heating,0
+Middle East,bld_comm,electricity,comm heating,0
+Middle East,bld_comm,gas,comm heating,0.015
+Middle East,bld_comm,heat,comm heating,0
+Middle East,bld_comm,refined liquids,comm heating,0.015
+Middle East,bld_comm,biomass,comm others,0.010791088
+Middle East,bld_comm,coal,comm others,0
+Middle East,bld_comm,electricity,comm others,0.341176927
+Middle East,bld_comm,gas,comm others,0.149808633
+Middle East,bld_comm,heat,comm others,0
+Middle East,bld_comm,refined liquids,comm others,0.068223352
+Southeast Asia,bld_comm,biomass,comm cooling,0
+Southeast Asia,bld_comm,coal,comm cooling,0
+Southeast Asia,bld_comm,electricity,comm cooling,0.15
+Southeast Asia,bld_comm,gas,comm cooling,0
+Southeast Asia,bld_comm,heat,comm cooling,0
+Southeast Asia,bld_comm,refined liquids,comm cooling,0
+Southeast Asia,bld_comm,biomass,comm heating,0
+Southeast Asia,bld_comm,coal,comm heating,0
+Southeast Asia,bld_comm,electricity,comm heating,0
+Southeast Asia,bld_comm,gas,comm heating,0.0125
+Southeast Asia,bld_comm,heat,comm heating,0
+Southeast Asia,bld_comm,refined liquids,comm heating,0.0375
+Southeast Asia,bld_comm,biomass,comm others,0.020050817
+Southeast Asia,bld_comm,coal,comm others,0.008064516
+Southeast Asia,bld_comm,electricity,comm others,0.550204375
+Southeast Asia,bld_comm,gas,comm others,0.046216306
+Southeast Asia,bld_comm,heat,comm others,0
+Southeast Asia,bld_comm,refined liquids,comm others,0.175463986
+USA,bld_comm,biomass,comm cooling,0
+USA,bld_comm,coal,comm cooling,0
+USA,bld_comm,electricity,comm cooling,0.066837653
+USA,bld_comm,gas,comm cooling,0.002526509
+USA,bld_comm,heat,comm cooling,0
+USA,bld_comm,refined liquids,comm cooling,0
+USA,bld_comm,biomass,comm heating,0.008758515
+USA,bld_comm,coal,comm heating,0
+USA,bld_comm,electricity,comm heating,0.017444216
+USA,bld_comm,gas,comm heating,0.143537572
+USA,bld_comm,heat,comm heating,0.005196114
+USA,bld_comm,refined liquids,comm heating,0.04934104
+USA,bld_comm,biomass,comm others,0
+USA,bld_comm,coal,comm others,0.003049597
+USA,bld_comm,electricity,comm others,0.511174595
+USA,bld_comm,gas,comm others,0.18771701
+USA,bld_comm,heat,comm others,0
+USA,bld_comm,refined liquids,comm others,0.004417179
+Western Europe,bld_comm,biomass,comm cooling,0
+Western Europe,bld_comm,coal,comm cooling,0
+Western Europe,bld_comm,electricity,comm cooling,0.05
+Western Europe,bld_comm,gas,comm cooling,0
+Western Europe,bld_comm,heat,comm cooling,0
+Western Europe,bld_comm,refined liquids,comm cooling,0
+Western Europe,bld_comm,biomass,comm heating,0.012388686
+Western Europe,bld_comm,coal,comm heating,0.019246798
+Western Europe,bld_comm,electricity,comm heating,0.047444382
+Western Europe,bld_comm,gas,comm heating,0.16
+Western Europe,bld_comm,heat,comm heating,0.048920133
+Western Europe,bld_comm,refined liquids,comm heating,0.032
+Western Europe,bld_comm,biomass,comm others,0.005309437
+Western Europe,bld_comm,coal,comm others,0.008248628
+Western Europe,bld_comm,electricity,comm others,0.380542027
+Western Europe,bld_comm,gas,comm others,0.142657609
+Western Europe,bld_comm,heat,comm others,0
+Western Europe,bld_comm,refined liquids,comm others,0.093242299
+Africa,bld_resid,biomass,resid cooling modern,0
+Africa,bld_resid,electricity,resid cooling modern,0.02
+Africa,bld_resid,gas,resid cooling modern,0
+Africa,bld_resid,heat,resid cooling modern,0
+Africa,bld_resid,refined liquids,resid cooling modern,0
+Africa,bld_resid,coal,resid heating coal,0
+Africa,bld_resid,biomass,resid heating modern,0.019607697
+Africa,bld_resid,electricity,resid heating modern,0.01776423
+Africa,bld_resid,gas,resid heating modern,0.008227684
+Africa,bld_resid,heat,resid heating modern,0
+Africa,bld_resid,refined liquids,resid heating modern,0.013806598
+Africa,bld_resid,traditional biomass,resid heating TradBio,0.05
+Africa,bld_resid,coal,resid others coal,0.011684994
+Africa,bld_resid,biomass,resid others modern,0.045751294
+Africa,bld_resid,electricity,resid others modern,0.021449871
+Africa,bld_resid,gas,resid others modern,0.01919793
+Africa,bld_resid,heat,resid others modern,0
+Africa,bld_resid,refined liquids,resid others modern,0.032215395
+Africa,bld_resid,traditional biomass,resid others TradBio,0.740294308
+Australia_NZ,bld_resid,biomass,resid cooling modern,0
+Australia_NZ,bld_resid,electricity,resid cooling modern,0.04
+Australia_NZ,bld_resid,gas,resid cooling modern,0
+Australia_NZ,bld_resid,heat,resid cooling modern,0
+Australia_NZ,bld_resid,refined liquids,resid cooling modern,0
+Australia_NZ,bld_resid,coal,resid heating coal,0
+Australia_NZ,bld_resid,biomass,resid heating modern,0
+Australia_NZ,bld_resid,electricity,resid heating modern,0.034
+Australia_NZ,bld_resid,gas,resid heating modern,0.20759764
+Australia_NZ,bld_resid,heat,resid heating modern,0
+Australia_NZ,bld_resid,refined liquids,resid heating modern,0.017
+Australia_NZ,bld_resid,traditional biomass,resid heating TradBio,0.08140236
+Australia_NZ,bld_resid,coal,resid others coal,0.000861401
+Australia_NZ,bld_resid,biomass,resid others modern,0
+Australia_NZ,bld_resid,electricity,resid others modern,0.458001034
+Australia_NZ,bld_resid,gas,resid others modern,0.105435352
+Australia_NZ,bld_resid,heat,resid others modern,0
+Australia_NZ,bld_resid,refined liquids,resid others modern,0.020815488
+Australia_NZ,bld_resid,traditional biomass,resid others TradBio,0.034886726
+Canada,bld_resid,biomass,resid cooling modern,0
+Canada,bld_resid,electricity,resid cooling modern,0.01
+Canada,bld_resid,gas,resid cooling modern,0
+Canada,bld_resid,heat,resid cooling modern,0
+Canada,bld_resid,refined liquids,resid cooling modern,0
+Canada,bld_resid,coal,resid heating coal,0
+Canada,bld_resid,biomass,resid heating modern,0
+Canada,bld_resid,electricity,resid heating modern,0.142533989
+Canada,bld_resid,gas,resid heating modern,0.324
+Canada,bld_resid,heat,resid heating modern,0
+Canada,bld_resid,refined liquids,resid heating modern,0.072
+Canada,bld_resid,traditional biomass,resid heating TradBio,0.061466011
+Canada,bld_resid,coal,resid others coal,0.0001755
+Canada,bld_resid,biomass,resid others modern,0
+Canada,bld_resid,electricity,resid others modern,0.270304434
+Canada,bld_resid,gas,resid others modern,0.109631684
+Canada,bld_resid,heat,resid others modern,0
+Canada,bld_resid,refined liquids,resid others modern,0.009888382
+Canada,bld_resid,traditional biomass,resid others TradBio,0
+China,bld_resid,biomass,resid cooling modern,0
+China,bld_resid,electricity,resid cooling modern,0.01628757
+China,bld_resid,gas,resid cooling modern,0
+China,bld_resid,heat,resid cooling modern,0
+China,bld_resid,refined liquids,resid cooling modern,0
+China,bld_resid,coal,resid heating coal,0.088235915
+China,bld_resid,biomass,resid heating modern,0.00376268
+China,bld_resid,electricity,resid heating modern,0.000741275
+China,bld_resid,gas,resid heating modern,0.069914931
+China,bld_resid,heat,resid heating modern,0.074593248
+China,bld_resid,refined liquids,resid heating modern,0.021271924
+China,bld_resid,traditional biomass,resid heating TradBio,0.196334784
+China,bld_resid,coal,resid others coal,0.074219666
+China,bld_resid,biomass,resid others modern,0
+China,bld_resid,electricity,resid others modern,0.210847022
+China,bld_resid,gas,resid others modern,0.056858939
+China,bld_resid,heat,resid others modern,0
+China,bld_resid,refined liquids,resid others modern,0.09999686
+China,bld_resid,traditional biomass,resid others TradBio,0.086935184
+Eastern Europe,bld_resid,biomass,resid cooling modern,0
+Eastern Europe,bld_resid,electricity,resid cooling modern,0.02
+Eastern Europe,bld_resid,gas,resid cooling modern,0
+Eastern Europe,bld_resid,heat,resid cooling modern,0
+Eastern Europe,bld_resid,refined liquids,resid cooling modern,0
+Eastern Europe,bld_resid,coal,resid heating coal,0.145488312
+Eastern Europe,bld_resid,biomass,resid heating modern,0.000325477
+Eastern Europe,bld_resid,electricity,resid heating modern,0.05897647
+Eastern Europe,bld_resid,gas,resid heating modern,0.111542953
+Eastern Europe,bld_resid,heat,resid heating modern,0.147173135
+Eastern Europe,bld_resid,refined liquids,resid heating modern,0.014723057
+Eastern Europe,bld_resid,traditional biomass,resid heating TradBio,0.180524976
+Eastern Europe,bld_resid,coal,resid others coal,0
+Eastern Europe,bld_resid,biomass,resid others modern,0
+Eastern Europe,bld_resid,electricity,resid others modern,0.117611763
+Eastern Europe,bld_resid,gas,resid others modern,0.111542953
+Eastern Europe,bld_resid,heat,resid others modern,0
+Eastern Europe,bld_resid,refined liquids,resid others modern,0.014723057
+Eastern Europe,bld_resid,traditional biomass,resid others TradBio,0.077367847
+Former Soviet Union,bld_resid,biomass,resid cooling modern,0
+Former Soviet Union,bld_resid,electricity,resid cooling modern,0.001
+Former Soviet Union,bld_resid,gas,resid cooling modern,0
+Former Soviet Union,bld_resid,heat,resid cooling modern,0
+Former Soviet Union,bld_resid,refined liquids,resid cooling modern,0
+Former Soviet Union,bld_resid,coal,resid heating coal,0
+Former Soviet Union,bld_resid,biomass,resid heating modern,0.000271834
+Former Soviet Union,bld_resid,electricity,resid heating modern,0.006562987
+Former Soviet Union,bld_resid,gas,resid heating modern,0.208692718
+Former Soviet Union,bld_resid,heat,resid heating modern,0.343012649
+Former Soviet Union,bld_resid,refined liquids,resid heating modern,0
+Former Soviet Union,bld_resid,traditional biomass,resid heating TradBio,0.021459811
+Former Soviet Union,bld_resid,coal,resid others coal,0.028766114
+Former Soviet Union,bld_resid,biomass,resid others modern,0
+Former Soviet Union,bld_resid,electricity,resid others modern,0.123696754
+Former Soviet Union,bld_resid,gas,resid others modern,0.191248082
+Former Soviet Union,bld_resid,heat,resid others modern,0
+Former Soviet Union,bld_resid,refined liquids,resid others modern,0.066091989
+Former Soviet Union,bld_resid,traditional biomass,resid others TradBio,0.009197062
+India,bld_resid,biomass,resid cooling modern,0
+India,bld_resid,electricity,resid cooling modern,0.006
+India,bld_resid,gas,resid cooling modern,0
+India,bld_resid,heat,resid cooling modern,0
+India,bld_resid,refined liquids,resid cooling modern,0
+India,bld_resid,coal,resid heating coal,0
+India,bld_resid,biomass,resid heating modern,0.012511737
+India,bld_resid,electricity,resid heating modern,0.001
+India,bld_resid,gas,resid heating modern,0
+India,bld_resid,heat,resid heating modern,0
+India,bld_resid,refined liquids,resid heating modern,0
+India,bld_resid,traditional biomass,resid heating TradBio,0.001
+India,bld_resid,coal,resid others coal,0.014856248
+India,bld_resid,biomass,resid others modern,0
+India,bld_resid,electricity,resid others modern,0.117449155
+India,bld_resid,gas,resid others modern,0.004153298
+India,bld_resid,heat,resid others modern,0
+India,bld_resid,refined liquids,resid others modern,0.151886265
+India,bld_resid,traditional biomass,resid others TradBio,0.691143297
+Japan,bld_resid,biomass,resid cooling modern,0
+Japan,bld_resid,electricity,resid cooling modern,0.03
+Japan,bld_resid,gas,resid cooling modern,0
+Japan,bld_resid,heat,resid cooling modern,0
+Japan,bld_resid,refined liquids,resid cooling modern,0
+Japan,bld_resid,coal,resid heating coal,0
+Japan,bld_resid,biomass,resid heating modern,0.000182715
+Japan,bld_resid,electricity,resid heating modern,0.04356999
+Japan,bld_resid,gas,resid heating modern,0.051258812
+Japan,bld_resid,heat,resid heating modern,0
+Japan,bld_resid,refined liquids,resid heating modern,0.161282542
+Japan,bld_resid,traditional biomass,resid heating TradBio,0
+Japan,bld_resid,coal,resid others coal,0
+Japan,bld_resid,biomass,resid others modern,0
+Japan,bld_resid,electricity,resid others modern,0.452192846
+Japan,bld_resid,gas,resid others modern,0.145297008
+Japan,bld_resid,heat,resid others modern,0
+Japan,bld_resid,refined liquids,resid others modern,0.116216088
+Japan,bld_resid,traditional biomass,resid others TradBio,0
+Korea,bld_resid,biomass,resid cooling modern,0
+Korea,bld_resid,electricity,resid cooling modern,0.02
+Korea,bld_resid,gas,resid cooling modern,0
+Korea,bld_resid,heat,resid cooling modern,0
+Korea,bld_resid,refined liquids,resid cooling modern,0
+Korea,bld_resid,coal,resid heating coal,0.010340473
+Korea,bld_resid,biomass,resid heating modern,0
+Korea,bld_resid,electricity,resid heating modern,0.04
+Korea,bld_resid,gas,resid heating modern,0.3
+Korea,bld_resid,heat,resid heating modern,0
+Korea,bld_resid,refined liquids,resid heating modern,0.144081461
+Korea,bld_resid,traditional biomass,resid heating TradBio,0.005578067
+Korea,bld_resid,coal,resid others coal,0.024127769
+Korea,bld_resid,biomass,resid others modern,0
+Korea,bld_resid,electricity,resid others modern,0.228691259
+Korea,bld_resid,gas,resid others modern,0.129984739
+Korea,bld_resid,heat,resid others modern,0
+Korea,bld_resid,refined liquids,resid others modern,0.097196232
+Korea,bld_resid,traditional biomass,resid others TradBio,0
+Latin America,bld_resid,biomass,resid cooling modern,0
+Latin America,bld_resid,electricity,resid cooling modern,0.05
+Latin America,bld_resid,gas,resid cooling modern,0
+Latin America,bld_resid,heat,resid cooling modern,0
+Latin America,bld_resid,refined liquids,resid cooling modern,0
+Latin America,bld_resid,coal,resid heating coal,0
+Latin America,bld_resid,biomass,resid heating modern,0.015
+Latin America,bld_resid,electricity,resid heating modern,0.012
+Latin America,bld_resid,gas,resid heating modern,0.024
+Latin America,bld_resid,heat,resid heating modern,0
+Latin America,bld_resid,refined liquids,resid heating modern,0.099
+Latin America,bld_resid,traditional biomass,resid heating TradBio,0.15
+Latin America,bld_resid,coal,resid others coal,0.000672333
+Latin America,bld_resid,biomass,resid others modern,0.005098644
+Latin America,bld_resid,electricity,resid others modern,0.257985372
+Latin America,bld_resid,gas,resid others modern,0.101213019
+Latin America,bld_resid,heat,resid others modern,0
+Latin America,bld_resid,refined liquids,resid others modern,0.111878145
+Latin America,bld_resid,traditional biomass,resid others TradBio,0.173152487
+Middle East,bld_resid,biomass,resid cooling modern,0
+Middle East,bld_resid,electricity,resid cooling modern,0.166666667
+Middle East,bld_resid,gas,resid cooling modern,0.083333333
+Middle East,bld_resid,heat,resid cooling modern,0
+Middle East,bld_resid,refined liquids,resid cooling modern,0
+Middle East,bld_resid,coal,resid heating coal,0
+Middle East,bld_resid,biomass,resid heating modern,0
+Middle East,bld_resid,electricity,resid heating modern,0
+Middle East,bld_resid,gas,resid heating modern,0.05
+Middle East,bld_resid,heat,resid heating modern,0
+Middle East,bld_resid,refined liquids,resid heating modern,0.05
+Middle East,bld_resid,traditional biomass,resid heating TradBio,0.004385448
+Middle East,bld_resid,coal,resid others coal,0.0001061
+Middle East,bld_resid,biomass,resid others modern,8.25E-05
+Middle East,bld_resid,electricity,resid others modern,0.21788524
+Middle East,bld_resid,gas,resid others modern,0.331170474
+Middle East,bld_resid,heat,resid others modern,0
+Middle East,bld_resid,refined liquids,resid others modern,0.096370217
+Middle East,bld_resid,traditional biomass,resid others TradBio,0
+Southeast Asia,bld_resid,biomass,resid cooling modern,0
+Southeast Asia,bld_resid,electricity,resid cooling modern,0.07
+Southeast Asia,bld_resid,gas,resid cooling modern,0
+Southeast Asia,bld_resid,heat,resid cooling modern,0
+Southeast Asia,bld_resid,refined liquids,resid cooling modern,0
+Southeast Asia,bld_resid,coal,resid heating coal,0
+Southeast Asia,bld_resid,biomass,resid heating modern,0
+Southeast Asia,bld_resid,electricity,resid heating modern,0
+Southeast Asia,bld_resid,gas,resid heating modern,0.016666667
+Southeast Asia,bld_resid,heat,resid heating modern,0
+Southeast Asia,bld_resid,refined liquids,resid heating modern,0.016666667
+Southeast Asia,bld_resid,traditional biomass,resid heating TradBio,0.016666667
+Southeast Asia,bld_resid,coal,resid others coal,1.19E-05
+Southeast Asia,bld_resid,biomass,resid others modern,0
+Southeast Asia,bld_resid,electricity,resid others modern,0.094442805
+Southeast Asia,bld_resid,gas,resid others modern,0.043666109
+Southeast Asia,bld_resid,heat,resid others modern,0
+Southeast Asia,bld_resid,refined liquids,resid others modern,0.06227397
+Southeast Asia,bld_resid,traditional biomass,resid others TradBio,0.679605217
+USA,bld_resid,biomass,resid cooling modern,0
+USA,bld_resid,electricity,resid cooling modern,0.079130435
+USA,bld_resid,gas,resid cooling modern,0
+USA,bld_resid,heat,resid cooling modern,0
+USA,bld_resid,refined liquids,resid cooling modern,0
+USA,bld_resid,coal,resid heating coal,0
+USA,bld_resid,biomass,resid heating modern,0
+USA,bld_resid,electricity,resid heating modern,0.065922651
+USA,bld_resid,gas,resid heating modern,0.319895175
+USA,bld_resid,heat,resid heating modern,0
+USA,bld_resid,refined liquids,resid heating modern,0.062286853
+USA,bld_resid,traditional biomass,resid heating TradBio,0.028931985
+USA,bld_resid,coal,resid others coal,0
+USA,bld_resid,biomass,resid others modern,0
+USA,bld_resid,electricity,resid others modern,0.326824251
+USA,bld_resid,gas,resid others modern,0.104609228
+USA,bld_resid,heat,resid others modern,0
+USA,bld_resid,refined liquids,resid others modern,0
+USA,bld_resid,traditional biomass,resid others TradBio,0.012399422
+Western Europe,bld_resid,biomass,resid cooling modern,0
+Western Europe,bld_resid,electricity,resid cooling modern,0.025
+Western Europe,bld_resid,gas,resid cooling modern,0
+Western Europe,bld_resid,heat,resid cooling modern,0
+Western Europe,bld_resid,refined liquids,resid cooling modern,0
+Western Europe,bld_resid,coal,resid heating coal,0
+Western Europe,bld_resid,biomass,resid heating modern,0.000618508
+Western Europe,bld_resid,electricity,resid heating modern,0.117866764
+Western Europe,bld_resid,gas,resid heating modern,0.29
+Western Europe,bld_resid,heat,resid heating modern,0.038274046
+Western Europe,bld_resid,refined liquids,resid heating modern,0.041458158
+Western Europe,bld_resid,traditional biomass,resid heating TradBio,0.091782524
+Western Europe,bld_resid,coal,resid others coal,0.014940569
+Western Europe,bld_resid,biomass,resid others modern,0
+Western Europe,bld_resid,electricity,resid others modern,0.132320177
+Western Europe,bld_resid,gas,resid others modern,0.095265021
+Western Europe,bld_resid,heat,resid others modern,0.016403163
+Western Europe,bld_resid,refined liquids,resid others modern,0.096735702
+Western Europe,bld_resid,traditional biomass,resid others TradBio,0.039335367
 USA,bld_comm,hydrogen,comm others,0
 USA,bld_comm,hydrogen,comm heating,0
-USA,bld_resid,hydrogen,resid others,0
-USA,bld_resid,hydrogen,resid heating,0
+USA,bld_resid,hydrogen,resid others modern,0
+USA,bld_resid,hydrogen,resid heating modern,0
 Canada,bld_comm,hydrogen,comm others,0
 Canada,bld_comm,hydrogen,comm heating,0
-Canada,bld_resid,hydrogen,resid others,0
-Canada,bld_resid,hydrogen,resid heating,0
+Canada,bld_resid,hydrogen,resid others modern,0
+Canada,bld_resid,hydrogen,resid heating modern,0
 Western Europe,bld_comm,hydrogen,comm others,0
 Western Europe,bld_comm,hydrogen,comm heating,0
-Western Europe,bld_resid,hydrogen,resid others,0
-Western Europe,bld_resid,hydrogen,resid heating,0
+Western Europe,bld_resid,hydrogen,resid others modern,0
+Western Europe,bld_resid,hydrogen,resid heating modern,0
 Japan,bld_comm,hydrogen,comm others,0
 Japan,bld_comm,hydrogen,comm heating,0
-Japan,bld_resid,hydrogen,resid others,0
-Japan,bld_resid,hydrogen,resid heating,0
+Japan,bld_resid,hydrogen,resid others modern,0
+Japan,bld_resid,hydrogen,resid heating modern,0
 Korea,bld_comm,hydrogen,comm others,0
 Korea,bld_comm,hydrogen,comm heating,0
-Korea,bld_resid,hydrogen,resid others,0
-Korea,bld_resid,hydrogen,resid heating,0
+Korea,bld_resid,hydrogen,resid others modern,0
+Korea,bld_resid,hydrogen,resid heating modern,0
 Southeast Asia,bld_comm,hydrogen,comm others,0
 Southeast Asia,bld_comm,hydrogen,comm heating,0
-Southeast Asia,bld_resid,hydrogen,resid others,0
-Southeast Asia,bld_resid,hydrogen,resid heating,0
+Southeast Asia,bld_resid,hydrogen,resid others modern,0
+Southeast Asia,bld_resid,hydrogen,resid heating modern,0
 India,bld_comm,hydrogen,comm others,0
 India,bld_comm,hydrogen,comm heating,0
-India,bld_resid,hydrogen,resid others,0
-India,bld_resid,hydrogen,resid heating,0
+India,bld_resid,hydrogen,resid others modern,0
+India,bld_resid,hydrogen,resid heating modern,0
 Australia_NZ,bld_comm,hydrogen,comm others,0
 Australia_NZ,bld_comm,hydrogen,comm heating,0
-Australia_NZ,bld_resid,hydrogen,resid others,0
-Australia_NZ,bld_resid,hydrogen,resid heating,0
+Australia_NZ,bld_resid,hydrogen,resid others modern,0
+Australia_NZ,bld_resid,hydrogen,resid heating modern,0
 Africa,bld_comm,hydrogen,comm others,0
 Africa,bld_comm,hydrogen,comm heating,0
-Africa,bld_resid,hydrogen,resid others,0
-Africa,bld_resid,hydrogen,resid heating,0
+Africa,bld_resid,hydrogen,resid others modern,0
+Africa,bld_resid,hydrogen,resid heating modern,0
 Middle East,bld_comm,hydrogen,comm others,0
 Middle East,bld_comm,hydrogen,comm heating,0
-Middle East,bld_resid,hydrogen,resid others,0
-Middle East,bld_resid,hydrogen,resid heating,0
+Middle East,bld_resid,hydrogen,resid others modern,0
+Middle East,bld_resid,hydrogen,resid heating modern,0
 Latin America,bld_comm,hydrogen,comm others,0
 Latin America,bld_comm,hydrogen,comm heating,0
-Latin America,bld_resid,hydrogen,resid others,0
-Latin America,bld_resid,hydrogen,resid heating,0
+Latin America,bld_resid,hydrogen,resid others modern,0
+Latin America,bld_resid,hydrogen,resid heating modern,0
 Former Soviet Union,bld_comm,hydrogen,comm others,0
 Former Soviet Union,bld_comm,hydrogen,comm heating,0
-Former Soviet Union,bld_resid,hydrogen,resid others,0
-Former Soviet Union,bld_resid,hydrogen,resid heating,0
+Former Soviet Union,bld_resid,hydrogen,resid others modern,0
+Former Soviet Union,bld_resid,hydrogen,resid heating modern,0
 China,bld_comm,hydrogen,comm others,0
 China,bld_comm,hydrogen,comm heating,0
-China,bld_resid,hydrogen,resid others,0
-China,bld_resid,hydrogen,resid heating,0
+China,bld_resid,hydrogen,resid others modern,0
+China,bld_resid,hydrogen,resid heating modern,0
 Eastern Europe,bld_comm,hydrogen,comm others,0
 Eastern Europe,bld_comm,hydrogen,comm heating,0
-Eastern Europe,bld_resid,hydrogen,resid others,0
-Eastern Europe,bld_resid,hydrogen,resid heating,0
+Eastern Europe,bld_resid,hydrogen,resid others modern,0
+Eastern Europe,bld_resid,hydrogen,resid heating modern,0

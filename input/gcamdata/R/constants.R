@@ -539,6 +539,7 @@ energy.WIND_MIN_POTENTIAL <- 0.001
 energy.WIND_ELECTROLYSIS_KGH2_D <- 50000    # kg of h2 produced per day at a wind-electrolysis plant
 
 # Digits for rounding into XMLs
+energy.DIGITS_BIAS_ADDER       <- 9
 energy.DIGITS_CALOUTPUT        <- 7
 energy.DIGITS_CALPRODUCTION    <- 7
 energy.DIGITS_CAPACITY_FACTOR  <- 2
@@ -548,7 +549,7 @@ energy.DIGITS_COST             <- 4
 energy.DIGITS_CURVE_EXPONENT   <- 3
 energy.DIGITS_RESOURCE      <- 2
 energy.DIGITS_EFFICIENCY       <- 3
-energy.DIGITS_FLOORSPACE       <- 6
+energy.DIGITS_FLOORSPACE       <- 9
 energy.DIGITS_GDP_SUPPLY_ELAST <- 3
 energy.DIGITS_HDDCDD           <- 0
 energy.DIGITS_INCELAS_IND      <- 3
@@ -559,7 +560,10 @@ energy.DIGITS_MID_PRICE        <- 3
 energy.DIGITS_MPKM             <- 0
 energy.DIGITS_OM               <- 2
 energy.DIGITS_REMOVE.FRACTION  <- 2
-energy.DIGITS_SATIATION_ADDER  <- 9
+energy.DIGITS_SATIATION_ADDER  <- 5
+energy.DIGITS_SATIATION_IMPEDANCE  <- 7
+energy.DIGITS_SERVICE          <- 9
+energy.DIGITS_SHELL            <- 7
 energy.DIGITS_SHRWT            <- 4
 energy.DIGITS_SPEED            <- 1
 energy.DIGITS_TECHCHANGE       <- 4
@@ -605,6 +609,7 @@ gcamusa.LAND_DENSITY_PARAM <- 0
 gcamusa.B_PARAM <- 3.49026
 gcamusa.INCOME_PARAM <- 0.4875
 
+
 # Constants for global detailed industry
 energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
 energy.IRON_STEEL.DEFAULT_COEF <- c("Biomass-based","scrap","H2 wholesale delivery") #assign iron & steel global technology coefficients
@@ -613,6 +618,14 @@ energy.IRON_STEEL.RESOURCES <- c("Other semi-finished iron and steel products","
                                  "Iron and steel wire","Iron and steel sections") #finished and semi-finished iron and steel resources
 energy.IRON_STEEL.DOMESTIC_SW <- c("Africa_Southern","Indonesia","Africa_Northern","Africa_Eastern","Africa_Western","South Asia","Southeast Asia")
 energy.IRON_STEEL.TRADED_SW <- c("Africa_Southern traded iron and steel","Indonesia traded iron and steel","Africa_Northern traded iron and steel","Africa_Eastern traded iron and steel","Africa_Western traded iron and steel","South Asia traded iron and steel","Southeast Asia traded iron and steel")
+energy.FOOD_PROCESSING.IEA_INDUSTRY_FLOWS <- c("MINING", "CONSTRUC", "IRONSTL", "CHEMICAL", "NONFERR", "NONMET", "TRANSEQ", "MACHINE", "FOODPRO", "PAPERPRO", "WOODPRO", "TEXTILES", "INONSPEC") # IEA industry flows
+energy.FOOD_PROCESSING.IEA_INONSPEC_FLOW <- "INONSPEC" # IEA non-specified industry flow
+energy.FOOD_PROCESSING.IEA_FOODPRO_FLOW <- "FOODPRO" # IEA food processing industry flow
+energy.FOOD_PROCESSING.ENERGY_INFILL_START_YEAR <- 1990 # year in which to start infilling energy use for regions without good data
+energy.FOOD_PROCESSING.ENERGY_INFILL_MAX_INONSPEC_FRAC <- 0.5 # maximum allowable fraction of total industry energy that is in non-specified industry
+energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_FOODPRO_FRAC <- 0.01 # minimum required fraction of total industry energy that is in food processing
+energy.FOOD_PROCESSING.ENERGY_INFILL_FOODPRO_FRAC_OVERRIDE <- 0.1 # fraction of total industry energy in food processing that indicates the data will be used, regardless of non-specified industry fraction
+energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_EJ_PCAL_COEF <- 0.000413 # minimum value of the EJ per Pcal coefficient from the higher quality historical data, only will infill energy if the coefficient is less than this value
 
 # Socioeconomics constants ======================================================================
 
@@ -644,6 +657,11 @@ socioeconomics.CES_GAMMA <- -0.3
 
 socioeconomics.BASE_POP_SCEN         <- "SSP2"
 socioeconomics.BASE_GDP_SCENARIO     <- "SSP2"
+socioeconomics.BASE_INCSHARE_BASE <- "Historical data"
+socioeconomics.BASE_INCSHARE_MODEL <- "PCA algorithm (Two Components)"
+socioeconomics.BASE_INCSHARE_SCENARIO <- "SSP2"
+socioeconomics.INCSHARE_YEARS <- 1967:2100
+socioeconomics.DEFAULT_INTEREST_RATE <- 0.05
 socioeconomics.DEFAULT_MEDIAN_HOURS_WORKED <- 1944
 
 # Asumptions related to tracking capital investments
@@ -654,7 +672,9 @@ socioeconomics.REFINING_CAP_PAYMENTS <- 30
 socioeconomics.H2_CAPITAL_RATIO <- 0.8
 socioeconomics.H2_CAP_PAYMENTS <- 30
 socioeconomics.INDUSTRY_CAPITAL_RATIO <- 0.9
+socioeconomics.FOOD_PROCESSING_CAPITAL_RATIO <- 0.7 # specific to food processing sector
 socioeconomics.INDUSTRY_CAP_PAYMENTS <- 30
+socioeconomics.FOOD_PROCESSING_CAP_PAYMENTS <- 25 # specific to food processing sector
 socioeconomics.BUILDINGS_CAPITAL_RATIO <- 1.0
 socioeconomics.BUILDINGS_CAP_PAYMENTS <- 1
 socioeconomics.BUILDINGS_DEPRECIATION_RATE <- 1/15
@@ -682,11 +702,16 @@ socioeconomics.FINAL_DEMAND_SECTORS <- c("other industrial energy use",
                                          "chemical energy use",
                                          "alumina",
                                          "iron and steel",
+                                         "process heat food processing",
                                          "process heat paper",
                                          "waste biomass for paper",
-                                         "resid cooling",
-                                         "resid heating",
-                                         "resid others",
+                                         paste0("resid cooling modern_d", seq(1,10)),
+                                         paste0("resid heating modern_d", seq(1,10)),
+                                         paste0("resid heating coal_d", seq(1,10)),
+                                         paste0("resid heating TradBio_d", seq(1,10)),
+                                         paste0("resid others modern_d", seq(1,10)),
+                                         paste0("resid others coal_d", seq(1,10)),
+                                         paste0("resid others TradBio_d", seq(1,10)),
                                          "comm cooling",
                                          "comm heating",
                                          "comm others",
@@ -774,6 +799,9 @@ water.RENEW.COST.GRADE1 <- 0.00001 # Renewable water grade1 cost
 water.RENEW.COST.GRADE2 <- 0.001 # Renewable water grade2 cost
 water.RENEW.COST.GRADE3 <- 10 # Renewable water grade3 cost
 water.DEMAND_FRAC_THRESHOLD <- 1e-4 # Demand fraction of total runoff below which we use a 3-point supply curve to help model solution
+
+# region whose value to use as base when scaling to obtain regional water use coefficients for the food processing industry
+water.FOOD_PROCESSING.REGION_BASE <- "USA"
 
 # Energy-for-water constants ======================================================================
 

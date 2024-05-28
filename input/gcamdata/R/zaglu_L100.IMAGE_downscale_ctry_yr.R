@@ -22,7 +22,7 @@ module_aglu_L100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       FILE = "aglu/IMAGE/IMAGE_an_feed_bySystem",
       FILE = "aglu/IMAGE/IMAGE_an_meat",
       FILE = "aglu/IMAGE/IMAGE_an_head_bySystem",
-      "L105.an_Prod_Mt_ctry_C_Y")
+      "L101.an_Prod_Mt_ctry_C_Y")
 
   MODULE_OUTPUTS <-
     c("L100.IMAGE_an_Feedfrac_ctry_C_Sys_Fd_Y",
@@ -143,7 +143,7 @@ module_aglu_L100.IMAGE_downscale_ctry_yr <- function(command, ...) {
 
     aglu.MODEL_MeatWaterContent_YEARS <- aglu.MODEL_PRICE_YEARS
 
-    L105.an_Prod_Mt_ctry_C_Y %>%
+    L101.an_Prod_Mt_ctry_C_Y %>%
       filter(year %in% aglu.MODEL_MeatWaterContent_YEARS) %>%
       left_join_error_no_match(AGLU_ctry %>% select(iso, IMAGEv3p2_region) %>% distinct, by = "iso") %>%
       group_by(commodity = GCAM_commodity, year, IMAGEv3p2_region) %>%
@@ -288,7 +288,7 @@ module_aglu_L100.IMAGE_downscale_ctry_yr <- function(command, ...) {
       add_comments("IMAGE data is in dry tons while FAO is in wet tons. Implied water content is computed at IMAGE regions and mapped to all regions") %>%
       add_legacy_name("L100.IMAGE_an_watercontent_ctry_C") %>%
       add_precursors("aglu/AGLU_ctry",
-                     "L105.an_Prod_Mt_ctry_C_Y",
+                     "L101.an_Prod_Mt_ctry_C_Y",
                      "aglu/IMAGE/IMAGE_an_meat") ->
       L100.IMAGE_an_watercontent_ctry_C
 

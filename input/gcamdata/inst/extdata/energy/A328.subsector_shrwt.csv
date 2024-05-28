@@ -1,0 +1,14 @@
+# File: A328.subsector_shrwt.csv
+# Title: Food processing default subsector shareweights
+# Units: Unitless
+# Column types: ccccn
+# ----------
+supplysector,subsector,year.fillout,year,share.weight
+food processing,food processing,start-year,,1
+process heat food processing,biomass,start-year,,1
+process heat food processing,gas,start-year,,1
+process heat food processing,refined liquids,start-year,,1
+process heat food processing,heat,start-year,,1
+process heat food processing,coal,start-year,,1
+process heat food processing,electricity,start-year,,0
+process heat food processing,electricity,2050,,0.5

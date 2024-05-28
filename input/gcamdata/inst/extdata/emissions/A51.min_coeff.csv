@@ -81,22 +81,22 @@ refining,gas to liquids,gas to liquids,0.0075,0.0054,0.002,0,0,0
 refining,oil refining,oil refining,0,0,0,0,0,0
 unconventional oil production,unconventional oil production,unconventional oil production,,,,,,0
 regional oil,crude oil,crude oil,0,0,0,0,0,0
-resid heating,biomass,biomass,0.0035,0.04,0.0929,0,0,0.0453
-resid heating,coal,coal,0.0181,0.0256,0.6444,0,0,0.286
-resid heating,electricity,electricity,,,,,,
-resid heating,gas,gas,0.0035,0.04,0.0929,0,0,0.0453
-resid heating,refined liquids,refined liquids,0.0007,0.04,0.0929,0.0025,0.0013,0.0453
-resid heating,traditional biomass,traditional biomass,0.1206,0.0384,0.6444,0,0,0.7151
-resid heating,district heat,district heat,,,,,,
-resid cooling,electricity,electricity,,,,,,
-resid cooling,gas,gas,0,0,0,0,0,0
-resid others,biomass,biomass,0.0035,0.04,0.0929,0,0,0.0453
-resid others,coal,coal,0.0181,0.0256,0.6444,0.0651,0.0521,0.286
-resid others,electricity,electricity,,,,,,
-resid others,gas,gas,0.0035,0.04,0.0929,0,0,0.0453
-resid others,refined liquids,refined liquids,0.0007,0.04,0.0929,0.0025,0.0013,0.0453
-resid others,traditional biomass,traditional biomass,0.1206,0.0384,0.6444,0,0,0.7151
-resid others,district heat,district heat,,,,,,
+resid heating modern,biomass,biomass,0.0035,0.04,0.0929,0,0,0.0453
+resid heating coal,coal,coal,0.0181,0.0256,0.6444,0,0,0.286
+resid heating modern,electricity,electricity,,,,,,
+resid heating modern,gas,gas,0.0035,0.04,0.0929,0,0,0.0453
+resid heating modern,refined liquids,refined liquids,0.0007,0.04,0.0929,0.0025,0.0013,0.0453
+resid heating TradBio,traditional biomass,traditional biomass,0.1206,0.0384,0.6444,0,0,0.7151
+resid heating modern,district heat,district heat,,,,,,
+resid cooling modern,electricity,electricity,,,,,,
+resid cooling modern,gas,gas,0,0,0,0,0,0
+resid others modern,biomass,biomass,0.0035,0.04,0.0929,0,0,0.0453
+resid others coal,coal,coal,0.0181,0.0256,0.6444,0.0651,0.0521,0.286
+resid others modern,electricity,electricity,,,,,,
+resid others modern,gas,gas,0.0035,0.04,0.0929,0,0,0.0453
+resid others modern,refined liquids,refined liquids,0.0007,0.04,0.0929,0.0025,0.0013,0.0453
+resid others TradBio,traditional biomass,traditional biomass,0.1206,0.0384,0.6444,0,0,0.7151
+resid others modern,district heat,district heat,,,,,,
 comm heating,biomass,biomass,0.0107,0.0408,0.0072,0.0018,0.0121,0.0015
 comm heating,coal,coal,0,0,0,0,0,0
 comm heating,electricity,electricity,,,,,,
@@ -280,6 +280,15 @@ iron and steel,refined liquids,BLASTFUR,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
 iron and steel,refined liquids,EAF with DRI,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
 iron and steel,refined liquids,EAF with scrap,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
 iron and steel,gas,EAF with scrap,0.0238,0.0468,0.0067,0,0,0.0038
+process heat food processing,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
+process heat food processing,biomass,biomass cogen,,,,,,
+process heat food processing,gas,gas,0.0238,0.0468,0.0067,0,0,0.0038
+process heat food processing,gas,gas cogen,,,,,,
+process heat food processing,gas,gas with solar,,,,,,
+process heat food processing,refined liquids,refined liquids,0.0238,0.0156,0.0067,0.0092,0.001,0.0038
+process heat food processing,refined liquids,refined liquids cogen,,,,,,
+process heat food processing,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038
+process heat food processing,coal,coal cogen,,,,,,
 waste biomass for paper,biomass,biomass,0.0238,0.0351,0.0067,0.0001,0.0003,0.0038
 waste biomass for paper,biomass,biomass cogen,,,,,,
 process heat paper,coal,coal,0.004,0.013,0.0067,0.0024,0.0009,0.0038

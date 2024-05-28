@@ -105,8 +105,6 @@ public:
 
     double calcDemand( const double aDemandDriver ) const;
     
-    void calibrateSatiationImpedance( const double aDemand, const double aDemandDriver, const int aPeriod );
-
     static const std::string& getXMLNameStatic();
 
     // INamed methods
@@ -125,6 +123,13 @@ protected:
         //! The satiation level which may have been parsed directly by the user.
         DEFINE_VARIABLE( SIMPLE, "satiation-level", mParsedSatiationLevel, Value ),
 
+        //! Satiation impedance.  This is the parsed value and will not change.
+        DEFINE_VARIABLE(SIMPLE, "satiation-impedance", mParsedSatiationImpedance, Value),
+
+        //! Satiation adder, determines subsistence level.  This is the parsed value
+        //! and will not change.
+        DEFINE_VARIABLE(SIMPLE, "satiation-adder", mParsedSatiationAdder, Value),
+
         //! The satiation level to use during calcDemand.  This could have been read
         //! in directly by the user or set as a percentage increase from the base year
         //! demand.
@@ -132,15 +137,13 @@ protected:
 
         //! Satiation impedance or midpoint demand driver.  Note that this value is
         //! calibrated via calibrateSatiationImpedance.
-        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "satiation-impedance", mSatiationImpedance, Value ),
-
-        //! Satiation adder, determines subsistence level.  This is the parsed value
-        //! and will not change.
-        DEFINE_VARIABLE( SIMPLE, "satiation-adder", mParsedSatiationAdder, Value ),
+        DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "real-satiation-impedance", mSatiationImpedance, Value ),     
+        
 
         //! Satiation adder, determines subsistence level.  This value may be adjusted
         //! from the parsed value during some calibration periods.
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "real-satiation-adder", mSatiationAdder, Value )
+
     )
     
     void copy( const SatiationDemandFunction& aOther );

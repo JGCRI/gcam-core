@@ -676,11 +676,12 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
 #'
 #' @param x A data frame contain the variable for calculation
 #' @param periods An odd number of the periods in MA. The default is 5, i.e., 2 lags and 2 leads
+#' @param NA_RM If TRUE, remove NA in calculating mean, otherwise returning NA
 #'
 #' @return A data frame
 #' @export
 
-Moving_average <- function(x, periods = 5){
+Moving_average <- function(x, periods = 5, NA_RM = TRUE){
   if (periods == 1) {
     return(x)
   }
@@ -688,12 +689,29 @@ Moving_average <- function(x, periods = 5){
   if ((periods %% 2) == 0) {
     stop("Periods should be an odd value")
   } else{
-    (x +
-       Reduce(`+`, lapply(seq(1, (periods -1 )/2), function(a){lag(x, n = a)})) +
-       Reduce(`+`,lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)}))
-    )/periods
+
+    # (x +
+    #    Reduce(`+`, lapply(seq(1, (periods -1 )/2), function(a){lag(x, n = a)})) +
+    #    Reduce(`+`,lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)}))
+    # )/periods
+
+
+    #new method to allow na.rm in mean calculation
+    c(lapply(seq((periods -1 )/2, 1), function(a){lag(x, n = a)}),
+      list(x),
+      lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)})) %>% unlist %>%
+      matrix(ncol = periods) %>%
+      rowMeans(na.rm = NA_RM)
+
   }
 }
+
+
+
+
+
+
+
 
 # Function to dissaggregate dissolved regions in historical years ----
 # copyed in gcamdata
@@ -834,6 +852,64 @@ FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL <- function(.DF,
   return(.DF2)
 
 }
+
+#' Balance gross trade
+#' @description Scale gross export and import in all regions to make them equal at the world level.
+#'
+#' @param .DF An input dataframe with an element col including Import and Export
+#' @param .MIN_TRADE_PROD_RATIO Trade will be removed if world total export or import over production is smaller than .MIN_TRADE_PROD_RATIO, 0.01 default value
+#' @param .Reg_VAR Region variable name; default is area_code
+#' @param .GROUP_VAR Group variable; default is item_code and year
+#'
+#' @return The same dataframe with balanced world export and import.
+
+
+GROSS_TRADE_ADJUST <- function(.DF,
+                               .MIN_TRADE_PROD_RATIO = 0.01,
+                               .Reg_VAR = 'area_code',
+                               .GROUP_VAR = c("item_code", "year")){
+
+  element <- value <- Export <- Import <- Production <- ExportScaler <-
+    ImportScaler <-
+
+    # assert .DF structure
+    assertthat::assert_that(all(c("element", .GROUP_VAR) %in% names(.DF)))
+  assertthat::assert_that(dplyr::is.grouped_df(.DF) == F)
+  assertthat::assert_that(all(c("Import", "Export", "Production") %in%
+                                c(.DF %>% distinct(element) %>% pull)))
+
+  .DF %>%
+    # Join ExportScaler and ImportScaler
+    left_join(
+      .DF %>%
+        spread(element, value) %>%
+        dplyr::group_by_at(vars(dplyr::all_of(.GROUP_VAR))) %>%
+        # filter out items with zero world trade or production
+        # and replace na to zero later for scaler
+        replace_na(list(Export = 0, Import = 0, Production = 0)) %>%
+        filter(sum(Export) != 0, sum(Import) != 0, sum(Production) != 0) %>%
+        # world trade should be later than .MIN_TRADE_PROD_RATIO to have meaningful data
+        # depending on item group, .MIN_TRADE_PROD_RATIO can be set differently
+        filter(sum(Export) / sum(Production) > .MIN_TRADE_PROD_RATIO) %>%
+        filter(sum(Import) / sum(Production) > .MIN_TRADE_PROD_RATIO) %>%
+        # finally,
+        # use average gross trade value to calculate trade scaler
+        # the trade scalers will be applied to all regions
+        mutate(ExportScaler = (sum(Export) + sum(Import))/ 2 / sum(Export),
+               ImportScaler = (sum(Export) + sum(Import))/ 2 / sum(Import)) %>%
+        select(dplyr::all_of(c(.Reg_VAR, .GROUP_VAR)), ExportScaler, ImportScaler) %>%
+        ungroup(),
+      by = c(dplyr::all_of(c(.Reg_VAR, .GROUP_VAR)))) %>%
+    replace_na(list(ExportScaler = 0, ImportScaler = 0)) %>%
+    # If world export, import, or prod is 0, trade will be zero
+    mutate(value = case_when(
+      element %in% c("Export") ~ value * ExportScaler,
+      element %in% c("Import") ~ value * ImportScaler,
+      TRUE ~ value)) %>%
+    select(-ExportScaler, -ImportScaler)
+
+}
+
 
 #' evaluate_smooth_res_curve
 #'

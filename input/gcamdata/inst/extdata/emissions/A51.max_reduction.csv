@@ -3,7 +3,7 @@
 # Units: NA
 # Source: NA
 # Description: NA
-# Column types: ccciniiii 
+# Column types: ccciniiii
 # ----------
 supplysector,subsector,stub.technology,SO2,NOx,CO,BC,OC,NMVOC
 cement,cement,cement,,,,,,
@@ -81,22 +81,22 @@ refining,gas to liquids,gas to liquids,25,46,80,50,50,60
 refining,oil refining,oil refining,25,46,80,50,50,60
 unconventional oil production,unconventional oil production,unconventional oil production,,,,,,60
 regional oil,crude oil,crude oil,95,46,80,,,60
-resid heating,biomass,biomass,50,46,80,92,90,60
-resid heating,coal,coal,85,64,80,90,90,60
-resid heating,electricity,electricity,,,,,,
-resid heating,gas,gas,50,46,80,80,50,60
-resid heating,refined liquids,refined liquids,90,46,80,50,50,60
-resid heating,traditional biomass,traditional biomass,0,46,80,50,75,
-resid heating,district heat,district heat,,,,,,
-resid cooling,electricity,electricity,,,,,,
-resid cooling,gas,gas,50,46,80,80,50,60
-resid others,biomass,biomass,50,46,80,92,90,60
-resid others,coal,coal,85,64,80,90,90,60
-resid others,electricity,electricity,,,,,,
-resid others,gas,gas,50,46,80,80,50,60
-resid others,refined liquids,refined liquids,90,46,80,50,50,60
-resid others,traditional biomass,traditional biomass,0,46,80,50,75,
-resid others,district heat,district heat,,,,,,
+resid heating modern,biomass,biomass,50,46,80,92,90,60
+resid heating coal,coal,coal,85,64,80,90,90,60
+resid heating modern,electricity,electricity,,,,,,
+resid heating modern,gas,gas,50,46,80,80,50,60
+resid heating modern,refined liquids,refined liquids,90,46,80,50,50,60
+resid heating TradBio,traditional biomass,traditional biomass,0,46,80,50,75,
+resid heating modern,district heat,district heat,,,,,,
+resid cooling modern,electricity,electricity,,,,,,
+resid cooling modern,gas,gas,50,46,80,80,50,60
+resid others modern,biomass,biomass,50,46,80,92,90,60
+resid others coal,coal,coal,85,64,80,90,90,60
+resid others modern,electricity,electricity,,,,,,
+resid others modern,gas,gas,50,46,80,80,50,60
+resid others modern,refined liquids,refined liquids,90,46,80,50,50,60
+resid others TradBio,traditional biomass,traditional biomass,0,46,80,50,75,
+resid others modern,district heat,district heat,,,,,,
 comm heating,biomass,biomass,50,46,80,92,90,60
 comm heating,coal,coal,85,64,80,90,90,60
 comm heating,electricity,electricity,,,,,,
@@ -185,6 +185,15 @@ iron and steel,refined liquids,BLASTFUR,70,82,80,70,90,60
 iron and steel,refined liquids,EAF with DRI,70,82,80,70,90,60
 iron and steel,refined liquids,EAF with scrap,70,82,80,70,90,60
 iron and steel,gas,EAF with scrap,70,46,80,50,50,60
+process heat food processing,biomass,biomass,70,59.5,80,98,96,60
+process heat food processing,biomass,biomass cogen,,,,,,
+process heat food processing,gas,gas,70,46,80,50,50,60
+process heat food processing,gas,gas cogen,,,,,,
+process heat food processing,gas,gas with solar,,,,,,
+process heat food processing,refined liquids,refined liquids,70,82,80,70,90,60
+process heat food processing,refined liquids,refined liquids cogen,,,,,,
+process heat food processing,coal,coal,95,85,80,90,95,60
+process heat food processing,coal,coal cogen,,,,,,
 waste biomass for paper,biomass,biomass,70,59.5,80,98,96,60
 waste biomass for paper,biomass,biomass cogen,,,,,,
 process heat paper,coal,coal,95,85,80,90,95,60

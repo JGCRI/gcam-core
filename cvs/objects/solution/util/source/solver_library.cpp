@@ -476,7 +476,7 @@ bool SolverLibrary::bracket( Marketplace* aMarketplace, World* aWorld, const dou
         const double FX_INCREASE_THRESHOLD = 10.0;
         double stepMult = 1.0;
         dx = x - prev_x;
-        while(currFX > (prevFX * FX_INCREASE_THRESHOLD)) {
+        while(currFX > (prevFX * FX_INCREASE_THRESHOLD) && stepMult > 1e-8) {
             stepMult /= 2.0;
             x = prev_x + dx * stepMult;
             edFun(x, fx);

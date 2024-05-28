@@ -104,6 +104,7 @@
 #include "functions/include/building_service_input.h"
 #include "functions/include/satiation_demand_function.h"
 #include "functions/include/food_demand_input.h"
+#include "technologies/include/ag_storage_technology.h"
 #include "functions/include/nested_ces_production_function_macro.h"
 #include <typeinfo>
 
@@ -833,6 +834,29 @@ void XMLDBOutputter::startVisitTechnology( const Technology* aTechnology, const 
                     *childBuffer, mTabs.get(), curr, mCurrentPriceUnit );
             }
         }
+    }
+    const AgStorageTechnology* agStorageTech = dynamic_cast <const AgStorageTechnology*> (mCurrentTechnology);
+    if (agStorageTech) {
+        writeItemToBuffer(agStorageTech->mStoredValue, "closing-stock",
+            *childBuffer, mTabs.get(), 0, mCurrentOutputUnit);
+
+        const Modeltime* modeltime = scenario->getModeltime();
+        int techYear = agStorageTech->getYear(); 
+        int techPeriod = modeltime->getyr_to_per(techYear);
+        double openStock = techPeriod <= modeltime->getFinalCalibrationPeriod() ? 
+            agStorageTech->mOpeningStock : 
+            agStorageTech->mStoredValue * agStorageTech->mLossCoefficient;
+        
+        writeItemToBuffer(openStock, "opening-stock",
+            *childBuffer, mTabs.get(), 0, mCurrentOutputUnit);
+
+        writeItemToBuffer(agStorageTech->mStorageCost, "storage-cost",
+            *childBuffer, mTabs.get(), 0, mCurrentOutputUnit);
+
+        writeItemToBuffer(agStorageTech->mAdjExpectedPrice, "adj-exp-price",
+            *childBuffer, mTabs.get(), 0, mCurrentOutputUnit);
+
+
     }
 }
 
@@ -1941,11 +1965,17 @@ void XMLDBOutputter::startVisitBuildingNodeInput(const BuildingNodeInput* aBuild
     mBufferStack.push(childBuffer);
 
     if (aBuildingNodeInput->getSatiationDemandFunction() ) {
-        writeItemToBuffer(aBuildingNodeInput->getSatiationDemandFunction()->mSatiationImpedance,
+        writeItemToBuffer(aBuildingNodeInput->getSatiationDemandFunction()->mParsedSatiationImpedance,
             "satiation-impedance", *childBuffer, mTabs.get(), 1, "unitless");
-        writeItemToBuffer(aBuildingNodeInput->getSatiationDemandFunction()->mSatiationLevel,
-            "satiation-level", *childBuffer, mTabs.get(), 1, "GJ/m^2");
+        writeItemToBuffer(aBuildingNodeInput->getSatiationDemandFunction()->mParsedSatiationLevel,
+            "satiation-level", *childBuffer, mTabs.get(), 1, "m^2/pers");
+    }  else  {
+
+    writeItemToBuffer(aBuildingNodeInput->mBiasAdjustParam,
+        "bias-adder", *childBuffer, mTabs.get(), 1, "m^2/pers");
+
     }
+
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ) {
         double price = aBuildingNodeInput->getPricePaid( mCurrentRegion, per );
@@ -1958,6 +1988,8 @@ void XMLDBOutputter::startVisitBuildingNodeInput(const BuildingNodeInput* aBuild
             writeItemToBuffer( floorspace, "floorspace",
                 *childBuffer, mTabs.get(), per, "billion m^2" );
         }
+
+
     }
 }
 
@@ -1985,16 +2017,25 @@ void XMLDBOutputter::endVisitBuildingNodeInput( const BuildingNodeInput* aBuildi
 void XMLDBOutputter::startVisitBuildingServiceInput( const BuildingServiceInput* aBuildingServiceInput, const int aPeriod ) {
     startVisitInput( aBuildingServiceInput, aPeriod );
 
-    writeItemToBuffer( aBuildingServiceInput->getSatiationDemandFunction()->mSatiationImpedance,
+    if (aBuildingServiceInput->getSatiationDemandFunction()) {
+    writeItemToBuffer( aBuildingServiceInput->getSatiationDemandFunction()->mParsedSatiationImpedance,
                        "satiation-impedance", *mBufferStack.top(), mTabs.get(), 1, "unitless" );
-    writeItemToBuffer( aBuildingServiceInput->getSatiationDemandFunction()->mSatiationLevel,
+    writeItemToBuffer( aBuildingServiceInput->getSatiationDemandFunction()->mParsedSatiationLevel,
                        "satiation-level", *mBufferStack.top(), mTabs.get(), 1, "GJ/m^2" );
+    }
+
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ) {
         double serviceDensity = aBuildingServiceInput->mServiceDensity[ per ];
         if( !objects::isEqual<double>( serviceDensity, 0.0 ) ) {
             writeItemToBuffer( serviceDensity, "service-density",
                 *mBufferStack.top(), mTabs.get(), per, "GJ/m^2" );
+        }
+
+        double BiasAdderEn = aBuildingServiceInput->getBiasAdder( per );
+        if (!objects::isEqual<double>(BiasAdderEn, 0.0)) {
+            writeItemToBuffer(BiasAdderEn, "bias-adder",
+                *mBufferStack.top(), mTabs.get(), per, "GJ/m^2");
         }
     }
 }

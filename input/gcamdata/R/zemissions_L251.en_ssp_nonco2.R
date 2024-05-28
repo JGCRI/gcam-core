@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251.ssp2_ef}, \code{L251.ssp34_ef}, \code{L251.ssp15_ef_vin}, \code{L251.ssp2_ef_vin}, \code{L251.ssp34_ef_vin}. The corresponding file in the
+#' the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251.ssp2_ef}, \code{L251.ssp2_ef_residTradBio}, \code{L251.ssp34_ef}, \code{L251.ssp15_ef_vin}, \code{L251.ssp2_ef_vin}, \code{L251.ssp34_ef_vin}. The corresponding file in the
 #' original data system was \code{L251.en_ssp_nonco2.R} (emissions level2).
 #' @details This section takes in the non-CO2 emissions factors for SSP 1/5, 2, and 3/4 across sectors.
 #' First, create data that spans the years 2010-2100 in five year increments by interpolation of input data.
@@ -31,7 +31,8 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              "L161.SSP15_EF",
              "L161.SSP34_EF",
              "L201.nonghg_steepness",
-             "L223.GlobalTechEff_elec"))
+             "L223.GlobalTechEff_elec",
+             FILE = "socioeconomics/income_shares"))
 
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L251.ctrl.delete",
@@ -43,7 +44,8 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              "L251.ssp34_ef_elec",
              "L251.ssp15_ef_vin",
              "L251.ssp2_ef_vin",
-             "L251.ssp34_ef_vin"))
+             "L251.ssp34_ef_vin",
+             "L251.ssp2_ef_residTradBio"))
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- Non.CO2 <- supplysector <- subsector <-
@@ -66,6 +68,9 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
     get_data(all_data, "L201.nonghg_steepness") -> L201.nonghg_steepness
     L223.GlobalTechEff_elec <- get_data(all_data, "L223.GlobalTechEff_elec")
 
+    income_shares<-get_data(all_data, "socioeconomics/income_shares")
+
+
     # make a complete mapping to be able to look up with sector + subsector + tech the
     # input name to use for an input-driver
     bind_rows(
@@ -77,6 +82,17 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
              input.name = minicam.energy.input) %>%
       distinct() ->
       EnTechInputNameMap
+
+    # Adjust the mapping sectors with the new residential sector (mult consumers)
+    EnTechInputNameMap_resid<-EnTechInputNameMap %>%
+      filter(grepl("resid",supplysector)) %>%
+      repeat_add_columns(tibble(group=unique(income_shares$category))) %>%
+      unite(supplysector,c("supplysector","group"),sep = "_")
+
+    EnTechInputNameMap<-EnTechInputNameMap %>%
+      filter(!grepl("resid",supplysector)) %>%
+      bind_rows(EnTechInputNameMap_resid)
+
 
     # ===================================================
 
@@ -264,6 +280,10 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                 by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) ->
       L251.ctrl.delete
 
+    # Write SSP2 EFs for TradBio
+    L251.ssp2_ef_residTradBio <- L251.ssp2_ef %>%
+      filter(grepl("TradBio", supplysector))
+
     # ===================================================
     # Produce outputs
     # No flags are necessary because old data is in 'long' format.
@@ -289,6 +309,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "emissions/A_regions",
                      "energy/calibrated_techs",
                      "energy/calibrated_techs_bld_det",
+                     "socioeconomics/income_shares",
                      UCD_tech_map_name) ->
       L251.ssp15_ef
     L251.ssp2_ef %>%
@@ -301,8 +322,24 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "emissions/A_regions",
                      "energy/calibrated_techs",
                      "energy/calibrated_techs_bld_det",
+                     "socioeconomics/income_shares",
                      UCD_tech_map_name) ->
       L251.ssp2_ef
+
+    L251.ssp2_ef_residTradBio %>%
+      add_title("Regional non-CO2 emissions coefficient data for SSP2 for TradBio") %>%
+      add_units("Tg / EJ") %>%
+      add_comments("First, the non-CO2 emissions factors for SSP 2 are interpolated across years 2010-2100 in 5 year segments.") %>%
+      add_comments("Then, regional non-CO2 emission species information is added.") %>%
+      add_legacy_name("L251.ssp2_ef") %>%
+      add_precursors("L161.SSP2_EF",
+                     "emissions/A_regions",
+                     "energy/calibrated_techs",
+                     "energy/calibrated_techs_bld_det",
+                     "socioeconomics/income_shares",
+                     UCD_tech_map_name) ->
+      L251.ssp2_ef_residTradBio
+
     L251.ssp34_ef %>%
       add_title("Regional non-CO2 emissions coefficient data for SSP3 and SSP4.") %>%
       add_units("Tg / EJ") %>%
@@ -325,6 +362,7 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
       add_comments("technology choice which is implemented with pass-through sector/tech") %>%
       add_precursors("L161.SSP15_EF",
                      "emissions/A_regions",
+                     "socioeconomics/income_shares",
                      "L223.GlobalTechEff_elec") ->
       L251.ssp15_ef_elec
     L251.ssp2_ef_elec %>%
@@ -382,7 +420,8 @@ module_emissions_L251.en_ssp_nonco2 <- function(command, ...) {
                      "emissions/A_regions") ->
       L251.ssp34_ef_vin
 
-    return_data(L251.ctrl.delete, L251.ssp15_ef, L251.ssp2_ef, L251.ssp34_ef, L251.ssp15_ef_elec, L251.ssp2_ef_elec, L251.ssp34_ef_elec, L251.ssp15_ef_vin, L251.ssp2_ef_vin, L251.ssp34_ef_vin)
+    return_data(L251.ctrl.delete, L251.ssp15_ef, L251.ssp2_ef, L251.ssp2_ef_residTradBio,
+                L251.ssp34_ef, L251.ssp15_ef_elec, L251.ssp2_ef_elec, L251.ssp34_ef_elec, L251.ssp15_ef_vin, L251.ssp2_ef_vin, L251.ssp34_ef_vin)
   } else {
     stop("Unknown command")
   }

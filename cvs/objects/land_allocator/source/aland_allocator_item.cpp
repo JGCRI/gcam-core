@@ -43,6 +43,8 @@
 #include "land_allocator/include/aland_allocator_item.h"
 #include "containers/include/scenario.h"
 #include "functions/include/idiscrete_choice.hpp"
+#include "util/logger/include/ilogger.h"
+
 
 using namespace std;
 
@@ -167,6 +169,13 @@ void ALandAllocatorItem::calculateShareWeights( const string& aRegionName,
         }
         for( int futurePer = aPeriod + 1; futurePer < modeltime->getmaxper(); ++futurePer ) {
             if( mGhostUnormalizedShare[ futurePer ].isInited() ) {
+                if(!util::isValidNumber(profitRateForCal) || profitRateForCal < 0.0) {
+                    ILogger& mainLog = ILogger::getLogger( "main_log" );
+                    mainLog.setLevel( ILogger::WARNING);
+                    mainLog << "Negative or invalid profit rate: " << profitRateForCal << " for calibration of "
+                            << aRegionName << ", " << mName << endl;
+                    mShareWeight[ futurePer ] = 0.0;
+                } else {
                 // note when mIsGhostShareRelativeToDominantCrop is true we made an adjustment to the cal profit rate
                 // by that of the dominant crop however the mGhostUnormalizedShare is still taken as an absolute
                 // share.  if instead we think it makes better sense to read it in as relative to the dominant crop's
@@ -174,6 +183,7 @@ void ALandAllocatorItem::calculateShareWeights( const string& aRegionName,
                 mShareWeight[ futurePer ] = aChoiceFnAbove->calcShareWeight( mGhostUnormalizedShare[ futurePer ] /* * shareAdj */,
                                                                              profitRateForCal,
                                                                              futurePer );
+                }
             }
         }
     }

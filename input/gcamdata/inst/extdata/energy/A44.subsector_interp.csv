@@ -4,22 +4,22 @@
 # Column types: ccccccc 
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
-resid heating,biomass,share-weight,final-calibration-year,end-year,,fixed
-resid heating,coal,share-weight,final-calibration-year,end-year,,fixed
-resid heating,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid heating,gas,share-weight,final-calibration-year,end-year,,fixed
-resid heating,refined liquids,share-weight,final-calibration-year,end-year,,fixed
-resid heating,traditional biomass,share-weight,final-calibration-year,end-year,,fixed
-resid heating,district heat,share-weight,final-calibration-year,end-year,,fixed
-resid cooling,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid cooling,gas,share-weight,final-calibration-year,end-year,,fixed
-resid others,biomass,share-weight,final-calibration-year,end-year,,fixed
-resid others,coal,share-weight,final-calibration-year,end-year,,fixed
-resid others,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid others,gas,share-weight,final-calibration-year,end-year,,fixed
-resid others,refined liquids,share-weight,final-calibration-year,end-year,,fixed
-resid others,traditional biomass,share-weight,final-calibration-year,end-year,,fixed
-resid others,district heat,share-weight,final-calibration-year,end-year,,fixed
+resid heating modern,biomass,share-weight,final-calibration-year,end-year,,fixed
+resid heating coal,coal,share-weight,final-calibration-year,end-year,,fixed
+resid heating modern,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid heating modern,gas,share-weight,final-calibration-year,end-year,,fixed
+resid heating modern,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+resid heating TradBio,traditional biomass,share-weight,final-calibration-year,end-year,,fixed
+resid heating modern,district heat,share-weight,final-calibration-year,end-year,,fixed
+resid cooling modern,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid cooling modern,gas,share-weight,final-calibration-year,end-year,,fixed
+resid others modern,biomass,share-weight,final-calibration-year,end-year,,fixed
+resid others coal,coal,share-weight,final-calibration-year,end-year,,fixed
+resid others modern,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid others modern,gas,share-weight,final-calibration-year,end-year,,fixed
+resid others modern,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+resid others TradBio,traditional biomass,share-weight,final-calibration-year,end-year,,fixed
+resid others modern,district heat,share-weight,final-calibration-year,end-year,,fixed
 comm heating,biomass,share-weight,final-calibration-year,end-year,,fixed
 comm heating,coal,share-weight,final-calibration-year,end-year,,fixed
 comm heating,electricity,share-weight,final-calibration-year,end-year,,fixed

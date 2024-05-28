@@ -14,7 +14,7 @@ module_gcamusa_L131.enduse_noEFW(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L131.in_EJ_USA_Senduse_F_Yh_noEFW}.
+the generated outputs: \code{L131.in_EJ_USA_Senduse_F_Yh_noEFW}, \code{L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj}.
 }
 \description{
 Generate the following two tables:

@@ -50,6 +50,7 @@
 #include "functions/include/aproduction_function.h"
 
 class IInput;
+class BuildingNodeInput;
 class BuildingServiceInput;
 
 /*!
@@ -80,9 +81,11 @@ public:
                             double capitalStock = 0, const IInput* aParentInput = 0 ) const;
 
 
+    
     double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
                               const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                               const IInput* aParentInput = 0 ) const;
+    
 
     // AProductionFunction methods not implemented
     double changeElasticity( InputSet& input, const std::string& aRegionName, double priceReceived,
@@ -139,8 +142,21 @@ private:
 
     double calcServiceDensity( BuildingServiceInput* aBuildingServiceInput,
                                const double aIncome,
+                               const double aBasePrice,
                                const std::string& aRegionName,
                                const int aPeriod ) const;
+
+    double calcServiceCoal(BuildingServiceInput* aBuildingServiceInput,
+        const double aIncome,
+        const double aBasePrice,
+        const std::string& aRegionName,
+        const int aPeriod)  const;
+
+    double calcServiceTradBio(BuildingServiceInput* aBuildingServiceInput,
+        const double aIncome,
+        const double aBasePrice,
+        const std::string& aRegionName,
+        const int aPeriod)  const;
 };
 
 #endif // _BUILDING_SERVICE_FUNCTION_H_

@@ -108,8 +108,8 @@ public:
                                const std::string& aTechName,
                                const IInfo* aTechInfo );
     
-    virtual double getCoefficient( const int aPeriod ) const;
-    
+    virtual double getCoefficient(const int aPeriod) const;
+  
     virtual void setCoefficient( const double aCoefficient,
                                  const int aPeriod );
     
@@ -125,9 +125,40 @@ protected:
         
         //! Degree days by period.
         DEFINE_VARIABLE( ARRAY, "degree-days", mDegreeDays, objects::PeriodVector<Value> ),
-        
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE( SIMPLE | STATE, "coef", mCoef, Value ),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "A-coal", mCoalA, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "k-coal", mCoalK, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-coal", mCoalBase, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "x-TradBio", mTradBioX, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "y-TradBio", mTradBioY, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-TradBio", mTradBioBase, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "price", mServPriceBase, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(SIMPLE | STATE, "base-density", mServBaseDens, Value),
+
+        //! Demand function coefficients to capture base year thermal characteristics.
+        DEFINE_VARIABLE(ARRAY | STATE, "bias-adder", mBiasAdderEn, objects::PeriodVector<Value>),
+
         //! Demand function coefficients to capture base year thermal characteristics.
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "coefficient", mCoefficient, Value )
+
     )
     
     void copy( const ThermalBuildingServiceInput& aInput );

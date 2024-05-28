@@ -1,0 +1,29 @@
+# File: A328.demand.csv
+# Title: food processing demand set by agricultural production linkage
+# Unit: NA
+# Description: Sets the food processing demand by linking to agricultural production. The structure should match food demand in aglu demand_subsector 
+# Source: Placeholder
+# Column types: cccccnn
+# ----------
+supplysector,subsector0,subsector,technology,minicam.energy.input,coefficient,price.unit.conversion
+FoodDemand_Staples,Corn,Corn,Corn,food processing,1,0
+FoodDemand_NonStaples,Oil,FiberCrop,FiberCrop,food processing,1,0
+FoodDemand_NonStaples,FruitsVeg,Fruits,Fruits,food processing,1,0
+FoodDemand_NonStaples,Protein,Plant,Legumes,food processing,1,0
+FoodDemand_NonStaples,MiscCrop,MiscCrop,MiscCrop,food processing,1,0
+FoodDemand_NonStaples,Protein,Plant,NutsSeeds,food processing,1,0
+FoodDemand_NonStaples,Oil,OilCrop,OilCrop,food processing,1,0
+FoodDemand_NonStaples,Oil,Soybean,Soybean,food processing,1,0
+FoodDemand_Staples,OtherGrain,OtherGrain,OtherGrain,food processing,1,0
+FoodDemand_NonStaples,Oil,OilPalm,OilPalm,food processing,1,0
+FoodDemand_Staples,Rice,Rice,Rice,food processing,1,0
+FoodDemand_Staples,RootTuber,RootTuber,RootTuber,food processing,1,0
+FoodDemand_NonStaples,SugarCrop,SugarCrop,SugarCrop,food processing,1,0
+FoodDemand_NonStaples,FruitsVeg,Vegetables,Vegetables,food processing,1,0
+FoodDemand_Staples,Wheat,Wheat,Wheat,food processing,1,0
+FoodDemand_NonStaples,Protein,Animal,Beef,food processing,1,0
+FoodDemand_NonStaples,Protein,Animal,Dairy,food processing,1,0
+FoodDemand_NonStaples,Protein,Animal,Pork,food processing,1,0
+FoodDemand_NonStaples,Protein,Animal,Poultry,food processing,1,0
+FoodDemand_NonStaples,Protein,Animal,SheepGoat,food processing,1,0
+FoodDemand_NonStaples,Protein,Animal,OtherMeat_Fish,food processing,1,0

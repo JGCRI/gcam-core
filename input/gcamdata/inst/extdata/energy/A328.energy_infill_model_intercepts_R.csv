@@ -1,0 +1,41 @@
+# File: A328.energy_infill_model_intercepts_R.csv
+# Title: Food processing energy use infilling model intercepts
+# Description: Intercepts from the derived linear model relating food processing energy use to GDP and non-staples calorie consumption on a GCAM region level. Value listed for region=default is the default value used for regions that were not employed in model-fitting and that will also be used for any new regions not specified in this file
+# Units: Listed in file
+# Source: Derived from FAO food consumption data and IEA energy use data on a GCAM region level
+# Column types: ncnc
+# ----------
+GCAM_region_ID,region,intercept,units
+1,USA,-0.1982,EJ
+2,Africa_Eastern,0.0467,EJ
+3,Africa_Northern,0.0467,EJ
+4,Africa_Southern,0.0467,EJ
+5,Africa_Western,0.0467,EJ
+6,Australia_NZ,0.0465,EJ
+7,Brazil,0.4168,EJ
+8,Canada,-0.0867,EJ
+9,Central America and Caribbean,0.0467,EJ
+10,Central Asia,-0.0469,EJ
+11,China,0.1817,EJ
+12,EU-12,0.0565,EJ
+13,EU-15,-0.3085,EJ
+14,Europe_Eastern,0.0412,EJ
+15,Europe_Non_EU,-0.0422,EJ
+16,European Free Trade Association,-0.0399,EJ
+17,India,0.0467,EJ
+18,Indonesia,0.0467,EJ
+19,Japan,-0.21,EJ
+20,Mexico,-0.0395,EJ
+21,Middle East,0.0467,EJ
+22,Pakistan,0.0467,EJ
+23,Russia,0.1742,EJ
+24,South Africa,0.0467,EJ
+25,South America_Northern,-0.0165,EJ
+26,South America_Southern,0.0467,EJ
+27,South Asia,0.0467,EJ
+28,South Korea,-0.0134,EJ
+29,Southeast Asia,0.1075,EJ
+30,Taiwan,-0.0163,EJ
+31,Argentina,0.0467,EJ
+32,Colombia,0.0117,EJ
+,default,0.0467,EJ

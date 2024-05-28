@@ -19,47 +19,54 @@
 #' @importFrom tidyr gather
 #' @author JDH Nov 2017
 module_energy_L221.en_supply <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "aglu/A_agStorageSector",
+      FILE = "energy/A21.sector",
+      FILE = "energy/A_regions",
+      FILE = "energy/A21.subsector_logit",
+      FILE = "energy/A21.subsector_shrwt",
+      FILE = "energy/A21.subsector_interp",
+      FILE = "energy/A21.globaltech_coef",
+      FILE = "energy/A21.globaltech_cost",
+      FILE = "energy/A21.globaltech_shrwt",
+      FILE = "energy/A21.globaltech_keyword",
+      FILE = "energy/A21.globaltech_secout",
+      FILE = "energy/A21.rsrc_info",
+      FILE = "aglu/A_an_input_subsector",
+      "L121.BiomassOilRatios_kgGJ_R_C",
+      "L122.in_Mt_R_C_Yh",
+      "L108.ag_Feed_Mt_R_C_Y",
+      "L202.ag_consP_R_C_75USDkg")
+
+  MODULE_OUTPUTS <-
+    c("L221.Supplysector_en",
+      "L221.SectorUseTrialMarket_en",
+      "L221.SubsectorLogit_en",
+      "L221.SubsectorShrwt_en",
+      "L221.SubsectorShrwtFllt_en",
+      "L221.SubsectorInterp_en",
+      "L221.SubsectorInterpTo_en",
+      "L221.StubTech_en",
+      "L221.GlobalTechCoef_en",
+      "L221.StubTechCoef_bioOil",
+      "L221.GlobalTechCost_en",
+      "L221.GlobalTechShrwt_en",
+      "L221.PrimaryConsKeyword_en",
+      "L221.StubTechFractSecOut_en",
+      "L221.StubTechFractProd_en",
+      "L221.StubTechFractCalPrice_en",
+      "L221.Rsrc_en",
+      "L221.RsrcPrice_en",
+      "L221.StubTechCalInput_bioOil",
+      "L221.StubTechInterp_bioOil",
+      "L221.StubTechShrwt_bioOil")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "aglu/A_agRegionalTechnology",
-             FILE = "energy/A21.sector",
-             FILE = "energy/A_regions",
-             FILE = "energy/A21.subsector_logit",
-             FILE = "energy/A21.subsector_shrwt",
-             FILE = "energy/A21.subsector_interp",
-             FILE = "energy/A21.globaltech_coef",
-             FILE = "energy/A21.globaltech_cost",
-             FILE = "energy/A21.globaltech_shrwt",
-             FILE = "energy/A21.globaltech_keyword",
-             FILE = "energy/A21.globaltech_secout",
-             FILE = "energy/A21.rsrc_info",
-             "L121.BiomassOilRatios_kgGJ_R_C",
-             "L122.in_Mt_R_C_Yh",
-             FILE = "aglu/A_an_input_subsector",
-             "L108.ag_Feed_Mt_R_C_Y",
-             "L202.ag_consP_R_C_75USDkg"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L221.Supplysector_en",
-             "L221.SectorUseTrialMarket_en",
-             "L221.SubsectorLogit_en",
-             "L221.SubsectorShrwt_en",
-             "L221.SubsectorShrwtFllt_en",
-             "L221.SubsectorInterp_en",
-             "L221.SubsectorInterpTo_en",
-             "L221.StubTech_en",
-             "L221.GlobalTechCoef_en",
-             "L221.StubTechCoef_bioOil",
-             "L221.GlobalTechCost_en",
-             "L221.GlobalTechShrwt_en",
-             "L221.PrimaryConsKeyword_en",
-             "L221.StubTechFractSecOut_en",
-             "L221.StubTechFractProd_en",
-             "L221.StubTechFractCalPrice_en",
-             "L221.Rsrc_en",
-             "L221.RsrcPrice_en",
-             "L221.StubTechCalInput_bioOil",
-             "L221.StubTechInterp_bioOil",
-             "L221.StubTechShrwt_bioOil"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     # Silence global variable package check
@@ -76,25 +83,8 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    A_agRegionalTechnology <- get_data(all_data, "aglu/A_agRegionalTechnology")
-    A21.sector <- get_data(all_data, "energy/A21.sector", strip_attributes = TRUE)
-    A_regions <- get_data(all_data, "energy/A_regions")
-    A21.subsector_logit <- get_data(all_data, "energy/A21.subsector_logit", strip_attributes = TRUE)
-    A21.subsector_shrwt <- get_data(all_data, "energy/A21.subsector_shrwt", strip_attributes = TRUE)
-    A21.subsector_interp <- get_data(all_data, "energy/A21.subsector_interp", strip_attributes = TRUE)
-    A21.globaltech_coef <- get_data(all_data, "energy/A21.globaltech_coef")
-    A21.globaltech_cost <- get_data(all_data, "energy/A21.globaltech_cost")
-    A21.globaltech_shrwt <- get_data(all_data, "energy/A21.globaltech_shrwt", strip_attributes = TRUE)
-    A21.globaltech_keyword <- get_data(all_data, "energy/A21.globaltech_keyword", strip_attributes = TRUE)
-    A21.globaltech_secout <- get_data(all_data, "energy/A21.globaltech_secout", strip_attributes = TRUE)
-    A21.rsrc_info <- get_data(all_data, "energy/A21.rsrc_info", strip_attributes = TRUE)
-    L121.BiomassOilRatios_kgGJ_R_C <- get_data(all_data, "L121.BiomassOilRatios_kgGJ_R_C", strip_attributes = TRUE)
-    L122.in_Mt_R_C_Yh <- get_data(all_data, "L122.in_Mt_R_C_Yh", strip_attributes = TRUE)
-    A_an_input_subsector <- get_data(all_data, "aglu/A_an_input_subsector")
-    L108.ag_Feed_Mt_R_C_Y <- get_data(all_data, "L108.ag_Feed_Mt_R_C_Y")
-    L202.ag_consP_R_C_75USDkg <- get_data(all_data, "L202.ag_consP_R_C_75USDkg")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -245,8 +235,8 @@ module_energy_L221.en_supply <- function(command, ...) {
 
     # First build the table with the available technologies.
     # GCAM_commodity -> regional crop name (if a traded crop) -> passthrough supplysector/subsector/technology
-    biofuel_feedstock_cropname <- filter(A_agRegionalTechnology, market.name == "regional") %>%
-      select(passthru_tech_input = "supplysector", GCAM_commodity = "minicam.energy.input")
+    biofuel_feedstock_cropname <- A_agStorageSector %>%
+      select(passthru_tech_input = "supplysector", GCAM_commodity)
 
     L221.biofuel_types_region <- distinct(L122.in_Mt_R_C_Yh, GCAM_region_ID, GCAM_commodity) %>%
       # join in the regional crop name (resetting to default gcam commodity for crops that aren't traded)
@@ -568,7 +558,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       add_units("fractions") %>%
       add_comments("Secondary outputs are only written out to relevant regions and technologies") %>%
       add_legacy_name("L221.StubTechFractSecOut_en") %>%
-      add_precursors("aglu/A_agRegionalTechnology", "energy/A21.globaltech_secout", "common/GCAM_region_names", "L122.in_Mt_R_C_Yh") ->
+      add_precursors("aglu/A_agStorageSector", "energy/A21.globaltech_secout", "common/GCAM_region_names", "L122.in_Mt_R_C_Yh") ->
       L221.StubTechFractSecOut_en
 
     L221.StubTechFractProd_en %>%
@@ -623,14 +613,7 @@ module_energy_L221.en_supply <- function(command, ...) {
       same_precursors_as(L221.StubTechCalInput_bioOil) ->
       L221.StubTechShrwt_bioOil
 
-    return_data(L221.Supplysector_en, L221.SectorUseTrialMarket_en, L221.SubsectorLogit_en,
-                L221.SubsectorShrwt_en, L221.SubsectorShrwtFllt_en, L221.SubsectorInterp_en,
-                L221.SubsectorInterpTo_en, L221.StubTech_en, L221.GlobalTechCoef_en, L221.StubTechCoef_bioOil,
-                L221.GlobalTechCost_en, L221.GlobalTechShrwt_en, L221.PrimaryConsKeyword_en,
-                L221.StubTechFractSecOut_en, L221.StubTechFractProd_en, L221.StubTechFractCalPrice_en, L221.Rsrc_en,
-                L221.RsrcPrice_en,
-                L221.StubTechCalInput_bioOil,
-                L221.StubTechInterp_bioOil, L221.StubTechShrwt_bioOil)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

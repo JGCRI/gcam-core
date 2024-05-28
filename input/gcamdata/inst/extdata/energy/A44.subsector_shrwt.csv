@@ -4,22 +4,22 @@
 # Column types: ccccn
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
-resid heating,biomass,start-year,,1
-resid heating,coal,start-year,,1
-resid heating,electricity,start-year,,1
-resid heating,gas,start-year,,1
-resid heating,refined liquids,start-year,,1
-resid heating,traditional biomass,start-year,,1
-resid heating,district heat,start-year,,1
-resid cooling,electricity,start-year,,1
-resid cooling,gas,start-year,,1
-resid others,biomass,start-year,,1
-resid others,coal,start-year,,1
-resid others,electricity,start-year,,1
-resid others,gas,start-year,,1
-resid others,refined liquids,start-year,,1
-resid others,traditional biomass,start-year,,1
-resid others,district heat,start-year,,1
+resid heating modern,biomass,start-year,,1
+resid heating coal,coal,start-year,,1
+resid heating modern,electricity,start-year,,1
+resid heating modern,gas,start-year,,1
+resid heating modern,refined liquids,start-year,,1
+resid heating TradBio,traditional biomass,start-year,,1
+resid heating modern,district heat,start-year,,1
+resid cooling modern,electricity,start-year,,1
+resid cooling modern,gas,start-year,,1
+resid others modern,biomass,start-year,,1
+resid others coal,coal,start-year,,1
+resid others modern,electricity,start-year,,1
+resid others modern,gas,start-year,,1
+resid others modern,refined liquids,start-year,,1
+resid others TradBio,traditional biomass,start-year,,1
+resid others modern,district heat,start-year,,1
 comm heating,biomass,start-year,,1
 comm heating,coal,start-year,,1
 comm heating,electricity,start-year,,1

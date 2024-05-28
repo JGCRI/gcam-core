@@ -26,7 +26,8 @@ module_gcamusa_L131.enduse_noEFW <- function(command, ...) {
              "L122.in_EJ_R_refining_F_Yh",
              "L126.out_EJ_R_electd_F_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L131.in_EJ_USA_Senduse_F_Yh_noEFW"))
+    return(c("L131.in_EJ_USA_Senduse_F_Yh_noEFW",
+             "L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj"))
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- sector <- fuel <- value.y <- value.x <-
@@ -105,6 +106,34 @@ module_gcamusa_L131.enduse_noEFW <- function(command, ...) {
       bind_rows(Enduse_elect_scaled_USA) ->
       L131.in_EJ_USA_Senduse_F_Yh_noEFW
 
+    # Create a adjusted L131.in_EJ_USA_Senduse_F_Yh_noEFW file for adjusting the building sector biomass re-mapping in GCAM-USA
+    L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj_bio<-L131.in_EJ_USA_Senduse_F_Yh_noEFW %>%
+      filter(grepl("bld", sector),
+             grepl ("resid", sector),
+             fuel %in% c("biomass","biomass_tradbio"))
+
+    # Calculate the total biomass and assign it to non-traditional biomass
+    tot.value.bio<-L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj_bio %>%
+      group_by(GCAM_region_ID,sector,year) %>%
+      summarise(value = sum(value)) %>%
+      ungroup() %>%
+      rename(tot.bio = value)
+
+    L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj_bio<-L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj_bio %>%
+      left_join_error_no_match(tot.value.bio, by = c("GCAM_region_ID", "sector", "year")) %>%
+      mutate(value = if_else(fuel == "biomass_tradbio",0,tot.bio)) %>%
+      select(-tot.bio)
+
+    # Need an ancilary function
+    `%!in%` = Negate(`%in%`)
+
+    L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj<-L131.in_EJ_USA_Senduse_F_Yh_noEFW %>%
+      filter(grepl("bld", sector)) %>%
+      anti_join(L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj_bio, by = c("GCAM_region_ID", "sector", "fuel", "year")) %>%
+      bind_rows(L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj_bio)
+
+
+
     # ===================================================
     L131.in_EJ_USA_Senduse_F_Yh_noEFW %>%
       add_title("Final scaled energy input by USA / end-use sector (incl CHP) / fuel / historical year (no EFW)") %>%
@@ -114,7 +143,15 @@ module_gcamusa_L131.enduse_noEFW <- function(command, ...) {
                      "L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") ->
       L131.in_EJ_USA_Senduse_F_Yh_noEFW
 
-    return_data(L131.in_EJ_USA_Senduse_F_Yh_noEFW)
+    L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj %>%
+      add_title("Final scaled energy input by USA / end-use sector (incl CHP) / fuel / historical year (no EFW)") %>%
+      add_units("EJ") %>%
+      add_comments("File adjusted for GCAM-USA buildings") %>%
+      add_precursors("energy/mappings/enduse_sector_aggregation", "L1011.en_bal_EJ_R_Si_Fi_Yh",
+                     "L121.in_EJ_R_unoil_F_Yh", "L122.in_EJ_R_refining_F_Yh", "L126.out_EJ_R_electd_F_Yh") ->
+      L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj
+
+    return_data(L131.in_EJ_USA_Senduse_F_Yh_noEFW,L131.in_EJ_USA_Senduse_F_Yh_noEFW_bldAdj)
   } else {
     stop("Unknown command")
   }

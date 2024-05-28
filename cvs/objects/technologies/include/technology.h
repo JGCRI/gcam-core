@@ -139,7 +139,7 @@ class Tabs;
  * \todo Better document the plug-in points for the derived classes.
  * \note Technology is the abstract base class for the various Technology
  *       implementations. It contains default implementations of the abstract
- *       functions which may be called by the derived classes to perform the
+ *       functions which may be called by the derived classes to perform the 
  *       default actions.
  * \author Sonny Kim, Josh Lurz
  */
@@ -198,7 +198,7 @@ public:
                            const std::string& aSectorName,
                            const int aPeriod );
 
-    double getCost( const int aPeriod ) const;
+    virtual double getCost( const int aPeriod ) const;
 
     const std::string& getName() const;
 

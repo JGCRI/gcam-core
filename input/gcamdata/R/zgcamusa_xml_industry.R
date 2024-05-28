@@ -14,6 +14,7 @@ module_gcamusa_industry_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L232.DeleteSupplysector_USAind",
              "L232.DeleteFinalDemand_USAind",
+             "L232.DeleteStubCalorieContent_USAind",
              "L232.DeleteDomSubsector_USAind",
              "L232.DeleteTraSubsector_USAind",
              "L232.Supplysector_ind_USA",
@@ -44,6 +45,7 @@ module_gcamusa_industry_xml <- function(command, ...) {
     # Load required inputs
     L232.DeleteSupplysector_USAind <- get_data(all_data, "L232.DeleteSupplysector_USAind")
     L232.DeleteFinalDemand_USAind <- get_data(all_data, "L232.DeleteFinalDemand_USAind")
+    L232.DeleteStubCalorieContent_USAind <- get_data(all_data, "L232.DeleteStubCalorieContent_USAind")
     L232.DeleteDomSubsector_USAind <- get_data(all_data, "L232.DeleteDomSubsector_USAind")
     L232.DeleteTraSubsector_USAind <- get_data(all_data, "L232.DeleteTraSubsector_USAind")
     L232.Production_reg_imp <- get_data(all_data, "L232.Production_reg_imp")
@@ -72,6 +74,7 @@ module_gcamusa_industry_xml <- function(command, ...) {
     create_xml("industry_USA.xml") %>%
       add_xml_data(L232.DeleteSupplysector_USAind, "DeleteSupplysector") %>%
       add_xml_data(L232.DeleteFinalDemand_USAind, "DeleteFinalDemand") %>%
+      add_xml_data_generate_levels(L232.DeleteStubCalorieContent_USAind, "DeleteStubTechMinicamEnergyInput","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data(L232.DeleteDomSubsector_USAind, "DeleteSubsector") %>%
       add_xml_data(L232.DeleteTraSubsector_USAind, "DeleteSubsector") %>%
       add_xml_data(L232.Production_reg_imp, "Production") %>%
@@ -95,6 +98,7 @@ module_gcamusa_industry_xml <- function(command, ...) {
       add_xml_data(L232.BaseService_ind_USA, "BaseService") %>%
       add_precursors("L232.DeleteSupplysector_USAind",
                      "L232.DeleteFinalDemand_USAind",
+                     "L232.DeleteStubCalorieContent_USAind",
                      "L232.DeleteTraSubsector_USAind",
                      "L232.DeleteDomSubsector_USAind",
                      "L232.Supplysector_ind_USA",
