@@ -1413,10 +1413,16 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
                            aClimateModel->getForcing( "SO2", util::round( year ) ),
                            year );
         
-        // DirSO2 Forcing
-        writeItemUsingYear( "forcing-DirSO2", "W/m^2",
-                           aClimateModel->getForcing( "DirSO2", util::round( year ) ),
+        // NH3 Forcing
+        writeItemUsingYear( "forcing-NH3", "W/m^2",
+                           aClimateModel->getForcing( "NH3", util::round( year ) ),
                            year );
+        
+        // aci Forcing
+        writeItemUsingYear( "forcing-aci", "W/m^2",
+                           aClimateModel->getForcing( "aci", util::round( year ) ),
+                           year );
+        
         
         // TropO3 Forcing
         writeItemUsingYear( "forcing-TropO3", "W/m^2",
@@ -1500,11 +1506,7 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         writeItemUsingYear( "forcing-total", "W/m^2",
                             aClimateModel->getTotalForcing( year ),
                              year );
-        
-        // RCP Forcing
-        writeItemUsingYear( "forcing-RCP", "W/m^2",
-                           aClimateModel->getForcing( "RCP", year ),
-                           year );
+ 
      }
 
     // Write net terrestrial uptake

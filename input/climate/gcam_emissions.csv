@@ -1,7 +1,7 @@
 ; historical inputs for Hector v 3.1 coupled with GCAM,,,,,,,,,,,,,,,,,,,,,,,
 ; there should be no emissions after the 2005 (def_switch_year),,,,,,,,,,,,,,,,,,,,,,,
 ; date March Tues 21 2023,,,,,,,,,,,,,,,,,,,,,,,
-; UNITS:,  PgC year-1,  PgC year-1,  PgC year-1,  PgC year-1,  Tg year-1,  ppt,  ppt,  Tg CH4 year-1,  Tg CO year-1,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  ppt,  Tg N year-1,  Tg year-1,  Tg NMVOC year-1,  Tg N year-1,  Tg year-1,  ppt,  Gg S year-1
+; UNITS:,  PgC year-1,  PgC year-1,  PgC year-1,  PgC year-1,  Tg year-1,  Gg  year-1,   Gg  year-1,  Tg CH4 year-1,  Tg CO year-1,   Gg  year-1, Gg  year-1, Gg  year-1, Gg  year-1, Gg  year-1, Gg  year-1, Gg  year-1,  Tg N year-1,  Tg year-1,  Tg NMVOC year-1,  Tg N year-1,  Tg year-1, Gg  year-1,  Gg S year-1
 Date,ffi_emissions,luc_emissions,daccs_uptake,luc_uptake,BC_emissions,C2F6_emissions,CF4_emissions,CH4_emissions,CO_emissions,HFC125_emissions,HFC134a_emissions,HFC143a_emissions,HFC227ea_emissions,HFC23_emissions,HFC245fa_emissions,HFC32_emissions,N2O_emissions,NH3_emissions,NMVOC_emissions,NOX_emissions,OC_emissions,SF6_emissions,SO2_emissions
 1745,0.002594013,0.081175867,0,0,2.097770755,0,0.010071225,19.01978312,348.5273588,0,0,0,0,0,0,0,0.054751418,6.927690091,60.02182622,3.877282015,15.44766815,0,1221.927531
 1746,0.002594013,0.081175867,0,0,2.097770755,0,0.010071225,19.01978312,348.5273588,0,0,0,0,0,0,0,0.054751418,6.927690091,60.02182622,3.877282015,15.44766815,0,1221.927531
