@@ -272,7 +272,8 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       L241.nonco2_steepness
 
   ## Replace outlier EFs with the global median
-    #TODO: SO2 is "regional" (SO2_1, SO2_2, etc.). Find median in this grouping, or globally?
+    # SO2 is "regional" (SO2_1, SO2_2, etc.). For this pollutant, we find the median by SO2 grouping rather than globally
+    # In the future, this can be refined to use a global SO2 median.
     # list columns to group by (emission factor medians will based on this grouping)
     to_group <- c( "year", "Non.CO2", "supplysector", "subsector", "stub.technology" )
     # list columns to keep in final table
@@ -281,7 +282,8 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     ef_col_name <- "emiss.coeff"
     L241.OutputEmissCoeff_elec <- replace_outlier_EFs(L241.OutputEmissCoeff_elec_replace.outliers, to_group, names, ef_col_name)
 
-    #TODO: SO2 is "regional" (SO2_1, SO2_2, etc.). Find median in this grouping, or globally?
+    # SO2 is "regional" (SO2_1, SO2_2, etc.). For this pollutant, we find the median by SO2 grouping rather than globally
+    # In the future, this can be refined to use a global SO2 median.
     # list columns to group by (emission factor medians will based on this grouping)
     to_group <- c( "year", "Non.CO2", "supplysector", "subsector", "stub.technology" )
     # list columns to keep in final table

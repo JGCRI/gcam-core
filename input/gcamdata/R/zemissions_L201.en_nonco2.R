@@ -128,8 +128,15 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(EnTechInputNameMap,by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
-      mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
-      L201.en_pol_emissions_edit_ss
+      mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
+      # Add back in correct subsector name for iron and steel sector
+      left_join(ind_subsector_revised %>% select(supplysector,subsector.original, technology, minicam.energy.input) %>%
+                  rename(stub.technology = technology,
+                         input.name = minicam.energy.input),
+                by = c("supplysector", "stub.technology", "input.name")) %>%
+      mutate(subsector = if_else(!is.na(subsector.original),subsector.original,subsector)) %>%
+      select(-subsector.original) ->
+      L201.en_pol_emissions_remove_IS
 
     # L201.en_ghg_emissions: GHG emissions for energy technologies in all regions
     L112.ghg_tg_R_en_S_F_Yh %>%
@@ -139,20 +146,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(EnTechInputNameMap,by = c("supplysector", "subsector", "stub.technology")) %>%
       select(region, supplysector, subsector, stub.technology, year, input.emissions = value, Non.CO2, input.name) %>%
-      mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) ->
-      L201.en_ghg_emissions_edit_ss
-
-    # Add back in correct subsector name for iron and steel sector
-    L201.en_pol_emissions_edit_ss %>%
-      left_join(ind_subsector_revised %>% select(supplysector,subsector.original, technology, minicam.energy.input) %>%
-                  rename(stub.technology = technology,
-                         input.name = minicam.energy.input),
-                by = c("supplysector", "stub.technology", "input.name")) %>%
-      mutate(subsector = if_else(!is.na(subsector.original),subsector.original,subsector)) %>%
-      select(-subsector.original) ->
-      L201.en_pol_emissions_remove_IS
-
-    L201.en_ghg_emissions_edit_ss %>%
+      mutate(input.emissions = signif(input.emissions, emissions.DIGITS_EMISSIONS)) %>%
+      # Add back in correct subsector name for iron and steel sector
       left_join(ind_subsector_revised %>% select(supplysector,subsector.original, technology, minicam.energy.input) %>%
                   rename(stub.technology = technology,
                          input.name = minicam.energy.input),
