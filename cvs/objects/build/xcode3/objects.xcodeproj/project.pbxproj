@@ -2519,7 +2519,6 @@
 				GCC_OPTIMIZATION_LEVEL = 0;
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
-					"FUSION_MAX_VECTOR_SIZE=30",
 				);
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
@@ -2562,7 +2561,6 @@
 				GCC_PREPROCESSOR_DEFINITIONS = (
 					NDEBUG,
 					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
-					"FUSION_MAX_VECTOR_SIZE=30",
 					EIGEN_MPL2_ONLY,
 					BOOST_IOSTREAMS_NO_LIB,
 				);
