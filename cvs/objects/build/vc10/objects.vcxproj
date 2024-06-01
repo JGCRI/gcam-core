@@ -372,7 +372,7 @@
       <InlineFunctionExpansion>OnlyExplicitInline</InlineFunctionExpansion>
       <OmitFramePointers>true</OmitFramePointers>
       <AdditionalIncludeDirectories>..\..\..\..\libs\boost-lib;..\..\..\..\libs\java\include;..\..\..\..\libs\java\include\win32;..\..;..\..\climate\source\hector\headers;..\..\..\..\libs\tbb\include;..\..\..\..\libs\Eigen;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_IOSTREAMS_NO_LIB;FUSION_MAX_VECTOR_SIZE=30;BOOST_MATH_TR1_NO_LIB;NDEBUG;EIGEN_MPL2_ONLY;GCAM_PARALLEL_ENABLED;_WINDOWS;_AFXDLL;NOGDI;NOMINMAX;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;BOOST_DATE_TIME_NO_LIB;BOOST_IOSTREAMS_NO_LIB;BOOST_MATH_TR1_NO_LIB;NDEBUG;EIGEN_MPL2_ONLY;GCAM_PARALLEL_ENABLED;_WINDOWS;_AFXDLL;NOGDI;NOMINMAX;JARS_LIB#"../libs/basex/BaseX.jar\x3B../libs/jars/*";%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <StringPooling>true</StringPooling>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
