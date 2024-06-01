@@ -294,7 +294,9 @@ module_energy_L1328.food_processing <- function(command, ...) {
       spread(supplysector, value) %>%
       # add GDP, selecting just historical values
       left_join_error_no_match(L102.gdp_mil90usd_Scen_R_Y %>%
-                                 filter(scenario == "gSSP2", year %in% HISTORICAL_YEARS) %>%
+                                 # NOTE: at present historical GDP is the same in all SSP scenarios
+                                 # if that assumption changes we will want to revist this methodology
+                                 filter(scenario == socioeconomics.CORE_GCAM_SCENARIO, year %in% HISTORICAL_YEARS) %>%
                                  select(GCAM_region_ID, year, GDP_mil90USD = value),
                                by = c("GCAM_region_ID", "year")) %>%
       # add the regional intercepts of the model

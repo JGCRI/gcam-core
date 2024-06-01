@@ -32,3 +32,7 @@ GTAPv10_basedata_VKB_SAVE_VDEP.csv.gz
 
 # junk produced when developing the python scripts
 *pycache*
+
+# Renv
+renv/activate.R
+.Rprofile
