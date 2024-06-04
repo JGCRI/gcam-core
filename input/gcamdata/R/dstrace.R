@@ -108,7 +108,7 @@ dstrace <- function(object_name, direction = "upstream", graph = FALSE,
 #' recursively.
 #'
 #' The algorithm is performing a depth first search where chunks are "nodes"
-#' and data objects are "verticies" connecting them.
+#' and data objects are "vertices" connecting them.
 #' @param chunk_names A list of chunks to find the precursors for.
 #' @param gcam_data_map A tibble of metadata information; normally a built-in package dataset.
 #' @param prev_trace_list The list of chunks already found.

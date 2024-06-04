@@ -494,13 +494,13 @@ struct FilterStep {
     /*!
      * \brief Constructor which (potentially) sets the data name and data flag filters.
      */
-    FilterStep( const std::string& aDataName, const int aDataFlag = 0 ):mDataName( aDataName ), mDataFlag( aDataFlag ), mNumDescendantSteps( 0 ), mFilterMap(), mNoFilters( true ) {}
+    FilterStep( const std::string& aDataName, const int aDataFlag = 0 ):mDataName( aDataName ), mDataFlag( aDataFlag ), mNoFilters( true ), mNumDescendantSteps( 0 ), mFilterMap() {}
 
     /*!
      * \brief Constructor which (potentially) sets the data name and an IndexFilter.
      * \note The memory for aFilter will be managed by this class.
      */
-    FilterStep( const std::string& aDataName, IndexFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNumDescendantSteps( 0 ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, IndexFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNoFilters( false ), mNumDescendantSteps( 0 ), mFilterMap() {
         boost::fusion::at_key<IndexFilter>( mFilterMap ) = aFilter;
     }
 
@@ -508,7 +508,7 @@ struct FilterStep {
      * \brief Constructor which (potentially) sets the data name and a NamedFilter.
      * \note The memory for aFilter will be managed by this class.
      */
-    FilterStep( const std::string& aDataName, NamedFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNumDescendantSteps( 0 ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, NamedFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNoFilters( false ), mNumDescendantSteps( 0 ), mFilterMap() {
         boost::fusion::at_key<NamedFilter>( mFilterMap ) = aFilter;
     }
 
@@ -516,7 +516,7 @@ struct FilterStep {
      * \brief Constructor which (potentially) sets the data name and a YearFilter.
      * \note The memory for aFilter will be managed by this class.
      */
-    FilterStep( const std::string& aDataName, YearFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNumDescendantSteps( 0 ), mFilterMap(), mNoFilters( false ) {
+    FilterStep( const std::string& aDataName, YearFilter* aFilter ):mDataName( aDataName ), mDataFlag( 0 ), mNoFilters( false ), mNumDescendantSteps( 0 ), mFilterMap() {
         boost::fusion::at_key<YearFilter>( mFilterMap ) = aFilter;
     }
 

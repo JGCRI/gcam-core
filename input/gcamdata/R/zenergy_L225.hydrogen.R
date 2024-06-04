@@ -14,7 +14,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange filter group_by mutate select
 #' @importFrom tidyr complete nesting
-#' @author LF Augest 2017
+#' @author LF August 2017
 module_energy_L225.hydrogen <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",

@@ -78,14 +78,16 @@ void PassToParentStreamBuf::setParent( Logger* aParent ) {
 }
 
 //! Constructor which sets default values.
-Logger::Logger( const string& aFileName ):
+Logger::Logger( std::ostream* aCout, const string& aFileName ):
 ILogger( &mUnderStream ),
 // Initialize all variables which are not set by Configuration values.
 mCurrentWarningLevel( ILogger::DEBUG ),
 mFileName( aFileName ),
 mMinLogWarningLevel( ILogger::DEBUG ),
 mMinToScreenWarningLevel( ILogger::SEVERE ),
-mPrintLogWarningLevel( false ){
+mPrintLogWarningLevel( false ),
+mCout(aCout)
+{
     // Set the understream's parent to this Logger.
 	mUnderStream.setParent( this );
 }
@@ -145,9 +147,9 @@ void Logger::printToScreenIfConfigured( const string& aMessage ){
 	if ( mCurrentWarningLevel >= mMinToScreenWarningLevel ) {
 		// Print the warning level
 		if ( mPrintLogWarningLevel || mCurrentWarningLevel >= ILogger::ERROR ) {
-            cout << convertLevelToString( mCurrentWarningLevel ) << ":";
+            (*mCout) << convertLevelToString( mCurrentWarningLevel ) << ":";
 		}
-		cout << aMessage << endl;
+		(*mCout) << aMessage << endl;
 	}
 }
 

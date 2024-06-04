@@ -52,8 +52,9 @@ mitigation policy.
 
 * [GCAM Documentation](http://jgcri.github.io/gcam-doc/)
 * [Getting Started with GCAM](http://jgcri.github.io/gcam-doc/user-guide.html)
-* [GCAM Community](http://www.globalchange.umd.edu/models/gcam/gcam-community/)
+* [GCAM Community](https://gcims.pnnl.gov/community)
 * [GCAM Videos and Tutorial Slides](https://gcims.pnnl.gov/community)
+* [GCAM Citation and Co-authorship Guidelines](http://jgcri.github.io/gcam-doc/community-guide.html)
 
 ## Selected Publications
 

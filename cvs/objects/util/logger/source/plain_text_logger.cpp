@@ -49,13 +49,13 @@
 using namespace std;
 
 //! Constructor
-PlainTextLogger::PlainTextLogger( const string& aLoggerName ):Logger( aLoggerName ){
+PlainTextLogger::PlainTextLogger( std::ostream* aCout, const string& aLoggerName ):Logger( aCout, aLoggerName ){
 }
 
 //! Tells the logger to begin logging.
 void PlainTextLogger::open( const char[] ){
     if( mFileName.empty() ) { // set a default value
-        cout << "Using default log file name." << endl;
+        (*mCout) << "Using default log file name." << endl;
         mFileName = "log.txt";
     }
 

@@ -128,7 +128,7 @@ double FunctionUtils::DEFLATOR_1975_PER_DEFLATOR_2005( void )
 //! Function to return 1990 to 1975 US $ deflator.
 double FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975( void )
 {
-    return 2.212; // Ratio of 1990/1975 deflators
+    return 2.129; // Ratio of 1990/1975 deflators
 }
 
 //! Function to return kWh to GJ conversion.

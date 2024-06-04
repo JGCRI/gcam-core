@@ -147,7 +147,7 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
 
     // Add to all loggers that a new scenario is starting so that users may more
     // easily parse which scenario the messages pertain to.
-    LoggerFactory::logNewScenarioStarting( overrideName );
+    LoggerFactory::getInstance()->logNewScenarioStarting( overrideName );
 
     // Print data read in time.
     mainLog.setLevel( ILogger::DEBUG );

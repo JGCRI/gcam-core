@@ -17,6 +17,9 @@ TBB_INCLUDE     = $(GCAMLIB_HOME)/include/oneapi
 TBB_LIB	        = $(GCAMLIB_HOME)/lib
 JAVA_INCLUDE    = ${JAVA_HOME}/include
 JAVA_LIB        = ${JAVA_HOME}/jre/lib/amd64/server
+ifeq (openjdk,$(findstring openjdk,$(JAVA_HOME)))
+JAVA_LIB        = ${JAVA_HOME}/lib/server
+endif
 JARS_LIB        = $(GCAMLIB_HOME)/lib/jars/*
 ## `module load mkl/15.0.1` will get you the following variables:
 ifdef MLIB_CFLAGS

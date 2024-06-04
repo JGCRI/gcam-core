@@ -18,7 +18,7 @@ module_emissions_ssp2_emissions_factors_xml <- function(command, ...) {
              "L251.ssp2_ef_residTradBio"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ssp2_emissions_factors.xml",
-             XML = "ssp2_tradBio_emissions_factors.xml"))
+             XML = "ssp2_emissions_factors_tradBio.xml"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -50,9 +50,9 @@ module_emissions_ssp2_emissions_factors_xml <- function(command, ...) {
     create_xml("ssp2_emissions_factors_tradBio.xml") %>%
       add_xml_data(L251.ssp2_ef_residTradBio, "InputEmissCoeff") %>%
       add_precursors("L251.ssp2_ef_residTradBio") ->
-      ssp2_tradBio_emissions_factors.xml
+      ssp2_emissions_factors_tradBio.xml
 
-    return_data(ssp2_emissions_factors.xml, ssp2_tradBio_emissions_factors.xml)
+    return_data(ssp2_emissions_factors.xml, ssp2_emissions_factors_tradBio.xml)
   } else {
     stop("Unknown command")
   }

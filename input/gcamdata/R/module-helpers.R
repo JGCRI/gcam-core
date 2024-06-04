@@ -423,7 +423,7 @@ add_carbon_info <- function( data, carbon_info_table,
 #' Reduce the carbon density of a managed land type from its unmanaged land
 #' type's carbon density using constant multipliers
 #'
-#' @param data Unput data tibble to adjust carbon densities for
+#' @param data Input data tibble to adjust carbon densities for
 #' @param LTfor Land_Type name to use for Forest land types
 #' @param LTpast Land_Type name to use for Pasture land types
 #' @return The original table with carbon density adjusted for the managed land types
@@ -492,7 +492,7 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
 #' Takes a wide format tibble with years as columns, coverts to long format, and
 #' ensures values are filled in for all \code{out_years} using the following rules:
 #'   - Linearly interpolated for missing values that have end points
-#'   - Extrapolated using an exponential decay function paramaterized by the columns
+#'   - Extrapolated using an exponential decay function parameterized by the columns
 #'     \code{improvement.rate} and \code{improvement.max} using the following formulation
 #'     \code{v_0*max+(v_0-v_0*max)*(1-rate)^(y-y_0)}
 #'   - For rows that specify a char value in the column \code{improvement.shadow.technology}
@@ -550,7 +550,7 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
     select(-year, -value) %>%
     distinct() %>%
     repeat_add_columns(tibble(year=c(unique(c(d$year, out_years))))) %>%
-    left_join(d, by=names(.)) %>%
+    left_join(d, by=names(.), relationship = "many-to-many") %>%
     # for the purposes of interpolating (and later extrapolating) we would like
     # to just group by everything except year and value
     dplyr::group_by_at(dplyr::vars(-year, -value)) %>%
@@ -651,7 +651,7 @@ downscale_FAO_country <- function(data, country_name, dissolution_year, years = 
   ctry_years <- years[years < dissolution_year]
   yrs <- as.character(c(ctry_years, dissolution_year))
   data %>%
-    select(item, element, yrs) %>%
+    select(item, element, tidyr::all_of(yrs)) %>%
     group_by(item, element) %>%
     summarise_all(sum) %>%
     ungroup ->
@@ -959,6 +959,7 @@ smooth_res_curve_approx_error <- function(curve.exponent, mid.price, base.price,
 
 }
 
+
 #' NEI_to_GCAM
 #'
 #' Helper function to convert EPA National Emissions Inventory (NEI) emissions to GCAM emissions in GCAM-USA
@@ -1012,15 +1013,6 @@ NEI_to_GCAM <- function(NEI_data, CEDS_GCAM_fuel, NEI_pollutant_mapping, names) 
 
 }
 
-#' compute_BC_OC
-#'
-#' Helper function to compute BC and OC EFs from PM2.5 and a mapping file with BC OC fraction content by sector/subsector/technology
-#' Used for emissions in several sectors.
-#' @param df tibble which contains PM2.5 data to be used to get BC and OC data
-#' @param BC_OC_assumptions tibble which contains BC and OC fractions
-#' @importFrom assertthat assert_that
-#' @importFrom dplyr filter left_join rename mutate group_by select summarise_all ungroup
-#' @return tibble with BC and OC rows added
 
 compute_BC_OC <- function(df, BC_OC_assumptions) {
   #There is no data for BC/OC in the base year, so use fractions of PM2.5 to calculate BC/OC emission factors.
@@ -1361,4 +1353,84 @@ join.gdp.ts <- function(past, future, grouping) {
   else {
     rslt
   }
+}
+
+
+#' replace_outlier_EFs
+#'
+#' Helper function to replace emission factors (EFs) outside a threshold with a median EF
+#' Used for emission factors in several sectors
+#' @param df Base tibble to start from that contains EFs, and may include NAs
+#' @param to_group Character vector indicating the column names to group by.
+#' This relates to how specific the median will be, whether it is by sector, sector and subsector, etc.
+#' @param names Character vector indicating the column names of the returned tibble
+#' @param ef_col_name Name of the column containing emission factors
+#' @importFrom assertthat assert_that
+#' @importFrom dplyr filter anti_join rename mutate group_by_at select summarize ungroup bind_rows
+#' @return tibble with corresponding region, year, Non.CO2, GCAM sector, subsector, stub.technology, and modified EFs
+
+replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
+
+  # silence package check notes
+  region <- Non.CO2 <- year <- supplysector <- subsector0 <- subsector <- stub.technology <-
+    emiss.coef <- NULL
+
+  assert_that(is_tibble(df))
+  assert_that(is.character(to_group))
+  assert_that(is.character(names))
+  assert_that(is.character(ef_col_name))
+
+  # Generate median emissions factors
+  median.true <- df %>%
+    rename(emiss.coef = .data[[ef_col_name]]) %>%
+    # Remove NAs so as to not skew the median
+    filter(!is.na(emiss.coef)) %>%
+    dplyr::group_by_at(to_group) %>%
+    summarize(emiss.coef = median(emiss.coef)) %>%
+    ungroup() %>%
+    rename(medianEF = emiss.coef)
+
+  # Some year / pollutant / sector / subsector / tech are NA for all entries, and should be set to 0
+  median.skewed <- df %>%
+    rename(emiss.coef = .data[[ef_col_name]]) %>%
+    replace_na(list(emiss.coef = 0)) %>%
+    dplyr::group_by_at(to_group) %>%
+    summarize(emiss.coef = median(emiss.coef)) %>%
+    ungroup() %>%
+    rename(medianEF = emiss.coef)
+
+  # We want to join these tables so that only the entries not in median.true are retained from median.skewed
+  # These all have EFs of 0
+  median <- median.skewed %>%
+    anti_join(median.true, by=(to_group)) %>%
+    bind_rows(median.true)
+
+  # Find the standard deviation, which will be used to establish our outlier threshold
+  sd <- df %>%
+    rename(emiss.coef = .data[[ef_col_name]]) %>%
+    dplyr::mutate_if(is.numeric, ~ifelse(abs(.) == Inf,NA,.)) %>%
+    dplyr::group_by_at(to_group) %>%
+    mutate(sd = sd(emiss.coef, na.rm = TRUE)) %>%
+    ungroup() %>%
+    select(to_group, sd) %>%
+    distinct()
+
+  # Replace all emissions factors outside a threshold (two standard deviations higher than the median, three lower)
+  # or that are NAs with the median emissions factor for that year, non.CO2, and technology
+  # The output table in named "noBCOC" because in several cases where this is currently used, BC and OC EFs are added in at the next step.
+  noBCOC <- df %>%
+    rename(emiss.coef = .data[[ef_col_name]]) %>%
+    left_join_error_no_match(median, by=(to_group)) %>%
+    # we use a left_join here- LJENM results in an errors due to NAs from 1975
+    # TODO: alternatively, remove 1975 all together?
+    left_join(sd, by=(to_group)) %>%
+    # Replace EFs that are two standard deviation higher or three standard deviations lower than the median or are NA or Inf with the median
+    mutate(emiss.coef = if_else(emiss.coef > medianEF + (2 * sd) | emiss.coef < medianEF - (3 * sd),
+                                medianEF, emiss.coef),
+           emiss.coef = if_else(is.infinite(emiss.coef), medianEF, emiss.coef),
+           emiss.coef = if_else(is.na(emiss.coef), medianEF, emiss.coef)) %>%
+    rename({{ef_col_name}} := emiss.coef) %>%
+    select(all_of(names))
+
+  return (noBCOC)
 }

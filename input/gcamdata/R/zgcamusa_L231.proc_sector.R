@@ -39,7 +39,8 @@ module_gcamusa_L231.proc_sector <- function(command, ...) {
              "L231.Ind_globaltech_eff",
              "L132.in_EJ_state_indnochp_F",
              "L132.in_EJ_state_indchp_F",
-             "L132.in_EJ_state_indfeed_F"))
+             "L132.in_EJ_state_indfeed_F",
+             "L201.Pop_GCAMUSA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L231.DeleteSupplysector_industry_USA",
              "L231.DeleteSupplysector_urban_processes_USA",
@@ -84,6 +85,7 @@ module_gcamusa_L231.proc_sector <- function(command, ...) {
     L132.in_EJ_state_indnochp_F <- get_data(all_data, "L132.in_EJ_state_indnochp_F", strip_attributes = TRUE)
     L132.in_EJ_state_indchp_F <- get_data(all_data, "L132.in_EJ_state_indchp_F", strip_attributes = TRUE)
     L132.in_EJ_state_indfeed_F <- get_data(all_data, "L132.in_EJ_state_indfeed_F", strip_attributes = TRUE)
+    L201.Pop_GCAMUSA <- get_data(all_data, "L201.Pop_GCAMUSA", strip_attributes = TRUE)
 
     # ===================================================
 
@@ -221,19 +223,47 @@ module_gcamusa_L231.proc_sector <- function(command, ...) {
              supplysector = "other industry",
              subsector = "other industry",
              technology = "other industry",
-             minicam.energy.input = emissions.IND_PROC_MINICAM_ENERGY_INPUT)
-
-    # Interpolate coefficients to model years
-    L231.IndCoef_USA <- L231.IndCoef_Yb_USA %>%
-      select(-year, -coefficient, -ind_output, -ind_proc_input) %>%
-      distinct %>%
-      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
-      left_join(L231.IndCoef_Yb_USA, by = c("state", "supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%
+             minicam.energy.input = emissions.IND_PROC_MINICAM_ENERGY_INPUT) %>%
+      distinct() %>%
       rename(region = state) %>%
-      group_by(region, technology) %>%
-      mutate(coefficient = approx_fun(year, coefficient, rule = 2)) %>%
-      ungroup() %>%
       select(region, supplysector, subsector, technology, year, minicam.energy.input, coefficient)
+
+    # Reduce future industrial processes coefficient inverse to population growth to prevent an increase in future years
+    # Get rate of change by state/year
+    future_pop_change <- L201.Pop_GCAMUSA %>%
+      filter(year == max(MODEL_BASE_YEARS) | year %in% MODEL_FUTURE_YEARS) %>%
+      group_by(region) %>%
+      # calculate change from period to period
+      # -1 because we want to apply the inverse to the coefficient
+      mutate(change = -1*(totalPop - lag(totalPop))/lag(totalPop)) %>%
+      select(-totalPop)
+
+    # Apply the inverse rate of change by state/year
+    L231.IndCoef_Yf_USA_unchanged <- L231.IndCoef_Yb_USA %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
+      # add in future model years
+      complete(nesting(region, supplysector, subsector, technology, minicam.energy.input, coefficient), year = MODEL_YEARS) %>%
+      filter(year >= max(MODEL_BASE_YEARS)) %>%
+      # can't use LJENM because there are NAs in 2015
+      left_join(future_pop_change, by = c("region", "year"))
+
+    # Change NAs to 0 (this only applies to the base year)
+    L231.IndCoef_Yf_USA_unchanged[is.na(L231.IndCoef_Yf_USA_unchanged)] <- 0
+
+    L231.IndCoef_Yf_USA <- L231.IndCoef_Yf_USA_unchanged %>%
+      group_by(region) %>%
+      # calculate new coefficients based on the base year coefficient and inverse rate of change
+      mutate(new_coef = coefficient*cumprod(1+change)) %>%
+      distinct() %>%
+      select(region, supplysector, subsector, technology, year, minicam.energy.input, new_coef) %>%
+      rename(coefficient = new_coef) %>%
+      filter(year > max(MODEL_BASE_YEARS))
+
+    # bind base year with future year coefficients
+    L231.IndCoef_USA <- L231.IndCoef_Yb_USA %>%
+      bind_rows(L231.IndCoef_Yf_USA) %>%
+      # sort by region
+      arrange(region)
 
     # ===================================================
 
@@ -385,7 +415,8 @@ module_gcamusa_L231.proc_sector <- function(command, ...) {
       add_precursors("L231.Ind_globaltech_eff",
                      "L132.in_EJ_state_indchp_F",
                      "L132.in_EJ_state_indnochp_F",
-                     "L132.in_EJ_state_indfeed_F") ->
+                     "L132.in_EJ_state_indfeed_F",
+                     "L201.Pop_GCAMUSA") ->
       L231.IndCoef_USA
 
     return_data(L231.DeleteSupplysector_industry_USA,

@@ -109,6 +109,9 @@ bool NationalAccount::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     else if  ( nodeName == enumToXMLName( CAPITAL_STOCK ) ) {
         setAccount( CAPITAL_STOCK, XMLParseHelper::getValue<double>( aNode ) );
     }
+    else if  ( nodeName == enumToXMLName( CAPITAL_VALUE ) ) {
+        setAccount( CAPITAL_VALUE, XMLParseHelper::getValue<double>( aNode ) );
+    }
     else if  ( nodeName == enumToXMLName( DEPRECIATION_RATE ) ) {
         setAccount( DEPRECIATION_RATE, XMLParseHelper::getValue<double>( aNode ) );
     }
@@ -287,6 +290,7 @@ const string& NationalAccount::enumToXMLName( const AccountType aType ) const {
             "investment",
             "depreciation",
             "capital-stock",
+            "capital-value",
             "energy-investment",
             "consumer-durable",
             "GDP",

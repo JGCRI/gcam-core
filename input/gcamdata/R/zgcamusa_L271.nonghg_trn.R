@@ -451,11 +451,36 @@ module_gcamusa_L271.nonghg_trn <- function(command, ...) {
       distinct() %>%
       ungroup()
 
+    ## Replace outlier EFs with the national median
+
+    #First for the table that has EFS
+    # Generate national median emissions factors for base years
+    #TODO: Also for future years? This only applies to transportation sector
+    # list columns to group by (emission factor medians will based on this grouping)
+    to_group <- c( "year", "Non.CO2", "supplysector", "tranSubsector", "stub.technology" )
+    # list columns to keep in final table
+    names <- c( "region", "Non.CO2", "year", "supplysector", "tranSubsector", "stub.technology", "emiss.coef")
+    # Name of column containing emission factors
+    ef_col_name <- "emiss.coef"
+    L271.nonco2_trn_tech_coeff_USA <- replace_outlier_EFs(L271.nonco2_trn_tech_coeff_USA_scaled, to_group, names, ef_col_name)
+
+    #Then for the table that has linear control EFs
+    #TODO: Also do for linear controls?
+    # list columns to group by (emission factor medians will based on this grouping)
+    to_group <- c( "year", "start.year", "end.year", "Non.CO2", "supplysector", "tranSubsector", "stub.technology" )
+    # list columns to keep in final table
+    names <- c( "region", "Non.CO2", "start.year", "end.year", "year", "supplysector", "tranSubsector", "stub.technology",
+                "linear.control", "allow.ef.increase", "final.emissions.coefficient")
+    # Name of column containing emission factors
+    ef_col_name <- "final.emissions.coefficient"
+    L271.nonco2_trn_emiss_control_USA <- replace_outlier_EFs(L271.nonco2_trn_emiss_control_USA_scaled, to_group, names, ef_col_name)
+
+
     # ===================================================
 
     # Produce outputs
 
-    L271.nonco2_trn_tech_coeff_USA_scaled %>%
+    L271.nonco2_trn_tech_coeff_USA %>%
       add_title("Non-CO2 transportation emissions coefficients by state / supplysector / tranSubsector / stub.technology / year / Non.CO2") %>%
       add_units("Tg/million pass-km or Tg/million ton-km") %>%
       add_comments("Efs for base and future years from MARKAL, scaled to CEDS") %>%
@@ -470,7 +495,7 @@ module_gcamusa_L271.nonghg_trn <- function(command, ...) {
                      "gcam-usa/emissions/NEI_pollutant_mapping") ->
       L271.nonco2_trn_tech_coeff_USA
 
-    L271.nonco2_trn_emiss_control_USA_scaled %>%
+    L271.nonco2_trn_emiss_control_USA %>%
       add_title("Non-CO2 new transportation linear control final emissions coefficients by state / supplysector / tranSubsector / stub.technology / year / Non.CO2") %>%
       add_units("Tg/million pass-km or Tg/million ton-km") %>%
       add_comments("Efs for base and future years") %>%

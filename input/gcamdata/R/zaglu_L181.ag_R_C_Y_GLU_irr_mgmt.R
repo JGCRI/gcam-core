@@ -10,10 +10,10 @@
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L181.LC_bm2_R_C_Yh_GLU_irr_level}, \code{L181.ag_EcYield_kgm2_R_C_Y_GLU_irr_level}, \code{L181.ag_Prod_Mt_R_C_Y_GLU_irr_level}, \code{L181.YieldMult_R_bio_GLU_irr}, \code{L181.LandShare_R_bio_GLU_irr}. The corresponding file in the
 #' original data system was \code{LB181.ag_R_C_Y_GLU_irr_mgmt.R} (aglu level1).
-#' @details This chunk calulates the economic yields, cropland cover and production by GCAM region / commodity / year / GLU / irrigation / mgmt level.
+#' @details This chunk calculates the economic yields, cropland cover and production by GCAM region / commodity / year / GLU / irrigation / mgmt level.
 #' Currently the yield multipliers by high and low yield management are set at the same value for all region / commodity / year / GLU / irrigation,
 #' and the land share by high and low yield management is 50 percent by each. But this chunk is also a placeholder for a generic method of calculating specific
-#' yield mutipliers and land shares for each region / commodity / GLU / irrigation level.
+#' yield multipliers and land shares for each region / commodity / GLU / irrigation level.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows filter left_join mutate select
 #' @importFrom tidyr gather

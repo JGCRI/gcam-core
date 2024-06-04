@@ -46,7 +46,7 @@
 
 #include <string>
 
-class Market;
+class MarketContainer;
 class IInfo;
 class Value;
 
@@ -70,8 +70,11 @@ class Value;
 class CachedMarket
 {
 public:
-    CachedMarket( const std::string& aGoodName, const std::string& aRegionName, const int aPeriod, Market* aLocatedMarket );
+    CachedMarket();
+    CachedMarket( const std::string& aGoodName, const std::string& aRegionName, MarketContainer* aLocatedMarket );
     ~CachedMarket();
+    
+    bool hasLocatedMarket() { return mCachedMarket; }
 
     void setPrice( const std::string& aGoodName, const std::string& aRegionName, const double aValue,
                    const int aPeriod, bool aMustExist = true );
@@ -103,12 +106,9 @@ private:
     
     //! The region name used when this market was located.  Used for debugging.
     const std::string mRegionName;
-    
-    //! The period used when this market was located.  Used for debugging.
-    const int mPeriod;
 #endif
     //! The actual market which is cached.
-    Market* mCachedMarket;
+    MarketContainer* mCachedMarket;
 };
 
 #endif // _CACHED_MARKET_H_

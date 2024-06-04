@@ -11,7 +11,7 @@
 #' the generated outputs: \code{L118.out_EJ_R_elec_hydro_Yfut}. The corresponding file in the
 #' original data system was \code{LA118.hydro.R} (energy level1).
 #' @details Different proxies are used to calculate hydro potential.
-#' @details In most cases, a growth potential for each country was calculated, multiplied by its share in the region, and added to the base-year ouput
+#' @details In most cases, a growth potential for each country was calculated, multiplied by its share in the region, and added to the base-year output
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange bind_rows filter if_else group_by left_join mutate pull select summarise
 #' @importFrom tidyr fill spread
@@ -235,7 +235,7 @@ module_energy_L118.hydro <- function(command, ...) {
         add_units("EJ") %>%
         add_comments("Hydro potential was determined using various proxies") %>%
         add_comments("In most cases, a growth potential for each country was calculated,
-                   multiplied by its share in the region, and added to the base-year ouput") %>%
+                   multiplied by its share in the region, and added to the base-year output") %>%
         add_legacy_name("L118.out_EJ_R_elec_hydro_Yfut") %>%
         add_precursors("common/iso_GCAM_regID", "energy/Hydropower_potential", "energy/mappings/IEA_product_fuel",
                        "L100.IEA_en_bal_ctry_hist", "energy/A18.hydro_output") ->

@@ -223,7 +223,7 @@ repeat_add_columns <- function(x, y) {
 
   x %>%
     mutate(UNIQUE_JOIN_FIELD = 1) %>%
-    full_join(mutate(y, UNIQUE_JOIN_FIELD = 1), by = "UNIQUE_JOIN_FIELD") %>%
+    full_join(mutate(y, UNIQUE_JOIN_FIELD = 1), by = "UNIQUE_JOIN_FIELD", relationship = "many-to-many") %>%
     select(-UNIQUE_JOIN_FIELD)
 }
 

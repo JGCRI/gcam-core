@@ -358,12 +358,12 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
     L1321.expP_R_F_75USDm3 <- L100.FAO_for_ExpPrice_R_C_Y
 
     L1321.expP_R_F_75USDm3 %>%
-      filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
-      left_join_error_no_match(L1321.expP_R_F_75USDm3 %>% filter(!GCAM_commodity %in% aglu.FOREST_commodities) %>% rename(Price_USDm3 = value) %>% select(-GCAM_commodity), by = c("GCAM_region_ID")) %>%
+      filter(GCAM_commodity %in% aglu.FOREST_COMMODITIES) %>%
+      left_join_error_no_match(L1321.expP_R_F_75USDm3 %>% filter(!GCAM_commodity %in% aglu.FOREST_COMMODITIES) %>% rename(Price_USDm3 = value) %>% select(-GCAM_commodity), by = c("GCAM_region_ID")) %>%
       left_join(L110.IO_Coefs_pulp %>%filter(year %in% c(MODEL_FINAL_BASE_YEAR)) %>%  group_by(GCAM_region_ID) %>% summarize(IO= mean(IO)), by = c("GCAM_region_ID")) %>%
-      mutate(IO= if_else(is.na(IO),aglu.FOREST_sawtimber_conversion,IO)) %>%
-      mutate(ForCost = if_else(GCAM_commodity== "sawnwood",value-(Price_USDm3*IO),
-                               value-(Price_USDm3*aglu.FOREST_pulp_conversion))) %>%
+      mutate(IO = if_else(is.na(IO),aglu.FOREST_SAWTIMBER_CONVERSION,IO),
+             ForCost = if_else(GCAM_commodity== "sawnwood",value-(Price_USDm3*IO),
+                               value-(Price_USDm3*aglu.FOREST_PULP_CONVERSION))) %>%
       select(-Price_USDm3) %>%
       filter(ForCost > 0) %>%
       group_by(GCAM_region_ID, GCAM_commodity) %>%
@@ -396,7 +396,8 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "aglu/FAO/FAO_an_items_PRODSTAT",
                      "common/FAO_GDP_Deflators",
-                     "aglu/USDA/USDA_Alfalfa_prices_USDt") ->
+                     "aglu/USDA/USDA_Alfalfa_prices_USDt",
+                     "L109.ag_ALL_Mt_R_C_Y") ->
       L1321.ag_prP_R_C_75USDkg
 
     L1321.an_prP_R_C_75USDkg %>%
@@ -409,11 +410,12 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
                      "aglu/FAO/GCAMDATA_FAOSTAT_ProducerPrice_170Regs_185PrimaryItems_2010to2020",
                      "aglu/FAO/FAO_ag_items_PRODSTAT",
                      "aglu/FAO/FAO_an_items_PRODSTAT",
-                     "common/FAO_GDP_Deflators") ->
+                     "common/FAO_GDP_Deflators",
+                     "L109.ag_ALL_Mt_R_C_Y") ->
       L1321.an_prP_R_C_75USDkg
 
     L1321.expP_R_F_75USDm3 %>%
-      filter(GCAM_commodity %in% aglu.FOREST_supply_sector) %>%
+      filter(GCAM_commodity %in% aglu.FOREST_SUPPLY_SECTOR) %>%
       add_title("Regional prices for GCAM forest commodities") %>%
       add_units("1975$/m3") %>%
       add_comments("Region-specific calibration prices by GCAM commodity and region") %>%

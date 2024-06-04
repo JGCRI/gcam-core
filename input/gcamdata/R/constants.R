@@ -213,11 +213,12 @@ aglu.NONTRADED_COMM         <- c("DDGS and feedcakes", "FodderGrass", "Pasture",
 
 aglu.LAND_TOLERANCE    <- 0.005
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
+aglu.BIO_GHOST_CAL_COST_SCALER <- 0.9 # scale down nonLandVariableCost during ghost calibration
 aglu.MAX_FAO_LDS_SCALER <- 5   # Unitless max multiplier in reconciling LDS harvested area with FAO harvested area by country and crop. Useful for preventing bad allocations of N fert in AFG, TWN, several others
 aglu.TREECROP_MATURE_AGE <- 10 # Number of years for vegetation carbon to reach peak, for tree crops
 
-aglu.Min_Share_PastureFeed_in_PastureFodderGrass <- 0.1 # minimum share of pasture in Pasture_FodderGrass for feed uses to avoid negative or zero (not including Japan now); USA has ~30%
-aglu.Zero_Min_PastureFeed_Share_iso <- c("jpn")         # mapped to GCAM_region_ID of Japan; Japan has zero unmanaged and protected pasture
+aglu.MIN_SHARE_PASTUREFEED_IN_PASTUREFODDERGRASS <- 0.1 # minimum share of pasture in Pasture_FodderGrass for feed uses to avoid negative or zero (not including Japan now); USA has ~30%
+aglu.ZERO_MIN_PASTUREFEED_SHARE_ISO <- c("jpn")         # mapped to GCAM_region_ID of Japan; Japan has zero unmanaged and protected pasture
 
 # GLU (Geographic Land Unit) settings - see module_aglu_LA100.0_LDS_preprocessing
 aglu.GLU <- "GLU"
@@ -240,8 +241,8 @@ aglu.CCONTENT_CELLULOSE    <- 0.45
 aglu.CCONV_PEAK_AVG <- 0.5
 
 # Biomass mature_age (zaglu_L2252)
-biomassGrass_mature_age = 5
-biomassTree_mature_age = 8
+aglu.BIOMASSGRASS_MATURE_AGE = 5
+aglu.BIOMASSTREE_MATURE_AGE = 8
 
 
 # Constraints for the minimum and maximum harvested:cropped ratios
@@ -344,22 +345,21 @@ aglu.MILL_EROSION_CTRL_KGM2 <- 0
 aglu.WOOD_ENERGY_CONTENT_GJKG <- 0.0189
 
 
-aglu.FOREST_commodities <- c("sawnwood","woodpulp")
-aglu.FOREST_demand_sectors <- c("NonFoodDemand_sawnwood","NonFoodDemand_woodpulp")
-aglu.FOREST_supply_sector <- "Forest"
+aglu.FOREST_COMMODITIES <- c("sawnwood","woodpulp")
+aglu.FOREST_DEMAND_SECTORS <- c("NonFoodDemand_sawnwood","NonFoodDemand_woodpulp")
+aglu.FOREST_SUPPLY_SECTOR <- "Forest"
 #Below is a default amount of roundwood required to produce sawnwood.The model will calculate the IO using data. This will get used if and only if
 # the IO calculated by the model is an NA. This is taken as an everage across countries from a UNECE report on forest products. Available here- https://unece.org/fileadmin/DAM/timber/publications/DP-49.pdf
-aglu.FOREST_sawtimber_conversion <- 2.17
-aglu.PAPER_delete_ag_demand <- "NonFoodDemand_woodpulp"
-aglu.PAPER_delete_ag_demand_USA <- c("woodpulp_energy", "regional woodpulp for energy")
-
+aglu.FOREST_SAWTIMBER_CONVERSION <- 2.17
+aglu.PAPER_DELETE_AG_DEMAND <- "NonFoodDemand_woodpulp"
+aglu.PAPER_DELETE_AG_DEMAND_USA <- c("woodpulp_energy", "regional woodpulp for energy")
 
 #90% of pulp processing is chemical which has an IO of 5.44 and 10% is mechanical which is 2.55. Taking weighted average of the two,
 # we get 5.15. These are calculated as averages across countries.
 #Source- https://unece.org/fileadmin/DAM/timber/publications/DP-49.pdf
-aglu.FOREST_pulp_conversion <- 5.15
+aglu.FOREST_PULP_CONVERSION <- 5.15
 
-aglu.FOREST_max_price <- 165
+aglu.FOREST_MAX_PRICE <- 165
 # wood water content
 # Unitless (mass of water / total wood mass)
 aglu.WOOD_WATER_CONTENT <- 0.065
@@ -628,6 +628,8 @@ energy.FOOD_PROCESSING.ENERGY_INFILL_FOODPRO_FRAC_OVERRIDE <- 0.1 # fraction of 
 energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_EJ_PCAL_COEF <- 0.000413 # minimum value of the EJ per Pcal coefficient from the higher quality historical data, only will infill energy if the coefficient is less than this value
 
 # Socioeconomics constants ======================================================================
+
+socioeconomics.CORE_GCAM_SCENARIO <- "gSSP2"
 
 # Population years - note that these sequences shouldn't have any overlap,
 # and should contain all historical years used by other modules
@@ -1178,6 +1180,7 @@ gcamusa.DUST <- TRUE
 # Time shift conditions ======================================================================
 # Uncomment these lines to run under 'timeshift' conditions
 # # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
-# MODEL_FUTURE_YEARS <- seq(2010, 2100, 5)  # normally seq(2015, 2100, 5)
-# MODEL_BASE_YEARS <- c(1975, 1990, 2005)   # normally (1975, 1990, 2005, 2010)
+# MODEL_FUTURE_YEARS <- seq(2005, 2100, 5)  # normally seq(2015, 2100, 5)
+# MODEL_BASE_YEARS <- c(1975, 1990)   # normally (1975, 1990, 2005, 2010)
 # MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
+# MODEL_FINAL_BASE_YEAR <- 1990

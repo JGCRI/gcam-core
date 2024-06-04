@@ -29,7 +29,9 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           from_file = TRUE),
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = c("o1", "o1")),
-      expect_error(driver(quiet = TRUE), regexp = "Outputs appear multiple times")
+      {
+        expect_error(driver(quiet = TRUE), regexp = "Outputs appear multiple times")
+      }
     )
   })
 
@@ -43,7 +45,9 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           from_file = c(TRUE, FALSE)),
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = c("o1", "o2")),
-      expect_error(driver(quiet = TRUE), regexp = "not marked as from file")
+      {
+        expect_error(driver(quiet = TRUE), regexp = "not marked as from file")
+      }
     )
   })
 
@@ -66,7 +70,9 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
           add_precursors("i1") -> o2
         return_data(o2)
       },
-      expect_error(driver(quiet = TRUE), regexp = "is not returning what it promised")
+      {
+        expect_error(driver(quiet = TRUE), regexp = "is not returning what it promised")
+      }
     )
   })
 
@@ -160,14 +166,18 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           optional = FALSE),
       chunk_outputs = function(...) tibble(name = chunknames,
                                            output = c("i1", "i2")),
-      expect_error(driver(quiet = TRUE), regexp = "we are stuck")
+      {
+        expect_error(driver(quiet = TRUE), regexp = "we are stuck")
+      }
     )
   })
 
   test_that("run_chunk runs chunk", {
     with_mock(
       module_sample_sample = function(...) TRUE,
-      expect_true(run_chunk("module_sample_sample", 1))
+      {
+        expect_true(run_chunk("module_sample_sample", 1))
+      }
     )
   })
 
@@ -179,8 +189,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           input = c("Ai", "Ao", "Bo")),
       chunk_outputs = function(...) tibble(name = c("A", "B", "C"),
                                            output = c("Ao", "Bo", "Co")),
-      expect_silent(warn_data_injects()),
-      expect_equal(warn_data_injects(), 0)
+      {
+        expect_silent(warn_data_injects())
+        expect_equal(warn_data_injects(), 0)
+      }
     )
 
     # Chunks using temp-data-inject data because 'A' not enabled yet
@@ -195,8 +207,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           input = c("Ai", paste0(TEMP_DATA_INJECT, "Ao"), "Bo")),
       chunk_outputs = function(...) tibble(name = c("B", "C"),
                                            output = c("Bo", "Co")),
-      expect_silent(warn_data_injects()),
-      expect_equal(warn_data_injects(), 0)
+      {
+        expect_silent(warn_data_injects())
+        expect_equal(warn_data_injects(), 0)
+      }
     )
 
     # Chunk using temp-data-inject data but real data is available
@@ -206,8 +220,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           input = c("Ai", paste0(TEMP_DATA_INJECT, "Ao"), "Bo")),
       chunk_outputs = function(...) tibble(name = c("A", "B", "C"),
                                            output = c("Ao", "Bo", "Co")),
-      expect_message(warn_data_injects()),
-      expect_equal(warn_data_injects(), 1)
+      {
+        expect_message(warn_data_injects())
+        expect_equal(warn_data_injects(), 1)
+      }
     )
   })
 
@@ -220,8 +236,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           from_file = c(TRUE, FALSE, FALSE)),
       chunk_outputs = function(...) tibble(name = c("A", "B", "C"),
                                            output = c("Ao", "Bo", "Co")),
-      expect_silent(warn_datachunk_bypass()),
-      expect_equal(warn_datachunk_bypass(), 0)
+      {
+        expect_silent(warn_datachunk_bypass())
+        expect_equal(warn_datachunk_bypass(), 0)
+      }
     )
 
     # Chunk bypassing a data chunk
@@ -232,8 +250,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
                                           from_file = c(TRUE, FALSE)),
       chunk_outputs = function(...) tibble(name = c("dcA", "B", "C"),
                                            output = c("Ao", "Bo", "Co")),
-      expect_message(warn_datachunk_bypass()),
-      expect_equal(warn_datachunk_bypass(), 1)
+      {
+        expect_message(warn_datachunk_bypass())
+        expect_equal(warn_datachunk_bypass(), 1)
+      }
     )
   })
 
@@ -243,8 +263,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       chunk_inputs = function(...) tibble(name = c("A", "B", "C"),
                                           input = c("inst/extdata/Ai", "Ao", "Bo"),
                                           from_file = c(TRUE, FALSE, FALSE)),
-      expect_silent(warn_mismarked_fileinputs()),
-      expect_equal(warn_mismarked_fileinputs(), 0)
+      {
+        expect_silent(warn_mismarked_fileinputs())
+        expect_equal(warn_mismarked_fileinputs(), 0)
+      }
     )
 
     # Chunk mismarking an input as from_file, when it's not
@@ -252,8 +274,10 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
       chunk_inputs = function(...) tibble(name = c("A", "B", "C"),
                                           input = c("inst/extdata/Ai", "Ao", "Bo"),
                                           from_file = c(TRUE, FALSE, TRUE)),
-      expect_message(warn_mismarked_fileinputs()),
-      expect_equal(warn_mismarked_fileinputs(), 1)
+      {
+        expect_message(warn_mismarked_fileinputs())
+        expect_equal(warn_mismarked_fileinputs(), 1)
+      }
     )
   })
 

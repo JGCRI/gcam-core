@@ -524,7 +524,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
         add_comments("Conditionally created from the subset of A22.subsector_interp used to define regional shareweights interpolated to a year") %>%
         add_comments("by default contains all of A22.subsector_interp.") %>%
       add_legacy_name("L222.SubsectorInterp_en") %>%
-      add_precursors("energy/A22.subsector_interp", "common/GCAM_region_names") ->
+      add_precursors("energy/A22.subsector_interp", "common/GCAM_region_names", "energy/A22.SubsectorInterp_en_R") ->
       L222.SubsectorInterp_en
     } else {
       missing_data() %>%

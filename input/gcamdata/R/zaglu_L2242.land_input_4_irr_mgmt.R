@@ -3,7 +3,7 @@
 #' module_aglu_L2242.land_input_4_irr_mgmt
 #'
 #' Generate logit exponent of the fourth land node that specifies crop commodity and GLU by region,
-#' and generate the ghost node share for the bionenergy node.
+#' and generate the ghost node share for the bioenergy node.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -12,7 +12,7 @@
 #' the generated outputs: \code{L2242.LN4_Logit}, \code{L2242.LN4_NodeGhostShare}, \code{L2242.LN4_NodeIsGhostShareRel}. The corresponding file in the
 #' original data system was \code{L2242.land_input_4_irr_mgmt.R} (aglu level2).
 #' @details This chunk generates the logit exponent of the fourth land nest that specifies crop commodity and GLU by region,
-#' and the ghost node share for the bionenergy node in future years, and specifies whether the bionenergy ghost node share is relative.
+#' and the ghost node share for the bioenergy node in future years, and specifies whether the bioenergy ghost node share is relative.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr bind_rows distinct filter if_else left_join mutate select
 #' @importFrom tidyr separate
@@ -140,6 +140,7 @@ module_aglu_L2242.land_input_4_irr_mgmt <- function(command, ...) {
       add_precursors("L2012.AgYield_bio_ref",
                      "aglu/A_bio_ghost_share",
                      "aglu/A_biomassSupplyShare_R",
+                     "common/GCAM_region_names",
                      "aglu/A_LT_Mapping") ->
       L2242.LN4_NodeGhostShare
 

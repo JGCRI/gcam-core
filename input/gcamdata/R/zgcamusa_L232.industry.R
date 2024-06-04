@@ -165,7 +165,7 @@ module_gcamusa_L232.industry <- function(command, ...) {
     L202.StubTechProd_in_pulp_energy %>%
       bind_rows(L221.Supplysector_en) %>%
       filter(region == gcam.USA_REGION,
-             supplysector %in% aglu.PAPER_delete_ag_demand_USA) %>%
+             supplysector %in% aglu.PAPER_DELETE_AG_DEMAND_USA) %>%
       select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) %>%
       distinct ->
       L232.DeleteSupplysector_USAwoodpulp

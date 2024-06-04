@@ -255,8 +255,8 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                                       "year")) %>%
       mutate(emiss.coeff = round(emiss.coeff / efficiency, emissions.DIGITS_EMISS_COEF)) %>%
       select(LEVEL2_DATA_NAMES[["OutputEmissCoeff"]]) ->
-      L241.OutputEmissCoeff_elec
-    L241.nonco2_tech_coeff <- filter(L241.nonco2_tech_coeff, supplysector != "electricity")
+      L241.OutputEmissCoeff_elec_replace.outliers
+    L241.nonco2_tech_coeff_replace.outliers <- filter(L241.nonco2_tech_coeff, supplysector != "electricity")
 
     L241.nonco2_max_reduction %>%
       unite(region_bio, region, stub.technology, sep = "~", remove = FALSE) %>%
@@ -270,6 +270,28 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       filter(!stub.technology %in% L241.firstgenbio_techs | region_bio %in% region_biofuels) %>%
       select(-region_bio) ->
       L241.nonco2_steepness
+
+  ## Replace outlier EFs with the global median
+    # SO2 is "regional" (SO2_1, SO2_2, etc.). For this pollutant, we find the median by SO2 grouping rather than globally
+    # In the future, this can be refined to use a global SO2 median.
+    # list columns to group by (emission factor medians will based on this grouping)
+    to_group <- c( "year", "Non.CO2", "supplysector", "subsector", "stub.technology" )
+    # list columns to keep in final table
+    names <- c( "region", "Non.CO2", "year", "supplysector", "subsector", "stub.technology", "emiss.coeff")
+    # Name of column containing emission factors
+    ef_col_name <- "emiss.coeff"
+    L241.OutputEmissCoeff_elec <- replace_outlier_EFs(L241.OutputEmissCoeff_elec_replace.outliers, to_group, names, ef_col_name)
+
+    # SO2 is "regional" (SO2_1, SO2_2, etc.). For this pollutant, we find the median by SO2 grouping rather than globally
+    # In the future, this can be refined to use a global SO2 median.
+    # list columns to group by (emission factor medians will based on this grouping)
+    to_group <- c( "year", "Non.CO2", "supplysector", "subsector", "stub.technology" )
+    # list columns to keep in final table
+    names <- c( "region", "Non.CO2", "year", "supplysector", "subsector", "stub.technology", "emiss.coeff", "input.name")
+    # Name of column containing emission factors
+    ef_col_name <- "emiss.coeff"
+    L241.nonco2_tech_coeff <- replace_outlier_EFs(L241.nonco2_tech_coeff_replace.outliers, to_group, names, ef_col_name)
+
 
     # ===================================================
 

@@ -2,7 +2,7 @@
 
 #' module_gcamusa_L223.electricity
 #'
-#' Generates GCAM-USA model inputs for electrcity sector by grid regions and states.
+#' Generates GCAM-USA model inputs for electricity sector by grid regions and states.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command

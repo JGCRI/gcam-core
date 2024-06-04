@@ -12,7 +12,7 @@ ifeq ($(strip $(CC)),)
 CC		= gcc
 endif
 CXXOPTIM        = -O3 -pthread
-CXXDEBUG        = -ggdb -DNDEBUG -DFUSION_MAX_VECTOR_SIZE=30
+CXXDEBUG        = -ggdb -DNDEBUG
 CXXBASEOPTS     = $(CXXDEBUG)
 
 ARCH_FLAGS      = 
@@ -123,7 +123,9 @@ ifeq ($(strip $(JARS_LIB)),)
   $(error Unable to detect Jar lib path, please set env variable JARS_LIB)
 endif
 ## custom values set by environment variables
-OSNAME_LOWERCASE := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+ifndef OSNAME_LOWERCASE
+  OSNAME_LOWERCASE := $(shell uname -s | tr '[:upper:]' '[:lower:]')
+endif
 JAVAINC = -I$(JAVA_INCLUDE) -I$(JAVA_INCLUDE)/$(OSNAME_LOWERCASE)
 JAVALIB = -L$(JAVA_LIB)
 JAVA_RPATH = -Wl,-rpath,$(JAVA_LIB)
@@ -158,7 +160,7 @@ LIBDIR		= -L/usr/local/lib -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY)
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
 CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
-CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=$(CXXSTD) -Wno-deprecated
+CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) $(CXXEXTRA) -MMD -std=$(CXXSTD) -Wno-deprecated
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
 LDFLAGS         = $(CXXFLAGS) $(JAVA_RPATH) $(TBB_RPATH) $(MKL_LDFLAGS)

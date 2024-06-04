@@ -55,8 +55,6 @@
 
 using namespace std;
 
-map<string,Logger*> LoggerFactory::mLoggers;
-
 bool LoggerFactory::XMLParse(rapidxml::xml_node<char>* & aNode) {
     string nodeName = XMLParseHelper::getNodeName(aNode);
     
@@ -68,10 +66,10 @@ bool LoggerFactory::XMLParse(rapidxml::xml_node<char>* & aNode) {
         // Add additional types here.
         Logger* newLogger = 0;
         if( loggerType == "PlainTextLogger" ){
-            newLogger = new PlainTextLogger();
+            newLogger = new PlainTextLogger(mCout);
         }
         else if( loggerType == "XMLLogger" ){
-            newLogger = new XMLLogger();
+            newLogger = new XMLLogger(mCout);
         }
         else {
             cerr << "Unknown Logger Type: " << loggerType << endl;
@@ -91,9 +89,14 @@ bool LoggerFactory::XMLParse(rapidxml::xml_node<char>* & aNode) {
     }
 }
 
+LoggerFactory* LoggerFactory::getInstance() {
+    static LoggerFactory sLoggerFactory;
+    return &sLoggerFactory;
+}
+
 //! Single static method of ILogger interface.
 ILogger& ILogger::getLogger( const string& aLoggerName ){
-    return LoggerFactory::getLogger( aLoggerName );
+    return LoggerFactory::getInstance()->getLogger( aLoggerName );
 }
 
 //! Returns the instance of the Logger, creating it if necessary.
@@ -104,8 +107,8 @@ Logger& LoggerFactory::getLogger( const string& aLoggerName ) {
 		return *logIter->second;
 	}
 	else {
-		cout << "Creating an uninitialized logger " << aLoggerName << endl;
-		Logger* newLogger = new PlainTextLogger( aLoggerName );
+		(*mCout) << "Creating an uninitialized logger " << aLoggerName << endl;
+		Logger* newLogger = new PlainTextLogger( mCout, aLoggerName );
 		newLogger->open();
         mLoggers[ aLoggerName ] = newLogger;
 		return *mLoggers[ aLoggerName ];
@@ -127,7 +130,7 @@ void LoggerFactory::cleanUp() {
 * \param aTabs A tabs object responsible for printing the correct number of tabs. 
 * \warning This method is NOT constant, because static methods are not allowed to be declared const.
 */
-void LoggerFactory::toDebugXML( ostream& aOut, Tabs* aTabs ) {
+void LoggerFactory::toDebugXML( ostream& aOut, Tabs* aTabs ) const {
 	
     XMLWriteOpeningTag( "LoggerFactory", aOut, aTabs );
 	for( map<string,Logger*>::const_iterator logIter = mLoggers.begin(); logIter != mLoggers.end(); ++logIter ){
@@ -140,7 +143,7 @@ void LoggerFactory::toDebugXML( ostream& aOut, Tabs* aTabs ) {
  * \brief Log to all configured loggers that the scenario identified by the given scenario
  *        name is starting.
  */
-void LoggerFactory::logNewScenarioStarting( const string& aScenarioName ) {
+void LoggerFactory::logNewScenarioStarting( const string& aScenarioName ) const {
 	for( map<string,Logger*>::const_iterator logIter = mLoggers.begin(); logIter != mLoggers.end(); ++logIter ){
         ILogger::WarningLevel oldLevel = logIter->second->setLevel( ILogger::WARNING );
         (*logIter->second) << "Starting new scenario: " << aScenarioName << endl;
@@ -158,5 +161,13 @@ const string& LoggerFactoryWrapper::getXMLName() const {
 }
 
 bool LoggerFactoryWrapper::XMLParse(rapidxml::xml_node<char>* & aNode) {
-    return LoggerFactory::XMLParse(aNode);
+    return LoggerFactory::getInstance()->XMLParse(aNode);
 }
+
+std::ostream* LoggerFactoryWrapper::setCout(std::ostream* aNewCout) {
+    LoggerFactory* loggerFactory = LoggerFactory::getInstance();
+    ostream* ret = loggerFactory->mCout;
+    loggerFactory->mCout = aNewCout;
+    return ret;
+}
+

@@ -244,7 +244,13 @@ void EnergyInput::initCalc( const string& aRegionName,
         mAdjustedCoefficients[ aPeriod ] = 1;
     }
     
-    mCachedMarket = scenario->getMarketplace()->locateMarket( mName, mMarketName, aPeriod );
+    // Ideally we only need to locate the market once, however during completeInit
+    // all markets may have not yet been set up.  So, instead we avoid re-lookups
+    // if the market has been found.  Unfortunately, this means if the market will
+    // never be found we will continue to try to look it up each model period.
+    if(!mCachedMarket.hasLocatedMarket()) {
+        mCachedMarket = scenario->getMarketplace()->locateMarket( mName, mMarketName );
+    }
 }
 
 /*! \brief Initialize the type flags.
@@ -302,9 +308,9 @@ void EnergyInput::setPhysicalDemand( double aPhysicalDemand,
                                      const int aPeriod )
 {
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
-    mCachedMarket->addToDemand( mName, mMarketName,
-                                       mPhysicalDemand[ aPeriod ],
-                                       aPeriod, true );
+    mCachedMarket.addToDemand( mName, mMarketName,
+                               mPhysicalDemand[ aPeriod ],
+                               aPeriod, true );
 }
 
 double EnergyInput::getCoefficient( const int aPeriod ) const {
@@ -328,7 +334,7 @@ double EnergyInput::getPrice( const string& aRegionName,
                               const int aPeriod ) const
 {
     return mPriceUnitConversionFactor *
-        mCachedMarket->getPrice( mName, mMarketName, aPeriod );
+        mCachedMarket.getPrice( mName, mMarketName, aPeriod );
 }
 
 void EnergyInput::setPrice( const string& aRegionName,

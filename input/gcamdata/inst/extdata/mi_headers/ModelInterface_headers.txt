@@ -50,7 +50,7 @@ GDP, world/+{name}region, nationalAccountContainer/+{year}nationalAccount, natio
 
 PPPConvert, world/+{name}region, nationalAccountContainer/+gdp-ppp-conversion, scenario, scenario/world, region/nationalAccountContainer
 
-NationalAccount, world/+{name}region, nationalAccountContainer/+{year}nationalAccount, nationalAccount/+capital-stock, nationalAccount/+depreciation-rate, nationalAccount/+savings-rate, nationalAccount/+energy-investment, nationalAccount/+labor-wages, nationalAccount/+labor-force-share, nationalAccount/+capital-net-export, scenario, scenario/world, region/nationalAccountContainer
+NationalAccount, world/+{name}region, nationalAccountContainer/+{year}nationalAccount, nationalAccount/+capital-stock, nationalAccount/+depreciation-rate, nationalAccount/+savings-rate, nationalAccount/+energy-investment, nationalAccount/+labor-wages, nationalAccount/+capital-value, nationalAccount/+labor-force-share, nationalAccount/+capital-net-export, scenario, scenario/world, region/nationalAccountContainer
 
 GDPMacroFunction, world/+{name}region, nationalAccountContainer/+{name}gdp-macro-function, gdp-macro-function/+rho, gdp-macro-function/+{name}factor-input-node, factor-input-node/+node-gamma, factor-input-node/+{name}factor-input-leaf, factor-input-leaf/+is-primary-factor, factor-input-leaf/+is-capital, factor-input-leaf/+is-labor, factor-input-leaf/+is-energy, scenario, scenario/world, region/nationalAccountContainer
 

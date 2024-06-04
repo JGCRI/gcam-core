@@ -335,8 +335,8 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # see biomassGrass_mature_age and biomassTree_mature_age in constants.R
 
     L2252.LN5_MgdCarbon_bio %>%
-      mutate(mature.age = if_else(grepl("biomassGrass", LandNode4), (biomassGrass_mature_age), mature.age),
-             mature.age = if_else(grepl("biomassTree", LandNode4), (biomassTree_mature_age), mature.age)) ->
+      mutate(mature.age = if_else(grepl("biomassGrass", LandNode4), (aglu.BIOMASSGRASS_MATURE_AGE), mature.age),
+             mature.age = if_else(grepl("biomassTree", LandNode4), (aglu.BIOMASSTREE_MATURE_AGE), mature.age)) ->
       L2252.LN5_MgdCarbon_bio
 
 

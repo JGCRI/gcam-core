@@ -173,7 +173,7 @@ module_gcamusa_L244.building <- function(command, ...) {
     L244.Supplysector_bld<-get_data(all_data, "L244.Supplysector_bld") %>% filter(region == gcam.USA_REGION)
 
     # Add a deflator for harmonizing GDPpc with prices
-    def9075<-2.212
+    def9075<-gdp_deflator(1990, 1975)
 
     # ===================================================
     # Data Processing
@@ -281,8 +281,8 @@ module_gcamusa_L244.building <- function(command, ...) {
       # Change units satiation level
       mutate(satiation.level = satiation.level * 1E6) %>%
       # Calculate satiation impedance
-      mutate(`satiation-impedance` = (-log(2)/log((satiation.level - flsp_pc) / (satiation.level))) * pcGDP_thous90USD) %>%
-      mutate(`satiation-impedance`= round(`satiation-impedance`,energy.DIGITS_SATIATION_IMPEDANCE)) %>%
+      mutate(`satiation-impedance` = (-log(2)/log((satiation.level - flsp_pc) / (satiation.level))) * pcGDP_thous90USD,
+             `satiation-impedance`= round(`satiation-impedance`,energy.DIGITS_SATIATION_IMPEDANCE)) %>%
       select(region,nodeInput,building.node.input,`satiation-impedance`)
 
     L244.Satiation_impedance_gcamusa<-L144.Satiation_impedance_gcamusa_pre %>%
@@ -318,8 +318,8 @@ module_gcamusa_L244.building <- function(command, ...) {
              observed_flsp_bm2 = round(observed_flsp_bm2,3)) %>%
       mutate(satiation.adder = ((observed_flsp_bm2-est_flsp_bm2)*1E9) / (pop_thous*1E3)) %>%
       select(region,nodeInput,building.node.input,year,satiation.adder) %>%
-      mutate(satiation.adder = round(satiation.adder,energy.DIGITS_SATIATION_ADDER)) %>%
-      mutate(gcam.consumer = nodeInput) %>%
+      mutate(satiation.adder = round(satiation.adder,energy.DIGITS_SATIATION_ADDER),
+             gcam.consumer = nodeInput) %>%
       select(LEVEL2_DATA_NAMES[["SatiationAdder"]])
 
     #------------------------------------------------------
@@ -738,12 +738,12 @@ module_gcamusa_L244.building <- function(command, ...) {
       mutate(`satiation-impedance` = (log(2)*((pcGDP_thous90USD*1000/def9075)/price)) / log((satiation.level)/(satiation.level-base_serv_flsp))) %>%
       # Check with an adder to be 0!!!!
       rename(observed_base_serv_perflsp = base_serv_flsp) %>%
-      mutate(thermal_load = 1) %>%
-      mutate(afford=(pcGDP_thous90USD*1000/def9075) / price) %>%
-      mutate(serv_density = satiation.level * (1-exp((-log(2)/`satiation-impedance`) * afford))) %>%
-      mutate(coef = observed_base_serv_perflsp / serv_density*thermal_load) %>%
-      mutate(est_base_serv_perflsp = coef * thermal_load * serv_density) %>%
-      mutate(bias.adder = round(est_base_serv_perflsp-observed_base_serv_perflsp,energy.DIGITS_BIAS_ADDER))
+      mutate(thermal_load = 1,
+             afford=(pcGDP_thous90USD*1000/def9075) / price,
+             serv_density = satiation.level * (1-exp((-log(2)/`satiation-impedance`) * afford)),
+             coef = observed_base_serv_perflsp / serv_density*thermal_load,
+             est_base_serv_perflsp = coef * thermal_load * serv_density,
+             bias.adder = round(est_base_serv_perflsp-observed_base_serv_perflsp,energy.DIGITS_BIAS_ADDER))
 
     L244.GenericServiceImpedance_gcamusa<-L244.GenericServiceImpedance_allvars_gcamusa %>%
       select(LEVEL2_DATA_NAMES[["GenericServiceImpedance"]]) %>%
@@ -775,8 +775,8 @@ module_gcamusa_L244.building <- function(command, ...) {
                 by = c("supplysector" = "sector.name", "subsector" = "subsector.name" ,
                        "stub.technology"="technology", "year")) %>%
       filter(complete.cases(.)) %>%
-      mutate(int_gains = base.service*internal.gains.output.ratio) %>%
-      mutate(gcam.consumer = ifelse(grepl("comm",supplysector),"comm","resid")) %>%
+      mutate(int_gains = base.service*internal.gains.output.ratio,
+             gcam.consumer = if_else(grepl("comm",supplysector),"comm","resid")) %>%
       group_by(region,gcam.consumer,year) %>%
       summarise(int_gains = sum(int_gains)) %>%
       ungroup() %>%
@@ -801,8 +801,8 @@ module_gcamusa_L244.building <- function(command, ...) {
                                  filter(thermal.building.service.input %in% thermal_services, year == MODEL_FINAL_BASE_YEAR),
                                by=c("region","year","thermal.building.service.input")) %>%
       rename(price = value) %>%
-      mutate(`satiation-impedance` = (log(2)*((pcGDP_thous90USD*1000/def9075)/price)) / log((satiation.level)/(satiation.level-base_serv_flsp))) %>%
-      mutate(dd=if_else(grepl("cooling",thermal.building.service.input),"CDD","HDD")) %>%
+      mutate(`satiation-impedance` = (log(2)*((pcGDP_thous90USD*1000/def9075)/price)) / log((satiation.level)/(satiation.level-base_serv_flsp)),
+             dd=if_else(grepl("cooling",thermal.building.service.input),"CDD","HDD")) %>%
       left_join_error_no_match(L244.HDDCDD_scen_state %>% filter(year == MODEL_FINAL_BASE_YEAR,
                                                                GCM == "hist") %>%
                                  rename(dd = variable) %>%
@@ -813,15 +813,15 @@ module_gcamusa_L244.building <- function(command, ...) {
       left_join_error_no_match(L244.internal_gains_gcamusa %>% filter(year == MODEL_FINAL_BASE_YEAR), by=c("region","year","gcam.consumer")) %>%
       left_join_error_no_match(L244.Intgains_scalar_gcamusa,by = c("region","gcam.consumer","nodeInput",
                                                            "building.node.input","thermal.building.service.input")) %>%
-      mutate(intGains_EJ_serv = intGains_EJ / base.building.size) %>%
-      mutate(thermal_load = degree.days * shell.conductance * floor.to.surface.ratio + internal.gains.scalar*intGains_EJ_serv) %>%
+      mutate(intGains_EJ_serv = intGains_EJ / base.building.size,
+             thermal_load = degree.days * shell.conductance * floor.to.surface.ratio + internal.gains.scalar*intGains_EJ_serv) %>%
       select(-base.building.size) %>%
       rename(observed_base_serv_perflsp = base_serv_flsp) %>%
-      mutate(afford = (pcGDP_thous90USD*1000/def9075) / price) %>%
-      mutate(serv_density=satiation.level * (1-exp((-log(2)/`satiation-impedance`)*afford))) %>%
-      mutate(coef = observed_base_serv_perflsp / (serv_density*thermal_load)) %>%
-      mutate(est_base_serv_perflsp = coef * thermal_load * serv_density) %>%
-      mutate(bias.adder = round(est_base_serv_perflsp-observed_base_serv_perflsp,energy.DIGITS_BIAS_ADDER))
+      mutate(afford = (pcGDP_thous90USD*1000/def9075) / price,
+             serv_density=satiation.level * (1-exp((-log(2)/`satiation-impedance`)*afford)),
+             coef = observed_base_serv_perflsp / (serv_density*thermal_load),
+             est_base_serv_perflsp = coef * thermal_load * serv_density,
+             bias.adder = round(est_base_serv_perflsp-observed_base_serv_perflsp,energy.DIGITS_BIAS_ADDER))
 
     L244.ThermalServiceImpedance_gcamusa<-L244.ThermalServiceImpedance_allvars_gcamusa %>%
       select(LEVEL2_DATA_NAMES[["ThermalServiceImpedance"]]) %>%

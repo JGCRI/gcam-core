@@ -50,6 +50,7 @@
 #include <map>
 #include <cstring>
 #include <boost/lexical_cast.hpp>
+#include <boost/type_traits/is_base_of.hpp>
 
 #ifdef USE_STANDALONE_RAPIDXML
 #include <rapidxml.hpp>

@@ -682,9 +682,9 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
         // to use fresh partial derivatives for *just* the unsolved markets as we may
         // be in a situation that those markets are bouncing between vastly different
         // derivatives
-        // set the threshold at roughly 3% of the markets are left unsolved
+        // set the threshold at roughly 20% of the markets are left unsolved
         // which is just some arbitrary threshold
-        const int UNSOLVED_FULL_PARTIAL_THRESHOLD = 30;
+        const int UNSOLVED_FULL_PARTIAL_THRESHOLD = 5;
         if((unsolved.size()*UNSOLVED_FULL_PARTIAL_THRESHOLD) < ncol) {
             fdjac(F, xnew, fxnew, B, unsolved, true);
         }

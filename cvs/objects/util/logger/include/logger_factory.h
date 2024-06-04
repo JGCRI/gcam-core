@@ -48,6 +48,7 @@
 */
 
 #include <map>
+#include <ostream>
 #include "util/base/include/aparsable.h"
 #include "util/base/include/data_definition_util.h"
 
@@ -66,15 +67,17 @@ class Tabs;
 class LoggerFactory {
     friend class LoggerFactoryWrapper;
 public:
-    static Logger& getLogger( const std::string& aLogName );
-    static void toDebugXML( std::ostream& aOut, Tabs* aTabs );
-    static void logNewScenarioStarting( const std::string& aScenarioName );
+    static LoggerFactory* getInstance();
+    Logger& getLogger( const std::string& aLogName );
+    void toDebugXML( std::ostream& aOut, Tabs* aTabs ) const;
+    void logNewScenarioStarting( const std::string& aScenarioName ) const;
 private:
-    static std::map<std::string,Logger*> mLoggers; //!< Map of logger names to loggers.
-     static bool XMLParse( rapidxml::xml_node<char>* & aNode );
-    static void cleanUp();
-    //! Private undefined constructor to prevent creating a LoggerFactory.
-    LoggerFactory();
+    std::map<std::string,Logger*> mLoggers; //!< Map of logger names to loggers.
+    std::ostream* mCout;
+    bool XMLParse( rapidxml::xml_node<char>* & aNode );
+    void cleanUp();
+    //! Private constructor to prevent creating a LoggerFactory.
+    LoggerFactory():mCout(&std::cout) {}
     //! Private undefined copy constructor to prevent  copying a LoggerFactory.
     LoggerFactory( const LoggerFactory& );
     //! Private undefined assignment operator to prevent  copying a LoggerFactory.
@@ -97,7 +100,7 @@ private:
 class LoggerFactoryWrapper: public AParsable {
 public:
     ~LoggerFactoryWrapper() {
-        LoggerFactory::cleanUp();
+        LoggerFactory::getInstance()->cleanUp();
     }
     
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
@@ -105,6 +108,8 @@ public:
     static const std::string& getXMLNameStatic();
     
     const std::string& getXMLName() const;
+
+    std::ostream* setCout(std::ostream* aNewCout);
     
 protected:
     DEFINE_DATA(

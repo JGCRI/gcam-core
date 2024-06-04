@@ -12,11 +12,11 @@
 #' original data system was \code{L142.pfc_R_S_T_Y.R} (emissions level1).
 #' @details First, a table was created that has all historical HFCs values.
 #' Then, regional and sector information was added.  And finally, HFC emission shares
-#' were calculated by suming emissions over region, sector, technology, and gas by year.
+#' were calculated by summing emissions over region, sector, technology, and gas by year.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
 #' @importFrom tidyr gather spread
-#' @author CDL June 2017 and YO Feburary 2020
+#' @author CDL June 2017 and YO February 2020
 module_emissions_L142.pfc_R_S_T_Y <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",

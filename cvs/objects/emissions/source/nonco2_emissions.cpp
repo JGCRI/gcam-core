@@ -255,7 +255,7 @@ double NonCO2Emissions::getGHGValue( const string& aRegionName,
     // Conversion from teragrams (Tg=MT) of X per EJ to metric tons of X per GJ
     const double CVRT_Tg_per_EJ_to_Tonne_per_GJ = 1e-3;
     
-    double GHGTax = mCachedMarket->getPrice( getName(), aRegionName, aPeriod, false );
+    double GHGTax = mCachedMarket.getPrice( getName(), aRegionName, aPeriod, false );
     if( GHGTax == Marketplace::NO_MARKET_PRICE ){
         return 0;
     }

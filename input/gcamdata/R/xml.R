@@ -31,11 +31,6 @@ create_xml <- function(xml_file, mi_header = NULL) {
     invisible()
 }
 
-#' A suffix to be appended to the XML name in \code{set_xml_file_helper}.  Potentially
-#' useful when used to generate permutations of inputs.  We need to go through a package
-#' data so as to do this in a way that is opaque to drake
-xml.XML_SUFFIX <- NULL
-
 #' set_xml_file_helper
 #'
 #' @param xml The xml pipeline object
@@ -44,9 +39,19 @@ xml.XML_SUFFIX <- NULL
 set_xml_file_helper <- function(xml, fq_name) {
   xml$xml_file <- fq_name
 
+  # A prefix/suffix to be added to the XML name.  Potentially useful when used to generate
+  # permutations of inputs.  We need to go through options so as to do this in a way that is
+  # opaque to drake
+  xml.XML_PREFIX = getOption("gcamdata.xml.XML_PREFIX")
+  xml.XML_SUFFIX = getOption("gcamdata.xml.XML_SUFFIX")
+
   # append an XML suffix if so configured
   if(!is.null(xml.XML_SUFFIX)) {
     xml$xml_file <- paste0(gsub('\\.xml$', '', xml$xml_file), xml.XML_SUFFIX, '.xml')
+  }
+  # append an XML prefix if so configured
+  if(!is.null(xml.XML_PREFIX)) {
+      xml$xml_file <- paste0(xml.XML_PREFIX, xml$xml_file)
   }
 
   invisible(xml)
@@ -272,9 +277,9 @@ add_node_equiv_xml <- function(dot, equiv_class) {
 #' Add a table to convert to XML but generate additional levels of XML nesting
 #'
 #' We have the ability to create as many levels of "subsector" nesting as we
-#' want but in doing so we want to avoid having to make an explict copy of
+#' want but in doing so we want to avoid having to make an explicit copy of
 #' the headers / LEVEL2_DATA_NAMES. So we provide this method which will instruct
-#' the ModelIntercae to generate the addtional levels automatically.  It assumes
+#' the ModelInterface to generate the additional levels automatically.  It assumes
 #' the data in the base header is provided as is and the additional columns needed
 #' for nesting will be moved to the end (see detail for the \code{column_name} and
 #' \code{column_order_lookup} params).
@@ -426,7 +431,7 @@ add_logit_tables_xml_generate_levels <- function(dot, data, header, old_tag, new
 #' @export
 cmp_xml_files <- function(fleft, fright, raw = FALSE)
 {
-  cmd <- system2('which', 'python', stdout=TRUE)
+  cmd <- system2('which', 'python3', stdout=TRUE)
   py <- system.file('exec/xml_verify.py', package = 'gcamdata')
   ## normalizePath prints a warning when one of the files doesn't exist, but we'll
   ## catch that as an error below.

@@ -466,12 +466,12 @@ module_energy_L2327.paper <- function(command, ...) {
     # Delete NonFoodDemand_woodpulp sectors in all regions (energy-final-demands and supplysectors)
     # This is replaced with woodpulp_energy
     L203.Supplysector_demand %>%
-      filter(supplysector == aglu.PAPER_delete_ag_demand) %>%
+      filter(supplysector == aglu.PAPER_DELETE_AG_DEMAND) %>%
       select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) ->
       L2327.DeleteSupplysector_PaperAgDemand
 
     L203.PerCapitaBased %>%
-      filter(energy.final.demand == aglu.PAPER_delete_ag_demand) %>%
+      filter(energy.final.demand == aglu.PAPER_DELETE_AG_DEMAND) %>%
       select(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]]) ->
       L2327.DeleteFinalDemand_PaperAgDemand
 

@@ -148,7 +148,11 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "printLogWarningLevel", mPrintLogWarningLevel, bool )
     )
 
-    Logger( const std::string& aFileName = "" );
+    //! Keep an explict reference to the console output, in case it needs to go
+    //! somewhere other than std::cout
+    std::ostream* mCout;
+
+    Logger( std::ostream* aCout, const std::string& aFileName = "" );
     
 	//! Log a message with the given warning level.
     virtual void logCompleteMessage( const std::string& aMessage ) = 0;

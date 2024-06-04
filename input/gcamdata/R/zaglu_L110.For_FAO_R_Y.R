@@ -140,22 +140,22 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
 
     #First separate out roundwood consumption
     L110.For_ALL_bm3_R_Y %>%
-      filter(GCAM_commodity==aglu.FOREST_supply_sector) %>%
+      filter(GCAM_commodity==aglu.FOREST_SUPPLY_SECTOR) %>%
       select(GCAM_region_ID,year,roundwood_cons=Cons_bm3)->L110.Roundwood_Cons
 
     #Join the same with commoditties.
     L110.For_ALL_bm3_R_Y %>%
-      filter(GCAM_commodity %in% aglu.FOREST_commodities) %>%
+      filter(GCAM_commodity %in% aglu.FOREST_COMMODITIES) %>%
       select(GCAM_region_ID,year,GCAM_commodity,Prod_bm3) %>%
       spread(GCAM_commodity,Prod_bm3) %>%
       left_join_error_no_match(L110.Roundwood_Cons, by = c("GCAM_region_ID","year")) %>%
       #Assume that pulpwood has a coeff of 5.14 sawtimber is the remaining. There are a couple of adjustments that need to be made.
       mutate(#First adjust sawnwood production here
              #sawnwood= if_else(sawnwood > 2 *roundwood_cons, roundwood_cons *0.05,sawnwood),
-             after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_pulp_conversion),
+             after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_PULP_CONVERSION),
              #If a country does not have enough roundwood cons to produce saw, increase it.
-             roundwood_cons=if_else(after_pulp <0, woodpulp*aglu.FOREST_pulp_conversion*1.1,roundwood_cons),
-             after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_pulp_conversion),
+             roundwood_cons=if_else(after_pulp <0, woodpulp*aglu.FOREST_PULP_CONVERSION*1.1,roundwood_cons),
+             after_pulp = roundwood_cons-(woodpulp*aglu.FOREST_PULP_CONVERSION),
              #Now calculate pulp IO here
              IO=after_pulp/sawnwood,
              #We are going to run in a scenario where the coef is less than 1 in some places.
@@ -163,11 +163,11 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
              #Add a max value on the IO here,
              IO= if_else(IO > 10,10,IO),
              IO= if_else(sawnwood==0, 0,IO),
-             roundwood_cons=(woodpulp*aglu.FOREST_pulp_conversion)+(IO*sawnwood)) ->L110.IO_Coefs_pulp
+             roundwood_cons=(woodpulp*aglu.FOREST_PULP_CONVERSION)+(IO*sawnwood)) ->L110.IO_Coefs_pulp
 
     #Since we increased roundwood cons in some places, increase production proportionately
     L110.For_ALL_bm3_R_Y %>%
-      filter(GCAM_commodity==aglu.FOREST_supply_sector) %>%
+      filter(GCAM_commodity==aglu.FOREST_SUPPLY_SECTOR) %>%
       left_join_error_no_match(L110.IO_Coefs_pulp %>% select(GCAM_region_ID,year,roundwood_cons), by = c("GCAM_region_ID","year")) %>%
       mutate(diff=roundwood_cons-Cons_bm3,
              Prod_bm3= Prod_bm3+diff,
@@ -175,7 +175,7 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
       select(colnames(L110.For_ALL_bm3_R_Y))->L110.For_ALL_bm3_R_Y_Primary
 
     L110.For_ALL_bm3_R_Y %>%
-      filter(GCAM_commodity!=aglu.FOREST_supply_sector) %>%
+      filter(GCAM_commodity!=aglu.FOREST_SUPPLY_SECTOR) %>%
       bind_rows(L110.For_ALL_bm3_R_Y_Primary)->L110.For_ALL_bm3_R_Y
 
 

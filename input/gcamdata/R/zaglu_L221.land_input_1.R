@@ -21,7 +21,7 @@
 #' External soil time scale assumptions for each AGLU region."}
 #' \item{"L221.LN1_ValueLogit Unmanaged land value by region and GLU, and logit exponent of first nest.
 #' L131 land value data is joined with LandNode Logit assumptions.A minimum value is set to ensure all
-#' regins have a nonzero land value."}
+#' regions have a nonzero land value."}
 #' \item{"L221.LN1_HistUnmgdAllocation Historical land cover fora unmanaged land (LT_GLU) in the first nest by region.
 #' Historical land cover for unmanaged land in the first nest, from L125 land cover data."}
 #' \item{"L221.LN1_UnmgdAllocation Land cover in the model base periods for unmanaged land (LT_GLU) in the first nest by region.
@@ -356,14 +356,18 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
       add_title("Unmanaged land value by region and GLU, and logit exponent of first nest") %>%
       add_units("1975USD/thousand square kilometers") %>%
       add_comments("L131 land value data is joined with LandNode Logit assumptions.") %>%
-      add_comments("A minimum value is set to ensure all regins have a nonzero land value.") %>%
+      add_comments("A minimum value is set to ensure all regions have a nonzero land value.") %>%
       add_legacy_name("L221.LN1_ValueLogit") %>%
       add_precursors("common/GCAM_region_names",
                      "water/basin_to_country_mapping",
                      "aglu/A_LandNode_logit",
                      "aglu/A_LT_Mapping",
                      "L125.LC_bm2_R_LT_Yh_GLU",
-                     "L131.LV_USD75_m2_R_GLU") ->
+                     "L131.LV_USD75_m2_R_GLU",
+                     "L2252.LN5_MgdAllocation_crop",
+                     "L2012.AgProduction_ag_irr_mgmt",
+                     "L2012.AgSupplySector",
+                     "L2052.AgCost_ag_irr_mgmt") ->
       L221.LN1_ValueLogit
     L221.LN1_HistUnmgdAllocation %>%
       add_title("Historical land cover fora unmanaged land (LT_GLU) in the first nest by region") %>%

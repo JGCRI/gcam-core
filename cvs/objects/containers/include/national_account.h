@@ -112,6 +112,7 @@ public:
         INVESTMENT,
         DEPRECIATION,
         CAPITAL_STOCK,
+        CAPITAL_VALUE,
         CAPITAL_ENERGY_INV,
         CONSUMER_DURABLE_INV,
         GDP,

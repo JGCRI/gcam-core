@@ -850,18 +850,16 @@ IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegio
  *          same behavior as the equivalent method in this class.
  * \param aGoodName The good of the market to locate.
  * \param aRegionName The region of the market to locate.
- * \param aPeriod The period for which to locate.
  * \return A CachedMarket object which wraps the requested market.  This will always
  *         be a valid object regardless of if the market was not found.
  * \see CachedMarket
  */
-unique_ptr<CachedMarket> Marketplace::locateMarket( const string& aGoodName, const string& aRegionName,
-                                                  const int aPeriod ) const
+CachedMarket Marketplace::locateMarket( const string& aGoodName, const string& aRegionName ) const
 {
     const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
-    unique_ptr<CachedMarket> locatedMarket( new CachedMarket( aGoodName, aRegionName, aPeriod,
-                                                            marketNumber != MarketLocator::MARKET_NOT_FOUND ?
-                                                            mMarkets[ marketNumber ]->getMarket( aPeriod ) : 0 ) );
+    CachedMarket locatedMarket( aGoodName, aRegionName,
+                                marketNumber != MarketLocator::MARKET_NOT_FOUND ?
+                                mMarkets[ marketNumber ] : 0 );
     return locatedMarket;
 }
 

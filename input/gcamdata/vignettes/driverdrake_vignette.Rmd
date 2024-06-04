@@ -106,7 +106,7 @@ driver_drake()
 print(Sys.time()-t1)
 
 ```
-Now we have our file back without re-running the entire datasystem. 
+Now we have our file back without re-running the entire data system. 
 
 
 ## Arguments to `driver_drake()` 
@@ -114,7 +114,7 @@ Now we have our file back without re-running the entire datasystem.
 `driver_drake()` supports the same arguments as `driver()` (see `?driver`), except `write_outputs` (since `drake` must include all outputs in the cache). Thus users can still use `stop_before` or `return_data_map_only` as before except with the benefits of `drake`: if no modifications were made they can just be generated from cache.
 Users can also pass additional arguments to `driver_drake()` which will be forwarded on to `make()`. You can see `?drake::make` for all available options, but some useful ones include:
 
-* `verbose`: integer, controls printing to the console/terminal (defualt: `1`)
+* `verbose`: integer, controls printing to the console/terminal (default: `1`)
     * 0: print nothing
     * 1: print target names as they build
     * 2: show a progress bar to track what percent of targets have been completed. Also shows a spinner bar during preprocessing tasks

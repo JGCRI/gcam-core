@@ -153,13 +153,13 @@ test_that("fast_left_join produces results equivalent to left_join", {
   B <- tibble(x = x, y = y, z2 = z2)
 
   ## Two join columns, no duplicate unjoined columns
-  ABdp <- left_join(A, B, by = c('x', 'y')) %>% arrange(x, y)
+  ABdp <- left_join(A, B, by = c('x', 'y'), relationship = "many-to-many") %>% arrange(x, y)
   ABdt <- fast_left_join(A, B, by = c('x', 'y')) %>% arrange(x, y) %>% select(x, y, z1, z2)
 
   expect_equivalent(ABdp, ABdt)
 
   ## One join column, y is a duplicate
-  ABdp <- left_join(A, B, by = 'x') %>% arrange(x, y.x, y.y)
+  ABdp <- left_join(A, B, by = 'x', relationship = "many-to-many") %>% arrange(x, y.x, y.y)
   ABdt <- fast_left_join(A, B, by = 'x') %>% rename(y.x = i.y, y.y = y) %>%
     arrange(x, y.x, y.y) %>% select(x, y.x, z1, y.y, z2)
 

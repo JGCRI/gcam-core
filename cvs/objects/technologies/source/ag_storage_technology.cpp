@@ -103,15 +103,24 @@ void AgStorageTechnology::completeInit(const string& aRegionName,
 
     Technology::completeInit(aRegionName, aSectorName, aSubsectorName, aSubsectorInfo, aLandAllocator);
 
-    // The AgStorageTechnology should not have any vintaging.  All vintaging should be
-    // in the associated pass-through sector
+    // AgStorageTechnology should have a lifetime just long enough to last two model periods, double
+    // check that now
     const Modeltime* modeltime = scenario->getModeltime();
-    
     if (mYear < modeltime->getEndYear()) {
         const int period = modeltime->getyr_to_per(mYear);
-        int minLifetime = modeltime->gettimestep(period + 1); //check this
-        int maxLifetime = modeltime->gettimestep(period + 1) + modeltime->gettimestep(period + 2); //check this
-  
+        const int prevYear = period == 0 ?
+            (mYear - modeltime->gettimestep(period)) : modeltime->getper_to_yr(period - 1);
+        const int nextYear = (period+1) == modeltime->getmaxper() ?
+            (mYear + modeltime->gettimestep(period)) : modeltime->getper_to_yr(period+1);
+        if(mLifetimeYears != (nextYear - prevYear)) {
+            ILogger& mainLog = ILogger::getLogger("main_log");
+            mainLog.setLevel(ILogger::SEVERE);
+            mainLog << "Lifetime for " << getXMLNameStatic()
+                    << " must last exatly 2 periods, instead has lifetime: "
+                    << mLifetimeYears << " in " << aRegionName << ", " << aSectorName
+                    << ", " << mName << " year " << mYear << endl;
+            abort();
+        }
     }
 
 }
@@ -273,9 +282,12 @@ void AgStorageTechnology::calcCost(const string& aRegionName,
     const int aPeriod)
 {
     // we didn't want the price signal to consumption to change due to storage
-    // so we need to re-inflate the price here
+    // so we need to reset it to one here
+    double origCoef = mInputs[0]->getCoefficient(aPeriod);
+    mInputs[0]->setCoefficient(1.0, aPeriod);
     Technology::calcCost(aRegionName, aSectorName, aPeriod);
-    mCosts[aPeriod] /= mInputs[0]->getCoefficient(aPeriod);
+    // restore the previous value in case it is needed
+    mInputs[0]->setCoefficient(origCoef, aPeriod);
 }
 
 //! write object to xml output stream

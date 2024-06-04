@@ -150,33 +150,39 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
       spread(Non.CO2, input.emissions) ->
       L2236.elec_ghg_emissions_USA
 
+
+
     # Organize the state fuel input data
     # Electricity segments
-    L1231.in_EJ_state_elec_F_tech %>%
+    # The calibrated output data has all technology options we could need, so start with it.
+    L2233.StubTechProd_elecS_cool_USA %>%
       mutate(sector = "electricity") %>%
-      filter(year %in% L2236.elec_ghg_emissions_USA$year & technology %in% L2236.elec_ghg_emissions_USA$stub.technology) %>%
-      # We do not expect at 1:1 match may use a left_join here.
-      left_join(A23.elecS_tech_mapping %>%
-                  select(-subsector_1),
-                by = c("sector" = "supplysector", "technology")) %>%
-      select(state, supplysector = Electric.sector, subsector, stub.technology = Electric.sector.technology,
-             year, technology, fuel, tech_fuel_input = value) %>%
-      # use left_join becuase the number of rows will change (same fuel into multiple cooling techs)
-      left_join(A23.elecS_tech_mapping_cool,
-                by=c("stub.technology"="Electric.sector.technology",
-                     "supplysector"="Electric.sector","subsector","technology")) %>%
-      select(-technology,-subsector_1,-supplysector.y)%>%
-      rename(technology = to.technology,
-             subsector0 = subsector,
-             subsector = stub.technology) %>%
-      # We do not expect a 1:1 match so we can use a left_join here
-      left_join(L2233.StubTechProd_elecS_cool_USA %>% rename("stub.technology"="technology") %>%
-                  select(LEVEL2_DATA_NAMES[['StubTechYr']], subsector0, calOutputValue),
-                by = c("state" = "region", "supplysector","subsector0", "subsector", "technology"="stub.technology", "year")) %>%
-      group_by(state, technology, year) %>%
+      filter(year %in% L2236.elec_ghg_emissions_USA$year & subsector0 %in% L2236.elec_ghg_emissions_USA$subsector) %>%
+      # need to duplicate and separate subsector for fuel table joining purposes.
+      # all of this being done is specifically to remediate a gas issue, which has two generation technologies
+      mutate(new_sub = subsector) %>%
+      separate(new_sub, into = c("gen_fuel", "delete", "fuel_type"), sep = "_", extra = "drop") %>%
+      select(-delete) %>%
+      unite(new_sub, gen_fuel, fuel_type, sep = " ") %>%
+      # now, we do renaming to match the fuel table
+      # the fuel table has 5 technology options
+      mutate(new_sub = gsub("gas CC", "gas (CC)", new_sub),
+             new_sub = gsub("gas steam/CT", "gas (steam/CT)", new_sub),
+             new_sub = if_else(subsector0 == "coal", "coal (conv pul)", new_sub),
+             new_sub = if_else(subsector0 == "refined liquids", "refined liquids (steam/CT)", new_sub),
+             new_sub = if_else(subsector0 == "biomass", "biomass (conv)", new_sub)) %>%
+    # Join with table that has fuel data.
+    # If the LJENM fails here, it is likely because the table being joined in was updated to include additional technologies
+      left_join_error_no_match(L1231.in_EJ_state_elec_F_tech,
+                by = c("region" = "state", "year", "new_sub" = "technology")) %>%
+    # remove columns we no longer need
+      select(-c(share.weight.year, subs.share.weight, tech.share.weight, sector.x, sector.y)) %>%
+      rename(state = region) %>%
+    # share out the fuel input based on electricity production
+      group_by(state, year, new_sub) %>%
       mutate(tech_calOuput = sum(calOutputValue),
              segment_share = calOutputValue / tech_calOuput,
-             fuel_input = round(tech_fuel_input * segment_share, 6),
+             fuel_input = round(value * segment_share, 6),
              fuel_input = if_else(is.na(fuel_input), 0, fuel_input)) %>%
       ungroup() %>%
       select(state, supplysector,subsector0,subsector, technology, year, technology, fuel, fuel_input) %>%
@@ -185,6 +191,7 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
                 by = c("supplysector", "technology"="stub.technology", "year", "state"  = "region")) ->
       L2236.elecS_cool_fuel_input_state
 
+
     # Compute state shares for each category in the fuel input table
     # Share out CH4 and N2O emissions by state based on the fuel input shares
     L2236.elecS_cool_fuel_input_state %>%
@@ -192,7 +199,8 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
       left_join_error_no_match(A23.elecS_tech_mapping_cool %>%
                                  select(stub.technology = technology, technology = to.technology) %>% distinct(),
                                by = "technology") %>%
-      left_join_error_no_match(L2236.elec_ghg_emissions_USA %>% select(-region, -supplysector, -subsector),
+      # we do not expect a 1:1 match here due to severl technologies not having emissions included
+      left_join(L2236.elec_ghg_emissions_USA %>% select(-region, -supplysector, -subsector),
                                by = c("stub.technology", "year")) %>%
       group_by(stub.technology, year) %>%
       mutate(fuel_input_USA = sum(fuel_input),

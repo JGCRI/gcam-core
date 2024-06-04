@@ -259,7 +259,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       L203.For_ALL_bm3_R_Y
 
     A_demand_technology_R_Yh %>%
-      filter(supplysector %in% aglu.FOREST_demand_sectors) %>%
+      filter(supplysector %in% aglu.FOREST_DEMAND_SECTORS) %>%
       # Map in forest product demand in bm3
       left_join_error_no_match(L203.For_ALL_bm3_R_Y, by = c("region", "year","supplysector"="GCAM_commodity")) %>%
       mutate(calOutputValue = round(Cons_bm3, aglu.DIGITS_CALOUTPUT),

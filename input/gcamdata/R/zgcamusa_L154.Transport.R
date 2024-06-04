@@ -2,7 +2,7 @@
 
 #' module_gcamusa_L154.Transport
 #'
-#' Downscale transportation energy consumption and nonmotor data to the state level, generating three ouput tables.
+#' Downscale transportation energy consumption and nonmotor data to the state level, generating three output tables.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
