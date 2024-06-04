@@ -103,7 +103,7 @@ InputSubsidy::InputSubsidy()
  * \brief Destructor.
  * \note An explicit constructor must be defined to avoid the compiler inlining
  *       it in the header file before the header file for the type contained in
- *       the auto_ptr is included.
+ *       the unique_ptr is included.
  */
 InputSubsidy::~InputSubsidy() {
 }

@@ -64,7 +64,7 @@ mParentInfo( aParentInfo )
 /*! \brief Destructor
 * \details The explicit destructor is needed to prevent it from being inlined
 *          into the header file where the hashmap definition file would not have
-*          been seen yet. The auto_ptr will delete the hashmap automatically
+*          been seen yet. The unique_ptr will delete the hashmap automatically
 *          here.
 */
 Info::~Info(){

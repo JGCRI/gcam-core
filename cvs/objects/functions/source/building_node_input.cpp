@@ -82,7 +82,7 @@ void BuildingNodeInput::completeInit( const string& aRegionName, const string& a
                                       const IInfo* aTechInfo)
 {
     // create internal gains market for this type of building
-    auto_ptr<IInfo> internalGainsInfo( InfoFactory::constructInfo( aTechInfo, mInternalGainsMarketname ) );
+    unique_ptr<IInfo> internalGainsInfo( InfoFactory::constructInfo( aTechInfo, mInternalGainsMarketname ) );
     internalGainsInfo->setString( "output-unit", mInternalGainsUnit );
     if( SectorUtils::createTrialSupplyMarket( aRegionName, mInternalGainsMarketname, internalGainsInfo.get() ) ){
         // set initial trial supplies from the parsed vector

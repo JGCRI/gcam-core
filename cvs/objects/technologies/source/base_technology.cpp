@@ -71,7 +71,7 @@ typedef vector<AGHG*>::iterator GHGIterator;
 BaseTechnology::BaseTechnology():
   mShareWeight( 1.0 ),
   mIsInitialYear( false ),
-  mSequestrationDevice( 0 ),
+  mSequestrationDevice(),
   doCalibration( false )
 {
     mNestedInputRoot = 0 ;
