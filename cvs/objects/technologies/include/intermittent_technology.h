@@ -138,13 +138,6 @@ protected:
         //! Cached input containing the technology costs.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "tech-cost-input-pointer", mTechCostInput, InputIterator ),
 
-        //! Electric reserve cost read in at the Sector level.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "electricity-reserve-margin", mElecReserveMargin, Value ),
-
-        //! Average grid capacity factor read in at the Sector level.
-        //todo dynamically calculate average grid capacity factor
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "average-grid-capacity-factor", mAveGridCapacityFactor, Value ),
-
         //! State value necessary to track tech output ratio
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "tech-output-ratio", mIntermitOutTechRatio, Value )
     )

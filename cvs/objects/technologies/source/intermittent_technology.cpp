@@ -71,7 +71,6 @@ IntermittentTechnology::IntermittentTechnology( const string& aName, const int a
 :Technology( aName, aYear )
 {
     mElectricSectorName = "electricity";
-    mElecReserveMargin = 0.15;
     
     mValueFactorCalculator = 0;
     
@@ -81,7 +80,6 @@ IntermittentTechnology::IntermittentTechnology( const string& aName, const int a
 
 IntermittentTechnology::IntermittentTechnology() {
     mElectricSectorName = "electricity";
-    mElecReserveMargin = 0.15;
     
     mValueFactorCalculator = 0;
     
@@ -187,10 +185,6 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
 	// The parent method must be called first due to sequence issues
     Technology::completeInit( aRegionName, aSectorName, aSubsectorName, aSubsectorInfo,
 							 aLandAllocator );	
-	
-	// Initialize electric reserve margin and average grid capacity factor from the Sector.
-    mElecReserveMargin = aSubsectorInfo->getDouble( "electricity-reserve-margin", true );
-    mAveGridCapacityFactor = aSubsectorInfo->getDouble( "average-grid-capacity-factor", true );
 
     // Inititalize info object
     mIntermittTechInfo.reset( InfoFactory::constructInfo( 0, getName() ) );

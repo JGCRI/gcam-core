@@ -96,15 +96,6 @@ public:
         const int aPeriod) const;
 
 protected:
-
-    double calcIntermittentShare(const std::string& aSector,
-        const std::string& aElectricSector,
-        const std::string& aResource,
-        const std::string& aRegion,
-        const double aTechCapacityFactor,
-        const double aReserveMargin,
-        const double aAverageGridCapacityFactor,
-        const int aPeriod) const;
         
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

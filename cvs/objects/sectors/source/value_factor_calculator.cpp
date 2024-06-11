@@ -56,8 +56,8 @@ using namespace std;
  */
 ValueFactorCalculator::ValueFactorCalculator()
 {
-    mValueFactorIntercept = 0.945;
-    mValueFactorSlope = -1.326;
+    mValueFactorIntercept = 1.0;
+    mValueFactorSlope = 0.0;
 }
 
 // Documentation is inherited.
@@ -170,38 +170,4 @@ double ValueFactorCalculator::getValueFactor( const string& aSector,
 
     return valueFactor;
 
-}
-
-/*!
- * \brief Calculate the capacity share of the intermittent resource within the
- *        electricity sector.
- * \details Calculates the share of capacity of the intermittent resource within
- *          the electricity sector. This is determined using trial values for
- *          the intermittent sector and electricity sector production. The
- *          production is converted to capacity using constant capacity factors.
- * \param aSector The name of the sector which requires backup capacity.
- * \param aElectricSector The name of the electricity sector into which the
- *        sector having a backup amount calculated for will feed.
- * \param aResource The name of the resource the sector consumes.
- * \param aRegion Name of the containing region.
- * \param aReserveMargin Reserve margin for the electricity sector.
- * \param aAverageGridCapacityFactor The average electricity grid capacity
- *        factor.
- * \param aPeriod Model period.
- * \return Share of the intermittent resource within within the electricity
- *         sector.
- */
-double ValueFactorCalculator::calcIntermittentShare( const string& aSector,
-                                                             const string& aElectricSector,
-                                                             const string& aResource,
-                                                             const string& aRegion,
-                                                             const double aTechCapacityFactor,
-                                                             const double aReserveMargin,
-                                                             const double aAverageGridCapacityFactor,
-                                                             const int aPeriod ) const
-{
-
-    double capacityShare = std::min( std::max( SectorUtils::getTrialSupply( aRegion, aSector, aPeriod ), 0.0 ), 1.0 ) *
-                           aAverageGridCapacityFactor / aTechCapacityFactor;
-    return capacityShare;
 }
