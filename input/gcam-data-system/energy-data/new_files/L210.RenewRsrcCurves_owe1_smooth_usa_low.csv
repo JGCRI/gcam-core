@@ -1,0 +1,31 @@
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+SmthRenewRsrcCurves,,,,,
+,,,,,
+region,renewresource,smooth.renewable.subresource,maxSubResource,mid.price,curve.exponent
+CA,offshore wind resource 1,offshore wind resource 1,0.610024673,4.277632911,116.7972967
+CT,offshore wind resource 1,offshore wind resource 1,0.028280349,0.001,123.539346
+DE,offshore wind resource 1,offshore wind resource 1,0.011903025,0.001,142.0138863
+GA,offshore wind resource 1,offshore wind resource 1,0.20373797,0.011156459,160.2719606
+HI,offshore wind resource 1,offshore wind resource 1,1.006456184,4.297510537,46.95793494
+IL,offshore wind resource 1,offshore wind resource 1,0.004884933,0.001,142.0138925
+IN,offshore wind resource 1,offshore wind resource 1,0.004378308,0.001000033,142.0109635
+LA,offshore wind resource 1,offshore wind resource 1,2.562062029,0.622433625,0.500000007
+ME,offshore wind resource 1,offshore wind resource 1,0.048326706,0.001000051,101.8821457
+MD,offshore wind resource 1,offshore wind resource 1,0.010751119,0.001000006,142.0134054
+MA,offshore wind resource 1,offshore wind resource 1,0.116897087,0.001000005,139.6465177
+MI,offshore wind resource 1,offshore wind resource 1,0.237815177,0.001000002,4.551641883
+MN,offshore wind resource 1,offshore wind resource 1,0.165426443,4.273671704,154.6849106
+NH,offshore wind resource 1,offshore wind resource 1,0.000991919,0.001000006,142.0133278
+NJ,offshore wind resource 1,offshore wind resource 1,0.028179024,0.001000004,143.0901522
+NY,offshore wind resource 1,offshore wind resource 1,0.058923171,0.001000023,126.3166601
+NC,offshore wind resource 1,offshore wind resource 1,0.098519926,0.001000007,142.013317
+OH,offshore wind resource 1,offshore wind resource 1,0.018190509,0.001,142.0339711
+OR,offshore wind resource 1,offshore wind resource 1,0.020675639,0.001000055,115.9461339
+PA,offshore wind resource 1,offshore wind resource 1,0.001823851,0.001000048,142.0096706
+RI,offshore wind resource 1,offshore wind resource 1,0.011961686,0.001,130.5949052
+SC,offshore wind resource 1,offshore wind resource 1,0.077678967,0.001000032,192.2671907
+TX,offshore wind resource 1,offshore wind resource 1,0.107671176,0.001,47.99136661
+VA,offshore wind resource 1,offshore wind resource 1,0.047420114,0.001000006,142.0133984
+WA,offshore wind resource 1,offshore wind resource 1,0.08387046,0.060068857,2.439758297
+WI,offshore wind resource 1,offshore wind resource 1,0.198143761,0.432018735,1.58831376

@@ -1,0 +1,28 @@
+<ModelInterfaceBatch>
+	<class name="ModelInterface.ModelGUI2.InputViewer">
+	<command name="CSV file">
+		<headerFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/_common/headers//ModelInterface_headers.txt</headerFile>
+
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/GCAM-USA_electricity//L223.SectorNodeEquiv.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/GCAM-USA_electricity//L223.TechNodeEquiv.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/GCAM-USA_electricity//L223.PassthroughSector_elec_USA.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/GCAM-USA_electricity//L223.PassthroughTech_elec_FERC.csv</csvFile>
+
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/level2//L223.EQUIV_TABLE.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.SubsectorLogit_relative-cost-logit_owe4_usa.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.SubsectorLogit_elec_owe4_usa.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.SubsectorShrwtFllt_elec_owe4_usa.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.SubsectorShrwt_renew_owe4_usa.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.SubsectorInterp_elec_owe4_usa.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.StubTech_elec_owe4_usa.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.StubTechCapFactor_elec_owe4_usa_low.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.StubTechProd_elec_owe4_usa.csv</csvFile>
+
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.StubTechMarket_elec_USA_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L223.StubTechMarket_backup_USA_owe4.csv</csvFile>
+		<csvFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/energy-data/new_files//L2232.StubTechElecMarket_backup_USA_owe4.csv</csvFile>
+
+		<outFile>E:/GCAM/GCAM_4.2_r6539_User_Package_with_code_Windows/Main_User_Workspace/input/gcam-data-system/xml/energy-xml//electricity_owe4_usa_low.xml</outFile>
+ 	</command>
+	</class>
+</ModelInterfaceBatch>
