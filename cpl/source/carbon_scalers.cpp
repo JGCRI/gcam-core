@@ -157,15 +157,22 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                                 std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers,
                                  std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName,
                                  int& aNumScalars) {
+ 
+    // Open the coupling log
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
+
+    coupleLog << "In calcScalers" << endl;
+
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
-   
+
     // first copy the area into the local array, expanded to all pfts
     // this is because the area needs to be zeroed out also for outliers
     // an outlier may be for one pft in a cell, but not for another
     for (int z=0; z < mNumPFT; z++) {
         for (int i=0; i < (mNumLat*mNumLon); i++) {
-            mELMArea[(z*mNumLat*mNumLon)+i] = aELMArea[(z*mNumLat*mNumLon)+i];
+            mELMArea[(z*mNumLat*mNumLon)+i] = aELMArea[i];
         }
     } 
 
@@ -515,7 +522,7 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR) {
     int length = mNumLat * mNumLon * mNumPFT;
     std::vector<double> scaledNPP(aELMNPP+0, aELMNPP+length);
     std::vector<double> scaledHR(aELMHR+0, aELMHR+length);
-    
+   
     // Calculate raw scalars
     std::transform(scaledNPP.begin(), scaledNPP.end(), mBaseNPPVector.begin(), scaledNPP.begin(), std::divides<double>());
     std::transform(scaledHR.begin(), scaledHR.end(), mBaseHRVector.begin(), scaledHR.begin(), std::divides<double>());
