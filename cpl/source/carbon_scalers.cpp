@@ -158,12 +158,6 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                                  std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName,
                                  int& aNumScalars) {
  
-    // Open the coupling log
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::NOTICE );
-
-    coupleLog << "In calcScalers" << endl;
-
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
 
@@ -208,10 +202,10 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     }
 
     // diagnostics to find out where the data are being lost
-    string SdName = "./scaler_diagnostic.csv";
-    ILogger& Sd = ILogger::getLogger( SdName );
-    Sd.setLevel( ILogger::NOTICE );
-    Sd.precision(20);
+    //string SdName = "./scaler_diagnostic.csv";
+    //ILogger& Sd = ILogger::getLogger( SdName );
+    //Sd.setLevel( ILogger::NOTICE );
+    //Sd.precision(20);
 
     // Create mappings to store intermediate information
     std::map<std::pair<std::string,std::string>, double> totalArea;
@@ -383,17 +377,17 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
         }
     
         // check the essential data
-        if(aGCAMYear == 2025) {
-           Sd << regID << "," << crop << endl;
-           Sd << "CASE: total area " << totalArea[std::make_pair(regID,crop)];
-           Sd << " total npp " << totalNPP[std::make_pair(regID,crop)] << " total hr " << totalHR[std::make_pair(regID,crop)];
-           Sd << " avgNPP " << avgNPP << " avgHR " << avgHR << endl;
-           Sd << "BASE: total area " << baseTotalArea[std::make_pair(regID,crop)];
-           Sd << " total npp " << baseTotalNPP[std::make_pair(regID,crop)] << " total hr " << baseTotalHR[std::make_pair(regID,crop)];
-           Sd << " avgNPP " << baseAvgNPP << " avgHR " << baseAvgHR << endl;
-           Sd << "above scalar " << aboveScalarMap[std::make_pair(regID,crop)];
-           Sd << " below scalar " << belowScalarMap[std::make_pair(regID,crop)] << endl;
-        }
+        //if(aGCAMYear == 2025) {
+        //   Sd << regID << "," << crop << endl;
+        //   Sd << "CASE: total area " << totalArea[std::make_pair(regID,crop)];
+        //   Sd << " total npp " << totalNPP[std::make_pair(regID,crop)] << " total hr " << totalHR[std::make_pair(regID,crop)];
+        //   Sd << " avgNPP " << avgNPP << " avgHR " << avgHR << endl;
+        //   Sd << "BASE: total area " << baseTotalArea[std::make_pair(regID,crop)];
+        //   Sd << " total npp " << baseTotalNPP[std::make_pair(regID,crop)] << " total hr " << baseTotalHR[std::make_pair(regID,crop)];
+        //   Sd << " avgNPP " << baseAvgNPP << " avgHR " << baseAvgHR << endl;
+        //   Sd << "above scalar " << aboveScalarMap[std::make_pair(regID,crop)];
+        //   Sd << " below scalar " << belowScalarMap[std::make_pair(regID,crop)] << endl;
+        //}
      } // end for loop over totalArea 
 
     createScalerVectors(aGCAMYear, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
@@ -402,11 +396,11 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     aNumScalars = static_cast<int>(aboveScalarMap.size());
  
     // check the vectors
-    Sd << endl << "Check vectors" << endl;
-    Sd << "year " << "region " << "tech_basin " << "above scalar " << "below scalar" << endl;
-    for (int r = 0; r < aNumScalars; r++) {
-       Sd << aYears[r] << " "  << aRegions[r] << " " << aLandTechs[r] << " " << aAboveScalers[r] << " " << aBelowScalers[r] << endl;
-    }
+    //Sd << endl << "Check vectors" << endl;
+    //Sd << "year " << "region " << "tech_basin " << "above scalar " << "below scalar" << endl;
+    //for (int r = 0; r < aNumScalars; r++) {
+    //   Sd << aYears[r] << " "  << aRegions[r] << " " << aLandTechs[r] << " " << aAboveScalers[r] << " " << aBelowScalers[r] << endl;
+    //}
 
 }
 
