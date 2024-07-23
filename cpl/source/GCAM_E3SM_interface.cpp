@@ -996,7 +996,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     else
     {
         surfaceCO2.readRegionMappingData(aRegionMappingFile);
-        coupleLog << "Finish read regional mapping data and start downscaling" << endl;
+        coupleLog << "Finish read regional mapping data and start surface downscaling" << endl;
         
         //surfaceCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
         //coupleLog << "GCAM run: Finish read Base year emission data" << endl;
@@ -1004,12 +1004,12 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
         surfaceCO2.downscaleSurfaceCO2EmissionsFromRegion2Grid(gcamoemiss_sfc, mBaseYearEmissions_sfc, mBaseYearEmissionsGrid_sfc);
     }
 
-    coupleLog << "after downscaling" << endl;
+    coupleLog << "after surface downscaling" << endl;
     // These regions are in order of the output regions in co2.xml 
-    for( r=0; r<(*aNumReg); r++ ) {
-        coupleLog << "Diagnostics: Regional surface CO2 Emissions (TgC) in " << *aCurrYear << endl;
-        coupleLog << "Region " << r+1  << " = " << gcamoemiss_sfc[r] << "; Regional surface scalar = " << gcamoemiss_sfc[r] / mBaseYearEmissions_sfc[r] << endl;
-    }
+    //for( r=0; r<(*aNumReg); r++ ) {
+    //    coupleLog << "Diagnostics: Regional surface CO2 Emissions (TgC) in " << *aCurrYear << endl;
+    //    coupleLog << "Region " << r+1  << " = " << gcamoemiss_sfc[r] << "; Regional surface scalar = " << gcamoemiss_sfc[r] / mBaseYearEmissions_sfc[r] << endl;
+    //}
 
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
@@ -1037,14 +1037,14 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     shipmentCO2.readRegionMappingData(aRegionMappingFile);
     coupleLog << "Finish read regional mapping data" << endl;
     //shipmentCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
-    coupleLog << "start downscaling" << endl;
+    coupleLog << "start shipment downscaling" << endl;
     shipmentCO2.downscaleInternationalShipmentCO2Emissions(gcamoemiss_ship, mBaseYearGlobalShipCO2Emiss, mBaseYearEmissionsGrid_ship);
-    coupleLog << "after downscaling" << endl;
+    coupleLog << "after shipment downscaling" << endl;
     // These regions are in order of the output regions in co2.xml
-    for( r=0; r<(*aNumReg); r++ ) {
-        coupleLog << "Diagnostics: Regional shipment CO2 Emissions (TgC) in " << *aCurrYear << endl;
-        coupleLog << "Region " << r+1  << " = " << gcamoemiss_ship[r] << endl;
-    }
+    //for( r=0; r<(*aNumReg); r++ ) {
+    //    coupleLog << "Diagnostics: Regional shipment CO2 Emissions (TgC) in " << *aCurrYear << endl;
+    //    coupleLog << "Region " << r+1  << " = " << gcamoemiss_ship[r] << endl;
+    //}
 
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
@@ -1069,14 +1069,14 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     //aircraftCO2.readSpatialData(aBaseCO2AirFile, true, true, false);
     aircraftCO2.readRegionMappingData(aRegionMappingFile);
     //aircraftCO2.readRegionBaseYearEmissionData(aBaseCO2GcamFileName);
-    
+    coupleLog << "start aircraft downscaling" << endl;
     aircraftCO2.downscaleAircraftCO2Emissions(gcamoemiss_air, mBaseYearGlobalAirCO2Emiss, mBaseYearEmissionsGrid_air);
-    coupleLog << "after downscaling" << endl;
+    coupleLog << "after aircraft downscaling" << endl;
     // These regions are in order of the output regions in co2.xml
-    for( r=0; r<(*aNumReg); r++ ) {
-        coupleLog << "Diagnostics: Regional aircraft CO2 Emissions (TgC) in " << *aCurrYear << endl;
-        coupleLog << "Region " << r+1  << " = " << gcamoemiss_air[r] << endl;
-    }
+    //for( r=0; r<(*aNumReg); r++ ) {
+    //    coupleLog << "Diagnostics: Regional aircraft CO2 Emissions (TgC) in " << *aCurrYear << endl;
+    //    coupleLog << "Region " << r+1  << " = " << gcamoemiss_air[r] << endl;
+    //}
 
     if ( aWriteCO2 ) {
         // TODO: Set name of file based on case name?
