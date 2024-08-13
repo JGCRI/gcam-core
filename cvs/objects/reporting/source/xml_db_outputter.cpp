@@ -1894,8 +1894,11 @@ void XMLDBOutputter::startVisitFoodDemandInput( const FoodDemandInput* aFoodDema
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ) {
         double perCapConv = aFoodDemandInput->getAnnualDemandConversionFactor( per );
-        double perCapDemand = aFoodDemandInput->getPhysicalDemand( per ) / perCapConv;
-        if( !objects::isEqual<double>( perCapDemand, 0.0 ) ) {
+        // note: the "conversion" returns zero for model periods which were not actually
+	// run which can happen when we are calling printXMLDB "early"
+	// we can just set perCapDemand as there are no results anyways
+	double perCapDemand = perCapConv == 0 ? 0.0 : aFoodDemandInput->getPhysicalDemand( per ) / perCapConv;
+	if( !objects::isEqual<double>( perCapDemand, 0.0 ) ) {
             writeItemToBuffer( perCapDemand, "demand-percap",
                 *mBufferStack.top(), mTabs.get(), per, "Kcal/per/day" );
         }
