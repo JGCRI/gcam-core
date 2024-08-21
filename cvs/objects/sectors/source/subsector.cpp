@@ -317,6 +317,7 @@ double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
     double sharesum = 0.0;
     const vector<double>& techShares = calcTechShares( aGDP, aPeriod );
     for ( unsigned int i = 0; i < mTechContainers.size(); ++i ) {
+        if(techShares[i] != 0.0) {
         double currCost = mTechContainers[i]->getNewVintageTechnology(aPeriod)->getCost( aPeriod );
         // calculate weighted average price for Subsector.
         /*!
@@ -324,6 +325,7 @@ double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
          */
         subsectorPrice += techShares[ i ] * currCost;
         sharesum += techShares[i];
+        }
     }
 
     if( sharesum < util::getSmallNumber() ) {
@@ -332,7 +334,7 @@ double Subsector::getPrice( const GDP* aGDP, const int aPeriod ) const {
         // with a NaN price gets a share of zero.  Therefore, as long
         // as you use only subsectors with positive shares, you will
         // never see the NaN price.
-        return numeric_limits<double>::signaling_NaN();
+        return numeric_limits<double>::quiet_NaN();
     }
     else {
         return subsectorPrice;

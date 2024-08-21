@@ -142,7 +142,7 @@ protected:
     typedef std::vector<Subsector*>::const_iterator CSubsectorIterator;
 
     //! Pointer to the sector's information store.
-    std::auto_ptr<IInfo> mSectorInfo;
+    std::unique_ptr<IInfo> mSectorInfo;
 
     typedef ObjECTS::TObjectMetaInfo object_meta_info_type;
     typedef std::vector<object_meta_info_type> object_meta_info_vector_type;

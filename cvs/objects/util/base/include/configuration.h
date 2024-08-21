@@ -87,7 +87,7 @@ public:
     const std::list<std::string>& getScenarioComponents() const;
 private:
     const std::string mLogFile; //!< The name of the log to use.
-    static std::auto_ptr<Configuration> gInstance; //!< The static instance of the Configuration class.
+    static std::unique_ptr<Configuration> gInstance; //!< The static instance of the Configuration class.
 	std::map<std::string, std::string> fileMap; //!< A map of the file names the program uses.
     //! Map file names to a flag if set indicates that the file should be written
 	std::map<std::string, bool> mShouldWriteFileMap;

@@ -79,13 +79,13 @@ there should be a copy constructor and assignment operator, as the three work in
 not be logical, then a private copy constructor and assignment operator should be defined to prevent a user or the compiler from accidentally calling the incorrect copy 
 or assignment operator.
 
-\subsection faqitem8 What is an auto_ptr and how do I use it?
-An auto_ptr is a member of the standard library which is used to contain a pointer a dynamically allocated object. The purpose of an auto_ptr is to automatically
+\subsection faqitem8 What is an unique_ptr and how do I use it?
+An unique_ptr is a member of the standard library which is used to contain a pointer a dynamically allocated object. The purpose of an unique_ptr is to automatically
 handle the deallocation of memory when an object goes out of scope. This allows the use of dynamic memory, which is often advantagous, without having to remember to
-deallocate the memory. To use an auto_ptr, you must include the <memory> file. Then declare an auto_ptr as auto_ptr<ObjectType>( new Object ). If you need to declare the auto_ptr
-prior to allocation, such as when using it as a member variable, you must use the auto_ptr's reset function to assign the new object to the auto_ptr. If you need to pass the object to
-another function, use the get function of the auto_ptr. Do not pass the auto_ptr itself, as only one auto_ptr can have responsibility for an object, so copying an auto_ptr assigns
-the memory to the auto_ptr you are copying into. auto_ptrs may not be used inside containers, such as vectors. This may compile, but will cause runtime errors. 
+deallocate the memory. To use an unique_ptr, you must include the <memory> file. Then declare an unique_ptr as unique_ptr<ObjectType>( new Object ). If you need to declare the unique_ptr
+prior to allocation, such as when using it as a member variable, you must use the unique_ptr's reset function to assign the new object to the unique_ptr. If you need to pass the object to
+another function, use the get function of the unique_ptr. Do not pass the unique_ptr itself, as only one unique_ptr can have responsibility for an object, so copying an unique_ptr assigns
+the memory to the unique_ptr you are copying into. unique_ptrs may not be used inside containers, such as vectors. This may compile, but will cause runtime errors. 
 
 \subsection faqitem9 Why is iosfwd included in header files instead of iostream?
 iosfwd is the forward declared version of iostream. iostream is a very large file, and should not be included in a header file unless the class contains a member variable of an iostream type.

@@ -225,10 +225,10 @@ protected:
     mutable bool mPricePaidCached;
 
     //! A sequestration device to capture emissions
-    std::auto_ptr<ICaptureComponent> mSequestrationDevice;
+    std::unique_ptr<ICaptureComponent> mSequestrationDevice;
     
     //! Technology info store.
-    std::auto_ptr<IInfo> mTechInfo;
+    std::unique_ptr<IInfo> mTechInfo;
 private:
     void clear();
     bool doCalibration;

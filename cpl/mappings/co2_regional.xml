@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<remap-data>
+    <column name="region">
+        <!-- order matters here! -->
+        <!--output-data>Global</output-data -->
+        <!-- no mappings implies no data will get remapped -->
+        <output-data>USA</output-data>
+        <output-data>Africa_Eastern</output-data>
+        <output-data>Africa_Northern</output-data>
+        <output-data>Africa_Southern</output-data>
+        <output-data>Africa_Western</output-data>
+        <output-data>Australia_NZ</output-data>
+        <output-data>Brazil</output-data>
+        <output-data>Canada</output-data>
+        <output-data>Central America and Caribbean</output-data>
+        <output-data>Central Asia</output-data>
+        <output-data>China</output-data>
+        <output-data>EU-12</output-data>
+        <output-data>EU-15</output-data>
+        <output-data>Europe_Eastern</output-data>
+        <output-data>Europe_Non_EU</output-data>
+        <output-data>European Free Trade Association</output-data>
+        <output-data>India</output-data>
+        <output-data>Indonesia</output-data>
+        <output-data>Japan</output-data>
+        <output-data>Mexico</output-data>
+        <output-data>Middle East</output-data>
+        <output-data>Pakistan</output-data>
+        <output-data>Russia</output-data>
+        <output-data>South Africa</output-data>
+        <output-data>South America_Northern</output-data>
+        <output-data>South America_Southern</output-data>
+        <output-data>South Asia</output-data>
+        <output-data>South Korea</output-data>
+        <output-data>Southeast Asia</output-data>
+        <output-data>Taiwan</output-data>
+        <output-data>Argentina</output-data>
+        <output-data>Colombia</output-data>
+    </column>
+    <column name="sector">
+        <output-data>surface</output-data>
+        <output-data>aircraft</output-data>
+        <output-data>shipment</output-data>
+        <map from="H2 central production" to="surface"/>
+        <map from="H2 forecourt production" to="surface"/>
+        <map from="H2 wholesale dispensing" to="surface"/>
+        <map from="N fertilizer" to="surface"/>
+        <map from="agricultural energy use" to="surface"/>
+        <map from="alumina" to="surface"/>
+        <map from="backup_electricity" to="surface"/>
+        <map from="cement" to="surface"/>
+        <map from="chemical energy use" to="surface"/>
+        <map from="chemical feedstocks" to="surface"/>
+        <map from="comm cooling" to="surface"/>
+        <map from="comm heating" to="surface"/>
+        <map from="comm others" to="surface"/>
+        <map from="construction energy use" to="surface"/>
+        <map from="csp_backup" to="surface"/>
+        <map from="desalinated water" to="surface"/>
+        <map from="district heat" to="surface"/>
+        <map from="elec_biomass (IGCC)" to="surface"/>
+        <map from="elec_biomass (IGCC CCS)" to="surface"/>
+        <map from="elec_biomass (conv)" to="surface"/>
+        <map from="elec_biomass (conv CCS)" to="surface"/>
+        <map from="elec_coal (IGCC)" to="surface"/>
+        <map from="elec_coal (conv pul)" to="surface"/>
+        <map from="elec_coal (IGCC CCS)" to="surface"/>
+        <map from="elec_coal (conv pul CCS)" to="surface"/>
+        <map from="elec_gas (CC)" to="surface"/>
+        <map from="elec_gas (CC CCS)" to="surface"/>
+        <map from="elec_gas (steam/CT)" to="surface"/>
+        <map from="elec_refined liquids (CC)" to="surface"/>
+        <map from="elec_refined liquids (CC CCS)" to="surface"/>
+        <map from="elec_refined liquids (steam/CT)" to="surface"/>
+        <map from="gas pipeline" to="surface"/>
+        <map from="gas processing" to="surface"/>
+        <map from="iron and steel" to="surface"/>
+        <map from="mining energy use" to="surface"/>
+        <map from="other industrial energy use" to="surface"/>
+        <map from="other industrial feedstocks" to="surface"/>
+        <map from="process heat cement" to="surface"/>
+        <map from="refining" to="surface"/>
+        <map from="regional biomass" to="surface"/>
+        <map from="regional biomassOil" to="surface"/>
+        <map from="regional corn for ethanol" to="surface"/>
+        <map from="regional sugar for ethanol" to="surface"/>
+        <map from="resid cooling" to="surface"/>
+        <map from="resid heating" to="surface"/>
+        <map from="resid others" to="surface"/>
+        <map from="trn_aviation_intl" to="aircraft"/>
+        <map from="trn_freight" to="surface"/>
+        <map from="trn_freight_road" to="surface"/>
+        <map from="trn_pass" to="surface"/>
+        <map from="trn_pass_road" to="surface"/>
+        <map from="trn_pass_road_LDV" to="surface"/>
+        <map from="trn_pass_road_LDV_4W" to="surface"/>
+        <map from="trn_shipping_intl" to="shipment"/>
+        <map from="unconventional oil production" to="surface"/>
+    </column>
+</remap-data>
