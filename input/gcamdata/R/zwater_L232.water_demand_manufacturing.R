@@ -21,7 +21,7 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
     c(FILE = "common/GCAM_region_names",
       FILE = "water/water_td_sectors",
       FILE = "energy/A32.globaltech_coef",
-      "L132.water_km3_R_ind_Yh",
+      "L173.water_all_km3_R_ind_Yh",
       "L232.StubTechProd_industry",
       FILE = "water/paper_mfg_intensity",
       FILE = "water/food_mfg_intensity",
@@ -77,7 +77,7 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
 
     L1327.out_Mt_R_paper_Yh %>%
       select(GCAM_region_ID, sector, year, prod=value) %>%
-      filter(year %in% unique(L132.water_km3_R_ind_Yh$year)) %>%
+      filter(year %in% unique(L173.water_all_km3_R_ind_Yh$year)) %>%
       left_join(paper_mfg_intensity %>% select(-country), by = "sector") %>%
       mutate(withdrawals = prod * intensity * CONV_MIL_BIL,
              # Calculate water consumption in paper industry - use constant ratio in mfg_water_ratios.csv
@@ -89,7 +89,7 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
       L1327.water_km3_R_ind_Yh_paper
 
     # Subtract paper industry water use from total industry
-    L132.water_km3_R_ind_Yh %>%
+    L173.water_all_km3_R_ind_Yh %>%
       rename(industry_water = water_km3) %>%
       left_join(L1327.water_km3_R_ind_Yh_paper %>% select(GCAM_region_ID, year, water_type, paper_water=water_km3),
                 by = c("GCAM_region_ID", "year", "water_type")) %>%
@@ -149,7 +149,7 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
     # Calculate food processing water withdrawals as intensity (km^3/Pcal) * production (Pcal)
     L1328.out_Pcal_R_food_Yh %>%
       select(GCAM_region_ID, year, prod = value) %>%
-      filter(year %in% unique(L132.water_km3_R_ind_Yh$year)) %>%
+      filter(year %in% unique(L173.water_all_km3_R_ind_Yh$year)) %>%
       mutate(sector = "food processing") %>%
       left_join_error_no_match(food_mfg_intensity_expanded, by = c("sector", "GCAM_region_ID")) %>%
       mutate(withdrawals = prod * intensity,
@@ -225,7 +225,7 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "water/water_td_sectors",
                      "energy/A32.globaltech_coef",
-                     "L132.water_km3_R_ind_Yh",
+                     "L173.water_all_km3_R_ind_Yh",
                      "L232.StubTechProd_industry",
                      "water/paper_mfg_intensity",
                      "water/mfg_water_ratios",
@@ -297,7 +297,7 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
       add_legacy_name("L232.TechCoef_food") %>%
       add_precursors("common/GCAM_region_names",
                      "water/water_td_sectors",
-                     "L132.water_km3_R_ind_Yh",
+                     "L173.water_all_km3_R_ind_Yh",
                      "water/food_mfg_intensity",
                      "water/mfg_water_ratios",
                      "L1328.out_Pcal_R_food_Yh",

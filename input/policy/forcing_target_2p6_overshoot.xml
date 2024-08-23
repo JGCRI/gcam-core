@@ -60,5 +60,5 @@
                                    the max-tax.  If the actual solution price
                                    lies above max-tax the algorithm will fail.
      -->
-    <max-tax>7999</max-tax>
+    <max-tax>9999</max-tax>
 </policy-target-runner>

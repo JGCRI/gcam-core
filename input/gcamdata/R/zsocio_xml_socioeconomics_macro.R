@@ -11,30 +11,30 @@
 #' the generated outputs: \code{socioeconomics_macro.xml}. There is no corresponding file in the
 #' original data system.
 module_socioeconomics_macro_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L280.nationalAccounts",
+      "L280.SavingsRateParams",
+      "L280.GDP_macro_function",
+      "L280.FactorProductivity",
+      # tracking inputs
+      "L281.BasePriceSectorMapping",
+      "L281.GlobalTechAccountOutputUseBasePrice_fd",
+      "L281.TrialValueResource")
+
+  MODULE_OUTPUTS <-
+    c(XML = "socioeconomics_macro.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L280.nationalAccounts",
-             "L280.SavingsRateParams",
-             "L280.GDP_macro_function",
-             "L280.FactorProductivity",
-             # tracking inputs
-             "L281.BasePriceSectorMapping",
-             "L281.GlobalTechAccountOutputUseBasePrice_fd",
-             "L281.TrialValueResource"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "socioeconomics_macro.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L280.nationalAccounts <- get_data(all_data, "L280.nationalAccounts")
-    L280.GDP_macro_function <- get_data(all_data, "L280.GDP_macro_function")
-    L280.SavingsRateParams <- get_data(all_data, "L280.SavingsRateParams")
-    L280.FactorProductivity <- get_data(all_data, "L280.FactorProductivity")
-
-    L281.BasePriceSectorMapping <- get_data(all_data, "L281.BasePriceSectorMapping")
-    L281.GlobalTechAccountOutputUseBasePrice_fd <- get_data(all_data, "L281.GlobalTechAccountOutputUseBasePrice_fd")
-    L281.TrialValueResource <- get_data(all_data, "L281.TrialValueResource")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -47,16 +47,10 @@ module_socioeconomics_macro_xml <- function(command, ...) {
       add_xml_data(L281.BasePriceSectorMapping, "BasePriceSectorMap", NULL) %>%
       add_xml_data(L281.GlobalTechAccountOutputUseBasePrice_fd, "GlobalTechAccountOutputUseBasePrice") %>%
       add_xml_data(L281.TrialValueResource, "TrialValueRsrc") %>%
-      add_precursors("L280.nationalAccounts",
-                     "L280.SavingsRateParams",
-                     "L280.GDP_macro_function",
-                     "L280.FactorProductivity",
-                     "L281.GlobalTechAccountOutputUseBasePrice_fd",
-                     "L281.TrialValueResource",
-                     "L281.BasePriceSectorMapping") ->
+      add_precursors(MODULE_INPUTS) ->
       socioeconomics_macro.xml
 
-    return_data(socioeconomics_macro.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

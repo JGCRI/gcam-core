@@ -425,7 +425,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       left_join(L110.IO_Coefs_pulp%>% left_join_error_no_match(GCAM_region_names, by = c("GCAM_region_ID")), by = c("region","year")) %>%
       mutate(coefficient = IO,
              coefficient=if_else(stub.technology == "woodpulp",aglu.FOREST_PULP_CONVERSION,coefficient)) %>%
-      group_by(GCAM_region_ID,stub.technology) %>%
+      group_by(region, stub.technology) %>%
       mutate(coefficient= if_else(is.na(coefficient),approx_fun(year, coefficient, rule = 1),coefficient)) %>%
       ungroup() %>%
       select(colnames(L202.StubTechCoef_an))->L202.StubTechCoef_an_Forest

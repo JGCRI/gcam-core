@@ -16,14 +16,22 @@
 #' @importFrom tidyr complete nesting replace_na
 #' @author STW May 2017
 module_socio_L100.Population_downscale_ctry <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "socioeconomics/POP/iso_ctry_Maddison",
+      FILE = "socioeconomics/POP/Maddison_population",
+      FILE = "socioeconomics/SSP/SSP_database_2024",
+      FILE = "socioeconomics/SSP/iso_SSP_regID",
+      FILE = "socioeconomics/POP/UN_popTot")
+
+  MODULE_OUTPUTS <-
+    c("L100.Pop_thous_ctry_Yh",
+      "L100.Pop_thous_SSP_ctry_Yfut")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "socioeconomics/socioeconomics_ctry",
-             "Maddison_population",
-             FILE = "socioeconomics/SSP_database_v9",
-             FILE = "socioeconomics/UN_popTot"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L100.Pop_thous_ctry_Yh",
-             "L100.Pop_thous_SSP_ctry_Yfut"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     ## silence package check.
@@ -35,11 +43,17 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    socioeconomics_ctry <- get_data(all_data, "socioeconomics/socioeconomics_ctry")
-    Maddison_population <- get_data(all_data, "Maddison_population")
-    SSP_database_v9 <- get_data(all_data, "socioeconomics/SSP_database_v9")
-    UN_popTot <- get_data(all_data, "socioeconomics/UN_popTot", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
+    Maddison_population %>%
+      select(-deleteme) %>%
+      gather_years %>%
+      # Remove all the blanks and "Total..." lines
+      filter(!(substr(Country, 1, 5) == "Total" & Country != "Total Former USSR"),
+             !is.na(Country)) %>%
+      mutate(year = as.integer(year)) ->
+      Maddison_population
 
     # ===================================================
 
@@ -47,8 +61,8 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
 
     # First clean up Maddison raw data -- NOTE: Maddison data are used to develop population ratios relative to 1950 to combine with UN data from 1950 onward
     pop_thous_ctry_reg <- Maddison_population %>%
-      rename(Maddison_ctry = Country, pop = value) %>%  # Change name to match socioeconomics_ctry mapping file
-      left_join(socioeconomics_ctry, by = "Maddison_ctry") # Join with iso codes
+      rename(Maddison_ctry = Country, pop = value) %>%  # Change name to match iso_ctry_Maddison mapping file
+      left_join(iso_ctry_Maddison, by = "Maddison_ctry") # Join with iso codes
 
     # Second, estimate population values prior to 1950 for countries in aggregate regions. This is what we want: pop_country_t = (pop_aggregate_t / pop_aggregate_1950) * pop_country_1950
     # Generate a scalar for population in each aggregate region in 1950 (to generate the population ratios)
@@ -165,15 +179,36 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
       rename(pop_final_hist = value) %>%
       select(-year)
 
-    # Second, generate ratios of future population to base year (2010) for all SSPs. The ratios will be applied to the historical year populations so there are no jumps/inconsistencies.
-    L100.Pop_thous_SSP_ctry_Yfut <- SSP_database_v9 %>% # Note units in SSP database are millions, but convert to thousands when we multiply by historic year
-      filter(MODEL == "IIASA-WiC POP", VARIABLE == "Population") %>%  # IIASA-WiC is the official SSP population data set
-      mutate(iso = tolower(REGION),
-             scenario = substr(SCENARIO, 1, 4)) %>%
-      select(-MODEL, -VARIABLE, -UNIT, -REGION, -SCENARIO) %>%
-      mutate(iso = gsub("rou", "rom", iso)) %>%  # SSP uses "rou" for the iso for Romania; replace with "rom" for consistency with other data sources
-      gather_years(value_col = "pop") %>%  # Long format
-      mutate(pop = as.numeric(pop)) %>%  # Clean year variable
+    # Second, generate ratios of future population to base year for all SSPs. The ratios will be applied to the historical year populations so there are no jumps/inconsistencies.
+
+    # use the IIASA-WiC POP model from the SSP database; IIASA-WiC is the official SSP population data set
+    SSP_database_2024 %>%
+      # make variable names lower case
+      dplyr::rename_all(tolower) %>%
+      # remove aggregated regions
+      filter(!grepl("\\(|World", region)) %>%
+      filter(model == "IIASA-WiC POP 2023", variable == "Population") %>%
+      left_join_error_no_match(
+        iso_SSP_regID %>% distinct(iso, region = ssp_country_name),
+        by = "region") %>%
+      gather_years() ->
+      SSP_pop_0
+
+    # Using the Historical Reference scenario to fill history of SSPs
+    SSP_pop_0 %>%
+      filter(scenario != "Historical Reference") %>%
+      left_join(
+        SSP_pop_0 %>% filter(scenario == "Historical Reference") %>% select(-scenario) %>%
+          rename(hist = value),
+        by = c("model", "region", "variable", "unit", "iso", "year")
+      ) %>%
+      # new ssp data starts 2020 (socioeconomics.SSP_DB_BASEYEAR)
+      mutate(value = if_else(year < socioeconomics.SSP_DB_BASEYEAR, hist, value)) %>%
+      select(iso, scenario, year, pop = value) ->
+      L100.Pop_thous_SSP_ctry_Yfut_0
+
+    L100.Pop_thous_SSP_ctry_Yfut <-
+      L100.Pop_thous_SSP_ctry_Yfut_0 %>%
       complete(nesting(scenario, iso), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
       filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
       group_by(scenario, iso) %>%
@@ -189,10 +224,12 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
       # For these countries, the ratio will be set to 1 (per the old data system).
       replace_na(list(ratio_iso_ssp = 1)) %>%
       ## Note: In the old data system, Taiwan is in this category and has constant population. Issue has been opened to deal with this later. ##
-      left_join(pop_final_hist, by = "iso") %>% # Join with final historic period population
+      right_join(pop_final_hist, by = "iso") %>% # Join with final historic period population
       mutate(value = pop_final_hist * ratio_iso_ssp) %>%  # Units are 1000 persons (UN 2010 value is in thousands)
       filter(year != socioeconomics.FINAL_HIST_YEAR) %>% # Keep only SSP future years
       select(-pop_final_hist, -ratio_iso_ssp)
+
+
 
     # ===================================================
 
@@ -202,7 +239,8 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
       add_units("thousand") %>%
       add_comments("Maddison population data cleaned to develop complete data for all years, (dis)aggregated to modern country boundaries") %>%
       add_legacy_name("L100.Pop_thous_ctry_Yh") %>%
-      add_precursors("socioeconomics/socioeconomics_ctry", "Maddison_population") ->
+      add_precursors("socioeconomics/POP/iso_ctry_Maddison",
+                     "socioeconomics/POP/Maddison_population") ->
       L100.Pop_thous_ctry_Yh
 
     L100.Pop_thous_SSP_ctry_Yfut %>%
@@ -210,10 +248,12 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
       add_units("thousand") %>%
       add_comments("Future population calculated as final historical year (2010) population times ratio of SSP future years to SSP 2010") %>%
       add_legacy_name("L100.Pop_thous_SSP_ctry_Yfut") %>%
-      add_precursors("socioeconomics/socioeconomics_ctry", "socioeconomics/SSP_database_v9", "socioeconomics/UN_popTot") ->
+      add_precursors("socioeconomics/SSP/SSP_database_2024",
+                     "socioeconomics/SSP/iso_SSP_regID",
+                     "socioeconomics/POP/UN_popTot") ->
       L100.Pop_thous_SSP_ctry_Yfut
 
-    return_data(L100.Pop_thous_ctry_Yh, L100.Pop_thous_SSP_ctry_Yfut)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

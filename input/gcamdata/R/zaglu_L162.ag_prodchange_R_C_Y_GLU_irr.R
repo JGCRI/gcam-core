@@ -112,6 +112,7 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       mutate(Irr_Rfd = "RFD") %>%
       rename(yield_kgHa = Yield_kgHa_rainfed) %>%
       bind_rows(L162.ag_irrYield_kgHa_Rcrs_Ccrs_Y) %>%
+      mutate(yield_kgHa = as.numeric(yield_kgHa)) %>%
       group_by(CROSIT_ctry, CROSIT_crop, Irr_Rfd) %>%
       mutate(tag1 = if_else(yield_kgHa[year == 2030] < yield_kgHa[year == 2005], 1, 0), # if 2030 < 2005, then AgProdChange1 = 0
              yield_kgHa = if_else(tag1 == 1 & year == 2030, yield_kgHa[year == 2005], yield_kgHa),

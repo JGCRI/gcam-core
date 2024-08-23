@@ -11,127 +11,80 @@
 #' the generated outputs: \code{electricity_water.xml}. The corresponding file in the
 #' original data system was \code{batch_electricity_water.xml.R} (water XML).
 module_water_electricity_water_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L223.Supplysector_elec",
+      "L223.SubsectorShrwtFllt_elec",
+      "L223.ElecReserve",
+      "L223.SectorUseTrialMarket_elec",
+      "L223.StubTechCapFactor_elec",
+      "L223.SubsectorInterp_elec",
+      "L223.SubsectorInterpTo_elec",
+      "L223.SubsectorLogit_elec",
+      "L223.SubsectorShrwt_coal",
+      "L223.SubsectorShrwt_nuc",
+      "L223.SubsectorShrwt_renew",
+      "L2233.AvgFossilEffKeyword_elec_cool",
+      "L2233.GlobalIntTechBackup_elec_cool",
+      "L2233.GlobalIntTechCapFac_elec_cool",
+      "L2233.GlobalIntTechEff_elec_cool",
+      "L2233.GlobalIntTechLifetime_elec_cool",
+      "L2233.GlobalIntTechShrwt_elec_cool",
+      "L2233.GlobalTechCapFac_elec_cool",
+      "L2233.GlobalTechCapture_elec_cool",
+      "L2233.GlobalTechEff_elec_cool",
+      "L2233.GlobalTechLifetime_elec_cool",
+      "L2233.GlobalTechProfitShutdown_elec_cool",
+      "L2233.GlobalTechSCurve_elec_cool",
+      "L2233.GlobalTechShrwt_elec_cool",
+      "L2233.PrimaryRenewKeyword_elec_cool",
+      "L2233.PrimaryRenewKeywordInt_elec_cool",
+      "L2233.StubTech_elecPassthru",
+      "L2233.StubTechProd_elecPassthru",
+      "L2233.GlobalPassThroughTech",
+      "L2233.GlobalTechEff_elecPassthru",
+      "L2233.GlobalTechShrwt_elecPassthru",
+      "L2233.GlobalIntTechCapital_elec",
+      "L2233.GlobalTechCapital_elecPassthru",
+      "L2233.GlobalIntTechOMfixed_elec",
+      "L2233.GlobalTechOMfixed_elecPassthru",
+      "L2233.GlobalIntTechOMvar_elec",
+      "L2233.GlobalTechOMvar_elecPassthru",
+      "L2233.GlobalTechInterp_elecPassthru",
+      "L2233.PassThroughSector_elec_cool",
+      "L2233.Supplysector_elec_cool",
+      "L2233.ElecReserve_elec_cool",
+      "L2233.SubsectorShrwtFllt_elec_cool",
+      "L2233.SubsectorLogit_elec_cool",
+      "L2233.StubTechTrackCapital_elec",
+      "L2233.StubTech_elec_cool",
+      "L2233.StubTechEff_elec_cool",
+      "L2233.StubTechProd_elec_cool",
+      "L2233.StubTechCapFactor_elec_cool",
+      "L2233.StubTechSecOut_desal_elec_cool",
+      "L2233.StubTechFixOut_hydro",
+      "L2233.StubTechShrwt_elec_cool",
+      "L2233.GlobalTechCapital_elec_cool",
+      "L2233.GlobalIntTechCapital_elec_cool",
+      "L223.GlobalTechCapFac_elec")
+
+  MODULE_OUTPUTS <-
+    c(XML = "electricity_water.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L223.Supplysector_elec",
-             "L223.SubsectorShrwtFllt_elec",
-             "L223.ElecReserve",
-             "L223.SectorUseTrialMarket_elec",
-             "L223.StubTechCapFactor_elec",
-             "L223.SubsectorInterp_elec",
-             "L223.SubsectorInterpTo_elec",
-             "L223.SubsectorLogit_elec",
-             "L223.SubsectorShrwt_coal",
-             "L223.SubsectorShrwt_nuc",
-             "L223.SubsectorShrwt_renew",
-             "L2233.AvgFossilEffKeyword_elec_cool",
-             "L2233.GlobalIntTechBackup_elec_cool",
-             "L2233.GlobalIntTechCapFac_elec_cool",
-             "L2233.GlobalIntTechEff_elec_cool",
-             "L2233.GlobalIntTechLifetime_elec_cool",
-             "L2233.GlobalIntTechShrwt_elec_cool",
-             "L2233.GlobalTechCapFac_elec_cool",
-             "L2233.GlobalTechCapture_elec_cool",
-             "L2233.GlobalTechEff_elec_cool",
-             "L2233.GlobalTechLifetime_elec_cool",
-             "L2233.GlobalTechProfitShutdown_elec_cool",
-             "L2233.GlobalTechSCurve_elec_cool",
-             "L2233.GlobalTechShrwt_elec_cool",
-             "L2233.PrimaryRenewKeyword_elec_cool",
-             "L2233.PrimaryRenewKeywordInt_elec_cool",
-             "L2233.StubTech_elecPassthru",
-             "L2233.StubTechProd_elecPassthru",
-             "L2233.GlobalPassThroughTech",
-             "L2233.GlobalTechEff_elecPassthru",
-             "L2233.GlobalTechShrwt_elecPassthru",
-             "L2233.GlobalIntTechCapital_elec",
-             "L2233.GlobalTechCapital_elecPassthru",
-             "L2233.GlobalIntTechOMfixed_elec",
-             "L2233.GlobalTechOMfixed_elecPassthru",
-             "L2233.GlobalIntTechOMvar_elec",
-             "L2233.GlobalTechOMvar_elecPassthru",
-             "L2233.GlobalTechInterp_elecPassthru",
-             "L2233.PassThroughSector_elec_cool",
-             "L2233.Supplysector_elec_cool",
-             "L2233.ElecReserve_elec_cool",
-             "L2233.SubsectorShrwtFllt_elec_cool",
-             "L2233.SubsectorLogit_elec_cool",
-             "L2233.StubTechTrackCapital_elec",
-             "L2233.StubTech_elec_cool",
-             "L2233.StubTechEff_elec_cool",
-             "L2233.StubTechProd_elec_cool",
-             "L2233.StubTechCapFactor_elec_cool",
-             "L2233.StubTechSecOut_desal_elec_cool",
-             "L2233.StubTechFixOut_hydro",
-             "L2233.StubTechShrwt_elec_cool",
-             "L2233.GlobalTechCapital_elec_cool",
-             "L2233.GlobalIntTechCapital_elec_cool",
-             "L223.GlobalTechCapFac_elec"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "electricity_water.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L223.Supplysector_elec <- get_data(all_data, "L223.Supplysector_elec")
-    L223.SubsectorShrwtFllt_elec <- get_data(all_data, "L223.SubsectorShrwtFllt_elec")
-    L223.ElecReserve <- get_data(all_data, "L223.ElecReserve")
-    L223.SectorUseTrialMarket_elec <- get_data(all_data, "L223.SectorUseTrialMarket_elec")
-    L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
-    L223.SubsectorInterp_elec <- get_data(all_data, "L223.SubsectorInterp_elec")
-    L223.SubsectorInterpTo_elec <- get_data(all_data, "L223.SubsectorInterpTo_elec")
-    L223.SubsectorLogit_elec <- get_data(all_data, "L223.SubsectorLogit_elec")
-    L223.SubsectorShrwt_coal <- get_data(all_data, "L223.SubsectorShrwt_coal")
-    L223.SubsectorShrwt_nuc <- get_data(all_data, "L223.SubsectorShrwt_nuc")
-    L223.SubsectorShrwt_renew <- get_data(all_data, "L223.SubsectorShrwt_renew")
-    L2233.AvgFossilEffKeyword_elec_cool <- get_data(all_data, "L2233.AvgFossilEffKeyword_elec_cool")
-    L2233.GlobalIntTechBackup_elec_cool <- get_data(all_data, "L2233.GlobalIntTechBackup_elec_cool")
-    L2233.GlobalIntTechCapFac_elec_cool <- get_data(all_data, "L2233.GlobalIntTechCapFac_elec_cool")
-    L2233.GlobalIntTechEff_elec_cool <- get_data(all_data, "L2233.GlobalIntTechEff_elec_cool")
-    L2233.GlobalIntTechLifetime_elec_cool <- get_data(all_data, "L2233.GlobalIntTechLifetime_elec_cool")
-    L2233.GlobalIntTechShrwt_elec_cool <- get_data(all_data, "L2233.GlobalIntTechShrwt_elec_cool")
-    L2233.GlobalTechCapFac_elec_cool <- get_data(all_data, "L2233.GlobalTechCapFac_elec_cool")
-    L2233.GlobalTechCapture_elec_cool <- get_data(all_data, "L2233.GlobalTechCapture_elec_cool")
-    L2233.GlobalTechEff_elec_cool <- get_data(all_data, "L2233.GlobalTechEff_elec_cool")
-    L2233.GlobalTechLifetime_elec_cool <- get_data(all_data, "L2233.GlobalTechLifetime_elec_cool")
-    L2233.GlobalTechProfitShutdown_elec_cool <- get_data(all_data, "L2233.GlobalTechProfitShutdown_elec_cool")
-    L2233.GlobalTechSCurve_elec_cool <- get_data(all_data, "L2233.GlobalTechSCurve_elec_cool")
-    L2233.GlobalTechShrwt_elec_cool <- get_data(all_data, "L2233.GlobalTechShrwt_elec_cool")
-    L2233.PrimaryRenewKeyword_elec_cool <- get_data(all_data, "L2233.PrimaryRenewKeyword_elec_cool")
-    L2233.PrimaryRenewKeywordInt_elec_cool <- get_data(all_data, "L2233.PrimaryRenewKeywordInt_elec_cool")
-    L2233.StubTech_elecPassthru <- get_data(all_data, "L2233.StubTech_elecPassthru")
-    L2233.StubTechProd_elecPassthru <- get_data(all_data, "L2233.StubTechProd_elecPassthru")
-    L2233.GlobalPassThroughTech <- get_data(all_data, "L2233.GlobalPassThroughTech")
-    L2233.GlobalTechEff_elecPassthru <- get_data(all_data, "L2233.GlobalTechEff_elecPassthru")
-    L2233.GlobalTechShrwt_elecPassthru <- get_data(all_data, "L2233.GlobalTechShrwt_elecPassthru")
-    L2233.GlobalIntTechCapital_elec <- get_data(all_data, "L2233.GlobalIntTechCapital_elec")
-    L2233.GlobalTechCapital_elecPassthru <- get_data(all_data, "L2233.GlobalTechCapital_elecPassthru")
-    L2233.GlobalIntTechOMfixed_elec <- get_data(all_data, "L2233.GlobalIntTechOMfixed_elec")
-    L2233.GlobalTechOMfixed_elecPassthru <- get_data(all_data, "L2233.GlobalTechOMfixed_elecPassthru")
-    L2233.GlobalIntTechOMvar_elec <- get_data(all_data, "L2233.GlobalIntTechOMvar_elec")
-    L2233.GlobalTechOMvar_elecPassthru <- get_data(all_data, "L2233.GlobalTechOMvar_elecPassthru")
-    L2233.GlobalTechInterp_elecPassthru <- get_data(all_data, "L2233.GlobalTechInterp_elecPassthru")
-    L2233.PassThroughSector_elec_cool <- get_data(all_data, "L2233.PassThroughSector_elec_cool")
-    L2233.Supplysector_elec_cool <- get_data(all_data, "L2233.Supplysector_elec_cool")
-    L2233.ElecReserve_elec_cool <- get_data(all_data, "L2233.ElecReserve_elec_cool")
-    L2233.SubsectorShrwtFllt_elec_cool <- get_data(all_data, "L2233.SubsectorShrwtFllt_elec_cool")
-    L2233.SubsectorLogit_elec_cool <- get_data(all_data, "L2233.SubsectorLogit_elec_cool")
-    L2233.StubTechTrackCapital_elec <- get_data(all_data, "L2233.StubTechTrackCapital_elec")
-    L2233.StubTech_elec_cool <- get_data(all_data, "L2233.StubTech_elec_cool")
-    L2233.StubTechEff_elec_cool <- get_data(all_data, "L2233.StubTechEff_elec_cool")
-    L2233.StubTechSecOut_desal_elec_cool <- get_data(all_data, "L2233.StubTechSecOut_desal_elec_cool")
-    L2233.StubTechProd_elec_cool <- get_data(all_data, "L2233.StubTechProd_elec_cool")
-    L2233.StubTechCapFactor_elec_cool <- get_data(all_data, "L2233.StubTechCapFactor_elec_cool")
-    L2233.StubTechFixOut_hydro <- get_data(all_data, "L2233.StubTechFixOut_hydro")
-    L2233.StubTechShrwt_elec_cool <- get_data(all_data, "L2233.StubTechShrwt_elec_cool")
-    L2233.GlobalTechCapital_elec_cool <- get_data(all_data, "L2233.GlobalTechCapital_elec_cool")
-    L2233.GlobalIntTechCapital_elec_cool <- get_data(all_data, "L2233.GlobalIntTechCapital_elec_cool")
-    L223.GlobalTechCapFac_elec <- get_data(all_data, "L223.GlobalTechCapFac_elec")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
 
     # Silence package checks
     technology <- NULL
-
 
     # ===================================================
 
@@ -201,63 +154,10 @@ module_water_electricity_water_xml <- function(command, ...) {
       add_xml_data(L2233.GlobalTechCapital_elec_cool, "GlobalTechCapital") %>%
       add_xml_data(L2233.GlobalIntTechCapital_elec_cool, "GlobalIntTechCapital", "GlobalTechCapital") %>%
       add_xml_data(L223.GlobalTechCapFac_elec, "GlobalTechCapFac") %>%
-      add_precursors("L223.Supplysector_elec",
-                     "L223.SubsectorShrwtFllt_elec",
-                     "L223.ElecReserve",
-                     "L223.SectorUseTrialMarket_elec",
-                     "L223.StubTechCapFactor_elec",
-                     "L223.SubsectorInterp_elec",
-                     "L223.SubsectorInterpTo_elec",
-                     "L223.SubsectorLogit_elec",
-                     "L223.SubsectorShrwt_coal",
-                     "L223.SubsectorShrwt_nuc",
-                     "L223.SubsectorShrwt_renew",
-                     "L2233.AvgFossilEffKeyword_elec_cool",
-                     "L2233.GlobalIntTechBackup_elec_cool",
-                     "L2233.GlobalIntTechCapFac_elec_cool",
-                     "L2233.GlobalIntTechEff_elec_cool",
-                     "L2233.GlobalIntTechLifetime_elec_cool",
-                     "L2233.GlobalIntTechShrwt_elec_cool",
-                     "L2233.GlobalTechCapFac_elec_cool",
-                     "L2233.GlobalTechCapture_elec_cool",
-                     "L2233.GlobalTechEff_elec_cool",
-                     "L2233.GlobalTechLifetime_elec_cool",
-                     "L2233.GlobalTechProfitShutdown_elec_cool",
-                     "L2233.GlobalTechSCurve_elec_cool",
-                     "L2233.GlobalTechShrwt_elec_cool",
-                     "L2233.PrimaryRenewKeyword_elec_cool",
-                     "L2233.PrimaryRenewKeywordInt_elec_cool",
-                     "L2233.StubTech_elecPassthru",
-                     "L2233.StubTechProd_elecPassthru",
-                     "L2233.GlobalPassThroughTech",
-                     "L2233.GlobalTechEff_elecPassthru",
-                     "L2233.GlobalTechShrwt_elecPassthru",
-                     "L2233.GlobalIntTechCapital_elec",
-                     "L2233.GlobalTechCapital_elecPassthru",
-                     "L2233.GlobalIntTechOMfixed_elec",
-                     "L2233.GlobalTechOMfixed_elecPassthru",
-                     "L2233.GlobalIntTechOMvar_elec",
-                     "L2233.GlobalTechOMvar_elecPassthru",
-                     "L2233.GlobalTechInterp_elecPassthru",
-                     "L2233.PassThroughSector_elec_cool",
-                     "L2233.Supplysector_elec_cool",
-                     "L2233.ElecReserve_elec_cool",
-                     "L2233.SubsectorShrwtFllt_elec_cool",
-                     "L2233.SubsectorLogit_elec_cool",
-                     "L2233.StubTechTrackCapital_elec",
-                     "L2233.StubTech_elec_cool",
-                     "L2233.StubTechEff_elec_cool",
-                     "L2233.StubTechProd_elec_cool",
-                     "L2233.StubTechCapFactor_elec_cool",
-                     "L2233.StubTechSecOut_desal_elec_cool",
-                     "L2233.StubTechFixOut_hydro",
-                     "L2233.StubTechShrwt_elec_cool",
-                     "L2233.GlobalTechCapital_elec_cool",
-                     "L2233.GlobalIntTechCapital_elec_cool",
-                     "L223.GlobalTechCapFac_elec") ->
+      add_precursors(MODULE_INPUTS) ->
       electricity_water.xml
 
-    return_data(electricity_water.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

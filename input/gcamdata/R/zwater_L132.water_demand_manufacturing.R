@@ -18,16 +18,14 @@
 #' @author GPK June 2018
 module_water_L132.water_demand_manufacturing <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "water/aquastat_ctry",
+    return(c(FILE = "water/aquastat_ctry",
              FILE = "water/FAO_industrial_water_AQUASTAT",
              FILE = "water/mfg_water_ratios",
              FILE = "water/mfg_water_mapping",
              FILE = "water/Vassolo_mfg_water",
              "L101.en_bal_EJ_ctry_Si_Fi_Yh_full"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L132.water_km3_ctry_ind_Yh",
-             "L132.water_km3_R_ind_Yh"))
+    return(c("L132.water_km3_ctry_ind_Yh"))
   } else if(command == driver.MAKE) {
 
     year <- value <- GCAM_region_ID <- sector <- fuel <- continent <-
@@ -39,7 +37,6 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     aquastat_ctry <- get_data(all_data, "water/aquastat_ctry")
     FAO_industrial_water_AQUASTAT <- get_data(all_data, "water/FAO_industrial_water_AQUASTAT")
     mfg_water_ratios <- get_data(all_data, "water/mfg_water_ratios")
@@ -130,14 +127,6 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
              water_km3 = water_km3 * scaler) %>%
       select(-scaler)
 
-    # Aggregating manufacturing water flow volumes to GCAM regions
-    L132.water_km3_R_ind_Yh <-
-      left_join_error_no_match(L132.water_km3_ctry_ind_Yh, iso_GCAM_regID[c("iso", "GCAM_region_ID")],
-                               by = "iso") %>%
-      group_by(GCAM_region_ID, year, water_type) %>%
-      summarise(water_km3 = sum(water_km3)) %>%
-      ungroup()
-
 
     # ===================================================
 
@@ -147,6 +136,7 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
       add_comments("Uses continental industrial energy/water ratios from 1995") %>%
       add_comments("to determine water withdrawal and consumption coefficients") %>%
       add_comments("Estimated withdrawal volumes are capped by Aquastat data") %>%
+      add_comments("NOTE: this is self supply only (not including desal)") %>%
       add_legacy_name("L132.water_km3_ctry_ind_Yh") %>%
       add_precursors("water/aquastat_ctry",
                      "water/FAO_industrial_water_AQUASTAT",
@@ -156,23 +146,7 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
                      "L101.en_bal_EJ_ctry_Si_Fi_Yh_full") ->
       L132.water_km3_ctry_ind_Yh
 
-    L132.water_km3_R_ind_Yh %>%
-      add_title("Manufacturing water withdrawals by GCAM region and water type") %>%
-      add_units("km^3/yr") %>%
-      add_comments("Uses continental industrial energy/water ratios from 1995") %>%
-      add_comments("to determine water withdrawal and consumption coefficients") %>%
-      add_comments("Estimated withdrawal volumes are capped by Aquastat data") %>%
-      add_legacy_name("L132.water_km3_R_ind_Yh") %>%
-      add_precursors("common/iso_GCAM_regID",
-                     "water/aquastat_ctry",
-                     "water/FAO_industrial_water_AQUASTAT",
-                     "water/mfg_water_ratios",
-                     "water/mfg_water_mapping",
-                     "water/Vassolo_mfg_water",
-                     "L101.en_bal_EJ_ctry_Si_Fi_Yh_full") ->
-      L132.water_km3_R_ind_Yh
-
-    return_data(L132.water_km3_ctry_ind_Yh, L132.water_km3_R_ind_Yh)
+    return_data(L132.water_km3_ctry_ind_Yh)
   } else {
     stop("Unknown command")
   }

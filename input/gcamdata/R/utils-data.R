@@ -104,7 +104,7 @@ get_units <- function(x) { attr(x, ATTR_UNITS) }
 #' @param ... Names of precursor objects (character)
 #' @return \code{x} with units appended to any existing comments.
 add_precursors <- function(x, ...) {
-  pc <- as.character(list(...))
+  pc <- c(...)
   attr(x, ATTR_PRECURSORS) <- c(attr(x, ATTR_PRECURSORS), pc)
   x
 }

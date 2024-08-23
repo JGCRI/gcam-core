@@ -16,28 +16,34 @@ module_socio_SSP_xml <- function(command, ...) {
 
   SSP_NUMS <- 1:5
 
+  MODULE_INPUTS <-
+    c(paste0("L201.Pop_gSSP", SSP_NUMS),
+      paste0("L201.Pop_SSP", SSP_NUMS),
+      "L201.GDP_Scen",
+      paste0("L201.TotalFactorProductivity_gSSP", SSP_NUMS),
+      paste0("L201.TotalFactorProductivity_SSP", SSP_NUMS),
+      "L201.PPPConvert",
+      "L201.GDP_GCAM3",
+      "L201.TotalFactorProductivity_GCAM3",
+      "L201.Pop_GCAM3")
+
+  MODULE_OUTPUTS <-
+    c(XML = "socioeconomics_gSSP1.xml",
+      XML = "socioeconomics_gSSP2.xml",
+      XML = "socioeconomics_gSSP3.xml",
+      XML = "socioeconomics_gSSP4.xml",
+      XML = "socioeconomics_gSSP5.xml",
+      XML = "socioeconomics_SSP1.xml",
+      XML = "socioeconomics_SSP2.xml",
+      XML = "socioeconomics_SSP3.xml",
+      XML = "socioeconomics_SSP4.xml",
+      XML = "socioeconomics_SSP5.xml",
+      XML = "socioeconomics_GCAM3.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(paste0("L201.Pop_gSSP", SSP_NUMS),
-             paste0("L201.Pop_SSP", SSP_NUMS),
-             "L201.GDP_Scen",
-             paste0("L201.TotalFactorProductivity_gSSP", SSP_NUMS),
-             paste0("L201.TotalFactorProductivity_SSP", SSP_NUMS),
-             "L201.PPPConvert",
-             "L201.GDP_GCAM3",
-             "L201.TotalFactorProductivity_GCAM3",
-             "L201.Pop_GCAM3"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "socioeconomics_gSSP1.xml",
-             XML = "socioeconomics_gSSP2.xml",
-             XML = "socioeconomics_gSSP3.xml",
-             XML = "socioeconomics_gSSP4.xml",
-             XML = "socioeconomics_gSSP5.xml",
-             XML = "socioeconomics_SSP1.xml",
-             XML = "socioeconomics_SSP2.xml",
-             XML = "socioeconomics_SSP3.xml",
-             XML = "socioeconomics_SSP4.xml",
-             XML = "socioeconomics_SSP5.xml",
-             XML = "socioeconomics_GCAM3.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -47,12 +53,8 @@ module_socio_SSP_xml <- function(command, ...) {
       socioeconomics_SSP2.xml <- socioeconomics_SSP3.xml <- socioeconomics_SSP4.xml <-
       socioeconomics_SSP5.xml <- socioeconomics_GCAM3.xml <- NULL  # silence package check notes
 
-    # Load required inputs
-    L201.GDP_Scen <- get_data(all_data, "L201.GDP_Scen")
-    L201.PPPConvert <- get_data(all_data, "L201.PPPConvert")
-    L201.GDP_GCAM3 <- get_data(all_data, "L201.GDP_GCAM3")
-    L201.TotalFactorProductivity_GCAM3 <- get_data(all_data, "L201.TotalFactorProductivity_GCAM3")
-    L201.Pop_GCAM3 <- get_data(all_data, "L201.Pop_GCAM3")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     for(g in c("g", "")) {
       for(ssp in SSP_NUMS) {
@@ -88,12 +90,7 @@ module_socio_SSP_xml <- function(command, ...) {
       socioeconomics_GCAM3.xml
 
 
-    return_data(socioeconomics_gSSP1.xml, socioeconomics_gSSP2.xml,
-                socioeconomics_gSSP3.xml, socioeconomics_gSSP4.xml,
-                socioeconomics_gSSP5.xml, socioeconomics_SSP1.xml,
-                socioeconomics_SSP2.xml, socioeconomics_SSP3.xml,
-                socioeconomics_SSP4.xml, socioeconomics_SSP5.xml,
-                socioeconomics_GCAM3.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

@@ -16,16 +16,28 @@
 #' @author SHK October 2020
 #'
 module_socio_L180.GDP_macro <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      FILE = "common/GCAM_region_names",
+      FILE = "socioeconomics/SSP/SSP_database_2024",
+      FILE = "socioeconomics/SSP/pop_laborforce_variable",
+      FILE = "socioeconomics/SSP/iso_SSP_regID",
+      FILE = "socioeconomics/PWT/pwt91",
+      FILE = "socioeconomics/PWT/pwt91_na",
+      # PWT v9 will be updated to PWT v10 soon
+      #FILE = "socioeconomics/PWT/pwt1001",
+      #FILE = "socioeconomics/PWT/pwt1001_na",
+      "L100.GTAP_capital_stock")
+
+  MODULE_OUTPUTS <-
+    c("L180.nationalAccounts",
+      "L180.laborForceSSP")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "common/GCAM_region_names",
-             FILE = "socioeconomics/SSP_database_v9",
-             FILE = "socioeconomics/pwt91",
-             FILE = "socioeconomics/pwt91_na",
-             "L100.GTAP_capital_stock"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L180.nationalAccounts",
-             "L180.laborForceSSP"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     # silence package checks
@@ -37,16 +49,15 @@ module_socio_L180.GDP_macro <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
+    # Define data source/version ----
     # note this data is based on market exchange rate (mer)
     # macroeconomic date from Penn World Tables
-    PWT91.raw <- get_data(all_data, "socioeconomics/pwt91")
-    PWT91.supplemental <- get_data(all_data, "socioeconomics/pwt91_na")
-    # population by cohort for determining labor force
-    pop.cohort.ssp.data <- get_data(all_data, "socioeconomics/SSP_database_v9")
-    gcam.reg.iso <- get_data(all_data, "common/iso_GCAM_regID", strip_attributes = TRUE)
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
-
-    L100.GTAP_capital_stock <- get_data(all_data, "L100.GTAP_capital_stock", strip_attributes = TRUE)
+    PWT.raw <- pwt91
+    PWT.supplemental <- pwt91_na
+    gcam.reg.iso <- iso_GCAM_regID
 
 
     # -----------------------------------------------------------------------------
@@ -71,7 +82,7 @@ module_socio_L180.GDP_macro <- function(command, ...) {
     # delta           	  Average depreciation rate of the capital stock
     #
 
-    PWT91.raw %>% select(countrycode, country, year, pop, emp, avh, rgdpna, rconna, rdana,
+    PWT.raw %>% select(countrycode, country, year, pop, emp, avh, rgdpna, rconna, rdana,
                          rnna, labsh, delta, irr) %>%
       rename(iso = countrycode,
              labor.force = emp,
@@ -92,20 +103,20 @@ module_socio_L180.GDP_macro <- function(command, ...) {
     # 1. convert from constant local currency to constant USD using the provided
     #    exchange rate in the base dollar year
     # 2. ensure export and imports balance globally (they are off by ~ 1-2%)
-    PWT91.supplemental %>%
+    PWT.supplemental %>%
       rename(iso = countrycode) %>%
       mutate(iso = tolower(iso)) %>%
       filter(iso %in% unique(pwt$iso)) ->
-      PWT91.supplemental
+      PWT.supplemental
 
-    PWT91.supplemental %>%
+    PWT.supplemental %>%
       # get the exchange rate of the base dollar year
       filter(year == socioeconomics.PWT_CONSTANT_CURRENCY_YEAR) %>%
       select(iso, xr) %>%
       # join that exchange rate back onto the base q_x, q_m (exports and imports)
       # which are already in the base currency year so that we can jump from
       # local currency to USD
-      left_join_error_no_match(PWT91.supplemental %>% select(iso, year, q_x, q_m), ., by=c("iso")) %>%
+      left_join_error_no_match(PWT.supplemental %>% select(iso, year, q_x, q_m), ., by=c("iso")) %>%
       mutate(exports = q_x / xr,
              imports = q_m / xr) %>%
       select(iso, year, exports, imports) %>%
@@ -122,10 +133,10 @@ module_socio_L180.GDP_macro <- function(command, ...) {
       pwt
 
     # replace iso:sxm with iso:nld for Dutch part of Saint Maarten
-    pwt %>% mutate(iso = gsub("sxm", "nld", iso)) %>%
-      group_by(iso, var, year) %>%
-      summarise_all(sum, na.rm = TRUE) %>%
-      ungroup() -> pwt
+    # pwt %>% mutate(iso = gsub("sxm", "nld", iso)) %>%
+    #   group_by(iso, var, year) %>%
+    #   summarise_all(sum, na.rm = TRUE) %>%
+    #   ungroup() -> pwt
 
     ## Process and aggregate data to GCAM inputs
     ## Check for iso errors, do not include.
@@ -222,7 +233,6 @@ module_socio_L180.GDP_macro <- function(command, ...) {
       select(-gtap_ene_inv_share, -gtap_ene_stock_share) ->
       L180.nationalAccounts
 
-
     # Some ISOs have missing interest rates, attempt to fill them using
     # rule=2 and if still missing (i.e. the country has no data for any
     # year) just fall back to the global mean
@@ -233,45 +243,54 @@ module_socio_L180.GDP_macro <- function(command, ...) {
       mutate(interest.rate = if_else(is.na(interest.rate), mean(interest.rate, na.rm=T), interest.rate)) ->
       L180.nationalAccounts
 
+    # Using SSP database to derive future labor force
+    SSP_database_2024 %>%
+      # make variable names lower case
+      dplyr::rename_all(tolower) %>%
+      # remove aggregated regions
+      filter(!grepl("\\(|World", region)) %>%
+      filter(model == "IIASA-WiC POP 2023") %>%
+      left_join_error_no_match(
+        iso_SSP_regID %>% distinct(iso, region = ssp_country_name),
+        by = "region") %>%
+      gather_years() ->
+      SSP_pop_0
 
-    #Future labor force share of population from SSP population by cohort
-    #Clean up dataset for processing.
-    pop.cohort.ssp.data %>%
-      rename(model = MODEL, scenario = SCENARIO, iso = REGION, var = VARIABLE, unit = UNIT) %>%
-      filter(model == "IIASA-WiC POP") %>%
-      mutate(var = gsub("\\|", "_", var),
-             scenario = tolower(substr(scenario, 1, 4)),
-             iso = tolower(iso),
-             var = gsub("Population", "pop", var),
-             var = gsub("\\-", "_", var),
-             var = gsub("Female", "n", var),
-             var = gsub("Male", "n", var),
-             var = gsub("Aged", "", var)) -> pop.cohort.ssp #gender neutral for total
-    #Filter working age population, excluding some cohorts
-    #Working age population = ages 15-64. Don't include ages 15-19 in HS and 20-24 in college.
-    pop.cohort.ssp %>% filter(var %in% c("pop", "pop_n_15_19_No Education", "pop_n_15_19_Primary Education",
-                      "pop_n_20_24_No Education", "pop_n_20_24_Primary Education",
-                      "pop_n_20_24_Secondary Education",
-                      "pop_n_25_29", "pop_n_30_34", "pop_n_35_39" , "pop_n_40_44",
-                      "pop_n_45_49", "pop_n_50_54", "pop_n_55_59" , "pop_n_60_64")) %>%
-      select(-model) -> pop.labor.force.ssp
-    pop.labor.force.ssp %>% filter(var %in% "pop") %>%
-      gather(year, value, -scenario, -var, -iso, -unit) %>%
-      mutate(year = as.integer(year),
-             value = as.numeric(value)) -> pop.ssp
-    pop.labor.force.ssp %>% filter(!(var %in% "pop")) %>%
-      gather(year, value, -scenario, -var, -iso, -unit) %>%
-      mutate(year = as.integer(year),
-             value = as.numeric(value)) -> labor.force.cohort.ssp
-    labor.force.cohort.ssp %>% select(-var) %>%
+    # Using the Historical Reference scenario to fill history of SSPs
+    SSP_pop_0 %>%
+      filter(scenario != "Historical Reference") %>%
+      left_join(
+        SSP_pop_0 %>% filter(scenario == "Historical Reference") %>% select(-scenario) %>%
+          rename(hist = value),
+        by = c("model", "region", "variable", "unit", "iso", "year")
+      ) %>%
+      # new ssp data starts 2020 (socioeconomics.SSP_DB_BASEYEAR)
+      mutate(value = if_else(year < socioeconomics.SSP_DB_BASEYEAR, hist, value)) %>%
+      select(-hist) ->
+      SSP_pop_1
+
+    SSP_pop_1 %>% filter(variable == "Population") %>%
+      transmute(scenario, iso, var = "pop", unit, year, value) ->
+      pop.ssp
+
+    SSP_pop_1 %>%
+      left_join_error_no_match(
+        pop_laborforce_variable %>% filter(version == "sspv3"), by = "variable") %>%
+      filter(laborforce_var == TRUE) %>%
+      # Note that in historical years, population was not differentiated by education
+      # We also do not have that differentiation now (NA could cause issues)
+      # Since the population to labor force will have another rescaling when connecting to
+      # PWT labor force base values
       group_by(scenario, iso, unit, year) %>%
-      summarise_all(sum, na.rm = TRUE) %>%
-      ungroup() %>%
-      mutate(var ="labor.force") -> labor.force.ssp
+      summarize(value = sum(value, na.rm = T)) %>% ungroup %>%
+      mutate(var = "labor.force") ->
+      labor.force.ssp
+
 
     #include total SSP population (pop) in table
     labor.force.ssp %>%
       bind_rows(pop.ssp) %>%
+      mutate(scenario = tolower(scenario)) %>%
       left_join_error_no_match(gcam.reg.iso, by = "iso") %>%
       select(scenario, iso, GCAM_region_ID, var, year, value, unit) %>%
       arrange(scenario, iso, var, year) ->
@@ -295,9 +314,12 @@ module_socio_L180.GDP_macro <- function(command, ...) {
     L180.laborForceSSP %>%
       add_title("Labor Force and Pop by SSP Scenarios") %>%
       add_units("millions") %>%
-      add_comments("Total pop and working age population less ages 15-19 in HS and 20-24 in college") %>%
+      add_comments("Total pop and working age population") %>%
       add_legacy_name("NA") %>%
-      add_precursors("common/iso_GCAM_regID", "socioeconomics/SSP_database_v9") ->
+      add_precursors("common/iso_GCAM_regID",
+                     "socioeconomics/SSP/SSP_database_2024",
+                     "socioeconomics/SSP/pop_laborforce_variable",
+                     "socioeconomics/SSP/iso_SSP_regID") ->
       L180.laborForceSSP
 
     L180.nationalAccounts %>%
@@ -307,11 +329,11 @@ module_socio_L180.GDP_macro <- function(command, ...) {
                labor wages, labor productivity, labor force, and labor force share, energy investment") %>%
       add_legacy_name("NA") %>%
       add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names",
-                     "socioeconomics/pwt91", "socioeconomics/pwt91_na",
+                     "socioeconomics/PWT/pwt91", "socioeconomics/PWT/pwt91_na",
                      "L100.GTAP_capital_stock") ->
       L180.nationalAccounts
 
-    return_data(L180.nationalAccounts, L180.laborForceSSP)
+    return_data(MODULE_OUTPUTS)
 
   } else {
     stop("Unknown command")

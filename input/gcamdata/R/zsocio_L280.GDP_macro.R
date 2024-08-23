@@ -16,18 +16,25 @@
 #' @author SHK October 2020
 #'
 module_socio_L280.GDP_macro <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "socioeconomics/A81.factor_productivity",
+      "L101.Pop_thous_R_Yh",
+      "L102.gdp_mil90usd_Scen_R_Y",
+      "L180.nationalAccounts",
+      "L180.laborForceSSP")
+
+  MODULE_OUTPUTS <-
+    c("L280.nationalAccounts",
+      "L280.SavingsRateParams",
+      "L280.GDP_macro_function",
+      "L280.FactorProductivity")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "socioeconomics/A81.factor_productivity",
-             "L101.Pop_thous_R_Yh",
-             "L102.gdp_mil90usd_Scen_R_Y",
-             "L180.nationalAccounts",
-             "L180.laborForceSSP"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L280.nationalAccounts",
-             "L280.SavingsRateParams",
-             "L280.GDP_macro_function",
-             "L280.FactorProductivity"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     # silence package checks
@@ -39,15 +46,18 @@ module_socio_L280.GDP_macro <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
     # note this data is based on market exchange rate (mer)
     # macroeconomic date from Penn World Tables
-    L180.nationalAccounts <- get_data(all_data, "L180.nationalAccounts", strip_attributes = TRUE)
-    A81.factor_productivity <- get_data(all_data, "socioeconomics/A81.factor_productivity", strip_attributes = TRUE)
+    L180.nationalAccounts <- L180.nationalAccounts
+    A81.factor_productivity <- A81.factor_productivity
     # future labor force share from SSP dataset
-    L180.laborForceSSP <- get_data(all_data, "L180.laborForceSSP", strip_attributes = TRUE)
-    gdp.calibrated.data <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y", strip_attributes = TRUE)
-    pop.hist.data <- get_data(all_data, "L101.Pop_thous_R_Yh", strip_attributes = TRUE)
-    gcam.region.id <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
+    L180.laborForceSSP <- L180.laborForceSSP
+    gdp.calibrated.data <- L102.gdp_mil90usd_Scen_R_Y
+    pop.hist.data <- L101.Pop_thous_R_Yh
+    gcam.region.id <- GCAM_region_names
     # -----------------------------------------------------------------------------
 
     #Calculate fractional wage rates to determine employment weighted
@@ -200,20 +210,6 @@ module_socio_L280.GDP_macro <- function(command, ...) {
       mutate(labor.force.share = labor.force/pop) %>%
       select(-labor.force) -> laborForceShareSSP2
 
-    #Future labor force share for Taiwan (30) missing.
-    #Use final historical year labor force share and pop for all future periods.
-    #Todo: final alternative wage pop data.
-    taiwan.region.name = gcam.region.id %>% filter(GCAM_region_ID == socioeconomics.TAIWAN_REGION_ID) %>% pull(region)
-    national.accounts.BaseYrs %>% filter( region == taiwan.region.name & year %in% MODEL_BASE_YEARS ) %>%
-      select( GCAM_region_ID, year, labor.force.share, pop=pop.pwt ) -> labor.force.share.Taiwan.BYS
-    national.accounts.BaseYrs %>% filter( region == taiwan.region.name & year == MODEL_FINAL_BASE_YEAR ) %>%
-      select( GCAM_region_ID, labor.force.share, pop=pop.pwt ) -> labor.force.share.Taiwan.FBY
-    tibble(year = as.integer(MODEL_FUTURE_YEARS), GCAM_region_ID = socioeconomics.TAIWAN_REGION_ID) %>%
-      left_join_error_no_match(labor.force.share.Taiwan.FBY, by=c("GCAM_region_ID")) -> laborForceShare.Taiwan.future
-
-    laborForceShareSSP2 %>% bind_rows(labor.force.share.Taiwan.BYS) %>%
-      bind_rows(laborForceShare.Taiwan.future) %>%
-      arrange( GCAM_region_ID, year ) -> laborForceShareSSP2
 
     #Calculate employment rate from historical employed share and working age pop from SSP data.
     #Apply employment rate from final base year to to future working age pop share.
@@ -223,6 +219,7 @@ module_socio_L280.GDP_macro <- function(command, ...) {
     laborForceShareSSP2.FBY %>% left_join_error_no_match(employed.share.FBY, by=c("GCAM_region_ID") ) %>%
       mutate(employment.rate = employed.share/labor.force.share) %>%
       select(-year, -pop, -employed.share, -labor.force.share) -> employment.rate.SSP2.FBY
+
     laborForceShareSSP2 %>% filter(year %in% MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(employment.rate.SSP2.FBY, by=c("GCAM_region_ID")) %>%
       mutate(labor.force.share = labor.force.share * employment.rate) -> laborForceShareSSP2.MFY
@@ -457,10 +454,7 @@ module_socio_L280.GDP_macro <- function(command, ...) {
                      "socioeconomics/A81.factor_productivity") ->
       L280.FactorProductivity
 
-    return_data(L280.nationalAccounts,
-                L280.SavingsRateParams,
-                L280.GDP_macro_function,
-                L280.FactorProductivity)
+    return_data(MODULE_OUTPUTS)
 
   } else {
     stop("Unknown command")

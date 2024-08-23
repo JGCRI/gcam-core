@@ -1,0 +1,500 @@
+# File: pop_laborforce_variable.csv
+# Title: Mapping of population to labor force
+# Units: NA
+# Description: variables in IIASA-WiC POP for two versions of SSP database
+# Source: Internally generated mapping file
+# Column types: ccl
+# ----------
+version,variable,laborforce_var
+sspv1,Population,FALSE
+sspv1,Population|Female,FALSE
+sspv1,Population|Female|Aged0-4,FALSE
+sspv1,Population|Female|Aged0-4|No Education,FALSE
+sspv1,Population|Female|Aged5-9,FALSE
+sspv1,Population|Female|Aged5-9|No Education,FALSE
+sspv1,Population|Female|Aged10-14,FALSE
+sspv1,Population|Female|Aged10-14|No Education,FALSE
+sspv1,Population|Female|Aged15-19,FALSE
+sspv1,Population|Female|Aged15-19|No Education,TRUE
+sspv1,Population|Female|Aged15-19|Primary Education,TRUE
+sspv1,Population|Female|Aged15-19|Secondary Education,FALSE
+sspv1,Population|Female|Aged15-19|Tertiary Education,FALSE
+sspv1,Population|Female|Aged20-24,FALSE
+sspv1,Population|Female|Aged20-24|No Education,TRUE
+sspv1,Population|Female|Aged20-24|Primary Education,TRUE
+sspv1,Population|Female|Aged20-24|Secondary Education,TRUE
+sspv1,Population|Female|Aged20-24|Tertiary Education,FALSE
+sspv1,Population|Female|Aged25-29,TRUE
+sspv1,Population|Female|Aged25-29|No Education,FALSE
+sspv1,Population|Female|Aged25-29|Primary Education,FALSE
+sspv1,Population|Female|Aged25-29|Secondary Education,FALSE
+sspv1,Population|Female|Aged25-29|Tertiary Education,FALSE
+sspv1,Population|Female|Aged30-34,TRUE
+sspv1,Population|Female|Aged30-34|No Education,FALSE
+sspv1,Population|Female|Aged30-34|Primary Education,FALSE
+sspv1,Population|Female|Aged30-34|Secondary Education,FALSE
+sspv1,Population|Female|Aged30-34|Tertiary Education,FALSE
+sspv1,Population|Female|Aged35-39,TRUE
+sspv1,Population|Female|Aged35-39|No Education,FALSE
+sspv1,Population|Female|Aged35-39|Primary Education,FALSE
+sspv1,Population|Female|Aged35-39|Secondary Education,FALSE
+sspv1,Population|Female|Aged35-39|Tertiary Education,FALSE
+sspv1,Population|Female|Aged40-44,TRUE
+sspv1,Population|Female|Aged40-44|No Education,FALSE
+sspv1,Population|Female|Aged40-44|Primary Education,FALSE
+sspv1,Population|Female|Aged40-44|Secondary Education,FALSE
+sspv1,Population|Female|Aged40-44|Tertiary Education,FALSE
+sspv1,Population|Female|Aged45-49,TRUE
+sspv1,Population|Female|Aged45-49|No Education,FALSE
+sspv1,Population|Female|Aged45-49|Primary Education,FALSE
+sspv1,Population|Female|Aged45-49|Secondary Education,FALSE
+sspv1,Population|Female|Aged45-49|Tertiary Education,FALSE
+sspv1,Population|Female|Aged50-54,TRUE
+sspv1,Population|Female|Aged50-54|No Education,FALSE
+sspv1,Population|Female|Aged50-54|Primary Education,FALSE
+sspv1,Population|Female|Aged50-54|Secondary Education,FALSE
+sspv1,Population|Female|Aged50-54|Tertiary Education,FALSE
+sspv1,Population|Female|Aged55-59,TRUE
+sspv1,Population|Female|Aged55-59|No Education,FALSE
+sspv1,Population|Female|Aged55-59|Primary Education,FALSE
+sspv1,Population|Female|Aged55-59|Secondary Education,FALSE
+sspv1,Population|Female|Aged55-59|Tertiary Education,FALSE
+sspv1,Population|Female|Aged60-64,FALSE
+sspv1,Population|Female|Aged60-64|No Education,FALSE
+sspv1,Population|Female|Aged60-64|Primary Education,FALSE
+sspv1,Population|Female|Aged60-64|Secondary Education,FALSE
+sspv1,Population|Female|Aged60-64|Tertiary Education,FALSE
+sspv1,Population|Female|Aged65-69,FALSE
+sspv1,Population|Female|Aged65-69|No Education,FALSE
+sspv1,Population|Female|Aged65-69|Primary Education,FALSE
+sspv1,Population|Female|Aged65-69|Secondary Education,FALSE
+sspv1,Population|Female|Aged65-69|Tertiary Education,FALSE
+sspv1,Population|Female|Aged70-74,FALSE
+sspv1,Population|Female|Aged70-74|No Education,FALSE
+sspv1,Population|Female|Aged70-74|Primary Education,FALSE
+sspv1,Population|Female|Aged70-74|Secondary Education,FALSE
+sspv1,Population|Female|Aged70-74|Tertiary Education,FALSE
+sspv1,Population|Female|Aged75-79,FALSE
+sspv1,Population|Female|Aged75-79|No Education,FALSE
+sspv1,Population|Female|Aged75-79|Primary Education,FALSE
+sspv1,Population|Female|Aged75-79|Secondary Education,FALSE
+sspv1,Population|Female|Aged75-79|Tertiary Education,FALSE
+sspv1,Population|Female|Aged80-84,FALSE
+sspv1,Population|Female|Aged80-84|No Education,FALSE
+sspv1,Population|Female|Aged80-84|Primary Education,FALSE
+sspv1,Population|Female|Aged80-84|Secondary Education,FALSE
+sspv1,Population|Female|Aged80-84|Tertiary Education,FALSE
+sspv1,Population|Female|Aged85-89,FALSE
+sspv1,Population|Female|Aged85-89|No Education,FALSE
+sspv1,Population|Female|Aged85-89|Primary Education,FALSE
+sspv1,Population|Female|Aged85-89|Secondary Education,FALSE
+sspv1,Population|Female|Aged85-89|Tertiary Education,FALSE
+sspv1,Population|Female|Aged90-94,FALSE
+sspv1,Population|Female|Aged90-94|No Education,FALSE
+sspv1,Population|Female|Aged90-94|Primary Education,FALSE
+sspv1,Population|Female|Aged90-94|Secondary Education,FALSE
+sspv1,Population|Female|Aged90-94|Tertiary Education,FALSE
+sspv1,Population|Female|Aged95-99,FALSE
+sspv1,Population|Female|Aged95-99|No Education,FALSE
+sspv1,Population|Female|Aged95-99|Primary Education,FALSE
+sspv1,Population|Female|Aged95-99|Secondary Education,FALSE
+sspv1,Population|Female|Aged95-99|Tertiary Education,FALSE
+sspv1,Population|Female|Aged100+,FALSE
+sspv1,Population|Female|Aged100+|No Education,FALSE
+sspv1,Population|Female|Aged100+|Primary Education,FALSE
+sspv1,Population|Female|Aged100+|Secondary Education,FALSE
+sspv1,Population|Female|Aged100+|Tertiary Education,FALSE
+sspv1,Population|Male,FALSE
+sspv1,Population|Male|Aged0-4,FALSE
+sspv1,Population|Male|Aged0-4|No Education,FALSE
+sspv1,Population|Male|Aged5-9,FALSE
+sspv1,Population|Male|Aged5-9|No Education,FALSE
+sspv1,Population|Male|Aged10-14,FALSE
+sspv1,Population|Male|Aged10-14|No Education,FALSE
+sspv1,Population|Male|Aged15-19,FALSE
+sspv1,Population|Male|Aged15-19|No Education,TRUE
+sspv1,Population|Male|Aged15-19|Primary Education,TRUE
+sspv1,Population|Male|Aged15-19|Secondary Education,FALSE
+sspv1,Population|Male|Aged15-19|Tertiary Education,FALSE
+sspv1,Population|Male|Aged20-24,FALSE
+sspv1,Population|Male|Aged20-24|No Education,TRUE
+sspv1,Population|Male|Aged20-24|Primary Education,TRUE
+sspv1,Population|Male|Aged20-24|Secondary Education,TRUE
+sspv1,Population|Male|Aged20-24|Tertiary Education,FALSE
+sspv1,Population|Male|Aged25-29,TRUE
+sspv1,Population|Male|Aged25-29|No Education,FALSE
+sspv1,Population|Male|Aged25-29|Primary Education,FALSE
+sspv1,Population|Male|Aged25-29|Secondary Education,FALSE
+sspv1,Population|Male|Aged25-29|Tertiary Education,FALSE
+sspv1,Population|Male|Aged30-34,TRUE
+sspv1,Population|Male|Aged30-34|No Education,FALSE
+sspv1,Population|Male|Aged30-34|Primary Education,FALSE
+sspv1,Population|Male|Aged30-34|Secondary Education,FALSE
+sspv1,Population|Male|Aged30-34|Tertiary Education,FALSE
+sspv1,Population|Male|Aged35-39,TRUE
+sspv1,Population|Male|Aged35-39|No Education,FALSE
+sspv1,Population|Male|Aged35-39|Primary Education,FALSE
+sspv1,Population|Male|Aged35-39|Secondary Education,FALSE
+sspv1,Population|Male|Aged35-39|Tertiary Education,FALSE
+sspv1,Population|Male|Aged40-44,TRUE
+sspv1,Population|Male|Aged40-44|No Education,FALSE
+sspv1,Population|Male|Aged40-44|Primary Education,FALSE
+sspv1,Population|Male|Aged40-44|Secondary Education,FALSE
+sspv1,Population|Male|Aged40-44|Tertiary Education,FALSE
+sspv1,Population|Male|Aged45-49,TRUE
+sspv1,Population|Male|Aged45-49|No Education,FALSE
+sspv1,Population|Male|Aged45-49|Primary Education,FALSE
+sspv1,Population|Male|Aged45-49|Secondary Education,FALSE
+sspv1,Population|Male|Aged45-49|Tertiary Education,FALSE
+sspv1,Population|Male|Aged50-54,TRUE
+sspv1,Population|Male|Aged50-54|No Education,FALSE
+sspv1,Population|Male|Aged50-54|Primary Education,FALSE
+sspv1,Population|Male|Aged50-54|Secondary Education,FALSE
+sspv1,Population|Male|Aged50-54|Tertiary Education,FALSE
+sspv1,Population|Male|Aged55-59,TRUE
+sspv1,Population|Male|Aged55-59|No Education,FALSE
+sspv1,Population|Male|Aged55-59|Primary Education,FALSE
+sspv1,Population|Male|Aged55-59|Secondary Education,FALSE
+sspv1,Population|Male|Aged55-59|Tertiary Education,FALSE
+sspv1,Population|Male|Aged60-64,FALSE
+sspv1,Population|Male|Aged60-64|No Education,FALSE
+sspv1,Population|Male|Aged60-64|Primary Education,FALSE
+sspv1,Population|Male|Aged60-64|Secondary Education,FALSE
+sspv1,Population|Male|Aged60-64|Tertiary Education,FALSE
+sspv1,Population|Male|Aged65-69,FALSE
+sspv1,Population|Male|Aged65-69|No Education,FALSE
+sspv1,Population|Male|Aged65-69|Primary Education,FALSE
+sspv1,Population|Male|Aged65-69|Secondary Education,FALSE
+sspv1,Population|Male|Aged65-69|Tertiary Education,FALSE
+sspv1,Population|Male|Aged70-74,FALSE
+sspv1,Population|Male|Aged70-74|No Education,FALSE
+sspv1,Population|Male|Aged70-74|Primary Education,FALSE
+sspv1,Population|Male|Aged70-74|Secondary Education,FALSE
+sspv1,Population|Male|Aged70-74|Tertiary Education,FALSE
+sspv1,Population|Male|Aged75-79,FALSE
+sspv1,Population|Male|Aged75-79|No Education,FALSE
+sspv1,Population|Male|Aged75-79|Primary Education,FALSE
+sspv1,Population|Male|Aged75-79|Secondary Education,FALSE
+sspv1,Population|Male|Aged75-79|Tertiary Education,FALSE
+sspv1,Population|Male|Aged80-84,FALSE
+sspv1,Population|Male|Aged80-84|No Education,FALSE
+sspv1,Population|Male|Aged80-84|Primary Education,FALSE
+sspv1,Population|Male|Aged80-84|Secondary Education,FALSE
+sspv1,Population|Male|Aged80-84|Tertiary Education,FALSE
+sspv1,Population|Male|Aged85-89,FALSE
+sspv1,Population|Male|Aged85-89|No Education,FALSE
+sspv1,Population|Male|Aged85-89|Primary Education,FALSE
+sspv1,Population|Male|Aged85-89|Secondary Education,FALSE
+sspv1,Population|Male|Aged85-89|Tertiary Education,FALSE
+sspv1,Population|Male|Aged90-94,FALSE
+sspv1,Population|Male|Aged90-94|No Education,FALSE
+sspv1,Population|Male|Aged90-94|Primary Education,FALSE
+sspv1,Population|Male|Aged90-94|Secondary Education,FALSE
+sspv1,Population|Male|Aged90-94|Tertiary Education,FALSE
+sspv1,Population|Male|Aged95-99,FALSE
+sspv1,Population|Male|Aged95-99|No Education,FALSE
+sspv1,Population|Male|Aged95-99|Primary Education,FALSE
+sspv1,Population|Male|Aged95-99|Secondary Education,FALSE
+sspv1,Population|Male|Aged95-99|Tertiary Education,FALSE
+sspv1,Population|Male|Aged100+,FALSE
+sspv1,Population|Male|Aged100+|No Education,FALSE
+sspv1,Population|Male|Aged100+|Primary Education,FALSE
+sspv1,Population|Male|Aged100+|Secondary Education,FALSE
+sspv1,Population|Male|Aged100+|Tertiary Education,FALSE
+sspv3,Population,FALSE
+sspv3,Population|Female,FALSE
+sspv3,Population|Female|Age 0-4,FALSE
+sspv3,Population|Female|Age 5-9,FALSE
+sspv3,Population|Female|Age 10-14,FALSE
+sspv3,Population|Female|Age 15-19,TRUE
+sspv3,Population|Female|Age 15-19|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 15-19|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 15-19|No Education,FALSE
+sspv3,Population|Female|Age 15-19|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 15-19|Primary Education,FALSE
+sspv3,Population|Female|Age 15-19|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 20-24,TRUE
+sspv3,Population|Female|Age 20-24|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 20-24|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 20-24|No Education,FALSE
+sspv3,Population|Female|Age 20-24|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 20-24|Primary Education,FALSE
+sspv3,Population|Female|Age 20-24|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 25-29,TRUE
+sspv3,Population|Female|Age 25-29|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 25-29|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 25-29|No Education,FALSE
+sspv3,Population|Female|Age 25-29|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 25-29|Primary Education,FALSE
+sspv3,Population|Female|Age 25-29|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 30-34,TRUE
+sspv3,Population|Female|Age 30-34|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 30-34|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 30-34|No Education,FALSE
+sspv3,Population|Female|Age 30-34|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 30-34|Primary Education,FALSE
+sspv3,Population|Female|Age 30-34|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 35-39,TRUE
+sspv3,Population|Female|Age 35-39|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 35-39|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 35-39|No Education,FALSE
+sspv3,Population|Female|Age 35-39|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 35-39|Primary Education,FALSE
+sspv3,Population|Female|Age 35-39|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 40-44,TRUE
+sspv3,Population|Female|Age 40-44|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 40-44|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 40-44|No Education,FALSE
+sspv3,Population|Female|Age 40-44|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 40-44|Primary Education,FALSE
+sspv3,Population|Female|Age 40-44|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 45-49,TRUE
+sspv3,Population|Female|Age 45-49|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 45-49|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 45-49|No Education,FALSE
+sspv3,Population|Female|Age 45-49|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 45-49|Primary Education,FALSE
+sspv3,Population|Female|Age 45-49|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 50-54,TRUE
+sspv3,Population|Female|Age 50-54|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 50-54|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 50-54|No Education,FALSE
+sspv3,Population|Female|Age 50-54|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 50-54|Primary Education,FALSE
+sspv3,Population|Female|Age 50-54|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 55-59,TRUE
+sspv3,Population|Female|Age 55-59|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 55-59|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 55-59|No Education,FALSE
+sspv3,Population|Female|Age 55-59|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 55-59|Primary Education,FALSE
+sspv3,Population|Female|Age 55-59|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 60-64,TRUE
+sspv3,Population|Female|Age 60-64|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 60-64|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 60-64|No Education,FALSE
+sspv3,Population|Female|Age 60-64|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 60-64|Primary Education,FALSE
+sspv3,Population|Female|Age 60-64|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 65-69,FALSE
+sspv3,Population|Female|Age 65-69|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 65-69|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 65-69|No Education,FALSE
+sspv3,Population|Female|Age 65-69|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 65-69|Primary Education,FALSE
+sspv3,Population|Female|Age 65-69|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 70-74,FALSE
+sspv3,Population|Female|Age 70-74|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 70-74|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 70-74|No Education,FALSE
+sspv3,Population|Female|Age 70-74|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 70-74|Primary Education,FALSE
+sspv3,Population|Female|Age 70-74|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 75-79,FALSE
+sspv3,Population|Female|Age 75-79|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 75-79|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 75-79|No Education,FALSE
+sspv3,Population|Female|Age 75-79|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 75-79|Primary Education,FALSE
+sspv3,Population|Female|Age 75-79|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 80-84,FALSE
+sspv3,Population|Female|Age 80-84|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 80-84|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 80-84|No Education,FALSE
+sspv3,Population|Female|Age 80-84|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 80-84|Primary Education,FALSE
+sspv3,Population|Female|Age 80-84|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 85-89,FALSE
+sspv3,Population|Female|Age 85-89|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 85-89|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 85-89|No Education,FALSE
+sspv3,Population|Female|Age 85-89|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 85-89|Primary Education,FALSE
+sspv3,Population|Female|Age 85-89|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 90-94,FALSE
+sspv3,Population|Female|Age 90-94|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 90-94|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 90-94|No Education,FALSE
+sspv3,Population|Female|Age 90-94|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 90-94|Primary Education,FALSE
+sspv3,Population|Female|Age 90-94|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 95-99,FALSE
+sspv3,Population|Female|Age 95-99|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 95-99|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 95-99|No Education,FALSE
+sspv3,Population|Female|Age 95-99|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 95-99|Primary Education,FALSE
+sspv3,Population|Female|Age 95-99|Upper Secondary Education,FALSE
+sspv3,Population|Female|Age 100+,FALSE
+sspv3,Population|Female|Age 100+|Incomplete Primary Education,FALSE
+sspv3,Population|Female|Age 100+|Lower Secondary Education,FALSE
+sspv3,Population|Female|Age 100+|No Education,FALSE
+sspv3,Population|Female|Age 100+|Post Secondary Education,FALSE
+sspv3,Population|Female|Age 100+|Primary Education,FALSE
+sspv3,Population|Female|Age 100+|Upper Secondary Education,FALSE
+sspv3,Population|Male,FALSE
+sspv3,Population|Male|Age 0-4,FALSE
+sspv3,Population|Male|Age 5-9,FALSE
+sspv3,Population|Male|Age 10-14,FALSE
+sspv3,Population|Male|Age 15-19,TRUE
+sspv3,Population|Male|Age 15-19|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 15-19|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 15-19|No Education,FALSE
+sspv3,Population|Male|Age 15-19|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 15-19|Primary Education,FALSE
+sspv3,Population|Male|Age 15-19|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 20-24,TRUE
+sspv3,Population|Male|Age 20-24|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 20-24|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 20-24|No Education,FALSE
+sspv3,Population|Male|Age 20-24|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 20-24|Primary Education,FALSE
+sspv3,Population|Male|Age 20-24|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 25-29,TRUE
+sspv3,Population|Male|Age 25-29|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 25-29|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 25-29|No Education,FALSE
+sspv3,Population|Male|Age 25-29|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 25-29|Primary Education,FALSE
+sspv3,Population|Male|Age 25-29|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 30-34,TRUE
+sspv3,Population|Male|Age 30-34|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 30-34|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 30-34|No Education,FALSE
+sspv3,Population|Male|Age 30-34|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 30-34|Primary Education,FALSE
+sspv3,Population|Male|Age 30-34|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 35-39,TRUE
+sspv3,Population|Male|Age 35-39|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 35-39|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 35-39|No Education,FALSE
+sspv3,Population|Male|Age 35-39|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 35-39|Primary Education,FALSE
+sspv3,Population|Male|Age 35-39|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 40-44,TRUE
+sspv3,Population|Male|Age 40-44|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 40-44|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 40-44|No Education,FALSE
+sspv3,Population|Male|Age 40-44|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 40-44|Primary Education,FALSE
+sspv3,Population|Male|Age 40-44|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 45-49,TRUE
+sspv3,Population|Male|Age 45-49|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 45-49|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 45-49|No Education,FALSE
+sspv3,Population|Male|Age 45-49|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 45-49|Primary Education,FALSE
+sspv3,Population|Male|Age 45-49|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 50-54,TRUE
+sspv3,Population|Male|Age 50-54|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 50-54|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 50-54|No Education,FALSE
+sspv3,Population|Male|Age 50-54|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 50-54|Primary Education,FALSE
+sspv3,Population|Male|Age 50-54|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 55-59,TRUE
+sspv3,Population|Male|Age 55-59|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 55-59|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 55-59|No Education,FALSE
+sspv3,Population|Male|Age 55-59|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 55-59|Primary Education,FALSE
+sspv3,Population|Male|Age 55-59|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 60-64,TRUE
+sspv3,Population|Male|Age 60-64|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 60-64|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 60-64|No Education,FALSE
+sspv3,Population|Male|Age 60-64|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 60-64|Primary Education,FALSE
+sspv3,Population|Male|Age 60-64|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 65-69,FALSE
+sspv3,Population|Male|Age 65-69|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 65-69|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 65-69|No Education,FALSE
+sspv3,Population|Male|Age 65-69|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 65-69|Primary Education,FALSE
+sspv3,Population|Male|Age 65-69|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 70-74,FALSE
+sspv3,Population|Male|Age 70-74|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 70-74|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 70-74|No Education,FALSE
+sspv3,Population|Male|Age 70-74|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 70-74|Primary Education,FALSE
+sspv3,Population|Male|Age 70-74|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 75-79,FALSE
+sspv3,Population|Male|Age 75-79|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 75-79|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 75-79|No Education,FALSE
+sspv3,Population|Male|Age 75-79|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 75-79|Primary Education,FALSE
+sspv3,Population|Male|Age 75-79|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 80-84,FALSE
+sspv3,Population|Male|Age 80-84|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 80-84|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 80-84|No Education,FALSE
+sspv3,Population|Male|Age 80-84|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 80-84|Primary Education,FALSE
+sspv3,Population|Male|Age 80-84|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 85-89,FALSE
+sspv3,Population|Male|Age 85-89|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 85-89|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 85-89|No Education,FALSE
+sspv3,Population|Male|Age 85-89|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 85-89|Primary Education,FALSE
+sspv3,Population|Male|Age 85-89|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 90-94,FALSE
+sspv3,Population|Male|Age 90-94|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 90-94|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 90-94|No Education,FALSE
+sspv3,Population|Male|Age 90-94|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 90-94|Primary Education,FALSE
+sspv3,Population|Male|Age 90-94|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 95-99,FALSE
+sspv3,Population|Male|Age 95-99|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 95-99|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 95-99|No Education,FALSE
+sspv3,Population|Male|Age 95-99|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 95-99|Primary Education,FALSE
+sspv3,Population|Male|Age 95-99|Upper Secondary Education,FALSE
+sspv3,Population|Male|Age 100+,FALSE
+sspv3,Population|Male|Age 100+|Incomplete Primary Education,FALSE
+sspv3,Population|Male|Age 100+|Lower Secondary Education,FALSE
+sspv3,Population|Male|Age 100+|No Education,FALSE
+sspv3,Population|Male|Age 100+|Post Secondary Education,FALSE
+sspv3,Population|Male|Age 100+|Primary Education,FALSE
+sspv3,Population|Male|Age 100+|Upper Secondary Education,FALSE
+sspv3,Mean Years of Education|Female|Age 100+,FALSE
+sspv3,Mean Years of Education|Female|Age 15-19,FALSE
+sspv3,Mean Years of Education|Female|Age 20-24,FALSE
+sspv3,Mean Years of Education|Female|Age 25-29,FALSE
+sspv3,Mean Years of Education|Female|Age 30-34,FALSE
+sspv3,Mean Years of Education|Female|Age 35-39,FALSE
+sspv3,Mean Years of Education|Female|Age 40-44,FALSE
+sspv3,Mean Years of Education|Female|Age 45-49,FALSE
+sspv3,Mean Years of Education|Female|Age 50-54,FALSE
+sspv3,Mean Years of Education|Female|Age 55-59,FALSE
+sspv3,Mean Years of Education|Female|Age 60-64,FALSE
+sspv3,Mean Years of Education|Female|Age 65-69,FALSE
+sspv3,Mean Years of Education|Female|Age 70-74,FALSE
+sspv3,Mean Years of Education|Female|Age 75-79,FALSE
+sspv3,Mean Years of Education|Female|Age 80-84,FALSE
+sspv3,Mean Years of Education|Female|Age 85-89,FALSE
+sspv3,Mean Years of Education|Female|Age 90-94,FALSE
+sspv3,Mean Years of Education|Female|Age 95-99,FALSE
+sspv3,Mean Years of Education|Male|Age 100+,FALSE
+sspv3,Mean Years of Education|Male|Age 15-19,FALSE
+sspv3,Mean Years of Education|Male|Age 20-24,FALSE
+sspv3,Mean Years of Education|Male|Age 25-29,FALSE
+sspv3,Mean Years of Education|Male|Age 30-34,FALSE
+sspv3,Mean Years of Education|Male|Age 35-39,FALSE
+sspv3,Mean Years of Education|Male|Age 40-44,FALSE
+sspv3,Mean Years of Education|Male|Age 45-49,FALSE
+sspv3,Mean Years of Education|Male|Age 50-54,FALSE
+sspv3,Mean Years of Education|Male|Age 55-59,FALSE
+sspv3,Mean Years of Education|Male|Age 60-64,FALSE
+sspv3,Mean Years of Education|Male|Age 65-69,FALSE
+sspv3,Mean Years of Education|Male|Age 70-74,FALSE
+sspv3,Mean Years of Education|Male|Age 75-79,FALSE
+sspv3,Mean Years of Education|Male|Age 80-84,FALSE
+sspv3,Mean Years of Education|Male|Age 85-89,FALSE
+sspv3,Mean Years of Education|Male|Age 90-94,FALSE
+sspv3,Mean Years of Education|Male|Age 95-99,FALSE

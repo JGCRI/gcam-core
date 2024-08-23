@@ -17,16 +17,23 @@
 #' @importFrom tidyr complete nesting spread
 #' @author BBL April 2017
 module_socio_L101.Population <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      FILE = "socioeconomics/POP/GCAM3_population",
+      "L100.Pop_thous_ctry_Yh",
+      "L100.Pop_thous_SSP_ctry_Yfut")
+
+  MODULE_OUTPUTS <-
+    c("L101.Pop_thous_R_Yh",
+      "L101.Pop_thous_Scen_R_Yfut",
+      "L101.Pop_thous_GCAM3_R_Y",
+      "L101.Pop_thous_GCAM3_ctry_Y")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "socioeconomics/GCAM3_population",
-             "L100.Pop_thous_ctry_Yh",
-             "L100.Pop_thous_SSP_ctry_Yfut"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L101.Pop_thous_R_Yh",
-             "L101.Pop_thous_Scen_R_Yfut",
-             "L101.Pop_thous_GCAM3_R_Y",
-             "L101.Pop_thous_GCAM3_ctry_Y"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     year <- value <- region_GCAM3 <- GCAM_region_ID <- iso <- scenario <- . <-
@@ -35,13 +42,11 @@ module_socio_L101.Population <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    get_data(all_data, "socioeconomics/GCAM3_population") %>%
-      gather_years ->
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
+    GCAM3_population %>% gather_years ->
       GCAM3_population
-    L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
-    L100.Pop_thous_SSP_ctry_Yfut <- get_data(all_data, "L100.Pop_thous_SSP_ctry_Yfut")
 
     # Historical population by region
     L100.Pop_thous_ctry_Yh %>%
@@ -155,7 +160,7 @@ module_socio_L101.Population <- function(command, ...) {
       add_units("thousand persons") %>%
       add_comments("Population by region over the historical time period") %>%
       add_legacy_name("L101.Pop_thous_R_Yh") %>%
-      add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
+      add_precursors("common/iso_GCAM_regID", "socioeconomics/POP/GCAM3_population",
                      "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_R_Yh
 
@@ -164,7 +169,7 @@ module_socio_L101.Population <- function(command, ...) {
       add_units("thousand persons") %>%
       add_comments("Population by region and gSSP SSP in future periods") %>%
       add_legacy_name("L101.Pop_thous_Scen_R_Yfut") %>%
-      add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
+      add_precursors("common/iso_GCAM_regID", "socioeconomics/POP/GCAM3_population",
                      "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_Scen_R_Yfut
 
@@ -173,7 +178,7 @@ module_socio_L101.Population <- function(command, ...) {
       add_units("thousand persons") %>%
       add_comments("GCAM population data interpolated to all historical and future years") %>%
       add_legacy_name("L101.Pop_thous_GCAM3_R_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
+      add_precursors("common/iso_GCAM_regID", "socioeconomics/POP/GCAM3_population",
                      "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_GCAM3_R_Y
 
@@ -184,11 +189,11 @@ module_socio_L101.Population <- function(command, ...) {
       add_units("thousand persons") %>%
       add_comments("GCAM population data interpolated to all historical and future years") %>%
       add_legacy_name("L101.Pop_thous_GCAM3_ctry_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "socioeconomics/GCAM3_population",
+      add_precursors("common/iso_GCAM_regID", "socioeconomics/POP/GCAM3_population",
                      "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_GCAM3_ctry_Y
 
-    return_data(L101.Pop_thous_R_Yh, L101.Pop_thous_Scen_R_Yfut, L101.Pop_thous_GCAM3_R_Y, L101.Pop_thous_GCAM3_ctry_Y)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

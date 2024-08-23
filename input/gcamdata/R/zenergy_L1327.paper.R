@@ -17,7 +17,7 @@
 #' @author MMC July 2022
 module_energy_L1327.paper <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L1011.en_bal_EJ_R_Si_Fi_Yh",
+    return(c("L1012.en_bal_EJ_R_Si_Fi_Yh",
              FILE = "energy/A_regions",
              FILE = "energy/mappings/enduse_fuel_aggregation",
              "L1326.in_EJ_R_indenergy_F_Yh",
@@ -50,7 +50,7 @@ module_energy_L1327.paper <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L1011.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1011.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
+    L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
     A_regions <- get_data(all_data, "energy/A_regions",strip_attributes = TRUE)
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation", strip_attributes = TRUE)
     L1326.in_EJ_R_indenergy_F_Yh <- get_data(all_data, "L1326.in_EJ_R_indenergy_F_Yh", strip_attributes = TRUE)
@@ -85,7 +85,7 @@ module_energy_L1327.paper <- function(command, ...) {
 
 
     # Get pulp and paper energy use from IEA energy balances
-    L1011.en_bal_EJ_R_Si_Fi_Yh %>%
+    L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(grepl("paper", sector)) ->
       L1327.in_EJ_R_paper_F_Yh
 
@@ -414,7 +414,7 @@ module_energy_L1327.paper <- function(command, ...) {
       add_units("EJ") %>%
       add_comments("PAPERPRO sector from IEA energy balances aggregated to GCAM regions") %>%
       add_legacy_name("L1327.in_EJ_R_paper_F_Yh") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A_regions",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh", "energy/A_regions",
                      "common/iso_GCAM_regID", "energy/mappings/enduse_fuel_aggregation",
                      "L123.in_EJ_R_indchp_F_Yh", "energy/paper_food_TFE", "energy/A327.china_biomass") ->
       L1327.in_EJ_R_paper_F_Yh
@@ -432,7 +432,7 @@ module_energy_L1327.paper <- function(command, ...) {
       add_units("GJ/kg paper") %>%
       add_legacy_name("L1327.IO_GJkg_R_paper_F_Yh") %>%
       add_comments("IO coefficients for heat energy and electricity are calculated from IEA energy consumption and FAO paper production data") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "aglu/FAO/FAO_Paper_Prod_t_FORESTAT", "aglu/AGLU_ctry", "energy/A_regions",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh", "aglu/FAO/FAO_Paper_Prod_t_FORESTAT", "aglu/AGLU_ctry", "energy/A_regions",
                      "common/iso_GCAM_regID","energy/mappings/enduse_fuel_aggregation", "L123.in_EJ_R_indchp_F_Yh",
                      "energy/paper_food_TFE", "energy/A327.globaltech_coef", "energy/A327.china_biomass") ->
       L1327.IO_GJkg_R_paper_F_Yh
@@ -443,7 +443,7 @@ module_energy_L1327.paper <- function(command, ...) {
       add_comments("Subtracted pulp and paper energy use from industrial energy use values in L1326.in_EJ_R_indenergy_F_Yh") %>%
       add_comments("To determine adjusted input energy for industrial energy use") %>%
       add_legacy_name("L1327.in_EJ_R_indenergy_F_Yh") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "L1326.in_EJ_R_indenergy_F_Yh", "aglu/FAO/FAO_Paper_Prod_t_FORESTAT",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh", "L1326.in_EJ_R_indenergy_F_Yh", "aglu/FAO/FAO_Paper_Prod_t_FORESTAT",
                      "aglu/AGLU_ctry", "energy/A_regions", "common/iso_GCAM_regID","energy/mappings/enduse_fuel_aggregation") ->
       L1327.in_EJ_R_indenergy_F_Yh
 
@@ -452,7 +452,7 @@ module_energy_L1327.paper <- function(command, ...) {
       add_units("None") %>%
       add_comments("Subsector share weights for process heat technologies will be reset from 0 to 1 for these regions") %>%
       add_legacy_name("L1327.elec_noheat_adj_shwt_R") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A_regions",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh", "energy/A_regions",
                      "common/iso_GCAM_regID","energy/mappings/enduse_fuel_aggregation") ->
       L1327.elec_noheat_adj_shwt_R
 
@@ -470,7 +470,7 @@ module_energy_L1327.paper <- function(command, ...) {
       add_units("GJ/kg") %>%
       add_comments("Woodpulp in Mt divided by paper sector biomass energy in EJ") %>%
       add_legacy_name("L1327.IO_woodpulp_energy") %>%
-      add_precursors("L1011.en_bal_EJ_R_Si_Fi_Yh", "energy/A_regions", "common/GCAM_region_names",
+      add_precursors("L1012.en_bal_EJ_R_Si_Fi_Yh", "energy/A_regions", "common/GCAM_region_names",
                      "common/iso_GCAM_regID", "energy/mappings/enduse_fuel_aggregation",
                      "L123.in_EJ_R_indchp_F_Yh", "energy/paper_food_TFE", "energy/A327.china_biomass",
                      "L110.For_ALL_bm3_R_Y") ->

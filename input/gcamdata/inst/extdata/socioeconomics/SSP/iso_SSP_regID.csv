@@ -1,0 +1,207 @@
+# File: iso_SSP_regID.csv
+# Title: ISO to SSP region mapping
+# Units: NA
+# Description: Maps iso codes to SSP regions 
+# Column types: cc
+# ----------
+iso,ssp_country_name
+afg,Afghanistan
+alb,Albania
+dza,Algeria
+ago,Angola
+atg,Antigua and Barbuda
+arg,Argentina
+arm,Armenia
+abw,Aruba
+aus,Australia
+aut,Austria
+aze,Azerbaijan
+bhs,Bahamas
+bhr,Bahrain
+bgd,Bangladesh
+brb,Barbados
+blr,Belarus
+bel,Belgium
+blz,Belize
+ben,Benin
+btn,Bhutan
+bol,Bolivia
+bih,Bosnia and Herzegovina
+bwa,Botswana
+bra,Brazil
+brn,Brunei Darussalam
+bgr,Bulgaria
+bfa,Burkina Faso
+bdi,Burundi
+civ,Côte d'Ivoire
+cpv,Cabo Verde
+khm,Cambodia
+cmr,Cameroon
+can,Canada
+caf,Central African Republic
+tcd,Chad
+chl,Chile
+chn,China
+col,Colombia
+com,Comoros
+cog,Congo
+cri,Costa Rica
+hrv,Croatia
+cub,Cuba
+cuw,Curaçao
+cyp,Cyprus
+cze,Czechia
+cod,Democratic Republic of the Congo
+dnk,Denmark
+dji,Djibouti
+dom,Dominican Republic
+ecu,Ecuador
+egy,Egypt
+slv,El Salvador
+gnq,Equatorial Guinea
+eri,Eritrea
+est,Estonia
+swz,Eswatini
+eth,Ethiopia
+fji,Fiji
+fin,Finland
+fra,France
+guf,French Guiana
+pyf,French Polynesia
+gab,Gabon
+gmb,Gambia
+geo,Georgia
+deu,Germany
+gha,Ghana
+grc,Greece
+grd,Grenada
+glp,Guadeloupe
+gum,Guam
+gtm,Guatemala
+gin,Guinea
+gnb,Guinea-Bissau
+guy,Guyana
+hti,Haiti
+hnd,Honduras
+hkg,Hong Kong
+hun,Hungary
+isl,Iceland
+ind,India
+idn,Indonesia
+irn,Iran
+irq,Iraq
+irl,Ireland
+isr,Israel
+ita,Italy
+jam,Jamaica
+jpn,Japan
+jor,Jordan
+kaz,Kazakhstan
+ken,Kenya
+kir,Kiribati
+kwt,Kuwait
+kgz,Kyrgyzstan
+lao,Laos
+lva,Latvia
+lbn,Lebanon
+lso,Lesotho
+lbr,Liberia
+lby,Libya
+ltu,Lithuania
+lux,Luxembourg
+mac,Macao
+mdg,Madagascar
+mwi,Malawi
+mys,Malaysia
+mdv,Maldives
+mli,Mali
+mlt,Malta
+mtq,Martinique
+mrt,Mauritania
+mus,Mauritius
+myt,Mayotte
+mex,Mexico
+fsm,Micronesia
+mda,Moldova
+mng,Mongolia
+mne,Montenegro
+mar,Morocco
+moz,Mozambique
+mmr,Myanmar
+nam,Namibia
+npl,Nepal
+nld,Netherlands
+ncl,New Caledonia
+nzl,New Zealand
+nic,Nicaragua
+ner,Niger
+nga,Nigeria
+prk,North Korea
+mkd,North Macedonia
+nor,Norway
+omn,Oman
+pak,Pakistan
+pse,Palestine
+pan,Panama
+png,Papua New Guinea
+pry,Paraguay
+per,Peru
+phl,Philippines
+pol,Poland
+prt,Portugal
+pri,Puerto Rico
+qat,Qatar
+reu,Réunion
+rom,Romania
+rus,Russian Federation
+rwa,Rwanda
+lca,Saint Lucia
+vct,Saint Vincent and the Grenadines
+wsm,Samoa
+stp,Sao Tome and Principe
+sau,Saudi Arabia
+sen,Senegal
+srb,Serbia
+syc,Seychelles
+sle,Sierra Leone
+sgp,Singapore
+svk,Slovakia
+svn,Slovenia
+slb,Solomon Islands
+som,Somalia
+zaf,South Africa
+kor,South Korea
+ssd,South Sudan
+esp,Spain
+lka,Sri Lanka
+sdn,Sudan
+sur,Suriname
+swe,Sweden
+che,Switzerland
+syr,Syria
+twn,Taiwan
+tjk,Tajikistan
+tza,Tanzania
+tha,Thailand
+tls,Timor-Leste
+tgo,Togo
+ton,Tonga
+tto,Trinidad and Tobago
+tun,Tunisia
+tur,Turkey
+tkm,Turkmenistan
+uga,Uganda
+ukr,Ukraine
+are,United Arab Emirates
+gbr,United Kingdom
+usa,United States
+vir,United States Virgin Islands
+ury,Uruguay
+uzb,Uzbekistan
+vut,Vanuatu
+ven,Venezuela
+vnm,Viet Nam
+esh,Western Sahara
+yem,Yemen
+zmb,Zambia
+zwe,Zimbabwe

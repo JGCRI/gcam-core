@@ -19,43 +19,73 @@
 #' @importFrom dplyr filter mutate select
 #' @author BBL February 2017
 module_socio_L100.GDP_hist <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "aglu/AGLU_ctry",
+      FILE = "socioeconomics/GDP/GCAMFAOSTAT_GDP",
+      FILE = "socioeconomics/GDP/GDP_twn")
+
+  MODULE_OUTPUTS <-
+    c("L100.gdp_mil90usd_ctry_Yh")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "socioeconomics/USDA_GDP_MER",
-             FILE = "socioeconomics/WB_ExtraCountries_GDP_MER"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L100.gdp_mil90usd_ctry_Yh"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     Country <- year <- value <- iso <- NULL # silence package checks.
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    usda_gdp_mer <- get_data(all_data, "socioeconomics/USDA_GDP_MER")
-    WB_ExtraCountries_GDP_MER <- get_data(all_data, "socioeconomics/WB_ExtraCountries_GDP_MER")
-    assert_that(tibble::is_tibble(usda_gdp_mer))
-    assert_that(tibble::is_tibble(WB_ExtraCountries_GDP_MER))
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
-    # bind qatar's GDP data to the USDA's nation-level data
-    usda_gdp_mer <- bind_rows(usda_gdp_mer, WB_ExtraCountries_GDP_MER) %>%
-      arrange(Country)
+    # Note that GCAMFAOSTAT_GDP has data in 2015$ so regional GDP deflators are not used
+    # But values are brought back to 1990$ using USA GDP deflators
+    # FAO_GDP_Deflators is added to this chunk for BYU uses
+    # see module_aglu_L100.regional_ag_an_for_prices for examples
+    # Note that historical regional values have been fixed using FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL in gcamfaostat
+    GCAMFAOSTAT_GDP %>%
+      gather_years() %>%
+      filter(element_code == 6184, # 2015$
+             !is.na(value)) %>%
+      # ToDo: GCAMFAOSTAT_GDP is more recent than other GCAMFAOSTAT files
+      # FAOSTAT recent changed name of 2 countries
+      # next GCAMFAOSTAT update (ready already) will use area_code to avoid dealing with country name changes
+      mutate(area = if_else(grepl("Yemen ", area), "Yemen", area),
+             area = if_else(area == "Netherlands (Kingdom of the)", "Netherlands", area),
+             area = if_else(area == "Sint Maarten (Dutch part)", "Sint Maarten (Dutch Part)", area)) %>%
+      left_join_error_no_match(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
+      select(iso, year, value) %>%
+      # agg two Yeman
+      group_by(iso, year) %>%
+      summarize(value = sum(value), .groups = "drop") %>%
+      mutate(value = value * gdp_deflator(1990, base_year = 2015) ) ->
+      L100.gdp_mil90usd_ctry_Yh_0
 
-    # Convert to long form, filter to historical years, convert units
-    usda_gdp_mer %>%
-      select(-Country) %>%
-      gather_years %>%
-      filter(!is.na(value), !is.na(iso)) %>%
-      mutate(value = value * CONV_BIL_MIL * gdp_deflator(1990, base_year = 2010),
-             year = as.integer(year)) %>%
-      add_title("Historical GDP downscaled to country (iso)") %>%
-      add_comments("Units converted to constant 1990 USD") %>%
-      add_precursors("socioeconomics/USDA_GDP_MER",
-                     "socioeconomics/WB_ExtraCountries_GDP_MER") %>%
+    # Taiwan from pwt but also extend to recent years using Taiwan statistics
+    GDP_twn %>%
+      select(iso, year, value = gdp_2015USD) %>%
+      mutate(value = value * gdp_deflator(1990, base_year = 2015)) ->
+      L100.gdp_mil90usd_ctry_Yh_0_TWN
+
+    L100.gdp_mil90usd_ctry_Yh_0 %>%
+      bind_rows(
+        L100.gdp_mil90usd_ctry_Yh_0_TWN
+      ) %>%
+      add_title("Historical GDP by country (iso) since 1970 per FAOSTAT") %>%
+      add_comments("Units 2015$ converted to constant 1990 USD using USA GDP deflators") %>%
+      add_precursors("socioeconomics/GDP/GCAMFAOSTAT_GDP",
+                     "aglu/AGLU_ctry",
+                     "socioeconomics/GDP/GDP_twn") %>%
       add_units("Million 1990 USD") %>%
       add_legacy_name("L100.gdp_mil90usd_ctry_Yh") ->
       L100.gdp_mil90usd_ctry_Yh
 
-    return_data(L100.gdp_mil90usd_ctry_Yh)
+
+    return_data(MODULE_OUTPUTS)
+
   } else {
     stop("Unknown command")
   }
