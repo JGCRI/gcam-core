@@ -117,7 +117,7 @@ int main( ) {
     int* NUM_LAT = &numLat; // Number of horizontal grid cells
     int numLon = 288;
     int* NUM_LON = &numLon; // Number of vertical grid cells
-    int numPFT = 17;
+    int numPFT = 51;
     int* NUM_PFT = &numPFT; // Number of PFTs in ELM
     int numGEReg = 32;
     int* NUM_GCAM_ENERGY_REGIONS = &numGEReg;
