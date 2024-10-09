@@ -6,6 +6,8 @@
 # Column types: cccci 
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
+backup_electricity,gas,start-year,,1
+csp_backup,gas,start-year,,1
 delivered biomass,delivered biomass,start-year,,1
 delivered coal,delivered coal,start-year,,1
 electricity_net_ownuse,electricity_net_ownuse,start-year,,1

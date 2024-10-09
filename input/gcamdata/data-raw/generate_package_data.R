@@ -181,8 +181,6 @@ generate_level2_data_names <- function() {
   level2_data_names[["GlobalTechFCROnly"]] <- c(level2_data_names[["GlobalTechYr"]], "input.capital", "fixed.charge.rate")
   level2_data_names[["GlobalTechOMfixed"]] <- c(level2_data_names[["GlobalTechYr"]], "input.OM.fixed", "OM.fixed")
   level2_data_names[["GlobalTechOMvar"]] <- c(level2_data_names[["GlobalTechYr"]], "input.OM.var", "OM.var")
-  level2_data_names[["GlobalTechBackup"]] <- c(level2_data_names[["GlobalTechYr"]], "electric.sector.name", "trial.market.name", "backup.capital.cost",
-                                               "backup.capacity.factor", "capacity.limit", "minicam.energy.input", "minicam.non.energy.input", "flag")
   level2_data_names[["GlobalCarbonCapture"]] <- c(level2_data_names[["GlobalTechYr"]], "storage.market", "remove.fraction")
   level2_data_names[["GlobalRenewTech"]] <- c(level2_data_names[["GlobalTechYr"]], "renewable.input")
   level2_data_names[["GlobalTechSecOut"]] <- c(level2_data_names[["GlobalTechYr"]], "secondary.output", "output.ratio")
@@ -208,7 +206,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["GlobalIntTechShutdown"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "lifetime", "shutdown.rate")
   level2_data_names[["GlobalIntTechProfitShutdown"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "median.shutdown.point", "steepness")
   level2_data_names[["GlobalIntTechSCurve"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "lifetime", "steepness", "half.life")
-  level2_data_names[["GlobalIntTechBackup"]] <- c("sector.name", "subsector.name", "technology", "year", "electric.sector.name", "trial.market.name",
+  level2_data_names[["GlobalIntTechBackup"]] <- c("sector.name", "subsector.name", "backup.intermittent.technology", "year", "electric.sector.name", "trial.market.name",
                                                   "backup.capital.cost", "backup.capacity.factor", "capacity.limit", "minicam.energy.input", "minicam.non.energy.input", "flag")
   level2_data_names[["GlobalIntTechValueFactor"]] <- c("sector.name", "subsector.name", "intermittent.technology", "year", "electric.sector.name", "trial.market.name",
                                                        "value.factor.intercept", "value.factor.slope")

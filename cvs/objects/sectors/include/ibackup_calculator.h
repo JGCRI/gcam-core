@@ -41,7 +41,7 @@
  * \file ibackup_calculator.h
  * \ingroup Objects
  * \brief The IBackupCalculator interface header file.
- * \author Marshall Wise, Josh Lurz, Matthew Binsted, Matt Mowers
+ * \author Marshall Wise, Josh Lurz
  */
 
 #include <boost/core/noncopyable.hpp>
@@ -54,17 +54,20 @@ class IInfo;
 class Tabs;
 
 // Need to forward declare the subclasses as well.
-class ValueFactorCalculator; 
+class CapacityLimitBackupCalculator;
+class CSPBackupCalculator;
+class ValueFactorCalculator;
 
 /*!
  * \ingroup Objects
- * \brief Interface which defines methods for calculating value factor
- *        of a technology depending on its market share.
- * \details Defines an interface to an object which determines the value
- *          factor for a technology. The value factor may use trial values of
- *          market share. Value factors are specific to electricity sector
- *          technologies.
- * \author Matthew Binsted, Matt Mowers
+ * \brief Interface which defines methods for calculating a value factor or 
+ *        backup capacity requirement (average and marginal) per unit of output.
+ * \details Defines an interface to an object which helps determine the value factor of or 
+ *          backup capacity required for a technology. The backup capacity is determined
+ *          per unit of output, but may use trial values to allow computation
+ *          based on the total output. Backup requirements are specific to
+ *          technologies that produce electricity.
+ * \author Josh Lurz
  */
 class IBackupCalculator : public INamed, private boost::noncopyable {
 public:
@@ -149,7 +152,8 @@ protected:
         /* Declare all subclasses of Sector to allow automatic traversal of the
          * hierarchy under introspection.
          */
-        DEFINE_SUBCLASS_FAMILY( IBackupCalculator, ValueFactorCalculator)
+        DEFINE_SUBCLASS_FAMILY( IBackupCalculator, CapacityLimitBackupCalculator,
+                                CSPBackupCalculator, ValueFactorCalculator )
     )
 };
 

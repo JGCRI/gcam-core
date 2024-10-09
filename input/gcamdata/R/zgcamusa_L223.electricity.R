@@ -20,7 +20,7 @@
 #' \code{L223.SubsectorShrwt_renew_USA}, \code{L223.SubsectorInterp_elec_USA}, \code{L223.SubsectorInterpTo_elec_USA},
 #' \code{L223.StubTech_elec_USA}, \code{L223.StubTechEff_elec_USA}, \code{L223.StubTechCapFactor_elec_USA},
 #' \code{L223.StubTechFixOut_elec_USA}, \code{L223.StubTechFixOut_hydro_USA}, \code{L223.StubTechProd_elec_USA},
-#' \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechElecMarket_backup_USA},
+#' \code{L223.StubTechMarket_elec_USA}, \code{L223.StubTechMarket_backup_USA}, \code{L223.StubTechElecMarket_backup_USA},
 #' \code{L223.StubTechCapFactor_elec_wind_USA}, \code{L223.StubTechCapFactor_elec_solar_USA}, \code{L223.StubTechCost_offshore_wind_USA}.
 #' The corresponding file in the original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
 #' @details This chunk generates input files to create an annualized electricity generation sector for each state
@@ -49,6 +49,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
              "L223.StubTech_elec",
              "L223.StubTechEff_elec",
              "L223.StubTechCapFactor_elec",
+             "L223.GlobalIntTechBackup_elec",
              "L1231.in_EJ_state_elec_F_tech",
              "L1231.out_EJ_state_elec_F_tech",
              "L1232.out_EJ_sR_elec",
@@ -91,6 +92,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
              "L223.StubTechFixOut_hydro_USA",
              "L223.StubTechProd_elec_USA",
              "L223.StubTechMarket_elec_USA",
+             "L223.StubTechMarket_backup_USA",
              "L223.StubTechElecMarket_backup_USA",
              "L223.StubTechCapFactor_elec_wind_USA",
              "L223.StubTechCapFactor_elec_solar_USA",
@@ -126,6 +128,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
     L223.StubTech_elec <- get_data(all_data, "L223.StubTech_elec", strip_attributes = TRUE)
     L223.StubTechEff_elec <- get_data(all_data, "L223.StubTechEff_elec", strip_attributes = TRUE)
     L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec", strip_attributes = TRUE)
+    L223.GlobalIntTechBackup_elec <- get_data(all_data, "L223.GlobalIntTechBackup_elec", strip_attributes = TRUE)
     L1231.in_EJ_state_elec_F_tech <- get_data(all_data, "L1231.in_EJ_state_elec_F_tech", strip_attributes = TRUE)
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech", strip_attributes = TRUE)
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec", strip_attributes = TRUE)
@@ -503,6 +506,20 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       select(-grid_region) ->
       L223.StubTechMarket_elec_USA
 
+    # L223.StubTechMarket_backup_USA: market names of backup inputs to state electricity sectors
+    L223.GlobalIntTechBackup_elec %>%
+      mutate(supplysector = sector.name, subsector = subsector.name) %>%
+      write_to_all_states(names = c(names(.), 'region')) %>%
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", backup.intermittent.technology)) %>%
+      mutate(market.name = gcam.USA_REGION, stub.technology = backup.intermittent.technology) %>%
+      # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
+      # Thus, no wind & solar subsectors should be created in DC's electricity sector.
+      # Use anti_join to remove them from the table.
+      anti_join(A10.renewable_resource_delete,
+                by = c("region", "subsector" = "resource_elec_subsector")) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechMarket"]]) ->
+      L223.StubTechMarket_backup_USA
+
     # L223.StubTechCapFactor_elec_wind_USA: capacity factors for wind electricity in the states
     # Just use the subsector for matching - technologies include storage technologies as well
     L114.CapacityFactor_wind_state %>%
@@ -569,6 +586,12 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       bind_rows(L223.StubTechMarket_elec_USA %>%
                   filter(stub.technology == "wind_offshore",
                          region %in% offshore_wind_states)) -> L223.StubTechMarket_elec_USA
+
+    L223.StubTechMarket_backup_USA %>%
+      filter(stub.technology != "wind_offshore") %>%
+      bind_rows(L223.StubTechMarket_backup_USA %>%
+                  filter(stub.technology == "wind_offshore",
+                         region %in% offshore_wind_states)) -> L223.StubTechMarket_backup_USA
 
     # Replacing with correct state-specific offshore wind capacity factors
     L223.StubTechCapFactor_elec_wind_USA %>%
@@ -896,6 +919,17 @@ module_gcamusa_L223.electricity <- function(command, ...) {
                      "L119.CapFacScaler_CSP_state") ->
       L223.StubTechMarket_elec_USA
 
+    L223.StubTechMarket_backup_USA %>%
+      add_title("Market names of backup inputs to state electricity sectors") %>%
+      add_units("Unitless") %>%
+      add_comments("Set market as USA") %>%
+      add_legacy_name("L223.StubTechMarket_backup_USA") %>%
+      add_precursors("L223.GlobalIntTechBackup_elec",
+                     "gcam-usa/states_subregions",
+                     "gcam-usa/A10.renewable_resource_delete",
+                     "L119.CapFacScaler_CSP_state") ->
+      L223.StubTechMarket_backup_USA
+
     if(exists("L223.StubTechElecMarket_backup_USA")) {
       L223.StubTechElecMarket_backup_USA %>%
         add_title("Market name of electricity sector for backup calculations") %>%
@@ -951,6 +985,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
                      "L223.StubTech_elec",
                      "L223.StubTechEff_elec",
                      "L223.StubTechCapFactor_elec",
+                     "L223.GlobalIntTechBackup_elec",
                      "L1231.in_EJ_state_elec_F_tech",
                      "L1231.out_EJ_state_elec_F_tech",
                      "L1232.out_EJ_sR_elec",
@@ -994,6 +1029,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
                 L223.StubTechFixOut_hydro_USA,
                 L223.StubTechProd_elec_USA,
                 L223.StubTechMarket_elec_USA,
+                L223.StubTechMarket_backup_USA,
                 L223.StubTechElecMarket_backup_USA,
                 L223.StubTechCapFactor_elec_wind_USA,
                 L223.StubTechCapFactor_elec_solar_USA,

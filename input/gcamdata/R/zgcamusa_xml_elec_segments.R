@@ -44,8 +44,10 @@ module_gcamusa_elec_segments_xml <- function(command, ...) {
              "L2234.GlobalTechProfitShutdown_elecS_USA",
              "L2234.GlobalTechSCurve_elecS_USA",
              "L2234.GlobalTechCapture_elecS_USA",
+             "L2234.GlobalIntTechBackup_elecS_USA",
              "L2234.GlobalIntTechValueFactor_elecS_USA",
              "L2234.StubTechMarket_elecS_USA",
+             "L2234.StubTechMarket_backup_elecS_USA",
              "L2234.StubTechElecMarket_backup_elecS_USA",
              "L2234.StubTechProd_elecS_USA",
              "L2234.StubTechFixOut_elecS_USA",
@@ -125,8 +127,10 @@ module_gcamusa_elec_segments_xml <- function(command, ...) {
     L2234.GlobalTechProfitShutdown_elecS_USA <- get_data(all_data, "L2234.GlobalTechProfitShutdown_elecS_USA")
     L2234.GlobalTechSCurve_elecS_USA <- get_data(all_data, "L2234.GlobalTechSCurve_elecS_USA")
     L2234.GlobalTechCapture_elecS_USA <- get_data(all_data, "L2234.GlobalTechCapture_elecS_USA")
+    L2234.GlobalIntTechBackup_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechBackup_elecS_USA")
     L2234.GlobalIntTechValueFactor_elecS_USA <- get_data(all_data, "L2234.GlobalIntTechValueFactor_elecS_USA")
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, "L2234.StubTechMarket_elecS_USA")
+    L2234.StubTechMarket_backup_elecS_USA <- get_data(all_data, "L2234.StubTechMarket_backup_elecS_USA")
     L2234.StubTechElecMarket_backup_elecS_USA <- get_data(all_data, "L2234.StubTechElecMarket_backup_elecS_USA")
     L2234.StubTechProd_elecS_USA <- get_data(all_data, "L2234.StubTechProd_elecS_USA")
     L2234.StubTechFixOut_elecS_USA <- get_data(all_data, "L2234.StubTechFixOut_elecS_USA")
@@ -197,8 +201,8 @@ module_gcamusa_elec_segments_xml <- function(command, ...) {
     L2234.GlobalTechProfitShutdown_elecS_USA <- fix_global_tech_names(L2234.GlobalTechProfitShutdown_elecS_USA)
     L2234.GlobalTechSCurve_elecS_USA <- fix_global_tech_names(L2234.GlobalTechSCurve_elecS_USA)
     L2234.GlobalTechCapture_elecS_USA <- fix_global_tech_names(L2234.GlobalTechCapture_elecS_USA)
-    L2234.GlobalIntTechValueFactor_elecS_USA <- L2234.GlobalIntTechValueFactor_elecS_USA %>%
-      fix_global_tech_names()
+    L2234.GlobalIntTechBackup_elecS_USA <- fix_global_tech_names(L2234.GlobalIntTechBackup_elecS_USA)
+    L2234.GlobalIntTechValueFactor_elecS_USA <- fix_global_tech_names(L2234.GlobalIntTechValueFactor_elecS_USA)
 
     L2234.StubTechProd_elecS_USA <- rename(L2234.StubTechProd_elecS_USA, tech.share.weight = share.weight)
     L2234.TechProd_elecS_grid_USA <- rename(L2234.TechProd_elecS_grid_USA, tech.share.weight = share.weight)
@@ -212,7 +216,24 @@ module_gcamusa_elec_segments_xml <- function(command, ...) {
       add_xml_data(L2234.PassThroughTech_elecS_grid_USA, "PassThroughTech") %>%
       add_logit_tables_xml(L2234.Supplysector_elecS_USA, "Supplysector") %>%
       add_xml_data(L2234.ElecReserve_elecS_USA, "ElecReserve") %>%
-      add_logit_tables_xml(L2234.SubsectorLogit_elecS_USA, "SubsectorLogit") %>%
+      add_logit_tables_xml(L2234.SubsectorLogit_elecS_USA, "SubsectorLogit") ->
+      elec_segments_USA.xml
+
+    if(energy.ELEC_USE_BACKUP) {
+      elec_segments_USA.xml %>%
+        add_xml_data(L2234.GlobalIntTechBackup_elecS_USA, "GlobalIntTechBackup") %>%
+        add_xml_data(L2234.StubTechMarket_backup_elecS_USA, "StubTechMarket") %>%
+        add_precursors("L2234.GlobalIntTechBackup_elecS_USA",
+                       "L2234.StubTechMarket_backup_elecS_USA") ->
+        elec_segments_USA.xml
+    } else {
+      elec_segments_USA.xml %>%
+        add_xml_data(L2234.GlobalIntTechValueFactor_elecS_USA, "GlobalIntTechValueFactor") %>%
+        add_precursors("L2234.GlobalIntTechValueFactor_elecS_USA") ->
+        elec_segments_USA.xml
+    }
+
+    elec_segments_USA.xml %>%
       add_xml_data(L2234.GlobalTechShrwt_elecS_USA, "GlobalTechShrwt") %>%
       add_xml_data(L2234.GlobalIntTechShrwt_elecS_USA, "GlobalIntTechShrwt") %>%
       add_xml_data(L2234.PrimaryRenewKeyword_elecS_USA, "PrimaryRenewKeyword") %>%
@@ -232,7 +253,6 @@ module_gcamusa_elec_segments_xml <- function(command, ...) {
       add_xml_data(L2234.GlobalTechProfitShutdown_elecS_USA, "GlobalTechProfitShutdown") %>%
       add_xml_data(L2234.GlobalTechSCurve_elecS_USA, "GlobalTechSCurve") %>%
       add_xml_data(L2234.GlobalTechCapture_elecS_USA, "GlobalTechCapture") %>%
-      add_xml_data(L2234.GlobalIntTechValueFactor_elecS_USA, "GlobalIntTechValueFactor") %>%
       add_xml_data(L2234.StubTechMarket_elecS_USA, "StubTechMarket") %>%
       add_xml_data(L2234.StubTechElecMarket_backup_elecS_USA, "StubTechElecMarket") %>%
       add_xml_data(L2234.StubTechProd_elecS_USA, "StubTechProd") %>%
@@ -311,7 +331,6 @@ module_gcamusa_elec_segments_xml <- function(command, ...) {
                      "L2234.GlobalTechProfitShutdown_elecS_USA",
                      "L2234.GlobalTechSCurve_elecS_USA",
                      "L2234.GlobalTechCapture_elecS_USA",
-                     "L2234.GlobalIntTechValueFactor_elecS_USA",
                      "L2234.StubTechMarket_elecS_USA",
                      "L2234.StubTechElecMarket_backup_elecS_USA",
                      "L2234.StubTechProd_elecS_USA",

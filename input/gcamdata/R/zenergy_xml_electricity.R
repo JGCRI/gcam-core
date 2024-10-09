@@ -13,47 +13,48 @@
 module_energy_electricity_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L223.Supplysector_elec",
-              "L223.ElecReserve",
-              "L223.SectorUseTrialMarket_elec",
-              "L223.SubsectorLogit_elec",
-              "L223.SubsectorShrwtFllt_elec",
-              "L223.SubsectorShrwt_elec",
-              "L223.SubsectorShrwt_coal",
-              "L223.SubsectorShrwt_nuc",
-              "L223.SubsectorShrwt_renew",
-              "L223.SubsectorInterp_elec",
-              "L223.SubsectorInterpTo_elec",
-              "L223.StubTech_elec",
-              "L223.GlobalIntTechEff_elec",
-              "L223.GlobalTechEff_elec",
-              "L223.GlobalTechCapFac_elec",
-              "L223.GlobalIntTechCapFac_elec",
-              "L223.GlobalTechCapital_elec",
-              "L223.GlobalIntTechCapital_elec",
-              "L223.GlobalTechOMfixed_elec",
-              "L223.GlobalIntTechOMfixed_elec",
-              "L223.GlobalTechOMvar_elec",
-              "L223.GlobalIntTechOMvar_elec",
-              "L223.GlobalTechShrwt_elec",
-              "L223.GlobalTechInterp_elec",
-              "L223.GlobalIntTechShrwt_elec",
-              "L223.PrimaryRenewKeyword_elec",
-              "L223.PrimaryRenewKeywordInt_elec",
-              "L223.AvgFossilEffKeyword_elec",
-              "L223.GlobalTechCapture_elec",
-              "L223.GlobalIntTechValueFactor_elec",
-              "L223.StubTechCapFactor_elec",
-              "L223.StubTechCost_offshore_wind",
-              "L223.GlobalTechSCurve_elec",
-              "L223.GlobalTechLifetime_elec",
-              "L223.GlobalIntTechLifetime_elec",
-              "L223.GlobalTechProfitShutdown_elec",
-              "L223.StubTechCalInput_elec",
-              "L223.StubTechFixOut_elec",
-              "L223.StubTechFixOut_hydro",
-              "L223.StubTechProd_elec",
-              "L223.StubTechEff_elec",
-              "L223.StubTechSecOut_desal"))
+             "L223.ElecReserve",
+             "L223.SectorUseTrialMarket_elec",
+             "L223.SubsectorLogit_elec",
+             "L223.SubsectorShrwtFllt_elec",
+             "L223.SubsectorShrwt_elec",
+             "L223.SubsectorShrwt_coal",
+             "L223.SubsectorShrwt_nuc",
+             "L223.SubsectorShrwt_renew",
+             "L223.SubsectorInterp_elec",
+             "L223.SubsectorInterpTo_elec",
+             "L223.StubTech_elec",
+             "L223.GlobalIntTechEff_elec",
+             "L223.GlobalTechEff_elec",
+             "L223.GlobalTechCapFac_elec",
+             "L223.GlobalIntTechCapFac_elec",
+             "L223.GlobalTechCapital_elec",
+             "L223.GlobalIntTechCapital_elec",
+             "L223.GlobalTechOMfixed_elec",
+             "L223.GlobalIntTechOMfixed_elec",
+             "L223.GlobalTechOMvar_elec",
+             "L223.GlobalIntTechOMvar_elec",
+             "L223.GlobalTechShrwt_elec",
+             "L223.GlobalTechInterp_elec",
+             "L223.GlobalIntTechShrwt_elec",
+             "L223.PrimaryRenewKeyword_elec",
+             "L223.PrimaryRenewKeywordInt_elec",
+             "L223.AvgFossilEffKeyword_elec",
+             "L223.GlobalTechCapture_elec",
+             "L223.GlobalIntTechValueFactor_elec",
+             "L223.GlobalIntTechBackup_elec",
+             "L223.StubTechCapFactor_elec",
+             "L223.StubTechCost_offshore_wind",
+             "L223.GlobalTechSCurve_elec",
+             "L223.GlobalTechLifetime_elec",
+             "L223.GlobalIntTechLifetime_elec",
+             "L223.GlobalTechProfitShutdown_elec",
+             "L223.StubTechCalInput_elec",
+             "L223.StubTechFixOut_elec",
+             "L223.StubTechFixOut_hydro",
+             "L223.StubTechProd_elec",
+             "L223.StubTechEff_elec",
+             "L223.StubTechSecOut_desal"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "electricity.xml"))
   } else if(command == driver.MAKE) {
@@ -91,6 +92,7 @@ module_energy_electricity_xml <- function(command, ...) {
     L223.AvgFossilEffKeyword_elec <- get_data(all_data, "L223.AvgFossilEffKeyword_elec")
     L223.GlobalTechCapture_elec <- get_data(all_data, "L223.GlobalTechCapture_elec")
     L223.GlobalIntTechValueFactor_elec <- get_data(all_data, "L223.GlobalIntTechValueFactor_elec")
+    L223.GlobalIntTechBackup_elec <- get_data(all_data, "L223.GlobalIntTechBackup_elec")
     L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec")
     L223.StubTechCost_offshore_wind<- get_data(all_data, "L223.StubTechCost_offshore_wind")
     L223.GlobalTechSCurve_elec <- get_data(all_data, "L223.GlobalTechSCurve_elec")
@@ -128,6 +130,22 @@ module_energy_electricity_xml <- function(command, ...) {
       add_xml_data(L223.SubsectorInterp_elec, "SubsectorInterp") %>%
       add_xml_data(L223.SubsectorInterpTo_elec, "SubsectorInterpTo") %>%
       add_xml_data(L223.StubTech_elec, "StubTech") %>%
+      add_node_equiv_xml("technology") ->
+      electricity.xml
+
+    if(energy.ELEC_USE_BACKUP) {
+    electricity.xml %>%
+      add_xml_data(L223.GlobalIntTechBackup_elec, "GlobalIntTechBackup") %>%
+        add_precursors("L223.GlobalIntTechBackup_elec") ->
+        electricity.xml
+    } else {
+      electricity.xml %>%
+        add_xml_data(L223.GlobalIntTechValueFactor_elec, "GlobalIntTechValueFactor") %>%
+        add_precursors("L223.GlobalIntTechValueFactor_elec") ->
+        electricity.xml
+    }
+
+    electricity.xml %>%
       add_xml_data(L223.GlobalIntTechEff_elec, "GlobalIntTechEff") %>%
       add_xml_data(L223.GlobalTechEff_elec, "GlobalTechEff") %>%
       add_xml_data(L223.GlobalTechCapFac_elec, "GlobalTechCapFac") %>%
@@ -145,7 +163,6 @@ module_energy_electricity_xml <- function(command, ...) {
       add_xml_data(L223.PrimaryRenewKeywordInt_elec, "PrimaryRenewKeywordInt") %>%
       add_xml_data(L223.AvgFossilEffKeyword_elec, "AvgFossilEffKeyword") %>%
       add_xml_data(L223.GlobalTechCapture_elec, "GlobalTechCapture") %>%
-      add_xml_data(L223.GlobalIntTechValueFactor_elec, "GlobalIntTechValueFactor") %>%
       add_xml_data(L223.StubTechCapFactor_elec, "StubTechCapFactor") %>%
       add_xml_data(L223.StubTechCost_offshore_wind, "StubTechCost") %>%
       add_xml_data(L223.GlobalTechSCurve_elec, "GlobalTechSCurve") %>%
@@ -187,7 +204,6 @@ module_energy_electricity_xml <- function(command, ...) {
                      "L223.PrimaryRenewKeywordInt_elec",
                      "L223.AvgFossilEffKeyword_elec",
                      "L223.GlobalTechCapture_elec",
-                     "L223.GlobalIntTechValueFactor_elec",
                      "L223.StubTechCapFactor_elec",
                      "L223.StubTechCost_offshore_wind",
                      "L223.GlobalTechSCurve_elec",

@@ -6,6 +6,8 @@
 # Column types: ccic 
 # ----------
 supplysector,subsector,logit.exponent,logit.type
+backup_electricity,gas,-6,
+csp_backup,gas,-6,
 delivered biomass,delivered biomass,-6,
 delivered coal,delivered coal,-6,
 electricity_net_ownuse,electricity_net_ownuse,-6,

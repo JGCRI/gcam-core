@@ -31,7 +31,7 @@ module_gcamusa_L2232.electricity_FERC <- function(command, ...) {
              "L126.in_EJ_state_td_elec",
              "L132.out_EJ_state_indchp_F",
              "L1232.out_EJ_sR_elec",
-             "L2234.StubTechElecMarket_backup_elecS_USA"))
+             "L223.StubTechMarket_backup_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2232.DeleteSupplysector_USAelec",
              "L2232.Supplysector_USAelec",
@@ -72,7 +72,7 @@ module_gcamusa_L2232.electricity_FERC <- function(command, ...) {
     L126.in_EJ_state_td_elec <- get_data(all_data, "L126.in_EJ_state_td_elec")
     L132.out_EJ_state_indchp_F <- get_data(all_data, "L132.out_EJ_state_indchp_F")
     L1232.out_EJ_sR_elec <- get_data(all_data, "L1232.out_EJ_sR_elec")
-    L2234.StubTechElecMarket_backup_elecS_USA <- get_data(all_data, "L2234.StubTechElecMarket_backup_elecS_USA", strip_attributes = TRUE)
+    L223.StubTechMarket_backup_USA <- get_data(all_data, "L223.StubTechMarket_backup_USA", strip_attributes = TRUE)
 
     # This chunk builds the electric sector model with demand resolved at the grid region level.
 
@@ -341,7 +341,7 @@ module_gcamusa_L2232.electricity_FERC <- function(command, ...) {
     # PART 3: THE STATES
     # L2232.StubTechElecMarket_backup_USA_FERC: electric sector name for states
     # Reset the electric sector market to the grid regions (for backup calculations)
-    L2234.StubTechElecMarket_backup_elecS_USA %>%
+    L223.StubTechMarket_backup_USA %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]]) %>%
       left_join_error_no_match(select(states_subregions, electric.sector.market = grid_region, state),
                                by = c("region" = "state")) ->
@@ -531,7 +531,7 @@ module_gcamusa_L2232.electricity_FERC <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Reset the electric sector market to the grid regions (for backup calculations)") %>%
       add_legacy_name("L2232.StubTechElecMarket_backup_USA") %>%
-      add_precursors("L2234.StubTechElecMarket_backup_elecS_USA") ->
+      add_precursors("L223.StubTechMarket_backup_USA") ->
       L2232.StubTechElecMarket_backup_USA
 
     return_data(L2232.DeleteSupplysector_USAelec, L2232.Supplysector_USAelec, L2232.SubsectorShrwtFllt_USAelec,

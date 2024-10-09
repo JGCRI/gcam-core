@@ -72,6 +72,28 @@ module_energy_L226.en_distribution <- function(command, ...) {
     L126.IO_R_electd_F_Yh <- get_data(all_data, "L126.IO_R_electd_F_Yh")
     L126.IO_R_gaspipe_F_Yh <- get_data(all_data, "L126.IO_R_gaspipe_F_Yh")
 
+
+    # ===================================================
+    # Remove backup electricity sector (by default)
+
+    remove_backup_sector <- function(data, type = "global") {
+      data %>%
+        filter(!(supplysector %in% energy.BACKUP_SECTORS))
+    }
+
+    if(energy.ELEC_USE_BACKUP) {
+      # DO NOTHING
+    } else {
+      # REMOVE BACKUP ELECTRICITY SECTORS
+      A26.sector %<>% remove_backup_sector
+      A26.subsector_logit %<>% remove_backup_sector
+      A26.subsector_shrwt %<>% remove_backup_sector
+      A26.subsector_interp %<>% remove_backup_sector
+      A26.globaltech_eff %<>% remove_backup_sector
+      A26.globaltech_cost %<>% remove_backup_sector
+      A26.globaltech_shrwt %<>% remove_backup_sector
+    }
+
     # ===================================================
 
     # 2. Build tables for CSVs

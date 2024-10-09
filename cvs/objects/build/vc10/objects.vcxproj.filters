@@ -932,6 +932,15 @@
     <ClCompile Include="..\..\sectors\source\value_factor_calculator.cpp">
       <Filter>Source Files\sectors</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\sectors\source\capacity_limit_backup_calculator.cpp">
+      <Filter>Source Files\sectors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\sectors\source\CSP_backup_calculator.cpp">
+      <Filter>Source Files\sectors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\technologies\source\backup_intermittent_technology.cpp">
+      <Filter>Source Files\technology</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
@@ -1890,6 +1899,15 @@
     </ClInclude>
     <ClInclude Include="..\..\sectors\include\value_factor_calculator.h">
       <Filter>Header Files\sectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sectors\include\capacity_limit_backup_calculator.h">
+      <Filter>Header Files\sectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\sectors\include\CSP_backup_calculator.h">
+      <Filter>Header Files\sectors</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\technologies\include\backup_intermittent_technology.h">
+      <Filter>Header Files\technologies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

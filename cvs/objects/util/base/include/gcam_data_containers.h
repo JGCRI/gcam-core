@@ -166,6 +166,7 @@
 #include "technologies/include/output_accounting.h"
 #include "technologies/include/ical_data.h"
 #include "technologies/include/icapture_component.h"
+#include "technologies/include/backup_intermittent_technology.h"
 #include "technologies/include/intermittent_technology.h"
 #include "technologies/include/internal_gains.h"
 #include "technologies/include/ioutput.h"

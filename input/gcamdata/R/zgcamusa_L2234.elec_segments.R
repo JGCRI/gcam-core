@@ -19,7 +19,7 @@
 #' \code{L2234.GlobalTechCapFac_elecS_USA}, \code{L2234.GlobalTechEff_elecS_USA}, \code{L2234.GlobalIntTechEff_elecS_USA},
 #' \code{L2234.GlobalTechLifetime_elecS_USA}, \code{L2234.GlobalIntTechLifetime_elecS_USA}, \code{L2234.GlobalTechProfitShutdown_elecS_USA},
 #' \code{L2234.GlobalTechSCurve_elecS_USA}, \code{L2234.GlobalTechCapture_elecS_USA}, \code{L2234.GlobalIntTechValueFactor_elecS_USA},
-#' \code{L2234.StubTechMarket_elecS_USA}, \code{L2234.StubTechElecMarket_backup_elecS_USA},
+#' \code{L2234.GlobalIntTechBackup_elecS_USA},\code{L2234.StubTechMarket_elecS_USA}, \code{L2234.StubTechMarket_backup_elecS_USA}, \code{L2234.StubTechElecMarket_backup_elecS_USA},
 #' \code{L2234.StubTechProd_elecS_USA}, \code{L2234.StubTechFixOut_elecS_USA}, \code{L2234.StubTechFixOut_hydro_elecS_USA}, \code{L2234.StubTechCost_offshore_wind_elecS_USA},
 #' \code{L2234.TechShrwt_elecS_grid_USA}, \code{L2234.TechCoef_elecS_grid_USA}, \code{L2234.TechProd_elecS_grid_USA}.
 #' The corresponding file in the original data system was \code{L2234.elec_segments_USA.R} (gcam-usa level2).
@@ -51,7 +51,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "gcam-usa/elecS_time_fraction",
              FILE = "gcam-usa/A10.renewable_resource_delete",
-      		 "L113.elecS_globaltech_capital_battery_ATB",
+             "L113.elecS_globaltech_capital_battery_ATB",
              "L119.CapFacScaler_CSP_state",
              "L1239.state_elec_supply_USA",
              "L223.StubTechEff_elec_USA",
@@ -59,6 +59,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
              "L223.StubTechProd_elec_USA",
              "L223.StubTechFixOut_elec_USA",
              "L223.StubTechFixOut_hydro_USA",
+             "L223.StubTechMarket_backup_USA",
              "L223.StubTechCapFactor_elec_wind_USA",
              "L223.StubTechCapFactor_elec_solar_USA",
              "L223.GlobalTechCapFac_elec",
@@ -76,6 +77,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
              "L223.GlobalTechSCurve_elec",
              "L223.GlobalTechProfitShutdown_elec",
              "L223.GlobalTechCapture_elec",
+             "L223.GlobalIntTechBackup_elec",
              "L223.GlobalIntTechValueFactor_elec",
              "L223.PrimaryRenewKeyword_elec",
              "L223.PrimaryRenewKeywordInt_elec",
@@ -114,8 +116,10 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
              "L2234.GlobalTechProfitShutdown_elecS_USA",
              "L2234.GlobalTechSCurve_elecS_USA",
              "L2234.GlobalTechCapture_elecS_USA",
+             "L2234.GlobalIntTechBackup_elecS_USA",
              "L2234.GlobalIntTechValueFactor_elecS_USA",
              "L2234.StubTechMarket_elecS_USA",
+             "L2234.StubTechMarket_backup_elecS_USA",
              "L2234.StubTechElecMarket_backup_elecS_USA",
              "L2234.StubTechProd_elecS_USA",
              "L2234.StubTechFixOut_elecS_USA",
@@ -175,6 +179,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     L223.StubTechProd_elec_USA <- get_data(all_data, "L223.StubTechProd_elec_USA", strip_attributes = TRUE)
     L223.StubTechFixOut_elec_USA <- get_data(all_data, "L223.StubTechFixOut_elec_USA", strip_attributes = TRUE)
     L223.StubTechFixOut_hydro_USA <- get_data(all_data, "L223.StubTechFixOut_hydro_USA", strip_attributes = TRUE)
+    L223.StubTechMarket_backup_USA <- get_data(all_data, "L223.StubTechMarket_backup_USA", strip_attributes = TRUE)
     L223.StubTechCapFactor_elec_wind_USA <- get_data(all_data, "L223.StubTechCapFactor_elec_wind_USA", strip_attributes = TRUE)
     L223.StubTechCapFactor_elec_solar_USA <- get_data(all_data, "L223.StubTechCapFactor_elec_solar_USA", strip_attributes = TRUE)
     L223.GlobalTechCapFac_elec <- get_data(all_data, "L223.GlobalTechCapFac_elec", strip_attributes = TRUE)
@@ -192,6 +197,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     L223.GlobalTechSCurve_elec <- get_data(all_data, "L223.GlobalTechSCurve_elec", strip_attributes = TRUE)
     L223.GlobalTechProfitShutdown_elec <- get_data(all_data, "L223.GlobalTechProfitShutdown_elec", strip_attributes = TRUE)
     L223.GlobalTechCapture_elec <- get_data(all_data, "L223.GlobalTechCapture_elec", strip_attributes = TRUE)
+    L223.GlobalIntTechBackup_elec <- get_data(all_data, "L223.GlobalIntTechBackup_elec", strip_attributes = TRUE)
     L223.GlobalIntTechValueFactor_elec <- get_data(all_data, "L223.GlobalIntTechValueFactor_elec", strip_attributes = TRUE)
     L223.PrimaryRenewKeyword_elec <- get_data(all_data, "L223.PrimaryRenewKeyword_elec", strip_attributes = TRUE)
     L223.PrimaryRenewKeywordInt_elec <- get_data(all_data, "L223.PrimaryRenewKeywordInt_elec", strip_attributes = TRUE)
@@ -274,16 +280,16 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     # Create horizontal generation supplysectors
     L2234.Supplysector_elecS_USA <-
       write_to_all_states(A23.elecS_sector, c("region", "supplysector", "output.unit", "input.unit", "price.unit",
-                                               "logit.year.fillout", "logit.exponent", "logit.type" ))
+                                              "logit.year.fillout", "logit.exponent", "logit.type" ))
 
     L2234.ElecReserve_elecS_USA <-
       write_to_all_states(A23.elecS_metainfo, c("region", "supplysector","electricity.reserve.margin",
-                                                 "average.grid.capacity.factor"))
+                                                "average.grid.capacity.factor"))
 
     # 2b. Subsector information
     L2234.SubsectorLogit_elecS_USA <-
       write_to_all_states(A23.elecS_subsector_logit, c("region", "supplysector", "subsector", "logit.year.fillout",
-                                                        "logit.exponent" , "logit.type" ))  %>%
+                                                       "logit.exponent" , "logit.type" ))  %>%
       # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
       # Thus, no wind & solar subsectors should be created in DC's electricity sector.
       # Use anti_join to remove them from the table.
@@ -301,7 +307,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
 
     L2234.SubsectorShrwtInterp_elecS_USA <-
       write_to_all_states(A23.elecS_subsector_shrwt_interp, c("region", "supplysector","subsector","apply.to",
-                                                               "from.year","to.year", "interpolation.function"))  %>%
+                                                              "from.year","to.year", "interpolation.function"))  %>%
       # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
       # Thus, no wind & solar subsectors should be created in DC's electricity sector.
       # Use anti_join to remove them from the table.
@@ -310,7 +316,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
 
     L2234.SubsectorShrwtInterpTo_elecS_USA <-
       write_to_all_states(A23.elecS_subsector_shrwt_interpto, c("region", "supplysector","subsector", "apply.to",
-                                                                 "from.year","to.year","to.value", "interpolation.function"))  %>%
+                                                                "from.year","to.year","to.value", "interpolation.function"))  %>%
       # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
       # Thus, no wind & solar subsectors should be created in DC's electricity sector.
       # Use anti_join to remove them from the table.
@@ -518,6 +524,14 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       select(-supplysector, -subsector_1, -intermittent.technology, -sector.name) %>%
       rename(supplysector = Electric.sector, intermittent.technology = Electric.sector.intermittent.technology) ->
       L2234.GlobalIntTechValueFactor_elecS
+    # Old approach to intermittent renewable integration (no longer the default)
+    A23.elecS_inttech_mapping %>%
+      # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
+      left_join(L223.GlobalIntTechBackup_elec, by= c("subsector"= "subsector.name", "intermittent.technology" = "backup.intermittent.technology")) %>%
+      filter(!is.na(capacity.limit)) %>%
+      select(-supplysector, -subsector_1, -intermittent.technology, -sector.name) %>%
+      rename(supplysector = Electric.sector, backup.intermittent.technology = Electric.sector.intermittent.technology) ->
+      L2234.GlobalIntTechBackup_elecS
 
     # Energy inputs
     A23.elecS_inttech_mapping %>%
@@ -533,11 +547,16 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
              year, minicam.energy.input, market.name) -> L2234.StubTechMarket_elecS_USA
 
     # Backup markets
-    L2234.StubTechMarket_elecS_USA %>%
-      # filter for intermittent technologies
-      semi_join(L2234.GlobalIntTechShrwt_elecS, by = c("supplysector" = "sector.name",
-                                                       "subsector" = "subsector.name",
-                                                       "stub.technology" = "intermittent.technology")) %>%
+    L223.StubTechMarket_backup_USA %>%
+      # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
+      left_join(A23.elecS_inttech_mapping,
+                by = c("supplysector", "subsector", "stub.technology" = "intermittent.technology")) %>%
+      filter(!is.na(minicam.energy.input)) %>%
+      select(region, supplysector = Electric.sector, subsector, stub.technology = Electric.sector.intermittent.technology,
+             year, minicam.energy.input, market.name) -> L2234.StubTechMarket_backup_elecS_USA
+
+    L2234.StubTechMarket_backup_elecS_USA %>%
+      select(-minicam.energy.input, -market.name) %>%
       left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%
       select(region, supplysector, subsector, stub.technology, year, electric.sector.market = grid_region) ->
       L2234.StubTechElecMarket_backup_elecS_USA
@@ -1427,6 +1446,16 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
                      "L223.GlobalTechCapture_elec") ->
       L2234.GlobalTechCapture_elecS_USA
 
+    L2234.GlobalIntTechBackup_elecS %>%
+      add_title("Electricity Load Segments Intermittent Technology Backup Characteristics") %>%
+      add_units("1975$/kW/yr (backup.capital.cost); unitless") %>%
+      add_comments("Backup characteristics for electricity load segments intermittent technologies") %>%
+      add_legacy_name("L2234.GlobalIntTechBackup_elecS") %>%
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
+                     "gcam-usa/A23.elecS_tech_availability",
+                     "L223.GlobalIntTechBackup_elec") ->
+      L2234.GlobalIntTechBackup_elecS_USA
+
     L2234.GlobalIntTechValueFactor_elecS %>%
       add_title("Electricity Load Segments Intermittent Technology Backup Characteristics") %>%
       add_units("value.factor.intercept = fraction of PLCOE observed at 0% market share (LCOE is divided by this value);
@@ -1448,6 +1477,16 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
                      "L223.StubTechMarket_elec_USA") ->
       L2234.StubTechMarket_elecS_USA
 
+    L2234.StubTechMarket_backup_elecS_USA %>%
+      add_title("Backup Energy Inputs for Electricity Load Segments Intermittent Technologies") %>%
+      add_units("NA") %>%
+      add_comments("Backup energy inputs for intermittent electricity load segments technologies") %>%
+      add_legacy_name("L2234.StubTechMarket_backup_elecS_USA") %>%
+      add_precursors("gcam-usa/A23.elecS_inttech_mapping",
+                     "gcam-usa/A23.elecS_tech_availability",
+                     "L223.StubTechMarket_backup_USA") ->
+      L2234.StubTechMarket_backup_elecS_USA
+
     L2234.StubTechElecMarket_backup_elecS_USA %>%
       add_title("Electricity Load Segments Sector Name for Backup Markets") %>%
       add_units("NA") %>%
@@ -1456,7 +1495,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       add_precursors("gcam-usa/states_subregions",
                      "gcam-usa/A23.elecS_inttech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
-                     "L223.GlobalIntTechValueFactor_elec",
                      "L223.StubTechMarket_elec_USA") ->
       L2234.StubTechElecMarket_backup_elecS_USA
 
@@ -1569,8 +1607,10 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
                 L2234.GlobalTechProfitShutdown_elecS_USA,
                 L2234.GlobalTechSCurve_elecS_USA,
                 L2234.GlobalTechCapture_elecS_USA,
+                L2234.GlobalIntTechBackup_elecS_USA,
                 L2234.GlobalIntTechValueFactor_elecS_USA,
                 L2234.StubTechMarket_elecS_USA,
+                L2234.StubTechMarket_backup_elecS_USA,
                 L2234.StubTechElecMarket_backup_elecS_USA,
                 L2234.StubTechProd_elecS_USA,
                 L2234.StubTechFixOut_elecS_USA,

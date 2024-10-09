@@ -18,13 +18,13 @@
 #' \code{L223.GlobalTechOMvar_elec}, \code{L223.GlobalIntTechOMvar_elec}, \code{L223.GlobalTechShrwt_elec},
 #' \code{L223.GlobalTechInterp_elec}, \code{L223.GlobalIntTechShrwt_elec}, \code{L223.PrimaryRenewKeyword_elec},
 #' \code{L223.PrimaryRenewKeywordInt_elec}, \code{L223.AvgFossilEffKeyword_elec}, \code{L223.GlobalTechCapture_elec},
-#' \code{L223.GlobalIntTechValueFactor_elec}, \code{L223.StubTechCapFactor_elec}, \code{L223.StubTechCost_offshore_wind},
-#' \code{L223.GlobalTechShutdown_elec}, \code{L223.GlobalIntTechShutdown_elec}, \code{L223.GlobalTechSCurve_elec},
-#' \code{L223.GlobalIntTechSCurve_elec}, \code{L223.GlobalTechLifetime_elec}, \code{L223.GlobalIntTechLifetime_elec},
-#' \code{L223.GlobalTechProfitShutdown_elec}, \code{L223.GlobalIntTechProfitShutdown_elec},
+#' \code{L223.GlobalIntTechValueFactor_elec}, \code{L223.GlobalIntTechBackup_elec}, \code{L223.StubTechCapFactor_elec},
+#' \code{L223.StubTechCost_offshore_wind}, \code{L223.GlobalTechShutdown_elec}, \code{L223.GlobalIntTechShutdown_elec},
+#' \code{L223.GlobalTechSCurve_elec}, \code{L223.GlobalIntTechSCurve_elec}, \code{L223.GlobalTechLifetime_elec},
+#' \code{L223.GlobalIntTechLifetime_elec}, \code{L223.GlobalTechProfitShutdown_elec}, \code{L223.GlobalIntTechProfitShutdown_elec},
 #' \code{L223.StubTechCalInput_elec}, \code{L223.StubTechFixOut_elec}, \code{L223.StubTechFixOut_hydro},
-#' \code{L223.StubTechProd_elec}, \code{L223.StubTechEff_elec}, \code{L223.StubTechSecOut_desal}, \code{L223.GlobalTechCapital_sol_adv},
-#' \code{L223.GlobalIntTechCapital_sol_adv}, \code{L223.GlobalTechCapital_wind_adv},
+#' \code{L223.StubTechProd_elec}, \code{L223.StubTechEff_elec}, \code{L223.StubTechSecOut_desal},
+#' \code{L223.GlobalTechCapital_sol_adv}, \code{L223.GlobalIntTechCapital_sol_adv}, \code{L223.GlobalTechCapital_wind_adv},
 #' \code{L223.GlobalIntTechCapital_wind_adv}, \code{L223.GlobalTechCapital_geo_adv},
 #' \code{L223.GlobalTechCapital_nuc_adv}, \code{L223.GlobalTechCapital_sol_low},
 #' \code{L223.GlobalIntTechCapital_sol_low}, \code{L223.GlobalTechCapital_wind_low},
@@ -53,6 +53,7 @@ module_energy_L223.electricity <- function(command, ...) {
              FILE = "energy/A23.subsector_shrwt_nuc_R",
              FILE = "energy/A23.subsector_shrwt_renew_R",
              FILE = "energy/A23.globalinttech",
+             FILE = "energy/A23.globalinttech_backup",
              FILE = "energy/A23.globaltech_shrwt",
              FILE = "energy/A23.globaltech_interp",
              FILE = "energy/A23.globaltech_keyword",
@@ -107,6 +108,7 @@ module_energy_L223.electricity <- function(command, ...) {
              "L223.AvgFossilEffKeyword_elec",
              "L223.GlobalTechCapture_elec",
              "L223.GlobalIntTechValueFactor_elec",
+             "L223.GlobalIntTechBackup_elec",
              "L223.StubTechCapFactor_elec",
              "L223.StubTechCost_offshore_wind",
              "L223.GlobalTechShutdown_elec",
@@ -165,6 +167,7 @@ module_energy_L223.electricity <- function(command, ...) {
     A23.subsector_shrwt_nuc_R <- get_data(all_data, "energy/A23.subsector_shrwt_nuc_R")
     A23.subsector_shrwt_renew_R <- get_data(all_data, "energy/A23.subsector_shrwt_renew_R")
     A23.globalinttech <- get_data(all_data, "energy/A23.globalinttech", strip_attributes = TRUE)
+    A23.globalinttech_backup <- get_data(all_data, "energy/A23.globalinttech_backup", strip_attributes = TRUE)
     A23.globaltech_shrwt <- get_data(all_data, "energy/A23.globaltech_shrwt", strip_attributes = TRUE)
     A23.globaltech_interp <- get_data(all_data, "energy/A23.globaltech_interp", strip_attributes = TRUE)
     A23.globaltech_keyword <- get_data(all_data, "energy/A23.globaltech_keyword", strip_attributes = TRUE)
@@ -685,7 +688,7 @@ module_energy_L223.electricity <- function(command, ...) {
     # reorders columns to match expected model interface input
     L223.GlobalTechCapture_elec <- L223.GlobalTechCapture_elec[c(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction", "storage.market")]
 
-    # Set backup parameters for global electricity generation technologies for L223.GlobalIntTechValueFactor_elec
+    # Set backup parameters for global electricity generation technologies for L223.GlobalIntTechValueFactor_elec and L223.GlobalIntTechBackup_elec
     # ------------------------------------------------------------------------------------------------------
 
     # Copy assumed parameters to all model years
@@ -695,6 +698,16 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.GlobalIntTechValueFactor_elec
     # reorders columns to match expected model interface input
     L223.GlobalIntTechValueFactor_elec <- L223.GlobalIntTechValueFactor_elec[c(LEVEL2_DATA_NAMES[["GlobalIntTechValueFactor"]])]
+
+    # NOTE: this is the previous approach to renewable integration and will not be used by default
+    A23.globalinttech_backup %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      rename(sector.name = supplysector,
+             subsector.name = subsector,
+             backup.intermittent.technology = technology) ->
+      L223.GlobalIntTechBackup_elec
+    # reorders columns to match expected model interface input
+    L223.GlobalIntTechBackup_elec <- L223.GlobalIntTechBackup_elec[c(LEVEL2_DATA_NAMES[["GlobalIntTechBackup"]])]
 
     # Set global technology retirement information for all electricity sector technologies
     # ------------------------------------------------------------------------------------
@@ -1348,13 +1361,22 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.GlobalTechCapture_elec
 
     L223.GlobalIntTechValueFactor_elec %>%
-      add_title("Capital costs of backup technologies for intermittent techs") %>%
+      add_title("Value factor equations for intermittent technologies") %>%
       add_units("value.factor.intercept = fraction of PLCOE observed at 0% market share (LCOE is divided by this value);
                 value.factor.slope = % reduction in PLCOE obsrved per % increase in market share") %>%
       add_comments("Assumptions contained within A23.globalinttech") %>%
       add_legacy_name("L223.GlobalIntTechValueFactor_elec") %>%
       add_precursors("energy/A23.globalinttech") ->
       L223.GlobalIntTechValueFactor_elec
+
+    L223.GlobalIntTechBackup_elec %>%
+      add_title("Backup cost and demand function parameters for intermittent techs") %>%
+      add_units("1975 USD/kW/yr") %>%
+      add_comments("NOTE: this is the previous approach to renewable integration and will not be used by default") %>%
+      add_comments("Assumptions contained within A23.globalinttech_backup") %>%
+      add_legacy_name("L223.GlobalIntTechBackup_elec") %>%
+      add_precursors("energy/A23.globalinttech_backup") ->
+      L223.GlobalIntTechBackup_elec
 
     L223.StubTechCapFactor_elec %>%
       add_title("Capacity factors of stub technologies including wind and solar") %>%
@@ -1656,7 +1678,7 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.GlobalTechOMfixed_elec, L223.GlobalIntTechOMfixed_elec, L223.GlobalTechOMvar_elec,
       L223.GlobalIntTechOMvar_elec, L223.GlobalTechShrwt_elec, L223.GlobalTechInterp_elec,
       L223.GlobalIntTechShrwt_elec, L223.PrimaryRenewKeyword_elec, L223.PrimaryRenewKeywordInt_elec,
-       L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechValueFactor_elec,
+       L223.AvgFossilEffKeyword_elec, L223.GlobalTechCapture_elec, L223.GlobalIntTechValueFactor_elec, L223.GlobalIntTechBackup_elec,
        L223.StubTechCapFactor_elec,L223.StubTechCost_offshore_wind, L223.GlobalTechShutdown_elec,
        L223.GlobalIntTechShutdown_elec, L223.GlobalTechSCurve_elec, L223.GlobalIntTechSCurve_elec,
        L223.GlobalTechLifetime_elec, L223.GlobalIntTechLifetime_elec, L223.GlobalTechProfitShutdown_elec,
