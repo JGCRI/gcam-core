@@ -57,25 +57,21 @@ class IInfo;
  * \ingroup Objects
  * \brief A Technology which represents production from an intermittent
  *        resource.
- * \details An intermittent subsector represents the production of a good, such
+ * \details An intermittent technology represents the production of a good, such
  *          as electricity, from an intermittent resource, such as wind or
- *          solar. An intermittent subsector has a pair of technologies. One
- *          Technology consumes the intermittent resource and produces the
- *          majority of the output, and the other Technology produces the backup
- *          required. The backup Technology may produce a small amount of
- *          output, and emissions. The intermittent and backup technologies do
- *          not compete. The intermittent subsector has a backup calculator,
- *          which is responsible for determining the average and marginal quantity
- *          of backup capacity required. The backup calculator sets the shares
- *          of the technologies using the marginal backup requirements. These
- *          shares are used for the cost calculation, but not the output
- *          calculation. Output, and therefore emissions, is based on the
+ *          solar. An intermittent technology has a pair of inputs - the 
+ *          intermittent resource which produces the majority of the output, 
+ *          and a backup energy input. The associated backup sector may produce 
+ *          a small amount of output, and emissions. The intermittent subsector 
+ *          has a backup calculator, which is responsible for determining the 
+ *          average and marginal quantity of backup capacity required. The backup 
+ *          calculator sets the shares of the technologies using the marginal backup 
+ *          requirements. These shares are used for the cost calculation, but not 
+ *          the output calculation. Output, and therefore emissions, is based on the
  *          average backup required.
- * \note An intermittent subsector must have two and only two Technologies, one
- *       consuming an intermittent resource and one which is the backup.
  * \note If a backup calculator is not read in, the backup requirement is
- *       assumed to be zero and this subsector will operate exactly the same as
- *       a standard Subsector with one Technology.
+ *       assumed to be zero and this technology will operate exactly the same as
+ *       a standard technology.
  *          <b>XML specification for BackupIntermittentTechnology</b>
  *          - XML name: \c intermittent-technology
  *          - Contained by: Subsector

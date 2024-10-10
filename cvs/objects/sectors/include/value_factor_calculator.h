@@ -102,9 +102,10 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         IBackupCalculator,
 
-        //! TODO:  leave an explanatory comment
+        //! Y-inercept of linear function which equates intermittent technology share to value factor
         DEFINE_VARIABLE( SIMPLE, "value-factor-intercept", mValueFactorIntercept, double ),
 
+        //! Slope of linear function which equates intermittent technology share to value factor
         DEFINE_VARIABLE( SIMPLE, "value-factor-slope", mValueFactorSlope, double )
 
     )

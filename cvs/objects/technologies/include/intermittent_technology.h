@@ -56,18 +56,17 @@ class IInfo;
  * \ingroup Objects
  * \brief A Technology which represents production from an intermittent
  *        resource.
- * \details An intermittent subsector represents the production of a good, such
+ * \details An intermittent technology represents the production of a good, such
  *          as electricity, from an intermittent resource, such as wind or
  *          solar. These technologies will have adjusted costs to reflect
- *          their value factor reduction as a function of market share.
+ *          a reduction of their value as a function of market share.
  *          <b>XML specification for IntermittentTechnology</b>
  *          - XML name: \c intermittent-technology
  *          - Contained by: Subsector
  *          - Parsing inherited from class: Technology
  *          - Elements:
  *              - \c electric-sector-name mElectricSectorName
- *              - \c wind-backup-calculator WindBackupCalculator
- *              - \c capacity-limit-backup-calculator CapacityLimitBackupCalculator
+ *              - \c value-factor-calculator ValueFactorCalculator
  *
  * \author Marshall Wise, Josh Lurz, Matthew Binsted, Matt Mowers
  */
