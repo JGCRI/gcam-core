@@ -1,0 +1,33 @@
+INPUT_TABLE,,,
+Variable ID,,,
+RenewRsrcPrice,,,
+,,,
+region,renewresource,year,price
+CA,offshore wind resource 6,1975,0.05
+HI,offshore wind resource 6,1975,0.05
+ME,offshore wind resource 6,1975,0.05
+MA,offshore wind resource 6,1975,0.05
+NY,offshore wind resource 6,1975,0.05
+OR,offshore wind resource 6,1975,0.05
+RI,offshore wind resource 6,1975,0.05
+CA,offshore wind resource 6,1990,0.05
+HI,offshore wind resource 6,1990,0.05
+ME,offshore wind resource 6,1990,0.05
+MA,offshore wind resource 6,1990,0.05
+NY,offshore wind resource 6,1990,0.05
+OR,offshore wind resource 6,1990,0.05
+RI,offshore wind resource 6,1990,0.05
+CA,offshore wind resource 6,2005,0.05
+HI,offshore wind resource 6,2005,0.05
+ME,offshore wind resource 6,2005,0.05
+MA,offshore wind resource 6,2005,0.05
+NY,offshore wind resource 6,2005,0.05
+OR,offshore wind resource 6,2005,0.05
+RI,offshore wind resource 6,2005,0.05
+CA,offshore wind resource 6,2010,0.05
+HI,offshore wind resource 6,2010,0.05
+ME,offshore wind resource 6,2010,0.05
+MA,offshore wind resource 6,2010,0.05
+NY,offshore wind resource 6,2010,0.05
+OR,offshore wind resource 6,2010,0.05
+RI,offshore wind resource 6,2010,0.05
