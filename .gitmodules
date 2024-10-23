@@ -5,9 +5,6 @@
 [submodule "output/modelinterface/modelinterface"]
 	path = output/modelinterface/modelinterface
 	url = https://github.com/JGCRI/modelinterface.git
-[submodule "util/testing-framework"]
-	path = util/testing-framework
-	url = https://stash.pnnl.gov/scm/jgcri/gcam-testing-framework.git
 [submodule "cpl/deps/eigen"]
 	path = cpl/deps/eigen
 	url = git@github.com:PX4/eigen
