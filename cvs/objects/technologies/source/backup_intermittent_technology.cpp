@@ -32,7 +32,7 @@
 
 
 /*!
-* \file interm_subsector.cpp
+* \file backup_intermittent_technology.cpp
 * \ingroup Objects
 * \brief BackupIntermittentTechnology class source file.
 * \author Marshall Wise, Sonny Kim
