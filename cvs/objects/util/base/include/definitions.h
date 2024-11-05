@@ -69,7 +69,7 @@
 
 //! A flag which turns on or off parallel calculation using intel TBB
 #ifndef GCAM_PARALLEL_ENABLED
-#define GCAM_PARALLEL_ENABLED 1
+#define GCAM_PARALLEL_ENABLED 0
 #endif
 
 // This allows for memory leak debugging.

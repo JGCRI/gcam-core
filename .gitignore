@@ -76,3 +76,10 @@ xcuserdata
 *.xcuserstate
 .Rproj.user
 input/gcamdata/inst/extdata/emissions/CEDS/desktop.ini
+
+# some files related to eigen
+util/eigen-3.4.0.zip
+util/eigen-3.4.0/.gitignore
+util/eigen-3.4.0/.gitlab-ci.yml
+util/eigen-3.4.0/.gitlab/
+util/eigen-3.4.0/.hgeol

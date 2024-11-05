@@ -1210,7 +1210,10 @@ double Technology::getCalibrationOutput( const bool aHasRequiredInput,
             // All coefficients are checked for consistency, so the input used
             // is arbitrary.
             double calInput = mInputs[ i ]->getCalibrationQuantity( aPeriod );
-            if( calInput >= 0 ) {
+            if( calInput == 0) {
+                totalCalOutput = 0;
+            }
+            else if( calInput >= 0 ) {
                 // TODO: Remove leontief assumption.
                 totalCalOutput = calInput / mInputs[ i ]->getCoefficient( aPeriod )
                                  * mAlphaZero;

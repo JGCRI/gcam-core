@@ -176,13 +176,13 @@ private:
     std::map<std::string, double> mUnitConvFac;
 
     //! Hector core object
-    std::auto_ptr<Hector::Core> mHcore;
+    std::unique_ptr<Hector::Core> mHcore;
 
     //! file handle for the outputstream visitor
-    std::auto_ptr<std::ofstream> mOfile;
+    std::unique_ptr<std::ofstream> mOfile;
 
     //! output stream visitor
-    std::auto_ptr<Hector::CSVOutputStreamVisitor> mHosv;
+    std::unique_ptr<Hector::CSVOutputStreamVisitor> mHosv;
     
     // private functions
     

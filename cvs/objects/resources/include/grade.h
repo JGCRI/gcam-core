@@ -109,7 +109,7 @@ protected:
     )
 
     //! The Grade's information store.
-    std::auto_ptr<IInfo> mGradeInfo;
+    std::unique_ptr<IInfo> mGradeInfo;
     
     virtual const std::string& getXMLName() const;
 };

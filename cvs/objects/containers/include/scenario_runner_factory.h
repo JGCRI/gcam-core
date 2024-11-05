@@ -63,9 +63,9 @@ class SingleScenarioRunner;
 class ScenarioRunnerFactory { 
 public:
 	static bool isOfType( const std::string& aType );
-	static std::auto_ptr<IScenarioRunner> create( const std::string& aType );
-	static std::auto_ptr<SingleScenarioRunner> createSingleScenarioRunner();
-    static std::auto_ptr<IScenarioRunner> createDefault( const std::list<std::string>& aExcludedTypes );
+	static std::unique_ptr<IScenarioRunner> create( const std::string& aType );
+	static std::unique_ptr<SingleScenarioRunner> createSingleScenarioRunner();
+    static std::unique_ptr<IScenarioRunner> createDefault( const std::list<std::string>& aExcludedTypes );
 private:
     static bool isExcluded( const std::list<std::string>& aExcludedTypes,
                             const std::string& aType );
