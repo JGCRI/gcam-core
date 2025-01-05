@@ -124,7 +124,7 @@ public:
                            const double aPrice,
                            const int aPeriod );
 
-    double getCO2EmissionsCoefficient( const std::string& aGHGName,
+    double getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                     const int aPeriod ) const;
 
     double getCoefficient( const int aPeriod ) const;

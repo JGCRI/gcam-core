@@ -129,7 +129,7 @@ double UnmanagedLandLeaf::getCalLandAllocation( const LandAllocationType aType,
 * \param aPeriod Period.
 */
 void UnmanagedLandLeaf::setProfitRate( const gcamstr& aRegionName,
-                                 const string& aProductName,
+                                 const gcamstr& aProductName,
                                  const double aProfitRate,
                                  const int aPeriod )
 {

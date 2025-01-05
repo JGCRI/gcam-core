@@ -110,7 +110,7 @@ public:
                                         const bool aCalcFutureSW );
 
     virtual void setProfitRate( const gcamstr& aRegionName,
-                                   const std::string& aProductName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
 
@@ -135,7 +135,7 @@ public:
                                    const int aYear, const int aEndYear,
                                    const bool aStoreFullEmiss );
     
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const;
 
     virtual double getCalLandAllocation( const LandAllocationType aType,
@@ -164,10 +164,10 @@ protected:
                                     std::ostream& out, 
                                     Tabs* tabs ) const;
     
-    ALandAllocatorItem* findChild( const std::string& aName,
+    ALandAllocatorItem* findChild( const gcamstr& aName,
                                    const LandAllocatorItemType aType );
     
-    const ALandAllocatorItem* findChild( const std::string& aName,
+    const ALandAllocatorItem* findChild( const gcamstr& aName,
                                          const LandAllocatorItemType aType ) const;
     
     // Define data such that introspection utilities can process the data from this

@@ -89,7 +89,7 @@ public:
      * \author James Blackwood, Kate Calvin
      */
     virtual void setProfitRate( const gcamstr& aRegionName,
-                                   const std::string& aProductName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod ) = 0;
 
@@ -100,7 +100,7 @@ public:
      * \param aPeriod Model period.
      * \return The land allocated for the product.
      */
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const = 0;
     
     /*!
@@ -117,7 +117,7 @@ public:
      *          of times the product need to be located.
      * \return The leaf node if found otherwise null.
      */
-    virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName ) = 0;
+    virtual ALandAllocatorItem* findProductLeaf( const gcamstr& aProductName ) = 0;
 
     /*!
      * \brief Complete the initialization of the land allocator.

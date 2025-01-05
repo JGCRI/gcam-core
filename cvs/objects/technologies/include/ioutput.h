@@ -270,7 +270,7 @@ public:
      * \param aName - the name of the technology
      */
     virtual void sendLandAllocator( const ILandAllocator* aLandAllocator,
-                                   const std::string& aName ) = 0;
+                                   const gcamstr& aName ) = 0;
     
     /*!
      * \brief Hook for an output to do interpolations to fill in any data that

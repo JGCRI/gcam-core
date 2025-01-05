@@ -236,7 +236,7 @@ void LandNode::setInitShares( const gcamstr& aRegionName,
 * \param aPeriod Period.
 */
 void LandNode::setProfitRate( const gcamstr& aRegionName,
-                                 const string& aProductName,
+                                 const gcamstr& aProductName,
                                  const double aProfitRate,
                                  const int aPeriod )
 {
@@ -439,7 +439,7 @@ void LandNode::calcLUCEmissions( const gcamstr& aRegionName,
  * \param aType The desired type.
  * \return ALandAllocatorItem pointer to the child.
  */
-ALandAllocatorItem* LandNode::findChild( const string& aName,
+ALandAllocatorItem* LandNode::findChild( const gcamstr& aName,
                                          const LandAllocatorItemType aType ) {
     return findItem<ALandAllocatorItem>( eDFS, this, MatchesTypeAndName( aName, aType ) );
 }
@@ -450,7 +450,7 @@ ALandAllocatorItem* LandNode::findChild( const string& aName,
  * \param aType The desired type.
  * \return ALandAllocatorItem pointer to the child.
  */
-const ALandAllocatorItem* LandNode::findChild( const string& aName,
+const ALandAllocatorItem* LandNode::findChild( const gcamstr& aName,
                                                const LandAllocatorItemType aType ) const {
     return findItem<ALandAllocatorItem>( eDFS, this, MatchesTypeAndName( aName, aType ) );
 }
@@ -461,8 +461,8 @@ const ALandAllocatorItem* LandNode::findChild( const string& aName,
  * \param aPeriod Model period.
  * \return Total land allocation of a given product.
  */
-double LandNode::getLandAllocation( const string& aProductName,
-                                    const int aPeriod ) const 
+double LandNode::getLandAllocation( const gcamstr& aProductName,
+                                    const int aPeriod ) const
 {
     // Allows land for entire node to be returned
     if ( aProductName == mName ) {

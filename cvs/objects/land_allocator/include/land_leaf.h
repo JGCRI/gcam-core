@@ -69,7 +69,7 @@ class LandLeaf : public ALandAllocatorItem {
     friend class XMLDBOutputter;
 public:
     LandLeaf( const ALandAllocatorItem* aParent,
-              const std::string& aName );
+              const gcamstr& aName );
     
     LandLeaf();
 
@@ -100,7 +100,7 @@ public:
                                            const int aPeriod );
 
 	virtual void setProfitRate( const gcamstr& aRegionName,
-                                   const std::string& aProductName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
 
@@ -118,7 +118,7 @@ public:
                                    const int aPeriod, const int aEndYear,
                                    const bool aStoreFullEmiss );
 
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const;
 
     virtual double getCalLandAllocation( const LandAllocationType aType,

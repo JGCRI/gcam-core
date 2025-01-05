@@ -588,7 +588,7 @@ double NodeInput::getConversionFactor( const int aPeriod ) const {
     return 0;
 }
 
-double NodeInput::getCO2EmissionsCoefficient( const std::string& aGHGName,
+double NodeInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     // TODO:

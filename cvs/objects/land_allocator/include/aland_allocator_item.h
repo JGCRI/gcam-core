@@ -177,7 +177,7 @@ public:
      * \param aProductName Name of the product.
      * \return Land allocation.
      */
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const = 0;
 
     /*!
@@ -272,7 +272,7 @@ public:
      * \author James Blackwood, Kate Calvin
      */
     virtual void setProfitRate( const gcamstr& aRegionName,
-                                   const std::string& aProductName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod ) = 0;
 
@@ -480,14 +480,14 @@ struct MatchesTypeAndName {
     /*!
      * \brief String that stores the desired name.
      */
-    const std::string& mName;
+    const gcamstr mName;
 
     /*!
      * \brief Constructor.
      * \param aName The desired name.
      * \param aType The desired type.
      */
-    explicit MatchesTypeAndName( const std::string& aName, LandAllocatorItemType aType )
+    explicit MatchesTypeAndName( const gcamstr& aName, LandAllocatorItemType aType )
     : mType( aType ),
       mName( aName )
     {}

@@ -200,7 +200,7 @@ void InputOMVar::setPhysicalDemand( double aPhysicalDemand,
     // Does not add to the marketplace.
 }
 
-double InputOMVar::getCO2EmissionsCoefficient( const string& aGHGName,
+double InputOMVar::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                             const int aPeriod ) const
 {
     // Capital cost inputs cannot have emissions coefficients.

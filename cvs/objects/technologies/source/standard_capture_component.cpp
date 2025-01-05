@@ -137,7 +137,6 @@ void StandardCaptureComponent::completeInit( const gcamstr& aRegionName,
 
 void StandardCaptureComponent::initCalc( const gcamstr& aRegionName,
                                            const gcamstr& aSectorName,
-                                           const string& aFuelName,
                                            const int aPeriod )
 {
 }
@@ -150,7 +149,7 @@ void StandardCaptureComponent::initCalc( const gcamstr& aRegionName,
  * \return storage cost
  */
 double StandardCaptureComponent::getStorageCost( const gcamstr& aRegionName,
-                                                 const string& aGHGName,
+                                                 const gcamstr& aGHGName,
                                                  const int aPeriod ) const
 {
     // First check if this component can capture the gas.
@@ -192,7 +191,7 @@ double StandardCaptureComponent::getStorageCost( const gcamstr& aRegionName,
  * \param aGHGName 
  * \return remove fraction
  */
-double StandardCaptureComponent::getRemoveFraction( const string& aGHGName ) const {
+double StandardCaptureComponent::getRemoveFraction( const gcamstr& aGHGName ) const {
     return aGHGName == mTargetGas ? mRemoveFraction : 0;
 }
 
@@ -206,7 +205,7 @@ double StandardCaptureComponent::getRemoveFraction( const string& aGHGName ) con
  * \return emissions sequestered
  */
 double StandardCaptureComponent::calcSequesteredAmount( const gcamstr& aRegionName,
-                                                        const string& aGHGName,
+                                                        const gcamstr& aGHGName,
                                                         const double aTotalEmissions,
                                                         const int aPeriod )
 {
@@ -234,7 +233,7 @@ double StandardCaptureComponent::calcSequesteredAmount( const gcamstr& aRegionNa
  * \param aPeriod 
  * \return sequestered amount
  */
-double StandardCaptureComponent::getSequesteredAmount( const string& aGHGName,
+double StandardCaptureComponent::getSequesteredAmount( const gcamstr& aGHGName,
                                                        const bool aGetGeologic,
                                                        const int aPeriod ) const 
 {

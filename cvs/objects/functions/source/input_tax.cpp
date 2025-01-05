@@ -187,7 +187,7 @@ void InputTax::copyParamsInto( InputTax& aInput,
 }
 
 
-double InputTax::getCO2EmissionsCoefficient( const string& aGHGName,
+double InputTax::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     return 0;

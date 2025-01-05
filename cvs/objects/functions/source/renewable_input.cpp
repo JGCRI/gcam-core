@@ -170,7 +170,7 @@ void RenewableInput::setPhysicalDemand( double aPhysicalDemand,
     // marketplace.
 }
 
-double RenewableInput::getCO2EmissionsCoefficient( const string& aGHGName,
+double RenewableInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                                 const int aPeriod ) const
 {
     return 0;

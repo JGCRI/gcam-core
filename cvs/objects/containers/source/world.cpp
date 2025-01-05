@@ -667,26 +667,6 @@ bool World::isAllCalibrated( const int period, double calAccuracy, const bool pr
     return isAllCalibrated;
 }
 
-/*! \brief This function returns a special mapping of strings to ints for use in
-*          the outputs. 
-* \details This map is created such that global maps to zero, region 0 maps to
-*          1, etc. It is similiar to the regionNamesToNumbers map but has the
-*          global element and each region number in the regionMap is 1 + the
-*          number in the regionNamesToNumbers map.
-* \warning This function should only be used by the database output functions. 
-* \return The map of region names to numbers.
-*/
-const map<string,int> World::getOutputRegionMap() const {
-    map<string,int> regionMap;
-
-    for ( unsigned int i = 0; i < mRegions.size(); i++ ) {
-        regionMap[mRegions[i]->getName()] = i+1; // start index from 1
-    }
-    // hardcode for now
-    regionMap["global"] = 0;
-    return regionMap;
-}
-
 /*! \brief Set a fixed tax for all regions.
 * \param aTax Tax.
 */
@@ -785,7 +765,7 @@ const GlobalTechnologyDatabase* World::getGlobalTechnologyDatabase() const {
  * \param aRegionName The name of the region to get.
  * \return A const pointer to the requested region or null if not found.
  */
-Region const* World::getRegion( const string& aRegionName ) const {
+Region const* World::getRegion( const gcamstr& aRegionName ) const {
     for( auto region : mRegions ) {
         if( region->getName() == aRegionName ) {
             return region;

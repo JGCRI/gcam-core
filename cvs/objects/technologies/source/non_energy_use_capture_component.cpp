@@ -131,25 +131,24 @@ void NonEnergyUseCaptureComponent::completeInit( const gcamstr& aRegionName,
 
 void NonEnergyUseCaptureComponent::initCalc( const gcamstr& aRegionName,
                                              const gcamstr& aSectorName,
-                                             const string& aFuelName,
                                              const int aPeriod )
 {
 }
 
 double NonEnergyUseCaptureComponent::getStorageCost( const gcamstr& aRegionName,
-                                                     const string& aGHGName,
+                                                     const gcamstr& aGHGName,
                                                      const int aPeriod ) const
 {
     // Emissions stored in the product so there is zero cost.
     return 0;
 }
 
-double NonEnergyUseCaptureComponent::getRemoveFraction( const string& aGHGName ) const {
+double NonEnergyUseCaptureComponent::getRemoveFraction( const gcamstr& aGHGName ) const {
 	return aGHGName == mTargetGas ? mRemoveFraction : 0;
 }
 
 double NonEnergyUseCaptureComponent::calcSequesteredAmount( const gcamstr& aRegionName,
-                                                            const string& aGHGName,
+                                                            const gcamstr& aGHGName,
 										                    const double aTotalEmissions, const int aPeriod )
 {
 	double capturedAmount = 0;
@@ -160,7 +159,7 @@ double NonEnergyUseCaptureComponent::calcSequesteredAmount( const gcamstr& aRegi
 	return capturedAmount;
 }
 
-double NonEnergyUseCaptureComponent::getSequesteredAmount( const string& aGHGName,
+double NonEnergyUseCaptureComponent::getSequesteredAmount( const gcamstr& aGHGName,
                                                            const bool aGetGeologic,
 										                   const int aPeriod ) const 
 {

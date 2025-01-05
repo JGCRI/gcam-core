@@ -315,7 +315,7 @@ void ResidueBiomassOutput::scaleCoefficient( const double aScaler )
 }
 
 void ResidueBiomassOutput::sendLandAllocator( const ILandAllocator* aLandAllocator,
-                                              const std::string& aName )
+                                              const gcamstr& aName )
 {
     // TODO: maybe the technology should just pass the product leaf
     mProductLeaf = const_cast<ILandAllocator*>( aLandAllocator )->findProductLeaf( aName );

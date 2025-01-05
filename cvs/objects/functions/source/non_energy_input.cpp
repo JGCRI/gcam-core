@@ -200,7 +200,7 @@ void NonEnergyInput::setPhysicalDemand( double aPhysicalDemand,
     // Does not add to the marketplace.
 }
 
-double NonEnergyInput::getCO2EmissionsCoefficient( const string& aGHGName,
+double NonEnergyInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                                 const int aPeriod ) const
 {
     // Non-energy inputs cannot have emissions coefficients.

@@ -161,7 +161,7 @@ public:
 
     // Documentation is inherited.
     virtual void sendLandAllocator( const ILandAllocator* aLandAllocator,
-                                   const std::string& aName ) {}
+                                   const gcamstr& aName ) {}
     
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IOutput* aPreviousInput,

@@ -70,7 +70,7 @@ typedef std::map<gcamstr, gcamstr>::const_iterator NameIterator;
  * \param aRegionName The region name to find.
  * \return A pointer to the national account for the requested region or null if not found.
  */
-NationalAccountContainer const* getNationalAccountContainer( const string& aRegionName ) {
+NationalAccountContainer const* getNationalAccountContainer( const gcamstr& aRegionName ) {
     Region const* region = scenario->getWorld()->getRegion( aRegionName );
     if( region ) {
         NationalAccountContainer const* ret = region->getNationalAccounts();

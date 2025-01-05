@@ -167,7 +167,7 @@ void LandAllocatorPrinter::startVisitLandLeaf( const LandLeaf *aLandLeaf, const 
  */
 void LandAllocatorPrinter::printNode( const ALandAllocatorItem* aLandItem,
                                       const int aPeriod, const bool aIsLeaf ) const{
-    string name = aLandItem->getName();
+    gcamstr name = aLandItem->getName();
     string nameStripped = util::replaceSpaces( name );
     mFile << "\t" << makeNameFromLabel( name ) << "[label=" << "\"" << nameStripped;
     if( mPrintValues ){

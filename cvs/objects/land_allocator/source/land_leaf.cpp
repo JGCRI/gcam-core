@@ -67,7 +67,7 @@ extern Scenario* scenario;
  * \param aParent Pointer to this leafs's parent.
  * \param aName Product name.
 */
-LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const std::string &aName ):
+LandLeaf::LandLeaf( const ALandAllocatorItem* aParent, const gcamstr &aName ):
     ALandAllocatorItem( aParent, eLeaf ),
     mCarbonContentCalc( 0 ),
     mMinAboveGroundCDensity( 0.0 ),
@@ -258,7 +258,7 @@ void LandLeaf::toDebugXMLDerived( const int period, ostream& out, Tabs* tabs ) c
 * \param aPeriod Period.
 */
 void LandLeaf::setProfitRate( const gcamstr& aRegionName,
-                                 const string& aProductName,
+                                 const gcamstr& aProductName,
                                  const double aProfitRate,
                                  const int aPeriod )
 {
@@ -491,7 +491,7 @@ void LandLeaf::calcLUCEmissions( const gcamstr& aRegionName,
 * \param aProductName Product name.
 * \param aPeriod Model Period
 */
-double LandLeaf::getLandAllocation( const string& aProductName,
+double LandLeaf::getLandAllocation( const gcamstr& aProductName,
                                     const int aPeriod ) const
 {
     assert( aProductName == mName || aProductName == "" ); // Residue output object calls this without product information

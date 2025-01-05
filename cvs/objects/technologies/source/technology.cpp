@@ -525,7 +525,7 @@ void Technology::initCalc( const gcamstr& aRegionName,
     }
 
     if( mCaptureComponent ) {
-        mCaptureComponent->initCalc( aRegionName, aSectorName, "", aPeriod );
+        mCaptureComponent->initCalc( aRegionName, aSectorName, aPeriod );
         mCaptureComponent->adjustInputs( aRegionName, mInputs, aPeriod );
     }
 

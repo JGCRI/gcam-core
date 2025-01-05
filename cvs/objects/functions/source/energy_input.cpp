@@ -286,7 +286,7 @@ void EnergyInput::copyParamsInto( EnergyInput& aInput,
     }
 }
 
-double EnergyInput::getCO2EmissionsCoefficient( const string& aGHGName,
+double EnergyInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     // Check that the CO2 coefficient is initialized.

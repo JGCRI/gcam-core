@@ -232,7 +232,7 @@ void InputCapital::setPhysicalDemand( double aPhysicalDemand,
     }
 }
 
-double InputCapital::getCO2EmissionsCoefficient( const string& aGHGName,
+double InputCapital::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                                  const int aPeriod ) const
 {
     // Capital cost inputs cannot have emissions coefficients.

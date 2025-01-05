@@ -187,7 +187,7 @@ void InputSubsidy::copyParamsInto( InputSubsidy& aInput,
 }
 
 
-double InputSubsidy::getCO2EmissionsCoefficient( const string& aGHGName,
+double InputSubsidy::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     return 0;

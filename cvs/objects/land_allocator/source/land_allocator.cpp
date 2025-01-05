@@ -229,7 +229,7 @@ void LandAllocator::calibrateLandAllocator( const gcamstr& aRegionName, const in
     calculateShareWeights( aRegionName, mChoiceFn, aPeriod, false );
 }
 
-double LandAllocator::getLandAllocation( const string& aProductName,
+double LandAllocator::getLandAllocation( const gcamstr& aProductName,
                                          const int aPeriod ) const
 {
     const ALandAllocatorItem* node = findChild( aProductName, eLeaf );
@@ -256,7 +256,7 @@ void LandAllocator::setSoilTimeScale( const int aTimeScale ) {
 }
 
 void LandAllocator::setProfitRate( const gcamstr& aRegionName,
-                                   const string& aProductName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod )
 {
@@ -355,7 +355,7 @@ void LandAllocator::postCalc( const gcamstr& aRegionName, const int aPeriod ) {
     calcLUCEmissions( aRegionName, aPeriod, CarbonModelUtils::getEndYear(), true );
 }
 
-ALandAllocatorItem* LandAllocator::findProductLeaf( const string& aProductName ) {
+ALandAllocatorItem* LandAllocator::findProductLeaf( const gcamstr& aProductName ) {
     return findChild( aProductName, eLeaf );
 }
 

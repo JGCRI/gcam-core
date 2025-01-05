@@ -158,7 +158,7 @@ void CTaxInput::copyParam( const IInput* aInput,
 {
 }
 
-double CTaxInput::getCO2EmissionsCoefficient( const string& aGHGName,
+double CTaxInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     // do not double account taxes on mFuelName

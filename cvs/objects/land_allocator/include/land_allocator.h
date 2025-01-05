@@ -82,13 +82,13 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
     
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const;
 
     virtual void setSoilTimeScale( const int aTimeScale );
 
     virtual void setProfitRate( const gcamstr& aRegionName,
-                                   const std::string& aProductName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
    
@@ -124,7 +124,7 @@ public:
                                    const int aPeriod, const int aEndYear,
                                    const bool aStoreFullEmiss );
                               
-    virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName );
+    virtual ALandAllocatorItem* findProductLeaf( const gcamstr& aProductName );
 protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.

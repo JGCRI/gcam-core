@@ -78,7 +78,7 @@ public:
                                          const int aPeriod ) const;
     
     virtual void setProfitRate( const gcamstr& aRegionName,
-                                   const std::string& aProductName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
 	

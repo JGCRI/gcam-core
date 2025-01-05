@@ -74,7 +74,7 @@ public:
     static double getCoefSum( const InputSet& input, const int aPeriod );
     
     static IInput* getInput( const InputSet& aInputs,
-                             const std::string& aInputName );
+                             const gcamstr& aInputName );
     
     static IInput* getCapitalInput( const InputSet& aInputs );
     

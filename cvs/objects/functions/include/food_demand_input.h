@@ -277,7 +277,7 @@ public:
 		return 0;
 	}
 
-    virtual double getCO2EmissionsCoefficient( const std::string& aGHGName,
+    virtual double getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 	{
 		return 0;

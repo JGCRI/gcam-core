@@ -129,21 +129,20 @@ public:
     
     virtual void initCalc( const gcamstr& aRegionName,
                            const gcamstr& aSectorName,
-                           const std::string& aFuelName,
                            const int aPeriod );
 
     double getStorageCost( const gcamstr& aRegionName,
-                           const std::string& aGHGName,
+                           const gcamstr& aGHGName,
                            const int aPeriod ) const;
 
-    double getRemoveFraction( const std::string& aGHGName ) const;
+    double getRemoveFraction( const gcamstr& aGHGName ) const;
 	
 	double calcSequesteredAmount( const gcamstr& aRegionName,
-                                  const std::string& aGHGName,
+                                  const gcamstr& aGHGName,
                                   const double aTotalEmissions,
                                   const int aPeriod );
 
-    double getSequesteredAmount( const std::string& aGHGName,
+    double getSequesteredAmount( const gcamstr& aGHGName,
                                  const bool aGetGeologic,
                                  const int aPeriod ) const;
 

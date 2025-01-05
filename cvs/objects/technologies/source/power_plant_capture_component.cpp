@@ -149,7 +149,6 @@ void PowerPlantCaptureComponent::completeInit( const gcamstr& aRegionName,
 
 void PowerPlantCaptureComponent::initCalc( const gcamstr& aRegionName,
                                            const gcamstr& aSectorName,
-                                           const string& aFuelName,
                                            const int aPeriod )
 {
 }
@@ -162,7 +161,7 @@ void PowerPlantCaptureComponent::initCalc( const gcamstr& aRegionName,
  * \return storage cost
  */
 double PowerPlantCaptureComponent::getStorageCost( const gcamstr& aRegionName,
-                                                   const string& aGHGName,
+                                                   const gcamstr& aGHGName,
                                                    const int aPeriod ) const
 {
     if( aGHGName != mTargetGas ){
@@ -193,7 +192,7 @@ double PowerPlantCaptureComponent::getStorageCost( const gcamstr& aRegionName,
  * \param aGHGName 
  * \return remove fraction
  */
-double PowerPlantCaptureComponent::getRemoveFraction( const string& aGHGName ) const {
+double PowerPlantCaptureComponent::getRemoveFraction( const gcamstr& aGHGName ) const {
     return aGHGName == mTargetGas ? mRemoveFraction : 0;
 }
 
@@ -207,7 +206,7 @@ double PowerPlantCaptureComponent::getRemoveFraction( const string& aGHGName ) c
  * \return emissions sequestered
  */
 double PowerPlantCaptureComponent::calcSequesteredAmount( const gcamstr& aRegionName,
-                                                          const string& aGHGName,
+                                                          const gcamstr& aGHGName,
                                                           const double aTotalEmissions,
                                                           const int aPeriod )
 {
@@ -235,7 +234,7 @@ double PowerPlantCaptureComponent::calcSequesteredAmount( const gcamstr& aRegion
  * \param aPeriod 
  * \return sequestered amount
  */
-double PowerPlantCaptureComponent::getSequesteredAmount( const string& aGHGName,
+double PowerPlantCaptureComponent::getSequesteredAmount( const gcamstr& aGHGName,
                                                          const bool aGetGeologic,
                                                          const int aPeriod ) const 
 {

@@ -207,7 +207,7 @@ double FunctionUtils::getCoefSum( const InputSet& input,
 * \return A constant pointer to the input, null if it does not exist.
 */
 IInput* FunctionUtils::getInput( const InputSet& aInputs,
-                                 const string& aInputName )
+                                 const gcamstr& aInputName )
 {
     for( InputSet::const_iterator input = aInputs.begin(); input != aInputs.end(); ++input ) {
         if( ( *input )->getName() == aInputName ) {

@@ -112,7 +112,7 @@ public :
     virtual void postCalc( const gcamstr& aRegionName, const int aPeriod );
 
     virtual void scaleCoefficient( const double aScaler );
-    virtual void sendLandAllocator( const ILandAllocator* aLandAllocator, const std::string& aName );
+    virtual void sendLandAllocator( const ILandAllocator* aLandAllocator, const gcamstr& aName );
     virtual void setName( const gcamstr& sectorName ) { mName = sectorName; }
     virtual void setPhysicalOutput( const double aPrimaryOutput, const gcamstr& aRegionName,
                                     ICaptureComponent* aCaptureComponent, const int aPeriod );

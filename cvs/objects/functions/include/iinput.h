@@ -387,7 +387,7 @@ public:
     * \param aPeriod Model period
     * \return The emissions coefficient for the gas.
     */
-    virtual double getCO2EmissionsCoefficient( const std::string& aGHGName,
+    virtual double getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const = 0;
 
     /*!

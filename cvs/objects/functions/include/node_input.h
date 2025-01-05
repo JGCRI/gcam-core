@@ -207,7 +207,7 @@ public:
 
     virtual double getConversionFactor( const int aPeriod ) const;
 
-    virtual double getCO2EmissionsCoefficient( const std::string& aGHGName,
+    virtual double getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const;
 
     virtual void tabulateFixedQuantity( const gcamstr& aRegionName,
