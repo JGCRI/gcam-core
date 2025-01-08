@@ -11,7 +11,8 @@
 #' the generated outputs: \code{L2233.GlobalTechEff_elecS_cool_USA}, \code{L2233.GlobalTechShrwt_elecS_cool_USA}, \code{L2233.GlobalTechProfitShutdown_elecS_cool_USA},
 #' \code{L2233.GlobalTechOMvar_elecS_cool_USA}, \code{L2233.GlobalTechOMfixed_elecS_cool_USA}, \code{L2233.GlobalTechCapital_elecS_USA}, \code{L2233.GlobalTechCapital_elecS_cool_USA},
 #' \code{L2233.GlobalTechCapFac_elecS_cool_USA}, \code{L2233.GlobalTechSCurve_elecS_cool_USA}, \code{L2233.GlobalTechCoef_elecS_cool_USA}, \code{L2233.GlobalTechCapture_elecS_cool_USA},
-#' \code{L2233.GlobalTechLifetime_elecS_cool_USA}, \code{L2233.AvgFossilEffKeyword_elecS_cool_USA}, \code{L2233.GlobalIntTechBackup_elecS_cool_USA}, \code{L2233.GlobalIntTechCapital_elecS_USA},
+#' \code{L2233.GlobalTechLifetime_elecS_cool_USA}, \code{L2233.AvgFossilEffKeyword_elecS_cool_USA}, \code{L2233.GlobalIntTechBackup_elecS_cool_USA},
+#' \code{L2233.GlobalIntTechValueFactor_elecS_cool_USA}, \code{L2233.GlobalIntTechCapital_elecS_USA},
 #' \code{L2233.GlobalIntTechCapital_elecS_cool_USA}, \code{L2233.GlobalIntTechEff_elecS_USA}, \code{L2233.GlobalIntTechEff_elecS_cool_USA}, \code{L2233.GlobalIntTechLifetime_elecS_cool_USA},
 #' \code{L2233.GlobalIntTechOMfixed_elecS_cool_USA}, \code{L2233.GlobalIntTechOMvar_elecS_cool_USA}, \code{L2233.GlobalIntTechShrwt_elecS_cool_USA}, \code{L2233.GlobalIntTechCoef_elecS_cool_USA},
 #' \code{L2233.PrimaryRenewKeyword_elecS_cool_USA}, \code{L2233.PrimaryRenewKeywordInt_elecS_cool_USA}, \code{L2233.StubTechEff_elecS_cool_USA}, \code{L2233.StubTechCoef_elecS_cool_USA},
@@ -46,6 +47,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
              "L2233.GlobalIntTechCoef_elec_cool",
              "L2234.AvgFossilEffKeyword_elecS_USA",
              "L2234.GlobalIntTechBackup_elecS_USA",
+             "L2234.GlobalIntTechValueFactor_elecS_USA",
              "L2234.GlobalIntTechCapital_elecS_USA",
              "L2234.GlobalIntTechEff_elecS_USA",
              "L2234.GlobalIntTechLifetime_elecS_USA",
@@ -116,6 +118,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
              "L2233.GlobalTechLifetime_elecS_cool_USA",
              "L2233.AvgFossilEffKeyword_elecS_cool_USA",
              "L2233.GlobalIntTechBackup_elecS_cool_USA",
+             "L2233.GlobalIntTechValueFactor_elecS_cool_USA",
              "L2233.GlobalIntTechCapital_elecS_USA",
              "L2233.GlobalIntTechCapital_elecS_cool_USA",
              "L2233.GlobalIntTechEff_elecS_USA",
@@ -195,6 +198,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     L2233.GlobalIntTechCoef_elec_cool <- get_data(all_data, "L2233.GlobalIntTechCoef_elec_cool", strip_attributes = TRUE)
     L2234.AvgFossilEffKeyword_elecS_USA <- get_data(all_data, "L2234.AvgFossilEffKeyword_elecS_USA", strip_attributes = TRUE)
     L2234.GlobalIntTechBackup_elecS_USA <- get_data(all_data,"L2234.GlobalIntTechBackup_elecS_USA", strip_attributes = TRUE)
+    L2234.GlobalIntTechValueFactor_elecS_USA <- get_data(all_data,"L2234.GlobalIntTechValueFactor_elecS_USA", strip_attributes = TRUE)
     L2234.GlobalIntTechCapital_elecS_USA <- get_data(all_data,"L2234.GlobalIntTechCapital_elecS_USA", strip_attributes = TRUE)
     L2234.GlobalIntTechEff_elecS_USA <- get_data(all_data,"L2234.GlobalIntTechEff_elecS_USA", strip_attributes = TRUE)
     L2234.GlobalIntTechLifetime_elecS_USA <- get_data(all_data,"L2234.GlobalIntTechLifetime_elecS_USA", strip_attributes = TRUE)
@@ -531,9 +535,9 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     }
 
     # no changes needed for backup techs as cooling is not directly associated in previous cooling files
-    L2234.GlobalIntTechBackup_elecS_USA %>%
+    L2234.GlobalIntTechValueFactor_elecS_USA %>%
       csp_filter() %>%
-      bind_rows(L2234.GlobalIntTechBackup_elecS_USA %>%
+      bind_rows(L2234.GlobalIntTechValueFactor_elecS_USA %>%
                   filter(grepl("CSP", intermittent.technology)) %>%
                   left_join(A23.elecS_tech_mapping_cool,
                             # Left_join used as each power plant type will now be multiplied
@@ -546,6 +550,26 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
                          subsector = intermittent.technology,
                          intermittent.technology = to.technology)) %>%
       arrange(supplysector, subsector0, subsector, intermittent.technology, year)->
+      L2233.GlobalIntTechValueFactor_elecS_USA
+    # Old approach to intermittent renewable integration (no longer the default)
+    L2234.GlobalIntTechBackup_elecS_USA %>%
+      filter(!grepl("CSP", backup.intermittent.technology)) %>%
+      rename(subsector0 = subsector,
+             subsector = backup.intermittent.technology) %>%
+      mutate(backup.intermittent.technology = subsector) %>%
+      bind_rows(L2234.GlobalIntTechBackup_elecS_USA %>%
+                  filter(grepl("CSP", backup.intermittent.technology)) %>%
+                  left_join(A23.elecS_tech_mapping_cool,
+                            # Left_join used as each power plant type will now be multiplied
+                            # by up to five cooling technologies, thus increasing tibble size
+                            by = c("supplysector" = "Electric.sector",
+                                   "backup.intermittent.technology" = "Electric.sector.technology",
+                                   "subsector")) %>%
+                  select(-technology, -subsector_1) %>%
+                  rename(subsector0 = subsector,
+                         subsector = backup.intermittent.technology,
+                         backup.intermittent.technology = to.technology)) %>%
+      arrange(supplysector, subsector0, subsector, backup.intermittent.technology, year)->
       L2233.GlobalIntTechBackup_elecS_USA
 
     # isolate int techs that do not have cooling techs associated
@@ -661,13 +685,11 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       L2233.GlobalIntTechOMfixed_elecS_cool_USA
 
     L2234.GlobalIntTechOMvar_elecS_USA %>%
-      mutate(subsector0 = subsector,
-             subsector = intermittent.technology) ->
-      L2233.GlobalIntTechOMvar_elecS_cool_USA
-
-    L2234.GlobalIntTechOMvar_elecS_USA %>%
-      mutate(subsector0 = subsector,
-             subsector = intermittent.technology) ->
+      csp_filter() %>%
+      bind_rows(L2234.GlobalIntTechOMvar_elecS_USA %>%
+                  filter(grepl("CSP", intermittent.technology)) %>%
+                  add_int_cooling_techs) %>%
+      arrange(supplysector, subsector0, subsector, intermittent.technology, year) ->
       L2233.GlobalIntTechOMvar_elecS_cool_USA
 
     L2234.GlobalIntTechShrwt_elecS_USA %>%
@@ -1273,6 +1295,14 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalIntTechBackup_elecS_USA") ->
       L2233.GlobalIntTechBackup_elecS_cool_USA
 
+    L2233.GlobalIntTechValueFactor_elecS_USA %>%
+      add_title("Electricity Load Segments Intermittent Technology Backup Characteristics") %>%
+      add_units("value.factor.intercept = fraction of PLCOE observed at 0% market share (LCOE is divided by this value);
+                value.factor.slope = % reduction in PLCOE obsrved per % increase in market share") %>%
+      add_comments("Electricity Load Segments Intermittent Technology Backup Characteristics") %>%
+      add_precursors("L2234.GlobalIntTechValueFactor_elecS_USA") ->
+      L2233.GlobalIntTechValueFactor_elecS_cool_USA
+
     L2233.GlobalIntTechCapital_elecS_USA %>%
       add_title("Electricity Load Segments Intermittent Technology Capital Costs") %>%
       add_units("none") %>%
@@ -1593,6 +1623,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
                 L2233.GlobalTechLifetime_elecS_cool_USA,
                 L2233.AvgFossilEffKeyword_elecS_cool_USA,
                 L2233.GlobalIntTechBackup_elecS_cool_USA,
+                L2233.GlobalIntTechValueFactor_elecS_cool_USA,
                 L2233.GlobalIntTechCapital_elecS_USA,
                 L2233.GlobalIntTechCapital_elecS_cool_USA,
                 L2233.GlobalIntTechEff_elecS_USA,

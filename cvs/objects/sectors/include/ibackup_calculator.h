@@ -56,16 +56,17 @@ class Tabs;
 // Need to forward declare the subclasses as well.
 class CapacityLimitBackupCalculator;
 class CSPBackupCalculator;
+class ValueFactorCalculator;
 
 /*!
  * \ingroup Objects
- * \brief Interface which defines methods for calculating an average and
- *        marginal amount of backup capacity required per unit of output.
- * \details Defines an interface to an object which determines the backup
- *          capacity required for a Sector. The backup capacity is determined
+ * \brief Interface which defines methods for calculating a value factor or 
+ *        backup capacity requirement (average and marginal) per unit of output.
+ * \details Defines an interface to an object which helps determine the value factor of or 
+ *          backup capacity required for a technology. The backup capacity is determined
  *          per unit of output, but may use trial values to allow computation
  *          based on the total output. Backup requirements are specific to
- *          sectors that produce electricity.
+ *          technologies that produce electricity.
  * \author Josh Lurz
  */
 class IBackupCalculator : public INamed, private boost::noncopyable {
@@ -152,7 +153,7 @@ protected:
          * hierarchy under introspection.
          */
         DEFINE_SUBCLASS_FAMILY( IBackupCalculator, CapacityLimitBackupCalculator,
-                                CSPBackupCalculator )
+                                CSPBackupCalculator, ValueFactorCalculator )
     )
 };
 

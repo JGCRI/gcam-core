@@ -27,6 +27,7 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
              "L2233.GlobalTechLifetime_elecS_cool_USA",
              "L2233.AvgFossilEffKeyword_elecS_cool_USA",
              "L2233.GlobalIntTechBackup_elecS_cool_USA",
+             "L2233.GlobalIntTechValueFactor_elecS_cool_USA",
              "L2233.GlobalIntTechCapital_elecS_USA",
              "L2233.GlobalIntTechCapital_elecS_cool_USA",
              "L2233.GlobalIntTechEff_elecS_USA",
@@ -124,7 +125,8 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
     L2233.GlobalTechCapture_elecS_cool_USA <- get_data(all_data, "L2233.GlobalTechCapture_elecS_cool_USA")
     L2233.GlobalTechLifetime_elecS_cool_USA <- get_data(all_data, "L2233.GlobalTechLifetime_elecS_cool_USA")
     L2233.AvgFossilEffKeyword_elecS_cool_USA <- get_data(all_data,"L2233.AvgFossilEffKeyword_elecS_cool_USA")
-    L2233.GlobalIntTechBackup_elecS_cool_USA<- get_data(all_data,"L2233.GlobalIntTechBackup_elecS_cool_USA")
+    L2233.GlobalIntTechBackup_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechBackup_elecS_cool_USA")
+    L2233.GlobalIntTechValueFactor_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechValueFactor_elecS_cool_USA")
     L2233.GlobalIntTechCapital_elecS_USA<- get_data(all_data,"L2233.GlobalIntTechCapital_elecS_USA")
     L2233.GlobalIntTechCapital_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechCapital_elecS_cool_USA")
     L2233.GlobalIntTechEff_elecS_USA <- get_data(all_data, "L2233.GlobalIntTechEff_elecS_USA")
@@ -213,15 +215,15 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
       return(data_new)
     }
 
-
-    L2233.GlobalIntTechBackup_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechBackup_elecS_cool_USA)
-    L2233.GlobalIntTechCapital_elecS_USA<- fix_global_tech_names(L2233.GlobalIntTechCapital_elecS_USA)
+    L2233.GlobalIntTechBackup_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechBackup_elecS_cool_USA)
+    L2233.GlobalIntTechValueFactor_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechValueFactor_elecS_cool_USA)
+    L2233.GlobalIntTechCapital_elecS_USA <- fix_global_tech_names(L2233.GlobalIntTechCapital_elecS_USA)
     L2233.GlobalIntTechCapital_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechCapital_elecS_cool_USA)
     L2233.GlobalIntTechEff_elecS_USA <- fix_global_tech_names(L2233.GlobalIntTechEff_elecS_USA)
-    L2233.GlobalIntTechEff_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechEff_elecS_cool_USA)
-    L2233.GlobalIntTechLifetime_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechLifetime_elecS_cool_USA)
-    L2233.GlobalIntTechOMfixed_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechOMfixed_elecS_cool_USA)
-    L2233.GlobalIntTechOMvar_elecS_cool_USA<- fix_global_tech_names(L2233.GlobalIntTechOMvar_elecS_cool_USA)
+    L2233.GlobalIntTechEff_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechEff_elecS_cool_USA)
+    L2233.GlobalIntTechLifetime_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechLifetime_elecS_cool_USA)
+    L2233.GlobalIntTechOMfixed_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechOMfixed_elecS_cool_USA)
+    L2233.GlobalIntTechOMvar_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechOMvar_elecS_cool_USA)
     L2233.GlobalIntTechCoef_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechCoef_elecS_cool_USA)
     L2233.GlobalTechProfitShutdown_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalTechProfitShutdown_elecS_cool_USA)
     L2233.GlobalTechCoef_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalTechCoef_elecS_cool_USA)
@@ -231,7 +233,6 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
     L2233.GlobalTechLifetime_elecS_cool_USA <- rename(L2233.GlobalTechLifetime_elecS_cool_USA, sector.name = supplysector)
     L2233.GlobalTechCapture_elecS_cool_USA <- rename(L2233.GlobalTechCapture_elecS_cool_USA, sector.name = supplysector)
     L2233.PrimaryRenewKeywordInt_elecS_cool_USA <- rename(L2233.PrimaryRenewKeywordInt_elecS_cool_USA,  technology = intermittent.technology)
-    L2233.GlobalIntTechBackup_elecS_cool_USA <- rename(L2233.GlobalIntTechBackup_elecS_cool_USA, technology = intermittent.technology)
     L2233.GlobalIntTechCoef_elecS_cool_USA <- rename(L2233.GlobalIntTechCoef_elecS_cool_USA,technology = intermittent.technology)
 
     L2233.StubTechMarket_elecS_cool_USA <- rename(L2233.StubTechMarket_elecS_cool_USA, stub.technology = technology)
@@ -282,7 +283,25 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
       # replace global rooftop_pv to avoid capital tracking input
       add_xml_data(L223.StubTechCapFactor_elec, "DeleteStubTech") %>%
       add_xml_data(L223.StubTechCapFactor_elec, "StubTechCapFactor") %>%
-      add_xml_data(L2233.GlobalTechCapital_elecS_cool_USA, "GlobalTechCapital") %>%
+      add_xml_data(L2233.GlobalTechCapital_elecS_cool_USA, "GlobalTechCapital") ->
+      elec_segments_water_USA.xml
+
+      if(energy.ELEC_USE_BACKUP) {
+        elec_segments_water_USA.xml %>%
+          add_xml_data(L2233.GlobalIntTechBackup_elecS_cool_USA, "GlobalIntTechBackup") %>%
+          add_xml_data_generate_levels(L2233.StubTechMarket_backup_elecS_cool_USA,
+                                       "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
+          add_precursors("L2233.GlobalIntTechBackup_elecS_cool_USA",
+                         "L2233.StubTechMarket_backup_elecS_cool_USA") ->
+          elec_segments_water_USA.xml
+      } else {
+        elec_segments_water_USA.xml %>%
+          add_xml_data(L2233.GlobalIntTechValueFactor_elecS_cool_USA, "GlobalIntTechValueFactor") %>%
+          add_precursors("L2233.GlobalIntTechValueFactor_elecS_cool_USA") ->
+          elec_segments_water_USA.xml
+      }
+
+    elec_segments_water_USA.xml %>%
       add_xml_data(L2233.GlobalIntTechCapital_elecS_USA, "GlobalIntTechCapital") %>%
       add_xml_data(L2233.GlobalIntTechCapital_elecS_cool_USA, "GlobalIntTechCapital") %>%
       add_xml_data(L2233.GlobalTechOMfixed_elecS_cool_USA, "GlobalTechOMfixed") %>%
@@ -300,7 +319,6 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
       add_xml_data(L2233.GlobalTechSCurve_elecS_cool_USA, "GlobalTechSCurve") %>%
       add_xml_data(L2233.GlobalTechCapture_elecS_cool_USA, "GlobalTechCapture") %>%
       add_xml_data(L2233.GlobalTechLifetime_elecS_cool_USA, "GlobalTechLifetime") %>%
-      add_xml_data(L2233.GlobalIntTechBackup_elecS_cool_USA, "GlobalIntTechBackup") %>%
       add_xml_data(L2233.GlobalTechShrwt_elecS_cool_USA, "GlobalTechShrwt") %>%
       add_xml_data(L2233.GlobalIntTechShrwt_elecS_cool_USA, "GlobalIntTechShrwt") %>%
       add_logit_tables_xml_generate_levels(L2233.SubsectorLogit_elecS_cool_USA,
@@ -308,8 +326,6 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
       add_xml_data_generate_levels(L2233.SubsectorShrwt_elecS_cool_USA,
                                    "SubsectorShrwt","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechMarket_elecS_cool_USA,
-                                   "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
-      add_xml_data_generate_levels(L2233.StubTechMarket_backup_elecS_cool_USA,
                                    "StubTechMarket","subsector","nesting-subsector",1,FALSE) %>%
       add_xml_data_generate_levels(L2233.StubTechElecMarket_backup_elecS_cool_USA,
                                    "StubTechElecMarket","subsector","nesting-subsector",1,FALSE) %>%
@@ -391,7 +407,6 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
                      "L2233.GlobalTechCapture_elecS_cool_USA",
                      "L2233.GlobalTechLifetime_elecS_cool_USA",
                      "L2233.AvgFossilEffKeyword_elecS_cool_USA",
-                     "L2233.GlobalIntTechBackup_elecS_cool_USA",
                      "L2233.GlobalIntTechCapital_elecS_USA",
                      "L2233.GlobalIntTechCapital_elecS_cool_USA",
                      "L2233.GlobalIntTechEff_elecS_USA",
@@ -413,7 +428,6 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
                      "L2233.StubTechElecMarket_backup_elecS_cool_USA",
                      "L2233.StubTechFixOut_elecS_cool_USA",
                      "L2233.StubTechFixOut_hydro_elecS_cool_USA",
-                     "L2233.StubTechMarket_backup_elecS_cool_USA",
                      "L2233.StubTechProfitShutdown_elecS_cool_USA",
                      "L2233.StubTechSCurve_elecS_cool_USA",
                      "L2233.StubTechShrwt_elecS_cool_USA",

@@ -25,6 +25,7 @@ module_water_electricity_water_xml <- function(command, ...) {
       "L223.SubsectorShrwt_nuc",
       "L223.SubsectorShrwt_renew",
       "L2233.AvgFossilEffKeyword_elec_cool",
+      "L2233.GlobalIntTechValueFactor_elec_cool",
       "L2233.GlobalIntTechBackup_elec_cool",
       "L2233.GlobalIntTechCapFac_elec_cool",
       "L2233.GlobalIntTechEff_elec_cool",
@@ -93,7 +94,8 @@ module_water_electricity_water_xml <- function(command, ...) {
     L2233.GlobalIntTechLifetime_elec_cool <- rename(L2233.GlobalIntTechLifetime_elec_cool, `intermittent.technology` = technology )
     L2233.GlobalIntTechShrwt_elec_cool    <- rename(L2233.GlobalIntTechShrwt_elec_cool,  `intermittent.technology` = technology )
     L2233.GlobalIntTechCapFac_elec_cool   <- rename(L2233.GlobalIntTechCapFac_elec_cool,  `intermittent.technology` = technology )
-
+    L2233.GlobalIntTechValueFactor_elec_cool   <- rename(L2233.GlobalIntTechValueFactor_elec_cool,  `intermittent.technology` = technology )
+    L2233.GlobalIntTechBackup_elec_cool   <- rename(L2233.GlobalIntTechBackup_elec_cool,  `backup.intermittent.technology` = technology )
 
     # Produce outputs
     create_xml("electricity_water.xml") %>%
@@ -110,8 +112,22 @@ module_water_electricity_water_xml <- function(command, ...) {
       add_xml_data(L223.SubsectorShrwt_coal, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_nuc, "SubsectorShrwt") %>%
       add_xml_data(L223.SubsectorShrwt_renew, "SubsectorShrwt") %>%
-      add_xml_data(L2233.AvgFossilEffKeyword_elec_cool, "AvgFossilEffKeyword") %>%
-      add_xml_data(L2233.GlobalIntTechBackup_elec_cool, "GlobalIntTechBackup") %>%
+      add_xml_data(L2233.AvgFossilEffKeyword_elec_cool, "AvgFossilEffKeyword") ->
+      electricity_water.xml
+
+    if(energy.ELEC_USE_BACKUP) {
+      electricity_water.xml %>%
+        add_xml_data(L2233.GlobalIntTechBackup_elec_cool, "GlobalIntTechBackup") %>%
+        add_precursors("L2233.GlobalIntTechBackup_elec_cool") ->
+        electricity_water.xml
+    } else {
+      electricity_water.xml %>%
+        add_xml_data(L2233.GlobalIntTechValueFactor_elec_cool, "GlobalIntTechValueFactor") %>%
+        add_precursors("L2233.GlobalIntTechValueFactor_elec_cool") ->
+        electricity_water.xml
+    }
+
+    electricity_water.xml %>%
       add_xml_data(L2233.GlobalIntTechCapFac_elec_cool, "GlobalIntTechCapFac") %>%
       add_xml_data(L2233.GlobalIntTechEff_elec_cool, "GlobalIntTechEff") %>%
       add_xml_data(L2233.GlobalIntTechLifetime_elec_cool, "GlobalIntTechLifetime") %>%

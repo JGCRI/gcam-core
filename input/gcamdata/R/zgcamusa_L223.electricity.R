@@ -510,8 +510,8 @@ module_gcamusa_L223.electricity <- function(command, ...) {
     L223.GlobalIntTechBackup_elec %>%
       mutate(supplysector = sector.name, subsector = subsector.name) %>%
       write_to_all_states(names = c(names(.), 'region')) %>%
-      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", technology)) %>%
-      mutate(market.name = gcam.USA_REGION, stub.technology = technology) %>%
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", backup.intermittent.technology)) %>%
+      mutate(market.name = gcam.USA_REGION, stub.technology = backup.intermittent.technology) %>%
       # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
       # Thus, no wind & solar subsectors should be created in DC's electricity sector.
       # Use anti_join to remove them from the table.
