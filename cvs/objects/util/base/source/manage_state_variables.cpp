@@ -407,6 +407,15 @@ void Value::doStateCheck() const {
         abort();
     }
 }
+
+void checkAddStrDuringCalc(const std::string& aStr) {
+    if(Marketplace::mIsDerivativeCalc) {
+        std::cout << "Attempting to intern gcamstr during World.calc: " << aStr << std::endl;
+        // use the debugger call stack from here to indentify the code that was attempting
+        // to intern a gcamstr during World.calc
+        abort();
+    }
+}
 #endif
 
 template<typename DataType>

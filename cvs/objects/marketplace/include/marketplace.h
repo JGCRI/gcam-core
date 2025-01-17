@@ -140,6 +140,7 @@ class Marketplace: public IVisitable, private boost::noncopyable
 #if DEBUG_STATE
     friend class ManageStateVariables;
     friend class Value;
+    friend void checkAddStrDuringCalc(const std::string& aStr);
 #endif
 public:
     Marketplace();

@@ -65,7 +65,6 @@ typedef std::map<unsigned int, double> LandMapType;
 LandNode::LandNode( const ALandAllocatorItem* aParent )
 : ALandAllocatorItem( aParent, eNode ),
 mChoiceFn( 0 ),
-mUnManagedLandValue( 0.0 ),
 mLandUseHistory( 0 ),
 mCarbonCalc( 0 )
 {
@@ -74,7 +73,6 @@ mCarbonCalc( 0 )
 LandNode::LandNode()
 : ALandAllocatorItem( eNode ),
 mChoiceFn( 0 ),
-mUnManagedLandValue( 0.0 ),
 mLandUseHistory( 0 ),
 mCarbonCalc( 0 )
 {
@@ -346,7 +344,7 @@ void LandNode::setUnmanagedLandProfitRate( const gcamstr& aRegionName,
     // If node is the root of a fixed land area nest ( typically a subregion )
     // or the root of the entire land allocatory, then set the average profit
     // rate to the previously calculated value. 
-    if ( mUnManagedLandValue > 0.0 ) {
+    if ( mUnManagedLandValue.isInited() ) {
         avgProfitRate = mUnManagedLandValue;
     }
     else {

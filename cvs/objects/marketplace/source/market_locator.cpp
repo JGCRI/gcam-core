@@ -38,48 +38,23 @@
 * \author Josh Lurz
 */
 
-//#include "util/base/include/definitions.h"
 #include <cassert>
-//#include <string>
 
 #include "marketplace/include/market_locator.h"
-//#include "util/base/include/hash_map.h"
-
-/*#define PERFORM_TIMING 0
-#if PERFORM_TIMING
-#include <iostream>
-#include "util/base/include/timer.h"
-// Static variables used for timing. Static variables are automatically
-// initialized to zero.
-static double gTotalLookupTime;
-static int gNumLookups;
-#endif*/
-
-
-
 
 using namespace std;
 
-
-
-
 /*! \brief Constructor */
 MarketLocator::MarketLocator()
-//:mLastRegionLookup( mMarketList.end() )
 {
+    // tune the load factor relatively low to avoid collisions and
+    // prioritize speed over memory as this is a highly performance
+    // critical operation in GCAM
     mRegionList.max_load_factor(0.5);
-    /*const unsigned int MARKET_REGION_LIST_SIZE = 71;
-    mRegionList.reset( new RegionMarketList( MARKET_REGION_LIST_SIZE ) );
-    mMarketList.reset( new RegionMarketList( MARKET_REGION_LIST_SIZE ) );*/
 }
 
 //! Destructor
 MarketLocator::~MarketLocator(){
-/*#if PERFORM_TIMING
-    cout << "Total time spent in lookups: " << gTotalLookupTime << " seconds." << endl
-         << "Average time per lookup: " << gTotalLookupTime / static_cast<double>( gNumLookups )
-         << " seconds." << endl;
-#endif*/
 }
 
 /*! \brief Add a market to the locator.
@@ -104,40 +79,18 @@ int MarketLocator::addMarket( const gcamstr& aMarket,
     int goodNumber;
     // The market area does not exist. Create a new entry.
     if( iter == mMarketList.end() ){
-        /*boost::shared_ptr<RegionOrMarketNode> newMarketNode( new RegionOrMarketNode( aMarket ) );
-        // Add the node to the hashmap.
-        mMarketList->insert( make_pair( aMarket, newMarketNode ) );
-
         // Add the item to it.
-        goodNumber = newMarketNode->addGood( aGoodName, aUniqueNumber );*/
         mMarketList[marketKey] = aUniqueNumber;
         goodNumber = aUniqueNumber;
     }
     else {
+        // The market area already exists.
         goodNumber = (*iter).second;
-        // The market area already exists. Add the item to it.
-        //goodNumber = iter->second->addGood( aGoodName, aUniqueNumber );
     }
     
+    // set the index into the region list if it already existed or not
     pair<gcamstr, gcamstr> regionKey(aRegion, aGoodName);
     mRegionList[regionKey] = goodNumber;
-
-    // Check if the region exists in the region list.
-    /*iter = mRegionList->find( aRegion );
-
-    // The region does not exist. Create a new entry.
-    if( iter == mRegionList->end() ){
-        boost::shared_ptr<RegionOrMarketNode> newRegionNode( new RegionOrMarketNode( aRegion ) );
-        // Add the new region to the region list.
-        mRegionList->insert( make_pair( aRegion, newRegionNode ) );
-        
-        // Add the item to the region list.
-        newRegionNode->addGood( aGoodName, goodNumber );
-    }
-    else {
-        // The region already exists. Add the item to it.
-        iter->second->addGood( aGoodName, goodNumber );
-    }*/
 
     // Return the good number used.
     return goodNumber;
@@ -149,24 +102,6 @@ int MarketLocator::addMarket( const gcamstr& aMarket,
 * \return The market number or MARKET_NOT_FOUND if it is not present.
 */
 int MarketLocator::getMarketNumber( const gcamstr& aRegion, const gcamstr& aGoodName ) const {
-    // Compile in extra timing. Note that timing causes significant overhead, so
-    // timed runs will take longer. The result is useful to compare across timed
-    // runs, not vs non-timed runs.
-/*#if PERFORM_TIMING
-    Timer timer;
-    timer.start();
-
-    // Lookup the market in the marketList.
-    int marketNumber = getMarketNumberInternal( aRegion, aGoodName );
-    timer.stop();
-    gTotalLookupTime += timer.getTimeDifference();
-    ++gNumLookups;
-    return marketNumber;
-#else
-    RegionMarketList::const_iterator iter = 
-    //return getMarketNumberInternal( aRegion, aGoodName );
-#endif*/
     RegionMarketList::const_iterator iter = mRegionList.find(make_pair(aRegion, aGoodName));
     return iter == mRegionList.end() ? MARKET_NOT_FOUND : (*iter).second;
 }
-

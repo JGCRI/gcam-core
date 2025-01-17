@@ -61,6 +61,7 @@ extern Scenario* scenario;
 LandAllocator::LandAllocator()
 : LandNode( 0 )
 {
+    mUnManagedLandValue = 0.0;
     mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();
 }
 

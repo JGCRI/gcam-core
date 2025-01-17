@@ -47,26 +47,6 @@
 
 #include "util/base/include/definitions.h"
 #include <unordered_map>
-//#include <memory>
-//#include <boost/shared_ptr.hpp>
-//template <class T, class U> class HashMap;
-
-//#include <boost/functional/hash/hash.hpp>
-
-namespace std {
-template<>
-struct hash<std::pair<gcamstr, gcamstr> > {
-    size_t operator()(const std::pair<gcamstr, gcamstr>& aPair) const {
-        std::hash<const std::string*> hasher;
-        return hasher(&aPair.first.get()) ^ hasher(&aPair.second.get());
-    }
-};
-}
-
-
-/*#if GCAM_PARALLEL_ENABLED
-#include <tbb/enumerable_thread_specific.h>
-#endif*/
 
 /*!
 * \ingroup Objects
@@ -80,14 +60,11 @@ struct hash<std::pair<gcamstr, gcamstr> > {
 *          Marketplace gives the MarketLocator the name of a market area, a
 *          region, a good name, and a lookup number to use if the MarketLocator
 *          does not already know the location of the market. The MarketLocator
-*          stores this information in a pair of list. The first list contains
-*          nodes which represent market areas. These nodes each store a list of
-*          sectors and their corresponding sector numbers. This first list is
-*          only used during the market creation process. The second list stored
-*          by the MarketLocator is a list of nodes representing regions, each
-*          containing a list of sectors and their market numbers. This is the
-*          list which is used to determine a market number from a region name
-*          and good name throughout the model run.
+*          stores this information in a hash map designed for speed.  They key is
+*          a std::pair of (Region, Good) names.  The value is the market
+*          number.  Note we keep and extra list of (Market, Good) names to index
+*          as well to ensure correct market number assignment, however during
+*          model operation just the (Region, Good) map is used.
 * \author Josh Lurz
 */
 class MarketLocator
@@ -103,77 +80,34 @@ public:
     //! exist.
     static const int MARKET_NOT_FOUND = -1;
 private:
-    //int getMarketNumberInternal( const gcamstr& aRegion, const gcamstr& aGoodName ) const;
+    
+    // provide a hash implementation for a pair of gcamstr objects so that we can use
+    // them as a key in a hash map (std::unordered_map)
+    struct GCAMStrPairHasher {
+        // provide the implementation here so it can ideally be inlined
+        size_t operator()(const std::pair<gcamstr, gcamstr>& aPair) const {
+            // just hash the memory address of the interned string which is
+            // guaranteed to be unique for gcamstr objects by definition
+            std::hash<const std::string*> hasher;
+            
+            // a naive method for combining the hashes of the individual gcamstr
+            // objects which generally is not appropriate because hash(a,b) == hash(b,a)
+            // however in this case we would never expect to encounter such a situation
+            // and this will be performance critical therefore we go with it
+            return hasher(&aPair.first.get()) ^ hasher(&aPair.second.get());
+        }
+    };
+    
+    //! The type of the list of regions/markets + good => market number
+    typedef std::unordered_map<std::pair<gcamstr, gcamstr>, int, GCAMStrPairHasher> RegionMarketList;
 
-    /*! \brief A single node in a list of goods which contains the name of the
-    *          good and its market location.
-    */
-    /*class GoodNode {
-    public:
-        GoodNode( const gcamstr& aName, int aMarketNumber );
-        GoodNode( const GoodNode& aOther) = delete;
-        ~GoodNode();
-
-        //! The good name.
-        const gcamstr mName;
-
-        //! The market number.
-        const int mNumber;
-        
-        int mRefCount;
-    };*/
-
-    /*! \brief A single node in a list of Regions or Markets which contains the
-    *          name of the Region or Market and a list of good names and market
-    *          locations. 
-    */
-    /*class RegionOrMarketNode {
-    public:
-        RegionOrMarketNode( const gcamstr& aName );
-        ~RegionOrMarketNode();
-        inline const gcamstr& getName() const;
-        int addGood( const gcamstr& aGoodName, const int aMarketNumber );
-        int getMarketNumber( const gcamstr& aGoodName ) const;
-    private:
-        //! The type of the list that contains the goods.
-        //typedef HashMap<std::string, boost::shared_ptr<GoodNode> > SectorNodeList;
-        std::unordered_map<gcamstr, GoodNode> SectorNodeList;
-
-        //! A list of sectors contained by this market or region.
-        std::unique_ptr<SectorNodeList> mSectorNodeList;
-        
-        //! The region or market area name.
-        const gcamstr mName;
-    };*/
-
-    //! The type of the lists of regions or markets.
-    //typedef HashMap<std::string, boost::shared_ptr<RegionOrMarketNode> > RegionMarketList;
-    typedef std::unordered_map<std::pair<gcamstr, gcamstr>, int> RegionMarketList;
-
-    //! A pointer to the last region looked up.
-/*#if GCAM_PARALLEL_ENABLED
-    mutable tbb::enumerable_thread_specific<RegionMarketList::const_iterator> mLastRegionLookup;
-#else
-    mutable RegionMarketList::const_iterator mLastRegionLookup;
-#endif*/
-
-    //! A list of market areas each containing a list of sectors contained by
-    //! the market.
-    //std::auto_ptr<RegionMarketList> mMarketList;
+    //! A map of (Market, Good) names => market number, which is needed for correct unique
+    //! market number assignment during addMarket
     RegionMarketList mMarketList;
 
-    //! A list of regions each containing a list of of sectors contained by the
-    //! region.
-    //std::auto_ptr<RegionMarketList> mRegionList;
+    //! A map of (Region, Good) names => market number, which is used during model operation
+    //! to quickly looping a market index
     RegionMarketList mRegionList;
 };
-
-// Inline definitions.
-/*! \brief Get the name of the RegionOrMarketNode.
-* \return The name of the RegionOrMarketNode.
-*/
-/*const std::string& MarketLocator::RegionOrMarketNode::getName() const {
-    return mName;
-}*/
 
 #endif // _MARKET_LOCATOR_H_
