@@ -48,7 +48,6 @@
 #include "util/logger/include/ilogger.h"
 #include "util/base/include/gcam_fusion.hpp"
 #include "util/base/include/gcam_data_containers.h"
-#include "util/base/include/atom.h"
 #include "solution/util/include/calc_counter.h"
 
 typedef std::map<std::string, std::tuple<std::string, size_t, size_t, size_t> > ResultMap;

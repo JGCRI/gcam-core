@@ -198,13 +198,10 @@
 		CD48881F122873C200F5A88A /* variable_production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886C5122873C200F5A88A /* variable_production_state.cpp */; };
 		CD488820122873C200F5A88A /* vintage_production_state.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886C6122873C200F5A88A /* vintage_production_state.cpp */; };
 		CD488821122873C200F5A88A /* wind_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886C7122873C200F5A88A /* wind_technology.cpp */; };
-		CD488822122873C200F5A88A /* atom.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886EF122873C200F5A88A /* atom.cpp */; };
-		CD488823122873C200F5A88A /* atom_registry.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F0122873C200F5A88A /* atom_registry.cpp */; };
 		CD488824122873C200F5A88A /* calibrate_resource_visitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F1122873C200F5A88A /* calibrate_resource_visitor.cpp */; };
 		CD488825122873C200F5A88A /* calibrate_share_weight_visitor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F2122873C200F5A88A /* calibrate_share_weight_visitor.cpp */; };
 		CD488826122873C200F5A88A /* configuration.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F3122873C200F5A88A /* configuration.cpp */; };
 		CD488827122873C200F5A88A /* fixed_interpolation_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F4122873C200F5A88A /* fixed_interpolation_function.cpp */; };
-		CD488828122873C200F5A88A /* input_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F5122873C200F5A88A /* input_finder.cpp */; };
 		CD48882A122873C200F5A88A /* interpolation_rule.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F7122873C200F5A88A /* interpolation_rule.cpp */; };
 		CD48882B122873C200F5A88A /* linear_interpolation_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F8122873C200F5A88A /* linear_interpolation_function.cpp */; };
 		CD48882C122873C200F5A88A /* model_time.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4886F9122873C200F5A88A /* model_time.cpp */; };
@@ -728,8 +725,6 @@
 		CD4886C5122873C200F5A88A /* variable_production_state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = variable_production_state.cpp; sourceTree = "<group>"; };
 		CD4886C6122873C200F5A88A /* vintage_production_state.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = vintage_production_state.cpp; sourceTree = "<group>"; };
 		CD4886C7122873C200F5A88A /* wind_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = wind_technology.cpp; sourceTree = "<group>"; };
-		CD4886CB122873C200F5A88A /* atom.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atom.h; sourceTree = "<group>"; };
-		CD4886CC122873C200F5A88A /* atom_registry.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = atom_registry.h; sourceTree = "<group>"; };
 		CD4886CD122873C200F5A88A /* auto_file.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = auto_file.h; sourceTree = "<group>"; };
 		CD4886CE122873C200F5A88A /* calibrate_resource_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calibrate_resource_visitor.h; sourceTree = "<group>"; };
 		CD4886CF122873C200F5A88A /* calibrate_share_weight_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calibrate_share_weight_visitor.h; sourceTree = "<group>"; };
@@ -737,10 +732,8 @@
 		CD4886D1122873C200F5A88A /* default_visitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = default_visitor.h; sourceTree = "<group>"; };
 		CD4886D2122873C200F5A88A /* definitions.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = definitions.h; sourceTree = "<group>"; };
 		CD4886D3122873C200F5A88A /* fixed_interpolation_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = fixed_interpolation_function.h; sourceTree = "<group>"; };
-		CD4886D4122873C200F5A88A /* hash_map.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = hash_map.h; sourceTree = "<group>"; };
 		CD4886D5122873C200F5A88A /* iinterpolation_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = iinterpolation_function.h; sourceTree = "<group>"; };
 		CD4886D6122873C200F5A88A /* inamed.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = inamed.h; sourceTree = "<group>"; };
-		CD4886D7122873C200F5A88A /* input_finder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = input_finder.h; sourceTree = "<group>"; };
 		CD4886D9122873C200F5A88A /* interpolation_rule.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = interpolation_rule.h; sourceTree = "<group>"; };
 		CD4886DD122873C200F5A88A /* ivisitable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivisitable.h; sourceTree = "<group>"; };
 		CD4886DE122873C200F5A88A /* ivisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ivisitor.h; sourceTree = "<group>"; };
@@ -748,7 +741,6 @@
 		CD4886E0122873C200F5A88A /* model_time.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = model_time.h; sourceTree = "<group>"; };
 		CD4886E1122873C200F5A88A /* object_meta_info.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = object_meta_info.h; sourceTree = "<group>"; };
 		CD4886E2122873C200F5A88A /* s_curve_interpolation_function.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = s_curve_interpolation_function.h; sourceTree = "<group>"; };
-		CD4886E3122873C200F5A88A /* string_hash.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = string_hash.h; sourceTree = "<group>"; };
 		CD4886E5122873C200F5A88A /* supply_demand_curve.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = supply_demand_curve.h; sourceTree = "<group>"; };
 		CD4886E6122873C200F5A88A /* time_vector.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = time_vector.h; sourceTree = "<group>"; };
 		CD4886E7122873C200F5A88A /* timer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = timer.h; sourceTree = "<group>"; };
@@ -757,13 +749,10 @@
 		CD4886EA122873C200F5A88A /* value.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = value.h; sourceTree = "<group>"; };
 		CD4886EB122873C200F5A88A /* version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = version.h; sourceTree = "<group>"; };
 		CD4886EC122873C200F5A88A /* xml_helper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml_helper.h; sourceTree = "<group>"; };
-		CD4886EF122873C200F5A88A /* atom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = atom.cpp; sourceTree = "<group>"; };
-		CD4886F0122873C200F5A88A /* atom_registry.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = atom_registry.cpp; sourceTree = "<group>"; };
 		CD4886F1122873C200F5A88A /* calibrate_resource_visitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = calibrate_resource_visitor.cpp; sourceTree = "<group>"; };
 		CD4886F2122873C200F5A88A /* calibrate_share_weight_visitor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = calibrate_share_weight_visitor.cpp; sourceTree = "<group>"; };
 		CD4886F3122873C200F5A88A /* configuration.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = configuration.cpp; sourceTree = "<group>"; };
 		CD4886F4122873C200F5A88A /* fixed_interpolation_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fixed_interpolation_function.cpp; sourceTree = "<group>"; };
-		CD4886F5122873C200F5A88A /* input_finder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = input_finder.cpp; sourceTree = "<group>"; };
 		CD4886F7122873C200F5A88A /* interpolation_rule.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = interpolation_rule.cpp; sourceTree = "<group>"; };
 		CD4886F8122873C200F5A88A /* linear_interpolation_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = linear_interpolation_function.cpp; sourceTree = "<group>"; };
 		CD4886F9122873C200F5A88A /* model_time.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = model_time.cpp; sourceTree = "<group>"; };
@@ -1955,8 +1944,6 @@
 				0E7338671CB4361700B1CD82 /* factory.h */,
 				0E7338681CB4361700B1CD82 /* gcam_fusion.hpp */,
 				CD52797916418A2B00A425BF /* fltcmp.hpp */,
-				CD4886CB122873C200F5A88A /* atom.h */,
-				CD4886CC122873C200F5A88A /* atom_registry.h */,
 				CD4886CD122873C200F5A88A /* auto_file.h */,
 				CD4886CE122873C200F5A88A /* calibrate_resource_visitor.h */,
 				CD4886CF122873C200F5A88A /* calibrate_share_weight_visitor.h */,
@@ -1964,10 +1951,8 @@
 				CD4886D1122873C200F5A88A /* default_visitor.h */,
 				CD4886D2122873C200F5A88A /* definitions.h */,
 				CD4886D3122873C200F5A88A /* fixed_interpolation_function.h */,
-				CD4886D4122873C200F5A88A /* hash_map.h */,
 				CD4886D5122873C200F5A88A /* iinterpolation_function.h */,
 				CD4886D6122873C200F5A88A /* inamed.h */,
-				CD4886D7122873C200F5A88A /* input_finder.h */,
 				CD4886D9122873C200F5A88A /* interpolation_rule.h */,
 				CD4886DD122873C200F5A88A /* ivisitable.h */,
 				CD4886DE122873C200F5A88A /* ivisitor.h */,
@@ -1975,7 +1960,6 @@
 				CD4886E0122873C200F5A88A /* model_time.h */,
 				CD4886E1122873C200F5A88A /* object_meta_info.h */,
 				CD4886E2122873C200F5A88A /* s_curve_interpolation_function.h */,
-				CD4886E3122873C200F5A88A /* string_hash.h */,
 				CD4886E5122873C200F5A88A /* supply_demand_curve.h */,
 				CD4886E6122873C200F5A88A /* time_vector.h */,
 				CD4886E7122873C200F5A88A /* timer.h */,
@@ -1998,13 +1982,10 @@
 				CD2420012162D2310071DB2B /* initialize_tech_vector_helper.cpp */,
 				0E3C49691EC4BBD8005EDC19 /* manage_state_variables.cpp */,
 				0E05C9001E435B3600C73D94 /* gcam_fusion.cpp */,
-				CD4886EF122873C200F5A88A /* atom.cpp */,
-				CD4886F0122873C200F5A88A /* atom_registry.cpp */,
 				CD4886F1122873C200F5A88A /* calibrate_resource_visitor.cpp */,
 				CD4886F2122873C200F5A88A /* calibrate_share_weight_visitor.cpp */,
 				CD4886F3122873C200F5A88A /* configuration.cpp */,
 				CD4886F4122873C200F5A88A /* fixed_interpolation_function.cpp */,
-				CD4886F5122873C200F5A88A /* input_finder.cpp */,
 				CD4886F7122873C200F5A88A /* interpolation_rule.cpp */,
 				CD4886F8122873C200F5A88A /* linear_interpolation_function.cpp */,
 				CD4886F9122873C200F5A88A /* model_time.cpp */,
@@ -2396,14 +2377,11 @@
 				CD48881F122873C200F5A88A /* variable_production_state.cpp in Sources */,
 				CD488820122873C200F5A88A /* vintage_production_state.cpp in Sources */,
 				CD488821122873C200F5A88A /* wind_technology.cpp in Sources */,
-				CD488822122873C200F5A88A /* atom.cpp in Sources */,
-				CD488823122873C200F5A88A /* atom_registry.cpp in Sources */,
 				CD488824122873C200F5A88A /* calibrate_resource_visitor.cpp in Sources */,
 				CD488825122873C200F5A88A /* calibrate_share_weight_visitor.cpp in Sources */,
 				0EB5CE791C063E4B008CEF7D /* fractional_secondary_output.cpp in Sources */,
 				CD488826122873C200F5A88A /* configuration.cpp in Sources */,
 				CD488827122873C200F5A88A /* fixed_interpolation_function.cpp in Sources */,
-				CD488828122873C200F5A88A /* input_finder.cpp in Sources */,
 				0E05C9011E435B3600C73D94 /* gcam_fusion.cpp in Sources */,
 				CD48882A122873C200F5A88A /* interpolation_rule.cpp in Sources */,
 				CD1775072784866C00F8360F /* market_matches_solution_info_filter.cpp in Sources */,
@@ -2535,9 +2513,7 @@
 				GCC_ENABLE_SSE42_EXTENSIONS = NO;
 				GCC_ENABLE_SUPPLEMENTAL_SSE3_INSTRUCTIONS = NO;
 				GCC_OPTIMIZATION_LEVEL = 0;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"",
-				);
+				GCC_PREPROCESSOR_DEFINITIONS = "JARS_LIB=\"\\\"../libs/basex/BaseX.jar:../libs/jars/*\\\"\"";
 				GCC_UNROLL_LOOPS = YES;
 				GCC_WARN_ABOUT_RETURN_TYPE = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;

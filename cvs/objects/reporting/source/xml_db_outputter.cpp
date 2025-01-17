@@ -78,7 +78,6 @@
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/icarbon_calc.h"
 #include "ccarbon_model/include/land_carbon_densities.h"
-#include "util/base/include/atom.h"
 #include "land_allocator/include/land_node.h"
 #include "technologies/include/ioutput.h"
 #include "technologies/include/base_technology.h"
