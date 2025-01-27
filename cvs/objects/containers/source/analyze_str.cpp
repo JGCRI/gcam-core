@@ -75,6 +75,7 @@ void AnalyzeStr::calcFeedbacksBeforePeriod( Scenario* aScenario, const IClimateM
 
 void AnalyzeStr::calcFeedbacksAfterPeriod( Scenario* aScenario, const IClimateModel* aClimateModel, const int aPeriod ) {
     // do stuff
+    mNumActualStr = 0;
     mNumStr = 0;
     mTotalSize = 0;
     mStrCount.clear();
@@ -93,6 +94,7 @@ void AnalyzeStr::calcFeedbacksAfterPeriod( Scenario* aScenario, const IClimateMo
     mainLog.setLevel( ILogger::SEVERE );
     mainLog << "sizeof(string::value_type): " << sizeof(string::value_type) << endl;
     mainLog << "sizeof(string): " << sizeof(string) << endl;
+    mainLog << "Num std::string: " << mNumActualStr << endl;
     mainLog << "Num str: " << mNumStr << endl;
     mainLog << "Total size of str: " << mTotalSize << endl;
     mainLog << "Unique str: " << mStrCount.size() << endl;
@@ -118,12 +120,26 @@ void AnalyzeStr::processData( DataType& aData ) {
 
 template<>
 void AnalyzeStr::processData<string>( string& aData ) {
+    ++mNumActualStr;
     ++mNumStr;
     mTotalSize += sizeof(string) + sizeof(string::value_type) * aData.size();
     
     auto iter = mStrCount.find( aData );
     if(iter == mStrCount.end()) {
         iter = mStrCount.insert(make_pair( aData, 0)).first;
+    }
+
+    ++(*iter).second;
+}
+
+template<>
+void AnalyzeStr::processData<gcamstr>( gcamstr& aData ) {
+    ++mNumStr;
+    mTotalSize += sizeof(string) + sizeof(string::value_type) * aData.get().size();
+    
+    auto iter = mStrCount.find( aData.get() );
+    if(iter == mStrCount.end()) {
+        iter = mStrCount.insert(make_pair( aData.get(), 0)).first;
     }
 
     ++(*iter).second;

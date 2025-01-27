@@ -78,6 +78,9 @@ public:
 
 private:
 
+    
+    size_t mNumActualStr;
+    
     size_t mNumStr;
 
     size_t mTotalSize;
