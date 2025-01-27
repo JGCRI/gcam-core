@@ -106,7 +106,7 @@ private:
     RegionMarketList mMarketList;
 
     //! A map of (Region, Good) names => market number, which is used during model operation
-    //! to quickly looping a market index
+    //! to quickly look up a market index
     RegionMarketList mRegionList;
 };
 
