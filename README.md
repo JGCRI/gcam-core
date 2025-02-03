@@ -1,17 +1,13 @@
 # Global Change Analysis Model (GCAM)
 
-The Joint Global Change Research Institute (JGCRI) is the home and
-primary development institution for GCAM, an integrated assessment
-tool for exploring consequences and responses to global
-change. Climate change is a global issue that impacts all regions of
-the world and all sectors of the global economy. Thus, any responses
-to the threat of climate change, such as policies or international
-agreements to limit greenhouse gas emissions, can have wide ranging
-consequences throughout the energy system as well as on land use and
-land cover. Integrated assessment models endeavor to represent all
-world regions and all sectors of the economy in an economic framework
-in order to explore interactions between sectors and understand the
-potential ramifications of climate mitigation actions.
+The Joint Global Change Research Institute (JGCRI) of the Pacific 
+Northwest National Laboratory (PNNL) is the home and primary 
+development institution for GCAM, a multisector tool for exploring 
+consequences of and responses to global change. Climate change is a
+global issue that impacts all regions of the world and all sectors of 
+the global economy. Multisector tools such as GCAM capture these 
+interconnected impacts in an economic framework in order to explore 
+interactions between regions and sectors.
 
 GCAM has been developed at PNNL for over 20 years and is now a freely
 available community model and documented online (See below). The team
@@ -47,6 +43,20 @@ radiative forcing and climate effects of 16 greenhouse gases, aerosols
 and short-lived species at 0.5×0.5 degree resolution, contingent on
 assumptions about future population, economy, technology, and climate
 mitigation policy.
+
+## Community guidelines for peer-reviewed journal articles using GCAM
+
+This section outlines some suggested language which the GCAM user community 
+can employ to describe GCAM in papers in peer-reviewed journal articles 
+using GCAM or versions of GCAM. GCAM is under continuous development. The 
+suggested language for the opening paragraphs of a methodology or 
+introduction section of a paper describing GCAM is as follows:
+
+"The Global Change Analysis Model (GCAM) is a multisector model developed and maintained at the Pacific Northwest National Laboratory’s Joint Global Change Research Institute (JGCRI, 2023) _\<include additional citations to previous GCAM studies as relevant\>_. GCAM is an open-source community model. In this study, we use GCAM v NN. The documentation of the model is available at the GCAM documentation page ([http://jgcri.github.io/gcam-doc](http://jgcri.github.io/gcam-doc)) and the description below is a summary. GCAM includes representations of: economy, energy, agriculture, and water supply in 32 geopolitical regions across the globe; their GHG and air pollutant emissions and global GHG concentrations, radiative forcing, and temperature change; and the associated land allocation, water use, and agriculture production across 384 land sub-regions and 235 water basins.  _\<If using GCAM-USA, include without quotes: "This study uses a U.S.-focused version of GCAM called GCAM-USA that includes representation of energy, economy, and water systems for the fifty states and the District of Columbia in addition to 31 regions outside of the United States.”\>_. The version of GCAM used in this study is available – along with full source code and instructions for use – in a public repository _\<include citation including link to the GCAM repository with doi used in paper\>_. 
+
+Subsequent paragraphs of the description might expound on particular capabilities, systems, or sectors of focus in the paper. Details in the GCAM documentation page can be used as a reference to develop these paragraphs.
+
+Community users of GCAM might also undertake their own model developments and/or assumptions for papers. It is recommended that these departures from the publicly available version of the model be clearly described. In addition, if these developments are substantial, we suggest making this clear by including an additional phrase (e.g. region name or name of institution) in the name of the model and explicitly calling it out in place of or immediately following the italicized portion in the above paragraphs. For example: _"This study uses a modified version of GCAM/GCAM-USA called GCAM-\<institution name\>/GCAM-USA-\<institution name\>. GCAM-\<institution name\>/GCAM-USA-\<institution name\> incorporates additional details and modified assumptions from GCAM v NN as described subsequently"_. 
 
 ## Documentation
 
