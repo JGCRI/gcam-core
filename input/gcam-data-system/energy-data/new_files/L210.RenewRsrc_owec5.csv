@@ -1,0 +1,33 @@
+INPUT_TABLE,,,,
+Variable ID,,,,
+RenewRsrc,,,,
+,,,,
+region,renewresource,output.unit,price.unit,market
+Africa_Eastern,offshore wind resource c5,EJ,1975$/GJ,Africa_Eastern
+Africa_Northern,offshore wind resource c5,EJ,1975$/GJ,Africa_Northern
+Africa_Southern,offshore wind resource c5,EJ,1975$/GJ,Africa_Southern
+Africa_Western,offshore wind resource c5,EJ,1975$/GJ,Africa_Western
+Australia_NZ,offshore wind resource c5,EJ,1975$/GJ,Australia_NZ
+Brazil,offshore wind resource c5,EJ,1975$/GJ,Brazil
+Canada,offshore wind resource c5,EJ,1975$/GJ,Canada
+Central America and Caribbean,offshore wind resource c5,EJ,1975$/GJ,Central America and Caribbean
+China,offshore wind resource c5,EJ,1975$/GJ,China
+EU-12,offshore wind resource c5,EJ,1975$/GJ,EU-12
+EU-15,offshore wind resource c5,EJ,1975$/GJ,EU-15
+Europe_Non_EU,offshore wind resource c5,EJ,1975$/GJ,Europe_Non_EU
+European Free Trade Association,offshore wind resource c5,EJ,1975$/GJ,European Free Trade Association
+India,offshore wind resource c5,EJ,1975$/GJ,India
+Indonesia,offshore wind resource c5,EJ,1975$/GJ,Indonesia
+Japan,offshore wind resource c5,EJ,1975$/GJ,Japan
+Mexico,offshore wind resource c5,EJ,1975$/GJ,Mexico
+Middle East,offshore wind resource c5,EJ,1975$/GJ,Middle East
+Russia,offshore wind resource c5,EJ,1975$/GJ,Russia
+South Africa,offshore wind resource c5,EJ,1975$/GJ,South Africa
+South America_Northern,offshore wind resource c5,EJ,1975$/GJ,South America_Northern
+South America_Southern,offshore wind resource c5,EJ,1975$/GJ,South America_Southern
+South Asia,offshore wind resource c5,EJ,1975$/GJ,South Asia
+South Korea,offshore wind resource c5,EJ,1975$/GJ,South Korea
+Southeast Asia,offshore wind resource c5,EJ,1975$/GJ,Southeast Asia
+Taiwan,offshore wind resource c5,EJ,1975$/GJ,Taiwan
+Argentina,offshore wind resource c5,EJ,1975$/GJ,Argentina
+Colombia,offshore wind resource c5,EJ,1975$/GJ,Colombia
