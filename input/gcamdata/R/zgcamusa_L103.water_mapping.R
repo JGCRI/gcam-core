@@ -51,15 +51,15 @@ module_gcamusa_L103.water_mapping <- function(command, ...) {
     # Copy shares for 1990 to 1975, and then from 2015 through end of century
     USGS_livestock_water_withdrawals %>%
       select(-water_type) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
-      complete(nesting(state,value), year = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      complete(nesting(state,value), year = c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
       bind_rows(
         USGS_livestock_water_withdrawals %>%
           select(-water_type) %>%
           filter(year == min(year)) %>%
           complete(nesting(state, value), year = first(MODEL_BASE_YEARS)),
         USGS_livestock_water_withdrawals %>%
-          filter(year < max(MODEL_BASE_YEARS)) %>%
+          filter(year < MODEL_FINAL_BASE_YEAR) %>%
           select(-water_type)
       ) %>%
       group_by(year) %>%
@@ -73,14 +73,14 @@ module_gcamusa_L103.water_mapping <- function(command, ...) {
     # Mining shares are precalculated as total withdrawals in historical periods at the state level from USGS data.
     # Copy shares for 1990 to 1975, and then from 2015 through end of century
     USGS_mining_water_shares %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
-      complete(nesting(state, state.to.country.share, fresh.share, saline.share), year = c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
+      complete(nesting(state, state.to.country.share, fresh.share, saline.share), year = c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
       bind_rows(
         USGS_mining_water_shares %>%
           filter(year == min(year)) %>%
           complete(nesting(state, state.to.country.share, fresh.share, saline.share), year = first(MODEL_BASE_YEARS)),
         USGS_mining_water_shares %>%
-          filter(year < max(MODEL_BASE_YEARS))
+          filter(year < MODEL_FINAL_BASE_YEAR)
       ) %>%
       arrange(state, year) %>%
       repeat_add_columns(tibble(water_type = water.MAPPED_WATER_TYPES)) %>%
@@ -96,7 +96,7 @@ module_gcamusa_L103.water_mapping <- function(command, ...) {
       bind_rows(
         irrigation_shares,
         # Copy shares from 2010 to 2015
-        irrigation_shares %>% filter(year==gcamusa.FINAL_MAPPING_YEAR) %>% mutate(year=max(MODEL_BASE_YEARS))
+        irrigation_shares %>% filter(year==gcamusa.FINAL_MAPPING_YEAR) %>% mutate(year=MODEL_FINAL_BASE_YEAR)
       ) %>%
       left_join_error_no_match(basin_to_country_mapping, by = "GCAM_basin_ID") %>%
       select(GLU_name, basin_name, state_abbr, volume, year) %>%

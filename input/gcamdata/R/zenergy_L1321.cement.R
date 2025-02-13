@@ -109,7 +109,8 @@ module_energy_L1321.cement <- function(command, ...) {
       left_join_error_no_match(L1321.Cement_Worrell_reg, by = "Worrell_region") %>%
       mutate(share = process_emissions_ktC / reg_process_emissions) %>%
       left_join_error_no_match(select(Worrell_1994_cement, Country, cement_prod_Mt, process_emissions_MtC), by = c("Worrell_region" = "Country")) %>%
-      mutate(cement_prod_Mt = cement_prod_Mt * share, process_emissions_MtC = process_emissions_MtC * share) %>%
+      mutate(cement_prod_Mt = cement_prod_Mt * share,
+             process_emissions_MtC = process_emissions_MtC * share) %>%
 
       # Now match and aggregate Worrell's process CO2 emissions and cement production in 1994 by GCAM region and compute the emissions ratio
       # which is assumed to be constant for all other years
@@ -250,9 +251,14 @@ module_energy_L1321.cement <- function(command, ...) {
       # Match in fuelshares of (by default) coal, gas, oil, and biomass
       left_join_error_no_match(IEA_cement_fuelshares, by = c("IEA_fuelshare_region" = "Country")) %>%
       # Calculate heat intensity of energy and electricity, as well as total heat for each
-      mutate(heat_GJkg = TPE_GJkg - elec_GJkg * IOelec, heat_EJ = heat_GJkg * prod_Mt, elec_EJ = elec_GJkg * prod_Mt) %>%
+      mutate(heat_GJkg = TPE_GJkg - elec_GJkg * IOelec,
+             heat_EJ = heat_GJkg * prod_Mt,
+             elec_EJ = elec_GJkg * prod_Mt) %>%
       # Calculate total heat by fuel using fuelshares
-      mutate(Coal_EJ = Coal * heat_EJ, Oil_EJ = Oil * heat_EJ, Gas_EJ = Gas * heat_EJ, Biomass_EJ = Biomass * heat_EJ) ->
+      mutate(Coal_EJ = Coal * heat_EJ,
+             Oil_EJ = Oil * heat_EJ,
+             Gas_EJ = Gas * heat_EJ,
+             Biomass_EJ = Biomass * heat_EJ) ->
       L1321.Cement_ALL_ctry_Yh
 
     # ===============================================================================================================================================
@@ -310,9 +316,10 @@ module_energy_L1321.cement <- function(command, ...) {
     # Compile regional historical data on energy use for cement by fuel
     L1321.Cement_ALL_R_Yh %>%
       select(GCAM_region_ID, year, elec_EJ, Coal_EJ, Oil_EJ, Gas_EJ, Biomass_EJ) %>%
-      gather(fuel, value, elec_EJ, Coal_EJ, Oil_EJ, Gas_EJ, Biomass_EJ) %>%
+      tidyr::gather(fuel, value, elec_EJ, Coal_EJ, Oil_EJ, Gas_EJ, Biomass_EJ) %>%
       # Match fuel names to GCAM, removing _EJ and replacing oil and elec
-      mutate(sector = "cement", fuel = tolower(gsub("_EJ", "", fuel)), fuel = gsub("elec", "electricity", fuel),
+      mutate(sector = "cement", fuel = tolower(gsub("_EJ", "", fuel)),
+             fuel = gsub("elec", "electricity", fuel),
              fuel = gsub("oil", "refined liquids", fuel)) ->
       L1321.in_EJ_R_cement_F_Y_base
 

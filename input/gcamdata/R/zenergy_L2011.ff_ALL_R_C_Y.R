@@ -52,7 +52,7 @@ module_energy_L2011.ff_ALL_R_C_Y <- function(command, ...) {
     # Total production is taken from L111.Prod_EJ_R_F_Yh and total consumption is calculated from
     # L1012.en_bal_EJ_R_Si_Fi_Yh and L121.in_EJ_R_TPES_crude_Yh/unoil.
 
-    #Part 1: Calculate toal consumption of fuels by region
+    # Part 1: Calculate total consumption of fuels by region
     bind_rows(L1012.en_bal_EJ_R_Si_Fi_Yh,
               L121.in_EJ_R_TPES_crude_Yh,
               L121.in_EJ_R_TPES_unoil_Yh) %>%
@@ -67,7 +67,7 @@ module_energy_L2011.ff_ALL_R_C_Y <- function(command, ...) {
       select(GCAM_region_ID, fuel, year, consumption = value) ->
       ff_consumption
 
-    #Part 2: Gather total production of fossil fuels
+    # Part 2: Gather total production of fossil fuels
     L111.Prod_EJ_R_F_Yh %>%
       select(GCAM_region_ID, fuel, year, production = value, technology) %>%
       mutate(fuel= if_else(technology=="unconventional oil","crude oil",fuel)) %>%
@@ -82,6 +82,23 @@ module_energy_L2011.ff_ALL_R_C_Y <- function(command, ...) {
       distinct()->
       ff_production
 
+    # check: production should be equal to consumption globally in all historical years
+    ff_consumption %>%
+      left_join_error_no_match(ff_production, by=c("GCAM_region_ID", "fuel", "year")) %>%
+      group_by(fuel, year) %>%
+      summarize(consumption = sum(consumption),
+                production = sum(production)) %>%
+      mutate(diff = abs(production-consumption)) %>%
+      # Check up to a large number of sig digits. On at least one system, if this is not done,
+      # error is triggered even though values are identical to at least 10 decimals
+      filter(diff > energy.DIGITS_CALPRODUCTION) ->
+      ff_balance_check
+    if (nrow(ff_balance_check) > 0) {
+      print(ff_balance_check)
+      stop("ERROR: Production and consumption of fossil fuels in historical years by fuel is not equal. ")
+    }
+
+
     #Part 3: Calculate net-trade by subtracting consumption from production by region and year
     ff_production %>%
       left_join_error_no_match(ff_consumption, by = c("GCAM_region_ID", "fuel", "year")) %>%
@@ -90,43 +107,63 @@ module_energy_L2011.ff_ALL_R_C_Y <- function(command, ...) {
       select(region, fuel, year, production, consumption, net_trade) ->
       L2011.ff_ALL_EJ_R_C_Y
 
-    #Part 4: Adjust Comtrade's trade to match GCAM's calibrated data
+    {
+    # TODO-BYU-HN: This calibration part within {} is mostly redundant after
+    # natural gas trade CMP because there are no NAs or negative trade values in
+    # data objects tracking trade flows (this was corrected upstream in L1011
+    # chunk by using a very large number CONV_BIL_THOUS as a place holder and
+    # eventually replace it)
 
+    #Part 4: Adjust Comtrade's trade to match GCAM's calibrated data
     L1011.ff_GrossTrade_EJ_R_C_Y %>%
       filter(year == MODEL_FINAL_BASE_YEAR) %>%
       complete(GCAM_Commodity = unique(L2011.ff_ALL_EJ_R_C_Y$fuel),
                nesting(GCAM_region_ID, year)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L2011.ff_ALL_EJ_R_C_Y %>% select(region, fuel, year, GCAM_net_trade = net_trade),
-                by = c("region", "GCAM_Commodity" = "fuel", "year")) %>%
+                by = c("region", "GCAM_Commodity" = "fuel", "year")) -> identifyNAs
+
+    identifyNAs %>%
+      # take deficit calculated from GCAM production and consumption difference if comm_trade data is missing
       mutate(net_trade = if_else(is.na(net_trade), GCAM_net_trade, net_trade),
-             GrossExp_EJ = if_else(is.na(GrossExp_EJ), if_else(GCAM_net_trade>0, GCAM_net_trade, 0), GrossExp_EJ ),
-             GrossImp_EJ = if_else(is.na(GrossImp_EJ), if_else(GCAM_net_trade<=0, -1*GCAM_net_trade, 0), GrossImp_EJ )) %>%
+             GrossExp_EJ = if_else(is.na(GrossExp_EJ), # if comm_trade export data is missing
+                                   if_else(GCAM_net_trade > 0, GCAM_net_trade, 0), # use what gcam thinks should be the trade
+                                   GrossExp_EJ),
+             GrossImp_EJ = if_else(is.na(GrossImp_EJ),
+                                   if_else(GCAM_net_trade <= 0, -1*GCAM_net_trade, 0),
+                                   # if both import and export comm_data are missing, then adjust imports using gcam's guess
+                                   if_else(GrossExp_EJ == 0, -1*GCAM_net_trade, GrossImp_EJ))) -> fillNAs
+
+    fillNAs %>%
       #We will maintain GCAM's calibration values and harmonize net_trade by scaling Comtrade's imports and exports by the ratio between GCAM's net trade and comtrade's
-      mutate(GrossExp_EJ = if_else(!is.na(GrossExp_EJ * GCAM_net_trade/net_trade) & !is.infinite(GrossExp_EJ * GCAM_net_trade/net_trade), GrossExp_EJ * GCAM_net_trade/net_trade, GrossExp_EJ),
-             GrossImp_EJ = if_else(!is.na(GrossImp_EJ * GCAM_net_trade/net_trade) & !is.infinite(GrossImp_EJ * GCAM_net_trade/net_trade), GrossImp_EJ * GCAM_net_trade/net_trade, GrossImp_EJ),
-             net_trade = GrossExp_EJ - GrossImp_EJ) %>%
+      mutate(GrossExp_EJ = if_else(!is.na(GrossExp_EJ * GCAM_net_trade/net_trade) & !is.infinite(GrossExp_EJ * GCAM_net_trade/net_trade),
+                                   GrossExp_EJ * GCAM_net_trade/net_trade, GrossExp_EJ),
+             GrossImp_EJ = if_else(!is.na(GrossImp_EJ * GCAM_net_trade/net_trade) & !is.infinite(GrossImp_EJ * GCAM_net_trade/net_trade),
+                                   GrossImp_EJ * GCAM_net_trade/net_trade, GrossImp_EJ),
+             net_trade = GrossExp_EJ - GrossImp_EJ) -> calibrateNAs
+
+    calibrateNAs %>%
       #There are a few rows where Comtrade says a region is an importer and GCAM says they're an exporter
-      #This discrepency makes the gross imports and exports negative which cannot happen.
+      #This discrepancy makes the gross imports and exports negative which cannot happen.
       #We turn the values positive and flip imports and exports to maintain GCAM's values
       mutate(GrossExp_EJ_old = GrossExp_EJ,
-             GrossExp_EJ = if_else(GrossExp_EJ<0, -1*GrossImp_EJ, GrossExp_EJ),
-             GrossImp_EJ = if_else(GrossImp_EJ<0, -1*GrossExp_EJ_old, GrossImp_EJ),
+             GrossExp_EJ = if_else(GrossExp_EJ < 0, -1*GrossImp_EJ, GrossExp_EJ),
+             GrossImp_EJ = if_else(GrossImp_EJ < 0, -1*GrossExp_EJ_old, GrossImp_EJ),
              net_trade = GrossExp_EJ - GrossImp_EJ) %>%
       select(names(L1011.ff_GrossTrade_EJ_R_C_Y)) ->
       L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year
-
+    }
     # This structure does not allow regions to trade more product than they produce, so decrease
     # Exports and Imports for any region where GrossExp is greater than production
     L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L2011.ff_ALL_EJ_R_C_Y %>% select(region, fuel, year, production),
                                by = c("region", "GCAM_Commodity" = "fuel", "year")) %>%
-      mutate(GrossImp_EJ = if_else(GrossExp_EJ>production, GrossImp_EJ - (GrossExp_EJ-production), if_else(GrossExp_EJ==production, GrossImp_EJ - (GrossExp_EJ-0.95*production),GrossImp_EJ)),
-             GrossExp_EJ = if_else(GrossExp_EJ>production, production, if_else(GrossExp_EJ==production, 0.95*production,GrossExp_EJ))) %>%
+      mutate(GrossImp_EJ = if_else(GrossExp_EJ > production, GrossImp_EJ - (GrossExp_EJ - production), if_else(GrossExp_EJ == production, GrossImp_EJ - (GrossExp_EJ - 0.95*production), GrossImp_EJ)),
+             GrossExp_EJ = if_else(GrossExp_EJ > production, production, if_else(GrossExp_EJ == production, 0.95*production, GrossExp_EJ))) %>%
       distinct() %>%
-      mutate(GrossImp_EJ = if_else(GrossExp_EJ==production, GrossImp_EJ - (GrossExp_EJ-0.95*production),GrossImp_EJ),
-             GrossExp_EJ = if_else(GrossExp_EJ==production, 0.95*production,GrossExp_EJ)) %>%
+      mutate(GrossImp_EJ = if_else(GrossExp_EJ == production, GrossImp_EJ - (GrossExp_EJ - 0.95*production), GrossImp_EJ),
+             GrossExp_EJ = if_else(GrossExp_EJ == production, 0.95*production, GrossExp_EJ)) %>%
       select(names(L1011.ff_GrossTrade_EJ_R_C_Y)) ->
       L2011.ff_GrossTrade_EJ_R_C_Final_Cal_Year_adj
 

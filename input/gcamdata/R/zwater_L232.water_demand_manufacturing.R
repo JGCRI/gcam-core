@@ -213,7 +213,7 @@ module_water_L232.water_demand_manufacturing <- function(command, ...) {
       # Fill out the values in the final base year to all future years
       group_by(region, supplysector, subsector, technology, minicam.energy.input, market.name) %>%
       complete(year = MODEL_YEARS) %>%
-      mutate(coefficient = if_else(year %in% MODEL_FUTURE_YEARS, coefficient[year == max(MODEL_BASE_YEARS)], coefficient)) %>%
+      mutate(coefficient = if_else(year %in% MODEL_FUTURE_YEARS, coefficient[year == MODEL_FINAL_BASE_YEAR], coefficient)) %>%
       ungroup() %>%
 
       # add attributes for output

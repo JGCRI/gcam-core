@@ -140,7 +140,7 @@ module_water_L273.EFW_manufacturing <- function(command, ...) {
 
     # If any of the stub technology coefficients are greater than the global technology defaults, copy them forward to all future years
     # (Coefs less than the global tech defaults are only that way because of base-year energy balancing, not something to carry forward)
-    L273.StubTechCoef_ind_future <- filter(L273.StubTechCoef_ind, year == max(MODEL_BASE_YEARS)) %>%
+    L273.StubTechCoef_ind_future <- filter(L273.StubTechCoef_ind, year == MODEL_FINAL_BASE_YEAR) %>%
       left_join(L273.GlobalTechCoef_ind, by = c(supplysector = "sector.name", subsector = "subsector.name", stub.technology = "technology", "year"),
                 suffix = c("", ".default")) %>%
       filter(coefficient > coefficient.default) %>%

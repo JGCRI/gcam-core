@@ -31,7 +31,7 @@ L125 land cover data is assigned proper GCAM region names and nest id."}
 External soil time scale assumptions for each AGLU region."}
 \item{"L221.LN1_ValueLogit Unmanaged land value by region and GLU, and logit exponent of first nest.
 L131 land value data is joined with LandNode Logit assumptions.A minimum value is set to ensure all
-regins have a nonzero land value."}
+regions have a nonzero land value."}
 \item{"L221.LN1_HistUnmgdAllocation Historical land cover fora unmanaged land (LT_GLU) in the first nest by region.
 Historical land cover for unmanaged land in the first nest, from L125 land cover data."}
 \item{"L221.LN1_UnmgdAllocation Land cover in the model base periods for unmanaged land (LT_GLU) in the first nest by region.

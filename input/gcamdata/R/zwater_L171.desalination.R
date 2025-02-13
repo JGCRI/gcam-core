@@ -171,8 +171,9 @@ module_water_L171.desalination <- function(command, ...) {
     L171.out_km3_R_desal_F_tech_Yh <- full_join(L171.out_km3_R_desal_tech_Yh,
                                                 select(EFW_mapping_desal, sector, fuel, technology),
                                                 by = "technology") %>%
+      # the following line errors if IEA energy balances (propriety data file) is not placed in inst/extdata/energy
       left_join_error_no_match(L171.desal_fuel_shares,
-                               by = c("GCAM_region_ID", "fuel", "technology", "year")) %>%
+                                 by = c("GCAM_region_ID", "fuel", "technology", "year")) %>%
       mutate(desal_km3 = value * share) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, "desal_km3")
 
@@ -188,7 +189,7 @@ module_water_L171.desalination <- function(command, ...) {
       select(sector, fuel, technology, year, coefficient) %>%
       complete(nesting(sector, fuel, technology), year = c(HISTORICAL_YEARS)) %>%
       group_by(sector, fuel, technology) %>%
-      mutate(coefficient = approx_fun(year, coefficient)) %>%
+      mutate(coefficient = approx_fun(year, coefficient, rule = 2)) %>%
       ungroup()
 
     # Join these energy coefficients to the desalinated water production volumes, and multiply to estimate the energy use

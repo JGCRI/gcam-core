@@ -195,7 +195,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
     L223.SubsectorShrwtFllt_elec_FERC %>%
       select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") ->
       L223.SubsectorInterp_elec_FERC
@@ -401,6 +401,8 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       filter(fuel == "nuclear", year == max(HISTORICAL_YEARS)) %>%
       left_join_error_no_match(L223.out_EJ_state_elec, by = "state") %>%
       mutate(share = value / elec,
+             # If share is NA (due to value and elec = 0), make it 0
+             share = if_else(is.na(share), 0, share),
              avg.share = sum(value) / sum(elec),
              pref = share / avg.share) %>%
       select(state, pref) %>%

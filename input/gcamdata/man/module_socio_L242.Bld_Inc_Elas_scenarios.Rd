@@ -14,7 +14,7 @@ module_socio_L242.Bld_Inc_Elas_scenarios(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L242.IncomeElasticity_bld_GCAM3}, \code{object}. The corresponding file in the
+the generated outputs: \code{}, \code{object}. The corresponding file in the
 original data system was \code{L242.Bld_Inc_Elas_scenarios.R} (socioeconomics level2).
 }
 \description{

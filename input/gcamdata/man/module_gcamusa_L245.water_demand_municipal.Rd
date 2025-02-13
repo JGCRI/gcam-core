@@ -19,7 +19,7 @@ the generated outputs: \code{L245.Supplysector_USA}, \code{L245.SubsectorLogit_U
 \code{L245.BaseService_USA}, \code{L245.IncomeElasticity_USA}, \code{L245.PriceElasticity_USA}, \code{L245.aeei_USA}.
 }
 \description{
-Genereate GCAM-USA municipal water sector input files.
+Generate GCAM-USA municipal water sector input files.
 }
 \details{
 This chunk generates the input files of municipal water information (cost, efficiency, coefficients)

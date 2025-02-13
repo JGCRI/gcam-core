@@ -151,7 +151,7 @@ fast_left_join <- function(left, right, by) {
 #'
 #' @param year Numeric year, in a melted tibble or data frame
 #' @param value Numeric value to interpolate
-#' @param rule Rule to use; see \code{\link{approx}} and details
+#' @param rule Rule to use; 1 - linear interpolation, 2 = constant. see \code{\link{approx}}
 #' @details This was \code{gcam_interp} in the original data system.
 #' @return Interpolated values.
 #' @importFrom assertthat assert_that
@@ -344,21 +344,19 @@ missing_data <- function() {
 #' gdp_bil_2010USD <- gdp_bil_1990USD * gdp_deflator(2010, base_year = 1990)
 gdp_deflator <- function(year, base_year) {
   # This time series is the BEA "A191RD3A086NBEA" product
-  # Downloaded April 13, 2017 from https://fred.stlouisfed.org/series/A191RD3A086NBEA
-  # 3-16-2022 FRED data was re-based; extend the index to 2021 using annual rates
-  gdp_years <- 1929:2021
-  gdp <- c(9.896, 9.535, 8.555, 7.553, 7.345, 7.749, 7.908, 8.001, 8.347,
-           8.109, 8.033, 8.131, 8.68, 9.369, 9.795, 10.027, 10.288, 11.618,
-           12.887, 13.605, 13.581, 13.745, 14.716, 14.972, 15.157, 15.298,
-           15.559, 16.091, 16.625, 17.001, 17.237, 17.476, 17.669, 17.886,
-           18.088, 18.366, 18.702, 19.227, 19.786, 20.627, 21.642, 22.784,
-           23.941, 24.978, 26.337, 28.703, 31.361, 33.083, 35.135, 37.602,
-           40.706, 44.377, 48.52, 51.53, 53.565, 55.466, 57.24, 58.395,
-           59.885, 61.982, 64.392, 66.773, 68.996, 70.569, 72.248, 73.785,
-           75.324, 76.699, 78.012, 78.859, 80.065, 81.887, 83.754, 85.039,
-           86.735, 89.12, 91.988, 94.814, 97.337, 99.246, 100, 101.221,
-           103.311, 105.214, 106.913, 108.828, 109.998, 111.445, 113.545,
-           116.311, 118.339, 119.766, 124.743)
+  # Downloaded March 3, 2023 from https://fred.stlouisfed.org/series/A191RD3A086NBEA
+  gdp_years <- 1929:2023
+  gdp <- c(8.778, 8.457, 7.587, 6.700, 6.514, 6.871, 7.012, 7.097, 7.402,
+  7.190, 7.120, 7.205, 7.692, 8.304, 8.683, 8.890, 9.120, 10.296, 11.426,
+  12.067, 12.046, 12.195, 13.060, 13.286, 13.447, 13.572, 13.801, 14.271,
+  14.744, 15.080, 15.287, 15.495, 15.660, 15.850, 16.032, 16.276, 16.574,
+  17.039, 17.533, 18.280, 19.176, 20.189, 21.212, 22.130, 23.342, 25.443,
+  27.800, 29.330, 31.152, 33.343, 36.110, 39.371, 43.097, 45.759, 47.552,
+  49.267, 50.826, 51.849, 53.134, 55.008, 57.165, 59.305, 61.310, 62.707,
+  64.194, 65.564, 66.939, 68.164, 69.340, 70.119, 71.111, 72.722, 74.360,
+  75.515, 77.006, 79.077, 81.556, 84.071, 86.349, 88.013, 88.556, 89.632,
+  91.481, 93.185, 94.771, 96.421, 97.316, 98.241, 100.000, 102.291, 104.008,
+  105.381, 110.213, 117.973, 122.273)
   names(gdp) <- gdp_years
 
   assert_that(all(year %in% gdp_years))
@@ -386,7 +384,7 @@ gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN, na
   . <- year <- value <- NULL  # silence package check notes
 
   d %>%
-    gather(year, value, matches(year_pattern), na.rm = na.rm) %>%
+    tidyr::gather(year, value, matches(year_pattern), na.rm = na.rm) %>%
     mutate(year = as.integer(year)) %>%
     stats::setNames(sub("value", value_col, names(.)))
 }

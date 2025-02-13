@@ -22,7 +22,7 @@ be in the \code{value} column.  All extrapolation parameters will be cleaned out
 Takes a wide format tibble with years as columns, coverts to long format, and
 ensures values are filled in for all \code{out_years} using the following rules:
   - Linearly interpolated for missing values that have end points
-  - Extrapolated using an exponential decay function paramaterized by the columns
+  - Extrapolated using an exponential decay function parameterized by the columns
     \code{improvement.rate} and \code{improvement.max} using the following formulation
     \code{v_0*max+(v_0-v_0*max)*(1-rate)^(y-y_0)}
   - For rows that specify a char value in the column \code{improvement.shadow.technology}

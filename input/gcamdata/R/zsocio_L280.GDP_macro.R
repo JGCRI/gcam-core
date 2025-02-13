@@ -119,8 +119,8 @@ module_socio_L280.GDP_macro <- function(command, ...) {
       arrange(GCAM_region_ID, year) -> pop.hist
 
     #calibrated gdp from original socioeconomic data processing
-    #Note: gSSP2 is the "core" GCAM socioeconomic scenario
-    gdp.calibrated.data %>% filter(scenario == 'gSSP2') %>%
+    #Note: SSP2 is the "core" GCAM socioeconomic scenario
+    gdp.calibrated.data %>% filter(scenario == 'SSP2') %>%
       rename(gdp = value) %>%
       arrange(GCAM_region_ID, year) -> gdp.ssp2
     #ssp2 history from 1971 - 2015

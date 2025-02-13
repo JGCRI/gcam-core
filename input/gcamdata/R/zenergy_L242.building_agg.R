@@ -229,7 +229,7 @@ module_energy_L242.building_agg <- function(command, ...) {
 
     # Global technology shareweight interpolation of building sector
     A42.globaltech_interp %>%
-      mutate(from.year = max(MODEL_BASE_YEARS),
+      mutate(from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_FUTURE_YEARS)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechInterp"]]) -> # Drops to.value

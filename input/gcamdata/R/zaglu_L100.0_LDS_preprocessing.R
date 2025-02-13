@@ -121,6 +121,26 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
       assign(legacy_name, df)
     }
 
+    # base year related processing:
+    # check which files have the years column, write a warning if the max year
+    # is earlier than the base year, and copy the data to the final base year
+    for(nm in namelist) {
+      if("year" %in% names(LDSfiles[[nm]])) {
+        max_year <- max(LDSfiles[[nm]]$year, na.rm = TRUE)
+
+        # Check if the max year is earlier than MODEL_FINAL_BASE_YEAR
+        if (max_year < MODEL_FINAL_BASE_YEAR) {
+          warning("module_aglu_L100.0_LDS_preprocessing: latest year in ", nm, " (", max_year, ") is earlier than the final base-year (", MODEL_FINAL_BASE_YEAR, "). Consider updating the data.")
+        }
+
+        # Copy latest year data to MODEL_FINAL_BASE_YEAR
+        latest_data <- LDSfiles[[nm]] %>%
+          filter(year == max_year) %>%
+          mutate(year = MODEL_FINAL_BASE_YEAR)
+        LDSfiles[[nm]] <- bind_rows(latest_data, LDSfiles[[nm]])
+      }
+    }
+
     # The production and harvested area tables have values <1 clipped, resulting
     # in some country/glu/crops present in one but not the other. For now these will
     # simply be dropped; in the future, we may want to add a digit of rounding in the lds

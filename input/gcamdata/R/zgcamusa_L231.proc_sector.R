@@ -170,6 +170,24 @@ module_gcamusa_L231.proc_sector <- function(command, ...) {
              calibrated.value = emissions.REG_TECH_CAL_VALUE) %>%
       select(region, sector.name, subsector.name, technology, year, minicam.energy.input, calibrated.value)
 
+    # Price information for unlimited resources are largely nominal placeholder values
+    # So copying values forward should be fine
+    # Copy information to last base year if needed
+    MaxYearInFile <- max(A31.rsrc_info$year)
+
+    if (MODEL_FINAL_BASE_YEAR > MaxYearInFile) {
+      warning("module_gcamusa_L231.proc_sector: Extending latest year in A31.rsrc_info (",  max(MaxYearInFile), ") to latest base year (", MODEL_FINAL_BASE_YEAR, ").")
+
+      A31.rsrc_info <- A31.rsrc_info %>%
+        # filter for the year of data we want applied to new year
+        filter((year == MaxYearInFile)) %>%
+        # change the year name from last year originally in file to last base year
+        mutate(year = gsub(MaxYearInFile, MODEL_FINAL_BASE_YEAR, year),
+               year = as.numeric(year)) %>%
+        # add back in the original data frame with all of the other years
+        bind_rows(A31.rsrc_info)
+    }
+
     # Resource Information
     # Interpolate to specified historical years, as necessary
     L231.rsrc_info_USA <- A31.rsrc_info %>%

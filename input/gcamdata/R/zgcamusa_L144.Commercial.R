@@ -219,13 +219,26 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
 
     # NOTE: we are scaling aggregated CBECS floorspace to match AEO base year estimates from 1999 to 2010
     # The main reason for this step is that the most recent CBECS edition is a decade old (2003)
-    AEO_Tab5_yearcols <- unique(EIA_AEO_Tab5$year)
+
+    # need to extrapolate EIA_AEO_Tab5 for base year recent than 2015, as the data is up to 2015
+    if (max(EIA_AEO_Tab5$year) < MODEL_FINAL_BASE_YEAR) {
+      warning("module_gcamusa_L144.Commercial: Floorspace data from AEO (EIA_AEO_Tab5.csv) only goes up to ", max(EIA_AEO_Tab5$year), ". Extrapolating to ", MODEL_FINAL_BASE_YEAR, ".")
+    }
+    # it's fine to interpolate outside the conditional because we have to fill in years anyway
+    EIA_AEO_Tab5 %>%
+      # fill missing years
+      complete(nesting(variable, unit, fuel, service),
+               year = unique(c(HISTORICAL_YEARS, MODEL_FINAL_BASE_YEAR))) %>%
+      # extrapolate missing years
+      group_by(variable, unit, fuel, service) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup() -> EIA_AEO_Tab5
 
     # Convert AEO values to billion square meters
     AEO_USA_flsp_bm2 <- EIA_AEO_Tab5 %>%
       filter(variable == "Floorspace",
              # To fix timeshift, year can't be greater than historical years
-             year <= max(HISTORICAL_YEARS)) %>%
+             year <= MODEL_FINAL_BASE_YEAR) %>%
       mutate(value = value * CONV_FT2_M2,
              unit = "Billion square meters")
 
@@ -377,7 +390,7 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
     # because it's all going to be scaled later anyway. These unscaled values are only used to compute
     # percentage-wise allocation of fuels to specific services.
     EIA_AEO_Tab5 %>%
-      filter(year == max(HISTORICAL_YEARS),
+      filter(year == MODEL_FINAL_BASE_YEAR,
              variable != "Floorspace") %>%
       select(EIA_fuel = fuel,
              EIA_service = service,

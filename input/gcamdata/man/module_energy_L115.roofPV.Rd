@@ -21,7 +21,7 @@ original data system was \code{LA115.roofPV.R} (energy level1).
 Convert rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3", to the 32 GCAM region IDs.
 }
 \details{
-Rooftop PV resources are given in the input file according to the 14 GCAM regions, i.e., "region_GCAM3." Because some regions span mutliple GCAM region IDs, population in 2010 was used to allocate proportionally.
+Rooftop PV resources are given in the input file according to the 14 GCAM regions, i.e., "region_GCAM3." Because some regions span multiple GCAM region IDs, population in 2010 was used to allocate proportionally.
 }
 \author{
 AJS April 2017

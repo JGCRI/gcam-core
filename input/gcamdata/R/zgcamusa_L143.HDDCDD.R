@@ -57,6 +57,14 @@ module_gcamusa_L143.HDDCDD <- function(command, ...) {
     # ===================================================
 
     # Part 1: Create tibbles of state share of subregion population's degree days.
+    # First extrapolate census data to the max base year
+    Census_pop %>%
+      gather_years() %>%
+      complete(nesting(state), year = HISTORICAL_YEARS) %>%
+      # extrapolate missing years
+      group_by(state) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup() -> Census_pop
 
     # Add subregion13 (for RECS) and subregion9 (for CBECS) columns to the population by state tibble
     # and transform to long format. This tibble will be used to calculate the share of person heating

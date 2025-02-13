@@ -31,7 +31,7 @@ module_gcamusa_L2239.CSP_reeds <- function(command, ...) {
              FILE = 'gcam-usa/NREL_us_re_technical_potential',
              FILE = 'gcam-usa/NREL_us_re_capacity_factors',
              FILE = "gcam-usa/A10.renewable_resource_delete",
-             FILE = 'energy/A10.rsrc_info',
+             "L210.rsrc_info",
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
              'L2234.GlobalIntTechCapital_elecS_USA',
@@ -63,7 +63,7 @@ module_gcamusa_L2239.CSP_reeds <- function(command, ...) {
     reeds_CSP_curve_grid_cost <- get_data(all_data, 'gcam-usa/reeds_CSP_curve_grid_cost')
     A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
-    A10.rsrc_info <- get_data(all_data, 'energy/A10.rsrc_info')
+    L210.rsrc_info <- get_data(all_data, 'L210.rsrc_info')
     L2234.StubTechCapFactor_elecS_solar_USA <- get_data(all_data, 'L2234.StubTechCapFactor_elecS_solar_USA', strip_attributes = TRUE)
     L2234.StubTechMarket_elecS_USA <- get_data(all_data, 'L2234.StubTechMarket_elecS_USA', strip_attributes = TRUE)
     L2234.GlobalIntTechCapital_elecS_USA <- get_data(all_data, 'L2234.GlobalIntTechCapital_elecS_USA', strip_attributes = TRUE)
@@ -171,21 +171,18 @@ module_gcamusa_L2239.CSP_reeds <- function(command, ...) {
     # L2239.CSP_matrix: Creating a matrix of costs (1975$/GJ) and resource potential (EJ) by state and class
     L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "CSP_peak",
-             year == max(MODEL_BASE_YEARS)) %>%
-      select(capital.overnight) -> L2239.CSP_capital
-    L2239.CSP_capital <- as.numeric(L2239.CSP_capital)
+             year == MODEL_FINAL_BASE_YEAR) %>%
+      select(capital.overnight) %>% as.numeric()-> L2239.CSP_capital
 
     L223.GlobalIntTechCapital_elec %>%
       filter(intermittent.technology == "CSP",
-             year == max(MODEL_BASE_YEARS)) %>%
-      select(fixed.charge.rate) -> L2239.fcr
-    L2239.fcr <- as.numeric(L2239.fcr)
+             year == MODEL_FINAL_BASE_YEAR) %>%
+      select(fixed.charge.rate) %>% as.numeric() -> L2239.fcr
 
     L223.GlobalIntTechOMfixed_elec %>%
       filter(intermittent.technology == "CSP",
-             year == max(MODEL_BASE_YEARS)) %>%
-      select(OM.fixed) -> L2239.CSP_OMfixed
-    L2239.CSP_OMfixed <- as.numeric(L2239.CSP_OMfixed)
+             year == MODEL_FINAL_BASE_YEAR) %>%
+      select(OM.fixed) %>% as.numeric() -> L2239.CSP_OMfixed
 
     L2239.CSP_potential_EJ %>%
       left_join_error_no_match(L2239.CSP_CF, by = c("State", "CSP.class" ="class")) %>%
@@ -245,11 +242,11 @@ module_gcamusa_L2239.CSP_reeds <- function(command, ...) {
       filter(State %in% L2239.single_grade_states) -> L2239.CSP_curve_single_grade
 
     # We get the unlimited global solar resource price which will be applied to the one grade states by creating a dummy second grade which will utilize the maxsubresource for the given state
-    A10.rsrc_info %>%
-      gather_years() %>%
-      filter(resource == "global solar resource",
-             year == max(year)) %>%
-      pull(value) -> A10_solar_cost
+    L210.rsrc_info %>%
+      filter(resource == "global solar resource") %>%
+      filter(year == max(year)) %>%
+      pull(value) %>%
+      unique() -> A10_solar_cost
 
     # Make a second grade for all the single grade states by using full maxsubresource percebtage as available value and global solar resource price as extraction cost
     L2239.CSP_curve_single_grade %>%
@@ -280,7 +277,7 @@ module_gcamusa_L2239.CSP_reeds <- function(command, ...) {
              tech.change = round(abs(1 - (tech.change.period) ^ (1 / time.change)), energy.DIGITS_TECHCHANGE)) %>%
       select(year, tech.change) %>%
       filter(!is.na(tech.change),
-             year > max(MODEL_BASE_YEARS)) -> L2239.CSP_curve_tech_change
+             year > MODEL_FINAL_BASE_YEAR) -> L2239.CSP_curve_tech_change
 
     # Capacity factors at the technology level need to be updated for all states that have the resource available.
     # Hence, creating a list of all states.
@@ -484,7 +481,7 @@ module_gcamusa_L2239.CSP_reeds <- function(command, ...) {
                      'gcam-usa/NREL_us_re_technical_potential',
                      'gcam-usa/NREL_us_re_capacity_factors',
                      "gcam-usa/A10.renewable_resource_delete",
-                     'energy/A10.rsrc_info',
+                     'L210.rsrc_info',
                      'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->
@@ -503,7 +500,7 @@ module_gcamusa_L2239.CSP_reeds <- function(command, ...) {
                      'gcam-usa/A23.elecS_tech_mapping_cool',
                      'gcam-usa/NREL_us_re_technical_potential',
                      'gcam-usa/NREL_us_re_capacity_factors',
-                     'energy/A10.rsrc_info',
+                     'L210.rsrc_info',
                      'L2234.StubTechMarket_elecS_USA',
                      'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',

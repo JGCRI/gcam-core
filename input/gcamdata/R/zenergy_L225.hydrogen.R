@@ -128,19 +128,14 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # L225.GlobalTechCoef_h2: Energy inputs coefficients of global technologies for hydrogen
     L125.globaltech_coef %>%
-           # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-           rename(sector.name = supplysector,
-                  subsector.name = subsector,
-                  coefficient = value) %>%
+           rename(coefficient = value) %>%
       mutate(coefficient = round(coefficient,energy.DIGITS_COEFFICIENT))-> L225.GlobalTechCoef_h2
 
     # L225.GlobalTechCost_h2: Costs of global technologies for hydrogen
     # Costs of global technologies
     L125.globaltech_cost %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      rename(sector.name = supplysector,
-             subsector.name = subsector,
-             input.cost = cost) %>%
+      rename(input.cost = cost) %>%
       mutate(input.cost = round(input.cost,energy.DIGITS_COST))-> L225.GlobalTechCost_h2
 
     # L225.GlobalTechTrackCapital_h2: We want track capital investments for these technologies thus
@@ -187,7 +182,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
       anti_join(L125.globaltech_coef, by = c("sector.name", "subsector.name", "technology", "minicam.energy.input")) %>%
-      select(-value,-efficiency,-price.unit.conversion) ->
+      select(-value,-price.unit.conversion) ->
       L225.GlobalTechCoef_h2_noprod #filter and convert efficiencies to coefficients for only end use and distribution pass-through sectors and technologies
 
     L225.GlobalTechCoef_h2 <- bind_rows(L225.GlobalTechCoef_h2,L225.GlobalTechCoef_h2_noprod) %>%
@@ -239,7 +234,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Electrolyzer non-energy costs replace rather than add to the global default
     # values in L225.GlobalTechCost_h2. This is handled in the left_join.
     L223.StubTechCapFactor_elec %>%
-      filter(year == max(MODEL_BASE_YEARS),
+      filter(year == MODEL_FINAL_BASE_YEAR,
              stub.technology %in% c("wind", "PV")) %>%
       mutate(IdleRatio = pmax(1, 1 / (capacity.factor / energy.ELECTROLYZER_RENEWABLE_CAPACITY_RATIO)),
              `2015` = L125.Electrolyzer_IdleRatio_Params_2015$intercept +
@@ -350,7 +345,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       filter(year == min(MODEL_FUTURE_YEARS)) %>%
       select(-year) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
-      bind_rows(filter(L225.globaltech_retirement_base, year == max(MODEL_BASE_YEARS))) ->
+      bind_rows(filter(L225.globaltech_retirement_base, year == MODEL_FINAL_BASE_YEAR)) ->
       L225.globaltech_retirement
 
     # S-CURVE RETIREMENT

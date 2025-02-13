@@ -37,7 +37,7 @@ module_gcamusa_L120.offshore_wind_reeds <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     State <- resource.potential.MW <- depth_class <- distance_to_shore <-
-      resource.potential.EJ <- fixed.charge.rate <- technology <- socioeconomics.FINAL_HIST_YEAR <- fcr <- OM.fixed <- price <-
+      resource.potential.EJ <- fixed.charge.rate <- technology <- fcr <- OM.fixed <- price <-
       CFmax <- supply <- curve.exponent <- mid.price <- base.price <- maxSubResource <- supply_points <- Pvar <- P1 <- Q1 <- sector.name <-
       supplysector <- subsector.name <- subsector <- intermittent.technology <- year <- input.capital <- capital.overnight <-
       capacity.factor <- capital.overnight.lag <- capital.tech.change.5yr <- kl  <- tech.change.5yr <- tech.change <- bin <- cost <-
@@ -86,15 +86,14 @@ module_gcamusa_L120.offshore_wind_reeds <- function(command, ...) {
 
     L113.globaltech_capital_ATB %>%
       filter(technology == "wind_offshore") %>%
-      select(fixed.charge.rate) -> L120.offshore_wind_fcr
-    L120.offshore_wind_fcr <- as.numeric(L120.offshore_wind_fcr)
+      select(fixed.charge.rate) %>% as.numeric() -> L120.offshore_wind_fcr
 
     L113.globaltech_OMfixed_ATB %>%
       gather_years() %>%
       filter(technology == "wind_offshore",
-             year == max(HISTORICAL_YEARS)) %>%
-      distinct(value) -> L120.offshore_wind_OMfixed
-    L120.offshore_wind_OMfixed <- as.numeric(L120.offshore_wind_OMfixed)
+             year == MODEL_FINAL_BASE_YEAR) %>%
+      distinct(value) %>%
+      as.numeric() -> L120.offshore_wind_OMfixed
 
     # NOTE that the process for calculating supply/ price is different for offshore wind (vs. onshore wind).  For offshore wind, we
     # (1) calculate the price associated with each wind class, then (2) arrange the dataset by region/ price and calculate
@@ -120,8 +119,7 @@ module_gcamusa_L120.offshore_wind_reeds <- function(command, ...) {
     # Alaska is assigned 5% of each supply point (this assumption is defined in offshore_wind_potential_missing).
     # Note that this approach assumes that a missing state's resource is a representative sample of the total USA resource.
     L120.CFmax.average <- L120.offshore_wind_matrix %>%
-      summarise(CFmax = mean(CFmax))
-    L120.CFmax.average <- as.numeric(L120.CFmax.average)
+      summarise(CFmax = mean(CFmax)) %>% as.numeric()
 
     L120.offshore_wind_potential_EJ %>%
       left_join_error_no_match(L120.offshore_wind_CF, by = c("State", "Wind_Class")) %>%

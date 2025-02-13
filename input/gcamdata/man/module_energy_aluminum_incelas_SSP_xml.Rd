@@ -14,9 +14,8 @@ module_energy_aluminum_incelas_SSP_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{aluminum_incelas_gcam3.xml}, \code{aluminum_incelas_ssp1.xml}, \code{aluminum_incelas_ssp2.xml}, \code{aluminum_incelas_ssp3.xml},
-\code{aluminum_incelas_ssp4.xml}, \code{aluminum_incelas_ssp5.xml}, \code{aluminum_incelas_gssp1.xml}, \code{aluminum_incelas_gssp2.xml},
-\code{aluminum_incelas_gssp3.xml}, \code{aluminum_incelas_gssp4.xml}, and \code{aluminum_incelas_gssp5.xml}.
+the generated outputs: \code{aluminum_incelas_ssp1.xml}, \code{aluminum_incelas_ssp2.xml},
+\code{aluminum_incelas_ssp3.xml}, \code{aluminum_incelas_ssp4.xml}, and \code{aluminum_incelas_ssp5.xml}.
 }
 \description{
 Construct XML data structures for all the \code{aluminum_incelas_SSP.xml} files.

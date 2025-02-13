@@ -24,7 +24,7 @@ Read in demand fraction and time fraction and compute load curve related paramet
 Calculate an initial estimate of generation by fuel (EJ) in the horizontal segments
 }
 \details{
-Compute load curve related parameters and nitial estimate of generation by fuel in the horizontal segments.
+Compute load curve related parameters and initial estimate of generation by fuel in the horizontal segments.
 }
 \author{
 MTB August 2018

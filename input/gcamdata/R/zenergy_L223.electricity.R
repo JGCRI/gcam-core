@@ -231,7 +231,7 @@ module_energy_L223.electricity <- function(command, ...) {
     }
 
     # Assumed coal electricity subsector shareweights by region to generate L223.SubsectorShrwt_coal
-    # This is intended to override default coal electricty subsector shareweights for specific regions and years.
+    # This is intended to override default coal electricity subsector shareweights for specific regions and years.
     A23.subsector_shrwt_coal_R %>%
       gather_years(value_col = "share.weight") %>%
       # Interpolate to model time periods, and add columns specifying the final format
@@ -729,7 +729,7 @@ module_energy_L223.electricity <- function(command, ...) {
       filter(year == min(MODEL_FUTURE_YEARS)) %>%
       select(-year) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
-      bind_rows(filter(L223.globaltech_retirement_base, year == max(MODEL_BASE_YEARS))) ->
+      bind_rows(filter(L223.globaltech_retirement_base, year == MODEL_FINAL_BASE_YEAR)) ->
       L223.globaltech_retirement
 
     # PHASED RETIREMENT

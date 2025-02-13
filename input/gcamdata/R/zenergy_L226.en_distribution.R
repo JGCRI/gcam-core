@@ -227,7 +227,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # repeat final year's ownuse ratio into future years and append future years to base years (could perhaps be tied to industrial CHP...but also AUTOELEC)
     L226.IO_R_elecownuse_F_Yh %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       repeat_add_columns(tibble("year" = MODEL_FUTURE_YEARS)) %>%
       select(-year.x) %>%
       rename(year = year.y) %>%
@@ -248,7 +248,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # Copy final base year value to future periods
     L226.IO_R_electd_F_Yh %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       repeat_add_columns(tibble("year" = MODEL_FUTURE_YEARS)) %>%
       select(-year.x) %>%
       rename(year = year.y) ->
@@ -257,7 +257,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
     # append assumed techchange value and calculate decrease in future energy use
     L226.IO_R_electd_F_Yfut %>%
       left_join(A_regions, by = "GCAM_region_ID") %>%
-      mutate(value = value * ((1 - elect_td_techchange) ^ (year - max(MODEL_BASE_YEARS)))) %>%
+      mutate(value = value * ((1 - elect_td_techchange) ^ (year - MODEL_FINAL_BASE_YEAR))) %>%
       select(GCAM_region_ID, sector, fuel, value, year) %>%
       bind_rows(L226.IO_R_electd_F_Yh, .) ->
       L226.IO_R_electd_F_Y
@@ -293,7 +293,7 @@ module_energy_L226.en_distribution <- function(command, ...) {
 
     # Generate future year gas pipeline energy use ratios by holding final base year value constant
     L226.IO_R_gaspipe_F_Yh %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       repeat_add_columns(tibble("year" = MODEL_FUTURE_YEARS)) %>%
       select(-year.x) %>%
       rename(year = year.y) ->

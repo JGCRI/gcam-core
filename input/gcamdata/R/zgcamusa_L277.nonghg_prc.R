@@ -150,7 +150,7 @@ module_gcamusa_L277.nonghg_prc <- function(command, ...) {
       # Filter the L277 inputs to just the USA region and non-GHGs
       filter(region == gcam.USA_REGION, Non.CO2 %in% emissions.NONGHG_PROC_SECTORS) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["GDPCtrlMax"]]) %>%
-      mutate(year = max(MODEL_BASE_YEARS),
+      mutate(year = MODEL_FINAL_BASE_YEAR,
              # this is a somewhat arbitrary value, but consistent between pollutants
              max.reduction = gcamusa.NONGHG_PROC_SECTORS.GDP_MAX_REDUCTION ) %>%
       distinct()
@@ -182,7 +182,7 @@ module_gcamusa_L277.nonghg_prc <- function(command, ...) {
       # Filter the L277 inputs to just the USA region and non-GHGs
       filter(region == gcam.USA_REGION, Non.CO2 %in% emissions.NONGHG_PROC_SECTORS) %>%
       write_to_all_states(LEVEL2_DATA_NAMES[["GDPCtrlSteep"]]) %>%
-      mutate(year = max(MODEL_BASE_YEARS),
+      mutate(year = MODEL_FINAL_BASE_YEAR,
              # this is the current value for all pollutants anyway
              steepness = gcamusa.NONGHG_PROC_SECTORS.GDP_STEEPNESS) %>%
       distinct()

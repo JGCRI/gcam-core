@@ -22,7 +22,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
              FILE = "gcam-usa/EIA_AEO_fuels",
              FILE = "gcam-usa/EIA_AEO_services",
              FILE = "gcam-usa/Census_pop",
-             FILE = "gcam-usa/AEO_2015_flsp",
+             FILE = "gcam-usa/AEO_flsp",
              FILE = "gcam-usa/EIA_AEO_Tab4",
              FILE = "gcam-usa/RECS_1979",
              FILE = "gcam-usa/RECS_1984",
@@ -57,7 +57,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
     EIA_AEO_services <- get_data(all_data, "gcam-usa/EIA_AEO_services")
     Census_pop <- get_data(all_data, "gcam-usa/Census_pop") %>%
       gather_years
-    AEO_2015_flsp <- get_data(all_data, "gcam-usa/AEO_2015_flsp")
+    AEO_flsp <- get_data(all_data, "gcam-usa/AEO_flsp")
     EIA_AEO_Tab4 <- get_data(all_data, "gcam-usa/EIA_AEO_Tab4") %>%
       gather_years
     RECS_1979 <- get_data(all_data, "gcam-usa/RECS_1979")
@@ -156,7 +156,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
           df %>%
             select(tidyselect::all_of(c("year", "subregion9", "HOUSEHOLDS", flsp_var))) %>%
-            gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
+            tidyr::gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
             group_by(year, subregion9, variable) %>%
             summarise(value = sum(value * HOUSEHOLDS * CONV_MILFT2_M2)) %>%
             ungroup()
@@ -166,7 +166,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
             flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
             df %>%
               select(tidyselect::all_of(c("year", "subregion9", "NWEIGHT", flsp_var))) %>%
-              gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
+              tidyr::gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
               group_by(year, subregion9, variable) %>%
               summarise(value = sum(value * NWEIGHT * CONV_FT2_M2)) %>%
               ungroup()
@@ -188,7 +188,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
           flsp_var <- names(df)[which(names(df) %in% flsp_vars)]
           df %>%
             select(tidyselect::all_of(c("year", "subregion13", "NWEIGHT", flsp_var))) %>%
-            gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
+            tidyr::gather("variable", "value", tidyselect::all_of(flsp_var)) %>%
             group_by(year, subregion13, variable) %>%
             summarise(value = sum(value * NWEIGHT * CONV_FT2_M2)) %>%
             ungroup()
@@ -264,14 +264,15 @@ module_gcamusa_L144.Residential <- function(command, ...) {
       mutate(value = value * pcflsp_m2 / CONV_BM2_M2) %>%
       select(state, subregion13, sector, year, value)
 
-    # Final step - adjustment for AEO 2015 harmonization. NEMS residential floorspace is a lot lower than RECS.
-    L144.flsp_bm2_state_res    %>%
+    # Final step - adjustment for AEO harmonization. NEMS residential floorspace is a lot lower than RECS.
+    # AEO historical data out to 2021
+    L144.flsp_scaler <- L144.flsp_bm2_state_res %>%
       group_by(sector, year) %>%
       summarise(RECS_flspc = sum(value)) %>%
       ungroup() %>%
       select(-sector) %>%
       # use left_join due to lack of AEO data prior to 1993
-      left_join(AEO_2015_flsp %>%
+      left_join(AEO_flsp %>%
                 gather_years() %>%
                 filter(Sector == "Residential") %>%
                 select(-Sector),
@@ -279,12 +280,12 @@ module_gcamusa_L144.Residential <- function(command, ...) {
       mutate(scaler = value / RECS_flspc) %>%
       # extrapolate the scaler to years before 1993
       mutate(scaler =if_else(is.na(scaler),approx_fun(year, scaler, rule = 2),scaler)) %>%
-      select(year, scaler) -> L144.flsp_scaler
+      select(year, scaler)
 
-   L144.flsp_bm2_state_res %>%
+    L144.flsp_bm2_state_res <- L144.flsp_bm2_state_res %>%
       left_join_error_no_match(L144.flsp_scaler, by = c("year")) %>%
       mutate(value = if_else(year %in% HISTORICAL_YEARS, value * scaler, value)) %>%
-      select(-scaler) -> L144.flsp_bm2_state_res
+      select(-scaler)
 
     # c) ENERGY CONSUMPTION BY STATE, SERVICE, AND YEAR
     # Aggregating energy consumption by sampling weights
@@ -293,7 +294,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
       lapply(function(df) {
         if(unique(df$year) %in% c(1990, 1993, 2009, 2015)) {
           df %>%
-            gather(variable, value, -NWEIGHT, -year, -subregion9) %>%
+            tidyr::gather(variable, value, -NWEIGHT, -year, -subregion9) %>%
             filter(variable %in% unique(RECS_variables$variable)) %>%
             mutate(NWEIGHT = as.numeric(NWEIGHT),
                    value = as.numeric(value)) %>%
@@ -311,7 +312,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
       lapply(function(df) {
         if(unique(df$year) %in% c(1993:2009)) {
           df %>%
-            gather(variable, value, -NWEIGHT, -year, -subregion13) %>%
+            tidyr::gather(variable, value, -NWEIGHT, -year, -subregion13) %>%
             filter(variable %in% unique(RECS_variables$variable)) %>%
             mutate(NWEIGHT = as.numeric(NWEIGHT),
                    value = as.numeric(value)) %>%
@@ -343,7 +344,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
       left_join_error_no_match(states_subregions %>%
                                  select(subregion9, DIVISION) %>%
                                  distinct(), by = "DIVISION") %>%
-      gather(variable, value, -DIVISION, -subregion9) %>%
+      tidyr::gather(variable, value, -DIVISION, -subregion9) %>%
       mutate(value = value * CONV_TBTU_EJ,
              variable = sub("TBTU", "BTU", variable),
              year = 1979) %>%
@@ -587,7 +588,7 @@ module_gcamusa_L144.Residential <- function(command, ...) {
       add_legacy_name("L144.flsp_bm2_state_res") %>%
       add_precursors("gcam-usa/states_subregions",
                      "gcam-usa/Census_pop",
-                     "gcam-usa/AEO_2015_flsp",
+                     "gcam-usa/AEO_flsp",
                      "gcam-usa/RECS_1979",
                      "gcam-usa/RECS_1984",
                      "gcam-usa/RECS_1990",

@@ -71,27 +71,25 @@ module_energy_L1231.elec_tech<- function(command, ...) {
       filter(fuel == "gas") %>%
       rename(efficiency = value) -> L1231.eff_R_elec_gas_Yh_gathered
 
-    # Create auxiliar tibble to perform interpolation (aprox_fun) on efficiencies for natural gas technologies
+    # Create auxiliary tibble to perform interpolation (aprox_fun) on efficiencies for natural gas technologies
     # Interpolation is needed since input data is only provided for some intermediate years in the range 1971-2010.
     # Therefore there is not efficiency values for every historical year. Efficiencies for all historical years are needed
     # To estimate outputs from fuel/technology by region in the electricity sector
     tibble(supplysector = "electricity", subsector = "gas", year = HISTORICAL_YEARS) %>%
-      mutate(year = as.integer(year)) %>%
       full_join(energy.GAS_TECH, by = "supplysector") -> Aux_gas_tech_elec
 
     # Perform interpolation for gas technologies efficiencies , max, and rate
-    # Interpolation is needed since efficiencies are given for 1971, 1990, 2005 and 2010 only. Not for every historical year.
+    # Interpolation and extrapolation are needed since efficiencies are given for 1971, 1990, 2005 and 2010 only. Not for every historical year.
     A23.globaltech_eff %>%
       filter(subsector == "gas") %>%
       semi_join(calibrated_techs, by = c("supplysector", "subsector", "technology")) %>%
       gather_years(value_col = "efficiency_tech") %>%
-      mutate(efficiency_tech = as.numeric(efficiency_tech)) %>%
       semi_join(Aux_gas_tech_elec, by = "year") %>%
       full_join(Aux_gas_tech_elec, by = c("supplysector", "subsector", "technology", "minicam.energy.input", "year")) %>%
       group_by(supplysector, subsector, technology) %>%
-      mutate(efficiency_tech = approx_fun(year, efficiency_tech),
-             improvement.max = approx_fun(year, improvement.max),
-             improvement.rate = approx_fun(year, improvement.rate)) %>%
+      mutate(efficiency_tech = approx_fun(year, efficiency_tech, rule = 2),
+             improvement.max = approx_fun(year, improvement.max, rule = 2),
+             improvement.rate = approx_fun(year, improvement.rate, rule = 2)) %>%
       ungroup() -> L1231.eff_R_elec_gas_tech
 
     # Reset upper and lower bound efficiencies, as needed
@@ -195,6 +193,7 @@ module_energy_L1231.elec_tech<- function(command, ...) {
       rename(value = output) %>%
       select(GCAM_region_ID, sector, fuel, technology, year, value) %>%
       ungroup -> L1231.out_EJ_R_elec_F_tech_Yh
+
 
     # add final details to tibbles and save them
     L1231.in_EJ_R_elec_F_tech_Yh%>%

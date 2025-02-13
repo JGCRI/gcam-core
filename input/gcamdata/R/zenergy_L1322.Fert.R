@@ -27,7 +27,7 @@ module_energy_L1322.Fert <- function(command, ...) {
       FILE = "energy/IEA_Fert_fuel_data",
       "L142.ag_Fert_Prod_MtN_ctry_Y",
       FILE = "energy/H2A_Prod_Tech",
-      FILE = "energy/A10.rsrc_info",
+      "L210.rsrc_info",
       FILE = "energy/A21.globaltech_cost",
       FILE = "energy/A22.globaltech_cost",
       "L1321.in_EJ_R_indenergy_F_Yh",
@@ -67,7 +67,7 @@ module_energy_L1322.Fert <- function(command, ...) {
 
     # First, extract fuel share data to create a dedicated table for fuel shares
     IEA_Fert_fuel_data %>%
-      gather(variable, value, -IEA_Fert_reg) %>% # Convert to long form
+      tidyr::gather(variable, value, -IEA_Fert_reg) %>% # Convert to long form
       filter(grepl("share", variable)) %>% # Filter for only the share data
       mutate(fuel = sub("share_", "", variable), # Create a dedicated fuel column
              fuel = sub("oil", "refined liquids", fuel)) %>% # Rename oil to refined liquids
@@ -76,7 +76,7 @@ module_energy_L1322.Fert <- function(command, ...) {
 
     # Now, extract intensities (energy per unit mass) to create a dedicated table for fuel intensities
     IEA_Fert_fuel_data %>%
-      gather(variable, value, -IEA_Fert_reg) %>%
+      tidyr::gather(variable, value, -IEA_Fert_reg) %>%
       filter(grepl("GJtNH3", variable)) %>% # Filter for only GJtNH3 (i.e., energy per unit mass)
       mutate(fuel = sub("_GJtNH3", "", variable),
              fuel = sub("oil", "refined liquids", fuel), # Rename oil to refined liquids
@@ -159,7 +159,7 @@ module_energy_L1322.Fert <- function(command, ...) {
       select(iso, year, fuel, value_share_adj) %>%
       spread(fuel, value_share_adj) %>% # This is to set up the calculation in the next step
       mutate(`refined liquids` = 1 - coal - gas) %>%
-      gather(fuel, value_share_adj, -iso, -year) ->
+      tidyr::gather(fuel, value_share_adj, -iso, -year) ->
       Ctry_fuel_share_adj
 
     # Disaggregating input energy to fertilizer production into energy use (combustion) and feedstocks
@@ -271,7 +271,7 @@ module_energy_L1322.Fert <- function(command, ...) {
 
 
     # The processing steps below ensure that the base year for fertilizer prices is included
-    A10.rsrc_info %>%
+    L210.rsrc_info %>%
       filter(resource == "natural gas") %>%
       gather_years() %>%
       select(resource, year, value) %>%
@@ -279,13 +279,13 @@ module_energy_L1322.Fert <- function(command, ...) {
       mutate(value = approx_fun(year, value)) %>%
       filter(year == aglu.FERT_PRICE_YEAR) %>%
       mutate(value = replace_na(value, 0)) %>%
-      pull(value) -> # Save cost as single number. Units are 1975 USD per GJ.
-      A10.rsrc_cost_aglu.FERT_PRICE_YEAR
+      pull(value) ->
+      A10.rsrc_cost_aglu.FERT_PRICE_YEAR # Save cost as single unique number. Units are 1975 USD per GJ.
 
 
     # A21.globaltech_cost and A22.globaltech_cost report costs on primary energy handling (A21) and transformation technologies (A22)
     # Units for both are 1975$/GJ
-    # As mentioned above, because 2010 is the year used as the fertilizer base price (from A10.rsrc_info), we will interpolate for
+    # As mentioned above, because aglu.FERT_PRICE_YEAR is the year used as the fertilizer base price (from L210.rsrc_info), we will interpolate for
     # this year for both global tech cost tables so that we may add up all costs consistently.
 
     # Interpolate to get cost of primary energy transformation for natural gas in aglu.FERT_PRICE_YEAR
@@ -440,7 +440,7 @@ module_energy_L1322.Fert <- function(command, ...) {
       add_comments("Gas with CCS, coal, and coal with CCS were calculated using H2A characteristics of hydrogen production technologies") %>%
       add_comments("Oil was set to generally balance the total net costs with natural gas steam reforming.") %>%
       add_legacy_name("L1322.Fert_NEcost_75USDkgNH3_F") %>%
-      add_precursors("energy/H2A_Prod_Tech","energy/A10.rsrc_info",
+      add_precursors("energy/H2A_Prod_Tech","L210.rsrc_info",
                      "energy/A21.globaltech_cost", "energy/A22.globaltech_cost") ->
       L1322.Fert_NEcost_75USDkgNH3_F
 

@@ -23,8 +23,8 @@ Map HFC emission shares by region, sector, technology, gas, and year for years 1
 \details{
 First, a table was created that has all historical HFCs values.
 Then, regional and sector information was added.  And finally, HFC emission shares
-were calculated by suming emissions over region, sector, technology, and gas by year.
+were calculated by summing emissions over region, sector, technology, and gas by year.
 }
 \author{
-CDL June 2017 and YO Feburary 2020
+CDL June 2017 and YO February 2020
 }

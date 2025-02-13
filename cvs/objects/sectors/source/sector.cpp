@@ -437,6 +437,9 @@ void Sector::postCalc( const int aPeriod ){
     if( aPeriod > 0 ){
         mPrice[ aPeriod ] = marketplace->getPrice( mName, mRegionName, aPeriod, true );
     }
+    
+    // Write out the data in the vectors for the current period.
+
 }
 
 void Sector::accept( IVisitor* aVisitor, const int aPeriod ) const {

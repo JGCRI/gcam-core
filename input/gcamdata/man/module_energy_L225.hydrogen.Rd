@@ -24,5 +24,5 @@ Provides supply sector information, subsector information, technology informatio
 Provides supply sector information, subsector information, technology information for hydrogen sectors.
 }
 \author{
-LF Augest 2017
+LF August 2017
 }

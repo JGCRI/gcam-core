@@ -14,7 +14,7 @@ module_socio_L2326.aluminum_Inc_Elas_scenarios(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2326.aluminum_incelas_gcam3}, \code{object}. The corresponding file in the
+the generated outputs: \code{object}. The corresponding file in the
 original data system was \code{L2326.aluminum_Inc_Elas_scenarios.R} (socioeconomics level2).
 }
 \description{

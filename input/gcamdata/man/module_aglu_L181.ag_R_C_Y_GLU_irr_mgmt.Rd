@@ -21,10 +21,10 @@ original data system was \code{LB181.ag_R_C_Y_GLU_irr_mgmt.R} (aglu level1).
 Calculates the economic yields, cropland cover and production by GCAM region / commodity / year / GLU / irrigation / mgmt level.
 }
 \details{
-This chunk calulates the economic yields, cropland cover and production by GCAM region / commodity / year / GLU / irrigation / mgmt level.
+This chunk calculates the economic yields, cropland cover and production by GCAM region / commodity / year / GLU / irrigation / mgmt level.
 Currently the yield multipliers by high and low yield management are set at the same value for all region / commodity / year / GLU / irrigation,
 and the land share by high and low yield management is 50 percent by each. But this chunk is also a placeholder for a generic method of calculating specific
-yield mutipliers and land shares for each region / commodity / GLU / irrigation level.
+yield multipliers and land shares for each region / commodity / GLU / irrigation level.
 }
 \author{
 RC May 2017

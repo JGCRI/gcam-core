@@ -18,7 +18,7 @@ the generated outputs: \code{L102.ceds_nonco2_tg_R_S_F}, \code{L102.ceds_GFED_no
 }
 \description{
 Calculates emissions using CEDS and CMIP emissions data for all sectors and fuels and aggregates to GCAM regions. Note that the outputs of this chunk are a part of the prebuilt data.
-To change the ouputs of this chunk, add CEDS data to the CEDS folder under emissions and rebuild prebuilt data.
+To change the outputs of this chunk, add CEDS data to the CEDS folder under emissions and rebuild prebuilt data.
 }
 \details{
 Calculates emissions using CEDS and CMIP data.

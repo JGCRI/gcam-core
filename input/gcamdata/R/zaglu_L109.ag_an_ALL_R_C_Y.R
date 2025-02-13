@@ -94,7 +94,7 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
   L101.GrossTrade_Mt_R_C_Y %>%
     filter(GCAM_commodity %in% Primary_commodities) %>%
     mutate(NetExp_Mt = GrossExp_Mt - GrossImp_Mt) %>%
-    gather(flow, value, -GCAM_region_ID, -GCAM_commodity, -year) %>%
+    tidyr::gather(flow, value, -GCAM_region_ID, -GCAM_commodity, -year) %>%
     # Name the flows in each table, and combine all tables
       bind_rows(L108.ag_NetExp_Mt_R_FodderHerb_Y %>% mutate(flow = "NetExp_Mt")) %>%
       bind_rows(mutate(L101.ag_Prod_Mt_R_C_Y, flow = "Prod_Mt")) %>%
@@ -202,7 +202,7 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
     L109.ag_ALL_Mt_R_C_Y %>%
     filter(GCAM_commodity %in% c("FodderHerb", Feed_commodities))
     ) %>%
-    gather(element, value, -GCAM_region_ID, -GCAM_commodity, -year) %>%
+    tidyr::gather(element, value, -GCAM_region_ID, -GCAM_commodity, -year) %>%
     mutate(value = round(value, aglu.DIGITS_CALOUTPUT))->
     L109.ag_ALL_Mt_R_C_Y_3
 

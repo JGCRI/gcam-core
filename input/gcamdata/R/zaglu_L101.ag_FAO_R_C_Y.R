@@ -31,8 +31,7 @@ module_aglu_L101.ag_FAO_R_C_Y <- function(command, ...) {
       FILE = "aglu/LDS/LDS_land_types",
       "L100.FAO_PRODSTAT_TO_DOWNSCAL",
       "L100.LDS_ag_HA_ha",
-      "L100.LDS_ag_prod_t",
-      "L100.Land_type_area_ha")
+      "L100.LDS_ag_prod_t")
 
   MODULE_OUTPUTS <-
     c("L101.ag_HA_bm2_R_C_Y",
@@ -211,7 +210,7 @@ module_aglu_L101.ag_FAO_R_C_Y <- function(command, ...) {
       add_comments("Data was also converted from HA to billion km2") %>%
       add_legacy_name("L101.ag_HA_bm2_R_C_Y_GLU") %>%
       add_precursors("L100.FAO_PRODSTAT_TO_DOWNSCAL", "aglu/FAO/FAO_ag_items_PRODSTAT", "L100.LDS_ag_HA_ha", "common/iso_GCAM_regID",
-                     "aglu/LDS/LDS_land_types", "L100.Land_type_area_ha") ->
+                     "aglu/LDS/LDS_land_types") ->
       L101.ag_HA_bm2_R_C_Y_GLU
     L101.ag_HA_bm2_R_C_Y %>%
       add_title("Harvested area by GCAM region, commodity, and year") %>%
@@ -231,7 +230,7 @@ module_aglu_L101.ag_FAO_R_C_Y <- function(command, ...) {
       add_comments("Country/crop combinations with zero harvested area were assigned zero production") %>%
       add_legacy_name("L101.ag_Prod_Mt_R_C_Y_GLU") %>%
       add_precursors("L100.FAO_PRODSTAT_TO_DOWNSCAL", "aglu/FAO/FAO_ag_items_PRODSTAT", "L100.LDS_ag_prod_t", "common/iso_GCAM_regID",
-                     "aglu/LDS/LDS_land_types", "L100.Land_type_area_ha") ->
+                     "aglu/LDS/LDS_land_types") ->
       L101.ag_Prod_Mt_R_C_Y_GLU
     L101.ag_Prod_Mt_R_C_Y %>%
       add_title("Agricultural production by GCAM region, commodity, and year") %>%

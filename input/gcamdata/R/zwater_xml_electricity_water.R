@@ -89,7 +89,7 @@ module_water_electricity_water_xml <- function(command, ...) {
 
     # ===================================================
 
-    # Rename columns to match add_xml_data header expeectations.
+    # Rename columns to match add_xml_data header expectations.
     L2233.GlobalIntTechEff_elec_cool      <- rename(L2233.GlobalIntTechEff_elec_cool, `intermittent.technology` = technology)
     L2233.GlobalIntTechLifetime_elec_cool <- rename(L2233.GlobalIntTechLifetime_elec_cool, `intermittent.technology` = technology )
     L2233.GlobalIntTechShrwt_elec_cool    <- rename(L2233.GlobalIntTechShrwt_elec_cool,  `intermittent.technology` = technology )

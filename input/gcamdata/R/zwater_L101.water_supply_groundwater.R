@@ -36,7 +36,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       grade <- scenario <- trend_km3PerYr <-
       hi <- nhi <- human_only <- depletion <-
       netDepletion <- Country <- iso <- cost_bin <-
-      lower_cost <- upper_cost <-
+      lower_cost <- upper_cost <- lower <- upper <- range_mult <-
       grade <- elec_EJ <- elec_coef <- Superwell_country <-
       GCAM_region_ID <- minNEcost <- available <-
       minNEcost_bilUSD <- maxNEcost_bilUSD <- maxNEcost <-

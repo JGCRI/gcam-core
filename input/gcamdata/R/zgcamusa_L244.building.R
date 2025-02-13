@@ -188,6 +188,19 @@ module_gcamusa_L244.building <- function(command, ...) {
     # satiation.adder: value that allow the starting position of any region to be set along the demand function
     # satiation.impedance: shape parameter
 
+    if(max(L144.prices_bld_gcamusa$year) < MODEL_FINAL_BASE_YEAR) {
+      warning(paste0("Historical data in gcam-usa/A44.CalPrice_service_gcamusa only goes up to ",
+                     max(L144.prices_bld_gcamusa$year), " extending to ", MODEL_FINAL_BASE_YEAR,
+                     " consider updating data."))
+      L144.prices_bld_gcamusa %>%
+        tidyr::expand(tidyr::nesting(region, sector), year = MODEL_BASE_YEARS) %>%
+        left_join(L144.prices_bld_gcamusa, by=c("region", "sector", "year")) %>%
+        group_by(region, sector) %>%
+        mutate(value = approx_fun(year, value, rule=2)) %>%
+        ungroup() ->
+        L144.prices_bld_gcamusa
+    }
+
 
     # Need to delete the buildings sector in the USA region (gcam.consumers and supplysectors)
 
@@ -250,7 +263,7 @@ module_gcamusa_L244.building <- function(command, ...) {
       rename(region = state) %>%
       # Need to make sure that the satiation level is greater than the floorspace in the final base year
       left_join_error_no_match(L244.Floorspace_gcamusa %>%
-                                 filter(year == max(MODEL_BASE_YEARS)), by = c("region", "gcam.consumer")) %>%
+                                 filter(year == MODEL_FINAL_BASE_YEAR), by = c("region", "gcam.consumer")) %>%
       left_join_error_no_match(L100.Pop_thous_state %>% rename(pop = value), by = c("region" = "state", "year")) %>%
       mutate(year = as.integer(year),
              # value.y = population
@@ -610,13 +623,13 @@ module_gcamusa_L244.building <- function(command, ...) {
 
     # L244.GlobalTechSCurve_bld: Retirement rates for building technologies
     L244.GlobalTechSCurve_bld <- L244.GlobalTechCost_bld_gcamusa %>%
-      filter(year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS),
+      filter(year %in% c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS),
              sector.name %in% A44.globaltech_retirement$supplysector) %>%
       # Add lifetimes and steepness
       left_join_error_no_match(A44.globaltech_retirement, by = c("sector.name" = "supplysector")) %>%
       # Set steepness/halflife values to stock for base years, new for future years
-      mutate(steepness = if_else(year == max(MODEL_BASE_YEARS), steepness_stock, steepness_new),
-             half.life = if_else(year == max(MODEL_BASE_YEARS), half_life_stock, half_life_new)) %>%
+      mutate(steepness = if_else(year == MODEL_FINAL_BASE_YEAR, steepness_stock, steepness_new),
+             half.life = if_else(year == MODEL_FINAL_BASE_YEAR, half_life_stock, half_life_new)) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechSCurve"]])
 
     # L244.GlobalTechIntGainOutputRatio: Output ratios of internal gain energy from non-thermal building services
@@ -670,7 +683,7 @@ module_gcamusa_L244.building <- function(command, ...) {
     # L244.GenericServiceSatiation_gcamusa: Satiation levels assumed for non-thermal building services
     # Just multiply the base-service by an exogenous multiplier
     L244.GenericServiceSatiation_gcamusa <- L244.GenericBaseService_gcamusa %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       # Add floorspace
       left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
       # Add multiplier
@@ -681,7 +694,7 @@ module_gcamusa_L244.building <- function(command, ...) {
 
     # L244.ThermalServiceSatiation: Satiation levels assumed for thermal building services
     L244.ThermalServiceSatiation_gcamusa <- L244.ThermalBaseService_gcamusa %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       # Add floorspace
       left_join_error_no_match(L244.Floorspace_gcamusa, by = c(LEVEL2_DATA_NAMES[["BldNodes"]], "year")) %>%
       # Add multiplier

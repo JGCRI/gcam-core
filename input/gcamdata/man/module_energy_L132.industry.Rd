@@ -21,7 +21,7 @@ original data system was \code{LA132.industry.R} (energy level1).
 Provides industrial energy consumption (not including CHP) and industrial feedstock consumption by GCAM region/fuel/historical year.
 }
 \details{
-The chunk calculates industrial feedstock consumption directly separated from enduse energy comsuption and
+The chunk calculates industrial feedstock consumption directly separated from enduse energy consumption and
          industrial energy consumption by deducting net energy use by unconventional oil production, gas processing, refining, and CHP
 }
 \author{

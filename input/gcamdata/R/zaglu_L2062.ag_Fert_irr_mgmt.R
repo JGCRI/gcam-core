@@ -76,7 +76,7 @@ module_aglu_L2062.ag_Fert_irr_mgmt <- function(command, ...) {
     # Copy final base year coefficients to all future years, bind with historic coefficients, then remove zeroes
     # Note: this assumes constant fertilizer coefficients in the future ----
     L2062.AgCoef_Fert_ag_irr_mgmt %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(-year) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       bind_rows(L2062.AgCoef_Fert_ag_irr_mgmt) %>%

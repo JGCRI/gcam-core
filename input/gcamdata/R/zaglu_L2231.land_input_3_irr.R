@@ -225,7 +225,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
     # L223.LN3_UnmgdCarbon: Carbon content info, unmanaged land in the third nest
     L223.LC_bm2_R_Unmgd3_Yh_GLU %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>% select(-GCAM_region_ID) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
@@ -238,7 +238,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
 
     # L223.LN3_MgdCarbon_noncrop: Carbon content info, managed land in the third nest, non-crop (forest)
     L223.LC_bm2_R_Mgd3_Yh_GLU %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       #left_join_error_no_match(select(GCAMLandLeaf_CdensityLT, Land_Type, LandLeaf), by = c("Land_Type" = "LandLeaf")) %>%
       mutate(Cdensity_LT = Land_Type) %>% select(-GCAM_region_ID) %>%
       add_carbon_info(carbon_info_table = L121.CarbonContent_kgm2_R_LT_GLU) %>%
@@ -301,7 +301,7 @@ module_aglu_L2231.land_input_3_irr <- function(command, ...) {
     # to set the amount of protected land (if possible)
     L223.LN3_UnmgdAllocation %>%
       filter(!grepl("OtherArable", UnmanagedLandLeaf),
-             year == max(MODEL_BASE_YEARS)) %>%
+             year == MODEL_FINAL_BASE_YEAR) %>%
       rename(base_allocation = allocation) %>%
       select(-year) ->
       BYUnmgdAllocation

@@ -155,7 +155,7 @@ module_gcamusa_L2235.elec_segments_FERC <- function(command, ...) {
     L2235.SubsectorLogit_elecS_grid_vertical %>%
       select(region, supplysector, subsector) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_FUTURE_YEARS),
              interpolation.function = "fixed") -> L2235.SubsectorShrwtInterp_elecS_grid_vertical
 
@@ -230,7 +230,7 @@ module_gcamusa_L2235.elec_segments_FERC <- function(command, ...) {
     # regions that don't export in the base year don't export at all
     L2235.SubsectorShrwtFllt_elec_USA %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") %>%
       select(-year.fillout, -share.weight) -> L2235.SubsectorInterp_elec_USA
@@ -518,7 +518,7 @@ module_gcamusa_L2235.elec_segments_FERC <- function(command, ...) {
     L2235.structure_FERC %>%
       select(region, supplysector, subsector) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") -> L2235.SubsectorInterp_elec_FERC
 
@@ -579,7 +579,7 @@ module_gcamusa_L2235.elec_segments_FERC <- function(command, ...) {
                   select(grid_region, year, ownuse_coef),
                 by = c("region" = "grid_region", "year")) %>%
       group_by(region) %>%
-      mutate(coefficient = if_else(is.na(ownuse_coef), ownuse_coef[year==max(MODEL_BASE_YEARS)], ownuse_coef)) %>%
+      mutate(coefficient = if_else(is.na(ownuse_coef), ownuse_coef[year==MODEL_FINAL_BASE_YEAR], ownuse_coef)) %>%
       ungroup() %>%
       select(region, supplysector, subsector, technology, year, minicam.energy.input,
              coefficient, market.name) -> L2235.TechCoef_elecownuse_FERC

@@ -340,13 +340,13 @@ if(command == driver.DECLARE_INPUTS) {
   # L2392.TechLifetime_tra_NG: Lifetime of traded technologies
   L2392.TechLifetime_tra_NG <- A_ff_TradedTechnology_R_Y_NG %>%
     select(LEVEL2_DATA_NAMES[["TechLifetime"]]) %>%
-    filter(year >= max(MODEL_BASE_YEARS),
+    filter(year >= MODEL_FINAL_BASE_YEAR,
            !(stringr::str_detect(technology, "statistical differences")))
 
   # L2392.TechSCurve_tra_NG: S-curve retirement function for base year traded technologies
   L2392.TechSCurve_tra_NG <- A_ff_TradedTechnology_R_Y_NG %>%
     select(LEVEL2_DATA_NAMES[["TechSCurve"]]) %>%
-    filter(year == max(MODEL_BASE_YEARS),
+    filter(year == MODEL_FINAL_BASE_YEAR,
            !(stringr::str_detect(technology, "statistical differences")))
 
   # L2392.ProfitShutdown_tra_NG: Profit shutdown decider for traded technologies
@@ -485,12 +485,12 @@ if(command == driver.DECLARE_INPUTS) {
   # L2392.TechLifetime_reg_NG: Lifetime of regional technologies
   L2392.TechLifetime_reg_NG <- A_ff_RegionalTechnology_R_Y_NG %>%
     select(LEVEL2_DATA_NAMES[["TechLifetime"]], "subsector0") %>%
-    filter(year >= max(MODEL_BASE_YEARS))
+    filter(year >= MODEL_FINAL_BASE_YEAR)
 
   # L2392.TechSCurve_reg_NG: S-curve retirement function for base year regional technologies
   L2392.TechSCurve_reg_NG <- A_ff_RegionalTechnology_R_Y_NG %>%
     select(LEVEL2_DATA_NAMES[["TechSCurve"]], "subsector0") %>%
-    filter(year == max(MODEL_BASE_YEARS))
+    filter(year == MODEL_FINAL_BASE_YEAR)
 
   # L2392.TechSCurve_reg_NG: profit shutdown decider for regional technologies
   L2392.ProfitShutdown_reg_NG <- select(A_ff_RegionalTechnology_R_Y_NG, LEVEL2_DATA_NAMES[["TechProfitShutdown"]], "subsector0")

@@ -608,7 +608,12 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     L1239.state_elec_supply_USA %>%
       select(state, fuel, segment, year, fraction)%>%
       rename(region = state, supplysector = segment, subsector = fuel) %>%
-      mutate(year = as.numeric(year)) -> L2234.fuelfractions_segment_USA
+      mutate(year = as.numeric(year)) %>%
+      # extrapolate to all base years
+      complete(nesting(region, subsector, supplysector), year = MODEL_BASE_YEARS) %>%
+      group_by(region, subsector, supplysector) %>%
+      mutate(fraction = approx_fun(year, fraction, rule = 2)) %>%
+      ungroup() -> L2234.fuelfractions_segment_USA
 
     L2234.StubTechProd_elecS_USA %>%
       # join will produce NAs; left_join_error_no_match throws error, so left_join used
@@ -659,7 +664,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     # near top of script) or (2) zeroing out their shareweights in future model periods.
 
     L2234.StubTechProd_elecS_USA %>%
-      filter(year == max(MODEL_BASE_YEARS)) -> L2234.StubTechProd_elecS_USA_final_cal_year
+      filter(year == MODEL_FINAL_BASE_YEAR) -> L2234.StubTechProd_elecS_USA_final_cal_year
 
     # Adjusting nuclear subsector shareweights - states with no historical nuclear power generation
     # receive zero  shareweights.
@@ -750,9 +755,9 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
              share.weight.year, subs.share.weight, tech.share.weight) -> L2234.StubTechFixOut_elecS_USA
 
     # Fixed Output for hydro in future years.
-    # We apply the same fule fractions in future years as in the final calibration year
+    # We apply the same fuel fractions in future years as in the final calibration year
     L2234.fuelfractions_segment_USA %>%
-      filter(year == max(MODEL_BASE_YEARS),
+      filter(year == MODEL_FINAL_BASE_YEAR,
              subsector == "hydro") -> L2234.fuelfractions_segment_USA_hydro_final_calibration_year
 
     L223.StubTechFixOut_hydro_USA %>%
@@ -1007,7 +1012,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     L2234.SubsectorLogit_elecS_grid %>%
       select(region, supplysector, subsector) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_FUTURE_YEARS),
              interpolation.function = "fixed" ) -> L2234.SubsectorShrwtInterp_elecS_grid
 

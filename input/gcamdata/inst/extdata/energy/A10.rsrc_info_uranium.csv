@@ -1,0 +1,8 @@
+# File: A10.rsrc_info_uranium.csv
+# Title: Information about Uranium resource globally
+# Units: 2020$/kgU
+# Source: Prices from NEA Uranium 2020 "Redbook". Using US long-term from Fig. 2.10 in 2020 report here https://www.oecd-nea.org/jcms/pl_52718/uranium-2020-resources-production-and-demand
+# Column types: cccccnnnnnnn
+# ----------
+resource,resource_type,market,output-unit,price-unit,1971,1975,1990,2005,2010,2015,2019
+uranium,resource,global,Mt,2020$/kg,20,20,40,50,140,125,105

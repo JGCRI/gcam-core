@@ -16,36 +16,38 @@
 # Wind and PV with dedicated storage costs are assumed to equal costs of the underlying technologies plus four times the cost of ATB 2019's battery storage.
 # This is because ATB reports costs for a 4-hour battery with 15-year lifetime. We assume an 8-hour battery with 30-year lifetime to be more consistent with storage requirements and technology lifetimes in GCAM.
 # rooftop_pv costs represent a simple average of commerical and residential rooftop PV.
-# PV and rooftop PV technolgies entail a 1$/kW DC : 0.85$/kW AC conversion because Overnight Capital Cost; Fixed O&M; and Variable O&M costs represent $/kW(h) DC; all other techs are reported in $/kW(h) AC.
+# rooftop PV technolgies entail a 1$/kW DC : 0.85$/kW AC conversion because Overnight Capital Cost; Fixed O&M; and Variable O&M costs represent $/kW(h) DC; all other techs are reported in $/kW(h) AC.  
+# Also note that older versions of the ATB provided utility scale PV (UPV) costs in $/DC; the 2021 ATB provides UPV costs in $/AC; historical UPV costs have been adjusted accordingly.
+# Note that ATB 2021 includes a Utility-Scale PV-Plus-Battery technology; this implementation does not use this technology but continues to combine Utility PV & Battery Storage cost assumptions to maintain consistent technical assumptiosn for PV_storage and wind_storage.
 # inferred column indicates whether a technology cost is mapped directly from the ATB or is inferred via either (1) the shadow_tech cost ratio approach described above or (2) created from a composite of other technology costs (e.g. PV_storage costs are the sum of ATB PV costs and ATB Battery Storage costs).  This column is not used in the data processing.
-# Column types: cccncc 
+# Column types: cccncc
 # ----------
 technology,tech_type,tech_detail,conversion,shadow_tech,inferred
-coal (conv pul),Coal,Coal-new-HighCF,1,,
-coal (conv pul CCS),Coal,Coal-CCS 90%-HighCF,1,,
-coal (IGCC),Coal,Coal-IGCC-HighCF,1,,
-coal (IGCC CCS),Coal,Coal-IGCC-HighCF,,coal (IGCC),x
-gas (steam/CT),Natural Gas,Gas-CT-HighCF,1,,
-gas (CC),Natural Gas,Gas-CC-HighCF,1,,
-gas (CC CCS),Natural Gas,Gas-CC-CCS-HighCF,1,,
-refined liquids (steam/CT),Natural Gas,Gas-CT-HighCF,,gas (steam/CT),x
-refined liquids (CC),Natural Gas,Gas-CC-HighCF,,gas (CC),x
-refined liquids (CC CCS),Natural Gas,Gas-CC-CCS-HighCF,,gas (CC CCS),x
+coal (conv pul),Coal,Coal,1,,
+coal (conv pul CCS),Coal,Coal-90%-CCS,1,,
+coal (IGCC),Coal,Coal-IGCC,1,,
+coal (IGCC CCS),Coal,Coal-IGCC,,coal (IGCC),x
+gas (steam/CT),Natural Gas,NG F-Frame CT,1,,
+gas (CC),Natural Gas,NG F-Frame CC,1,,
+gas (CC CCS),Natural Gas,NG F-Frame CC 90% CCS,1,,
+refined liquids (steam/CT),Natural Gas,NG F-Frame CT,,gas (steam/CT),x
+refined liquids (CC),Natural Gas,NG F-Frame CC,,gas (CC),x
+refined liquids (CC CCS),Natural Gas,NG F-Frame CC 90% CCS,,gas (CC CCS),x
 biomass (conv),Biopower,Dedicated,1,,
 biomass (conv CCS),Biopower,Dedicated,,biomass (conv),x
 biomass (IGCC),Biopower,Dedicated,,biomass (conv),x
 biomass (IGCC CCS),Biopower,Dedicated,,biomass (conv),x
-Gen_III,Nuclear,Nuclear,1,,
-wind,Land-Based Wind,TRG 5,1,,
-wind_storage,Land-Based Wind,TRG 5,1,,x
-wind_storage,Storage,Battery Storage,3,,x
-PV,Solar - Utility PV,Utility PV - Kansas City,1.176,,
-PV_storage,Solar - Utility PV,Utility PV - Kansas City,1.176,,x
-PV_storage,Storage,Battery Storage,3,,x
-CSP,Solar - CSP,10hrs TES - Class 3,,CSP_storage,x
-CSP_storage,Solar - CSP,10hrs TES - Class 3,1,,
+Gen_III,Nuclear,Nuclear - AP1000,1,,
+wind,Land-Based Wind,Class 5,1,,
+wind_storage,Land-Based Wind,Class 5,1,,x
+wind_storage,Storage,4Hr Battery Storage,3,,x
+PV,Solar - Utility PV,Utility PV - Class 5,1,,
+PV_storage,Solar - Utility PV,Utility PV - Class 5,1,,x
+PV_storage,Storage,4Hr Battery Storage,3,,x
+CSP,Solar - CSP,CSP - Class 3,,CSP_storage,x
+CSP_storage,Solar - CSP,CSP - Class 3,1,,
 geothermal,Geothermal,Hydro / Flash,1,,
-rooftop_pv,Solar - PV Dist. Comm,Comm PV - Kansas City,0.588,,
-rooftop_pv,Solar - PV Dist. Res,Res PV - Kansas City,0.588,,
-wind_offshore,Offshore Wind,TRG 4,1,,
-battery,Storage,Battery Storage,1.5,,
+rooftop_pv,Solar - PV Dist. Comm,Commercial PV - Class 5,0.588,,
+rooftop_pv,Solar - PV Dist. Res,Residential PV - Class 5,0.588,,
+wind_offshore,Offshore Wind,Class 4,1,,
+battery,Storage,4Hr Battery Storage,1.5,,

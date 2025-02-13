@@ -483,6 +483,63 @@ outputs_of <- function(chunks) {
   chunk_outputs(chunks)$output
 }
 
+
+#' chunks_info
+#'
+#' Get the description and details from a chunk from its /man*.Rd page.
+#' Currently setup to return info of all non-batch (xml) chunks.
+#'
+#' All non-batch chunk info can be retrieved with the following code:
+#' chunk_names <- find_chunks('^module_[a-zA-Z\\.]*_L.*$')
+#' bind_rows(lapply(chunk_names$name, chunks_info))
+#'
+#' @param chunkname The name of the chunk to extract details from
+#' @return Tibble with chunk name, details, and description
+#'
+#' @examples
+#' chunks_info("module_water_L1233.Elec_water")
+#' chunk_names <- find_chunks('^module_[a-zA-Z\\.]*_L.*$')
+#' bind_rows(lapply(chunk_names$name, chunks_info))
+#'
+#' @author Hassan Niazi, October 2022
+chunks_info <- function(chunkname) {
+  assertthat::assert_that(is.character(chunkname))
+
+  # Get .Rd filename
+  chunkname_Rd <- list.files(path = "man", pattern = chunkname, full.names = TRUE, recursive = TRUE)
+
+  # There should only be one .Rd file per chunk
+  assert_that(length(chunkname_Rd) == 1,
+              msg = paste0("Numbers of .Rd files for ", chunkname, " is not equal to 1"))
+
+  # Read in documentation
+  lines <- readLines(chunkname_Rd)
+
+  # Search for description and details in documentation
+  for (l in 1:length(lines)) {
+    # If we find description label, read it in until closing bracket
+    if (lines[l] == "\\description{") {
+      ldes <- l + 1
+      while (lines[ldes] != "}"){
+        ldes <- ldes + 1
+      }
+      des <- paste(lines[(l+1):(ldes-1)], collapse = " ")
+    }
+    # If we find details label, read it in until closing bracket
+    else if (lines[l] == "\\details{"){
+      ldet = l
+      ldet <- l + 1
+      while (lines[ldet] != "}"){
+        ldet <- ldet + 1
+      }
+      det <- paste(lines[(l+1):(ldet-1)], collapse = " ")
+    }
+    l <- l + 1
+  }
+  # Return the description and details string if they exist, empty string if not
+  return(tibble(name = chunkname, description = get0("des", mode = "character"), details = get0("det", mode = "character")))
+}
+
 #' screen_forbidden
 #'
 #' Screen a function for use of functions forbidden by data system style guide.

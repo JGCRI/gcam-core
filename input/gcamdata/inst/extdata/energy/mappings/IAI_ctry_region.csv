@@ -1,7 +1,7 @@
-# File: IAA_ctry_region.csv
+# File: IAI_ctry_region.csv
 # Title: ISO to International Aluminum Institute region mapping
 # Units: NA
-# Description: Maps iso codes to IAA regions by data type
+# Description: Maps iso codes to IAI regions by data type
 # Column types: ccccc
 # ----------
 iso,region_aluminum_prod,region_alumina_prod,region_aluminum_en,region_alumina_en

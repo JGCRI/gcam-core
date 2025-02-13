@@ -1,0 +1,102 @@
+# File: ATB_tech_mapping.csv
+# Title: Mapping file to track between ATB technologies in historical ATB datasets
+# Units: N/A
+# Description: ATB technology mapping file
+# Column types: ccccc
+# ----------
+tech_type,tech_detail_standard,tech_detail_ATB2021,tech_detail_ATB2019,tech_detail_ATB2017
+Offshore Wind,Class 1,Class 1,Class 1,Class 1
+Offshore Wind,Class 2,Class 2,Class 2,Class 2
+Offshore Wind,Class 3,Class 3,Class 3,Class 3
+Offshore Wind,Class 4,Class 4,Class 4,Class 4
+Offshore Wind,Class 5,Class 5,Class 5,Class 5
+Offshore Wind,Class 6,Class 6,Class 6,Class 6
+Offshore Wind,Class 7,Class 7,Class 7,Class 7
+Offshore Wind,Class 8,Class 8,Class 8,Class 8
+Offshore Wind,Class 9,Class 9,Class 9,Class 9
+Offshore Wind,Class 10,Class 10,Class 10,Class 10
+Offshore Wind,Class 11,Class 11,Class 11,Class 11
+Offshore Wind,Class 12,Class 12,Class 12,Class 12
+Offshore Wind,Class 13,Class 13,Class 13,Class 13
+Offshore Wind,Class 14,Class 14,Class 14,Class 14
+Land-Based Wind,Class 1,Class 1,Class 1,Class 1
+Land-Based Wind,Class 2,Class 2,Class 2,Class 2
+Land-Based Wind,Class 3,Class 3,Class 3,Class 3
+Land-Based Wind,Class 4,Class 4,Class 4,Class 4
+Land-Based Wind,Class 5,Class 5,Class 5,Class 5
+Land-Based Wind,Class 6,Class 6,Class 6,Class 6
+Land-Based Wind,Class 7,Class 7,Class 7,Class 7
+Land-Based Wind,Class 8,Class 8,Class 8,Class 8
+Land-Based Wind,Class 9,Class 9,Class 9,Class 9
+Land-Based Wind,Class 10,Class 10,Class 10,Class 10
+Solar - Utility PV,Utility PV - Class 10,Utility PV - Class 10,Utility PV - Class 10,Utility PV - Class 10
+Solar - Utility PV,Utility PV - Class 9,Utility PV - Class 9,Utility PV - Class 9,Utility PV - Class 9
+Solar - Utility PV,Utility PV - Class 8,Utility PV - Class 8,Utility PV - Class 8,Utility PV - Class 8
+Solar - Utility PV,Utility PV - Class 7,Utility PV - Class 7,Utility PV - Class 7,Utility PV - Class 7
+Solar - Utility PV,Utility PV - Class 6,Utility PV - Class 6,Utility PV - Class 6,Utility PV - Class 6
+Solar - Utility PV,Utility PV - Class 5,Utility PV - Class 5,Utility PV - Class 5,Utility PV - Class 5
+Solar - Utility PV,Utility PV - Class 4,Utility PV - Class 4,Utility PV - Class 4,Utility PV - Class 4
+Solar - Utility PV,Utility PV - Class 3,Utility PV - Class 3,Utility PV - Class 3,Utility PV - Class 3
+Solar - Utility PV,Utility PV - Class 2,Utility PV - Class 2,Utility PV - Class 2,Utility PV - Class 2
+Solar - Utility PV,Utility PV - Class 1,Utility PV - Class 1,Utility PV - Class 1,Utility PV - Class 1
+Solar - PV Dist. Comm,Commercial PV - Class 10,Commercial PV - Class 10,Commercial PV - Class 10,Commercial PV - Class 10
+Solar - PV Dist. Comm,Commercial PV - Class 9,Commercial PV - Class 9,Commercial PV - Class 9,Commercial PV - Class 9
+Solar - PV Dist. Comm,Commercial PV - Class 8,Commercial PV - Class 8,Commercial PV - Class 8,Commercial PV - Class 8
+Solar - PV Dist. Comm,Commercial PV - Class 7,Commercial PV - Class 7,Commercial PV - Class 7,Commercial PV - Class 7
+Solar - PV Dist. Comm,Commercial PV - Class 6,Commercial PV - Class 6,Commercial PV - Class 6,Commercial PV - Class 6
+Solar - PV Dist. Comm,Commercial PV - Class 5,Commercial PV - Class 5,Commercial PV - Class 5,Commercial PV - Class 5
+Solar - PV Dist. Comm,Commercial PV - Class 4,Commercial PV - Class 4,Commercial PV - Class 4,Commercial PV - Class 4
+Solar - PV Dist. Comm,Commercial PV - Class 3,Commercial PV - Class 3,Commercial PV - Class 3,Commercial PV - Class 3
+Solar - PV Dist. Comm,Commercial PV - Class 2,Commercial PV - Class 2,Commercial PV - Class 2,Commercial PV - Class 2
+Solar - PV Dist. Comm,Commercial PV - Class 1,Commercial PV - Class 1,Commercial PV - Class 1,Commercial PV - Class 1
+Solar - PV Dist. Res,Residential PV - Class 10,Residential PV - Class 10,Residential PV - Class 10,Residential PV - Class 10
+Solar - PV Dist. Res,Residential PV - Class 9,Residential PV - Class 9,Residential PV - Class 9,Residential PV - Class 9
+Solar - PV Dist. Res,Residential PV - Class 8,Residential PV - Class 8,Residential PV - Class 8,Residential PV - Class 8
+Solar - PV Dist. Res,Residential PV - Class 7,Residential PV - Class 7,Residential PV - Class 7,Residential PV - Class 7
+Solar - PV Dist. Res,Residential PV - Class 6,Residential PV - Class 6,Residential PV - Class 6,Residential PV - Class 6
+Solar - PV Dist. Res,Residential PV - Class 5,Residential PV - Class 5,Residential PV - Class 5,Residential PV - Class 5
+Solar - PV Dist. Res,Residential PV - Class 4,Residential PV - Class 4,Residential PV - Class 4,Residential PV - Class 4
+Solar - PV Dist. Res,Residential PV - Class 3,Residential PV - Class 3,Residential PV - Class 3,Residential PV - Class 3
+Solar - PV Dist. Res,Residential PV - Class 2,Residential PV - Class 2,Residential PV - Class 2,Residential PV - Class 2
+Solar - PV Dist. Res,Residential PV - Class 1,Residential PV - Class 1,Residential PV - Class 1,Residential PV - Class 1
+Solar - CSP,CSP - Class 7,10hrs TES - Class 7,10hrs TES - Class 7,10hrs TES - Class 7
+Solar - CSP,CSP - Class 3,10hrs TES - Class 3,10hrs TES - Class 3,10hrs TES - Class 3
+Solar - CSP,CSP - Class 2,10hrs TES - Class 2,10hrs TES - Class 2,10hrs TES - Class 2
+Geothermal,Hydro / Flash,Hydro / Flash,Hydro / Flash,Hydro / Flash
+Geothermal,Hydro / Binary,Hydro / Binary,Hydro / Binary,Hydro / Binary
+Geothermal,NF EGS / Flash,NF EGS / Flash,NF EGS / Flash,NF EGS / Flash
+Geothermal,NF EGS / Binary,NF EGS / Binary,NF EGS / Binary,NF EGS / Binary
+Geothermal,Deep EGS / Flash,Deep EGS / Flash,Deep EGS / Flash,Deep EGS / Flash
+Geothermal,Deep EGS / Binary,Deep EGS / Binary,Deep EGS / Binary,Deep EGS / Binary
+Hydropower,NPD 1,NPD 1,NPD 1,NPD 1
+Hydropower,NPD 2,NPD 2,NPD 2,NPD 2
+Hydropower,NPD 3,NPD 3,NPD 3,NPD 3
+Hydropower,NPD 4,NPD 4,NPD 4,NPD 4
+Hydropower,NPD 5,NPD 5,NPD 5,NPD 5
+Hydropower,NPD 6,NPD 6,NPD 6,NPD 6
+Hydropower,NPD 7,NPD 7,NPD 7,NPD 7
+Hydropower,NPD 8,NPD 8,NPD 8,NPD 8
+Coal,Coal,Coal-new-AvgCF,Coal-new-AvgCF,Coal-new-AvgCF
+Coal,Coal-90%-CCS,Coal-CCS 90%-AvgCF,Coal-CCS 90%-AvgCF,Coal-CCS 90%-AvgCF
+Coal,Coal-IGCC,Coal-IGCC-AvgCF,Coal-IGCC-AvgCF,Coal-IGCC-AvgCF
+Natural Gas,NG F-Frame CT,Gas-CT-AvgCF,Gas-CT-AvgCF,Gas-CT-AvgCF
+Natural Gas,NG F-Frame CC,Gas-CC-AvgCF,Gas-CC-AvgCF,Gas-CC-AvgCF
+Natural Gas,NG F-Frame CC 90% CCS,Gas-CC-CCS-AvgCF,Gas-CC-CCS-AvgCF,Gas-CC-CCS-AvgCF
+Nuclear,Nuclear - AP1000,Nuclear,Nuclear,Nuclear
+Nuclear,Nuclear - Small Modular Reactor,Nuclear - Small Modular Reactor,Nuclear - Small Modular Reactor,Nuclear - Small Modular Reactor
+Biopower,Dedicated,Dedicated,Dedicated,Dedicated
+Storage,2Hr Battery Storage,2Hr Battery Storage,2Hr Battery Storage,2Hr Battery Storage
+Storage,4Hr Battery Storage,4Hr Battery Storage,4Hr Battery Storage,4Hr Battery Storage
+Storage,6Hr Battery Storage,6Hr Battery Storage,6Hr Battery Storage,6Hr Battery Storage
+Storage,8Hr Battery Storage,8Hr Battery Storage,8Hr Battery Storage,8Hr Battery Storage
+Storage,10Hr Battery Storage,10Hr Battery Storage,10Hr Battery Storage,10Hr Battery Storage
+PV+Storage,PV+Storage - Class 10,PV+Storage - Class 10,PV+Storage - Class 10,PV+Storage - Class 10
+PV+Storage,PV+Storage - Class 9,PV+Storage - Class 9,PV+Storage - Class 9,PV+Storage - Class 9
+PV+Storage,PV+Storage - Class 8,PV+Storage - Class 8,PV+Storage - Class 8,PV+Storage - Class 8
+PV+Storage,PV+Storage - Class 7,PV+Storage - Class 7,PV+Storage - Class 7,PV+Storage - Class 7
+PV+Storage,PV+Storage - Class 6,PV+Storage - Class 6,PV+Storage - Class 6,PV+Storage - Class 6
+PV+Storage,PV+Storage - Class 5,PV+Storage - Class 5,PV+Storage - Class 5,PV+Storage - Class 5
+PV+Storage,PV+Storage - Class 4,PV+Storage - Class 4,PV+Storage - Class 4,PV+Storage - Class 4
+PV+Storage,PV+Storage - Class 3,PV+Storage - Class 3,PV+Storage - Class 3,PV+Storage - Class 3
+PV+Storage,PV+Storage - Class 2,PV+Storage - Class 2,PV+Storage - Class 2,PV+Storage - Class 2
+PV+Storage,PV+Storage - Class 1,PV+Storage - Class 1,PV+Storage - Class 1,PV+Storage - Class 1

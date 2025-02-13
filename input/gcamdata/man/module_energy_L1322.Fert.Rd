@@ -14,11 +14,11 @@ module_energy_L1322.Fert(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L1322.Fert_Prod_MtN_R_F_Y}, \code{L1322.IO_R_Fert_F_Yh}, \code{L1322.in_EJ_R_indenergy_F_Yh}, \code{L1322.in_EJ_R_indfeed_F_Yh}, \code{L1322.Fert_NEcost_75USDkgN_F}. The corresponding file in the
+the generated outputs: \code{L1322.Fert_Prod_MtNH3_R_F_Y}, \code{L1322.IO_R_Fert_F_Yh}, \code{L1322.in_EJ_R_indenergy_F_Yh}, \code{L1322.in_EJ_R_indfeed_F_Yh}, \code{L1322.Fert_NEcost_75USDkgNH3_F}. The corresponding file in the
 original data system was \code{LB1322.Fert.R} (energy level1).
 }
 \description{
-Compute fertilizer production and energy inputs by technology.
+Compute ammonia fertilizer production and energy inputs by technology.
 }
 \details{
 Fertilizer production and energy information was calculated using country-level fuel share and energy intensity data

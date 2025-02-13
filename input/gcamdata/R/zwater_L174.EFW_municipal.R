@@ -137,7 +137,7 @@ module_water_L174.EFW_municipal <- function(command, ...) {
     L174.globaltech_coef <- gather_years(A74.globaltech_coef, value_col = "coefficient") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(HISTORICAL_YEARS)) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input) %>%
-      mutate(coefficient = approx_fun(year, coefficient)) %>%
+      mutate(coefficient = approx_fun(year, coefficient, rule = 2)) %>%
       ungroup() %>%
       left_join_error_no_match(select(EFW_mapping, supplysector, subsector, technology, minicam.energy.input, sector, fuel, from.sector, from.sector.2),
                                by = c("supplysector", "subsector", "technology", "minicam.energy.input"),

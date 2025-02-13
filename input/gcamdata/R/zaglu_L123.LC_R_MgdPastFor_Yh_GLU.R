@@ -96,7 +96,7 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       L123.ag_Prod_Mt_R_Past_Y_GLU
 
     # Calculate managed pasture land required using actual production and yields,
-    # and make adjustements: where managed pasture land is greater than
+    # and make adjustments: where managed pasture land is greater than
     # assumed threshold percentage of total pasture land, reduce managed pasture land area.
     L123.ag_Prod_Mt_R_Past_Y_GLU %>%
       rename(Land_Type = GCAM_commodity) %>%

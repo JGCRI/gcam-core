@@ -983,7 +983,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     # be held constant into the future.  The exception is once through cooling, whose
     # share weights will be 0 from 2020-2100 to mirror GCAM-core.
     L2233.StubTechProd_elec_USA %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       # join in subsector shareweights so we know which generation technologies
       # are allowed to deploy in the future
       left_join_error_no_match(L2233.SubsectorShrwt_elecS_cool_USA %>%
@@ -1014,7 +1014,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     L2233.StubTechProd_elec_cool_SW_USA %>%
       filter(!grepl(gcamusa.DISALLOWED_COOLING_TECH, technology),
              subs.share.weight > 0 & future.subs.shrwt > 0) %>%
-      mutate(from.year = max(MODEL_BASE_YEARS),
+      mutate(from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = gcamusa.FIXED_SHAREWEIGHT) %>%
       rename(stub.technology = technology) %>%

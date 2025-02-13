@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L101.Pop_thous_R_Yh}, \code{L101.Pop_thous_Scen_R_Yfut}, \code{L101.Pop_thous_GCAM3_R_Y}, \code{L101.Pop_thous_GCAM3_ctry_Y}. The corresponding file in the
+#' the generated outputs: \code{L101.Pop_thous_R_Yh}, \code{L101.Pop_thous_SSP_R_Yfut}, \code{L101.Pop_thous_GCAM3_R_Y}, \code{L101.Pop_thous_GCAM3_ctry_Y}. The corresponding file in the
 #' original data system was \code{L101.Population.R} (socioeconomics level1).
 #' @details Interpolates GCAM population data to all historical and future years, aggregating by
 #' country and/or region and/or SSP as necessary.
@@ -26,7 +26,7 @@ module_socio_L101.Population <- function(command, ...) {
 
   MODULE_OUTPUTS <-
     c("L101.Pop_thous_R_Yh",
-      "L101.Pop_thous_Scen_R_Yfut",
+      "L101.Pop_thous_SSP_R_Yfut",
       "L101.Pop_thous_GCAM3_R_Y",
       "L101.Pop_thous_GCAM3_ctry_Y")
 
@@ -73,14 +73,6 @@ module_socio_L101.Population <- function(command, ...) {
       summarise(value = sum(value)) %>%
       ungroup() ->
       L101.Pop_thous_SSP_R_Yfut
-
-    # Future population in the GCAM-SSP (paP) scenarios
-    # For now use SSP population for both SSP and gSSP; revisit this after consulting GCAM-China team
-    L101.Pop_thous_SSP_R_Yfut %>%
-      ungroup %>%
-      mutate(scenario = paste0("g", substr(scenario, 1, 4))) %>%
-      bind_rows(L101.Pop_thous_SSP_R_Yfut) ->
-      L101.Pop_thous_Scen_R_Yfut
 
     # Downscale GCAM 3.0 population to country on the basis of UN historical data and base SSP in future years
     # This is done according to actual shares in the historical periods, and SSPbase in the future periods
@@ -164,14 +156,14 @@ module_socio_L101.Population <- function(command, ...) {
                      "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
       L101.Pop_thous_R_Yh
 
-    L101.Pop_thous_Scen_R_Yfut %>%
-      add_title("Population by region and gSSP SSP in future periods") %>%
+    L101.Pop_thous_SSP_R_Yfut %>%
+      add_title("Population by region and SSP in future periods") %>%
       add_units("thousand persons") %>%
-      add_comments("Population by region and gSSP SSP in future periods") %>%
-      add_legacy_name("L101.Pop_thous_Scen_R_Yfut") %>%
+      add_comments("Population by region and SSP in future periods") %>%
+      add_legacy_name("L101.Pop_thous_SSP_R_Yfut") %>%
       add_precursors("common/iso_GCAM_regID", "socioeconomics/POP/GCAM3_population",
                      "L100.Pop_thous_ctry_Yh", "L100.Pop_thous_SSP_ctry_Yfut") ->
-      L101.Pop_thous_Scen_R_Yfut
+      L101.Pop_thous_SSP_R_Yfut
 
     L101.Pop_thous_GCAM3_R_Y %>%
       add_title("GCAM 3.0 population by region in historical and future years") %>%

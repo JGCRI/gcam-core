@@ -8,10 +8,8 @@
 #' outputs include GDP, pcGDP, and the PPP-MER conversion factor, all tabulated
 #' by GCAM region.
 #'
-#' The scenarios generated include the SSPs and the gSSPs (SSPs modified by
-#' near-term IMF projections).  GDP outputs are in millions of 1990 USD, Market
-#' Exchange Rate (measured in 2010) is used for foreign currency.  Per-capita
-#' values are in thousands of 1990 USD.
+#' The scenarios generated include the SSPs.  GDP outputs are in millions of 1990 USD.
+#' Per-capita values are in thousands of 1990 USD.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -34,7 +32,7 @@ module_socio_L102.GDP <- function(command, ...) {
       "L101.Pop_thous_GCAM3_R_Y",
       "L101.Pop_thous_GCAM3_ctry_Y",
       "L101.Pop_thous_R_Yh",
-      "L101.Pop_thous_Scen_R_Yfut")
+      "L101.Pop_thous_SSP_R_Yfut")
 
   MODULE_OUTPUTS <-
     c("L102.gdp_mil90usd_Scen_R_Y",
@@ -126,35 +124,16 @@ module_socio_L102.GDP <- function(command, ...) {
 
     # all regions currently GDP up to 2023 (FAOSTAT)
     # SSP scenarios use 2020-2100 growth rate from SSP
-    # gSSP scenarios use 2023 -2100 growth rate from SSP
 
     ## 3.1 for SSP scenarios ----
     # join.gdp.ts hist and future
-    gdp.mil90usd.SSP.rgn.yr <-
+    gdp.mil90usd.scen.rgn.yr <-
       join.gdp.ts(
         # hist: gdp_mil90usd_rgn before socioeconomics.SSP_DB_BASEYEAR
         gdp_mil90usd_rgn %>% filter(year <= socioeconomics.SSP_DB_BASEYEAR),
         # future: gdp_bilusd_rgn_Yfut
         gdp_bilusd_rgn_Yfut,
         grouping = 'GCAM_region_ID')
-
-    ## 3.2 for gSSP scenarios ----
-
-    # join.gdp.ts hist and future
-    gdp.mil90usd.gSSP.rgn.yr <-
-      join.gdp.ts(
-        # hist: gdp_mil90usd_rgn before socioeconomics.SSP_DB_BASEYEAR
-        gdp_mil90usd_rgn,
-        # future: gdp_bilusd_rgn_Yfut
-        gdp_bilusd_rgn_Yfut,
-        grouping = 'GCAM_region_ID') %>%
-      mutate(scenario = paste0('g', scenario))
-
-
-    # Step 4: Combine SSP and gSSP scenarios into a single table ----
-    #(this will be one of our final outputs)
-    gdp.mil90usd.scen.rgn.yr <-
-      bind_rows(gdp.mil90usd.SSP.rgn.yr, gdp.mil90usd.gSSP.rgn.yr)
 
     # Step 5: Additional adjustment  for Venezuela (South Amer North) and Taiwan ----
 
@@ -206,7 +185,7 @@ module_socio_L102.GDP <- function(command, ...) {
     ## we need.  Add a scenario column to historical years, and combine the
     ## whole thing into a single table.
     pop.thous.fut <-
-      rename(L101.Pop_thous_Scen_R_Yfut, population = value) %>%
+      rename(L101.Pop_thous_SSP_R_Yfut, population = value) %>%
       filter(year %in% FUTURE_YEARS)
     pop.thous.hist <-
       rename(L101.Pop_thous_R_Yh, population = value) %>%
@@ -365,10 +344,8 @@ module_socio_L102.GDP <- function(command, ...) {
       mutate(year = as.integer(year)) %>%
       add_title("Gross Domestic Product (GDP) by scenario, region, and year.") %>%
       add_units("Millions of 1990 USD (MER)") %>%
-      add_comments("For the SSP scenarios, SSP GDP projections are scaled to match ") %>%
-      add_comments("historical values in the base year (2010).  For the gSSP scenarios ") %>%
-      add_comments("IMF growth projections are applied from 2010-2020, and the SSP projections ") %>%
-      add_comments("are scaled to match the 2020 values resulting from this process.") %>%
+      add_comments("SSP projections match historical values and are available beyond") %>%
+      add_comments("our final calibration period.") %>%
       add_legacy_name("L102.gdp_mil90usd_Scen_R_Y") %>%
       add_precursors("common/iso_GCAM_regID",
                      "socioeconomics/SSP/SSP_database_2024",
@@ -390,7 +367,7 @@ module_socio_L102.GDP <- function(command, ...) {
                      "socioeconomics/SSP/iso_SSP_regID",
                      "L100.gdp_mil90usd_ctry_Yh",
                      "L101.Pop_thous_R_Yh",
-                     "L101.Pop_thous_Scen_R_Yfut") ->
+                     "L101.Pop_thous_SSP_R_Yfut") ->
       L102.pcgdp_thous90USD_Scen_R_Y
 
     ppp.mer.rgn %>%

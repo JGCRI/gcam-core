@@ -12,7 +12,7 @@
 #' original data system was \code{L1233.Elec_water.R} (water level1).
 #' @details Categorizes electricity generating technologies by cooling water type, and computes water withdrawals and consumption.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr arrange filter if_else group_by left_join mutate right_join select semi_join summarise
+#' @importFrom dplyr arrange filter if_else group_by left_join mutate right_join select semi_join summarise last
 #' @importFrom tidyr complete fill nesting replace_na
 #' @author SWDT May 2017
 module_water_L1233.Elec_water <- function(command, ...) {
@@ -50,7 +50,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
-    A23.CoolingSystemShares_RG3 <- get_data(all_data, "water/A23.CoolingSystemShares_RG3")
+    A23.CoolingSystemShares_RG3 <- get_data(all_data, "water/A23.CoolingSystemShares_RG3") %>% gather_years()
     elec_tech_water_map <- get_data(all_data, "water/elec_tech_water_map", strip_attributes = TRUE)
     Macknick_elec_water_m3MWh <- get_data(all_data, "water/Macknick_elec_water_m3MWh")
     L103.water_mapping_R_B_W_Ws_share <- get_data(all_data, "L103.water_mapping_R_B_W_Ws_share")
@@ -78,8 +78,57 @@ module_water_L1233.Elec_water <- function(command, ...) {
       L1233.out_EJ_ctry_elec_F_Yh
 
     # INTERPOLATE A23.CoolingSystemShares_RG3 FOR HISTORICAL YEARS AND HISTORICAL + FUTURE YEARS
+
+    # TODO-BYU: extrapolating this file, A23.CoolingSystemShares_RG3, including
+    # many others in the data system, could be problematic when the base year
+    # advances to a year recent than 2020 because all input files that have
+    # assumptions for all years inherently assume that future starts from 2020.
+    # We don't have checks in place to catch these cases, we only check against
+    # MODEL_FINAL_BASE_YEAR. Current base year update related processing
+    # overlooks this aspect, except the one done below.
+
+    # first check if the shares are the same in for all years less than 2015 for
+    # each combination of region, plant type, cooling system, and water type
+    if (F) { # skip running this, but keep here for diagnostics
+      shares_combinations_check <- A23.CoolingSystemShares_RG3 %>%
+        filter(year <= 2015) %>% # fine to hard code 2015 because we are checking 'historical' years assumed in the file
+        group_by(region_GCAM3, plant_type, cooling_system, water_type) %>%
+        summarise(all_values_equal = all(value == first(value)))
+
+      # Check if all combinations have the same values for years less than 2015
+      if(all(shares_combinations_check$all_values_equal) != T) {
+        warning("module_water_L1233.Elec_water: Not all combinations in A23.CoolingSystemShares_RG3 have the same shares for years earlier than 2015. \n")
+        # Check using: shares_combinations_check %>% filter(all_values_equal == F)
+      }
+    }
+
+    # TODO-BYU: demo processing showing one way of handling automatic base year
+    # update when the data has both historical and future values which change
+    # over time and where we want to make sure that new base years past the
+    # 'future' year assumed in the file are extrapolated using historical years
+    # of the file. E.g., in case of 2021 base year, it should be interpolated
+    # using 2017 not 2020
+    #
+    # check if the file has shares for the final base year
+    if (!(MODEL_FINAL_BASE_YEAR %in% unique(A23.CoolingSystemShares_RG3$year))) {
+      warning("module_water_L1233.Elec_water: A23.CoolingSystemShares_RG3 does not have cooling system shares for the final base year. Shares will be interpolated. \n")
+
+      # copy forward shares of last historical year in the file to final base year if MODEL_FINAL_BASE_YEAR is greater than 2015 but less than 2020
+      if (MODEL_FINAL_BASE_YEAR > 2015 & MODEL_FINAL_BASE_YEAR < 2020) {
+        A23.CoolingSystemShares_RG3 %>%
+          # filter the last year before MODEL_FINAL_BASE_YEAR
+          filter(year == max(year[year < MODEL_FINAL_BASE_YEAR])) %>%
+          mutate(year = MODEL_FINAL_BASE_YEAR) %>%
+          bind_rows(A23.CoolingSystemShares_RG3) %>% arrange(year) -> A23.CoolingSystemShares_RG3
+      } else {
+        # change 2020 to min(MODEL_FUTURE_YEARS) and copy forward shares of last historical year in the file to final base year
+        A23.CoolingSystemShares_RG3 %>%
+          mutate(year = ifelse(year == 2020, min(MODEL_FUTURE_YEARS), year),
+                 year = ifelse(year == max(year[year < MODEL_FINAL_BASE_YEAR]), MODEL_FINAL_BASE_YEAR, year)) -> A23.CoolingSystemShares_RG3
+      }
+    }
+
     A23.CoolingSystemShares_RG3 %>%
-      gather_years %>%
       complete(nesting(region_GCAM3, plant_type, cooling_system, water_type),
                year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%

@@ -182,22 +182,22 @@ module_gcamusa_L100.Socioeconomics <- function(command, ...) {
 
     L102.pcgdp_thous90USD_Scen_R_Y %>%
       filter(GCAM_region_ID == gcam.USA_CODE,
-             scenario == "gSSP2") %>%
+             scenario == "SSP2") %>%
       group_by(GCAM_region_ID, scenario) %>%
       mutate(pcGDPratio = value / lag(value)) %>%
       ungroup() %>%
       repeat_add_columns(tibble::tibble(state = gcamusa.STATES)) %>%
-      select(state, year, pcGDPratio) -> L100.pcGDPratio_state_gSSP2
+      select(state, year, pcGDPratio) -> L100.pcGDPratio_state_SSP2
 
     # Combine annual growth rates into a single table
     L100.pcGDPratio_state_hist %>%
       bind_rows(L100.pcGDPratio_state_AEO %>%
-                  # In order to smoothen transitions in GDP growth rate, we iterpolate between
+                  # In order to smooth transitions in GDP growth rate, we iterpolate between
                   # historical (2010-2018 growth) rates to AEO 2030 growth rates
                   # Thus we filter for values at or beyond 2030
                   filter(year >= gcamusa.SE_NEAR_TERM_YEAR),
-                L100.pcGDPratio_state_gSSP2 %>%
-                  # In order to smoothen transitions in GDP growth rate, we iterpolate between
+                L100.pcGDPratio_state_SSP2 %>%
+                  # In order to smooth transitions in GDP growth rate, we iterpolate between
                   # 2050 state-level values to the USA-region value in 2100
                   # Thus we filter for only the 2100 value here
                   filter(year == max(FUTURE_YEARS))) %>%

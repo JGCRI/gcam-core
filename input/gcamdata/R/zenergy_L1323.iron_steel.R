@@ -79,8 +79,7 @@ module_energy_L1323.iron_steel <- function(command, ...) {
              `EAF with DRI`=if_else(`EAF with scrap`<=0,EAF,`EAF with DRI`),
              `EAF with scrap`=if_else(`EAF with scrap`<0,0,`EAF with scrap`))%>%
       select(-EAF)%>%
-      left_join(iso_GCAM_regID,by="country_name")%>%
-      select(-GCAM_region_ID,-country_name,-region_GCAM3)-> All_steel
+      left_join(iso_GCAM_regID,by="country_name") -> All_steel_Ctry
 
 
     # ===================================================
@@ -89,20 +88,19 @@ module_energy_L1323.iron_steel <- function(command, ...) {
     # Recalculate steel production by technology across years to be consistent
     # with the iron and steel trade balance (consumption = production - exports + imports)
     # Change steel production to long format and aggregate to region level
-    All_steel %>%
-      left_join(iso_GCAM_regID, by = "iso") %>%
+    All_steel_Ctry %>%
       #aggregate the production to regional level
       group_by(GCAM_region_ID, year) %>%
       summarise(BLASTFUR=sum(BLASTFUR),`EAF with scrap`=sum(`EAF with scrap`),
-                `EAF with DRI`=sum(`EAF with DRI`))-> All_steel
+                `EAF with DRI`=sum(`EAF with DRI`))-> All_steel_R
 
       #Obtain the index of GCAM_regions and sub sectors that are calibrated to zero steel production in the base-year
-      All_steel %>%
+    All_steel_R %>%
         filter(year==MODEL_FINAL_BASE_YEAR & (`EAF with scrap`==0| BLASTFUR==0 | `EAF with DRI`==0)) %>%
         left_join(GCAM_region_names,by=c("GCAM_region_ID"))-> L1323.index
 
       #add a minimal steel production value (0.5% of the total) to technologies in the base-year where they are calibrated to zero
-      All_steel %>%
+      All_steel_R %>%
         mutate(BLASTFUR=if_else(BLASTFUR==0 & year == MODEL_FINAL_BASE_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,BLASTFUR),
                `EAF with scrap`=if_else(`EAF with scrap`==0 & year == MODEL_FINAL_BASE_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,`EAF with scrap`),
                `EAF with DRI`=if_else(`EAF with DRI`==0 & year == MODEL_FINAL_BASE_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,`EAF with DRI`),

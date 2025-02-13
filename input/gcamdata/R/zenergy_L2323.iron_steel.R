@@ -22,10 +22,6 @@
 #' @author Yang Liu Sep 2019, Siddarth Durga April 2023
 module_energy_L2323.iron_steel <- function(command, ...) {
 
-  INCOME_ELASTICITY_OUTPUTS <- c("GCAM3",
-                                 paste0("gSSP", 1:5),
-                                 paste0("SSP", 1:5))
-
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "energy/calibrated_techs",
@@ -296,7 +292,7 @@ module_energy_L2323.iron_steel <- function(command, ...) {
     # filters base years from original and then appends future years
     L2323.globaltech_retirement_base %>%
       mutate(year = as.integer(year)) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       bind_rows(L2323.globaltech_retirement_future) ->
       L2323.globaltech_retirement
 

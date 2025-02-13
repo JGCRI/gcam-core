@@ -1,14 +1,10 @@
-# File: A10.rsrc_info.csv
+# File: A10.rsrc_info_renewables_others.csv
 # Title: Information about resources in each region
-# Units: 1975$/kg for uranium and limestone;  1975$/GJ for everything else
-# Source: Prices from GCAM 3.1 model input. 2010 2015 estimated
+# Units: 1975$/kg limestone;  1975$/GJ for everything else
+# Source: Prices from GCAM 3.1 model input
 # Column types: cccccnnnnnn
 # ----------
 resource,resource_type,market,output-unit,price-unit,1971,1975,1990,2005,2010,2015
-coal,resource,regional,EJ,1975$/GJ,0.4,0.4,0.435,0.382,0.495,0.547
-crude oil,resource,regional,EJ,1975$/GJ,1.84,1.84,1.37,1.546,3.935,4.51
-natural gas,resource,regional,EJ,1975$/GJ,0.65,0.65,0.812,1.107,1.746,1.746
-uranium,resource,global,Mt,1975$/kg,20,20,25,35,35,35
 biomass,renewresource,regional,EJ,1975$/GJ,1,1,1,1.25,1.25,1.25
 distributed_solar,renewresource,regional,EJ,1975$/GJ,6,6,6,6,6,6
 geothermal,renewresource,regional,EJ,1975$/GJ,0.1,0.1,0.1,0.1,0.1,0.1

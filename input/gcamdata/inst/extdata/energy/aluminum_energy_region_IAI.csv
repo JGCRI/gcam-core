@@ -1,0 +1,314 @@
+# File: aluminum_energy_region_IAI.csv
+# Title: Aluminum energy by IAI region
+# Units: GWh
+# Description: Regional aluminum energy consumption
+# Source: International Aluminum Institute: Primary Aluminium Smelting Power Consumption 1st Jan 1980 to 1st Jan 2022 (all); https://international-aluminium.org/statistics/primary-aluminium-smelting-power-consumption/
+# Column types: ciccnnnnnnnnnc
+# ----------
+flow,year,type,fuel,Africa,North America,South America,Asia (ex China),Europe,Oceania,Gulf Cooperation Council,China,World Reported,unit
+Aluminum,1980,Power Mix,Hydro,5877,52430,13334,4435,27782,4516,0,0,108374,GWh
+Aluminum,1980,Power Mix,Coal,1332,31567,0,4112,14326,3155,0,0,54492,GWh
+Aluminum,1980,Power Mix,Oil,0,1861,637,12871,5853,0,0,0,21222,GWh
+Aluminum,1980,Power Mix,Natural Gas,0,9354,268,2761,4193,0,0,0,16576,GWh
+Aluminum,1980,Power Mix,Nuclear,0,4758,0,447,7826,0,0,0,13031,GWh
+Aluminum,1980,Power Source,Self-Generated,0,31201,2137,10525,15380,1197,0,0,60440,GWh
+Aluminum,1980,Power Source,Purchased from Supplier(s),7209,68769,12102,14101,44600,6474,0,0,153255,GWh
+Aluminum,1981,Power Mix,Hydro,6544,52066,13217,3970,27818,4544,0,0,108159,GWh
+Aluminum,1981,Power Mix,Coal,1338,31758,0,4103,15304,4085,0,0,56588,GWh
+Aluminum,1981,Power Mix,Oil,0,871,218,8273,4664,0,0,0,14026,GWh
+Aluminum,1981,Power Mix,Natural Gas,0,5885,368,4230,4205,0,0,0,14688,GWh
+Aluminum,1981,Power Mix,Nuclear,0,4815,0,374,6830,0,0,0,12019,GWh
+Aluminum,1981,Power Source,Self-Generated,0,28456,1856,9376,15661,1144,0,0,56493,GWh
+Aluminum,1981,Power Source,Purchased from Supplier(s),7882,66939,11947,11574,43160,7485,0,0,148987,GWh
+Aluminum,1982,Power Mix,Hydro,6412,42453,13470,4069,24580,4759,0,0,95743,GWh
+Aluminum,1982,Power Mix,Coal,1646,23915,0,4396,14928,4259,0,0,49144,GWh
+Aluminum,1982,Power Mix,Oil,0,850,43,2434,4380,0,0,0,7707,GWh
+Aluminum,1982,Power Mix,Natural Gas,0,3053,96,5321,3905,0,0,0,12375,GWh
+Aluminum,1982,Power Mix,Nuclear,0,3505,0,341,6404,0,0,0,10250,GWh
+Aluminum,1982,Power Source,Self-Generated,0,25363,1997,10079,14158,1190,0,0,52787,GWh
+Aluminum,1982,Power Source,Purchased from Supplier(s),8058,48413,11612,6482,40039,7828,0,0,122432,GWh
+Aluminum,1983,Power Mix,Hydro,4365,45401,15525,5069,24560,5531,0,0,100451,GWh
+Aluminum,1983,Power Mix,Coal,2487,26318,0,4551,15667,5682,0,0,54705,GWh
+Aluminum,1983,Power Mix,Oil,0,491,8,1336,3122,234,0,0,5191,GWh
+Aluminum,1983,Power Mix,Natural Gas,0,432,469,5442,3869,0,0,0,10212,GWh
+Aluminum,1983,Power Mix,Nuclear,0,4031,0,316,7113,0,0,0,11460,GWh
+Aluminum,1983,Power Source,Self-Generated,0,26015,2506,11576,14415,1173,0,0,55685,GWh
+Aluminum,1983,Power Source,Purchased from Supplier(s),6852,50658,13496,5138,39916,10274,0,0,126334,GWh
+Aluminum,1984,Power Mix,Hydro,4022,54854,16784,6239,25169,6031,0,0,113099,GWh
+Aluminum,1984,Power Mix,Coal,2539,32297,0,5759,17945,9831,0,0,68371,GWh
+Aluminum,1984,Power Mix,Oil,0,147,0,1597,2763,0,0,0,4507,GWh
+Aluminum,1984,Power Mix,Natural Gas,0,336,314,5762,3446,0,0,0,9858,GWh
+Aluminum,1984,Power Mix,Nuclear,0,4478,0,310,7331,0,0,0,12119,GWh
+Aluminum,1984,Power Source,Self-Generated,0,28691,1984,12814,14378,1131,0,0,58998,GWh
+Aluminum,1984,Power Source,Purchased from Supplier(s),6561,63421,15114,6853,42276,14731,0,0,148956,GWh
+Aluminum,1985,Power Mix,Hydro,5082,49208,18506,6791,23346,6098,0,0,109031,GWh
+Aluminum,1985,Power Mix,Coal,2695,25713,0,5929,17235,11288,0,0,62860,GWh
+Aluminum,1985,Power Mix,Oil,0,1817,0,951,2332,0,0,0,5100,GWh
+Aluminum,1985,Power Mix,Natural Gas,0,108,250,5504,3031,0,0,0,8893,GWh
+Aluminum,1985,Power Mix,Nuclear,0,4037,0,275,8193,0,0,0,12505,GWh
+Aluminum,1985,Power Source,Self-Generated,0,26917,1765,13022,14686,1113,0,0,57503,GWh
+Aluminum,1985,Power Source,Purchased from Supplier(s),7777,53966,16991,6428,39451,16273,0,0,140886,GWh
+Aluminum,1986,Power Mix,Hydro,6144,47852,21145,5286,23270,6111,0,0,109808,GWh
+Aluminum,1986,Power Mix,Coal,2738,23764,0,5782,16224,11684,0,0,60192,GWh
+Aluminum,1986,Power Mix,Oil,0,20,0,397,3332,0,0,0,3749,GWh
+Aluminum,1986,Power Mix,Natural Gas,0,8,817,5603,2923,0,0,0,9351,GWh
+Aluminum,1986,Power Mix,Nuclear,0,2403,0,219,9429,0,0,0,12051,GWh
+Aluminum,1986,Power Source,Self-Generated,0,25745,1747,12477,13187,1078,0,0,54234,GWh
+Aluminum,1986,Power Source,Purchased from Supplier(s),8882,48302,20215,4810,41991,16717,0,0,140917,GWh
+Aluminum,1987,Power Mix,Hydro,6421,52557,22702,4728,23477,6252,0,0,116137,GWh
+Aluminum,1987,Power Mix,Coal,2661,27420,0,4126,17291,13717,0,0,65215,GWh
+Aluminum,1987,Power Mix,Oil,0,25,720,193,3149,0,0,0,4087,GWh
+Aluminum,1987,Power Mix,Natural Gas,0,9,330,5514,1869,0,0,0,7722,GWh
+Aluminum,1987,Power Mix,Nuclear,0,1803,0,122,9588,0,0,0,11513,GWh
+Aluminum,1987,Power Source,Self-Generated,0,26834,2034,11111,11111,1841,0,0,52931,GWh
+Aluminum,1987,Power Source,Purchased from Supplier(s),9082,54980,21718,3572,44263,18128,0,0,151743,GWh
+Aluminum,1988,Power Mix,Hydro,6645,57110,23312,5066,24473,6319,0,0,122925,GWh
+Aluminum,1988,Power Mix,Coal,2696,31947,0,5132,17550,15757,0,0,73082,GWh
+Aluminum,1988,Power Mix,Oil,0,0,834,146,2957,0,0,0,3937,GWh
+Aluminum,1988,Power Mix,Natural Gas,0,78,788,5681,1739,0,0,0,8286,GWh
+Aluminum,1988,Power Mix,Nuclear,0,2101,0,124,9674,0,0,0,11899,GWh
+Aluminum,1988,Power Source,Self-Generated,0,27217,2684,12144,10932,2543,0,0,55520,GWh
+Aluminum,1988,Power Source,Purchased from Supplier(s),9341,64019,22250,4005,45461,19533,0,0,164609,GWh
+Aluminum,1989,Power Mix,Hydro,6870,57486,25463,5377,24282,6417,0,0,125895,GWh
+Aluminum,1989,Power Mix,Coal,2687,35043,42,6096,19389,16546,0,0,79803,GWh
+Aluminum,1989,Power Mix,Oil,0,0,855,172,1663,0,0,0,2690,GWh
+Aluminum,1989,Power Mix,Natural Gas,0,190,576,5959,1724,0,0,0,8449,GWh
+Aluminum,1989,Power Mix,Nuclear,0,1564,0,128,10304,0,0,0,11996,GWh
+Aluminum,1989,Power Source,Self-Generated,0,28174,2914,13255,11225,1207,0,0,56775,GWh
+Aluminum,1989,Power Source,Purchased from Supplier(s),9557,66109,24022,4477,46137,21756,0,0,172058,GWh
+Aluminum,1990,Power Mix,Hydro,6787,56803,27809,5078,24187,6098,0,0,126762,GWh
+Aluminum,1990,Power Mix,Coal,2589,34293,0,6310,17907,16824,0,0,77923,GWh
+Aluminum,1990,Power Mix,Oil,0,0,46,69,2227,155,0,0,2497,GWh
+Aluminum,1990,Power Mix,Natural Gas,0,66,886,6407,2120,0,0,0,9479,GWh
+Aluminum,1990,Power Mix,Nuclear,0,1350,0,5,10164,0,0,0,11519,GWh
+Aluminum,1990,Power Source,Self-Generated,0,27701,2478,13957,9701,1026,0,0,54863,GWh
+Aluminum,1990,Power Source,Purchased from Supplier(s),9376,64811,26263,3912,46904,22051,0,0,173317,GWh
+Aluminum,1991,Power Mix,Hydro,6834,61324,31054,5010,23711,6185,0,0,134118,GWh
+Aluminum,1991,Power Mix,Coal,2632,34019,0,7112,16030,16980,0,0,76773,GWh
+Aluminum,1991,Power Mix,Oil,0,0,597,71,2185,200,0,0,3053,GWh
+Aluminum,1991,Power Mix,Natural Gas,0,68,174,7484,2358,0,0,0,10084,GWh
+Aluminum,1991,Power Mix,Nuclear,0,1352,0,6,10796,0,0,0,12154,GWh
+Aluminum,1991,Power Source,Self-Generated,0,28124,2785,15577,10413,1184,0,0,58083,GWh
+Aluminum,1991,Power Source,Purchased from Supplier(s),9466,68639,29040,4106,44667,22181,0,0,178099,GWh
+Aluminum,1992,Power Mix,Hydro,6864,61737,30578,5136,21867,6407,0,0,132589,GWh
+Aluminum,1992,Power Mix,Coal,2646,33988,0,7179,13819,16564,0,0,74196,GWh
+Aluminum,1992,Power Mix,Oil,0,0,4,619,2192,0,0,0,2815,GWh
+Aluminum,1992,Power Mix,Natural Gas,0,91,108,9287,1866,0,0,0,11352,GWh
+Aluminum,1992,Power Mix,Nuclear,0,1389,0,0,11295,0,0,0,12684,GWh
+Aluminum,1992,Power Source,Self-Generated,0,27175,3107,17058,10629,1174,0,0,59143,GWh
+Aluminum,1992,Power Source,Purchased from Supplier(s),9510,70030,27583,5163,40410,21797,0,0,174493,GWh
+Aluminum,1993,Power Mix,Hydro,6929,64049,30096,4823,21396,6771,0,0,134064,GWh
+Aluminum,1993,Power Mix,Coal,2777,30948,0,6948,12398,18023,0,0,71094,GWh
+Aluminum,1993,Power Mix,Oil,0,0,0,990,2124,0,0,0,3114,GWh
+Aluminum,1993,Power Mix,Natural Gas,0,86,65,11413,2131,496,0,0,14191,GWh
+Aluminum,1993,Power Mix,Nuclear,0,987,0,0,11618,0,0,0,12605,GWh
+Aluminum,1993,Power Source,Self-Generated,0,29873,3000,18976,6639,1102,0,0,59590,GWh
+Aluminum,1993,Power Source,Purchased from Supplier(s),9706,66197,27161,5198,43028,24188,0,0,175478,GWh
+Aluminum,1994,Power Mix,Hydro,6316,61153,30700,5343,21828,6332,0,0,131672,GWh
+Aluminum,1994,Power Mix,Coal,2749,27184,0,7085,9346,17238,0,0,63602,GWh
+Aluminum,1994,Power Mix,Oil,0,0,0,615,2705,0,0,0,3320,GWh
+Aluminum,1994,Power Mix,Natural Gas,0,81,184,12162,1733,455,0,0,14615,GWh
+Aluminum,1994,Power Mix,Nuclear,0,458,0,2,12345,0,0,0,12805,GWh
+Aluminum,1994,Power Source,Self-Generated,0,29524,2912,21228,7133,1022,0,0,61819,GWh
+Aluminum,1994,Power Source,Purchased from Supplier(s),9065,59352,27972,3979,40824,23003,0,0,164195,GWh
+Aluminum,1995,Power Mix,Hydro,6221,61032,31726,5280,21950,6209,0,2628,135046,GWh
+Aluminum,1995,Power Mix,Coal,3745,27362,0,7740,10144,17203,0,23650,89844,GWh
+Aluminum,1995,Power Mix,Oil,0,0,0,1185,2697,0,0,0,3882,GWh
+Aluminum,1995,Power Mix,Natural Gas,0,80,309,12095,2288,439,0,0,15211,GWh
+Aluminum,1995,Power Mix,Nuclear,0,649,61,2,12162,0,0,0,12874,GWh
+Aluminum,1995,Power Source,Self-Generated,0,28269,2785,22079,4737,900,0,0,58770,GWh
+Aluminum,1995,Power Source,Purchased from Supplier(s),9966,60854,29311,4223,44504,22951,0,0,171809,GWh
+Aluminum,1996,Power Mix,Hydro,6288,64268,32026,4893,22824,6794,0,2845,139938,GWh
+Aluminum,1996,Power Mix,Coal,9214,28473,0,7865,11430,17966,0,25605,100553,GWh
+Aluminum,1996,Power Mix,Oil,0,0,0,71,1730,0,0,0,1801,GWh
+Aluminum,1996,Power Mix,Natural Gas,0,76,860,11760,3145,446,0,0,16287,GWh
+Aluminum,1996,Power Mix,Nuclear,0,887,113,1,13452,0,0,0,14453,GWh
+Aluminum,1996,Power Source,Self-Generated,0,29669,3337,22572,9138,868,0,0,65584,GWh
+Aluminum,1996,Power Source,Purchased from Supplier(s),15502,64035,29662,2018,43443,24338,0,0,178998,GWh
+Aluminum,1997,Power Mix,Hydro,6986,65313,31898,4317,25767,7340,0,3227,144848,GWh
+Aluminum,1997,Power Mix,Coal,9530,28555,0,8741,11595,19633,0,29044,107098,GWh
+Aluminum,1997,Power Mix,Oil,0,0,0,81,1264,0,0,0,1345,GWh
+Aluminum,1997,Power Mix,Natural Gas,0,77,1036,13956,3632,446,0,0,19147,GWh
+Aluminum,1997,Power Mix,Nuclear,200,869,116,2,12013,0,0,0,13200,GWh
+Aluminum,1997,Power Source,Self-Generated,0,29979,3287,25055,9504,1026,0,0,68851,GWh
+Aluminum,1997,Power Source,Purchased from Supplier(s),16716,64835,29763,2042,44767,26393,0,0,184516,GWh
+Aluminum,1998,Power Mix,Hydro,2832,67540,31192,2828,27849,7167,0,3689,143097,GWh
+Aluminum,1998,Power Mix,Coal,9830,28868,0,8814,12019,22582,0,33199,115312,GWh
+Aluminum,1998,Power Mix,Oil,0,27,0,108,1282,0,0,0,1417,GWh
+Aluminum,1998,Power Mix,Natural Gas,2918,0,1742,14264,3744,0,0,0,22668,GWh
+Aluminum,1998,Power Mix,Nuclear,56,967,115,0,14625,0,0,0,15763,GWh
+Aluminum,1998,Power Source,Self-Generated,418,30813,3652,23584,8907,1085,0,0,68459,GWh
+Aluminum,1998,Power Source,Purchased from Supplier(s),15218,66589,29397,2430,50612,28664,0,0,192910,GWh
+Aluminum,1999,Power Mix,Hydro,6347,63398,27941,2643,28934,7194,0,4054,140511,GWh
+Aluminum,1999,Power Mix,Coal,9706,22119,0,9591,12181,23233,0,36483,113313,GWh
+Aluminum,1999,Power Mix,Oil,0,24,593,99,1434,0,0,0,2150,GWh
+Aluminum,1999,Power Mix,Natural Gas,186,0,2056,14533,3715,0,0,0,20490,GWh
+Aluminum,1999,Power Mix,Nuclear,0,1429,113,0,14571,0,0,0,16113,GWh
+Aluminum,1999,Power Source,Self-Generated,186,31351,4092,25188,8294,1161,0,0,70272,GWh
+Aluminum,1999,Power Source,Purchased from Supplier(s),16053,55619,26611,1678,52541,29266,0,0,181768,GWh
+Aluminum,2000,Power Mix,Hydro,6914,59324,30491,3400,28449,7328,0,4325,140231,GWh
+Aluminum,2000,Power Mix,Coal,10844,25292,0,9437,14286,21697,0,38923,120479,GWh
+Aluminum,2000,Power Mix,Oil,0,150,518,378,1052,0,0,0,2098,GWh
+Aluminum,2000,Power Mix,Natural Gas,0,587,2119,15381,4894,0,0,0,22981,GWh
+Aluminum,2000,Power Mix,Nuclear,0,1826,99,0,14004,0,0,0,15929,GWh
+Aluminum,2000,Power Source,Self-Generated,0,29574,4124,28134,2391,1108,0,0,65331,GWh
+Aluminum,2000,Power Source,Purchased from Supplier(s),17758,57605,29103,462,60294,27917,0,0,193139,GWh
+Aluminum,2001,Power Mix,Hydro,6955,47105,32207,3621,28755,7202,0,5215,131060,GWh
+Aluminum,2001,Power Mix,Coal,13325,23198,0,9877,16932,24199,0,46934,134465,GWh
+Aluminum,2001,Power Mix,Oil,0,149,0,405,1120,0,0,0,1674,GWh
+Aluminum,2001,Power Mix,Natural Gas,35,315,1343,16060,5719,0,0,0,23472,GWh
+Aluminum,2001,Power Mix,Nuclear,186,715,0,0,11720,0,0,0,12621,GWh
+Aluminum,2001,Power Source,Self-Generated,0,28667,4386,28394,9239,1067,0,0,71753,GWh
+Aluminum,2001,Power Source,Purchased from Supplier(s),20501,42815,29164,1569,55007,30334,0,0,179390,GWh
+Aluminum,2002,Power Mix,Hydro,6444,50312,32207,3030,29969,7380,0,6638,135980,GWh
+Aluminum,2002,Power Mix,Coal,13443,27248,0,10080,15773,24120,0,59741,150405,GWh
+Aluminum,2002,Power Mix,Oil,0,93,0,109,1279,0,0,0,1481,GWh
+Aluminum,2002,Power Mix,Natural Gas,38,351,1343,16336,6199,0,0,0,24267,GWh
+Aluminum,2002,Power Mix,Nuclear,189,678,0,0,12672,0,0,0,13539,GWh
+Aluminum,2002,Power Source,Self-Generated,0,27702,4386,28228,9193,1244,0,0,70753,GWh
+Aluminum,2002,Power Source,Purchased from Supplier(s),20114,50980,29164,1327,56699,30256,0,0,188540,GWh
+Aluminum,2003,Power Mix,Hydro,4881,52843,33254,958,31704,7382,0,8335,139357,GWh
+Aluminum,2003,Power Mix,Coal,15432,27545,0,11610,16645,25058,0,75014,171304,GWh
+Aluminum,2003,Power Mix,Oil,0,5,0,106,1123,2,0,0,1236,GWh
+Aluminum,2003,Power Mix,Natural Gas,57,318,1415,16974,6183,0,0,0,24947,GWh
+Aluminum,2003,Power Mix,Nuclear,280,437,0,0,12110,0,0,0,12827,GWh
+Aluminum,2003,Power Source,Self-Generated,0,28286,5769,28023,9338,1195,0,0,72611,GWh
+Aluminum,2003,Power Source,Purchased from Supplier(s),20650,52862,28900,1625,58427,31247,0,0,193711,GWh
+Aluminum,2004,Power Mix,Hydro,5239,49074,35152,4913,47734,7513,0,9896,159521,GWh
+Aluminum,2004,Power Mix,Coal,18898,23836,0,12902,16937,25645,0,89061,187279,GWh
+Aluminum,2004,Power Mix,Oil,0,5,0,96,1858,2,0,0,1961,GWh
+Aluminum,2004,Power Mix,Natural Gas,76,307,1579,18758,6626,0,0,0,27346,GWh
+Aluminum,2004,Power Mix,Nuclear,375,434,0,0,13147,0,0,0,13956,GWh
+Aluminum,2004,Power Source,Self-Generated,0,29318,6345,34822,10516,1224,0,0,82225,GWh
+Aluminum,2004,Power Source,Purchased from Supplier(s),24588,44338,30386,1847,75786,31936,0,0,208881,GWh
+Aluminum,2005,Power Mix,Hydro,5808,55429,33195,3868,88228,7659,0,11376,205563,GWh
+Aluminum,2005,Power Mix,Coal,17992,23702,0,14182,13840,25618,0,102388,197722,GWh
+Aluminum,2005,Power Mix,Oil,0,4,0,599,1722,2,0,0,2327,GWh
+Aluminum,2005,Power Mix,Natural Gas,76,233,1412,21572,6704,0,0,0,29997,GWh
+Aluminum,2005,Power Mix,Nuclear,951,473,0,0,15697,0,0,0,17121,GWh
+Aluminum,2005,Power Source,Self-Generated,0,28711,6253,40157,10859,1086,0,0,87066,GWh
+Aluminum,2005,Power Source,Purchased from Supplier(s),24827,51130,28354,64,115332,32193,0,0,251900,GWh
+Aluminum,2006,Power Mix,Hydro,6906,56483,36467,4956,82397,7571,0,13740,208520,GWh
+Aluminum,2006,Power Mix,Coal,19878,20787,0,17518,25777,26171,0,123662,233793,GWh
+Aluminum,2006,Power Mix,Oil,0,7,0,2145,985,2,0,0,3139,GWh
+Aluminum,2006,Power Mix,Natural Gas,82,286,1404,22119,7236,0,0,0,31127,GWh
+Aluminum,2006,Power Mix,Nuclear,404,436,0,0,13755,0,0,0,14595,GWh
+Aluminum,2006,Power Source,Self-Generated,0,29122,7651,46672,10657,1353,0,0,95455,GWh
+Aluminum,2006,Power Source,Purchased from Supplier(s),27270,48877,30220,66,119493,32391,0,0,258317,GWh
+Aluminum,2007,Power Mix,Hydro,13445,60986,36707,4852,88229,7828,0,18178,230225,GWh
+Aluminum,2007,Power Mix,Coal,13079,20274,0,18728,27865,26587,0,163605,270138,GWh
+Aluminum,2007,Power Mix,Oil,0,7,0,1360,776,2,0,0,2145,GWh
+Aluminum,2007,Power Mix,Natural Gas,6,281,2457,23686,7523,0,0,0,33953,GWh
+Aluminum,2007,Power Mix,Nuclear,0,461,0,0,13637,0,0,0,14098,GWh
+Aluminum,2007,Power Source,Self-Generated,0,25247,10082,48568,10414,1186,0,0,95497,GWh
+Aluminum,2007,Power Source,Purchased from Supplier(s),26530,56762,29082,58,127616,33231,0,0,273279,GWh
+Aluminum,2008,Power Mix,Hydro,5580,59780,37214,4831,96107,7382,0,19404,230298,GWh
+Aluminum,2008,Power Mix,Coal,19810,24148,0,25404,24583,26464,0,174632,295041,GWh
+Aluminum,2008,Power Mix,Oil,0,7,0,76,734,2,0,0,819,GWh
+Aluminum,2008,Power Mix,Natural Gas,0,298,4282,26156,9642,0,0,0,40378,GWh
+Aluminum,2008,Power Mix,Nuclear,0,462,0,0,14728,0,0,0,15190,GWh
+Aluminum,2008,Power Source,Self-Generated,0,27755,12275,56179,10097,1086,0,0,107392,GWh
+Aluminum,2008,Power Source,Purchased from Supplier(s),25390,56940,29221,289,135697,32762,0,0,280299,GWh
+Aluminum,2009,Power Mix,Hydro,4989,44086,23808,602,92203,11409,0,19392,196489,GWh
+Aluminum,2009,Power Mix,Coal,19788,16485,0,23021,12866,20639,0,174524,267323,GWh
+Aluminum,2009,Power Mix,Oil,0,7,0,11,373,8,0,0,399,GWh
+Aluminum,2009,Power Mix,Natural Gas,0,301,5451,31744,5388,0,0,0,42884,GWh
+Aluminum,2009,Power Mix,Nuclear,0,369,0,0,10849,0,0,0,11218,GWh
+Aluminum,2009,Power Source,Self-Generated,0,24923,7015,50616,7635,1120,0,87262,178571,GWh
+Aluminum,2009,Power Source,Purchased from Supplier(s),24777,36325,22244,4762,114044,30937,0,106654,339742,GWh
+Aluminum,2010,Power Mix,Hydro,9181,50355,29145,4817,97271,5211,0,24227,220207,GWh
+Aluminum,2010,Power Mix,Coal,11844,16095,0,8171,13856,17932,0,218043,285941,GWh
+Aluminum,2010,Power Mix,Oil,0,7,0,138,238,6,0,0,389,GWh
+Aluminum,2010,Power Mix,Natural Gas,0,316,5591,15510,5015,0,0,0,26432,GWh
+Aluminum,2010,Power Mix,Nuclear,0,320,0,0,10677,0,0,0,10997,GWh
+Aluminum,2010,Power Source,Self-Generated,0,23938,12569,28623,8056,1206,0,121135,195527,GWh
+Aluminum,2010,Power Source,Purchased from Supplier(s),21025,43155,22167,13,119001,21943,0,121135,348439,GWh
+Aluminum,2011,Power Mix,Hydro,9851,53030,29102,4731,91537,8166,0,27926,224343,GWh
+Aluminum,2011,Power Mix,Coal,11430,15285,0,14535,10209,26453,0,251336,329248,GWh
+Aluminum,2011,Power Mix,Oil,0,5,0,7,426,8,0,0,446,GWh
+Aluminum,2011,Power Mix,Natural Gas,0,449,4924,28263,8549,0,0,0,42185,GWh
+Aluminum,2011,Power Mix,Nuclear,0,831,0,0,5380,0,0,0,6211,GWh
+Aluminum,2011,Power Source,Self-Generated,1061,24924,11543,47466,9141,1143,0,139631,234909,GWh
+Aluminum,2011,Power Source,Purchased from Supplier(s),20220,44676,22483,70,106960,33484,0,139631,367524,GWh
+Aluminum,2012,Power Mix,Hydro,9376,51832,27117,782,100737,7722,0,32581,230147,GWh
+Aluminum,2012,Power Mix,Coal,10193,15128,0,8365,8954,23823,0,293225,359688,GWh
+Aluminum,2012,Power Mix,Oil,0,1,0,0,322,15,3,0,341,GWh
+Aluminum,2012,Power Mix,Natural Gas,0,340,4689,0,4174,0,37073,0,46276,GWh
+Aluminum,2012,Power Mix,Nuclear,0,404,0,0,9566,0,0,0,9970,GWh
+Aluminum,2012,Power Source,Self-Generated,0,21633,11478,9147,5261,1144,35793,169419,253875,GWh
+Aluminum,2012,Power Source,Purchased from Supplier(s),19569,46072,20328,0,118492,30416,1283,156386,392546,GWh
+Aluminum,2013,Power Mix,Hydro,9670,54755,21327,584,96604,7701,0,36458,227099,GWh
+Aluminum,2013,Power Mix,Coal,13456,9622,51,13042,7185,15233,0,328119,386708,GWh
+Aluminum,2013,Power Mix,Oil,0,2,309,0,155,16,6,0,488,GWh
+Aluminum,2013,Power Mix,Natural Gas,0,2784,5603,0,3624,0,38832,0,50843,GWh
+Aluminum,2013,Power Mix,Nuclear,0,368,101,0,7908,0,0,0,8377,GWh
+Aluminum,2013,Power Source,Self-Generated,0,24057,9693,13599,4678,981,38780,171351,263139,GWh
+Aluminum,2013,Power Source,Purchased from Supplier(s),23126,43474,17698,27,110798,21969,58,193226,410376,GWh
+Aluminum,2014,Power Mix,Hydro,10243,47646,14888,546,95382,7766,0,38500,214971,GWh
+Aluminum,2014,Power Mix,Coal,10218,8621,52,15797,6852,22318,0,346498,410356,GWh
+Aluminum,2014,Power Mix,Oil,0,277,316,0,335,0,28,0,956,GWh
+Aluminum,2014,Power Mix,Natural Gas,0,578,5720,0,2810,0,57640,0,66748,GWh
+Aluminum,2014,Power Mix,Nuclear,0,7,103,0,7900,0,0,0,8010,GWh
+Aluminum,2014,Power Source,Self-Generated,0,22107,6934,16108,9622,683,57365,242549,355368,GWh
+Aluminum,2014,Power Source,Purchased from Supplier(s),20461,35022,14145,235,103657,29401,303,142449,345673,GWh
+Aluminum,2015,Power Mix,Hydro,13178,49543,14789,4767,101184,7920,0,42745,234126,GWh
+Aluminum,2015,Power Mix,Coal,10110,16284,51,28122,7088,21158,0,384702,467515,GWh
+Aluminum,2015,Power Mix,Oil,0,1,0,0,252,0,7,0,260,GWh
+Aluminum,2015,Power Mix,Natural Gas,0,582,5553,0,3055,0,63268,0,72458,GWh
+Aluminum,2015,Power Mix,Nuclear,0,648,96,0,11327,0,0,0,12071,GWh
+Aluminum,2015,Power Source,Self-Generated,0,23573,5785,32758,2349,0,57823,290664,412952,GWh
+Aluminum,2015,Power Source,Purchased from Supplier(s),23288,43485,15011,131,120557,29078,5452,136783,373785,GWh
+Aluminum,2016,Power Mix,Hydro,14410,45534,15827,5065,87406,7864,0,44389,220495,GWh
+Aluminum,2016,Power Mix,Coal,10140,9791,56,45514,11333,20802,0,399497,497133,GWh
+Aluminum,2016,Power Mix,Oil,0,3,271,0,228,0,7,0,509,GWh
+Aluminum,2016,Power Mix,Natural Gas,0,1564,5300,0,3105,164,66618,0,76751,GWh
+Aluminum,2016,Power Mix,Nuclear,0,233,80,0,11472,0,0,0,11785,GWh
+Aluminum,2016,Power Mix,Other Renewable,0,938,10,0,6971,41,0,0,7960,GWh
+Aluminum,2016,Power Mix,Other non-renewable,0,30,39,0,115,0,0,0,184,GWh
+Aluminum,2016,Power Source,Self-Generated,0,23615,10131,49164,4262,0,60830,310720,458722,GWh
+Aluminum,2016,Power Source,Purchased from Supplier(s),24550,34478,11452,1415,116368,28871,5795,133166,356095,GWh
+Aluminum,2017,Power Mix,Hydro,12534,49444,19639,4289,73366,7861,0,48755,215888,GWh
+Aluminum,2017,Power Mix,Coal,10208,6092,0,47768,7115,18206,0,438799,528188,GWh
+Aluminum,2017,Power Mix,Oil,0,7,0,7,180,0,19,0,213,GWh
+Aluminum,2017,Power Mix,Natural Gas,0,1564,4086,0,2157,122,73377,0,81306,GWh
+Aluminum,2017,Power Mix,Nuclear,0,180,0,0,11297,0,0,0,11477,GWh
+Aluminum,2017,Power Mix,Other Renewable,0,776,0,0,23141,505,0,0,24422,GWh
+Aluminum,2017,Power Mix,Other non-renewable,0,194,0,0,1646,0,0,0,1840,GWh
+Aluminum,2017,Power Source,Self-Generated,0,24140,9539,50922,4033,0,61788,355914,506336,GWh
+Aluminum,2017,Power Source,Purchased from Supplier(s),22742,34117,14186,1142,114869,26694,11608,131640,356998,GWh
+Aluminum,2018,Power Mix,Hydro,12090,46251,14340,4796,92187,7971,0,35113,212748,GWh
+Aluminum,2018,Power Mix,Coal,11735,7513,0,39432,8010,19225,0,439659,525574,GWh
+Aluminum,2018,Power Mix,Oil,0,6,0,5,176,0,5,0,192,GWh
+Aluminum,2018,Power Mix,Natural Gas,0,1639,4312,0,2326,193,79954,0,88424,GWh
+Aluminum,2018,Power Mix,Nuclear,0,182,0,0,11222,0,0,5440,16844,GWh
+Aluminum,2018,Power Mix,Other Renewable,0,644,0,12,6822,480,0,14342,22300,GWh
+Aluminum,2018,Power Mix,Other non-renewable,20,161,0,0,1494,0,0,0,1675,GWh
+Aluminum,2018,Power Source,Self-Generated,0,26293,9997,42794,3913,0,67593,330857,481447,GWh
+Aluminum,2018,Power Source,Purchased from Supplier(s),23845,30103,8655,1451,118324,27869,12366,163697,386310,GWh
+Aluminum,2019,Power Mix,Hydro,11651,45169,13492,1264,93055,8229,0,48434,221294,GWh
+Aluminum,2019,Power Mix,Coal,11320,6193,0,39204,6153,18547,0,387474,468891,GWh
+Aluminum,2019,Power Mix,Oil,0,5,0,5,293,0,6,0,309,GWh
+Aluminum,2019,Power Mix,Natural Gas,0,429,3384,0,2062,263,84347,0,90485,GWh
+Aluminum,2019,Power Mix,Nuclear,0,137,0,0,7258,0,0,0,7395,GWh
+Aluminum,2019,Power Mix,Other Renewable,0,885,84,37,6754,809,0,48434,57003,GWh
+Aluminum,2019,Power Mix,Other non-renewable,19,23,17,0,883,26,0,0,968,GWh
+Aluminum,2019,Power Source,Self-Generated,0,26511,8307,39052,3283,0,72722,315791,465666,GWh
+Aluminum,2019,Power Source,Purchased from Supplier(s),22990,26330,8670,1458,113175,27874,11631,168551,380679,GWh
+Aluminum,2020,Power Mix,Hydro,11684,48344,12763,1289,96471,8171,0,72231,250953,GWh
+Aluminum,2020,Power Mix,Coal,10623,6346,0,37812,1779,18425,0,390241,465236,GWh
+Aluminum,2020,Power Mix,Oil,0,22,0,0,0,0,4,0,26,GWh
+Aluminum,2020,Power Mix,Natural Gas,0,1136,2785,0,1240,204,76949,0,82314,GWh
+Aluminum,2020,Power Mix,Nuclear,0,561,0,0,3373,0,0,2424,6358,GWh
+Aluminum,2020,Power Mix,Other Renewable,0,1302,1598,37,5214,1049,0,19876,29076,GWh
+Aluminum,2020,Power Mix,Other non-renewable,21,53,165,0,1071,0,0,0,1310,GWh
+Aluminum,2020,Power Source,Self-Generated,0,25615,7891,37692,0,0,75893,310254,457355,GWh
+Aluminum,2020,Power Source,Purchased from Supplier(s),22328,32149,9420,1446,109148,27849,1060,174518,377918,GWh
+Aluminum,2021,Power Mix,Hydro,7591,47323,14651,1218,97743,11780,0,83235,263542,GWh
+Aluminum,2021,Power Mix,Coal,10832,2264,0,20809,1138,18058,0,426578,479678,GWh
+Aluminum,2021,Power Mix,Oil,0,0,0,2.203,30.05095045,0,4.770665731,0,37,GWh
+Aluminum,2021,Power Mix,Natural Gas,0,0,2842,0,1230,212.015156,77528,0,81812,GWh
+Aluminum,2021,Power Mix,Nuclear,0,47.69991933,0,0,3553,0,0,2601,6202,GWh
+Aluminum,2021,Power Mix,Other Renewable,0,0,417,111.973753,789,1201,560.11248,7803,10882,GWh
+Aluminum,2021,Power Mix,Other non-renewable,0,5.962489707,0,0,1064,0,0,0,1070,GWh
+Aluminum,2021,Power Source,Self-Generated,0,24652,8368,20823,0,0,77162,343343,474348,GWh
+Aluminum,2021,Power Source,Purchased from Supplier(s),18423,24989,9542,1318,105546,31251,931,176874,368874,GWh

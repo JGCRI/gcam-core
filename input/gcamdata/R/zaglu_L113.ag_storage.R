@@ -118,7 +118,8 @@ module_aglu_L113_ag_storage <- function(command, ...) {
       mutate(timestep = replace_na(year - lag(year), modeltime.PERIOD0_TIMESTEP),
              # the lifetime needs to last the current timestep plus the next
              lifetime = timestep + lead(timestep)) %>%
-      tidyr::fill(lifetime, .direction="down")
+      tidyr::fill(lifetime, .direction="down") %>%
+      select(-timestep)
 
     # Construct the key table for storage tech.
     # ToDo: storage.cost
@@ -145,12 +146,15 @@ module_aglu_L113_ag_storage <- function(command, ...) {
       bind_rows(
         L113.StorageTechAndPassThrough %>% filter(storage_model == TRUE) %>%
           filter(year == max(MODEL_BASE_YEARS)) %>%
-          mutate(year = min(MODEL_FUTURE_YEARS),
-                 # setting carried.forward and closing stock to zero
-                 # The two are not important because the values are not used
-                 opening.stock = closing.stock * loss.coefficient,
-                 closing.stock = opening.stock,
-                 lifetime = sort(MODEL_FUTURE_YEARS)[2] - max(MODEL_BASE_YEARS))
+          select(-year, -lifetime) %>%
+          mutate(opening.stock = closing.stock * loss.coefficient,
+                 closing.stock = opening.stock) %>%
+          repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
+          left_join_error_no_match(L113.StorageLifeTime, by="year") %>%
+          mutate(# setting carried.forward and closing stock to zero
+                 # The two are not important because the values are not used)
+                 opening.stock = if_else(year == MODEL_FUTURE_YEARS[1], opening.stock, 0.0),
+                 closing.stock = if_else(year == MODEL_FUTURE_YEARS[1], closing.stock, 0.0))
       )
 
     # Produce outputs ----

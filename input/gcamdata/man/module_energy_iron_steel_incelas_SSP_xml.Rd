@@ -14,9 +14,8 @@ module_energy_iron_steel_incelas_SSP_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{iron_steel_incelas_gcam3.xml}, \code{iron_steel_incelas_ssp1.xml}, \code{iron_steel_incelas_ssp2.xml}, \code{iron_steel_incelas_ssp3.xml},
-\code{iron_steel_incelas_ssp4.xml}, \code{iron_steel_incelas_ssp5.xml}, \code{iron_steel_incelas_gssp1.xml}, \code{iron_steel_incelas_gssp2.xml},
-\code{iron_steel_incelas_gssp3.xml}, \code{iron_steel_incelas_gssp4.xml}, and \code{iron_steel_incelas_gssp5.xml}.
+the generated outputs: \code{iron_steel_incelas_ssp1.xml}, \code{iron_steel_incelas_ssp2.xml},
+\code{iron_steel_incelas_ssp3.xml}, \code{iron_steel_incelas_ssp4.xml}, and \code{iron_steel_incelas_ssp5.xml}.
 }
 \description{
 Construct XML data structures for all the \code{iron_steel_incelas_SSP.xml} files.

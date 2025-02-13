@@ -1,11 +1,11 @@
-# File: aluminum_prod_region_IAA.csv
-# Title: Aluminum and alumina production by IAA region
+# File: aluminum_prod_region_IAI.csv
+# Title: Aluminum and alumina production by IAI region
 # Units: Thousand tons
 # Description: Regional aluminum production
-# Source: World aluminum Association
+# Source: International Aluminium Institute
 # Column types: cicnc
 # ----------
-flow,year,IAA_region,value,unit
+flow,year,IAI_region,value,unit
 Aluminum,1973,Africa,249,Thousand metric tons
 Aluminum,1973,Asia (ex China),1439,Thousand metric tons
 Aluminum,1973,China (Estimated),0,Thousand metric tons

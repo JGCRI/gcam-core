@@ -18,5 +18,5 @@ the generated outputs: \code{bld_agg.xml}. The corresponding file in the
 original data system was \code{batch_bld_agg.xml.R} (socio XML).
 }
 \description{
-Construct XML data structure for \code{bld_agg.xml} and all the SSP and gSSP ones as well.
+Construct XML data structure for \code{bld_agg.xml} and all the SSP ones as well.
 }

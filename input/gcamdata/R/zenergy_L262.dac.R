@@ -144,9 +144,11 @@ module_energy_L262.dac <- function(command, ...) {
       PrimaryFuelCO2Coef <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
       value.x <- value.y <- parameter <- half.life <- median.shutdown.point <-
-      L262.GlobalTechCoef_dac_ssp1 <- L262.GlobalTechCoef_dac_ssp2 <-L262.GlobalTechCoef_dac_ssp3 <-L262.GlobalTechCoef_dac_ssp4 <-L262.GlobalTechCoef_dac_ssp5 <-
-      L262.GlobalTechCost_dac_ssp1 <- L262.GlobalTechCost_dac_ssp2 <- L262.GlobalTechCost_dac_ssp3 <- L262.GlobalTechCost_dac_ssp4 <- L262.GlobalTechCost_dac_ssp5 <-
-      L262.GlobalTechShrwt_dac_ssp1 <- L262.GlobalTechShrwt_dac_ssp2 <- L262.GlobalTechShrwt_dac_ssp3 <- L262.GlobalTechShrwt_dac_ssp4 <- L262.GlobalTechShrwt_dac_ssp5 <- NULL
+      L262.GlobalTechCoef_dac_ssp1 <- L262.GlobalTechCoef_dac_ssp2 <- L262.GlobalTechCoef_dac_ssp3 <-
+      L262.GlobalTechCoef_dac_ssp4 <- L262.GlobalTechCoef_dac_ssp5 <- L262.GlobalTechCost_dac_ssp1 <-
+      L262.GlobalTechCost_dac_ssp2 <- L262.GlobalTechCost_dac_ssp3 <- L262.GlobalTechCost_dac_ssp4 <-
+      L262.GlobalTechCost_dac_ssp5 <- L262.GlobalTechShrwt_dac_ssp1 <- L262.GlobalTechShrwt_dac_ssp2 <-
+      L262.GlobalTechShrwt_dac_ssp3 <- L262.GlobalTechShrwt_dac_ssp4 <- L262.GlobalTechShrwt_dac_ssp5 <- NULL
 
 
     # ===================================================
@@ -331,7 +333,7 @@ module_energy_L262.dac <- function(command, ...) {
 
     # Copy the data in the last base year period through to the end year
     A62.globaltech_retirement_with_years %>%
-      filter(year == max(MODEL_BASE_YEARS)) ->
+      filter(year == MODEL_FINAL_BASE_YEAR) ->
       A62.globaltech_retirement_max_baseyear
 
     A62.globaltech_retirement_with_years %>%

@@ -78,6 +78,43 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
       nls <- coef <- gdp_mil <- area_thouskm2 <- unadjust.satiation <- land.density.param <- tot.dens <-
       b.param <- income.param <- pc_gdp_thous <- flsp_pc_est <- flsp_est <- NULL
 
+    income_shares %>%
+      filter(sce == socioeconomics.BASE_INCSHARE_BASE) %>%
+      select(GCAM_region_ID, year, category, shares, gini, gdp_pcap_decile) ->
+      income_shares_hist
+
+    max_income_hist_year <- max(income_shares_hist$year)
+
+    fill_years <- HISTORICAL_YEARS
+
+    if(max_income_hist_year < MODEL_FINAL_BASE_YEAR) {
+      warning(paste0("Historical data in socioeconomics/income_shares only goes up to ",
+                     max_income_hist_year, " interpolating to ", MODEL_FINAL_BASE_YEAR,
+                     " using ", socioeconomics.BASE_INCSHARE_SCENARIO))
+      income_shares %>%
+        filter(sce == socioeconomics.BASE_INCSHARE_SCENARIO & model == socioeconomics.BASE_INCSHARE_MODEL & year == MODEL_FUTURE_YEARS[1]) %>%
+        select(GCAM_region_ID, year, category, shares, gini, gdp_pcap_decile) %>%
+        bind_rows(income_shares_hist) ->
+        income_shares_hist
+
+      fill_years <- c(HISTORICAL_YEARS, MODEL_FUTURE_YEARS[1])
+    }
+
+    income_shares_hist %>%
+      # doing a piece wise complete but just on years by region and category
+      tidyr::expand(tidyr::nesting(GCAM_region_ID, category), year = fill_years) %>%
+      # expecting shares, gini, and gdp_pcap_decile to generate NAs which we subsequently
+      # fill with approx_fun
+      left_join_error_no_match(income_shares_hist, by=c("GCAM_region_ID", "category", "year"),
+                               ignore_columns = c("shares", "gini", "gdp_pcap_decile")) %>%
+      group_by(GCAM_region_ID, category) %>%
+      mutate(shares = approx_fun(year, shares),
+             gini = approx_fun(year, gini),
+             gdp_pcap_decile = approx_fun(year, gdp_pcap_decile)) %>%
+      ungroup() %>%
+      filter(year %in% HISTORICAL_YEARS) ->
+      income_shares_hist
+
     # FLOORSPACE CALCULATION - RESIDENTIAL
 
     # In this section, we aim to create a final output table of residential floorspace per GCAM region across all historical years
@@ -234,16 +271,22 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
 
     # Other country - South Africa
     # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
+    # We filter by and extrapolate for residential floorspace here (commercial floorspace handled later)
 
     # Time series doesn't span entire "historical" range; need to extrapolate
     # For now, use constant floorspace outside of available time series
+
+    Other_isos_resid_filter <- Other_pcflsp_m2_ctry_Yh %>%
+      filter(gcam.consumer == "resid")
+    unique(Other_isos_resid_filter$iso)-> Other_isos_resid
+
     Other_pcflsp_m2_ctry_Yh %>%
       gather_years(value_col = "value_pcflsp") %>%
       filter(gcam.consumer == "resid") %>%
       # Extrapolate to all historical years
       select(iso, year, value_pcflsp) %>%
       complete(year = HISTORICAL_YEARS,
-               iso = "zaf") %>%
+               iso = Other_isos_resid) %>%
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
       mutate(value_pcflsp = approx_fun(year, value_pcflsp, rule = 2)) ->
       L144.pcflsp_m2_otherctry_Yh_final
@@ -422,8 +465,8 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(L144.flsp_param, by = "region") %>%
       #add multiple consumers
-      repeat_add_columns(tibble(category= unique(income_shares$category))) %>%
-      left_join_error_no_match(income_shares, by = c("GCAM_region_ID", "year","category")) %>%
+      repeat_add_columns(tibble(category= unique(income_shares_hist$category))) %>%
+      left_join_error_no_match(income_shares_hist, by = c("GCAM_region_ID", "year","category")) %>%
       mutate(gdp_gr = gdp * shares,
              pop_gr = pop/n_groups,
              pc_gdp_thous_gr = (gdp_gr/pop_gr)/1E3) %>%
@@ -460,7 +503,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
 
     # For the USA, use the 50-state-derived data (written by LA144.Commercial.R from an earlier version of GCAM-USA)
     A44.flsp_bm2_state_comm %>%
-      gather(year, value_bm2, -state, -GCAM_sector) %>% # Convert to long form
+      tidyr::gather(year, value_bm2, -state, -GCAM_sector) %>% # Convert to long form
       mutate(year = as.integer(substr(year, 2, 5))) %>% # Strip X's, convert year to integer
       filter(year %in% HISTORICAL_YEARS) %>% # Ensure within historical years
       mutate(iso = "usa") %>% # Add column with USA iso name
@@ -482,6 +525,12 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
 
     # Other country - South Africa
     # Other_pcflsp_m2_ctry_Yh provides residential and commercial floorspace (m2) per person for 2004 and 2005
+    # We filter by and extrapolate for commercial floorspace here (residential floorspace handled earlier)
+
+    other_isos_comm_filter <- Other_pcflsp_m2_ctry_Yh %>%
+      filter(gcam.consumer == "comm")
+    unique(other_isos_comm_filter$iso)-> other_isos_comm
+
     Other_pcflsp_m2_ctry_Yh %>%
       gather_years(value_col = "value_pcflsp") %>%
       filter(year %in% HISTORICAL_YEARS) %>% # Ensure within historical years
@@ -489,7 +538,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
       # Extrapolate to all historical years
       select(iso, year, value_pcflsp) %>%
       complete(year = HISTORICAL_YEARS,
-               iso = "zaf") %>%
+               iso = other_isos_comm) %>%
       # Rule 2 is used so years outside of min-max range are assigned values from closest data, as opposed to NAs
       mutate(value_pcflsp = approx_fun(year, value_pcflsp, rule = 2)) %>%
       # Convert to total floorspace

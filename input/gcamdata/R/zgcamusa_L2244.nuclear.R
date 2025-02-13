@@ -64,6 +64,12 @@ module_gcamusa_L2244.nuclear <- function(command, ...) {
     nuc_gen2 %>%
       gather(year, gen, -region, -plant, -Units) %>%
       mutate(year = as.integer(year))  %>%
+      # need to interpolate, as this input only has info in 5 year timesteps
+      # which is an issue when the base years are annual
+      complete(nesting(region, plant, Units), year = c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
+      # interpolate missing years
+      group_by(region, plant, Units) %>%
+      mutate(gen = approx_fun(year, gen, rule = 2)) %>%
       filter(year >= max(HISTORICAL_YEARS)) %>%
       mutate(time = year - max(HISTORICAL_YEARS)) %>%
       group_by(region, year, time) %>%
@@ -127,7 +133,7 @@ module_gcamusa_L2244.nuclear <- function(command, ...) {
       # left_join_error_no_match throws error due to NA for Oregon, so left_join is used instead
       left_join(L2244.nuc_gen2_lifetime, by = "region") %>%
       filter(!is.na(lifetime)) %>%
-      mutate(year = max(MODEL_BASE_YEARS)) %>%
+      mutate(year = MODEL_FINAL_BASE_YEAR) %>%
       rename(supplysector = Electric.sector, stub.technology = Electric.sector.technology) %>%
       select(LEVEL2_DATA_NAMES[["StubTechSCurve"]]) ->
       L2244.StubTechSCurve_nuc_gen2_USA

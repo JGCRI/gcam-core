@@ -13,20 +13,12 @@
 #' \code{paper_incelas_gssp3.xml}, \code{paper_incelas_gssp4.xml}, and \code{paper_incelas_gssp5.xml}.
 module_energy_paper_incelas_SSP_xml <- function(command, ...) {
 
-  INCOME_ELASTICITY_INPUTS <- c("GCAM3",
-                                paste0("gSSP", 1:5),
-                                paste0("SSP", 1:5))
+  INCOME_ELASTICITY_INPUTS <- paste0("SSP", 1:5)
 
   if(command == driver.DECLARE_INPUTS) {
     return(c(paste("L2327.paper_incelas", tolower(INCOME_ELASTICITY_INPUTS), sep = "_")))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c(XML = "paper_incelas_gcam3.xml",
-             XML = "paper_incelas_gssp1.xml",
-             XML = "paper_incelas_gssp2.xml",
-             XML = "paper_incelas_gssp3.xml",
-             XML = "paper_incelas_gssp4.xml",
-             XML = "paper_incelas_gssp5.xml",
-             XML = "paper_incelas_ssp1.xml",
+    return(c(XML = "paper_incelas_ssp1.xml",
              XML = "paper_incelas_ssp2.xml",
              XML = "paper_incelas_ssp3.xml",
              XML = "paper_incelas_ssp4.xml",
@@ -34,9 +26,8 @@ module_energy_paper_incelas_SSP_xml <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     # Silence package checks
-    paper_incelas_gcam3.xml <- paper_incelas_ssp1.xml <- paper_incelas_ssp2.xml <- paper_incelas_ssp3.xml <-
-      paper_incelas_ssp4.xml <- paper_incelas_ssp5.xml<- paper_incelas_gssp1.xml<- paper_incelas_gssp2.xml<-
-      paper_incelas_gssp3.xml<- paper_incelas_gssp4.xml <- paper_incelas_gssp5.xml <- NULL
+    paper_incelas_ssp1.xml <- paper_incelas_ssp2.xml <- paper_incelas_ssp3.xml <-
+      paper_incelas_ssp4.xml <- paper_incelas_ssp5.xml <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -54,9 +45,7 @@ module_energy_paper_incelas_SSP_xml <- function(command, ...) {
       assign(xmlfn, xml_obj)
     }
 
-    return_data(paper_incelas_gcam3.xml,
-                paper_incelas_ssp1.xml, paper_incelas_ssp2.xml, paper_incelas_ssp3.xml, paper_incelas_ssp4.xml, paper_incelas_ssp5.xml,
-                paper_incelas_gssp1.xml, paper_incelas_gssp2.xml, paper_incelas_gssp3.xml, paper_incelas_gssp4.xml, paper_incelas_gssp5.xml)
+    return_data(paper_incelas_ssp1.xml, paper_incelas_ssp2.xml, paper_incelas_ssp3.xml, paper_incelas_ssp4.xml, paper_incelas_ssp5.xml)
   } else {
     stop("Unknown command")
   }

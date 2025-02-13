@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{paste0("negative_emissions_budget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)), ".xml")}.
+#' the generated outputs: \code{negative_emissions_budget_USA.xml)}.
 module_gcamusa_negative_emissions_budget_usa_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c("L270.NegEmissBudget_USA"))

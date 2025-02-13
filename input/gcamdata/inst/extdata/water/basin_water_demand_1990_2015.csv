@@ -1,7 +1,7 @@
 # File: basin_water_demand_1990_2015.csv
 # Title: water demand (all sectors) by basin for water supply calibration period
 # Source: queried from prior GCAM calibration period run
-# Comments: This data is used solely for calibrating accessible water fractions using historical runoff and groundwater extraction rates. It is not used to set up water demand in GCAM. Actual GCAM Water demands are determined dynamically within the model for each sector (see sean.turner@pnnl.gov for details)
+# Comments: This is not used in the data system (and has been renamed to basin_water_demand_1990_BY anyway). This data is used solely for calibrating accessible water fractions using historical runoff and groundwater extraction rates. It is not used to set up water demand in GCAM. Actual GCAM Water demands are determined dynamically within the model for each sector
 # Units: km^3/yr
 # Column types: iin
 # ----------

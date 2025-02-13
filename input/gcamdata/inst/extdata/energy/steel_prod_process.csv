@@ -2,7 +2,7 @@
 # Title: Crude steel production by country and process
 # Units: Thousand tonnes
 # Description: National steel production by process (Blast Furnace and Electric Arc Furnace)
-# Source: World Steel Association Statistical Year books
+# Source: World Steel Association Statistical Year books; GCAM region 4 only has one non-zero country (Angola); Angola data begins in 2015 (from Global Energy Monitor - https://www.gem.wiki/Aceria_Angola_Bengo_steel_plant); prior to 2015 Angola is data is a placeholder for region 4
 # Column types: cinnc
 # ----------
 country_name,year,BLASTFUR,EAF,unit_prod
@@ -4016,7 +4016,7 @@ Uzbekistan,2015,0,643,thousand tons
 Venezuela,2015,0,1343,thousand tons
 Viet Nam,2015,2270,3381,thousand tons
 South Africa,2015,3910,2512,thousand tons
-Angola,2015,0,1,thousand tons
+Angola,2015,0,500,thousand tons
 Austria,2016,6766,672,thousand tons
 Belgium,2016,5330,2357,thousand tons
 Bulgaria,2016,0,527,thousand tons
@@ -4079,6 +4079,7 @@ Mauritania,2016,5,0,thousand tons
 Morocco,2016,0,520,thousand tons
 Nigeria,2016,0,100,thousand tons
 South Africa,2016,3820,2322,thousand tons
+Angola,2016,0,500,thousand tons
 Tunisia,2016,0,50,thousand tons
 Uganda,2016,0,30,thousand tons
 "Iran, Islamic Republic of",2016,2183,15712,thousand tons
@@ -4167,6 +4168,7 @@ Mauritania,2017,5,0,thousand tons
 Morocco,2017,0,550,thousand tons
 Nigeria,2017,0,100,thousand tons
 South Africa,2017,3731,2570,thousand tons
+Angola,2017,0,500,thousand tons
 Tunisia,2017,0,50,thousand tons
 Uganda,2017,0,30,thousand tons
 "Iran, Islamic Republic of",2017,2235,19000,thousand tons
@@ -4255,6 +4257,7 @@ Mauritania,2018,5,0,thousand tons
 Morocco,2018,0,520,thousand tons
 Nigeria,2018,0,100,thousand tons
 South Africa,2018,3899,2428,thousand tons
+Angola,2018,0,500,thousand tons
 Tunisia,2018,0,50,thousand tons
 Uganda,2018,0,30,thousand tons
 Bahrain,2018,0,720,thousand tons
@@ -4345,6 +4348,7 @@ Mauritania,2019,5,0,thousand tons
 Morocco,2019,0,500,thousand tons
 Nigeria,2019,0,100,thousand tons
 South Africa,2019,3330,2822,thousand tons
+Angola,2019,0,500,thousand tons
 Tunisia,2019,0,50,thousand tons
 Uganda,2019,0,30,thousand tons
 Bahrain,2019,0,700,thousand tons

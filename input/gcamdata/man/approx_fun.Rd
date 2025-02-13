@@ -11,7 +11,7 @@ approx_fun(year, value, rule = 1)
 
 \item{value}{Numeric value to interpolate}
 
-\item{rule}{Rule to use; see \code{\link{approx}} and details}
+\item{rule}{Rule to use; 1 - linear interpolation, 2 = constant. see \code{\link{approx}}}
 }
 \value{
 Interpolated values.

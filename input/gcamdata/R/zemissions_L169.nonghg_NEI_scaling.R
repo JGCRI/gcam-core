@@ -286,7 +286,7 @@ module_emissions_L169.nonghg_NEI_scaling <- function(command, ...) {
                      total_emissions2017 = sum( emissions17 ) ) %>%
       select( c(state, tier1_description, pollutant_code, total_emissions2008, total_emissions2009, total_emissions2010, total_emissions2011,
                        total_emissions2012, total_emissions2013, total_emissions2014, total_emissions2015, total_emissions2016, total_emissions2017 ) ) %>%
-      gather( id, total_emissions, -c( state, tier1_description, pollutant_code ) ) %>%
+      tidyr::gather( id, total_emissions, -c( state, tier1_description, pollutant_code ) ) %>%
       ungroup() %>%
       separate( id, into = c("id", "year"), sep = "emissions" ) %>%
       select( -id ) %>%
@@ -386,7 +386,7 @@ module_emissions_L169.nonghg_NEI_scaling <- function(command, ...) {
       select( c(state, pollutant_code, tier1_description, total_emissions2007, total_emissions2006, total_emissions2005,
                        total_emissions2004, total_emissions2003, total_emissions2002, total_emissions2001, total_emissions2000,
                        total_emissions1999, total_emissions1998, total_emissions1997, total_emissions1996, total_emissions1990 ) ) %>%
-      gather( id, total_emissions, -c( state, pollutant_code, tier1_description ) ) %>%
+      tidyr::gather( id, total_emissions, -c( state, pollutant_code, tier1_description ) ) %>%
       ungroup() %>%
       separate( id, into = c("id", "year"), sep = "emissions" ) %>%
       select( -id ) %>%
@@ -478,7 +478,7 @@ module_emissions_L169.nonghg_NEI_scaling <- function(command, ...) {
       # calculate PM2.5 emissions based on BC and OC
       spread( Non.CO2, emissions ) %>%
       mutate( "PM2.5" =  ( BC + OC * gcamusa.OC_TO_OM ) * gcamusa.PM1_TO_PM2.5 ) %>%
-      gather( Non.CO2, emissions, -year ) %>%
+      tidyr::gather( Non.CO2, emissions, -year ) %>%
       # Full join and removing NA "share" and NA "emissions" because we only can scale in instances when we have pollutants in both datasets
       # The NA share removes BC, OC, CH4, and N2O (not in NEI)
       # The NA emissions removes PM10 (not in CEDS)

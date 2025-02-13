@@ -83,8 +83,9 @@ module_aglu_L125.LC_tot <- function(command, ...) {
       L125.LC_bm2_R_Yh_GLU %>%
         filter(year %in% aglu.AGLU_HISTORICAL_YEARS) %>%
         arrange(GCAM_region_ID, GLU, year) %>%
-        mutate(change_rate = value / lag(value),
-               change = value - lag(value)) ->          # calculate the rate of change
+        #when executing lag there is no value before 1971 so division/subtraction can't happen so fixed by using the first cell value (1971) to operate with itself
+        mutate(change_rate = value / lag(value, default = first(value)),
+               change = value - lag(value, default = first(value))) ->          # calculate the rate of change
         LC_check
 
       # Stop if the rate is outside of the tolerance boundaries

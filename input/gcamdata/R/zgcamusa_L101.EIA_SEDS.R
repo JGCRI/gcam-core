@@ -49,6 +49,11 @@ module_gcamusa_L101.EIA_SEDS <- function(command, ...) {
 
     # ===================================================
 
+    # warning to update SEDS data if the maximum year is earlier than base year
+    if (max((EIA_use_all_Bbtu %>% gather_years())$year) < MODEL_FINAL_BASE_YEAR) {
+      warning("L101.EIA_SEDS: Update SEDS data (EIA_use_all_Bbtu) till latest base year.")
+    }
+
     # Prep for output tables - add columns for GCAM sector and fuel names, using the substrings of the Mnemonic Series Name (MSN) code, and filter out U.S.
     EIA_use_all_Bbtu %>%
       gather_years %>%
@@ -95,7 +100,7 @@ module_gcamusa_L101.EIA_SEDS <- function(command, ...) {
 
     # To create this third output table, I need to split the dataframe and recombine
     Bbtu_with_GCAM_names_intermediate %>%
-      filter(year %in% gcamusa.SEDS_DATA_YEARS) %>% # Custom year range (1971:2017), want to keep NAs in 1960-1970
+      filter(year %in% unique(seq(min(HISTORICAL_YEARS), max((EIA_use_all_Bbtu %>% gather_years())$year)))) %>% # Filter by most recent SEDS data years, want to keep NAs in 1960-1970
       fill(value) %>% # Replace NAs in 1971-1979 with values from one year more recent
       bind_rows(filter(Bbtu_with_GCAM_names_intermediate, year %in% 1960:1970)) %>% # Reattaching 1960-1970 rows
       arrange(Data_Status, state, MSN, EIA_fuel, EIA_sector, sector, fuel, -year) ->

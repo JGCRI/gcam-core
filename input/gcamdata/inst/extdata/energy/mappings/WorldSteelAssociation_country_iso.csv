@@ -1,0 +1,103 @@
+# File: WorldSteelAssociation_country_iso.csv
+# Title: WSA Country Name - ISO Mapping File
+# Source: World Steel Association
+# Comments: Maps WSA country names to iso codes. Enables endogenous ctry_name->iso conversions
+# Units: NA
+# Column types: cc
+# ----------
+country,iso
+Austria,aut
+Belgium,bel
+Bulgaria,bgr
+Croatia,hrv
+Czech Republic,cze
+Germany,deu
+Finland,fin
+France,fra
+Greece,grc
+Hungary,hun
+Italy,ita
+Luxembourg,lux
+Netherlands,nld
+Poland,pol
+Portugal,prt
+Romania,rou
+Slovak Republic,svk
+Slovenia,svn
+Spain,esp
+Sweden,swe
+United Kingdom,gbr
+Albania,alb
+Bosnia-Herzegovina,bih
+Macedonia,mkd
+Montenegro,mne
+Norway,nor
+Serbia,srb
+Switzerland,che
+Turkey,tur
+Azerbaijan,aze
+Byelorussia,blr
+Kazakhstan,kaz
+Moldova,mda
+Russia,rus
+Ukraine,ukr
+Uzbekistan,uzb
+Canada,can
+Cuba,cub
+El Salvador,slv
+Guatemala,gtm
+Mexico,mex
+Trinidad and Tobago,tto
+United States,usa
+Argentina,arg
+Brazil,bra
+Chile,chl
+Colombia,col
+Ecuador,ecu
+Paraguay,pry
+Peru,per
+Uruguay,ury
+Venezuela,ven
+Algeria,dza
+D.R. Congo,cod
+Egypt,egy
+Ghana,gha
+Kenya,ken
+Libya,lby
+Mauritania,mrt
+Morocco,mar
+Nigeria,nga
+South Africa,zaf
+Tunisia,tun
+Uganda,uga
+Iran,irn
+Israel,isr
+Jordan,jor
+Oman,omn
+Qatar,qat
+Saudi Arabia,sau
+Syria,syr
+United Arab Emirates,are
+Bangladesh,bgd
+China,chn
+India,ind
+Indonesia,idn
+Japan,jpn
+South Korea,kor
+Malaysia,mys
+Mongolia,mng
+Myanmar,mmr
+Pakistan,pak
+Philippines,phl
+Singapore,sgp
+Sri Lanka,lka
+Taiwan,twn
+Thailand,tha
+Viet Nam,vnm
+Australia,aus
+New Zealand,nzl
+Czechia,cze
+Slovakia,svk
+Belarus,blr
+Bahrain,bhr
+Kuwait,kwt

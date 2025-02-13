@@ -203,7 +203,7 @@ module_gcamusa_L222.en_transformation <- function(command, ...) {
     L222.Tech_USAen %>%
       filter(subsector %in% c("oil refining", "biomass liquids")) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") ->
       L222.TechInterp_USAen
@@ -277,8 +277,8 @@ module_gcamusa_L222.en_transformation <- function(command, ...) {
       # calibration year so we can get a base cost for the absolute cost logit.  Having a share weight of zero
       # at the subsector is sufficient then to ensure we get no production in the calibration years
       L222.GlobalTechShrwt_en_USA %>%
-        mutate(share.weight = if_else(technology == "coal to liquids" & year == max(MODEL_BASE_YEARS), 1.0, share.weight),
-               share.weight = if_else(technology == "gas to liquids" & year == max(MODEL_BASE_YEARS), 1.0, share.weight)) ->
+        mutate(share.weight = if_else(technology == "coal to liquids" & year == MODEL_FINAL_BASE_YEAR, 1.0, share.weight),
+               share.weight = if_else(technology == "gas to liquids" & year == MODEL_FINAL_BASE_YEAR, 1.0, share.weight)) ->
         L222.GlobalTechShrwt_en_USA
 
       # L222.Supplysector_en_USA: Supplysector information, replace name of supplysector with the subsector names

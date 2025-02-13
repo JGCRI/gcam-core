@@ -26,7 +26,6 @@ module_gcamusa_industry_xml <- function(command, ...) {
              "L232.StubTechInterp_ind_USA",
              "L232.PerCapitaBased_ind_USA",
              "L232.PriceElasticity_ind_USA",
-             "L232.IncomeElasticity_ind_gcam3_USA",
              "L232.StubTechCalInput_indenergy_USA",
              "L232.StubTechCalInput_indfeed_USA",
              "L232.StubTechProd_industry_USA",
@@ -59,7 +58,6 @@ module_gcamusa_industry_xml <- function(command, ...) {
     L232.StubTechInterp_ind_USA <- get_data(all_data, "L232.StubTechInterp_ind_USA")
     L232.PerCapitaBased_ind_USA <- get_data(all_data, "L232.PerCapitaBased_ind_USA")
     L232.PriceElasticity_ind_USA <- get_data(all_data, "L232.PriceElasticity_ind_USA")
-    L232.IncomeElasticity_ind_gcam3_USA <- get_data(all_data, "L232.IncomeElasticity_ind_gcam3_USA")
     L232.StubTechCalInput_indenergy_USA <- get_data(all_data, "L232.StubTechCalInput_indenergy_USA")
     L232.StubTechCalInput_indfeed_USA <- get_data(all_data, "L232.StubTechCalInput_indfeed_USA")
     L232.StubTechProd_industry_USA <- get_data(all_data, "L232.StubTechProd_industry_USA")
@@ -88,7 +86,6 @@ module_gcamusa_industry_xml <- function(command, ...) {
       add_xml_data(L232.StubTechInterp_ind_USA, "StubTechInterp") %>%
       add_xml_data(L232.PerCapitaBased_ind_USA, "PerCapitaBased") %>%
       add_xml_data(L232.PriceElasticity_ind_USA, "PriceElasticity") %>%
-      add_xml_data(L232.IncomeElasticity_ind_gcam3_USA, "IncomeElasticity") %>%
       add_xml_data(L232.StubTechCalInput_indenergy_USA, "StubTechCalInput") %>%
       add_xml_data(L232.StubTechCalInput_indfeed_USA, "StubTechCalInput") %>%
       add_xml_data(L232.StubTechProd_industry_USA, "StubTechProd") %>%
@@ -110,7 +107,6 @@ module_gcamusa_industry_xml <- function(command, ...) {
                      "L232.StubTechInterp_ind_USA",
                      "L232.PerCapitaBased_ind_USA",
                      "L232.PriceElasticity_ind_USA",
-                     "L232.IncomeElasticity_ind_gcam3_USA",
                      "L232.StubTechCalInput_indenergy_USA",
                      "L232.StubTechCalInput_indfeed_USA",
                      "L232.StubTechProd_industry_USA",

@@ -41,37 +41,39 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       "L109.an_ALL_Mt_R_C_Y",
       "L110.For_ALL_bm3_R_Y")
 
+  MODULE_OUTPUTS <-
+    c("L203.Supplysector_demand",
+      "L203.NestingSubsectorAll_demand_food",
+      "L203.SubsectorAll_demand_food",
+      "L203.SubsectorAll_demand_nonfood",
+      "L203.StubTech_demand_food",
+      "L203.StubTech_demand_nonfood",
+      "L203.SubregionalShares",
+      "L203.DemandFunction_food",
+      "L203.DemandStapleParams",
+      "L203.DemandNonStapleParams",
+      "L203.DemandStapleRegBias",
+      "L203.DemandNonStapleRegBias",
+      "L203.StapleBaseService",
+      "L203.NonStapleBaseService",
+      "L203.GlobalTechCoef_demand",
+      "L203.GlobalTechShrwt_demand",
+      "L203.StubTechProd_food",
+      "L203.StubTechProd_nonfood_crop",
+      "L203.StubTechProd_nonfood_meat",
+      "L203.StubTechProd_For",
+      "L203.StubCalorieContent",
+      "L203.PerCapitaBased",
+      "L203.BaseService",
+      "L203.IncomeElasticity",
+      "L203.PriceElasticity",
+      "L203.FuelPrefElast_ssp1",
+      "L203.GlobalTechInterp_demand")
 
   if(command == driver.DECLARE_INPUTS) {
     return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L203.Supplysector_demand",
-             "L203.NestingSubsectorAll_demand_food",
-             "L203.SubsectorAll_demand_food",
-             "L203.SubsectorAll_demand_nonfood",
-             "L203.StubTech_demand_food",
-             "L203.StubTech_demand_nonfood",
-             "L203.SubregionalShares",
-             "L203.DemandFunction_food",
-             "L203.DemandStapleParams",
-             "L203.DemandNonStapleParams",
-             "L203.DemandStapleRegBias",
-             "L203.DemandNonStapleRegBias",
-             "L203.StapleBaseService",
-             "L203.NonStapleBaseService",
-             "L203.GlobalTechCoef_demand",
-             "L203.GlobalTechShrwt_demand",
-             "L203.StubTechProd_food",
-             "L203.StubTechProd_nonfood_crop",
-             "L203.StubTechProd_nonfood_meat",
-             "L203.StubTechProd_For",
-             "L203.StubCalorieContent",
-             "L203.PerCapitaBased",
-             "L203.BaseService",
-             "L203.IncomeElasticity",
-             "L203.PriceElasticity",
-             "L203.FuelPrefElast_ssp1",
-             "L203.GlobalTechInterp_demand"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -84,6 +86,8 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
 
     # Load required inputs ----
 
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
     lapply(MODULE_INPUTS, function(d){
       # get name as the char after last /
       nm <- tail(strsplit(d, "/")[[1]], n = 1)
@@ -95,6 +99,9 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
     # Get mass-calories conversion rates for food commodities----
     # Note that food consumption in Mt in L109 files should be finalized
     # So the conversion rates are finalized here (after any potential earlier food adjustments)
+
+    # Note that historical calories values in L101.CropMeat_Food_Pcal_R_C_Y were calculated based on
+    # base year (5-year average) mass-to-calories conversion rates
     L109.ag_ALL_Mt_R_C_Y %>%
       # Combine the balance tables of crop and meat in Mt
       bind_rows(L109.an_ALL_Mt_R_C_Y) %>%
@@ -286,7 +293,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       # For each region / commodity,
       group_by(region, subsector0, subsector, technology) %>%
       # Calorie content are held constant in the future, so set value for future years at the final base year value
-      mutate(efficiency = replace(efficiency, year > max(MODEL_BASE_YEARS), efficiency[year == max(MODEL_BASE_YEARS)])) %>%
+      mutate(efficiency = replace(efficiency, year > MODEL_FINAL_BASE_YEAR, efficiency[year == MODEL_FINAL_BASE_YEAR])) %>%
       ungroup() %>%
       select(c(LEVEL2_DATA_NAMES[["StubTechCalorieContent"]], "subsector0")) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->          # Remove any regions for which agriculture and land use are not modeled
@@ -659,14 +666,7 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       add_precursors("aglu/A_demand_food_nonstaples") ->
       L203.NonStapleBaseService
 
-    return_data(L203.Supplysector_demand, L203.NestingSubsectorAll_demand_food, L203.SubsectorAll_demand_food,
-                L203.SubsectorAll_demand_nonfood, L203.StubTech_demand_food, L203.StubTech_demand_nonfood,
-                L203.GlobalTechCoef_demand, L203.GlobalTechShrwt_demand, L203.GlobalTechInterp_demand, L203.StubTechProd_food,
-                L203.StubTechProd_nonfood_crop, L203.StubTechProd_nonfood_meat, L203.StubTechProd_For,
-                L203.StubCalorieContent, L203.PerCapitaBased, L203.BaseService,
-                L203.IncomeElasticity, L203.PriceElasticity, L203.FuelPrefElast_ssp1,
-                L203.SubregionalShares, L203.DemandFunction_food, L203.DemandStapleParams, L203.DemandNonStapleParams,
-                L203.DemandStapleRegBias, L203.DemandNonStapleRegBias, L203.StapleBaseService, L203.NonStapleBaseService)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

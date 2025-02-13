@@ -86,7 +86,8 @@ module_energy_L123.electricity <- function(command, ...) {
       select(-outputs, -input) ->
       L123.eff_R_elec_F_Yh
 
-    # Taking care of NA, 0, and INF values generatted in previous step (efficiency calculations) and updating
+
+    # Taking care of NA, 0, and INF values generated in previous step (efficiency calculations) and updating
     # the efficiency output L123.eff_R_elec_F_Yh
     L123.eff_R_elec_F_Yh %>%
       mutate(value = if_else(!is.na(value), value, energy.DEFAULT_ELECTRIC_EFFICIENCY),

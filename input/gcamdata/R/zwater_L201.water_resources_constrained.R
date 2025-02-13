@@ -234,6 +234,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       left_join_error_no_match(select(L165.ag_IrrEff_R, GCAM_region_ID, conveyance.eff),
                                by = "GCAM_region_ID") %>%
       mutate(value = IrrWithd_km3 / conveyance.eff)
+
     L201.NonIrrWithd_km3_R_B_Y <- L203.Production_watertd %>%
       filter(technology != water.DESAL,
              technology != "water consumption") %>%
@@ -242,7 +243,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
                                by = c(subsector = "GLU_name")) %>%
       select(GCAM_region_ID, GCAM_basin_ID, year, value = calOutputValue)
 
-    basin_water_demand_1990_2015 <- bind_rows(L201.IrrWithd_km3_R_B_Y,
+    basin_water_demand_1990_BY <- bind_rows(L201.IrrWithd_km3_R_B_Y,
                                               L201.NonIrrWithd_km3_R_B_Y) %>%
       filter(year %in% MODEL_BASE_YEARS,
              year >= water.GW_DEPLETION_BASE_YEAR) %>%
@@ -252,7 +253,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       summarise(demand = sum(value)) %>%
       ungroup()
 
-    basin_water_demand_2000_2015 <- basin_water_demand_1990_2015 %>%
+    basin_water_demand_2000_BY <- basin_water_demand_1990_BY %>%
       filter(year %in% water.GW_DEPLETION_HISTORICAL) %>%
       group_by(GCAM_basin_ID, year) %>%
       summarise(demand = sum(demand)) %>%
@@ -265,12 +266,12 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       filter(year %in% water.GW_DEPLETION_HISTORICAL) %>%
       group_by(GCAM_basin_ID) %>% summarise(runoff = mean(runoff_max)) %>%
       ungroup() ->
-      basin_max_runoff_2000_2015
+      basin_max_runoff_2000_BY
 
     # not all basin runoff water are in used
     # ^^ non-restrictive join required (NA values generated for unused basins)
-    left_join(basin_water_demand_2000_2015,
-              basin_max_runoff_2000_2015,
+    left_join(basin_water_demand_2000_BY,
+              basin_max_runoff_2000_BY,
               by = "GCAM_basin_ID") ->
       demand_runoff_cal
 
@@ -359,7 +360,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
                accessible_runoff = runoff * accessible) %>%
         # ^^ get runoff volumes available
         select(GCAM_basin_ID, accessible_runoff) %>%
-        right_join(basin_water_demand_1990_2015, by = "GCAM_basin_ID") %>%
+        right_join(basin_water_demand_1990_BY, by = "GCAM_basin_ID") %>%
         # ^^ join the historical demand
         mutate(deficit = demand - accessible_runoff,
                deficit = if_else(deficit <=0, 0, deficit)) %>%
@@ -409,7 +410,7 @@ module_water_L201.water_resources_constrained <- function(command, ...) {
       L201.DepRsrcCurves_ground
 
       # Create a technology for all water resources and subresources. This is where the groundwater electricity coefficient will be assigned.
-      # Include a share weight of 1 to facilatate creating a technology.
+      # Include a share weight of 1 to facilitate creating a technology.
       # Create technology for renewable freshwater and depletable groundwater subresource
       L201.RenewRsrcCurves_calib %>%
         distinct(region, resource, sub.renewable.resource) %>%
