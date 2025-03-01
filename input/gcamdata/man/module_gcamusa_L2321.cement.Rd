@@ -18,7 +18,7 @@ the generated outputs: \code{L2321.DeleteSupplysector_USAcement}, \code{L2321.De
 \code{L2321.StubTechCoef_cement_USA}, \code{L2321.StubTechCalInput_cement_heat_USA}, \code{L2321.StubTechMarket_cement_USA}, \code{L2321.BaseService_cement_USA},
 \code{L2321.Supplysector_cement_USA}, \code{L2321.FinalEnergyKeyword_cement_USA}, \code{L2321.SubsectorLogit_cement_USA},
 \code{L2321.SubsectorShrwtFllt_cement_USA}, \code{L2321.StubTech_cement_USA}, \code{L2321.PerCapitaBased_cement_USA},
- \code{L2321.PriceElasticity_cement_USA}, \code{L2321.IncomeElasticity_cement_gcam3_USA} .
+ \code{L2321.PriceElasticity_cement_USA}, \code{} .
  The corresponding file in the original data system was \code{L2321.cement_USA.R} (gcam-usa level2).
 }
 \description{

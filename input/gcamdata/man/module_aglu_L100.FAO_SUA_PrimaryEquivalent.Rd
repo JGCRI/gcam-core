@@ -18,14 +18,6 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent(command, ...)
 \item{.SINK_ITEM}{Sink items or processed items in the processing}
 
 \item{DF_ALL}{Input supply-utilization accounting data frame with all levels of data nested which need to be primarized}
-
-\item{.DF}{An input dataframe with an element col including Import and Export}
-
-\item{.MIN_TRADE_PROD_RATIO}{Trade will be removed if world total export or import over production is smaller than .MIN_TRADE_PROD_RATIO (1% default value)}
-
-\item{.Reg_VAR}{Region variable name; default is ("area_code")}
-
-\item{.GROUP_VAR}{Group variable; default is ("item_code", "year")}
 }
 \value{
 Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
@@ -45,9 +37,6 @@ Primary equivalent aggregation
 A supply-utilization accounting data frame with all levels processed and aggregated to GCAM_commodity
 # In some cases, prescale sink item SUA using output_specific_extraction_rate can improve the processing.
 # e.g., when coproduction shares are not fixed.
-Balance gross trade
-
-The same dataframe with balanced world export and import.
 }
 \description{
 Gross extraction rate is calculated for domestic, traded, and lagged values.
@@ -57,8 +46,6 @@ The function is used in Proc_primarize.
 The function is used in Proc_primarize
 
 The function is used in Proc_primarize
-
-Scale gross export and import in all regions to make them equal at the world level.
 }
 \details{
 Generate supply utilization balance in primary equivalent

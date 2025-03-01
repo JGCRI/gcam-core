@@ -18,8 +18,8 @@ the generated outputs: \code{L2042.AgResBio_For}, \code{L2042.AgResBioCurve_For}
 original data system was \code{L2042.resbio_input_irr_mgmt.R} (aglu level2).
 }
 \description{
-Produce a table of global Mill Residue Biomass Paramters by year, a table of regional Forest Residue Biomass Paramters by year, and a table of
-Agricultural Residue Biomass Paramters by irrigation-management level-year. This chunk also produces tables by region and year of residue biomass supply
+Produce a table of global Mill Residue Biomass Parameters by year, a table of regional Forest Residue Biomass Parameters by year, and a table of
+Agricultural Residue Biomass Parameters by irrigation-management level-year. This chunk also produces tables by region and year of residue biomass supply
 curves for Mill, Forest, and Agriculture.
 }
 \details{
@@ -29,7 +29,7 @@ residue biomass parameters for each region and year. For each region-supplySecto
 this table, base supply curves are read in from A_resbio_curves and then, in specified calibration years MODEL_BASE_YEARS, replaced by
 fractions in  A_bio_frac_prod_R to form the table of Forest resbio supply curves for each region and year.
 
-For Mill Residue Biomass, sector, subsector, and technology combinations for NonFoodDeman_Forest are pulled from A_demand_technology,
+For Mill Residue Biomass, sector, subsector, and technology combinations for NonFoodDemand_Forest are pulled from A_demand_technology,
 and externally set parameters are added to form the table of global Mill residue biomass parameters in each year. Sector, subsector,
 and technology combinations from this table are repeated for each GCAM region and year, base supply curves are read in from
 A_resbio_curves and then, in specified calibration years MODEL_BASE_YEARS, replaced by fractions in  A_bio_frac_prod_R to form the table of

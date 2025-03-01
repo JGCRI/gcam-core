@@ -1,0 +1,318 @@
+# File: NREL_ATB_OMvar_2019.csv
+# Title: Technology variable O&M cost assumptions by year from NREL 2019 ATB
+# Units: $2017/MWh
+# Source: NREL 2019 Annual Technology Baseline for 2017-2018 (https://atb.nrel.gov/electricity/2019/files/2019-ATB-data.xlsm)
+# Comments: tech_type corresponds to tab within the ATB workbooks; tech_detail corresponds to the more detailed technologies within those tabs
+# Users can specify how ATB technologies are mapped to GCAM technologies in energy/mappings/atb_gcam_mapping.csv
+# Column types: ccccnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+# ----------
+tech_type,tech_detail,input,case,2017,2018,2019,2020,2021,2022,2023,2024,2025,2026,2027,2028,2029,2030,2031,2032,2033,2034,2035,2036,2037,2038,2039,2040,2041,2042,2043,2044,2045,2046,2047,2048,2049,2050
+Offshore Wind,Class 1,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 1,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 1,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 2,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 2,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 2,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 3,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 3,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 3,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 4,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 4,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 4,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 5,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 5,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 5,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 6,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 6,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 6,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 7,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 7,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 7,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 8,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 8,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 8,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 9,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 9,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 9,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 10,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 10,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 10,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 11,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 11,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 11,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 12,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 12,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 12,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 13,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 13,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 13,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 14,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 14,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Offshore Wind,Class 14,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 1,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 1,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 1,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 2,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 2,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 2,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 3,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 3,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 3,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 4,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 4,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 4,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 5,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 5,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 5,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 6,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 6,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 6,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 7,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 7,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 7,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 8,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 8,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 8,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 9,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 9,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 9,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 10,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 10,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Land-Based Wind,Class 10,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 10,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 10,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 10,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 9,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 9,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 9,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 8,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 8,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 8,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 7,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 7,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 7,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 6,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 6,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 6,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 5,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 5,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 5,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 4,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 4,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 4,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 3,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 3,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 3,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 2,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 2,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 2,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 1,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 1,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - Utility PV,Utility PV - Class 1,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 10,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 10,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 10,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 9,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 9,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 9,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 8,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 8,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 8,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 7,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 7,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 7,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 6,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 6,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 6,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 5,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 5,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 5,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 4,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 4,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 4,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 3,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 3,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 3,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 2,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 2,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 2,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 1,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 1,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Comm,Commercial PV - Class 1,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 10,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 10,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 10,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 9,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 9,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 9,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 8,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 8,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 8,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 7,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 7,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 7,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 6,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 6,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 6,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 5,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 5,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 5,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 4,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 4,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 4,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 3,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 3,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 3,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 2,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 2,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 2,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 1,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 1,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - PV Dist. Res,Residential PV - Class 1,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Solar - CSP,10hrs TES - Class 7,OM-var,adv tech,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Solar - CSP,10hrs TES - Class 7,OM-var,central,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Solar - CSP,10hrs TES - Class 7,OM-var,low tech,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Solar - CSP,10hrs TES - Class 3,OM-var,adv tech,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Solar - CSP,10hrs TES - Class 3,OM-var,central,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Solar - CSP,10hrs TES - Class 3,OM-var,low tech,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Solar - CSP,10hrs TES - Class 2,OM-var,adv tech,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Solar - CSP,10hrs TES - Class 2,OM-var,central,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Solar - CSP,10hrs TES - Class 2,OM-var,low tech,4.1,4.1,4.1,4.1,4.1,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5,3.5
+Geothermal,Hydro / Flash,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Hydro / Flash,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Hydro / Flash,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Hydro / Binary,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Hydro / Binary,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Hydro / Binary,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,NF EGS / Flash,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,NF EGS / Flash,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,NF EGS / Flash,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,NF EGS / Binary,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,NF EGS / Binary,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,NF EGS / Binary,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Deep EGS / Flash,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Deep EGS / Flash,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Deep EGS / Flash,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Deep EGS / Binary,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Deep EGS / Binary,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Geothermal,Deep EGS / Binary,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 1,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 1,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 1,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 2,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 2,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 2,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 3,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 3,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 3,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 4,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 4,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 4,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 5,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 5,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 5,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 6,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 6,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 6,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 7,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 7,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 7,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 8,OM-var,adv tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 8,OM-var,central,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Hydropower,NPD 8,OM-var,low tech,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Coal,Coal-new-AvgCF,OM-var,adv tech,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Coal,Coal-new-AvgCF,OM-var,central,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Coal,Coal-new-AvgCF,OM-var,low tech,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Coal,Coal-new-HighCF,OM-var,adv tech,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Coal,Coal-new-HighCF,OM-var,central,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Coal,Coal-new-HighCF,OM-var,low tech,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5,5
+Coal,Coal-IGCC-AvgCF,OM-var,adv tech,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
+Coal,Coal-IGCC-AvgCF,OM-var,central,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
+Coal,Coal-IGCC-AvgCF,OM-var,low tech,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
+Coal,Coal-IGCC-HighCF,OM-var,adv tech,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
+Coal,Coal-IGCC-HighCF,OM-var,central,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
+Coal,Coal-IGCC-HighCF,OM-var,low tech,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8,8
+Coal,Coal-CCS 36%-AvgCF,OM-var,adv tech,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
+Coal,Coal-CCS 36%-AvgCF,OM-var,central,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
+Coal,Coal-CCS 36%-AvgCF,OM-var,low tech,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
+Coal,Coal-CCS 90%-AvgCF,OM-var,adv tech,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
+Coal,Coal-CCS 90%-AvgCF,OM-var,central,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
+Coal,Coal-CCS 90%-AvgCF,OM-var,low tech,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
+Coal,Coal-CCS 36%-HighCF,OM-var,adv tech,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
+Coal,Coal-CCS 36%-HighCF,OM-var,central,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
+Coal,Coal-CCS 36%-HighCF,OM-var,low tech,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7,7
+Coal,Coal-CCS 90%-HighCF,OM-var,adv tech,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
+Coal,Coal-CCS 90%-HighCF,OM-var,central,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
+Coal,Coal-CCS 90%-HighCF,OM-var,low tech,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10,10
+Natural Gas,Gas-CT-AvgCF,OM-var,adv tech,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14
+Natural Gas,Gas-CT-AvgCF,OM-var,central,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14
+Natural Gas,Gas-CT-AvgCF,OM-var,low tech,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14
+Natural Gas,Gas-CT-HighCF,OM-var,adv tech,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14
+Natural Gas,Gas-CT-HighCF,OM-var,central,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14
+Natural Gas,Gas-CT-HighCF,OM-var,low tech,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14,7.14
+Natural Gas,Gas-CC-AvgCF,OM-var,adv tech,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77
+Natural Gas,Gas-CC-AvgCF,OM-var,central,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77
+Natural Gas,Gas-CC-AvgCF,OM-var,low tech,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77
+Natural Gas,Gas-CC-HighCF,OM-var,adv tech,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77
+Natural Gas,Gas-CC-HighCF,OM-var,central,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77
+Natural Gas,Gas-CC-HighCF,OM-var,low tech,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77,2.77
+Natural Gas,Gas-CC-CCS-AvgCF,OM-var,adv tech,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18
+Natural Gas,Gas-CC-CCS-AvgCF,OM-var,central,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18
+Natural Gas,Gas-CC-CCS-AvgCF,OM-var,low tech,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18
+Natural Gas,Gas-CC-CCS-HighCF,OM-var,adv tech,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18
+Natural Gas,Gas-CC-CCS-HighCF,OM-var,central,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18
+Natural Gas,Gas-CC-CCS-HighCF,OM-var,low tech,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18,7.18
+Nuclear,Nuclear,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Nuclear,Nuclear,OM-var,central,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31,2.31
+Nuclear,Nuclear,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Nuclear,Nuclear - Small Modular Reactor,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Nuclear,Nuclear - Small Modular Reactor,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Nuclear,Nuclear - Small Modular Reactor,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Biopower,Dedicated,OM-var,adv tech,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57
+Biopower,Dedicated,OM-var,central,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57
+Biopower,Dedicated,OM-var,low tech,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57,5.57
+Storage,2Hr Battery Storage,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,2Hr Battery Storage,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,2Hr Battery Storage,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,4Hr Battery Storage,OM-var,adv tech,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Storage,4Hr Battery Storage,OM-var,central,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Storage,4Hr Battery Storage,OM-var,low tech,,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
+Storage,6Hr Battery Storage,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,6Hr Battery Storage,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,6Hr Battery Storage,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,8Hr Battery Storage,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,8Hr Battery Storage,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,8Hr Battery Storage,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,10Hr Battery Storage,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,10Hr Battery Storage,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+Storage,10Hr Battery Storage,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 10,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 10,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 10,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 9,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 9,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 9,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 8,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 8,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 8,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 7,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 7,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 7,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 6,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 6,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 6,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 5,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 5,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 5,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 4,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 4,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 4,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 3,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 3,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 3,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 2,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 2,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 2,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 1,OM-var,adv tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 1,OM-var,central,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+PV+Storage ,PV+Storage - Class 1,OM-var,low tech,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

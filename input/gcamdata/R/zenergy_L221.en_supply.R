@@ -363,17 +363,17 @@ module_energy_L221.en_supply <- function(command, ...) {
     # Technology share-weight interpolation - for regions with positive calibration values,
     # carry the share-weights forward. All others will get default values (below)
     L221.StubTechInterp_bioOil <- filter(L221.StubTechCalInput_bioOil,
-                                         year == max(MODEL_BASE_YEARS),
+                                         year == MODEL_FINAL_BASE_YEAR,
                                          tech.share.weight == 1) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") %>%
       select(LEVEL2_DATA_NAMES[["StubTechInterp"]])
 
     # Technology share-weights for regions without calibration values
     L221.StubTechShrwt_bioOil <- filter(L221.StubTechCalInput_bioOil,
-                                        year == max(MODEL_BASE_YEARS),
+                                        year == MODEL_FINAL_BASE_YEAR,
                                         tech.share.weight == 0) %>%
       select(region, supplysector, subsector, stub.technology) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%

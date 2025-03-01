@@ -150,7 +150,6 @@ module_emissions_L102.nonco2_ceds_R_S_Y <- function(command, ...) {
           left_join(CEDS_sector_map, by = c("sector" = "CEDS_sector")) %>%
           left_join(CEDS_fuel_map, by = c("fuel" = "CEDS_fuel")) %>%
           filter(CEDS_agg_sector=="trn_intl_ship",CEDS_agg_fuel =="refined liquids") %>%
-          gather_years %>%
           filter(year %in% emissions.CEDS_YEARS) %>%
           filter(year <= max(HISTORICAL_YEARS), emissions > 0)->CEDS_int_shipping
 

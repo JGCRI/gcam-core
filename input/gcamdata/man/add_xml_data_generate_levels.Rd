@@ -4,8 +4,17 @@
 \alias{add_xml_data_generate_levels}
 \title{Add a table to convert to XML but generate additional levels of XML nesting}
 \usage{
-add_xml_data_generate_levels(dot, data, header, old_tag, new_tag, num_levels,
-  rename_final, column_name = old_tag, column_order_lookup = header)
+add_xml_data_generate_levels(
+  dot,
+  data,
+  header,
+  old_tag,
+  new_tag,
+  num_levels,
+  rename_final,
+  column_name = old_tag,
+  column_order_lookup = header
+)
 }
 \arguments{
 \item{dot}{The current state of the pipeline started from \code{create_xml}}
@@ -39,9 +48,9 @@ interface CSV to XML conversion.
 }
 \description{
 We have the ability to create as many levels of "subsector" nesting as we
-want but in doing so we want to avoid having to make an explict copy of
+want but in doing so we want to avoid having to make an explicit copy of
 the headers / LEVEL2_DATA_NAMES. So we provide this method which will instruct
-the ModelIntercae to generate the addtional levels automatically.  It assumes
+the ModelInterface to generate the additional levels automatically.  It assumes
 the data in the base header is provided as is and the additional columns needed
 for nesting will be moved to the end (see detail for the \code{column_name} and
 \code{column_order_lookup} params).

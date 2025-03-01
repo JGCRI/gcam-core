@@ -165,7 +165,7 @@ module_water_L203.water_td <- function(command, ...) {
     # Subsector share-weight interpolation (for competition between basins - fixed share-weight interpolation)
     L203.SubsectorInterp_watertd <- L203.SubsectorLogit_watertd %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") %>%
       select(LEVEL2_DATA_NAMES[["SubsectorInterp"]])
@@ -191,7 +191,7 @@ module_water_L203.water_td <- function(command, ...) {
     # read in a default value of 1, with a fixed interpolation rule from the final model base year
     L203.TechInterp_watertd <- L203.water_td_info %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") %>%
       select(LEVEL2_DATA_NAMES[["TechInterp"]])

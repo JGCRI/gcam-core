@@ -25,7 +25,7 @@ The tables for cement production, i.e., out, and energy inputs, i.e., in, were c
 
 The state shares were determined by the states' relative values of cement shipments.
 
-The input-out coefficients were downscaled to the states in proportation to the national data.
+The input-out coefficients were downscaled to the states in proportion to the national data.
 }
 \author{
 AS May 2017

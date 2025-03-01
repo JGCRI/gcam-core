@@ -134,7 +134,7 @@ module_gcamusa_L2322.Fert <- function(command, ...) {
     L2322.SubsectorLogit_USAFert %>%
       select(region, supplysector, subsector) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") ->
       L2322.SubsectorInterp_USAFert

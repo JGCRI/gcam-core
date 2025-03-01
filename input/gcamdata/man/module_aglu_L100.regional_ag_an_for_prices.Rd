@@ -24,5 +24,5 @@ This chunk calculates average prices over calibration years by GCAM commodity an
   years, when applicable, are unweighted; averages over FAO item are weighted by production.
 }
 \author{
-GPK/RC/STW February 2019; XZ 2022
+GPK/RC/STW February 2019; XZ 2022/2024
 }

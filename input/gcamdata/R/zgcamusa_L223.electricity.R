@@ -195,7 +195,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
     L223.SubsectorShrwtFllt_elec_FERC %>%
       select(LEVEL2_DATA_NAMES[["Subsector"]]) %>%
       mutate(apply.to = "share-weight",
-             from.year = max(MODEL_BASE_YEARS),
+             from.year = MODEL_FINAL_BASE_YEAR,
              to.year = max(MODEL_YEARS),
              interpolation.function = "fixed") ->
       L223.SubsectorInterp_elec_FERC
@@ -401,6 +401,8 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       filter(fuel == "nuclear", year == max(HISTORICAL_YEARS)) %>%
       left_join_error_no_match(L223.out_EJ_state_elec, by = "state") %>%
       mutate(share = value / elec,
+             # If share is NA (due to value and elec = 0), make it 0
+             share = if_else(is.na(share), 0, share),
              avg.share = sum(value) / sum(elec),
              pref = share / avg.share) %>%
       select(state, pref) %>%
@@ -510,8 +512,8 @@ module_gcamusa_L223.electricity <- function(command, ...) {
     L223.GlobalIntTechBackup_elec %>%
       mutate(supplysector = sector.name, subsector = subsector.name) %>%
       write_to_all_states(names = c(names(.), 'region')) %>%
-      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", technology)) %>%
-      mutate(market.name = gcam.USA_REGION, stub.technology = technology) %>%
+      filter(!(region %in% CSP_states_noresource) | !grepl("CSP", backup.intermittent.technology)) %>%
+      mutate(market.name = gcam.USA_REGION, stub.technology = backup.intermittent.technology) %>%
       # Wind & utility-scale (i.e. non-rooftop) solar are assumed to be infeasible in DC.
       # Thus, no wind & solar subsectors should be created in DC's electricity sector.
       # Use anti_join to remove them from the table.

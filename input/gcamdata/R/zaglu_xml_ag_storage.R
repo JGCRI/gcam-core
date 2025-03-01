@@ -89,34 +89,13 @@ module_aglu_batch_ag_storage_xml <- function(command, ...) {
 
     fst_extra <-
       L113.StorageTechTable %>%
-      select(LEVEL2_DATA_NAMES[["FoodTech"]]) %>%
-      bind_rows(
-        L113.StorageTechTable %>%
-          select(LEVEL2_DATA_NAMES[["FoodTech"]]) %>%
-          # Add cost to future years as the last base year
-          filter(year == min(MODEL_FUTURE_YEARS)) %>% select(-year) %>%
-          # Note that the first future year was included above
-          repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS[-1])) %>%
-          mutate(opening.stock = 0, closing.stock = 0) %>%
-          filter(!is.na(region))
-      )
+      select(LEVEL2_DATA_NAMES[["FoodTech"]])
 
 
     fst_coef <-
       L113.StorageTechTable %>%
       mutate(coefficient = 1, market.name = region) %>%
       select(LEVEL2_DATA_NAMES[["FoodTechCoef"]])
-
-    fst_coef <-
-      fst_coef %>%
-      bind_rows(
-        fst_coef %>%
-          # Add cost to future years as the last base year
-          filter(year == min(MODEL_FUTURE_YEARS)) %>% select(-year) %>%
-          # Note that the first future year was included above
-          repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS[-1])) %>%
-          filter(!is.na(region))
-      )
 
     # The cost here is not really useful for storage. It is cost to main product
     # fst_cost <-
@@ -128,17 +107,6 @@ module_aglu_batch_ag_storage_xml <- function(command, ...) {
       mutate(res.secondary.output = GCAM_commodity,
              output.ratio = 1, pMultiplier = 0) %>%
       select(LEVEL2_DATA_NAMES[["FoodTechRESSecOut"]])
-
-    fst_RESSecOut <-
-      fst_RESSecOut %>%
-        bind_rows(
-          fst_RESSecOut %>%
-            # Add cost to future years as the last base year
-            filter(year == min(MODEL_FUTURE_YEARS)) %>% select(-year) %>%
-            # Note that the first future year was included above
-            repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS[-1])) %>%
-            filter(!is.na(region))
-        )
 
 
     # 2. tables ready for PassThrough commodities ----

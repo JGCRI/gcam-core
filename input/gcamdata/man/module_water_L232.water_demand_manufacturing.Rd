@@ -21,7 +21,7 @@ original data system was \code{L232.water_demand_manufacturing.R} (water level2)
 Computes manufacturing water withdrawal/consumption coefficients (m3/GJ output) by region and year
 }
 \details{
-Water widthdrawal and consumption coefficients for manufacturing for GCAM regions.
+Water withdrawal and consumption coefficients for manufacturing for GCAM regions.
 }
 \author{
 GPK June 2018

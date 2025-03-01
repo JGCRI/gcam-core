@@ -24,7 +24,6 @@ module_gcamusa_cement_xml <- function(command, ...) {
              "L2321.StubTech_cement_USA",
              "L2321.PerCapitaBased_cement_USA",
              "L2321.PriceElasticity_cement_USA",
-             "L2321.IncomeElasticity_cement_gcam3_USA",
              "L2321.DeleteFinalDemand_USAcement",
              "L2321.StubTechProd_cement_USA",
              "L2321.StubTechCoef_cement_USA",
@@ -49,7 +48,6 @@ module_gcamusa_cement_xml <- function(command, ...) {
     L2321.StubTech_cement_USA <- get_data(all_data, "L2321.StubTech_cement_USA")
     L2321.PerCapitaBased_cement_USA <- get_data(all_data, "L2321.PerCapitaBased_cement_USA")
     L2321.PriceElasticity_cement_USA <- get_data(all_data, "L2321.PriceElasticity_cement_USA")
-    L2321.IncomeElasticity_cement_gcam3_USA <- get_data(all_data, "L2321.IncomeElasticity_cement_gcam3_USA")
     L2321.DeleteFinalDemand_USAcement <- get_data(all_data, "L2321.DeleteFinalDemand_USAcement")
     L2321.Supplysector_cement_USA <- get_data(all_data, "L2321.Supplysector_cement_USA")
     L2321.StubTechProd_cement_USA <- get_data(all_data, "L2321.StubTechProd_cement_USA")
@@ -75,7 +73,6 @@ module_gcamusa_cement_xml <- function(command, ...) {
       add_xml_data(L2321.StubTech_cement_USA, "StubTech") %>%
       add_xml_data(L2321.PerCapitaBased_cement_USA, "PerCapitaBased") %>%
       add_xml_data(L2321.PriceElasticity_cement_USA, "PriceElasticity") %>%
-      add_xml_data(L2321.IncomeElasticity_cement_gcam3_USA, "IncomeElasticity") %>%
       add_xml_data(L2321.StubTechProd_cement_USA, "StubTechProd") %>%
       add_xml_data(L2321.StubTechCoef_cement_USA, "StubTechCoef") %>%
       add_xml_data(L2321.StubTechCalInput_cement_heat_USA, "StubTechCalInput") %>%
@@ -93,7 +90,6 @@ module_gcamusa_cement_xml <- function(command, ...) {
                      "L2321.StubTech_cement_USA",
                      "L2321.PerCapitaBased_cement_USA",
                      "L2321.PriceElasticity_cement_USA",
-                     "L2321.IncomeElasticity_cement_gcam3_USA",
                      "L2321.DeleteFinalDemand_USAcement",
                      "L2321.StubTechProd_cement_USA",
                      "L2321.StubTechCoef_cement_USA",

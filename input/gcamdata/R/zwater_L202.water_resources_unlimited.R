@@ -67,7 +67,7 @@ module_water_L202.water_resources_unlimited <- function(command, ...) {
       ungroup() ->
       L202.region_basin
 
-    # Create unlimied research markets for mapped water types
+    # Create unlimited resource markets for mapped water types
     L202.region_basin %>%
       mutate(unlimited.resource = paste(basin_name, water_type, sep = "_"),
              output.unit = water.WATER_UNITS_QUANTITY,
@@ -84,6 +84,7 @@ module_water_L202.water_resources_unlimited <- function(command, ...) {
       rename(resource = unlimited.resource) %>%
       select(LEVEL2_DATA_NAMES[["Rsrc"]]) ->
       L202.Rsrc_mapped
+
     L202.UnlimitRsrc_mapped %>%
       filter(is_unlimited) %>%
       select(LEVEL2_DATA_NAMES[["UnlimitRsrc"]]) ->

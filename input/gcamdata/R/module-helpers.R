@@ -191,7 +191,7 @@ set_years <- function(data) {
 
   assert_that(is_tibble(data))
   year_recode <- c("start-year" =  min(MODEL_BASE_YEARS),
-                   "final-calibration-year" = max(MODEL_BASE_YEARS),
+                   "final-calibration-year" = MODEL_FINAL_BASE_YEAR,
                    "final-historical-year" = as.numeric(max(HISTORICAL_YEARS)),
                    "initial-future-year" = min(MODEL_FUTURE_YEARS),
                    "initial-nonhistorical-year" = min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)]),
@@ -686,31 +686,43 @@ Moving_average <- function(x, periods = 5, NA_RM = TRUE){
     return(x)
   }
 
-  if ((periods %% 2) == 0) {
-    stop("Periods should be an odd value")
-  } else{
-
-    # (x +
-    #    Reduce(`+`, lapply(seq(1, (periods -1 )/2), function(a){lag(x, n = a)})) +
-    #    Reduce(`+`,lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)}))
-    # )/periods
+  assert_that((periods %% 2) == 1, msg = "Periods should be an odd value")
 
 
-    #new method to allow na.rm in mean calculation
-    c(lapply(seq((periods -1 )/2, 1), function(a){lag(x, n = a)}),
-      list(x),
-      lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)})) %>% unlist %>%
-      matrix(ncol = periods) %>%
-      rowMeans(na.rm = NA_RM)
+  #new method to allow na.rm in mean calculation
+  c(lapply(seq((periods -1 )/2, 1), function(a){lag(x, n = a)}),
+    list(x),
+    lapply(seq(1, (periods -1 )/2), function(a){lead(x, n = a)})) %>% unlist %>%
+    matrix(ncol = periods) %>%
+    rowMeans(na.rm = NA_RM)
 
-  }
 }
 
+#' Moving average lagged
+#' @description function to calculate moving average using only preceding values
+#'
+#' @param x A data frame contain the variable for calculation
+#' @param periods An odd number of the periods in MA. The default is 5, i.e.,
+#' 4 preceding years and the current year
+#'
+#' @return A data frame with moving average
+#' @export
+#' @author Hassan Niazi, May 2024
 
+Moving_average_lagged <- function(x, periods = 5){
+  if (periods == 1) {
+    return(x)
+  }
 
+  assert_that((periods %% 2) == 1, msg = "Periods should be an odd value")
+  assert_that(length(x) >= periods,
+              msg = "The length of the timeseries should be at least equal to the number of periods")
 
+  (x +
+      Reduce(`+`, lapply(seq(1, periods - 1), function(a) {lag(x, n = a)}))
+  ) / periods
 
-
+}
 
 
 # Function to dissaggregate dissolved regions in historical years ----
@@ -761,12 +773,11 @@ FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION <-
 
 #' FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL
 #'
-#' @param .DF
+#' @param .DF The data.frame to disaggregate
 #' @param SUDAN2012_BREAK If T break Sudan before 2012 based on 2013- 2016 data
 #' @param SUDAN2012_MERGE If T merge South Sudan into Sudan
 #'
 #' @return data with historical periods of dissolved region disaggregated to small pieces.
-
 FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL <- function(.DF,
                                                        SUDAN2012_BREAK = F,
                                                        SUDAN2012_MERGE = T){

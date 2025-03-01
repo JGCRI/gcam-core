@@ -262,7 +262,7 @@ module_gcamusa_L203.water_td <- function(command, ...) {
       arrange(region) %>%
       bind_rows(L203.mapping_nonirr %>%
                   filter(year == gcamusa.FINAL_MAPPING_YEAR) %>%
-                  mutate(year=max(MODEL_BASE_YEARS),
+                  mutate(year=MODEL_FINAL_BASE_YEAR,
                          coefficient = gcamusa.DEFAULT_COEFFICIENT,
                          subsector = basin_name,
                          technology = basin_name,

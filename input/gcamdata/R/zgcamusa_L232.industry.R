@@ -14,7 +14,7 @@
 #' \code{L232.BaseService_ind_USA}, \code{L232.Supplysector_ind_USA}, \code{L232.FinalEnergyKeyword_ind_USA}, \code{L232.BaseService_iron_steel},
 #' \code{L232.SubsectorLogit_ind_USA}, \code{L232.SubsectorShrwtFllt_ind_USA}, \code{L232.SubsectorInterp_ind_USA},
 #' \code{L232.StubTech_ind_USA}, \code{L232.StubTechInterp_ind_USA}, \code{L232.PerCapitaBased_ind_USA}, \code{L232.Production_reg_imp},
-#' \code{L232.PriceElasticity_ind_USA}, \code{L232.IncomeElasticity_ind_gcam3_USA}, \code{L232.DeleteDomSubsector_USAind}, \code{L232.DeleteTraSubsector_USAind},
+#' \code{L232.PriceElasticity_ind_USA}, \code{L232.DeleteDomSubsector_USAind}, \code{L232.DeleteTraSubsector_USAind},
 #' \code{L232.DeleteStubCalorieContent_USAind}.
 #' The corresponding file in the original data system was \code{L232.industry_USA.R} (gcam-usa level2).
 #' @details Prepare level 2 industry sector files for USA.
@@ -43,7 +43,6 @@ module_gcamusa_L232.industry <- function(command, ...) {
              "L232.StubTechInterp_ind",
              "L232.PerCapitaBased_ind",
              "L232.PriceElasticity_ind",
-             "L232.IncomeElasticity_ind_gcam3",
              "L2323.Supplysector_iron_steel",
              "L2324.Supplysector_Off_road",
              "L2325.Supplysector_chemical",
@@ -83,7 +82,6 @@ module_gcamusa_L232.industry <- function(command, ...) {
              "L232.StubTechInterp_ind_USA",
              "L232.PerCapitaBased_ind_USA",
              "L232.PriceElasticity_ind_USA",
-             "L232.IncomeElasticity_ind_gcam3_USA",
              "L232.DeleteTraSubsector_USAind",
              "L232.DeleteDomSubsector_USAind",
              "L232.Production_reg_imp",
@@ -119,7 +117,6 @@ module_gcamusa_L232.industry <- function(command, ...) {
     L232.StubTechInterp_ind <- get_data(all_data, "L232.StubTechInterp_ind", strip_attributes = TRUE)
     L232.PerCapitaBased_ind <- get_data(all_data, "L232.PerCapitaBased_ind", strip_attributes = TRUE)
     L232.PriceElasticity_ind <- get_data(all_data, "L232.PriceElasticity_ind", strip_attributes = TRUE)
-    L232.IncomeElasticity_ind_gcam3 <- get_data(all_data, "L232.IncomeElasticity_ind_gcam3", strip_attributes = TRUE)
     L2323.Supplysector_iron_steel <- get_data(all_data, "L2323.Supplysector_iron_steel", strip_attributes = TRUE)
     L2324.Supplysector_Off_road <- get_data(all_data, "L2324.Supplysector_Off_road", strip_attributes = TRUE)
     L2325.Supplysector_chemical <- get_data(all_data, "L2325.Supplysector_chemical", strip_attributes = TRUE)
@@ -273,7 +270,6 @@ module_gcamusa_L232.industry <- function(command, ...) {
     L232.StubTechInterp_ind_USA <- industry_USA_processing(L232.StubTechInterp_ind)
     L232.PerCapitaBased_ind_USA <- industry_USA_processing(L232.PerCapitaBased_ind)
     L232.PriceElasticity_ind_USA <- industry_USA_processing(L232.PriceElasticity_ind)
-    L232.IncomeElasticity_ind_gcam3_USA <- industry_USA_processing(L232.IncomeElasticity_ind_gcam3)
 
     # get calibrated input of industrial energy use technologies, including cogen
     L132.in_EJ_state_indnochp_F %>%
@@ -371,7 +367,7 @@ module_gcamusa_L232.industry <- function(command, ...) {
     # ^^ covers only base years
 
     L232.StubTechCoef_industry_USA_base %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>% select(-year) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>% select(-year) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) ->
       L232.StubTechCoef_industry_USA_fut
     # ^^ future years copied from final base year
@@ -646,16 +642,6 @@ module_gcamusa_L232.industry <- function(command, ...) {
       add_precursors("L232.PriceElasticity_ind") ->
       L232.PriceElasticity_ind_USA
 
-    L232.IncomeElasticity_ind_gcam3_USA %>%
-      add_title("Income elasticity of industry - GCAM3") %>%
-      add_units("Unitless") %>%
-      add_comments("First calculate industrial output as the base-year industrial output times the GDP ratio raised to the income elasticity") %>%
-      add_comments("Then back out the appropriate income elasticities from industrial output") %>%
-      add_comments("Note lower income elasticities for SSP1 are hard-coded.") %>%
-      add_legacy_name("L232.IncomeElasticity_ind_gcam3_USA") %>%
-      add_precursors("L232.IncomeElasticity_ind_gcam3") ->
-      L232.IncomeElasticity_ind_gcam3_USA
-
 
     return_data(L232.DeleteSupplysector_USAind,
                 L232.DeleteFinalDemand_USAind,
@@ -676,7 +662,6 @@ module_gcamusa_L232.industry <- function(command, ...) {
                 L232.StubTechInterp_ind_USA,
                 L232.PerCapitaBased_ind_USA,
                 L232.PriceElasticity_ind_USA,
-                L232.IncomeElasticity_ind_gcam3_USA,
                 L232.DeleteDomSubsector_USAind,
                 L232.DeleteTraSubsector_USAind,
                 L232.Production_reg_imp,

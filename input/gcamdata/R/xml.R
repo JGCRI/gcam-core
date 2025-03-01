@@ -505,7 +505,7 @@ XML_NODE_EQUIV <- list(
   "sector" = c("supplysector", "AgSupplySector", "pass-through-sector"),
   "subsector" = c("subsector", "AgSupplySubsector", "tranSubsector",
                   "nesting-subsector"),
-  "technology" = c("technology", "stub-technology", "intermittent-technology",
+  "technology" = c("technology", "stub-technology", "intermittent-technology", "backup-intermittent-technology",
                    "tranTechnology", "AgProductionTechnology", "pass-through-technology",
                    "resource-reserve-technology"),
   "discrete-choice" = c("dummy-logit-tag", "relative-cost-logit",

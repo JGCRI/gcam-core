@@ -14,7 +14,7 @@ module_emissions_L251.en_ssp_nonco2(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251.ssp2_ef}, \code{L251.ssp34_ef}, \code{L251.ssp15_ef_vin}, \code{L251.ssp2_ef_vin}, \code{L251.ssp34_ef_vin}. The corresponding file in the
+the generated outputs: \code{L251.ctrl.delete}, \code{L251.ssp15_ef}, \code{L251.ssp2_ef}, \code{L251.ssp2_ef_residTradBio}, \code{L251.ssp34_ef}, \code{L251.ssp15_ef_vin}, \code{L251.ssp2_ef_vin}, \code{L251.ssp34_ef_vin}. The corresponding file in the
 original data system was \code{L251.en_ssp_nonco2.R} (emissions level2).
 }
 \description{

@@ -234,7 +234,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # Add carbon content info to the master  table to give the
     # carbon content infor for unmanaged land in the second nest.
     L222.LC_bm2_R_Unmgd2_Yh_GLU %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>% select(-GCAM_region_ID) %>%
@@ -282,7 +282,7 @@ module_aglu_L222.land_input_2 <- function(command, ...) {
     # Add carbon content info to the master  table to give the
     # carbon content infor for managed land in the second nest.
     L222.LC_bm2_R_Mgd2_Yh_GLU %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>% select(-GCAM_region_ID) %>%

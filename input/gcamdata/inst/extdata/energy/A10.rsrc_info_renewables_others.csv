@@ -1,0 +1,17 @@
+# File: A10.rsrc_info_renewables_others.csv
+# Title: Information about resources in each region
+# Units: 1975$/kg limestone;  1975$/GJ for everything else
+# Source: Prices from GCAM 3.1 model input
+# Column types: cccccnnnnnn
+# ----------
+resource,resource_type,market,output-unit,price-unit,1971,1975,1990,2005,2010,2015
+biomass,renewresource,regional,EJ,1975$/GJ,1,1,1,1.25,1.25,1.25
+distributed_solar,renewresource,regional,EJ,1975$/GJ,6,6,6,6,6,6
+geothermal,renewresource,regional,EJ,1975$/GJ,0.1,0.1,0.1,0.1,0.1,0.1
+onshore wind resource,renewresource,regional,EJ,1975$/GJ,0.05,0.05,0.05,0.05,0.05,0.05
+traditional biomass,renewresource,regional,EJ,1975$/GJ,0.25,0.25,0.25,0.25,0.25,0.25
+global solar resource,unlimited-resource,global,EJ,1975$/GJ,0.001,0.001,0.001,0.001,0.001,0.001
+limestone,unlimited-resource,global,Mt,1975$/kg,0.001,0.001,0.001,0.001,0.001,0.001
+offshore wind resource,renewresource,regional,EJ,1975$/GJ,0.05,0.05,0.05,0.05,0.05,0.05
+scrap,unlimited-resource,global,Mt,1975$/kg,0.001,0.001,0.001,0.001,0.001,0.001
+unconventional oil upscaling,unlimited-resource,global,EJ,1975$/GJ,0.001,0.001,0.001,0.001,0.001,0.001

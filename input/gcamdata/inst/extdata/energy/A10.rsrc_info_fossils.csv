@@ -1,0 +1,150 @@
+# File: A10.rsrc_info_fossils.csv
+# Title: Information about fossil resource prices in select marker regions
+# Units: Nominal $/tonne for coal; Nominal $/millBtu for natural gas; and Nominal $/barrel for crude oil
+# Source: Prices from BP bp-stats-review-2022-all-data: https://www.bp.com/en/global/corporate/energy-economics/statistical-review-of-world-energy.html. 
+# Comments: To get the resource price data in this file from BP stats review file; copy German import price column in "Gas: Prices" sheet for natural gas; copy Northwest Europe marker price and Japan steam coal import CIF price for coal from "Coal: Prices" sheet; and copy Brent column from "Spot crude pricew" sheet for crude oil.  Note that resource with multiple markers will use straight mean of those regions.
+# Column types: ccccccin
+# ----------
+source,resource,resource_type,market,output-unit,price-unit,year,price
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1976,12.8
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1977,13.92
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1978,14.02
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1979,31.61
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1980,36.83
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1981,35.93
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1982,32.97
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1983,29.55
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1984,28.78
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1985,27.56
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1986,14.43
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1987,18.44
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1988,14.92
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1989,18.23
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1990,23.73
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1991,20
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1992,19.32
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1993,16.97
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1994,15.82
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1995,17.02
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1996,20.67
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1997,19.09
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1998,12.72
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,1999,17.97
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2000,28.5
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2001,24.44
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2002,25.02
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2003,28.83
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2004,38.27
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2005,54.52
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2006,65.14
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2007,72.39
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2008,97.26
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2009,61.67
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2010,79.5
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2011,111.26
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2012,111.67
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2013,108.66
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2014,98.95
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2015,52.39
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2016,43.73
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2017,54.19
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2018,71.31
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2019,64.21
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2020,41.84
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2021,70.91
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2022,101.32
+Brent spot price,crude oil,resource,regional,EJ,Nominal $/barrel,2023,82.64
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2001,37.69
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2002,31.47
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2003,39.61
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2004,74.22
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2005,64.62
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2006,65.22
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2007,95.59
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2008,157.88
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2009,83.59
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2010,108.47
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2011,126.13
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2012,100.3
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2013,90.07
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2014,76.13
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2015,60.1
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2016,71.66
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2017,96.02
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2018,112.73
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2019,85.48
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2020,69.01
+Japan steam spot CIF price,coal,resource,regional,EJ,Nominal $/tonne,2021,155.41
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1987,31.3
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1988,39.94
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1989,42.08
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1990,43.48
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1991,42.80
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1992,38.53
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1993,33.68
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1994,37.18
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1995,44.50
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1996,41.25
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1997,38.92
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1998,32.00
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,1999,28.79
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2000,35.99
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2001,39.03
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2002,31.65
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2003,43.6
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2004,72.13
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2005,60.54
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2006,64.11
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2007,88.79
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2008,147.67
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2009,70.39
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2010,92.50
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2011,121.48
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2012,92.5
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2013,81.69
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2014,75.38
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2015,56.79
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2016,60.09
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2017,84.51
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2018,91.83
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2019,60.17
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2020,50.13
+Northwest Europe marker price,coal,resource,regional,EJ,Nominal $/tonne,2021,122.6
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1984,4
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1985,4.25
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1986,3.93
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1987,2.55
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1988,2.22
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1989,2
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1990,2.78
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1991,3.23
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1992,2.7
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1993,2.51
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1994,2.35
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1995,2.43
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1996,2.5
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1997,2.66
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1998,2.33
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,1999,1.86
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2000,2.91
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2001,3.67
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2002,3.21
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2003,4.06
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2004,4.3
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2005,5.83
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2006,7.87
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2007,7.99
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2008,11.6
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2009,8.53
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2010,8.03
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2011,10.49
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2012,10.93
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2013,10.73
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2014,9.11
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2015,6.72
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2016,4.93
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2017,5.62
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2018,6.64
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2019,5.03
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2020,4.06
+Average German Import price,natural gas,resource,regional,EJ,Nominal $/millionBtu,2021,8.94

@@ -33,7 +33,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
 
     tibble(start.year.timestep     = GCAM_timesteps[1],
            start.year              = min(MODEL_BASE_YEARS),
-           final.calibration.year  = max(MODEL_BASE_YEARS),
+           final.calibration.year  = MODEL_FINAL_BASE_YEAR,
            end.year                = max(MODEL_FUTURE_YEARS),
            carbon.model.start.year = modeltime.MAGICC_C_START_YEAR) %>%
       add_title("GCAM time information") %>%

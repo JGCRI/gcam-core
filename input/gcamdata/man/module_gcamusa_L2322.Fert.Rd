@@ -14,14 +14,14 @@ module_gcamusa_L2322.Fert(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2322.DeleteSubsector_USAFert}, \code{L2322.FinalEnergyKeyword_USAFert}, \code{L2322.FinalEnergyKeyword_Fert_USA}, \code{L2322.StubTech_Fert_USA}, \code{L2322.SubsectorLogit_USAFert}, \code{L2322.SubsectorShrwtFllt_USAFert}, \code{L2322.TechShrwt_USAFert}, \code{L2322.Production_USAFert}, \code{L2322.TechCoef_USAFer}, \code{L2322.StubTechProd_Fert_USA}, \code{L2322.StubTechCoef_Fert_USA}, \code{L2322.StubTechMarket_Fert_USA}, \code{L2322.SubsectorLogit_Fert_USA}, \code{L2322.Supplysector_Fert_USA}, \code{L2322.SubsectorShrwtFllt_Fert_USA}, \code{L2322.SubsectorInterp_Fert_USA},\code{L2322.SubsectorInterp_USAFert}
+the generated outputs: \code{L2322.DeleteSubsector_USAFert}, \code{L2322.FinalEnergyKeyword_USAFert}, \code{L2322.FinalEnergyKeyword_Fert_USA}, \code{L2322.StubTech_Fert_USA}, \code{L2322.SubsectorLogit_USAFert}, \code{L2322.SubsectorShrwtFllt_USAFert}, \code{L2322.TechShrwt_USAFert}, \code{L2322.Production_USAFert}, \code{L2322.TechCoef_USAFer}, \code{L2322.StubTechProd_FertProdProd_USA}, \code{L2322.StubTechCoef_Fert_USA}, \code{L2322.StubTechMarket_Fert_USA}, \code{L2322.SubsectorLogit_Fert_USA}, \code{L2322.Supplysector_Fert_USA}, \code{L2322.SubsectorShrwtFllt_Fert_USA}, \code{L2322.SubsectorInterp_Fert_USA},\code{L2322.SubsectorInterp_USAFert}
  The corresponding file in the original data system was \code{L2322.Fert_USA.R} (gcam-usa level2).
 }
 \description{
-Produce tables to create the N fertilizer sector in GCAM-USA.
+Create the state-level ammonia production sectors in GCAM-USA.
 }
 \details{
-This chunk produces tables to create the N fertilizer sector in GCAM-USA.
+This chunk produces tables to create the ammonia sector in GCAM-USA.
 }
 \author{
 KD October 2017

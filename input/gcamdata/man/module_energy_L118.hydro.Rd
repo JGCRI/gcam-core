@@ -23,7 +23,7 @@ Calculate hydro potential in EJ from 2010 to 2100 by GCAM region ID
 \details{
 Different proxies are used to calculate hydro potential.
 
-In most cases, a growth potential for each country was calculated, multiplied by its share in the region, and added to the base-year ouput
+In most cases, a growth potential for each country was calculated, multiplied by its share in the region, and added to the base-year output
 }
 \author{
 AS May 2017

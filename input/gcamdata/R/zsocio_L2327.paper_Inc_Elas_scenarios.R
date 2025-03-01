@@ -25,12 +25,7 @@ module_socio_L2327.paper_Inc_Elas_scenarios <- function(command, ...) {
              "L101.Pop_thous_GCAM3_R_Y",
              "L102.gdp_mil90usd_GCAM3_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2327.paper_incelas_gssp1",
-             "L2327.paper_incelas_gssp2",
-             "L2327.paper_incelas_gssp3",
-             "L2327.paper_incelas_gssp4",
-             "L2327.paper_incelas_gssp5",
-             "L2327.paper_incelas_ssp1",
+    return(c("L2327.paper_incelas_ssp1",
              "L2327.paper_incelas_ssp2",
              "L2327.paper_incelas_ssp3",
              "L2327.paper_incelas_ssp4",
@@ -105,31 +100,6 @@ module_socio_L2327.paper_Inc_Elas_scenarios <- function(command, ...) {
     # ===================================================
 
     # Produce outputs
-    L2327.pcgdp_thous90USD_Scen_R_Y[["gSSP1"]] %>%
-      add_title("Paper Income Elasticity: gssp1") %>%
-      add_legacy_name("L2327.paper_incelas_gssp1") ->
-      L2327.paper_incelas_gssp1
-
-    L2327.pcgdp_thous90USD_Scen_R_Y[["gSSP2"]] %>%
-      add_title("Paper Income Elasticity: gssp2") %>%
-      add_legacy_name("L2327.paper_incelas_gssp2") ->
-      L2327.paper_incelas_gssp2
-
-    L2327.pcgdp_thous90USD_Scen_R_Y[["gSSP3"]] %>%
-      add_title("Paper Income Elasticity: gssp3") %>%
-      add_legacy_name("L2327.paper_incelas_gssp3") ->
-      L2327.paper_incelas_gssp3
-
-    L2327.pcgdp_thous90USD_Scen_R_Y[["gSSP4"]] %>%
-      add_title("Paper Income Elasticity: gssp4") %>%
-      add_legacy_name("L2327.paper_incelas_gssp4") ->
-      L2327.paper_incelas_gssp4
-
-    L2327.pcgdp_thous90USD_Scen_R_Y[["gSSP5"]] %>%
-      add_title("Paper Income Elasticity: gssp5") %>%
-      add_legacy_name("L2327.paper_incelas_gssp5") ->
-      L2327.paper_incelas_gssp5
-
     L2327.pcgdp_thous90USD_Scen_R_Y[["SSP1"]] %>%
       add_title("Paper Income Elasticity: ssp1") %>%
       add_legacy_name("L2327.paper_incelas_ssp1") ->
@@ -165,12 +135,7 @@ module_socio_L2327.paper_Inc_Elas_scenarios <- function(command, ...) {
                      "L101.Pop_thous_GCAM3_R_Y", "L102.gdp_mil90usd_GCAM3_R_Y") ->
       L2327.paper_incelas_gcam3
 
-    return_data(L2327.paper_incelas_gssp1,
-                L2327.paper_incelas_gssp2,
-                L2327.paper_incelas_gssp3,
-                L2327.paper_incelas_gssp4,
-                L2327.paper_incelas_gssp5,
-                L2327.paper_incelas_ssp1,
+    return_data(L2327.paper_incelas_ssp1,
                 L2327.paper_incelas_ssp2,
                 L2327.paper_incelas_ssp3,
                 L2327.paper_incelas_ssp4,

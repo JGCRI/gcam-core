@@ -116,9 +116,9 @@ module_emissions_L253.emission_controls <- function(command, ...) {
 
     # Join GDP data with GCAM region by the region ID, and filter to only include data we need
     # Convert GDP data to 2015$ to be consistent with the units expected in the emission control input files
-    # The scenario can be switched to another by substituting the new scenario with "gSSP2" here
+    # The scenario can be switched to another by substituting the new scenario with "SSP2" here
     pcGDP_MER %>%
-      filter(scenario == "gSSP2",
+      filter(scenario == "SSP2",
              year %in% MODEL_YEARS) %>%
       left_join_error_no_match(non_co2_region_info, by = "GCAM_region_ID") %>%
       select(year, value, region) %>%

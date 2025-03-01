@@ -1,0 +1,15 @@
+# File: A23.globalinttech_backup.csv
+# Title: Electricity sector backup intermittent technology information
+# Units: USD1975/kW/yr for 'backup.capital.cost'; Unitless for 'backup.capacity.factor'; Unitless for 'capacity.limit'
+# Description: (1) Annualized capital cost per kW of backup capacity that intermittent renewable technologies may be required to purchase to ensure electrical supply reliability
+# (2) Assumed capacity factor of purchased backup capacity
+# (3) Mid-point of backup capacity requirement curve: an s-curve describing the amount of backup capacity required per unit of installed capacity of the given technology.
+# This file corresponds to the previous (GCAM v7.1 and earlier) approach to representing variable renewable energy integration. This approach remains available but is not used by default.
+# Column types: cccccinnccc 
+# ----------
+supplysector,subsector,technology,electric.sector.name,trial.market.name,backup.capital.cost,backup.capacity.factor,capacity.limit,minicam.energy.input,minicam.non.energy.input,flag
+electricity,wind,wind,electricity,wind,36,0.05,0.4,backup_electricity,backup-cap-cost,BackupEnergy
+electricity,solar,PV,electricity,solar,36,0.05,0.45,backup_electricity,backup-cap-cost,BackupEnergy
+electricity,solar,CSP,electricity,solar,36,0.05,0.45,csp_backup,backup-cap-cost,BackupEnergy
+elect_td_bld,rooftop_pv,rooftop_pv,electricity,solar,36,0.05,0.45,backup_electricity,backup-cap-cost,BackupEnergy
+electricity,wind,wind_offshore,electricity,wind,36,0.05,0.4,backup_electricity,backup-cap-cost,BackupEnergy

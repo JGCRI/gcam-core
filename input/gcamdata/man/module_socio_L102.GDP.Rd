@@ -25,10 +25,8 @@ outputs include GDP, pcGDP, and the PPP-MER conversion factor, all tabulated
 by GCAM region.
 }
 \details{
-The scenarios generated include the SSPs and the gSSPs (SSPs modified by
-near-term IMF projections).  GDP outputs are in millions of 1990 USD, Market
-Exchange Rate (measured in 2010) is used for foreign currency.  Per-capita
-values are in thousands of 1990 USD.
+The scenarios generated include the SSPs.  GDP outputs are in millions of 1990 USD.
+Per-capita values are in thousands of 1990 USD.
 }
 \author{
 RPL March 2017

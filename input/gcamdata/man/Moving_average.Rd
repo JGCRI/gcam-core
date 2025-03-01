@@ -4,12 +4,14 @@
 \alias{Moving_average}
 \title{Moving average}
 \usage{
-Moving_average(x, periods = 5)
+Moving_average(x, periods = 5, NA_RM = TRUE)
 }
 \arguments{
 \item{x}{A data frame contain the variable for calculation}
 
 \item{periods}{An odd number of the periods in MA. The default is 5, i.e., 2 lags and 2 leads}
+
+\item{NA_RM}{If TRUE, remove NA in calculating mean, otherwise returning NA}
 }
 \value{
 A data frame

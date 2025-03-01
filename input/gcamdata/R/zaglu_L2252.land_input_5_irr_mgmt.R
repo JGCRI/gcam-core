@@ -142,7 +142,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       replace_GLU(map = basin_to_country_mapping) %>%
       mutate(Irr_Rfd = "RFD") %>%
       bind_rows(L171.ag_irrEcYield_kgm2_R_C_Y_GLU) %>%
-      filter(year == max(MODEL_BASE_YEARS)) ->
+      filter(year == MODEL_FINAL_BASE_YEAR) ->
       L171.ag_EcYield_kgm2_R_C_Y_GLU
 
     # convert_LN4_to_LN5
@@ -296,7 +296,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
       L2252.LN5_MgdCarbon_crop
 
     L2012.AgYield_bio_ref %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(region, AgProductionTechnology, yield) %>%
       separate(AgProductionTechnology, c("GCAM_subsector", "GLU", "Irr_Rfd", "level")) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("GCAM_subsector" = "LandLeaf")) %>%
@@ -373,7 +373,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
 
     # Next, compute total land by GLU, using adjust levels
     ADJ_LAND_COVER %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       group_by(region, GLU) %>%
       summarize(total_land = sum(value)) %>%
       ungroup() ->
@@ -382,7 +382,7 @@ module_aglu_L2252.land_input_5_irr_mgmt <- function(command, ...) {
     # Finally, compute share of adjusted land cover that is irrigated or rainfed
     ADJ_LAND_COVER %>%
       mutate(Irr_Rfd = toupper(Irr_Rfd)) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       group_by(region, GLU, Irr_Rfd) %>%
       summarize(value = sum(value)) %>%
       ungroup() %>%

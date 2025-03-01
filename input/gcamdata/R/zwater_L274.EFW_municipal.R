@@ -140,7 +140,7 @@ module_water_L274.EFW_municipal <- function(command, ...) {
 
     # If any of the stub technology coefficients are greater than the global technology defaults, copy them forward to all future years
     # (Coefs less than the global tech defaults are only that way because of base-year energy balancing, not something to carry forward)
-    L274.StubTechCoef_muni_future <- filter(L274.StubTechCoef_muni, year == max(MODEL_BASE_YEARS)) %>%
+    L274.StubTechCoef_muni_future <- filter(L274.StubTechCoef_muni, year == MODEL_FINAL_BASE_YEAR) %>%
       left_join(L274.GlobalTechCoef_muni, by = c(supplysector = "sector.name", subsector = "subsector.name", stub.technology = "technology", "year"),
                 suffix = c("", ".default")) %>%
       filter(coefficient > coefficient.default) %>%

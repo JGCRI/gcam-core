@@ -22,8 +22,7 @@
 #' @author MTB September 2018; AJS June 2019
 module_gcamusa_L2238.PV_reeds <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = 'energy/A10.rsrc_info',
-             FILE = 'gcam-usa/states_subregions',
+    return(c(FILE = 'gcam-usa/states_subregions',
              FILE = 'gcam-usa/reeds_regions_states',
              FILE = 'gcam-usa/reeds_PV_curve_capacity',
              FILE = 'gcam-usa/reeds_PV_curve_CF_avg',
@@ -33,6 +32,7 @@ module_gcamusa_L2238.PV_reeds <- function(command, ...) {
              FILE = 'gcam-usa/NREL_us_re_technical_potential',
              FILE = 'gcam-usa/NREL_us_re_capacity_factors',
              FILE = "gcam-usa/A10.renewable_resource_delete",
+             "L210.rsrc_info",
              'L2234.StubTechCapFactor_elecS_solar_USA',
              'L2234.StubTechMarket_elecS_USA',
              'L2234.GlobalIntTechCapital_elecS_USA',
@@ -53,7 +53,7 @@ module_gcamusa_L2238.PV_reeds <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    A10.rsrc_info <- get_data(all_data, 'energy/A10.rsrc_info')
+    L210.rsrc_info <- get_data(all_data, 'L210.rsrc_info')
     states_subregions <- get_data(all_data, 'gcam-usa/states_subregions')
     reeds_regions_states <- get_data(all_data, 'gcam-usa/reeds_regions_states')
     reeds_PV_curve_capacity <- get_data(all_data, 'gcam-usa/reeds_PV_curve_capacity')
@@ -180,21 +180,18 @@ module_gcamusa_L2238.PV_reeds <- function(command, ...) {
     # L2238.PV_matrix: Create a matrix of costs (1975$/GJ) and resource potential (EJ) by state and class
     L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "PV_peak",
-             year == max(MODEL_BASE_YEARS)) %>%
-      select(capital.overnight) -> L2238.PV_capital
-    L2238.PV_capital <- as.numeric(L2238.PV_capital)
+             year == MODEL_FINAL_BASE_YEAR) %>%
+      select(capital.overnight) %>% as.numeric() -> L2238.PV_capital
 
     L223.GlobalIntTechCapital_elec %>%
       filter(intermittent.technology == "PV",
-             year == max(MODEL_BASE_YEARS)) %>%
-      select(fixed.charge.rate) -> L2238.fcr
-    L2238.fcr <- as.numeric(L2238.fcr)
+             year == MODEL_FINAL_BASE_YEAR) %>%
+      select(fixed.charge.rate) %>% as.numeric()  -> L2238.fcr
 
     L223.GlobalIntTechOMfixed_elec %>%
       filter(intermittent.technology == "PV",
-             year == max(MODEL_BASE_YEARS)) %>%
-      select(OM.fixed) -> L2238.PV_OMfixed
-    L2238.PV_OMfixed <- as.numeric(L2238.PV_OMfixed)
+             year == MODEL_FINAL_BASE_YEAR) %>%
+      select(OM.fixed) %>% as.numeric() -> L2238.PV_OMfixed
 
     L2238.PV_potential_EJ %>%
       left_join_error_no_match(L2238.PV_CF, by = c("State","PV.class")) %>%
@@ -269,11 +266,11 @@ module_gcamusa_L2238.PV_reeds <- function(command, ...) {
 
     # We get the unlimited global solar resource price which will be applied to the one grade states
     # by creating a dummy second grade which will utilize the maxsubresource for the given state
-    A10.rsrc_info %>%
-      gather_years() %>%
-      filter(resource == "global solar resource",
-             year == max(year)) %>%
-      pull(value) -> A10_solar_cost
+    L210.rsrc_info %>%
+      filter(resource == "global solar resource") %>%
+      filter(year == max(year)) %>%
+      pull(value) %>%
+      unique() -> A10_solar_cost
 
     # Make a second grade for all the single grade states by using full the maxsubresource percentage
     # as available value and global solar resource price as extraction cost
@@ -305,7 +302,7 @@ module_gcamusa_L2238.PV_reeds <- function(command, ...) {
              tech.change = round(abs(1 - (tech.change.period) ^ (1 / time.change)), energy.DIGITS_TECHCHANGE)) %>%
       select(year, tech.change) %>%
       filter(!is.na(tech.change),
-             year > max(MODEL_BASE_YEARS)) -> L2238.PV_curve_tech_change
+             year > MODEL_FINAL_BASE_YEAR) -> L2238.PV_curve_tech_change
 
     # Grid connection costs are read in as fixed non-energy cost adders (in $/GJ) that vary by state.
     # Our starting data comprises of grid connection costs in $/MW by ReEDS region and PV class.
@@ -484,7 +481,7 @@ module_gcamusa_L2238.PV_reeds <- function(command, ...) {
                      'gcam-usa/reeds_PV_curve_CF_avg',
                      'gcam-usa/NREL_us_re_technical_potential',
                      'gcam-usa/NREL_us_re_capacity_factors',
-                     'energy/A10.rsrc_info',
+                     'L210.rsrc_info',
                      'L2234.StubTechMarket_elecS_USA',
                      'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
@@ -503,7 +500,7 @@ module_gcamusa_L2238.PV_reeds <- function(command, ...) {
                      'gcam-usa/NREL_us_re_technical_potential',
                      'gcam-usa/NREL_us_re_capacity_factors',
                      'gcam-usa/A10.renewable_resource_delete',
-                     'energy/A10.rsrc_info',
+                     'L210.rsrc_info',
                      'L2234.GlobalIntTechCapital_elecS_USA',
                      'L223.GlobalIntTechCapital_elec',
                      'L223.GlobalIntTechOMfixed_elec') ->

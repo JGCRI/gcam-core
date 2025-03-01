@@ -46,7 +46,7 @@ module_energy_L121.liquids <- function(command, ...) {
       share <- share_RG3_world <- subsector <- technology <- minicam.energy.input <-
       value_coef <- fuel.y <- value_coef_gas <- resource <- Production_ML <-
       Biofuel <- GCAM_commodity <- SecOutRatio <- IOcoef <- Weighted_IOcoef <-
-      Weighted_SecOutRatio <- Weight <- region <- gas_coef <- val_unoil <- NULL
+      Weighted_SecOutRatio <- Weight <- region <- gas_coef <- val_unoil <- year.x <- year.y <- NULL
 
     all_data <- list(...)[[1]]
 
@@ -60,7 +60,7 @@ module_energy_L121.liquids <- function(command, ...) {
     A21.unoil_demandshares <- get_data(all_data, "energy/A21.unoil_demandshares", strip_attributes = TRUE)
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist", strip_attributes = TRUE)
     L1012.en_bal_EJ_R_Si_Fi_Yh <- get_data(all_data, "L1012.en_bal_EJ_R_Si_Fi_Yh", strip_attributes = TRUE)
-    A21.globalrsrctech_coef <- get_data(all_data, "energy/A21.globalrsrctech_coef", strip_attributes = TRUE) %>%
+    A21.globalrsrctech_coef_ngas <- get_data(all_data, "energy/A21.globalrsrctech_coef", strip_attributes = TRUE) %>%
       filter(minicam.energy.input == "regional natural gas") %>%
       gather_years(value_col = "gas_coef") %>%
       repeat_add_columns(tibble(region = c(iso_GCAM_regID$GCAM_region_ID)))
@@ -84,11 +84,22 @@ module_energy_L121.liquids <- function(command, ...) {
 
       # ===================================================
 
-      A21.globalrsrctech_coef %>%
+      A21.globalrsrctech_coef_ngas %>%
         select(region, year, minicam.energy.input, gas_coef) %>%
         rename(GCAM_region_ID=region, fuel = minicam.energy.input) %>%
         mutate(fuel="gas") %>%
         distinct() -> gas_uncov_ratio
+
+      # copy forward the coefficient from the latest year before final base year
+      if (!all(MODEL_BASE_YEARS %in% unique(gas_uncov_ratio$year))) {
+        # actually this warning might not be necessary here because all historical gas-to-oil coefficients are the same
+        warning("module_energy_L121.liquids: Filling in gas input coeffcient to unconventional oil from A21.globalrsrctech_coef for the base year (", MODEL_FINAL_BASE_YEAR ,").")
+
+        gas_uncov_ratio %>%
+          complete(GCAM_region_ID, year = c(year, MODEL_BASE_YEARS), fuel) %>%
+          mutate(gas_coef = if_else(is.na(gas_coef), lag(gas_coef), gas_coef)) %>%
+          fill(gas_coef, .direction = "down") -> gas_uncov_ratio
+        }
 
       # Downscaling unconventional oil consumption shares by GCAM 3.0 region to countries
       product_filters <- filter(IEA_product_rsrc, resource == "crude oil")
@@ -160,12 +171,14 @@ module_energy_L121.liquids <- function(command, ...) {
         filter(year %in% MODEL_BASE_YEARS) %>%
         mutate(fuel=paste0("gas")) %>%
         left_join(gas_uncov_ratio,by=c("GCAM_region_ID","year","fuel")) %>%
-        mutate(value =if_else(is.na(gas_coef),0,value*gas_coef)) %>%
-        inner_join(unoil_prod %>% select(GCAM_region_ID, year, val_unoil =value),by=c("GCAM_region_ID","year"))%>%
-        mutate(value=val_unoil*gas_coef) %>%
-        select(GCAM_region_ID, fuel, year, value)->  L121.in_EJ_R_unoil_F_Yh
+        inner_join(unoil_prod %>% select(GCAM_region_ID, year, val_unoil = value), by=c("GCAM_region_ID","year")) %>%
+        mutate(value = val_unoil * gas_coef) %>%
+        select(GCAM_region_ID, fuel, year, value) ->  L121.in_EJ_R_unoil_F_Yh
 
-
+      # Check for invalid data here
+      if ( sum(colSums(is.na(L121.in_EJ_R_unoil_F_Yh))) > 0 ) {
+        stop("ERROR in module_energy_LA121.liquids. Invalid data in unconventional oil calcuation.")
+      }
 
       # 4/23/2019 addendum - GPK.
       # Downscale biofuel consumption to specific technologies, per data from IIASA

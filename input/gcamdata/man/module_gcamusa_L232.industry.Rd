@@ -20,7 +20,8 @@ the generated outputs: \code{L232.DeleteSupplysector_USAind}, \code{L232.DeleteF
 \code{L232.BaseService_ind_USA}, \code{L232.Supplysector_ind_USA}, \code{L232.FinalEnergyKeyword_ind_USA}, \code{L232.BaseService_iron_steel},
 \code{L232.SubsectorLogit_ind_USA}, \code{L232.SubsectorShrwtFllt_ind_USA}, \code{L232.SubsectorInterp_ind_USA},
 \code{L232.StubTech_ind_USA}, \code{L232.StubTechInterp_ind_USA}, \code{L232.PerCapitaBased_ind_USA}, \code{L232.Production_reg_imp},
-\code{L232.PriceElasticity_ind_USA}, \code{L232.IncomeElasticity_ind_gcam3_USA}, \code{L232.DeleteDomSubsector_USAind}, \code{L232.DeleteTraSubsector_USAind}.
+\code{L232.PriceElasticity_ind_USA}, \code{L232.DeleteDomSubsector_USAind}, \code{L232.DeleteTraSubsector_USAind},
+\code{L232.DeleteStubCalorieContent_USAind}.
 The corresponding file in the original data system was \code{L232.industry_USA.R} (gcam-usa level2).
 }
 \description{

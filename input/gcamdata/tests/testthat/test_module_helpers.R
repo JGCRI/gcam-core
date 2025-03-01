@@ -69,7 +69,7 @@ test_that("set_years", {
                     "initial-future-year", "initial-nonhistorical-year", "end-year"))
   d1 <- set_years(d)
   expect_identical(d1$x, c(min(MODEL_BASE_YEARS),
-                           max(MODEL_BASE_YEARS),
+                           MODEL_FINAL_BASE_YEAR,
                            max(HISTORICAL_YEARS),
                            min(MODEL_FUTURE_YEARS),
                            min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)]),

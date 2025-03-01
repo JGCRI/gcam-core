@@ -92,19 +92,19 @@ module_gcamusa_L2237.wind_reeds <- function(command, ...) {
     # L2237.wind_matrix: Creating a matrix of costs (1975$/GJ) and cumulative resource potential (EJ) by state and class
     L2234.GlobalIntTechCapital_elecS_USA %>%
       filter(intermittent.technology == "wind_base",
-             year == max(MODEL_BASE_YEARS)) %>%
+             year == MODEL_FINAL_BASE_YEAR) %>%
       select(capital.overnight) -> L2237.wind_capital
     L2237.wind_capital <- as.numeric(L2237.wind_capital)
 
     L223.GlobalIntTechCapital_elec %>%
       filter(intermittent.technology == "wind",
-             year == max(MODEL_BASE_YEARS)) %>%
+             year == MODEL_FINAL_BASE_YEAR) %>%
       select(fixed.charge.rate) -> L2237.fcr
     L2237.fcr <- as.numeric(L2237.fcr)
 
     L223.GlobalIntTechOMfixed_elec %>%
       filter(intermittent.technology == "wind",
-             year == max(MODEL_BASE_YEARS)) %>%
+             year == MODEL_FINAL_BASE_YEAR) %>%
       select(OM.fixed) -> L2237.wind_OMfixed
     L2237.wind_OMfixed <- as.numeric(L2237.wind_OMfixed)
 
@@ -225,7 +225,7 @@ module_gcamusa_L2237.wind_reeds <- function(command, ...) {
              tech.change = round(abs(1 - (tech.change.period) ^ ( 1 / time.change)), energy.DIGITS_TECHCHANGE)) %>%
       select(year, tech.change) %>%
       filter(!is.na(tech.change),
-             year > max(MODEL_BASE_YEARS)) -> L2237.wind_curve_tech_change
+             year > MODEL_FINAL_BASE_YEAR) -> L2237.wind_curve_tech_change
 
     # Grid connection costs are read in as fixed non-energy cost adders (in $/GJ) that vary by state.
     # Our starting data consists of grid connection costs in $/MW by ReEDS region and wind class.

@@ -254,23 +254,42 @@ module_energy_L222.en_transformation <- function(command, ...) {
       L222.GlobalTechTrackCapital_en
 
     # L222.GlobalTechCost_low_en: Costs of global technologies for energy transformation -- low tech/high cost option
-    A22.globaltech_cost_low %>%
-      gather_years(value_col = "input.cost") %>%
-      complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_YEARS)) %>%
-      arrange(supplysector, year) %>%
-      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
-      mutate(input.cost = approx_fun(year, input.cost, rule = 1)) %>%
-      ungroup() %>%
-      filter(year %in% MODEL_YEARS) %>%
-      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      rename(sector.name = supplysector, subsector.name = subsector) %>%
-      mutate(input.cost = round(input.cost, energy.DIGITS_COST)) ->
-      L222.GlobalTechCost_low_en
+      A22.globaltech_cost_low %>%
+        gather_years(value_col = "input.cost") %>%
+        complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_YEARS)) %>%
+        arrange(supplysector, year) %>%
+        group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
+        # only interpolate future years
+        mutate(input.cost = if_else(year <= MODEL_FINAL_BASE_YEAR, input.cost, approx_fun(year, input.cost, rule = 1))) %>%
+        # fill historical years with the first non-NA value
+        fill(input.cost, .direction = "down") %>%
+        ungroup() %>%
+        filter(year %in% MODEL_YEARS) %>%
+        # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
+        rename(sector.name = supplysector, subsector.name = subsector) %>%
+        mutate(input.cost = round(input.cost, energy.DIGITS_COST)) ->
+        L222.GlobalTechCost_low_en
     # reorders columns to match expected model interface input
     L222.GlobalTechCost_low_en <- L222.GlobalTechCost_low_en[LEVEL2_DATA_NAMES[["GlobalTechCost"]]]
 
-    # L222.GlobalTechShrwt_en: Shareweights of global technologies for energy transformation
+    # Makes sure A22.globaltech_shrwt has a base year column in which
+    # shareweights in the base year are the same as previous history year.
+    # The base year needs to be specified here for interpolation
+
     A22.globaltech_shrwt %>%
+      gather_years(value_col = "share.weight") %>%
+      filter(year <= MODEL_FINAL_BASE_YEAR) %>%
+      complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_FINAL_BASE_YEAR)) %>%
+      arrange(supplysector, year) %>%
+      group_by(supplysector, subsector, technology) %>%
+      mutate(share.weight = approx_fun(year, share.weight, rule = 2)) %>%
+      ungroup() %>%
+      spread(year, share.weight) %>%
+      left_join_error_no_match(A22.globaltech_shrwt) -> A22.globaltech_shrwt_wBaseY
+
+
+    # L222.GlobalTechShrwt_en: Shareweights of global technologies for energy transformation
+    A22.globaltech_shrwt_wBaseY %>%
       gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_YEARS)) %>%
       arrange(supplysector, year) %>%
@@ -321,7 +340,7 @@ module_energy_L222.en_transformation <- function(command, ...) {
     # filters base years from original and then appends future years
     L222.globaltech_retirement_base %>%
       mutate(year = as.integer(year)) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       bind_rows(L222.globaltech_retirement_future) ->
       L222.globaltech_retirement
 

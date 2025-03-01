@@ -4,8 +4,12 @@
 \alias{add_carbon_info}
 \title{add_carbon_info}
 \usage{
-add_carbon_info(data, carbon_info_table, matchvars = c("region", "GLU",
-  Cdensity_LT = "Land_Type"))
+add_carbon_info(
+  data,
+  carbon_info_table,
+  matchvars = c("region", "GLU", Cdensity_LT = "Land_Type"),
+  Min_Soil_C_at_Cropland = TRUE
+)
 }
 \arguments{
 \item{data}{= input data tibble to receive carbon info}
@@ -13,6 +17,8 @@ add_carbon_info(data, carbon_info_table, matchvars = c("region", "GLU",
 \item{carbon_info_table}{= table with veg and soil carbon densities, and mature.age}
 
 \item{matchvars}{=  a character vector for by = in left_join(data, carbon_info_table, by = ...)}
+
+\item{Min_Soil_C_at_Cropland}{If TRUE (default) using cropland soil carbon density as a minimum threshold in land policy}
 }
 \value{
 the original table with carbon density info added

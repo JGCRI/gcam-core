@@ -53,6 +53,7 @@
 #include "technologies/include/technology.h"
 #include "technologies/include/itechnology.h"
 #include "technologies/include/default_technology.h"
+#include "technologies/include/backup_intermittent_technology.h"
 #include "technologies/include/intermittent_technology.h"
 #include "technologies/include/wind_technology.h"
 #include "technologies/include/solar_technology.h"
@@ -127,6 +128,7 @@ ITechnologyContainer* TechnologyContainer::clone() const {
  */
 bool TechnologyContainer::hasTechnologyType( const string& aTechNodeName ) {
     return ( aTechNodeName == DefaultTechnology::getXMLNameStatic() ||
+             aTechNodeName == BackupIntermittentTechnology::getXMLNameStatic() ||
              aTechNodeName == IntermittentTechnology::getXMLNameStatic() ||
              aTechNodeName == WindTechnology::getXMLNameStatic() ||
              aTechNodeName == SolarTechnology::getXMLNameStatic() ||

@@ -19,5 +19,5 @@ The unique list of chunk names which are precursors for \code{chunk_names}.
 }
 \description{
 The algorithm is performing a depth first search where chunks are "nodes"
-and data objects are "verticies" connecting them.
+and data objects are "vertices" connecting them.
 }

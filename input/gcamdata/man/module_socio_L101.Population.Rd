@@ -14,7 +14,7 @@ module_socio_L101.Population(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L101.Pop_thous_R_Yh}, \code{L101.Pop_thous_Scen_R_Yfut}, \code{L101.Pop_thous_GCAM3_R_Y}, \code{L101.Pop_thous_GCAM3_ctry_Y}. The corresponding file in the
+the generated outputs: \code{L101.Pop_thous_R_Yh}, \code{L101.Pop_thous_SSP_R_Yfut}, \code{L101.Pop_thous_GCAM3_R_Y}, \code{L101.Pop_thous_GCAM3_ctry_Y}. The corresponding file in the
 original data system was \code{L101.Population.R} (socioeconomics level1).
 }
 \description{
@@ -22,7 +22,7 @@ Compute population for historical and future years, by region and SSP.
 }
 \details{
 Interpolates GCAM population data to all historical and future years, aggregating by
-country and/or region and/or SPP as necessary.
+country and/or region and/or SSP as necessary.
 }
 \author{
 BBL April 2017

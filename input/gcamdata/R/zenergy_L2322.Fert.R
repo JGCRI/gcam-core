@@ -260,7 +260,7 @@ module_energy_L2322.Fert <- function(command, ...) {
 
     # Copy the data in the last base year period through to the end year
     A322.globaltech_retirement_with_years %>%
-      filter(year == max(MODEL_BASE_YEARS)) ->
+      filter(year == MODEL_FINAL_BASE_YEAR) ->
       A322.globaltech_retirement_max_baseyear
 
     A322.globaltech_retirement_with_years %>%

@@ -125,7 +125,7 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
       gather_years() %>%
       replace_na(list(value = 0)) %>%
       # The EIA coal generation data set (EIA_coal_generation_2018) begins in 2001
-      # This is fine for the data's intended purposes, but causes test_timeshift to fail when max(MODEL_BASE_YEARS) < 2001
+      # This is fine for the data's intended purposes, but causes test_timeshift to fail when MODEL_FINAL_BASE_YEAR < 2001
       # Backfill historical values with 2001 values to avoid test_timeshift failure
       complete(nesting(fuel, state, units), year = c(HISTORICAL_YEARS, EIA_coal_gen_years))  %>%
       group_by(fuel, state, units) %>%
@@ -135,10 +135,10 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
       left_join_error_no_match(states_subregions %>%
                                  select(state, state_name),
                                by = "state_name") %>%
-      filter(year %in% c(max(MODEL_BASE_YEARS), max(year))) %>%
+      filter(year %in% c(MODEL_FINAL_BASE_YEAR, max(year))) %>%
       select(state, year, units, value) %>%
       group_by(state) %>%
-      mutate(retire_frac = 1 - (value / value[year==max(MODEL_BASE_YEARS)])) %>%
+      mutate(retire_frac = 1 - (value / value[year==MODEL_FINAL_BASE_YEAR])) %>%
       filter(year == max(year)) %>%
       replace_na(list(retire_frac = 0)) %>%
       # 4 states (AR, HI, SD, WA) have retirement fractions < 0 (more coal in 2018 than base year) (all are small values besides AR)
@@ -174,7 +174,7 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
     # Note that this updates s-curve retirement parameters for both the existing technologies and the new "retire_2020" technologies
     L2241.StubTechProd_elec_coalret_USA %>%
       select(LEVEL2_DATA_NAMES[["StubTechYr"]]) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       left_join_error_no_match(A23.elec_tech_coal_retire_SCurve,
                                by = c("stub.technology" = "Electric.sector.technology")) -> L2241.StubTechSCurve_elec_coalret_USA
 
@@ -251,7 +251,7 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
     # Profit Shutdown decider
     # L2241.GlobalTechProfitShutdown_elec_coalret: Profit shut-down decider for historic U.S. conventional coal electricity plants by load segment
     L2241.elec_USA_coalret %>%
-      filter(year >= max(MODEL_BASE_YEARS)) %>%
+      filter(year >= MODEL_FINAL_BASE_YEAR) %>%
       left_join_error_no_match(L2234.GlobalTechProfitShutdown_elecS_USA,
                                by = c("supplysector", "subsector",  "tech" = "technology", "year")) %>%
       select(supplysector, subsector, technology, year, median.shutdown.point, profit.shutdown.steepness) ->
@@ -294,7 +294,7 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
     # Create a table of generation and capacity-weighted lifetime from 2015 and by state and vintage
     L2241.coal_units_ret_2018 %>%
       # Calculate lifetime from 2018, which is model base year
-      mutate(cap.lifetime = capacity * (Retirement.Year - max(MODEL_BASE_YEARS))) %>%
+      mutate(cap.lifetime = capacity * (Retirement.Year - MODEL_FINAL_BASE_YEAR)) %>%
       group_by(State, vintage.bin) %>%
       summarise(lifetime = round(sum(cap.lifetime) / sum(capacity), 0), generation = sum(generation)) %>%
       mutate(generation = generation * CONV_MWH_GJ * CONV_GJ_EJ,
@@ -314,14 +314,14 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
       # LJENM is intended to duplicate rows so production can be allocated across vintages; use left_join to avoid error
       left_join(L2241.StubTechProd_elec_coalret_USA %>%
                   filter(subsector == "coal",
-                         year == max(MODEL_BASE_YEARS),
+                         year == MODEL_FINAL_BASE_YEAR,
                          !grepl("retire", stub.technology)),
                 by = "region") %>%
       filter(!is.na(calOutputValue), calOutputValue != 0) %>%
       mutate(calOutputValue = calOutputValue * share.vintage,
              # Create new technologies. Naming the variable as stub.technology.new so that we can use stub.technology as reference later
              stub.technology.new = paste(stub.technology, vintage.bin, sep = " "),
-             year = max(MODEL_BASE_YEARS), share.weight.year = max(MODEL_BASE_YEARS),
+             year = MODEL_FINAL_BASE_YEAR, share.weight.year = MODEL_FINAL_BASE_YEAR,
              subs.share.weight = 1, tech.share.weight = 1) %>%
       # Select variables. For now, include lifetime and vintage.bin as well. We'll remove it later
       select(LEVEL2_DATA_NAMES[["StubTechProd"]], stub.technology.new, lifetime, vintage.bin) ->
@@ -358,7 +358,7 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
 
     # Read in energy inputs for future periods
     L2241.StubTechEff_coal_vintage_USA %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(-efficiency, -year) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) ->
       L2241.StubTechMarket_coal_vintage_USA
@@ -432,7 +432,7 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
     # Read in zero calOutputValue for 2010 for existing coal conv pul technology
     L2241.StubTechProd_elec_coalret_USA %>%
       filter(subsector == "coal",
-             year == max(MODEL_BASE_YEARS),
+             year == MODEL_FINAL_BASE_YEAR,
              calOutputValue != 0,
              !grepl("_retire_", stub.technology),
              region %in% unique(L2241.coal_vintage_gen_2018$State)) %>%

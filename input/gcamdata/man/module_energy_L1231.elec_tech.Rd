@@ -21,7 +21,7 @@ original data system was \code{LA1231.elec_tech.R} (energy level1).
 Obtain inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
 }
 \details{
-This chunk obtaines inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
+This chunk obtains inputs, outputs and efficiencies in the electricity sector for all technologies by region, sector, and year.
 }
 \author{
 FF, May 2017

@@ -316,7 +316,7 @@ module_aglu_L221.land_input_1 <- function(command, ...) {
     # Carbon contents and mature ages
     # Carbon content info, unmanaged land in the first nest
     L221.LC_bm2_R_Unmgd1_Yh_GLU %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(-year, -allocation) %>%
       left_join_error_no_match(GCAMLandLeaf_CdensityLT, by = c("Land_Type" = "LandLeaf")) %>%
       rename(Cdensity_LT = Land_Type.y) %>%

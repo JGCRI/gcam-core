@@ -48,6 +48,14 @@ module_water_L132.water_demand_manufacturing <- function(command, ...) {
 
     # ===================================================
 
+    # First check that all needed iso's are in the mapping file and emit an error if not
+    unique(L101.en_bal_EJ_ctry_Si_Fi_Yh_full$iso) -> df1_iso
+    unique(mfg_water_mapping$iso) -> df2_iso
+    setdiff(df1_iso, df2_iso) -> in_df1_not_df2
+    if (nrow(as.data.frame(in_df1_not_df2)) > 0) {
+      stop(paste0("Mapping file mfg_water_mapping does not contain iso's: ",as.character(in_df1_not_df2)))
+    }
+
     # The goal is estimating nation- and region-level manufacturing water withdrawals and consumption by historical year
     # Starting data is continent-scale withdrawals and consumption from the Vassolo and Doll inventory whose base
     # year is 1995. This is downscaled to country and re-aggregated to GCAM region in that year, in order to compute

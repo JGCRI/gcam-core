@@ -483,14 +483,14 @@ module_aglu_L202.an_input <- function(command, ...) {
     # Calculate non-feed costs of animal production based on regional producer prices and feed costs
     # First, calculate the weighted average price across the different feed types (supplysectors)
     L202.StubTechProd_in %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(region, supplysector, subsector, stub.technology, calOutputValue) ->
       L202.ag_Feed_P_share_R_C
 
     # Use the producer prices of crops in each exporting region to calculate the global "traded" crop prices
     L202.ag_tradedP_C_75USDkg <- L109.ag_ALL_Mt_R_C_Y %>%
       select(GCAM_region_ID, GCAM_commodity, year, GrossExp_Mt, GrossImp_Mt) %>%
-      filter(year == max(MODEL_BASE_YEARS),
+      filter(year == MODEL_FINAL_BASE_YEAR,
              GCAM_commodity%in% aglu.TRADED_CROPS) %>%
       inner_join(L1321.ag_prP_R_C_75USDkg, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       mutate(Exp_wtd_price = GrossExp_Mt * value) %>%
@@ -502,7 +502,7 @@ module_aglu_L202.an_input <- function(command, ...) {
       select(GCAM_commodity, tradedP)
 
     # Calculate the share of domestic supply (i.e., total consumption) that is from imports
-    L202.ag_ImpShare_Mt_R_C_Y <- filter(L109.ag_ALL_Mt_R_C_Y, year == max(MODEL_BASE_YEARS)) %>%
+    L202.ag_ImpShare_Mt_R_C_Y <- filter(L109.ag_ALL_Mt_R_C_Y, year == MODEL_FINAL_BASE_YEAR) %>%
       select(GCAM_region_ID, GCAM_commodity, year, Supply_Mt, GrossExp_Mt, GrossImp_Mt) %>%
       mutate(ImpShare = if_else(is.na(GrossImp_Mt) | Supply_Mt == 0, 0, GrossImp_Mt / Supply_Mt)) %>%
       select(GCAM_region_ID, GCAM_commodity, ImpShare)
@@ -569,13 +569,13 @@ module_aglu_L202.an_input <- function(command, ...) {
     L233.TechCoef %>%
       filter(minicam.energy.input == "water_td_an_W") %>%
       mutate(watercost_an = water.DEFAULT_BASEYEAR_WATER_PRICE * coefficient) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       select(region, GCAM_commodity = supplysector, system = subsector, feed = technology, watercost_an)->
       L202.an_WaterCost
 
     # Calculate the total cost of all inputs, for each animal commodity, first matching in the feed quantity and the price
     L202.an_Prod_Mt_R_C_Sys_Fd_Y.mlt %>%
-      filter(year == max(MODEL_BASE_YEARS),
+      filter(year == MODEL_FINAL_BASE_YEAR,
              !region %in% aglu.NO_AGLU_REGIONS) %>%
       rename(Prod_Mt = value) %>%
       left_join_error_no_match(select(L202.an_Feed_Mt_R_C_Sys_Fd_Y.mlt, GCAM_region_ID, GCAM_commodity, system, feed, year, Feed_Mt = value),

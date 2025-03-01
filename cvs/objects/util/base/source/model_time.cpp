@@ -126,11 +126,14 @@ bool Modeltime::XMLParse( rapidxml::xml_node<char>* & aNode ) {
                     mFinalCalibrationYear = tempCalibrationYear;
                 }
                 else if (tempCalibrationYear > mFinalCalibrationYear ){
+                   // Do what user asks in input, not hard coded year.
+                   mFinalCalibrationYear = tempCalibrationYear;
                     ILogger& mainLog = ILogger::getLogger( "main_log" );
                     mainLog.setLevel( ILogger::WARNING );
-                    mainLog << "\nHistorical calibration to (" << tempCalibrationYear << ") is not possible! "
-                            << "Setting final calibration year to default year (" << mFinalCalibrationYear
-                            << ").\n" << endl;
+                    mainLog << "\nRead in final-calibration-year (" << tempCalibrationYear << ") "
+                            << "which is beyond the expected year(" << mFinalCalibrationYear << ").\n"
+                            << "The user must ensure a fully calibrated dataset to " << tempCalibrationYear
+                            << " is provided to avoid errors." << endl;
                 }
             }
             else if( nodeName == "carbon-model-start-year" ) {

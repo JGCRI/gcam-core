@@ -41,7 +41,7 @@ devtools::load_all()
 driver_drake()
 ```
 
-On Windows we may run into the MAX_PATH file path limit after the package is installed. If you get the following error, make sure you load the package with `devtools::load_all()`.
+On Windows we may run into the MAX_PATH file path limit after the package is installed. If you get the following error, make sure you load the package with `devtools::load_all()` or reduce the file path by shortening the directory name or moving the workspace to have a shorter path length.
 ```
 Error in file.rename() :
   expanded 'to' name too long

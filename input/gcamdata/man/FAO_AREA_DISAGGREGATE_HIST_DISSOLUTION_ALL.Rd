@@ -11,6 +11,8 @@ FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL(
 )
 }
 \arguments{
+\item{.DF}{The data.frame to disaggregate}
+
 \item{SUDAN2012_BREAK}{If T break Sudan before 2012 based on 2013- 2016 data}
 
 \item{SUDAN2012_MERGE}{If T merge South Sudan into Sudan}

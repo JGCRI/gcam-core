@@ -91,7 +91,7 @@ module_gcamusa_L2245.geothermal_fixed <- function(command, ...) {
     L2233.StubTechProd_elecS_cool_USA %>%
       select(-share.weight.year) %>%
       filter(subsector0 == "geothermal",
-             year == max(MODEL_BASE_YEARS)) %>%
+             year == MODEL_FINAL_BASE_YEAR) %>%
       complete(year = MODEL_FUTURE_YEARS, nesting(region, supplysector, subsector0, subsector, technology,
                                                   subs.share.weight, tech.share.weight, calOutputValue)) %>%
       bind_rows(

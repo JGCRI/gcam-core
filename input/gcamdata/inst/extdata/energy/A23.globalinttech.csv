@@ -1,14 +1,12 @@
 # File: A23.globalinttech.csv
 # Title: Electricity sector intermittent technology information
-# Units: USD1975/kW/yr for 'backup.capital.cost'; Unitless for 'backup.capacity.factor'; Unitless for 'capacity.limit'
-# Description: (1) Annualized capital cost per kW of backup capacity that intermittent renewable technologies may be required to purchase to ensure electrical supply reliability
-# (2) Assumed capacity factor of purchased backup capacity
-# (3) Mid-point of backup capacity requirement curve: an s-curve describing the amount of backup capacity required per unit of installed capacity of the given technology.
-# Column types: cccccinnccc 
+# Units: unitless for value factor intercept and slope
+# Description: parameters used to calculate value factors for variable techs as a linear function of market share (bounds = (0;1))
+# Column types: cccccnn 
 # ----------
-supplysector,subsector,technology,electric.sector.name,trial.market.name,backup.capital.cost,backup.capacity.factor,capacity.limit,minicam.energy.input,minicam.non.energy.input,flag
-electricity,wind,wind,electricity,wind,36,0.05,0.4,backup_electricity,backup-cap-cost,BackupEnergy
-electricity,solar,PV,electricity,solar,36,0.05,0.45,backup_electricity,backup-cap-cost,BackupEnergy
-electricity,solar,CSP,electricity,solar,36,0.05,0.45,csp_backup,backup-cap-cost,BackupEnergy
-elect_td_bld,rooftop_pv,rooftop_pv,electricity,solar,36,0.05,0.45,backup_electricity,backup-cap-cost,BackupEnergy
-electricity,wind,wind_offshore,electricity,wind,36,0.05,0.4,backup_electricity,backup-cap-cost,BackupEnergy
+supplysector,subsector,intermittent.technology,electric.sector.name,trial.market.name,value.factor.intercept,value.factor.slope
+electricity,wind,wind,electricity,wind,0.91,-1.2
+electricity,solar,PV,electricity,solar,0.972,-1.443
+electricity,solar,CSP,electricity,solar,0.972,-1.443
+elect_td_bld,rooftop_pv,rooftop_pv,electricity,solar,0.972,-1.443
+electricity,wind,wind_offshore,electricity,wind_offshore,0.946,-1.661

@@ -1387,16 +1387,19 @@ bool Technology::isAllCalibrated( const int aPeriod,
 		output -= fixedOutput;
 	}
     double relativeDiff;
+	double absDiff;
     double sectorOutput = scenario->getMarketplace()->getSupply( aSectorName, aRegionName, aPeriod );
 
     // Do not write warning to main log if the calibration value or the
     // relative difference is smaller than the criteria for calibration accuracy.
     if( calOutput > aCalAccuracy ) {
-        relativeDiff = fabs( output - calOutput ) / calOutput;
+        absDiff = output - calOutput;
+		relativeDiff = absDiff / calOutput;	
     }
     else {
         // Use absolute accuracy since the calibrated output level is zero.
-        relativeDiff = fabs( output - calOutput );
+        absDiff = output - calOutput;
+        relativeDiff = absDiff;
     }
     // Return false (not calibrated) and print warning only if relativeDiff is
     // greater than the calibration accuracy.
@@ -1408,7 +1411,7 @@ bool Technology::isAllCalibrated( const int aPeriod,
      *          a very tight tolerence we probably won't be able to calibrate exactly when scales
      *          are so different.
      */
-    if( relativeDiff > aCalAccuracy && ( fabs( output - calOutput ) ) > aCalAccuracy * sectorOutput ) {
+    if( relativeDiff > aCalAccuracy && ( fabs( absDiff ) ) > aCalAccuracy * sectorOutput ) {
         // Print warning then return false.
         if( aPrintWarnings ) {
             double sectorShare = sectorOutput > 0.0 ? calOutput / sectorOutput : numeric_limits<double>::quiet_NaN();
@@ -1425,6 +1428,7 @@ bool Technology::isAllCalibrated( const int aPeriod,
             mainLog.precision(4); // for floating-point
             mainLog << " Output: "; mainLog.width(8); mainLog << output;
             mainLog << " Calibration: "; mainLog.width(8); mainLog << calOutput;
+			mainLog << " absDiff: "; mainLog.width(8); mainLog << absDiff;
             mainLog << " relativeDiff: "; mainLog.width(8); mainLog << relativeDiff;
             mainLog << " SectorOutput: "; mainLog.width(8); mainLog << sectorOutput;
             mainLog << " SectorShare: "; mainLog.width(8); mainLog << sectorShare;

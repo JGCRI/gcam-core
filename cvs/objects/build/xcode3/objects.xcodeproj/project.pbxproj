@@ -24,6 +24,8 @@
 		0EDA1124220B73AA0066113A /* resource_reserve_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EDA1123220B73A90066113A /* resource_reserve_technology.cpp */; };
 		0EF7AF5813E1EFDA0034AA71 /* market_dependency_finder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 0EF7AF5113E1EFDA0034AA71 /* market_dependency_finder.cpp */; };
 		4BC45CF32717DF19001B7DF6 /* building_gompertz_function.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 4BC45CF22717DF19001B7DF6 /* building_gompertz_function.cpp */; };
+		8C288E8E2D4D57F50096CF21 /* value_factor_calculator.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C288E8D2D4D57F50096CF21 /* value_factor_calculator.cpp */; };
+		8C900C902D42DFAB0055A304 /* backup_intermittent_technology.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 8C900C8F2D42DFAB0055A304 /* backup_intermittent_technology.cpp */; };
 		981AC63D19E31D92000CB162 /* rcp_forcing_target.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */; };
 		9C58EE4524D4744B000F32CE /* national_account_container_activity.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C58EE4324D4744B000F32CE /* national_account_container_activity.cpp */; };
 		9C58EE4624D4744B000F32CE /* national_account_container.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 9C58EE4424D4744B000F32CE /* national_account_container.cpp */; };
@@ -346,6 +348,9 @@
 		0EF7AF6713E1F0130034AA71 /* edfun.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = edfun.cpp; sourceTree = "<group>"; };
 		4BC45CF12717DF09001B7DF6 /* building_gompertz_function.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = building_gompertz_function.h; sourceTree = "<group>"; };
 		4BC45CF22717DF19001B7DF6 /* building_gompertz_function.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = building_gompertz_function.cpp; sourceTree = "<group>"; };
+		8C288E8D2D4D57F50096CF21 /* value_factor_calculator.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = value_factor_calculator.cpp; sourceTree = "<group>"; };
+		8C900C8E2D42DFA10055A304 /* backup_intermittent_technology.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = backup_intermittent_technology.h; sourceTree = "<group>"; };
+		8C900C8F2D42DFAB0055A304 /* backup_intermittent_technology.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; path = backup_intermittent_technology.cpp; sourceTree = "<group>"; };
 		981AC63C19E31D92000CB162 /* rcp_forcing_target.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = rcp_forcing_target.cpp; sourceTree = "<group>"; };
 		981AC63E19E31D9A000CB162 /* rcp_forcing_target.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = rcp_forcing_target.h; sourceTree = "<group>"; };
 		9C58EE3F24D47411000F32CE /* national_account_container_activity.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = national_account_container_activity.h; sourceTree = "<group>"; };
@@ -1619,6 +1624,7 @@
 				CD488614122873C200F5A88A /* subsector_add_techcosts.cpp */,
 				CD488615122873C200F5A88A /* supply_sector.cpp */,
 				CD488617122873C200F5A88A /* tran_subsector.cpp */,
+				8C288E8D2D4D57F50096CF21 /* value_factor_calculator.cpp */,
 			);
 			path = source;
 			sourceTree = "<group>";
@@ -1810,25 +1816,18 @@
 		CD48866B122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
-				CDAC857A2BF30ACD0056386E /* ag_storage_technology.h */,
-				9CA541B225939D0600CFA8F2 /* output_accounting.h */,
-				CDEE90B5296DD954002FC783 /* exogenous_shutdown_decider.h */,
-				0EDA1125220B73B60066113A /* resource_reserve_technology.h */,
-				CD8FDECA1C0647640099C752 /* pass_through_technology.h */,
-				0EB5CE771C063E3E008CEF7D /* fractional_secondary_output.h */,
-				CDF83C0F13A30C9300DF178D /* res_secondary_output.h */,
-				CDF83C1013A30C9300DF178D /* s_curve_shutdown_decider.h */,
-				CDD5A206130338A90088463C /* empty_technology.h */,
-				CDD5A207130338A90088463C /* itechnology_container.h */,
-				CDD5A208130338A90088463C /* stub_technology_container.h */,
-				CDD5A209130338A90088463C /* technology_container.h */,
-				CD548E5812AFFD8C00ADCE8C /* generic_output.h */,
 				CD48866C122873C200F5A88A /* ag_production_technology.h */,
+				CDAC857A2BF30ACD0056386E /* ag_storage_technology.h */,
+				8C900C8E2D42DFA10055A304 /* backup_intermittent_technology.h */,
 				CD48866D122873C200F5A88A /* base_technology.h */,
 				CD48866F122873C200F5A88A /* cal_data_output.h */,
 				CD488670122873C200F5A88A /* cal_data_output_percap.h */,
 				CD488672122873C200F5A88A /* default_technology.h */,
+				CDD5A206130338A90088463C /* empty_technology.h */,
+				CDEE90B5296DD954002FC783 /* exogenous_shutdown_decider.h */,
 				CD488674122873C200F5A88A /* fixed_production_state.h */,
+				0EB5CE771C063E3E008CEF7D /* fractional_secondary_output.h */,
+				CD548E5812AFFD8C00ADCE8C /* generic_output.h */,
 				CD488678122873C200F5A88A /* global_technology_database.h */,
 				CD488679122873C200F5A88A /* ical_data.h */,
 				CD48867A122873C200F5A88A /* icapture_component.h */,
@@ -1839,21 +1838,29 @@
 				CD488680122873C200F5A88A /* ishutdown_decider.h */,
 				CD488681122873C200F5A88A /* itechnical_change_calc.h */,
 				CD488682122873C200F5A88A /* itechnology.h */,
+				CDD5A207130338A90088463C /* itechnology_container.h */,
 				CD488684122873C200F5A88A /* marginal_profit_calculator.h */,
 				CD488685122873C200F5A88A /* non_energy_use_capture_component.h */,
 				CD488686122873C200F5A88A /* nuke_fuel_technology.h */,
+				9CA541B225939D0600CFA8F2 /* output_accounting.h */,
+				CD8FDECA1C0647640099C752 /* pass_through_technology.h */,
 				CD488688122873C200F5A88A /* phased_shutdown_decider.h */,
 				CD488689122873C200F5A88A /* power_plant_capture_component.h */,
 				CD48868A122873C200F5A88A /* primary_output.h */,
 				CD48868B122873C200F5A88A /* production_state_factory.h */,
 				CD48868D122873C200F5A88A /* profit_shutdown_decider.h */,
+				CDF83C0F13A30C9300DF178D /* res_secondary_output.h */,
 				CD48868E122873C200F5A88A /* residue_biomass_output.h */,
+				0EDA1125220B73B60066113A /* resource_reserve_technology.h */,
 				CD48868F122873C200F5A88A /* retired_production_state.h */,
+				CDF83C1013A30C9300DF178D /* s_curve_shutdown_decider.h */,
 				CD488690122873C200F5A88A /* secondary_output.h */,
 				CD488693122873C200F5A88A /* solar_technology.h */,
 				CD488694122873C200F5A88A /* standard_capture_component.h */,
 				CD488695122873C200F5A88A /* standard_technical_change_calc.h */,
+				CDD5A208130338A90088463C /* stub_technology_container.h */,
 				CD488696122873C200F5A88A /* technology.h */,
+				CDD5A209130338A90088463C /* technology_container.h */,
 				CD488698122873C200F5A88A /* tran_technology.h */,
 				CD488699122873C200F5A88A /* unmanaged_land_technology.h */,
 				CD48869B122873C200F5A88A /* variable_production_state.h */,
@@ -1867,6 +1874,7 @@
 			isa = PBXGroup;
 			children = (
 				CDAC857D2BF30AD60056386E /* ag_storage_technology.cpp */,
+				8C900C8F2D42DFAB0055A304 /* backup_intermittent_technology.cpp */,
 				9CA541B025939CF300CFA8F2 /* output_accounting.cpp */,
 				CDEE90B7296DD962002FC783 /* exogenous_shutdown_decider.cpp */,
 				0EDA1123220B73A90066113A /* resource_reserve_technology.cpp */,
@@ -2294,6 +2302,7 @@
 				CD4887BB122873C200F5A88A /* resource.cpp in Sources */,
 				CD4887BC122873C200F5A88A /* smooth_renewable_subresource.cpp in Sources */,
 				CD4887BD122873C200F5A88A /* subresource.cpp in Sources */,
+				8C900C902D42DFAB0055A304 /* backup_intermittent_technology.cpp in Sources */,
 				CD4887BE122873C200F5A88A /* unlimited_resource.cpp in Sources */,
 				CD4887BF122873C200F5A88A /* ag_supply_sector.cpp in Sources */,
 				CD4887C0122873C200F5A88A /* ag_supply_subsector.cpp in Sources */,
@@ -2377,6 +2386,7 @@
 				CD48881F122873C200F5A88A /* variable_production_state.cpp in Sources */,
 				CD488820122873C200F5A88A /* vintage_production_state.cpp in Sources */,
 				CD488821122873C200F5A88A /* wind_technology.cpp in Sources */,
+				8C288E8E2D4D57F50096CF21 /* value_factor_calculator.cpp in Sources */,
 				CD488824122873C200F5A88A /* calibrate_resource_visitor.cpp in Sources */,
 				CD488825122873C200F5A88A /* calibrate_share_weight_visitor.cpp in Sources */,
 				0EB5CE791C063E4B008CEF7D /* fractional_secondary_output.cpp in Sources */,

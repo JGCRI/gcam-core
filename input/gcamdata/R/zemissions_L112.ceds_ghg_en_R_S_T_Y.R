@@ -20,7 +20,7 @@
 #' @details Calculates emissions using CEDS emissions and GCAM sectors.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select mutate_all
-#' @importFrom tidyr gather spread
+#' @importFrom tidyr gather spread pivot_longer pivot_wider
 #' @importFrom tibble tibble
 #' @author CWR Oct. 2018 , YO Mar. 2020, KBN 2020
 module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
@@ -112,14 +112,13 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       EDGAR_agg_sector <- globalemfact <- emfact <- value <- em_fact <- . <- FF_driver <- natural_gas <- UCD_category <- Non.co2 <-
       quantile <- upper <- GCAM_subsector <- value_median <- share_in_global_ship <- main.fuel <- CEDS_agg_fuel_remapped <- NULL
 
-
     #Get CEDS_GFED data
     L112.CEDS_GCAM_no_intl_shipping <- get_data(all_data, "L102.ceds_GFED_nonco2_tg_R_S_F") %>%
-      filter(year >= min(HISTORICAL_YEARS), year <= max(HISTORICAL_YEARS))
+      filter(year %in% HISTORICAL_YEARS)
 
     #Get CEDS international shipping data
     L112.CEDS_intl_shipping <- get_data(all_data, "L102.ceds_int_shipping_nonco2_tg_S_F") %>%
-      filter(year >= min(HISTORICAL_YEARS), year <= max(HISTORICAL_YEARS))
+      filter(year %in% HISTORICAL_YEARS)
     Int_shipping_IEA_EIA <- get_data(all_data, "L154.IEA_histfut_data_times_UCD_shares") %>% filter(UCD_category=="trn_international ship")
 
     #Get NEI data for crude oil and natural gas, and BC OC fractions for this
@@ -139,7 +138,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     #Process data for international shipping to disaggregate to the GCAM regions
     L112.CEDS_intl_shipping %>%
       right_join(Int_shipping_IEA_EIA %>% select(iso,year,value) %>%
-                   filter(year >= min(HISTORICAL_YEARS), year <= max(HISTORICAL_YEARS)), by=c("year")) %>%
+                   filter(year %in% HISTORICAL_YEARS), by=c("year")) %>%
       mutate(emissions=if_else(is.na(emissions),0,emissions)) %>%
       group_by(Non.CO2,year,sector,fuel) %>%
       mutate(share_in_global_ship= value/sum(value)) %>%
@@ -173,16 +172,16 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       ungroup() %>%
       na.omit() %>%
       #filter data for final model base year, since we may not have GCAM activity data beyond the latest base year.
-      filter(year<= max(HISTORICAL_YEARS))->L112.CEDS_GCAM
+      filter(year <= MODEL_FINAL_BASE_YEAR) -> L112.CEDS_GCAM
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
 
     #Get GAINS sector and fuel emissions by iso. Also get IEA energy data by iso.
-    GAINS_sector <- get_data(all_data,"emissions/CEDS/gains_iso_sector_emissions")
+    gains_iso_sector_emissions <- get_data(all_data,"emissions/CEDS/gains_iso_sector_emissions")
     #Separate out GAINS em factors for NG
-    GAINS_fuel <- get_data(all_data,"emissions/CEDS/gains_iso_fuel_emissions") %>%  select(-natural_gas)
-    GAINS_fuel_NG <- get_data(all_data,"emissions/CEDS/gains_iso_fuel_emissions") %>%  select(-dieseloil,-lightoil)
+    gains_iso_fuel_emissions <- get_data(all_data,"emissions/CEDS/gains_iso_fuel_emissions") %>%  select(-natural_gas)
+    gains_iso_fuel_emissions_NG <- get_data(all_data,"emissions/CEDS/gains_iso_fuel_emissions") %>%  select(-dieseloil,-lightoil)
     IEA_Ctry_data <- get_data(all_data,"L154.IEA_histfut_data_times_UCD_shares")
 
     #If using revised size classes, use revised data else use old data
@@ -288,6 +287,32 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       filter(!fuel %in% c(emissions.ZERO_EM_TECH,"NG")) %>%
       mutate(fuel =if_else(fuel=="Hybrid Liquids","Liquids",fuel))->Clean_IEA_ctry_data
 
+    # make GAINS data base year update friendly by interpolating values for the base year
+    gains_iso_sector_emissions %>%
+      tidyr::pivot_longer(c(Freight, Motorcycle, Passenger), names_to = "modes", values_to = "value") %>%
+      complete(nesting(Non.co2, iso, modes),
+               year = unique(c(year, MODEL_FINAL_BASE_YEAR))) %>%
+      group_by(Non.co2, iso, modes) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
+      ungroup() %>%
+      tidyr::pivot_wider(names_from = "modes", values_from = "value") -> GAINS_sector
+
+    gains_iso_fuel_emissions %>%
+      tidyr::pivot_longer(c(dieseloil, lightoil), names_to = "fuels", values_to = "value") %>%
+      complete(nesting(Non.co2, iso, fuels),
+               year = unique(c(year, MODEL_FINAL_BASE_YEAR))) %>%
+      group_by(Non.co2, iso, fuels) %>%
+      mutate(value = approx_fun(year, value, rule = 1)) %>%
+      ungroup() %>%
+      tidyr::pivot_wider(names_from = "fuels", values_from = "value") -> GAINS_fuel
+
+    gains_iso_fuel_emissions_NG %>%
+      complete(nesting(Non.co2, iso),
+               year = unique(c(year, MODEL_FINAL_BASE_YEAR))) %>%
+      group_by(Non.co2, iso) %>%
+      mutate(natural_gas = approx_fun(year, natural_gas, rule = 1)) %>%
+      ungroup()-> GAINS_fuel_NG
+
     #Calculate GAINS sector weights which we can use on CEDS data to distribute emissions into Passenger and Freight.
     Clean_IEA_ctry_data %>%
       group_by(iso,UCD_sector,year) %>%
@@ -353,7 +378,13 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       ungroup() %>%
       mutate(CEDS_agg_fuel=paste0("refined liquids")) %>%
       rename(CEDS_agg_sector=mode,Non.CO2=Non.co2) %>%
-      select(GCAM_region_ID,year,Non.CO2,CEDS_agg_sector,CEDS_agg_fuel,emissions) %>% distinct()->L112.CEDS_GCAM_Road_Emissions_GAINS
+      select(GCAM_region_ID,year,Non.CO2,CEDS_agg_sector,CEDS_agg_fuel,emissions) %>%
+      distinct() %>%
+      complete(nesting(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel),
+               year = unique(c(year, HISTORICAL_YEARS))) %>%
+      group_by(GCAM_region_ID, Non.CO2, CEDS_agg_sector, CEDS_agg_fuel) %>%
+      mutate(emissions = approx_fun(year, emissions, rule = 2)) %>%
+      ungroup() -> L112.CEDS_GCAM_Road_Emissions_GAINS
 
     #Bind new GAINS weighted emissions into CEDS emissions
     L112.CEDS_GCAM %>%  bind_rows(L112.CEDS_GCAM_Road_Emissions_GAINS)->L112.CEDS_GCAM
@@ -533,7 +564,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L1325.in_EJ_R_chemical_F_Y
 
     L1326.in_EJ_R_aluminum_Yh %>%
-      mutate(technology = fuel) ->
+      mutate(technology = fuel) %>%
+      filter(year %in% HISTORICAL_YEARS) ->
       L1326.in_EJ_R_aluminum_Yh
 
     L1327.in_EJ_R_paper_F_Yh %>%
@@ -567,7 +599,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     # Get main combustion fuel in iron and steel in base year by region and technology
     # Non-CO2 emissions will be assigned to this fuel for iron and steel, since it can't be broken out by subsector, technology, and fuel
     L1323.in_EJ_R_iron_steel_F_Y %>%
-      filter(year == max(MODEL_BASE_YEARS),
+      filter(year == MODEL_FINAL_BASE_YEAR,
              # filter out electricity
              !fuel %in% emissions.ZERO_EM_TECH) %>%
       group_by(GCAM_region_ID, sector, technology) %>%

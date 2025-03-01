@@ -34,7 +34,8 @@ module_energy_L100.IEA_downscale_ctry <- function(command, ...) {
     `1990` <- `1990_share` <- `1990_sum` <- COUNTRY <- EcYield_kgm2_hi <- EcYield_kgm2_lo <- FLOW <-
       GCAM_commodity <- GCAM_region_ID <- GLU <- IEAcomposite <- Irr_Rfd <- LC_bm2_hi <-
       LC_bm2_lo <- PRODUCT <- composite_population <- iso <- landshare_hi <- landshare_lo <-
-      level <- optional <- value <- year <- yield <- yieldmult_hi <- yieldmult_lo <- NULL # silence package check notes
+      level <- optional <- value <- year <- yield <- yieldmult_hi <- yieldmult_lo <-
+      iso.x <- year.x <- iso.y <- year.y <- NULL # silence package check notes
 
     all_data <- list(...)[[1]]
 
@@ -245,14 +246,34 @@ module_energy_L100.IEA_downscale_ctry <- function(command, ...) {
         select(iso, year, pop_share) ->
         L100.Others_pop_share
 
-      # Spread L100.Others_pop_share to wide format in preparation for computing L100.Others_ctry_bal
-      # This is relatively inexpensive
-      L100.Others_pop_share <- spread(L100.Others_pop_share, year, pop_share)
+      # Create a dataframe that has all iso's and all years, and fill with the values we have from IEA
+      L100.Others_pop_share %>%
+        # NOTE: default fill is NA
+        complete(nesting(iso, year)) ->
+        L100.Others_pop_share_NAs
+
+      # Write out a warning with the number of NAs and fill NAs
+      if (any(is.na(L100.Others_pop_share_NAs))) {
+        warning("module_energy_L100.IEA_downscale_ctry: There are ", nrow(L100.Others_pop_share_NAs), " NAs in the population shares dataframe L100.Others_pop_share_NAs. These values will be interpolated or extrapolated.")
+
+        # Interpolate and/or extrapolate to fill NAs
+        L100.Others_pop_share_NAs %>%
+          group_by(iso) %>%
+          mutate(pop_share = approx_fun(year, pop_share, rule = 2)) %>%
+          ungroup() %>%
+          # Spread L100.Others_pop_share to wide format in preparation for computing L100.Others_ctry_bal
+          spread(year, pop_share) -> L100.Others_pop_share
+      } else {
+        L100.Others_pop_share_NAs %>%
+          spread(year, pop_share) -> L100.Others_pop_share
+      }
+
 
       # Multiply the repeated country databases by the population shares to get the energy balances by country (159-162)
       L100.Others_repCtry %>%
         rename(IEAcomposite = COUNTRY) ->
         L100.Others_ctry_bal
+
 
       L100.Others_repCtry %>%
         select(iso) %>%

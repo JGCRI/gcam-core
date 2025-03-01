@@ -90,9 +90,9 @@ module_energy_L120.offshore_wind <- function(command, ...) {
     L113.globaltech_OMfixed_ATB %>%
       gather_years() %>%
       filter(technology == "wind_offshore",
-             year == max(HISTORICAL_YEARS)) %>%
-      distinct(value)-> L120.offshore_wind_OMfixed
-    L120.offshore_wind_OMfixed <- as.numeric(L120.offshore_wind_OMfixed)
+             year == MODEL_FINAL_BASE_YEAR) %>%
+      distinct(value) %>%
+      as.numeric() -> L120.offshore_wind_OMfixed
 
     # NOTE that the process for calculating supply/ price is different for offshore wind (vs. onshore wind).  For offshore wind, we
     # (1) calculate the price associated with each wind class, then (2) arrange the dataset by region/ price and calculate
@@ -239,7 +239,7 @@ module_energy_L120.offshore_wind <- function(command, ...) {
              tech.change = round(abs(1 - (tech.change.period) ^ ( 1 / time.change)), energy.DIGITS_TECHCHANGE)) %>%
       select(year, tech.change) %>%
       filter(!is.na(tech.change),
-             year > max(MODEL_BASE_YEARS)) -> L120.TechChange_offshore_wind
+             year > MODEL_FINAL_BASE_YEAR) -> L120.TechChange_offshore_wind
 
     # Creating region-specific capacity factors to be used for levelizing grid connection costs. This is calculated by
     # getting the maximum possible capacity factor for a region. Since offshore wind resource utilization is pretty low, it is
@@ -328,7 +328,8 @@ module_energy_L120.offshore_wind <- function(command, ...) {
       add_title("Offshore wind resource curve") %>%
       add_units("EJ") %>%
       add_comments("Offshore wind resource curve by region") %>%
-      add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names", "energy/NREL_offshore_energy",
+      add_precursors("common/iso_GCAM_regID", "common/GCAM_region_names",
+                     "energy/mappings/NREL_wind_ctry", "energy/NREL_offshore_energy",
                      "energy/A20.wind_class_CFs", "L113.globaltech_capital_ATB",
                      "L113.globaltech_OMfixed_ATB", "energy/A20.offshore_wind_depth_cap_cost",
                      "energy/offshore_wind_potential_scaler", "energy/mappings/NREL_wind_ctry") ->

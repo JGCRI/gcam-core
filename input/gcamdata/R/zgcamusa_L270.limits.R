@@ -13,12 +13,13 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L270.CreditMkt_USA}, \code{L270.CreditInput_elecS_USA}, \code{L270.NegEmissBudgetMaxPrice_USA},
-#' \code{paste0( "L270.NegEmissBudget_USA_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5)) )}.
+#' \code{L270.NegEmissBudget_USA}.
 #' @details Add 50 states to USA market for GCAM policy constraints which enforce limits
 #' to liquid feedstocks and the amount of subsidies given for net negative emissions.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr anti_join filter
 #' @author PLP June 2018
+
 module_gcamusa_L270.limits <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",

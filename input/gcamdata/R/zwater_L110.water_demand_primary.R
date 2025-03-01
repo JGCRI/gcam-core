@@ -128,7 +128,7 @@ module_water_L110.water_demand_primary <- function(command, ...) {
       gather_years(value_col = "efficiency") %>%
       select(supplysector = minicam.energy.input, year, efficiency) %>%
       complete(nesting(supplysector), year = HISTORICAL_YEARS) %>%
-      mutate(efficiency = approx_fun(year, efficiency)) %>%
+      mutate(efficiency = approx_fun(year, efficiency, rule = 2)) %>%
       filter(year %in% HISTORICAL_YEARS)
     L110.energy_flow_nuc <- subset(L1012.en_bal_EJ_R_Si_Fi_Yh, fuel == "elec_nuclear" & sector == "out_electricity generation") %>%
       mutate(sector = "electricity generation", fuel = "nuclear") %>%

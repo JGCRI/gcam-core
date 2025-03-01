@@ -12,11 +12,8 @@
 #' \code{L2321.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2321.SubsectorLogit_cement}, \code{L2321.SubsectorShrwtFllt_cement},
 #' \code{L2321.SubsectorInterp_cement}, \code{L2321.StubTech_cement}, \code{L2321.GlobalTechShrwt_cement}, \code{L2321.GlobalTechCoef_cement},
 #' \code{L2321.GlobalTechCost_cement}, \code{L2321.GlobalTechCapture_cement}, \code{L2321.StubTechProd_cement}, \code{L2321.StubTechCalInput_cement_heat},
-#' \code{L2321.StubTechCoef_cement}, \code{L2321.PerCapitaBased_cement}, \code{L2321.BaseService_cement}, \code{L2321.PriceElasticity_cement},
-#' \code{L2321.IncomeElasticity_cement_gcam3}, \code{L2321.IncomeElasticity_cement_gssp1}, \code{L2321.IncomeElasticity_cement_gssp2},
-#' \code{L2321.IncomeElasticity_cement_gssp3}, \code{L2321.IncomeElasticity_cement_gssp4}, \code{L2321.IncomeElasticity_cement_gssp5},
-#' \code{L2321.IncomeElasticity_cement_ssp1}, \code{L2321.IncomeElasticity_cement_ssp2}, \code{L2321.IncomeElasticity_cement_ssp3},
-#' \code{L2321.IncomeElasticity_cement_ssp4}, \code{L2321.IncomeElasticity_cement_ssp5}, \code{object}. The corresponding file in the
+#' \code{L2321.StubTechCoef_cement}, \code{L2321.PerCapitaBased_cement}, \code{L2321.BaseService_cement}, \code{L2321.PriceElasticity_cement}, \code{L2321.IncomeElasticity_cement_ssp1}, \code{L2321.IncomeElasticity_cement_ssp2},
+#' \code{L2321.IncomeElasticity_cement_ssp3}, \code{L2321.IncomeElasticity_cement_ssp4}, \code{L2321.IncomeElasticity_cement_ssp5}, \code{object}. The corresponding file in the
 #' original data system was \code{L2321.cement.R} (energy level2).
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc for cement sector.
 #' @importFrom assertthat assert_that
@@ -25,9 +22,7 @@
 #' @author LF October 2017
 module_energy_L2321.cement <- function(command, ...) {
 
-  INCOME_ELASTICITY_OUTPUTS <- c("GCAM3",
-                                 paste0("gSSP", 1:5),
-                                 paste0("SSP", 1:5))
+  INCOME_ELASTICITY_OUTPUTS <- c(paste0("SSP", 1:5))
 
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -107,12 +102,10 @@ module_energy_L2321.cement <- function(command, ...) {
       remove.fraction <- minicam.non.energy.input <- input.cost <- PrimaryFuelCO2Coef.name <-
       PrimaryFuelCO2Coef <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
-      value.x <- value.y <- parameter <- L2321.IncomeElasticity_cement_gcam3 <-
-      L2321.IncomeElasticity_cement_gssp1 <- L2321.IncomeElasticity_cement_gssp2 <-
-      L2321.IncomeElasticity_cement_gssp3 <- L2321.IncomeElasticity_cement_gssp4 <-
-      L2321.IncomeElasticity_cement_gssp5 <- L2321.IncomeElasticity_cement_ssp1 <-
-      L2321.IncomeElasticity_cement_ssp2 <- L2321.IncomeElasticity_cement_ssp3 <-
-      L2321.IncomeElasticity_cement_ssp4 <- L2321.IncomeElasticity_cement_ssp5 <- year.x <- year.y <- NULL
+      value.x <- value.y <- parameter <-
+      L2321.IncomeElasticity_cement_ssp1 <- L2321.IncomeElasticity_cement_ssp2 <-
+      L2321.IncomeElasticity_cement_ssp3 <- L2321.IncomeElasticity_cement_ssp4 <-
+      L2321.IncomeElasticity_cement_ssp5 <- year.x <- year.y <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -354,7 +347,7 @@ module_energy_L2321.cement <- function(command, ...) {
     # filters base years from original and then appends future years
     L2321.globaltech_retirement_base %>%
       mutate(year = as.integer(year)) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       bind_rows(L2321.globaltech_retirement_future) ->
       L2321.globaltech_retirement
 
@@ -403,7 +396,7 @@ module_energy_L2321.cement <- function(command, ...) {
       # Combine GCAM 3.0 with the SSPs, and subset only the relevant years
       mutate(scenario = "GCAM3") %>%
       bind_rows(L102.pcgdp_thous90USD_Scen_R_Y) %>%
-      filter(year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
+      filter(year %in% c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
       # Per-capita GDP ratios, which are used in the equation for demand growth
       group_by(GCAM_region_ID, scenario) %>%
       mutate(temp_lag = lag(value, 1),
@@ -419,7 +412,7 @@ module_energy_L2321.cement <- function(command, ...) {
       select(GCAM_region_ID, scenario) %>%
       distinct %>%
       left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
-      mutate(year = max(MODEL_BASE_YEARS)) %>%
+      mutate(year = MODEL_FINAL_BASE_YEAR) %>%
       left_join_error_no_match(L2321.BaseService_cement, by = c("year", "region")) %>%
       left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("year", "GCAM_region_ID")) %>%
       mutate(value = base.service * CONV_MIL_THOUS / value) %>%
@@ -429,7 +422,7 @@ module_energy_L2321.cement <- function(command, ...) {
     # At each time, the output is equal to the prior period's output times the GDP ratio, raised to the elasticity
     # that corresponds to the output that was observed in the prior time period. This method prevents (ideally) runaway
     # production/consumption.
-    elast_years <- c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)
+    elast_years <- c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)
     for(i in seq_along(elast_years)[-1]) {
       L2321.Output_cement %>%
         filter(year == elast_years[i - 1]) %>%
@@ -463,7 +456,7 @@ module_energy_L2321.cement <- function(command, ...) {
     # ===================================================
     # Produce outputs
 
-    # Extract GCAM3, SSP, and gSSP data and assign to separate tables
+    # Extract scenario data and assign to separate tables
     for(ieo in INCOME_ELASTICITY_OUTPUTS) {
       L2321.IncomeElasticity_cement %>%
         filter(scenario == ieo) %>%
@@ -676,14 +669,13 @@ module_energy_L2321.cement <- function(command, ...) {
                 L2321.StubTech_cement, L2321.GlobalTechShrwt_cement,
                 L2321.GlobalTechCoef_cement, L2321.GlobalTechCost_cement, L2321.GlobalTechCapture_cement,
                 L2321.StubTechProd_cement, L2321.StubTechCalInput_cement_heat, L2321.StubTechCoef_cement,
-                L2321.PerCapitaBased_cement, L2321.BaseService_cement,L2321.GlobalTechShutdown_en,
+                L2321.PerCapitaBased_cement, L2321.BaseService_cement,
+                L2321.PriceElasticity_cement,
+                L2321.GlobalTechShutdown_en,
                 L2321.GlobalTechSCurve_en, L2321.GlobalTechLifetime_en, L2321.GlobalTechProfitShutdown_en,
-                L2321.PriceElasticity_cement, L2321.IncomeElasticity_cement_gcam3,
-                L2321.IncomeElasticity_cement_gssp1, L2321.IncomeElasticity_cement_gssp2,
-                L2321.IncomeElasticity_cement_gssp3, L2321.IncomeElasticity_cement_gssp4,
-                L2321.IncomeElasticity_cement_gssp5, L2321.IncomeElasticity_cement_ssp1,
-                L2321.IncomeElasticity_cement_ssp2, L2321.IncomeElasticity_cement_ssp3,
-                L2321.IncomeElasticity_cement_ssp4, L2321.IncomeElasticity_cement_ssp5,
+                L2321.IncomeElasticity_cement_ssp1, L2321.IncomeElasticity_cement_ssp2,
+                L2321.IncomeElasticity_cement_ssp3, L2321.IncomeElasticity_cement_ssp4,
+                L2321.IncomeElasticity_cement_ssp5,
                 L2321.GlobalTechTrackCapital_cement)
   } else {
     stop("Unknown command")

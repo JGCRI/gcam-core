@@ -107,6 +107,18 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # Then complete missing agricultural years from aglu.SPEC_AG_PROD_YEARS and interpolate
     # to fill in yields. Keep only the years in aglu.SPEC_AG_PROD_YEARS
     # Finally, Calculate yield multipliers.
+
+    # helper to speed up fixing declining yields
+    crosit_yield_helper <- function(vec) {
+      # TODO: very hard coded logic
+      assert_that(length(vec) == 3)
+      # if 2030 < 2005, then AgProdChange1 = 0
+      vec[2] = max(vec[1], vec[2])
+      # TODO: code doesn't match comment double check this
+      # if 2050 < 2030, then AgProdChange2 = AgProdChange1
+      vec[3] = if_else(vec[2] > vec[3], vec[2] + 4*(vec[2] - vec[1])/5, vec[3])
+      return(vec)
+    }
     FAO_ag_CROSIT %>%
       select(CROSIT_ctry, CROSIT_crop, year, Yield_kgHa_rainfed) %>%
       mutate(Irr_Rfd = "RFD") %>%
@@ -114,10 +126,8 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       bind_rows(L162.ag_irrYield_kgHa_Rcrs_Ccrs_Y) %>%
       mutate(yield_kgHa = as.numeric(yield_kgHa)) %>%
       group_by(CROSIT_ctry, CROSIT_crop, Irr_Rfd) %>%
-      mutate(tag1 = if_else(yield_kgHa[year == 2030] < yield_kgHa[year == 2005], 1, 0), # if 2030 < 2005, then AgProdChange1 = 0
-             yield_kgHa = if_else(tag1 == 1 & year == 2030, yield_kgHa[year == 2005], yield_kgHa),
-             tag2 = if_else(yield_kgHa[year == 2050] < yield_kgHa[year == 2030], 1, 0), # if 2050 < 2030, then AgProdChange2 = AgProdChange1
-             yield_kgHa = if_else(tag2 == 1 & year == 2050, yield_kgHa[year == 2030] + 4*(yield_kgHa[year == 2030] - yield_kgHa[year == 2005])/5, yield_kgHa)) %>%
+      mutate(yield_kgHa = crosit_yield_helper(yield_kgHa)) %>%
+      ungroup() %>%
       # add the missing aglu.SPEC_AG_PROD_YEARS and interpolate the yields
       complete(year = c(year, aglu.SPEC_AG_PROD_YEARS) ,
                       CROSIT_ctry, CROSIT_crop, Irr_Rfd) %>%
@@ -254,41 +264,12 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # Translate these yield ratios to annual improvement rates.
     # The rate in year i is defined as
     # [(ratio_i / ratio_{i-1}) ^ (1/(year_i - year_{i-1}) ] - 1.
-    #
-    # To perform this calculation in a pipeline, we form two intermediate tables.
-    # First, of aglu.SPEC_AG_PROD_YEARS and the corresponding timestep for each.
-    # Second, of lagged YieldRatios and corresponding time steps,
-    # Where lagyear represents the year a ratio is subtracted from (ie lagyear = 2010 indicates this ratio
-    # is subtracted from the 2010 ratio.)
-    # This allows the same calculation to be performed even if aglu.SPEC_AG_PROD_YEARS changes.
-    tibble(year = aglu.SPEC_AG_PROD_YEARS, timestep = c(diff(aglu.SPEC_AG_PROD_YEARS), max(aglu.SPEC_AG_PROD_YEARS) + 1)) ->
-      timesteps
-
     L162.agBio_YieldRatio_R_C_Ysy_GLU_irr %>%
-      left_join_error_no_match(timesteps, by = "year") %>%
-      mutate(lagyear = year + timestep,
-             # There is no lag for aglu.SPEC_AG_PROD_YEARS[1] but there is for a year not in SPEC_AG_PROD_YEARS
-             # aglu.SPEC_AG_PROD_YEARS[1] gets left alone, so for lagyear = not in aglu.SPEC_AG_PROD_YEAR, overwrite
-             # the ratio to be 0.5, the timestep to be 1, and lagyear = SPEC_AG_PROD_YEAR[1]. This allows
-             # the same pipeline to be used for all aglu.SPEC_AG_PROD_YEARS
-             YieldRatio = replace(YieldRatio,
-                                  ! lagyear %in% aglu.SPEC_AG_PROD_YEARS,
-                                  0.5),
-             timestep = replace(timestep,
-                                ! lagyear %in% aglu.SPEC_AG_PROD_YEARS,
-                                1),
-             lagyear = replace(lagyear,
-                               ! lagyear %in% aglu.SPEC_AG_PROD_YEARS,
-                               first(aglu.SPEC_AG_PROD_YEARS))) %>%
-      select(-year) %>%
-      rename(YieldRatio_lag = YieldRatio) ->
-      L162.agBio_YieldRatio_lag
-
-    # Join the YieldRatio_lag table to the YieldRatio table to calculate the annual rates.
-    L162.agBio_YieldRatio_R_C_Ysy_GLU_irr %>%
-      left_join_error_no_match(L162.agBio_YieldRatio_lag, by = c("GCAM_region_ID", "GLU", "Irr_Rfd", "GCAM_commodity", "GCAM_subsector", "year" = "lagyear")) %>%
-      mutate(YieldRate = (YieldRatio / YieldRatio_lag) ^ (1 / timestep) - 1) %>%
-      select(-YieldRatio, -YieldRatio_lag, -timestep) ->
+      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd) %>%
+      mutate(timestep = year - lag(year),
+             YieldRate = if_else(is.na(timestep), 0, (YieldRatio / lag(YieldRatio))^(1/timestep) - 1)) %>%
+      ungroup() %>%
+      select(-YieldRatio, -timestep) ->
       L162.agBio_YieldRate_R_C_Ysy_GLU_irr
 
 
@@ -297,13 +278,18 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
     # Step 1: make a table of default improvement rates by interpolating available rates to relevant years.
     A_defaultYieldRate %>%
       gather_years %>%
-      complete(year = unique(c(year, max(HISTORICAL_YEARS), FUTURE_YEARS)),
+      complete(year = unique(c(year, max(aglu.AGLU_HISTORICAL_YEARS), FUTURE_YEARS)),
                       GCAM_commodity) %>%
       arrange(year) %>%
       group_by(GCAM_commodity) %>%
+      # NOTE: It is ambiguous what the intent was here with these rate changes and if interpolating
+      # is the proper thing to do.  However, because we always calculate the values annually (i.e.
+      # independent of model timesteps) interpolating is not demonstrably wrong
       mutate(value = approx_fun(year, value, rule = 2)) %>%
+      # If we choose to fill instead of interpolate the following would work
+      # tidyr::fill(value, .direction = "up")  %>%
       ungroup() %>%
-      filter(year %in% unique(c(max(HISTORICAL_YEARS), FUTURE_YEARS))) %>%
+      filter(year %in% unique(c(max(aglu.AGLU_HISTORICAL_YEARS), FUTURE_YEARS))) %>%
       rename(defaultRate = value) ->
       L162.defaultYieldRate
 
@@ -366,11 +352,9 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       complete(year = c(max(HISTORICAL_YEARS),FUTURE_YEARS), nesting(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd)) %>%
       left_join_error_no_match(L162.defaultYieldRate, by = c("year", "GCAM_commodity")) %>%
       # replace NA's - which correspond to years we just filled in - with the default yield for that year we just joined
-      group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, GLU, Irr_Rfd, year) %>%
-      mutate(YieldRate = replace(YieldRate,
-                                 is.na(YieldRate),
-                                 defaultRate)) %>%
-      ungroup() %>%
+      mutate(YieldRate = if_else(is.na(YieldRate),
+                                 defaultRate,
+                                 YieldRate)) %>%
       select(-defaultRate) ->
       L162.agbio_YieldRate_R_C_Y_GLU_irr
 

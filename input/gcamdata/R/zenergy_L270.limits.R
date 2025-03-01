@@ -12,7 +12,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L270.CreditOutput}, \code{L270.CreditInput_elec}, \code{L270.CreditInput_feedstocks}, \code{L270.CreditMkt}, \code{L270.CTaxInput}, \code{L270.LandRootNegEmissMkt}, \code{L270.NegEmissBudgetMaxPrice}, \code{paste0("L270.NegEmissBudget_", c("GCAM3", paste0("SSP", 1:5), paste0("gSSP", 1:5))) )}. The corresponding file in the
+#' the generated outputs: \code{L270.CreditOutput}, \code{L270.CreditInput_elec}, \code{L270.CreditInput_feedstocks}, \code{L270.CreditMkt}, \code{L270.CTaxInput}, \code{L270.LandRootNegEmissMkt}, \code{L270.NegEmissBudgetMaxPrice}. The corresponding file in the
 #' original data system was \code{L270.limits.R} (energy level2).
 #' @details Generate GCAM policy constraints which enforce limits to liquid feedstocks
 #' and the amount of subsidies given for net negative emissions.
@@ -227,6 +227,9 @@ module_energy_L270.limits <- function(command, ...) {
     # L210.RenewRsrcPrice: initial prices for renewable resources
     L270.RenewRsrcPrice <- L270.rsrc_info %>%
       gather_years() %>%
+      # extrapolate value to final base year
+      complete(nesting(resource, resource_type, market, `output-unit`, `price-unit`, region), year = c(year, MODEL_FINAL_BASE_YEAR)) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
       filter(resource_type == "renewresource",
              year %in% MODEL_BASE_YEARS) %>%
       select(region, renewresource = resource, year, price = value)

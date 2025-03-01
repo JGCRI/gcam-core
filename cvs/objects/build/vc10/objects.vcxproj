@@ -649,6 +649,7 @@
     <ClCompile Include="..\..\sectors\source\subsector_add_techcosts.cpp" />
     <ClCompile Include="..\..\sectors\source\supply_sector.cpp" />
     <ClCompile Include="..\..\sectors\source\tran_subsector.cpp" />
+    <ClCompile Include="..\..\sectors\source\value_factor_calculator.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_all.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_one.cpp" />
     <ClCompile Include="..\..\solution\solvers\source\bisect_policy.cpp" />
@@ -688,6 +689,7 @@
     <ClCompile Include="..\..\target_finder\source\rcp_forcing_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\secanter.cpp" />
     <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\backup_intermittent_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\base_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\cal_data_output.cpp" />
     <ClCompile Include="..\..\technologies\source\cal_data_output_percap.cpp" />
@@ -934,6 +936,7 @@
     <ClInclude Include="..\..\sectors\include\subsector_add_techcosts.h" />
     <ClInclude Include="..\..\sectors\include\supply_sector.h" />
     <ClInclude Include="..\..\sectors\include\tran_subsector.h" />
+    <ClInclude Include="..\..\sectors\include\value_factor_calculator.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_all.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_one.h" />
     <ClInclude Include="..\..\solution\solvers\include\bisect_policy.h" />
@@ -980,6 +983,7 @@
     <ClInclude Include="..\..\target_finder\include\rcp_forcing_target.h" />
     <ClInclude Include="..\..\target_finder\include\secanter.h" />
     <ClInclude Include="..\..\technologies\include\ag_production_technology.h" />
+    <ClInclude Include="..\..\technologies\include\backup_intermittent_technology.h" />
     <ClInclude Include="..\..\technologies\include\base_technology.h" />
     <ClInclude Include="..\..\technologies\include\cal_data_output.h" />
     <ClInclude Include="..\..\technologies\include\cal_data_output_percap.h" />

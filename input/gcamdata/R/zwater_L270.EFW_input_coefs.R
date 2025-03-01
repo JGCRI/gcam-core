@@ -73,9 +73,8 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
 
     # Because not all water withdrawn is later treated as wastewater, the wastewater treatment coefficients should be
     # replaced by those computed in prior steps (for historical periods) The step below temporarily fills out the last
-    # historical value to all subsequent future model time periods. Note that 2010 is hard-wired as this is the base
-    # year of the Liu et al inventory. These default coefficients will be supplemented with scenario-specific
-    # coefficients in a subsequent step
+    # historical value to all subsequent future model time periods. These default coefficients will be supplemented with
+    # scenario-specific coefficients for future years in a subsequent step
     L270.WWtrt_coef <- bind_rows(L173.WWtrtfrac_R_ind_Yh, L174.WWtrtfrac_R_muni_Yh) %>%
       rename(coef_revised = WWtrtfrac) %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -85,18 +84,18 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
       select(region, water.supplysector, minicam.energy.input, year, coef_revised) %>%
       group_by(region, water.supplysector, minicam.energy.input) %>%
       complete(year = MODEL_YEARS) %>%
-      mutate(coef_revised = if_else(year > 2010, coef_revised[year == 2010], coef_revised)) %>%
+      mutate(coef_revised = if_else(year > MODEL_FINAL_BASE_YEAR, coef_revised[year == MODEL_FINAL_BASE_YEAR], coef_revised)) %>%
       ungroup()
 
     # This method uses the function used in GCAM (C++) for determining non-CO2 pollutant emissions factor reduction as a
     # function of per-capita GDP. The base-GDP scenario is set in the constants.
     L270.GDPreduction_scen_R_Y <- filter(L102.pcgdp_thous90USD_Scen_R_Y,
-                                         year %in% c(max(MODEL_BASE_YEARS), MODEL_FUTURE_YEARS)) %>%
+                                         year %in% c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
       rename(pcGDP = value) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       select(scenario, region, year, pcGDP) %>%
       group_by(scenario, region) %>%
-      mutate(baseGDP = pcGDP[year==max(MODEL_BASE_YEARS)]) %>%
+      mutate(baseGDP = pcGDP[year==MODEL_FINAL_BASE_YEAR]) %>%
       ungroup() %>%
       # Copied from C++ code for GDP control. negative values occur where GDP declines; not allowing this to reduce trtshr.
       mutate(reduction = 1 - (1 / (1 + (pcGDP - baseGDP) / efw.WWTRT_STEEPNESS)),
@@ -123,6 +122,7 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
              coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]])
 
+    # BYU-TODO: For some reason coefficients output from this chunk are idential in 2017 and first modeled year. Fix that.
     # SSP scenario suite
     L270.WWtrt_coef_SSP <- inner_join(L270.WWtrt_coef, L270.GDPreduction_scen_R_Y,
                                          by = c("region", "year")) %>%

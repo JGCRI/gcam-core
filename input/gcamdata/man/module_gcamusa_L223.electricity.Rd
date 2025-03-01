@@ -31,7 +31,7 @@ the generated outputs: \code{L223.DeleteSubsector_USAelec},
 The corresponding file in the original data system was \code{L223.electricity_USA.R} (gcam-usa level2).
 }
 \description{
-Generates GCAM-USA model inputs for electrcity sector by grid regions and states.
+Generates GCAM-USA model inputs for electricity sector by grid regions and states.
 }
 \details{
 This chunk generates input files to create an annualized electricity generation sector for each state
