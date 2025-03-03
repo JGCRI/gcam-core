@@ -123,9 +123,6 @@ InputSubsidy::InputSubsidy( const InputSubsidy& aOther )
     // Do not copy calibration values into the future
     // as they are only valid for one period.
     mName = aOther.mName;
-    
-    // copy keywords
-    mKeywordMap = aOther.mKeywordMap;
 }
 
 InputSubsidy* InputSubsidy::clone() const {

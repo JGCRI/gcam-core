@@ -703,7 +703,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
 }
 
 template<>
-void XMLParseHelper::parseData<Data<std::map<std::string, std::string>, SIMPLE> >(const rapidxml::xml_node<char>* aNode, Data<std::map<std::string, std::string>, SIMPLE>& aData) {
+void XMLParseHelper::parseData<Data<std::map<gcamstr, gcamstr>, SIMPLE> >(const rapidxml::xml_node<char>* aNode, Data<std::map<gcamstr, gcamstr>, SIMPLE>& aData) {
     // TODO: kind of a hack to deal with keywords
     std::map<std::string, std::string> attrs = getAllAttrs(aNode);
     aData.mData.insert(attrs.begin(), attrs.end());

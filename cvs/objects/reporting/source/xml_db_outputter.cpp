@@ -907,14 +907,6 @@ void XMLDBOutputter::startVisitMiniCAMInput( const MiniCAMInput* aInput, const i
     // we use startVisitInput to write out the generic input information, however
     // startVisitInput will never be called by an accept so we do it here
     startVisitInput( aInput, aPeriod );
-        
-    // We want to write the keywords last due to limitations in 
-    // XPath we could be searching for them using following-sibling
-    // note that mBufferStack.top() is the child buffer for input
-    if( !aInput->mKeywordMap.empty() && mBufferStack.top()->rdbuf()->in_avail()/*->str().empty()*/ ) {
-        XMLWriteElementWithAttributes( "", "keyword", *mBufferStack.top(), mTabs.get(), 
-            aInput->mKeywordMap );
-    }
 }
 void XMLDBOutputter::endVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ) {
     // call the endVisitInput explicitly becuase it is never called by an accept method.

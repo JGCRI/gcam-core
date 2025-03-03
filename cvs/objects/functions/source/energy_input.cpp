@@ -138,9 +138,6 @@ EnergyInput::EnergyInput( const EnergyInput& aOther )
     mTechChange = aOther.mTechChange;
     mPriceUnitConversionFactor = aOther.mPriceUnitConversionFactor;
     
-    // copy keywords
-    mKeywordMap = aOther.mKeywordMap;
-    
     mMarketName = aOther.mMarketName;
 }
 

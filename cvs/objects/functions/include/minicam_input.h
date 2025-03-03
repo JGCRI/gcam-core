@@ -203,9 +203,6 @@ protected:
         //! Name of the Input.
         DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
         
-        //! A map of a keyword to its keyword group
-        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<gcamstr, gcamstr> ),
-        
         //! Type flags.
         DEFINE_VARIABLE( SIMPLE, "type-flags", mTypeFlags, int )
     )
