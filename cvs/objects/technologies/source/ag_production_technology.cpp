@@ -463,15 +463,12 @@ double AgProductionTechnology::calcProfitRate( const gcamstr& aRegionName,
     // nonlandvariable cost units are now assumed to be in $/kg
     double price = marketplace->getPrice( aProductName, aRegionName, aPeriod );
 
-	// subsidy in $/kg
-    //double subsidy = marketplace->getMarketInfo( aProductName, aRegionName, aPeriod, true )->getDouble( aRegionName+"subsidy", true );
-
     // Compute cost of variable inputs (such as water and fertilizer)
     double inputCosts = getTotalInputCost( aRegionName, aProductName, aPeriod );
 
     // Price in model is 1975$/kg.  land and ag costs are now assumed to be in 1975$ also
     // We are assuming that secondary values will be in 1975$/kg
-    double profitRate = ( price /*+ subsidy*/ - mNonLandVariableCost - inputCosts + secondaryValue ) * mYield;
+    double profitRate = ( price - mNonLandVariableCost - inputCosts + secondaryValue ) * mYield;
 
     // We multiply by 1e9 since profitRate above is in $/m2
     // and the land allocator needs it in $/billion m2. This assumes yield is in kg/m2

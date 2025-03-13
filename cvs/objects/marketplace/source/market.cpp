@@ -54,8 +54,6 @@
 #include "containers/include/scenario.h"
 #include "util/base/include/ivisitor.h"
 #include "containers/include/info_factory.h"
-//#include "util/base/include/atom_registry.h"
-//#include "util/base/include/atom.h"
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
 #include "marketplace/include/marketplace.h"

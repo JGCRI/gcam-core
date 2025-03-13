@@ -334,9 +334,9 @@ const Curve* Region::getEmissionsPriceCurve( const string& ghgName ) const {
     }
 
     Curve* emissionsCurve = new PointSetCurve( emissionsPoints.release() );
-    /*emissionsCurve->setTitle( ghgName + " emissions tax curve" );
+    emissionsCurve->setTitle( ghgName + " emissions tax curve" );
     emissionsCurve->setXAxisLabel( "year" );
-    emissionsCurve->setYAxisLabel( "emissions tax" );*/
+    emissionsCurve->setYAxisLabel( "emissions tax" );
 
     return emissionsCurve;
 }

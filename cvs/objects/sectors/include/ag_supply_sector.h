@@ -91,8 +91,6 @@ protected:
 
         // TODO: Should this be a vector?
         DEFINE_VARIABLE( SIMPLE, "calPrice", mCalPrice, double ),
-
-        //DEFINE_VARIABLE( ARRAY, "subsidy", mSubsidy, objects::PeriodVector<double> ),
                             
         //! A threshold which controls the minimum profit rate to allow during calibration.  The technology will
         //! use this threshold to calculate an implicit subsidy to ensure its profit rate meets this threshold.

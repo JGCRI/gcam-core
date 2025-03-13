@@ -832,6 +832,7 @@
 		CD8FDECA1C0647640099C752 /* pass_through_technology.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pass_through_technology.h; sourceTree = "<group>"; };
 		CD8FDECB1C0647A20099C752 /* pass_through_technology.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pass_through_technology.cpp; sourceTree = "<group>"; };
 		CD966E671D92F1BB00A93938 /* hector.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = hector.xcodeproj; path = ../../climate/source/hector/project_files/Xcode/hector.xcodeproj; sourceTree = "<group>"; };
+		CD9F77462D755B65003D473D /* gcamstr.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = gcamstr.h; sourceTree = "<group>"; };
 		CDA0C40A25A7B24D00E84153 /* calc_base_price.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = calc_base_price.h; sourceTree = "<group>"; };
 		CDA0C40C25A7B26200E84153 /* calc_base_price.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = calc_base_price.cpp; sourceTree = "<group>"; };
 		CDA481A425E6FC3E0046E143 /* fdjac.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = fdjac.cpp; sourceTree = "<group>"; };
@@ -1941,6 +1942,7 @@
 		CD4886CA122873C200F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
+				CD9F77462D755B65003D473D /* gcamstr.h */,
 				CDE4917426C037ED00ADDD53 /* aparsable.h */,
 				CD7A99FE2673A49D000EA23F /* xml_parse_helper.h */,
 				CDAACD84216C545F00D13FD6 /* supply_demand_curve_saver.h */,

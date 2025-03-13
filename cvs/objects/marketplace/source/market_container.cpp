@@ -57,8 +57,6 @@
 #include "marketplace/include/normal_market.h"
 #include "marketplace/include/trial_value_market.h"
 #include "marketplace/include/linked_market.h"
-//#include "util/base/include/atom_registry.h"
-//#include "util/base/include/atom.h"
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
 
@@ -264,21 +262,7 @@ void MarketContainer::resetToPriceMarket( MarketContainer* aDemandMarkets ) {
  *          the list it is not added and a warning is printed.
  * \param aRegion The name of the region to add.
  */
-void MarketContainer::addRegion( const gcamstr& aRegion ) {
-    // Convert the string to an atom.
-    /*const Atom* regionID = AtomRegistry::getInstance()->findAtom( aRegion );
-    
-    // Could be the first request for this name.  Note the atom registry will
-    // manage this memory.
-    if( !regionID ) {
-        regionID = new Atom( aRegion );
-    }*/
-    
-    /*! \invariant The ID of the found atom is the same as the name of the
-     *              region, this ensures the lookup was correct.
-     */
-    //assert( regionID->getID() == aRegion );
-    
+void MarketContainer::addRegion( const gcamstr& aRegion ) {    
     // Check if the region ID does not already exist in the list.
     if( find( mContainedRegions.begin(), mContainedRegions.end(), aRegion ) == mContainedRegions.end() ) {
         // Add the region ID.

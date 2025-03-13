@@ -61,6 +61,7 @@ extern Scenario* scenario;
 LandAllocator::LandAllocator()
 : LandNode( 0 )
 {
+    // explicitly initialize to zero to avoid tripping debug state checks
     mUnManagedLandValue = 0.0;
     mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();
 }

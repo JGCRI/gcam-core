@@ -71,19 +71,19 @@ Info::~Info(){
 }
 
 bool Info::setBoolean( const gcamstr& aStringKey, const bool aValue ){
-    return setItemValueLocal( aStringKey, eBoolean, aValue );
+    return setItemValueLocal( aStringKey, aValue );
 }
 
 bool Info::setInteger( const gcamstr& aStringKey, const int aValue ){
-    return setItemValueLocal( aStringKey, eInteger, aValue );
+    return setItemValueLocal( aStringKey, aValue );
 }
 
 bool Info::setDouble( const gcamstr& aStringKey, const double aValue ){
-    return setItemValueLocal( aStringKey, eDouble, aValue );
+    return setItemValueLocal( aStringKey, aValue );
 }
 
 bool Info::setString( const gcamstr& aStringKey, const gcamstr& aValue ){
-    return setItemValueLocal( aStringKey, eString, aValue );
+    return setItemValueLocal( aStringKey, aValue );
 }
     
 bool Info::getBoolean( const gcamstr& aStringKey, const bool aMustExist ) const

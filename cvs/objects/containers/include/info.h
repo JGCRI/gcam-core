@@ -110,30 +110,10 @@ private:
 
     gcamstr mOwnerName;
 
-    /*!
-     * \brief Enum representing possible types of each item.
-     */
-    enum AnyType {
-        //! Boolean
-        eBoolean,
-
-        //! Integer
-        eInteger,
-
-        //! Double
-        eDouble,
-
-        //! String
-        eString
-    };
-
     template<class T> bool setItemValueLocal( const gcamstr& aStringKey,
-                                              const AnyType aType,
                                               const T& aValue );
 
     template<class T> T getItemValueLocal( const gcamstr& aStringKey, bool& aExists ) const;
-
-    size_t getInitialSize() const;
 
     void printItemNotFoundWarning( const gcamstr& aStringKey ) const;
 
@@ -169,7 +149,6 @@ private:
 * \param aValue The value to be associated with this key. 
 */
 template<class T> bool Info::setItemValueLocal( const gcamstr& aStringKey,
-                                                const AnyType aType,
                                                 const T& aValue )
 {
     /*! \pre A valid key was passed. */
