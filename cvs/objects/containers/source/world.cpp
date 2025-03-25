@@ -175,7 +175,7 @@ void World::toDebugXML( const int period, ostream& out, Tabs* tabs ) const {
     }
 
     // Climate model parameters
-    if ( !mClimateModel ) {
+    if ( mClimateModel ) {
         mClimateModel->toDebugXML( period, out, tabs );
     }
 

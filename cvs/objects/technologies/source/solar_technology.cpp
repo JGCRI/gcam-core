@@ -379,7 +379,7 @@ void SolarTechnology::initCalc(
    }
 
    // Get number of no sun days
-   if ( pInfo || !pInfo->hasValue( "no-sun-days" ) )
+   if ( !pInfo || !pInfo->hasValue( "no-sun-days" ) )
    // Invalid input parameter
    {
       mNoSunDays = pInfo->getDouble( "no-sun-days", false );
