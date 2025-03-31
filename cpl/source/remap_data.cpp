@@ -439,14 +439,14 @@ size_t ReMapData::getArrayLength() const {
  *        diagnostics.
  * \details This method will produce column headers and seperate
  *          output with a comma.
- *          The values will be rounded to 7 fixed decimal digits
+ *          The values will be rounded to maximum decimal digits for double without conversion losss
  * \param aOut The output stream to send data to.
  * \return The given output stream for chaining
  */
 ostream& ReMapData::printAsTable( ostream& aOut ) const {
     const string DELIM = ",";
 
-    aOut << fixed << setprecision(7);
+    aOut << fixed << setprecision(numeric_limits<double>::max_digits10);
 
     if( !mIsInitialized ) {
         aOut << "No initialized." << endl;
