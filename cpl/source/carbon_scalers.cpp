@@ -448,7 +448,7 @@ void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears
         exit(EXIT_FAILURE);
     }
     // write scalars to max precision for exact conversion between binary and text
-    oFile << fixed << setprecision(numeric_limits<double>::max_digits10)
+    oFile << fixed << setprecision(numeric_limits<double>::max_digits10);
 
     // include a header line
     oFile << "Year" << ",Region" << ",LandType_Basin" << ",Vegetation" << ",Soil" << endl;
