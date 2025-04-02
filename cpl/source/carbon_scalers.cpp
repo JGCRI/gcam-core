@@ -39,6 +39,7 @@
 
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
