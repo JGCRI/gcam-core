@@ -101,7 +101,7 @@ protected:
     )
     
     //! Pointer to the resource's information store.
-    std::auto_ptr<IInfo> mResourceInfo;
+    std::unique_ptr<IInfo> mResourceInfo;
 
     virtual const std::string& getXMLName() const;
     void setMarket( const std::string& aRegionName );

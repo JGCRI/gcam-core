@@ -85,7 +85,7 @@
 *       iterate over the key-value set or remove keys from the map.
 * \note The Value type is required to implement the no-argument constructor.
 *       This condition must be true for standard library containers as well.
-* \note Do not use auto_ptrs as Values as they may be accidentally deleted during
+* \note Do not use unique_ptrs as Values as they may be accidentally deleted during
 *       resizes. This is true of standard library containers as well.
 * \author Josh Lurz
 */

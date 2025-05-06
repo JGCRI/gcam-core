@@ -123,7 +123,7 @@ private:
         typedef HashMap<std::string, boost::shared_ptr<GoodNode> > SectorNodeList;
 
         //! A list of sectors contained by this market or region.
-        std::auto_ptr<SectorNodeList> mSectorNodeList;
+        std::unique_ptr<SectorNodeList> mSectorNodeList;
         
         //! The region or market area name.
         const std::string mName;
@@ -141,11 +141,11 @@ private:
 
     //! A list of market areas each containing a list of sectors contained by
     //! the market.
-    std::auto_ptr<RegionMarketList> mMarketList;
+    std::unique_ptr<RegionMarketList> mMarketList;
 
     //! A list of regions each containing a list of of sectors contained by the
     //! region.
-    std::auto_ptr<RegionMarketList> mRegionList;
+    std::unique_ptr<RegionMarketList> mRegionList;
 };
 
 // Inline definitions.
