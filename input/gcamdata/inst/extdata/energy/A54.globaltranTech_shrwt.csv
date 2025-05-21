@@ -3,7 +3,7 @@
 # Units: Unitless
 # Column types: cccnnnnnnnnc
 # ----------
-supplysector,tranSubsector,tranTechnology,1971,2010,2015,2020,2025,2030,2050,2100,sce
+supplysector,tranSubsector,tranTechnology,1971,2010,final-calibration-year,initial-future-year,2025,2030,2050,2100,sce
 trn_aviation_intl,International Aviation,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_freight,Domestic Ship,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_freight,Freight Rail,Coal,1,1,0,0,0,0,0,0,CORE

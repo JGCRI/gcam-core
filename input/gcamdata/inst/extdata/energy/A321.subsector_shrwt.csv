@@ -10,5 +10,5 @@ process heat cement,coal,start-year,,1
 process heat cement,gas,start-year,,1
 process heat cement,refined liquids,start-year,,1
 process heat cement,hydrogen,start-year,,0
-process heat cement,hydrogen,2020,,0
+process heat cement,hydrogen,initial-future-year,,0
 process heat cement,hydrogen,2050,,1

@@ -608,12 +608,8 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     L1239.state_elec_supply_USA %>%
       select(state, fuel, segment, year, fraction)%>%
       rename(region = state, supplysector = segment, subsector = fuel) %>%
-      mutate(year = as.numeric(year)) %>%
-      # extrapolate to all base years
-      complete(nesting(region, subsector, supplysector), year = MODEL_BASE_YEARS) %>%
-      group_by(region, subsector, supplysector) %>%
-      mutate(fraction = approx_fun(year, fraction, rule = 2)) %>%
-      ungroup() -> L2234.fuelfractions_segment_USA
+      mutate(year = as.numeric(year)) -> L2234.fuelfractions_segment_USA
+
 
     L2234.StubTechProd_elecS_USA %>%
       # join will produce NAs; left_join_error_no_match throws error, so left_join used
@@ -795,7 +791,7 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     # there has always been only one technology in the calibration period per fuel so their efficiencies
     # (in L223.StubTechEff_elec_USA) are based on the actual historical efficiency in the L123.eff_R_elec_F_Yh.csv file.
     L123.eff_R_elec_F_Yh %>%
-      gather_years("eff_actual") %>%
+      rename(eff_actual = value) %>%
       filter(GCAM_region_ID == gcam.USA_CODE,
              year %in% MODEL_BASE_YEARS) -> L2234.fuel_eff_actual
 
@@ -953,7 +949,10 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     # Energy Inputs for additional technologies such as battery
     L2234.StubTech_energy_elecS_USA <- write_to_all_states(A23.elecS_stubtech_energy_inputs,
                                                            c("region", "supplysector","subsector","stub.technology",
-                                                             "period", "minicam.energy.input", "market.name", "efficiency") )
+                                                             "period", "minicam.energy.input", "market.name", "efficiency") ) %>%
+      tidyr::complete(tidyr::nesting(region, supplysector, subsector, stub.technology, minicam.energy.input, market.name), period = MODEL_YEARS) %>%
+      mutate(efficiency = approx_fun(period, efficiency)) %>%
+      filter(period %in% MODEL_YEARS)
 
     L2234.StubTech_energy_elecS_USA %>%
       left_join_error_no_match(states_subregions, by = c("region" = "state")) %>%

@@ -3,7 +3,7 @@
 # Units: Unitless
 # Column types: cccnnnn
 # ----------
-supplysector,subsector,technology,1971,2020,2050,2100
+supplysector,subsector,technology,1971,final-calibration-year,2050,2100
 agricultural energy use,mobile,refined liquids,1,1,1,1
 agricultural energy use,mobile,electricity,0,0,1,1
 agricultural energy use,mobile,hydrogen,0,0,1,1

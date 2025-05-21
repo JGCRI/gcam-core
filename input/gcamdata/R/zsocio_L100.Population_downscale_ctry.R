@@ -2,7 +2,7 @@
 
 #' module_socio_L100.Population_downscale_ctry
 #'
-#'  Clean and interpolate both Maddison historical population data (1700-2010) and SSP population scenarios.
+#'  Clean and interpolate both Maddison historical population data (1700-max(UN_HISTORICAL_YEARS)) and SSP population scenarios.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -140,25 +140,60 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
       mutate(year = as.integer(year)) %>%
       ungroup
 
-    # Need to create matching iso codes for three countries in UN, but not Maddison.
-    # Set Serbia and Montenegro ratio equal to Serbia & Montenegro and use Indonesia population ratio for East Timor
-    mne_srb_tls <- filter(maddison_hist_ratio, iso %in% c("idn", "scg")) %>%
-      mutate(iso = replace(iso, iso == "idn", "tls"), iso = replace(iso, iso == "scg", "mne"))
+    # Need to create population ratios & iso codes for countries in UN, but not Maddison.
+    # Renaming (Romania), adding countries (Timor-Leste, South Sudan, Vatican, Kosovo), in other cases Iso disaggregation,
+    # where population ratios will remain the same from parent to child (X---> A,B,C where X=A=B=C)
+    new_UN_iso <- filter(maddison_hist_ratio, iso %in% c("idn", "scg", "chi", "sdn", "rom", "ita","alb", "ant", "glp", "shn", "nru")) %>%
+      mutate(iso = replace(iso, iso == "idn", "tls"), #Create Timor-Leste iso using Indonesia pop ratio
+             iso = replace(iso, iso == "scg", "mne"), #Create Montenegro iso using Serbia & Montenegro pop ratio
+             iso = replace(iso, iso == "chi", "jey"), #Create Jersey iso using the Channel Islands pop ratio
+             iso = replace(iso, iso == "sdn", "ssd"), #Create South Sudan iso using Sudan pop ratio
+             iso = replace(iso, iso == "rom", "rou"), #Create Romania iso using Romania pop ratio (renaming iso)
+             iso = replace(iso, iso == "ita", "vat"), #Create Vatican(Holy See) iso using Italy pop ratio
+             iso = replace(iso, iso == "alb", "xkx"), #Create Kosovo iso using Albania pop ratio
+             iso = replace(iso, iso == "ant", "bes"), #Create Bonaire, Sint Eustatius and Saba iso using Netherlands Antilles pop ratio
+             iso = replace(iso, iso == "glp", "blm"), #Create Saint Barthelemy iso using Guadalupe pop ratio
+             iso = replace(iso, iso == "shn", "flk"), #Create the Falkland Islands iso using Saint Helena, Ascension and Tristan da Cunha pop ratio
+             iso = replace(iso, iso == "nru", "niu")  #Create Niue iso using the Republic of Nauru pop ratio
+             ) %>%
+      bind_rows(filter(maddison_hist_ratio, iso %in% c("scg", "chi", "ant", "glp", "nru"))) %>%
+      mutate(iso = replace(iso, iso == "scg", "srb"), #Create Serbia iso using Serbia & Montenegro pop ratio
+             iso = replace(iso, iso == "chi", "ggy"), #Create Guernsey iso using the Channel Islands pop ratio
+             iso = replace(iso, iso == "ant", "cuw"), #Create Curacao iso using Netherlands Antilles pop ratio
+             iso = replace(iso, iso == "glp", "maf"), #Create Saint Martin iso using Guadalupe pop ratio
+             iso = replace(iso, iso == "nru", "tkl")  #Create Tokelau iso using the Republic of Nauru pop ratio
+             ) %>%
+      bind_rows(filter(maddison_hist_ratio, iso %in% c("ant"))) %>%
+      mutate(iso = replace(iso, iso == "ant", "sxm"))  #Create Sint Maarten iso using Netherlands Antilles pop ratio
 
-    # Combine with other ratio_iso values
+    # Combine with additional UN pop ratio_iso values
     maddison_hist_ratio <- maddison_hist_ratio %>%
-      bind_rows(mne_srb_tls) %>%
-      mutate(iso = replace(iso, iso == "scg", "srb"))
+      bind_rows(new_UN_iso) %>%
+      #Remove disaggregated/renamed iso's
+      filter(iso != "scg") %>%
+      filter(iso != "ant") %>%
+      filter(iso != "chi") %>%
+      filter(iso != "rom")
 
-    # Sixth, apply Maddison ratios for historic periods to UN populatio data that begin in 1950
+    # Adding check here to see if there are still any iso's in UN data are not in updated madison data and probably error if so.
+    # Since the UN data will be regularly updated, this will help debugging future updates
+    UN_iso <- tolower(unique(UN_popTot$Country))
+    maddison_iso <- unique(maddison_hist_ratio$iso)
+    missing_iso <- UN_iso[!(UN_iso %in% maddison_iso)]
+    if (length(missing_iso > 0)) {
+      stop(paste0("Error: The following iso's are in UN data but are missing from madison data: ", toString(missing_iso)))
+    }
+
+    # Sixth, apply Maddison ratios for historic periods to UN population data that begin in 1950
     # Clean raw UN population data
     un_clean <- UN_popTot %>%
-      filter(Scenario == "EST") %>%  # "EST" is the UN historical estimates, not projections
+      filter(Scenario == "Estimates") %>%  # "Estimates" is the UN historical estimates, not projections
       select(-Region, -Sex, -Scenario) %>%
       rename(iso = Country, year = Year, pop = Value) %>%
       mutate(iso = tolower(iso)) %>%
       filter(year %in% socioeconomics.UN_HISTORICAL_YEARS) %>%  # Keep only the years that we are using
       mutate(iso = gsub("xea", "twn", iso)) # Correct iso code for Taiwan
+
     # Multiply UN 1950 population by Maddison historic ratios to get values for pre-1950 years
     un_maddison_hist <- filter(un_clean, year == min(socioeconomics.UN_HISTORICAL_YEARS)) %>%
       select(-year) %>%
@@ -166,11 +201,54 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
       complete(year, nesting(iso)) %>%  # Completes tibble to include all years for all iso (creates missing values)
       mutate(pop = if_else(!is.na(pop_ratio), (pop * pop_ratio), 0)) %>% # Set the remaining mismatched (very small) countries to zero
       select(iso, year, pop)
+
     # Combine scaled population for Maddison historic years with UN population 1950+
     L100.Pop_thous_ctry_Yh <- bind_rows(un_clean, un_maddison_hist) %>%
       filter(year %in% c(socioeconomics.MADDISON_HISTORICAL_YEARS, socioeconomics.UN_HISTORICAL_YEARS)) %>%
       replace_na(list(pop = 0)) %>%
-      rename(value = pop)
+      rename(value = pop) %>%
+      mutate(iso = gsub("rou", "rom", iso), #Revert new Romania iso (ROU) back to old iso (ROM) for uniformity throughout GCAM
+             iso = gsub("bes", "ant", iso),
+             iso = gsub("cuw", "ant", iso),
+             iso = gsub("sxm", "ant", iso)#Aggregating Netherlands Antilles islands (broken out in newer UN Population Data)
+             ) %>%
+      group_by(iso, year) %>%
+      mutate(value = sum(value)) %>%
+      ungroup() %>%
+      distinct()
+
+    # Some iso's don't have data out to the base year, so we need to extrapolate
+    # Create a dataframe that has all iso's and all years, and fill with the values we have from Maddison and UN
+    L100.Pop_thous_ctry_Yh %>%
+      repeat_add_columns(tibble::tibble(iso=unique(L100.Pop_thous_ctry_Yh$iso))) %>%
+      repeat_add_columns(tibble::tibble(year=unique(L100.Pop_thous_ctry_Yh$year))) %>%
+      select(-c(iso.x,year.x,value)) %>%
+      distinct() %>%
+      # Must use left_join because we want NAs in this dataframe to show what is missing from IEA
+      left_join(L100.Pop_thous_ctry_Yh, by=c("iso.y" = "iso", "year.y" = "year")) %>%
+      rename(iso = iso.y,
+             year = year.y) ->
+      # This results in a df that has NAs, so we can interpolate / extrapolate
+      L100.Pop_thous_ctry_UNpopYh_NAs
+
+    # Write out a warning with the number of NAs
+    L100.Pop_thous_ctry_UNpopYh_NAs %>%
+      filter(is.na(value)) -> value_NAs
+
+    if ( dim(value_NAs)[1] != 0 ) {
+      paste0("Warning: There are ", nrow(value_NAs), " NAs in the dataframe. These values will be interpolated or extrapolated.")
+    }
+
+    # Interpolate and/or extrapolate to fill NAs
+    # If there are no NAs, this will not do anything but change the dataframe name
+    L100.Pop_thous_ctry_UNpopYh_NAs %>%
+      group_by(iso) %>%
+      mutate(value = approx_fun(year, value, rule = 2)) %>%
+      ungroup() ->
+      L100.Pop_thous_ctry_UNpopYh
+    # L100.Pop_thous_ctry_UNpopYh - NOTE: _popYh indicates data set is for historical(h), population(pop) years (Y).
+    # This distinction  is important because the population data is updated to a more recent year than the GCAM base year.
+    # Meaning the final Historical Year output will be a subset (out to the max base year) of the Historical Population Years
 
     ## (2) SSP population projections by country
 
@@ -209,12 +287,17 @@ module_socio_L100.Population_downscale_ctry <- function(command, ...) {
 
     L100.Pop_thous_SSP_ctry_Yfut <-
       L100.Pop_thous_SSP_ctry_Yfut_0 %>%
-      complete(nesting(scenario, iso), year = c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
-      filter(year %in% c(socioeconomics.FINAL_HIST_YEAR, FUTURE_YEARS)) %>%
+      # need to have socioeconomics.SSP_DB_BASEYEAR in the data as the initial point for interpolation
+      # otherwise 2021:2024 could be the same with 2025 (rule = 2 below)
+      complete(nesting(scenario, iso),
+               year = c(socioeconomics.SSP_DB_BASEYEAR:max(FUTURE_YEARS))) %>%
+      filter(year %in% c(socioeconomics.SSP_DB_BASEYEAR:max(FUTURE_YEARS))) %>%
       group_by(scenario, iso) %>%
-      mutate(pop = approx_fun(year, pop),
+      # Data is in five year intervals, so interpolate so get data for the base-year before calculating ratios
+      mutate(pop = approx_fun(year, pop, rule = 2),
              ratio_iso_ssp = pop / pop[year == socioeconomics.FINAL_HIST_YEAR]) %>%  # Calculate population ratios to final historical year (2010), no units
       select(-pop) %>%
+      filter(year >= socioeconomics.FINAL_HIST_YEAR) %>%
       # Third, project country population values using SSP ratios and final historical year populations.
       # Not all countries in the UN data are in SSP data. Create complete tibble with all UN countries & SSP years.
       ungroup() %>%

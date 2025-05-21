@@ -122,7 +122,6 @@ module_water_L270.EFW_input_coefs <- function(command, ...) {
              coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]])
 
-    # BYU-TODO: For some reason coefficients output from this chunk are idential in 2017 and first modeled year. Fix that.
     # SSP scenario suite
     L270.WWtrt_coef_SSP <- inner_join(L270.WWtrt_coef, L270.GDPreduction_scen_R_Y,
                                          by = c("region", "year")) %>%

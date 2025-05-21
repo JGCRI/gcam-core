@@ -291,7 +291,7 @@ module_energy_L244.building_det <- function(command, ...) {
       income_shares_hist
 
     L144.income_shares %>%
-      filter(scen != socioeconomics.BASE_INCSHARE_BASE) %>%
+      filter(scen != socioeconomics.BASE_INCSHARE_BASE, year > MODEL_FINAL_BASE_YEAR) %>%
       bind_rows(income_shares_hist) ->
       L144.income_shares
 
@@ -738,7 +738,7 @@ module_energy_L244.building_det <- function(command, ...) {
       summarise(satiation.level = mean(satiation.level),
                 `satiation-impedance`= mean(`satiation-impedance`)) %>%
       ungroup() %>%
-      mutate(year = 2015) %>%
+      mutate(year = MODEL_FINAL_BASE_YEAR) %>%
       left_join_error_no_match(A_regions %>% select(GCAM_region_ID,region),by = "region") %>%
       left_join_error_no_match(bind_rows(L144.flsp_bm2_R_res_Yh %>% mutate(nodeInput = "resid"),
                                          L144.flsp_bm2_R_comm_Yh %>% mutate(nodeInput = "comm")),

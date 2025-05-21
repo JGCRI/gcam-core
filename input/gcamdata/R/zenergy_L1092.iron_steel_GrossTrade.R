@@ -155,13 +155,17 @@ module_energy_L1092.iron_steel_GrossTrade <- function(command, ...){
     #map import and export regions to GCAM_regions
     Rt_iron_steel_bilateral_trade_data %>%
       rename(Country_Name = Exporter, iso="Exporter ISO3")%>%
-      left_join(comtrade_countrycode_ISO,by=c("Country_Name"))%>%
+      # putting in a LJ "keep first only" because Italy has 2 iso codes (381 original, 380 new).
+      # Iron and steel trade data uses the old code 381 but we do not want to have duplicate entries.
+      left_join_keep_first_only(comtrade_countrycode_ISO,by=c("Country_Name"))%>%
       mutate(iso=tolower(iso)) %>%
       left_join(iso_GCAM_regID,by=c("iso")) %>%
       left_join(GCAM_region_names,by=c("GCAM_region_ID"))%>%
       rename(Exporter_Region = region, Exporter_Country = Country_Name,Country_Name=Importer)%>%
       select(Exporter_Country,Country_Name,`Importer ISO3`,Resource,Year,Value,Weight,Exporter_Region)%>%
-      left_join(comtrade_countrycode_ISO,by=c("Country_Name"))%>%
+      # putting in a LJ "keep first only" because Italy has 2 iso codes (381 original, 380 new).
+      # Iron and steel trade data uses the old code 381 but we do not want to have duplicate entries.
+      left_join_keep_first_only(comtrade_countrycode_ISO,by=c("Country_Name"))%>%
       rename(iso="Importer ISO3")%>%
       mutate(iso=tolower(iso))%>%
       left_join(iso_GCAM_regID,by=c("iso")) %>%

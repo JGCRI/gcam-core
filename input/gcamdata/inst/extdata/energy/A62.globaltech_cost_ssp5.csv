@@ -3,7 +3,7 @@
 # Units: 1975$/kgC for dac, 1975$/GJ for process heat dac
 # Column types: ccccnnnn
 # ----------
-supplysector,subsector,technology,minicam.non.energy.input,1971,2020,2050,2100
+supplysector,subsector,technology,minicam.non.energy.input,1971,initial-future-year,2050,2100
 CO2 removal,dac,hightemp DAC NG,non-energy,0.297615642,0.297615642,0.07742967,0.07742967
 CO2 removal,dac,hightemp DAC elec,non-energy,0.381047227,0.381047227,0.096028217,0.096028217
 CO2 removal,dac,lowtemp DAC heatpump,non-energy,0.423419501,0.423419501,0.1356294,0.1356294

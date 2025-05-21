@@ -2,25 +2,25 @@
 # Title: Hydrogen efficiencies 
 # Units: GJ input / GJ output
 # Comments: To be more intuitive in our handling of technologies with multiple inputs, we now use coefficients rather than efficiencies. This file contains the reciprocal of all values in the previous A25.globaltech_eff file for primary inputs, as well as new secondary inputs for select technologies.
-# Column types: ccccnnnnnnnnnnnnnnnnnnnn
+# Column types: ccccnnnnn
 # ----------
-supplysector,subsector,technology,minicam.energy.input,price.unit.conversion,1971,2015,2020,2025,2030,2035,2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100
-H2 pipeline,H2 pipeline,H2 pipeline,elect_td_ind,,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729,0.01729
-H2 pipeline,H2 pipeline,H2 pipeline,H2 central production,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-H2 liquid truck,H2 liquid truck,H2 liquid truck,elect_td_ind,,0.2766,0.2766,0.2766,0.2766,0.2640,0.2520,0.2405,0.2326,0.2250,0.2176,0.2105,0.2105,0.2105,0.2105,0.2105,0.2105,0.2105,0.2105,0.2105
-H2 liquid truck,H2 liquid truck,H2 liquid truck,H2 central production,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-H2 liquid truck,H2 liquid truck,H2 liquid truck,trn_freight_road,0.0004521,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327,1327
-H2 wholesale delivery,H2 pipeline,H2 pipeline,H2 pipeline,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-H2 wholesale delivery,H2 liquid truck,H2 liquid truck,H2 liquid truck,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-H2 industrial,H2 delivery,H2 delivery,H2 wholesale delivery,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-H2 industrial,onsite production,electrolysis,elect_td_ind,,1.635116224,1.635116224,1.610951945,1.587144772,1.56368943,1.540580721,1.517813519,1.495382777,1.473283523,1.451510859,1.430059962,1.40892607,1.397535234,1.397535234,1.397535234,1.397535234,1.397535234,1.397535234,1.397535234
-H2 retail delivery,H2 retail delivery,H2 retail delivery,H2 wholesale delivery,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-H2 wholesale dispensing,forecourt production,natural gas steam reforming,delivered gas,,1.367360538,1.367360538,1.350479544,1.333806956,1.317340203,1.301076745,1.285014068,1.269149697,1.253481182,1.243055034,1.243055034,1.243055034,1.243055034,1.243055034,1.243055034,1.243055034,1.243055034,1.243055034,1.243055034
-H2 wholesale dispensing,forecourt production,natural gas steam reforming,elect_td_trn (compression and refrigeration),,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149
-H2 wholesale dispensing,forecourt production,electrolysis,elect_td_trn,,1.635116224,1.635116224,1.610951945,1.587144772,1.56368943,1.540580721,1.517813519,1.495382777,1.473283523,1.451510859,1.430059962,1.40892607,1.397535234,1.397535234,1.397535234,1.397535234,1.397535234,1.397535234,1.397535234
-H2 wholesale dispensing,forecourt production,electrolysis,elect_td_trn (compression and refrigeration),,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149
-H2 wholesale dispensing,H2 delivery,H2 pipeline,H2 pipeline,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-H2 wholesale dispensing,H2 delivery,H2 pipeline,elect_td_trn,,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149,0.149
-H2 wholesale dispensing,H2 delivery,H2 liquid truck,H2 liquid truck,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
-H2 wholesale dispensing,H2 delivery,H2 liquid truck,elect_td_trn,,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161,0.0161
-H2 retail dispensing,H2 retail dispensing,H2 retail dispensing,H2 wholesale dispensing,,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1
+supplysector,subsector,technology,minicam.energy.input,price.unit.conversion,1971,final-calibration-year,initial-future-year,2100
+H2 pipeline,H2 pipeline,H2 pipeline,elect_td_ind,,0.01729,0.01729,0.01729,0.01729
+H2 pipeline,H2 pipeline,H2 pipeline,H2 central production,,1,1,1,1
+H2 liquid truck,H2 liquid truck,H2 liquid truck,elect_td_ind,,0.2766,0.2766,0.2766,0.2105
+H2 liquid truck,H2 liquid truck,H2 liquid truck,H2 central production,,1,1,1,1
+H2 liquid truck,H2 liquid truck,H2 liquid truck,trn_freight_road,0.0004521,1327,1327,1327,1327
+H2 wholesale delivery,H2 pipeline,H2 pipeline,H2 pipeline,,1,1,1,1
+H2 wholesale delivery,H2 liquid truck,H2 liquid truck,H2 liquid truck,,1,1,1,1
+H2 industrial,H2 delivery,H2 delivery,H2 wholesale delivery,,1,1,1,1
+H2 industrial,onsite production,electrolysis,elect_td_ind,,1.635116224,1.635116224,1.610951945,1.397535234
+H2 retail delivery,H2 retail delivery,H2 retail delivery,H2 wholesale delivery,,1,1,1,1
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,delivered gas,,1.367360538,1.367360538,1.350479544,1.243055034
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,elect_td_trn (compression and refrigeration),,0.149,0.149,0.149,0.149
+H2 wholesale dispensing,forecourt production,electrolysis,elect_td_trn,,1.635116224,1.635116224,1.610951945,1.397535234
+H2 wholesale dispensing,forecourt production,electrolysis,elect_td_trn (compression and refrigeration),,0.149,0.149,0.149,0.149
+H2 wholesale dispensing,H2 delivery,H2 pipeline,H2 pipeline,,1,1,1,1
+H2 wholesale dispensing,H2 delivery,H2 pipeline,elect_td_trn,,0.149,0.149,0.149,0.149
+H2 wholesale dispensing,H2 delivery,H2 liquid truck,H2 liquid truck,,1,1,1,1
+H2 wholesale dispensing,H2 delivery,H2 liquid truck,elect_td_trn,,0.0161,0.0161,0.0161,0.0161
+H2 retail dispensing,H2 retail dispensing,H2 retail dispensing,H2 wholesale dispensing,,1,1,1,1

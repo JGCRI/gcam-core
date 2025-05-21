@@ -218,6 +218,10 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
       mutate(OtherUse_Food_Share = - OtherUses_Mt / Food_Mt) ->
       CheckOtherUsevsFood
 
+    assertthat::assert_that(
+      CheckOtherUsevsFood %>% filter(OtherUse_Food_Share >=1) %>% nrow() == 0,
+      msg = "Check negative food here")
+
     L109.ag_ALL_Mt_R_C_Y %>%
       mutate(Food_Mt = if_else(year %in% MODEL_BASE_YEARS & OtherUses_Mt <0,
                                Food_Mt + OtherUses_Mt, Food_Mt)) %>%
@@ -347,6 +351,7 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
       L109.an_ALL_Mt_R_C_Y
 
 
+
     if(any(L109.an_ALL_Mt_R_C_Y$OtherUses_Mt < 0)){
       # Filter commodities that may be imbalanced
       L109.an_ALL_Mt_R_C_Y %>%
@@ -358,16 +363,20 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
         group_by(GCAM_commodity, year, negOther) %>%
         summarise(value = sum(OtherUses_Mt), .groups = "drop") %>%
         spread(negOther, value) %>%
-        filter(!is.na(Neg), Neg + Pos < 0) %>% nrow() == 0 ->
+        filter(!is.na(Neg), Neg + Pos < 0) %>%
+        # these two had special food adjustments later, so filter out
+        filter(!(GCAM_commodity == "Pork" & year == 2019),
+               !(GCAM_commodity == "SheepGoat" & year == 2015)) %>%
+        nrow() == 0 ->
         An_OTHERUSE_WARNING
 
       # comment this out since adjustments are added later
-      # if (An_OTHERUSE_WARNING == F) {
-      #  warning("Negative other use in model base years.Other use in meat commodities may require a case-by-case adjustment (in food) since total global other use is negative. Please check food consumption adjustments.")
-      #   }
+      if (An_OTHERUSE_WARNING == F) {
+       warning("Negative other use in model base years.Other use in meat commodities may require a case-by-case adjustment (in food) since total global other use is negative. Please check food consumption adjustments.")
+        }
 
       # Ship negative otheruse to other regions with positives
-      # positive regions will be scaled down simplely
+      # positive regions will be scaled down simply
       L109.an_ALL_Mt_R_C_Y_1 %>%
         group_by(GCAM_commodity, year, negOther) %>%
         # world processed by neg or pos
@@ -378,15 +387,57 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
         select(-Neg, -Pos)->
         Pos_OtherUse_scaler
 
+      # Special adjustments for pork in 2019 for Pakistan (22)
+      # the food consumption cannot be adjusted in Pakistan since it is too small
+      # it would generate negative values in food in this case
+      # here we specify regional scaler to avoid other use adj in Pakistan (so later food adj is avoided)
+      # this also a longer story and including storage for pork will help in future
+
+      # check T/F data exist
+      L109.an_ALL_Mt_R_C_Y_1 %>% filter(year == 2019, GCAM_commodity == "Pork") %>% nrow() > 0 ->
+        NeedPork2019_adj
+
+      if (NeedPork2019_adj) {
+        # update scaler
+        L109.an_ALL_Mt_R_C_Y_1 %>%
+          filter(year == 2019, GCAM_commodity == "Pork", GCAM_region_ID != 22) %>%
+          group_by(GCAM_commodity, year, negOther) %>%
+          # world processed by neg or pos
+          summarise(OtherUses_Mt = sum(OtherUses_Mt, na.rm = T)) %>%
+          ungroup() %>%
+          spread(negOther, OtherUses_Mt) %>%
+          mutate(World_pos_scaler = -Neg/Pos) %>%
+          select(-Neg, -Pos) ->
+          Pos_OtherUse_scaler_adj
+
+        # Bind back other scalers
+        Pos_OtherUse_scaler_adj %>%
+          repeat_add_columns(L109.an_ALL_Mt_R_C_Y_1 %>% distinct(GCAM_region_ID)) %>%
+          mutate(World_pos_scaler = if_else(GCAM_region_ID == 22, 0, World_pos_scaler)) %>%
+          bind_rows(
+            Pos_OtherUse_scaler %>%
+              filter(!(year == 2019 & GCAM_commodity == "Pork")) %>%
+              repeat_add_columns(L109.an_ALL_Mt_R_C_Y_1 %>% distinct(GCAM_region_ID))
+          ) ->
+          Pos_OtherUse_scaler
+
+      } else {
+
+        Pos_OtherUse_scaler %>%
+          repeat_add_columns(L109.an_ALL_Mt_R_C_Y_1 %>% distinct(GCAM_region_ID)) ->
+          Pos_OtherUse_scaler
+      }
+
+
       # NA scalers mean no negative other uses in all region for the item
       L109.an_ALL_Mt_R_C_Y_1 %>%
-        left_join(Pos_OtherUse_scaler, by = c("year", "GCAM_commodity")) %>%
+        left_join(Pos_OtherUse_scaler, by = c("year", "GCAM_commodity", "GCAM_region_ID")) %>%
         filter(is.na(World_pos_scaler)) %>%
         select(-negOther, -World_pos_scaler) %>%
         # all positive other use bind ones with negative values
         bind_rows(
           L109.an_ALL_Mt_R_C_Y_1 %>%
-            left_join(Pos_OtherUse_scaler, by = c("year", "GCAM_commodity")) %>%
+            left_join(Pos_OtherUse_scaler, by = c("year", "GCAM_commodity", "GCAM_region_ID")) %>%
             filter(!is.na(World_pos_scaler)) %>%
             # Adjust negative OtherUse first by moving to import
             # set neg OtherUse to zero
@@ -417,6 +468,11 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
           filter(year %in% MODEL_BASE_YEARS, OtherUses_Mt <0) %>%
           mutate(OtherUse_Food_Share = - OtherUses_Mt / Food_Mt) ->
           CheckOtherUsevsFood
+
+        assertthat::assert_that(
+          CheckOtherUsevsFood %>% filter(OtherUse_Food_Share >=1) %>% nrow() == 0,
+          msg = "Check negative food here due to the negative other use adjustments")
+
         # Note that only 2015 SheepGoat negative OtherUse was moved to food, which was ~3%
 
         L109.an_ALL_Mt_R_C_Y %>%
@@ -491,16 +547,52 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
 
 
 
-    # Part 3 Adjust self-trade to ensure export < production ----
+    # Part 3 Adjust self-trade to ensure export < domestic supply (production + opening stock) ----
     # this was an assumption in GCAM cpp
     # the assumption could be strong e.g., US does not product OilPalm but could export OilPalm product
+
+    ## 3.1 crops
+    # Method 1 (not used): generalized adjustment
+    L109.ag_ALL_Mt_R_C_Y %>%
+      # reduce import and export both by the same (GrossExp_Mt - Prod_Mt - `Opening stocks`)
+      mutate(GrossImp_Mt = if_else(GrossExp_Mt > (Prod_Mt + `Opening stocks`),
+                                   GrossImp_Mt - (GrossExp_Mt - Prod_Mt - `Opening stocks`), GrossImp_Mt),
+             GrossExp_Mt = if_else(GrossExp_Mt > (Prod_Mt + `Opening stocks`),
+                                   (Prod_Mt + `Opening stocks`), GrossExp_Mt)) ->
+      L109.ag_ALL_Mt_R_C_Y_a
+
+    # Method 1 is not used since there would be more errors (palm and suger crops related) due to the adjustments
+    # because there may be not enough import for adjustments (leading to negative import)
+
+    # Method 2 (old method; now used with special cases):  adjustments to ensure export < production
     L109.ag_ALL_Mt_R_C_Y %>%
       # reduce import and export both by the same (GrossExp_Mt - Prod_Mt)
       mutate(GrossImp_Mt = if_else(GrossExp_Mt > Prod_Mt,
                                    GrossImp_Mt - (GrossExp_Mt - Prod_Mt),GrossImp_Mt),
              GrossExp_Mt = if_else(GrossExp_Mt > Prod_Mt,
                                    Prod_Mt, GrossExp_Mt)) ->
+      L109.ag_ALL_Mt_R_C_Y_b
+
+    # remove trade adj for a special case to avoid negative trade values
+    # two cases added for now
+    L109.ag_ALL_Mt_R_C_Y %>%
+      filter((year == 1975 & GCAM_region_ID == 5 & GCAM_commodity == "MiscCrop") |
+               (year == 1975 & GCAM_region_ID == 10 & GCAM_commodity == "Soybean") |
+               (year == 1975 & GCAM_region_ID == 18 & GCAM_commodity == "OtherGrain") |
+               (year == 2021 & GCAM_region_ID == 8 & GCAM_commodity == "Legumes")) %>%
+      bind_rows(
+        L109.ag_ALL_Mt_R_C_Y_b %>%
+          filter(!(year == 1975 & GCAM_region_ID == 5 & GCAM_commodity == "MiscCrop") &
+                   !(year == 1975 & GCAM_region_ID == 10 & GCAM_commodity == "Soybean") &
+                   !(year == 1975 & GCAM_region_ID == 18 & GCAM_commodity == "OtherGrain") &
+                   !(year == 2021 & GCAM_region_ID == 8 & GCAM_commodity == "Legumes"))
+      ) ->
       L109.ag_ALL_Mt_R_C_Y
+
+    if(any(filter(L109.ag_ALL_Mt_R_C_Y, year %in% MODEL_BASE_YEARS)$GrossImp_Mt < 0)){
+      stop("Negative trade values.") }
+
+    ## 3.2 livestock
 
     L109.an_ALL_Mt_R_C_Y %>%
       # reduce import and export both by the same (GrossExp_Mt - Prod_Mt)

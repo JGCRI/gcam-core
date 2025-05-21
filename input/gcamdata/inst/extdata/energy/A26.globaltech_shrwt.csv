@@ -5,7 +5,7 @@
 # Source: NA
 # Column types: ccciiii 
 # ----------
-supplysector,subsector,technology,1971,2020,2025,2100
+supplysector,subsector,technology,1971,final-calibration-year,initial-future-year,2100
 backup_electricity,gas,gas (steam/CT),1,1,1,1
 csp_backup,gas,CSP gas hybrid mode,1,1,1,1
 delivered biomass,delivered biomass,delivered biomass,1,1,1,1

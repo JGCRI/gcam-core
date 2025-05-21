@@ -4,537 +4,542 @@
 # Description: Ideally we just use SUA (supply utilization accounts) item names directly.  However, given the volume of data
 # it helps to use item_code to reduce the size of the input data as well as speed up processing.  We will then need this mapping
 # to ultimately translate back to item names. TM is TRUE when bilateral data was used for the item.
-# Last update: 8-15-2022 (XZ)
-# Column types: cil
+# Last update: 06-09-2024 (XZ)
+# Column types: cicicl
 # ----------
-item,item_code,TM
-Wheat,15,TRUE
-"Rice, paddy",27,TRUE
-Barley,44,TRUE
-Beer of barley,51,TRUE
-Maize,56,TRUE
-"Oil, maize",60,TRUE
-Rye,71,TRUE
-Oats,75,TRUE
-Millet,79,TRUE
-Sorghum,83,TRUE
-Buckwheat,89,TRUE
-Quinoa,92,TRUE
-Fonio,94,TRUE
-Triticale,97,TRUE
-Canary seed,101,TRUE
-"Grain, mixed",103,TRUE
-Potatoes,116,TRUE
-Sweet potatoes,122,TRUE
-Cassava,125,TRUE
-Roots and tubers nes,149,TRUE
-Sugar beet,157,TRUE
-Sugar crops nes,161,TRUE
-Sugar Raw Centrifugal,162,TRUE
-Molasses,165,TRUE
-"Beans, dry",176,TRUE
-"Broad beans, horse beans, dry",181,TRUE
-"Peas, dry",187,TRUE
-Chick peas,191,TRUE
-Lentils,201,TRUE
-Bambara beans,203,TRUE
-Vetches,205,TRUE
-"Cashew nuts, with shell",217,TRUE
-Chestnut,220,TRUE
-"Almonds, with shell",221,TRUE
-"Walnuts, with shell",222,TRUE
-Pistachios,223,TRUE
-Kola nuts,224,TRUE
-"Hazelnuts, with shell",225,TRUE
-Areca nuts,226,TRUE
-Nuts nes,234,TRUE
-Soybeans,236,TRUE
-"Oil, groundnut",244,TRUE
-Coconuts,249,TRUE
-"Oil, coconut (copra)",252,TRUE
-"Oil, palm",257,TRUE
-"Oil, palm kernel",258,TRUE
-Olives,260,TRUE
-"Oil, olive, virgin",261,TRUE
-Karite nuts (sheanuts),263,TRUE
-Sunflower seed,267,TRUE
-"Oil, sunflower",268,TRUE
-Rapeseed,270,TRUE
-"Oil, rapeseed",271,TRUE
-"Oil, safflower",281,TRUE
-Sesame seed,289,TRUE
-"Oil, sesame",290,TRUE
-Mustard seed,292,TRUE
-Poppy seed,296,TRUE
-Cottonseed,329,TRUE
-"Oil, cottonseed",331,TRUE
-Linseed,333,TRUE
-"Oil, linseed",334,TRUE
-Oilseeds nes,339,TRUE
-Cabbages and other brassicas,358,TRUE
-Artichokes,366,TRUE
-Asparagus,367,TRUE
-Lettuce and chicory,372,TRUE
-Spinach,373,TRUE
-Tomatoes,388,TRUE
-Cauliflowers and broccoli,393,TRUE
-"Pumpkins, squash and gourds",394,TRUE
-Cucumbers and gherkins,397,TRUE
-Eggplants (aubergines),399,TRUE
-"Chillies and peppers, green",401,TRUE
-"Onions, shallots, green",402,TRUE
-"Onions, dry",403,TRUE
-Garlic,406,TRUE
-"Leeks, other alliaceous vegetables",407,TRUE
-"Beans, green",414,TRUE
-"Peas, green",417,TRUE
-Carrots and turnips,426,TRUE
-"Maize, green",446,TRUE
-Mushrooms and truffles,449,TRUE
-"Vegetables, fresh nes",463,TRUE
-Bananas,486,TRUE
-Plantains and others,489,TRUE
-Oranges,490,TRUE
-"Tangerines, mandarins, clementines, satsumas",495,TRUE
-Lemons and limes,497,TRUE
-Grapefruit (inc. pomelos),507,TRUE
-Apples,515,TRUE
-Pears,521,TRUE
-Quinces,523,TRUE
-Apricots,526,TRUE
-"Cherries, sour",530,TRUE
-Cherries,531,TRUE
-Peaches and nectarines,534,TRUE
-Plums and sloes,536,TRUE
-Strawberries,544,TRUE
-Gooseberries,549,TRUE
-Currants,550,TRUE
-Blueberries,552,TRUE
-Cranberries,554,TRUE
-Grapes,560,TRUE
-Wine,564,TRUE
-Watermelons,567,TRUE
-"Melons, other (inc.cantaloupes)",568,TRUE
-Figs,569,TRUE
-"Mangoes, mangosteens, guavas",571,TRUE
-Avocados,572,TRUE
-Pineapples,574,TRUE
-Dates,577,TRUE
-Persimmons,587,TRUE
-Cashewapple,591,TRUE
-Kiwi fruit,592,TRUE
-Papayas,600,TRUE
-"Fruit, tropical fresh nes",603,TRUE
-"Fruit, fresh nes",619,TRUE
-"Coffee, green",656,TRUE
-"Cocoa, beans",661,TRUE
-Tea,667,TRUE
-Mate,671,TRUE
-Pepper (piper spp.),687,TRUE
-"Chillies and peppers, dry",689,TRUE
-Vanilla,692,TRUE
-Cinnamon (cannella),693,TRUE
-Cloves,698,TRUE
-"Nutmeg, mace and cardamoms",702,TRUE
-"Anise, badian, fennel, coriander",711,TRUE
-Ginger,720,TRUE
-Spices nes,723,TRUE
-"Meat, cattle",867,TRUE
-"Offals, edible, cattle",868,TRUE
-"Fat, cattle",869,TRUE
-"Milk, whole fresh cow",882,TRUE
-Cream fresh,885,TRUE
-"Butter, cow milk",886,TRUE
-"Milk, skimmed cow",888,TRUE
-"Milk, whole condensed",889,TRUE
-"Whey, condensed",890,TRUE
-Yoghurt,891,TRUE
-"Milk, whole evaporated",894,TRUE
-"Milk, whole dried",897,TRUE
-"Milk, skimmed dried",898,TRUE
-"Whey, dry",900,TRUE
-"Cheese, whole cow milk",901,TRUE
-"Meat, sheep",977,TRUE
-"Offals, sheep,edible",978,TRUE
-"Cheese, sheep milk",984,TRUE
-"Meat, goat",1017,TRUE
-"Offals, edible, goats",1018,TRUE
-"Meat, pig",1035,TRUE
-"Offals, pigs, edible",1036,TRUE
-"Fat, pigs",1037,TRUE
-Lard,1043,TRUE
-"Meat, chicken",1058,TRUE
-"Eggs, hen, in shell",1062,TRUE
-"Meat, duck",1069,TRUE
-"Meat, goose and guinea fowl",1073,TRUE
-"Meat, turkey",1080,TRUE
-"Eggs, other bird, in shell",1091,TRUE
-"Meat, horse",1097,TRUE
-"Fat, camels",1129,TRUE
-"Meat, rabbit",1141,TRUE
-"Meat, game",1163,TRUE
-Meat nes,1166,TRUE
-"Honey, natural",1182,TRUE
-Tallow,1225,TRUE
-"Margarine, short",1242,TRUE
-"Flour, wheat",16,TRUE
-"Bran, wheat",17,TRUE
-Macaroni,18,TRUE
-Bread,20,TRUE
-Bulgur,21,TRUE
-Pastry,22,TRUE
-"Rice, husked",28,TRUE
-"Rice, milled/husked",29,TRUE
-"Rice, milled",31,TRUE
-"Rice, broken",32,TRUE
-"Oil, rice bran",36,TRUE
-"Flour, rice",38,TRUE
-"Beverages, fermented rice",39,TRUE
-"Cereals, breakfast",41,TRUE
-"Barley, pearled",46,TRUE
-Malt,49,TRUE
-"Germ, maize",57,TRUE
-"Flour, maize",58,TRUE
-"Bran, maize",59,TRUE
-Oats rolled,76,TRUE
-"Bran, millet",81,TRUE
-"Bran, sorghum",85,TRUE
-"Flour, mixed grain",104,TRUE
-Infant food,109,TRUE
-Wafers,110,TRUE
-"Flour, cereals",111,TRUE
-Cereal preparations nes,113,TRUE
-Mixes and doughs,114,TRUE
-"Food preparations, flour, malt extract",115,TRUE
-"Flour, potatoes",117,TRUE
-"Potatoes, frozen",118,TRUE
-"Flour, cassava",126,TRUE
-Cassava dried,128,TRUE
-"Starch, cassava",129,TRUE
-"Flour, roots and tubers nes",150,TRUE
-Maple sugar and syrups,160,TRUE
-Sugar non-centrifugal,163,TRUE
-Sugar refined,164,TRUE
-"Fructose and syrup, other",166,TRUE
-Sugar nes,167,TRUE
-Sugar confectionery,168,TRUE
-Glucose and dextrose,172,TRUE
-Lactose,173,TRUE
-"Flour, pulses",212,TRUE
-"Brazil nuts, shelled",229,TRUE
-"Cashew nuts, shelled",230,TRUE
-Almonds shelled,231,TRUE
-"Walnuts, shelled",232,TRUE
-"Hazelnuts, shelled",233,TRUE
-"Nuts, prepared (exc. groundnuts)",235,TRUE
-"Oil, soybean",237,TRUE
-Soya sauce,239,TRUE
-Soya paste,240,TRUE
-"Groundnuts, shelled",243,TRUE
-"Groundnuts, prepared",246,TRUE
-Peanut butter,247,TRUE
-"Coconuts, desiccated",250,TRUE
-Copra,251,TRUE
-Olives preserved,262,TRUE
-Butter of karite nuts,264,TRUE
-"Oil, castor beans",266,TRUE
-"Oil, olive residues",274,TRUE
-"Flour, mustard",295,TRUE
-"Oil, vegetable origin nes",340,TRUE
-"Juice, tomato",390,TRUE
-"Tomatoes, paste",391,TRUE
-"Tomatoes, peeled",392,TRUE
-Sweet corn frozen,447,TRUE
-Sweet corn prep or preserved,448,TRUE
-"Mushrooms, canned",451,TRUE
-"Vegetables, dehydrated",469,TRUE
-Vegetables in vinegar,471,TRUE
-"Vegetables, preserved nes",472,TRUE
-"Vegetables, frozen",473,TRUE
-"Vegetables, temporarily preserved",474,TRUE
-"Vegetables, preserved, frozen",475,TRUE
-"Vegetables, homogenized preparations",476,TRUE
-"Juice, orange, single strength",491,TRUE
-"Juice, orange, concentrated",492,TRUE
-"Juice, lemon, single strength",498,TRUE
-"Juice, lemon, concentrated",499,TRUE
-"Juice, grapefruit",509,TRUE
-"Juice, grapefruit, concentrated",510,TRUE
-"Juice, citrus, single strength",513,TRUE
-"Juice, citrus, concentrated",514,TRUE
-Cider etc,517,TRUE
-"Juice, apple, single strength",518,TRUE
-"Juice, apple, concentrated",519,TRUE
-"Apricots, dry",527,TRUE
-Plums dried (prunes),537,TRUE
-Raisins,561,TRUE
-"Juice, grape",562,TRUE
-Vermouths & similar,565,TRUE
-Figs dried,570,TRUE
-Pineapples canned,575,TRUE
-"Juice, pineapple",576,TRUE
-"Juice, pineapple, concentrated",580,TRUE
-"Fruit, dried nes",620,TRUE
-"Juice, fruit nes",622,TRUE
-"Fruit, prepared nes",623,TRUE
-"Fruit, cooked, homogenized preparations",626,TRUE
-"Beverages, distilled alcoholic",634,TRUE
-"Coffee, roasted",657,TRUE
-"Coffee, substitutes containing coffee",658,TRUE
-"Coffee, extracts",659,TRUE
-"Cocoa, paste",662,TRUE
-"Cocoa, butter",664,TRUE
-"Cocoa, powder & cake",665,TRUE
-Chocolate products nes,666,TRUE
-"Tea, mate extracts",672,TRUE
-"Feed and meal, gluten",846,TRUE
-"Meat, cattle, boneless (beef & veal)",870,TRUE
-"Meat, beef and veal sausages",874,TRUE
-"Meat, beef, preparations",875,TRUE
-"Yoghurt, concentrated or not",892,TRUE
-"Buttermilk, curdled, acidified milk",893,TRUE
-"Cheese, processed",907,TRUE
-"Milk, products of natural constituents nes",909,TRUE
-Ice cream and edible ice,910,TRUE
-Grease incl. lanolin wool,994,TRUE
-"Meat, pork",1038,TRUE
-Bacon and ham,1039,TRUE
-"Meat, pig sausages",1041,TRUE
-"Meat, pig, preparations",1042,TRUE
-"Offals, liver chicken",1059,TRUE
-"Fat, liver prepared (foie gras)",1060,TRUE
-"Meat, chicken, canned",1061,TRUE
-"Eggs, liquid",1063,TRUE
-"Eggs, dried",1064,TRUE
-"Offals, liver geese",1074,TRUE
-"Offals, liver duck",1075,TRUE
-"Meat, dried nes",1164,TRUE
-"Oils, fats of animal nes",1168,TRUE
-Food prep nes,1232,TRUE
-"Margarine, liquid",1241,TRUE
-"Fat nes, prepared",1243,TRUE
-"Oil, boiled etc",1274,TRUE
-Fatty acids,1276,TRUE
-Fatty substance residues,1277,TRUE
-Cereals nes,108,FALSE
-Yautia (cocoyam),135,FALSE
-Taro (cocoyam),136,FALSE
-Yams,137,FALSE
-Sugar cane,156,FALSE
-"Cow peas, dry",195,FALSE
-Pigeon peas,197,FALSE
-Lupins,210,FALSE
-Pulses nes,211,FALSE
-"Brazil nuts, with shell",216,FALSE
-"Groundnuts, with shell",242,FALSE
-Oil palm fruit,254,FALSE
-Palm kernels,256,FALSE
-Castor oil seed,265,FALSE
-Tung nuts,275,FALSE
-Jojoba seed,277,FALSE
-Safflower seed,280,FALSE
-Melonseed,299,FALSE
-Tallowtree seed,305,FALSE
-Kapok fruit,310,FALSE
-Kapokseed in shell,311,FALSE
-Hempseed,336,FALSE
-Cassava leaves,378,FALSE
-"Vegetables, leguminous nes",420,FALSE
-String beans,423,FALSE
-Okra,430,FALSE
-Chicory roots,459,FALSE
-Carobs,461,FALSE
-"Fruit, citrus nes",512,FALSE
-"Fruit, stone nes",541,FALSE
-"Fruit, pome nes",542,FALSE
-Raspberries,547,FALSE
-Berries nes,558,FALSE
-"Ghee, butteroil of cow milk",887,FALSE
-"Milk, skimmed evaporated",895,FALSE
-"Milk, skimmed condensed",896,FALSE
-"Milk, dry buttermilk",899,FALSE
-"Cheese, skimmed cow milk",904,FALSE
-"Meat, buffalo",947,FALSE
-"Offals, edible, buffaloes",948,FALSE
-"Fat, buffaloes",949,FALSE
-"Milk, whole fresh buffalo",951,FALSE
-"Butter, buffalo milk",952,FALSE
-"Ghee, buffalo milk",953,FALSE
-"Cheese, buffalo milk",955,FALSE
-"Fat, sheep",979,FALSE
-"Milk, whole fresh sheep",982,FALSE
-"Butter and ghee, sheep milk",983,FALSE
-"Fat, goats",1019,FALSE
-"Milk, whole fresh goat",1020,FALSE
-"Cheese, goat milk",1021,FALSE
-"Meat, bird nes",1089,FALSE
-"Offals, horses",1098,FALSE
-"Meat, ass",1108,FALSE
-"Meat, mule",1111,FALSE
-"Meat, camel",1127,FALSE
-"Offals, edible, camels",1128,FALSE
-"Milk, whole fresh camel",1130,FALSE
-"Meat, other rodents",1151,FALSE
-"Snails, not sea",1176,FALSE
-"Germ, wheat",19,FALSE
-"Starch, wheat",23,FALSE
-"Gluten, wheat",24,FALSE
-"Beverages, fermented wheat",26,FALSE
-"Gluten, rice",33,FALSE
-"Starch, rice",34,FALSE
-"Bran, rice",35,FALSE
-"Barley, pot",45,FALSE
-"Bran, barley",47,FALSE
-"Flour, barley and grits",48,FALSE
-Malt extract,50,FALSE
-"Gluten, maize",63,FALSE
-"Starch, maize",64,FALSE
-Beer of maize,66,FALSE
-"Flour, rye",72,FALSE
-"Bran, rye",73,FALSE
-"Bran, oats",77,FALSE
-"Flour, millet",80,FALSE
-Beer of millet,82,FALSE
-"Flour, sorghum",84,FALSE
-Beer of sorghum,86,FALSE
-"Flour, buckwheat",90,FALSE
-"Bran, buckwheat",91,FALSE
-"Flour, fonio",95,FALSE
-"Bran, fonio",96,FALSE
-"Flour, triticale",98,FALSE
-"Bran, triticale",99,FALSE
-"Bran, mixed grains",105,FALSE
-"Bran, cereals nes",112,FALSE
-"Starch, potatoes",119,FALSE
-"Tapioca, potatoes",121,FALSE
-"Tapioca, cassava",127,FALSE
-Roots and tubers dried,151,FALSE
-Fructose chemically pure,154,FALSE
-Maltose chemically pure,155,FALSE
-"Sugar, cane, raw, centrifugal",158,FALSE
-Isoglucose,175,FALSE
-"Bran, pulses",213,FALSE
-Soya curd,241,FALSE
-"Oil, tung nuts",276,FALSE
-"Oil, jojoba",278,FALSE
-"Oil, mustard",293,FALSE
-"Oil, poppy",297,FALSE
-Vegetable tallow,306,FALSE
-Kapokseed shelled,312,FALSE
-"Oil, kapok",313,FALSE
-"Oil, hempseed",337,FALSE
-"Flour, oilseeds",343,FALSE
-"Mushrooms, dried",450,FALSE
-"Juice, vegetables nes",466,FALSE
-"Juice, tangerine",496,FALSE
-"Juice, plum, single strength",538,FALSE
-"Juice, plum, concentrated",539,FALSE
-"Grapes, must",563,FALSE
-"Juice, mango",583,FALSE
-"Fruit, tropical dried nes",604,FALSE
-"Flour, fruit",624,FALSE
-"Fruits, nuts, peel, sugar preserved",625,FALSE
-Alcohol non food,632,FALSE
-"Fat, cattle butcher",871,FALSE
-"Meat, beef, dried, salted, smoked",872,FALSE
-"Meat, extracts",873,FALSE
-"Meat, homogenized preparations",877,FALSE
-Liver prep.,878,FALSE
-"Whey, fresh",903,FALSE
-"Whey, cheese",905,FALSE
-"Milk, reconstituted",908,FALSE
-Egg albumine,916,FALSE
-Casein,917,FALSE
-"Milk, skimmed buffalo",954,FALSE
-"Milk, skimmed sheep",985,FALSE
-"Butter, goat milk",1022,FALSE
-"Milk, skimmed goat",1023,FALSE
-"Fat, pig butcher",1040,FALSE
-"Fat, poultry",1065,FALSE
-"Fat, poultry, rendered",1066,FALSE
-"Offals, liver turkeys",1081,FALSE
-"Fat, other camelids",1160,FALSE
-Offals nes,1167,FALSE
-"Meat nes, preparations",1172,FALSE
-Lard stearine oil,1221,FALSE
-Degras,1222,FALSE
-"Castor oil, hydrogenated (opal wax)",1273,FALSE
-"Oil, hydrogenated",1275,FALSE
-"Cake, soybeans",238,TRUE
-"Cake, groundnuts",245,TRUE
-"Cake, copra",253,TRUE
-"Cake, palm kernel",259,TRUE
-"Cake, sunflower",269,TRUE
-"Cake, rapeseed",272,TRUE
-"Cake, sesame seed",291,TRUE
-"Cake, mustard",294,TRUE
-"Cake, cottonseed",332,TRUE
-"Cake, others",341,FALSE
-"Rice, paddy (rice milled equivalent)",30,FALSE
-Seed cotton,328,FALSE
-Hops,677,TRUE
-Peppermint,748,TRUE
-"Pyrethrum, dried",754,TRUE
-Cotton lint,767,TRUE
-Flax fibre and tow,773,TRUE
-Hemp tow waste,777,FALSE
-Kapok fibre,778,TRUE
-Jute,780,TRUE
-"Bastfibres, other",782,FALSE
-Ramie,788,FALSE
-Sisal,789,FALSE
-Agave fibres nes,800,FALSE
-Manila fibre (abaca),809,TRUE
-Coir,813,TRUE
-Fibre crops nes,821,TRUE
-"Tobacco, unmanufactured",826,TRUE
-"Rubber, natural",836,TRUE
-"Gums, natural",839,FALSE
-"Hides, cattle, fresh",919,TRUE
-"Hides, buffalo, fresh",957,FALSE
-"Wool, greasy",987,TRUE
-"Skins, sheep, fresh",995,FALSE
-"Skins, goat, fresh",1025,FALSE
-"Meat, other camelids",1158,FALSE
-Beeswax,1183,TRUE
-"Silk-worm cocoons, reelable",1185,TRUE
-"Silk, raw",1186,TRUE
-Freshwater Fish,2761,FALSE
-Demersal Fish,2762,FALSE
-Pelagic Fish,2763,FALSE
-"Marine Fish, Other",2764,FALSE
-Crustaceans,2765,FALSE
-Cephalopods,2766,FALSE
-"Molluscs, Other",2767,FALSE
-"Meat, Aquatic Mammals",2768,FALSE
-"Aquatic Animals, Others",2769,FALSE
-Aquatic Plants,2775,FALSE
-"Fish, Body Oil",2781,FALSE
-"Fish, Liver Oil",2782,FALSE
-"Cake, rice bran",360000,FALSE
-"Cake, maize",600000,FALSE
-"Cake, olive residues",2740000,FALSE
-"Cake, jojoba",2780000,FALSE
-"Cake, safflower",2810000,FALSE
-"Cake, poppy",2970000,FALSE
-"Cake, kapok",3130000,FALSE
-"Fiber, cottonseed",3320000,FALSE
-"Cake, linseed",3340000,FALSE
-"Cake, hempseed",3370000,FALSE
-"Cake, vegetable origin nes",3400000,FALSE
-"AnMeatEq, cattle",8670000,FALSE
-"AnMeatEq, buffalo",9470000,FALSE
-"AnMeatEq, sheep",9770000,FALSE
-"AnMeatEq, goat",10170000,FALSE
-"AnMeatEq, pig",10350000,FALSE
-"AnMeatEq, chicken",10580000,FALSE
-"AnMeatEq, duck",10690000,FALSE
-"AnMeatEq, goose and guinea fowl",10730000,FALSE
-"AnMeatEq, turkey",10800000,FALSE
-"AnMeatEq, horse",10970000,FALSE
-"AnMeatEq, ass",11080000,FALSE
-"AnMeatEq, mule",11110000,FALSE
-"AnMeatEq, camel",11270000,FALSE
-"AnMeatEq, rabbit",11410000,FALSE
-"AnMeatEq, other rodents",11510000,FALSE
-"AnMeatEq, other camelids",11580000,FALSE
+item,item_code,item_new_2024,tier,DS_trade,TM
+Wheat,15,Wheat,1,TM,TRUE
+"Flour, wheat",16,Wheat and meslin flour,2,TM,TRUE
+"Bran, wheat",17,Bran of wheat,2,TM,TRUE
+Macaroni,18,"Uncooked pasta, not stuffed or otherwise prepared",2,TM,TRUE
+"Germ, wheat",19,Germ of wheat,2,TM,TRUE
+Bread,20,Bread,2,TM,TRUE
+Bulgur,21,Bulgur,2,TM,TRUE
+Pastry,22,Pastry,2,TM,TRUE
+"Starch, wheat",23,Starch of wheat,4,SCL,FALSE
+"Gluten, wheat",24,Wheat gluten,4,SCL,FALSE
+"Beverages, fermented wheat",26,Wheat-fermented beverages,4,SCL,FALSE
+"Rice, paddy",27,Rice,1,TM,TRUE
+"Rice, husked",28,Husked rice,2,TM,TRUE
+"Rice, milled/husked",29,"Rice, milled (husked)",2,TM,TRUE
+"Rice, milled",31,"Rice, milled",2,TM,TRUE
+"Rice, broken",32,"Rice, broken",2,TM,TRUE
+"Gluten, rice",33,"Rice, gluten",4,SCL,FALSE
+"Starch, rice",34,Starch of rice,4,SCL,FALSE
+"Bran, rice",35,Bran of rice,2,TM,TRUE
+"Oil, rice bran",36,Oil of rice bran,2,TM,TRUE
+"Flour, rice",38,Flour of rice,2,TM,TRUE
+"Beverages, fermented rice",39,Rice-fermented beverages,2,TM,TRUE
+"Cereals, breakfast",41,Breakfast cereals,2,TM,TRUE
+Barley,44,Barley,1,TM,TRUE
+"Barley, pot",45,Pot barley,2,TM,TRUE
+"Barley, pearled",46,"Barley, pearled",2,TM,TRUE
+"Bran, barley",47,Bran of barley,2,TM,TRUE
+"Flour, barley and grits",48,Barley flour and grits,2,TM,TRUE
+Malt,49,"Malt, whether or not roasted",2,TM,TRUE
+Malt extract,50,Malt extract,2,TM,TRUE
+Beer of barley,51,"Beer of barley, malted",1,TM,TRUE
+Maize,56,Maize (corn),1,TM,TRUE
+"Germ, maize",57,Germ of maize,2,TM,TRUE
+"Flour, maize",58,Flour of maize,2,TM,TRUE
+"Bran, maize",59,Bran of maize,2,TM,TRUE
+"Oil, maize",60,Oil of maize,1,TM,TRUE
+"Gluten, maize",63,Maize gluten,4,SCL,FALSE
+"Starch, maize",64,Starch of maize,4,SCL,FALSE
+Beer of maize,66,"Beer of maize, malted",4,SCL,FALSE
+Rye,71,Rye,1,TM,TRUE
+"Flour, rye",72,Flour of rye,2,TM,TRUE
+"Bran, rye",73,Bran of rye,2,TM,TRUE
+Oats,75,Oats,1,TM,TRUE
+Oats rolled,76,"Oats, rolled",2,TM,TRUE
+"Bran, oats",77,Bran of oats,2,TM,TRUE
+Millet,79,Millet,1,TM,TRUE
+"Flour, millet",80,Flour of millet,2,TM,TRUE
+"Bran, millet",81,Bran of millet,2,TM,TRUE
+Beer of millet,82,"Beer of millet, malted",4,SCL,FALSE
+Sorghum,83,Sorghum,1,TM,TRUE
+"Flour, sorghum",84,Flour of sorghum,2,TM,TRUE
+"Bran, sorghum",85,Bran of sorghum,2,TM,TRUE
+Beer of sorghum,86,"Beer of sorghum, malted",4,SCL,FALSE
+Buckwheat,89,Buckwheat,1,TM,TRUE
+"Flour, buckwheat",90,Flour of buckwheat,2,TM,TRUE
+"Bran, buckwheat",91,Bran of buckwheat,4,SCL,FALSE
+Quinoa,92,Quinoa,1,TM,TRUE
+Fonio,94,Fonio,1,TM,TRUE
+"Flour, fonio",95,Flour of fonio,4,SCL,FALSE
+"Bran, fonio",96,Bran of fonio,4,SCL,FALSE
+Triticale,97,Triticale,1,TM,TRUE
+"Flour, triticale",98,Flour of triticale,4,SCL,FALSE
+"Bran, triticale",99,Bran of triticale,4,SCL,FALSE
+Canary seed,101,Canary seed,1,TM,TRUE
+"Grain, mixed",103,Mixed grain,1,TM,TRUE
+"Flour, mixed grain",104,Flour of mixed grain,2,TM,TRUE
+"Bran, mixed grains",105,Bran of mixed grain,2,TM,TRUE
+Cereals nes,108,Cereals n.e.c.,1,TM,TRUE
+Infant food,109,Infant food,2,TM,TRUE
+Wafers,110,"Communion wafers, empty cachets of a kind suitable for pharmaceutical use, sealing wafers, rice paper and similar products.",2,TM,TRUE
+"Flour, cereals",111,Flour of cereals n.e.c.,2,TM,TRUE
+"Bran, cereals nes",112,Bran of cereals n.e.c.,2,TM,TRUE
+Cereal preparations nes,113,Cereal preparations,2,TM,TRUE
+Mixes and doughs,114,Mixes and doughs for the preparation of bakers wares,2,TM,TRUE
+"Food preparations, flour, malt extract",115,"Food preparations of flour, meal or malt extract",2,TM,TRUE
+Potatoes,116,Potatoes,1,TM,TRUE
+"Flour, potatoes",117,"Flour, meal, powder, flakes, granules and pellets of potatoes",2,TM,TRUE
+"Potatoes, frozen",118,"Potatoes, frozen",2,TM,TRUE
+"Starch, potatoes",119,Starch of potatoes,4,SCL,FALSE
+"Tapioca, potatoes",121,Tapioca of potatoes,2,TM,TRUE
+Sweet potatoes,122,Sweet potatoes,1,TM,TRUE
+Cassava,125,"Cassava, fresh",1,TM,TRUE
+"Flour, cassava",126,Flour of cassava,2,TM,TRUE
+"Tapioca, cassava",127,Tapioca of cassava,2,TM,TRUE
+Cassava dried,128,"Cassava, dry",2,TM,TRUE
+"Starch, cassava",129,Starch of cassava,2,TM,TRUE
+Yautia (cocoyam),135,Yautia,1,TM,TRUE
+Taro (cocoyam),136,Taro,1,TM,TRUE
+Yams,137,Yams,1,TM,TRUE
+Roots and tubers nes,149,"Edible roots and tubers with high starch or inulin content, n.e.c., fresh",1,TM,TRUE
+"Flour, roots and tubers nes",150,Flour of roots and tubers n.e.c.,2,TM,TRUE
+Roots and tubers dried,151,"Edible roots and tubers with high starch or inulin content, n.e.c., dry",2,TM,TRUE
+Fructose chemically pure,154,"Fructose, chemically pure",4,SCL,FALSE
+Maltose chemically pure,155,"Maltose, chemically pure",4,SCL,FALSE
+Sugar cane,156,Sugar cane,1,TM,TRUE
+Sugar beet,157,Sugar beet,1,TM,TRUE
+"Sugar, cane, raw, centrifugal",158,"Cane sugar, centrifugal",4,SCL,FALSE
+Maple sugar and syrups,160,"Refined cane or beet sugar, in solid form, containing added flavouring or colouring matter; maple sugar and maple syrup",2,TM,TRUE
+Sugar crops nes,161,Other sugar crops n.e.c.,1,TM,TRUE
+Sugar Raw Centrifugal,162,Raw cane or beet sugar (centrifugal only),1,TM,TRUE
+Sugar non-centrifugal,163,"Cane sugar, non-centrifugal",2,TM,TRUE
+Sugar refined,164,Refined sugar,2,TM,TRUE
+Molasses,165,Molasses,1,TM,TRUE
+"Fructose and syrup, other",166,Other fructose and syrup,2,TM,TRUE
+Sugar nes,167,Sugar and syrups n.e.c.,2,TM,TRUE
+Sugar confectionery,168,Sugar confectionery,2,TM,TRUE
+Glucose and dextrose,172,Glucose and dextrose,2,TM,TRUE
+Lactose,173,Lactose,2,TM,TRUE
+Isoglucose,175,Isoglucose,2,TM,TRUE
+"Beans, dry",176,"Beans, dry",1,TM,TRUE
+"Broad beans, horse beans, dry",181,"Broad beans and horse beans, dry",1,TM,TRUE
+"Peas, dry",187,"Peas, dry",1,TM,TRUE
+Chick peas,191,"Chick peas, dry",1,TM,TRUE
+"Cow peas, dry",195,"Cow peas, dry",1,TM,TRUE
+Pigeon peas,197,"Pigeon peas, dry",1,TM,TRUE
+Lentils,201,"Lentils, dry",1,TM,TRUE
+Bambara beans,203,"Bambara beans, dry",1,TM,TRUE
+Vetches,205,Vetches,1,TM,TRUE
+Lupins,210,Lupins,1,TM,TRUE
+Pulses nes,211,Other pulses n.e.c.,1,TM,TRUE
+"Flour, pulses",212,Flour of pulses,2,TM,TRUE
+"Bran, pulses",213,Bran of pulses,2,TM,TRUE
+"Brazil nuts, with shell",216,"Brazil nuts, in shell",1,TM,TRUE
+"Cashew nuts, with shell",217,"Cashew nuts, in shell",1,TM,TRUE
+Chestnut,220,"Chestnuts, in shell",1,TM,TRUE
+"Almonds, with shell",221,"Almonds, in shell",1,TM,TRUE
+"Walnuts, with shell",222,"Walnuts, in shell",1,TM,TRUE
+Pistachios,223,"Pistachios, in shell",1,TM,TRUE
+Kola nuts,224,Kola nuts,1,TM,TRUE
+"Hazelnuts, with shell",225,"Hazelnuts, in shell",1,TM,TRUE
+Areca nuts,226,Areca nuts,1,TM,TRUE
+"Brazil nuts, shelled",229,"Brazil nuts, shelled",2,TM,TRUE
+"Cashew nuts, shelled",230,"Cashew nuts, shelled",2,TM,TRUE
+Almonds shelled,231,"Almonds, shelled",2,TM,TRUE
+"Walnuts, shelled",232,"Walnuts, shelled",2,TM,TRUE
+"Hazelnuts, shelled",233,"Hazelnuts, shelled",2,TM,TRUE
+Nuts nes,234,"Other nuts (excluding wild edible nuts and groundnuts), in shell, n.e.c.",1,TM,TRUE
+"Nuts, prepared (exc. groundnuts)",235,Prepared nuts,2,TM,TRUE
+Soybeans,236,Soya beans,1,TM,TRUE
+"Oil, soybean",237,Soya bean oil,2,TM,TRUE
+"Cake, soybeans",238,Cake of  soya beans,2,TM,TRUE
+Soya sauce,239,Soya sauce,2,TM,TRUE
+Soya paste,240,Soya paste,2,TM,TRUE
+Soya curd,241,Soya curd,4,SCL,FALSE
+"Groundnuts, with shell",242,"Groundnuts, excluding shelled",1,TM,TRUE
+"Groundnuts, shelled",243,"Groundnuts, shelled",2,TM,TRUE
+"Oil, groundnut",244,Groundnut oil,1,TM,TRUE
+"Cake, groundnuts",245,Cake of groundnuts,2,TM,TRUE
+"Groundnuts, prepared",246,Prepared groundnuts,2,TM,TRUE
+Peanut butter,247,Peanut butter,2,TM,TRUE
+Coconuts,249,"Coconuts, in shell",1,TM,TRUE
+"Coconuts, desiccated",250,"Coconuts, desiccated",2,TM,TRUE
+Copra,251,Copra,2,TM,TRUE
+"Oil, coconut (copra)",252,Coconut oil,1,TM,TRUE
+"Cake, copra",253,Cake of copra,2,TM,TRUE
+Oil palm fruit,254,Oil palm fruit,3,SCL,FALSE
+Palm kernels,256,Palm kernels,1,TM,TRUE
+"Oil, palm",257,Palm oil,1,TM,TRUE
+"Oil, palm kernel",258,Oil of palm kernel,1,TM,TRUE
+"Cake, palm kernel",259,Cake of palm kernel,2,TM,TRUE
+Olives,260,Olives,1,TM,TRUE
+"Oil, olive, virgin",261,Olive oil,1,TM,TRUE
+Olives preserved,262,Olives preserved,2,TM,TRUE
+Karite nuts (sheanuts),263,Karite nuts (sheanuts),1,TM,TRUE
+Butter of karite nuts,264,Butter of karite nuts,2,TM,TRUE
+Castor oil seed,265,Castor oil seeds,1,TM,TRUE
+"Oil, castor beans",266,Oil of castor beans,2,TM,TRUE
+Sunflower seed,267,Sunflower seed,1,TM,TRUE
+"Oil, sunflower",268,"Sunflower-seed oil, crude",1,TM,TRUE
+"Cake, sunflower",269,Cake of sunflower seed,2,TM,TRUE
+Rapeseed,270,Rape or colza seed,1,TM,TRUE
+"Oil, rapeseed",271,"Rapeseed or canola oil, crude",1,TM,TRUE
+"Cake, rapeseed",272,Cake of rapeseed,2,TM,TRUE
+"Oil, olive residues",274,Oil of olive residues,2,TM,TRUE
+Tung nuts,275,Tung nuts,1,TM,TRUE
+"Oil, tung nuts",276,Oil of tung nuts,2,TM,TRUE
+Jojoba seed,277,Jojoba seeds,3,SCL,FALSE
+"Oil, jojoba",278,Jojoba oil,2,TM,TRUE
+Safflower seed,280,Safflower seed,1,TM,TRUE
+"Oil, safflower",281,"Safflower-seed oil, crude",1,TM,TRUE
+Sesame seed,289,Sesame seed,1,TM,TRUE
+"Oil, sesame",290,Oil of sesame seed,1,TM,TRUE
+"Cake, sesame seed",291,Cake of sesame seed,2,TM,TRUE
+Mustard seed,292,Mustard seed,1,TM,TRUE
+"Oil, mustard",293,"Mustard seed oil, crude",2,TM,TRUE
+"Cake, mustard",294,Cake of mustard seed,2,TM,TRUE
+"Flour, mustard",295,Flour of mustard seed,2,TM,TRUE
+Poppy seed,296,Poppy seed,1,TM,TRUE
+"Oil, poppy",297,Oil of poppy seed,4,SCL,FALSE
+Melonseed,299,Melonseed,1,TM,TRUE
+Tallowtree seed,305,Tallowtree seeds,3,SCL,FALSE
+Vegetable tallow,306,Vegetable tallow,4,SCL,FALSE
+Kapok fruit,310,Kapok fruit,3,SCL,FALSE
+Kapokseed in shell,311,Kapokseed in shell,3,SCL,FALSE
+Kapokseed shelled,312,"Kapokseed, shelled",4,SCL,FALSE
+"Oil, kapok",313,Oil of kapok,4,SCL,FALSE
+Seed cotton,328,"Seed cotton, unginned",6,TM,TRUE
+Cottonseed,329,Cotton seed,1,TM,TRUE
+"Oil, cottonseed",331,Cottonseed oil,1,TM,TRUE
+"Cake, cottonseed",332,Cake of cottonseed,2,TM,TRUE
+Linseed,333,Linseed,1,TM,TRUE
+"Oil, linseed",334,Oil of linseed,1,TM,TRUE
+Hempseed,336,Hempseed,1,TM,TRUE
+"Oil, hempseed",337,Oil of hempseed,4,SCL,FALSE
+Oilseeds nes,339,"Other oil seeds, n.e.c.",1,TM,TRUE
+"Oil, vegetable origin nes",340,"Other oil of vegetable origin, crude n.e.c.",2,TM,TRUE
+"Cake, others",341,"Cake, oilseeds nes",2,TM,TRUE
+"Flour, oilseeds",343,"Flours and meals of oil seeds or oleaginous fruits, except those of mustard",2,TM,TRUE
+Cabbages and other brassicas,358,Cabbages,1,TM,TRUE
+Artichokes,366,Artichokes,1,TM,TRUE
+Asparagus,367,Asparagus,1,TM,TRUE
+Lettuce and chicory,372,Lettuce and chicory,1,TM,TRUE
+Spinach,373,Spinach,1,TM,TRUE
+Cassava leaves,378,Cassava leaves,3,SCL,FALSE
+Tomatoes,388,Tomatoes,1,TM,TRUE
+"Juice, tomato",390,Tomato juice,2,TM,TRUE
+"Tomatoes, paste",391,Paste of tomatoes,2,TM,TRUE
+"Tomatoes, peeled",392,"Tomatoes, peeled (o/t vinegar)",2,TM,TRUE
+Cauliflowers and broccoli,393,Cauliflowers and broccoli,1,TM,TRUE
+"Pumpkins, squash and gourds",394,"Pumpkins, squash and gourds",1,TM,TRUE
+Cucumbers and gherkins,397,Cucumbers and gherkins,1,TM,TRUE
+Eggplants (aubergines),399,Eggplants (aubergines),1,TM,TRUE
+"Chillies and peppers, green",401,"Chillies and peppers, green (Capsicum spp. and Pimenta spp.)",1,TM,TRUE
+"Onions, shallots, green",402,"Onions and shallots, green",1,TM,TRUE
+"Onions, dry",403,"Onions and shallots, dry (excluding dehydrated)",1,TM,TRUE
+Garlic,406,Green garlic,1,TM,TRUE
+"Leeks, other alliaceous vegetables",407,Leeks and other alliaceous vegetables,1,TM,TRUE
+"Beans, green",414,"Other beans, green",1,TM,TRUE
+"Peas, green",417,"Peas, green",1,TM,TRUE
+"Vegetables, leguminous nes",420,"Broad beans and horse beans, green",1,TM,TRUE
+String beans,423,String beans,1,TM,TRUE
+Carrots and turnips,426,Carrots and turnips,1,TM,TRUE
+Okra,430,Okra,1,TM,TRUE
+"Maize, green",446,Green corn (maize),1,TM,TRUE
+Sweet corn frozen,447,"Sweet corn, frozen",2,TM,TRUE
+Sweet corn prep or preserved,448,"Sweet corn, prepared or preserved",2,TM,TRUE
+Mushrooms and truffles,449,Mushrooms and truffles,1,TM,TRUE
+"Mushrooms, dried",450,Dried mushrooms,2,TM,TRUE
+"Mushrooms, canned",451,Canned mushrooms,2,TM,TRUE
+Chicory roots,459,Chicory roots,1,TM,TRUE
+Carobs,461,Locust beans (carobs),1,TM,TRUE
+"Vegetables, fresh nes",463,"Other vegetables, fresh n.e.c.",1,TM,TRUE
+"Juice, vegetables nes",466,Other vegetable juices,2,TM,TRUE
+"Vegetables, dehydrated",469,"Vegetables, dehydrated",2,TM,TRUE
+Vegetables in vinegar,471,"Vegetables, pulses and potatoes, preserved by vinegar or acetic acid",2,TM,TRUE
+"Vegetables, preserved nes",472,Vegetables preserved nes (o/t vinegar),2,TM,TRUE
+"Vegetables, frozen",473,Vegetables frozen,2,TM,TRUE
+"Vegetables, temporarily preserved",474,Other vegetables provisionally preserved,2,TM,TRUE
+"Vegetables, preserved, frozen",475,Vegetables preserved (frozen),2,TM,TRUE
+"Vegetables, homogenized preparations",476,Homogenized vegetable preparations,2,TM,TRUE
+Bananas,486,Bananas,1,TM,TRUE
+Plantains and others,489,Plantains and cooking bananas,1,TM,TRUE
+Oranges,490,Oranges,1,TM,TRUE
+"Juice, orange, single strength",491,Orange juice,2,TM,TRUE
+"Juice, orange, concentrated",492,"Orange juice, concentrated",2,TM,TRUE
+"Tangerines, mandarins, clementines, satsumas",495,"Tangerines, mandarins, clementines",1,TM,TRUE
+"Juice, tangerine",496,Juice of tangerine,2,TM,TRUE
+Lemons and limes,497,Lemons and limes,1,TM,TRUE
+"Juice, lemon, single strength",498,Juice of lemon,2,TM,TRUE
+"Juice, lemon, concentrated",499,"Lemon juice, concentrated",2,TM,TRUE
+Grapefruit (inc. pomelos),507,Pomelos and grapefruits,1,TM,TRUE
+"Juice, grapefruit",509,Grapefruit juice,2,TM,TRUE
+"Juice, grapefruit, concentrated",510,"Grapefruit juice, concentrated",2,TM,TRUE
+"Fruit, citrus nes",512,"Other citrus fruit, n.e.c.",1,TM,TRUE
+"Juice, citrus, single strength",513,Juice of citrus fruit n.e.c.,2,TM,TRUE
+"Juice, citrus, concentrated",514,"Citrus juice, concentrated n.e.c.",2,TM,TRUE
+Apples,515,Apples,1,TM,TRUE
+Cider etc,517,Cider and other fermented beverages,2,TM,TRUE
+"Juice, apple, single strength",518,Apple juice,2,TM,TRUE
+"Juice, apple, concentrated",519,"Apple juice, concentrated",2,TM,TRUE
+Pears,521,Pears,1,TM,TRUE
+Quinces,523,Quinces,1,TM,TRUE
+Apricots,526,Apricots,1,TM,TRUE
+"Apricots, dry",527,"Apricots, dried",2,TM,TRUE
+"Cherries, sour",530,Sour cherries,1,TM,TRUE
+Cherries,531,Cherries,1,TM,TRUE
+Peaches and nectarines,534,Peaches and nectarines,1,TM,TRUE
+Plums and sloes,536,Plums and sloes,1,TM,TRUE
+Plums dried (prunes),537,"Plums, dried",2,TM,TRUE
+"Juice, plum, single strength",538,Juice of plum,4,SCL,FALSE
+"Juice, plum, concentrated",539,"Juice of plum, concentrated",4,SCL,FALSE
+"Fruit, stone nes",541,Other stone fruits,1,TM,TRUE
+"Fruit, pome nes",542,Other pome fruits,3,SCL,FALSE
+Strawberries,544,Strawberries,1,TM,TRUE
+Raspberries,547,Raspberries,1,TM,TRUE
+Gooseberries,549,Gooseberries,1,TM,TRUE
+Currants,550,Currants,1,TM,TRUE
+Blueberries,552,Blueberries,1,TM,TRUE
+Cranberries,554,Cranberries,1,TM,TRUE
+Berries nes,558,Other berries and fruits of the genus vaccinium n.e.c.,1,TM,TRUE
+Grapes,560,Grapes,1,TM,TRUE
+Raisins,561,Raisins,2,TM,TRUE
+"Juice, grape",562,Grape juice,2,TM,TRUE
+"Grapes, must",563,Must of grape,2,TM,TRUE
+Wine,564,Wine,1,TM,TRUE
+Vermouths & similar,565,Vermouth and other wine of fresh grapes flavoured with plats or aromatic substances,2,TM,TRUE
+Watermelons,567,Watermelons,1,TM,TRUE
+"Melons, other (inc.cantaloupes)",568,Cantaloupes and other melons,1,TM,TRUE
+Figs,569,Figs,1,TM,TRUE
+Figs dried,570,"Figs, dried",2,TM,TRUE
+"Mangoes, mangosteens, guavas",571,"Mangoes, guavas and mangosteens",1,TM,TRUE
+Avocados,572,Avocados,1,TM,TRUE
+Pineapples,574,Pineapples,1,TM,TRUE
+Pineapples canned,575,"Pineapples, otherwise prepared or preserved",2,TM,TRUE
+"Juice, pineapple",576,Pineapple juice,2,TM,TRUE
+Dates,577,Dates,1,TM,TRUE
+"Juice, pineapple, concentrated",580,"Juice of pineapples, concentrated",2,TM,TRUE
+"Juice, mango",583,Juice of mango,2,TM,TRUE
+Persimmons,587,Persimmons,1,TM,TRUE
+Cashewapple,591,Cashewapple,1,TM,TRUE
+Kiwi fruit,592,Kiwi fruit,1,TM,TRUE
+Papayas,600,Papayas,1,TM,TRUE
+"Fruit, tropical fresh nes",603,"Other tropical fruits, n.e.c.",1,TM,TRUE
+"Fruit, tropical dried nes",604,"Other tropical fruit, dried",2,TM,TRUE
+"Fruit, fresh nes",619,"Other fruits, n.e.c.",1,TM,TRUE
+"Fruit, dried nes",620,"Other fruit n.e.c., dried",2,TM,TRUE
+"Juice, fruit nes",622,Juice of fruits n.e.c.,2,TM,TRUE
+"Fruit, prepared nes",623,Fruit prepared n.e.c.,2,TM,TRUE
+"Flour, fruit",624,Flour of fruits,2,TM,TRUE
+"Fruits, nuts, peel, sugar preserved",625,"Fruit, nuts, peel, sugar preserved",2,TM,TRUE
+"Fruit, cooked, homogenized preparations",626,"Homogenized cooked fruit, prepared",2,TM,TRUE
+Alcohol non food,632,Undenatured ethyl alcohol of an alcoholic strength by volume of 80% vol or higher,4,SCL,FALSE
+"Beverages, distilled alcoholic",634,"Undenatured ethyl alcohol of an alcoholic strength by volume of less than 80% vol; spirits, liqueurs and other spirituous beverages",2,TM,TRUE
+"Coffee, green",656,"Coffee, green",1,TM,TRUE
+"Coffee, roasted",657,"Coffee, decaffeinated or roasted",2,TM,TRUE
+"Coffee, substitutes containing coffee",658,Coffee substitutes,2,TM,TRUE
+"Coffee, extracts",659,Coffee extracts,2,TM,TRUE
+"Cocoa, beans",661,Cocoa beans,1,TM,TRUE
+"Cocoa, paste",662,Cocoa paste not defatted,2,TM,TRUE
+"Cocoa, butter",664,"Cocoa butter, fat and oil",2,TM,TRUE
+"Cocoa, powder & cake",665,Cocoa powder and cake,2,TM,TRUE
+Chocolate products nes,666,Chocolate products nes,2,TM,TRUE
+Tea,667,Tea leaves,1,TM,TRUE
+Mate,671,Mate leaves,1,TM,TRUE
+"Tea, mate extracts",672,"Extracts, essences and concentrates of tea or mate, and preparations with a basis thereof or with a basis of tea or mate",2,TM,TRUE
+Hops,677,Hop cones,6,TM,TRUE
+Pepper (piper spp.),687,"Pepper (Piper spp.), raw",1,TM,TRUE
+"Chillies and peppers, dry",689,"Chillies and peppers, dry (Capsicum spp., Pimenta spp.), raw",1,TM,TRUE
+Vanilla,692,"Vanilla, raw",1,TM,TRUE
+Cinnamon (cannella),693,"Cinnamon and cinnamon-tree flowers, raw",1,TM,TRUE
+Cloves,698,"Cloves (whole stems), raw",1,TM,TRUE
+"Nutmeg, mace and cardamoms",702,"Nutmeg, mace, cardamoms, raw",1,TM,TRUE
+"Anise, badian, fennel, coriander",711,"Anise, badian, coriander, cumin, caraway, fennel and juniper berries, raw",1,TM,TRUE
+Ginger,720,"Ginger, raw",1,TM,TRUE
+Spices nes,723,"Other stimulant, spice and aromatic crops, n.e.c.",1,TM,TRUE
+Peppermint,748,"Peppermint, spearmint",6,TM,TRUE
+"Pyrethrum, dried",754,"Pyrethrum, dried flowers",6,TM,TRUE
+Cotton lint,767,"Cotton lint, ginned",6,TM,TRUE
+"Flax, raw or retted ",771,"Flax, raw or retted ",6,TM,TRUE
+Hemp tow waste,777,"True hemp, raw or retted",6,TM,TRUE
+Kapok fibre,778,"Kapok fibre, raw",6,TM,TRUE
+Jute,780,"Jute, raw or retted",6,TM,TRUE
+"Bastfibres, other",782,"Kenaf, and other textile bast fibres, raw or retted",6,TM,TRUE
+Ramie,788,"Ramie, raw or retted",6,TM,TRUE
+Sisal,789,"Sisal, raw",6,TM,TRUE
+Agave fibres nes,800,"Agave fibres, raw, n.e.c.",6,TM,TRUE
+Manila fibre (abaca),809,"Abaca, manila hemp, raw",6,TM,TRUE
+Coir,813,"Coir, raw",6,TM,TRUE
+Fibre crops nes,821,"Other fibre crops, raw, n.e.c.",6,TM,TRUE
+"Tobacco, unmanufactured",826,Unmanufactured tobacco,6,TM,TRUE
+"Rubber, natural",836,Natural rubber in primary forms,6,TM,TRUE
+"Gums, natural",839,"Balata, gutta-percha, guayule, chicle and similar natural gums in primary forms or in plates, sheets or strip",6,TM,TRUE
+"Feed and meal, gluten",846,Gluten feed and meal,2,TM,TRUE
+"Meat, cattle",867,"Meat of cattle with the bone, fresh or chilled",1,TM,TRUE
+"Offals, edible, cattle",868,"Edible offal of cattle, fresh, chilled or frozen",1,TM,TRUE
+"Fat, cattle",869,"Cattle fat, unrendered",1,TM,TRUE
+"Meat, cattle, boneless (beef & veal)",870,"Meat of cattle boneless, fresh or chilled",2,TM,TRUE
+"Fat, cattle butcher",871,"Cattle, butcher fat",2,TM,TRUE
+"Meat, beef, dried, salted, smoked",872,"Bovine meat, salted, dried or smoked",2,TM,TRUE
+"Meat, extracts",873,"Extracts and juices of meat, fish, crustaceans, molluscs or other aquatic invertebrates",2,TM,TRUE
+"Meat, beef and veal sausages",874,"Sausages and similar products of meat, offal or blood of beef and veal",2,TM,TRUE
+"Meat, beef, preparations",875,beef and veal preparations nes,2,TM,TRUE
+"Meat, homogenized preparations",877,Homogenized meat preparations,2,TM,TRUE
+Liver prep.,878,Liver preparations,2,TM,TRUE
+"Milk, whole fresh cow",882,Raw milk of cattle,1,TM,TRUE
+Cream fresh,885,"Cream, fresh",1,TM,TRUE
+"Butter, cow milk",886,Butter of cow milk,1,TM,TRUE
+"Ghee, butteroil of cow milk",887,Ghee from cow milk,1,TM,TRUE
+"Milk, skimmed cow",888,Skim milk of cows,1,TM,TRUE
+"Milk, whole condensed",889,"Whole milk, condensed",1,TM,TRUE
+"Whey, condensed",890,"Whey, condensed",1,TM,TRUE
+Yoghurt,891,Yoghurt,1,TM,TRUE
+"Yoghurt, concentrated or not",892,"Yoghurt, with additives",2,TM,TRUE
+"Buttermilk, curdled, acidified milk",893,"Buttermilk, curdled and acidified milk",2,TM,TRUE
+"Milk, whole evaporated",894,"Whole milk, evaporated",1,TM,TRUE
+"Milk, skimmed evaporated",895,"Skim milk, evaporated",1,TM,TRUE
+"Milk, skimmed condensed",896,"Skim milk, condensed",1,TM,TRUE
+"Milk, whole dried",897,Whole milk powder,1,TM,TRUE
+"Milk, skimmed dried",898,Skim milk and whey powder,1,TM,TRUE
+"Milk, dry buttermilk",899,"Buttermilk, dry",1,TM,TRUE
+"Whey, dry",900,"Whey, dry",1,TM,TRUE
+"Cheese, whole cow milk",901,Cheese from whole cow milk,1,TM,TRUE
+"Whey, fresh",903,"Whey, fresh",2,TM,TRUE
+"Cheese, skimmed cow milk",904,Cheese from skimmed cow milk,1,TM,TRUE
+"Whey, cheese",905,Whey cheese,2,TM,TRUE
+"Cheese, processed",907,Processed cheese,2,TM,TRUE
+"Milk, reconstituted",908,Reconstituted milk,4,SCL,FALSE
+"Milk, products of natural constituents nes",909,Dairy products n.e.c.,2,TM,TRUE
+Ice cream and edible ice,910,Ice cream and other edible ice,2,TM,TRUE
+Egg albumine,916,Egg albumin,4,SCL,FALSE
+Casein,917,Casein,4,SCL,FALSE
+"Hides, cattle, fresh",919,Raw hides and skins of cattle,6,TM,TRUE
+"Meat, buffalo",947,"Meat of buffalo, fresh or chilled",1,TM,TRUE
+"Offals, edible, buffaloes",948,"Edible offal of buffalo, fresh, chilled or frozen",1,TM,TRUE
+"Fat, buffaloes",949,"Buffalo fat, unrendered",3,SCL,FALSE
+"Milk, whole fresh buffalo",951,Raw milk of buffalo,3,SCL,FALSE
+"Butter, buffalo milk",952,Butter of buffalo milk,3,SCL,FALSE
+"Ghee, buffalo milk",953,Ghee from buffalo milk,3,SCL,FALSE
+"Milk, skimmed buffalo",954,Skim milk of buffalo,4,SCL,FALSE
+"Cheese, buffalo milk",955,"Cheese from milk of buffalo, fresh or processed",3,SCL,FALSE
+"Hides, buffalo, fresh",957,Raw hides and skins of buffaloes,6,TM,TRUE
+"Meat, sheep",977,"Meat of sheep, fresh or chilled",1,TM,TRUE
+"Offals, sheep,edible",978,"Edible offal of sheep, fresh, chilled or frozen",1,TM,TRUE
+"Fat, sheep",979,"Sheep fat, unrendered",1,TM,TRUE
+"Milk, whole fresh sheep",982,Raw milk of sheep,3,SCL,FALSE
+"Butter and ghee, sheep milk",983,Butter and ghee of sheep milk,1,TM,TRUE
+"Cheese, sheep milk",984,"Cheese from milk of sheep, fresh or processed",1,TM,TRUE
+"Milk, skimmed sheep",985,Skim sheep milk,4,SCL,FALSE
+"Wool, greasy",987,"Shorn wool, greasy, including fleece-washed shorn wool",6,TM,TRUE
+Grease incl. lanolin wool,994,Wool grease and lanolin,2,TM,TRUE
+"Skins, sheep, fresh",995,Raw hides and skins of sheep or lambs,6,TM,TRUE
+"Meat, goat",1017,"Meat of goat, fresh or chilled",1,TM,TRUE
+"Offals, edible, goats",1018,"Edible offal of goat, fresh, chilled or frozen",1,TM,TRUE
+"Fat, goats",1019,"Goat fat, unrendered",3,SCL,FALSE
+"Milk, whole fresh goat",1020,Raw milk of goats,3,SCL,FALSE
+"Cheese, goat milk",1021,"Cheese from milk of goats, fresh or processed",1,TM,TRUE
+"Butter, goat milk",1022,Butter of goat milk,1,TM,TRUE
+"Milk, skimmed goat",1023,Skim milk of goat,4,SCL,FALSE
+"Skins, goat, fresh",1025,Raw hides and skins of goats or kids,6,TM,TRUE
+"Meat, pig",1035,"Meat of pig with the bone, fresh or chilled",1,TM,TRUE
+"Offals, pigs, edible",1036,"Edible offal of pigs, fresh, chilled or frozen",1,TM,TRUE
+"Fat, pigs",1037,Fat of pigs,1,TM,TRUE
+"Meat, pork",1038,"Meat of pig boneless, fresh or chilled",2,TM,TRUE
+Bacon and ham,1039,"Pig meat, cuts, salted, dried or smoked (bacon and ham)",2,TM,TRUE
+"Fat, pig butcher",1040,"Pig, butcher fat",2,TM,TRUE
+"Meat, pig sausages",1041,"Sausages and similar products of meat, offal or blood of pig",2,TM,TRUE
+"Meat, pig, preparations",1042,Pig meat preparations,2,TM,TRUE
+Lard,1043,"Pig fat, rendered",1,TM,TRUE
+"Meat, chicken",1058,"Meat of chickens, fresh or chilled",1,TM,TRUE
+"Offals, liver chicken",1059,"Edible offals and liver of chickens and guinea fowl, fresh, chilled or frozen",2,TM,TRUE
+"Fat, liver prepared (foie gras)",1060,Fatty liver preparations,2,TM,TRUE
+"Meat, chicken, canned",1061,Poultry meat preparations,2,TM,TRUE
+"Eggs, hen, in shell",1062,"Hen eggs in shell, fresh",1,TM,TRUE
+"Eggs, liquid",1063,"Eggs, liquid",2,TM,TRUE
+"Eggs, dried",1064,"Eggs, dried",2,TM,TRUE
+"Fat, poultry",1065,Fat of poultry,2,TM,TRUE
+"Fat, poultry, rendered",1066,"Poultry fat, rendered",2,TM,TRUE
+"Meat, duck",1069,"Meat of ducks, fresh or chilled",1,TM,TRUE
+"Meat, goose and guinea fowl",1073,"Meat of geese, fresh or chilled",1,TM,TRUE
+"Offals, liver geese",1074,"Edible offals and liver of geese, fresh, chilled or frozen",2,TM,TRUE
+"Offals, liver duck",1075,"Edible offals and liver of ducks, fresh, chilled or frozen",2,TM,TRUE
+"Meat, turkey",1080,"Meat of turkeys, fresh or chilled",1,TM,TRUE
+"Offals, liver turkeys",1081,"Edible offals and liver of turkey, fresh, chilled or frozen",2,TM,TRUE
+"Meat, bird nes",1089,"Meat of pigeons and other birds n.e.c., fresh, chilled or frozen",1,TM,TRUE
+"Eggs, other bird, in shell",1091,"Eggs from other birds in shell, fresh, n.e.c.",1,TM,TRUE
+"Meat, horse",1097,"Horse meat, fresh or chilled",1,TM,TRUE
+"Offals, horses",1098,"Edible offals of horses and other equines,  fresh, chilled or frozen",1,TM,TRUE
+"Meat, ass",1108,"Meat of asses, fresh or chilled",3,SCL,FALSE
+"Meat, mule",1111,"Meat of mules, fresh or chilled",3,SCL,FALSE
+"Meat, camel",1127,"Meat of camels, fresh or chilled",1,TM,TRUE
+"Offals, edible, camels",1128,"Edible offals of camels and other camelids, fresh, chilled or frozen",3,SCL,FALSE
+"Fat, camels",1129,Fat of camels,1,TM,TRUE
+"Milk, whole fresh camel",1130,Raw milk of camel,3,SCL,FALSE
+"Meat, rabbit",1141,"Meat of rabbits and hares, fresh or chilled",1,TM,TRUE
+"Meat, other rodents",1151,"Meat of other domestic rodents, fresh or chilled",3,SCL,FALSE
+"Meat, other camelids",1158,"Meat of other domestic camelids, fresh or chilled",6,TM,TRUE
+"Fat, other camelids",1160,Fat of other camelids,4,SCL,FALSE
+"Meat, game",1163,"Game meat, fresh, chilled or frozen",1,TM,TRUE
+"Meat, dried nes",1164,"Other meat and edible meat offal, salted, in brine, dried or smoked; edible flours and meals of meat or meat offal",2,TM,TRUE
+Meat nes,1166,"Other meat n.e.c. (excluding mammals), fresh, chilled or frozen",1,TM,TRUE
+Offals nes,1167,"Offals n.e.c. (excluding mammals), fresh, chilled or frozen",2,TM,TRUE
+"Oils, fats of animal nes",1168,Animal oils and fats n.e.c.,2,TM,TRUE
+"Meat nes, preparations",1172,Meat prepared n.e.c.,2,TM,TRUE
+"Snails, not sea",1176,"Snails, fresh, chilled, frozen, dried, salted or in brine, except sea snails",3,SCL,FALSE
+"Honey, natural",1182,Natural honey,1,TM,TRUE
+Beeswax,1183,Beeswax,6,TM,TRUE
+"Silk-worm cocoons, reelable",1185,Silk-worm cocoons suitable for reeling,6,TM,TRUE
+"Silk, raw",1186,Raw silk (not thrown),6,TM,TRUE
+Lard stearine oil,1221,Lard stearine and lard oil,2,TM,TRUE
+Degras,1222,Degras,2,TM,TRUE
+Tallow,1225,Tallow,1,TM,TRUE
+Food prep nes,1232,Food preparations n.e.c.,2,TM,TRUE
+"Margarine, liquid",1241,Liquid margarine,2,TM,TRUE
+"Margarine, short",1242,Margarine and shortening,1,TM,TRUE
+"Fat nes, prepared",1243,Fat preparations n.e.c.,2,TM,TRUE
+"Castor oil, hydrogenated (opal wax)",1273,"Castor oil, hydrogenated",4,SCL,FALSE
+"Oil, boiled etc",1274,"Animal or vegetable fats and oils and their fractions, chemically modified, except those hydrogenated, inter-esterified, re-esterified or elaidinized; inedible mixtures or preparations of animal or vegetable fats or oils",2,TM,TRUE
+"Oil, hydrogenated",1275,hydrogenated oils and fats,2,TM,TRUE
+Fatty acids,1276,Industrial monocarboxylic fatty acids; acid oils from refining,2,TM,TRUE
+Fatty substance residues,1277,Residues of fatty substances,2,TM,TRUE
+Freshwater Fish,2761,Freshwater Fish,5,FBS_FBSH,FALSE
+Demersal Fish,2762,Demersal Fish,5,FBS_FBSH,FALSE
+Pelagic Fish,2763,Pelagic Fish,5,FBS_FBSH,FALSE
+"Marine Fish, Other",2764,"Marine Fish, Other",5,FBS_FBSH,FALSE
+Crustaceans,2765,Crustaceans,5,FBS_FBSH,FALSE
+Cephalopods,2766,Cephalopods,5,FBS_FBSH,FALSE
+"Molluscs, Other",2767,"Molluscs, Other",5,FBS_FBSH,FALSE
+"Meat, Aquatic Mammals",2768,"Meat, Aquatic Mammals",5,FBS_FBSH,FALSE
+"Aquatic Animals, Others",2769,"Aquatic Animals, Others",5,FBS_FBSH,FALSE
+Aquatic Plants,2775,Aquatic Plants,5,FBS_FBSH,FALSE
+"Fish, Body Oil",2781,"Fish, Body Oil",5,FBS_FBSH,FALSE
+"Fish, Liver Oil",2782,"Fish, Liver Oil",5,FBS_FBSH,FALSE
+"Cake, olive residues",2740000,"Cake, olive residues",7,None,FALSE
+"Cake, jojoba",2780000,"Cake, jojoba",7,None,FALSE
+"Fiber, cottonseed",3320000,"Fiber, cottonseed",7,None,FALSE
+"Cake, vegetable origin nes",3400000,"Cake, vegetable origin nes",7,None,FALSE
+"AnMeatEq, cattle",8670000,"AnMeatEq, cattle",8,None,FALSE
+"AnMeatEq, buffalo",9470000,"AnMeatEq, buffalo",8,None,FALSE
+"AnMeatEq, sheep",9770000,"AnMeatEq, sheep",8,None,FALSE
+"AnMeatEq, goat",10170000,"AnMeatEq, goat",8,None,FALSE
+"AnMeatEq, pig",10350000,"AnMeatEq, pig",8,None,FALSE
+"AnMeatEq, chicken",10580000,"AnMeatEq, chicken",8,None,FALSE
+"AnMeatEq, duck",10690000,"AnMeatEq, duck",8,None,FALSE
+"AnMeatEq, goose and guinea fowl",10730000,"AnMeatEq, goose and guinea fowl",8,None,FALSE
+"AnMeatEq, turkey",10800000,"AnMeatEq, turkey",8,None,FALSE
+"AnMeatEq, horse",10970000,"AnMeatEq, horse",8,None,FALSE
+"AnMeatEq, ass",11080000,"AnMeatEq, ass",8,None,FALSE
+"AnMeatEq, mule",11110000,"AnMeatEq, mule",8,None,FALSE
+"AnMeatEq, camel",11270000,"AnMeatEq, camel",8,None,FALSE
+"AnMeatEq, rabbit",11410000,"AnMeatEq, rabbit",8,None,FALSE
+"AnMeatEq, other rodents",11510000,"AnMeatEq, other rodents",8,None,FALSE
+"AnMeatEq, other camelids",11580000,"AnMeatEq, other camelids",8,None,FALSE
+"Cake, rice bran",37,Cake of rice bran,2,TM,TRUE
+"Cake, maize",61,Cake of maize,2,TM,TRUE
+"Cake, safflower",282,Cake of safflowerseed,2,TM,TRUE
+"Cake, poppy",298,"Cake, poppy seed",4,SCL,FALSE
+"Cake, kapok",314,Cake of kapok,4,SCL,FALSE
+"Cake, linseed",335,Cake of  linseed,2,TM,TRUE
+"Cake, hempseed",338,Cake of hempseed,4,SCL,FALSE
+"Vegetable products, fresh or dry n.e.c.",460,"Vegetable products, fresh or dry n.e.c.",2,TM,TRUE
+Mango pulp,584,Mango pulp,2,TM,TRUE
+Other non-alcoholic caloric beverages,633,Other non-alcoholic caloric beverages,2,TM,TRUE
+Cocoa husks and shells,663,Cocoa husks and shells,2,TM,TRUE
+"Green tea (not fermented), black tea (fermented) and partly fermented tea, in immediate packings of a content not exceeding 3 kg",675,"Green tea (not fermented), black tea (fermented) and partly fermented tea, in immediate packings of a content not exceeding 3 kg",6,TM,TRUE
+Standardized milk,883,Standardized milk,4,SCL,FALSE

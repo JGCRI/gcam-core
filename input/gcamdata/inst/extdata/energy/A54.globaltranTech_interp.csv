@@ -4,7 +4,7 @@
 # Column types: cccccccc
 # ----------
 supplysector,tranSubsector,tranTechnology,apply.to,from.year,to.year,interpolation.function,sce
-trn_freight,Freight Rail,Coal,share-weight,final-calibration-year,2020,linear,CORE
+trn_freight,Freight Rail,Coal,share-weight,final-calibration-year,initial-future-year,linear,CORE
 trn_freight,Freight Rail,Electric,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_freight,Freight Rail,Liquids,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_freight_road,3W Rural,Liquids,share-weight,final-calibration-year,end-year,fixed,CORE
@@ -57,11 +57,11 @@ trn_freight_road,Truck (9-16t),Liquids,share-weight,final-calibration-year,end-y
 trn_freight_road,Truck (9-16t),NG,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass,Passenger Rail,Electric,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass,Passenger Rail,Liquids,share-weight,final-calibration-year,end-year,fixed,CORE
-trn_pass_road,Bus,Liquids,share-weight,final-calibration-year,2020,linear,CORE
+trn_pass_road,Bus,Liquids,share-weight,final-calibration-year,initial-future-year,linear,CORE
 trn_pass_road,Bus,NG,share-weight,final-calibration-year,end-year,fixed,CORE
-trn_pass_road_bus,Heavy Bus,Liquids,share-weight,final-calibration-year,2020,linear,CORE
+trn_pass_road_bus,Heavy Bus,Liquids,share-weight,final-calibration-year,initial-future-year,linear,CORE
 trn_pass_road_bus,Heavy Bus,NG,share-weight,final-calibration-year,end-year,fixed,CORE
-trn_pass_road_bus,Light Bus,Liquids,share-weight,final-calibration-year,2020,linear,CORE
+trn_pass_road_bus,Light Bus,Liquids,share-weight,final-calibration-year,initial-future-year,linear,CORE
 trn_pass_road_bus,Light Bus,NG,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass_road_LDV,Three-Wheeler,Liquids,share-weight,final-calibration-year,end-year,fixed,CORE
 trn_pass_road_LDV,Three-Wheeler,NG,share-weight,final-calibration-year,end-year,fixed,CORE

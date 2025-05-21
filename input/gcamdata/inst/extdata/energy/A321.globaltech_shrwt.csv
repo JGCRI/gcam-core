@@ -3,7 +3,7 @@
 # Units: Unitless
 # Column types: cccnnnnn
 # ----------
-supplysector,subsector,technology,1971,2019,2020,2050,2100
+supplysector,subsector,technology,1971,final-calibration-year,initial-future-year,2050,2100
 cement,cement,cement,1,1,1,1,1
 cement,cement,cement CCS,0,0,0,1,1
 process heat cement,biomass,biomass,1,1,1,1,1

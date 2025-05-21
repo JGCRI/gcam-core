@@ -218,57 +218,100 @@ module_energy_L210.resources <- function(command, ...) {
     start.year.timestep <- modeltime.PERIOD0_TIMESTEP
     model_year_timesteps <- tibble(year = MODEL_BASE_YEARS, timestep = c(start.year.timestep, GCAM_timesteps))
 
-    # a pipelne helper function to help back calculate new additions to reserve
+    # a pipeline helper function to help back calculate new additions to reserve
     # from historical production
-    lag_prod_helper <- function(year, value, year_operate, final_year) {
-      ret <- value
-      for(i in seq_along(year)) {
-        if(i == 1) {
+    lag_prod_helper <- function(data) {
+      data %>%
+        arrange(year_operate, year) %>%
+        mutate(max.annual.prod = 0,
+               annual.prod = 0,
+               reserve = 0,
+               cumul.prod = 0) ->
+        data_proc
+
+      # operate each model base year one at a time
+      for(year_i in MODEL_BASE_YEARS) {
+        curr_slice <- data_proc[data_proc$year_operate == year_i, ]
+        if(year_i == MODEL_BASE_YEARS[1]) {
           # first year assume all production in this vintage
-          ret[i] <- value[i]
-        } else if( year_operate[i] > final_year[i]) {
-          if(year_operate[i -1] >= final_year[i]) {
-            # retired
-            ret[i] <- 0
-          } else {
-            # final timestep that is operating so we must adjust the production
-            # by the number of years into the timestep it should have operated
-            # incase lifetime and timesteps do not neatly overlap
-            ret[i] <- ret[i - 1] * (year_operate[i] - final_year[i]) / (year_operate[i] - year_operate[i-1])
-          }
-        } else if(year_operate[i] > year[i]) {
-          # assume a vintage that as already invested continues at full
-          # capacity
-          ret[i] <- ret[i -1]
+          curr_slice %>%
+            mutate(max.annual.prod = value,
+                   annual.prod = value,
+                   reserve = annual.prod * lifetime,
+                   cumul.prod = annual.prod * timestep) ->
+            curr_slice
         } else {
-          # to determine new investment we take the difference between
-          # what the total should be and subtract off production from
-          # previous vintages that are still operating
-          ret[i] <- 0
-          ret[i] <- pmax(value[i] - sum(ret[year_operate == year[i]]), 0)
+          # pull out the new vintage slice
+          curr_slice %>%
+            filter(year == year_operate) ->
+            new_inv_slice
+          # grab the annual production in this year and the timestep which will be needed
+          # to calculate production from existing vintages as well
+          curr_demand <- new_inv_slice %>% pull(value)
+          curr_timestep = new_inv_slice %>% pull(timestep)
+          # calculate production from existing vintages first
+          prev_slice %>%
+            mutate(remain = reserve - cumul.prod,
+                   # save previous production so as to be able to linearly adjust depletion
+                   prev.annual.prod = annual.prod,
+                   # the max annual production may need to get scaled down if this reserve is about
+                   # to run out in this timestep
+                   max.annual.prod = pmin(max.annual.prod,
+                                          pmax((remain - curr_timestep * prev.annual.prod) * 2.0 / curr_timestep + prev.annual.prod, 0.0)),
+                   # calculate the production short fall which if positive will drive new investment
+                   supply.shortfall = curr_demand - sum(max.annual.prod),
+                   # if the short fall is negative we have over capacity so annual production will need
+                   # to scale down from the max
+                   annual.prod = if_else(supply.shortfall >= 0, max.annual.prod,
+                                         max.annual.prod * (curr_demand / sum(max.annual.prod)))) ->
+            prev_slice
+          # use the shortfall to set the new vintage production and reserves
+          new_prod <- pmax(unique(prev_slice$supply.shortfall), 0.0)
+          new_inv_slice %>%
+            mutate(max.annual.prod = new_prod,
+                   annual.prod = new_prod,
+                   reserve = annual.prod * lifetime,
+                   cumul.prod = annual.prod * timestep) ->
+            new_inv_slice
+          # update previous vintage values in the current "slice"
+          curr_slice %>%
+            filter(year != year_operate) %>%
+            mutate(annual.prod = prev_slice$annual.prod,
+                   # update cumulative depletion assuming linear change from previous production to current production
+                   cumul.prod = prev_slice$cumul.prod + prev_slice$prev.annual.prod * timestep + 0.5 * ( annual.prod - prev_slice$prev.annual.prod) * timestep,
+                   # copy forward the rest
+                   max.annual.prod = prev_slice$max.annual.prod,
+                   reserve = prev_slice$reserve) %>%
+            # add back new investment
+            bind_rows(new_inv_slice) ->
+            curr_slice
         }
+        # set the current "slice" back into the original DF
+        prev_slice = curr_slice
+        data_proc[data_proc$year_operate == year_i, ] = curr_slice
       }
-      ret
+      # ultimately we just need the new vintage reserves
+        data_proc %>%
+          filter(year == year_operate) %>%
+          select(year, value = reserve)
     }
     # Back calculate reserve additions to be exactly enough given our historical production
     # and assumed production lifetime.  Note production lifetimes may not cover the entire
-    # historical period making the calculation a bit more tricky.  We use the lag_prod_helper
-    # to help project forward production by each historical vintage so we can take this into
-    # account.
+    # historical period and production may dip below capacity making the calculation a bit more
+    # tricky.  We use the lag_prod_helper to help project forward production by each historical
+    # vintage so we can take this into account.
+    # Note: because we are back calculating this our choice of MODEL_BASE_YEARS matters, which is
+    # why this is Level2 processing.
     L111.Prod_EJ_R_F_Yh %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(select(A10.ResSubresourceProdLifetime, resource, lifetime = avg.prod.lifetime, reserve.subresource) %>% distinct(),
                                by=c("fuel" = "resource", "technology" = "reserve.subresource")) %>%
-      left_join_error_no_match(model_year_timesteps, by = c("year")) %>%
       repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
-      mutate(final_year = pmin(MODEL_BASE_YEARS[length(MODEL_BASE_YEARS)], (year - timestep + lifetime))) %>%
-      filter(year_operate >= year - timestep + 1) %>%
-      group_by(GCAM_region_ID, sector, fuel, technology) %>%
-      mutate(value = lag_prod_helper(year, value, year_operate, final_year)) %>%
-      ungroup() %>%
-      filter(year == year_operate) %>%
-      mutate(value = value * lifetime) %>%
-      select(-lifetime, -timestep, -year_operate) ->
+      left_join_error_no_match(model_year_timesteps, by = c("year_operate" = "year")) %>%
+      filter(year_operate >= year) %>%
+      tidyr::nest(data = -c(GCAM_region_ID, sector, fuel, technology)) %>%
+      mutate(data = lapply(data, lag_prod_helper)) %>%
+      tidyr::unnest(cols = data) ->
       L210.Reserve_EJ_R_F_Yh
 
     # Given the mismatch between data sets for historical production / regional supply curves / and
@@ -403,6 +446,7 @@ module_energy_L210.resources <- function(command, ...) {
       # with the next available value (`.direction = "up"`)
       tidyr::fill(value, .direction = "up") %>%
       ungroup() %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       repeat_add_columns(GCAM_region_names) %>%
       # Add subresource type
       left_join_error_no_match(A10.subrsrc_info, by = c("resource", "subresource"))
@@ -469,7 +513,9 @@ module_energy_L210.resources <- function(command, ...) {
     L210.RsrcCurves_fos <- L111.RsrcCurves_EJ_R_Ffos %>%
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
-      mutate(available = round(available, energy.DIGITS_RESOURCE)) %>%
+      # Note: we give many digits here in case some grades had to be added to be able
+      # to cover calibrated historical production where such resolution will be needed
+      mutate(available = round(available, energy.DIGITS_CALOUTPUT)) %>%
       select(region, resource = resource, subresource, grade, available, extractioncost)
 
     # L210.RsrcCurves_U: supply curves of uranium resources
@@ -581,7 +627,8 @@ module_energy_L210.resources <- function(command, ...) {
       complete(nesting(SSP, resource, reserve.subresource, resource.reserve.technology), year = c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
       group_by(SSP, resource, reserve.subresource, resource.reserve.technology) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
-      ungroup()
+      ungroup() %>%
+      filter(year %in% MODEL_FUTURE_YEARS)
 
     # L210.RsrcEnvironCost_SSPs: environmental cost for depletable resources in SSPs
     # Repeat and add region to assumed techchange tables
@@ -660,13 +707,14 @@ module_energy_L210.resources <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["ResReserveTechProfitShutdown"]]) ->
       L210.ResReserveTechProfitShutdown
 
-    # interpolating tech costs for the base year
+    # interpolating tech costs to cover all model years
     A21.globalrsrctech_cost %>%
       complete(nesting(resource, reserve.subresource, resource.reserve.technology, minicam.non.energy.input),
-               year = c(year, MODEL_FINAL_BASE_YEAR)) %>%
+               year = c(year, MODEL_YEARS)) %>%
       group_by(resource, reserve.subresource, resource.reserve.technology, minicam.non.energy.input) %>%
       mutate(input.cost = approx_fun(year, input.cost, rule = 2)) %>%
-      ungroup() -> A21.globalrsrctech_cost
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) -> A21.globalrsrctech_cost
 
     L210.ResSubresourceProdLifetime %>%
       mutate(resource.reserve.technology = reserve.subresource,
@@ -683,13 +731,14 @@ module_energy_L210.resources <- function(command, ...) {
       repeat_add_columns(GCAM_region_names) %>%
       select(LEVEL2_DATA_NAMES[["ResReserveTechCost"]]) -> L210.ResTechCost
 
-    # write tech coefficients for the base year (coefficient does not need interpolation)
+    # write tech coefficients for the resource tech energy inputs
     A21.globalrsrctech_coef %>%
-      complete(nesting(resource, reserve.subresource, resource.reserve.technology, minicam.energy.input), year = MODEL_FINAL_BASE_YEAR) %>%
+      complete(nesting(resource, reserve.subresource, resource.reserve.technology, minicam.energy.input), year = MODEL_YEARS) %>%
       arrange(year) %>%
       group_by(resource, reserve.subresource, resource.reserve.technology, minicam.energy.input) %>%
-      mutate(coefficient = if_else(is.na(coefficient), lag(coefficient), coefficient)) %>%
-      ungroup() -> A21.globalrsrctech_coef
+      mutate(coefficient = approx_fun(year, coefficient, rule = 2)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_YEARS) -> A21.globalrsrctech_coef
 
     A21.globalrsrctech_coef %>%
       repeat_add_columns(GCAM_region_names) %>%

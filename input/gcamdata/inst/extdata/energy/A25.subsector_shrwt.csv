@@ -21,20 +21,20 @@ H2 retail delivery,H2 retail delivery,start-year,,0
 H2 wholesale dispensing,H2 delivery,start-year,,0
 H2 wholesale dispensing,forecourt production,start-year,,0
 H2 retail dispensing,H2 retail dispensing,start-year,,0
-H2 central production,coal,2020,,1
-H2 central production,gas,2020,,1
-H2 central production,biomass,2020,,1
-H2 central production,nuclear,2020,,1
-H2 central production,electricity,2020,,1
-H2 central production,wind,2020,,1
-H2 central production,solar,2020,,1
-H2 pipeline,H2 pipeline,2020,,1
-H2 liquid truck,H2 liquid truck,2020,,1
-H2 wholesale delivery,H2 pipeline,2020,,1
-H2 wholesale delivery,H2 liquid truck,2020,,1
-H2 industrial,H2 delivery,2020,,1
-H2 industrial,onsite production,2020,,1
-H2 retail delivery,H2 retail delivery,2020,,1
-H2 wholesale dispensing,H2 delivery,2020,,1
-H2 wholesale dispensing,forecourt production,2020,,1
-H2 retail dispensing,H2 retail dispensing,2020,,1
+H2 central production,coal,initial-future-year,,1
+H2 central production,gas,initial-future-year,,1
+H2 central production,biomass,initial-future-year,,1
+H2 central production,nuclear,initial-future-year,,1
+H2 central production,electricity,initial-future-year,,1
+H2 central production,wind,initial-future-year,,1
+H2 central production,solar,initial-future-year,,1
+H2 pipeline,H2 pipeline,initial-future-year,,1
+H2 liquid truck,H2 liquid truck,initial-future-year,,1
+H2 wholesale delivery,H2 pipeline,initial-future-year,,1
+H2 wholesale delivery,H2 liquid truck,initial-future-year,,1
+H2 industrial,H2 delivery,initial-future-year,,1
+H2 industrial,onsite production,initial-future-year,,1
+H2 retail delivery,H2 retail delivery,initial-future-year,,1
+H2 wholesale dispensing,H2 delivery,initial-future-year,,1
+H2 wholesale dispensing,forecourt production,initial-future-year,,1
+H2 retail dispensing,H2 retail dispensing,initial-future-year,,1

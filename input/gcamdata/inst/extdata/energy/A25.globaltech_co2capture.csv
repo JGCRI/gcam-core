@@ -3,7 +3,7 @@
 # Units: Unitless
 # Column types: cccnnn 
 # ----------
-supplysector,subsector,technology,1971,2020,2100
+supplysector,subsector,technology,1971,initial-future-year,2100
 H2 central production,coal,coal chemical CCS,0.85,0.85,0.95
 H2 central production,gas,gas ATR CCS,0.85,0.85,0.95
 H2 central production,biomass,biomass to H2 CCS,0.85,0.85,0.95

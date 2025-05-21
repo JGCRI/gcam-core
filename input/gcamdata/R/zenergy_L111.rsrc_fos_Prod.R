@@ -55,14 +55,14 @@ module_energy_L111.rsrc_fos_Prod <- function(command, ...) {
     # ------- HISTORICAL FOSSIL ENERGY PRODUCTION
 
     # (lines 38-56 in original file)
-    # NOTE: Regional production is derived for each fuel as global TPES times regional share of global production
-    # Determine global total primary energy supply (TPES) for each fuel
+    # NOTE: Regional production is derived for each fuel as global TES times regional share of global production
+    # Determine global total primary energy supply (TES) for each fuel
     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == "TPES", fuel %in% energy.RSRC_FUELS, year %in% HISTORICAL_YEARS) %>%
+      filter(sector == energy.TPES_flow, fuel %in% energy.RSRC_FUELS, year %in% HISTORICAL_YEARS) %>%
       group_by(sector, fuel, year) %>%
       summarise(value = sum(value)) %>%
       ungroup ->
-      L111.TPES_EJ_F_Yh
+      L111.TES_EJ_F_Yh
 
     # Determine regional shares of production for each primary fuel
     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
@@ -78,7 +78,7 @@ module_energy_L111.rsrc_fos_Prod <- function(command, ...) {
     # Multiply through to calculate production by fuel
     L111.Prod_EJ_R_F_Yh_IEA %>%
       select(-value) %>%
-      left_join_error_no_match(select(L111.TPES_EJ_F_Yh, fuel, year, value), by = c("fuel", "year")) %>%
+      left_join_error_no_match(select(L111.TES_EJ_F_Yh, fuel, year, value), by = c("fuel", "year")) %>%
       left_join_error_no_match(L111.Prod_share_R_F_Yh, by = c("GCAM_region_ID", "sector", "fuel", "year")) %>%
       mutate(value = value * share) %>%
       select(-share) ->

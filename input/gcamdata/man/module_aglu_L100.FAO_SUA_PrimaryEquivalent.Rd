@@ -10,46 +10,17 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent(command, ...)
 \item{command}{API command to execute}
 
 \item{...}{other optional parameters, depending on command}
-
-\item{DF_CURR_NEST}{Input supply-utilization accounting data frame with one tier of processing}
-
-\item{DF_CURR_NEST_TradeAdj}{Output from Get_ARMINGTON_BALANCE. Input supply-utilization accounting data frame with one tier of processing and}
-
-\item{.SINK_ITEM}{Sink items or processed items in the processing}
-
-\item{DF_ALL}{Input supply-utilization accounting data frame with all levels of data nested which need to be primarized}
 }
 \value{
 Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
   \code{command} is "MAKE") all the generated outputs: \code{GCAM_AgLU_SUA_APE_1973_2019},
   \code{FAO_AgProd_Kt_All},\code{FAO_AgArea_Kha_All},\code{FAO_Food_Macronutrient_All_2010_2019},
   \code{FAO_Food_MacronutrientRate_2010_2019_MaxValue}
-
-A data frame including regional, traded, and world extraction rates of a processing
-Separate the SUA balance into domestic and imported balanced for sink_item
-
-SUA DF
-Separate the domestic SUA balance into current and lagged balanced for sink_item
-
-SUA DF
-Primary equivalent aggregation
-
-A supply-utilization accounting data frame with all levels processed and aggregated to GCAM_commodity
-# In some cases, prescale sink item SUA using output_specific_extraction_rate can improve the processing.
-# e.g., when coproduction shares are not fixed.
 }
 \description{
-Gross extraction rate is calculated for domestic, traded, and lagged values.
-By gross, it means sink items are aggregated.
-The function is used in Proc_primarize.
-
-The function is used in Proc_primarize
-
-The function is used in Proc_primarize
+Generate supply utilization balance in primary equivalent
 }
 \details{
-Generate supply utilization balance in primary equivalent
-
 This chunk compiles balanced supply utilization data in primary equivalent in GCAM region and commodities.
 A method to generate primary equivalent is created for the new FAOSTAT supply utilization data (2010 to 2019).
 New SUA balance is connected to the old one (before 2010). Production and harvested area data with FAO region and item
@@ -59,5 +30,6 @@ be changed in corresponding mappings. The output data is not averaged over time.
 }
 \author{
 XZ 2022
-Get extraction rate
+# In some cases, prescale sink item SUA using output_specific_extraction_rate can improve the processing.
+# e.g., when coproduction shares are not fixed.
 }

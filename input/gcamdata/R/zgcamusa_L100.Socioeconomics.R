@@ -21,7 +21,7 @@ module_gcamusa_L100.Socioeconomics <- function(command, ...) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/Census_pop",
              FILE = "gcam-usa/BEA_GDP_87_96_97USD_state",
-             FILE = "gcam-usa/BEA_GDP_97_18_12USD_state",
+             FILE = "gcam-usa/BEA_GDP_97_23_17USD_state",
              FILE = "gcam-usa/NCAR_SSP2_pop_state",
              FILE = "gcam-usa/AEO_2019_regional_pcGDP_ratio",
              "L102.pcgdp_thous90USD_Scen_R_Y"))
@@ -43,7 +43,7 @@ module_gcamusa_L100.Socioeconomics <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     Census_pop <- get_data(all_data, "gcam-usa/Census_pop") %>%
       gather_years("pop")
-    BEA_GDP_97_18_12USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_97_18_12USD_state")
+    BEA_GDP_97_23_17USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_97_23_17USD_state")
     BEA_GDP_87_96_97USD_state <- get_data(all_data, "gcam-usa/BEA_GDP_87_96_97USD_state")
     NCAR_SSP2_pop_state <- get_data(all_data, "gcam-usa/NCAR_SSP2_pop_state")
     AEO_2019_regional_pcGDP_ratio <- get_data(all_data, "gcam-usa/AEO_2019_regional_pcGDP_ratio")
@@ -53,13 +53,19 @@ module_gcamusa_L100.Socioeconomics <- function(command, ...) {
     # Data Processing
 
     # Population time series
+
+    # Make sure data is current to base year
+    if (max(Census_pop$year) < max(HISTORICAL_YEARS)) {
+      stop(paste0("ERROR: US Census data needs to be updated to extend to ",max(HISTORICAL_YEARS)," in zgcamusa_L100.Socioeconomics.R"))
+    }
+
     # L100.Pop_USA: Historical population by state from the U.S. Census Bureau
     Census_pop %>%
       mutate(pop = round(pop * CONV_ONES_THOUS, socioeconomics.POP_DIGITS)) -> L100.Pop_USA
 
     # L100.Pop_SSP2_USA: Updated future year populations for GCAM USA based on
-    # 2018 historical data and NCAR downscaled SSP2 data
-    # Calculate historical (2010-2018) population growth rates by state
+    # historical data and NCAR downscaled SSP2 data
+    # Calculate historical population growth rates by state
     L100.Pop_USA %>%
       filter(year %in% c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       complete(nesting(state), year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
@@ -141,13 +147,18 @@ module_gcamusa_L100.Socioeconomics <- function(command, ...) {
       ungroup() %>%
       mutate(value = value * gdp_deflator(1990, 1997)) -> L100.GDP_87_96_90USD_state
 
-    BEA_GDP_97_18_12USD_state %>%
+    BEA_GDP_97_23_17USD_state %>%
       select(-Fips) %>%
       gather_years %>%
-      mutate(value = value * gdp_deflator(1990, 2012)) -> L100.GDP_97_18_90USD_state
+      mutate(value = value * gdp_deflator(1990, 2017)) -> L100.GDP_97_23_90USD_state
+
+    # Require that state level GDP data be available to latest base-year
+    if (MODEL_FINAL_BASE_YEAR > max(L100.GDP_97_23_90USD_state$year)) {
+      stop("ERROR: Update USA state level GDP to the latest model base yearin zgcamusa_L100.Socioeconomics.R")
+    }
 
     L100.GDP_87_96_90USD_state %>%
-      bind_rows(L100.GDP_97_18_90USD_state) %>%
+      bind_rows(L100.GDP_97_23_90USD_state) %>%
       left_join_error_no_match(states_subregions %>%
                                  select(state, state_name),
                                by = c("Area" = "state_name")) %>%
@@ -274,7 +285,7 @@ module_gcamusa_L100.Socioeconomics <- function(command, ...) {
       add_precursors("gcam-usa/states_subregions",
                      "gcam-usa/Census_pop",
                      "gcam-usa/BEA_GDP_87_96_97USD_state",
-                     "gcam-usa/BEA_GDP_97_18_12USD_state") %>%
+                     "gcam-usa/BEA_GDP_97_23_17USD_state") %>%
       add_legacy_name("L100.pcGDP_thous90usd_state") ->
       L100.pcGDP_thous90usd_state
 

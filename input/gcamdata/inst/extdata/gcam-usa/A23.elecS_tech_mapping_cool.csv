@@ -10,181 +10,21 @@ base load generation,coal,coal_base_conv pul,electricity,coal,coal (conv pul),co
 base load generation,coal,coal_base_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
 base load generation,coal,coal_base_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
 base load generation,coal,coal_base_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-base load generation,coal,coal_base_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-base load generation,coal,coal_base_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-base load generation,coal,coal_base_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-base load generation,coal,coal_base_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-base load generation,coal,coal_base_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
 intermediate generation,coal,coal_int_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
 intermediate generation,coal,coal_int_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
 intermediate generation,coal,coal_int_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
 intermediate generation,coal,coal_int_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
 intermediate generation,coal,coal_int_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul before 1950,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1951-1955,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1956-1960,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1961-1965,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1966-1970,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1971-1975,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1976-1980,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1981-1985,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1986-1990,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1991-1995,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 1996-2000,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 2001-2005,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 2006-2010,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul 2011-2015,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-intermediate generation,coal,coal_int_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-intermediate generation,coal,coal_int_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-intermediate generation,coal,coal_int_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-intermediate generation,coal,coal_int_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-intermediate generation,coal,coal_int_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
 peak generation,coal,coal_peak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
 peak generation,coal,coal_peak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
 peak generation,coal,coal_peak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
 peak generation,coal,coal_peak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
 peak generation,coal,coal_peak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-peak generation,coal,coal_peak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-peak generation,coal,coal_peak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-peak generation,coal,coal_peak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-peak generation,coal,coal_peak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-peak generation,coal,coal_peak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
 subpeak generation,coal,coal_subpeak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
 subpeak generation,coal,coal_subpeak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
 subpeak generation,coal,coal_subpeak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
 subpeak generation,coal,coal_subpeak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
 subpeak generation,coal,coal_subpeak_conv pul,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
-subpeak generation,coal,coal_subpeak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (once through),coal,once through,fresh
-subpeak generation,coal,coal_subpeak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (seawater),coal,once through,seawater
-subpeak generation,coal,coal_subpeak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (recirculating),coal,recirculating,fresh
-subpeak generation,coal,coal_subpeak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (cooling pond),coal,cooling pond,fresh
-subpeak generation,coal,coal_subpeak_conv pul_retire_2020,electricity,coal,coal (conv pul),coal (conv pul) (dry cooling),coal,dry cooling,fresh
 base load generation,coal,coal_base_conv pul_CCS,electricity,coal,coal (conv pul CCS),coal (conv pul CCS) (once through),conv pul (CCS),once through,fresh
 base load generation,coal,coal_base_conv pul_CCS,electricity,coal,coal (conv pul CCS),coal (conv pul CCS) (seawater),conv pul (CCS),once through,seawater
 base load generation,coal,coal_base_conv pul_CCS,electricity,coal,coal (conv pul CCS),coal (conv pul CCS) (recirculating),conv pul (CCS),recirculating,fresh

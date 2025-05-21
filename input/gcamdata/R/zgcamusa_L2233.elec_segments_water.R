@@ -31,8 +31,7 @@
 module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
 
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
-             FILE = "gcam-usa/elec_tech_water_map",
+    return(c(FILE = "gcam-usa/elec_tech_water_map",
              FILE = "gcam-usa/A23.elecS_tech_mapping_cool_shares_fut",
              FILE = "gcam-usa/usa_seawater_states_basins",
              "L1233.out_EJ_state_elec_F_tech_cool",
@@ -102,7 +101,8 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
              "L2241.StubTechMarket_coal_vintage_USA",
              "L2241.StubTechProd_coal_vintage_USA",
              "L2241.StubTechProfitShutdown_coal_vintage_USA",
-             "L2241.StubTechSCurve_coal_vintage_USA"))
+             "L2241.StubTechSCurve_coal_vintage_USA",
+             "L2241.elecS_tech_mapping_cool_vintage"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2233.GlobalTechEff_elecS_cool_USA",
              "L2233.GlobalTechShrwt_elecS_cool_USA",
@@ -182,7 +182,6 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     # 1. Read files
 
     # Load required inputs
-    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool", strip_attributes = TRUE)
     elec_tech_water_map <- get_data(all_data, "gcam-usa/elec_tech_water_map", strip_attributes = TRUE)
     A23.elecS_tech_mapping_cool_shares_fut <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool_shares_fut", strip_attributes = TRUE)
     usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins", strip_attributes = TRUE)
@@ -254,7 +253,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     L2241.StubTechProd_coal_vintage_USA <- get_data(all_data,"L2241.StubTechProd_coal_vintage_USA", strip_attributes = TRUE)
     L2241.StubTechProfitShutdown_coal_vintage_USA <- get_data(all_data,"L2241.StubTechProfitShutdown_coal_vintage_USA", strip_attributes = TRUE)
     L2241.StubTechSCurve_coal_vintage_USA <- get_data(all_data,"L2241.StubTechSCurve_coal_vintage_USA", strip_attributes = TRUE)
-
+    L2241.elecS_tech_mapping_cool_vintage <- get_data(all_data,"L2241.elecS_tech_mapping_cool_vintage", strip_attributes = TRUE)
 
     # ===================================================
     # Define unique states and basins that have access to seawater that will
@@ -264,9 +263,9 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
 
     # Process data
 
-    A23.elecS_tech_mapping_cool %>%
+    L2241.elecS_tech_mapping_cool_vintage %>%
       select(-supplysector, -water_type, -cooling_system, -plant_type) ->
-      A23.elecS_tech_mapping_cool
+      L2241.elecS_tech_mapping_cool_vintage
 
     ## Define several filtering and renaming fuctions that will be applied
     ## throughout the zchunk
@@ -275,7 +274,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     # we must expand certain outputs
     add_cooling_techs <- function(data){
       data %>%
-        left_join(A23.elecS_tech_mapping_cool,
+        left_join(L2241.elecS_tech_mapping_cool_vintage,
                   # Left_join used as each power plant type will now be multiplied
                   # by up to five cooling technologies, thus increasing tibble size
                   by = c("stub.technology" = "Electric.sector.technology",
@@ -296,7 +295,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
 
     add_global_cooling_techs <- function(data){
       data %>%
-        left_join(A23.elecS_tech_mapping_cool,
+        left_join(L2241.elecS_tech_mapping_cool_vintage,
                   # Left_join used as each power plant type will now be multiplied
                   # by up to five cooling technologies, thus increasing tibble size
                   by = c("technology" = "Electric.sector.technology",
@@ -315,7 +314,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
 
     add_int_cooling_techs <- function(data){
       data %>%
-        left_join(A23.elecS_tech_mapping_cool,
+        left_join(L2241.elecS_tech_mapping_cool_vintage,
                   # Left_join used as each power plant type will now be multiplied
                   # by up to five cooling technologies, thus increasing tibble size
                   by = c("supplysector" = "Electric.sector",
@@ -352,7 +351,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     L2234.GlobalTechShrwt_elecS_USA %>%
       bind_rows(L2241.GlobalTechShrwt_coal_vintage_USA,
                 L2241.GlobalTechShrwt_elec_coalret_USA) %>%
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 # Left_join used as each power plant type will now be multiplied
                 # by up to five cooling technologies, thus increasing tibble size
                 by = c("technology" = "Electric.sector.technology",
@@ -368,7 +367,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     # Add all vintages to profit shutdown tibbles as they initially exist at state level, not global
     L2234.GlobalTechProfitShutdown_elecS_USA %>%
       bind_rows(L2241.GlobalTechProfitShutdown_elec_coalret_USA) %>%
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 # Left_join used as each power plant type will now be multiplied
                 # by up to five cooling technologies, thus increasing tibble size
                 by = c("technology" = "Electric.sector.technology",
@@ -453,7 +452,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
 
     # Assume that global tech coefficients map to all segments
     L2233.GlobalTechCoef_elec_cool %>%
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 # Left_join used as each power plant type will now be multiplied
                 # by up to five cooling technologies, thus increasing tibble size
                 by = c("subsector.name" = "technology",
@@ -464,7 +463,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
         L2233.GlobalTechCoef_elec_cool %>%
           # Left_join used as each power plant type will now be multiplied
           # by up to five cooling technologies, thus increasing tibble size
-          left_join(A23.elecS_tech_mapping_cool,
+          left_join(L2241.elecS_tech_mapping_cool_vintage,
                     by = c("subsector.name" = "technology")) %>%
           filter(grepl("base_storage", to.technology)) %>%
           select(-sector.name, -subsector_1, -subsector.name, -technology) %>%
@@ -473,7 +472,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
         L2233.GlobalTechCoef_elec_cool %>%
           # Left_join used as each power plant type will now be multiplied
           # by up to five cooling technologies, thus increasing tibble size
-          left_join(A23.elecS_tech_mapping_cool,
+          left_join(L2241.elecS_tech_mapping_cool_vintage,
                     by = c("technology")) %>%
           filter(grepl("hydro", to.technology) | grepl("PV_base_storage", to.technology)) %>%
           select(-sector.name, -subsector_1, -subsector.name, -technology) %>%
@@ -507,7 +506,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       L2233.GlobalTechLifetime_elecS_cool_USA
 
     L2234.AvgFossilEffKeyword_elecS_USA %>%
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 # Left_join used as each power plant type will now be multiplied
                 # by up to five cooling technologies, thus increasing tibble size
                 by = c("technology" = "Electric.sector.technology",
@@ -539,7 +538,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       csp_filter() %>%
       bind_rows(L2234.GlobalIntTechValueFactor_elecS_USA %>%
                   filter(grepl("CSP", intermittent.technology)) %>%
-                  left_join(A23.elecS_tech_mapping_cool,
+                  left_join(L2241.elecS_tech_mapping_cool_vintage,
                             # Left_join used as each power plant type will now be multiplied
                             # by up to five cooling technologies, thus increasing tibble size
                             by = c("supplysector" = "Electric.sector",
@@ -559,7 +558,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       mutate(backup.intermittent.technology = subsector) %>%
       bind_rows(L2234.GlobalIntTechBackup_elecS_USA %>%
                   filter(grepl("CSP", backup.intermittent.technology)) %>%
-                  left_join(A23.elecS_tech_mapping_cool,
+                  left_join(L2241.elecS_tech_mapping_cool_vintage,
                             # Left_join used as each power plant type will now be multiplied
                             # by up to five cooling technologies, thus increasing tibble size
                             by = c("supplysector" = "Electric.sector",
@@ -582,7 +581,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       filter(grepl("CSP", intermittent.technology)) %>%
       # Left_join used as each power plant type will now be multiplied
       # by up to five cooling technologies, thus increasing tibble size
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 by = c("intermittent.technology" = "Electric.sector.technology",
                        "supplysector" = "Electric.sector", "subsector")) %>%
       select(-technology, -subsector_1) %>%
@@ -594,7 +593,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     L2233.GlobalIntTechCapital_elec_cool %>%
       # Left_join used as each power plant type will now be multiplied
       # by up to five cooling technologies, thus increasing tibble size
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 by = c("subsector.name" = "subsector_1")) %>%
       select(-sector.name, -subsector.name, -technology.x, -technology.y) %>%
       rename(supplysector = Electric.sector,
@@ -619,7 +618,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       mutate(technology = gsub("CSP", "CSP_storage", technology)) %>%
       # Left_join used as each power plant type will now be multiplied
       # by up to five cooling technologies, thus increasing tibble size
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 by = c("subsector.name" = "subsector_1")) %>%
       select(-sector.name, -subsector.name, -technology.y, -technology.x) %>%
       filter((grepl("dry_hybrid", to.technology) & efficiency < 0.96)) %>%
@@ -630,7 +629,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
                   mutate(technology = gsub("CSP", "CSP_storage", technology)) %>%
                   # Left_join used as each power plant type will now be multiplied
                   # by up to five cooling technologies, thus increasing tibble size
-                  left_join(A23.elecS_tech_mapping_cool,
+                  left_join(L2241.elecS_tech_mapping_cool_vintage,
                             by = c("subsector.name" = "subsector_1")) %>%
                   select(-sector.name, -subsector.name, -technology.y, -technology.x) %>%
                   # As we are not matching CSP names directly here, we want to make sure that the efficiency
@@ -655,7 +654,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       mutate(subsector.name = if_else(grepl("solar", subsector.name), technology, subsector.name)) %>%
       # Left_join used as each power plant type will now be multiplied
       # by up to five cooling technologies, thus increasing tibble size
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 by = c("subsector.name" = "subsector_1")) %>%
       select(-sector.name, -subsector.name, -technology.y, -technology.x) %>%
       rename(supplysector = Electric.sector,
@@ -699,7 +698,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       mutate(intermittent.technology = subsector.name) %>%
       bind_rows(L2234.GlobalIntTechShrwt_elecS_USA %>%
                   filter(grepl("CSP", intermittent.technology)) %>%
-                  left_join(A23.elecS_tech_mapping_cool,
+                  left_join(L2241.elecS_tech_mapping_cool_vintage,
                             # Left_join used as each power plant type will now be multiplied
                             # by up to five cooling technologies, thus increasing tibble size
                             by = c("sector.name" = "Electric.sector",
@@ -715,7 +714,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     L2234.PrimaryRenewKeyword_elecS_USA %>%
       # Left_join used as each power plant type will now be multiplied
       # by up to five cooling technologies, thus increasing tibble size
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 by=c("technology" = "Electric.sector.technology",
                      "sector.name" = "Electric.sector",
                      "subsector.name" = "subsector")) %>%
@@ -733,7 +732,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       mutate(intermittent.technology = subsector.name) %>%
       bind_rows(L2234.PrimaryRenewKeywordInt_elecS_USA %>%
                   filter(grepl("CSP", intermittent.technology)) %>%
-                  left_join(A23.elecS_tech_mapping_cool,
+                  left_join(L2241.elecS_tech_mapping_cool_vintage,
                             # Left_join used as each power plant type will now be multiplied
                             # by up to five cooling technologies, thus increasing tibble size
                             by = c("sector.name" = "Electric.sector",
@@ -868,7 +867,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
     # Create logit table at subsector level by including all possible fule types (i.e. hydro, battery, etc.)
 
     L2234.SubsectorLogit_elecS_USA %>%
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 # Left_join used as each power plant type will now be multiplied
                 # by up to five cooling technologies, thus increasing tibble size
                 by = c("supplysector" = "Electric.sector", "subsector")) %>%
@@ -1157,7 +1156,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalTechEff_elecS_USA",
                      "L2241.GlobalTechEff_coal_vintage_USA",
                      "L2241.GlobalTechEff_elec_coalret_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     "L2241.elecS_tech_mapping_cool_vintage",
                      "L2233.GlobalTechEff_elec_cool") ->
       L2233.GlobalTechEff_elecS_cool_USA
 
@@ -1169,7 +1168,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalTechShrwt_elecS_USA",
                      "L2241.GlobalTechShrwt_coal_vintage_USA",
                      "L2241.GlobalTechShrwt_elec_coalret_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     "L2241.elecS_tech_mapping_cool_vintage",
                      "L2233.GlobalTechShrwt_elec_cool") ->
       L2233.GlobalTechShrwt_elecS_cool_USA
 
@@ -1181,7 +1180,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalTechProfitShutdown_elecS_USA",
                      "L2241.GlobalTechProfitShutdown_elec_coalret_USA",
                      "L2241.StubTechProfitShutdown_coal_vintage_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     "L2241.elecS_tech_mapping_cool_vintage",
                      "L2233.GlobalTechProfitShutdown_elec_cool") ->
       L2233.GlobalTechProfitShutdown_elecS_cool_USA
 
@@ -1193,7 +1192,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalTechOMvar_elecS_USA",
                      "L2241.GlobalTechOMvar_coal_vintage_USA",
                      "L2241.GlobalTechOMvar_elec_coalret_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalTechOMvar_elecS_cool_USA
 
     L2233.GlobalTechOMfixed_elec_USA %>%
@@ -1204,7 +1203,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalTechOMfixed_elecS_USA",
                      "L2241.GlobalTechOMfixed_coal_vintage_USA",
                      "L2241.GlobalTechOMfixed_elec_coalret_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalTechOMfixed_elecS_cool_USA
 
     L2233.GlobalTechCapital_elec_USA %>%
@@ -1215,7 +1214,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalTechCapital_elecS_USA",
                      "L2241.GlobalTechCapital_coal_vintage_USA",
                      "L2241.GlobalTechCapital_elec_coalret_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalTechCapital_elecS_USA
 
     L2233.GlobalTechCapital_elec_cool_USA %>%
@@ -1226,7 +1225,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalTechCapital_elecS_USA",
                      "L2241.GlobalTechCapital_coal_vintage_USA",
                      "L2241.GlobalTechCapital_elec_coalret_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     "L2241.elecS_tech_mapping_cool_vintage",
                      "L2233.GlobalTechCapital_elec_cool",
                      "L2233.GlobalTechCapital_elecPassthru") ->
       L2233.GlobalTechCapital_elecS_cool_USA
@@ -1239,7 +1238,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.GlobalTechCapFac_elecS_USA",
                      "L2241.GlobalTechCapFac_coal_vintage_USA",
                      "L2241.GlobalTechCapFac_elec_coalret_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalTechCapFac_elecS_cool_USA
 
     L2233.GlobalTechSCurve_elecS_USA %>%
@@ -1248,7 +1247,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Technology S-curve Shutdown Decider") %>%
       add_legacy_name("L2233.GlobalTechSCurve_elec") %>%
       add_precursors("L2234.GlobalTechSCurve_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalTechSCurve_elecS_cool_USA
 
     L2233.GlobalTechCoef_elecS_cool_USA %>%
@@ -1257,7 +1256,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Weighted water coefficients for reference scenario and load segment classification") %>%
       add_legacy_name("L2233.GlobalTechCoef_elec_cool") %>%
       add_precursors("L2233.GlobalTechCoef_elec_cool",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalTechCoef_elecS_cool_USA
 
     L2233.GlobalTechCapture_elecS_USA %>%
@@ -1266,7 +1265,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments CCS Technology Characteristics") %>%
       add_legacy_name("L2233.GlobalTechCapture_elec") %>%
       add_precursors("L2234.GlobalTechCapture_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool")->
+                     "L2241.elecS_tech_mapping_cool_vintage")->
       L2233.GlobalTechCapture_elecS_cool_USA
 
     L2233.GlobalTechLifetime_elecS_cool_USA %>%
@@ -1275,7 +1274,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Lifetime") %>%
       add_legacy_name("L2233.GlobalTechLifetime_elec_cool") %>%
       add_precursors("L2234.GlobalTechLifetime_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool")->
+                     "L2241.elecS_tech_mapping_cool_vintage")->
       L2233.GlobalTechLifetime_elecS_cool_USA
 
     L2233.AvgFossilEffKeyword_elecS_USA %>%
@@ -1284,7 +1283,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Average Fossil Efficiency Keywords for Electricity Load Segments Technologies") %>%
       add_legacy_name("L2233.AvgFossilEffKeyword_elec") %>%
       add_precursors("L2234.AvgFossilEffKeyword_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.AvgFossilEffKeyword_elecS_cool_USA
 
     L2233.GlobalIntTechBackup_elecS_USA %>%
@@ -1318,7 +1317,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_legacy_name(" L2233.GlobalIntTechCapital_elec_cool") %>%
       add_precursors("L2234.GlobalIntTechCapital_elecS_USA",
                      "L2233.GlobalIntTechCapital_elec_cool",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalIntTechCapital_elecS_cool_USA
 
     L2233.GlobalIntTechEff_elecS_USA %>%
@@ -1335,7 +1334,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Intermittent Technology Efficiencies") %>%
       add_legacy_name("L2233.GlobalIntTechEff_elec") %>%
       add_precursors("L2234.GlobalIntTechEff_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     "L2241.elecS_tech_mapping_cool_vintage",
                      "L2233.GlobalIntTechEff_elec_cool") ->
       L2233.GlobalIntTechEff_elecS_cool_USA
 
@@ -1345,7 +1344,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Intermittent Technology Lifetimes") %>%
       add_legacy_name("L2233.GlobalIntTechLifetime_elec_cool") %>%
       add_precursors("L2234.GlobalIntTechLifetime_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalIntTechLifetime_elecS_cool_USA
 
     L2233.GlobalIntTechOMfixed_elecS_cool_USA %>%
@@ -1354,7 +1353,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Intermittent Technology Fixed OM Costs") %>%
       add_legacy_name("L2233.GlobalIntTechOMfixed_elec_cool") %>%
       add_precursors("L2234.GlobalIntTechOMfixed_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalIntTechOMfixed_elecS_cool_USA
 
     L2233.GlobalIntTechOMvar_elecS_cool_USA %>%
@@ -1371,7 +1370,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Intermittent Technology Shareweights") %>%
       add_legacy_name("L2233.GlobalIntTechShrwt_elec_cool") %>%
       add_precursors("L2234.GlobalIntTechShrwt_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalIntTechShrwt_elecS_cool_USA
 
     L2233.GlobalIntTechCoef_elecS_cool_USA %>%
@@ -1380,7 +1379,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Water demand coefs for int techs") %>%
       add_legacy_name("L2233.GlobalIntTechCoef_elec_cool") %>%
       add_precursors("L2233.GlobalIntTechCoef_elec_cool",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.GlobalIntTechCoef_elecS_cool_USA
 
     L2233.PrimaryRenewKeyword_elecS_cool_USA %>%
@@ -1408,7 +1407,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
                      "L2241.StubTechEff_coal_vintage_USA",
                      "L2241.StubTechEff_elec_coalret_USA",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechEff_elecS_cool_USA
 
     L2233.StubTechCoef_elecS_cool_USA %>%
@@ -1418,7 +1417,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_legacy_name("L2233.StubTechCoef_elec") %>%
       add_precursors("L2233.GlobalTechCoef_elec_cool",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechCoef_elecS_cool_USA
 
     L2233.StubTechMarket_elec_USA %>%
@@ -1430,7 +1429,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
                      "L2241.StubTechMarket_coal_vintage_USA",
                      "L2241.StubTechMarket_elec_coalret_USA",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechMarket_elecS_cool_USA
 
     L2233.StubTechProd_elec_USA %>%
@@ -1441,7 +1440,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2234.StubTechProd_elecS_USA",
                      "L2241.StubTechProd_coal_vintage_USA",
                      "L2241.StubTechProd_elec_coalret_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     "L2241.elecS_tech_mapping_cool_vintage",
                      "L1233.out_EJ_state_elec_F_tech_cool",
                      "gcam-usa/usa_seawater_states_basins",
                      "gcam-usa/elec_tech_water_map") ->
@@ -1455,7 +1454,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_precursors("L2241.StubTechSCurve_coal_vintage_USA",
                      "L2241.StubTechSCurve_elec_coalret_USA",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechSCurve_elecS_cool_USA
 
     L2233.StubTechProfitShutdown_elecS_cool_USA %>%
@@ -1465,7 +1464,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_legacy_name("L2233.StubTechSCurve_elec") %>%
       add_precursors("L2241.StubTechProfitShutdown_coal_vintage_USA",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechProfitShutdown_elecS_cool_USA
 
     L2233.StubTechCapFactor_elecS_solar_USA %>%
@@ -1475,7 +1474,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_legacy_name("L2233.StubTechCapFactor_elec_solar") %>%
       add_precursors("L2234.StubTechCapFactor_elecS_solar_USA",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechCapFactor_elecS_solar_USA
 
     L2233.StubTechCapFactor_elecS_wind_USA %>%
@@ -1485,7 +1484,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_legacy_name("L2233.StubTechCapFactor_elec_wind") %>%
       add_precursors("L2234.StubTechCapFactor_elecS_wind_USA",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechCapFactor_elecS_wind_USA
 
     L2233.StubTechElecMarket_backup_elecS_USA %>%
@@ -1495,7 +1494,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_legacy_name("L2233.StubTechElecMarket_backup_elec") %>%
       add_precursors("L2234.StubTechElecMarket_backup_elecS_USA",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechElecMarket_backup_elecS_cool_USA
 
     L2233.StubTechFixOut_elecS_USA %>%
@@ -1504,7 +1503,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Fixed Outputs") %>%
       add_legacy_name("L2233.StubTechFixOut_elec") %>%
       add_precursors("L2234.StubTechFixOut_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechFixOut_elecS_cool_USA
 
     L2233.StubTechFixOut_hydro_elecS_USA %>%
@@ -1513,7 +1512,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Hydro Fixed Outputs") %>%
       add_legacy_name("L2233.StubTechFixOut_hydro_elec") %>%
       add_precursors("L2234.StubTechFixOut_hydro_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechFixOut_hydro_elecS_cool_USA
 
     L2233.StubTechCost_offshore_wind_elecS_USA %>%
@@ -1522,7 +1521,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Electricity Load Segments Offshore Wind Cost Adjustment") %>%
       add_legacy_name("L2233.StubTechCost_offshore_wind_elec_USA") %>%
       add_precursors("L2234.StubTechCost_offshore_wind_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechCost_offshore_wind_elecS_cool_USA
 
     L2233.StubTechMarket_backup_elecS_USA %>%
@@ -1531,7 +1530,7 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       add_comments("Backup Energy Inputs for Electricity Load Segments Intermittent Technologies") %>%
       add_legacy_name("L2233.StubTechMarket_backup_elec") %>%
       add_precursors("L2234.StubTechMarket_backup_elecS_USA",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L2233.StubTechMarket_backup_elecS_cool_USA
 
     L2233.StubTechInterp_elecS_cool_USA %>%

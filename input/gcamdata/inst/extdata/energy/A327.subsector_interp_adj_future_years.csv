@@ -4,13 +4,13 @@
 # Column types: ccccccc
 # ----------
 supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function
-process heat paper,coal,share-weight,final-calibration-year,2020,,linear
-process heat paper,gas,share-weight,final-calibration-year,2020,,linear
-process heat paper,refined liquids,share-weight,final-calibration-year,2020,,linear
-process heat paper,heat,share-weight,final-calibration-year,2020,,linear
+process heat paper,coal,share-weight,final-calibration-year,initial-future-year,,linear
+process heat paper,gas,share-weight,final-calibration-year,initial-future-year,,linear
+process heat paper,refined liquids,share-weight,final-calibration-year,initial-future-year,,linear
+process heat paper,heat,share-weight,final-calibration-year,initial-future-year,,linear
 process heat paper,electricity,share-weight,final-calibration-year,2030,,linear
-process heat paper,coal,share-weight,2020,end-year,,fixed
-process heat paper,gas,share-weight,2020,end-year,,fixed
-process heat paper,refined liquids,share-weight,2020,end-year,,fixed
-process heat paper,heat,share-weight,2020,end-year,,fixed
+process heat paper,coal,share-weight,initial-future-year,end-year,,fixed
+process heat paper,gas,share-weight,initial-future-year,end-year,,fixed
+process heat paper,refined liquids,share-weight,initial-future-year,end-year,,fixed
+process heat paper,heat,share-weight,initial-future-year,end-year,,fixed
 process heat paper,electricity,share-weight,2030,end-year,,fixed

@@ -116,7 +116,6 @@
 		CD4887A3122873C200F5A88A /* trial_value_market.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD488575122873C100F5A88A /* trial_value_market.cpp */; };
 		CD4887A4122873C200F5A88A /* policy_ghg.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885A8122873C100F5A88A /* policy_ghg.cpp */; };
 		CD4887A5122873C200F5A88A /* policy_portfolio_standard.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885A9122873C100F5A88A /* policy_portfolio_standard.cpp */; };
-		CD4887A6122873C200F5A88A /* batch_csv_outputter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885BD122873C100F5A88A /* batch_csv_outputter.cpp */; };
 		CD4887AC122873C200F5A88A /* graph_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C3122873C100F5A88A /* graph_printer.cpp */; };
 		CD4887AF122873C200F5A88A /* land_allocator_printer.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885C6122873C100F5A88A /* land_allocator_printer.cpp */; };
 		CD4887B5122873C200F5A88A /* xml_db_outputter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4885CC122873C100F5A88A /* xml_db_outputter.cpp */; };
@@ -549,11 +548,9 @@
 		CD4885A6122873C100F5A88A /* policy_portfolio_standard.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = policy_portfolio_standard.h; sourceTree = "<group>"; };
 		CD4885A8122873C100F5A88A /* policy_ghg.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = policy_ghg.cpp; sourceTree = "<group>"; };
 		CD4885A9122873C100F5A88A /* policy_portfolio_standard.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = policy_portfolio_standard.cpp; sourceTree = "<group>"; };
-		CD4885AC122873C100F5A88A /* batch_csv_outputter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = batch_csv_outputter.h; sourceTree = "<group>"; };
 		CD4885B2122873C100F5A88A /* graph_printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = graph_printer.h; sourceTree = "<group>"; };
 		CD4885B5122873C100F5A88A /* land_allocator_printer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = land_allocator_printer.h; sourceTree = "<group>"; };
 		CD4885BB122873C100F5A88A /* xml_db_outputter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = xml_db_outputter.h; sourceTree = "<group>"; };
-		CD4885BD122873C100F5A88A /* batch_csv_outputter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = batch_csv_outputter.cpp; sourceTree = "<group>"; };
 		CD4885C3122873C100F5A88A /* graph_printer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = graph_printer.cpp; sourceTree = "<group>"; };
 		CD4885C6122873C100F5A88A /* land_allocator_printer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = land_allocator_printer.cpp; sourceTree = "<group>"; };
 		CD4885CC122873C100F5A88A /* xml_db_outputter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = xml_db_outputter.cpp; sourceTree = "<group>"; };
@@ -1508,7 +1505,6 @@
 		CD4885AB122873C100F5A88A /* include */ = {
 			isa = PBXGroup;
 			children = (
-				CD4885AC122873C100F5A88A /* batch_csv_outputter.h */,
 				CD4885B2122873C100F5A88A /* graph_printer.h */,
 				CD4885B5122873C100F5A88A /* land_allocator_printer.h */,
 				CD4885BB122873C100F5A88A /* xml_db_outputter.h */,
@@ -1519,7 +1515,6 @@
 		CD4885BC122873C100F5A88A /* source */ = {
 			isa = PBXGroup;
 			children = (
-				CD4885BD122873C100F5A88A /* batch_csv_outputter.cpp */,
 				CD4885C3122873C100F5A88A /* graph_printer.cpp */,
 				CD4885C6122873C100F5A88A /* land_allocator_printer.cpp */,
 				CD4885CC122873C100F5A88A /* xml_db_outputter.cpp */,
@@ -2292,7 +2287,6 @@
 				CD4887A3122873C200F5A88A /* trial_value_market.cpp in Sources */,
 				CD4887A4122873C200F5A88A /* policy_ghg.cpp in Sources */,
 				CD4887A5122873C200F5A88A /* policy_portfolio_standard.cpp in Sources */,
-				CD4887A6122873C200F5A88A /* batch_csv_outputter.cpp in Sources */,
 				CD4887AC122873C200F5A88A /* graph_printer.cpp in Sources */,
 				CD3CFCD8238DA5B800016CDB /* food_demand_input.cpp in Sources */,
 				CDEE90B8296DD962002FC783 /* exogenous_shutdown_decider.cpp in Sources */,

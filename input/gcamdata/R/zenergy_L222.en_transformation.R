@@ -161,6 +161,8 @@ module_energy_L222.en_transformation <- function(command, ...) {
       L222.SubsectorInterp_en
 
       # assert that all regions in GCAM_region_names are in A22.SubsectorInterp_en_R
+      A22.SubsectorInterp_en_R <- A22.SubsectorInterp_en_R %>% set_years()
+
       if (GCAM_region_names %>% distinct(region) %>% dplyr::setdiff(A22.SubsectorInterp_en_R %>% distinct(region)) %>% nrow > 0) {
         warning("Regions doesn't exist in A_biomassSupplyShare_R follow USA assumptions. Consider adding all GCAM regions to energy/A22.SubsectorInterp_en_R to avoid this warning.")
       }
@@ -272,24 +274,9 @@ module_energy_L222.en_transformation <- function(command, ...) {
     # reorders columns to match expected model interface input
     L222.GlobalTechCost_low_en <- L222.GlobalTechCost_low_en[LEVEL2_DATA_NAMES[["GlobalTechCost"]]]
 
-    # Makes sure A22.globaltech_shrwt has a base year column in which
-    # shareweights in the base year are the same as previous history year.
-    # The base year needs to be specified here for interpolation
-
-    A22.globaltech_shrwt %>%
-      gather_years(value_col = "share.weight") %>%
-      filter(year <= MODEL_FINAL_BASE_YEAR) %>%
-      complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_FINAL_BASE_YEAR)) %>%
-      arrange(supplysector, year) %>%
-      group_by(supplysector, subsector, technology) %>%
-      mutate(share.weight = approx_fun(year, share.weight, rule = 2)) %>%
-      ungroup() %>%
-      spread(year, share.weight) %>%
-      left_join_error_no_match(A22.globaltech_shrwt) -> A22.globaltech_shrwt_wBaseY
-
 
     # L222.GlobalTechShrwt_en: Shareweights of global technologies for energy transformation
-    A22.globaltech_shrwt_wBaseY %>%
+    A22.globaltech_shrwt %>%
       gather_years(value_col = "share.weight") %>%
       complete(nesting(supplysector, subsector, technology), year = c(year, MODEL_YEARS)) %>%
       arrange(supplysector, year) %>%

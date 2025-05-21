@@ -20,9 +20,9 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
   MODULE_INPUTS <-
     c(FILE = "common/iso_GCAM_regID",
       FILE = "aglu/A_an_supplysector",
-      "L101.an_Prod_Mt_R_C_Y",
       FILE = "water/LivestockWaterFootprint_MH2010",
       FILE = "water/FAO_an_items_Stocks",
+      "L101.an_Prod_Mt_R_C_Y",
       "L100.FAO_an_Stocks",
       "L100.FAO_an_Dairy_Stocks",
       "L103.water_mapping_R_B_W_Ws_share")
@@ -39,13 +39,8 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    lapply(MODULE_INPUTS, function(d){
-      # get name as the char after last /
-      nm <- tail(strsplit(d, "/")[[1]], n = 1)
-      # get data and assign
-      assign(nm, get_data(all_data, d, strip_attributes = T),
-             envir = parent.env(environment()))  })
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # Silence package checks
     year <- iso <- item <- value <- dairy.to.total <- dairy.adj <-
@@ -56,8 +51,8 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     # ===================================================
     # Calculate livestock water coefficients by region ID / GCAM_commodity/ water type.
     #
-    # (XZ)Note that Milking cow was separated from cattle stock since they have
-    # different water coefficients. However, layer chicker was not separated from
+    # (XZ) Note that Milking cow was separated from cattle stock since they have
+    # different water coefficients. However, layer chicken was not separated from
     # chicken stock since layer and boiler chicken had the same water coefficient.
 
     # Start by finding  the number of non-dairy producing livestock.
@@ -94,9 +89,9 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     # into a single tibble. Subsest for the year 2000 since that is the year the water use
     # coefficients are from.
     L133.FAO_an_heads %>%
-      select(iso, item, item_code, year, value) %>%
+      select(iso, item, item_code, year, value, unit) %>%
       bind_rows(L100.FAO_an_Dairy_Stocks %>%
-                  select(iso, item, item_code, year, value)) %>%
+                  select(iso, item, item_code, year, value, unit)) %>%
       filter(year == 2000) ->
       L133.FAO_an_heads
 
@@ -118,7 +113,12 @@ module_water_L133.water_demand_livestock <- function(command, ...) {
     # Multiply the livestock count by the livestock water use coefficient from Mekonnen and Hoekstra 2010.
     #
     # Since the Mekonnen and Hoekstra 2010 coefficient is in liters/head per day convert from L to m^3 per
-    # 1000 heads by dividing by 1000 and then convert from daily consumption to per year.
+    # head by dividing by 1000 and then convert from daily consumption to per year.
+    # FAO animal is in per head here
+
+    assertthat::assert_that(
+        (L133.FAO_an_heads %>% distinct(unit) %>% pull) == "An")
+
     L133.FAO_an_heads %>%
       mutate(water.consumption = value * Coefficient / 1000 / CONV_DAYS_YEAR) ->
       L133.FAO_an_heads

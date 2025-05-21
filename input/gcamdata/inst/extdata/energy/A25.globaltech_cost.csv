@@ -2,20 +2,20 @@
 # Title: Hydrogen non-energy costs
 # Units: 1975$/GJ
 # Comments: Solar panel and wind turbine costs are based on 20% and 46% capacity factors respectively.  Distribution and dispensing costs from HDSAM for Columbus OH. Costs decrease from 2030 to 2100 as follows: 25% reduction for distribution, 20% reduction for dispensing from pipelines, 10% reduction for dispensing from liquid trucks
-# Column types: ccccnnnnnnnnnnnnnnnnnnn
+# Column types: ccccnnnnn
 # ----------
-supplysector,subsector,technology,minicam.non.energy.input,1971,2015,2020,2025,2030,2035,2040,2045,2050,2055,2060,2065,2070,2075,2080,2085,2090,2095,2100
-H2 pipeline,H2 pipeline,H2 pipeline,non-energy,6,6,6,6,2.006,1.965199899,1.925229633,1.886072324,1.847711436,1.810130772,1.773314462,1.73724696,1.701913036,1.667297771,1.633386546,1.600165042,1.567619232,1.535735373,1.5045
-H2 liquid truck,H2 liquid truck,H2 liquid truck,non-energy,4.137,4.137,4.137,4.137,4.137,4.052857419,3.970426218,3.889671587,3.810559427,3.733056332,3.657129575,3.582747095,3.509877483,3.438489968,3.368554407,3.300041267,3.232921618,3.167167117,3.10275
-H2 wholesale delivery,H2 pipeline,H2 pipeline,non-energy,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-H2 wholesale delivery,H2 liquid truck,H2 liquid truck,non-energy,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-H2 industrial,H2 delivery,H2 delivery,non-energy,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-H2 industrial,onsite production,electrolysis,non-energy,3.02741042,3.02741042,2.543414939,2.136796355,1.795184338,1.508186215,1.267070802,1.06450278,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334
-H2 retail delivery,H2 retail delivery,H2 retail delivery,non-energy,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25
-H2 wholesale dispensing,H2 delivery,H2 pipeline,non-energy,5.189,5.189,5.189,5.189,5.189,5.106949071,5.026195571,4.946718983,4.868499117,4.7915161,4.715750375,4.641182694,4.567794112,4.495565986,4.424479965,4.354517989,4.285662286,4.217895362,4.1512
-H2 wholesale dispensing,H2 delivery,H2 liquid truck,non-energy,3.321,3.321,3.321,3.321,3.321,3.296100791,3.271388263,3.246861018,3.222517666,3.198356828,3.174377137,3.150577233,3.126955769,3.103511407,3.080242819,3.057148687,3.034227704,3.011478571,2.9889
-H2 wholesale dispensing,forecourt production,natural gas steam reforming,production,1.703067797,1.703067797,1.685033196,1.667189572,1.649534902,1.632067186,1.614784445,1.597684718,1.580766069,1.564026579,1.547464352,1.53107751,1.514864196,1.498822573,1.482950823,1.467247145,1.451709762,1.447607628,1.447607628
-H2 wholesale dispensing,forecourt production,natural gas steam reforming,compression and storage,5.189,5.189,5.189,5.189,5.189,5.106949071,5.026195571,4.946718983,4.868499117,4.7915161,4.715750375,4.641182694,4.567794112,4.495565986,4.424479965,4.354517989,4.285662286,4.217895362,4.1512
-H2 wholesale dispensing,forecourt production,electrolysis,production,3.02741042,3.02741042,2.543414939,2.136796355,1.795184338,1.508186215,1.267070802,1.06450278,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334,0.968771334
-H2 wholesale dispensing,forecourt production,electrolysis,compression and storage,5.189,5.189,5.189,5.189,5.189,5.106949071,5.026195571,4.946718983,4.868499117,4.7915161,4.715750375,4.641182694,4.567794112,4.495565986,4.424479965,4.354517989,4.285662286,4.217895362,4.1512
-H2 retail dispensing,H2 retail dispensing,H2 retail dispensing,non-energy,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25,1.25
+supplysector,subsector,technology,minicam.non.energy.input,1971,final-calibration-year,initial-future-year,2030,2100
+H2 pipeline,H2 pipeline,H2 pipeline,non-energy,6,6,6,2.006,1.5045
+H2 liquid truck,H2 liquid truck,H2 liquid truck,non-energy,4.137,4.137,4.137,4.137,3.10275
+H2 wholesale delivery,H2 pipeline,H2 pipeline,non-energy,0,0,0,0,0
+H2 wholesale delivery,H2 liquid truck,H2 liquid truck,non-energy,0,0,0,0,0
+H2 industrial,H2 delivery,H2 delivery,non-energy,0,0,0,0,0
+H2 industrial,onsite production,electrolysis,non-energy,3.02741042,3.02741042,2.543414939,1.795184338,0.968771334
+H2 retail delivery,H2 retail delivery,H2 retail delivery,non-energy,1.25,1.25,1.25,1.25,1.25
+H2 wholesale dispensing,H2 delivery,H2 pipeline,non-energy,5.189,5.189,5.189,5.189,4.1512
+H2 wholesale dispensing,H2 delivery,H2 liquid truck,non-energy,3.321,3.321,3.321,3.321,2.9889
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,production,1.703067797,1.703067797,1.685033196,1.649534902,1.447607628
+H2 wholesale dispensing,forecourt production,natural gas steam reforming,compression and storage,5.189,5.189,5.189,5.189,4.1512
+H2 wholesale dispensing,forecourt production,electrolysis,production,3.02741042,3.02741042,2.543414939,1.795184338,0.968771334
+H2 wholesale dispensing,forecourt production,electrolysis,compression and storage,5.189,5.189,5.189,5.189,4.1512
+H2 retail dispensing,H2 retail dispensing,H2 retail dispensing,non-energy,1.25,1.25,1.25,1.25,1.25

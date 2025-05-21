@@ -255,7 +255,7 @@ module_energy_L113.atb_cost <- function(command, ...) {
         select(-ratio,-check_overlap_constraint) %>%
         bind_rows(atbnext %>% filter(year >= overlap_year)) %>%
         ungroup() %>%
-        filter(year <= energy.ATB_LATEST_YEAR) %>%
+        filter(year <= energy.ATB_BASE_YEAR) %>%
         distinct()-> timeseries_built
       return(timeseries_built)
     }
@@ -278,7 +278,7 @@ module_energy_L113.atb_cost <- function(command, ...) {
       ungroup() %>%
       select(-case) %>%
       repeat_add_columns(tibble(case = unique(tail(atbList,n=1)[[1]]$case))) %>%
-      bind_rows(tail(atbList,n=1)[[1]] %>% filter(year > energy.ATB_LATEST_YEAR)) %>%
+      bind_rows(tail(atbList,n=1)[[1]] %>% filter(year > energy.ATB_BASE_YEAR)) %>%
       # Certain technologies only have central case defined so here, we will ensure that
       # i.e. Nuclear
       # advanced and low tech cases have the same costs:
@@ -326,7 +326,7 @@ module_energy_L113.atb_cost <- function(command, ...) {
       # We want these to diverge at the latest ATB year so we will set them to the central case
       # before the costs diverge. Then we use the shadow tech ratios:
             group_by(supplysector,subsector,technology,input,year) %>%
-            mutate(value = if_else(year <= energy.ATB_LATEST_YEAR,value[case==energy.COSTS_MID_CASE],
+            mutate(value = if_else(year <= energy.ATB_BASE_YEAR,value[case==energy.COSTS_MID_CASE],
                                    value)) %>%
             ungroup() -> GCAM_legacy_cost_assumptions
 
@@ -366,7 +366,7 @@ module_energy_L113.atb_cost <- function(command, ...) {
       # For historical years, we want to normalize the shadow tech cost so we will
       # set to the central trajectory:
       group_by(shadow_tech,input,year) %>%
-      mutate(shadow_tech_cost = if_else(year <= energy.ATB_LATEST_YEAR,
+      mutate(shadow_tech_cost = if_else(year <= energy.ATB_BASE_YEAR,
                                         shadow_tech_cost[case==energy.COSTS_MID_CASE],shadow_tech_cost)) %>%
       ungroup() -> L113.cost_shadow
 
@@ -418,19 +418,19 @@ module_energy_L113.atb_cost <- function(command, ...) {
     L113.costs_ATB %>%
       group_by(technology, input, case) %>%
       # calculate simple near term and mid term annual improvement rates as % reduction / # years
-      mutate(initial_ATB_cost = value[year==energy.ATB_LATEST_YEAR],
+      mutate(initial_ATB_cost = value[year==energy.ATB_BASE_YEAR],
              mid_ATB_cost = value[year==energy.ATB_MID_YEAR],
              final_ATB_cost = value[year==max(year)],
              target_ATB_cost = value[year==energy.ATB_TARGET_YEAR],
-             near_term_improvement = ((initial_ATB_cost - mid_ATB_cost) / energy.ATB_LATEST_YEAR) / (energy.ATB_MID_YEAR - energy.ATB_LATEST_YEAR),
+             near_term_improvement = ((initial_ATB_cost - mid_ATB_cost) / energy.ATB_BASE_YEAR) / (energy.ATB_MID_YEAR - energy.ATB_BASE_YEAR),
              long_term_improvement = ((mid_ATB_cost - final_ATB_cost) / energy.ATB_MID_YEAR) / (max(year) - energy.ATB_MID_YEAR),
              # calculate 2100 value based on extending long-term improvement rate
              cost_end_year = final_ATB_cost - (final_ATB_cost * (long_term_improvement * (max(FUTURE_YEARS) - max(year)))),
              # calculate maximum improvement based on extrapolated 2100 cost : 2015 cost
-             improvement.max = cost_end_year / value[year==energy.ATB_LATEST_YEAR],
+             improvement.max = cost_end_year / value[year==energy.ATB_BASE_YEAR],
              # calculate baseline improvement rate values assuming average linear reduction
              # this is just a starting point for the exponential function below
-             improvement.rate.base = (initial_ATB_cost - cost_end_year) / (max(year) - energy.ATB_LATEST_YEAR) / initial_ATB_cost) %>%
+             improvement.rate.base = (initial_ATB_cost - cost_end_year) / (max(year) - energy.ATB_BASE_YEAR) / initial_ATB_cost) %>%
       ungroup() %>%
       distinct(technology, input, case, initial_ATB_cost, target_ATB_cost, improvement.max, improvement.rate.base,cost_end_year) %>%
       # filter out techs with no cost in ATB - nuclear adv / low tech capital costs, CSP variable O&M
@@ -457,7 +457,7 @@ module_energy_L113.atb_cost <- function(command, ...) {
                input == component,
                case == level) %>%
         mutate(check = initial_ATB_cost * improvement.max + (initial_ATB_cost - initial_ATB_cost * improvement.max) *
-                 (1.0 - improvement.rate) ^ (energy.ATB_TARGET_YEAR - energy.ATB_LATEST_YEAR) - target_ATB_cost) %>%
+                 (1.0 - improvement.rate) ^ (energy.ATB_TARGET_YEAR - energy.ATB_BASE_YEAR) - target_ATB_cost) %>%
         pull(check) -> check
       check
     }
@@ -494,21 +494,34 @@ module_energy_L113.atb_cost <- function(command, ...) {
     # Add in the historical time series to provide selectivity for ATB base year:
     # Isolate the historical time series before the atb base year:
     L113.costs_ATB %>%
-      filter(year < energy.ATB_LATEST_YEAR) -> L113.costs_ATB_historical
+      filter(year < energy.ATB_BASE_YEAR) -> L113.costs_ATB_historical
 
     L113.costs_ATB_params %>%
       select(technology, input, case, value = initial_ATB_cost, improvement.max, improvement.rate = improvement.rate.base) %>%
       # Improvement rates taken from the latest ATB year
-      mutate(year = energy.ATB_LATEST_YEAR,
+      mutate(year = energy.ATB_BASE_YEAR,
              improvement.max = round(improvement.max, energy.DIGITS_CAPACITY_FACTOR),
              improvement.rate = round(improvement.rate, energy.DIGITS_CAPACITY_FACTOR)) %>%
-      bind_rows(L113.costs_ATB %>% filter(year < energy.ATB_LATEST_YEAR)) %>%
-      filter(year <= energy.ATB_LATEST_YEAR) %>%
+      bind_rows(L113.costs_ATB %>% filter(year < energy.ATB_BASE_YEAR)) %>%
+      filter(year <= energy.ATB_BASE_YEAR) %>%
       ungroup() %>%
       group_by(technology,input,case) %>%
-      mutate(improvement.rate = if_else(is.na(improvement.rate),improvement.rate[year==energy.ATB_LATEST_YEAR],improvement.rate),
-             improvement.max = if_else(is.na(improvement.max),improvement.max[year==energy.ATB_LATEST_YEAR],improvement.max)) %>%
+      mutate(improvement.rate = if_else(is.na(improvement.rate),improvement.rate[year==energy.ATB_BASE_YEAR],improvement.rate),
+             improvement.max = if_else(is.na(improvement.max),improvement.max[year==energy.ATB_BASE_YEAR],improvement.max)) %>%
       ungroup() -> L113.globaltech_cost_atb
+
+    if(energy.ATB_BASE_YEAR < energy.ATB_LATEST_YEAR) {
+      warning(paste0("energy.ATB_BASE_YEAR < energy.ATB_LATEST_YEAR (", energy.ATB_BASE_YEAR, " < ", energy.ATB_LATEST_YEAR, ") extending using fill_exp_decay_extrapolate"))
+      L113.globaltech_cost_atb %>%
+        spread(year, value) %>%
+        fill_exp_decay_extrapolate(unique(c(L113.globaltech_cost_atb$year, energy.ATB_LATEST_YEAR))) %>%
+        gather_years() -> L113.extended_data
+      # finally, we need to recover the extrapolation params
+      L113.globaltech_cost_atb %>%
+        distinct(technology, input, case, improvement.max, improvement.rate) %>%
+        left_join_error_no_match(L113.extended_data, ., by=c("technology", "input", "case")) ->
+        L113.globaltech_cost_atb
+    }
 
 
     # Extract technologies from the original A23 file that have a valid 2015 data (i.e. not NAs).
@@ -531,12 +544,19 @@ module_energy_L113.atb_cost <- function(command, ...) {
       gather_years() -> A23.globaltech_cost
 
     # Make sure df contains ATB base year
-    if ( max(A23.globaltech_cost$year) < energy.ATB_BASE_YEAR) {
-      A23.globaltech_cost <- A23.globaltech_cost %>%
-        dplyr::filter(year == max(A23.globaltech_cost$year)) %>%
-        dplyr::mutate(year = energy.ATB_BASE_YEAR) %>%
-        dplyr::bind_rows(A23.globaltech_cost)
+    if( ! energy.ATB_BASE_YEAR %in% unique(A23.globaltech_cost$year) ) {
+      A23.globaltech_cost %>%
+        tidyr::expand(tidyr::nesting(supplysector, subsector, technology, input, case), year = unique(c(A23.globaltech_cost$year, energy.ATB_BASE_YEAR))) %>%
+        left_join_error_no_match(A23.globaltech_cost, by=c("supplysector", "subsector", "technology", "input", "case", "year"),
+                                 ignore_columns = c("value", "fixed.charge.rate", "improvement.max", "improvement.rate", "improvement.shadow.technology")) %>%
+        group_by(supplysector, subsector, technology, input, case) %>%
+        mutate(value = approx_fun(year, value, rule = 2),
+               fixed.charge.rate = approx_fun(year, fixed.charge.rate, rule=2),
+               improvement.max = approx_fun(year, improvement.max, rule = 2),
+               improvement.shadow.technology = unique(NA_character_, unique(improvement.shadow.technology[!is.na(improvement.shadow.technology)]))) ->
+        A23.globaltech_cost
     }
+
 
     A23.globaltech_cost %>%
       group_by(technology, input, case) %>%
@@ -573,7 +593,7 @@ module_energy_L113.atb_cost <- function(command, ...) {
       ungroup() %>%
       arrange(subsector, technology, input, case) %>%
       # Filter for costs < the users specified ATB base year
-      filter(year <= energy.ATB_BASE_YEAR) %>%
+      filter(year <= energy.ATB_LATEST_YEAR) %>%
       spread(year, value) -> L113.globaltech_cost
 
     # At this point, check to make sure that all of the technologies that are mapped to GCAM are included in this table:
@@ -647,7 +667,11 @@ module_energy_L113.atb_cost <- function(command, ...) {
 
     # Merge cost data with GCAM_USA battery cost structure file
     A23.elecS_globaltech_non_energy_inputs %>%
+      tidyr::expand(tidyr::nesting(supplysector, subsector, technology), period = unique(A23.elecS_globaltech_non_energy_inputs$period, MODEL_YEARS)) %>%
+      left_join(A23.elecS_globaltech_non_energy_inputs, by=c("supplysector", "subsector", "technology", "period")) %>%
       select(-capital.cost, -fixed.om, -variable.om) %>%
+      tidyr::fill(lifetime, steepness, half.life, fcr, capacity.factor, .direction = "up") %>%
+      filter(year %in% MODEL_YEARS) %>%
       left_join_error_no_match(A23.globaltech_capital_atb_battery,
                                by = c("technology", "period")) -> L113.elecS_globaltech_capital_battery_ATB
 

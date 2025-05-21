@@ -305,7 +305,20 @@ module_socio_L180.GDP_macro <- function(command, ...) {
                                      cons.plus.invest, capital.stock, depreciation,
                                      savings, wages, hrs.worked.annual, wage.rate,
                                      labor.force.share, depreciation.rate, savings.rate,
-                                     interest.rate, energy.investment, capital.net.export ) -> L180.nationalAccounts
+                                     interest.rate, energy.investment, capital.net.export ) -> L180.nationalAccounts.part
+
+    # Check that data extends to base-year
+    if (max(L180.nationalAccounts.part$year) <= max(HISTORICAL_YEARS)) {
+      warning("WARNING: National accounts data extend to ",max(HISTORICAL_YEARS)," in module_socio_L180.GDP_macro. Data copied forward.")
+    }
+
+    L180.nationalAccounts.part %>%
+      complete(nesting(iso,country_name,GCAM_region_ID), year = c(year, HISTORICAL_YEARS)) %>%
+      group_by(iso,country_name,GCAM_region_ID) %>%
+      # interpolate for all columns except iso, year, country_name, region_GCAM3, GCAM_region_ID
+      mutate(across(setdiff(names(.), c("iso", "year", "country_name", "region_GCAM3", "GCAM_region_ID")),
+                  ~ approx_fun(year, .x, rule = 2))) %>%
+      ungroup() -> L180.nationalAccounts
 
     # ===================================================
 

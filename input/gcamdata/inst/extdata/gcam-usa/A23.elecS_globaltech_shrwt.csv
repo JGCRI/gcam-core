@@ -5,7 +5,7 @@
 # Source: None (GCAM assumptions)
 # Column types: ccciiiii 
 # ----------
-supplysector,subsector,technology,1971,2010,2015,2016,2100
+supplysector,subsector,technology,1971,2010,final-calibration-year,initial-future-year,2100
 base load generation,coal,coal_base_conv pul,1,1,1,1,1
 intermediate generation,coal,coal_int_conv pul,1,1,1,1,1
 subpeak generation,coal,coal_subpeak_conv pul,1,1,1,0,0

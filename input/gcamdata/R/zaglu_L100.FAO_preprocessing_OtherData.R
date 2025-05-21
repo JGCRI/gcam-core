@@ -23,10 +23,10 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
   MODULE_INPUTS <-
     c(FILE = "aglu/AGLU_ctry",
       FILE = "common/iso_GCAM_regID",
-      FILE = "aglu/FAO/GCAMDATA_FAOSTAT_ForProdTrade_215Regs_Roundwood_1973to2020",
-      FILE = "aglu/FAO/GCAMDATA_FAOSTAT_AnimalStock_202Regs_22Items_1973to2020",
-      FILE = "aglu/FAO/GCAMDATA_FAOSTAT_LandCover_229Regs_3Covers_1973to2020",
-      FILE = "aglu/FAO/GCAMDATA_FAOSTAT_NFertilizerProdDemand_175Regs_1Item_1973to2020")
+      FILE = "aglu/FAO/GCAMFAOSTAT_ForProdTrade",
+      FILE = "aglu/FAO/GCAMFAOSTAT_AnimalStock",
+      FILE = "aglu/FAO/GCAMFAOSTAT_LandCover",
+      FILE = "aglu/FAO/GCAMFAOSTAT_NFertilizer")
 
   MODULE_OUTPUTS <-
     c("L100.FAO_an_Stocks",
@@ -67,7 +67,7 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
         # disaggregate dissolved region
         FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL %>%
         # the iso mapping in AGLU_ctry works good now
-        left_join_error_no_match(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
+        left_join_error_no_match(AGLU_ctry %>% distinct(area_code = FAO_country_code, iso), by = c("area_code")) %>%
         left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
         # Adding moving average
         dplyr::group_by_at(dplyr::vars(-year, -value)) %>%
@@ -83,31 +83,37 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
         # disaggregate dissolved region
         FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL %>%
         # the iso mapping in AGLU_ctry works good now
-        inner_join(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
+        left_join_error_no_match(AGLU_ctry %>% distinct(area_code = FAO_country_code, iso), by = c("area_code")) %>%
         left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
         filter(year %in% aglu.AGLU_HISTORICAL_YEARS)
     }
 
 
     # Section1. Animal stocks ----
-    # corrected the unit issue in the old data
-    # unit should be head (except beehive, which is not used)
+
+    # assert that we have the right unit names
+    # since FAO change "head" to "An"
+    assertthat::assert_that(
+      c("1000 An", "An") %in%
+        (GCAMFAOSTAT_AnimalStock %>% distinct(unit) %>% pull) %>% all()
+    )
+
 
     ##* L100.FAO_an_Stocks ----
     L100.FAO_an_Stocks <-
-      GCAMDATA_FAOSTAT_AnimalStock_202Regs_22Items_1973to2020 %>%
+      GCAMFAOSTAT_AnimalStock %>%
       filter(element == "Stocks") %>%
       gather_years()%>%
       # filter out nonexist regions years due to gather e.g., USSR after 1991
       filter(!is.na(value)) %>%
       # change unit if 1000 head to head
-      mutate(value = if_else(unit == "1000 Head", value * 1000, value),
-             unit = if_else(unit == "1000 Head", "Head", unit)) %>%
+      mutate(value = if_else(unit == "1000 An", value * 1000, value),
+             unit = if_else(unit == "1000 An", "An", unit)) %>%
       FAO_REG_YEAR_MAP
 
     ##* L100.FAO_an_Dairy_Stocks ----
     L100.FAO_an_Dairy_Stocks <-
-      GCAMDATA_FAOSTAT_AnimalStock_202Regs_22Items_1973to2020 %>%
+      GCAMFAOSTAT_AnimalStock %>%
       filter(element == "Milk Animals") %>%
       gather_years()%>%
       # filter out nonexist regions years due to gather e.g., USSR after 1991
@@ -117,28 +123,28 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
     ### Produce outputs ----
     L100.FAO_an_Stocks %>%
       add_title("FAO animal stocks country, item, year", overwrite = T) %>%
-      add_units("number") %>%
+      add_units("Head/An") %>%
       add_comments("FAO animal stocks; unit of 1000 head were converted to head") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_AnimalStock_202Regs_22Items_1973to2020",
+      add_precursors("aglu/FAO/GCAMFAOSTAT_AnimalStock",
                      "aglu/AGLU_ctry","common/iso_GCAM_regID") ->
       L100.FAO_an_Stocks
 
     L100.FAO_an_Dairy_Stocks %>%
       add_title("FAO dairy producing animal stocks country, item, year", overwrite = T) %>%
-      add_units("Head") %>%
+      add_units("Head/An") %>%
       add_comments("FAO dairy cow stocks") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_AnimalStock_202Regs_22Items_1973to2020",
+      add_precursors("aglu/FAO/GCAMFAOSTAT_AnimalStock",
                      "aglu/AGLU_ctry","common/iso_GCAM_regID") ->
       L100.FAO_an_Dairy_Stocks
 
 
     # Section2. Forest supply and trade ----
 
-    GCAMDATA_FAOSTAT_ForProdTrade_215Regs_Roundwood_1973to2020 %>%
+    GCAMFAOSTAT_ForProdTrade %>%
       gather_years() %>%
       # NA area values that should not exist, e.g., USSR after 1991
       filter(!is.na(value)) %>%
-      FAO_REG_YEAR_MAP_FOREST ->
+      FAO_REG_YEAR_MAP ->
       L100.For_bal
 
 
@@ -147,8 +153,8 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
       filter(element == "Production")  %>%
       add_title("FAO forestry production by country, year") %>%
       add_comments("FAO primary roundwood production") %>%
-      add_units("m3") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_ForProdTrade_215Regs_Roundwood_1973to2020",
+      add_units("m3/t") %>%
+      add_precursors("aglu/FAO/GCAMFAOSTAT_ForProdTrade",
                      "aglu/AGLU_ctry",
                      "common/iso_GCAM_regID") ->
       L100.FAO_For_Prod_m3
@@ -159,8 +165,8 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
       filter(element == "Export")  %>%
       add_title("FAO forestry export by country, year") %>%
       add_comments("FAO primary roundwood gross export") %>%
-      add_units("m3") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_ForProdTrade_215Regs_Roundwood_1973to2020",
+      add_units("m3/t") %>%
+      add_precursors("aglu/FAO/GCAMFAOSTAT_ForProdTrade",
                      "aglu/AGLU_ctry",
                      "common/iso_GCAM_regID") ->
       L100.FAO_For_Exp_m3
@@ -171,78 +177,90 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
       filter(element == "Import")  %>%
       add_title("FAO forestry import by country, year") %>%
       add_comments("FAO primary roundwood gross import") %>%
-      add_units("m3") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_ForProdTrade_215Regs_Roundwood_1973to2020",
+      add_units("m3/t") %>%
+      add_precursors("aglu/FAO/GCAMFAOSTAT_ForProdTrade",
                      "aglu/AGLU_ctry", "common/iso_GCAM_regID") ->
       L100.FAO_For_Imp_m3
 
     rm(L100.For_bal,
-       GCAMDATA_FAOSTAT_ForProdTrade_215Regs_Roundwood_1973to2020)
+       GCAMFAOSTAT_ForProdTrade)
 
 
     #Section3. Fertilizer and Land cover ----
 
+    # assert that we have the right item/element names here
+    assertthat::assert_that(
+      c("Agricultural Use", "Production") %in%
+        (GCAMFAOSTAT_NFertilizer %>% distinct(element) %>% pull) %>% all()
+    )
+
     ##* L100.FAO_Fert_Cons_tN ----
-    GCAMDATA_FAOSTAT_NFertilizerProdDemand_175Regs_1Item_1973to2020 %>%
+    GCAMFAOSTAT_NFertilizer %>%
       filter(element == "Agricultural Use") %>%
       gather_years() %>% filter(!is.na(value)) %>%
       FAO_REG_YEAR_MAP %>%
       add_title("FAO fertilizer consumption by country, year") %>%
       add_comments("FAO nitrogen N (total) consumption") %>%
       add_units("tonnes N") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_NFertilizerProdDemand_175Regs_1Item_1973to2020",
+      add_precursors("aglu/FAO/GCAMFAOSTAT_NFertilizer",
                      "aglu/AGLU_ctry", "common/iso_GCAM_regID") ->
       L100.FAO_Fert_Cons_tN
 
 
     ##* L100.FAO_Fert_Prod_tN ----
-    GCAMDATA_FAOSTAT_NFertilizerProdDemand_175Regs_1Item_1973to2020 %>%
+    GCAMFAOSTAT_NFertilizer %>%
       filter(element == "Production") %>%
       gather_years() %>% filter(!is.na(value)) %>%
       FAO_REG_YEAR_MAP %>%
       add_title("FAO fertilizer production by country, year") %>%
       add_comments("FAO nitrogen N (total) production") %>%
       add_units("tonnes N") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_NFertilizerProdDemand_175Regs_1Item_1973to2020",
+      add_precursors("aglu/FAO/GCAMFAOSTAT_NFertilizer",
                      "aglu/AGLU_ctry", "common/iso_GCAM_regID") ->
       L100.FAO_Fert_Prod_tN
 
 
+    # assert that we have the right item names
+    assertthat::assert_that(
+      c("Arable land", "Temporary fallow", "Temporary crops") %in%
+        (GCAMFAOSTAT_LandCover %>% distinct(item) %>% pull) %>% all()
+    )
+
     ##* L100.FAO_CL_kha ----
-    GCAMDATA_FAOSTAT_LandCover_229Regs_3Covers_1973to2020 %>%
+    GCAMFAOSTAT_LandCover %>%
       filter(item == "Arable land") %>%
       gather_years() %>% filter(!is.na(value)) %>%
       FAO_REG_YEAR_MAP %>%
       add_title("FAO cropland area by country, year") %>%
       add_comments("FAO arable land") %>%
       add_units("kha") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_LandCover_229Regs_3Covers_1973to2020",
+      add_precursors("aglu/FAO/GCAMFAOSTAT_LandCover",
                      "aglu/AGLU_ctry", "common/iso_GCAM_regID") ->
       L100.FAO_CL_kha
 
 
     ##* L100.FAO_fallowland_kha ----
-    GCAMDATA_FAOSTAT_LandCover_229Regs_3Covers_1973to2020 %>%
-      filter(item == "Land with temporary fallow") %>%
+    GCAMFAOSTAT_LandCover %>%
+      filter(item == "Temporary fallow") %>%
       gather_years() %>% filter(!is.na(value)) %>%
       FAO_REG_YEAR_MAP %>%
       add_title("FAO fallow land area by country, year") %>%
       add_comments("FAO and with temporary fallow") %>%
       add_units("kha") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_LandCover_229Regs_3Covers_1973to2020",
+      add_precursors("aglu/FAO/GCAMFAOSTAT_LandCover",
                      "aglu/AGLU_ctry", "common/iso_GCAM_regID")->
       L100.FAO_fallowland_kha
 
 
     ##* L100.FAO_harv_CL_kha ----
-    GCAMDATA_FAOSTAT_LandCover_229Regs_3Covers_1973to2020 %>%
-      filter(item == "Land under temporary crops") %>%
+    GCAMFAOSTAT_LandCover %>%
+      filter(item == "Temporary crops") %>%
       gather_years() %>% filter(!is.na(value)) %>%
       FAO_REG_YEAR_MAP %>%
       add_title("FAO harvested cropland (temporary crops) area by country, year") %>%
       add_comments("FAO cropland cover") %>%
       add_units("kha") %>%
-      add_precursors("aglu/FAO/GCAMDATA_FAOSTAT_LandCover_229Regs_3Covers_1973to2020",
+      add_precursors("aglu/FAO/GCAMFAOSTAT_LandCover",
                      "aglu/AGLU_ctry", "common/iso_GCAM_regID")->
       L100.FAO_harv_CL_kha
 

@@ -22,9 +22,11 @@ module_gcamusa_L1236.elec_load_segments_solver <- function(command, ...) {
              "L1234.out_EJ_grid_elec_F",
              "L1235.grid_elec_supply_USA",
              "L1235.elecS_demand_fraction_USA",
-             "L1235.elecS_horizontal_vertical_USA"))
+             "L1235.elecS_horizontal_vertical_USA",
+             "L1235.elecS_horizontal_vertical_GCAM_coeff_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L1236.grid_elec_supply_USA"))
+    return(c("L1236.grid_elec_supply_USA",
+             "L1236.elecS_demand_fraction_adj_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -52,8 +54,9 @@ module_gcamusa_L1236.elec_load_segments_solver <- function(command, ...) {
     elecS_horizontal_to_vertical_map <- get_data(all_data, "gcam-usa/elecS_horizontal_to_vertical_map")
     L1234.out_EJ_grid_elec_F <- get_data(all_data, "L1234.out_EJ_grid_elec_F")
     L1235.grid_elec_supply_USA <- get_data(all_data, "L1235.grid_elec_supply_USA", strip_attributes = TRUE)
-    L1235.elecS_demand_fraction_USA <- get_data(all_data, "L1235.elecS_demand_fraction_USA")
+    L1235.elecS_demand_fraction_USA <- get_data(all_data, "L1235.elecS_demand_fraction_USA", strip_attributes = TRUE)
     L1235.elecS_horizontal_vertical_USA <- get_data(all_data, "L1235.elecS_horizontal_vertical_USA", strip_attributes = TRUE)
+    L1235.elecS_horizontal_vertical_GCAM_coeff_USA <- get_data(all_data, "L1235.elecS_horizontal_vertical_GCAM_coeff_USA", strip_attributes = TRUE)
 
     # ===================================================
     # Data Processing
@@ -1155,9 +1158,92 @@ module_gcamusa_L1236.elec_load_segments_solver <- function(command, ...) {
 
     # Re-join data for non calibrated years
     # Ensure that generation = total generation * calibrated load segment fuel fraction
+
     L1236.grid_elec_supply %>%
-      bind_rows(L1236.grid_elec_supply_non_cal) %>%
-      mutate(generation = tot_generation * fraction) -> L1236.grid_elec_supply
+      select(-tot_generation, -generation) %>%
+      group_by(grid_region, segment, fuel) %>%
+      tidyr::complete(year = MODEL_BASE_YEARS) %>%
+      mutate(fraction = approx_fun(year, fraction, rule = 2)) %>%
+      ungroup() %>%
+      filter(!(year %in% gcamusa.LOAD_SEG_CAL_YEARS)) %>%
+      left_join_error_no_match(L1236.grid_elec_supply_non_cal %>% select(-fraction, -generation),
+                               by = c("grid_region", "segment", "fuel", "year")) %>%
+      mutate(generation = tot_generation * fraction) %>%
+      bind_rows(L1236.grid_elec_supply) -> L1236.grid_elec_supply
+
+    L1235.elecS_demand_fraction_USA %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) ->
+      L1236.elecS_demand_fraction_adj_USA
+    FILLED_MODEL_YEARS <- setdiff(MODEL_BASE_YEARS, gcamusa.LOAD_SEG_CAL_YEARS)
+    if(length(FILLED_MODEL_YEARS) > 0) {
+      warning("Not solving non gcamusa.LOAD_SEG_CAL_YEARS years and extending forward, load shape is being adjusted to match")
+
+      L1235.elecS_horizontal_vertical_GCAM_coeff_USA %>%
+        select(grid_region, vert.segment = supplysector, horiz.segment = minicam.energy.input, horiz.coef = coefficient) %>%
+        left_join_error_no_match(L1235.elecS_demand_fraction_USA, by=c("grid_region", "vert.segment" = "vertical_segment")) %>%
+        rename(vert.coef = demand_fraction) ->
+        orig_shape
+      L1236.grid_elec_supply %>%
+        filter(year %in% FILLED_MODEL_YEARS) %>%
+        group_by(grid_region, year, segment) %>%
+        summarize(horiz.gen = sum(generation)) %>%
+        mutate(gr.gen = sum(horiz.gen)) %>%
+        ungroup() ->
+        actual_gen
+
+      optim_load_match <- function(new.coef, initial_coef, target_df) {
+        # set the trial vertical coefficients and calculate how different
+        # the calculated generation by horizontal load segment is from our
+        # target which is bottom up from our fuel appropriations
+        initial_coef %>%
+          mutate(vert.coef = new.coef) %>%
+          left_join_error_no_match(target_df, ., by=c("vert.segment")) %>%
+          group_by(horiz.segment) %>%
+          summarize(target = unique(horiz.gen),
+                    calc = sum(gr.gen * horiz.coef * vert.coef),
+                    error = (target - calc)/target) %>%
+          summarize(error = sum(error * error)) %>% pull(error)
+      }
+      set_coef_group <- function(group_df) {
+        # split out just the vertical coefficients which is what we are going to
+        # try to solve new values for
+        group_df %>%
+          select(vert.segment, vert.coef) %>%
+          distinct() ->
+          initial_coef
+        target_df <- select(group_df, -vert.coef)
+        # solve for new vertical coefficients
+        # we give it the initial_coef so that we can match back the vertical segment names
+        # and of course the rest of the data to re-calculate the to-down estimation of generation
+        # by horizontal load segment and of course our target genration values
+        optim_out <- optim(initial_coef$vert.coef, optim_load_match, gr = "BFGS", initial_coef, target_df)
+
+        # return whatever the solver came up as well as the convergence status so we can perform
+        # error checking later
+        initial_coef %>%
+          mutate(vert.coef = optim_out$par,
+                 convergence = optim_out$convergence)
+      }
+
+      orig_shape %>%
+        left_join(actual_gen, by=c("grid_region", "horiz.segment" = "segment")) %>%
+        group_by(grid_region, horiz.segment, year) %>%
+        mutate(implied.gen = sum(gr.gen * horiz.coef * vert.coef)) %>%
+        ungroup() %>%
+        tidyr::nest(data = -c("grid_region", "year")) %>%
+        mutate(data = lapply(data, set_coef_group)) %>%
+        tidyr::unnest(c(data)) %>%
+        rename(vertical_segment = vert.segment, demand_fraction = vert.coef) ->
+        adjusted_vertical_coefs
+
+      assertthat::assert_that(filter(adjusted_vertical_coefs, convergence != 0) %>% nrow() == 0,
+                              msg = "Failed to find a new set of vertical demand coef in some region / years")
+
+      L1236.elecS_demand_fraction_adj_USA %>%
+        anti_join(adjusted_vertical_coefs, by = c("grid_region", "vertical_segment", "year")) %>%
+        bind_rows(adjusted_vertical_coefs %>% select(-convergence)) ->
+        L1236.elecS_demand_fraction_adj_USA
+    }
 
     # ===================================================
 
@@ -1176,7 +1262,17 @@ module_gcamusa_L1236.elec_load_segments_solver <- function(command, ...) {
                      "gcam-usa/elecS_horizontal_to_vertical_map") ->
       L1236.grid_elec_supply_USA
 
-    return_data(L1236.grid_elec_supply_USA)
+    L1236.elecS_demand_fraction_adj_USA %>%
+      add_title("A potentially adjusted version of L1235.elecS_demand_fraction_USA") %>%
+      add_units("unitless (fraction)") %>%
+      add_comments("In the case of model years not in gcamusa.LOAD_SEG_CAL_YEARS we need to") %>%
+      add_comments("extend the fuel to segment attribution, however that will result in inconsistent") %>%
+      add_comments("energy totals by segment, so we adjust the vertical coefficients to compensate") %>%
+      same_precursors_as(L1236.grid_elec_supply_USA) %>%
+      add_precursors("L1235.elecS_horizontal_vertical_GCAM_coeff_USA") ->
+      L1236.elecS_demand_fraction_adj_USA
+
+    return_data(L1236.grid_elec_supply_USA, L1236.elecS_demand_fraction_adj_USA)
 
   } else {
     stop("Unknown command")
