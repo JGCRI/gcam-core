@@ -85,9 +85,9 @@
             <fixedTax year="2020">0.00</fixedTax>
          </ghgpolicy>
       </region>
-      <region name="Europe_Eastern">
+      <region name="Ukraine">
          <ghgpolicy name="CO2_NearTerm">
-            <market>Europe_Eastern</market>
+            <market>Ukraine</market>
             <fixedTax year="2020">0.00</fixedTax>
          </ghgpolicy>
       </region>

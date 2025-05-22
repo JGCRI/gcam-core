@@ -35,8 +35,8 @@ module_socio_L2326.aluminum_Inc_Elas_scenarios <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     GCAM_region_ID <- value <- year <- pcgdp_90thousUSD <- scenario <-
-        region <- energy.final.demand <- income.elasticity <- . <-
-      value.x <- value.y <- sector <- pcgdp_90thousUSD_Yfut <- population <-
+      region <- energy.final.demand <- income.elasticity <- . <-
+      value.x <- value.y <- sector <- pcgdp_90thousUSD_2015 <- population <-
       a <- b <- m <- per_capita_aluminum <- aluminum_pro <- pcgdp_90thousUSD_before <-
       aluminum_pro_before <- population_before <- aluminum_hist <- inc_elas <- NULL # silence package check.
 

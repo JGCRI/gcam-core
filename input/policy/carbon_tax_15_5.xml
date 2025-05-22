@@ -156,7 +156,7 @@
                 <market>global</market>
             </ghgpolicy>
         </region>
-        <region name="Europe_Eastern">
+        <region name="Ukraine">
             <ghgpolicy name="CO2_LTG">
                 <market>global</market>
             </ghgpolicy>

@@ -1,6 +1,6 @@
 # File: A22.SubsectorShrwtFllt_en_R.csv
 # Title: Region-specific refining subsector shareweights interpolation rules 
-# Descreption: adjust biomass liquid share weight for a few regions with palm biodiesel to lower values. This is needed due to data updates. Currently, the same assumption is used across all regions, e.g. same with A22.subsector_shrwt
+# Description: adjust biomass liquid share weight for a few regions with palm biodiesel to lower values. This is needed due to data updates. Currently, the same assumption is used across all regions, e.g. same with A22.subsector_shrwt
 # Units: Unitless share-weights
 # Date of last update: 2024-02-26 (XZ)
 # Comment:note that for regions not included (e.g., new regions) USA assumptions are used by default.
@@ -20,7 +20,7 @@ Central Asia,refining,biomass liquids,2030,1
 China,refining,biomass liquids,2030,1
 EU-12,refining,biomass liquids,2030,1
 EU-15,refining,biomass liquids,2030,1
-Europe_Eastern,refining,biomass liquids,2030,1
+Ukraine,refining,biomass liquids,2030,1
 Europe_Non_EU,refining,biomass liquids,2030,1
 European Free Trade Association,refining,biomass liquids,2030,1
 India,refining,biomass liquids,2030,1

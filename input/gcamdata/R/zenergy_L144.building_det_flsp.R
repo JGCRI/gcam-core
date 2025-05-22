@@ -61,11 +61,10 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
     L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
-    L221.LN0_Land<-get_data(all_data, "L221.LN0_Land", strip_attributes = TRUE)
-    L221.LN1_UnmgdAllocation<-get_data(all_data, "L221.LN1_UnmgdAllocation", strip_attributes = TRUE)
-    income_shares<-get_data(all_data, "socioeconomics/income_shares")
-    n_groups<-nrow(unique(get_data(all_data, "socioeconomics/income_shares") %>%
-                            select(category)))
+    L221.LN0_Land <- get_data(all_data, "L221.LN0_Land", strip_attributes = TRUE)
+    L221.LN1_UnmgdAllocation <- get_data(all_data, "L221.LN1_UnmgdAllocation", strip_attributes = TRUE)
+    income_shares <- get_data(all_data, "socioeconomics/income_shares")
+    n_groups <- length(unique(income_shares$category))
 
     # ===================================================
 
@@ -194,7 +193,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
     list_years_IEA <- unique(IEA_PCResFloorspace_long$year)
 
     Odyssee_ResFloorspacePerHouse %>%
-      gather(year, value_phflsp, matches(YEAR_PATTERN)) %>% # Convert to long form
+      tidyr::gather(year, value_phflsp, matches(YEAR_PATTERN)) %>% # Convert to long form
       mutate(year = as.integer(year)) %>% # Convert year to integer to both join with A44.HouseholdSize_long and be able to extrapolote later on
       filter(!iso %in% list_iso_IEA) %>% # Remove iso's that are in IEA dataset
       # left_join_error_no_match cannot be used because joining table does not contain every year, which will introduce NAs

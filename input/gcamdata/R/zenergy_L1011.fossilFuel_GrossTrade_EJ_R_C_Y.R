@@ -160,11 +160,12 @@ module_energy_L1011.ff_GrossTrade <- function(command, ...) {
     # Start by producing a complete set of trade patterns for all years
     L1011.comtrade_ff_BiTrade_y_ctry_item %>%
       complete(nesting(iso.reporter, iso.partner, Element, Commodity_Code),
-               year = unique(L1011.comtrade_ff_BiTrade_y_ctry_item$year))  %>%
+               year = unique(L1011.comtrade_ff_BiTrade_y_ctry_item$year)) %>%
       group_by(iso.reporter, iso.partner, Element, Commodity_Code) %>%
       # Fill in missing values through interpolation between values and copying edge values forwards / backwards
       # TODO: the one place this extrapolation function is most questionable is for LNG,
       # which only picked up in the last several years.
+      fill(value, .direction = "up") %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
       ungroup() %>%
       # Map COMTRADE commodity to GCAM fuel commodities

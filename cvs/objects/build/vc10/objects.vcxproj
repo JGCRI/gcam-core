@@ -106,7 +106,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -244,7 +244,7 @@
     </ClCompile>
     <Link>
       <AdditionalDependencies>jvm.lib;%(AdditionalDependencies)</AdditionalDependencies>
-      <AdditionalLibraryDirectories>..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
+      <AdditionalLibraryDirectories>..\..\..\..\libs\java\lib;..\..\..\..\libs\boost-lib\stage\lib;..\..\..\..\libs\boost-lib\bin.v2\libs\filesystem\build\msvc-14.2\release\address-model-64\link-static\threading-multi\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <ProgramDatabaseFile>$(OutDir)Object-main-d.pdb</ProgramDatabaseFile>
       <SubSystem>Console</SubSystem>

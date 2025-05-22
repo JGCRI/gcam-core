@@ -18,7 +18,7 @@ GCAM_region_ID,region,tradbio_region,ethanol,biodiesel,biomassOil_tech,elect_td_
 11,China,1,corn ethanol,biodiesel,Soybean,0.0001,1,D
 12,EU-12,1,corn ethanol,biodiesel,OilCrop,0.0001,1,C
 13,EU-15,1,corn ethanol,biodiesel,OilCrop,0.0001,0,C
-14,Europe_Eastern,1,corn ethanol,biodiesel,OilCrop,0.0002,1,D
+14,Ukraine,1,corn ethanol,biodiesel,OilCrop,0.0002,1,D
 15,Europe_Non_EU,1,corn ethanol,biodiesel,OilCrop,0.0002,1,C
 16,European Free Trade Association,1,corn ethanol,biodiesel,OilCrop,0.0001,0,C
 17,India,1,corn ethanol,biodiesel,Soybean,0.002,0,E

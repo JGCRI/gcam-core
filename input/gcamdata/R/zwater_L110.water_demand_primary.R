@@ -74,7 +74,7 @@ module_water_L110.water_demand_primary <- function(command, ...) {
       select(-region) %>%
       arrange(GCAM_region_ID) -> L110.water_coef_region_supplysector
 
-    # Get water consumption and withdrawal ratios 32 GCAM regions...
+    # Get water consumption and withdrawal ratios for GCAM regions...
     # ... all regions other than Middle East set to US values
     # Set the middle east region to the one containing Saudi Arabia
     MiddleEastRegID <- iso_GCAM_regID$GCAM_region_ID[iso_GCAM_regID$iso == "sau"]

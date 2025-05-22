@@ -35,8 +35,8 @@ module_socio_L2323.iron_steel_Inc_Elas_scenarios <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     GCAM_region_ID <- value <- year <- pcgdp_90thousUSD <- scenario <-
-        region <- energy.final.demand <- income.elasticity <- . <-
-      value.x <- value.y <- pcgdp_90thousUSD_Yfut <- a <- b <- m <-
+      region <- energy.final.demand <- income.elasticity <- . <-
+      value.x <- value.y <- pcgdp_90thousUSD_2015 <- a <- b <- m <-
       per_capita_steel <- population <- steel_cons <- pcgdp_90thousUSD_before <-
       steel_cons_before <- steel_hist <- inc_elas <- NULL # silence package check.
 
@@ -100,7 +100,7 @@ module_socio_L2323.iron_steel_Inc_Elas_scenarios <- function(command, ...) {
              steel_cons = per_capita_steel * population * 0.000001)
 
 
-  #Rebuild a new tibble save the previous year value
+    #Rebuild a new tibble save the previous year value
     L2323.pcgdp_thous90USD_Scen_R_Y_5_before <- L2323.pcgdp_thous90USD_Scen_R_Y %>%
       # essentially year + 5, but gets the next year dynamically without assuming + 5 year increments
       mutate(year = sapply(year, function(y) MODEL_FUTURE_YEARS[which(MODEL_FUTURE_YEARS > y)[1]]),

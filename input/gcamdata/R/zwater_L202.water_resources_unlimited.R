@@ -11,7 +11,7 @@
 #' the generated outputs: \code{L202.UnlimitRsrc_mapped}, \code{L202.UnlimitRsrc_nonmapped},
 #' \code{L202.UnlimitRsrcPrice_mapped}, \code{L202.UnlimitRsrcPrice_nonmapped}. The corresponding file in the
 #' original data system was \code{L202.water_resources_unlimited.R} (water level2).
-#' @details Create unlimited resource markets (i.e., 32 GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
+#' @details Create unlimited resource markets (i.e., GCAM regions) for water types (i.e., water consumption, withdrawals, biophysical water consumption and seawater),
 #' and read in fixed prices for water types.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr distinct filter mutate select

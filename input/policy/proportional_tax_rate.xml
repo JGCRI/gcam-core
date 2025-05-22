@@ -365,11 +365,11 @@
             <price-adjust year="2100">1</price-adjust>
          </linked-ghg-policy>
       </region>
-      <region name="Europe_Eastern">
+      <region name="Ukraine">
          <linked-ghg-policy name="CO2">
             <price-adjust fillout="1" year="1975">0</price-adjust>
             <demand-adjust fillout="1" year="1975">1</demand-adjust>
-            <market>Europe_Eastern</market>
+            <market>Ukraine</market>
             <linked-policy>CO2_TOTAL</linked-policy>
             <price-unit>1990$/tC</price-unit>
             <output-unit>MtC</output-unit>

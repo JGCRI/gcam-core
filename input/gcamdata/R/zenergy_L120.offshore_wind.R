@@ -66,7 +66,7 @@ module_energy_L120.offshore_wind <- function(command, ...) {
     # -----------------------------------------------------------------------------
     # Perform computations
 
-    # Map NREL data on resource potential by country to GCAM 32 regions, convert PWh to EJ,
+    # Map NREL data on resource potential by country to GCAM regions, convert PWh to EJ,
     # aggregate by GCAM region/ wind class/ depth class
     NREL_offshore_energy %>%
       select(-total) %>%
@@ -79,6 +79,22 @@ module_energy_L120.offshore_wind <- function(command, ...) {
       summarise(resource.potential.EJ = sum(resource.potential.EJ)) %>%
       ungroup() %>%
       filter(resource.potential.EJ != 0) -> L120.offshore_wind_potential_EJ
+
+    # assign zeroes when remaining broken out region countries do not have offshore wind (as per NREL_offshore_energy)
+        unique_regions <- unique(L120.offshore_wind_potential_EJ$GCAM_region_ID)
+    missing_regions <- (iso_GCAM_regID$GCAM_region_ID%>%unique())[
+      !(iso_GCAM_regID$GCAM_region_ID%>%unique()) %in% unique_regions]
+
+    missing_regions_df <- L120.offshore_wind_potential_EJ %>%
+      unique() %>%
+      dplyr::select(wind_class,depth_class) %>%
+      merge(data.frame(GCAM_region_ID=missing_regions))
+
+    if(nrow(missing_regions_df)>0){
+      L120.offshore_wind_potential_EJ %>%
+        dplyr::bind_rows(missing_regions_df) %>%
+        tidyr::replace_na(list(resource.potential.EJ=0))->
+        L120.offshore_wind_potential_EJ}
 
     L120.offshore_wind_capital <- A20.offshore_wind_depth_cap_cost
 
@@ -170,6 +186,14 @@ module_energy_L120.offshore_wind <- function(command, ...) {
       mutate(mid.price = round(((P2 - P1) * maxSubResource + 2 * Q2 * P1 - 2 * Q1 * P2) / (2 * (Q2 - Q1)),
                                energy.DIGITS_MAX_SUB_RESOURCE)) %>%
       select(GCAM_region_ID, mid.price) -> L120.mid.price
+
+    # Add 0 for missing region midpoint
+    missing_regions_mid_price_df <- data.frame(GCAM_region_ID = missing_regions) %>%
+      dplyr::mutate(mid.price = 0.1)
+
+    if(nrow(missing_regions_mid_price_df)>0){
+      L120.mid.price <- L120.mid.price %>%
+        dplyr::bind_rows(missing_regions_mid_price_df)}
 
     L120.offshore_wind_curve %>%
       left_join_error_no_match(L120.mid.price, by = c("GCAM_region_ID")) -> L120.offshore_wind_curve
@@ -263,6 +287,22 @@ module_energy_L120.offshore_wind <- function(command, ...) {
       ungroup() %>%
       unique() -> L120.offshore_wind_CF
 
+    # Adding in missing countries and regions as 0 to L120.offshore_wind_CF
+    # Mostly these regions have no off_shore wind
+    L120.offshore_wind_CF_missing_gcam_regions <-
+      unique(GCAM_region_names$region)[!unique(GCAM_region_names$region) %in%
+                                         unique(L120.offshore_wind_CF$region)]
+
+    missing_regions_df <- data.frame(CF = 0) %>%
+      merge(data.frame(region=L120.offshore_wind_CF_missing_gcam_regions))
+
+    if(nrow(missing_regions_df)>0){
+      L120.offshore_wind_CF %>%
+        bind_rows(missing_regions_df) %>%
+        replace_na(list(CF = 0)) %>%
+        unique()->
+        L120.offshore_wind_CF}
+
     # Grid connection costs are read in as fixed non-energy cost adders (in $/GJ). This is calculated using three things:
     # 1. the offshore wind $/kW-km cost based on distance cut-offs.
     # 2. Average distance from shore of existing and upcoming project for each bin used by NREL to assess wind potential - which are  basically midpoints, and
@@ -284,6 +324,22 @@ module_energy_L120.offshore_wind <- function(command, ...) {
       group_by(region) %>%
       mutate(share = total / sum(total)) %>%
       ungroup() -> L120.offshore_wind_potential_share
+
+    # Adding in missing countries and regions as 0 to L120.offshore_wind_potential_share
+    # Mostly these regions have no off_shore wind
+    L120.offshore_wind_potential_share_missing_gcam_regions <-
+      unique(GCAM_region_names$region)[!unique(GCAM_region_names$region) %in%
+                                         unique(L120.offshore_wind_potential_share$region)]
+
+    missing_regions_df <- data.frame(distance_to_shore = c("far","intermediate","near")) %>%
+      merge(data.frame(region=L120.offshore_wind_potential_share_missing_gcam_regions))
+
+    if(nrow(missing_regions_df)>0){
+      L120.offshore_wind_potential_share %>%
+        bind_rows(missing_regions_df) %>%
+        replace_na(list(total = 0, share = 0)) %>%
+        unique()->
+        L120.offshore_wind_potential_share}
 
     # Then, generate bins for each cost point using representative distances from the shore
     NREL_wind_energy_distance_range %>%
@@ -309,6 +365,10 @@ module_energy_L120.offshore_wind <- function(command, ...) {
                                by = "region") %>%
       mutate(fcr = L120.offshore_wind_fcr,
              grid.cost = fcr * cost / (CONV_YEAR_HOURS * CF* CONV_KWH_GJ) * gdp_deflator(1975, 2013)) -> L120.grid.cost
+
+    # Make sure no NaNs introduced because of the additional regions with no offshore wind added
+    L120.grid.cost %>%
+      tidyr::replace_na(list(grid.cost=0)) -> L120.grid.cost
 
     # Set grid connection cost for all regions
     GCAM_region_names %>%

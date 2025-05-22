@@ -675,7 +675,7 @@
             </subsector>
          </supplysector>
       </region>
-      <region name="Europe_Eastern">
+      <region name="Ukraine">
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>

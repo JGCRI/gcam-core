@@ -1,8 +1,8 @@
 # File: GCAM_GTAP_region_mapping.csv
-# Title: GTAP141 to GCAM32 region names
+# Title: GTAP141 to GCAM region names
 # Units: NA
 # Description: Maps GCAM region to GTAP regions
-# Column types: ccc 
+# Column types: ccc
 # ----------
 GTAPv10_region,GTAP_Long_Name,GCAM_region
 aus,Australia,Australia_NZ
@@ -90,10 +90,10 @@ che,Switzerland,European Free Trade Association
 nor,Norway,European Free Trade Association
 xef,Rest of EFTA,European Free Trade Association
 alb,Albania,Europe_Non_EU
-blr,Belarus,Europe_Eastern
+blr,Belarus,Europe_Non_EU
 rus,Russian Federation,Russia
-ukr,Ukraine,Europe_Eastern
-xee,Rest of Eastern Europe,Europe_Eastern
+ukr,Ukraine,Ukraine
+xee,Rest of Eastern Europe,Europe_Non_EU
 xer,Rest of Europe,Europe_Non_EU
 kaz,Kazakhstan,Central Asia
 kgz,Kyrgyzstan,Central Asia

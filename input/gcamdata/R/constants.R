@@ -72,7 +72,6 @@ GCAM_REGION_ID           <- "GCAM_region_ID"
 gcam.DEFAULT_PRICE            <- 1.0
 gcam.DEFAULT_SUBSECTOR_LOGIT  <- -3
 gcam.DEFAULT_TECH_LOGIT       <- -6
-gcam.REGION_NUMBER            <- 32    # Use for assertion in data processing to ensure all region has data
 gcam.REAL_PRICE_BASE_YEAR     <- 1975  # This is only used in AgLU prices now.
 
 # Driver constants ======================================================================
