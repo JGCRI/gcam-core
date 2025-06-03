@@ -516,11 +516,11 @@ aglu.GRASSLAND_NODE_NAMES <- "Grassland"
 # Energy constants ======================================================================
 
 # IEA energy data flows
-energy.TPES_flow <- "TES" #IEA code for Total Primary Energy Supply
+energy.TPES_FLOW <- "TES" #IEA code for Total Primary Energy Supply
 
 # IEA Country Names
-energy.FSU_name <- "Former Soviet Union (if no detail)"
-energy.Former_Yug_name <- "Former Yugoslavia (if no detail)"
+energy.FSU_NAME <- "Former Soviet Union (if no detail)"
+energy.FORMER_YUG_NAME <- "Former Yugoslavia (if no detail)"
 
 # Time
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010] # At present the CO2 emissions inventory from CDIAC stops at 2009
@@ -696,10 +696,10 @@ energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_EJ_PCAL_COEF <- 0.000413 # minimum valu
 # Socioeconomics constants ======================================================================
 
 socioeconomics.SSP_DB_BASEYEAR <- 2020 # base year of SSP data base v3.0.1
-socioeconomics.GDP_Adj_Moving_Average_ISO <- c("ven")
-socioeconomics.GDP_Adj_Moving_Average_Duration <- 15 # used for smoothing GDP for South_America_North
-socioeconomics.GDP_Adj_No_Neg_Growth_ISO <- c("ven", "twn")
-socioeconomics.GDP_Adj_No_Neg_Growth_Year <- 2025 # used for adjusting GDP projection to avoid negative GDP growth after this year (for Taiwan and South_America_North)
+socioeconomics.GDP_ADJ_MOVING_AVERAGE_ISO <- c("ven")
+socioeconomics.GDP_ADG_MOVING_AVERAGE_DURATION <- 15 # used for smoothing GDP for South_America_North
+socioeconomics.GDP_ADJ_NO_NEG_GROWTH_ISO <- c("ven", "twn")
+socioeconomics.GDP_ADJ_NO_NEG_GROWTH_YEAR <- 2025 # used for adjusting GDP projection to avoid negative GDP growth after this year (for Taiwan and South_America_North)
 
 socioeconomics.CORE_GCAM_SCENARIO <- "SSP2"
 

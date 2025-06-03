@@ -431,9 +431,6 @@
     <ClCompile Include="..\..\technologies\source\secondary_output.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\technologies\source\solar_technology.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\technologies\source\standard_capture_component.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
@@ -459,9 +456,6 @@
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\technologies\source\vintage_production_state.cpp">
-      <Filter>Source Files\technology</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\technologies\source\wind_technology.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\util\base\source\atom.cpp">
@@ -538,9 +532,6 @@
     </ClCompile>
     <ClCompile Include="..\..\consumers\source\consumer.cpp">
       <Filter>Source Files\consumers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\reporting\source\batch_csv_outputter.cpp">
-      <Filter>Source Files\reporting</Filter>
     </ClCompile>
     <ClCompile Include="..\..\reporting\source\graph_printer.cpp">
       <Filter>Source Files\reporting</Filter>
@@ -942,7 +933,7 @@
       <Filter>Source Files\technology</Filter>
     </ClCompile>
     <ClCompile Include="..\..\technologies\source\ag_storage_technology.cpp">
-      <Filter>Source Files</Filter>
+      <Filter>Source Files\technology</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -1273,9 +1264,6 @@
     <ClInclude Include="..\..\technologies\include\secondary_output.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\technologies\include\solar_technology.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\technologies\include\standard_capture_component.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
@@ -1301,9 +1289,6 @@
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h">
-      <Filter>Header Files\technologies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\technologies\include\wind_technology.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\atom.h">
@@ -1431,9 +1416,6 @@
     </ClInclude>
     <ClInclude Include="..\..\consumers\include\consumer.h">
       <Filter>Header Files\consumers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\reporting\include\batch_csv_outputter.h">
-      <Filter>Header Files\reporting</Filter>
     </ClInclude>
     <ClInclude Include="..\..\reporting\include\graph_printer.h">
       <Filter>Header Files\reporting</Filter>
@@ -1913,7 +1895,7 @@
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\ag_storage_technology.h">
-      <Filter>Header Files</Filter>
+      <Filter>Header Files\technologies</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

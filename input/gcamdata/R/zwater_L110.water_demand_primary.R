@@ -108,7 +108,7 @@ module_water_L110.water_demand_primary <- function(command, ...) {
     # Multiply the coefficients by the energy flow volumes of these different sectors
     # Note that the energy flow volumes are determined from processing energy balance data;
     # data on each fuel comes from a different place
-    L110.energy_flow_coal <- subset(L1012.en_bal_EJ_R_Si_Fi_Yh, sector == energy.TPES_flow & fuel == "coal") %>%
+    L110.energy_flow_coal <- subset(L1012.en_bal_EJ_R_Si_Fi_Yh, sector == energy.TPES_FLOW & fuel == "coal") %>%
       mutate(supplysector = "regional coal") %>%
       select(GCAM_region_ID, supplysector, year, value)
     L110.energy_flow_oil <- L121.in_EJ_R_TPES_crude_Yh %>%

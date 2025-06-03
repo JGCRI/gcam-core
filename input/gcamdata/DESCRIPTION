@@ -1,8 +1,8 @@
 Package: gcamdata
 Type: Package
 Title: Build the GCAM Input Datasets
-Version: 7.4
-Date: 2024-08-26
+Version: 8.2
+Date: 2025-05-22
 Authors@R: c(person("Ben", "Bond-Lamberty", 
                 email = "bondlamberty@pnnl.gov", 
                 role = c("cre", "aut"), 

@@ -18,6 +18,7 @@
 #' Modelling & Software 85, 246-265. http://dx.doi.org/10.1016/j.envsoft.2016.08.016.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate semi_join summarise
+#' @importFrom stringr str_split_1
 #' @author BBL March 2017
 module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
 
@@ -139,7 +140,12 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
     # Add necessary legacy and precursor information and assign to environment
     for(nm in namelist) {
       legacy_name <- paste0("L100.", nm)
+      # Extract units from file name (units are the final string after the last "_")
+      tempUnits <- str_split_1(nm, "_")
       LDSfiles[[nm]] %>%
+        add_title(nm) %>%
+        add_units(tempUnits[length(tempUnits)]) %>%
+        add_comments("Source: Land Data System") %>%
         add_legacy_name(legacy_name) %>%
         add_precursors(paste0(dirname, nm)) ->
         df

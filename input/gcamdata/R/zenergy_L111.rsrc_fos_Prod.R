@@ -58,7 +58,7 @@ module_energy_L111.rsrc_fos_Prod <- function(command, ...) {
     # NOTE: Regional production is derived for each fuel as global TES times regional share of global production
     # Determine global total primary energy supply (TES) for each fuel
     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == energy.TPES_flow, fuel %in% energy.RSRC_FUELS, year %in% HISTORICAL_YEARS) %>%
+      filter(sector == energy.TPES_FLOW, fuel %in% energy.RSRC_FUELS, year %in% HISTORICAL_YEARS) %>%
       group_by(sector, fuel, year) %>%
       summarise(value = sum(value)) %>%
       ungroup ->

@@ -23,6 +23,7 @@ module_energy_paper_xml <- function(command, ...) {
              "L2327.GlobalTechCost_paper",
              "L2327.GlobalTechTrackCapital_paper",
              "L2327.GlobalTechCapture_paper",
+             "L2327.CarbonCapture_paper",
              "L2327.GlobalTechSCurve_paper",
              "L2327.GlobalTechProfitShutdown_paper",
              "L2327.StubTechProd_paper",
@@ -50,6 +51,7 @@ module_energy_paper_xml <- function(command, ...) {
     L2327.GlobalTechCost_paper <- get_data(all_data, "L2327.GlobalTechCost_paper")
     L2327.GlobalTechTrackCapital_paper <- get_data(all_data, "L2327.GlobalTechTrackCapital_paper")
     L2327.GlobalTechCapture_paper <- get_data(all_data, "L2327.GlobalTechCapture_paper")
+    L2327.CarbonCapture_paper <- get_data(all_data, "L2327.CarbonCapture_paper")
     L2327.GlobalTechSCurve_paper <- get_data(all_data, "L2327.GlobalTechSCurve_paper")
     L2327.GlobalTechProfitShutdown_paper <- get_data(all_data, "L2327.GlobalTechProfitShutdown_paper")
     L2327.StubTechProd_paper <- get_data(all_data, "L2327.StubTechProd_paper")
@@ -78,6 +80,7 @@ module_energy_paper_xml <- function(command, ...) {
       add_xml_data(L2327.GlobalTechTrackCapital_paper, "GlobalTechTrackCapital") %>%
       add_xml_data(L2327.GlobalTechCost_paper, "GlobalTechCost") %>%
       add_xml_data(L2327.GlobalTechCapture_paper, "GlobalTechCapture") %>%
+      add_xml_data(L2327.CarbonCapture_paper, "CarbonCapture") %>%
       add_xml_data(L2327.StubTechProd_paper, "StubTechProd") %>%
       add_xml_data(L2327.StubTechCalInput_paper_heat, "StubTechCalInput") %>%
       add_xml_data(L2327.StubTechCoef_paper, "StubTechCoef") %>%
@@ -89,6 +92,7 @@ module_energy_paper_xml <- function(command, ...) {
                      "L2327.SubsectorShrwtFllt_paper", "L2327.SubsectorInterp_paper", "L2327.StubTech_paper",
                      "L2327.GlobalTechSCurve_paper", "L2327.GlobalTechProfitShutdown_paper", "L2327.GlobalTechShrwt_paper",
                      "L2327.GlobalTechCoef_paper", "L2327.GlobalTechCost_paper", "L2327.GlobalTechCapture_paper",
+                     "L2327.CarbonCapture_paper",
                      "L2327.StubTechProd_paper", "L2327.StubTechCalInput_paper_heat", "L2327.StubTechCoef_paper",
                      "L2327.PerCapitaBased_paper", "L2327.BaseService_paper", "L2327.PriceElasticity_paper",
                      "L2327.GlobalTechSecOut_paper", "L2327.GlobalTechTrackCapital_paper") ->

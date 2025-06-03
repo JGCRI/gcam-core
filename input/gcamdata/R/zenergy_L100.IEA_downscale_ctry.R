@@ -131,8 +131,8 @@ module_energy_L100.IEA_downscale_ctry <- function(command, ...) {
       # these aren't primary energy, so other flows like TFC (total final consumption) are used.
 
       # Split the country mapping table into composite regions and single-countries (69-77)
-      IEA_ctry_composite <- filter(IEA_ctry, IEA_ctry %in% c(energy.FSU_name,
-                                                             energy.Former_Yug_name,
+      IEA_ctry_composite <- filter(IEA_ctry, IEA_ctry %in% c(energy.FSU_NAME,
+                                                             energy.FORMER_YUG_NAME,
                                                              "Other Africa",
                                                              "Other non-OECD Americas",
                                                              "Other non-OECD Asia"))
@@ -155,8 +155,8 @@ module_energy_L100.IEA_downscale_ctry <- function(command, ...) {
       USSR_YUG_SPLIT_YEAR <- 1990
       USSR_YUG_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < USSR_YUG_SPLIT_YEAR]
       POST_USSR_YUG_YEARS_IEA <- as.character(HISTORICAL_YEARS[HISTORICAL_YEARS >= USSR_YUG_SPLIT_YEAR])
-      L100.USSR_Yug <- filter(L100.IEAcomposite, COUNTRY %in% c(energy.FSU_name,
-                                                                energy.Former_Yug_name))
+      L100.USSR_Yug <- filter(L100.IEAcomposite, COUNTRY %in% c(energy.FSU_NAME,
+                                                                energy.FORMER_YUG_NAME))
 
       # Re-map the "if no detail" forms of coal in the historical years prior to the relevant
       # coal types for matching with the more recent years (89-107)
@@ -187,7 +187,7 @@ module_energy_L100.IEA_downscale_ctry <- function(command, ...) {
       }
 
       # Isolate 1990 data for FSU and Yugoslavia; this will be used to back-project individual country shares
-      fsu_yug_composite_entries <- IEA_ctry_composite$IEA_ctry %in% c(energy.FSU_name, energy.Former_Yug_name)
+      fsu_yug_composite_entries <- IEA_ctry_composite$IEA_ctry %in% c(energy.FSU_NAME, energy.FORMER_YUG_NAME)
       L100.IEAsingle %>%
         filter(iso %in% IEA_ctry_composite$iso[fsu_yug_composite_entries]) %>%
         left_join_keep_first_only(select(IEA_ctry_composite, iso, IEA_ctry), by = "iso") %>%

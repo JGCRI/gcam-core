@@ -555,9 +555,9 @@ chunks_info <- function(chunkname) {
 #' @author RL 19 Apr 2017
 #' @importFrom utils capture.output
 screen_forbidden <- function(fn) {
-  forbidden <- c("(?<!error_no_)match(?!es)", "ifelse",
+  forbidden <- c("(?<!error_no_)match(?!es)\\s*\\(", "ifelse",
                  "melt", "cast",
-                 "rbind(?!list)", "cbind", "merge",
+                 "rbind(?!list)", "cbind", "merge\\s*\\(",
                  "read\\.csv", "write\\.csv",
                  "summarise_each", "mutate_each")
 

@@ -346,8 +346,8 @@ module_energy_L2391.gas_trade_flows <- function(command, ...) {
     L2391.gas_flow_balances %>%
       select(region, year, calExport_pipe, calExport_LNG) %>%
       tidyr::gather(GCAM_Commodity_traded, value, -c(region, year)) %>%
-      mutate(GCAM_Commodity = "natural gas") %>%
-      mutate(GCAM_Commodity_traded = gsub("calExport_", "", GCAM_Commodity_traded),
+      mutate(GCAM_Commodity = "natural gas",
+             GCAM_Commodity_traded = gsub("calExport_", "", GCAM_Commodity_traded),
              GCAM_Commodity_traded = if_else(GCAM_Commodity_traded == "pipe", "gas pipeline", GCAM_Commodity_traded)) %>%
       group_by(region, year, GCAM_Commodity, GCAM_Commodity_traded) %>%
       summarise(value = sum(value)) %>%

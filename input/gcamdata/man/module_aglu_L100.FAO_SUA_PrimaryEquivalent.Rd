@@ -13,9 +13,9 @@ module_aglu_L100.FAO_SUA_PrimaryEquivalent(command, ...)
 }
 \value{
 Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
-  \code{command} is "MAKE") all the generated outputs: \code{GCAM_AgLU_SUA_APE_1973_2019},
-  \code{FAO_AgProd_Kt_All},\code{FAO_AgArea_Kha_All},\code{FAO_Food_Macronutrient_All_2010_2019},
-  \code{FAO_Food_MacronutrientRate_2010_2019_MaxValue}
+  \code{command} is "MAKE") all the generated outputs: \code{GCAM_AgLU_SUA_APE},
+  \code{FAO_AgProd_Kt_All},\code{FAO_AgArea_Kha_All},\code{FAO_Food_Macronutrient_All},
+  \code{FAO_Food_MacronutrientRate_MaxValue}
 }
 \description{
 Generate supply utilization balance in primary equivalent

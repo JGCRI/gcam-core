@@ -545,7 +545,7 @@ local:generate-sector-input-coefs(remove($outputNameQueue, 1), $currTree, $coefs
                 <supplyDemandQuery title="elec gen by region (incl CHP)">
                     <axis1 name="region">region</axis1>
                     <axis2 name="Year">physical-output[@vintage]</axis2>
-                    <xPath buildList="true" dataName="output" group="false" sumAll="true">*[@type='sector' (:collapse:)]//
+                    <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' (:collapse:)]//
                *[@type='technology' (:collapse:) and not (@name='elect_td_bld')]/
                *[@type='output' (:collapse:)  and (@name='electricity' or @name='elect_td_bld')]/
                physical-output/node()</xPath>
@@ -2864,6 +2864,27 @@ element input {
                         <axis1 name="sector">sector</axis1>
                         <axis2 name="Year">cost</axis2>
                         <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='paper')]/cost/text()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                </queryGroup>
+                <queryGroup name="other industry">
+                    <supplyDemandQuery title="other industry production by region">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">physical-output[@vintage]</axis2>
+                        <xPath buildList="true" dataName="output" group="false" sumAll="false">*[@type='sector' and (@name='other industry')]//
+               *[@type='output' (:collapse:)]/physical-output/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="other industry inputs by tech (energy and feedstocks)">
+                        <axis1 name="input">input</axis1>
+                        <axis2 name="Year">demand-physical[@vintage]</axis2>
+                        <xPath buildList="true" dataName="input" group="false" sumAll="false">*[@type='sector' and (@name='other industrial energy use' or @name='other industrial feedstocks')]//*[@type='input' and not(@name='oil-credits')]/demand-physical/node()</xPath>
+                        <comments/>
+                    </supplyDemandQuery>
+                    <supplyDemandQuery title="other industry prices">
+                        <axis1 name="sector">sector</axis1>
+                        <axis2 name="Year">cost</axis2>
+                        <xPath buildList="true" dataName="cost" group="false" sumAll="false">*[@type='sector' and (@name='other industry')]/cost/text()</xPath>
                         <comments/>
                     </supplyDemandQuery>
                 </queryGroup>

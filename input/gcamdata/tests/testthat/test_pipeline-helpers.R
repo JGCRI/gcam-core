@@ -189,8 +189,4 @@ test_that("gather_years does its job", {
   # value column rename works
   d1 <- gather_years(d, value_col = "test")
   expect_identical(names(d1), c("x", "197", "year", "test"))
-
-  # change the year pattern and gather different columns
-  d1 <- gather_years(d, year_pattern = "[0-9]{3}")
-  expect_identical(d1, gather(d, year, value, matches("[0-9]{3}")) %>% mutate(year = as.integer(year)))
 })

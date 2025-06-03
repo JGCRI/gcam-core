@@ -15,7 +15,7 @@
 #' @details Takes in data on country-level offshore wind energy potential and global offshore wind
 #' capital cost assumptions and generates tables containing region-level offshore wind data.
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr filter mutate select group_by summarise distinct arrange bind_rows rename
+#' @importFrom dplyr filter mutate select group_by summarise distinct arrange bind_rows rename cross_join
 #' @importFrom tidyr gather
 #' @importFrom stats optimize
 #' @author MB GI AJS March 2019
@@ -88,7 +88,7 @@ module_energy_L120.offshore_wind <- function(command, ...) {
     missing_regions_df <- L120.offshore_wind_potential_EJ %>%
       unique() %>%
       dplyr::select(wind_class,depth_class) %>%
-      merge(data.frame(GCAM_region_ID=missing_regions))
+      cross_join(data.frame(GCAM_region_ID=missing_regions))
 
     if(nrow(missing_regions_df)>0){
       L120.offshore_wind_potential_EJ %>%
@@ -294,7 +294,7 @@ module_energy_L120.offshore_wind <- function(command, ...) {
                                          unique(L120.offshore_wind_CF$region)]
 
     missing_regions_df <- data.frame(CF = 0) %>%
-      merge(data.frame(region=L120.offshore_wind_CF_missing_gcam_regions))
+      cross_join(data.frame(region=L120.offshore_wind_CF_missing_gcam_regions))
 
     if(nrow(missing_regions_df)>0){
       L120.offshore_wind_CF %>%
@@ -332,7 +332,7 @@ module_energy_L120.offshore_wind <- function(command, ...) {
                                          unique(L120.offshore_wind_potential_share$region)]
 
     missing_regions_df <- data.frame(distance_to_shore = c("far","intermediate","near")) %>%
-      merge(data.frame(region=L120.offshore_wind_potential_share_missing_gcam_regions))
+      cross_join(data.frame(region=L120.offshore_wind_potential_share_missing_gcam_regions))
 
     if(nrow(missing_regions_df)>0){
       L120.offshore_wind_potential_share %>%

@@ -284,7 +284,8 @@ module_energy_L1326.aluminum <- function(command, ...) {
       add_units("Mt") %>%
       add_comments("Regional outputs are from World aluminum association, downscaled using data from USGS Mineral Yearbooks, and then aggregated to GCAM regions") %>%
       add_legacy_name("L1326.out_Mt_R_aluminum_Yh") %>%
-      add_precursors( "energy/A_regions", "energy/aluminum_prod_region_IAI", "energy/aluminum_prod_USGS",
+      add_precursors( "energy/A_regions", "energy/aluminum_prod_region_IAI",
+                      "energy/aluminum_prod_USGS", "energy/aluminum_prod_CEDS",
                       "energy/aluminum_energy_region_IAI", "energy/alumina_energy_region_IAI",
                       "energy/mappings/IAI_ctry_region", "common/iso_GCAM_regID") ->
       L1326.out_Mt_R_aluminum_Yh

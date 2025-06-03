@@ -13,94 +13,101 @@
 #' original data system was \code{batch_electricity_water.xml.R} (water XML).
 module_gcamusa_elec_segments_water_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L2233.GlobalTechEff_elecS_cool_USA",
-             "L2233.GlobalTechShrwt_elecS_cool_USA",
-             "L2233.GlobalTechProfitShutdown_elecS_cool_USA",
-             "L2233.GlobalTechOMvar_elecS_cool_USA",
-             "L2233.GlobalTechOMfixed_elecS_cool_USA",
-             "L2233.GlobalTechCapital_elecS_USA",
-             "L2233.GlobalTechCapital_elecS_cool_USA",
-             "L2233.GlobalTechCapFac_elecS_cool_USA",
-             "L2233.GlobalTechSCurve_elecS_cool_USA",
-             "L2233.GlobalTechCoef_elecS_cool_USA",
-             "L2233.GlobalTechCapture_elecS_cool_USA",
-             "L2233.GlobalTechLifetime_elecS_cool_USA",
-             "L2233.AvgFossilEffKeyword_elecS_cool_USA",
-             "L2233.GlobalIntTechBackup_elecS_cool_USA",
-             "L2233.GlobalIntTechValueFactor_elecS_cool_USA",
-             "L2233.GlobalIntTechCapital_elecS_USA",
-             "L2233.GlobalIntTechCapital_elecS_cool_USA",
-             "L2233.GlobalIntTechEff_elecS_USA",
-             "L2233.GlobalIntTechEff_elecS_cool_USA",
-             "L2233.GlobalIntTechLifetime_elecS_cool_USA",
-             "L2233.GlobalIntTechOMfixed_elecS_cool_USA",
-             "L2233.GlobalIntTechOMvar_elecS_cool_USA",
-             "L2233.GlobalIntTechShrwt_elecS_cool_USA",
-             "L2233.GlobalIntTechCoef_elecS_cool_USA",
-             "L2233.PrimaryRenewKeyword_elecS_cool_USA",
-             "L2233.PrimaryRenewKeywordInt_elecS_cool_USA",
-             "L2233.StubTechEff_elecS_cool_USA",
-             "L2233.StubTechCoef_elecS_cool_USA",
-             "L2233.StubTechMarket_elecS_cool_USA",
-             "L2233.StubTechProd_elecS_cool_USA",
-             "L2233.StubTechSCurve_elecS_cool_USA",
-             "L2233.StubTechCapFactor_elecS_solar_USA",
-             "L2233.StubTechCapFactor_elecS_wind_USA",
-             "L2233.StubTechElecMarket_backup_elecS_cool_USA",
-             "L2233.StubTechFixOut_elecS_cool_USA",
-             "L2233.StubTechFixOut_hydro_elecS_cool_USA",
-             "L2233.StubTechMarket_backup_elecS_cool_USA",
-             "L2233.StubTechProfitShutdown_elecS_cool_USA",
-             "L2233.StubTechSCurve_elecS_cool_USA",
-             "L2233.StubTechShrwt_elecS_cool_USA",
-             "L2233.StubTechInterp_elecS_cool_USA",
-             "L2233.StubTechCost_offshore_wind_elecS_cool_USA",
-             "L2233.SubsectorLogit_elecS_USA",
-             "L2233.SubsectorLogit_elecS_cool_USA",
-             "L2233.SubsectorShrwt_elecS_USA",
-             "L2233.SubsectorShrwt_elecS_cool_USA",
-             "L2233.SubsectorShrwtInterp_elecS_USA",
-             "L2233.SubsectorShrwtInterpTo_elecS_USA",
-             "L2233.Supplysector_elecS_cool_USA",
-             "L2234.SubsectorShrwtFllt_elecS_grid_USA",
-             "L2234.SubsectorShrwtInterp_elecS_grid_USA",
-             "L2234.PassThroughSector_elecS_USA",
-             "L2234.PassThroughTech_elecS_grid_USA",
-             "L2234.ElecReserve_elecS_USA",
-             "L2234.TechShrwt_elecS_grid_USA",
-             "L2234.TechCoef_elecS_grid_USA",
-             "L2234.TechProd_elecS_grid_USA",
-             "L2235.DeleteSupplysector_elec_USA",
-             "L2235.InterestRate_FERC_USA",
-             "L2235.Pop_FERC_USA",
-             "L2235.GDP_FERC_USA",
-             "L2235.Supplysector_elec_USA",
-             "L2235.ElecReserve_elecS_grid_vertical_USA",
-             "L2235.SubsectorLogit_elec_USA",
-             "L2235.SubsectorShrwtFllt_elec_USA",
-             "L2235.SubsectorInterp_elec_USA",
-             "L2235.SubsectorShrwt_elec_USA",
-             "L2235.SubsectorInterpTo_elec_USA",
-             "L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA",
-             "L2235.SubsectorShrwtInterp_elecS_grid_vertical_USA",
-             "L2235.TechShrwt_elec_USA",
-             "L2235.TechCoef_elec_USA",
-             "L2235.Production_exports_elec_USA",
-             "L2235.TechShrwt_elecS_grid_vertical_USA",
-             "L2235.TechCoef_elecS_grid_vertical_USA",
-             "L2235.Supplysector_elec_FERC_USA",
-             "L2235.SubsectorLogit_elec_FERC_USA",
-             "L2235.SubsectorShrwtFllt_elec_FERC_USA",
-             "L2235.SubsectorInterp_elec_FERC_USA",
-             "L2235.SubsectorShrwt_elec_FERC",
-             "L2235.SubsectorInterpTo_elec_FERC",
-             "L2235.TechShrwt_elec_FERC_USA",
-             "L2235.TechCoef_elec_FERC_USA",
-             "L2235.TechCoef_elecownuse_FERC_USA",
-             "L2235.Production_imports_FERC_USA",
-             "L2235.Production_elec_gen_FERC_USA",
-             # to replace capital tracking rooftop PV with regular
-             "L223.StubTechCapFactor_elec"))
+
+    MODULE_INPUTS <- c("L2233.GlobalTechEff_elecS_cool_USA",
+                       "L2233.GlobalTechShrwt_elecS_cool_USA",
+                       "L2233.GlobalTechProfitShutdown_elecS_cool_USA",
+                       "L2233.GlobalTechOMvar_elecS_cool_USA",
+                       "L2233.GlobalTechOMfixed_elecS_cool_USA",
+                       "L2233.GlobalTechCapital_elecS_USA",
+                       "L2233.GlobalTechCapital_elecS_cool_USA",
+                       "L2233.GlobalTechCapFac_elecS_cool_USA",
+                       "L2233.GlobalTechSCurve_elecS_cool_USA",
+                       "L2233.GlobalTechCoef_elecS_cool_USA",
+                       "L2233.GlobalTechCapture_elecS_cool_USA",
+                       "L2233.GlobalTechLifetime_elecS_cool_USA",
+                       "L2233.AvgFossilEffKeyword_elecS_cool_USA",
+                       "L2233.GlobalIntTechCapital_elecS_USA",
+                       "L2233.GlobalIntTechCapital_elecS_cool_USA",
+                       "L2233.GlobalIntTechEff_elecS_USA",
+                       "L2233.GlobalIntTechEff_elecS_cool_USA",
+                       "L2233.GlobalIntTechLifetime_elecS_cool_USA",
+                       "L2233.GlobalIntTechOMfixed_elecS_cool_USA",
+                       "L2233.GlobalIntTechOMvar_elecS_cool_USA",
+                       "L2233.GlobalIntTechShrwt_elecS_cool_USA",
+                       "L2233.GlobalIntTechCoef_elecS_cool_USA",
+                       "L2233.PrimaryRenewKeyword_elecS_cool_USA",
+                       "L2233.PrimaryRenewKeywordInt_elecS_cool_USA",
+                       "L2233.StubTechEff_elecS_cool_USA",
+                       "L2233.StubTechCoef_elecS_cool_USA",
+                       "L2233.StubTechMarket_elecS_cool_USA",
+                       "L2233.StubTechProd_elecS_cool_USA",
+                       "L2233.StubTechSCurve_elecS_cool_USA",
+                       "L2233.StubTechCapFactor_elecS_solar_USA",
+                       "L2233.StubTechCapFactor_elecS_wind_USA",
+                       "L2233.StubTechElecMarket_backup_elecS_cool_USA",
+                       "L2233.StubTechFixOut_elecS_cool_USA",
+                       "L2233.StubTechFixOut_hydro_elecS_cool_USA",
+                       "L2233.StubTechProfitShutdown_elecS_cool_USA",
+                       "L2233.StubTechSCurve_elecS_cool_USA",
+                       "L2233.StubTechShrwt_elecS_cool_USA",
+                       "L2233.StubTechInterp_elecS_cool_USA",
+                       "L2233.StubTechCost_offshore_wind_elecS_cool_USA",
+                       "L2233.SubsectorLogit_elecS_USA",
+                       "L2233.SubsectorLogit_elecS_cool_USA",
+                       "L2233.SubsectorShrwt_elecS_USA",
+                       "L2233.SubsectorShrwt_elecS_cool_USA",
+                       "L2233.SubsectorShrwtInterp_elecS_USA",
+                       "L2233.SubsectorShrwtInterpTo_elecS_USA",
+                       "L2233.Supplysector_elecS_cool_USA",
+                       "L2234.SubsectorShrwtFllt_elecS_grid_USA",
+                       "L2234.SubsectorShrwtInterp_elecS_grid_USA",
+                       "L2234.PassThroughSector_elecS_USA",
+                       "L2234.PassThroughTech_elecS_grid_USA",
+                       "L2234.ElecReserve_elecS_USA",
+                       "L2234.TechShrwt_elecS_grid_USA",
+                       "L2234.TechCoef_elecS_grid_USA",
+                       "L2234.TechProd_elecS_grid_USA",
+                       "L2235.DeleteSupplysector_elec_USA",
+                       "L2235.InterestRate_FERC_USA",
+                       "L2235.Pop_FERC_USA",
+                       "L2235.GDP_FERC_USA",
+                       "L2235.Supplysector_elec_USA",
+                       "L2235.ElecReserve_elecS_grid_vertical_USA",
+                       "L2235.SubsectorLogit_elec_USA",
+                       "L2235.SubsectorShrwtFllt_elec_USA",
+                       "L2235.SubsectorInterp_elec_USA",
+                       "L2235.SubsectorShrwt_elec_USA",
+                       "L2235.SubsectorInterpTo_elec_USA",
+                       "L2235.SubsectorShrwtFllt_elecS_grid_vertical_USA",
+                       "L2235.SubsectorShrwtInterp_elecS_grid_vertical_USA",
+                       "L2235.TechShrwt_elec_USA",
+                       "L2235.TechCoef_elec_USA",
+                       "L2235.Production_exports_elec_USA",
+                       "L2235.TechShrwt_elecS_grid_vertical_USA",
+                       "L2235.TechCoef_elecS_grid_vertical_USA",
+                       "L2235.Supplysector_elec_FERC_USA",
+                       "L2235.SubsectorLogit_elec_FERC_USA",
+                       "L2235.SubsectorShrwtFllt_elec_FERC_USA",
+                       "L2235.SubsectorInterp_elec_FERC_USA",
+                       "L2235.SubsectorShrwt_elec_FERC",
+                       "L2235.SubsectorInterpTo_elec_FERC",
+                       "L2235.TechShrwt_elec_FERC_USA",
+                       "L2235.TechCoef_elec_FERC_USA",
+                       "L2235.TechCoef_elecownuse_FERC_USA",
+                       "L2235.Production_imports_FERC_USA",
+                       "L2235.Production_elec_gen_FERC_USA",
+                       # to replace capital tracking rooftop PV with regular
+                       "L223.StubTechCapFactor_elec")
+
+    if(energy.ELEC_USE_BACKUP) {
+      MODULE_INPUTS <- c(MODULE_INPUTS, "L2233.GlobalIntTechBackup_elecS_cool_USA",
+                       "L2233.StubTechMarket_backup_elecS_cool_USA")
+    } else {
+      MODULE_INPUTS <- c(MODULE_INPUTS, "L2233.GlobalIntTechValueFactor_elecS_cool_USA")
+    }
+
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "elec_segments_water_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -125,8 +132,6 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
     L2233.GlobalTechCapture_elecS_cool_USA <- get_data(all_data, "L2233.GlobalTechCapture_elecS_cool_USA")
     L2233.GlobalTechLifetime_elecS_cool_USA <- get_data(all_data, "L2233.GlobalTechLifetime_elecS_cool_USA")
     L2233.AvgFossilEffKeyword_elecS_cool_USA <- get_data(all_data,"L2233.AvgFossilEffKeyword_elecS_cool_USA")
-    L2233.GlobalIntTechBackup_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechBackup_elecS_cool_USA")
-    L2233.GlobalIntTechValueFactor_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechValueFactor_elecS_cool_USA")
     L2233.GlobalIntTechCapital_elecS_USA<- get_data(all_data,"L2233.GlobalIntTechCapital_elecS_USA")
     L2233.GlobalIntTechCapital_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechCapital_elecS_cool_USA")
     L2233.GlobalIntTechEff_elecS_USA <- get_data(all_data, "L2233.GlobalIntTechEff_elecS_USA")
@@ -141,6 +146,7 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
     L2233.StubTechEff_elecS_cool_USA <- get_data(all_data,"L2233.StubTechEff_elecS_cool_USA")
     L2233.StubTechCoef_elecS_cool_USA <- get_data(all_data, "L2233.StubTechCoef_elecS_cool_USA")
     L2233.StubTechMarket_elecS_cool_USA<- get_data(all_data,"L2233.StubTechMarket_elecS_cool_USA")
+
     L2233.StubTechProd_elecS_cool_USA<- get_data(all_data,"L2233.StubTechProd_elecS_cool_USA")
     L2233.StubTechProfitShutdown_elecS_cool_USA <- get_data(all_data, "L2233.StubTechProfitShutdown_elecS_cool_USA")
     L2233.StubTechSCurve_elecS_cool_USA<- get_data(all_data,"L2233.StubTechSCurve_elecS_cool_USA")
@@ -149,7 +155,7 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
     L2233.StubTechElecMarket_backup_elecS_cool_USA <- get_data(all_data,"L2233.StubTechElecMarket_backup_elecS_cool_USA")
     L2233.StubTechFixOut_elecS_cool_USA<- get_data(all_data,"L2233.StubTechFixOut_elecS_cool_USA")
     L2233.StubTechFixOut_hydro_elecS_cool_USA<- get_data(all_data,"L2233.StubTechFixOut_hydro_elecS_cool_USA")
-    L2233.StubTechMarket_backup_elecS_cool_USA <- get_data(all_data,"L2233.StubTechMarket_backup_elecS_cool_USA")
+
     L2233.StubTechShrwt_elecS_cool_USA <- get_data(all_data, "L2233.StubTechShrwt_elecS_cool_USA")
     L2233.StubTechInterp_elecS_cool_USA <- get_data(all_data, "L2233.StubTechInterp_elecS_cool_USA")
     L2233.StubTechCost_offshore_wind_elecS_cool_USA <- get_data(all_data,"L2233.StubTechCost_offshore_wind_elecS_cool_USA")
@@ -200,6 +206,13 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
     L2235.Production_imports_FERC_USA <- get_data(all_data, "L2235.Production_imports_FERC_USA")
     L2235.Production_elec_gen_FERC_USA <- get_data(all_data, "L2235.Production_elec_gen_FERC_USA")
 
+    if(energy.ELEC_USE_BACKUP) {
+      L2233.GlobalIntTechBackup_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechBackup_elecS_cool_USA")
+      L2233.StubTechMarket_backup_elecS_cool_USA <- get_data(all_data,"L2233.StubTechMarket_backup_elecS_cool_USA")
+    } else {
+      L2233.GlobalIntTechValueFactor_elecS_cool_USA <- get_data(all_data,"L2233.GlobalIntTechValueFactor_elecS_cool_USA")
+    }
+
     # Silence package checks
     technology <- NULL
 
@@ -215,8 +228,13 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
       return(data_new)
     }
 
-    L2233.GlobalIntTechBackup_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechBackup_elecS_cool_USA)
-    L2233.GlobalIntTechValueFactor_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechValueFactor_elecS_cool_USA)
+    if(energy.ELEC_USE_BACKUP) {
+      L2233.GlobalIntTechBackup_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechBackup_elecS_cool_USA)
+      L2233.StubTechMarket_backup_elecS_cool_USA <- rename(L2233.StubTechMarket_backup_elecS_cool_USA, stub.technology = technology)
+    } else {
+      L2233.GlobalIntTechValueFactor_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechValueFactor_elecS_cool_USA)
+    }
+
     L2233.GlobalIntTechCapital_elecS_USA <- fix_global_tech_names(L2233.GlobalIntTechCapital_elecS_USA)
     L2233.GlobalIntTechCapital_elecS_cool_USA <- fix_global_tech_names(L2233.GlobalIntTechCapital_elecS_cool_USA)
     L2233.GlobalIntTechEff_elecS_USA <- fix_global_tech_names(L2233.GlobalIntTechEff_elecS_USA)
@@ -236,7 +254,6 @@ module_gcamusa_elec_segments_water_xml <- function(command, ...) {
     L2233.GlobalIntTechCoef_elecS_cool_USA <- rename(L2233.GlobalIntTechCoef_elecS_cool_USA,technology = intermittent.technology)
 
     L2233.StubTechMarket_elecS_cool_USA <- rename(L2233.StubTechMarket_elecS_cool_USA, stub.technology = technology)
-    L2233.StubTechMarket_backup_elecS_cool_USA <- rename(L2233.StubTechMarket_backup_elecS_cool_USA, stub.technology = technology)
     L2233.StubTechElecMarket_backup_elecS_cool_USA <- rename(L2233.StubTechElecMarket_backup_elecS_cool_USA, stub.technology = technology)
     L2233.StubTechProd_elecS_cool_USA <- rename(L2233.StubTechProd_elecS_cool_USA, stub.technology = technology)
     L2233.StubTechCapFactor_elecS_wind_USA <- rename(L2233.StubTechCapFactor_elecS_wind_USA, stub.technology = technology)

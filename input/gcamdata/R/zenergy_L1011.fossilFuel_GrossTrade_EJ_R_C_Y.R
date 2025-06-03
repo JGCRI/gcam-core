@@ -330,7 +330,8 @@ module_energy_L1011.ff_GrossTrade <- function(command, ...) {
                      "energy/mappings/comtrade_countrycode_ISO",
                      "energy/mappings/comtrade_commodity_code",
                      "energy/mappings/comtrade_trade_flow",
-                     "energy/comtrade_ff_trade") ->
+                     "energy/comtrade_ff_trade",
+                     "energy/comtrade_ff_trade_taiwan") ->
       L1011.ff_GrossTrade_EJ_R_C_Y
 
     L1011.ff_GrossTrade_EJ_R_Y_LNG %>%
@@ -345,7 +346,8 @@ module_energy_L1011.ff_GrossTrade <- function(command, ...) {
                      "energy/mappings/comtrade_countrycode_ISO",
                      "energy/mappings/comtrade_commodity_code",
                      "energy/mappings/comtrade_trade_flow",
-                     "energy/comtrade_ff_trade") ->
+                     "energy/comtrade_ff_trade",
+                     "energy/comtrade_ff_trade_taiwan") ->
       L1011.ff_GrossTrade_EJ_R_Y_LNG
 
     L1011.ff_GrossTrade_EJ_R_Y_NG_pipe %>%
@@ -378,6 +380,7 @@ module_energy_L1011.ff_GrossTrade <- function(command, ...) {
                      "energy/mappings/comtrade_commodity_code",
                      "energy/mappings/comtrade_trade_flow",
                      "energy/comtrade_ff_trade",
+                     "energy/comtrade_ff_trade_taiwan",
                      "energy/GCAM_region_pipeline_bloc_import",
                      "energy/GCAM_region_pipeline_bloc_export") ->
       L1011.ff_BilatTrade_EJ_R_Y_NG_pipe

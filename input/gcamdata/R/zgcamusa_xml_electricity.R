@@ -12,57 +12,63 @@
 #' original data system was \code{batch_electricity_USA_xml.R} (gcamusa XML).
 module_gcamusa_electricity_xml <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L223.PassthroughSector_elec_USA",
-             "L223.PassthroughTech_elec_FERC",
-             "L223.Supplysector_elec_FERC",
-             "L223.SubsectorShrwtFllt_elec_FERC",
-             "L223.SubsectorInterp_elec_FERC",
-             "L223.SubsectorLogit_elec_FERC",
-             "L223.TechShrwt_elec_FERC",
-             "L223.TechCoef_elec_FERC",
-             "L223.Production_elec_FERC",
-             "L223.InterestRate_FERC",
-             "L223.Pop_FERC",
-             "L223.GDP_FERC",
-             "L223.Supplysector_elec_USA",
-             "L223.ElecReserve_USA",
-             "L223.SubsectorLogit_elec_USA",
-             "L223.SubsectorShrwtFllt_elec_USA",
-             "L223.SubsectorShrwt_nuc_USA",
-             "L223.SubsectorShrwt_renew_USA",
-             "L223.SubsectorInterp_elec_USA",
-             "L223.SubsectorInterpTo_elec_USA",
-             "L223.StubTech_elec_USA",
-             "L223.StubTechEff_elec_USA",
-             "L223.StubTechCapFactor_elec_USA",
-             "L223.StubTechFixOut_elec_USA",
-             "L223.StubTechFixOut_hydro_USA",
-             "L223.StubTechProd_elec_USA",
-             "L223.StubTechMarket_elec_USA",
-             "L223.StubTechMarket_backup_USA",
-             "L223.StubTechElecMarket_backup_USA",
-             "L223.StubTechCapFactor_elec_wind_USA",
-             "L223.StubTechCapFactor_elec_solar_USA",
-             "L2232.DeleteSupplysector_USAelec",
-             "L2232.Supplysector_USAelec",
-             "L2232.SubsectorShrwtFllt_USAelec",
-             "L2232.SubsectorInterp_USAelec",
-             "L2232.SubsectorLogit_USAelec",
-             "L2232.TechShrwt_USAelec",
-             "L2232.TechCoef_USAelec",
-             "L2232.Production_exports_USAelec",
-             "L2232.Supplysector_elec_FERC",
-             "L2232.ElecReserve_FERC",
-             "L2232.SubsectorShrwtFllt_elec_FERC",
-             "L2232.SubsectorInterp_elec_FERC",
-             "L2232.SubsectorLogit_elec_FERC",
-             "L2232.TechShrwt_elec_FERC",
-             "L2232.TechCoef_elec_FERC",
-             "L2232.TechCoef_elecownuse_FERC",
-             "L2232.Production_imports_FERC",
-             "L2232.Production_elec_gen_FERC",
-             "L2232.StubTechElecMarket_backup_USA",
-             "L223.StubTechCost_offshore_wind_USA"))
+
+    MODULE_INPUTS <- c("L223.PassthroughSector_elec_USA",
+                       "L223.PassthroughTech_elec_FERC",
+                       "L223.Supplysector_elec_FERC",
+                       "L223.SubsectorShrwtFllt_elec_FERC",
+                       "L223.SubsectorInterp_elec_FERC",
+                       "L223.SubsectorLogit_elec_FERC",
+                       "L223.TechShrwt_elec_FERC",
+                       "L223.TechCoef_elec_FERC",
+                       "L223.Production_elec_FERC",
+                       "L223.InterestRate_FERC",
+                       "L223.Pop_FERC",
+                       "L223.GDP_FERC",
+                       "L223.Supplysector_elec_USA",
+                       "L223.ElecReserve_USA",
+                       "L223.SubsectorLogit_elec_USA",
+                       "L223.SubsectorShrwtFllt_elec_USA",
+                       "L223.SubsectorShrwt_nuc_USA",
+                       "L223.SubsectorShrwt_renew_USA",
+                       "L223.SubsectorInterp_elec_USA",
+                       "L223.SubsectorInterpTo_elec_USA",
+                       "L223.StubTech_elec_USA",
+                       "L223.StubTechEff_elec_USA",
+                       "L223.StubTechElecMarket_backup_USA",
+                       "L223.StubTechCapFactor_elec_USA",
+                       "L223.StubTechFixOut_elec_USA",
+                       "L223.StubTechFixOut_hydro_USA",
+                       "L223.StubTechProd_elec_USA",
+                       "L223.StubTechMarket_elec_USA",
+                       "L223.StubTechCapFactor_elec_wind_USA",
+                       "L223.StubTechCapFactor_elec_solar_USA",
+                       "L2232.DeleteSupplysector_USAelec",
+                       "L2232.Supplysector_USAelec",
+                       "L2232.SubsectorShrwtFllt_USAelec",
+                       "L2232.SubsectorInterp_USAelec",
+                       "L2232.SubsectorLogit_USAelec",
+                       "L2232.TechShrwt_USAelec",
+                       "L2232.TechCoef_USAelec",
+                       "L2232.Production_exports_USAelec",
+                       "L2232.Supplysector_elec_FERC",
+                       "L2232.ElecReserve_FERC",
+                       "L2232.SubsectorShrwtFllt_elec_FERC",
+                       "L2232.SubsectorInterp_elec_FERC",
+                       "L2232.SubsectorLogit_elec_FERC",
+                       "L2232.TechShrwt_elec_FERC",
+                       "L2232.TechCoef_elec_FERC",
+                       "L2232.TechCoef_elecownuse_FERC",
+                       "L2232.Production_imports_FERC",
+                       "L2232.Production_elec_gen_FERC",
+                       "L2232.StubTechElecMarket_backup_USA",
+                       "L223.StubTechCost_offshore_wind_USA")
+
+    if(energy.ELEC_USE_BACKUP) {
+      MODULE_INPUTS <- c(MODULE_INPUTS, "L223.StubTechMarket_backup_USA")
+    }
+
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "electricity_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -100,7 +106,9 @@ module_gcamusa_electricity_xml <- function(command, ...) {
     L223.StubTechFixOut_hydro_USA <- get_data(all_data, "L223.StubTechFixOut_hydro_USA")
     L223.StubTechProd_elec_USA <- get_data(all_data, "L223.StubTechProd_elec_USA")
     L223.StubTechMarket_elec_USA <- get_data(all_data, "L223.StubTechMarket_elec_USA")
-    L223.StubTechMarket_backup_USA <- get_data(all_data, "L223.StubTechMarket_backup_USA")
+    if(energy.ELEC_USE_BACKUP) {
+      L223.StubTechMarket_backup_USA <- get_data(all_data, "L223.StubTechMarket_backup_USA")
+    }
     L223.StubTechElecMarket_backup_USA <- get_data(all_data, "L223.StubTechElecMarket_backup_USA")
     L223.StubTechCapFactor_elec_wind_USA <- get_data(all_data, "L223.StubTechCapFactor_elec_wind_USA")
     L223.StubTechCapFactor_elec_solar_USA <- get_data(all_data, "L223.StubTechCapFactor_elec_solar_USA")

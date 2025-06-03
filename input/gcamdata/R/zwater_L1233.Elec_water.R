@@ -123,8 +123,8 @@ module_water_L1233.Elec_water <- function(command, ...) {
       } else {
         # change 2020 to min(MODEL_FUTURE_YEARS) and copy forward shares of last historical year in the file to final base year
         A23.CoolingSystemShares_RG3 %>%
-          mutate(year = ifelse(year == 2020, min(MODEL_FUTURE_YEARS), year),
-                 year = ifelse(year == max(year[year < MODEL_FINAL_BASE_YEAR]), MODEL_FINAL_BASE_YEAR, year)) -> A23.CoolingSystemShares_RG3
+          mutate(year = if_else(year == 2020, min(MODEL_FUTURE_YEARS), year),
+                 year = if_else(year == max(year[year < MODEL_FINAL_BASE_YEAR]), MODEL_FINAL_BASE_YEAR, year)) -> A23.CoolingSystemShares_RG3
       }
     }
 

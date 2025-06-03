@@ -175,7 +175,7 @@ module_energy_L101.en_bal_IEA <- function(command, ...) {
       # (i.e. no statistical differences, stock changes, transfers)
       L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
         filter(grepl("in_", sector) | grepl("net_", sector)) %>%
-        mutate(sector = energy.TPES_flow)%>%
+        mutate(sector = energy.TPES_FLOW)%>%
         group_by(GCAM_region_ID, sector, fuel, year) %>%
         summarise(value = sum(value)) ->
         L101.in_EJ_R_TPES_Fi_Yh
@@ -237,7 +237,7 @@ module_energy_L101.en_bal_IEA <- function(command, ...) {
 
       L101.en_bal_EJ_ctry_Si_Fi_Yh %>%
         filter(grepl("in_", sector) | grepl("net_", sector)) %>%
-        mutate(sector = energy.TPES_flow)%>%
+        mutate(sector = energy.TPES_FLOW)%>%
         group_by(iso, GCAM_region_ID, sector, fuel, year) %>%
         summarise(value = sum(value)) %>%
         ungroup ->

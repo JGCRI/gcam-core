@@ -25,5 +25,5 @@ Prepare GCAM basin groundwater supply curves
 Prepares groundwater resource curves and sets up groundwater calibration data.
 }
 \author{
-ST September 2018
+ST September 2018; HN 2025
 }

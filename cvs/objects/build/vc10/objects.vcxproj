@@ -60,19 +60,22 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - TBB|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -102,11 +105,12 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v142</PlatformToolset>
+    <PlatformToolset>v143</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Itanium'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -682,6 +686,7 @@
     <ClCompile Include="..\..\target_finder\source\rcp_forcing_target.cpp" />
     <ClCompile Include="..\..\target_finder\source\secanter.cpp" />
     <ClCompile Include="..\..\technologies\source\ag_production_technology.cpp" />
+    <ClCompile Include="..\..\technologies\source\ag_storage_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\backup_intermittent_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\base_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\cal_data_output.cpp" />
@@ -690,7 +695,6 @@
     <ClCompile Include="..\..\technologies\source\empty_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\exogenous_shutdown_decider.cpp" />
     <ClCompile Include="..\..\technologies\source\fixed_production_state.cpp" />
-    <ClCompile Include="..\..\technologies\source\ag_storage_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\fractional_secondary_output.cpp" />
     <ClCompile Include="..\..\technologies\source\generic_output.cpp" />
     <ClCompile Include="..\..\technologies\source\global_technology_database.cpp" />
@@ -711,7 +715,6 @@
     <ClCompile Include="..\..\technologies\source\res_secondary_output.cpp" />
     <ClCompile Include="..\..\technologies\source\retired_production_state.cpp" />
     <ClCompile Include="..\..\technologies\source\secondary_output.cpp" />
-    <ClCompile Include="..\..\technologies\source\solar_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\standard_capture_component.cpp" />
     <ClCompile Include="..\..\technologies\source\standard_technical_change_calc.cpp" />
     <ClCompile Include="..\..\technologies\source\stub_technology_container.cpp" />
@@ -722,7 +725,6 @@
     <ClCompile Include="..\..\technologies\source\unmanaged_land_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\variable_production_state.cpp" />
     <ClCompile Include="..\..\technologies\source\vintage_production_state.cpp" />
-    <ClCompile Include="..\..\technologies\source\wind_technology.cpp" />
     <ClCompile Include="..\..\util\base\source\atom.cpp" />
     <ClCompile Include="..\..\util\base\source\atom_registry.cpp" />
     <ClCompile Include="..\..\util\base\source\calibrate_resource_visitor.cpp" />
@@ -754,7 +756,6 @@
     <ClCompile Include="..\..\util\curves\source\point_set_curve.cpp" />
     <ClCompile Include="..\..\util\curves\source\xy_data_point.cpp" />
     <ClCompile Include="..\..\consumers\source\consumer.cpp" />
-    <ClCompile Include="..\..\reporting\source\batch_csv_outputter.cpp" />
     <ClCompile Include="..\..\reporting\source\graph_printer.cpp" />
     <ClCompile Include="..\..\reporting\source\land_allocator_printer.cpp" />
     <ClCompile Include="..\..\reporting\source\xml_db_outputter.cpp" />
@@ -973,6 +974,7 @@
     <ClInclude Include="..\..\target_finder\include\rcp_forcing_target.h" />
     <ClInclude Include="..\..\target_finder\include\secanter.h" />
     <ClInclude Include="..\..\technologies\include\ag_production_technology.h" />
+    <ClInclude Include="..\..\technologies\include\ag_storage_technology.h" />
     <ClInclude Include="..\..\technologies\include\backup_intermittent_technology.h" />
     <ClInclude Include="..\..\technologies\include\base_technology.h" />
     <ClInclude Include="..\..\technologies\include\cal_data_output.h" />
@@ -981,7 +983,6 @@
     <ClInclude Include="..\..\technologies\include\empty_technology.h" />
     <ClInclude Include="..\..\technologies\include\exogenous_shutdown_decider.h" />
     <ClInclude Include="..\..\technologies\include\fixed_production_state.h" />
-    <ClInclude Include="..\..\technologies\include\ag_storage_technology.h" />
     <ClInclude Include="..\..\technologies\include\fractional_secondary_output.h" />
     <ClInclude Include="..\..\technologies\include\generic_output.h" />
     <ClInclude Include="..\..\technologies\include\global_technology_database.h" />
@@ -1010,7 +1011,6 @@
     <ClInclude Include="..\..\technologies\include\res_secondary_output.h" />
     <ClInclude Include="..\..\technologies\include\retired_production_state.h" />
     <ClInclude Include="..\..\technologies\include\secondary_output.h" />
-    <ClInclude Include="..\..\technologies\include\solar_technology.h" />
     <ClInclude Include="..\..\technologies\include\standard_capture_component.h" />
     <ClInclude Include="..\..\technologies\include\standard_technical_change_calc.h" />
     <ClInclude Include="..\..\technologies\include\stub_technology_container.h" />
@@ -1021,7 +1021,6 @@
     <ClInclude Include="..\..\technologies\include\unmanaged_land_technology.h" />
     <ClInclude Include="..\..\technologies\include\variable_production_state.h" />
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h" />
-    <ClInclude Include="..\..\technologies\include\wind_technology.h" />
     <ClInclude Include="..\..\util\base\include\aparsable.h" />
     <ClInclude Include="..\..\util\base\include\atom.h" />
     <ClInclude Include="..\..\util\base\include\atom_registry.h" />
@@ -1076,7 +1075,6 @@
     <ClInclude Include="..\..\util\curves\include\point_set_curve.h" />
     <ClInclude Include="..\..\util\curves\include\xy_data_point.h" />
     <ClInclude Include="..\..\consumers\include\consumer.h" />
-    <ClInclude Include="..\..\reporting\include\batch_csv_outputter.h" />
     <ClInclude Include="..\..\reporting\include\graph_printer.h" />
     <ClInclude Include="..\..\reporting\include\xml_db_outputter.h" />
     <ClInclude Include="..\..\functions\include\aproduction_function.h" />

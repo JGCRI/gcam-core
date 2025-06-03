@@ -220,8 +220,8 @@ module_energy_L113.atb_cost <- function(command, ...) {
         # Use left_join because different ATB years do not contain the same technologies
         left_join(atb1 %>% filter(year == overlap_year),
                  by = c('tech_type', 'tech_detail','input','case','year')) %>%
-        mutate(ratio = newVal / value) %>%
-        mutate(ratio = if_else(is.na(ratio),1,ratio)) %>%
+        mutate(ratio = newVal / value,
+               ratio = if_else(is.na(ratio),1,ratio)) %>%
         select(-newVal, -value,-year) %>%
         mutate(check_overlap_constraint = if_else(abs(ratio -1) > energy.ATB_OVERLAP_CONSTRAINT,TRUE,FALSE))-> overlap_ratio_tab
       # Apply interpolation between the min year in atb1 and the overlap year
@@ -237,21 +237,21 @@ module_energy_L113.atb_cost <- function(command, ...) {
         # Need to clear the intermediate years to apply approx_fun between the
         # first year and the overlap year. We assign an arbitrarily high number (of 100000)
         # so we can then replace with NA values
-        mutate(ratio = if_else(!year %in% c(first_year,overlap_year),100000,ratio)) %>%
+        mutate(ratio = if_else(!year %in% c(first_year,overlap_year),100000,ratio),
         # For battery technology, there is no data before 2018 so we want to make
         # sure we are interpolating between 2018 and the overlap year
-        mutate(ratio = if_else(tech_type == 'Storage' & year <= BATTERY_STORAGE_YEAR,
-                               1,ratio)) %>%
-        mutate(ratio = dplyr::na_if(ratio,100000)) %>%
+               ratio = if_else(tech_type == 'Storage' & year <= BATTERY_STORAGE_YEAR,
+                               1,ratio),
+               ratio = dplyr::na_if(ratio,100000)) %>%
         group_by(tech_type,tech_detail,input,case) %>%
         mutate(ratio = approx_fun(year, ratio, rule = 2)) %>%
         ungroup() %>%
         # Set condition if the ratio of costs at the overlap year > 0.3 where we just copy back values
         # from the overlap year:
         group_by(tech_type,tech_detail,input,case) %>%
-        mutate(value = value * ratio) %>%
+        mutate(value = value * ratio,
         # Now if the ratio is greater than 0.3, we copy back from the overlap_year
-        mutate(value = if_else(check_overlap_constraint == TRUE, value[year==overlap_year],value)) %>%
+               value = if_else(check_overlap_constraint == TRUE, value[year==overlap_year],value)) %>%
         select(-ratio,-check_overlap_constraint) %>%
         bind_rows(atbnext %>% filter(year >= overlap_year)) %>%
         ungroup() %>%
@@ -381,9 +381,9 @@ module_energy_L113.atb_cost <- function(command, ...) {
       semi_join(atb_gcam_mapping_ratios, by = "technology") %>%
       left_join_error_no_match(atb_gcam_mapping_ratios, by = "technology") %>%
       left_join_error_no_match(L113.cost_shadow, by = c("shadow_tech", "year", "input", "case")) %>%
-      mutate(cost_ratio = value / shadow_tech_cost) %>%
+      mutate(cost_ratio = value / shadow_tech_cost,
       # technologies with cost = 0 for tech & shadow tech (e.g. CSP OM-var) return NAN... reset to cost_ratio = 1
-      mutate(cost_ratio = if_else(is.nan(cost_ratio), 1, cost_ratio)) %>%
+             cost_ratio = if_else(is.nan(cost_ratio), 1, cost_ratio)) %>%
       select(technology, year, cost_ratio, input, case) %>%
       # fill out for all ATB years
       complete(nesting(technology, input, case), year = c(ATB_years)) %>%
@@ -587,8 +587,8 @@ module_energy_L113.atb_cost <- function(command, ...) {
       # add in user defined values from A23 files
       bind_rows(A23.globaltech_cost_keep) %>%
       group_by(supplysector, subsector, technology, input, case) %>%
-      mutate(value = approx_fun(year, value, rule = 2)) %>%
-      mutate(improvement.max = if_else(is.na(improvement.max),improvement.max[year == energy.ATB_LATEST_YEAR],improvement.max),
+      mutate(value = approx_fun(year, value, rule = 2),
+             improvement.max = if_else(is.na(improvement.max),improvement.max[year == energy.ATB_LATEST_YEAR],improvement.max),
              improvement.rate = if_else(is.na(improvement.rate), improvement.rate[year == energy.ATB_LATEST_YEAR],improvement.rate)) %>%
       ungroup() %>%
       arrange(subsector, technology, input, case) %>%

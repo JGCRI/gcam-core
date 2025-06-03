@@ -218,8 +218,8 @@ module_socio_L280.GDP_macro <- function(command, ...) {
     laborForceShareSSP2 %>%
       complete(nesting(GCAM_region_ID), year = c(year, MODEL_FINAL_BASE_YEAR)) %>%
       group_by(GCAM_region_ID) %>%
-      mutate(pop = approx_fun(year, pop , rule = 2)) %>%
-      mutate(labor.force.share = approx_fun(year, labor.force.share , rule = 2)) %>%
+      mutate(pop = approx_fun(year, pop , rule = 2),
+             labor.force.share = approx_fun(year, labor.force.share , rule = 2)) %>%
       filter(year == MODEL_FINAL_BASE_YEAR ) %>% ungroup() -> laborForceShareSSP2.FBY
 
     laborForceShareSSP2.FBY %>% left_join_error_no_match(employed.share.FBY, by=c("GCAM_region_ID") ) %>%

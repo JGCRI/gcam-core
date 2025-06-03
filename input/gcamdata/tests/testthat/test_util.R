@@ -34,9 +34,9 @@ test_that("screening for use of forbidden functions works", {
 
   expect_equal(screen_forbidden(testgood_L20), character())
   tb <- screen_forbidden(testbad_L10)
-  expect_equivalent(tb[,1], c("consecutive mutate calls", "(?<!error_no_)match(?!es)",
+  expect_equivalent(tb[,1], c("consecutive mutate calls", "(?<!error_no_)match(?!es)\\s*\\(",
                          "ifelse", "ifelse", "melt", "cast", "rbind(?!list)",
-                         "cbind", "merge", "MODEL_BASE_YEARS", "MODEL_FUTURE_YEARS"))
+                         "cbind", "merge\\s*\\(", "MODEL_BASE_YEARS", "MODEL_FUTURE_YEARS"))
 })
 
 

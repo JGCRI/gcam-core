@@ -93,7 +93,7 @@ module_energy_L270.limits <- function(command, ...) {
       L270.CreditInput_elec
 
     # L270.CreditInput_feedstocks: minicam-energy-input of oil credits for feedstock techs
-    tibble(sector.name = c("other industrial feedstocks", "chemical feedstocks"),
+    tibble(sector.name = c("other industrial feedstocks", "chemical feedstocks", "construction feedstocks"),
            subsector.name = "refined liquids",
            technology = "refined liquids") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%

@@ -69,8 +69,6 @@ class Technology;
 class DefaultTechnology;
 class BackupIntermittentTechnology;
 class IntermittentTechnology;
-class WindTechnology;
-class SolarTechnology;
 class NukeFuelTechnology;
 class TranTechnology;
 class AgProductionTechnology;
@@ -233,7 +231,7 @@ public:
          * hierarchy under introspection.
          */
         DEFINE_SUBCLASS_FAMILY( ITechnology, Technology, DefaultTechnology, BackupIntermittentTechnology, IntermittentTechnology,
-                                WindTechnology, SolarTechnology, NukeFuelTechnology, TranTechnology,
+                                NukeFuelTechnology, TranTechnology,
                                 AgProductionTechnology, PassThroughTechnology, AgStorageTechnology, 
                                 UnmanagedLandTechnology, ResourceReserveTechnology, EmptyTechnology )
     )

@@ -71,6 +71,7 @@ module_energy_L122.gasproc_refining <- function(command, ...) {
       semi_join(select(calibrated_techs, supplysector, subsector, technology), by = c("supplysector", "subsector", "technology")) %>%
       left_join(select(calibrated_techs, supplysector, subsector, technology, minicam.energy.input, sector, fuel), by = c("supplysector", "subsector", "technology", "minicam.energy.input")) %>%
       gather(hist_year, value, -supplysector, -subsector, -technology, -minicam.energy.input, -sector, -fuel) %>%
+      set_years() %>%
       mutate(hist_year = as.numeric(hist_year)) %>%
       filter(hist_year == min(HISTORICAL_YEARS)) %>%
       repeat_add_columns(tibble(year = HISTORICAL_YEARS)) %>%
@@ -94,7 +95,7 @@ module_energy_L122.gasproc_refining <- function(command, ...) {
     # sugar cane ethanol, corn ethanol)
     BIOMASS_LIQUIDS <- c("refined biofuels_ethanol", "refined biofuels_FT")
     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == energy.TPES_flow,
+      filter(sector == energy.TPES_FLOW,
              fuel %in% BIOMASS_LIQUIDS) %>%
       mutate(Biofuel = if_else(fuel == "refined biofuels_ethanol", "ethanol", "biodiesel")) %>%
       left_join(A_biofuel_types_R, by = c("GCAM_region_ID", "Biofuel")) %>%
@@ -139,7 +140,7 @@ module_energy_L122.gasproc_refining <- function(command, ...) {
     # Create en_bal_TPES_OIL, en_bal_oil, ctl_OIL, and gtlctl_oil to adjust the outputs of CTL and GTL given the same fuel names of the oil refining outputs (as mentioned in the note above)
     # Get output for refined liquids for oil refining (TPES) sector
     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == energy.TPES_flow) %>%
+      filter(sector == energy.TPES_FLOW) %>%
       filter(fuel == "refined liquids") %>%
       select(GCAM_region_ID,sector, year, value_en_bal_TPES = value) %>%
       mutate(sector = "oil refining") -> en_bal_TPES_OIL
@@ -181,7 +182,7 @@ module_energy_L122.gasproc_refining <- function(command, ...) {
     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
       filter(sector == "net_oil refining") %>%
       filter(fuel == "refined liquids") %>%
-      left_join_error_no_match(select(filter(L1012.en_bal_EJ_R_Si_Fi_Yh, sector == energy.TPES_flow, fuel == "refined liquids"), -sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
+      left_join_error_no_match(select(filter(L1012.en_bal_EJ_R_Si_Fi_Yh, sector == energy.TPES_FLOW, fuel == "refined liquids"), -sector), by = c("GCAM_region_ID", "fuel", "year")) %>%
       select(-value.x) %>%
       rename(value = value.y) %>%
       bind_rows(filter(L1012.en_bal_EJ_R_Si_Fi_Yh, sector == "net_oil refining", fuel!= "refined liquids")) %>%
@@ -311,7 +312,7 @@ module_energy_L122.gasproc_refining <- function(command, ...) {
 
     # Gas processing output from biomass gasification is equal to regional TPES
     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == energy.TPES_flow , fuel == "gasified biomass") %>%
+      filter(sector == energy.TPES_FLOW , fuel == "gasified biomass") %>%
       mutate(sector = "gas processing", fuel = "biomass") -> L122.out_EJ_R_gasproc_bio_Yh
 
     # Gas processing output from coal gasification is calculated from the input of coal
@@ -328,7 +329,7 @@ module_energy_L122.gasproc_refining <- function(command, ...) {
 
     # Natural gas is equal to regional TPES minus upstream use of natural gas (e.g. GTL). Procedure and assumptions are explained below
     L1012.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(sector == energy.TPES_flow, fuel == "gas") %>%
+      filter(sector == energy.TPES_FLOW, fuel == "gas") %>%
       mutate(sector = "gas processing") -> L122.out_EJ_R_gasproc_gas_Yh
 
     # Note: The following code and their reason is given in  "NOTE2" (pasted from original code) below
