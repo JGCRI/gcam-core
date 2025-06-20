@@ -252,7 +252,8 @@ const string& NestedCESProductionFunctionMacro::getXMLName() const {
  * \return The name of this container.
  */
 const gcamstr& NestedCESProductionFunctionMacro::getName() const {
-    return gcamstr(getXMLNameStatic());
+    static const gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 //! Writes data members to debugging data stream in XML format.

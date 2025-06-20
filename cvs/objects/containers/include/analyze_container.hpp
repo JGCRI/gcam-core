@@ -1,3 +1,5 @@
+#if DEBUG_STATE
+
 #ifndef _ANALYZE_CONTAINER_H_
 #define _ANALYZE_CONTAINER_H_
 #if defined(_MSC_VER)
@@ -51,7 +53,13 @@
 #include "containers/include/imodel_feedback_calc.h"
 
 /*!
- * \brief Use GCAMFusion to analyze memory usage
+ * \brief Use GCAMFusion to analyze memory usage of GCAM `CONTAINER`.
+ * \details A GCAM containers are almost any class which are "nodes" in the GCAM heirachy.  They
+ *          may contain additional containers or just "simple" data.  This diagnostics class will perform
+ *          introspection to generate reports, per model period, of which classes are active (by actual instance
+ *          and base class so users can aggregate as useful) the number of instances created and their direct
+ *          actual class size as well as the "minimum size" (which could be different due to "padding", virtual
+ *          method pointers, or member variables declared outside of `DEFINE_DATA`).
  *
  * \author Pralit Patel
  */
@@ -59,30 +67,26 @@ class AnalyzeContainer : public IModelFeedbackCalc {
 public:
 
     // INamed methods
-    virtual const gcamstr& getName() const { static const gcamstr XML_NAME("analyze_str"); return XML_NAME; }
+    virtual const gcamstr& getName() const { static const gcamstr XML_NAME("analyze_container"); return XML_NAME; }
     
     // IModelFeedbackCalc methods
     virtual void calcFeedbacksBeforePeriod( Scenario* aScenario, const IClimateModel* aClimateModel, const int aPeriod );
 
     virtual void calcFeedbacksAfterPeriod( Scenario* aScenario, const IClimateModel* aClimateModel, const int aPeriod );
     
-    // Templated callbacks for GCAMFusion
+    // Templated callbacks for GCAMFusion so that we can perform introspection
     template<typename DataType>
     void processData( DataType& aData );
-    /*
-    template<typename DataType>
-    void pushFilterStep( const DataType& aData );
-    template<typename DataType>
-    void popFilterStep( const DataType& aData );
-    */
 
 private:
-
-    /*std::map<std::string, size_t> mContainerCount;
-    std::map<std::string, size_t> mContainerSize;
-    std::map<std::string, size_t> mContainerMinSize;*/
     
+    // A data structure to collect results in.  We use a map where the key is the instantiated
+    // class type name and the value is a tuple including: base class name, actual class size,
+    // minimum class size, and number of instances.  Such a data structure allows us to quickly
+    // accumulate results per instantiated class type.
     std::map<std::string, std::tuple<std::string, size_t, size_t, size_t> > mContainerStats;
 };
 
 #endif // _ANALYZE_CONTAINER_H_
+
+#endif // DEBUG_STATE

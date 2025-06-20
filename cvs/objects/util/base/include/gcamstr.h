@@ -73,6 +73,9 @@ void checkAddStrDuringCalc(const std::string& aStr);
 // have added additional debugging in the insert method
 template<typename Entry,typename Key>
 class DebugFactoryClass : boost::flyweights::factory_marker {
+    // Allow AnalyzeStr to access the size of the contained string pool so it can
+    // include it in the diagnstic report of string usage.
+    friend class AnalyzeStr;
     public:
         typedef const Entry* handle_type;
 

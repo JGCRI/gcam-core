@@ -74,6 +74,7 @@
 #include "containers/include/market_dependency_finder.h"
 #include "technologies/include/global_technology_database.h"
 #include "containers/include/iactivity.h"
+#include "util/base/include/manage_state_variables.hpp"
 
 #if GCAM_PARALLEL_ENABLED
 #include "parallel/include/gcam_parallel.hpp"
@@ -293,8 +294,15 @@ void World::calc( const int aPeriod, GcamFlowGraph *aWorkGraph, const vector<IAc
     }
 
     // do the model calculation
-    aWorkGraph->mHead.try_put( tbb::flow::continue_msg() );
-    aWorkGraph->mTBBFlowGraph.wait_for_all();
+    tbb::task_arena& threadPool = scenario->getManageStateVariables()->mThreadPool;
+    tbb::task_group tg;
+    threadPool.execute([&](){
+        tg.run([&](){
+            aWorkGraph->mHead.try_put( tbb::flow::continue_msg() );
+            aWorkGraph->mTBBFlowGraph.wait_for_all();
+        });
+    });
+    threadPool.execute([&tg](){ tg.wait(); });
 
 #ifdef GNU_SOURCE
     feenableexcept(except);

@@ -1,3 +1,4 @@
+#if DEBUG_STATE
 #ifndef _ANALYZE_TECH_MEM_H_
 #define _ANALYZE_TECH_MEM_H_
 #if defined(_MSC_VER)
@@ -48,7 +49,11 @@
 #include "containers/include/imodel_feedback_calc.h"
 
 /*!
- * \brief Use GCAMFusion to analyze memory usage
+ * \brief Use GCAMFusion to analyze memory usage within the various types of `ARRAY` Data.
+ * \details Produce diagnostic reports on which types of vectors are in use (std::vector, PeriodVector,
+ *          YearVector, or TechVintageVector) including how many instances and how much memory is
+ *          consumed by them both overhead and direct contiguous memory for the contained data.  With
+ *          a focus on those within Technology which can create "dead space" when not using TechVintageVector.
  *
  * \author Pralit Patel
  */
@@ -73,32 +78,46 @@ public:
 
 private:
 
+    //! A flag to indicate if the processData call back is currently within a Technology
     bool mInTech;
 
-    int mCurrTechLifetme;
+    //! The lifetime in terms of model periods of the current technology (if mInTech)
+    int mCurrTechLifetime;
 
+    //! A count of the number of Technology instances
     size_t mNumTech;
 
+    //! A count of the number of ARRAY held within and below the Technology level of nesting
     size_t mNumInTech;
 
+    //! The total sizeof the number of ARRAY held within and below the Technology level of nesting
     size_t mTotalSizeInTech;
 
+    //! The wasted space of arrays allocated for indices which would never be utilized
     size_t mDeadSizeInTech;
 
+    //! A count of the number of ARRAY not held within and below the Technology level of nesting
     size_t mNumOutTech;
 
+    //! The total sizeof the number of ARRAY not held within and below the Technology level of nesting
     size_t mTotalSizeOutTech;
     
+    //! The number of TechVintageVector instances
     size_t mNumTechVec;
     
+    //! The total sizeof TechVintageVector instances
     size_t mTotalSizeInTechVec;
     
+    //! A count of YearVectors, which are primarily used for land use change results
     size_t mNumLUCArr;
     
+    //! The total sizeof YearVectors, which are primarily used for land use change results
     size_t mTotalSizeLUCArr;
     
+    //! A count of the number of Value classes held within ARRAYs (as apposed to double)
     size_t mNumValueClasses;
-
 };
 
 #endif // _ANALYZE_TECH_MEM_H_
+
+#endif // DEBUG_STATE

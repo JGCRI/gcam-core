@@ -1,3 +1,5 @@
+#if DEBUG_STATE
+
 /*
  * LEGAL NOTICE
  * This computer software was prepared by Battelle Memorial Institute,
@@ -59,9 +61,12 @@ void AnalyzeTechMem::calcFeedbacksBeforePeriod( Scenario* aScenario, const IClim
 
 
 void AnalyzeTechMem::calcFeedbacksAfterPeriod( Scenario* aScenario, const IClimateModel* aClimateModel, const int aPeriod ) {
-    // do stuff
+    // do introspection and report results at the end of a model period in case any new arrays get allocated
+    // during this period
+    
+    // clear out counts
     mInTech = false;
-    mCurrTechLifetme = -1;
+    mCurrTechLifetime = -1;
     mNumTech = 0;
     mNumInTech = 0;
     mTotalSizeInTech = 0;
@@ -74,19 +79,20 @@ void AnalyzeTechMem::calcFeedbacksAfterPeriod( Scenario* aScenario, const IClima
     mTotalSizeLUCArr = 0;
     mNumValueClasses = 0;
 
+    // we want to search for any ARRAY Data types (std::vector, PeriodVector, YearVector, TechVintageVector)
+    // we will search for ARRAY data and collect statistics based on the types handled un `processData`
     vector<FilterStep*> collectStateSteps( 2, 0 );
     collectStateSteps[ 0 ] = new FilterStep( "" );
-    //collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::ARRAY );
-    collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::SIMPLE );
-    // DoCollect will handle all fusion callbacks thus their template boolean parameter
-    // are set to true.
+    collectStateSteps[ 1 ] = new FilterStep( "", DataFlags::ARRAY );
+    // note: because we are interested on if ARRAY is below the Technology level of nesting
+    // we will need to handle push/pop step callbacks as well
     GCAMFusion<AnalyzeTechMem, true, true, true> gatherState( *this, collectStateSteps );
     gatherState.startFilter( aScenario );
     
-    // DoCollect has now gathered all active state into the mStateValues list to
-    // allow faster/easier processing for the remaining tasks at hand.
+    // we will have finished gathering all of the statistics at this point so go ahead
+    // and report results
     ILogger& mainLog = ILogger::getLogger( "main_log" );
-    mainLog.setLevel( ILogger::SEVERE );
+    mainLog.setLevel( ILogger::NOTICE );
     mainLog << "sizeof(double): " << sizeof(double) << ", sizeof(Value): " << sizeof(Value) << endl;
     mainLog << "sizeof(vector<double>): " << sizeof(std::vector<double>) << ", sizeof(vector<Value>): " << sizeof(std::vector<Value>) << endl;
     mainLog << "sizeof(PeriodVector<double>): " << sizeof(objects::PeriodVector<double>) << ", sizeof(PeriodVector<Value>): " << sizeof(objects::PeriodVector<Value>) << endl;
@@ -120,11 +126,10 @@ void AnalyzeTechMem::processData<objects::PeriodVector<double> >( objects::Perio
     if(mInTech) {
         ++mNumInTech;
         mTotalSizeInTech += dataSize;
-        if( mCurrTechLifetme <= 0 ) {
+        if( mCurrTechLifetime <= 0 ) {
             cout << "didn't set tech lifetime." << endl;
         } else {
-            // TODO: hard coding sizes
-            mDeadSizeInTech += (aData.size() - mCurrTechLifetme ) * sizeof(double);
+            mDeadSizeInTech += (aData.size() - mCurrTechLifetime ) * sizeof(double);
         }
     } else {
         ++mNumOutTech;
@@ -139,11 +144,10 @@ void AnalyzeTechMem::processData<objects::PeriodVector<Value> >( objects::Period
     if(mInTech) {
         ++mNumInTech;
         mTotalSizeInTech += dataSize;
-        if( mCurrTechLifetme <= 0 ) {
+        if( mCurrTechLifetime <= 0 ) {
             cout << "didn't set tech lifetime." << endl;
         } else {
-            // TODO: hard coding sizes
-            mDeadSizeInTech += ( aData.size() - mCurrTechLifetme) * sizeof(Value);
+            mDeadSizeInTech += ( aData.size() - mCurrTechLifetime) * sizeof(Value);
         }
     } else {
         ++mNumOutTech;
@@ -157,11 +161,10 @@ void AnalyzeTechMem::processData<std::vector<double> >( std::vector<double>& aDa
     if(mInTech) {
         ++mNumInTech;
         mTotalSizeInTech += dataSize;
-        if( mCurrTechLifetme <= 0 ) {
+        if( mCurrTechLifetime <= 0 ) {
             cout << "didn't set tech lifetime." << endl;
         } else {
-            // TODO: hard coding sizes
-            mDeadSizeInTech += (aData.size() -  mCurrTechLifetme) * sizeof(double);
+            mDeadSizeInTech += (aData.size() -  mCurrTechLifetime) * sizeof(double);
         }
     } else {
         ++mNumOutTech;
@@ -176,11 +179,10 @@ void AnalyzeTechMem::processData<std::vector<Value> >( std::vector<Value>& aData
     if(mInTech) {
         ++mNumInTech;
         mTotalSizeInTech += dataSize;
-        if( mCurrTechLifetme <= 0 ) {
+        if( mCurrTechLifetime <= 0 ) {
             cout << "didn't set tech lifetime." << endl;
         } else {
-            // TODO: hard coding sizes
-            mDeadSizeInTech += (aData.size() - mCurrTechLifetme ) * sizeof(Value);
+            mDeadSizeInTech += (aData.size() - mCurrTechLifetime ) * sizeof(Value);
         }
     } else {
         ++mNumOutTech;
@@ -250,13 +252,15 @@ void AnalyzeTechMem::popFilterStep( const DataType& aData ) {
 
 template<>
 void AnalyzeTechMem::pushFilterStep<ITechnology*>( ITechnology* const& aData ) {
+    // we are now stepping into a technology, set the flag and calculate the number of
+    // periods which the technology is active
     mInTech = true;
     ++mNumTech;
     const Modeltime* modeltime = scenario->getModeltime();
-    mCurrTechLifetme = 0;
+    mCurrTechLifetime = 0;
     int currPer = modeltime->getyr_to_per( aData->getYear() );
     for( int year = aData->getYear(); currPer < modeltime->getmaxper() && year < (aData->getYear() + /*aData->getLifetimeYears()*/5 ); ) {
-        ++mCurrTechLifetme;
+        ++mCurrTechLifetime;
         ++currPer;
         if( currPer < modeltime->getmaxper() ) {
             year = modeltime->getper_to_yr( currPer );
@@ -264,19 +268,11 @@ void AnalyzeTechMem::pushFilterStep<ITechnology*>( ITechnology* const& aData ) {
     }
 }
 
-/*template<>
-void AnalyzeTechMem::pushFilterStep<ICarbonCalc*>( ICarbonCalc* const& aData ) {
-    size_t dataSize = sizeof( vector<double> );
-    if( aData->getMatureAge() > 1 ) {
-        dataSize += ( CarbonModelUtils::getEndYear() - CarbonModelUtils::getStartYear() + 1 ) * sizeof(double);
-    }
-    ++mNumLUCArr;
-    mTotalSizeLUCArr += dataSize;
-}*/
-
 template<>
 void AnalyzeTechMem::popFilterStep<ITechnology*>( ITechnology* const& aData ) {
+    // we are now stepping out of the Technology level of nesting so reset the flags
     mInTech = false;
-    mCurrTechLifetme = -1;
+    mCurrTechLifetime = -1;
 }
 
+#endif // DEBUG_STATE

@@ -1,3 +1,4 @@
+#if DEBUG_STATE
 #ifndef _ANALYZE_STR_H_
 #define _ANALYZE_STR_H_
 #if defined(_MSC_VER)
@@ -51,7 +52,10 @@
 #include "containers/include/imodel_feedback_calc.h"
 
 /*!
- * \brief Use GCAMFusion to analyze memory usage
+ * \brief Use GCAMFusion to analyze string related memory usage.
+ * \details Utilize introspection to search for all Data variables which contains a string of some form
+ *          so that we can track their memory usage and redundancy.  In addition provide diagnostics
+ *          to ensure we are not generating "bloat" in the interned gcamstr string pool that grows over time.
  *
  * \author Pralit Patel
  */
@@ -69,23 +73,22 @@ public:
     // Templated callbacks for GCAMFusion
     template<typename DataType>
     void processData( DataType& aData );
-    /*
-    template<typename DataType>
-    void pushFilterStep( const DataType& aData );
-    template<typename DataType>
-    void popFilterStep( const DataType& aData );
-    */
 
 private:
-
     
+    //! The number of std::string instances found
     size_t mNumActualStr;
     
+    //! The total number of any kind of string (std::string or gcamstr)
     size_t mNumStr;
 
+    //! The theoretical size of strings if they were all std::string
     size_t mTotalSize;
 
+    //! A count of the number of times each string is represented in GCAM
     std::map<std::string, size_t> mStrCount;
 };
 
 #endif // _ANALYZE_STR_H_
+
+#endif // DEBUG_STATE
