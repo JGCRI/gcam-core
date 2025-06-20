@@ -250,7 +250,7 @@ double CachedMarket::getPrice( const gcamstr& aGoodName, const gcamstr& aRegionN
     if( aMustExist ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Called for price of non-existant market " << aGoodName << " in region " 
+        mainLog << "Called for price of non-existent market " << aGoodName << " in region "
             << aRegionName << endl;
     }
     return Marketplace::NO_MARKET_PRICE;
@@ -288,7 +288,7 @@ double CachedMarket::getSupply( const gcamstr& aGoodName, const gcamstr& aRegion
     
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Called for supply of non-existant market " << aGoodName << " in " << aRegionName << endl;
+    mainLog << "Called for supply of non-existent market " << aGoodName << " in " << aRegionName << endl;
     return 0;
 }
 
@@ -324,7 +324,7 @@ double CachedMarket::getDemand(  const gcamstr& aGoodName, const gcamstr& aRegio
     
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Called for demand of non-existant market " << aGoodName << " in " << aRegionName << endl;
+    mainLog << "Called for demand of non-existent market " << aGoodName << " in " << aRegionName << endl;
     return 0;
 }
 

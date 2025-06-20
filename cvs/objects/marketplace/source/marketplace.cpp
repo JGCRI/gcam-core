@@ -182,7 +182,7 @@ bool Marketplace::createMarket( const gcamstr& aRegionName, const gcamstr& marke
 
 /*!
  * \brief Create a market that links to another market.
- * \details This function creates a market using the same symatics as createMarket
+ * \details This function creates a market using the same semantics as createMarket
  *          however differs in two key ways:
  *          - The market type is always LinkedMarket and the parameter linkedMarket along
  *            with the aRegionName will be used to look up the good to link to.
@@ -215,13 +215,13 @@ bool Marketplace::createLinkedMarket( const gcamstr& aRegionName, const gcamstr&
 
     /*!
      * \warning Changing marketName and changing a market over time may have unintended consequences
-     *          instead we reccommend using regional markets when a user wants to change the linked
+     *          instead we recommend using regional markets when a user wants to change the linked
      *          market over time.
      */
     if( aStartPeriod != -1 && aRegionName != marketName ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Changing regional markets and linking to different markets over time is not reccommend." << endl;
+        mainLog << "Changing regional markets and linking to different markets over time is not recommended." << endl;
         mainLog << "A safer approach would be to use regional markets in this use case." << endl;
     }
 
@@ -519,7 +519,7 @@ void Marketplace::setPrice( const gcamstr& goodName, const gcamstr& aRegionName,
 * This function increments the supply for a market determined by the goodName and aRegionName
 * by a given value. This function is used throughout the model to add supply to markets.
 * In order to add to supply a caller must provide a "state" backed Value class this is
-* due to when calculating partial derivatives we are interesed in adding the difference
+* due to when calculating partial derivatives we are interested in adding the difference
 * from the current value and the "base" value to supply.
 *
 * \param goodName Name of the good for which to add supply.
@@ -557,7 +557,7 @@ void Marketplace::addToSupply( const gcamstr& goodName, const gcamstr& aRegionNa
 * This function increments the demand for a market determined by the goodName and aRegionName
 * by a given value. This function is used throughout the model to add demand to markets. 
 * In order to add to demand a caller must provide a "state" backed Value class this is
-* due to when calculating partial derivatives we are interesed in adding the difference
+* due to when calculating partial derivatives we are interested in adding the difference
 * from the current value and the "base" value to demand.
 *
 * \param goodName Name of the good for which to add demand.
@@ -613,7 +613,7 @@ double Marketplace::getPrice( const gcamstr& goodName, const gcamstr& aRegionNam
     if( aMustExist ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Called for price of non-existant market " << goodName << " in region " 
+        mainLog << "Called for price of non-existent market " << goodName << " in region "
             << aRegionName << endl;
     }
     return NO_MARKET_PRICE;
@@ -623,7 +623,7 @@ double Marketplace::getPrice( const gcamstr& goodName, const gcamstr& aRegionNam
 *
 * This function uses a market type dependent function to find the supply for a market determined
 * by the goodName and aRegionName.  This supply is not always the raw or true supply.
-* For non-existant markets, this function returns 0.
+* For non-existent markets, this function returns 0.
 *
 * \param goodName The good for which a supply is needed.
 * \param aRegionName The region for which a supply is needed.
@@ -639,7 +639,7 @@ double Marketplace::getSupply( const gcamstr& goodName, const gcamstr& aRegionNa
 
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Called for supply of non-existant market " << goodName << " in " << aRegionName << endl;
+    mainLog << "Called for supply of non-existent market " << goodName << " in " << aRegionName << endl;
     return 0;
 }
 
@@ -647,7 +647,7 @@ double Marketplace::getSupply( const gcamstr& goodName, const gcamstr& aRegionNa
 *
 * This function uses a market type dependent function to find the demand for a market determined
 * by the goodName and aRegionName.  This demand is not always the raw or true demand.
-* For non-existant markets, this function returns 0.
+* For non-existent markets, this function returns 0.
 *
 * \param goodName The good for which a demand is needed.
 * \param aRegionName The region for which a demand is needed.
@@ -663,7 +663,7 @@ double Marketplace::getDemand(  const gcamstr& goodName, const gcamstr& aRegionN
 
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Called for demand of non-existant market " << goodName << " in " << aRegionName << endl;
+    mainLog << "Called for demand of non-existent market " << goodName << " in " << aRegionName << endl;
     return 0;
 }
 
@@ -729,7 +729,7 @@ void Marketplace::init_to_last( const int period ) {
     }
 }
 
-/*! \brief Store market prices for policy cost caluclation.
+/*! \brief Store market prices for policy cost calculation.
 *
 *
 * \author Sonny Kim
@@ -743,7 +743,7 @@ void Marketplace::store_prices_for_cost_calculation()
     }
 }
 
-/*! \brief Restore market prices for policy cost caluclation.
+/*! \brief Restore market prices for policy cost calculation.
 *
 *
 * \author Sonny Kim
