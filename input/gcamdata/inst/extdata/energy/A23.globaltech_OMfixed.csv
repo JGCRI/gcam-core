@@ -6,7 +6,7 @@
 # Note that some technologies are the same as another with additional equipment (i.e. CCS) for those technologies the improvement is on the additional equipment
 # Column types: ccccnnnnnnnc 
 # ----------
-supplysector,subsector,technology,input.OM.fixed,1971,1990,2005,2010,2015,improvement.max,improvement.rate,improvement.shadow.technology
+supplysector,subsector,technology,input.OM.fixed,1971,1990,2005,2010,final-calibration-year,improvement.max,improvement.rate,improvement.shadow.technology
 electricity,coal,coal (conv pul),OM-fixed,,,,,,0.75,0.01,
 electricity,coal,coal (conv pul CCS),OM-fixed,,,,,,0.6,0.05,
 electricity,coal,coal (IGCC),OM-fixed,,,,,,0.7,0.03,

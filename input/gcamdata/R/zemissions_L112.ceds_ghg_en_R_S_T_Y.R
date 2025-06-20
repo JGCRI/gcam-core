@@ -1707,7 +1707,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
       # 3) Handling outliers, if any scaler is greater than a threshold, will replace its scaler as 1
       # so just keep using CEDS emission
-      # for industry process emisison, choose scaler as emissions.EPA.SCALING.THRESHOLD
+      # for industry process emission, choose scaler as emissions.EPA.SCALING.THRESHOLD
       # mostly filter out Region 4 - industrial other, and some region 32
 
       L131.nonco2_tg_R_prc_S_S_Yh_EPAscaler %>%

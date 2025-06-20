@@ -116,19 +116,19 @@ module_aglu_L141.ag_Fert_IFA_ctry_crop <- function(command, ...) {
     # to the FAO's "Grasses Nes for forage;Sil"
     L100.FAO_ag_HA_ha %>%
       filter(year %in% aglu.FAO_LDS_YEARS) %>%
-      group_by(iso, item, item_code) %>%
+      group_by(iso, item_code) %>%
       summarise(FAO = mean(value)) %>%
       ungroup() ->
       L141.FAO
     # Take LDS HA data and aggregate to the GCAM region-commodity level:
     L100.LDS_ag_HA_ha %>%
-      left_join(FAO_ag_items_PRODSTAT[c("item", "item_code", "GTAP_crop")], by = "GTAP_crop") %>%
+      left_join(FAO_ag_items_PRODSTAT[c("item_code", "GTAP_crop")], by = "GTAP_crop") %>%
       drop_na() %>%                 # Some of the GTAP crops don't have a corresponding crop in the FAO databases
-      group_by(iso, item, item_code) %>%
+      group_by(iso, item_code) %>%
       summarise(LDS = sum(value)) %>%
       ungroup() %>%
       # Join in the FAO data from the previous pipeline
-      left_join(L141.FAO %>% select(-item), by = c("iso", "item_code")) %>%
+      left_join(L141.FAO, by = c("iso", "item_code")) %>%
       replace_na(list(FAO = 0)) %>%
       # Calculate the FAO_LDS scaler value = FAO/LDS
       # Set an upper bound to prevent extremely high fertilizer allocations to potentially low production volume GLUs

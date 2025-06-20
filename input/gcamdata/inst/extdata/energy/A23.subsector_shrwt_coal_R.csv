@@ -4,5 +4,5 @@
 # Source: GCAM assumptions; intended consistency with current trends
 # Column types: cccnnn 
 # ----------
-region,supplysector,subsector,2015,2020,2035
+region,supplysector,subsector,final-calibration-year,initial-future-year,2035
 USA,electricity,coal,1,0,1

@@ -210,16 +210,24 @@ module_socio_L280.GDP_macro <- function(command, ...) {
       mutate(labor.force.share = labor.force/pop) %>%
       select(-labor.force) -> laborForceShareSSP2
 
-
     #Calculate employment rate from historical employed share and working age pop from SSP data.
     #Apply employment rate from final base year to to future working age pop share.
     national.accounts.BaseYrs %>% filter( year == MODEL_FINAL_BASE_YEAR ) %>%
       select( GCAM_region_ID, employed.share = labor.force.share ) -> employed.share.FBY
-    laborForceShareSSP2 %>% filter(year == MODEL_FINAL_BASE_YEAR ) -> laborForceShareSSP2.FBY
+    # Interpolate for base-year year if missing
+    laborForceShareSSP2 %>%
+      complete(nesting(GCAM_region_ID), year = c(year, MODEL_FINAL_BASE_YEAR)) %>%
+      group_by(GCAM_region_ID) %>%
+      mutate(pop = approx_fun(year, pop , rule = 2),
+             labor.force.share = approx_fun(year, labor.force.share , rule = 2)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR ) %>% ungroup() -> laborForceShareSSP2.FBY
+
     laborForceShareSSP2.FBY %>% left_join_error_no_match(employed.share.FBY, by=c("GCAM_region_ID") ) %>%
       mutate(employment.rate = employed.share/labor.force.share) %>%
       select(-year, -pop, -employed.share, -labor.force.share) -> employment.rate.SSP2.FBY
 
+    # Note that this code assumes that future years are a multiple of 5 years. This won't always be true.
+    # Likely a problem in many places to fix later.
     laborForceShareSSP2 %>% filter(year %in% MODEL_FUTURE_YEARS) %>%
       left_join_error_no_match(employment.rate.SSP2.FBY, by=c("GCAM_region_ID")) %>%
       mutate(labor.force.share = labor.force.share * employment.rate) -> laborForceShareSSP2.MFY
@@ -231,26 +239,36 @@ module_socio_L280.GDP_macro <- function(command, ...) {
     #Make sure gdp, pop, gdp/cap, and savings rate are from consistent data sources.
     #Create average gdp/cap and savings rate by 5 year period.
     #This averages 2 years before and after 5 year intervals.
-    savings.rate.hist %>% select(GCAM_region_ID, region, year, gdp.cap.pwt, savings.rate) %>%
-        mutate(period = if_else( (year%%5) > 2, (year%/%5 + 1)*5, (year%/%5)*5 )) ->
-      savings.rate.hist
-    #calculate average annual gdp/cap growthrate and savings rate by region
-    savings.rate.hist %>% select(-year) %>%
-      group_by(GCAM_region_ID, region, period) %>%
-      summarise_all(mean, na.rm = TRUE) %>%
-      ungroup() -> savings.rate.hist
+
+    # Here we estimate the saving rate parameter using 5-year interval historial data
+    # since there will be more data updates to follow, we using data up to 2015 to keep
+    # changes/impacts minimal in BYU
+
+    savings.rate.hist %>%
+      select(GCAM_region_ID, region, year, gdp.cap.pwt, savings.rate) %>%
+      group_by(GCAM_region_ID, region) %>%
+      #calculate moving average annual gdp/cap growthrate and savings rate by region
+      mutate(across(setdiff(names(.), c("GCAM_region_ID", "region", "year")),
+                    ~ Moving_average(.x, periods = 5))) %>%
+      ungroup -> savings.rate.hist.v2
+
+    # keep the original years used for now [revisit under KLEAM]
+    savings.rate.hist.v2 %>%
+      filter(year %in% seq(1975, 2015, 5)) %>%
+      rename(period = year) -> savings.rate.hist.v2
+
 
     #calculate gdp per capita growthrate and lagged savings rate
-    savings.rate.hist %>% arrange(GCAM_region_ID, period) %>%
+    savings.rate.hist.v2 %>% arrange(GCAM_region_ID, period) %>%
       group_by(GCAM_region_ID) %>%
       mutate(gdp.cap.gr = gdp.cap.pwt / lag(gdp.cap.pwt) - 1,
              savings.rate.lag = lag(savings.rate)) %>%
-      ungroup() -> savings.rate.hist
+      ungroup() -> savings.rate.hist.v2
 
     # LM Regressions using 5-year average periods
-    lm(savings.rate ~ gdp.cap.gr + savings.rate.lag, data = savings.rate.hist) -> savings.rate.model
+    lm(savings.rate ~ gdp.cap.gr + savings.rate.lag, data = savings.rate.hist.v2) -> savings.rate.model
     # savings rate prediction using actual savings rate
-    predict.lm(savings.rate.model, savings.rate.hist) -> savings.rate.hist$savings.rate.fit
+    predict.lm(savings.rate.model, savings.rate.hist.v2) -> savings.rate.hist.v2$savings.rate.fit
     # Get coefficients to predict future savings rate
     coef.est <- summary(savings.rate.model)$coefficients
     savRate.b0 <- coef.est["(Intercept)", "Estimate"]
@@ -270,10 +288,10 @@ module_socio_L280.GDP_macro <- function(command, ...) {
       select(GCAM_region_ID, period=year, gdp.cap) -> gdp.cap.hist
     # Note: using left_join as savings.rate.hist is going to have some NAs in there already
     # (see comment in below in savings.rate.predict)
-    savings.rate.hist %>% left_join(gdp.cap.hist, by=c("GCAM_region_ID", "period")) %>%
-      select(-gdp.cap.pwt) -> savings.rate.hist
-    #combine historical and future years savings tables
-    bind_rows(savings.rate.hist, savings.rate.future) %>%
+    savings.rate.hist.v2 %>% left_join(gdp.cap.hist, by=c("GCAM_region_ID", "period")) %>%
+      select(-gdp.cap.pwt) -> savings.rate.hist.v2
+    #combine historical and future years savings tables and interpolate for base year
+    bind_rows(savings.rate.hist.v2, savings.rate.future) %>%
       filter(period >= min(MODEL_BASE_YEARS)) %>%
       arrange(GCAM_region_ID, period) -> savings.rate.all
 

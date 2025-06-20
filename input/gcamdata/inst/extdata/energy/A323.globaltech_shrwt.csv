@@ -3,7 +3,7 @@
 # Units: Unitless
 # Column types: cccnnnnnn
 # ----------
-supplysector,subsector,technology,1971,2015,2020,2025,2050,2100
+supplysector,subsector,technology,1971,final-calibration-year,initial-future-year,2030,2050,2100
 iron and steel,BLASTFUR,BLASTFUR,1,1,1,1,1,1
 iron and steel,BLASTFUR,BLASTFUR CCS,0,0,0,0.2,1,1
 iron and steel,BLASTFUR,Biomass-based,0,0,0,0.1,0.2,0.2

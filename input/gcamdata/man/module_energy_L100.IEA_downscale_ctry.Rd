@@ -27,7 +27,7 @@ values based on 1990 shares; use population to downscale IEA composite regions (
 non-OECD Americas, Other non-OECD Asia) to individual countries; filter out countries without data in any year.
 }
 \note{
-We build from the raw (and proprietary) \code{IEA_EnergyBalances_2019} file if
+We build from the raw (and proprietary) \code{IEA_EnergyBalances_2023} file if
 they are available; if not, this chunk reads in a pre-generated \code{L100.IEA_en_bal_ctry_hist}
 file and returns that. (In other words, our output is an optional input.)
 }

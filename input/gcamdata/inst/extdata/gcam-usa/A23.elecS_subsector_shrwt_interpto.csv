@@ -34,18 +34,18 @@ USA,base load generation,nuclear,share-weight,final-calibration-year,initial-fut
 USA,intermediate generation,nuclear,share-weight,final-calibration-year,initial-future-year,0,linear
 USA,subpeak generation,nuclear,share-weight,final-calibration-year,initial-future-year,0,linear
 USA,peak generation,nuclear,share-weight,final-calibration-year,initial-future-year,0,linear
-USA,base load generation,nuclear,share-weight,initial-future-year,2025,0,fixed
-USA,intermediate generation,nuclear,share-weight,initial-future-year,2025,0,fixed
-USA,subpeak generation,nuclear,share-weight,initial-future-year,2025,0,fixed
-USA,peak generation,nuclear,share-weight,initial-future-year,2025,0,fixed
-USA,base load generation,nuclear,share-weight,2025,2030,1,linear
-USA,intermediate generation,nuclear,share-weight,2025,2030,1,linear
-USA,subpeak generation,nuclear,share-weight,2025,2030,1,linear
-USA,peak generation,nuclear,share-weight,2025,2030,1,linear
-USA,base load generation,nuclear,share-weight,2030,end-year,1,fixed
-USA,intermediate generation,nuclear,share-weight,2030,end-year,1,fixed
-USA,subpeak generation,nuclear,share-weight,2030,end-year,1,fixed
-USA,peak generation,nuclear,share-weight,2030,end-year,1,fixed
+USA,base load generation,nuclear,share-weight,initial-future-year,2030,0,fixed
+USA,intermediate generation,nuclear,share-weight,initial-future-year,2030,0,fixed
+USA,subpeak generation,nuclear,share-weight,initial-future-year,2030,0,fixed
+USA,peak generation,nuclear,share-weight,initial-future-year,2030,0,fixed
+USA,base load generation,nuclear,share-weight,2030,2035,1,linear
+USA,intermediate generation,nuclear,share-weight,2030,2035,1,linear
+USA,subpeak generation,nuclear,share-weight,2030,2035,1,linear
+USA,peak generation,nuclear,share-weight,2030,2035,1,linear
+USA,base load generation,nuclear,share-weight,2035,end-year,1,fixed
+USA,intermediate generation,nuclear,share-weight,2035,end-year,1,fixed
+USA,subpeak generation,nuclear,share-weight,2035,end-year,1,fixed
+USA,peak generation,nuclear,share-weight,2035,end-year,1,fixed
 USA,base load generation,wind,share-weight,final-calibration-year,2030,1,linear
 USA,intermediate generation,wind,share-weight,final-calibration-year,initial-future-year,0,linear
 USA,subpeak generation,wind,share-weight,final-calibration-year,initial-future-year,0,linear

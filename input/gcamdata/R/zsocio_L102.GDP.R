@@ -140,13 +140,13 @@ module_socio_L102.GDP <- function(command, ...) {
     # Step 5.1 smoothing GDP when needed (socioeconomics.GDP_Adj_Moving_Average_ISO)
 
     GDP_Adj_Moving_Average_GCAM_region_ID <-
-      iso_GCAM_regID$GCAM_region_ID[iso_GCAM_regID$iso %in% socioeconomics.GDP_Adj_Moving_Average_ISO]
+      iso_GCAM_regID$GCAM_region_ID[iso_GCAM_regID$iso %in% socioeconomics.GDP_ADJ_MOVING_AVERAGE_ISO]
 
     # use socioeconomics.GDP_Adj_Moving_Average_Duration (15-year) moving average for South Amer North (25)
     gdp.mil90usd.scen.rgn.yr %>%
       filter(GCAM_region_ID %in% GDP_Adj_Moving_Average_GCAM_region_ID) %>%
       group_by(GCAM_region_ID, scenario) %>%
-      mutate(gdp = Moving_average(gdp, periods = socioeconomics.GDP_Adj_Moving_Average_Duration)) %>%
+      mutate(gdp = Moving_average(gdp, periods = socioeconomics.GDP_ADG_MOVING_AVERAGE_DURATION)) %>%
       ungroup() %>%
       bind_rows(
         gdp.mil90usd.scen.rgn.yr %>%
@@ -155,23 +155,23 @@ module_socio_L102.GDP <- function(command, ...) {
 
     # Step 5.1 no negative gdp growth (per IIASA GDP 2023 scenarios for twn)
     GDP_Adj_No_Neg_Growth_GCAM_region_ID <-
-      iso_GCAM_regID$GCAM_region_ID[iso_GCAM_regID$iso %in% socioeconomics.GDP_Adj_No_Neg_Growth_ISO]
+      iso_GCAM_regID$GCAM_region_ID[iso_GCAM_regID$iso %in% socioeconomics.GDP_ADJ_NO_NEG_GROWTH_ISO]
 
     # No negative after socioeconomics.GDP_Adj_No_Neg_Growth_Year (2025)
     gdp.mil90usd.scen.rgn.yr_1 %>%
       filter(GCAM_region_ID %in%GDP_Adj_No_Neg_Growth_GCAM_region_ID,
-             year >= socioeconomics.GDP_Adj_No_Neg_Growth_Year) %>%
+             year >= socioeconomics.GDP_ADJ_NO_NEG_GROWTH_YEAR) %>%
       group_by(GCAM_region_ID, scenario) %>%
       mutate(gdp_g = gdp / lag(gdp)) %>%
       replace_na(list(gdp_g = 1)) %>%
       mutate(gdp_g_adj =  pmax(1, gdp_g),
              gdp_cum = cumprod(gdp_g_adj)
              ) %>%
-      mutate(gdp = gdp[year == socioeconomics.GDP_Adj_No_Neg_Growth_Year] * gdp_cum) %>% ungroup %>%
+      mutate(gdp = gdp[year == socioeconomics.GDP_ADJ_NO_NEG_GROWTH_YEAR] * gdp_cum) %>% ungroup %>%
       select(names(gdp.mil90usd.scen.rgn.yr_1)) %>%
       bind_rows(
         gdp.mil90usd.scen.rgn.yr_1 %>%
-          filter(!(GCAM_region_ID %in% GDP_Adj_No_Neg_Growth_GCAM_region_ID & year >= socioeconomics.GDP_Adj_No_Neg_Growth_Year))
+          filter(!(GCAM_region_ID %in% GDP_Adj_No_Neg_Growth_GCAM_region_ID & year >= socioeconomics.GDP_ADJ_NO_NEG_GROWTH_YEAR))
       ) %>%
       arrange(GCAM_region_ID, scenario, year)->
       gdp.mil90usd.scen.rgn.yr

@@ -21,19 +21,26 @@
 #' @importFrom dplyr bind_rows filter group_by left_join mutate pull select summarise
 #' @author ACS June 2017
 module_aglu_L163.bio_Yield_R_GLU_irr <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      "L100.LDS_ag_HA_ha",
+      "L100.LDS_ag_prod_t",
+      "L101.ag_HA_bm2_R_C_Y_GLU",
+      "L151.ag_irrHA_ha_ctry_crop",
+      "L151.ag_irrProd_t_ctry_crop",
+      "L151.ag_rfdHA_ha_ctry_crop",
+      "L151.ag_rfdProd_t_ctry_crop")
+
+  MODULE_OUTPUTS <-
+    c("L163.ag_irrBioYield_GJm2_R_GLU",
+      "L163.ag_rfdBioYield_GJm2_R_GLU",
+      "L113.ag_bioYield_GJm2_R_GLU")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             "L100.LDS_ag_HA_ha",
-             "L100.LDS_ag_prod_t",
-             "L101.ag_HA_bm2_R_C_Y_GLU",
-             "L151.ag_irrHA_ha_ctry_crop",
-             "L151.ag_irrProd_t_ctry_crop",
-             "L151.ag_rfdHA_ha_ctry_crop",
-             "L151.ag_rfdProd_t_ctry_crop"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L163.ag_irrBioYield_GJm2_R_GLU",
-             "L163.ag_rfdBioYield_GJm2_R_GLU",
-             "L113.ag_bioYield_GJm2_R_GLU"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -42,15 +49,8 @@ module_aglu_L163.bio_Yield_R_GLU_irr <- function(command, ...) {
       Yield <- Ratio <- iso <- GCAM_region_ID <- GLU <- Irr_Rfd <- Ratio_weight <- . <-
       YieldIndex <- NULL  # silence package check notes
 
-    # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    L100.LDS_ag_HA_ha <- get_data(all_data, "L100.LDS_ag_HA_ha")
-    L100.LDS_ag_prod_t <- get_data(all_data, "L100.LDS_ag_prod_t")
-    L101.ag_HA_bm2_R_C_Y_GLU <- get_data(all_data, "L101.ag_HA_bm2_R_C_Y_GLU")
-    L151.ag_irrHA_ha_ctry_crop <- get_data(all_data, "L151.ag_irrHA_ha_ctry_crop")
-    L151.ag_irrProd_t_ctry_crop <- get_data(all_data, "L151.ag_irrProd_t_ctry_crop")
-    L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
-    L151.ag_rfdProd_t_ctry_crop <- get_data(all_data, "L151.ag_rfdProd_t_ctry_crop")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
 
     # Perform computations
@@ -137,7 +137,7 @@ module_aglu_L163.bio_Yield_R_GLU_irr <- function(command, ...) {
     # but now for rainfed and irrigated, rather than generic, crops
     L151.ag_irrHA_ha_ctry_crop %>%
       bind_rows(L151.ag_rfdHA_ha_ctry_crop) %>%
-      left_join_error_no_match(bind_rows(L151.ag_irrProd_t_ctry_crop, L151.ag_rfdProd_t_ctry_crop),
+      inner_join(bind_rows(L151.ag_irrProd_t_ctry_crop, L151.ag_rfdProd_t_ctry_crop),
                                by = c("iso", "GLU", "GTAP_crop", "Irr_Rfd")) %>%
       mutate(Yield = Prod / HA) %>%
       # drop NA's - values where HA = 0
@@ -247,7 +247,7 @@ module_aglu_L163.bio_Yield_R_GLU_irr <- function(command, ...) {
                      "L151.ag_rfdProd_t_ctry_crop") ->
       L163.ag_rfdBioYield_GJm2_R_GLU
 
-    return_data(L113.ag_bioYield_GJm2_R_GLU, L163.ag_irrBioYield_GJm2_R_GLU, L163.ag_rfdBioYield_GJm2_R_GLU)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

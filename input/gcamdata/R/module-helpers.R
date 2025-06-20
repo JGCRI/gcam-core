@@ -190,15 +190,10 @@ set_years <- function(data) {
   . <- NULL
 
   assert_that(is_tibble(data))
-  year_recode <- c("start-year" =  min(MODEL_BASE_YEARS),
-                   "final-calibration-year" = MODEL_FINAL_BASE_YEAR,
-                   "final-historical-year" = as.numeric(max(HISTORICAL_YEARS)),
-                   "initial-future-year" = min(MODEL_FUTURE_YEARS),
-                   "initial-nonhistorical-year" = min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)]),
-                   "end-year" = max(MODEL_FUTURE_YEARS))
+
   if(nrow(data)) {
     data %>%
-      dplyr::mutate_if(list(~ any(. %in% names(year_recode))), list(~ dplyr::recode(., !!!year_recode, .default=suppressWarnings(as.numeric(.))))) ->
+      dplyr::mutate_if(list(~ any(. %in% names(YEAR_RECODE))), list(~ dplyr::recode(., !!!YEAR_RECODE, .default=suppressWarnings(as.numeric(.))))) ->
       data
   }
   data

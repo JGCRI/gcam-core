@@ -331,31 +331,31 @@ EU-15,13,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.0044
 EU-15,13,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,0.000295276
 EU-15,13,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.003244435
 EU-15,13,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
-Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.019488898
-Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000320754
-Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.002335626
-Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.003754289
-Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.019488898
-Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000320754
-Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.002335626
-Europe_Eastern,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.003754289
-Europe_Eastern,14,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
-Europe_Eastern,14,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000320754
-Europe_Eastern,14,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.002335626
-Europe_Eastern,14,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.003754289
-Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001032317
-Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000137466
-Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.007149875
-Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.020380426
-Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001032317
-Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000137466
-Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.007149875
-Europe_Eastern,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.020380426
-Europe_Eastern,14,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
-Europe_Eastern,14,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.007149875
-Europe_Eastern,14,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,9.16E-05
-Europe_Eastern,14,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.005243242
-Europe_Eastern,14,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
+Ukraine,14,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.019488898
+Ukraine,14,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000320754
+Ukraine,14,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.002335626
+Ukraine,14,iron and steel,BLASTFUR,BLASTFUR,2010,wholesale gas,0.003754289
+Ukraine,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,delivered coal,0.019488898
+Ukraine,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,refined liquids industrial,0.000320754
+Ukraine,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,elect_td_ind,0.002335626
+Ukraine,14,iron and steel,BLASTFUR,BLASTFUR CCS,2010,wholesale gas,0.003754289
+Ukraine,14,iron and steel,BLASTFUR,Biomass-based,2010,delivered biomass,
+Ukraine,14,iron and steel,BLASTFUR,Biomass-based,2010,refined liquids industrial,0.000320754
+Ukraine,14,iron and steel,BLASTFUR,Biomass-based,2010,elect_td_ind,0.002335626
+Ukraine,14,iron and steel,BLASTFUR,Biomass-based,2010,wholesale gas,0.003754289
+Ukraine,14,iron and steel,EAF with DRI,EAF with DRI,2010,delivered coal,0.001032317
+Ukraine,14,iron and steel,EAF with DRI,EAF with DRI,2010,refined liquids industrial,0.000137466
+Ukraine,14,iron and steel,EAF with DRI,EAF with DRI,2010,elect_td_ind,0.007149875
+Ukraine,14,iron and steel,EAF with DRI,EAF with DRI,2010,wholesale gas,0.020380426
+Ukraine,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,delivered coal,0.001032317
+Ukraine,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,refined liquids industrial,0.000137466
+Ukraine,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,elect_td_ind,0.007149875
+Ukraine,14,iron and steel,EAF with DRI,EAF with DRI CCS,2010,wholesale gas,0.020380426
+Ukraine,14,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,H2 enduse,0
+Ukraine,14,iron and steel,EAF with DRI,Hydrogen-based DRI,2010,elect_td_ind,0.007149875
+Ukraine,14,iron and steel,EAF with scrap,EAF with scrap,2010,refined liquids industrial,9.16E-05
+Ukraine,14,iron and steel,EAF with scrap,EAF with scrap,2010,elect_td_ind,0.005243242
+Ukraine,14,iron and steel,EAF with scrap,EAF with scrap,2010,scrap,1.1
 Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR,2010,delivered coal,0.02373868
 Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR,2010,refined liquids industrial,0.000432827
 Europe_Non_EU,15,iron and steel,BLASTFUR,BLASTFUR,2010,elect_td_ind,0.000976115

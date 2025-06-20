@@ -520,6 +520,15 @@ module_emissions_L169.nonghg_NEI_scaling <- function(command, ...) {
       distinct( state, pollutant, GCAM_sector, CEDS_Sector, CEDS_Fuel, unit, year, emissions ) %>%
       ungroup() -> NEI_1990_2017_GCAM_sectors
 
+   if(max(NEI_1990_2017_GCAM_sectors$year) < MODEL_FINAL_BASE_YEAR) {
+     warning("L169.NEI_1990_2017_GCAM_sectors_unscaled is being extended to the final calibration year by copying forward")
+     extend_years <- seq(max(NEI_1990_2017_GCAM_sectors$year), MODEL_FINAL_BASE_YEAR)
+     all_years <- unique(c(NEI_1990_2017_GCAM_sectors$year, extend_years))
+     NEI_1990_2017_GCAM_sectors %>%
+       copy_data_forward_long("emissions", all_years, state, pollutant, GCAM_sector, CEDS_Sector, CEDS_Fuel, unit) ->
+       NEI_1990_2017_GCAM_sectors
+   }
+
     # ===================================================
     # Produce outputs
    NEI_1990_2017_GCAM_sectors %>%

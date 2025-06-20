@@ -140,7 +140,7 @@ module_energy_L1322.Fert <- function(command, ...) {
     L1322.Fert_ALL_MtNH3_R_F_Y %>%
       filter(check < 0) %>%
       mutate(mult = (1 - (-1 * check / in_Fert))) %>%
-      select(GCAM_region_ID, fuel, year, mult) ->
+      select(GCAM_region_ID, fuel, year, mult)->
       L1322.Fert_modify
 
     # For matched region/fuel/year, multiply the original shares by the multipliers from above
@@ -150,7 +150,8 @@ module_energy_L1322.Fert <- function(command, ...) {
       left_join(L1322.Fert_modify, by = c("GCAM_region_ID", "fuel", "year")) %>%
       replace_na(list(mult = 1)) %>%
       mutate(value_share_adj = value_share * mult) %>%
-      select(iso, GCAM_region_ID, year, fuel, value_MtNH3, value_share_adj, intensity_GJkgNH3) ->
+      select(iso, GCAM_region_ID, year, fuel, value_MtNH3, value_share_adj, intensity_GJkgNH3) %>%
+      unique()->
       L1322.Fert_Prod_MtNH3_ctry_F_Y_share_adj
 
     # For regions whose fuel shares changed, re-assign the production and energy inputs to the oil-based technology

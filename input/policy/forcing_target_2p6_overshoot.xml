@@ -31,14 +31,14 @@
      -->
     <target-type>forcing</target-type>
     <!-- first-tax-year | default: 2020 | The first year to start a tax in -->
-    <first-tax-year>2025</first-tax-year>
+    <first-tax-year>2030</first-tax-year>
     <!-- initial-tax-guess | default: 5 | The first tax value to try, if a user
                                           can provide a good initial guess it may
                                           cut down on the total number of iterations
                                           significantly.
      -->
     <!-- Note, the value chosen here is the solved price from the last GCAM release. -->
-    <initial-tax-guess>330.0</initial-tax-guess>
+    <initial-tax-guess>600.0</initial-tax-guess>
     <!-- forward-look | default: 0 | Allow forward looking behavior by skipping
          this many periods.
      -->

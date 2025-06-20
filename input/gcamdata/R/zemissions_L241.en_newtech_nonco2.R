@@ -292,6 +292,14 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
     ef_col_name <- "emiss.coeff"
     L241.nonco2_tech_coeff <- replace_outlier_EFs(L241.nonco2_tech_coeff_replace.outliers, to_group, names, ef_col_name)
 
+    # to avoid warnings only include emissions factors for the backup sectors if we are configured to run
+    # with the old backup electricity approach
+    if(!energy.ELEC_USE_BACKUP) {
+      L241.nonco2_tech_coeff %>%
+        filter(!(supplysector %in% energy.BACKUP_SECTORS)) ->
+        L241.nonco2_tech_coeff
+    }
+
 
     # ===================================================
 

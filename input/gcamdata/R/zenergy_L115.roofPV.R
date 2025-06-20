@@ -2,7 +2,7 @@
 
 #' module_energy_L115.roofPV
 #'
-#' Convert rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3", to the 32 GCAM region IDs.
+#' Convert rooftop PV resources from the 14 GCAM regions, i.e., "region_GCAM3", to the GCAM region IDs.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
@@ -67,7 +67,7 @@ module_energy_L115.roofPV <- function(command, ...) {
     L115.RsrcCurves_EJ_R_roofPV %>%
       add_title("Rooftop PV resources by GCAM region ID") %>%
       add_units("EJ for maxSubResource; 1975 $/GJ for midprice; unitless for gdpSupplyElast") %>%
-      add_comments("Resources converted from 14 GCAM regions to 32 GCAM region IDs") %>%
+      add_comments("Resources converted from 14 GCAM regions to GCAM region IDs") %>%
       add_legacy_name("L115.RsrcCurves_EJ_R_roofPV") %>%
       add_precursors("common/iso_GCAM_regID", "energy/A15.roofPV_curves", "L100.Pop_thous_ctry_Yh") ->
       L115.RsrcCurves_EJ_R_roofPV

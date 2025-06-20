@@ -4,11 +4,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -27,19 +27,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -58,20 +55,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.01</share-weight>
-               <share-weight year="2020">0.02</share-weight>
+               <share-weight year="2021">0.02</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -90,9 +84,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -100,11 +91,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -124,50 +115,16 @@
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
                </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
-               </interpolation-rule>
-            </subsector>
-            <subsector name="solar" nocreate="1">
-               <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
-                  <interpolation-function name="linear"/>
-               </interpolation-rule>
-               <share-weight year="2010">0.05</share-weight>
-               <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
-                <share-weight year="2025">1.0</share-weight>
-               <share-weight year="2030">1.0</share-weight>
-               <share-weight year="2035">1.0</share-weight>
-                <share-weight year="2040">1.0</share-weight>
-               <share-weight year="2045">1.0</share-weight>
-               <share-weight year="2050">1.0</share-weight>
-                <share-weight year="2055">1.0</share-weight>
-               <share-weight year="2060">1.0</share-weight>
-               <share-weight year="2065">1.0</share-weight>
-                <share-weight year="2070">1.0</share-weight>
-               <share-weight year="2075">1.0</share-weight>
-               <share-weight year="2080">1.0</share-weight>
-                <share-weight year="2085">1.0</share-weight>
-               <share-weight year="2090">1.0</share-weight>
-               <share-weight year="2095">1.0</share-weight>
- <share-weight year="2100">1.0</share-weight>
-               <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
-                  <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
-               </interpolation-rule>
-            </subsector>
+           </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.01</share-weight>
-               <share-weight year="2020">0.02</share-weight>
+               <share-weight year="2021">0.02</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -186,9 +143,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -196,11 +150,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -219,19 +173,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -250,20 +201,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.01</share-weight>
-               <share-weight year="2020">0.02</share-weight>
+               <share-weight year="2021">0.02</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -282,9 +230,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -292,11 +237,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -315,19 +260,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -346,20 +288,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.01</share-weight>
-               <share-weight year="2020">0.02</share-weight>
+               <share-weight year="2021">0.02</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -378,9 +317,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -388,11 +324,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -411,19 +347,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -442,20 +375,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.01</share-weight>
-               <share-weight year="2020">0.02</share-weight>
+               <share-weight year="2021">0.02</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -474,9 +404,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -485,12 +412,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.12</share-weight>
                <share-weight year="2015">0.18</share-weight>
-               <share-weight year="2020">0.26</share-weight>
+               <share-weight year="2021">0.26</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -509,19 +436,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -540,20 +464,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -572,9 +493,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -583,12 +501,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.09</share-weight>
                <share-weight year="2015">0.18</share-weight>
-               <share-weight year="2020">0.26</share-weight>
+               <share-weight year="2021">0.26</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -607,19 +525,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -638,20 +553,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -670,9 +582,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -681,12 +590,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.03</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -705,19 +614,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -736,20 +642,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -768,23 +671,20 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
       </region>
-      <region name="Europe_Eastern">
+      <region name="Ukraine">
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.04</share-weight>
                <share-weight year="2015">0.08</share-weight>
-               <share-weight year="2020">0.12</share-weight>
+               <share-weight year="2021">0.12</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -803,19 +703,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -834,20 +731,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -866,9 +760,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -876,12 +767,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.04</share-weight>
                <share-weight year="2015">0.08</share-weight>
-               <share-weight year="2020">0.12</share-weight>
+               <share-weight year="2021">0.12</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -900,19 +791,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -931,20 +819,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -963,9 +848,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -974,12 +856,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.005</share-weight>
                <share-weight year="2015">0.005</share-weight>
-               <share-weight year="2020">0.01</share-weight>
+               <share-weight year="2021">0.01</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -998,19 +880,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1029,20 +908,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                
                <share-weight year="2015">0.01</share-weight>
-               <share-weight year="2020">0.01</share-weight>
+               <share-weight year="2021">0.01</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1061,9 +937,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1071,12 +944,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.005</share-weight>
                <share-weight year="2015">0.005</share-weight>
-               <share-weight year="2020">0.01</share-weight>
+               <share-weight year="2021">0.01</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1095,19 +968,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1126,20 +996,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                
                <share-weight year="2015">0.01</share-weight>
-               <share-weight year="2020">0.01</share-weight>
+               <share-weight year="2021">0.01</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1158,9 +1025,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1169,12 +1033,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.07</share-weight>
                <share-weight year="2015">0.1</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1193,19 +1057,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1224,20 +1085,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1256,9 +1114,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1267,12 +1122,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.09</share-weight>
                <share-weight year="2015">0.17</share-weight>
-               <share-weight year="2020">0.25</share-weight>
+               <share-weight year="2021">0.25</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1291,19 +1146,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1322,20 +1174,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1354,9 +1203,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1365,11 +1211,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1388,19 +1234,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1419,9 +1262,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
@@ -1431,11 +1271,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1454,19 +1294,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1485,20 +1322,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1517,9 +1351,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1527,11 +1358,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1550,19 +1381,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1581,20 +1409,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1613,9 +1438,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1623,11 +1445,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1646,19 +1468,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1677,20 +1496,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1709,9 +1525,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1719,11 +1532,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1742,19 +1555,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1773,20 +1583,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1805,9 +1612,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1815,11 +1619,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1838,19 +1642,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1869,20 +1670,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1901,9 +1699,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -1911,11 +1706,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1934,19 +1729,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1965,20 +1757,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -1997,9 +1786,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2007,11 +1793,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2030,19 +1816,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2061,20 +1844,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2093,9 +1873,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2104,12 +1881,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.01</share-weight>
-               <share-weight year="2020">0.02</share-weight>
+               <share-weight year="2021">0.02</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2128,19 +1905,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2159,20 +1933,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.03</share-weight>
-               <share-weight year="2020">0.03</share-weight>
+               <share-weight year="2021">0.03</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2191,9 +1962,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2202,11 +1970,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2225,19 +1993,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2256,20 +2021,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.03</share-weight>
-               <share-weight year="2020">0.03</share-weight>
+               <share-weight year="2021">0.03</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2288,9 +2050,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2298,11 +2057,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2321,19 +2080,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2352,20 +2108,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.03</share-weight>
-               <share-weight year="2020">0.03</share-weight>
+               <share-weight year="2021">0.03</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2384,9 +2137,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2394,11 +2144,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2417,19 +2167,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2448,20 +2195,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.03</share-weight>
-               <share-weight year="2020">0.03</share-weight>
+               <share-weight year="2021">0.03</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2480,9 +2224,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2490,11 +2231,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2513,19 +2254,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2544,20 +2282,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.03</share-weight>
-               <share-weight year="2020">0.03</share-weight>
+               <share-weight year="2021">0.03</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2576,9 +2311,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2586,11 +2318,11 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2015">0.04</share-weight>
-               <share-weight year="2020">0.06</share-weight>
+               <share-weight year="2021">0.06</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2609,19 +2341,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2640,20 +2369,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.01</share-weight>
                <share-weight year="2015">0.03</share-weight>
-               <share-weight year="2020">0.03</share-weight>
+               <share-weight year="2021">0.03</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2672,9 +2398,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2683,12 +2406,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">1.9</share-weight>
                <share-weight year="2015">1.9</share-weight>
-               <share-weight year="2020">1.9</share-weight>
+               <share-weight year="2021">1.9</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2707,19 +2430,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2738,20 +2458,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2770,9 +2487,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2780,12 +2494,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">1.9</share-weight>
                <share-weight year="2015">1.9</share-weight>
-               <share-weight year="2020">1.9</share-weight>
+               <share-weight year="2021">1.9</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2804,19 +2518,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2835,20 +2546,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2867,9 +2575,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2877,12 +2582,12 @@
          <supplysector name="electricity" nocreate="1">
             <subsector name="wind" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">1.9</share-weight>
                <share-weight year="2015">1.9</share-weight>
-               <share-weight year="2020">1.9</share-weight>
+               <share-weight year="2021">1.9</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2901,19 +2606,16 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             <subsector name="solar" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.1</share-weight>
+               <share-weight year="2021">0.1</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2932,20 +2634,17 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
             
             <subsector name="geothermal" nocreate="1">
                <share-weight year="1975">1</share-weight>
-               <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+               <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
                   <interpolation-function name="linear"/>
                </interpolation-rule>
                <share-weight year="2010">0.05</share-weight>
                <share-weight year="2015">0.05</share-weight>
-               <share-weight year="2020">0.15</share-weight>
+               <share-weight year="2021">0.15</share-weight>
                 <share-weight year="2025">1.0</share-weight>
                <share-weight year="2030">1.0</share-weight>
                <share-weight year="2035">1.0</share-weight>
@@ -2964,9 +2663,6 @@
  <share-weight year="2100">1.0</share-weight>
                <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
                   <interpolation-function name="fixed"/>
-               </interpolation-rule>
-               <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-                  <interpolation-function name="linear"/>
                </interpolation-rule>
             </subsector>
          </supplysector>
@@ -2975,12 +2671,12 @@
      <supplysector name="electricity" nocreate="1">
       <subsector name="wind" nocreate="1">
        <share-weight year="1975">1</share-weight>
-       <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+       <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
         <interpolation-function name="linear"/>
        </interpolation-rule>
        <share-weight year="2010">1.9</share-weight>
        <share-weight year="2015">1.9</share-weight>
-       <share-weight year="2020">1.9</share-weight>
+       <share-weight year="2021">1.9</share-weight>
        <share-weight year="2025">1.0</share-weight>
        <share-weight year="2030">1.0</share-weight>
        <share-weight year="2035">1.0</share-weight>
@@ -3000,29 +2696,6 @@
        <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
         <interpolation-function name="fixed"/>
        </interpolation-rule>
-       <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-        <interpolation-function name="linear"/>
-       </interpolation-rule>
-      </subsector>
-      <subsector name="solar" nocreate="1">
-       <share-weight year="1975">1</share-weight>
-       <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
-        <interpolation-function name="linear"/>
-       </interpolation-rule>
-       <share-weight year="2010">0.05</share-weight>
-       <share-weight year="2015">0.05</share-weight>
-       <share-weight year="2020">0.1</share-weight>
-       <share-weight year="2025">1.0</share-weight>
-       <share-weight year="2030">1.0</share-weight>
-       <share-weight year="2035">1.0</share-weight>
-       <share-weight year="2040">1.0</share-weight>
-       <share-weight year="2045">1.0</share-weight>
-       <share-weight year="2050">1.0</share-weight>
-       <share-weight year="2055">1.0</share-weight>
-       <share-weight year="2060">1.0</share-weight>
-       <share-weight year="2065">1.0</share-weight>
-       <share-weight year="2070">1.0</share-weight>
-       <share-weight year="2075">1.0</share-weight>
        <share-weight year="2080">1.0</share-weight>
        <share-weight year="2085">1.0</share-weight>
        <share-weight year="2090">1.0</share-weight>
@@ -3030,20 +2703,17 @@
        <share-weight year="2100">1.0</share-weight>
        <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
         <interpolation-function name="fixed"/>
-       </interpolation-rule>
-       <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-        <interpolation-function name="linear"/>
        </interpolation-rule>
       </subsector>
       
       <subsector name="geothermal" nocreate="1">
        <share-weight year="1975">1</share-weight>
-       <interpolation-rule apply-to="share-weight" delete="1" from-year="2020" to-year="2065">
+       <interpolation-rule apply-to="share-weight" delete="1" from-year="2025" to-year="2065">
         <interpolation-function name="linear"/>
        </interpolation-rule>
        <share-weight year="2010">0.05</share-weight>
        <share-weight year="2015">0.05</share-weight>
-       <share-weight year="2020">0.15</share-weight>
+       <share-weight year="2021">0.15</share-weight>
        <share-weight year="2025">1.0</share-weight>
        <share-weight year="2030">1.0</share-weight>
        <share-weight year="2035">1.0</share-weight>
@@ -3062,9 +2732,6 @@
        <share-weight year="2100">1.0</share-weight>
        <interpolation-rule apply-to="share-weight" from-year="2065" to-year="9999">
         <interpolation-function name="fixed"/>
-       </interpolation-rule>
-       <interpolation-rule apply-to="share-weight" from-year="2010" to-year="2020">
-        <interpolation-function name="linear"/>
        </interpolation-rule>
       </subsector>
      </supplysector>

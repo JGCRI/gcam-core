@@ -55,7 +55,6 @@ module_energy_L2391.gas_trade_flows <- function(command, ...) {
     L239.Production_reg_imp <- get_data(all_data, "L239.Production_reg_imp", strip_attributes = TRUE) %>%
       filter(grepl("gas", supplysector))
 
-
     # ----------------------------------------
     # Process data
 
@@ -228,6 +227,21 @@ module_energy_L2391.gas_trade_flows <- function(command, ...) {
       select(region, GCAM_Commodity, GCAM_Commodity_traded, year, calOutputValue, pipeline.market) ->
       L2391.NG_export_calOutput_pipeline
 
+    # if L2391.NG_export_calOutput_pipeline or L2391.NG_export_calOutput_LNG or L2391.NG_import_calOutput_LNG has NAs for new regions. Replace them with zero
+    if (any(is.na(L2391.NG_export_calOutput_pipeline$calOutputValue)) | any(is.na(L2391.NG_export_calOutput_LNG$calOutputValue)) | any(is.na(L2391.NG_import_calOutput_LNG$calOutputValue))) {
+
+      warning("Replacing NAs in calibrated values of natural gas exports and LNG exports and imports with 0")
+
+      L2391.NG_export_calOutput_pipeline <- L2391.NG_export_calOutput_pipeline %>%
+        dplyr::mutate(calOutputValue = dplyr::if_else(is.na(calOutputValue), 0, calOutputValue))
+
+      L2391.NG_export_calOutput_LNG <- L2391.NG_export_calOutput_LNG %>%
+        dplyr::mutate(calOutputValue = dplyr::if_else(is.na(calOutputValue), 0, calOutputValue))
+
+      L2391.NG_import_calOutput_LNG <- L2391.NG_import_calOutput_LNG %>%
+        dplyr::mutate(calOutputValue = dplyr::if_else(is.na(calOutputValue), 0, calOutputValue))
+    }
+
 
     # STEP 4:  Check trade balances (across scales) and make final adjustments
     # Combine flows with a single market (LNG imports and exports, pipeline exports)
@@ -332,8 +346,8 @@ module_energy_L2391.gas_trade_flows <- function(command, ...) {
     L2391.gas_flow_balances %>%
       select(region, year, calExport_pipe, calExport_LNG) %>%
       tidyr::gather(GCAM_Commodity_traded, value, -c(region, year)) %>%
-      mutate(GCAM_Commodity = "natural gas") %>%
-      mutate(GCAM_Commodity_traded = gsub("calExport_", "", GCAM_Commodity_traded),
+      mutate(GCAM_Commodity = "natural gas",
+             GCAM_Commodity_traded = gsub("calExport_", "", GCAM_Commodity_traded),
              GCAM_Commodity_traded = if_else(GCAM_Commodity_traded == "pipe", "gas pipeline", GCAM_Commodity_traded)) %>%
       group_by(region, year, GCAM_Commodity, GCAM_Commodity_traded) %>%
       summarise(value = sum(value)) %>%

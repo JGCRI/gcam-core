@@ -87,7 +87,7 @@ test_that("outdated targets are correct", {
   origtime_mw <- hist_orig[[row, 3]]
 
   # for target Maddison_population
-  row <- tail(which(hist_orig$target == "Maddison_population"), n=1)
+  row <- tail(which(hist_orig$target == "socioeconomics.POP.Maddison_population"), n=1)
   origtime_rr <- hist_orig[[row, 3]]
 
   # Copy file that we edit to get it back later
@@ -106,7 +106,7 @@ test_that("outdated targets are correct", {
   time_mw1 <- hist1[[row, 3]]
 
   # of other target
-  row <- tail(which(hist1$target == "Maddison_population"), n=1)
+  row <- tail(which(hist1$target == "socioeconomics.POP.Maddison_population"), n=1)
   time_rr1 <- hist1[[row, 3]]
 
   # Compare

@@ -132,9 +132,9 @@
                 <output-unit>MTC</output-unit>
             </linked-ghg-policy>
         </region>
-        <region name="Europe_Eastern">
+        <region name="Ukraine">
             <linked-ghg-policy name="CO2_LUC">
-                <market>Europe_Eastern</market>
+                <market>Ukraine</market>
                 <linked-policy>CO2</linked-policy>
                 <price-adjust year="1975" fillout="1">0.0</price-adjust>
                 <demand-adjust year="1975" fillout="1">0.0</demand-adjust>

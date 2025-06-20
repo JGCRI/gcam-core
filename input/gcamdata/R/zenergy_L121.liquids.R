@@ -106,7 +106,7 @@ module_energy_L121.liquids <- function(command, ...) {
       product_filters <- unique(product_filters$PRODUCT)
 
       L100.IEA_en_bal_ctry_hist %>%
-        filter(FLOW == "TPES", PRODUCT %in% product_filters,
+        filter(FLOW == energy.TPES_FLOW, PRODUCT %in% product_filters,
                year == max(HISTORICAL_YEARS), !is.na(value)) %>%
         group_by(iso) %>%
         summarise(value = sum(value)) %>%
@@ -149,14 +149,14 @@ module_energy_L121.liquids <- function(command, ...) {
         repeat_add_columns(L121.Prod_EJ_unoil_Yh) %>%
         mutate(value = share * value) %>%
         select(GCAM_region_ID, fuel, year, value) %>%
-        mutate(sector = "TPES") -> L121.in_EJ_R_TPES_unoil_Yh
+        mutate(sector = energy.TPES_FLOW) -> L121.in_EJ_R_TPES_unoil_Yh
 
       L111.Prod_EJ_R_F_Yh %>%
         filter(technology=="unconventional oil") -> unoil_prod
 
       # Conventional (crude) oil: calculate as liquids TPES - unconventional oil
       L1012.en_bal_EJ_R_Si_Fi_Yh %>%
-        filter(sector == "TPES", fuel == "refined liquids") -> L121.in_EJ_R_TPES_liq_Yh
+        filter(sector == energy.TPES_FLOW, fuel == "refined liquids") -> L121.in_EJ_R_TPES_liq_Yh
 
       L121.in_EJ_R_TPES_liq_Yh %>%
         select(GCAM_region_ID, sector, fuel, year, value) %>%
@@ -198,7 +198,7 @@ module_energy_L121.liquids <- function(command, ...) {
 
       L121.share_R_TPES_biofuel_tech <- filter(L100.IEA_en_bal_ctry_hist,
                                                iso %in% L121.share_ctry_biofuel_tech$iso,
-                                               FLOW == "TPES",
+                                               FLOW == energy.TPES_FLOW,
                                                PRODUCT %in% c("Biogasoline", "Biodiesels"),
                                                year == max(HISTORICAL_YEARS),
                                                value > 0) %>%

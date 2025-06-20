@@ -6,7 +6,7 @@
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
 resid heating,biomass,start-year,,1
-resid heating,coal,2020,,0
+resid heating,coal,initial-future-year,,0
 resid heating,gas,start-year,,1
 resid heating,electricity,start-year,,1
 resid heating,refined liquids,start-year,,1
@@ -34,7 +34,7 @@ resid other,electricity,start-year,,1
 resid other,refined liquids,start-year,,1
 resid other,refined liquids,2050,,0.1
 comm heating,biomass,start-year,,1
-comm heating,coal,2020,,0
+comm heating,coal,initial-future-year,,0
 comm heating,gas,start-year,,1
 comm heating,electricity,start-year,,1
 comm heating,refined liquids,start-year,,1

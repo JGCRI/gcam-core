@@ -5,6 +5,21 @@
          tag and by virtue of template being empty those tags and all of their child
          nodes will be filtered out.
       -->
+
+    <!-- stash the model years in the $modelYears variables as we process the modeltime -->
+    <stx:variable name="modelYears" />
+    <stx:template match="model-year">
+        <stx:assign name="modelYears" select="insert-before($modelYears, 0, .)" />
+        <!-- we still want to copy the model time years too -->
+        <stx:copy>
+            <stx:process-children />
+        </stx:copy>
+    </stx:template>
+
+    <!-- LUC related output to be written only for model years -->
+    <stx:template match="land-use-change-emission[empty(index-of($modelYears, @year))]" />
+
+    <!-- LUC related output not to be written -->
     <stx:template match="above-gross-positive-luc" />
     <stx:template match="above-land-use-change-emission" />
     <stx:template match="below-land-use-change-emission" />

@@ -59,7 +59,23 @@ module_energy_L1326.aluminum <- function(command, ...) {
 
     # Set constants used for this chunk
     # ---------------------------------
-    # Determine historical years not available in data set (additional years) to copy values from final available year (final_CO2_year)
+    # Determine historical years not available in data set (additional years) to copy values from final available year
+    Prod_Ctry_years <- unique(aluminum_prod_country$year)
+    Prod_Ctry_max_year <- max(Prod_Ctry_years)
+    if (Prod_Ctry_max_year < MODEL_FINAL_BASE_YEAR) {
+      warning("energy/aluminum_prod USGS or CEDS: Copying to fill missing All Aluminum country prod data. Update data to latest base year.")
+      Prod_Ctry_missing_years <- HISTORICAL_YEARS[HISTORICAL_YEARS > Prod_Ctry_max_year]
+      # TODO: 2018 duplicate??
+      aluminum_prod_country <- copy_data_forward_long(aluminum_prod_country, "value", c(Prod_Ctry_years, Prod_Ctry_missing_years), country, iso, unit)
+    }
+
+    Prod_R_years <- unique(aluminum_prod_region$year)
+    Prod_R_max_year <- max(Prod_R_years)
+    if (Prod_R_max_year < MODEL_FINAL_BASE_YEAR) {
+      warning("energy/aluminum_prod_region_IAI: Copying to fill missing Aluminum region prod data. Update data to latest base year.")
+      Prod_R_missing_year <- HISTORICAL_YEARS[HISTORICAL_YEARS > Prod_R_max_year]
+      aluminum_prod_region <- copy_data_forward_long(aluminum_prod_region, "value", c(Prod_R_years, Prod_R_missing_year), flow, IAI_region, unit)
+    }
 
     # ===================================================
 
@@ -268,7 +284,8 @@ module_energy_L1326.aluminum <- function(command, ...) {
       add_units("Mt") %>%
       add_comments("Regional outputs are from World aluminum association, downscaled using data from USGS Mineral Yearbooks, and then aggregated to GCAM regions") %>%
       add_legacy_name("L1326.out_Mt_R_aluminum_Yh") %>%
-      add_precursors( "energy/A_regions", "energy/aluminum_prod_region_IAI", "energy/aluminum_prod_USGS",
+      add_precursors( "energy/A_regions", "energy/aluminum_prod_region_IAI",
+                      "energy/aluminum_prod_USGS", "energy/aluminum_prod_CEDS",
                       "energy/aluminum_energy_region_IAI", "energy/alumina_energy_region_IAI",
                       "energy/mappings/IAI_ctry_region", "common/iso_GCAM_regID") ->
       L1326.out_Mt_R_aluminum_Yh

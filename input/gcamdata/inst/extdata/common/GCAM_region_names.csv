@@ -1,5 +1,5 @@
 # File: GCAM_region_names.csv
-# Title: GCAM 32-region names
+# Title: GCAM region names
 # Units: NA
 # Description: Maps GCAM region IDs to region names
 # Column types: ic 
@@ -18,7 +18,7 @@ GCAM_region_ID,region
 11,China
 12,EU-12
 13,EU-15
-14,Europe_Eastern
+14,Ukraine
 15,Europe_Non_EU
 16,European Free Trade Association
 17,India

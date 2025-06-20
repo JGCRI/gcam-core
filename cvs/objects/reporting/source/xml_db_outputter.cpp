@@ -483,6 +483,15 @@ void XMLDBOutputter::startVisitScenario( const Scenario* aScenario, const int aP
     mTabs->writeTabs( mBuffer );
     mBuffer << "<model-version>ver_" << __ObjECTS_VER__ << "_r" << __REVISION_NUMBER__
         << "</model-version>" << endl;
+    
+    // put the model years in the output as well which may be useful metadata
+    XMLWriteOpeningTag("modeltime", mBuffer, mTabs.get());
+    const Modeltime* modeltime = aScenario->getModeltime();
+    for(int per = 0; per < modeltime->getmaxper(); ++per) {
+        int year = modeltime->getper_to_yr(per);
+        XMLWriteElement(year, "model-year", mBuffer, mTabs.get());
+    }
+    XMLWriteClosingTag("modeltime", mBuffer, mTabs.get());
 }
 
 void XMLDBOutputter::endVisitScenario( const Scenario* aScenario, const int aPeriod ){
@@ -1286,16 +1295,12 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     assert( aPeriod == -1 );
     // Write the opening tag.
     XMLWriteOpeningTag( "climate-model", mBuffer, mTabs.get() );
-    int outputInterval
-        = Configuration::getInstance()->getInt( "climateOutputInterval",
-                                   scenario->getModeltime()->gettimestep( 0 ) );
-
-    // print at least to 2100 if interval is set appropriately
-    int endingYear = max( scenario->getModeltime()->getEndYear(), 2100 );
+    
+    const Modeltime* modeltime = scenario->getModeltime();
 
     // Write the concentrations for the request period.
-    for( int year = scenario->getModeltime()->getStartYear();
-         year <= endingYear; year += outputInterval )
+    for( int year = modeltime->getStartYear();
+         year <= modeltime->getEndYear(); year++ )
     {
          writeItemUsingYear( "CO2-concentration", "PPM",
                              aClimateModel->getConcentration( "CO2", year ),
@@ -1333,8 +1338,8 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     }
 
     // Write total radiative forcing
-    for( int year = scenario->getModeltime()->getStartYear();
-         year <= endingYear; year += outputInterval )
+    for( int year = modeltime->getStartYear();
+         year <= modeltime->getEndYear(); year++ )
     {
         // Kyoto Forcing
         writeItemUsingYear( "forcing-Kyoto", "W/m^2",
@@ -1500,8 +1505,8 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
      }
 
     // Write net terrestrial uptake
-    for( int year = scenario->getModeltime()->getStartYear();
-         year <= endingYear; year += outputInterval )
+    for( int year = modeltime->getStartYear();
+         year <= modeltime->getEndYear(); year++ )
     {
         writeItemUsingYear( "net-terrestrial-uptake", "GtC",
                              aClimateModel->getNetTerrestrialUptake( year ),
@@ -1509,8 +1514,8 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     }
 
     // Write net ocean uptake
-    for( int year = scenario->getModeltime()->getStartYear();
-         year <= endingYear; year += outputInterval )
+    for( int year = modeltime->getStartYear();
+         year <= modeltime->getEndYear(); year++ )
     {
         writeItemUsingYear( "net-ocean-uptake", "GtC",
                              aClimateModel->getNetOceanUptake( year ),
@@ -1518,8 +1523,8 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     }
 
     // Global-mean air temperature
-    for( int year = scenario->getModeltime()->getStartYear();
-         year <= endingYear; year += outputInterval )
+    for( int year = modeltime->getStartYear();
+         year <= modeltime->getEndYear(); year++ )
     {
         writeItemUsingYear( "global-mean-air-temperature-native", "degreesC",
                              aClimateModel->getTemperature( year, false ),
@@ -1527,8 +1532,8 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     }
     
     // Global-mean surface temperature
-    for( int year = scenario->getModeltime()->getStartYear();
-         year <= endingYear; year += outputInterval )
+    for( int year = modeltime->getStartYear();
+         year <= modeltime->getEndYear(); year++ )
     {
         writeItemUsingYear( "global-mean-surface-temperature-native", "degreesC",
                              aClimateModel->getGmst( year, false ),
@@ -1536,8 +1541,8 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     }
     
     // Global-mean air temperature relative to 1850-1900 mean
-    for( int year = scenario->getModeltime()->getStartYear();
-         year <= endingYear; year += outputInterval )
+    for( int year = modeltime->getStartYear();
+         year <= modeltime->getEndYear(); year++ )
     {
         writeItemUsingYear( "global-mean-air-temperature", "degreesC",
                              aClimateModel->getTemperature( year, true ),
@@ -1545,8 +1550,8 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
     }
     
     // Global-mean surface temperature relative to 1850-1900 mean
-    for( int year = scenario->getModeltime()->getStartYear();
-         year <= endingYear; year += outputInterval )
+    for( int year = modeltime->getStartYear();
+         year <= modeltime->getEndYear(); year++ )
     {
         writeItemUsingYear( "global-mean-surface-temperature", "degreesC",
                              aClimateModel->getGmst( year, true ),
@@ -1686,11 +1691,10 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
     // Printing yearly values would be too much data.
     const Modeltime* modeltime = scenario->getModeltime();
     const int startingYear = max( Configuration::getInstance()->getInt( "carbon-output-start-year", 1990 ), CarbonModelUtils::getStartYear() );
-    int outputInterval = Configuration::getInstance()->getInt( "climateOutputInterval",modeltime->gettimestep( 0 ) );
     
     for( int aYear = startingYear; 
              aYear <= modeltime->getper_to_yr( modeltime->getmaxper() - 1 ) || aYear == modeltime->getper_to_yr( modeltime->getmaxper() - 1 ); 
-             aYear += outputInterval ){
+             aYear++ ){
         writeItemUsingYear( "land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmission( aYear ), aYear );
         writeItemUsingYear( "above-land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmissionAbove( aYear ), aYear );
         writeItemUsingYear( "below-land-use-change-emission", "MtC/yr", aCarbonCalc->getNetLandUseChangeEmissionBelow( aYear ), aYear );
@@ -1708,7 +1712,7 @@ void XMLDBOutputter::startVisitCarbonCalc( const ICarbonCalc* aCarbonCalc, const
     }
     for( int aYear = modeltime->getStartYear();
              aYear <= modeltime->getper_to_yr( modeltime->getmaxper() - 1 ) || aYear == modeltime->getper_to_yr( modeltime->getmaxper() - 1 );
-             aYear += outputInterval ){
+             aYear++ ){
         writeItemUsingYear( "above-ground-carbon-stock", "MtC", aCarbonCalc->getAboveGroundCarbonStock( aYear ), aYear );
 
     }

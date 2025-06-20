@@ -119,6 +119,8 @@ trn_pass_road,Bus,NG,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_2W,Motorcycle (50-250cc),Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV,Three-Wheeler,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV,Three-Wheeler,NG,3.5,3.5,3.5,3.5,3.5,3.5
+trn_pass_road_LDV,2W and 3W,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
+trn_pass_road_LDV,2W and 3W,NG,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Mini Car,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Mini Car,NG,3.5,3.5,3.5,3.5,3.5,3.5
@@ -149,12 +151,18 @@ trn_pass_road_LDV_2W,Motorcycle (>250cc),Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Midsize Car,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Midsize Car,Hybrid Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Midsize Car,NG,3.5,3.5,3.5,3.5,3.5,3.5
+trn_pass_road_LDV_4W,Car,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
+trn_pass_road_LDV_4W,Car,Hybrid Liquids,3.5,3.5,3.5,3.5,3.5,3.5
+trn_pass_road_LDV_4W,Car,NG,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Large Car,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Large Car,Hybrid Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Large Car,NG,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Light Truck and SUV,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Light Truck and SUV,Hybrid Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_pass_road_LDV_4W,Light Truck and SUV,NG,3.5,3.5,3.5,3.5,3.5,3.5
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
+trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,3.5,3.5,3.5,3.5,3.5,3.5
+trn_pass_road_LDV_4W,Large Car and Truck,NG,3.5,3.5,3.5,3.5,3.5,3.5
 trn_freight_road,Truck (0-1t),Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_freight_road,Truck (0-1t),NG,3.5,3.5,3.5,3.5,3.5,3.5
 trn_freight_road,Truck (1-6t),Liquids,3.5,3.5,3.5,3.5,3.5,3.5
@@ -208,6 +216,12 @@ trn_freight_road,Truck (4.5-12t),Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_freight_road,Truck (4.5-12t),NG,3.5,3.5,3.5,3.5,3.5,3.5
 trn_freight_road,Truck (>12t),Liquids,3.5,3.5,3.5,3.5,3.5,3.5
 trn_freight_road,Truck (>12t),NG,3.5,3.5,3.5,3.5,3.5,3.5
+trn_freight_road,Light truck,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
+trn_freight_road,Medium truck,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
+trn_freight_road,Heavy truck,Liquids,3.5,3.5,3.5,3.5,3.5,3.5
+trn_freight_road,Light truck,NG,3.5,3.5,3.5,3.5,3.5,3.5
+trn_freight_road,Medium truck,NG,3.5,3.5,3.5,3.5,3.5,3.5
+trn_freight_road,Heavy truck,NG,3.5,3.5,3.5,3.5,3.5,3.5
 out_resources,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5
 out_resources,crude oil,crude oil,3.5,3.5,3.5,3.5,3.5,3.5
 out_resources,natural gas,natural gas,3.5,3.5,3.5,3.5,3.5,3.5

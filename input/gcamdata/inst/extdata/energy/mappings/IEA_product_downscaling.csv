@@ -6,31 +6,31 @@
 # Column types: cc
 # ----------
 PRODUCT,FLOW
-Hard coal (if no detail),TPES
-Brown coal (if no detail),TPES
-Anthracite,TPES
-Coking coal,TPES
-Other bituminous coal,TPES
-Sub-bituminous coal,TPES
-Lignite,TPES
+Hard coal (if no detail),TES
+Brown coal (if no detail),TES
+Anthracite,TES
+Coking coal,TES
+Other bituminous coal,TES
+Sub-bituminous coal,TES
+Lignite,TES
 Patent fuel,TPATFUEL
 Coke oven coke,TCOKEOVS
-Gas coke,TPES
-Coal tar,TPES
+Gas coke,TES
+Coal tar,TES
 BKB,TBKB
-Peat products,TPES
+Peat products,TES
 Gas works gas,TGASWKS
 Coke oven gas,TCOKEOVS
 Blast furnace gas,TBLASTFUR
-Other recovered gases,TPES
-Peat,TPES
-Natural gas,TPES
-Crude/NGL/feedstocks (if no detail),TPES
-Crude oil,TPES
-Natural gas liquids,TPES
-Refinery feedstocks,TPES
-Additives/blending components,TPES
-Other hydrocarbons,TPES
+Other recovered gases,TES
+Peat,TES
+Natural gas,TES
+Crude/NGL/feedstocks (if no detail),TES
+Crude oil,TES
+Natural gas liquids,TES
+Refinery feedstocks,TES
+Additives/blending components,TES
+Other hydrocarbons,TES
 Refinery gas,TREFINER
 Ethane,TFC
 Liquefied petroleum gases (LPG),TFC
@@ -48,29 +48,29 @@ Bitumen,TFC
 Paraffin waxes,TFC
 Petroleum coke,TFC
 Other oil products,TFC
-Oil shale and oil sands,TPES
-Industrial waste,TPES
-Municipal waste (renewable),TPES
-Municipal waste (non-renewable),TPES
-Primary solid biofuels,TPES
-Biogases,TPES
-Bio jet kerosene,TPES
-Biogasoline,TPES
-Biodiesels,TPES
-Other liquid biofuels,TPES
-Non-specified primary biofuels and waste,TPES
+Oil shale and oil sands,TES
+Industrial waste,TES
+Municipal waste (renewable),TES
+Municipal waste (non-renewable),TES
+Primary solid biofuels,TES
+Biogases,TES
+Bio jet kerosene,TES
+Biogasoline,TES
+Biodiesels,TES
+Other liquid biofuels,TES
+Non-specified primary biofuels and waste,TES
 Charcoal,TCHARCOAL
 Elec/heat output from non-specified manufactured gases,TFC
 Heat output from non-specified combustible fuels,TFC
-Nuclear,TPES
-Hydro,TPES
-Geothermal,TPES
-Solar photovoltaics,TPES
-Solar thermal,TPES
-"Tide, wave and ocean",TPES
-Wind,TPES
-Other sources,TPES
+Nuclear,TES
+Hydro,TES
+Geothermal,TES
+Solar photovoltaics,TES
+Solar thermal,TES
+"Tide, wave and ocean",TES
+Wind,TES
+Other sources,TES
 Electricity,TFC
 Heat,TFC
-Total,TPES
-Memo: Renewables,TPES
+Total,TES
+Memo: Renewables,TES

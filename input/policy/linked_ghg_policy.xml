@@ -811,7 +811,7 @@
             <linked-policy>GHG</linked-policy>
          </linked-ghg-policy>
       </region>
-      <region name="Europe_Eastern">
+      <region name="Ukraine">
          <linked-ghg-policy name="CO2">
             <market>global</market>
             <linked-policy>GHG</linked-policy>

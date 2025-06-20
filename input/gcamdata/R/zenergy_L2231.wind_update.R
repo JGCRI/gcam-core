@@ -67,7 +67,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
     # ===================================================
     # Perform Computations
 
-    # First, map NREL data on resource potential by country to GCAM 32 regions, convert PWh to EJ
+    # First, map NREL data on resource potential by country to GCAM regions, convert PWh to EJ
     # Second, aggregate by GCAM region/ wind class
 
     L2231.onshore_wind_potential_EJ <- NREL_onshore_energy %>%
@@ -160,6 +160,21 @@ module_energy_L2231.wind_update <- function(command, ...) {
       mutate(mid.price = round(((P2 - P1) * maxSubResource + (2 * Q2 * P1) - (2 * Q1 * P2)) / (2 * (Q2 - Q1)),
                                energy.DIGITS_MAX_SUB_RESOURCE)) %>%
       select(region, mid.price) -> L2231.mid.price
+
+    # Add mid.price for regions with only one price point
+    (L2231.onshore_wind_curve %>%
+        dplyr::count(region) %>%
+        dplyr::filter(n==1))$region %>%
+      unique()-> L2231.onshore_wind_curve_single_regions
+
+    # Set mid.price to available price
+    L2231.onshore_wind_curve %>%
+      dplyr::filter(region %in% L2231.onshore_wind_curve_single_regions) %>%
+      dplyr::select(region, mid.price = price)-> L2231.mid.price_singleprice
+
+    # Combine with L2231.mid.price
+    L2231.mid.price %>%
+      dplyr::bind_rows(L2231.mid.price_singleprice) -> L2231.mid.price
 
     L2231.onshore_wind_curve %>%
       left_join_error_no_match(L2231.mid.price, by = c("region")) -> L2231.onshore_wind_curve

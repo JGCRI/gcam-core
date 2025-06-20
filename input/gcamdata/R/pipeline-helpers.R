@@ -383,8 +383,82 @@ gather_years <- function(d, value_col = "value", year_pattern = YEAR_PATTERN, na
 
   . <- year <- value <- NULL  # silence package check notes
 
+  # find year columns
+  year_cols_ind <- grepl(year_pattern, names(d)) | (names(d) %in% names(YEAR_RECODE))
+  year_cols <- names(d)[year_cols_ind]
+  # recode any columns that match the set_year constants
+  year_cols_recoded <- as.character(dplyr::recode(year_cols, !!!YEAR_RECODE, .default = suppressWarnings(as.numeric(year_cols))))
+
+  # do some error checking to ensure we do not resolve to year columns that are no
+  # longer in order
+  # note that while this _may_ actually be ok (constant values or NAs that would be removed),
+  # for now, we just keep the error checking simple
+  for(year_ind in seq_along(year_cols)) {
+    if(year_ind > 1) {
+      prev_year_recoded <- year_cols_recoded[year_ind-1]
+      curr_year_recoded <- year_cols_recoded[year_ind]
+      if(prev_year_recoded >= curr_year_recoded) {
+        # generate an error message noting the years that are out of order
+        prev_year_col <- year_cols[year_ind-1]
+        message_list <- c("gather_years resolved to out of order years: ", prev_year_col)
+        # if the column was recoded note the constant as well as the resolved year
+        if(prev_year_col != prev_year_recoded) {
+          message_list <- c(message_list, " (", prev_year_recoded, ")")
+        }
+        curr_year_col <- year_cols[year_ind]
+        message_list <- c(message_list,  " >= ", curr_year_col)
+        if(curr_year_col != curr_year_recoded) {
+          message_list <- c(message_list, " (", curr_year_recoded, ")")
+        }
+        stop(paste0(message_list))
+      }
+    }
+  }
+
+  # actually rename columns and do the gather
+  names(d)[year_cols_ind] = year_cols_recoded
   d %>%
-    tidyr::gather(year, value, matches(year_pattern), na.rm = na.rm) %>%
-    mutate(year = as.integer(year)) %>%
-    stats::setNames(sub("value", value_col, names(.)))
+    tidyr::gather(year, {{value_col}}, dplyr::any_of(year_cols_recoded), na.rm = na.rm) %>%
+    mutate(year = as.integer(year))
+}
+
+#' Helper function to extend data which is in long format.
+#'
+#' Given a data frame the \code{var} column which contains the data and a set of years
+#' for which all years must have data this helper expands the data and fills using
+#' \code{approx_fun(rule=2)}, in other words will copy data beyond the end years.
+#' Thus making it suitable to extend historical data sets by copying forward.
+#' @param data The data to extend
+#' @param var The column which contains the data to copy
+#' @param all_years The set of years for which there must be data.
+#' @param ... The result of the columns to "nest" by
+#' @return The data extended to include all requested years.
+#' @importFrom dplyr select distinct left_join group_by arrange mutate ungroup
+#' @export
+copy_data_forward_long <- function(data, var, all_years, ... ) {
+  data %>%
+    select(...) %>%
+    distinct() %>%
+    repeat_add_columns(tibble(year=c(unique(c(data$year, all_years))))) %>%
+    left_join(data, by=names(.), relationship = "many-to-many") %>%
+    group_by(...) %>%
+    arrange(year, .by_group = TRUE) %>%
+    mutate("{var}" := approx_fun(year, .data[[var]], rule=2)) %>%
+    ungroup()
+}
+
+#' Helper function to extend data which is in wide format.
+#'
+#' Given a data frame and a \code{copy_from_year} column this helper will copy it
+#' to new columns for each \code{copy_to_years}.
+#' @param data The data to extend
+#' @param copy_from_year The column which contains the data to copy
+#' @param all_years The set of years for which there must be data.
+#' @return The data extended to include all requested years.
+#' @export
+copy_data_forward_wide <- function(data, copy_from_year, copy_to_years) {
+  fill_cols <- lapply(copy_to_years, function(x){data %>% pull(as.character(copy_from_year))})
+  names(fill_cols) <- copy_to_years
+  data %>%
+    dplyr::bind_cols(tibble::as_tibble(fill_cols))
 }

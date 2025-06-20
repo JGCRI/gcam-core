@@ -18,39 +18,45 @@
 #' Modelling & Software 85, 246-265. http://dx.doi.org/10.1016/j.envsoft.2016.08.016.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate semi_join summarise
+#' @importFrom stringr str_split_1
 #' @author BBL March 2017
 module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
 
-  namelist <- c("Land_type_area_ha",
-                "LDS_ag_HA_ha",
-                "LDS_ag_prod_t",
-                "LDS_value_milUSD",
-                "MIRCA_irrHA_ha",
-                "MIRCA_rfdHA_ha",
-                "Mueller_yield_levels",
-                "Ref_veg_carbon_Mg_per_ha",
-                "Water_footprint_m3")
+  MODULE_INPUTS <-
+    c(FILE = "aglu/LDS/Land_type_area_ha",
+      FILE = "aglu/LDS/LDS_ag_HA_ha",
+      FILE = "aglu/LDS/LDS_ag_prod_t",
+      FILE = "aglu/LDS/LDS_value_milUSD",
+      FILE = "aglu/LDS/MIRCA_irrHA_ha",
+      FILE = "aglu/LDS/MIRCA_rfdHA_ha",
+      FILE = "aglu/LDS/Ref_veg_carbon_Mg_per_ha",
+      FILE = "aglu/LDS/Water_footprint_m3")
+
   dirname <- "aglu/LDS/"
+  namelist <- gsub(dirname, "", MODULE_INPUTS)
+  names(namelist) <- NULL
+
+  MODULE_OUTPUTS <- paste0("L100.", namelist)
 
   if(command == driver.DECLARE_INPUTS) {
-    x <- paste0(dirname, namelist)
-    names(x) <- rep("FILE", length(x))
-    return(x)
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(paste0("L100.", namelist))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     . <- value <- iso <- GTAP_crop <- GLU <- MIRCA_crop <- NULL             # silence package check.
     L100.Land_type_area_ha <- L100.LDS_value_milUSD <- L100.MIRCA_irrHA_ha <-
-        L100.MIRCA_rfdHA_ha <- L100.Mueller_yield_levels <-
-        L100.Ref_veg_carbon_Mg_per_ha <- L100.Water_footprint_m3 <- NULL
+        L100.MIRCA_rfdHA_ha <- L100.Ref_veg_carbon_Mg_per_ha <- L100.Water_footprint_m3 <- NULL
 
     all_data <- list(...)[[1]]
 
     # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
+    # add data to a list
     LDSfiles <- list()
     for(nm in namelist) {
-      LDSfiles[[nm]] <- get_data(all_data, paste0(dirname, nm))
+      LDSfiles[[nm]] <- get(nm)
     }
 
     # Go through all data frames and...
@@ -111,16 +117,6 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
       }
     }
 
-    # Add necessary legacy and precursor information and assign to environment
-    for(nm in namelist) {
-      legacy_name <- paste0("L100.", nm)
-      LDSfiles[[nm]] %>%
-        add_legacy_name(legacy_name) %>%
-        add_precursors(paste0(dirname, nm)) ->
-        df
-      assign(legacy_name, df)
-    }
-
     # base year related processing:
     # check which files have the years column, write a warning if the max year
     # is earlier than the base year, and copy the data to the final base year
@@ -139,6 +135,21 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
           mutate(year = MODEL_FINAL_BASE_YEAR)
         LDSfiles[[nm]] <- bind_rows(latest_data, LDSfiles[[nm]])
       }
+    }
+
+    # Add necessary legacy and precursor information and assign to environment
+    for(nm in namelist) {
+      legacy_name <- paste0("L100.", nm)
+      # Extract units from file name (units are the final string after the last "_")
+      tempUnits <- str_split_1(nm, "_")
+      LDSfiles[[nm]] %>%
+        add_title(nm) %>%
+        add_units(tempUnits[length(tempUnits)]) %>%
+        add_comments("Source: Land Data System") %>%
+        add_legacy_name(legacy_name) %>%
+        add_precursors(paste0(dirname, nm)) ->
+        df
+      assign(legacy_name, df)
     }
 
     # The production and harvested area tables have values <1 clipped, resulting
@@ -287,15 +298,7 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
 
 
     # And we're done
-    return_data(L100.Land_type_area_ha,
-                L100.LDS_ag_HA_ha,
-                L100.LDS_ag_prod_t,
-                L100.LDS_value_milUSD,
-                L100.MIRCA_irrHA_ha,
-                L100.MIRCA_rfdHA_ha,
-                L100.Mueller_yield_levels,
-                L100.Ref_veg_carbon_Mg_per_ha,
-                L100.Water_footprint_m3)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

@@ -11,8 +11,8 @@ process heat paper,gas,start-year,,1
 process heat paper,refined liquids,start-year,,1
 process heat paper,heat,start-year,,1
 process heat paper,electricity,start-year,,0
-process heat paper,electricity,2020,,0
+process heat paper,electricity,initial-future-year,,0
 process heat paper,electricity,2030,,1
 process heat paper,hydrogen,start-year,,0
-process heat paper,hydrogen,2020,,0
+process heat paper,hydrogen,initial-future-year,,0
 process heat paper,hydrogen,2050,,0.5

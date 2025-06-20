@@ -3,7 +3,7 @@
 # Units: Unitless
 # Column types: cccccnnnnnnnnn
 # ----------
-supplysector,subsector,technology,minicam.energy.input,secondary.output,1971,2005,2020,2035,2050,2065,2080,2095,2100
+supplysector,subsector,technology,minicam.energy.input,secondary.output,1971,final-calibration-year,initial-future-year,2035,2050,2065,2080,2095,2100
 chemical energy use,refined liquids,refined liquids,refined liquids industrial,,0.917381318,0.982,1.001,1.018,1.033,1.047,1.062,1.077,1.077
 chemical energy use,refined liquids,refined liquids cogen,refined liquids industrial,electricity,0.565189101,0.605,0.614,0.623,0.632,0.642,0.652,0.662,0.662
 chemical energy use,refined liquids,refined liquids CCS,refined liquids industrial,,0.917381318,0.982,1.001,1.018,1.033,1.047,1.062,1.077,1.077

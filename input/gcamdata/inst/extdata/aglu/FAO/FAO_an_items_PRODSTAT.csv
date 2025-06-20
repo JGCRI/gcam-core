@@ -6,73 +6,69 @@
 # Items not included are either nonfood or incuded in other places. Fish items are included using FBS item_code. 
 # This mapping is mainly used for price calculation. Items with no quality price data (fish items) could be dropped in processing. 
 # FAO only has price data for items with TRUE for price_item
+# Update2024: new item names added; Wool_greasy removed; honey was not from QCL
 # Sources: FAO and other databases
-# Date of last update: 2022-03-27 (XZ)
-# Column types: cicl 
+# Date of last update: 2024-06-11 (XZ)
+# Column types: ccicl 
 # ----------
-item,item_code,GCAM_commodity,price_item
-"Meat, buffalo",947,Beef,TRUE
-"Meat, cattle",867,Beef,TRUE
-"Milk, whole fresh buffalo",951,Dairy,TRUE
-"Milk, whole fresh camel",1130,Dairy,TRUE
-"Milk, whole fresh cow",882,Dairy,TRUE
-"Milk, whole fresh goat",1020,Dairy,TRUE
-"Milk, whole fresh sheep",982,Dairy,TRUE
-"Aquatic Animals, Others",2769,OtherMeat_Fish,FALSE
-Aquatic Plants,2775,OtherMeat_Fish,FALSE
-Cephalopods,2766,OtherMeat_Fish,FALSE
-Crustaceans,2765,OtherMeat_Fish,FALSE
-Demersal Fish,2762,OtherMeat_Fish,FALSE
-"Fat, buffaloes",949,OtherMeat_Fish,FALSE
-"Fat, camels",1129,OtherMeat_Fish,FALSE
-"Fat, cattle",869,OtherMeat_Fish,FALSE
-"Fat, goats",1019,OtherMeat_Fish,FALSE
-"Fat, pigs",1037,OtherMeat_Fish,FALSE
-"Fat, sheep",979,OtherMeat_Fish,FALSE
-"Fish, Body Oil",2781,OtherMeat_Fish,FALSE
-"Fish, Liver Oil",2782,OtherMeat_Fish,FALSE
-Freshwater Fish,2761,OtherMeat_Fish,FALSE
-"Honey, natural",1182,OtherMeat_Fish,TRUE
-"Marine Fish, Other",2764,OtherMeat_Fish,FALSE
-Meat nes,1166,OtherMeat_Fish,TRUE
-"Meat, Aquatic Mammals",2768,OtherMeat_Fish,TRUE
-"Meat, ass",1108,OtherMeat_Fish,TRUE
-"Meat, bird nes",1089,OtherMeat_Fish,TRUE
-"Meat, camel",1127,OtherMeat_Fish,TRUE
-"Meat, game",1163,OtherMeat_Fish,TRUE
-"Meat, horse",1097,OtherMeat_Fish,TRUE
-"Meat, mule",1111,OtherMeat_Fish,TRUE
-"Meat, other camelids",1158,OtherMeat_Fish,TRUE
-"Meat, other rodents",1151,OtherMeat_Fish,TRUE
-"Meat, rabbit",1141,OtherMeat_Fish,TRUE
-"Molluscs, Other",2767,OtherMeat_Fish,FALSE
-"Offals, edible, buffaloes",948,OtherMeat_Fish,FALSE
-"Offals, edible, camels",1128,OtherMeat_Fish,FALSE
-"Offals, edible, cattle",868,OtherMeat_Fish,FALSE
-"Offals, edible, goats",1018,OtherMeat_Fish,FALSE
-"Offals, horses",1098,OtherMeat_Fish,FALSE
-"Offals, pigs, edible",1036,OtherMeat_Fish,FALSE
-"Offals, sheep,edible",978,OtherMeat_Fish,FALSE
-Pelagic Fish,2763,OtherMeat_Fish,FALSE
-"Snails, not sea",1176,OtherMeat_Fish,FALSE
-"Meat, pig",1035,Pork,TRUE
-"Eggs, hen, in shell",1062,Poultry,TRUE
-"Eggs, other bird, in shell",1091,Poultry,TRUE
-"Meat, chicken",1058,Poultry,TRUE
-"Meat, duck",1069,Poultry,TRUE
-"Meat, goose and guinea fowl",1073,Poultry,TRUE
-"Meat, turkey",1080,Poultry,TRUE
-"Meat, goat",1017,SheepGoat,TRUE
-"Meat, sheep",977,SheepGoat,TRUE
-Beeswax,1183,,
-Hair of Horses,,,
-"Hides, buffalo, fresh",957,,
-"Hides, cattle, fresh",919,,
-Offals Nes,,,
-"Silk, raw",1186,,
-"Silk-worm cocoons, reelable",1185,,
-Skin Furs,,,
-Skins With Wool Sheep,,,
-"Skins, goat, fresh",1025,,
-"Skins, sheep, fresh",995,,
-"Wool, greasy",987,,
+item,item_name2023,item_code,GCAM_commodity,price_item
+"Meat of cattle with the bone, fresh or chilled","Meat, cattle",867,Beef,TRUE
+"Edible offal of cattle, fresh, chilled or frozen","Offals, edible, cattle",868,OtherMeat_Fish,FALSE
+"Cattle fat, unrendered","Fat, cattle",869,OtherMeat_Fish,FALSE
+Raw milk of cattle,"Milk, whole fresh cow",882,Dairy,TRUE
+Raw hides and skins of cattle,"Hides, cattle, fresh",919,,
+"Meat of buffalo, fresh or chilled","Meat, buffalo",947,Beef,TRUE
+"Edible offal of buffalo, fresh, chilled or frozen","Offals, edible, buffaloes",948,OtherMeat_Fish,FALSE
+"Buffalo fat, unrendered","Fat, buffaloes",949,OtherMeat_Fish,FALSE
+Raw milk of buffalo,"Milk, whole fresh buffalo",951,Dairy,TRUE
+Raw hides and skins of buffaloes,"Hides, buffalo, fresh",957,,
+"Meat of sheep, fresh or chilled","Meat, sheep",977,SheepGoat,TRUE
+"Edible offal of sheep, fresh, chilled or frozen","Offals, sheep,edible",978,OtherMeat_Fish,FALSE
+"Sheep fat, unrendered","Fat, sheep",979,OtherMeat_Fish,FALSE
+Raw milk of sheep,"Milk, whole fresh sheep",982,Dairy,TRUE
+Raw hides and skins of sheep or lambs,"Skins, sheep, fresh",995,,
+"Meat of goat, fresh or chilled","Meat, goat",1017,SheepGoat,TRUE
+"Edible offal of goat, fresh, chilled or frozen","Offals, edible, goats",1018,OtherMeat_Fish,FALSE
+"Goat fat, unrendered","Fat, goats",1019,OtherMeat_Fish,FALSE
+Raw milk of goats,"Milk, whole fresh goat",1020,Dairy,TRUE
+Raw hides and skins of goats or kids,"Skins, goat, fresh",1025,,
+"Meat of pig with the bone, fresh or chilled","Meat, pig",1035,Pork,TRUE
+"Edible offal of pigs, fresh, chilled or frozen","Offals, pigs, edible",1036,OtherMeat_Fish,FALSE
+Fat of pigs,"Fat, pigs",1037,OtherMeat_Fish,FALSE
+"Meat of chickens, fresh or chilled","Meat, chicken",1058,Poultry,TRUE
+"Hen eggs in shell, fresh","Eggs, hen, in shell",1062,Poultry,TRUE
+"Meat of ducks, fresh or chilled","Meat, duck",1069,Poultry,TRUE
+"Meat of geese, fresh or chilled","Meat, goose and guinea fowl",1073,Poultry,TRUE
+"Meat of turkeys, fresh or chilled","Meat, turkey",1080,Poultry,TRUE
+"Meat of pigeons and other birds n.e.c., fresh, chilled or frozen","Meat, bird nes",1089,OtherMeat_Fish,TRUE
+"Eggs from other birds in shell, fresh, n.e.c.","Eggs, other bird, in shell",1091,Poultry,TRUE
+"Horse meat, fresh or chilled","Meat, horse",1097,OtherMeat_Fish,TRUE
+"Edible offals of horses and other equines,  fresh, chilled or frozen","Offals, horses",1098,OtherMeat_Fish,FALSE
+"Meat of asses, fresh or chilled","Meat, ass",1108,OtherMeat_Fish,TRUE
+"Meat of mules, fresh or chilled","Meat, mule",1111,OtherMeat_Fish,TRUE
+"Meat of camels, fresh or chilled","Meat, camel",1127,OtherMeat_Fish,TRUE
+"Edible offals of camels and other camelids, fresh, chilled or frozen","Offals, edible, camels",1128,OtherMeat_Fish,FALSE
+Fat of camels,"Fat, camels",1129,OtherMeat_Fish,FALSE
+Raw milk of camel,"Milk, whole fresh camel",1130,Dairy,TRUE
+"Meat of rabbits and hares, fresh or chilled","Meat, rabbit",1141,OtherMeat_Fish,TRUE
+"Meat of other domestic rodents, fresh or chilled","Meat, other rodents",1151,OtherMeat_Fish,TRUE
+"Meat of other domestic camelids, fresh or chilled","Meat, other camelids",1158,OtherMeat_Fish,TRUE
+"Game meat, fresh, chilled or frozen","Meat, game",1163,OtherMeat_Fish,TRUE
+"Other meat n.e.c. (excluding mammals), fresh, chilled or frozen",Meat nes,1166,OtherMeat_Fish,TRUE
+"Snails, fresh, chilled, frozen, dried, salted or in brine, except sea snails","Snails, not sea",1176,OtherMeat_Fish,FALSE
+"Honey, natural","Honey, natural",1182,OtherMeat_Fish,TRUE
+Beeswax,Beeswax,1183,,
+"Silk-worm cocoons, reelable","Silk-worm cocoons, reelable",1185,,
+"Silk, raw","Silk, raw",1186,,
+Freshwater Fish,Freshwater Fish,2761,OtherMeat_Fish,FALSE
+Demersal Fish,Demersal Fish,2762,OtherMeat_Fish,FALSE
+Pelagic Fish,Pelagic Fish,2763,OtherMeat_Fish,FALSE
+"Marine Fish, Other","Marine Fish, Other",2764,OtherMeat_Fish,FALSE
+Crustaceans,Crustaceans,2765,OtherMeat_Fish,FALSE
+Cephalopods,Cephalopods,2766,OtherMeat_Fish,FALSE
+"Molluscs, Other","Molluscs, Other",2767,OtherMeat_Fish,FALSE
+"Meat, Aquatic Mammals","Meat, Aquatic Mammals",2768,OtherMeat_Fish,TRUE
+"Aquatic Animals, Others","Aquatic Animals, Others",2769,OtherMeat_Fish,FALSE
+Aquatic Plants,Aquatic Plants,2775,OtherMeat_Fish,FALSE
+"Fish, Body Oil","Fish, Body Oil",2781,OtherMeat_Fish,FALSE
+"Fish, Liver Oil","Fish, Liver Oil",2782,OtherMeat_Fish,FALSE

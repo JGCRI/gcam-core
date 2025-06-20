@@ -95,6 +95,34 @@ module_energy_L154.transportation_UCD <- function(command, ...) {
       repeat_add_columns(tibble(sce = unique(UCD_trn_data$sce))) ->
       OTAQ_trn_data_EMF37_to_bind
 
+    # PK 4/22/25 - the table OTAQ_trn_data_EMF37 uses 2015 as a stock year and 2020 as a new year for
+    # vehicle intensities of vintaged technologies. If the model base year is >2015 this will result in
+    # very efficient vehicles, moreso than intended, in the final model base year
+
+    # Define the final year in our transportation data in which vehicle intensities represent stock averages
+    energy.TRN_DATA_FINAL_STOCK_YEAR <- 2015
+    if(max(MODEL_BASE_YEARS) > energy.TRN_DATA_FINAL_STOCK_YEAR){
+      OTAQ_trn_data_EMF37_stock_adj <- filter(OTAQ_trn_data_EMF37_to_bind,
+                                              variable == "intensity" & mode %in% c("LDV_4W", "Truck"),
+                                              year >= energy.TRN_DATA_FINAL_STOCK_YEAR & year <= max(MODEL_BASE_YEARS)) %>%
+        complete(nesting(UCD_region, UCD_sector, mode, size.class, UCD_technology, UCD_fuel, variable, unit, sce),
+                 year = unique(c(year, max(MODEL_BASE_YEARS)))) %>%
+        dplyr::group_by_at(dplyr::vars(-year, -value)) %>%
+        mutate(value = approx_fun(year, value, rule = 2),
+               improvement = value - value[year == energy.TRN_DATA_FINAL_STOCK_YEAR],
+               nyears = year - energy.TRN_DATA_FINAL_STOCK_YEAR,
+               lifetime = 15,
+               new_value = value[year == energy.TRN_DATA_FINAL_STOCK_YEAR] + improvement * nyears / lifetime) %>%
+        ungroup() %>%
+        mutate(value = new_value) %>%
+        select(names(OTAQ_trn_data_EMF37_to_bind))
+
+      # Replace the data in OTAQ_trn_data_EMF37_to_bind
+      OTAQ_trn_data_EMF37_to_bind <- anti_join(OTAQ_trn_data_EMF37_to_bind, OTAQ_trn_data_EMF37_stock_adj,
+                                               by = names(OTAQ_trn_data_EMF37_to_bind)[names(OTAQ_trn_data_EMF37_to_bind) != "value"]) %>%
+        bind_rows(OTAQ_trn_data_EMF37_stock_adj)
+    }
+
     # Expand the OTAQ trn data to all of the required years in the UCD transportation database
     UCD_data_years <- sort(unique(UCD_trn_data$year))
 
@@ -347,9 +375,10 @@ module_energy_L154.transportation_UCD <- function(command, ...) {
 
 
     # Creating tibble with all GCAM years to join with. The values will be filled out using the first available year.
-    # Remove years in all GCAM years that are already in UCD database
+    # Remove years in all GCAM years that are already in UCD database (note, intensity may have adjusted years so avoid
+    # it when deciding years)
     all_years <- tibble( year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
-      filter(!(year %in% unique(UCD_trn_data$year)))
+      filter(!(year %in%  unique(UCD_trn_data[UCD_trn_data$variable != "intensity", "year", drop = T])))
 
     UCD_trn_data_sce <- bind_rows(UCD_trn_data_SSP1,UCD_trn_data_SSP3,UCD_trn_data_SSP5)
     all_years_SSPs <- tibble( year = c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%

@@ -50,8 +50,11 @@ module_gcamusa_L101.EIA_SEDS <- function(command, ...) {
     # ===================================================
 
     # warning to update SEDS data if the maximum year is earlier than base year
-    if (max((EIA_use_all_Bbtu %>% gather_years())$year) < MODEL_FINAL_BASE_YEAR) {
+    EIA_use_max_year <- max((EIA_use_all_Bbtu %>% gather_years())$year)
+    if (EIA_use_max_year < MODEL_FINAL_BASE_YEAR) {
       warning("L101.EIA_SEDS: Update SEDS data (EIA_use_all_Bbtu) till latest base year.")
+      EIA_missing_years <- HISTORICAL_YEARS[HISTORICAL_YEARS > EIA_use_max_year]
+      EIA_use_all_Bbtu <- copy_data_forward_wide(EIA_use_all_Bbtu, EIA_use_max_year, EIA_missing_years)
     }
 
     # Prep for output tables - add columns for GCAM sector and fuel names, using the substrings of the Mnemonic Series Name (MSN) code, and filter out U.S.

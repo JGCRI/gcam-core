@@ -81,6 +81,8 @@ private:
 
     //! Name of the resource currently being tabulated.
     gcamstr mCurrentResourceName;
+    
+    double mPrevSubResRemainPrice;
 };
 
 #endif // _CALIBRATE_RESOURCE_VISITOR_H_

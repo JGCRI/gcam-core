@@ -59,6 +59,40 @@ module_socio_L180.GDP_macro <- function(command, ...) {
     PWT.supplemental <- pwt91_na
     gcam.reg.iso <- iso_GCAM_regID
 
+    unique_regions <- unique(L100.GTAP_capital_stock$region_GTAP)
+    missing_regions <- (unique((gcam.reg.iso %>% dplyr::filter(GCAM_region_ID > 32))$iso))[
+      !(unique((gcam.reg.iso %>% dplyr::filter(GCAM_region_ID > 32))$iso)) %in% unique_regions]
+
+    if(length(missing_regions) > 0){
+      for(missing_region_i in missing_regions){
+        GCAM_region_ID_i <- (gcam.reg.iso %>% dplyr::filter(iso==missing_region_i))$GCAM_region_ID
+        GCAM_region_i <- (GCAM_region_names %>% dplyr::filter(GCAM_region_ID==GCAM_region_ID_i))$region
+
+        print(paste0('Global average for capital stocks has been used for ', GCAM_region_i, '. Correct the GCAM_GTAP_region_mapping.csv mapping'))
+
+        # Calculate global Average
+        L100.GTAP_capital_stock %>%
+          dplyr::select(-region_GTAP, -region_GCAM) %>%
+          dplyr::group_by(GCAM_sector,year) %>%
+          dplyr::summarize(CapitalCost = mean(CapitalCost,na.rm=T),
+                           VKE = mean(VKE,na.rm=T),
+                           VKB = mean(VKB,na.rm=T),
+                           VDEP = mean(VDEP,na.rm=T)) ->
+            L100.GTAP_capital_stock_global_average
+
+        # Set data for missing region to global average
+        L100.GTAP_capital_stock_missing_region_i <-
+          L100.GTAP_capital_stock_global_average %>%
+          dplyr::mutate(region_GTAP=missing_region_i,
+                        region_GCAM=GCAM_region_i)
+
+        # Join back into original L100.GTAP_capital_stock
+        L100.GTAP_capital_stock <-
+          L100.GTAP_capital_stock %>%
+          dplyr::bind_rows(L100.GTAP_capital_stock_missing_region_i)
+
+        }
+      }
 
     # -----------------------------------------------------------------------------
     # Data ID Info for Penn World Table used here (for complete list, see PWT91 in raw data)
@@ -305,7 +339,20 @@ module_socio_L180.GDP_macro <- function(command, ...) {
                                      cons.plus.invest, capital.stock, depreciation,
                                      savings, wages, hrs.worked.annual, wage.rate,
                                      labor.force.share, depreciation.rate, savings.rate,
-                                     interest.rate, energy.investment, capital.net.export ) -> L180.nationalAccounts
+                                     interest.rate, energy.investment, capital.net.export ) -> L180.nationalAccounts.part
+
+    # Check that data extends to base-year
+    if (max(L180.nationalAccounts.part$year) <= max(HISTORICAL_YEARS)) {
+      warning("WARNING: National accounts data extend to ",max(HISTORICAL_YEARS)," in module_socio_L180.GDP_macro. Data copied forward.")
+    }
+
+    L180.nationalAccounts.part %>%
+      complete(nesting(iso,country_name,GCAM_region_ID), year = c(year, HISTORICAL_YEARS)) %>%
+      group_by(iso,country_name,GCAM_region_ID) %>%
+      # interpolate for all columns except iso, year, country_name, region_GCAM3, GCAM_region_ID
+      mutate(across(setdiff(names(.), c("iso", "year", "country_name", "region_GCAM3", "GCAM_region_ID")),
+                  ~ approx_fun(year, .x, rule = 2))) %>%
+      ungroup() -> L180.nationalAccounts
 
     # ===================================================
 

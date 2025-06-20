@@ -65,6 +65,12 @@ module_gcamusa_L2247.elecS_tech_costs <- function(command, ...) {
     # 2. Build tables for CSVs
     # Investment Tax Credits and Production Tax Credits
 
+    A23.itc_USA %>%
+      tidyr::complete(tidyr::nesting(GCAM.technology), year = MODEL_FUTURE_YEARS) %>%
+      mutate(itc = approx_fun(year, itc)) %>%
+      filter(year %in% MODEL_FUTURE_YEARS) ->
+      A23.itc_USA
+
     # Adjust FCRs by 1-ITC for technologies that have ITC
     A23.elecS_tech_mapping %>%
       bind_rows(A23.elecS_inttech_mapping %>%
@@ -100,6 +106,11 @@ module_gcamusa_L2247.elecS_tech_costs <- function(command, ...) {
 
     # Build table to read in PTC as cost adder (subtracter)
     A23.ptc_USA %>%
+      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
+      tidyr::complete(year = MODEL_FUTURE_YEARS) %>%
+      mutate(input.cost = approx_fun(year, input.cost)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       # join is intended to duplicate rows (from single elec. sector techs to elec segments techs)
       # LJENM throws error, so left_join is used
       left_join(A23.elecS_tech_mapping, by = c("supplysector", "subsector" = "subsector_1", "technology")) %>%
@@ -108,6 +119,11 @@ module_gcamusa_L2247.elecS_tech_costs <- function(command, ...) {
       L2247.GlobalTechCost_ptc_USA
 
     A23.ptc_inttech_USA %>%
+      group_by(supplysector, subsector, intermittent.technology, minicam.non.energy.input) %>%
+      tidyr::complete(year = MODEL_FUTURE_YEARS) %>%
+      mutate(input.cost = approx_fun(year, input.cost)) %>%
+      ungroup() %>%
+      filter(year %in% MODEL_FUTURE_YEARS) %>%
       # join is intended to duplicate rows (from single elec. sector techs to elec segments techs)
       # LJENM throws error, so left_join is used
       left_join(A23.elecS_inttech_mapping, by = c("supplysector", "subsector" = "subsector_1", "intermittent.technology")) %>%

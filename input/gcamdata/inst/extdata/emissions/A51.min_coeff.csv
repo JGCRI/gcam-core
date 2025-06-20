@@ -168,6 +168,12 @@ trn_freight_road,Truck (6-30t),Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_freight_road,Truck (6-30t),NG,0.0033,0.2725,1.8195,0,0,0.0648
 trn_freight_road,Truck (9-16t),Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_freight_road,Truck (9-16t),NG,0.0033,0.2725,1.8195,0,0,0.0648
+trn_freight_road,Light truck,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_freight_road,Medium truck,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_freight_road,Heavy truck,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_freight_road,Light truck,NG,0.0033,0.2725,1.8195,0,0,0.0648
+trn_freight_road,Medium truck,NG,0.0033,0.2725,1.8195,0,0,0.0648
+trn_freight_road,Heavy truck,NG,0.0033,0.2725,1.8195,0,0,0.0648
 trn_pass,Domestic Aviation,Liquids,0.0005,0.0002,0.032,0.0012,0.0002,0.0075
 trn_pass,Passenger Rail,Liquids,0.0009,0.0192,0.006,0.0016,0.0037,0.0034
 trn_pass,Passenger Rail,Tech-Adv-Liquid,0.0009,0.0192,0.006,0.0016,0.0037,0.0034
@@ -183,6 +189,8 @@ trn_pass_road_LDV_2W,Moped,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_2W,Motorcycle (>250cc),Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_2W,Motorcycle (50-250cc),Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_2W,Scooter,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_pass_road_LDV,2W and 3W,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_pass_road_LDV,2W and 3W,NG,0.0033,0.2725,1.8195,0,0,0.0648
 trn_pass_road_LDV_4W,Compact Car,Hybrid Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_4W,Compact Car,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_4W,Compact Car,NG,0.0033,0.2725,1.8195,0,0,0.0648
@@ -192,9 +200,15 @@ trn_pass_road_LDV_4W,Large Car,NG,0.0033,0.2725,1.8195,0,0,0.0648
 trn_pass_road_LDV_4W,Large Car and SUV,Hybrid Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_4W,Large Car and SUV,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_4W,Large Car and SUV,NG,0.0033,0.2725,1.8195,0,0,0.0648
+trn_pass_road_LDV_4W,Car,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_pass_road_LDV_4W,Car,Hybrid Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_pass_road_LDV_4W,Car,NG,0.0033,0.2725,1.8195,0,0,0.0648
 trn_pass_road_LDV_4W,Light Truck and SUV,Hybrid Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_4W,Light Truck and SUV,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_4W,Light Truck and SUV,NG,0.0033,0.2725,1.8195,0,0,0.0648
+trn_pass_road_LDV_4W,Large Car and Truck,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
+trn_pass_road_LDV_4W,Large Car and Truck,NG,0.0033,0.2725,1.8195,0,0,0.0648
 trn_pass_road_LDV_4W,Midsize Car,Hybrid Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_4W,Midsize Car,Liquids,0.0005,0.0054,0.0546,0.0016,0.0037,0.0065
 trn_pass_road_LDV_4W,Midsize Car,NG,0.0033,0.2725,1.8195,0,0,0.0648

@@ -22,20 +22,27 @@
 #' @importFrom tibble tibble
 #' @author ACS June 2017
 module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/iso_GCAM_regID",
+      FILE = "aglu/A_defaultYieldRate",
+      FILE = "aglu/AGLU_ctry",
+      FILE = "aglu/FAO/FAO_ag_CROSIT",
+      FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
+      "L151.ag_irrHA_ha_ctry_crop",
+      "L151.ag_rfdHA_ha_ctry_crop",
+      "L161.ag_irrProd_Mt_R_C_Y_GLU",
+      "L161.ag_rfdProd_Mt_R_C_Y_GLU")
+
+  MODULE_OUTPUTS <-
+    c("L162.ag_YieldRatio_R_C_Ysy_GLU_irr",
+      "L162.ag_YieldRate_R_C_Y_GLU_irr",
+      "L162.bio_YieldRate_R_Y_GLU_irr")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/iso_GCAM_regID",
-             FILE = "aglu/A_defaultYieldRate",
-             FILE = "aglu/AGLU_ctry",
-             FILE = "aglu/FAO/FAO_ag_CROSIT",
-             FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
-             "L151.ag_irrHA_ha_ctry_crop",
-             "L151.ag_rfdHA_ha_ctry_crop",
-             "L161.ag_irrProd_Mt_R_C_Y_GLU",
-             "L161.ag_rfdProd_Mt_R_C_Y_GLU"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L162.ag_YieldRatio_R_C_Ysy_GLU_irr",
-             "L162.ag_YieldRate_R_C_Y_GLU_irr",
-             "L162.bio_YieldRate_R_Y_GLU_irr"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -46,16 +53,8 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       yield_kgHa <- iso <- irrHA <- rfdHA <- GTAP_crop <- HA <- Mult <- Prod_mod <- YieldRatio <-
       timestep <- lagyear <- YieldRatio_lag <- YieldRate <- defaultRate <- GCAM_subsector <- NULL  # silence package check notes
 
-    # Load required inputs
-    iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
-    A_defaultYieldRate <- get_data(all_data, "aglu/A_defaultYieldRate")
-    AGLU_ctry <- get_data(all_data, "aglu/AGLU_ctry")
-    FAO_ag_CROSIT <- get_data(all_data, "aglu/FAO/FAO_ag_CROSIT")
-    FAO_ag_items_PRODSTAT <- get_data(all_data, "aglu/FAO/FAO_ag_items_PRODSTAT")
-    L151.ag_irrHA_ha_ctry_crop <- get_data(all_data, "L151.ag_irrHA_ha_ctry_crop")
-    L151.ag_rfdHA_ha_ctry_crop <- get_data(all_data, "L151.ag_rfdHA_ha_ctry_crop")
-    L161.ag_irrProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_irrProd_Mt_R_C_Y_GLU")
-    L161.ag_rfdProd_Mt_R_C_Y_GLU <- get_data(all_data, "L161.ag_rfdProd_Mt_R_C_Y_GLU")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # Perform calculations
 
@@ -236,7 +235,7 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
       left_join(CROSIT_mult, by = c("CROSIT_ctry", "CROSIT_crop", "Irr_Rfd", "year")) %>%
       na.omit() %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
-      left_join_error_no_match(select(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity, GCAM_subsector), by = "GTAP_crop") %>%
+      left_join_error_no_match(distinct(FAO_ag_items_PRODSTAT, GTAP_crop, GCAM_commodity, GCAM_subsector), by = "GTAP_crop") %>%
       # Multiply base-year harvested area by the future productivity multipliers to calculate prod_mod and aggregate
       mutate(Prod_mod = HA * Mult) %>%
       group_by(GCAM_region_ID, GCAM_commodity, GCAM_subsector, year, GLU, Irr_Rfd) %>%
@@ -430,7 +429,7 @@ module_aglu_L162.ag_prodchange_R_C_Y_GLU_irr <- function(command, ...) {
                      "L161.ag_rfdProd_Mt_R_C_Y_GLU") ->
       L162.bio_YieldRate_R_Y_GLU_irr
 
-    return_data(L162.ag_YieldRatio_R_C_Ysy_GLU_irr, L162.ag_YieldRate_R_C_Y_GLU_irr, L162.bio_YieldRate_R_Y_GLU_irr)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

@@ -20,10 +20,10 @@ module_gcamusa_L1233.elec_water <- function(command, ...) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "gcam-usa/UCS_tech_names",
              FILE = "gcam-usa/UCS_water_types",
-             FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              FILE = "gcam-usa/UCS_Database",
              FILE = "gcam-usa/usa_seawater_states_basins",
-             "L1231.out_EJ_state_elec_F_tech"))
+             "L1231.out_EJ_state_elec_F_tech",
+             "L2241.elecS_tech_mapping_cool_vintage"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L1233.out_EJ_state_elec_F_tech_cool",
              "L1233.share_sR_elec_F_tech_cool"))
@@ -42,10 +42,10 @@ module_gcamusa_L1233.elec_water <- function(command, ...) {
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions")
     UCS_tech_names <- get_data(all_data, "gcam-usa/UCS_tech_names")
     UCS_water_types <- get_data(all_data, "gcam-usa/UCS_water_types")
-    A23.elecS_tech_mapping_cool <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping_cool")
     UCS_Database <- get_data(all_data, "gcam-usa/UCS_Database")
     usa_seawater_states_basins <- get_data(all_data, "gcam-usa/usa_seawater_states_basins")
     L1231.out_EJ_state_elec_F_tech <- get_data(all_data, "L1231.out_EJ_state_elec_F_tech")
+    L2241.elecS_tech_mapping_cool_vintage <- get_data(all_data, "L2241.elecS_tech_mapping_cool_vintage")
 
     # ===================================================
 
@@ -206,7 +206,7 @@ module_gcamusa_L1233.elec_water <- function(command, ...) {
     # Add GCAM-USA supplysector names and correct subsector vintages
     L1233.out_EJ_state_elec_F_tech_cool %>%
       # left_join here as numerous new rows are created due to vintages addition
-      left_join(A23.elecS_tech_mapping_cool %>%
+      left_join(L2241.elecS_tech_mapping_cool_vintage %>%
                   select(technology, Electric.sector, Electric.sector.technology, water_type),
                 by = c("technology", "water_type")) %>%
       filter(year %in% MODEL_YEARS) %>%
@@ -231,7 +231,7 @@ module_gcamusa_L1233.elec_water <- function(command, ...) {
       select(-share_nat, -sum_share_tech, -out_MWh) %>%
       # join is intended to duplicate rows to introduce load segments
       # LJENM produces error, so left_join() is used
-      left_join(A23.elecS_tech_mapping_cool %>%
+      left_join(L2241.elecS_tech_mapping_cool_vintage %>%
                   select(technology, Electric.sector, Electric.sector.technology),
                 by = c("technology")) %>%
       unique() %>%
@@ -260,7 +260,7 @@ module_gcamusa_L1233.elec_water <- function(command, ...) {
                      "gcam-usa/UCS_Database",
                      "gcam-usa/usa_seawater_states_basins",
                      "L1231.out_EJ_state_elec_F_tech",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L1233.out_EJ_state_elec_F_tech_cool
 
     L1233.share_sR_elec_F_tech_cool %>%
@@ -273,7 +273,7 @@ module_gcamusa_L1233.elec_water <- function(command, ...) {
                      "gcam-usa/UCS_water_types",
                      "gcam-usa/UCS_Database",
                      "gcam-usa/usa_seawater_states_basins",
-                     "gcam-usa/A23.elecS_tech_mapping_cool") ->
+                     "L2241.elecS_tech_mapping_cool_vintage") ->
       L1233.share_sR_elec_F_tech_cool
 
 

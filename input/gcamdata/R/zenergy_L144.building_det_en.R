@@ -554,17 +554,36 @@ module_energy_L144.building_det_en <- function(command, ...) {
       select(GCAM_region_ID, region_GCAM3, supplysector, subsector, technology, year, value) ->
       L144.internal_gains # This is a final output table.
 
+    # A44.Calprice_bld has regional data. The next code block will error if regional definitions change
+    # Stop with a warning by checking regions against GCAM_region_names
+    if (!all(A44.Calprice_bld$region %in% GCAM_region_names$region)) {
+      stop("Some regions in A44.Calprice_bld.csv do not match GCAM_region_names. More details in the chunk after this message line.")
+
+      # copy prices data from brokenout_FROM region to brokenout_TO, run GCAM reference, update A44.Calprice_bld.csv
+      # place the following sample code block before this conditional
+      if (!"brokenout_TO" %in% A44.Calprice_bld$region) {
+        A44.Calprice_bld %>%
+          filter(region == "brokenout_FROM") %>%
+          mutate(region = "brokenout_TO") %>%
+          bind_rows(A44.Calprice_bld) -> A44.Calprice_bld
+      }
+    }
 
     # 1G
     # Create L144.prices_bld to calibrate satiation impedance (mu) at region level within the DS
-    L144.prices_bld<-A44.Calprice_bld %>%
-      left_join_error_no_match(GCAM_region_names,by="region") %>%
+    L144.prices_bld <- A44.Calprice_bld %>%
+      left_join_error_no_match(GCAM_region_names, by="region") %>%
       gather_years() %>%
-      # Add 1975 and extrapolate prices using rule 2
-      group_by(region,GCAM_region_ID,market) %>%
+      # only residential will have cons.groups thus we expect NAs and set the fill
+      # flag accordingly
+      separate(market, c("market", "cons.groups"), sep = "_", fill = "right") %>%
+      group_by(region, GCAM_region_ID, market, year) %>%
+      # average out building energy service costs for consumer groups
+      summarise(value = mean(value)) %>%
+      # Add 1975 and fill prices using rule 2 (to copy terminal value)
       complete(nesting(year = MODEL_BASE_YEARS)) %>%
       mutate(value = if_else(is.na(value),approx_fun(year, value, rule = 2),value)) %>%
-      # Add all historical years and linerly extrapolate (rule 1)
+      # Add all historical years and linearly extrapolate (rule 1)
       complete(nesting(year = HISTORICAL_YEARS)) %>%
       mutate(value = if_else(is.na(value),approx_fun(year, value, rule = 2),value)) %>%
       ungroup() %>%

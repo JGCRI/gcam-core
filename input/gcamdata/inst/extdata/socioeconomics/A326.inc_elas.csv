@@ -17,7 +17,7 @@ Central Asia,2015,0.545
 China,2015,1.35
 EU-12,2015,0.253
 EU-15,2015,-0.1
-Europe_Eastern,2015,0.343
+Ukraine,2015,0.343
 Europe_Non_EU,2015,0.362
 European Free Trade Association,2015,-0.1
 India,2015,1.35
@@ -49,7 +49,7 @@ Central Asia,2020,0.512
 China,2020,0.415
 EU-12,2020,0.187
 EU-15,2020,-0.1
-Europe_Eastern,2020,0.434
+Ukraine,2020,0.434
 Europe_Non_EU,2020,0.318
 European Free Trade Association,2020,-0.1
 India,2020,0.241
@@ -81,7 +81,7 @@ Central Asia,2025,0.463
 China,2025,0.321
 EU-12,2025,0.14
 EU-15,2025,-0.1
-Europe_Eastern,2025,0.545
+Ukraine,2025,0.545
 Europe_Non_EU,2025,0.261
 European Free Trade Association,2025,-0.1
 India,2025,0.313
@@ -113,7 +113,7 @@ Central Asia,2030,0.414
 China,2030,0.233
 EU-12,2030,0.092
 EU-15,2030,-0.1
-Europe_Eastern,2030,0.514
+Ukraine,2030,0.514
 Europe_Non_EU,2030,0.204
 European Free Trade Association,2030,-0.1
 India,2030,0.437
@@ -145,7 +145,7 @@ Central Asia,2035,0.365
 China,2035,0.172
 EU-12,2035,0.044
 EU-15,2035,-0.1
-Europe_Eastern,2035,0.481
+Ukraine,2035,0.481
 Europe_Non_EU,2035,0.167
 European Free Trade Association,2035,-0.1
 India,2035,0.545
@@ -177,7 +177,7 @@ Central Asia,2040,0.318
 China,2040,0.125
 EU-12,2040,0.01
 EU-15,2040,-0.1
-Europe_Eastern,2040,0.447
+Ukraine,2040,0.447
 Europe_Non_EU,2040,0.13
 European Free Trade Association,2040,-0.1
 India,2040,0.515
@@ -209,7 +209,7 @@ Central Asia,2045,0.273
 China,2045,0.079
 EU-12,2045,-0.022
 EU-15,2045,-0.1
-Europe_Eastern,2045,0.413
+Ukraine,2045,0.413
 Europe_Non_EU,2045,0.091
 European Free Trade Association,2045,-0.1
 India,2045,0.482
@@ -241,7 +241,7 @@ Central Asia,2050,0.232
 China,2050,0.041
 EU-12,2050,-0.052
 EU-15,2050,-0.1
-Europe_Eastern,2050,0.378
+Ukraine,2050,0.378
 Europe_Non_EU,2050,0.05
 European Free Trade Association,2050,-0.1
 India,2050,0.446
@@ -273,7 +273,7 @@ Central Asia,2055,0.195
 China,2055,0.014
 EU-12,2055,-0.068
 EU-15,2055,-0.1
-Europe_Eastern,2055,0.341
+Ukraine,2055,0.341
 Europe_Non_EU,2055,0.021
 European Free Trade Association,2055,-0.1
 India,2055,0.407
@@ -305,7 +305,7 @@ Central Asia,2060,0.167
 China,2060,-0.013
 EU-12,2060,-0.087
 EU-15,2060,-0.1
-Europe_Eastern,2060,0.298
+Ukraine,2060,0.298
 Europe_Non_EU,2060,-0.01
 European Free Trade Association,2060,-0.1
 India,2060,0.364
@@ -337,7 +337,7 @@ Central Asia,2065,0.135
 China,2065,-0.04
 EU-12,2065,-0.1
 EU-15,2065,-0.1
-Europe_Eastern,2065,0.25
+Ukraine,2065,0.25
 Europe_Non_EU,2065,-0.044
 European Free Trade Association,2065,-0.1
 India,2065,0.316
@@ -369,7 +369,7 @@ Central Asia,2070,0.101
 China,2070,-0.059
 EU-12,2070,-0.1
 EU-15,2070,-0.1
-Europe_Eastern,2070,0.2
+Ukraine,2070,0.2
 Europe_Non_EU,2070,-0.065
 European Free Trade Association,2070,-0.1
 India,2070,0.265
@@ -401,7 +401,7 @@ Central Asia,2075,0.067
 China,2075,-0.073
 EU-12,2075,-0.1
 EU-15,2075,-0.1
-Europe_Eastern,2075,0.17
+Ukraine,2075,0.17
 Europe_Non_EU,2075,-0.083
 European Free Trade Association,2075,-0.1
 India,2075,0.211
@@ -433,7 +433,7 @@ Central Asia,2080,0.037
 China,2080,-0.087
 EU-12,2080,-0.1
 EU-15,2080,-0.1
-Europe_Eastern,2080,0.14
+Ukraine,2080,0.14
 Europe_Non_EU,2080,-0.1
 European Free Trade Association,2080,-0.1
 India,2080,0.172
@@ -465,7 +465,7 @@ Central Asia,2085,0.012
 China,2085,-0.1
 EU-12,2085,-0.1
 EU-15,2085,-0.1
-Europe_Eastern,2085,0.108
+Ukraine,2085,0.108
 Europe_Non_EU,2085,-0.1
 European Free Trade Association,2085,-0.1
 India,2085,0.135
@@ -497,7 +497,7 @@ Central Asia,2090,-0.015
 China,2090,-0.1
 EU-12,2090,-0.1
 EU-15,2090,-0.1
-Europe_Eastern,2090,0.075
+Ukraine,2090,0.075
 Europe_Non_EU,2090,-0.1
 European Free Trade Association,2090,-0.1
 India,2090,0.096
@@ -529,7 +529,7 @@ Central Asia,2095,-0.044
 China,2095,-0.1
 EU-12,2095,-0.1
 EU-15,2095,-0.1
-Europe_Eastern,2095,0.043
+Ukraine,2095,0.043
 Europe_Non_EU,2095,-0.1
 European Free Trade Association,2095,-0.1
 India,2095,0.054
@@ -561,7 +561,7 @@ Central Asia,2100,-0.062
 China,2100,-0.1
 EU-12,2100,-0.1
 EU-15,2100,-0.1
-Europe_Eastern,2100,0.019
+Ukraine,2100,0.019
 Europe_Non_EU,2100,-0.1
 European Free Trade Association,2100,-0.1
 India,2100,0.023

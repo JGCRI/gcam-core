@@ -39,10 +39,12 @@ module_energy_L2327.paper <- function(command, ...) {
              FILE = "energy/A327.demand",
              FILE = "energy/A327.subsector_interp_adj_future_years",
              FILE = "energy/A327.subsector_shrwt_adj_future_years",
+             FILE = "emissions/A_PrimaryFuelCCoef",
              "L1327.in_EJ_R_paper_F_Yh",
              "L1327.out_Mt_R_paper_Yh",
              "L1327.IO_GJkg_R_paper_F_Yh",
              "L1327.elec_noheat_adj_shwt_R",
+             "L202.StubTechCoef_an",
              "L203.Supplysector_demand",
              "L203.PerCapitaBased"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -57,6 +59,7 @@ module_energy_L2327.paper <- function(command, ...) {
              "L2327.GlobalTechCost_paper",
              "L2327.GlobalTechTrackCapital_paper",
              "L2327.GlobalTechCapture_paper",
+             "L2327.CarbonCapture_paper",
              "L2327.GlobalTechShutdown_paper",
              "L2327.GlobalTechSCurve_paper",
              "L2327.GlobalTechLifetime_paper",
@@ -99,6 +102,8 @@ module_energy_L2327.paper <- function(command, ...) {
     A327.subsector_shrwt_adj_future_years <- get_data(all_data, "energy/A327.subsector_shrwt_adj_future_years", strip_attributes = TRUE)
     L203.Supplysector_demand <- get_data(all_data, "L203.Supplysector_demand", strip_attributes = TRUE)
     L203.PerCapitaBased <- get_data(all_data, "L203.PerCapitaBased", strip_attributes = TRUE)
+    A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef", strip_attributes = TRUE)
+    L202.StubTechCoef_an <- get_data(all_data, "L202.StubTechCoef_an", strip_attributes = TRUE)
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline
@@ -267,6 +272,26 @@ module_energy_L2327.paper <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechYr"]], "remove.fraction") %>%
       mutate(storage.market = energy.CO2.STORAGE.MARKET) ->
       L2327.GlobalTechCapture_paper
+
+    # Note the paper feedstock and energy have been bundled together into the wood pulp for
+    # energy commodity.  However the intention with the CCS is to capture the energy related
+    # carbon only.  As such we need to adjust the remove fraction by the ratio of, in terms of
+    # mass, energy to feedstock.
+    # To do this we start with the wood pulp for energy IO coefficient and back out the mass to
+    # energy conversion.  Note these ratios are all over the place and so we need to check for
+    # un-reasonable values.
+    WOODPULP_CCoef <- A_PrimaryFuelCCoef %>% filter(PrimaryFuelCO2Coef.name == "regional woodpulp for energy") %>% pull(PrimaryFuelCO2Coef)
+    L202.StubTechCoef_an %>%
+      filter(supplysector == "woodpulp_energy") %>%
+      inner_join(L2327.GlobalTechCapture_paper, by = "year") %>%
+      mutate(energy_feedstock_mass_ratio = (1/coefficient) * WOODPULP_CCoef * CONV_KG_T,
+             energy_feedstock_mass_ratio = pmin(energy_feedstock_mass_ratio, 1.0),
+             remove.fraction = remove.fraction * energy_feedstock_mass_ratio,
+             supplysector = sector.name,
+             subsector = subsector.name) %>%
+      select(LEVEL2_DATA_NAMES[['CarbonCapture']]) ->
+      L2327.CarbonCapture_paper
+
 
     # Retirement information
     A327.globaltech_retirement %>%
@@ -632,6 +657,15 @@ module_energy_L2327.paper <- function(command, ...) {
       add_precursors("energy/A327.globaltech_co2capture") ->
       L2327.GlobalTechCapture_paper
 
+    L2327.CarbonCapture_paper %>%
+      add_title("Adjusted CO2 capture fractions such that only the energy portion of woodpulp_energy can be captured") %>%
+      add_units("%") %>%
+      add_comments("Pull in upstream woodpulp_energy IO coefficients to adjust the global tech assumptions") %>%
+      add_precursors("energy/A327.globaltech_co2capture",
+                     "emissions/A_PrimaryFuelCCoef",
+                     "L202.StubTechCoef_an") ->
+      L2327.CarbonCapture_paper
+
 
     L2327.StubTechProd_paper %>%
       add_title("calibrated paper production") %>%
@@ -724,7 +758,7 @@ module_energy_L2327.paper <- function(command, ...) {
 
     return_data(L2327.Supplysector_paper, L2327.FinalEnergyKeyword_paper, L2327.SubsectorLogit_paper, L2327.SubsectorShrwtFllt_paper,
                 L2327.SubsectorInterp_paper, L2327.StubTech_paper, L2327.GlobalTechShrwt_paper, L2327.GlobalTechCoef_paper,
-                L2327.GlobalTechCost_paper, L2327.GlobalTechCapture_paper, L2327.GlobalTechShutdown_paper, L2327.GlobalTechSCurve_paper,
+                L2327.GlobalTechCost_paper, L2327.GlobalTechCapture_paper, L2327.CarbonCapture_paper, L2327.GlobalTechShutdown_paper, L2327.GlobalTechSCurve_paper,
                 L2327.GlobalTechLifetime_paper, L2327.GlobalTechProfitShutdown_paper, L2327.StubTechProd_paper,
                 L2327.StubTechCalInput_paper_heat, L2327.StubTechCoef_paper, L2327.PerCapitaBased_paper,
                 L2327.BaseService_paper, L2327.PriceElasticity_paper, L2327.GlobalTechSecOut_paper,

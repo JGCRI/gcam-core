@@ -223,6 +223,7 @@ module_gcamusa_L143.HDDCDD <- function(command, ...) {
 
     # Interpolate heating and cooling degree days for all historical and future years
     HDDCDD_data %>%
+      select(sort(names(HDDCDD_data))) %>%
       gather_years %>%
       complete(nesting(variable, GCM, Scen, state), year = c(HISTORICAL_YEARS, FUTURE_YEARS)) %>%
       arrange(variable, GCM, Scen, state, year) %>%

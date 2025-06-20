@@ -23,14 +23,14 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
              'L241.OutputEmissCoeff_elec',
              FILE = 'gcam-usa/A23.elecS_tech_mapping',
              FILE = 'gcam-usa/A23.elecS_tech_availability',
-             FILE = "gcam-usa/A23.elecS_tech_mapping_cool",
              # the following files to be able to map in the input.name to
              # use for the input-driver
              FILE = "energy/A22.globaltech_input_driver",
              FILE = "energy/A23.globaltech_input_driver",
              FILE = "energy/A25.globaltech_input_driver",
              'L2233.StubTechMarket_elecS_cool_USA',
-             'L2233.StubTechProd_elecS_cool_USA'))
+             'L2233.StubTechProd_elecS_cool_USA',
+             'L2241.elecS_tech_mapping_cool_vintage'))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c('L2236.elecS_cool_ghg_tech_coeff_USA',
              'L2236.elecS_cool_ghg_emissions_USA'))
@@ -45,9 +45,9 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
     L241.OutputEmissCoeff_elec <- get_data(all_data, 'L241.OutputEmissCoeff_elec', strip_attributes = TRUE)
     A23.elecS_tech_mapping <- get_data(all_data, 'gcam-usa/A23.elecS_tech_mapping', strip_attributes = TRUE)
     A23.elecS_tech_availability <- get_data(all_data, 'gcam-usa/A23.elecS_tech_availability', strip_attributes = TRUE)
-    A23.elecS_tech_mapping_cool <- get_data(all_data, 'gcam-usa/A23.elecS_tech_mapping_cool', strip_attributes = TRUE)
     L2233.StubTechMarket_elecS_cool_USA <- get_data(all_data, 'L2233.StubTechMarket_elecS_cool_USA', strip_attributes = TRUE)
     L2233.StubTechProd_elecS_cool_USA <- get_data(all_data, 'L2233.StubTechProd_elecS_cool_USA', strip_attributes = TRUE)
+    L2241.elecS_tech_mapping_cool_vintage <- get_data(all_data, 'L2241.elecS_tech_mapping_cool_vintage', strip_attributes = TRUE)
 
     # Silence package checks
     CH4 <- Electric.sector <- Electric.sector.technology <- N2O <- Non.CO2 <-
@@ -72,7 +72,7 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
       data %>%
         # use left_join becuase the number of rows will change since we map the same fuel technology
         # to different cooling options
-        left_join(A23.elecS_tech_mapping_cool,
+        left_join(L2241.elecS_tech_mapping_cool_vintage,
                   by=c("stub.technology"="Electric.sector.technology",
                        "supplysector"="Electric.sector","subsector")) %>%
         select(-technology,-subsector_1)%>%
@@ -101,7 +101,7 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
       EnTechInput
 
     EnTechInput %>%
-      left_join(A23.elecS_tech_mapping_cool,
+      left_join(L2241.elecS_tech_mapping_cool_vintage,
                 by=c("stub.technology"="technology",
                      "supplysector","subsector")) %>%
       na.omit() %>%
@@ -196,7 +196,7 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
     # Share out CH4 and N2O emissions by state based on the fuel input shares
     L2236.elecS_cool_fuel_input_state %>%
       # add back electric technologies without cooling
-      left_join_error_no_match(A23.elecS_tech_mapping_cool %>%
+      left_join_error_no_match(L2241.elecS_tech_mapping_cool_vintage %>%
                                  select(stub.technology = technology, technology = to.technology) %>% distinct(),
                                by = "technology") %>%
       # we do not expect a 1:1 match here due to severl technologies not having emissions included
@@ -240,7 +240,7 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
                      'L241.OutputEmissCoeff_elec',
                      'gcam-usa/A23.elecS_tech_mapping',
                      'gcam-usa/A23.elecS_tech_availability',
-                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     'L2241.elecS_tech_mapping_cool_vintage',
                      "energy/A22.globaltech_input_driver",
                      "energy/A23.globaltech_input_driver",
                      "energy/A25.globaltech_input_driver",
@@ -262,7 +262,7 @@ module_gcamusa_L2236.elecS_ghg_emissions <- function(command, ...) {
                      "energy/A22.globaltech_input_driver",
                      "energy/A23.globaltech_input_driver",
                      "energy/A25.globaltech_input_driver",
-                     "gcam-usa/A23.elecS_tech_mapping_cool",
+                     'L2241.elecS_tech_mapping_cool_vintage',
                      'L2233.StubTechMarket_elecS_cool_USA',
                      'L2233.StubTechProd_elecS_cool_USA') ->
       L2236.elecS_cool_ghg_emissions_USA

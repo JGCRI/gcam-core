@@ -199,7 +199,14 @@ module_emissions_L241.fgas <- function(command, ...) {
       bind_rows(L241.hfc_cool_ef_update_filtered) %>%
       mutate(emiss.coeff = round(value, emissions.DIGITS_EMISSIONS),
              year = as.numeric(year)) %>%
-      select(region, supplysector, subsector, stub.technology, year, Non.CO2, emiss.coeff) ->
+      select(region, supplysector, subsector, stub.technology, year, Non.CO2, emiss.coeff) %>%
+      group_by(region, supplysector, subsector, stub.technology, Non.CO2) %>%
+      tidyr::complete(year = min(MODEL_FUTURE_YEARS)) %>%
+      mutate(emiss.coeff = approx_fun(year, emiss.coeff)) %>%
+      ungroup() %>%
+      # note: we actually allow some base year rows in the "future" table because we
+      # need to include some emissions factors for some missing regions
+      filter(year %in% MODEL_YEARS) ->
       L241.hfc_future
 
     # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years).
@@ -228,6 +235,15 @@ module_emissions_L241.fgas <- function(command, ...) {
       L241.fgas_all_units
 
     # ===================================================
+
+    # A temporary fix for JGCRI-506
+    L241.hfc_all %>%
+      filter(year <= 2015) ->
+      L241.hfc_all
+
+    L241.pfc_all %>%
+      filter(year <= 2015) ->
+      L241.pfc_all
 
     L241.hfc_all %>%
       add_title("HFC gas emission input table") %>%

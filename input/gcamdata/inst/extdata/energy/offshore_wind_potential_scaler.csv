@@ -3,7 +3,7 @@
 # Units: unitless scaler
 # Comments:  Per original wind resource dataset - United States of America refers only to the continental U.S. Alaska and Hawaii are counted separately because of their remoteness.
 # Thus we inflate the USA resource estimate by 5% to account for this uncounted resource.
-# Source:  assumption, informed by fact that Alaksa resource is not accounted in the USA estimate in the original data set (https://catalog.data.gov/dataset/global-cfdda-based-onshore-and-offshore-wind-potential-supply-curves-by-country-class-and--912c6)
+# Source:  assumption; informed by fact that Alaksa resource is not accounted in the USA estimate in the original data set (https://catalog.data.gov/dataset/global-cfdda-based-onshore-and-offshore-wind-potential-supply-curves-by-country-class-and--912c6)
 # Column types: inc
 # ----------
 GCAM_region_ID,scaler,reason

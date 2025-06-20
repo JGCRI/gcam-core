@@ -313,11 +313,11 @@
             <start-year>2040</start-year>
          </linked-ghg-policy>
      </region>
-      <region name="Europe_Eastern">
+      <region name="Ukraine">
          <linked-ghg-policy name="CO2_NearTerm_Link">
             <price-adjust fillout="1" year="1975">1</price-adjust>
             <demand-adjust fillout="1" year="1975">1</demand-adjust>
-            <policy-name>CO2</policy-name><market>Europe_Eastern</market>
+            <policy-name>CO2</policy-name><market>Ukraine</market>
             <linked-policy>CO2_NearTerm</linked-policy>
             <price-unit>1990$/tC</price-unit>
             <output-unit>MtC</output-unit>
@@ -330,7 +330,7 @@
             <price-adjust year="2045">0.823908741</price-adjust>
             <price-adjust fillout="1" year="2050">1</price-adjust>
             <demand-adjust fillout="1" year="1975">1</demand-adjust>
-            <policy-name>CO2</policy-name><market>Europe_Eastern</market>
+            <policy-name>CO2</policy-name><market>Ukraine</market>
             <linked-policy>CO2_LTG</linked-policy>
             <price-unit>1990$/tC</price-unit>
             <output-unit>MtC</output-unit>

@@ -215,6 +215,13 @@ module_gcamusa_L1235.elec_load_segments <- function(command, ...) {
       mutate(year = gsub("fraction", "", year),
              year = as.integer(year)) -> elecS_fuel_fraction
 
+    if(length(intersect(MODEL_BASE_YEARS, unique(elecS_fuel_fraction$year))) != length(MODEL_BASE_YEARS)) {
+      warning("Extending elecS_fuel_fraction to cover full historical period")
+      elecS_fuel_fraction %>%
+        copy_data_forward_long("fraction", MODEL_BASE_YEARS, fuel, segment) ->
+        elecS_fuel_fraction
+    }
+
     L1234.out_EJ_grid_elec_F %>%
       mutate(fuel = sub("solar CSP", "solar", fuel),
              fuel = sub("solar PV", "solar", fuel)) %>%

@@ -4,7 +4,7 @@
 # Description: Shareweights of transformation technologies 
 # Column types: cccnnnnnn 
 # ----------
-supplysector,subsector,technology,1971,2015,2020,2025,2050,2100
+supplysector,subsector,technology,1971,final-calibration-year,initial-future-year,2030,2050,2100
 gas processing,natural gas,natural gas,1,1,1,1,1,1
 gas processing,biomass gasification,biomass gasification,1,1,1,1,1,1
 gas processing,coal gasification,coal gasification,1,1,1,1,1,1

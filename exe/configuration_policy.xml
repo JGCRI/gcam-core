@@ -10,7 +10,6 @@
 		<Value write-output="1" append-scenario-name="1" name="xmlDebugFileName">debug.xml</Value>
 		<Value write-output="1" append-scenario-name="0" name="climatFileName">gas.emk</Value>
 		<Value write-output="1" append-scenario-name="1" name="costCurvesOutputFileName">cost_curves.xml</Value>
-		<Value write-output="1" append-scenario-name="0" name="batchCSVOutputFile">batch-csv-out.csv</Value>
 		<Value write-output="0" append-scenario-name="0" name="supplyDemandOutputFileName">SDCurves.csv</Value>
 		<Value write-output="0" append-scenario-name="0" name="flow-graph">gcam-flow-graph.dot</Value>
 		<Value write-output="0" append-scenario-name="0" name="dependencyGraphName">DependencyGraph.dot</Value>
@@ -144,7 +143,6 @@
 		<Value name="numPointsForSD">21</Value>
 		<Value name="numPointsForCO2CostCurve">5</Value>
 		<Value name="carbon-output-start-year">1705</Value>
-		<Value name="climateOutputInterval">5</Value>
 		<Value name="parallel-grain-size">50</Value>
 		<Value name="stop-period">-1</Value>
 		<Value name="stop-year">-1</Value>

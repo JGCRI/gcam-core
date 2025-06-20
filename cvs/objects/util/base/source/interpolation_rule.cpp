@@ -211,14 +211,14 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "No interpolation function set" << endl;
-        exit( 1 );
+        abort();
     }
     if( mToYear <= mFromYear ) {
         // abort to <= from
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "to-year is before or equal to from-year" << endl;
-        exit( 1 );
+        abort();
     }
     const Modeltime* modeltime = scenario->getModeltime();
     int fromPer = 0;
@@ -233,7 +233,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Could not find a value to interpolate from." << endl;
-            exit( 1 );
+            abort();
         }
     }
     else {
@@ -244,7 +244,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "A from value must be parsed when interpolating from a non-model year." << endl;
-            exit( 1 );
+            abort();
         }
         // we need to find the closest model period to from-year
         for( ; fromPer < modeltime->getmaxper() && modeltime->getper_to_yr( fromPer ) < mFromYear; ++fromPer ) {
@@ -254,7 +254,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "There are no model years after " << mFromYear << "." << endl;
-            exit( 1 );
+            abort();
         }
 
         // subtract 1 from fromPer since it is currently the first period that we would
@@ -275,7 +275,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "Could not find a value to interpolate to." << endl;
-            exit( 1 );
+            abort();
         }
     }
     else {
@@ -286,7 +286,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "A to value must be parsed when interpolating to a non-model year." << endl;
-            exit( 1 );
+            abort();
         }
         // we need to find the closest model period to to-year
         for( ; toPer >= 0 && modeltime->getper_to_yr( toPer ) > mToYear; --toPer ) {
@@ -296,7 +296,7 @@ void InterpolationRule::applyInterpolations( PeriodVector<Value>& aValuesToInter
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::ERROR );
             mainLog << "There are no model years before " << mToYear << "." << endl;
-            exit( 1 );
+            abort();
         }
 
         // add 1 to toPer since it is currently the last period that we would

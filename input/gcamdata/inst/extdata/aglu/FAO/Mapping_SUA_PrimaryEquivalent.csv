@@ -16,7 +16,8 @@
 # When Q25asMin is TRUE (minimium is smaller than 0.5) extraction_rate_Q25 is used as min to avoid unrealistic scale of processed balance to primary equivalent. It is used in Get_GROSS_EXTRACTION_RATE.
 # Need to make sure that when nest_level is not 0 Q25asMin extraction_rate_Q25 and extraction_rate_world2019 have values
 # Jojoba seed Poppy seed and Oil castor beans did not have quality extraction rate so 1 was used here.
-# Last update: 8-15-2022 (XZ)
+# Update2024: mushroom and brazil nuts were not associated with area harvested per FAO change; we removed both
+# Last update: 06-09-2024 (XZ)
 # Column types: ccilccncnnl
 # ----------
 GCAM_commodity,APE_comm,nest_level,source_primary,source_item,sink_item,output_specific_extraction_rate,sink_FBS_item,extraction_rate_Q25,extraction_rate_world2019,Q25asMin
@@ -139,7 +140,7 @@ FiberCrop,Seed cotton,2,FALSE,Cottonseed,"Fiber, cottonseed",,Estimated,0.653978
 FiberCrop,FiberCropNES,0,TRUE,Agave fibres nes,Agave fibres nes,,QCL,,,
 FiberCrop,FiberCropNES,0,TRUE,"Bastfibres, other","Bastfibres, other",,QCL,,,
 FiberCrop,FiberCropNES,0,TRUE,Fibre crops nes,Fibre crops nes,,QCL,,,
-FiberCrop,FiberCropNES,0,TRUE,Flax fibre and tow,Flax fibre and tow,,QCL,,,
+FiberCrop,FiberCropNES,0,TRUE,"Flax, raw or retted","Flax, raw or retted",,QCL,,,
 FiberCrop,FiberCropNES,0,TRUE,Hemp tow waste,Hemp tow waste,,QCL,,,
 FiberCrop,FiberCropNES,0,TRUE,Jute,Jute,,QCL,,,
 FiberCrop,FiberCropNES,0,TRUE,Manila fibre (abaca),Manila fibre (abaca),,QCL,,,
@@ -153,18 +154,16 @@ NutsSeeds,"Groundnuts, with shell",2,FALSE,"Groundnuts, shelled","Oil, groundnut
 NutsSeeds,NutsSeedsNES,0,TRUE,Chestnut,Chestnut,,Nuts and products,,,
 NutsSeeds,NutsSeedsNES,0,TRUE,Areca nuts,Areca nuts,,Nuts and products,,,
 NutsSeeds,NutsSeedsNES,0,TRUE,Kola nuts,Kola nuts,,Nuts and products,,,
-NutsSeeds,NutsSeedsNES,1,TRUE,"Brazil nuts, with shell","Brazil nuts, shelled",,Nuts and products,0.54998659,0.549990383,FALSE
-NutsSeeds,NutsSeedsNES,2,TRUE,"Walnuts, with shell","Walnuts, shelled",,Nuts and products,0.418449069,0.483226707,TRUE
-NutsSeeds,NutsSeedsNES,3,TRUE,"Cashew nuts, with shell","Cashew nuts, shelled",,Nuts and products,0.249908103,0.297210095,TRUE
-NutsSeeds,NutsSeedsNES,4,TRUE,"Almonds, with shell",Almonds shelled,,Nuts and products,0.494881028,0.535778845,TRUE
-NutsSeeds,NutsSeedsNES,5,TRUE,"Hazelnuts, with shell","Hazelnuts, shelled",,Nuts and products,0.499196224,0.498477673,TRUE
-NutsSeeds,NutsSeedsNES,6,FALSE,"Brazil nuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
-NutsSeeds,NutsSeedsNES,6,FALSE,"Walnuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
-NutsSeeds,NutsSeedsNES,6,FALSE,"Cashew nuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
-NutsSeeds,NutsSeedsNES,6,TRUE,Nuts nes,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
-NutsSeeds,NutsSeedsNES,6,TRUE,Pistachios,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
-NutsSeeds,NutsSeedsNES,6,FALSE,Almonds shelled,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
-NutsSeeds,NutsSeedsNES,6,FALSE,"Hazelnuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,1,TRUE,"Walnuts, with shell","Walnuts, shelled",,Nuts and products,0.418449069,0.483226707,TRUE
+NutsSeeds,NutsSeedsNES,2,TRUE,"Cashew nuts, with shell","Cashew nuts, shelled",,Nuts and products,0.249908103,0.297210095,TRUE
+NutsSeeds,NutsSeedsNES,3,TRUE,"Almonds, with shell",Almonds shelled,,Nuts and products,0.494881028,0.535778845,TRUE
+NutsSeeds,NutsSeedsNES,4,TRUE,"Hazelnuts, with shell","Hazelnuts, shelled",,Nuts and products,0.499196224,0.498477673,TRUE
+NutsSeeds,NutsSeedsNES,5,FALSE,"Walnuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,5,FALSE,"Cashew nuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,5,TRUE,Nuts nes,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,5,TRUE,Pistachios,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,5,FALSE,Almonds shelled,"Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
+NutsSeeds,NutsSeedsNES,5,FALSE,"Hazelnuts, shelled","Nuts, prepared (exc. groundnuts)",,Nuts and products,0.944971077,1.093836446,TRUE
 Legumes,Legumes,1,TRUE,"Beans, dry","Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
 Legumes,Legumes,1,TRUE,"Peas, dry","Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
 Legumes,Legumes,1,TRUE,"Broad beans, horse beans, dry","Flour, pulses",,"Pulses, Other and products",0.949902399,0.955596546,FALSE
@@ -207,8 +206,6 @@ Vegetables,Tomatoes,1,TRUE,Tomatoes,"Tomatoes, paste",,Tomatoes and products,0.3
 Vegetables,Tomatoes,1,TRUE,Tomatoes,"Tomatoes, peeled",,Tomatoes and products,0.311226649,0.365140358,TRUE
 Vegetables,"Maize, green",1,TRUE,"Maize, green",Sweet corn frozen,,"Vegetables, Other and products",0.4,0.3817711,TRUE
 Vegetables,"Maize, green",1,TRUE,"Maize, green",Sweet corn prep or preserved,,"Vegetables, Other and products",0.4,0.3817711,TRUE
-Vegetables,Mushrooms and truffles,1,TRUE,Mushrooms and truffles,"Mushrooms, dried",,"Vegetables, Other and products",0.373450077,0.427985642,TRUE
-Vegetables,Mushrooms and truffles,1,TRUE,Mushrooms and truffles,"Mushrooms, canned",,"Vegetables, Other and products",0.373450077,0.427985642,TRUE
 Vegetables,VegetablesNES,0,TRUE,Lettuce and chicory,Lettuce and chicory,,"Vegetables, Other and products",,,
 Vegetables,VegetablesNES,0,TRUE,Cassava leaves,Cassava leaves,,"Vegetables, Other and products",,,
 Vegetables,VegetablesNES,1,TRUE,"Chillies and peppers, dry","Juice, vegetables nes",,Pimento and products,0.709929554,0.803273208,TRUE

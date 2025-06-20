@@ -3,7 +3,7 @@
 # Units: Unitless
 # Column types: cccnnnnnnn
 # ----------
-supplysector,subsector,technology,1971,2010,2015,2020,2025,2030,2100
+supplysector,subsector,technology,1971,2010,final-calibration-year,initial-future-year,2030,2035,2100
 H2 central production,coal,coal chemical,0,0,0,0,0,0,0
 H2 central production,coal,coal chemical CCS,0,0,0,0,0.5,1,1
 H2 central production,gas,natural gas steam reforming,1,1,1,1,1,1,1

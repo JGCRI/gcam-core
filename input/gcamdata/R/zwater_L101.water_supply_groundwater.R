@@ -15,7 +15,7 @@
 #' @importFrom tibble tibble
 #' @importFrom dplyr arrange bind_rows filter group_by mutate rename row_number select ungroup
 #' @importFrom tidyr spread
-#' @author ST September 2018
+#' @author ST September 2018; HN 2025
 module_water_L101.water_supply_groundwater <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
@@ -23,7 +23,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
              FILE = "water/groundwater_uniform",
              FILE = "water/groundwater_trend_gleeson",
              FILE = "water/groundwater_trend_watergap",
-             FILE = "water/superwell_groundwater_cost_elec"))
+             FILE = "water/superwell_groundwater_cost_elec_dls"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L101.DepRsrcCurves_ground_uniform_bm3",
              "L101.groundwater_grades_constrained_bm3",
@@ -48,7 +48,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID", strip_attributes = TRUE)
     aquastat_ctry <- get_data(all_data, "water/aquastat_ctry", strip_attributes = TRUE)
     gw_uniform <- get_data(all_data, "water/groundwater_uniform", strip_attributes = TRUE)
-    superwell_groundwater_cost_elec <- get_data(all_data, "water/superwell_groundwater_cost_elec", strip_attributes = TRUE)
+    superwell_groundwater_cost_elec_dls <- get_data(all_data, "water/superwell_groundwater_cost_elec_dls", strip_attributes = TRUE)
 
     # throw error if water.GROUNDWATER_CALIBRATION is incorrectly referenced in constants.R
     if(!(water.GROUNDWATER_CALIBRATION %in% c("watergap", "gleeson"))){
@@ -101,9 +101,12 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       filter(!is.na(Country)) %>%
       distinct()
 
-    # Re-map the country for basin #103 from China to Taiwan
-    L101.Superwell_costcurves_ctry <- superwell_groundwater_cost_elec %>%
+    # filter the depletion limit and prepare the superwell data
+    L101.Superwell_costcurves_ctry <- superwell_groundwater_cost_elec_dls %>%
+      filter(depletion_limit == as.numeric(str_extract(water.GROUNDWATER_SCENARIO, "\\d+"))) %>%
+      select(-depletion_limit) %>%
       filter(!is.na(Country)) %>%
+      # re-map the country for basin #103 from China to Taiwan
       mutate(Country = if_else(GCAM_basin_ID == 103, "Taiwan", Country)) %>%
       left_join_error_no_match(superwell_ctry, by = "Country") %>%
       left_join_error_no_match(select(iso_GCAM_regID, iso, GCAM_region_ID), by = "iso") %>%
@@ -186,7 +189,7 @@ module_water_L101.water_supply_groundwater <- function(command, ...) {
       add_legacy_name("L101.groundwater_grades_constrained_bm3") %>%
       add_precursors("common/iso_GCAM_regID",
                      "water/aquastat_ctry",
-                     "water/superwell_groundwater_cost_elec") ->
+                     "water/superwell_groundwater_cost_elec_dls") ->
       L101.groundwater_grades_constrained_bm3
 
     L101.groundwater_depletion_bm3 %>%

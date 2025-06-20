@@ -12,7 +12,7 @@ EXPORTS,Exports,,
 MARBUNK,International Marine Bunkers,in_trn_international ship,-0.00004186
 AVBUNK,International Aviation Bunkers,in_trn_international air,-0.00004186
 STOCKCHA,Stock Changes,,
-TPES,Total Primary Energy Supply,,
+TES,Total Primary Energy Supply,,
 TRANSFER,Transfers,,
 STATDIFF,Statistical Differences,,
 TOTTRANF,Transformation Sector,,

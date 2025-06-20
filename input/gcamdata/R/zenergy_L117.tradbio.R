@@ -38,7 +38,7 @@ module_energy_L117.tradbio <- function(command, ...) {
 
     # Calculate the max resource of tradbio as the maximum during the historical years
      L1012.en_bal_EJ_R_Si_Fi_Yh %>%
-      filter(fuel == "biomass_tradbio", sector == "TPES") %>%
+      filter(fuel == "biomass_tradbio", sector == energy.TPES_FLOW) %>%
       group_by(GCAM_region_ID, sector, fuel) %>%
       summarise(value = max(value)) ->
       L117.maxSubResource_tradbio

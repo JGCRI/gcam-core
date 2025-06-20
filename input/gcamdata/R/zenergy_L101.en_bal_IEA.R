@@ -47,6 +47,7 @@ module_energy_L101.en_bal_IEA <- function(command, ...) {
     enduse_fuel_aggregation <- get_data(all_data, "energy/mappings/enduse_fuel_aggregation")
     L100.IEA_en_bal_ctry_hist <- get_data(all_data, "L100.IEA_en_bal_ctry_hist")
 
+
     # L100.IEA_en_bal_ctry_hist might be null (meaning the data system is running
     # without the proprietary IEA data files). If this is the case, we substitute
     # pre-built output datasets and exit.
@@ -57,6 +58,30 @@ module_energy_L101.en_bal_IEA <- function(command, ...) {
       L101.in_EJ_ctry_trn_Fi_Yh <- extract_prebuilt_data("L101.in_EJ_ctry_trn_Fi_Yh")
       L101.in_EJ_ctry_bld_Fi_Yh <- extract_prebuilt_data("L101.in_EJ_ctry_bld_Fi_Yh")
     } else {
+
+      # Check that IEA data is available
+      if(object.size(L100.IEA_en_bal_ctry_hist) < 1000){
+        stop("Neither pre-built nor full IEA energy balances are available.")
+      }
+
+      # Check mapping files for entries in IEA data - can use partially processed IEA data
+      # IEA_flow_sector
+      mapped_flows <- IEA_flow_sector %>%
+        filter(!is.na(sector)) %>%
+        pull(flow_code)
+      if( !all((mapped_flows %in% (L100.IEA_en_bal_ctry_hist$FLOW %>% unique)) ) ){
+        stop("Check mapping file energy/mappings/IEA_flow_sector. Entries in mapping file 'flow_code' not in IEA energy data.")
+      }
+      # TO DO RMH: there are a lot of intentionally unmatched entries here - not sure how to check for this
+      # # IEA_product_fuel
+      # mapped_product <- IEA_product_fuel %>%
+      #   filter(!is.na(fuel)) %>%
+      #   pull(product) %>% unique
+      #
+      # if( !all((mapped_product %in% (L100.IEA_en_bal_ctry_hist$PRODUCT %>% unique)) ) ){
+      #   stop("Check mapping file energy/mappings/IEA_product_fuel. Entries in mapping file 'product'
+      #   not in IEA energy data.")
+      # }
 
       # Add IEA data to main tibble (lines 35-46 in original file)
       L100.IEA_en_bal_ctry_hist %>%
@@ -145,12 +170,12 @@ module_energy_L101.en_bal_IEA <- function(command, ...) {
         replace_na(list(value = 0)) ->
         L101.en_bal_EJ_R_Si_Fi_Yh_full
 
-      # Calculate the total primary energy supply (TPES) in each region and fuel as the sum of all flows that are inputs
-      # This guarantees that our TPES will be consistent with the tracked forms of consumption
+      # Calculate the total primary energy supply (TES) in each region and fuel as the sum of all flows that are inputs
+      # This guarantees that our TES will be consistent with the tracked forms of consumption
       # (i.e. no statistical differences, stock changes, transfers)
       L101.en_bal_EJ_R_Si_Fi_Yh_full %>%
         filter(grepl("in_", sector) | grepl("net_", sector)) %>%
-        mutate(sector = "TPES")%>%
+        mutate(sector = energy.TPES_FLOW)%>%
         group_by(GCAM_region_ID, sector, fuel, year) %>%
         summarise(value = sum(value)) ->
         L101.in_EJ_R_TPES_Fi_Yh
@@ -212,7 +237,7 @@ module_energy_L101.en_bal_IEA <- function(command, ...) {
 
       L101.en_bal_EJ_ctry_Si_Fi_Yh %>%
         filter(grepl("in_", sector) | grepl("net_", sector)) %>%
-        mutate(sector = "TPES")%>%
+        mutate(sector = energy.TPES_FLOW)%>%
         group_by(iso, GCAM_region_ID, sector, fuel, year) %>%
         summarise(value = sum(value)) %>%
         ungroup ->

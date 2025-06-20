@@ -62,7 +62,7 @@ const Modeltime* Modeltime::getInstance() {
 Modeltime::Modeltime() :
 mStartYear( -1 ),
 mEndYear( -1 ),
-mFinalCalibrationYear( 2015 ),
+mFinalCalibrationYear( 2021 ),
 mIsInitialized( false ),
 mCarbonModelStartYear( -1 )
 {
@@ -126,14 +126,14 @@ bool Modeltime::XMLParse( rapidxml::xml_node<char>* & aNode ) {
                     mFinalCalibrationYear = tempCalibrationYear;
                 }
                 else if (tempCalibrationYear > mFinalCalibrationYear ){
-                   // Do what user asks in input, not hard coded year.
-                   mFinalCalibrationYear = tempCalibrationYear;
+                    // Do what user asks in input, not hard coded year.
                     ILogger& mainLog = ILogger::getLogger( "main_log" );
                     mainLog.setLevel( ILogger::WARNING );
                     mainLog << "\nRead in final-calibration-year (" << tempCalibrationYear << ") "
                             << "which is beyond the expected year(" << mFinalCalibrationYear << ").\n"
                             << "The user must ensure a fully calibrated dataset to " << tempCalibrationYear
                             << " is provided to avoid errors." << endl;
+                    mFinalCalibrationYear = tempCalibrationYear;
                 }
             }
             else if( nodeName == "carbon-model-start-year" ) {

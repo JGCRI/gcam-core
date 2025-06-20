@@ -2,11 +2,13 @@
 # Title: USDA historical Alfalfa prices
 # Unit: USD/tonne
 # Description: ANNUAL PRICES RECEIVED FOR ALFALFA HAY IN DOLLARS PER TON
-# Source: USDA NASS
-# Date of last update: 2022-03-15 (XZ)
+# Source: USDA NASS; last two years added based on relative changes
+# Date of last update: 2025-02-28 (XZ)
 # Column types: cicccccccccccicccccnn
 # ----------
 Program,Year,Period,Week Ending,Geo Level,State,State ANSI,Ag District,Ag District Code,County,County ANSI,Zip Code,Region,watershed_code,Watershed,Commodity,Data Item,Domain,Domain Category,Value,CV (%)
+SURVEY,2023,MARKETING YEAR,,NATIONAL,US TOTAL,,,,,,,,0,,HAY,"HAY, ALFALFA - PRICE RECEIVED, MEASURED IN $ / TON",TOTAL,NOT SPECIFIED,187,
+SURVEY,2022,MARKETING YEAR,,NATIONAL,US TOTAL,,,,,,,,0,,HAY,"HAY, ALFALFA - PRICE RECEIVED, MEASURED IN $ / TON",TOTAL,NOT SPECIFIED,218,
 SURVEY,2021,MARKETING YEAR,,NATIONAL,US TOTAL,,,,,,,,0,,HAY,"HAY, ALFALFA - PRICE RECEIVED, MEASURED IN $ / TON",TOTAL,NOT SPECIFIED,206,
 SURVEY,2020,MARKETING YEAR,,NATIONAL,US TOTAL,,,,,,,,0,,HAY,"HAY, ALFALFA - PRICE RECEIVED, MEASURED IN $ / TON",TOTAL,NOT SPECIFIED,171,
 SURVEY,2019,MARKETING YEAR,,NATIONAL,US TOTAL,,,,,,,,0,,HAY,"HAY, ALFALFA - PRICE RECEIVED, MEASURED IN $ / TON",TOTAL,NOT SPECIFIED,179,

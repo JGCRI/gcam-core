@@ -200,6 +200,7 @@ module_energy_electricity_xml <- function(command, ...) {
                      "L223.GlobalTechShrwt_elec",
                      "L223.GlobalTechInterp_elec",
                      "L223.GlobalIntTechShrwt_elec",
+                     "L223.GlobalIntTechBackup_elec",
                      "L223.PrimaryRenewKeyword_elec",
                      "L223.PrimaryRenewKeywordInt_elec",
                      "L223.AvgFossilEffKeyword_elec",

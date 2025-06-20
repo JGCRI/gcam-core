@@ -51,7 +51,6 @@
 #include "util/base/include/configuration.h"
 #include "util/logger/include/ilogger.h"
 #include "containers/include/scenario.h"
-#include "reporting/include/batch_csv_outputter.h"
 
 using namespace std;
 
@@ -136,7 +135,7 @@ bool BatchRunner::runScenarios( const int aSinglePeriod,
     // which the scenario runners were read.
     bool shouldExit = false;
     bool success = true;
-    BatchCSVOutputter csvOutputter;
+
     while( !shouldExit ){
         // The data structure containing the current run.
         Component fileSetsToRun;
@@ -151,8 +150,6 @@ bool BatchRunner::runScenarios( const int aSinglePeriod,
         for( RunnerIterator runner = mScenarioRunners.begin(); runner != mScenarioRunners.end(); ++runner ){
             bool scenarioSuccess = runSingleScenario( *runner, fileSetsToRun, aSinglePeriod, aTimer );
             success &= scenarioSuccess;
-            (*runner)->getInternalScenario()->accept( &csvOutputter, -1 );
-            csvOutputter.writeDidScenarioSolve( scenarioSuccess );
             // Clean up the current scenario runner before we move on to the next
             // so that we do not accumulate a large amount of idle memory.
             (*runner)->cleanup();
