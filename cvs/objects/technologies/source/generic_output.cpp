@@ -121,6 +121,6 @@ void GenericOutput::setPhysicalOutput( const double aPrimaryOutput,
     mPhysicalOutputs[ aPeriod ] = aPrimaryOutput;
 }
 
-string GenericOutput::getOutputUnits( const gcamstr& aRegionName ) const {
+gcamstr GenericOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return "";
 }

@@ -255,12 +255,12 @@ double FractionalSecondaryOutput::getValue( const gcamstr& aRegionName,
     return secondaryGoodPrice * mOutputRatio * productionFraction;
 }
 
-string FractionalSecondaryOutput::getOutputUnits( const gcamstr& aRegionName ) const {
+gcamstr FractionalSecondaryOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return scenario->getMarketplace()->getMarketInfo( getName(), mMarketName.empty() ? aRegionName : mMarketName, 0, true )
         ->getString( "output-unit", false );
 }
 
-double FractionalSecondaryOutput::getEmissionsPerOutput( const string& aGHGName,
+double FractionalSecondaryOutput::getEmissionsPerOutput( const gcamstr& aGHGName,
                                                          const int aPeriod ) const
 {
     return 0;

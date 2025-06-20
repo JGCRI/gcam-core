@@ -245,7 +245,7 @@ public:
      * \param aRegionName Name of the region containing the output.
      * \return The appropriate units string to use.
      */
-    virtual std::string getOutputUnits( const gcamstr& aRegionName ) const = 0;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const = 0;
 
     /*!
      * \brief Get the emissions of a given gas per unit of primary output.
@@ -258,7 +258,7 @@ public:
      * \param aPeriod Model period
      * \return The emissions of the gas per unit of output.
      */
-    virtual double getEmissionsPerOutput( const std::string& aGHGName,
+    virtual double getEmissionsPerOutput( const gcamstr& aGHGName,
                                           const int aPeriod ) const = 0;
 
     // Documentation is inherited.

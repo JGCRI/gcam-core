@@ -92,7 +92,7 @@ public :
     virtual void completeInit( const gcamstr& aSectorName, const gcamstr& aRegionName,
                                const IInfo* aTechInfo, const bool aIsTechOperating );
 
-    virtual double getEmissionsPerOutput( const std::string& aGHGName, const int aPeriod ) const;
+    virtual double getEmissionsPerOutput( const gcamstr& aGHGName, const int aPeriod ) const;
 
     virtual const gcamstr& getName( ) const { return mName; }
 
@@ -101,7 +101,7 @@ public :
     virtual double getValue( const gcamstr& aRegionName, const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
     
-    virtual std::string getOutputUnits( const gcamstr& aRegionName ) const;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const;
 
     static const std::string& getXMLNameStatic( );
 

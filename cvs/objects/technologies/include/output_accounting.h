@@ -141,10 +141,10 @@ public:
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const { return 0.0; }
     
-    virtual std::string getOutputUnits( const gcamstr& aRegionName ) const;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const;
 
     // not needed in this output
-    virtual double getEmissionsPerOutput( const std::string& aGHGName,
+    virtual double getEmissionsPerOutput( const gcamstr& aGHGName,
                                           const int aPeriod ) const { return 0.0; }
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

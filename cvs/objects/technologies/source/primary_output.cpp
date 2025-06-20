@@ -198,12 +198,12 @@ double PrimaryOutput::getValue( const gcamstr& aRegionName,
     return 0;
 }
 
-string PrimaryOutput::getOutputUnits( const gcamstr& aRegionName ) const {
+gcamstr PrimaryOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return mCachedMarket.getMarketInfo( getName(), aRegionName, 0, true )
         ->getString( "output-unit", false );
 }
 
-double PrimaryOutput::getEmissionsPerOutput( const string& aGHGName,
+double PrimaryOutput::getEmissionsPerOutput( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     assert( mCachedCO2Coef.isInited() );

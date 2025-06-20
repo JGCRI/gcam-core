@@ -219,12 +219,12 @@ double SecondaryOutput::getValue( const gcamstr& aRegionName,
     return price * mOutputRatio * mPriceMult;
 }
 
-string SecondaryOutput::getOutputUnits( const gcamstr& aRegionName ) const {
+gcamstr SecondaryOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return scenario->getMarketplace()->getMarketInfo( getName(), mMarketName.empty() ? aRegionName : mMarketName, 0, true )
         ->getString( "output-unit", false );
 }
 
-double SecondaryOutput::getEmissionsPerOutput( const string& aGHGName,
+double SecondaryOutput::getEmissionsPerOutput( const gcamstr& aGHGName,
                                                const int aPeriod ) const
 {
     // Currently other GHGs do not use output emissions coefficients.

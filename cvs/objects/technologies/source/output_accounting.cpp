@@ -198,7 +198,7 @@ double OutputAccounting::getCurrencyOutput( const int aPeriod ) const
     return mCurrencyOutputs[ aPeriod ];
 }
 
-string OutputAccounting::getOutputUnits( const gcamstr& aRegionName ) const {
+gcamstr OutputAccounting::getOutputUnits( const gcamstr& aRegionName ) const {
     IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, false );
     return marketInfo ? marketInfo->getString( "output-unit", false ) : "";
 }

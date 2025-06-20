@@ -261,7 +261,7 @@ void ResidueBiomassOutput::completeInit( const gcamstr& aSectorName, const gcams
                                                                       aRegionName );
 }
 
-double ResidueBiomassOutput::getEmissionsPerOutput( const std::string& aGHGName, const int aPeriod ) const
+double ResidueBiomassOutput::getEmissionsPerOutput( const gcamstr& aGHGName, const int aPeriod ) const
 {
     // Currently other GHGs do not use output emissions coefficients.
     assert( aGHGName == "CO2" );
@@ -370,7 +370,7 @@ bool ResidueBiomassOutput::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     }
 }
 
-string ResidueBiomassOutput::getOutputUnits( const gcamstr& aRegionName ) const {
+gcamstr ResidueBiomassOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return scenario->getMarketplace()->getMarketInfo( getName(), aRegionName, 0, true )
         ->getString( "output-unit", false );
 }

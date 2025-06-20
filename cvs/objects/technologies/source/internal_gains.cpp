@@ -195,12 +195,12 @@ double InternalGains::getValue( const gcamstr& aRegionName,
     return 0;
 }
 
-string InternalGains::getOutputUnits( const gcamstr& aRegionName ) const {
+gcamstr InternalGains::getOutputUnits( const gcamstr& aRegionName ) const {
     return scenario->getMarketplace()->getMarketInfo( SectorUtils::getTrialMarketName( mTrialMarketName ),
         aRegionName, 0, true )->getString( "output-unit", false );
 }
 
-double InternalGains::getEmissionsPerOutput( const string& aGHGName,
+double InternalGains::getEmissionsPerOutput( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     // Internal gains do not contain any emissions

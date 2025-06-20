@@ -99,7 +99,7 @@ public:
                                     ICaptureComponent* aCaptureComponent,
                                     const int aPeriod );
     
-    virtual std::string getOutputUnits( const gcamstr& aRegionName ) const;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const;
 
 protected:
 
