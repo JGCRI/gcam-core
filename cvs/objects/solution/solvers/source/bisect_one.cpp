@@ -118,7 +118,7 @@ SolverComponent::ReturnCode BisectOne::solve( SolutionInfoSet& aSolutionSet, con
                                aSolutionSet, worstSol, calcCounter, mSolutionInfoFilter.get(), aPeriod );
     unsigned int numIterations = 0;
     do {
-        aSolutionSet.printMarketInfo( "Bisect One on " + worstSol->getName(), calcCounter->getPeriodCount(), singleLog );
+        aSolutionSet.printMarketInfo( "Bisect One on " + worstSol->getName().get(), calcCounter->getPeriodCount(), singleLog );
 
         // Move the right price bracket in if Supply > Demand
         if ( worstSol->getED() < 0 ) {

@@ -76,57 +76,57 @@ class Info: public IInfo, boost::noncopyable
 public:
     ~Info();
 
-    bool setBoolean( const std::string& aStringKey, const bool aValue );
+    bool setBoolean( const gcamstr& aStringKey, const bool aValue );
 
-    bool setInteger( const std::string& aStringKey, const int aValue );
+    bool setInteger( const gcamstr& aStringKey, const int aValue );
 
-    bool setDouble( const std::string& aStringKey, const double aValue );
+    bool setDouble( const gcamstr& aStringKey, const double aValue );
 
-    bool setString( const std::string& aStringKey, const std::string& aValue );
+    bool setString( const gcamstr& aStringKey, const gcamstr& aValue );
 
-    bool getBoolean( const std::string& aStringKey, const bool aMustExist ) const;
+    bool getBoolean( const gcamstr& aStringKey, const bool aMustExist ) const;
 
-    int getInteger( const std::string& aStringKey, const bool aMustExist ) const;
+    int getInteger( const gcamstr& aStringKey, const bool aMustExist ) const;
 
-    double getDouble( const std::string& aStringKey, const bool aMustExist ) const;
+    double getDouble( const gcamstr& aStringKey, const bool aMustExist ) const;
 
-    const std::string getString( const std::string& aStringKey, const bool aMustExist ) const;
+    const gcamstr getString( const gcamstr& aStringKey, const bool aMustExist ) const;
 
-    bool getBooleanHelper( const std::string& aStringKey, bool& aFound ) const;
+    bool getBooleanHelper( const gcamstr& aStringKey, bool& aFound ) const;
 
-    int getIntegerHelper( const std::string& aStringKey, bool& aFound ) const;
+    int getIntegerHelper( const gcamstr& aStringKey, bool& aFound ) const;
 
-    double getDoubleHelper( const std::string& aStringKey, bool& aFound ) const;
+    double getDoubleHelper( const gcamstr& aStringKey, bool& aFound ) const;
 
-    const std::string getStringHelper( const std::string& aStringKey, bool& aFound ) const;
+    const gcamstr getStringHelper( const gcamstr& aStringKey, bool& aFound ) const;
 
-    bool hasValue( const std::string& aStringKey ) const;
+    bool hasValue( const gcamstr& aStringKey ) const;
 
     void toDebugXML( const int aPeriod, Tabs* aTabs, std::ostream& aOut ) const;
 protected:
-    Info( const IInfo* aParentInfo, const std::string& aOwnerName );
+    Info( const IInfo* aParentInfo, const gcamstr& aOwnerName );
 
 private:
 
-    std::string mOwnerName;
+    gcamstr mOwnerName;
 
-    template<class T> bool setItemValueLocal( const std::string& aStringKey,
+    template<class T> bool setItemValueLocal( const gcamstr& aStringKey,
                                               const T& aValue );
 
-    template<class T> T getItemValueLocal( const std::string& aStringKey, bool& aExists ) const;
+    template<class T> T getItemValueLocal( const gcamstr& aStringKey, bool& aExists ) const;
 
-    void printItemNotFoundWarning( const std::string& aStringKey ) const;
+    void printItemNotFoundWarning( const gcamstr& aStringKey ) const;
 
-    void printBadCastWarning( const std::string& aStringKey, bool aIsUpdate ) const;
+    void printBadCastWarning( const gcamstr& aStringKey, bool aIsUpdate ) const;
 
-    void printShadowWarning( const std::string& aStringKey ) const;
+    void printShadowWarning( const gcamstr& aStringKey ) const;
 
     template<class T> void printItem( const boost::any& aValue,
                                       std::ostream& aOut,
                                       Tabs* aTabs ) const;
 
     //! Type of the internal storage map.
-    typedef std::map<const std::string, boost::any> InfoMap;
+    typedef std::map<gcamstr, boost::any> InfoMap;
 
     //! Internal storage mapping item names to item values.
     InfoMap mInfoMap;
@@ -148,7 +148,7 @@ private:
 * \param aType Enum value of the type.
 * \param aValue The value to be associated with this key. 
 */
-template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
+template<class T> bool Info::setItemValueLocal( const gcamstr& aStringKey,
                                                 const T& aValue )
 {
     /*! \pre A valid key was passed. */
@@ -207,7 +207,7 @@ template<class T> bool Info::setItemValueLocal( const std::string& aStringKey,
 *          in the string object's malloc call.
 */
 template<class T>
-T Info::getItemValueLocal( const std::string& aStringKey,
+T Info::getItemValueLocal( const gcamstr& aStringKey,
                                  bool& aExists ) const
 {
     /*! \pre A valid key was passed. */

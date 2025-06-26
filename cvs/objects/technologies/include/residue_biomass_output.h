@@ -76,50 +76,50 @@ class ResidueBiomassOutput : public IOutput
 public :
    typedef IOutput parent;
 
-    ResidueBiomassOutput( const std::string& sectorName = std::string() );
+    ResidueBiomassOutput( const gcamstr& sectorName = gcamstr());
     virtual ~ResidueBiomassOutput(void);
     virtual const std::string& getXMLReportingName() const;
     virtual const std::string& getXMLName() const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     virtual IOutput::OutputList calcPhysicalOutput( const double aPrimaryOutput,
-                                                    const std::string& aRegionName,
+                                                    const gcamstr& aRegionName,
                                                     const ICaptureComponent* aCaptureComponent,
                                                     const int aPeriod ) const;
 
     virtual ResidueBiomassOutput* clone( void ) const;
 
-    virtual void completeInit( const std::string& aSectorName, const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aSectorName, const gcamstr& aRegionName,
                                const IInfo* aTechInfo, const bool aIsTechOperating );
 
-    virtual double getEmissionsPerOutput( const std::string& aGHGName, const int aPeriod ) const;
+    virtual double getEmissionsPerOutput( const gcamstr& aGHGName, const int aPeriod ) const;
 
-    virtual const std::string& getName( ) const { return mName; }
+    virtual const gcamstr& getName( ) const { return mName; }
 
     virtual double getPhysicalOutput( const int aPeriod ) const;
 
-    virtual double getValue( const std::string& aRegionName, const ICaptureComponent* aCaptureComponent,
+    virtual double getValue( const gcamstr& aRegionName, const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
     
-    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const;
 
     static const std::string& getXMLNameStatic( );
 
-    virtual void initCalc( const std::string& aRegionName, const std::string& aSectorName, const int aPeriod );
+    virtual void initCalc( const gcamstr& aRegionName, const gcamstr& aSectorName, const int aPeriod );
 
     virtual bool isSameType( const std::string& aType ) const { return getXMLNameStatic().compare( aType ) == 0; }
 
-    virtual void postCalc( const std::string& aRegionName, const int aPeriod );
+    virtual void postCalc( const gcamstr& aRegionName, const int aPeriod );
 
     virtual void scaleCoefficient( const double aScaler );
-    virtual void sendLandAllocator( const ILandAllocator* aLandAllocator, const std::string& aName );
-    virtual void setName( const std::string& sectorName ) { mName = sectorName; }
-    virtual void setPhysicalOutput( const double aPrimaryOutput, const std::string& aRegionName,
+    virtual void sendLandAllocator( const ILandAllocator* aLandAllocator, const gcamstr& aName );
+    virtual void setName( const gcamstr& sectorName ) { mName = sectorName; }
+    virtual void setPhysicalOutput( const double aPrimaryOutput, const gcamstr& aRegionName,
                                     ICaptureComponent* aCaptureComponent, const int aPeriod );
 
     virtual void setCurrencyOutput( const double aPysicalOutput,
                                     const double aCurrencyConversionPrice,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod ) { }
     virtual double getCurrencyOutput( const int aPeriod ) const { return 0; }
     
@@ -146,7 +146,7 @@ protected :
         * Name of the secondary output. Corresponds to a market for this good
         * and a supply sector which supplies this good as its primary output.
         */
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! CO2 emissions coefficient cached from the marketplace.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value ),

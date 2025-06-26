@@ -69,7 +69,7 @@ extern Scenario* scenario;
 * \todo Why is alpha zero not used in this function?
 */
 double AProductionFunction::calcCosts( const InputSet& input,
-                                       const string& regionName,
+                                       const gcamstr& aRegionName,
                                        const double aAlphaZero,
                                        int period ) const
 {
@@ -78,20 +78,20 @@ double AProductionFunction::calcCosts( const InputSet& input,
 		// capital input name should be changed to OtherValueAdded
 		if( !input[i]->hasTypeFlag( IInput::CAPITAL ) ) {
 			totalCost += input[i]->getPhysicalDemand( period )
-				         * input[i]->getPricePaid( regionName, period );
+				         * input[i]->getPricePaid( aRegionName, period );
 		}
 	}
 	return totalCost;
 }
 
 //! Calculate the profits using the production scale factor.
-double AProductionFunction::calcProfits( InputSet& input, const string& regionName, 
-                                         const string& sectorName, const double aShutdownCoef,
+double AProductionFunction::calcProfits( InputSet& input, const gcamstr& aRegionName, 
+                                         const gcamstr& sectorName, const double aShutdownCoef,
                                          int period, 
                                          double capitalStock, double alphaZero, double sigma ) const
 {
 
-    double profits = calcUnscaledProfits( input, regionName, sectorName, period,
+    double profits = calcUnscaledProfits( input, aRegionName, sectorName, period,
                                           capitalStock, alphaZero, sigma );
     // Scale the profits by the scaler which determines how much of the vintage
     // was shutdown.

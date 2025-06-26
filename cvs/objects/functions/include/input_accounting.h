@@ -85,7 +85,7 @@ public:
     virtual const std::string& getXMLReportingName() const;
 
     virtual void setPhysicalDemand( const double aPhysicalDemand,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod );
 
 protected:
@@ -97,10 +97,10 @@ protected:
         EnergyInput,
 
         //! Coefficient for production or demand function.
-        DEFINE_VARIABLE( SIMPLE, "tracking-market", mTrackingMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "tracking-market", mTrackingMarket, gcamstr ),
                             
         //! The tracking market name to which to add mCurrencyOutput
-        DEFINE_VARIABLE( SIMPLE, "currency-tracking-market", mCurrencyTrackingMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "currency-tracking-market", mCurrencyTrackingMarket, gcamstr ),
                             
         //! A value to be able to add the demand in currency amounts to market
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "currency-output", mCurrencyOutput, Value )

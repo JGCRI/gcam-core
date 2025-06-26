@@ -102,10 +102,10 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const std::string& aTechName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo );
     
     virtual double getCoefficient(const int aPeriod) const;

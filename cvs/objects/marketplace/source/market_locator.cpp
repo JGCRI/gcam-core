@@ -38,43 +38,23 @@
 * \author Josh Lurz
 */
 
-#include "util/base/include/definitions.h"
 #include <cassert>
-#include <string>
 
 #include "marketplace/include/market_locator.h"
-#include "util/base/include/hash_map.h"
-
-#define PERFORM_TIMING 0
-#if PERFORM_TIMING
-#include <iostream>
-#include "util/base/include/timer.h"
-// Static variables used for timing. Static variables are automatically
-// initialized to zero.
-static double gTotalLookupTime;
-static int gNumLookups;
-#endif
 
 using namespace std;
 
-
-
 /*! \brief Constructor */
 MarketLocator::MarketLocator()
-:mLastRegionLookup( static_cast<const RegionOrMarketNode*>( 0 ) )
 {
-    const unsigned int MARKET_REGION_LIST_SIZE = 71;
-    mRegionList.reset( new RegionMarketList( MARKET_REGION_LIST_SIZE ) );
-    mMarketList.reset( new RegionMarketList( MARKET_REGION_LIST_SIZE ) );
+    // tune the load factor relatively low to avoid collisions and
+    // prioritize speed over memory as this is a highly performance
+    // critical operation in GCAM
+    mRegionList.max_load_factor(0.5);
 }
 
 //! Destructor
 MarketLocator::~MarketLocator(){
-#if PERFORM_TIMING
-    cout << "Total time spent in lookups: " << gTotalLookupTime << " seconds." << endl
-         << "Average time per lookup: " << gTotalLookupTime / static_cast<double>( gNumLookups )
-         << " seconds." << endl;
-#endif
 }
 
 /*! \brief Add a market to the locator.
@@ -87,45 +67,30 @@ MarketLocator::~MarketLocator(){
 *        already exist.
 * \return The market number that was either already existing or added.
 */
-int MarketLocator::addMarket( const string& aMarket,
-                              const string& aRegion,
-                              const string& aGoodName,
+int MarketLocator::addMarket( const gcamstr& aMarket,
+                              const gcamstr& aRegion,
+                              const gcamstr& aGoodName,
                               const int aUniqueNumber )
 {
     // Check if the market area exists in the market area list.
-    RegionMarketList::iterator iter = mMarketList->find( aMarket );
+    pair<gcamstr, gcamstr> marketKey(aMarket, aGoodName);
+    RegionMarketList::iterator iter = mMarketList.find( marketKey );
     
     int goodNumber;
     // The market area does not exist. Create a new entry.
-    if( iter == mMarketList->end() ){
-        boost::shared_ptr<RegionOrMarketNode> newMarketNode( new RegionOrMarketNode( aMarket ) );
-        // Add the node to the hashmap.
-        mMarketList->insert( make_pair( aMarket, newMarketNode ) );
-
+    if( iter == mMarketList.end() ){
         // Add the item to it.
-        goodNumber = newMarketNode->addGood( aGoodName, aUniqueNumber );
+        mMarketList[marketKey] = aUniqueNumber;
+        goodNumber = aUniqueNumber;
     }
     else {
-        // The market area already exists. Add the item to it.
-        goodNumber = iter->second->addGood( aGoodName, aUniqueNumber );
+        // The market area already exists.
+        goodNumber = (*iter).second;
     }
-
-    // Check if the region exists in the region list.
-    iter = mRegionList->find( aRegion );
-
-    // The region does not exist. Create a new entry.
-    if( iter == mRegionList->end() ){
-        boost::shared_ptr<RegionOrMarketNode> newRegionNode( new RegionOrMarketNode( aRegion ) );
-        // Add the new region to the region list.
-        mRegionList->insert( make_pair( aRegion, newRegionNode ) );
-        
-        // Add the item to the region list.
-        newRegionNode->addGood( aGoodName, goodNumber );
-    }
-    else {
-        // The region already exists. Add the item to it.
-        iter->second->addGood( aGoodName, goodNumber );
-    }
+    
+    // set the index into the region list if it already existed or not
+    pair<gcamstr, gcamstr> regionKey(aRegion, aGoodName);
+    mRegionList[regionKey] = goodNumber;
 
     // Return the good number used.
     return goodNumber;
@@ -136,134 +101,7 @@ int MarketLocator::addMarket( const string& aMarket,
 * \param aGoodName Good for which to search.
 * \return The market number or MARKET_NOT_FOUND if it is not present.
 */
-int MarketLocator::getMarketNumber( const string& aRegion, const string& aGoodName ) const {
-    // Compile in extra timing. Note that timing causes significant overhead, so
-    // timed runs will take longer. The result is useful to compare across timed
-    // runs, not vs non-timed runs.
-#if PERFORM_TIMING
-    Timer timer;
-    timer.start();
-
-    // Lookup the market in the marketList.
-    int marketNumber = getMarketNumberInternal( aRegion, aGoodName );
-    timer.stop();
-    gTotalLookupTime += timer.getTimeDifference();
-    ++gNumLookups;
-    return marketNumber;
-#else
-    return getMarketNumberInternal( aRegion, aGoodName );
-#endif
-}
-
-/*! \brief Internal calculation which determines the market number from a region
-*          and good name.
-* \details Performs the calculation which determines the market number from a
-*          region and good name.
-* \param aRegion Region for which to search.
-* \param aGoodName Good for which to search.
-* \return The number of the associated market or MARKET_NOT_FOUND if it does not
-*         exist.
-*/
-int MarketLocator::getMarketNumberInternal( const string& aRegion,
-                                            const string& aGoodName ) const
-{
-    // First check if the cached market number matched the region.
-    const RegionOrMarketNode* region;
-#if GCAM_PARALLEL_ENABLED
-    const RegionOrMarketNode*& localCache = mLastRegionLookup.local();
-    if( localCache && localCache->getName() == aRegion ){
-        region = localCache;
-    }
-#else
-    if( mLastRegionLookup && mLastRegionLookup->getName() == aRegion ) {
-        region = mLastRegionLookup;
-    }
-#endif
-    else {
-        RegionMarketList::const_iterator iter = mRegionList->find( aRegion );
-        // Check if the region was found.
-        if( iter != mRegionList->end() ){
-            /*! \invariant If the key is in the list the node must be non-null. */
-            assert( iter->second.get() );
-            region = iter->second.get();
-#if GCAM_PARALLEL_ENABLED
-            localCache = region;
-#else
-            mLastRegionLookup = region;
-#endif
-        }
-        // Search failed.
-        else {
-            region = 0;
-        }
-    }
-
-    // If the region lookup succeeded search for the good, otherwise return
-    // market not found.
-    return region ? region->getMarketNumber( aGoodName ) : MARKET_NOT_FOUND;
-}
-
-//! Constructor
-MarketLocator::RegionOrMarketNode::RegionOrMarketNode( const string& aName ):
-mName( aName ){
-    const unsigned int SECTOR_LIST_SIZE = 51;
-    mSectorNodeList.reset( new SectorNodeList( SECTOR_LIST_SIZE ) );
-}
-
-//! Destructor
-MarketLocator::RegionOrMarketNode::~RegionOrMarketNode(){
-}
-
-/*! \brief Add a Good to the RegionOrMarketNode.
-* \param aGoodName Name of the Good to add.
-* \param aUniqueNumber A unique market location to use if the good is added to
-*        the list.
-* \return aUniqueNumber if the good was added to the list, the market number if
-*         it already existed.
-*/
-int MarketLocator::RegionOrMarketNode::addGood( const string& aGoodName,
-                                                const int aUniqueNumber )
-{
-    // Check if it exists in the good list.
-    SectorNodeList::iterator iter = mSectorNodeList->find( aGoodName );
-
-    // Check if the good was found.
-    if( iter != mSectorNodeList->end() ){
-        /*! \invariant If the key is in the list the node must be non-null. */
-        assert( iter->second.get() );
-
-        // Return the good number.
-        return iter->second->mNumber;
-    }
-
-    // The good node does not exist. Create a new one.
-    boost::shared_ptr<GoodNode> newGoodNode( new GoodNode( aGoodName, aUniqueNumber ) );
-
-    // Add the new node to the hashmap.
-    mSectorNodeList->insert( make_pair( aGoodName, newGoodNode ) );
-
-    // Return the new index.
-    return aUniqueNumber;
-}
-
-/*! \brief Find a market number given a Good name.
-* \param aGoodName The name of the Good to search for.
-* \return The market number for the Good, MARKET_NOT_FOUND otherwise.
-*/
-int MarketLocator::RegionOrMarketNode::getMarketNumber( const string& aGoodName ) const {
-    // Check if it exists in the good list.
-    SectorNodeList::const_iterator iter = mSectorNodeList->find( aGoodName );
-    if( iter != mSectorNodeList->end() ){
-        return iter->second->mNumber;
-    }
-
-    // Return that the market was not found.
-    return MARKET_NOT_FOUND;
-}
-
-//! Constructor
-MarketLocator::GoodNode::GoodNode( const string& aName, const int aMarketNumber ):
-mName( aName ),
-mNumber( aMarketNumber )
-{
+int MarketLocator::getMarketNumber( const gcamstr& aRegion, const gcamstr& aGoodName ) const {
+    RegionMarketList::const_iterator iter = mRegionList.find(make_pair(aRegion, aGoodName));
+    return iter == mRegionList.end() ? MARKET_NOT_FOUND : (*iter).second;
 }

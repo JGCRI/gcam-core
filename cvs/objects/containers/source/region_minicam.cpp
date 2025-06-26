@@ -142,7 +142,7 @@ bool RegionMiniCAM::XMLParse(rapidxml::xml_node<char>* & aNode) {
     string nodeName = XMLParseHelper::getNodeName(aNode);
     if( nodeName == "PrimaryFuelCO2Coef" ) {
         map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
-        mPrimaryFuelCO2Coef[ attrs["name"] ] = XMLParseHelper::getValue<double>( aNode );
+        mPrimaryFuelCO2Coef[ gcamstr(attrs["name"]) ] = XMLParseHelper::getValue<double>( aNode );
         return true;
     }
     else {
@@ -165,13 +165,13 @@ void RegionMiniCAM::completeInit() {
 
     // Add the interest rate to the region info.
     // TODO: mInterestRate is currently not used in GCAM and could be removed
-    mRegionInfo->setDouble( "interest-rate", mInterestRate );
+    mRegionInfo->setDouble( gcamstr("interest-rate"), mInterestRate );
     
     // Add the social discount rate to the region info.
-    mRegionInfo->setDouble( "social-discount-rate", mSocialDiscountRate );
+    mRegionInfo->setDouble( gcamstr("social-discount-rate"), mSocialDiscountRate );
     
     // Add the land private discount rate to the region info.
-    mRegionInfo->setDouble( "private-discount-rate-land", mPrivateDiscountRateLand );
+    mRegionInfo->setDouble( gcamstr("private-discount-rate-land"), mPrivateDiscountRateLand );
 
     // initialize demographic
     if( mDemographic ){
@@ -252,7 +252,7 @@ void RegionMiniCAM::toDebugXMLDerived( const int period, std::ostream& out, Tabs
     XMLWriteElement( mPrivateDiscountRateLand, "private-discount-rate-land", out, tabs );
     
     // Write out the Co2 Coefficients.
-    for( map<string,double>::const_iterator coefAllIter = mPrimaryFuelCO2Coef.begin(); coefAllIter != mPrimaryFuelCO2Coef.end(); coefAllIter++ ) {
+    for( map<gcamstr,double>::const_iterator coefAllIter = mPrimaryFuelCO2Coef.begin(); coefAllIter != mPrimaryFuelCO2Coef.end(); coefAllIter++ ) {
         XMLWriteElement( coefAllIter->second, "PrimaryFuelCO2Coef", out, tabs, 0, coefAllIter->first );
     }
     
@@ -386,9 +386,9 @@ void RegionMiniCAM::initCalc( const int period )
 * \param aPeriod Period.
 */
 void RegionMiniCAM::setCO2CoefsIntoMarketplace( const int aPeriod ){
-    const static string CO2COEF = "CO2coefficient";
+    const static gcamstr CO2COEF("CO2coefficient");
     Marketplace* marketplace = scenario->getMarketplace();
-    for( map<string, double>::const_iterator coef = mPrimaryFuelCO2Coef.begin();
+    for( map<gcamstr, double>::const_iterator coef = mPrimaryFuelCO2Coef.begin();
         coef != mPrimaryFuelCO2Coef.end(); ++coef )
     {
         // Markets may not exist for incorrect fuel names.

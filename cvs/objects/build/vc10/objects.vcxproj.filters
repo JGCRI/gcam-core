@@ -152,6 +152,15 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\containers\source\analyze_container.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\containers\source\analyze_str.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\containers\source\analyze_tech_mem.cpp">
+      <Filter>Source Files\containers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\containers\source\batch_runner.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
@@ -937,6 +946,15 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\containers\include\analyze_container.hpp">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\analyze_str.hpp">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\containers\include\analyze_tech_mem.hpp">
+      <Filter>Header Files\containers</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>

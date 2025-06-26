@@ -86,14 +86,14 @@ public:
     static const std::string& getXMLNameStatic();
     
     // ITechnologyContainer methods
-    virtual void completeInit( const std::string& aRegionName, const std::string& aSectorName,
-                               const std::string& aSubsectorName, const IInfo* aSubsecInfo,
+    virtual void completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName, const IInfo* aSubsecInfo,
                                ILandAllocator* aLandAllocator );
     
-    virtual void initCalc( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName, const gcamstr& aSectorName,
                            const IInfo* aSubsecInfo, const Demographic* aDemographics, const int aPeriod );
     
-    virtual void postCalc( const std::string& aRegionName, const int aPeriod );
+    virtual void postCalc( const gcamstr& aRegionName, const int aPeriod );
     
     virtual void toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
     
@@ -110,7 +110,7 @@ public:
     virtual CTechRangeIterator getVintageEnd( const int aPeriod ) const;
     
     // INamed methods
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     
     // AParsable methods
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
@@ -125,9 +125,9 @@ public:
     // the macro DEFINE_DATA utilities and instead set it up ourselves.
     typedef ITechnologyContainer ParentClass;
     virtual void doDataExpansion( ExpandDataVector<ParentClass::SubClassFamilyVector>& aVisitor );
-    typedef boost::fusion::vector<Data<std::string, SIMPLE> > DataVectorType;
+    typedef boost::fusion::vector<Data<gcamstr, SIMPLE> > DataVectorType;
     DataVectorType generateDataVector() {
-        return DataVectorType(Data<std::string, SIMPLE>(mName, "name"));
+        return DataVectorType(Data<gcamstr, SIMPLE>(mName, "name"));
     }
     
 protected:
@@ -137,7 +137,7 @@ private:
     //! The name of the stub which will be duplicated in each contained
     //! technology however we must keep it around to be able to do the
     //! lookup.
-    std::string mName;
+    gcamstr mName;
     
     //! The cloned global technology to delegate to
     ITechnologyContainer* mTechnology;

@@ -98,7 +98,7 @@ void PassThroughSector::completeInit( const IInfo* aRegionInfo,
 
     // Add dependencies for a calc item to gather up the fixed demands from this
     // pass through sector and make that available for the downstream sector
-    const string fixedDemandActivityName = mName + "-fixed-output";
+    const gcamstr fixedDemandActivityName(mName.get() + "-fixed-output");
     MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
 
     // Ensure we gather the fixed demands after we calculate prices / before we
@@ -156,7 +156,7 @@ double PassThroughSector::getFixedOutput( const int aPeriod ) const {
 void PassThroughSector::setFixedDemandsToMarket( const int aPeriod ) const {
     const_cast<PassThroughSector*>( this )->mLastCalcFixedOutput = getFixedOutput( aPeriod );
 
-    const string fixedDemandActivityName = mName + "-fixed-output";
+    const gcamstr fixedDemandActivityName(mName.get() + "-fixed-output");
     Marketplace* marketplace = scenario->getMarketplace();
     // set the fixed out to both sides of the equation (supply=price for trial markets)
     // so the solver doesn't complain it is "unsolved"
@@ -179,6 +179,6 @@ void CalcFixedOutputActivity::calc( const int aPeriod ) {
 }
 
 string CalcFixedOutputActivity::getDescription() const {
-    return mSector->mRegionName + " " + mSector->getName() + "-fixed-output";
+    return mSector->mRegionName.get() + " " + mSector->getName().get() + "-fixed-output";
 }
 

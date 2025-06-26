@@ -124,7 +124,7 @@ protected:
         IClimateModel,
 
         //! A map of the gases Magicc can report out.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "output-gas-name-map", mOutputGasNameMap, std::map<gcamstr,int> ),
         
         //! Emissions levels by gas and period from model
         DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "model-emission-by-gas", mModelEmissionsByGas, std::vector<std::vector<double> > ),
@@ -139,13 +139,13 @@ protected:
         DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "land-use-change-emissions", mLUCEmissionsByYear, std::vector<double> ),
         
         //! Name of the scenario.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "scenario-name", mScenarioName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "scenario-name", mScenarioName, gcamstr ),
         
         //! Whether the climate model output is updated.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "is-valid", mIsValid, bool ),
         
         //! Name of a GHG input file to use.
-        DEFINE_VARIABLE( SIMPLE, "ghgInputFileName", mGHGInputFileName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "ghgInputFileName", mGHGInputFileName, gcamstr ),
         
         //! Climate Sensitivity.
         DEFINE_VARIABLE( SIMPLE, "climateSensitivity", mClimateSensitivity, double ),

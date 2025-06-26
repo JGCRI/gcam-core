@@ -58,7 +58,7 @@ extern Scenario* scenario;
  * \param aGDP The regional gdp needed to calculate the sector.
  * \param aRegionName The name of the region in which this activity is contained.
  */
-SectorActivity::SectorActivity( Sector* aSector, const string& aRegionName ):
+SectorActivity::SectorActivity( Sector* aSector, const gcamstr& aRegionName ):
 mSector( aSector ),
 mRegionName( aRegionName )
 {
@@ -104,7 +104,7 @@ void SectorActivity::setDemands( const int aPeriod ) {
  * \return A description of this activity.
  */
 string SectorActivity::getDescription() const {
-    return mRegionName + " " + mSector->getName();
+    return mRegionName.get() + " " + mSector->getName().get();
 }
 
 /*!

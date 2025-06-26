@@ -85,7 +85,7 @@ const string& AccumulatedGrade::getXMLNameStatic() {
 * \author Sonny Kim
 * \param period Model period
 */
-void AccumulatedGrade::initCalc( const string& aRegionName, const string& aResourceName, const int aPeriod ) {
+void AccumulatedGrade::initCalc( const gcamstr& aRegionName, const gcamstr& aResourceName, const int aPeriod ) {
     // This is called only once in the beginning of each period.
     // Add to available resource the amount of accumulated resource from a by-product   // SHK 10/28/04
     Marketplace* marketplace = scenario->getMarketplace();
@@ -94,14 +94,15 @@ void AccumulatedGrade::initCalc( const string& aRegionName, const string& aResou
     // for period = 1, take slope of 0 and last period accumulated amount
     double lastPerAmount = 0; // annual amount last period
     double lastLastPerAmount = 0; // annual amount two periods before
+    gcamstr accRsrcKey("AccumulatedRsc");
     if ( aPeriod >= 1 ) {
         const IInfo* resourceInfo = marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod - 1, true );
-        lastPerAmount = resourceInfo->getDouble( "AccumulatedRsc", true );
+        lastPerAmount = resourceInfo->getDouble( accRsrcKey, true );
     }
     // for period > 1, take slope of last and the last two period accumulated amount
     if ( aPeriod > 1 ) {
         const IInfo* prevResourceInfo = marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod - 2, true );
-        lastLastPerAmount = prevResourceInfo->getDouble( "AccumulatedRsc", true );
+        lastLastPerAmount = prevResourceInfo->getDouble( accRsrcKey, true );
     }
     double diffAmount = lastPerAmount - lastLastPerAmount;
     const Modeltime* modeltime = scenario->getModeltime();
@@ -120,8 +121,8 @@ void AccumulatedGrade::initCalc( const string& aRegionName, const string& aResou
 * \param aResourceName Resource name.
 * \param aPeriod Model period.
 */
-void AccumulatedGrade::postCalc( const string& aRegionName,
-                                 const string& aResourceName,
+void AccumulatedGrade::postCalc( const gcamstr& aRegionName,
+                                 const gcamstr& aResourceName,
                                  const int aPeriod )
 {
 }

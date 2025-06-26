@@ -59,12 +59,13 @@ void PlainTextLogger::open( const char[] ){
         mFileName = "log.txt";
     }
 
-    mLogFile.open( mFileName.c_str(), ios::out );
+    mLogFile.open( mFileName.get().c_str(), ios::out );
 
     // Print the header message
     if( !mHeaderMessage.empty() ){
-        parseHeader( mHeaderMessage );
-        mLogFile << mHeaderMessage << endl << endl;
+        string currHeader = mHeaderMessage;
+        parseHeader( currHeader );
+        mLogFile << currHeader << endl << endl;
     }
 }
 

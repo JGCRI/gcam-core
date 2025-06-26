@@ -93,7 +93,7 @@ bool RESSecondaryOutput::isSameType( const string& aType ) const
 }
 
 void RESSecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
-                                        const string& aRegionName,
+                                        const gcamstr& aRegionName,
                                         ICaptureComponent* aCaptureComponent,
                                         const int aPeriod )
 {

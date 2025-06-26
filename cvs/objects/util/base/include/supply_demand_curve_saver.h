@@ -74,7 +74,7 @@ public:
     static const std::string& getXMLNameStatic();
     
     // INamed methods
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
      
     // IModelFeedbackCalc methods
     virtual void calcFeedbacksBeforePeriod( Scenario* aScenario,
@@ -87,7 +87,7 @@ public:
 
 protected:
     //! The name of this feedback
-    std::string mName;
+    gcamstr mName;
     
     //! A flag indicating if a user wanted the mPrices to be relative to the 
     //! the solved price for the configured market in each model period.

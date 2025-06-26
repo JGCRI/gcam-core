@@ -72,6 +72,12 @@
 #include <tbb/tick_count.h>
 #endif
 
+#if DEBUG_STATE
+#include "containers/include/analyze_str.hpp"
+#include "containers/include/analyze_tech_mem.hpp"
+#include "containers/include/analyze_container.hpp"
+#endif
+
 using namespace std;
 using namespace boost;
 
@@ -97,6 +103,12 @@ Scenario::~Scenario() {
     delete mWorld;
     delete mSolutionInfoParamParser;
     delete mManageStateVars;
+    for(auto feedback : mModelFeedbacks) {
+        delete feedback;
+    }
+    mModelFeedbacks.clear();
+    // shared_ptr will handle actual release of memory for the solvers
+    mSolvers.clear();
     // model time is really a singleton and so don't
     // try to delete it
 }
@@ -203,6 +215,12 @@ void Scenario::setName( string newName ) {
 
 //! Finish all initializations needed before the model can run.
 void Scenario::completeInit() {
+#if DEBUG_STATE
+    // add memory related diagnostic reports
+    mModelFeedbacks.push_back(new AnalyzeStr);
+    mModelFeedbacks.push_back(new AnalyzeTechMem);
+    mModelFeedbacks.push_back(new AnalyzeContainer);
+#endif
     // Make sure that some name is set.
     if( mName.empty() ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
@@ -236,7 +254,7 @@ void Scenario::completeInit() {
 }
 
 //! Return scenario name.
-const string& Scenario::getName() const {
+const gcamstr& Scenario::getName() const {
     return mName;
 }
 

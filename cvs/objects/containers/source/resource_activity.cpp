@@ -51,7 +51,7 @@ using namespace std;
 
 extern Scenario* scenario;
 
-ResourceActivity::ResourceActivity( AResource* aResource, const string& aRegionName ):
+ResourceActivity::ResourceActivity( AResource* aResource, const gcamstr& aRegionName ):
 mResource( aResource ),
 mRegionName( aRegionName )
 {
@@ -72,5 +72,5 @@ void ResourceActivity::calc( const int aPeriod ) {
 }
 
 string ResourceActivity::getDescription() const {
-    return mRegionName + " " + mResource->getName();
+    return mRegionName.get() + " " + mResource->getName().get();
 }

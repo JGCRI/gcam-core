@@ -83,7 +83,7 @@ mMaxTax( 4999 )
 PolicyTargetRunner::~PolicyTargetRunner(){
 }
 
-const string& PolicyTargetRunner::getName() const {
+const gcamstr& PolicyTargetRunner::getName() const {
     return mName;
 }
 
@@ -216,7 +216,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     }
 
     // Create the target object.
-    unique_ptr<ITarget> policyTarget = TargetFactory::create( mTargetType + "-target",
+    unique_ptr<ITarget> policyTarget = TargetFactory::create( mTargetType.get() + "-target",
         getInternalScenario()->getClimateModel(), mTargetValue, mFirstTaxYear );
     // Make sure we have a know target
     if( !policyTarget.get() ) {

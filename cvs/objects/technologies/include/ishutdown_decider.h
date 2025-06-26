@@ -112,8 +112,8 @@ public:
      * \return The fraction of capital or output to operate.
      */
     virtual double calcShutdownCoef( const double aCalculatedProfitRate,
-                                     const std::string& aRegionName,
-                                     const std::string& aSectorName,
+                                     const gcamstr& aRegionName,
+                                     const gcamstr& aSectorName,
                                      const int aInitialTechYear,
                                      const int aPeriod ) const = 0;
     

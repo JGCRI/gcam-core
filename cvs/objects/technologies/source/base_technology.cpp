@@ -136,10 +136,10 @@ void BaseTechnology::copyParam( const BaseTechnology* baseTechIn,
     
     // For each Ghg check if it exists in the current technology.
     for ( CGHGIterator ghg = baseTechIn->mGhgs.begin(); ghg != baseTechIn->mGhgs.end(); ++ghg ) {
-        if( !util::hasValue( mGhgNameMap, (*ghg)->getName() ) ){
+        if( !util::hasValue( mGhgNameMap, (*ghg)->getName().get() ) ){
             mGhgs.push_back( (*ghg)->clone() );
             // Add it to the map.
-            mGhgNameMap[ (*ghg)->getName() ] = static_cast<int>( mGhgs.size() ) - 1;
+            mGhgNameMap[ (*ghg)->getName().get() ] = static_cast<int>( mGhgs.size() ) - 1;
         }
         // It already exists, we need to copy into.
         // For now just leave the current one. It should already be in the map since it was parsed.
@@ -181,9 +181,9 @@ void BaseTechnology::toDebugXML( const int period, ostream& out, Tabs* tabs ) co
 }
 
 //! Complete the initialization of the BaseTechnology object.
-void BaseTechnology::completeInit( const string& aRegionName,
-                                   const string& aSectorName,
-                                   const string& aSubsectorName )
+void BaseTechnology::completeInit( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
+                                   const gcamstr& aSubsectorName )
 {
     const Modeltime* modeltime = scenario->getModeltime();
     const int initialYear = max( modeltime->getStartYear(), year );
@@ -208,8 +208,8 @@ void BaseTechnology::completeInit( const string& aRegionName,
 
 }
 
-void BaseTechnology::initCalc( const string& aRegionName,
-                               const string& aSectorName, NationalAccount& nationalAccount,
+void BaseTechnology::initCalc( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName, NationalAccount& nationalAccount,
                                const Demographic* aDemographics, const double aCapitalStock, const int aPeriod )
 {
     for( CGHGIterator ghg = mGhgs.begin(); ghg != mGhgs.end(); ++ghg ){
@@ -257,7 +257,7 @@ void BaseTechnology::removeEmptyInputs(){
 }
 
 //! get technology name
-const string& BaseTechnology::getName() const {
+const gcamstr& BaseTechnology::getName() const {
     return name;
 }
 
@@ -288,8 +288,8 @@ double BaseTechnology::getOutput( const int aPeriod ) const {
 * \param aPeriod The period for which to calculate expected price paid.
 * \author Sonny Kim
 */
-void BaseTechnology::calcPricePaid( const string& aRegionName,
-                                    const string& aSectorName, const int aPeriod, const int aLifetimeYears ) const
+void BaseTechnology::calcPricePaid( const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName, const int aPeriod, const int aLifetimeYears ) const
 {
     // the leaves must calculate their price paid first, then the nesting structure can calculate
     // node prices through the calcLevelizedCost method
@@ -304,7 +304,7 @@ void BaseTechnology::calcPricePaid( const string& aRegionName,
     }
 }
 
-void BaseTechnology::updateMarketplace( const string& sectorName, const string& regionName, const int period ) {
+void BaseTechnology::updateMarketplace( const gcamstr& sectorName, const gcamstr& aRegionName, const int period ) {
     // need to create the list here so that marketplaces get set up correctly
     // TODO: I could just create an updateMarketplace in the node input
     mLeafInputs = FunctionUtils::getLeafInputs( mNestedInputRoot );

@@ -56,7 +56,7 @@ class IInfo;
 */
 class InfoFactory {
 public:
-    static IInfo* constructInfo( const IInfo* aParent, const std::string& aOwnerName );
+    static IInfo* constructInfo( const IInfo* aParent, const gcamstr& aOwnerName );
 };
 
 #endif // _INFO_FACTORY_H_

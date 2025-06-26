@@ -76,20 +76,20 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
     
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     
-    virtual void completeInit( const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aRegionName,
                                const IInfo* aRegionInfo );
 
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const Demographic* aDemographics,
                            const int aPeriod );
 
-    virtual void setFinalDemand( const std::string& aRegionName,
+    virtual void setFinalDemand( const gcamstr& aRegionName,
                                  const Demographic* aDemographics,
                                  const int aPeriod );
 
-    virtual double getWeightedEnergyPrice( const std::string& aRegionName,
+    virtual double getWeightedEnergyPrice( const gcamstr& aRegionName,
                                            const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
@@ -102,7 +102,7 @@ protected:
         // TODO: Remove this function once construction is cleanly implemented.
         virtual bool isPerCapitaBased() const = 0;
 
-        virtual double calcDemand( const std::string& aRegionName,
+        virtual double calcDemand( const gcamstr& aRegionName,
                                    const Demographic* aDemographics,
                                    const double aPriceElasticity,
                                    const double aIncomeElasticity,
@@ -116,7 +116,7 @@ protected:
             return true;
         }
 
-        virtual double calcDemand( const std::string& aRegionName,
+        virtual double calcDemand( const gcamstr& aRegionName,
                                    const Demographic* aDemographics,
                                    const double aPriceElasticity,
                                    const double aIncomeElasticity,
@@ -130,7 +130,7 @@ protected:
             return false;
         }
 
-        virtual double calcDemand( const std::string& aRegionName,
+        virtual double calcDemand( const gcamstr& aRegionName,
                                    const Demographic* aDemographics,
                                    const double aPriceElasticity,
                                    const double aIncomeElasticity,
@@ -149,12 +149,12 @@ protected:
 
         FinalEnergyConsumer();
 
-        void completeInit( const std::string& aRegionName,
-                           const std::string& aFinalDemandName );
+        void completeInit( const gcamstr& aRegionName,
+                           const gcamstr& aFinalDemandName );
 
         double getCalibratedFinalEnergy( const int aPeriod ) const;
 
-        void updateAEEI( const std::string& aRegionName,
+        void updateAEEI( const gcamstr& aRegionName,
                          const int aPeriod );
 
         double calcTechChange( const int aPeriod ) const;
@@ -168,7 +168,7 @@ protected:
             DEFINE_SUBCLASS_FAMILY( FinalEnergyConsumer ),
             
             //! Name of the TFE market.
-            DEFINE_VARIABLE( SIMPLE, "market-name", mTFEMarketName, std::string ),
+            DEFINE_VARIABLE( SIMPLE, "market-name", mTFEMarketName, gcamstr ),
                     
             //! Autonomous end-use energy intensity parameter.
             DEFINE_VARIABLE( ARRAY, "aeei", mAEEI, objects::PeriodVector<Value> ),
@@ -184,7 +184,7 @@ protected:
         AFinalDemand,
     
         //! Name of the final demand and the good it consumes.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
                             
         DEFINE_VARIABLE( SIMPLE, "perCapitaBased", mIsPerCapBased, bool ),
         
@@ -210,11 +210,11 @@ protected:
     //! Demand function used to calculate unscaled demand.
     std::unique_ptr<IDemandFunction> mDemandFunction;
     
-    virtual double calcFinalDemand( const std::string& aRegionName,
+    virtual double calcFinalDemand( const gcamstr& aRegionName,
                                     const Demographic* aDemographics,
                                     const int aPeriod );
 
-    virtual double calcMacroScaler( const std::string& aRegionName,
+    virtual double calcMacroScaler( const gcamstr& aRegionName,
                                     const Demographic* aDemographics,
                                     const int aPeriod ) const;
 

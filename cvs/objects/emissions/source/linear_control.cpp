@@ -127,7 +127,7 @@ void LinearControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* a
 }
 
 
-void LinearControl::completeInit( const string& aRegionName, const string& aSectorName,
+void LinearControl::completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                const IInfo* aTechInfo )
 {
 
@@ -140,7 +140,7 @@ void LinearControl::completeInit( const string& aRegionName, const string& aSect
 
 }
 
-void LinearControl::initCalc( const string& aRegionName,
+void LinearControl::initCalc( const gcamstr& aRegionName,
                            const IInfo* aTechInfo,
                            const NonCO2Emissions* aParentGHG,
                            const int aPeriod )
@@ -201,7 +201,7 @@ void LinearControl::initCalc( const string& aRegionName,
     // Electricity inputs, for example, should never be associated with non-CO2 emissions.
 }
 
-double LinearControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod )
+double LinearControl::calcEmissionsReduction( const gcamstr& aRegionName, const int aPeriod )
 {
     // The actual work of calculating the reduction is done by the call to calcEmissionsReductionInternal
     // which is called during initCalc since the reduction will not be changing during World.calc.

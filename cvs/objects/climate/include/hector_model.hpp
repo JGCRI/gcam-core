@@ -114,7 +114,7 @@ protected:
         IClimateModel,
 
         //! A map of the gases Magicc can report out.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "output-gas-name-map", mOutputGasNameMap, std::map<std::string,int> ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "output-gas-name-map", mOutputGasNameMap, std::map<gcamstr,int> ),
         
         //! Last year to record year-by-year climate
         DEFINE_VARIABLE( SIMPLE, "hector-end-year", mHectorEndYear, int ),
@@ -126,7 +126,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "last-calc-year", mLastYear, int ),
 
         //! Hector initialization file
-        DEFINE_VARIABLE( SIMPLE, "hector-ini-file", mHectorIniFile, std::string )
+        DEFINE_VARIABLE( SIMPLE, "hector-ini-file", mHectorIniFile, gcamstr )
     )
 
 private:

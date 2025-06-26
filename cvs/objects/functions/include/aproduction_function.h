@@ -63,53 +63,53 @@ class IInput;
 */
 class AProductionFunction: public IFunction {
 public:
-	virtual double calcDemand( InputSet& input, double consumption, const std::string& regionName,
-							   const std::string& sectorName, const double aShutdownCoef, int period,
+	virtual double calcDemand( InputSet& input, double consumption, const gcamstr& aRegionName,
+							   const gcamstr& sectorName, const double aShutdownCoef, int period,
 							   double capitalStock = 0, double alphaZero = 0, double sigma = 0,
 							   double IBT = 0, const IInput* aParentInput = 0 ) const = 0;
 
-	virtual double calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
-									const std::string& sectorName, int period, double sigma = 0, double IBT = 0,
+	virtual double calcCoefficient( InputSet& input, double consumption, const gcamstr& aRegionName,
+									const gcamstr& sectorName, int period, double sigma = 0, double IBT = 0,
 									double capitalStock = 0, const IInput* aParentInput = 0 ) const = 0;
 
-	virtual double changeElasticity( InputSet& input, const std::string& aRegionName,
+	virtual double changeElasticity( InputSet& input, const gcamstr& aRegionName,
 									 double priceReceived, double aProfits, double capitalStock,
 									 const int aPeriod, double alphaZero = 0, double sigmaNew = 0,
 									 double sigmaOld = 0 ) const = 0;
 	
-    virtual double calcOutput( InputSet& input, const std::string& regionName,
-							   const std::string& sectorName, const double aShutdownCoef,
+    virtual double calcOutput( InputSet& input, const gcamstr& aRegionName,
+							   const gcamstr& sectorName, const double aShutdownCoef,
 							   int period, double capitalStock = 0, double alphaZero = 0,
 							   double sigma = 0 ) const = 0;
 	
-    double calcProfits( InputSet& input, const std::string& regionName, const std::string& sectorName,
+    double calcProfits( InputSet& input, const gcamstr& aRegionName, const gcamstr& sectorName,
 						const double aShutdownCoef, int period, double capitalStock = 0, double alphaZero = 0,
 						double sigma = 0 ) const;
     
     virtual double calcCosts( const InputSet& aInputs,
-                              const std::string& aRegionName,
+                              const gcamstr& aRegionName,
                               const double aAlphaZero,
                               int aPeriod ) const;
 	
-	virtual double calcExpProfitRate( const InputSet& input, const std::string& regionName,
-									  const std::string& sectorName, double aLifeTimeYears, int period,
+	virtual double calcExpProfitRate( const InputSet& input, const gcamstr& aRegionName,
+									  const gcamstr& sectorName, double aLifeTimeYears, int period,
 									  double alphaZero = 0, double sigma = 0 ) const = 0;
     
-    virtual double getCapitalOutputRatio( const InputSet& aInputs, const std::string& aRegionName,
-										  const std::string& aSectorName, double aLifeTimeYears,
+    virtual double getCapitalOutputRatio( const InputSet& aInputs, const gcamstr& aRegionName,
+										  const gcamstr& aSectorName, double aLifeTimeYears,
 										  int aPeriod, double aAlphaZero, double aSigma ) const = 0;
     
-    virtual double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-									  const std::string& aSectorName, int aPeriod, double aAlphaZero = 0,
+    virtual double calcLevelizedCost( const InputSet& aInputs, const gcamstr& aRegionName,
+									  const gcamstr& aSectorName, int aPeriod, double aAlphaZero = 0,
 									  double aSigma = 0, const IInput* aParentInput = 0 ) const = 0;
 
     virtual double applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
-										 const std::string& regionName, const std::string& sectorName,
+										 const gcamstr& aRegionName, const gcamstr& sectorName,
 										 const int aPeriod, double alphaZero = 0, double sigma = 0 ) const = 0;
     
     virtual double calcUnscaledProfits( const InputSet& aInputs, 
-                                        const std::string& aRegionName,
-                                        const std::string& aSectorName,
+                                        const gcamstr& aRegionName,
+                                        const gcamstr& aSectorName,
                                         const int aPeriod,
                                         const double aCapitalStock,
                                         const double aAlphaZero,

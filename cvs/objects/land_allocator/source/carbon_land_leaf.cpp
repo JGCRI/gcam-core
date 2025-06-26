@@ -95,7 +95,7 @@ const string& CarbonLandLeaf::getXMLNameStatic() {
 * \param aRegionName Region.
 * \param aPeriod Period.
 */
-void CarbonLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
+void CarbonLandLeaf::setUnmanagedLandProfitRate( const gcamstr& aRegionName,
                                                     double aAverageProfitRate,
                                                     const int aPeriod )
 {
@@ -149,8 +149,8 @@ void CarbonLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
 * \param aProfitRate Profit rate
 * \param aPeriod Period.
 */
-void CarbonLandLeaf::setProfitRate( const string& aRegionName,
-                                 const string& aProductName,
+void CarbonLandLeaf::setProfitRate( const gcamstr& aRegionName,
+                                 const gcamstr& aProductName,
                                  const double aProfitRate,
                                  const int aPeriod )
 {

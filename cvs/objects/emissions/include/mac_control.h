@@ -68,11 +68,11 @@ public:
     
     bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const IInfo* aTechIInfo );
 
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const IInfo* aTechInfo,
                            const NonCO2Emissions* aParentGHG,
                            const int aPeriod );
@@ -83,7 +83,7 @@ protected:
     
     virtual void toDebugXMLDerived( const int aPeriod, std::ostream& aOut, Tabs* aTabs ) const;
 
-    virtual double calcEmissionsReduction( const std::string& aRegionName, const int aPeriod );
+    virtual double calcEmissionsReduction( const gcamstr& aRegionName, const int aPeriod );
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -109,7 +109,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "mac-price-conversion", mCovertPriceValue, Value ),
         
         //! Name of market who's price is used to look up the curve.
-        DEFINE_VARIABLE( SIMPLE, "market-name", mPriceMarketName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "market-name", mPriceMarketName, gcamstr )
     )
     
     //! Technology change, % improvement rate per year

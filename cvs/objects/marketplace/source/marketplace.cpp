@@ -134,7 +134,7 @@ void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
         // TODO: This isn't quite right. This should search the contained
         // region list.
         if( mMarkets[ i ]->getMarket( period )->getRegionName() == debugRegion ||
-            mMarkets[ i ]->getMarket( period )->getRegionName() == "global" )
+            mMarkets[ i ]->getMarket( period )->getRegionName() == gcamstr("global") )
         {
             mMarkets[ i ]->getMarket( period )->toDebugXML( period, out, tabs );
         }
@@ -149,23 +149,23 @@ void Marketplace::toDebugXML( const int period, ostream& out, Tabs* tabs ) const
 * This function first checks if a market exists for a given market name and good name. If it does, the function add the region 
 * to the contained regions of the market and add the region and good name to the regionToMarketMap, then finally returns false.
 * Otherwise, it creates a market of the specified type, add the region to the contained region list, and adds keys to the marketMap and regionToMarketMap.
-* The key to the marketMap is based on the marketName and goodName and the key to the regionToMarketMap is based on the regionName and goodName.
+* The key to the marketMap is based on the marketName and goodName and the key to the regionToMarketMap is based on the aRegionName and goodName.
 *
 * \todo A factory method should be used so all market classes don't have to be included by this class. 
 * \warning There is an important distinction here between the region name vs the market name. The key to the market is the goodName + market name.
-* \param regionName The region of the sector for which to create a market.
-* \param marketName The market region for which to create a market. This varies from the regionName, it can be global, a multi-region market, or the same as the region name.
+* \param aRegionName The region of the sector for which to create a market.
+* \param marketName The market region for which to create a market. This varies from the aRegionName, it can be global, a multi-region market, or the same as the region name.
 * \param goodName The good for which to create a market.
 * \param aType The type of market to create.
 * \return Whether a market was created.
 */
-bool Marketplace::createMarket( const string& regionName, const string& marketName, const string& goodName, const IMarketType::Type aType ) {
+bool Marketplace::createMarket( const gcamstr& aRegionName, const gcamstr& marketName, const gcamstr& goodName, const IMarketType::Type aType ) {
     /*! \pre Region name, market name, and sector name must be non null. */
-    assert( !regionName.empty() && !marketName.empty() && !goodName.empty() );
+    assert( !aRegionName.empty() && !marketName.empty() && !goodName.empty() );
 
     // Create the index within the market locator.
     const int uniqueNumber = static_cast<int>( mMarkets.size() );
-    int marketNumber = mMarketLocator->addMarket( marketName, regionName, goodName, uniqueNumber );
+    int marketNumber = mMarketLocator->addMarket( marketName, aRegionName, goodName, uniqueNumber );
 
     // If the market number is the unique number we passed it, the market did not already exist and 
     // we should create the market objects, one per period.
@@ -175,28 +175,28 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
     }
 
     // Add the region onto the market.
-    mMarkets[ marketNumber ]->addRegion( regionName );
+    mMarkets[ marketNumber ]->addRegion( aRegionName );
     // Return whether we were required to create a new market.
     return isNewMarket;
 }
 
 /*!
  * \brief Create a market that links to another market.
- * \details This function creates a market using the same symatics as createMarket
+ * \details This function creates a market using the same semantics as createMarket
  *          however differs in two key ways:
  *          - The market type is always LinkedMarket and the parameter linkedMarket along
- *            with the regionName will be used to look up the good to link to.
+ *            with the aRegionName will be used to look up the good to link to.
  *          - We allow these types of markets to change over time.  That is if the aStartPeriod
  *            parameter is set (non negative value) then this call may potentially override a
  *            previously set market with one that links elsewhere.
  *          Please see LinkedMarket for details on what it means for a market to link to
  *          another market.
- * \param regionName The region of the policy for which to create a market.
+ * \param aRegionName The region of the policy for which to create a market.
  * \param marketName The market region for which to create a market. This varies from the
- *                   regionName, it can be global, a multi-region market, or the same as
+ *                   aRegionName, it can be global, a multi-region market, or the same as
  *                   the region name.
  * \param goodName The good for which to create a market.
- * \param linkedGoodName The good which in conjunction with regionName will be used to lookup
+ * \param linkedGoodName The good which in conjunction with aRegionName will be used to lookup
  *                       which market is linked to.
  * \param aStartPeriod If a non-negative value is the period in which a linked market may
  *                     override a previously set market to effectively switch markets over time.
@@ -206,39 +206,39 @@ bool Marketplace::createMarket( const string& regionName, const string& marketNa
  *       with gaps, then by default those periods will link to no market.  Such that calls
  *       getPrice will return NO_MARKET_PRICE and calls to addToDemand will do nothing.
  */
-bool Marketplace::createLinkedMarket( const string& regionName, const string& marketName,
-                                      const string& goodName, const string& linkedGoodName,
+bool Marketplace::createLinkedMarket( const gcamstr& aRegionName, const gcamstr& marketName,
+                                      const gcamstr& goodName, const gcamstr& linkedGoodName,
                                       const int aStartPeriod )
 {
     /*! \pre Region name, market name, sector name, and linked good name must be non null. */
-    assert( !regionName.empty() && !marketName.empty() && !goodName.empty() && !linkedGoodName.empty() );
+    assert( !aRegionName.empty() && !marketName.empty() && !goodName.empty() && !linkedGoodName.empty() );
 
     /*!
      * \warning Changing marketName and changing a market over time may have unintended consequences
-     *          instead we reccommend using regional markets when a user wants to change the linked
+     *          instead we recommend using regional markets when a user wants to change the linked
      *          market over time.
      */
-    if( aStartPeriod != -1 && regionName != marketName ) {
+    if( aStartPeriod != -1 && aRegionName != marketName ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Changing regional markets and linking to different markets over time is not reccommend." << endl;
+        mainLog << "Changing regional markets and linking to different markets over time is not recommended." << endl;
         mainLog << "A safer approach would be to use regional markets in this use case." << endl;
     }
 
     // Create the index within the market locator.
     const int uniqueNumber = static_cast<int>( mMarkets.size() );
-    int marketNumber = mMarketLocator->addMarket( marketName, regionName, goodName, uniqueNumber );
+    int marketNumber = mMarketLocator->addMarket( marketName, aRegionName, goodName, uniqueNumber );
     
     // If the market number is the unique number we passed it, the market did not already exist and 
     // we should create the market objects, one per period.
     const bool isNewMarket = ( marketNumber == uniqueNumber );
 
     // Find the market to link to.
-    const int linkedMarketNumber = mMarketLocator->getMarketNumber( regionName, linkedGoodName );
+    const int linkedMarketNumber = mMarketLocator->getMarketNumber( aRegionName, linkedGoodName );
     if( linkedMarketNumber == MarketLocator::MARKET_NOT_FOUND ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::WARNING );
-        mainLog << "Linked market "<< goodName << " in " << regionName << " could not be linked to " << linkedGoodName << endl;
+        mainLog << "Linked market "<< goodName << " in " << aRegionName << " could not be linked to " << linkedGoodName << endl;
     }
     // We check if the default value for start year is found (-1).  If this is a new market then
     // we assume the user wanted to link for all period.  Otherwise we must assume this linked policy
@@ -253,7 +253,7 @@ bool Marketplace::createLinkedMarket( const string& regionName, const string& ma
     }
     
     // Add the region onto the market.
-    mMarkets[ marketNumber ]->addRegion( regionName );
+    mMarkets[ marketNumber ]->addRegion( aRegionName );
     
     // Return whether we were required to create a new market.
     return isNewMarket;
@@ -295,18 +295,20 @@ int Marketplace::resetToPriceMarket( const int aMarketNumber ) {
     }
     else {
         // Setup the corresponding demand markets
-        string marketName = mMarkets[ aMarketNumber ]->getRegionName();
-        string goodName = mMarkets[ aMarketNumber ]->getGoodName();
-        string demandGoodName = goodName + "Demand_int";
-        string regionName = mMarkets[ aMarketNumber ]->getRegionName();
-        createMarket( regionName, marketName, demandGoodName, IMarketType::DEMAND );
+        gcamstr marketName = mMarkets[ aMarketNumber ]->getRegionName();
+        gcamstr goodName = mMarkets[ aMarketNumber ]->getGoodName();
+        gcamstr demandGoodName(goodName.get() + "Demand_int");
+        gcamstr aRegionName = mMarkets[ aMarketNumber ]->getRegionName();
+        createMarket( aRegionName, marketName, demandGoodName, IMarketType::DEMAND );
         // Add units of the corresponding NORMAL market to the DEMAND market info object.
-        IInfo* marketInfoFrom = getMarketInfo( goodName, regionName, 0, true );
-        IInfo* marketInfo = getMarketInfo( demandGoodName, regionName, 0, true );
-        marketInfo->setString( "price-unit", marketInfoFrom->getString( "price-unit", true ) );
-        marketInfo->setString( "output-unit", marketInfoFrom->getString( "output-unit", true ) );
+        IInfo* marketInfoFrom = getMarketInfo( goodName, aRegionName, 0, true );
+        IInfo* marketInfo = getMarketInfo( demandGoodName, aRegionName, 0, true );
+        gcamstr priceUnitKey("price-unit");
+        gcamstr outputUnitKey("output-unit");
+        marketInfo->setString( priceUnitKey, marketInfoFrom->getString( priceUnitKey, true ) );
+        marketInfo->setString( outputUnitKey, marketInfoFrom->getString( outputUnitKey, true ) );
 
-        int demandMarketNumber = mMarketLocator->getMarketNumber( regionName, demandGoodName );
+        int demandMarketNumber = mMarketLocator->getMarketNumber( aRegionName, demandGoodName );
         assert( demandMarketNumber != MarketLocator::MARKET_NOT_FOUND );
         mMarkets[ aMarketNumber ]->resetToPriceMarket( mMarkets[ demandMarketNumber ] );
         return demandMarketNumber;
@@ -321,18 +323,18 @@ int Marketplace::resetToPriceMarket( const int aMarketNumber ) {
 *
 * \author Josh Lurz
 * \param goodName The goodName of the market for which to set new prices.
-* \param regionName The regionName to use for the lookup to determine the correct market.
+* \param aRegionName The aRegionName to use for the lookup to determine the correct market.
 * \param prices A vector containing prices to set into the market. 
 */
-void Marketplace::setPriceVector( const string& goodName, const string& regionName,
+void Marketplace::setPriceVector( const gcamstr& goodName, const gcamstr& aRegionName,
                                  const objects::PeriodVector<Value>& prices ){
     // determine what market the region and good are in.
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
     if( marketNumber == MarketLocator::MARKET_NOT_FOUND ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Market price vector cannot be set the market does not exist: " 
-            << goodName << " " << regionName << endl;
+            << goodName << " " << aRegionName << endl;
     }
     else {
         for( unsigned int i = 0; i < mMarkets[ marketNumber ]->size() && i < prices.size(); i++ ){
@@ -370,11 +372,11 @@ void Marketplace::initPrices(){
 * solution mechanism, except for cases where the market does not pass certain other criteria 
 * related to singularities. If this flag is set to false, as is the default, the market will never be solved. 
 * \param goodName The name of the good of the market.
-* \param regionName The region name of the market.
+* \param aRegionName The region name of the market.
 * \param per The period for which the market should be solved.
 */
-void Marketplace::setMarketToSolve ( const string& goodName, const string& regionName, const int per ) {
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+void Marketplace::setMarketToSolve ( const gcamstr& goodName, const gcamstr& aRegionName, const int per ) {
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
 
     // If the market exists.
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
@@ -384,7 +386,7 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Market cannot be set to solve as it does not exist: " << goodName << " " 
-            << regionName << endl;
+            << aRegionName << endl;
     }
 }
 
@@ -397,12 +399,12 @@ void Marketplace::setMarketToSolve ( const string& goodName, const string& regio
 * same time. 
 * \todo This function is only used in one place.
 * \param goodName The name of the good of the market.
-* \param regionName The region name of the market.
+* \param aRegionName The region name of the market.
 * \param per The period for which the market should not be solved.
 */
-void Marketplace::unsetMarketToSolve ( const string& goodName, const string& regionName, const int per ) {
+void Marketplace::unsetMarketToSolve ( const gcamstr& goodName, const gcamstr& aRegionName, const int per ) {
 
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
 
     // If the market exists.
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
@@ -414,7 +416,7 @@ void Marketplace::unsetMarketToSolve ( const string& goodName, const string& reg
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Market cannot be unset not to solve as it does not exist: " << goodName << " " 
-            << regionName << endl;
+            << aRegionName << endl;
     }
 }
 
@@ -484,12 +486,12 @@ void Marketplace::assignMarketSerialNumbers( int aPeriod )
 * the market.
 *
 * \param goodName The good of the market.
-* \param regionName The region setting the price.
+* \param aRegionName The region setting the price.
 * \param value The value to which to set price.
 * \param per The period in which to set the price.
 * \param aMustExist Whether it is an error for the market not to exist.
 */
-void Marketplace::setPrice( const string& goodName, const string& regionName, const double value,
+void Marketplace::setPrice( const gcamstr& goodName, const gcamstr& aRegionName, const double value,
                             const int per, bool aMustExist )
 {
     // Print a warning message if the new price is not a finite number.
@@ -500,7 +502,7 @@ void Marketplace::setPrice( const string& goodName, const string& regionName, co
         return;
     }
 
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         mMarkets[ marketNumber ]->getMarket( per )->setPrice( value );
     }
@@ -508,36 +510,36 @@ void Marketplace::setPrice( const string& goodName, const string& regionName, co
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Cannot set price for market as it does not exist: " << goodName << " " 
-            << regionName << endl;
+            << aRegionName << endl;
     }
 }
 
 /*! \brief Add to the supply for this market.
 *
-* This function increments the supply for a market determined by the goodName and regionName
+* This function increments the supply for a market determined by the goodName and aRegionName
 * by a given value. This function is used throughout the model to add supply to markets.
 * In order to add to supply a caller must provide a "state" backed Value class this is
-* due to when calculating partial derivatives we are interesed in adding the difference
+* due to when calculating partial derivatives we are interested in adding the difference
 * from the current value and the "base" value to supply.
 *
 * \param goodName Name of the good for which to add supply.
-* \param regionName Name of the region in which supply should be added for the market.
+* \param aRegionName Name of the region in which supply should be added for the market.
 * \param value Amount of supply to add.
 * \param per Period in which to add supply.
 * \param aMustExist Whether it is an error for the market not to exist.
 */
-void Marketplace::addToSupply( const string& goodName, const string& regionName, const Value& value,
+void Marketplace::addToSupply( const gcamstr& goodName, const gcamstr& aRegionName, const Value& value,
                                const int per, bool aMustExist )
 {
     // Print a warning message when adding infinity values to the supply.
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error adding to supply in marketplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
+        mainLog << "Error adding to supply in marketplace for: " << goodName << ", region: " << aRegionName << ", value: " << value << endl;
         return;
     }
 
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
 
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         mMarkets[ marketNumber ]->getMarket( per )->addToSupply( mIsDerivativeCalc ? value.getDiff() : value.get() );
@@ -546,36 +548,36 @@ void Marketplace::addToSupply( const string& goodName, const string& regionName,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Cannot add to supply for market as it does not exist: " << goodName << " " 
-            << regionName << endl;
+            << aRegionName << endl;
     }
 }
 
 /*! \brief Add to the demand for this market.
 *
-* This function increments the demand for a market determined by the goodName and regionName
+* This function increments the demand for a market determined by the goodName and aRegionName
 * by a given value. This function is used throughout the model to add demand to markets. 
 * In order to add to demand a caller must provide a "state" backed Value class this is
-* due to when calculating partial derivatives we are interesed in adding the difference
+* due to when calculating partial derivatives we are interested in adding the difference
 * from the current value and the "base" value to demand.
 *
 * \param goodName Name of the good for which to add demand.
-* \param regionName Name of the region in which demand should be added for the market.
+* \param aRegionName Name of the region in which demand should be added for the market.
 * \param value Amount of demand to add.
 * \param per Period in which to add demand.
 * \param aMustExist Whether it is an error for the market not to exist.
 */
-void Marketplace::addToDemand( const string& goodName, const string& regionName, const Value& value,
+void Marketplace::addToDemand( const gcamstr& goodName, const gcamstr& aRegionName, const Value& value,
                                const int per, bool aMustExist )
 {
     // Print a warning message when adding infinity values to the demand
     if ( !util::isValidNumber( value ) ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Error adding to demand in marketplace for: " << goodName << ", region: " << regionName << ", value: " << value << endl;
+        mainLog << "Error adding to demand in marketplace for: " << goodName << ", region: " << aRegionName << ", value: " << value << endl;
         return;
     }
 
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         mMarkets[ marketNumber ]->getMarket( per )->addToDemand( mIsDerivativeCalc ? value.getDiff() : value.get() );
     }
@@ -583,26 +585,26 @@ void Marketplace::addToDemand( const string& goodName, const string& regionName,
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Cannot add to demand for market as it does not exist: " << goodName << " " 
-            << regionName << endl;
+            << aRegionName << endl;
     }
 }
 
 /*! \brief Return the market price. 
 *
 * This function uses a market type dependent function to find the price for a market determined by
-* the goodName and regionName.  This price is not always the raw or true price. For non-existant
+* the goodName and aRegionName.  This price is not always the raw or true price. For non-existant
 * markets, this function returns a near infinite price, except for renewable
 * markets that do not exist, for which it returns 0.
 *
 * \param goodName The good for which a price is needed.
-* \param regionName The region for which a price is needed.
+* \param aRegionName The region for which a price is needed.
 * \param per The period to return the market price for.
 * \param aMustExist Whether it is an error for the market not to exist.
 * \return The market price.
 */  
-double Marketplace::getPrice( const string& goodName, const string& regionName, const int per,
+double Marketplace::getPrice( const gcamstr& goodName, const gcamstr& aRegionName, const int per,
                              bool aMustExist ) const {
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
     
     if( marketNumber != MarketLocator::MARKET_NOT_FOUND ){
         return mMarkets[ marketNumber ]->getMarket( per )->getPrice();
@@ -611,8 +613,8 @@ double Marketplace::getPrice( const string& goodName, const string& regionName, 
     if( aMustExist ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
-        mainLog << "Called for price of non-existant market " << goodName << " in region " 
-            << regionName << endl;
+        mainLog << "Called for price of non-existent market " << goodName << " in region "
+            << aRegionName << endl;
     }
     return NO_MARKET_PRICE;
 }
@@ -620,16 +622,16 @@ double Marketplace::getPrice( const string& goodName, const string& regionName, 
 /*! \brief Return the market supply. 
 *
 * This function uses a market type dependent function to find the supply for a market determined
-* by the goodName and regionName.  This supply is not always the raw or true supply.
-* For non-existant markets, this function returns 0.
+* by the goodName and aRegionName.  This supply is not always the raw or true supply.
+* For non-existent markets, this function returns 0.
 *
 * \param goodName The good for which a supply is needed.
-* \param regionName The region for which a supply is needed.
+* \param aRegionName The region for which a supply is needed.
 * \param per Period to get the supply for.
 * \return The market supply.
 */
-double Marketplace::getSupply( const string& goodName, const string& regionName, const int per ) const {
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+double Marketplace::getSupply( const gcamstr& goodName, const gcamstr& aRegionName, const int per ) const {
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
 
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         return mMarkets[ marketNumber ]->getMarket( per )->getSupply();
@@ -637,23 +639,23 @@ double Marketplace::getSupply( const string& goodName, const string& regionName,
 
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Called for supply of non-existant market " << goodName << " in " << regionName << endl;
+    mainLog << "Called for supply of non-existent market " << goodName << " in " << aRegionName << endl;
     return 0;
 }
 
 /*! \brief Return the market demand. 
 *
 * This function uses a market type dependent function to find the demand for a market determined
-* by the goodName and regionName.  This demand is not always the raw or true demand.
-* For non-existant markets, this function returns 0.
+* by the goodName and aRegionName.  This demand is not always the raw or true demand.
+* For non-existent markets, this function returns 0.
 *
 * \param goodName The good for which a demand is needed.
-* \param regionName The region for which a demand is needed.
+* \param aRegionName The region for which a demand is needed.
 * \param per The period to return the market demand for.
 * \return The market demand.
 */
-double Marketplace::getDemand(  const string& goodName, const string& regionName, const int per ) const {
-    const int marketNumber = mMarketLocator->getMarketNumber( regionName, goodName );
+double Marketplace::getDemand(  const gcamstr& goodName, const gcamstr& aRegionName, const int per ) const {
+    const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, goodName );
 
     if ( marketNumber != MarketLocator::MARKET_NOT_FOUND ) {
         return mMarkets[ marketNumber ]->getMarket( per )->getDemand();
@@ -661,7 +663,7 @@ double Marketplace::getDemand(  const string& goodName, const string& regionName
 
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::NOTICE );
-    mainLog << "Called for demand of non-existant market " << goodName << " in " << regionName << endl;
+    mainLog << "Called for demand of non-existent market " << goodName << " in " << aRegionName << endl;
     return 0;
 }
 
@@ -727,7 +729,7 @@ void Marketplace::init_to_last( const int period ) {
     }
 }
 
-/*! \brief Store market prices for policy cost caluclation.
+/*! \brief Store market prices for policy cost calculation.
 *
 *
 * \author Sonny Kim
@@ -741,7 +743,7 @@ void Marketplace::store_prices_for_cost_calculation()
     }
 }
 
-/*! \brief Restore market prices for policy cost caluclation.
+/*! \brief Restore market prices for policy cost calculation.
 *
 *
 * \author Sonny Kim
@@ -775,7 +777,7 @@ void Marketplace::restore_prices_for_cost_calculation()
 *       constant functions. A second version is available which returns a
 *       mutable pointer.
 */
-const IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegionName,
+const IInfo* Marketplace::getMarketInfo( const gcamstr& aGoodName, const gcamstr& aRegionName,
                                          const int aPeriod, const bool aMustExist ) const 
 {
     const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
@@ -818,7 +820,7 @@ const IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& 
 * \note This function returns a mutable pointer to the information object so it
 *       cannot be called from constant function.
 */
-IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegionName,
+IInfo* Marketplace::getMarketInfo( const gcamstr& aGoodName, const gcamstr& aRegionName,
                                    const int aPeriod, const bool aMustExist )
 {
     const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
@@ -854,7 +856,7 @@ IInfo* Marketplace::getMarketInfo( const string& aGoodName, const string& aRegio
  *         be a valid object regardless of if the market was not found.
  * \see CachedMarket
  */
-CachedMarket Marketplace::locateMarket( const string& aGoodName, const string& aRegionName ) const
+CachedMarket Marketplace::locateMarket( const gcamstr& aGoodName, const gcamstr& aRegionName ) const
 {
     const int marketNumber = mMarketLocator->getMarketNumber( aRegionName, aGoodName );
     CachedMarket locatedMarket( aGoodName, aRegionName,

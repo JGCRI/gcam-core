@@ -66,43 +66,43 @@ class IInput;
 */
 class NestedCESProductionFunction : public AProductionFunction {
 public:
-    double calcDemand( InputSet& input, double consumption, const std::string& regionName,
-                       const std::string& sectorName, const double aShutdownCoef, int period,
+    double calcDemand( InputSet& input, double consumption, const gcamstr& aRegionName,
+                       const gcamstr& sectorName, const double aShutdownCoef, int period,
                        double capitalStock = 0, double alphaZero = 0, double sigma = 0, double IBT = 0,
                        const IInput* aParentInput = 0 ) const;
     
-    double calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
-                            const std::string& sectorName, int period, double sigma = 0, double IBT = 0,
+    double calcCoefficient( InputSet& input, double consumption, const gcamstr& aRegionName,
+                            const gcamstr& sectorName, int period, double sigma = 0, double IBT = 0,
                             double capitalStock = 0,
                             const IInput* aParentInput = 0 ) const;
     
-    double changeElasticity( InputSet& input, const std::string& aRegionName, double priceReceived,
+    double changeElasticity( InputSet& input, const gcamstr& aRegionName, double priceReceived,
                              double aProfits, double capitalStock, const int aPeriod, double alphaZero = 0,
                              double sigmaNew = 0, double sigmaOld = 0 ) const;
     
-    double calcOutput( InputSet& input, const std::string& regionName,
-                       const std::string& sectorName, const double aShutdownCoef,
+    double calcOutput( InputSet& input, const gcamstr& aRegionName,
+                       const gcamstr& sectorName, const double aShutdownCoef,
                        int period, double capitalStock = 0, double alphaZero = 0, double sigma = 0 ) const;
     
-    double calcExpProfitRate( const InputSet& input, const std::string& regionName,
-                              const std::string& sectorName, double aLifeTimeYears, int period, double alphaZero = 0,
+    double calcExpProfitRate( const InputSet& input, const gcamstr& aRegionName,
+                              const gcamstr& sectorName, double aLifeTimeYears, int period, double alphaZero = 0,
                               double sigma = 0 ) const;
 
-    double calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                              const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+    double calcLevelizedCost( const InputSet& aInputs, const gcamstr& aRegionName,
+                              const gcamstr& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                               const IInput* aParentInput = 0 ) const;
 
-    double getCapitalOutputRatio( const InputSet& aInputs, const std::string& aRegionName,
-                                  const std::string& aSectorName, double aLifeTimeYears, int aPeriod,
+    double getCapitalOutputRatio( const InputSet& aInputs, const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName, double aLifeTimeYears, int aPeriod,
                                   double aAlphaZero, double aSigma ) const;
     
     double applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
-                                 const std::string& regionName,const std::string& sectorName, const int aPeriod, 
+                                 const gcamstr& aRegionName,const gcamstr& sectorName, const int aPeriod, 
                                  double alphaZero = 0, double sigma = 0 ) const;
     
     double calcUnscaledProfits( const InputSet& aInputs, 
-                                const std::string& aRegionName,
-                                const std::string& aSectorName,
+                                const gcamstr& aRegionName,
+                                const gcamstr& aSectorName,
                                 const int aPeriod,
                                 const double aCapitalStock,
                                 const double aAlphaZero,
@@ -111,7 +111,7 @@ private:
     double calcCapitalScaler( const InputSet& input, double aAlphaZero, double sigma,
                               double capitalStock, const int aPeriod ) const;
 
-    double calcIORatio( const InputSet::value_type aInput, const std::string& aRegionName, const int aPeriod,
+    double calcIORatio( const InputSet::value_type aInput, const gcamstr& aRegionName, const int aPeriod,
                                 const double aAlphaZero, const double aParentPrice, const double aSigma ) const;
 
     inline double pow1( double base, double exp ) const;

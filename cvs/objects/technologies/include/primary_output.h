@@ -74,7 +74,7 @@ public:
      * \brief Constructor
      * \param aSectorName Name of the sector and primary output.
      */
-    PrimaryOutput( const std::string& aSectorName );
+    PrimaryOutput( const gcamstr& aSectorName );
     
     PrimaryOutput();
     
@@ -84,7 +84,7 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     static const std::string& getXMLNameStatic();
     
@@ -96,27 +96,27 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
 
-    virtual void completeInit( const std::string& aSectorName,
-                               const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aSectorName,
+                               const gcamstr& aRegionName,
                                const IInfo* aTechInfo,
                                const bool aIsTechOperating );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
     virtual void scaleCoefficient( const double aScaler );
 
     virtual OutputList calcPhysicalOutput( const double aPrimaryOutput,
-                                           const std::string& aRegionName,
+                                           const gcamstr& aRegionName,
                                            const ICaptureComponent* aCaptureComponent,
                                            const int aPeriod ) const;
 
     virtual void setPhysicalOutput( const double aPrimaryOutput,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     ICaptureComponent* aCaptureComponent,
                                     const int aPeriod );
 
@@ -124,7 +124,7 @@ public:
 
     virtual void setCurrencyOutput( const double aPysicalOutput,
                                     const double aCurrencyConversionPrice,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod )
     {
         // TODO: This could work by converting from physical to currency with
@@ -138,20 +138,20 @@ public:
         return 0;
     }
 
-    virtual double getValue( const std::string& aRegionName,
+    virtual double getValue( const gcamstr& aRegionName,
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
     
-    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const;
 
-    virtual double getEmissionsPerOutput( const std::string& aGHGName,
+    virtual double getEmissionsPerOutput( const gcamstr& aGHGName,
                                           const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     // Documentation is inherited.
     virtual void sendLandAllocator( const ILandAllocator* aLandAllocator,
-                                   const std::string& aName ) {}
+                                   const gcamstr& aName ) {}
     
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IOutput* aPreviousInput,
@@ -168,7 +168,7 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! Name of the primary output. This is the same as the sector name.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! CO2 emissions coefficient cached from the marketplace.
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "co2-coef", mCachedCO2Coef, Value )

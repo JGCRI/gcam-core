@@ -65,14 +65,14 @@ public:
     // ISimpleComponent methods.
     virtual VintageProductionState* clone() const;
     virtual bool isSameType( const std::string& aType ) const;
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 	virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
 
     // IProductionState methods.
-    virtual double calcProduction( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    virtual double calcProduction( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const double aVariableOutput,
                                    const MarginalProfitCalculator* aMarginalProfitCalc,
                                    const double aFixedOutputScaleFactor,
@@ -112,8 +112,8 @@ protected:
      */
     VintageProductionState();
 
-    double calcShutdownCoefficient( const std::string& aRegionName,
-								    const std::string& aSectorName,
+    double calcShutdownCoefficient( const gcamstr& aRegionName,
+								    const gcamstr& aSectorName,
                                     const std::vector<IShutdownDecider*>& aShutdownDeciders,
                                     const MarginalProfitCalculator* aMarginalProfitCalc,
                                     const int aPeriod ) const;

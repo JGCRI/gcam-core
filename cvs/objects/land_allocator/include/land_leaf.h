@@ -69,7 +69,7 @@ class LandLeaf : public ALandAllocatorItem {
     friend class XMLDBOutputter;
 public:
     LandLeaf( const ALandAllocatorItem* aParent,
-              const std::string& aName );
+              const gcamstr& aName );
     
     LandLeaf();
 
@@ -86,49 +86,49 @@ public:
 
     virtual ALandAllocatorItem* getChildAt( const size_t aIndex );
 
-    virtual void completeInit( const std::string& aRegionName, 
+    virtual void completeInit( const gcamstr& aRegionName, 
                                const IInfo* aRegionInfo );
         
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
-    virtual void setInitShares( const std::string& aRegionName,
+    virtual void setInitShares( const gcamstr& aRegionName,
                                 const double aLandAllocationAbove,
                                 const int aPeriod );
 
-    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+    virtual void calculateNodeProfitRates( const gcamstr& aRegionName,
                                            const int aPeriod );
 
-	virtual void setProfitRate( const std::string& aRegionName,
-                                   const std::string& aProductName,
+	virtual void setProfitRate( const gcamstr& aRegionName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
 
     virtual void setSoilTimeScale( const int aTimeScale );
 
-    virtual double calcLandShares( const std::string& aRegionName,
+    virtual double calcLandShares( const gcamstr& aRegionName,
                                    IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
-    virtual void calcLandAllocation( const std::string& aRegionName,
+    virtual void calcLandAllocation( const gcamstr& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
 
-    virtual void calcLUCEmissions( const std::string& aRegionName,
+    virtual void calcLUCEmissions( const gcamstr& aRegionName,
                                    const int aPeriod, const int aEndYear,
                                    const bool aStoreFullEmiss );
 
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const;
 
     virtual double getCalLandAllocation( const LandAllocationType aType,
                                          const int aPeriod ) const;
     
-    virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
+    virtual void setUnmanagedLandProfitRate( const gcamstr& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
     
-    virtual void resetCalLandAllocation( const std::string& aRegionName,
+    virtual void resetCalLandAllocation( const gcamstr& aRegionName,
                                             double aNewLandAllocation,
                                             const int aPeriod );
     
@@ -178,27 +178,27 @@ protected:
         DEFINE_VARIABLE( ARRAY, "landAllocation", mReadinLandAllocation, objects::PeriodVector<Value> ),
                             
         //! Name of land constraint policy
-        DEFINE_VARIABLE( SIMPLE, "land-constraint-policy", mLandConstraintPolicy, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "land-constraint-policy", mLandConstraintPolicy, gcamstr ),
                             
         //! State value necessary to use Marketplace::addToDemand for CO2 emissions
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "luc-state", mLastCalcCO2Value, Value ),
 
         //! The name of a negative emissions policy which may scale back
         //! carbon subsidies if there isn't a budget to support it
-        DEFINE_VARIABLE( SIMPLE, "negative-emiss-market", mNegEmissMarketName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "negative-emiss-market", mNegEmissMarketName, gcamstr )
     )
 
-    double getCarbonSubsidy( const std::string& aRegionName,
+    double getCarbonSubsidy( const gcamstr& aRegionName,
                            const int aPeriod ) const;
     
-    double getLandConstraintCost( const std::string& aRegionName,
+    double getLandConstraintCost( const gcamstr& aRegionName,
                             const int aPeriod ) const;
 
     virtual void toDebugXMLDerived( const int aPeriod,
                                     std::ostream& aOut,
                                     Tabs* aTabs ) const;
 
-    virtual void initLandUseHistory( const std::string& aRegionName );
+    virtual void initLandUseHistory( const gcamstr& aRegionName );
 };
 
 #endif // _LAND_LEAF_H_

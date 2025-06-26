@@ -128,10 +128,10 @@ void CTaxInput::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void CTaxInput::completeInit( const string& aRegionName,
-                                 const string& aSectorName,
-                                 const string& aSubsectorName,
-                                 const string& aTechName,
+void CTaxInput::completeInit( const gcamstr& aRegionName,
+                                 const gcamstr& aSectorName,
+                                 const gcamstr& aSubsectorName,
+                                 const gcamstr& aTechName,
                                  const IInfo* aTechInfo )
 {
 
@@ -142,8 +142,8 @@ void CTaxInput::completeInit( const string& aRegionName,
                                                                       aRegionName );
 }
 
-void CTaxInput::initCalc( const string& aRegionName,
-                             const string& aSectorName,
+void CTaxInput::initCalc( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
                              const bool aIsNewInvestmentPeriod,
                              const bool aIsTrade,
                              const IInfo* aTechInfo,
@@ -158,7 +158,7 @@ void CTaxInput::copyParam( const IInput* aInput,
 {
 }
 
-double CTaxInput::getCO2EmissionsCoefficient( const string& aGHGName,
+double CTaxInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     // do not double account taxes on mFuelName
@@ -174,7 +174,7 @@ double CTaxInput::getCarbonContent( const int aPeriod ) const {
 }
 
 void CTaxInput::setPhysicalDemand( double aPhysicalDemand,
-                                     const string& aRegionName,
+                                     const gcamstr& aRegionName,
                                      const int aPeriod )
 {
     Marketplace* marketplace = scenario->getMarketplace();
@@ -203,7 +203,7 @@ void CTaxInput::setCoefficient( const double aCoefficient,
     // Do nothing.
 }
 
-double CTaxInput::getPrice( const string& aRegionName,
+double CTaxInput::getPrice( const gcamstr& aRegionName,
                               const int aPeriod ) const
 {
     // Constants
@@ -221,7 +221,7 @@ double CTaxInput::getPrice( const string& aRegionName,
         0.0 : taxFraction * ctax * mCachedCCoef / CVRT90 * CVRT_TG_MT;
 }
 
-void CTaxInput::setPrice( const string& aRegionName,
+void CTaxInput::setPrice( const gcamstr& aRegionName,
                             const double aPrice,
                             const int aPeriod )
 {

@@ -67,7 +67,7 @@ mAvgProdLifetime( 0 )
 ReserveSubResource::~ReserveSubResource() {
 }
 
-void ReserveSubResource::completeInit( const std::string& aRegionName, const std::string& aResourceName,
+void ReserveSubResource::completeInit( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                        const IInfo* aResourceInfo )
 {
     if( mAvgProdLifetime <= 0 ) {
@@ -110,7 +110,7 @@ const std::string& ReserveSubResource::getXMLNameStatic() {
 //! calculate annual supply
 /*! Takes into account short-term capacity limits.
 Note that cumulsupply() must be called before calling this function. */
-void ReserveSubResource::annualsupply( const string& aRegionName, const string& aResourceName,
+void ReserveSubResource::annualsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                        int aPeriod, double aPrice )
 {
     double prevCumul = aPeriod > 0 ? mCumulProd[ aPeriod - 1] : 0.0;

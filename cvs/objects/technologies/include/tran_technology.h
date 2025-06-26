@@ -64,31 +64,31 @@ public:
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
 
-    virtual void initCalc( const std::string& aRegionName,
-        const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+        const gcamstr& aSectorName,
         const IInfo* aSubsectorInfo,
         const Demographic* aDemographics,
         PreviousPeriodInfo& aPrevPeriodInfo,
         const int aPeriod );
 
-    virtual void production( const std::string& aRegionName,
-        const std::string& aSectorName, 
+    virtual void production( const gcamstr& aRegionName,
+        const gcamstr& aSectorName, 
         double aVariableDemand,
         double aFixedOutputScaleFactor,
         const int aPeriod );
 
-    virtual void calcCost( const std::string& aRegionName,
-        const std::string& aSectorName,
+    virtual void calcCost( const gcamstr& aRegionName,
+        const gcamstr& aSectorName,
         const int aPeriod );
 
-    virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
+    virtual double getTotalGHGCost( const gcamstr& aRegionName, const gcamstr& aSectorName, 
         const int aPeriod ) const;
 
-    virtual double calcSecondaryValue( const std::string& aRegionName,
+    virtual double calcSecondaryValue( const gcamstr& aRegionName,
         const int aPeriod ) const;
 
-    virtual double getEnergyCost( const std::string& aRegionName,
-        const std::string& aSectorName,
+    virtual double getEnergyCost( const gcamstr& aRegionName,
+        const gcamstr& aSectorName,
         const int aPeriod ) const;
 
     double getCalibrationOutput( const bool aHasRequiredInput,
@@ -111,17 +111,17 @@ protected:
     
     void copy( const TranTechnology& aOther );
 
-    double getTotalInputCost( const std::string& aRegionName,
-        const std::string& aSectorName,
+    double getTotalInputCost( const gcamstr& aRegionName,
+        const gcamstr& aSectorName,
         const int aPeriod ) const;
     
-    virtual double getCurrencyConversionPrice( const std::string& aRegionName,
-                                               const std::string& aSectorName,
+    virtual double getCurrencyConversionPrice( const gcamstr& aRegionName,
+                                               const gcamstr& aSectorName,
                                                const int aPeriod ) const;
 
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    double getNonEnergyCost( const std::string& aRegionName,
-        const std::string& aSectorName,
+    double getNonEnergyCost( const gcamstr& aRegionName,
+        const gcamstr& aSectorName,
         const int aPeriod ) const;
 };
 

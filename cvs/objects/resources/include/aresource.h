@@ -73,21 +73,21 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const = 0;
 
-    virtual const std::string& getName() const = 0;
+    virtual const gcamstr& getName() const = 0;
 
-    virtual void completeInit( const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aRegionName,
                                const IInfo* aRegionInfo ) = 0;
     
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const int aPeriod ) = 0;
 
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod ) = 0;
     
-    virtual void calcSupply( const std::string& aRegionName,
+    virtual void calcSupply( const gcamstr& aRegionName,
                              const int period ) = 0;
 
-    virtual double getAnnualProd( const std::string& aRegionName,
+    virtual double getAnnualProd( const gcamstr& aRegionName,
                                   const int aPeriod ) const = 0;
 
     virtual double getPrice( const int aPeriod ) const = 0;
@@ -106,19 +106,19 @@ protected:
                                 TrialValueResource ),
 
         //! Resource name.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Unit of resource output
-        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, gcamstr ),
 
         //! Unit of resource price
-        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, gcamstr ),
 
         //! Market name.
-        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, gcamstr ),
 
         //! A map of a keyword to its keyword group
-        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> )
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<gcamstr, gcamstr> )
     )
 };
 

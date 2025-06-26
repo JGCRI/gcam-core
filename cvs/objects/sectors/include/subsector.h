@@ -101,13 +101,13 @@ protected:
                                 NestingSubsector ),
 
         //! subsector name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! region name
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, gcamstr ),
 
         //! sector name
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "sector-name", mSectorName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "sector-name", mSectorName, gcamstr ),
 
         //! Subsector logit share weights
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "real-share-weight", mShareWeights, objects::PeriodVector<Value> ),
@@ -148,9 +148,9 @@ protected:
 public:
     Subsector();
     virtual ~Subsector();
-    const std::string& getName() const;
+    const gcamstr& getName() const;
     
-    virtual void setNames( const std::string& aRegionName, const std::string& aSectorName );
+    virtual void setNames( const gcamstr& aRegionName, const gcamstr& aSectorName );
     
     virtual const std::string& getXMLName() const;
    

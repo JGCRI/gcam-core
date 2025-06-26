@@ -94,11 +94,11 @@ const std::string& NationalAccountContainer::getXMLNameStatic() {
     return XML_NAME;
 }
 
-const string& NationalAccountContainer::getGDPMarketName() const {
+const gcamstr& NationalAccountContainer::getGDPMarketName() const {
     return mGDPMrkName;
 }
 
-const string& NationalAccountContainer::getGDPActivityName() const {
+const gcamstr& NationalAccountContainer::getGDPActivityName() const {
     return mGDPActName;
 }
 
@@ -112,7 +112,7 @@ void NationalAccountContainer::toDebugXML( const int period, ostream& out, Tabs*
 /*!
  * \brief Complete initializations for the national account
  */
-void NationalAccountContainer::completeInit( const string& aRegionName, const Demographic* aDemographics ) {
+void NationalAccountContainer::completeInit( const gcamstr& aRegionName, const Demographic* aDemographics ) {
     
     const Modeltime* modeltime = scenario->getModeltime();
     mRegionName = aRegionName;

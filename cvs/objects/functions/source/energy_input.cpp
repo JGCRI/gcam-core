@@ -138,9 +138,6 @@ EnergyInput::EnergyInput( const EnergyInput& aOther )
     mTechChange = aOther.mTechChange;
     mPriceUnitConversionFactor = aOther.mPriceUnitConversionFactor;
     
-    // copy keywords
-    mKeywordMap = aOther.mKeywordMap;
-    
     mMarketName = aOther.mMarketName;
 }
 
@@ -202,10 +199,10 @@ void EnergyInput::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void EnergyInput::completeInit( const string& aRegionName,
-                                const string& aSectorName,
-                                const string& aSubsectorName,
-                                const string& aTechName,
+void EnergyInput::completeInit( const gcamstr& aRegionName,
+                                const gcamstr& aSectorName,
+                                const gcamstr& aSubsectorName,
+                                const gcamstr& aTechName,
                                 const IInfo* aTechInfo )
 {
     if( mMarketName.empty() ) {
@@ -218,8 +215,8 @@ void EnergyInput::completeInit( const string& aRegionName,
     initializeTypeFlags();
 }
 
-void EnergyInput::initCalc( const string& aRegionName,
-                            const string& aSectorName,
+void EnergyInput::initCalc( const gcamstr& aRegionName,
+                            const gcamstr& aSectorName,
                             const bool aIsNewInvestmentPeriod,
                             const bool aIsTrade,
                             const IInfo* aTechInfo,
@@ -263,7 +260,7 @@ void EnergyInput::initializeTypeFlags() {
     mTypeFlags |= IInput::ENERGY;
 }
 
-const string& EnergyInput::getMarketName( const string& aRegionName ) const {
+const string& EnergyInput::getMarketName( const gcamstr& aRegionName ) const {
     return mMarketName;
 }
 
@@ -286,7 +283,7 @@ void EnergyInput::copyParamsInto( EnergyInput& aInput,
     }
 }
 
-double EnergyInput::getCO2EmissionsCoefficient( const string& aGHGName,
+double EnergyInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     // Check that the CO2 coefficient is initialized.
@@ -304,7 +301,7 @@ double EnergyInput::getCarbonContent( const int aPeriod ) const {
 }
 
 void EnergyInput::setPhysicalDemand( double aPhysicalDemand,
-                                     const string& aRegionName,
+                                     const gcamstr& aRegionName,
                                      const int aPeriod )
 {
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
@@ -330,14 +327,14 @@ void EnergyInput::setCoefficient( const double aCoefficient,
     mAdjustedCoefficients[ aPeriod ] = aCoefficient;
 }
 
-double EnergyInput::getPrice( const string& aRegionName,
+double EnergyInput::getPrice( const gcamstr& aRegionName,
                               const int aPeriod ) const
 {
     return mPriceUnitConversionFactor *
         mCachedMarket.getPrice( mName, mMarketName, aPeriod );
 }
 
-void EnergyInput::setPrice( const string& aRegionName,
+void EnergyInput::setPrice( const gcamstr& aRegionName,
                             const double aPrice,
                             const int aPeriod )
 {

@@ -97,7 +97,7 @@ const string& UnmanagedLandLeaf::getXMLNameStatic() {
 * \param aRegionName Region.
 * \param aPeriod Period.
 */
-void UnmanagedLandLeaf::setUnmanagedLandProfitRate( const string& aRegionName,
+void UnmanagedLandLeaf::setUnmanagedLandProfitRate( const gcamstr& aRegionName,
                                                     double aAverageProfitRate,
                                                     const int aPeriod )
 {
@@ -128,8 +128,8 @@ double UnmanagedLandLeaf::getCalLandAllocation( const LandAllocationType aType,
 * \param aProfitRate Profit rate
 * \param aPeriod Period.
 */
-void UnmanagedLandLeaf::setProfitRate( const string& aRegionName,
-                                 const string& aProductName,
+void UnmanagedLandLeaf::setProfitRate( const gcamstr& aRegionName,
+                                 const gcamstr& aProductName,
                                  const double aProfitRate,
                                  const int aPeriod )
 {

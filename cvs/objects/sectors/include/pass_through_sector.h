@@ -80,10 +80,10 @@ protected:
         
         //! The appropriate sector name for which's marginal revenue should be used
         //! when calculating fixed output.
-        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-sector", mMarginalRevenueSector, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-sector", mMarginalRevenueSector, gcamstr ),
         
         //! The market in which to find the marginal revenue sector.
-        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-market", mMarginalRevenueMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "marginal-revenue-market", mMarginalRevenueMarket, gcamstr ),
 
         //! State value used to set the fixed output to market.
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "last-calac-fixed-output", mLastCalcFixedOutput, Value )

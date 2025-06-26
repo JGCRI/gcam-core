@@ -71,10 +71,10 @@ NodeInput::~NodeInput() {
     }
 }
 
-void NodeInput::completeInit( const string& aRegionName,
-                             const string& aSectorName,
-                             const string& aSubsectorName,
-                             const string& aTechName,
+void NodeInput::completeInit( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
+                             const gcamstr& aSubsectorName,
+                             const gcamstr& aTechName,
                              const IInfo* aTechInfo)
 {
     // This is a hack to create the trial utility market when that is the function set
@@ -101,8 +101,8 @@ void NodeInput::completeInit( const string& aRegionName,
     }
 }
 
-void NodeInput::initCalc( const string& aRegionName,
-                         const string& aSectorName,
+void NodeInput::initCalc( const gcamstr& aRegionName,
+                         const gcamstr& aSectorName,
                          const bool aIsNewInvestmentPeriod,
                          const bool aIsTrade,
                          const IInfo* aTechInfo,
@@ -271,7 +271,7 @@ const string& NodeInput::getXMLNameStatic() {
 }
 
 //! Get the name of the NodeInput
-const string& NodeInput::getName() const {
+const gcamstr& NodeInput::getName() const {
     return mName;
 }
 
@@ -313,7 +313,7 @@ void NodeInput::initialize() {
     mNodeCurrencyDemand.init( valueSum );
 
     // should I create a isRoot()?
-    if( mName != "root" ) {
+    if( mName.get() != "root" ) {
         // note the use of init here implies do not overwrite an already read in value
         mPricePaid.init( 1.0 );
         // TODO: hack for consumers
@@ -321,7 +321,7 @@ void NodeInput::initialize() {
     }
 }
 
-void NodeInput::calcCoefficient( const std::string& aRegionName, const std::string& aSectorName,
+void NodeInput::calcCoefficient( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aTechPeriod )
 {
     // We need to create a vector which includes this input as the first element since the production
@@ -338,12 +338,12 @@ void NodeInput::calcCoefficient( const std::string& aRegionName, const std::stri
     // now have the production function calculate the coefficient for our direct children
     double retAlpha = mProdDmdFn->calcCoefficient( temp, 0, aRegionName, aSectorName, aTechPeriod, mCurrentSigma, 0, 0 );
     // TODO: check this
-    if( mName == "root" ) {
+    if( mName == gcamstr("root") ) {
         mAlphaCoef = retAlpha;
     }
 }
 
-void NodeInput::changeElasticity( const std::string& aRegionName, const int aPeriod, const double aAlphaZero ) {
+void NodeInput::changeElasticity( const gcamstr& aRegionName, const int aPeriod, const double aAlphaZero ) {
     // have children adjust their children's coefficients first
     for( NestedInputIterator it = mNestedInputs.begin(); it != mNestedInputs.end(); ++it ) {
         (*it)->changeElasticity( aRegionName, aPeriod, aAlphaZero );
@@ -356,12 +356,12 @@ void NodeInput::changeElasticity( const std::string& aRegionName, const int aPer
     // are the same
     mProdDmdFn->changeElasticity( mChildInputsCache, aRegionName, mBasePricePaid, 0, 0, aPeriod, aAlphaZero,
         mSigmaNewCapital, mSigmaOldCapital );
-    if( mName == "root" ) {
+    if( mName == gcamstr("root") ) {
         // set alpha zero to 1 as we have pulled the difference into the other alphas
         mAlphaCoef = 1.0;
     }
 }
-void NodeInput::changeSigma( const string& aRegionName, const int aPeriod,
+void NodeInput::changeSigma( const gcamstr& aRegionName, const int aPeriod,
         const double aAlphaZero )
 {
     // have children adjust their children's coefficients first
@@ -380,13 +380,13 @@ void NodeInput::changeSigma( const string& aRegionName, const int aPeriod,
 
     // set the current sigma to old capital
     mCurrentSigma = mSigmaNewCapital;
-    if( mName == "root" ) {
+    if( mName == gcamstr("root") ) {
         // set alpha zero to 1 as we have pulled the difference into the other alphas
         mAlphaCoef = 1.0;
     }
 }
 
-void NodeInput::calcLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+void NodeInput::calcLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero ) 
 {
     // have children calculate their levelized costs first
@@ -419,7 +419,7 @@ void NodeInput::resetCalcLevelizedCostFlag() {
 }
 
 
-double NodeInput::calcInputDemand( const std::string& aRegionName, const std::string& aSectorName,
+double NodeInput::calcInputDemand( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aPhysicalOutput, const double aUtilityParameterA,
         const double aAlphaZero )
 {
@@ -438,7 +438,7 @@ double NodeInput::calcInputDemand( const std::string& aRegionName, const std::st
     return retDemand;
 }
 
-double NodeInput::calcCapitalOutputRatio( const std::string& aRegionName, const std::string& aSectorName,
+double NodeInput::calcCapitalOutputRatio( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero ) {
     /*
     assert( hasCapitalInput() );
@@ -454,7 +454,7 @@ double NodeInput::calcCapitalOutputRatio( const std::string& aRegionName, const 
     return 0;
 }
 
-void NodeInput::calcVariableLevelizedCost(const std::string& aRegionName, const std::string& aSectorName,
+void NodeInput::calcVariableLevelizedCost(const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero ) 
 {
     // have children calculate their levelized costs first
@@ -479,7 +479,7 @@ void NodeInput::calcVariableLevelizedCost(const std::string& aRegionName, const 
     resetCalcLevelizedCostFlag();
 }
 
-void NodeInput::applyTechnicalChange( const std::string& aRegionName, const std::string& aSectorName,
+void NodeInput::applyTechnicalChange( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const TechChange& aTechChange )
 {
     // have children adjust their children's coefficients for tech chagne first
@@ -498,7 +498,7 @@ const IFunction* NodeInput::getFunction() const {
     return mProdDmdFn;
 }
 
-double NodeInput::getLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+double NodeInput::getLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod ) const
 {
     // this is not the best solution but since it must be const I have to calc seperatly
@@ -513,7 +513,7 @@ double NodeInput::getCurrencyDemand( const int aPeriod ) const {
 }
 
 void NodeInput::setCurrencyDemand( const double aCurrencyDemand,
-                                    const std::string& aRegionName, 
+                                    const gcamstr& aRegionName, 
                                     const int aPeriod ) {
     // setting a currency demand for a node makes no sense
     assert( false );
@@ -532,7 +532,7 @@ double NodeInput::getCarbonContent( const int aPeriod ) const {
 }
     
 void NodeInput::setPhysicalDemand( const double aPhysicalDemand,
-                                    const std::string& aRegionName, 
+                                    const gcamstr& aRegionName, 
                                     const int aPeriod )
 {
     // allowing this now so that calcInputDemand can be
@@ -541,13 +541,13 @@ void NodeInput::setPhysicalDemand( const double aPhysicalDemand,
     mNodeCurrencyDemand.set( aPhysicalDemand );
 }
 
-double NodeInput::getPrice( const std::string& aRegionName,
+double NodeInput::getPrice( const gcamstr& aRegionName,
                              const int aPeriod ) const
 {
     return mPricePaid;
 }
 
-void NodeInput::setPrice( const std::string& aRegionName,
+void NodeInput::setPrice( const gcamstr& aRegionName,
                            const double aPrice,
                            const int aPeriod )
 {
@@ -559,7 +559,7 @@ double NodeInput::getPriceAdjustment() const {
     return 0;
 }
 
-double NodeInput::getPricePaid( const std::string& aRegionName,
+double NodeInput::getPricePaid( const gcamstr& aRegionName,
                                  const int aPeriod ) const
 {
     return mPricePaid;
@@ -588,14 +588,14 @@ double NodeInput::getConversionFactor( const int aPeriod ) const {
     return 0;
 }
 
-double NodeInput::getCO2EmissionsCoefficient( const std::string& aGHGName,
+double NodeInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     // TODO:
     return 0;
 }
 
-void NodeInput::tabulateFixedQuantity( const std::string& aRegionName,
+void NodeInput::tabulateFixedQuantity( const gcamstr& aRegionName,
                                         const double aFixedOutput,
                                         const bool aIsInvestmentPeriod,
                                         const int aPeriod )

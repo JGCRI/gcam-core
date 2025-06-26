@@ -74,7 +74,7 @@ const string& SupplyDemandCurveSaver::getXMLNameStatic() {
   return XML_NAME;
 }
 
-const string& SupplyDemandCurveSaver::getName() const {
+const gcamstr& SupplyDemandCurveSaver::getName() const {
     return mName;
 }
 

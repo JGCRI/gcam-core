@@ -72,11 +72,11 @@ public:
                const std::string aMarket,
                const std::vector<double>& aFixedTaxes );
     virtual GHGPolicy* clone() const;
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void completeInit( const std::string& aRegionName );
+    virtual void completeInit( const gcamstr& aRegionName );
     virtual bool isApplicable( const std::string& aRegion ) const;
     virtual void setConstraint( const std::vector<double>& aConstraint );
 protected:
@@ -88,10 +88,10 @@ protected:
         DEFINE_SUBCLASS_FAMILY( GHGPolicy, PolicyPortfolioStandard, LinkedGHGPolicy ),
 
         //! GHG name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
                 
         //! Name of the market
-        DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "market", mMarket, gcamstr ),
                     
         //! Emissions constraint by year(tgC or MTC)
         DEFINE_VARIABLE( ARRAY, "constraint", mConstraint, objects::PeriodVector<Value> ),

@@ -87,36 +87,35 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
     
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName );
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName );
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
-                           const std::string& aFuelName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 
-    double getStorageCost( const std::string& aRegionName,
-                           const std::string& aGHGName,
+    double getStorageCost( const gcamstr& aRegionName,
+                           const gcamstr& aGHGName,
                            const int aPeriod ) const;
 
-    double getRemoveFraction( const std::string& aGHGName ) const;
+    double getRemoveFraction( const gcamstr& aGHGName ) const;
     
-    virtual double getSequesteredAmount( const std::string& aGHGName,
+    virtual double getSequesteredAmount( const gcamstr& aGHGName,
                                          const bool aGetGeologic,
                                          const int aPeriod ) const;
 
-    virtual double calcSequesteredAmount( const std::string& aRegionName,
-                                          const std::string& aGHGName,
+    virtual double calcSequesteredAmount( const gcamstr& aRegionName,
+                                          const gcamstr& aGHGName,
                                           const double aTotalEmissions,
                                           const int aPeriod );
 
-    virtual void adjustInputs( const std::string& aRegionName,
+    virtual void adjustInputs( const gcamstr& aRegionName,
                                std::vector<IInput*>& aInputs,
                                const int aPeriod ) const;
 protected:
@@ -131,7 +130,7 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "sequestered-amount", mSequesteredAmount, objects::TechVintageVector<Value> ),
 
         //! The name of the gas which will be sequestered.
-        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, gcamstr ),
 
         //! Fraction of carbon removed from the emissions stream.
         DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double )

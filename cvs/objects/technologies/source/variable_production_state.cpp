@@ -56,9 +56,10 @@ bool VariableProductionState::isSameType( const std::string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& VariableProductionState::getName() const {
+const gcamstr& VariableProductionState::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
     // Use the XML name as the name.
-    return getXMLNameStatic();
+    return NAME;
 }
 
 void VariableProductionState::toDebugXML( const int aPeriod,
@@ -74,8 +75,8 @@ const string& VariableProductionState::getXMLNameStatic() {
     return XML_NAME;
 }
 
-double VariableProductionState::calcProduction( const string& aRegionName,
-                                                const string& aSectorName,
+double VariableProductionState::calcProduction( const gcamstr& aRegionName,
+                                                const gcamstr& aSectorName,
                                                 const double aVariableOutput,
                                                 const MarginalProfitCalculator* aMarginalProfitCalc,
                                                 const double aFixedOutputScaleFactor,

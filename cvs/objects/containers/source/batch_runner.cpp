@@ -69,8 +69,9 @@ mInternalRunner( 0 ){
 BatchRunner::~BatchRunner(){
 }
 
-const string& BatchRunner::getName() const {
-    return getXMLNameStatic();
+const gcamstr& BatchRunner::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 bool BatchRunner::setupScenarios( Timer& aTimer, const string aName, const list<string> aScenComponents ){

@@ -85,8 +85,8 @@ public:
     
     static const std::string& getXMLNameStatic();
     
-    const ITechnologyContainer* getTechnology( const std::string& aSectorName,
-                                               const std::string& aSubsectorName,
+    const ITechnologyContainer* getTechnology( const gcamstr& aSectorName,
+                                               const gcamstr& aSubsectorName,
                                                const std::string& aTechnologyName ) const;
     
     // AParsable methods

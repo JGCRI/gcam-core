@@ -135,7 +135,7 @@ double CO2Emissions::calcInputCoef( const vector<IInput*>& aInputs, const int aP
     return coefFuel;
 }
 
-double CO2Emissions::getGHGValue( const std::string& aRegionName,
+double CO2Emissions::getGHGValue( const gcamstr& aRegionName,
                                   const std::vector<IInput*>& aInputs,
                                   const std::vector<IOutput*>& aOutputs,
                                   const ICaptureComponent* aSequestrationDevice,
@@ -211,7 +211,7 @@ double CO2Emissions::calcOutputEmissions( const vector<IOutput*>& aOutputs,
  * \param aRegionName Name of the region in which the emission is occurring.
  * \param aPeriod Period in which the emission is occurring.
  */
-double CO2Emissions::calcInputCO2Emissions( const vector<IInput*>& aInputs, const string& aRegionName, const int aPeriod ) const {
+double CO2Emissions::calcInputCO2Emissions( const vector<IInput*>& aInputs, const gcamstr& aRegionName, const int aPeriod ) const {
     double totalEmissions = 0;
 
     // Loop over the inputs calculating the amount of carbon in each.
@@ -226,7 +226,7 @@ double CO2Emissions::calcInputCO2Emissions( const vector<IInput*>& aInputs, cons
     return totalEmissions;
 }
 
-void CO2Emissions::calcEmission( const std::string& aRegionName,
+void CO2Emissions::calcEmission( const gcamstr& aRegionName,
                                  const std::vector<IInput*>& aInputs,
                                  const std::vector<IOutput*>& aOutputs,
                                  ICaptureComponent* aSequestrationDevice,

@@ -60,5 +60,5 @@ const string& MarketMatchesSolutionInfoFilter::getXMLNameStatic() {
 }
 
 bool MarketMatchesSolutionInfoFilter::acceptSolutionInfo( const SolutionInfo& aSolutionInfo ) const {
-    return regex_search(aSolutionInfo.getName(), mAcceptMarketMatches);
+    return regex_search(aSolutionInfo.getName().get(), mAcceptMarketMatches);
 }

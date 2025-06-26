@@ -68,31 +68,31 @@ public:
     static const std::string& getXMLNameStatic();
     virtual const std::string& getXMLName() const;
     virtual bool isSameType(const std::string& aType) const;
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     virtual void toDebugXML(const int aPeriod, std::ostream& aOut, Tabs* aTabs) const;
     virtual void initCalc(const IInfo* aTechInfo);
 
-    virtual double getMarginalBackupCapacity(const std::string& aSector,
-        const std::string& aElectricSector,
-        const std::string& aResource,
-        const std::string& aRegion,
+    virtual double getMarginalBackupCapacity(const gcamstr& aSector,
+        const gcamstr& aElectricSector,
+        const gcamstr& aResource,
+        const gcamstr& aRegion,
         const double aTechCapacityFactor,
         const double aReserveMargin,
         const double aAverageGridCapacityFactor,
         const int aPeriod) const;
 
-    virtual double getAverageBackupCapacity(const std::string& aSector,
-        const std::string& aElectricSector,
-        const std::string& aResource,
-        const std::string& aRegion,
+    virtual double getAverageBackupCapacity(const gcamstr& aSector,
+        const gcamstr& aElectricSector,
+        const gcamstr& aResource,
+        const gcamstr& aRegion,
         const double aTechCapacityFactor,
         const double aReserveMargin,
         const double aAverageGridCapacityFactor,
         const int aPeriod) const;
 
-    virtual double getValueFactor(const std::string& aSector,
-        const std::string& aElectricSector,
-        const std::string& aRegion,
+    virtual double getValueFactor(const gcamstr& aSector,
+        const gcamstr& aElectricSector,
+        const gcamstr& aRegion,
         const int aPeriod) const;
 
 protected:

@@ -78,37 +78,37 @@ public:
     const std::string& getXMLName() const;
     UnmanagedLandTechnology* clone() const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator );
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const IInfo* aSubsectorIInfo,
                            const Demographic* aDemographics,
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
 
-    virtual void calcCost( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void calcCost( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 
-    virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName, 
+    virtual void production( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
                              const int aPeriod );
 
-    virtual void calcEmissionsAndOutputs( const std::string& aRegionName,
-                                          const std::string& aSectorName,
-                                  const double aPrimaryOutput,
-                                  const int aPeriod );
+    virtual void calcEmissionsAndOutputs( const gcamstr& aRegionName,
+                                          const gcamstr& aSectorName,
+                                          const double aPrimaryOutput,
+                                          const int aPeriod );
 
 protected:
-    void initializeInputLocations( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    void initializeInputLocations( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const int aPeriod );
 
     virtual const std::string& getLandInputName( ) const;
@@ -119,7 +119,7 @@ protected:
         AgProductionTechnology,
 
         //! Name of leaf or node to use as driver for this technology
-        DEFINE_VARIABLE( SIMPLE, "itemName", mLandItemName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "itemName", mLandItemName, gcamstr )
     )
 
 

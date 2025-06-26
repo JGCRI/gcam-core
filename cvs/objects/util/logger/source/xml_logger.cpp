@@ -57,12 +57,12 @@ XMLLogger::XMLLogger( std::ostream* aCout, const string& aLoggerName ):Logger( a
 
 //! Tells the logger to begin logging.
 void XMLLogger::open( const char[] ){
-	if( mFileName == "" ) { // set a default value
+	if( mFileName.empty() ) { // set a default value
 		(*mCout) << "Using default log file name." << endl;
 		mFileName = "log.xml";
 	}
 
-    mLogFile.open( mFileName.c_str(), ios::out );
+    mLogFile.open( mFileName.get().c_str(), ios::out );
 
 	// Print the header message
 	time_t localTime;

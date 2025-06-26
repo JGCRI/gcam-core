@@ -88,8 +88,8 @@ public:
      * \param aPeriod Model period.
      * \author James Blackwood, Kate Calvin
      */
-    virtual void setProfitRate( const std::string& aRegionName,
-                                   const std::string& aProductName,
+    virtual void setProfitRate( const gcamstr& aRegionName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod ) = 0;
 
@@ -100,7 +100,7 @@ public:
      * \param aPeriod Model period.
      * \return The land allocated for the product.
      */
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const = 0;
     
     /*!
@@ -108,7 +108,7 @@ public:
      * \param aRegionName Region name.
      * \param aPeriod Model period.
      */
-    virtual void calcFinalLandAllocation( const std::string& aRegionName, 
+    virtual void calcFinalLandAllocation( const gcamstr& aRegionName, 
                                           const int aPeriod ) = 0;
                            
     /*!
@@ -117,14 +117,14 @@ public:
      *          of times the product need to be located.
      * \return The leaf node if found otherwise null.
      */
-    virtual ALandAllocatorItem* findProductLeaf( const std::string& aProductName ) = 0;
+    virtual ALandAllocatorItem* findProductLeaf( const gcamstr& aProductName ) = 0;
 
     /*!
      * \brief Complete the initialization of the land allocator.
      * \param aRegionName Region name.
      * \param aRegionInfo Local info object.
      */
-    virtual void completeInit( const std::string& aRegionName, 
+    virtual void completeInit( const gcamstr& aRegionName, 
                                const IInfo* aRegionInfo ) = 0;
     
     /*!
@@ -132,7 +132,7 @@ public:
      * \param aRegionName Region name.
      * \param aPeriod Model period.
      */
-    virtual void initCalc( const std::string& aRegionName, 
+    virtual void initCalc( const gcamstr& aRegionName, 
                            const int aPeriod ) = 0;
                            
     /*!
@@ -141,7 +141,7 @@ public:
      * \param aRegionName Region name.
      * \param aPeriod Model period.
      */
-    virtual void postCalc( const std::string& aRegionName, 
+    virtual void postCalc( const gcamstr& aRegionName, 
                            const int aPeriod ) = 0;
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const = 0;

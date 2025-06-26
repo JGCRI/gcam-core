@@ -187,14 +187,14 @@ public:
      * \brief Return the name of the input.
      * \return The name of the input.
      */
-    virtual const std::string& getName() const = 0;
+    virtual const gcamstr& getName() const = 0;
 
     /*!
      * \brief Get the market name for the input in case the input
      *        demands from another region.
      * \return The market name.
      */
-    virtual const std::string& getMarketName( const std::string& aRegionName ) const = 0;
+    virtual const std::string& getMarketName( const gcamstr& aRegionName ) const = 0;
 
     /*!
      * \brief Return the name of the input for reporting.
@@ -234,10 +234,10 @@ public:
      * \param aTechName Name of the Technology containing the input.
      * \param aTechInfo Technology's info object.
      */
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
-                               const std::string& aTechName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo ) = 0;
 
     /*!
@@ -250,8 +250,8 @@ public:
      * \param aTechInfo Technology's info object.
      * \param aPeriod Model period.
      */
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
@@ -271,7 +271,7 @@ public:
      * \param aPeriod Model period.
      */
     virtual void setCurrencyDemand( const double aCurrencyDemand,
-                                    const std::string& aRegionName, 
+                                    const gcamstr& aRegionName, 
                                     const int aPeriod ) = 0;
 
     /*!
@@ -295,7 +295,7 @@ public:
      * \param aPeriod Model period.
      */
     virtual void setPhysicalDemand( const double aPhysicalDemand,
-                                    const std::string& aRegionName, 
+                                    const gcamstr& aRegionName, 
                                     const int aPeriod ) = 0;
 
     /*!
@@ -304,7 +304,7 @@ public:
      * \param aPeriod Period for which to return price.
      * \return The price in the given period.
      */
-    virtual double getPrice( const std::string& aRegionName,
+    virtual double getPrice( const gcamstr& aRegionName,
                              const int aPeriod ) const = 0;
 
     /*!
@@ -313,7 +313,7 @@ public:
      * \param aPrice The new price of the input.
      * \param aPeriod Model period.
      */
-    virtual void setPrice( const std::string& aRegionName,
+    virtual void setPrice( const gcamstr& aRegionName,
                            const double aPrice,
                            const int aPeriod ) = 0;
 
@@ -331,7 +331,7 @@ public:
      * \param aPeriod Period for which to return price paid.
      * \return The price paid in the given period.
      */
-    virtual double getPricePaid( const std::string& aRegionName,
+    virtual double getPricePaid( const gcamstr& aRegionName,
                                  const int aPeriod ) const = 0;
 
     /*!
@@ -353,8 +353,8 @@ public:
      *          Used to calculate depreciation of capital.
      * \param aPeriod Period for which to calculate price paid.
      */
-    virtual void calcPricePaid( const std::string& aRegionName,
-                                const std::string& aSectorName,
+    virtual void calcPricePaid( const gcamstr& aRegionName,
+                                const gcamstr& aSectorName,
                                 const std::vector<AGHG*>& aGhgs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aLifetimeYears,
@@ -387,7 +387,7 @@ public:
     * \param aPeriod Model period
     * \return The emissions coefficient for the gas.
     */
-    virtual double getCO2EmissionsCoefficient( const std::string& aGHGName,
+    virtual double getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                              const int aPeriod ) const = 0;
 
     /*!

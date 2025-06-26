@@ -152,14 +152,14 @@ public:
      * \author James Blackwood
      * \return the name of this ALandAllocatorItem
      */
-    const std::string& getName() const;
+    const gcamstr& getName() const;
 
     /*!
      * \brief Complete the initialization of the ALandAllocatorItem.
      * \param aRegionName Region name.
      * \param aInfo Local info object.
      */
-    virtual void completeInit( const std::string& aRegionName, 
+    virtual void completeInit( const gcamstr& aRegionName, 
                                const IInfo* aRegionInfo ) = 0;
 
     /*!
@@ -167,7 +167,7 @@ public:
      * \param aRegionName Region name.
      * \param aInfo Local info object.
      */
-    virtual void initCalc( const std::string& aRegionName, 
+    virtual void initCalc( const gcamstr& aRegionName, 
                            const int aPeriod ) {};
 
     /*!
@@ -177,7 +177,7 @@ public:
      * \param aProductName Name of the product.
      * \return Land allocation.
      */
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const = 0;
 
     /*!
@@ -215,7 +215,7 @@ public:
      * \param aPeriod Period.
      * \author Kate Calvin
      */
-    virtual void setInitShares( const std::string& aRegionName,
+    virtual void setInitShares( const gcamstr& aRegionName,
                                 const double aLandAllocationAbove,
                                 const int aPeriod ) = 0;
 
@@ -232,7 +232,7 @@ public:
      * \warning This method is only used during calibration and should be called
      *          before calculateShareWeights.
      */
-    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+    virtual void calculateNodeProfitRates( const gcamstr& aRegionName,
                                            const int aPeriod ) = 0;
 
     /*!
@@ -257,7 +257,7 @@ public:
      * \warning This method is only used during calibration and should be called
      *          after node profit rates are set in calculateNodeProfitRates.
      */
-    virtual void calculateShareWeights( const std::string& aRegionName,
+    virtual void calculateShareWeights( const gcamstr& aRegionName,
                                         IDiscreteChoice* aChoiceFnAbove,
                                         const int aPeriod,
                                         const bool aCalcFutureSW = false );
@@ -271,8 +271,8 @@ public:
      * \param aPeriod Model period.
      * \author James Blackwood, Kate Calvin
      */
-    virtual void setProfitRate( const std::string& aRegionName,
-                                   const std::string& aProductName,
+    virtual void setProfitRate( const gcamstr& aRegionName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod ) = 0;
 
@@ -310,7 +310,7 @@ public:
      * \return The unnormalized share.
      * \author Kate Calvin
      */
-    virtual double calcLandShares( const std::string& aRegionName,
+    virtual double calcLandShares( const gcamstr& aRegionName,
                                    IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod ) = 0;
 
@@ -324,7 +324,7 @@ public:
      *          passed down recursively.
      * \author Steve Smith, James Blackwood
      */
-    virtual void calcLandAllocation( const std::string& aRegionName,
+    virtual void calcLandAllocation( const gcamstr& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aPeriod ) = 0;
 
@@ -332,7 +332,7 @@ public:
      * \brief This calls the simple carbon calculator to calculate
      *        land-use change emissions.
      */
-    virtual void calcLUCEmissions( const std::string& aRegionName,
+    virtual void calcLUCEmissions( const gcamstr& aRegionName,
                                    const int aPeriod, const int aEndYear,
                                    const bool aStoreFullEmiss ) {}
 
@@ -347,7 +347,7 @@ public:
      * \param aPeriod Model period
      * \author Kate Calvin
      */
-    virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
+    virtual void setUnmanagedLandProfitRate( const gcamstr& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod ) = 0;
     
@@ -361,7 +361,7 @@ public:
      * \param aPeriod Model period
      * \author Kate Calvin
      */
-    virtual void resetCalLandAllocation( const std::string& aRegionName,
+    virtual void resetCalLandAllocation( const gcamstr& aRegionName,
                                             double aNewLandAllocation,
                                         const int aPeriod ) {}
     
@@ -455,7 +455,7 @@ protected:
 
         //! Name of the land allocator item. This is the name of the product for
         //! leafs and name of the type of land for nodes.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         /*!
          * \brief Enum that stores the item's type.
@@ -480,14 +480,14 @@ struct MatchesTypeAndName {
     /*!
      * \brief String that stores the desired name.
      */
-    const std::string& mName;
+    const gcamstr mName;
 
     /*!
      * \brief Constructor.
      * \param aName The desired name.
      * \param aType The desired type.
      */
-    explicit MatchesTypeAndName( const std::string& aName, LandAllocatorItemType aType )
+    explicit MatchesTypeAndName( const gcamstr& aName, LandAllocatorItemType aType )
     : mType( aType ),
       mName( aName )
     {}

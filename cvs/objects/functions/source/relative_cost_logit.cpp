@@ -74,7 +74,7 @@ void RelativeCostLogit::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void RelativeCostLogit::initCalc( const string& aRegionName, const string& aContainerName,
+void RelativeCostLogit::initCalc( const gcamstr& aRegionName, const string& aContainerName,
                                   const bool aShouldShareIncreaseWithValue, const int aPeriod)
 {
     if( mLogitExponent[ aPeriod ] != 0.0 && aShouldShareIncreaseWithValue ^ ( mLogitExponent[ aPeriod ] > 0.0 ) ) {

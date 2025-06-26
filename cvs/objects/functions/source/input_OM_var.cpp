@@ -135,10 +135,10 @@ void InputOMVar::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void InputOMVar::completeInit( const string& aRegionName,
-                               const string& aSectorName,
-                               const string& aSubsectorName,
-                               const string& aTechName,
+void InputOMVar::completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
+                               const gcamstr& aTechName,
                                const IInfo* aTechInfo )
 {   
     // Initialize the adjusted costs in all periods to the base calculate
@@ -162,8 +162,8 @@ double InputOMVar::calcOMVarCost( void ) const
     return OMVarCost; // 1975$/GJ
 }
 
-void InputOMVar::initCalc( const string& aRegionName,
-                           const string& aSectorName,
+void InputOMVar::initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aIsNewInvestmentPeriod,
                            const bool aIsTrade,
                            const IInfo* aTechInfo,
@@ -175,14 +175,14 @@ void InputOMVar::initCalc( const string& aRegionName,
     mAdjustedCoefficients[ aPeriod ] = 1;
 }
 
-double InputOMVar::getPrice( const string& aRegionName,
+double InputOMVar::getPrice( const gcamstr& aRegionName,
                              const int aPeriod ) const
 {
     assert( mAdjustedCosts[ aPeriod ].isInited() );
     return mAdjustedCosts[ aPeriod ];
 }
 
-void InputOMVar::setPrice( const string& aRegionName,
+void InputOMVar::setPrice( const gcamstr& aRegionName,
                            const double aPrice,
                            const int aPeriod ) 
 {
@@ -194,13 +194,13 @@ double InputOMVar::getPhysicalDemand( const int aPeriod ) const {
 }
 
 void InputOMVar::setPhysicalDemand( double aPhysicalDemand,
-                                    const string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod )
 {
     // Does not add to the marketplace.
 }
 
-double InputOMVar::getCO2EmissionsCoefficient( const string& aGHGName,
+double InputOMVar::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                             const int aPeriod ) const
 {
     // Capital cost inputs cannot have emissions coefficients.
@@ -218,7 +218,7 @@ void InputOMVar::setCoefficient( const double aCoefficient,
     mAdjustedCoefficients[ aPeriod ] = aCoefficient;
 }
 
-void InputOMVar::tabulateFixedQuantity( const string& aRegionName,
+void InputOMVar::tabulateFixedQuantity( const gcamstr& aRegionName,
                                         const double aFixedOutput,
                                         const bool aIsInvestmentPeriod,
                                         const int aPeriod )

@@ -94,9 +94,9 @@ const string& AgStorageTechnology::getXMLName() const {
     return getXMLNameStatic();
 }
 
-void AgStorageTechnology::completeInit(const string& aRegionName,
-    const string& aSectorName,
-    const string& aSubsectorName,
+void AgStorageTechnology::completeInit(const gcamstr& aRegionName,
+    const gcamstr& aSectorName,
+    const gcamstr& aSubsectorName,
     const IInfo* aSubsectorInfo,
     ILandAllocator* aLandAllocator)
 {
@@ -151,8 +151,8 @@ void AgStorageTechnology::setProductionState(const int aPeriod) {
 }
 
 
-void AgStorageTechnology::initCalc(const string& aRegionName,
-    const string& aSectorName,
+void AgStorageTechnology::initCalc(const gcamstr& aRegionName,
+    const gcamstr& aSectorName,
     const IInfo* aSubsectorInfo,
     const Demographic* aDemographics,
     PreviousPeriodInfo& aPrevPeriodInfo,
@@ -170,8 +170,8 @@ void AgStorageTechnology::initCalc(const string& aRegionName,
     }
 }
 
-double AgStorageTechnology::getFixedOutput(const string& aRegionName,
-    const string& aSectorName,
+double AgStorageTechnology::getFixedOutput(const gcamstr& aRegionName,
+    const gcamstr& aSectorName,
     const bool aHasRequiredInput,
     const string& aRequiredInput,
     const double aMarginalRevenue,
@@ -183,8 +183,8 @@ double AgStorageTechnology::getFixedOutput(const string& aRegionName,
     return 0;
 }
 
-void AgStorageTechnology::production(const string& aRegionName,
-    const string& aSectorName,
+void AgStorageTechnology::production(const gcamstr& aRegionName,
+    const gcamstr& aSectorName,
     double aVariableDemand,
     double aFixedOutputScaleFactor,
     const int aPeriod)
@@ -277,8 +277,8 @@ void AgStorageTechnology::production(const string& aRegionName,
     
 }
 
-void AgStorageTechnology::calcCost(const string& aRegionName,
-    const string& aSectorName,
+void AgStorageTechnology::calcCost(const gcamstr& aRegionName,
+    const gcamstr& aSectorName,
     const int aPeriod)
 {
     // we didn't want the price signal to consumption to change due to storage

@@ -59,8 +59,8 @@ using namespace std;
 extern Scenario* scenario;
 
 
-double GompertzDemandFunction::calcDemand(InputSet& input, double income, const std::string& regionName,
-    const std::string& sectorName, const double aShutdownCoef, int period,
+double GompertzDemandFunction::calcDemand(InputSet& input, double income, const gcamstr& aRegionName,
+    const gcamstr& sectorName, const double aShutdownCoef, int period,
     double capitalStock, double alphaZero, double sigma, double IBT, const IInput* aParentInput) const {
     assert(input.size() == 1);
     BuildingNodeInput* bldInput = static_cast<BuildingNodeInput*>(input[0]);
@@ -71,7 +71,7 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
     double TotDens = bldInput->mTotDens;
     double bParam = bldInput->mbParam;
     double incomeParam = bldInput->mIncomeParam;
-    double subregionalIncome = bldInput->mCurrentSubregionalIncomeShare * SectorUtils::getGDP( regionName, period ) / subregionalPopulation;
+    double subregionalIncome = bldInput->mCurrentSubregionalIncomeShare * SectorUtils::getGDP( aRegionName, period ) / subregionalPopulation;
     double biasAdjustParam = bldInput->mBiasAdjustParam;
 
     double pcfloorspace = (unadjustSatiation + (-landDensityParam) * log(TotDens))
@@ -95,7 +95,7 @@ double GompertzDemandFunction::calcDemand(InputSet& input, double income, const 
         floorspace = Basefloorspace;
     }
 
-    bldInput->setPhysicalDemand(floorspace, regionName, period);
+    bldInput->setPhysicalDemand(floorspace, aRegionName, period);
 
     return floorspace;
 }

@@ -103,8 +103,8 @@ void TranTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs* ta
 }   
 
 
-void TranTechnology::initCalc( const string& aRegionName,
-                               const string& aSectorName, 
+void TranTechnology::initCalc( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName, 
 							   const IInfo* aSubsectorInfo,
                                const Demographic* aDemographics,
                                PreviousPeriodInfo& aPrevPeriodInfo,
@@ -140,8 +140,8 @@ void TranTechnology::initCalc( const string& aRegionName,
     }
 }
 
-double TranTechnology::getTotalInputCost( const string& aRegionName,
-                                          const string& aSectorName,
+double TranTechnology::getTotalInputCost( const gcamstr& aRegionName,
+                                          const gcamstr& aSectorName,
                                           const int aPeriod ) const
 {
     return getEnergyCost( aRegionName, aSectorName, aPeriod) + 
@@ -163,8 +163,8 @@ double TranTechnology::getTotalInputCost( const string& aRegionName,
 * \param aPeriod The period to calculate this value for.
 * \return The total emissions and storage cost of all ghgs.
 */
-double TranTechnology::getTotalGHGCost( const string& aRegionName,
-                                    const string& aSectorName,
+double TranTechnology::getTotalGHGCost( const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName,
                                     const int aPeriod ) const
 {
     const double CVRT90 = 2.212; // 1975 $ to 1990 $
@@ -180,7 +180,7 @@ double TranTechnology::getTotalGHGCost( const string& aRegionName,
     return (totalGHGCost * JPERBTU / GIGA * CVRT90) / mLoadFactor;
 }
 
-double TranTechnology::calcSecondaryValue( const string& aRegionName,
+double TranTechnology::calcSecondaryValue( const gcamstr& aRegionName,
                                            const int aPeriod ) const
 {
     // NOTE: This entire function is copied so the units can be adjusted.
@@ -209,8 +209,8 @@ double TranTechnology::calcSecondaryValue( const string& aRegionName,
     return (totalValue * JPERBTU / GIGA * CVRT90) / mLoadFactor;
 }
 
-double TranTechnology::getEnergyCost( const string& aRegionName,
-                                      const string& aSectorName,
+double TranTechnology::getEnergyCost( const gcamstr& aRegionName,
+                                      const gcamstr& aSectorName,
                                       const int aPeriod ) const
 {
     // NOTE: This entire function is copied so the units can be adjusted.
@@ -235,8 +235,8 @@ double TranTechnology::getEnergyCost( const string& aRegionName,
     return cost / mLoadFactor;
 }
 
-double TranTechnology::getNonEnergyCost( const string& aRegionName,
-                                      const string& aSectorName,
+double TranTechnology::getNonEnergyCost( const gcamstr& aRegionName,
+                                      const gcamstr& aSectorName,
                                       const int aPeriod ) const
 {
     // NOTE: This entire function is copied so the units can be adjusted.
@@ -257,8 +257,8 @@ double TranTechnology::getNonEnergyCost( const string& aRegionName,
 }
 
 
-void TranTechnology::calcCost( const string& aRegionName,
-                               const string& aSectorName,
+void TranTechnology::calcCost( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const int aPeriod )
 {
     double techCost = getTotalInputCost( aRegionName, aSectorName, aPeriod )
@@ -272,7 +272,7 @@ void TranTechnology::calcCost( const string& aRegionName,
     mCosts[ aPeriod ] = max( techCost, util::getSmallNumber() );
 }
 
-void TranTechnology::production( const string& aRegionName, const string& aSectorName,
+void TranTechnology::production( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                  double aVariableDemand, double aFixedOutputScaleFactor,
                                  const int aPeriod )
 {
@@ -395,8 +395,8 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
 * \param aSectorName Sector name.
 * \param aPeriod Period.
 */
-double TranTechnology::getCurrencyConversionPrice( const string& aRegionName,
-                                                   const string& aSectorName,
+double TranTechnology::getCurrencyConversionPrice( const gcamstr& aRegionName,
+                                                   const gcamstr& aSectorName,
                                                    const int aPeriod ) const
 {
     // transportation costs will be in 1990$/service and the output units

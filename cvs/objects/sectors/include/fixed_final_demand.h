@@ -72,7 +72,7 @@ public:
      * \brief Get the name of the final demand.
      * \return The name of the final demand.
      */
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     
     /*!
      * \brief Complete the initialization of the final demand.
@@ -81,7 +81,7 @@ public:
      * \param aRegionName Region name.
      * \param aRegionInfo Regional information container.
      */
-    virtual void completeInit( const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aRegionName,
                                const IInfo* aRegionInfo );
 
     /*!
@@ -92,7 +92,7 @@ public:
      * \param aDemograhics Region demographics.
      * \param aPeriod Model period.
      */
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const Demographic* aDemographics,
                            const int aPeriod );
     
@@ -106,7 +106,7 @@ public:
      * \param aDemographics Regional demographics.
      * \param aPeriod Model period.
      */
-    virtual void setFinalDemand( const std::string& aRegionName,
+    virtual void setFinalDemand( const gcamstr& aRegionName,
                                  const Demographic* aDemographics,
                                  const int aPeriod );
 
@@ -117,7 +117,7 @@ public:
      * \param aRegionName Region name.
      * \param aPeriod Model period.
      */
-    virtual double getWeightedEnergyPrice( const std::string& aRegionName,
+    virtual double getWeightedEnergyPrice( const gcamstr& aRegionName,
                                            const int aPeriod ) const;
 
     // Documentation is inherited.
@@ -132,7 +132,7 @@ protected:
         AFinalDemand,
 
         //! Name of the final demand and the good it consumes.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Total end-use sector service which will always be demanded
         //! \note We mark this as STATE even though it will not change as it is

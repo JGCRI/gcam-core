@@ -58,8 +58,8 @@ using namespace std;
 
 extern Scenario* scenario;
 
-double NestedCESProductionFunction::calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
-                            const std::string& sectorName, int period, double sigma, double IBT,
+double NestedCESProductionFunction::calcCoefficient( InputSet& input, double consumption, const gcamstr& aRegionName,
+                            const gcamstr& sectorName, int period, double sigma, double IBT,
                             double capitalStock, const IInput* aParentInput ) const
 {
     // the first input is the parent node input
@@ -67,12 +67,12 @@ double NestedCESProductionFunction::calcCoefficient( InputSet& input, double con
     const double r = 1 - sigma;
     // this is really currency
     const double totalDemand = (*it)->getPhysicalDemand( period );
-    const double outputPrice = (*it)->getPrice( regionName, period );
+    const double outputPrice = (*it)->getPrice( aRegionName, period );
     // period is really the period which we are setting the coef in
     // we want to use the base period prices and demands
     const int basePeriod = 0;
     for( ++it; it != input.end(); ++it ) {
-        double priceRatio = (*it)->getPricePaid( regionName, basePeriod ) / outputPrice;
+        double priceRatio = (*it)->getPricePaid( aRegionName, basePeriod ) / outputPrice;
         // this will really give currency demand
         double tempCoef = pow1( ( (*it)->getPhysicalDemand( basePeriod ) / totalDemand ), -1 / r ) *
             priceRatio;
@@ -83,7 +83,7 @@ double NestedCESProductionFunction::calcCoefficient( InputSet& input, double con
 }
 
 double NestedCESProductionFunction::applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
-                                 const std::string& regionName,const std::string& sectorName, const int aPeriod, 
+                                 const gcamstr& aRegionName,const gcamstr& sectorName, const int aPeriod, 
                                  double alphaZero, double sigma ) const
 {
     // TODO: should I just use FunctionUtils::applyTechnicalChangeInternal
@@ -103,7 +103,7 @@ double NestedCESProductionFunction::applyTechnicalChange( InputSet& input, const
     return 0;
 }
 
-double NestedCESProductionFunction::changeElasticity( InputSet& input, const std::string& aRegionName, double priceReceived,
+double NestedCESProductionFunction::changeElasticity( InputSet& input, const gcamstr& aRegionName, double priceReceived,
                              double aProfits, double capitalStock, const int aPeriod, double alphaZero,
                              double sigmaNew, double sigmaOld ) const
 {
@@ -125,8 +125,8 @@ double NestedCESProductionFunction::changeElasticity( InputSet& input, const std
     return 0;
 }
 
-double NestedCESProductionFunction::calcDemand( InputSet& input, double consumption, const std::string& regionName,
-                       const std::string& sectorName, const double aShutdownCoef, int period,
+double NestedCESProductionFunction::calcDemand( InputSet& input, double consumption, const gcamstr& aRegionName,
+                       const gcamstr& sectorName, const double aShutdownCoef, int period,
                        double capitalStock, double alphaZero, double sigma, double IBT,
                        const IInput* aParentInput ) const
 {   
@@ -134,17 +134,17 @@ double NestedCESProductionFunction::calcDemand( InputSet& input, double consumpt
     const double outputPrice = IBT;
     double totalDemand = 0.0;
     for( InputSet::iterator it = input.begin(); it != input.end(); ++it ) {
-        double ioRatio = calcIORatio( *it, regionName, period, alphaZero, outputPrice, sigma );
+        double ioRatio = calcIORatio( *it, aRegionName, period, alphaZero, outputPrice, sigma );
         // consumption is really output at the current node (the path io ratio has already been applied)
         double tempDemand = ioRatio * consumption * aShutdownCoef;
-        (*it)->setPhysicalDemand( tempDemand, regionName, period );
+        (*it)->setPhysicalDemand( tempDemand, aRegionName, period );
         totalDemand += tempDemand;
     }
     return totalDemand;
 }
 
-double NestedCESProductionFunction::calcOutput( InputSet& input, const std::string& regionName,
-                       const std::string& sectorName, const double aShutdownCoef,
+double NestedCESProductionFunction::calcOutput( InputSet& input, const gcamstr& aRegionName,
+                       const gcamstr& sectorName, const double aShutdownCoef,
                        int period, double capitalStock, double alphaZero, double sigma ) const
 {
     // TODO: everything
@@ -152,8 +152,8 @@ double NestedCESProductionFunction::calcOutput( InputSet& input, const std::stri
     return 0;
 }
 
-double NestedCESProductionFunction::getCapitalOutputRatio( const InputSet& aInputs, const std::string& aRegionName,
-                                  const std::string& aSectorName, double aLifeTimeYears, int aPeriod,
+double NestedCESProductionFunction::getCapitalOutputRatio( const InputSet& aInputs, const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName, double aLifeTimeYears, int aPeriod,
                                   double aAlphaZero, double aSigma ) const
 {
     // we are only expecting a single capital input here
@@ -165,8 +165,8 @@ double NestedCESProductionFunction::getCapitalOutputRatio( const InputSet& aInpu
     return calcIORatio( capitalInput, aRegionName, aPeriod, aAlphaZero, aLifeTimeYears, aSigma );
 }
 
-double NestedCESProductionFunction::calcExpProfitRate( const InputSet& input, const std::string& regionName,
-                              const std::string& sectorName, double aLifeTimeYears, int period, double alphaZero,
+double NestedCESProductionFunction::calcExpProfitRate( const InputSet& input, const gcamstr& aRegionName,
+                              const gcamstr& sectorName, double aLifeTimeYears, int period, double alphaZero,
                               double sigma ) const
 {
     // TODO: figure out what to do about all of this since it is no longer used
@@ -175,19 +175,19 @@ double NestedCESProductionFunction::calcExpProfitRate( const InputSet& input, co
     if( !capInput ) {
         return 0;
     }
-    double profitRate = capInput->getPricePaid( regionName, period );
+    double profitRate = capInput->getPricePaid( aRegionName, period );
     // this is the real discount rate
-    capInput->setPricePaid( capInput->getPrice( regionName, period ) + capInput->getPriceAdjustment(),
+    capInput->setPricePaid( capInput->getPrice( aRegionName, period ) + capInput->getPriceAdjustment(),
         period );
     // Calculate the net present value multiplier to determine expected prices.
-    const double netPresentValueMult = FunctionUtils::getNetPresentValueMult( input, regionName, aLifeTimeYears, period );
+    const double netPresentValueMult = FunctionUtils::getNetPresentValueMult( input, aRegionName, aLifeTimeYears, period );
     // set the profit rate back in capital
     capInput->setPricePaid( profitRate, period );
     return profitRate * netPresentValueMult;
 }
 
-double NestedCESProductionFunction::calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                         const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+double NestedCESProductionFunction::calcLevelizedCost( const InputSet& aInputs, const gcamstr& aRegionName,
+                         const gcamstr& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                          const IInput* aParentInput ) const
 {
     // TODO: shouldn't aPeriod, aAlphaZero, and aSigma all be const?
@@ -204,8 +204,8 @@ double NestedCESProductionFunction::calcLevelizedCost( const InputSet& aInputs, 
 }
 
 double NestedCESProductionFunction::calcUnscaledProfits( const InputSet& aInputs, 
-                                const std::string& aRegionName,
-                                const std::string& aSectorName,
+                                const gcamstr& aRegionName,
+                                const gcamstr& aSectorName,
                                 const int aPeriod,
                                 const double aCapitalStock,
                                 const double aAlphaZero,
@@ -227,7 +227,7 @@ double NestedCESProductionFunction::calcCapitalScaler( const InputSet& input, do
     return 0;
 }
 
-double NestedCESProductionFunction::calcIORatio( const InputSet::value_type aInput, const string& aRegionName, const int aPeriod,
+double NestedCESProductionFunction::calcIORatio( const InputSet::value_type aInput, const gcamstr& aRegionName, const int aPeriod,
                                 const double aAlphaZero, const double aParentPrice, const double aSigma ) const
 {
     // optimazation to speed up calculations when sigma is zero

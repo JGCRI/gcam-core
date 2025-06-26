@@ -318,7 +318,7 @@ struct Data {
  *
  *          For instance a call such as:
  *          ```
- *          DEFINE_DATA_INTERNAL( DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ) )
+ *          DEFINE_DATA_INTERNAL( DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ) )
  *          ```
  *          Would then be transformed to (although perhaps not so well formatted):
  *          ```

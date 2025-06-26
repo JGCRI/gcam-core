@@ -66,21 +66,21 @@ public:
                              std::ostream &out,
                              Tabs* tabs ) const;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
-    virtual void completeInit( const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aRegionName,
                                const IInfo* aRegionInfo );
 
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
-    virtual void calcSupply( const std::string& aRegionName,
+    virtual void calcSupply( const gcamstr& aRegionName,
                              const int aPeriod );
 
-    virtual double getAnnualProd( const std::string& aRegionName,
+    virtual double getAnnualProd( const gcamstr& aRegionName,
                                   const int aPeriod ) const;
 
     virtual double getPrice( const int aPeriod ) const;
@@ -100,7 +100,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "max-price", mMaxPrice, Value )
     )
     
-    void setMarket( const std::string& aRegionName );
+    void setMarket( const gcamstr& aRegionName );
 };
 
 #endif // _TRIAL_VALUE_RESOURCE_H_

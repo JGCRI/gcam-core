@@ -103,19 +103,19 @@ protected:
                                 PassThroughSector ),
 
         //! Sector name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! unit of good or service produced by sector
-        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnit, gcamstr ),
 
         //! unit of input demanded by sector
-        DEFINE_VARIABLE( SIMPLE, "input-unit", mInputUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "input-unit", mInputUnit, gcamstr ),
 
         //! price unit of good or service produced by sector
-        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnit, gcamstr ),
 
         //! region name
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "region-name", mRegionName, gcamstr ),
 
         //! subsector objects
         DEFINE_VARIABLE( CONTAINER, "subsector", mSubsectors, std::vector<Subsector*> ),
@@ -124,7 +124,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "price", mPrice, objects::PeriodVector<Value> ),
 
         //! A map of a keyword to its keyword group
-        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<gcamstr, gcamstr> ),
         
         //! The discrete choice model used to calculate sector shares.
         DEFINE_VARIABLE( CONTAINER, "discrete-choice-function", mDiscreteChoiceModel, IDiscreteChoice* ),
@@ -159,9 +159,9 @@ protected:
 public:
     explicit Sector();
     virtual ~Sector();
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     
-    void setNames( const std::string& aRegionName );
+    void setNames( const gcamstr& aRegionName );
     
     virtual const std::string& getXMLName() const = 0;
 

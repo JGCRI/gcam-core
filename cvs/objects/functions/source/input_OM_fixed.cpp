@@ -138,15 +138,15 @@ void InputOMFixed::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void InputOMFixed::completeInit( const string& aRegionName,
-                                 const string& aSectorName,
-                                 const string& aSubsectorName,
-                                 const string& aTechName,
+void InputOMFixed::completeInit( const gcamstr& aRegionName,
+                                 const gcamstr& aSectorName,
+                                 const gcamstr& aSubsectorName,
+                                 const gcamstr& aTechName,
                                  const IInfo* aTechInfo )
 {   
     // technology capacity factor
     // capacity factor needed before levelized fixed om cost calculation
-    mCapacityFactor = aTechInfo->getDouble("tech-capacity-factor", true);
+    mCapacityFactor = aTechInfo->getDouble(gcamstr("tech-capacity-factor"), true);
 
     // completeInit() is called for each technology for each period
     // so levelized O&M fixed cost calculation is done here.
@@ -176,8 +176,8 @@ double InputOMFixed::calcLevelizedOMFixedCost( void ) const
     return levelizedOMFixedCost; // 1975$/GJ
 }
 
-void InputOMFixed::initCalc( const string& aRegionName,
-                             const string& aSectorName,
+void InputOMFixed::initCalc( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
                              const bool aIsNewInvestmentPeriod,
                              const bool aIsTrade,
                              const IInfo* aTechInfo,
@@ -189,14 +189,14 @@ void InputOMFixed::initCalc( const string& aRegionName,
     mAdjustedCoefficients[ aPeriod ] = 1;
 }
 
-double InputOMFixed::getPrice( const string& aRegionName,
+double InputOMFixed::getPrice( const gcamstr& aRegionName,
                                const int aPeriod ) const
 {
     assert( mAdjustedCosts[ aPeriod ].isInited() );
     return mAdjustedCosts[ aPeriod ];
 }
 
-void InputOMFixed::setPrice( const string& aRegionName,
+void InputOMFixed::setPrice( const gcamstr& aRegionName,
                              const double aPrice,
                              const int aPeriod ) 
 {
@@ -208,13 +208,13 @@ double InputOMFixed::getPhysicalDemand( const int aPeriod ) const {
 }
 
 void InputOMFixed::setPhysicalDemand( double aPhysicalDemand,
-                                      const string& aRegionName,
+                                      const gcamstr& aRegionName,
                                       const int aPeriod )
 {
     // Does not add to the marketplace.
 }
 
-double InputOMFixed::getCO2EmissionsCoefficient( const string& aGHGName,
+double InputOMFixed::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                                  const int aPeriod ) const
 {
     // Capital cost inputs cannot have emissions coefficients.
@@ -232,7 +232,7 @@ void InputOMFixed::setCoefficient( const double aCoefficient,
     mAdjustedCoefficients[ aPeriod ] = aCoefficient;
 }
 
-void InputOMFixed::tabulateFixedQuantity( const string& aRegionName,
+void InputOMFixed::tabulateFixedQuantity( const gcamstr& aRegionName,
                                           const double aFixedOutput,
                                           const bool aIsInvestmentPeriod,
                                           const int aPeriod )

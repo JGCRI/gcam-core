@@ -73,34 +73,34 @@ public:
 
     virtual AgStorageTechnology* clone() const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void initCalc(const std::string& aRegionName,
-        const std::string& aSectorName,
+    virtual void initCalc(const gcamstr& aRegionName,
+        const gcamstr& aSectorName,
         const IInfo* aSubsectorInfo,
         const Demographic* aDemographics,
         PreviousPeriodInfo& aPrevPeriodInfo,
         const int aPeriod);
 
-    virtual double getFixedOutput(const std::string& aRegionName,
-        const std::string& aSectorName,
+    virtual double getFixedOutput(const gcamstr& aRegionName,
+        const gcamstr& aSectorName,
         const bool aHasRequiredInput,
         const std::string& aRequiredInput,
         const double aMarginalRevenue,
         const int aPeriod) const;
 
-    virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName,
+    virtual void production( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
                              const int aPeriod );
 
-    virtual void calcCost(const std::string& aRegionName,
-                          const std::string& aSectorName,
+    virtual void calcCost(const gcamstr& aRegionName,
+                          const gcamstr& aSectorName,
                           const int aPeriod);
 
 

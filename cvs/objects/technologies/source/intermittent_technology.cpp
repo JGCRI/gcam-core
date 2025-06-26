@@ -154,7 +154,7 @@ const string& IntermittentTechnology::getTechCostName( ) const {
 void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
     XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
-    XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
+    XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, gcamstr("") );
 }
 
 /*! \brief Create a trial market for the technology and complete the initialization.
@@ -176,9 +176,9 @@ void IntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut,
 *       Capacity Factor) could be dynamically calculated and utilized by
 *       intermittent technology.
 */
-void IntermittentTechnology::completeInit( const string& aRegionName,
-                                           const string& aSectorName,
-                                           const string& aSubsectorName,
+void IntermittentTechnology::completeInit( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
+                                           const gcamstr& aSubsectorName,
                                            const IInfo* aSubsectorInfo,
                                            ILandAllocator* aLandAllocator )
 {
@@ -187,7 +187,7 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
 							 aLandAllocator );	
 
     // Inititalize info object
-    mIntermittTechInfo.reset( InfoFactory::constructInfo( 0, getName() ) );
+    mIntermittTechInfo.reset( InfoFactory::constructInfo( 0, mName ) );
     // Output unit for intermittent technology to be for market.
     mIntermittTechInfo->setString( "output-unit", "share" );
 
@@ -232,8 +232,8 @@ void IntermittentTechnology::completeInit( const string& aRegionName,
     depFinder->addDependency( aSectorName, aRegionName, (*mResourceInput)->getName(), aRegionName );
 }
 
-void IntermittentTechnology::initCalc( const string& aRegionName,
-                                       const string& aSectorName,
+void IntermittentTechnology::initCalc( const gcamstr& aRegionName,
+                                       const gcamstr& aSectorName,
                                        const IInfo* aSubsectorInfo,
                                        const Demographic* aDemographics,
                                        PreviousPeriodInfo& aPrevPeriodInfo,
@@ -253,7 +253,7 @@ void IntermittentTechnology::initCalc( const string& aRegionName,
     initializeInputLocations( aRegionName, aSectorName, aPeriod );
 }
 
-void IntermittentTechnology::postCalc( const string& aRegionName,
+void IntermittentTechnology::postCalc( const gcamstr& aRegionName,
                                       const int aPeriod )
 {
     // Use the base class postCalc.
@@ -269,8 +269,8 @@ void IntermittentTechnology::postCalc( const string& aRegionName,
 * \param aGDP GDP
 * \param aPeriod Model period
 */
-void IntermittentTechnology::production( const string& aRegionName,
-                                         const string& aSectorName, 
+void IntermittentTechnology::production( const gcamstr& aRegionName,
+                                         const gcamstr& aSectorName, 
                                          double aVariableDemand,
                                          double aFixedOutputScaleFactor,
                                          const int aPeriod )
@@ -301,8 +301,8 @@ void IntermittentTechnology::production( const string& aRegionName,
 * \author Steve Smith
 * \param aPeriod Model period.
 */
-double IntermittentTechnology::getResourceToEnergyRatio(const string& aRegionName,
-    const string& aSectorName,
+double IntermittentTechnology::getResourceToEnergyRatio(const gcamstr& aRegionName,
+    const gcamstr& aSectorName,
     const int aPeriod)
 {
     // Default assumpion is that resource is in energy units
@@ -318,8 +318,8 @@ double IntermittentTechnology::getResourceToEnergyRatio(const string& aRegionNam
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 */
-void IntermittentTechnology::calcCost( const string& aRegionName,
-                                       const string& aSectorName,
+void IntermittentTechnology::calcCost( const gcamstr& aRegionName,
+                                       const gcamstr& aSectorName,
                                        const int aPeriod )
 {
     if (mProductionState[aPeriod]->isOperating()) {
@@ -350,8 +350,8 @@ void IntermittentTechnology::calcCost( const string& aRegionName,
  * \param aPeriod Period.
  * \warning If the input vector changes size, these positions will not be valid.
  */
-void IntermittentTechnology::initializeInputLocations( const string& aRegionName,
-                                                       const string& aSectorName,
+void IntermittentTechnology::initializeInputLocations( const gcamstr& aRegionName,
+                                                       const gcamstr& aSectorName,
                                                        const int aPeriod )
 {
     // Set the inputs to the error value.

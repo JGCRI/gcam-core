@@ -70,7 +70,7 @@ public:
      * \brief Constructor
      * \param aSectorName Name of the sector and primary output.
      */
-    GenericOutput( const std::string& aSectorName );
+    GenericOutput( const gcamstr& aSectorName );
     
     GenericOutput();
     
@@ -90,16 +90,16 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 
     virtual void setPhysicalOutput( const double aPrimaryOutput,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     ICaptureComponent* aCaptureComponent,
                                     const int aPeriod );
     
-    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const;
 
 protected:
 

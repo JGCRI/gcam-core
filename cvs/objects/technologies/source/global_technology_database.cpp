@@ -144,8 +144,8 @@ bool GlobalTechnologyDatabase::XMLParse( rapidxml::xml_node<char>* & aNode ) {
  * \param aTechnologyName The technology name to find.
  * \return A pointer to the global technology container or null if not found.
  */
-const ITechnologyContainer* GlobalTechnologyDatabase::getTechnology( const string& aSectorName,
-                                                                     const string& aSubsectorName,
+const ITechnologyContainer* GlobalTechnologyDatabase::getTechnology( const gcamstr& aSectorName,
+                                                                     const gcamstr& aSubsectorName,
                                                                      const string& aTechnologyName ) const
 {
     const pair<string, string> locationToFind( aSectorName, aSubsectorName );

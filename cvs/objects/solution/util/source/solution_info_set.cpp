@@ -305,7 +305,7 @@ SolutionInfo* SolutionInfoSet::getWorstSolutionInfoReverse( const bool aIgnoreBi
 SolutionInfo* SolutionInfoSet::getPolicyOrWorstSolutionInfo() {
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++ iter ){
         // TODO: Find a more generic method. 
-        if( iter->getName() == "globalCO2" && !iter->isSolved() ){
+        if( iter->getName().get() == "globalCO2" && !iter->isSolved() ){
             return &*iter;
         }
     }
@@ -331,7 +331,7 @@ SolutionInfo* SolutionInfoSet::getPolicyOrWorstSolutionInfo() {
 SolutionInfo* SolutionInfoSet::getPolicySolutionInfo() {
     for( SetIterator iter = solvable.begin(); iter != solvable.end(); ++ iter ){
         // TODO: Find a more generic method. 
-        if( iter->getName() == "globalCO2" && !iter->isSolved() ){
+        if( iter->getName().get() == "globalCO2" && !iter->isSolved() ){
             return &*iter;
         }
     }

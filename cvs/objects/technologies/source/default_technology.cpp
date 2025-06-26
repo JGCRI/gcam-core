@@ -86,7 +86,7 @@ const string& DefaultTechnology::getXMLNameStatic() {
     return XML_NAME1D;
 }
 
-double DefaultTechnology::getTotalInputCost( const string& aRegionName, const string& aSectorName,
+double DefaultTechnology::getTotalInputCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
 									   const int aPeriod ) const
 {
 	return Technology::getTotalInputCost( aRegionName, aSectorName, aPeriod );

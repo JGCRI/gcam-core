@@ -547,7 +547,7 @@ bool SolverLibrary::bracketOne( Marketplace* aMarketplace, World* aWorld, const 
 
     // Loop is done at least once.
     do {
-        aSolSet.printMarketInfo( "Bracket One on " + aSol->getName(),
+        aSolSet.printMarketInfo( "Bracket One on " + aSol->getName().get(),
                                  aCalcCounter->getPeriodCount(),
                                  singleLog );
 

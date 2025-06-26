@@ -132,7 +132,7 @@ protected:
         DEFINE_VARIABLE( ARRAY, "GDPcalPerCapita", mGDPcalPerCapita, objects::PeriodVector<double> ),
         
         /*! \brief map of CO2 emissions coefficient for primary fuels only */
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "PrimaryFuelCO2Coef", mPrimaryFuelCO2Coef, std::map<std::string, double> ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "PrimaryFuelCO2Coef", mPrimaryFuelCO2Coef, std::map<gcamstr, double> ),
         
         /*! \brief Interest rate for the region. */
         DEFINE_VARIABLE( SIMPLE, "interest-rate", mInterestRate, double ),

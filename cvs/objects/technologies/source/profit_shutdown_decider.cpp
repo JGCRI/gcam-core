@@ -73,7 +73,7 @@ bool ProfitShutdownDecider::isSameType( const std::string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& ProfitShutdownDecider::getName() const {
+const gcamstr& ProfitShutdownDecider::getName() const {
     return mName;
 }
 
@@ -104,8 +104,8 @@ void ProfitShutdownDecider::toDebugXML( const int aPeriod, ostream& aOut, Tabs* 
 }
 
 double ProfitShutdownDecider::calcShutdownCoef( const double aCalculatedProfitRate,
-                                                const string& aRegionName,
-                                                const string& aSectorName,
+                                                const gcamstr& aRegionName,
+                                                const gcamstr& aSectorName,
                                                 const int aInitialTechYear,
                                                 const int aPeriod ) const 
 {

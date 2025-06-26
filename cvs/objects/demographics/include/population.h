@@ -103,7 +103,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "totalPop", mTotalPop, double ),
         
         //! unit of population numbers
-        DEFINE_VARIABLE( SIMPLE, "population-unit", mPopulationUnit, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "population-unit", mPopulationUnit, gcamstr ),
         
         //! minimum working age.
         DEFINE_VARIABLE( SIMPLE, "min-working-age", mWorkingAgeMin, int ),

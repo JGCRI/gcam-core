@@ -45,7 +45,7 @@
 
 using namespace std;
 
-GenericOutput::GenericOutput( const string& aSectorName )
+GenericOutput::GenericOutput( const gcamstr& aSectorName )
     : PrimaryOutput( aSectorName )
 {
 }
@@ -98,8 +98,8 @@ void GenericOutput::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void GenericOutput::initCalc( const string& aRegionName,
-                              const string& aSectorName,
+void GenericOutput::initCalc( const gcamstr& aRegionName,
+                              const gcamstr& aSectorName,
                               const int aPeriod )
 {
     // Do mostly nothing
@@ -110,7 +110,7 @@ void GenericOutput::initCalc( const string& aRegionName,
 }
 
 void GenericOutput::setPhysicalOutput( const double aPrimaryOutput,
-                                       const string& aRegionName,
+                                       const gcamstr& aRegionName,
                                        ICaptureComponent* aCaptureComponent,
                                        const int aPeriod )
 {
@@ -121,6 +121,6 @@ void GenericOutput::setPhysicalOutput( const double aPrimaryOutput,
     mPhysicalOutputs[ aPeriod ] = aPrimaryOutput;
 }
 
-string GenericOutput::getOutputUnits( const string& aRegionName ) const {
+gcamstr GenericOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return "";
 }

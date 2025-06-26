@@ -77,7 +77,7 @@ public:
         
 private:
     //! The market info key to check.
-    std::string mMarketInfoKey;
+    gcamstr mMarketInfoKey;
 };
 
 #endif // _HAS_MARKET_FLAG_SOLUTION_INFO_FILTER_H_

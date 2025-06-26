@@ -58,7 +58,7 @@ using namespace std;
 extern Scenario* scenario;
 
 double MinicamLeontiefProductionFunction::calcCosts( const InputSet& aInputs,
-                                                     const string& aRegionName,
+                                                     const gcamstr& aRegionName,
                                                      const double aAlphaZero,
                                                      int aPeriod ) const
 {
@@ -70,8 +70,8 @@ double MinicamLeontiefProductionFunction::calcCosts( const InputSet& aInputs,
 }
 
 double MinicamLeontiefProductionFunction::calcProfits( InputSet& aInputs,
-                                                       const string& aRegionName,
-                                                       const string& aSectorName,
+                                                       const gcamstr& aRegionName,
+                                                       const gcamstr& aSectorName,
                                                        const double aShutdownCoef,
                                                        int aPeriod,
                                                        double aCapitalStock,
@@ -88,8 +88,8 @@ double MinicamLeontiefProductionFunction::calcProfits( InputSet& aInputs,
 
 double MinicamLeontiefProductionFunction::calcCoefficient( InputSet& aInputs,
                                                            double aConsumption,
-                                                           const string& aRegionName,
-                                                           const string& aSectorName,
+                                                           const gcamstr& aRegionName,
+                                                           const gcamstr& aSectorName,
                                                            int aPeriod,
                                                            double aSigma,
                                                            double aIndBusTax,
@@ -101,7 +101,7 @@ double MinicamLeontiefProductionFunction::calcCoefficient( InputSet& aInputs,
 }
 
 double MinicamLeontiefProductionFunction::changeElasticity( InputSet& input,
-                                                            const string& aRegionName,
+                                                            const gcamstr& aRegionName,
                                                             double aPriceReceived,
                                                             double aProfits,
                                                             double aCapitalStock,
@@ -116,8 +116,8 @@ double MinicamLeontiefProductionFunction::changeElasticity( InputSet& input,
 
 double MinicamLeontiefProductionFunction::calcDemand( InputSet& aInputs,
                                                       double aPersonalIncome,
-                                                      const string& aRegionName,
-                                                      const string& aSectorName,
+                                                      const gcamstr& aRegionName,
+                                                      const gcamstr& aSectorName,
                                                       const double aShutdownCoef,
                                                       int aPeriod,
                                                       double aCapitalStock,
@@ -139,8 +139,8 @@ double MinicamLeontiefProductionFunction::calcDemand( InputSet& aInputs,
 }
 
 double MinicamLeontiefProductionFunction::calcExpProfitRate( const InputSet& aInputs,
-                                                             const string& aRegionName,
-                                                             const string& aSectorName,
+                                                             const gcamstr& aRegionName,
+                                                             const gcamstr& aSectorName,
                                                              double aLifetimeYears,
                                                              int aPeriod,
                                                              double aAlphaZero,
@@ -151,8 +151,8 @@ double MinicamLeontiefProductionFunction::calcExpProfitRate( const InputSet& aIn
 }
 
 double MinicamLeontiefProductionFunction::calcLevelizedCost( const InputSet& aInputs,
-                                                             const string& aRegionName,
-                                                             const string& aSectorName,
+                                                             const gcamstr& aRegionName,
+                                                             const gcamstr& aSectorName,
                                                              int aPeriod,
                                                              double aAlphaZero,
                                                              double aSigma,
@@ -170,8 +170,8 @@ double MinicamLeontiefProductionFunction::calcLevelizedCost( const InputSet& aIn
 }
 
 double MinicamLeontiefProductionFunction::calcOutput( InputSet& aInputs,
-                                                      const string& aRegionName,
-                                                      const string& aSectorName,
+                                                      const gcamstr& aRegionName,
+                                                      const gcamstr& aSectorName,
                                                       const double aShutdownCoef,
                                                       int aPeriod,
                                                       double aCapitalStock,
@@ -183,8 +183,8 @@ double MinicamLeontiefProductionFunction::calcOutput( InputSet& aInputs,
 }
 
 double MinicamLeontiefProductionFunction::getCapitalOutputRatio( const InputSet& aInputs,
-                                                                 const string& aRegionName,
-                                                                 const string& aSectorName,
+                                                                 const gcamstr& aRegionName,
+                                                                 const gcamstr& aSectorName,
                                                                  double aLifetimeYears,
                                                                  int aPeriod,
                                                                  double aAlphaZero,
@@ -196,8 +196,8 @@ double MinicamLeontiefProductionFunction::getCapitalOutputRatio( const InputSet&
 
 double MinicamLeontiefProductionFunction::applyTechnicalChange( InputSet& aInputs,
                                                                 const TechChange& aTechChange,
-                                                                const string& aRegionName,
-                                                                const string& aSectorName,
+                                                                const gcamstr& aRegionName,
+                                                                const gcamstr& aSectorName,
                                                                 const int aPeriod,
                                                                 double aAlphaZero,
                                                                 double aSigma ) const
@@ -207,8 +207,8 @@ double MinicamLeontiefProductionFunction::applyTechnicalChange( InputSet& aInput
 }
 
 double MinicamLeontiefProductionFunction::calcUnscaledProfits( const InputSet& aInputs,
-                                                               const string& aRegionName,
-                                                               const string& aSectorName,
+                                                               const gcamstr& aRegionName,
+                                                               const gcamstr& aSectorName,
                                                                const int aPeriod,
                                                                const double aCapitalStock,
                                                                const double aAlphaZero,

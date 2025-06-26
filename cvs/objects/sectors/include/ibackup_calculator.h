@@ -112,10 +112,10 @@ public:
      * \return Reserve capacity per marginal intermittent electricity resource
      *         output.
      */
-    virtual double getMarginalBackupCapacity( const std::string& aSector,
-                                              const std::string& aElectricSector,
-                                              const std::string& aResource,
-                                              const std::string& aRegion,
+    virtual double getMarginalBackupCapacity( const gcamstr& aSector,
+                                              const gcamstr& aElectricSector,
+                                              const gcamstr& aResource,
+                                              const gcamstr& aRegion,
                                               const double aTechCapacityFactor,
                                               const double aReserveMargin,
                                               const double aAverageGridCapacityFactor,
@@ -137,10 +137,10 @@ public:
      * \param aPeriod Model period.
      * \return The average backup capacity required per unit of output.
      */
-    virtual double getAverageBackupCapacity( const std::string& aSector,
-                                             const std::string& aElectricSector,
-                                             const std::string& aResource,
-                                             const std::string& aRegion,
+    virtual double getAverageBackupCapacity( const gcamstr& aSector,
+                                             const gcamstr& aElectricSector,
+                                             const gcamstr& aResource,
+                                             const gcamstr& aRegion,
                                              const double aTechCapacityFactor,
                                              const double aReserveMargin,
                                              const double aAverageGridCapacityFactor,

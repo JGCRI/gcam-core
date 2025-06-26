@@ -71,20 +71,20 @@ public:
 
     virtual PassThroughTechnology* clone() const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator );
 
-    virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName,
+    virtual void production( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName,
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
                              const int aPeriod );
 
-    virtual double getFixedOutput( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    virtual double getFixedOutput( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const bool aHasRequiredInput,
                                    const std::string& aRequiredInput,
                                    const double aMarginalRevenue,
@@ -103,10 +103,10 @@ protected:
         Technology,
 
         //! The name of the sector this technology is retrieving fixed output from (extracted from the input objects).
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-name", mPassThroughSectorName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-name", mPassThroughSectorName, gcamstr ),
 
         //! The market name in which mPassThroughSectorName exists (extracted from the input objects).
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-market-name", mPassThroughMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "pass-through-market-name", mPassThroughMarketName, gcamstr ),
 
         //! The level of fixed output that exists in mPassThroughSectorName.
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "pass-through-fixed-output", mPassThroughFixedOutput, Value )

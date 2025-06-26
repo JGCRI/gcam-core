@@ -116,7 +116,7 @@ public:
      * \brief Return the name of the output.
      * \return The name of the output.
      */
-    virtual const std::string& getName() const = 0;
+    virtual const gcamstr& getName() const = 0;
 
     /*!
      * \brief Return the name of the input for reporting.
@@ -138,8 +138,8 @@ public:
      * \param aTechInfo The technology's information container.
      * \param aIsTechOperating Whether the Technology can operate.
      */
-    virtual void completeInit( const std::string& aSectorName,
-                               const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aSectorName,
+                               const gcamstr& aRegionName,
                                const IInfo* aTechInfo,
                                const bool aIsTechOperating ) = 0;
 
@@ -149,8 +149,8 @@ public:
      * \param aPeriod Model period.
      * \param aSectorName Sector name.
      */
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod ) = 0;
 
     /*!
@@ -158,7 +158,7 @@ public:
      * \param aRegionName Name of the containing region.
      * \param aPeriod Model period.
      */
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod ) = 0;
 
     /*! 
@@ -185,7 +185,7 @@ public:
      */
     typedef std::list<std::pair<std::string, double> > OutputList;
     virtual OutputList calcPhysicalOutput( const double aPrimaryOutput,
-                                           const std::string& aRegionName,
+                                           const gcamstr& aRegionName,
                                            const ICaptureComponent* aCaptureComponent,
                                            const int aPeriod ) const = 0;
 
@@ -200,7 +200,7 @@ public:
      * \sa calcPhysicalOutput
      */
     virtual void setPhysicalOutput( const double aPrimaryOutput,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     ICaptureComponent* aCaptureComponent,
                                     const int aPeriod ) = 0;
 
@@ -220,7 +220,7 @@ public:
      */
     virtual void setCurrencyOutput( const double aPysicalOutput,
                                     const double aCurrencyConversionPrice,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod ) = 0;
 
     /*!
@@ -236,7 +236,7 @@ public:
      * \param aPeriod Period.
      * \return The value in the given period.
      */
-    virtual double getValue( const std::string& aRegionName,
+    virtual double getValue( const gcamstr& aRegionName,
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const = 0;
     
@@ -245,7 +245,7 @@ public:
      * \param aRegionName Name of the region containing the output.
      * \return The appropriate units string to use.
      */
-    virtual std::string getOutputUnits( const std::string& aRegionName ) const = 0;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const = 0;
 
     /*!
      * \brief Get the emissions of a given gas per unit of primary output.
@@ -258,7 +258,7 @@ public:
      * \param aPeriod Model period
      * \return The emissions of the gas per unit of output.
      */
-    virtual double getEmissionsPerOutput( const std::string& aGHGName,
+    virtual double getEmissionsPerOutput( const gcamstr& aGHGName,
                                           const int aPeriod ) const = 0;
 
     // Documentation is inherited.
@@ -270,7 +270,7 @@ public:
      * \param aName - the name of the technology
      */
     virtual void sendLandAllocator( const ILandAllocator* aLandAllocator,
-                                   const std::string& aName ) = 0;
+                                   const gcamstr& aName ) = 0;
     
     /*!
      * \brief Hook for an output to do interpolations to fill in any data that

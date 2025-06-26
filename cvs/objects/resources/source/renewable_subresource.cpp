@@ -80,7 +80,7 @@ const std::string& SubRenewableResource::getXMLNameStatic(){
 /*! Renewable resources should have only grades with well defined cost curves. 
 \todo The extra elements in the vector should be removed. 
 Also remove any grades with zero available by resetting the parameter nograde. */
-void SubRenewableResource::completeInit( const string& aRegionName, const string& aResourceName,
+void SubRenewableResource::completeInit( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                          const IInfo* aSectorInfo ) {
 
     SubResource::completeInit( aRegionName, aResourceName, aSectorInfo );
@@ -119,7 +119,7 @@ void SubRenewableResource::completeInit( const string& aRegionName, const string
 *   production 
 */
 
-void SubRenewableResource::cumulsupply( const string& aRegionName, const string& aResourceName,
+void SubRenewableResource::cumulsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                         double aPrice, int aPeriod )
 {
     // Cumulative supply is not utilize for annual production.
@@ -133,7 +133,7 @@ void SubRenewableResource::cumulsupply( const string& aRegionName, const string&
 * Technological change is applied if present. 
 * Note that the cost curve needs to be in the form of price, and cumulative fraction available.
 */
-void SubRenewableResource::annualsupply( const string& aRegionName, const string& aResourceName,
+void SubRenewableResource::annualsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                          int aPeriod, double aPrice )
 {
     const Modeltime* modeltime = scenario->getModeltime();

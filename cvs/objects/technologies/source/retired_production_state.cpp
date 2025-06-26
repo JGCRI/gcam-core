@@ -56,8 +56,9 @@ bool RetiredProductionState::isSameType( const string& aType ) const {
 	return aType == getXMLNameStatic();
 }
 
-const string& RetiredProductionState::getName() const {
-	return getXMLNameStatic();
+const gcamstr& RetiredProductionState::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+	return NAME;
 }
 
 
@@ -74,8 +75,8 @@ const string& RetiredProductionState::getXMLNameStatic() {
 	return XML_NAME;
 }
 
-double RetiredProductionState::calcProduction( const string& aRegionName,
-                                               const string& aSectorName,
+double RetiredProductionState::calcProduction( const gcamstr& aRegionName,
+                                               const gcamstr& aSectorName,
                                                const double aVariableOutput,
                                                const MarginalProfitCalculator* aMarginalProfitCalc,
                                                const double aFixedOutputScaleFactor,

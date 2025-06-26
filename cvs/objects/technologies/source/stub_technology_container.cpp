@@ -91,13 +91,13 @@ void StubTechnologyContainer::toDebugXML( const int aPeriod, ostream& aOut, Tabs
     mTechnology->toDebugXML( aPeriod, aOut, aTabs );
 }
 
-const string& StubTechnologyContainer::getName() const {
+const gcamstr& StubTechnologyContainer::getName() const {
     return mName;
 }
 
-void StubTechnologyContainer::completeInit( const string& aRegionName,
-                                            const string& aSectorName,
-                                            const string& aSubsectorName,
+void StubTechnologyContainer::completeInit( const gcamstr& aRegionName,
+                                            const gcamstr& aSectorName,
+                                            const gcamstr& aSubsectorName,
                                             const IInfo* aSubsecInfo,
                                             ILandAllocator* aLandAllocator )
 {
@@ -129,14 +129,14 @@ void StubTechnologyContainer::completeInit( const string& aRegionName,
                                aSubsecInfo, aLandAllocator );
 }
 
-void StubTechnologyContainer::initCalc( const string& aRegionName, const string& aSectorName,
+void StubTechnologyContainer::initCalc( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                         const IInfo* aSubsecInfo, const Demographic* aDemographic,
                                         const int aPeriod )
 {
     mTechnology->initCalc( aRegionName, aSectorName, aSubsecInfo, aDemographic, aPeriod );
 }
 
-void StubTechnologyContainer::postCalc( const string& aRegionName, const int aPeriod ) {
+void StubTechnologyContainer::postCalc( const gcamstr& aRegionName, const int aPeriod ) {
     mTechnology->postCalc( aRegionName, aPeriod );
 }
 

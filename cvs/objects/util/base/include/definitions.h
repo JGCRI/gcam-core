@@ -53,6 +53,8 @@
 #include <list>
 #include <string>
 #include <iostream>
+#include "util/base/include/gcamstr.h"
+
 
 // Configuration constants.
 

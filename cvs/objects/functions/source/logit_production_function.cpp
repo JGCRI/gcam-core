@@ -48,8 +48,8 @@
 
 using namespace std;
 
-double LogitProductionFunction::calcCoefficient( InputSet& input, double consumption, const std::string& regionName,
-                            const std::string& sectorName, int period, double sigma, double IBT,
+double LogitProductionFunction::calcCoefficient( InputSet& input, double consumption, const gcamstr& aRegionName,
+                            const gcamstr& sectorName, int period, double sigma, double IBT,
                             double capitalStock, const IInput* aParentInput ) const
 {
     // period is really the period which we are setting the coef in
@@ -61,7 +61,7 @@ double LogitProductionFunction::calcCoefficient( InputSet& input, double consump
     for( ++it; it != input.end(); ++it ) {
         // get physical is really giving us currency at this point so divide
         // by the price to get physical
-        totalDemand += (*it)->getPhysicalDemand( basePeriod ) / (*it)->getPricePaid( regionName, basePeriod );
+        totalDemand += (*it)->getPhysicalDemand( basePeriod ) / (*it)->getPricePaid( aRegionName, basePeriod );
     }
 
     // we need to set this price back into the node because the node price does matter
@@ -74,21 +74,21 @@ double LogitProductionFunction::calcCoefficient( InputSet& input, double consump
     // TODO: we could get the biggest input and make the rest relative
     // to it that way the coefs will have meaning
     ++it;
-    double relativeFromPrice = (*it)->getPricePaid( regionName, basePeriod );
-    double relativeFromShare = ( (*it)->getPhysicalDemand( basePeriod ) / (*it)->getPricePaid( regionName, basePeriod ) )
+    double relativeFromPrice = (*it)->getPricePaid( aRegionName, basePeriod );
+    double relativeFromShare = ( (*it)->getPhysicalDemand( basePeriod ) / (*it)->getPricePaid( aRegionName, basePeriod ) )
         / totalDemand;
     for( ; it != input.end(); ++it ) {
-        double currShare = ( (*it)->getPhysicalDemand( basePeriod ) / (*it)->getPricePaid( regionName, basePeriod ) )
+        double currShare = ( (*it)->getPhysicalDemand( basePeriod ) / (*it)->getPricePaid( aRegionName, basePeriod ) )
             / totalDemand;
         double shareWeight = ( currShare / relativeFromShare )
-            * pow( relativeFromPrice / (*it)->getPricePaid( regionName, basePeriod ), sigma );
+            * pow( relativeFromPrice / (*it)->getPricePaid( aRegionName, basePeriod ), sigma );
         (*it)->setCoefficient( shareWeight, period );
         (*it)->setCoefficient( shareWeight, basePeriod );
     }
     return 1;
 }
 
-double LogitProductionFunction::changeElasticity( InputSet& input, const std::string& aRegionName, double priceReceived,
+double LogitProductionFunction::changeElasticity( InputSet& input, const gcamstr& aRegionName, double priceReceived,
                              double aProfits, double capitalStock, const int aPeriod, double alphaZero,
                              double sigmaNew, double sigmaOld ) const
 {
@@ -96,22 +96,22 @@ double LogitProductionFunction::changeElasticity( InputSet& input, const std::st
     return 0;
 }
 
-double LogitProductionFunction::calcDemand( InputSet& input, double consumption, const std::string& regionName,
-                       const std::string& sectorName, const double aShutdownCoef, int period,
+double LogitProductionFunction::calcDemand( InputSet& input, double consumption, const gcamstr& aRegionName,
+                       const gcamstr& sectorName, const double aShutdownCoef, int period,
                        double capitalStock, double alphaZero, double sigma, double IBT,
                        const IInput* aParentInput ) const
 {
     double totalSum = 0;
     for( InputSet::const_iterator it = input.begin(); it != input.end(); ++it ) {
-        totalSum += (*it)->getCoefficient( period ) * pow( (*it)->getPricePaid( regionName, period ), sigma );
+        totalSum += (*it)->getCoefficient( period ) * pow( (*it)->getPricePaid( aRegionName, period ), sigma );
     }
 
     double totalDemand = 0.0;
     for( InputSet::iterator it = input.begin(); it != input.end(); ++it ) {
         // consumption is really output at the current node
-        double shareDemand = (*it)->getCoefficient( period ) * pow( (*it)->getPricePaid( regionName, period ), sigma )
+        double shareDemand = (*it)->getCoefficient( period ) * pow( (*it)->getPricePaid( aRegionName, period ), sigma )
             / totalSum * consumption;
-        (*it)->setPhysicalDemand( shareDemand, regionName, period );
+        (*it)->setPhysicalDemand( shareDemand, aRegionName, period );
         totalDemand += shareDemand;
     }
 
@@ -122,8 +122,8 @@ double LogitProductionFunction::calcDemand( InputSet& input, double consumption,
     return totalDemand;
 }
 
-double LogitProductionFunction::calcLevelizedCost( const InputSet& aInputs, const std::string& aRegionName,
-                         const std::string& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
+double LogitProductionFunction::calcLevelizedCost( const InputSet& aInputs, const gcamstr& aRegionName,
+                         const gcamstr& aSectorName, int aPeriod, double aAlphaZero, double aSigma,
                          const IInput* aParentInput ) const
 {
     double totalSum = 0;

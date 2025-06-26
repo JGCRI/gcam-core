@@ -87,8 +87,8 @@ const string& AccumulatedPostGrade::getXMLNameStatic() {
 * \param aResourceName Resource name.
 * \param aPeriod Model period.
 */
-void AccumulatedPostGrade::initCalc( const string& aRegionName,
-                                     const string& aResourceName,
+void AccumulatedPostGrade::initCalc( const gcamstr& aRegionName,
+                                     const gcamstr& aResourceName,
                                      const int aPeriod )
 {
 }
@@ -101,8 +101,8 @@ void AccumulatedPostGrade::initCalc( const string& aRegionName,
 * \param aResourceName Resource name.
 * \param aPeriod Model period.
 */
-void AccumulatedPostGrade::postCalc( const string& aRegionName,
-                                     const string& aResourceName,
+void AccumulatedPostGrade::postCalc( const gcamstr& aRegionName,
+                                     const gcamstr& aResourceName,
                                      const int aPeriod )
 {
     // This is called only once at the end of each period. Add to available
@@ -112,10 +112,11 @@ void AccumulatedPostGrade::postCalc( const string& aRegionName,
     // none accumulated for period = 0
     if ( aPeriod > 0 ) {
         Marketplace* marketplace = scenario->getMarketplace();
+        gcamstr accRsrcKey("AccumulatedRsc");
         const IInfo* lastResourceInfo = marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod - 1, true );
-        lastPerAmount = lastResourceInfo->getDouble( "AccumulatedRsc", false );
+        lastPerAmount = lastResourceInfo->getDouble( accRsrcKey, false );
         const IInfo* currResourceInfo = marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, true );
-        curPerAmount = currResourceInfo->getDouble( "AccumulatedRsc", false );
+        curPerAmount = currResourceInfo->getDouble( accRsrcKey, false );
     }
     double diffAmount = curPerAmount - lastPerAmount;
 

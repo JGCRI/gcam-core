@@ -65,7 +65,6 @@ typedef std::map<unsigned int, double> LandMapType;
 LandNode::LandNode( const ALandAllocatorItem* aParent )
 : ALandAllocatorItem( aParent, eNode ),
 mChoiceFn( 0 ),
-mUnManagedLandValue( 0.0 ),
 mLandUseHistory( 0 ),
 mCarbonCalc( 0 )
 {
@@ -74,7 +73,6 @@ mCarbonCalc( 0 )
 LandNode::LandNode()
 : ALandAllocatorItem( eNode ),
 mChoiceFn( 0 ),
-mUnManagedLandValue( 0.0 ),
 mLandUseHistory( 0 ),
 mCarbonCalc( 0 )
 {
@@ -149,7 +147,7 @@ const string& LandNode::getXMLNameStatic() {
     return XML_NAME;
 }
 
-void LandNode::completeInit( const string& aRegionName,
+void LandNode::completeInit( const gcamstr& aRegionName,
                              const IInfo* aRegionInfo )
 {
     if( !mChoiceFn ) {
@@ -169,7 +167,7 @@ void LandNode::completeInit( const string& aRegionName,
     }
 }
 
-void LandNode::initCalc( const string& aRegionName, const int aPeriod )
+void LandNode::initCalc( const gcamstr& aRegionName, const int aPeriod )
 {
     mChoiceFn->initCalc( aRegionName, mName, true, aPeriod );
     
@@ -200,7 +198,7 @@ void LandNode::initCalc( const string& aRegionName, const int aPeriod )
 * \param aLandAllocationAbove Land allocation of the parent node
 * \param aPeriod Model period
 */
-void LandNode::setInitShares( const string& aRegionName,
+void LandNode::setInitShares( const gcamstr& aRegionName,
                                 const double aLandAllocationAbove,
                                 const int aPeriod )
 {
@@ -235,8 +233,8 @@ void LandNode::setInitShares( const string& aRegionName,
 * \param aProfitRate Profit rate passed in from ag food production technology
 * \param aPeriod Period.
 */
-void LandNode::setProfitRate( const string& aRegionName,
-                                 const string& aProductName,
+void LandNode::setProfitRate( const gcamstr& aRegionName,
+                                 const gcamstr& aProductName,
                                  const double aProfitRate,
                                  const int aPeriod )
 {
@@ -275,7 +273,7 @@ void LandNode::setSoilTimeScale( const int aTimeScale ) {
 * \param aChoiceFnAbove The discrete choice function from the level above.
 * \param aPeriod Period.
 */
-double LandNode::calcLandShares( const string& aRegionName,
+double LandNode::calcLandShares( const gcamstr& aRegionName,
                                  IDiscreteChoice* aChoiceFnAbove,
                                  const int aPeriod )
 {
@@ -313,7 +311,7 @@ double LandNode::calcLandShares( const string& aRegionName,
     return unnormalizedShareAbove; // the unnormalized share of this node.
 }
 
-void LandNode::calculateShareWeights( const string& aRegionName, 
+void LandNode::calculateShareWeights( const gcamstr& aRegionName, 
                                       IDiscreteChoice* aChoiceFnAbove,
                                       const int aPeriod,
                                       const bool aCalcFutureSW )
@@ -338,7 +336,7 @@ void LandNode::calculateShareWeights( const string& aRegionName,
  * \param aAverageProfitRate Average profit rate of region or subregion.
  * \param aPeriod model period.
  */
-void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
+void LandNode::setUnmanagedLandProfitRate( const gcamstr& aRegionName,
                                            double aAverageProfitRate,
                                            const int aPeriod )
 {
@@ -346,7 +344,7 @@ void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
     // If node is the root of a fixed land area nest ( typically a subregion )
     // or the root of the entire land allocatory, then set the average profit
     // rate to the previously calculated value. 
-    if ( mUnManagedLandValue > 0.0 ) {
+    if ( mUnManagedLandValue.isInited() ) {
         avgProfitRate = mUnManagedLandValue;
     }
     else {
@@ -359,7 +357,7 @@ void LandNode::setUnmanagedLandProfitRate( const string& aRegionName,
 }
 
 
-void LandNode::calculateNodeProfitRates( const string& aRegionName,
+void LandNode::calculateNodeProfitRates( const gcamstr& aRegionName,
                                          const int aPeriod )
 {
     // trigger the calculation for the children
@@ -394,7 +392,7 @@ void LandNode::calculateNodeProfitRates( const string& aRegionName,
  * \param aLandAllocationAbove Land allocation of parent.
  * \param aPeriod model period.
  */
-void LandNode::calcLandAllocation( const string& aRegionName,
+void LandNode::calcLandAllocation( const gcamstr& aRegionName,
                                    const double aLandAllocationAbove,
                                    const int aPeriod )
 {
@@ -420,7 +418,7 @@ void LandNode::calcLandAllocation( const string& aRegionName,
  * \param aStoreFullEmiss Flag to pass on to the carbon calc used as an optimization
  *                        to avoid store full LUC emissins during World.calc.
  */
-void LandNode::calcLUCEmissions( const string& aRegionName,
+void LandNode::calcLUCEmissions( const gcamstr& aRegionName,
                                  const int aPeriod, const int aEndYear,
                                  const bool aStoreFullEmiss )
 {
@@ -439,7 +437,7 @@ void LandNode::calcLUCEmissions( const string& aRegionName,
  * \param aType The desired type.
  * \return ALandAllocatorItem pointer to the child.
  */
-ALandAllocatorItem* LandNode::findChild( const string& aName,
+ALandAllocatorItem* LandNode::findChild( const gcamstr& aName,
                                          const LandAllocatorItemType aType ) {
     return findItem<ALandAllocatorItem>( eDFS, this, MatchesTypeAndName( aName, aType ) );
 }
@@ -450,7 +448,7 @@ ALandAllocatorItem* LandNode::findChild( const string& aName,
  * \param aType The desired type.
  * \return ALandAllocatorItem pointer to the child.
  */
-const ALandAllocatorItem* LandNode::findChild( const string& aName,
+const ALandAllocatorItem* LandNode::findChild( const gcamstr& aName,
                                                const LandAllocatorItemType aType ) const {
     return findItem<ALandAllocatorItem>( eDFS, this, MatchesTypeAndName( aName, aType ) );
 }
@@ -461,8 +459,8 @@ const ALandAllocatorItem* LandNode::findChild( const string& aName,
  * \param aPeriod Model period.
  * \return Total land allocation of a given product.
  */
-double LandNode::getLandAllocation( const string& aProductName,
-                                    const int aPeriod ) const 
+double LandNode::getLandAllocation( const gcamstr& aProductName,
+                                    const int aPeriod ) const
 {
     // Allows land for entire node to be returned
     if ( aProductName == mName ) {

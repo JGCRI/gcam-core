@@ -47,7 +47,7 @@
 using namespace std;
 
 ConsumerActivity::ConsumerActivity( Consumer* aConsumer, const Demographic* aDemographic,
-                                    const string& aRegionName ):
+                                    const gcamstr& aRegionName ):
 mConsumer( aConsumer ),
 mDemographic( aDemographic ),
 mRegionName( aRegionName )
@@ -67,5 +67,5 @@ void ConsumerActivity::calc( const int aPeriod ) {
 }
 
 string ConsumerActivity::getDescription() const {
-    return mRegionName + " " + mConsumer->getName();
+    return mRegionName.get() + " " + mConsumer->getName().get();
 }

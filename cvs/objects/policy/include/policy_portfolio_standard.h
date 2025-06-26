@@ -56,24 +56,18 @@ class PolicyPortfolioStandard: public GHGPolicy {
 public:
     PolicyPortfolioStandard();
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void completeInit( const std::string& aRegionName );
+    virtual void completeInit( const gcamstr& aRegionName );
 protected:
 
     DEFINE_DATA_WITH_PARENT(
         GHGPolicy,
         
-        //! Policy name
-        //DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
-        
-        //! Name of the market
-        //DEFINE_VARIABLE( SIMPLE, "market", mMarket, std::string ),
-        
         //! Type of policy (tax or subsidy)
-        DEFINE_VARIABLE( SIMPLE, "policyType", mPolicyType, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "policyType", mPolicyType, gcamstr ),
         
         //! Boolean to use share of total or quantity constraint
         DEFINE_VARIABLE( SIMPLE, "isShareBased", mIsShareBased, bool ),
@@ -94,10 +88,10 @@ protected:
         DEFINE_VARIABLE( ARRAY, "max-price", mMaxPrice, objects::PeriodVector<double> ),
         
         //! A label for the price units of this market
-        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnits, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnits, gcamstr ),
         
         //! A label for the units of this market
-        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnits, std::string )
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnits, gcamstr )
     )
 };
 

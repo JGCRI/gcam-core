@@ -211,7 +211,7 @@ vector<SolutionInfoParamParser::SolutionInfoValues*> SolutionInfoParamParser::ge
  *         be entries by both market type and good name.
  */
 SolutionInfoParamParser::SolutionInfoValues SolutionInfoParamParser::getSolutionInfoValuesForMarket( const string& aGoodName,
-                                                                                                     const string& aRegionName,
+                                                                                                     const gcamstr& aRegionName,
                                                                                                      const string& aMarketType,
                                                                                                      const int aPeriod ) const
 {

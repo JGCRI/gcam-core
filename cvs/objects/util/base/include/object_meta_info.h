@@ -95,7 +95,7 @@ public :
    /*! Get the name
     *  \return the name
     */
-   virtual const std::string& getName( void ) const { return mName; }
+   virtual const gcamstr& getName( void ) const { return mName; }
 
    /*! Get the value
     *  \return the value
@@ -142,7 +142,7 @@ protected :
         DEFINE_SUBCLASS_FAMILY( TObjectMetaInfo ),
 
         //! Sector name
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
     
         DEFINE_VARIABLE( SIMPLE, "value", mValue, value_type )
     )

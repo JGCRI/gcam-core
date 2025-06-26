@@ -81,7 +81,7 @@ double LeontiefProductionFunction::calcCapitalScaler( const InputSet& input, dou
 * \return alpha zero.
 */
 double LeontiefProductionFunction::calcCoefficient( InputSet& input, double consumption, 
-												    const string& regionName, const string& sectorName, 
+												    const gcamstr& aRegionName, const gcamstr& sectorName, 
                                                     int period, double sigma, double indBusTax, 
                                                     double capitalStock, const IInput* aParentInput ) const 
 {
@@ -100,7 +100,7 @@ double LeontiefProductionFunction::calcCoefficient( InputSet& input, double cons
     }
     
     // use price received(psubj) for the good in the next equation
-    double priceReceived = FunctionUtils::getPriceReceived( regionName, sectorName, period );
+    double priceReceived = FunctionUtils::getPriceReceived( aRegionName, sectorName, period );
     assert( priceReceived > 0 );
     double qSubJ = demandCurrencySum / priceReceived;
     assert( qSubJ > 0 );
@@ -111,9 +111,9 @@ double LeontiefProductionFunction::calcCoefficient( InputSet& input, double cons
             input[ i ]->setCoefficient( capitalStock / qSubJ, period );
         }
         else {
-            if( input[ i ]->getPricePaid( regionName, period ) > 0 ){
+            if( input[ i ]->getPricePaid( aRegionName, period ) > 0 ){
                 double currToPrice = input[ i ]->getCurrencyDemand( period )
-					                 / input[ i ]->getPricePaid( regionName, period );
+					                 / input[ i ]->getPricePaid( aRegionName, period );
                 input[ i ]->setCoefficient( currToPrice / qSubJ, period );
             }
             else {
@@ -129,7 +129,7 @@ double LeontiefProductionFunction::calcCoefficient( InputSet& input, double cons
 *          short-term elasticity.
 * \author Sonny Kim
 */
-double LeontiefProductionFunction::changeElasticity( InputSet& input, const string& aRegionName, 
+double LeontiefProductionFunction::changeElasticity( InputSet& input, const gcamstr& aRegionName, 
 													 double priceReceived, double aProfits, double capitalStock,
 													 const int aPeriod, double alphaZero, double sigmaNew,
 													 double sigmaOld ) const 
@@ -165,7 +165,7 @@ double LeontiefProductionFunction::changeElasticity( InputSet& input, const stri
 * \return Returns total demand
 */
 double LeontiefProductionFunction::calcDemand( InputSet& input, double personalIncome, 
-											   const string& regionName, const string& sectorName,
+											   const gcamstr& aRegionName, const gcamstr& sectorName,
                                                const double aShutdownCoef,
                                                int period, double capitalStock, double alphaZero, 
                                                double sigma, double IBT, const IInput* aParentInput ) const 
@@ -186,7 +186,7 @@ double LeontiefProductionFunction::calcDemand( InputSet& input, double personalI
                 mainLog << "Trying to add negative demand currency for " << input[ i ]->getName() 
 					    << " in " << sectorName << endl;
             }
-            input[ i ]->setCurrencyDemand( currDemand, regionName, period );
+            input[ i ]->setCurrencyDemand( currDemand, aRegionName, period );
         }
     }
     assert( totalDemand >= 0 );
@@ -195,16 +195,16 @@ double LeontiefProductionFunction::calcDemand( InputSet& input, double personalI
 }
 
 //! Calculate Expected Profit Rate.
-double LeontiefProductionFunction::calcExpProfitRate( const InputSet& input, const string& regionName, 
-													  const string& sectorName, double aLifetimeYears,
+double LeontiefProductionFunction::calcExpProfitRate( const InputSet& input, const gcamstr& aRegionName, 
+													  const gcamstr& sectorName, double aLifetimeYears,
 													  int period, double alphaZero, double sigma ) const 
 {
     double qCapital = calcCapitalScaler( input, alphaZero, sigma, 0, period );
-    double valQ = qCapital * FunctionUtils::getExpectedPriceReceived( input, regionName, sectorName,
+    double valQ = qCapital * FunctionUtils::getExpectedPriceReceived( input, aRegionName, sectorName,
                                                                       aLifetimeYears, period );
     assert( valQ >= 0 );
     assert( util::isValidNumber( valQ ) );
-    const double netPresentValueMult = FunctionUtils::getNetPresentValueMult( input, regionName,
+    const double netPresentValueMult = FunctionUtils::getNetPresentValueMult( input, aRegionName,
 																			  aLifetimeYears, period );
     double sum = 0;
     for( unsigned int i = 0; i < input.size(); ++i ){
@@ -229,8 +229,8 @@ double LeontiefProductionFunction::calcExpProfitRate( const InputSet& input, con
 * \param aSigma Sigma coefficient.
 * \return The levelized cost.
 */
-double LeontiefProductionFunction::calcLevelizedCost( const InputSet& aInputs, const string& aRegionName,
-													  const string& aSectorName, int aPeriod,
+double LeontiefProductionFunction::calcLevelizedCost( const InputSet& aInputs, const gcamstr& aRegionName,
+													  const gcamstr& aSectorName, int aPeriod,
 													  double aAlphaZero, double aSigma,
                                                       const IInput* aParentInput ) const
 {
@@ -253,14 +253,14 @@ double LeontiefProductionFunction::calcLevelizedCost( const InputSet& aInputs, c
 }
 
 //! Calculate profits.
-double LeontiefProductionFunction::calcUnscaledProfits( const InputSet& input, const string& regionName,
-														const string& sectorName, const int period, 
+double LeontiefProductionFunction::calcUnscaledProfits( const InputSet& input, const gcamstr& aRegionName,
+														const gcamstr& sectorName, const int period, 
 													    const double capitalStock, const double alphaZero, 
                                                         const double sigma ) const 
 {
     double qCapital = calcCapitalScaler( input, alphaZero, sigma, capitalStock, period );
 
-    double valQ = qCapital * FunctionUtils::getPriceReceived( regionName, sectorName, period );
+    double valQ = qCapital * FunctionUtils::getPriceReceived( aRegionName, sectorName, period );
     
     assert( valQ >= 0 );
     assert( util::isValidNumber( valQ ) );
@@ -269,7 +269,7 @@ double LeontiefProductionFunction::calcUnscaledProfits( const InputSet& input, c
     for( unsigned int i = 0; i < input.size(); ++i ){
         if( !input[ i ]->hasTypeFlag( IInput::CAPITAL ) ){
             sum += qCapital * input[ i ]->getCoefficient( period ) / alphaZero
-				   * input[ i ]->getPricePaid( regionName, period );
+				   * input[ i ]->getPricePaid( aRegionName, period );
         }
     }
     assert( sum >= 0 );
@@ -278,8 +278,8 @@ double LeontiefProductionFunction::calcUnscaledProfits( const InputSet& input, c
 }
 
 //! Calculate output.
-double LeontiefProductionFunction::calcOutput( InputSet& input, const string& regionName, 
-											   const string& sectorName, const double aShutdownCoef,
+double LeontiefProductionFunction::calcOutput( InputSet& input, const gcamstr& aRegionName, 
+											   const gcamstr& sectorName, const double aShutdownCoef,
                                                int period, double capitalStock, 
                                                double alphaZero, double sigma ) const 
 {
@@ -288,8 +288,8 @@ double LeontiefProductionFunction::calcOutput( InputSet& input, const string& re
 }
 
 //! Return the amount of output produced by one unit of capital.
-double LeontiefProductionFunction::getCapitalOutputRatio( const InputSet& aInputs, const string& aRegionName,
-														  const string& aSectorName, double aLifetimeYears, 
+double LeontiefProductionFunction::getCapitalOutputRatio( const InputSet& aInputs, const gcamstr& aRegionName,
+														  const gcamstr& aSectorName, double aLifetimeYears, 
                                                           int aPeriod, double aAlphaZero,
                                                           double aSigma ) const
 {
@@ -306,16 +306,16 @@ double LeontiefProductionFunction::getCapitalOutputRatio( const InputSet& aInput
 * \param input Vector of inputs for the demand function.
 * \param aTechChange A structure containing the various possible types of
 *        technical change.
-* \param regionName Name of the region containing the function.
+* \param aRegionName Name of the region containing the function.
 * \param sectorName Nmae of the sector containing the function.
 * \param alphaZero The up-front scaler.
 * \param sigma Sigma coefficient.
 * \return The new alpha zero.
 */
 double LeontiefProductionFunction::applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
-                                                         const string& regionName, const string& sectorName,
+                                                         const gcamstr& aRegionName, const gcamstr& sectorName,
                                                          const int aPeriod, double alphaZero, double sigma ) const 
 {
-    return FunctionUtils::applyTechnicalChangeInternal( input, aTechChange, regionName, sectorName,
+    return FunctionUtils::applyTechnicalChangeInternal( input, aTechChange, aRegionName, sectorName,
                                                         aPeriod, alphaZero, sigma );
 }

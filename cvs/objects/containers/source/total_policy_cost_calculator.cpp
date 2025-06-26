@@ -134,7 +134,7 @@ TotalPolicyCostCalculator::~TotalPolicyCostCalculator(){
 bool TotalPolicyCostCalculator::calculateAbatementCostCurve() {
     // If there is no policy market, the model will not create cost curves and 
     // will leave mRanCosts as false. This will prevent the cost curves from printing.
-    if( mSingleScenario->getInternalScenario()->getMarketplace()->getPrice( mGHGName, "USA", 1 ) == Marketplace::NO_MARKET_PRICE ){
+    if( mSingleScenario->getInternalScenario()->getMarketplace()->getPrice( gcamstr(mGHGName), gcamstr("USA"), 1 ) == Marketplace::NO_MARKET_PRICE ){
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::NOTICE );
         mainLog << "Skipping cost curve calculations for non-policy model run." << endl;
@@ -345,15 +345,15 @@ TotalPolicyCostCalculator::RegionCurves TotalPolicyCostCalculator::getEmissionsQ
     
     const Modeltime* modeltime = mSingleScenario->getInternalScenario()->getModeltime();
     const Marketplace* marketplace = mSingleScenario->getInternalScenario()->getMarketplace();
-    const string DEMAND_ADJ_KEY = "demand-adjust";
+    const gcamstr DEMAND_ADJ_KEY("demand-adjust");
     
     for( string currGHG : mGHGQuantityNames ) {
         RegionCurves currGHGCurves = mSingleScenario->getInternalScenario()->getEmissionsQuantityCurves( currGHG );
         for( auto currRegionCurve : currGHGCurves ) {
-            string currRegion = currRegionCurve.first;
+            gcamstr currRegion(currRegionCurve.first);
             for( int period = 0; period < modeltime->getmaxper(); ++period ) {
                 int year = modeltime->getper_to_yr( period );
-                const IInfo* currMarketInfo = marketplace->getMarketInfo( currGHG, currRegion, period, false );
+                const IInfo* currMarketInfo = marketplace->getMarketInfo( gcamstr(currGHG), currRegion, period, false );
                 // if the market info contains the "demand-adjust" we should weight the emissions with it
                 if( currMarketInfo && currMarketInfo->hasValue( DEMAND_ADJ_KEY ) ) {
                     double demandAdjust = currMarketInfo->getDouble( DEMAND_ADJ_KEY, true );

@@ -105,8 +105,9 @@ const string& PowerPlantCaptureComponent::getXMLName() const {
     return getXMLNameStatic();
 }
 
-const string& PowerPlantCaptureComponent::getName() const {
-    return getXMLNameStatic();
+const gcamstr& PowerPlantCaptureComponent::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 void PowerPlantCaptureComponent::toDebugXML( const int aPeriod,
@@ -122,8 +123,8 @@ void PowerPlantCaptureComponent::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void PowerPlantCaptureComponent::completeInit( const string& aRegionName,
-                                               const string& aSectorName )
+void PowerPlantCaptureComponent::completeInit( const gcamstr& aRegionName,
+                                               const gcamstr& aSectorName )
 {
     // Add the storage market as a dependency of the sector. This is because
     // this sector will have to be ordered first so that the total demand and
@@ -146,9 +147,8 @@ void PowerPlantCaptureComponent::completeInit( const string& aRegionName,
     }
 }
 
-void PowerPlantCaptureComponent::initCalc( const string& aRegionName,
-                                           const string& aSectorName,
-                                           const string& aFuelName,
+void PowerPlantCaptureComponent::initCalc( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
                                            const int aPeriod )
 {
 }
@@ -160,8 +160,8 @@ void PowerPlantCaptureComponent::initCalc( const string& aRegionName,
  * \param aPeriod 
  * \return storage cost
  */
-double PowerPlantCaptureComponent::getStorageCost( const string& aRegionName,
-                                                   const string& aGHGName,
+double PowerPlantCaptureComponent::getStorageCost( const gcamstr& aRegionName,
+                                                   const gcamstr& aGHGName,
                                                    const int aPeriod ) const
 {
     if( aGHGName != mTargetGas ){
@@ -192,7 +192,7 @@ double PowerPlantCaptureComponent::getStorageCost( const string& aRegionName,
  * \param aGHGName 
  * \return remove fraction
  */
-double PowerPlantCaptureComponent::getRemoveFraction( const string& aGHGName ) const {
+double PowerPlantCaptureComponent::getRemoveFraction( const gcamstr& aGHGName ) const {
     return aGHGName == mTargetGas ? mRemoveFraction : 0;
 }
 
@@ -205,8 +205,8 @@ double PowerPlantCaptureComponent::getRemoveFraction( const string& aGHGName ) c
  * \param aPeriod 
  * \return emissions sequestered
  */
-double PowerPlantCaptureComponent::calcSequesteredAmount( const string& aRegionName,
-                                                          const string& aGHGName,
+double PowerPlantCaptureComponent::calcSequesteredAmount( const gcamstr& aRegionName,
+                                                          const gcamstr& aGHGName,
                                                           const double aTotalEmissions,
                                                           const int aPeriod )
 {
@@ -234,7 +234,7 @@ double PowerPlantCaptureComponent::calcSequesteredAmount( const string& aRegionN
  * \param aPeriod 
  * \return sequestered amount
  */
-double PowerPlantCaptureComponent::getSequesteredAmount( const string& aGHGName,
+double PowerPlantCaptureComponent::getSequesteredAmount( const gcamstr& aGHGName,
                                                          const bool aGetGeologic,
                                                          const int aPeriod ) const 
 {
@@ -251,7 +251,7 @@ double PowerPlantCaptureComponent::getSequesteredAmount( const string& aGHGName,
 * \param aInputs Vector of technology inputs.
 * \param aPeriod Model period.
 */
-void PowerPlantCaptureComponent::adjustInputs( const string& aRegionName,
+void PowerPlantCaptureComponent::adjustInputs( const gcamstr& aRegionName,
                                                vector<IInput*>& aInputs,
                                                const int aPeriod ) const
 {
@@ -301,7 +301,7 @@ void PowerPlantCaptureComponent::adjustEnergyInput( IInput* aEnergyInput,
 }
 
 void PowerPlantCaptureComponent::adjustNonEnergyInput( IInput* aNonEnergyInput,
-                                                       const string& aRegionName,
+                                                       const gcamstr& aRegionName,
                                                        const double aBaseEnergyIntensity,
                                                        const double aEffectiveEnergyIntensity,
                                                        const double aFuelEmissCoef,

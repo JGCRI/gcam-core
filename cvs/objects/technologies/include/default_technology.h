@@ -87,8 +87,8 @@ protected:
 
 	virtual const std::string& getXMLName() const;
 	
-    virtual double getTotalInputCost( const std::string& aRegionName,
-                                      const std::string& aSectorName,
+    virtual double getTotalInputCost( const gcamstr& aRegionName,
+                                      const gcamstr& aSectorName,
 		                              const int aPeriod ) const;
 };
 

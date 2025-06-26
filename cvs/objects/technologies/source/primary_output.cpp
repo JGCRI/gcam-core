@@ -52,7 +52,7 @@ using namespace std;
 
 extern Scenario* scenario;
 
-PrimaryOutput::PrimaryOutput( const string& aSectorName )
+PrimaryOutput::PrimaryOutput( const gcamstr& aSectorName )
 {
     mName = aSectorName;
 }
@@ -80,7 +80,7 @@ bool PrimaryOutput::isSameType( const string& aType ) const
     return aType == "primary-output";
 }
 
-const string& PrimaryOutput::getName() const
+const gcamstr& PrimaryOutput::getName() const
 {
     // Make sure the name is initialized.
     assert( !mName.empty() );
@@ -120,16 +120,16 @@ void PrimaryOutput::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( "primary-output", aOut, aTabs );
 }
 
-void PrimaryOutput::completeInit( const string& aSectorName,
-                                  const string& aRegionName,
+void PrimaryOutput::completeInit( const gcamstr& aSectorName,
+                                  const gcamstr& aRegionName,
                                   const IInfo* aTechInfo,
                                   const bool aIsTechOperating )
 {
     // Primary outputs do not have any additional dependencies.
 }
 
-void PrimaryOutput::initCalc( const string& aRegionName,
-                              const string& aSectorName,
+void PrimaryOutput::initCalc( const gcamstr& aRegionName,
+                              const gcamstr& aSectorName,
                               const int aPeriod )
 {
     // Make sure the primary output has a name.
@@ -147,7 +147,7 @@ void PrimaryOutput::initCalc( const string& aRegionName,
     }
 }
 
-void PrimaryOutput::postCalc( const string& aRegionName,
+void PrimaryOutput::postCalc( const gcamstr& aRegionName,
                               const int aPeriod )
 {
 }
@@ -157,7 +157,7 @@ void PrimaryOutput::scaleCoefficient( const double aScaler ){
 }
 
 IOutput::OutputList PrimaryOutput::calcPhysicalOutput( const double aPrimaryOutput,
-                                                       const string& aRegionName,
+                                                       const gcamstr& aRegionName,
                                                        const ICaptureComponent* aCaptureComponent,
                                                        const int aPeriod ) const
 {
@@ -168,7 +168,7 @@ IOutput::OutputList PrimaryOutput::calcPhysicalOutput( const double aPrimaryOutp
 }
 
 void PrimaryOutput::setPhysicalOutput( const double aPrimaryOutput,
-                                       const string& aRegionName,
+                                       const gcamstr& aRegionName,
                                        ICaptureComponent* aCaptureComponent,
                                        const int aPeriod )
 {
@@ -190,7 +190,7 @@ double PrimaryOutput::getPhysicalOutput( const int aPeriod ) const {
     return mPhysicalOutputs[ aPeriod ];
 }
 
-double PrimaryOutput::getValue( const string& aRegionName,
+double PrimaryOutput::getValue( const gcamstr& aRegionName,
                                 const ICaptureComponent* aCaptureComponent,
                                 const int aPeriod ) const
 {
@@ -198,12 +198,12 @@ double PrimaryOutput::getValue( const string& aRegionName,
     return 0;
 }
 
-string PrimaryOutput::getOutputUnits( const string& aRegionName ) const {
+gcamstr PrimaryOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return mCachedMarket.getMarketInfo( getName(), aRegionName, 0, true )
         ->getString( "output-unit", false );
 }
 
-double PrimaryOutput::getEmissionsPerOutput( const string& aGHGName,
+double PrimaryOutput::getEmissionsPerOutput( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     assert( mCachedCO2Coef.isInited() );

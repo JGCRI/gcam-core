@@ -112,13 +112,13 @@ void GDPControl::toDebugXMLDerived( const int aPeriod, ostream& aOut, Tabs* aTab
     XMLWriteElement( mSteepness, "steepness", aOut, aTabs);
 }
 
-void GDPControl::completeInit( const string& aRegionName, const string& aSectorName,
+void GDPControl::completeInit( const gcamstr& aRegionName, const gcamstr& aSectorName,
                                const IInfo* aTechIInfo )
 {
     SectorUtils::addGDPDependency( aRegionName, aSectorName );
 }
 
-void GDPControl::initCalc( const string& aRegionName,
+void GDPControl::initCalc( const gcamstr& aRegionName,
                            const IInfo* aTechInfo,
                            const NonCO2Emissions* aParentGHG,
                            const int aPeriod )
@@ -131,7 +131,7 @@ void GDPControl::initCalc( const string& aRegionName,
     }    
 }
 
-double GDPControl::calcEmissionsReduction( const std::string& aRegionName, const int aPeriod ) {
+double GDPControl::calcEmissionsReduction( const gcamstr& aRegionName, const int aPeriod ) {
     const Modeltime* modeltime = scenario->getModeltime();
     double reduction = 0.0;
     

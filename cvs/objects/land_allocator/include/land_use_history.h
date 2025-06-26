@@ -84,7 +84,7 @@ public:
     // AParsable Methods.
     virtual bool XMLParse( rapidxml::xml_node<char>* & aNode );
     
-    const std::string& getName() const;
+    const gcamstr& getName() const;
 
     void toDebugXML( const int aPeriod,
                      std::ostream& aOut,

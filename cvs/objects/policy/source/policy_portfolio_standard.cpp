@@ -95,7 +95,7 @@ const string& PolicyPortfolioStandard::getXMLNameStatic() {
 }
 
 //! Get the ghg policy name. 
-const string& PolicyPortfolioStandard::getName() const {
+const gcamstr& PolicyPortfolioStandard::getName() const {
     return mName;
 }
 
@@ -136,20 +136,20 @@ void PolicyPortfolioStandard::toDebugXML( const int period, ostream& out, Tabs* 
 * \author Sonny Kim
 * \param regionName The name of the region the policy controls. 
 */
-void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
+void PolicyPortfolioStandard::completeInit( const gcamstr& aRegionName ) {
     const Modeltime* modeltime = scenario->getModeltime();
     Marketplace* marketplace = scenario->getMarketplace();
     // Create the policy market, a solved market of GHG type which
     // sets the supply side as the constraint and the demand side
     // as the calculated value.
 
-	if ( mPolicyType == "tax") {
+	if ( mPolicyType == gcamstr("tax")) {
         marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::TAX );
     }
-	else if ( mPolicyType == "RES") {
+	else if ( mPolicyType == gcamstr("RES")) {
         marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::RES );	
 	} 
-    else if( mPolicyType == "subsidy" ) {
+    else if( mPolicyType == gcamstr("subsidy") ) {
         marketplace->createMarket( aRegionName, mMarket, mName, IMarketType::SUBSIDY );
     }
     else {
@@ -162,9 +162,9 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
 
     // Set price and output units for period 0 market info.
     IInfo* marketInfo = marketplace->getMarketInfo( mName, aRegionName, 0, true );
-    marketInfo->setString( "price-unit", mPriceUnits );
-    marketInfo->setString( "output-unit", mOutputUnits );
-    marketInfo->setString( "policy-type", mPolicyType );
+    marketInfo->setString( gcamstr("price-unit"), mPriceUnits );
+    marketInfo->setString( gcamstr("output-unit"), mOutputUnits );
+    marketInfo->setString( gcamstr("policy-type"), mPolicyType );
 
     // Put the taxes in the market as the market prices if it is a fixed tax policy.
     for( unsigned int i = 0; i < mFixedTax.size(); ++i ){
@@ -183,7 +183,7 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
     // technology is in.
     if( mIsShareBased ){
         tempConstraint = mShareOfSectorOutput;
-        marketInfo->setBoolean( "isShareBased", true );
+        marketInfo->setBoolean( gcamstr("isShareBased"), true );
     }
     // Set either of the constraints, quantity or share, into the
     // DEMAND side of the market for a subsidy, so that increasing subsidy 
@@ -197,12 +197,12 @@ void PolicyPortfolioStandard::completeInit( const string& aRegionName ) {
         // because addToDemand adds to any existing demand in the market.
         // Passing false to suppress a warning the first time through.
         if( tempConstraint[ per ].isInited() ){
-            if ( mPolicyType == "tax" ){
+            if ( mPolicyType == gcamstr("tax") ){
                 marketplace->setMarketToSolve( mName, aRegionName, per );
                 marketplace->addToSupply( mName, aRegionName, Value( tempConstraint[ per ] -
                     marketplace->getSupply( mName, aRegionName, per ) ), per, false );
             }
-            else if ( mPolicyType == "RES" ){  // maw doesn't understand this
+            else if ( mPolicyType == gcamstr("RES") ){  // maw doesn't understand this
                 marketplace->setMarketToSolve( mName, aRegionName, per );
             //	maw doesn't understand this.  But it doesn;t work otherwise
                 marketplace->addToSupply( mName, aRegionName, Value( tempConstraint[ per ] -

@@ -108,7 +108,7 @@ public:
     static const std::string& getXMLNameStatic();
 
     // INamed methods
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     
 protected:
     

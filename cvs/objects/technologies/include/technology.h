@@ -168,39 +168,39 @@ public:
     
     virtual const std::string& getXMLName() const = 0;
     
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
-                               const std::string& aSubsectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
+                               const gcamstr& aSubsectorName,
                                const IInfo* aSubsectorIInfo,
                                ILandAllocator* aLandAllocator );
     
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const IInfo* aSubsectorInfo,
                            const Demographic* aDemographics,
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
     
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
-    virtual void production( const std::string& aRegionName,
-                             const std::string& aSectorName, 
+    virtual void production( const gcamstr& aRegionName,
+                             const gcamstr& aSectorName, 
                              double aVariableDemand,
                              double aFixedOutputScaleFactor,
                              const int aPeriod );
 
-    virtual double calcShare( const std::string& aRegionName,
+    virtual double calcShare( const gcamstr& aRegionName,
                               const IDiscreteChoice* aChoiceFn,
                               int aPeriod ) const;
     
-    virtual void calcCost( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void calcCost( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 
     virtual double getCost( const int aPeriod ) const;
 
-    const std::string& getName() const;
+    const gcamstr& getName() const;
 
     void setShareWeight( double shareWeightValue );
     
@@ -211,13 +211,13 @@ public:
     virtual bool hasCalibratedValue( const int aPeriod ) const;
 
     // TODO: Make this non-virtual when transportation is fixed by units.
-    virtual double getEnergyCost( const std::string& aRegionName,
-                                  const std::string& aSectorName,
+    virtual double getEnergyCost( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const int aPeriod ) const;
 
     double getOutput( const int aPeriod ) const;
 
-    virtual double getTotalGHGCost( const std::string& aRegionName, const std::string& aSectorName, 
+    virtual double getTotalGHGCost( const gcamstr& aRegionName, const gcamstr& aSectorName, 
                             const int aPeriod ) const;
 
     double getShareWeight() const;
@@ -236,8 +236,8 @@ public:
 
     const std::vector<std::string> getGHGNames() const;
 
-    virtual double getFixedOutput( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual double getFixedOutput( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const bool aHasRequiredInput,
                            const std::string& aRequiredInput,
                            const double aMarginalRevenue,
@@ -245,9 +245,9 @@ public:
     
     bool isAllCalibrated( const int aPeriod,
                           double aCalAccuracy,
-                          const std::string& aRegionName,
-                          const std::string& aSectorName,
-                          const std::string& aSubsectorName,
+                          const gcamstr& aRegionName,
+                          const gcamstr& aSectorName,
+                          const gcamstr& aSubsectorName,
                           const bool aPrintWarnings ) const;
 
     // TODO: rename this method to isOutputFixedOrCalibrated
@@ -310,10 +310,10 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "cost", mCosts, objects::TechVintageVector<Value> ),
 
         //! A map of a keyword to its keyword group
-        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<std::string, std::string> ),
+        DEFINE_VARIABLE( SIMPLE, "keyword", mKeywordMap, std::map<gcamstr, gcamstr> ),
 
         //! Name of this technology.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Logit share weight
         DEFINE_VARIABLE( SIMPLE | STATE | NOT_PARSABLE, "real-share-weight", mShareWeight, Value ),
@@ -353,25 +353,25 @@ protected:
 
     bool hasInput( const std::string& aInput ) const;
     
-    virtual double getTotalInputCost( const std::string& aRegionName,
-                                      const std::string& aSectorName,
+    virtual double getTotalInputCost( const gcamstr& aRegionName,
+                                      const gcamstr& aSectorName,
                                       const int aPeriod ) const;
 
-    virtual double getMarginalRevenue( const std::string& aRegionName,
-                               const std::string& aSectorName,
+    virtual double getMarginalRevenue( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const int aPeriod ) const;
 
-    virtual void calcEmissionsAndOutputs( const std::string& aRegionName,
-                                          const std::string& aSectorName,
+    virtual void calcEmissionsAndOutputs( const gcamstr& aRegionName,
+                                          const gcamstr& aSectorName,
                                           const double aPrimaryOutput,
                                           const int aPeriod );
 
     // TODO: Make this non-virtual when transportation is fixed by units.
-    virtual double calcSecondaryValue( const std::string& aRegionName,
+    virtual double calcSecondaryValue( const gcamstr& aRegionName,
                                        const int aPeriod ) const;
     
-    virtual double getCurrencyConversionPrice( const std::string& aRegionName,
-                                               const std::string& aSectorName,
+    virtual double getCurrencyConversionPrice( const gcamstr& aRegionName,
+                                               const gcamstr& aSectorName,
                                                const int aPeriod ) const;
 
     bool hasNoInputOrOutput( const int aPeriod ) const;

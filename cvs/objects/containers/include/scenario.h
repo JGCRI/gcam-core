@@ -50,6 +50,7 @@
 #include <string>
 #include <boost/shared_ptr.hpp>
 
+#include "util/base/include/definitions.h"
 #include "util/base/include/aparsable.h"
 #include "util/base/include/ivisitable.h"
 #include "util/base/include/data_definition_util.h"
@@ -102,7 +103,7 @@ public:
     void completeInit();
     void setName(std::string newName);
 
-    const std::string& getName() const;
+    const gcamstr& getName() const;
     bool run( const int aSinglePeriod, const bool aPrintDebugging, const std::string& aFilenameEnding = "" );
     void setTax( const GHGPolicy* aTax );
     std::map<std::string, const Curve*> getEmissionsQuantityCurves( const std::string& ghgName ) const;
@@ -126,7 +127,7 @@ protected:
         DEFINE_SUBCLASS_FAMILY( Scenario ),
                 
         /*! \brief The Scenario name. */
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         /*! \brief The modeltime for the scenario. */
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "modeltime", mModeltime, const Modeltime* ),

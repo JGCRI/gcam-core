@@ -61,6 +61,8 @@ extern Scenario* scenario;
 LandAllocator::LandAllocator()
 : LandNode( 0 )
 {
+    // explicitly initialize to zero to avoid tripping debug state checks
+    mUnManagedLandValue = 0.0;
     mSoilTimeScale = CarbonModelUtils::getSoilTimeScale();
 }
 
@@ -91,7 +93,7 @@ void LandAllocator::toDebugXML( const int aPeriod, std::ostream& aOut, Tabs* aTa
     ALandAllocatorItem::toDebugXML( aPeriod, aOut, aTabs );  
 }
 
-void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
+void LandAllocator::initCalc( const gcamstr& aRegionName, const int aPeriod )
 {
     // do an initial call to setUnmanagedLandProfitRate here which allows us
     // to avoid tagging the mUnManagedLandValue as STATE in the land nodes
@@ -110,7 +112,7 @@ void LandAllocator::initCalc( const string& aRegionName, const int aPeriod )
     LandNode::initCalc( aRegionName, aPeriod );
 }
 
-void LandAllocator::completeInit( const string& aRegionName, 
+void LandAllocator::completeInit( const gcamstr& aRegionName, 
                                   const IInfo* aRegionInfo )
 {
     // Ensure the parent nodes are set through out the tree.  The root has no
@@ -120,7 +122,7 @@ void LandAllocator::completeInit( const string& aRegionName,
     // create a land-info from the region info so we can pass the
     // negative emissions market name
     IInfo* landInfo = InfoFactory::constructInfo( aRegionInfo, mName );
-    landInfo->setString( "negative-emiss-market", mNegEmissMarketName );
+    landInfo->setString( gcamstr("negative-emiss-market"), mNegEmissMarketName );
 
 
     // Call generic node method (since LandAllocator is just a specialized node)
@@ -149,7 +151,7 @@ void LandAllocator::completeInit( const string& aRegionName,
  * \param aRegionName Region name.
  * \param aPeriod model period.
  */
-void LandAllocator::checkLandArea( const string& aRegionName, const int aPeriod ) {
+void LandAllocator::checkLandArea( const gcamstr& aRegionName, const int aPeriod ) {
 
     // Check to make sure that the sum of the area of the leafs is equal
     // to the total land area read in.
@@ -184,7 +186,7 @@ void LandAllocator::checkLandArea( const string& aRegionName, const int aPeriod 
  * \param aPeriod model period.
  * \author Marshall Wise and Katherine V Calvin
  */
-void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int aPeriod ) {
+void LandAllocator::calibrateLandAllocator( const gcamstr& aRegionName, const int aPeriod ) {
     
 /*  Step 1. Calculate and set initial land shares based on read in data for a 
     calibration period. */
@@ -229,7 +231,7 @@ void LandAllocator::calibrateLandAllocator( const string& aRegionName, const int
     calculateShareWeights( aRegionName, mChoiceFn, aPeriod, false );
 }
 
-double LandAllocator::getLandAllocation( const string& aProductName,
+double LandAllocator::getLandAllocation( const gcamstr& aProductName,
                                          const int aPeriod ) const
 {
     const ALandAllocatorItem* node = findChild( aProductName, eLeaf );
@@ -255,8 +257,8 @@ void LandAllocator::setSoilTimeScale( const int aTimeScale ) {
 
 }
 
-void LandAllocator::setProfitRate( const string& aRegionName,
-                                   const string& aProductName,
+void LandAllocator::setProfitRate( const gcamstr& aRegionName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod )
 {
@@ -267,7 +269,7 @@ void LandAllocator::setProfitRate( const string& aRegionName,
     } 
 }
 
-void LandAllocator::setInitShares( const string& aRegionName,
+void LandAllocator::setInitShares( const gcamstr& aRegionName,
                                    const double aLandAllocationAbove,
                                    const int aPeriod )
 {
@@ -282,7 +284,7 @@ void LandAllocator::setInitShares( const string& aRegionName,
     mShare[ aPeriod ] = 1;
 }
 
-double LandAllocator::calcLandShares( const string& aRegionName,
+double LandAllocator::calcLandShares( const gcamstr& aRegionName,
                                       IDiscreteChoice* aChoiceFnAbove,
                                       const int aPeriod ){
 
@@ -296,7 +298,7 @@ double LandAllocator::calcLandShares( const string& aRegionName,
     return 1;
 }
 
-void LandAllocator::calcLandAllocation( const string& aRegionName,
+void LandAllocator::calcLandAllocation( const gcamstr& aRegionName,
                                             const double aLandAllocationAbove,
                                             const int aPeriod ){
     for ( unsigned int i = 0; i < mChildren.size(); ++i ){
@@ -304,7 +306,7 @@ void LandAllocator::calcLandAllocation( const string& aRegionName,
     }
 }
 
-void LandAllocator::calcLUCEmissions( const string& aRegionName, const int aPeriod,
+void LandAllocator::calcLUCEmissions( const gcamstr& aRegionName, const int aPeriod,
                                       const int aEndYear, const bool aStoreFullEmiss )
 {
     // Calculate emissions for all years in this model period.  Note that in
@@ -315,7 +317,7 @@ void LandAllocator::calcLUCEmissions( const string& aRegionName, const int aPeri
 }
 
 
-void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
+void LandAllocator::calcFinalLandAllocation( const gcamstr& aRegionName,
                                                  const int aPeriod ){
 
     // In calibration periods, check land area and set calibration values
@@ -340,7 +342,7 @@ void LandAllocator::calcFinalLandAllocation( const string& aRegionName,
                       scenario->getModeltime()->getper_to_yr( aPeriod ), false );
 }
 
-void LandAllocator::postCalc( const string& aRegionName, const int aPeriod ) {
+void LandAllocator::postCalc( const gcamstr& aRegionName, const int aPeriod ) {
     // In the final calibration year re-calculate the share-weights this time
     // calculating the future share-weights as well.
     if( scenario->getModeltime()->getFinalCalibrationPeriod() == aPeriod ) {
@@ -355,7 +357,7 @@ void LandAllocator::postCalc( const string& aRegionName, const int aPeriod ) {
     calcLUCEmissions( aRegionName, aPeriod, CarbonModelUtils::getEndYear(), true );
 }
 
-ALandAllocatorItem* LandAllocator::findProductLeaf( const string& aProductName ) {
+ALandAllocatorItem* LandAllocator::findProductLeaf( const gcamstr& aProductName ) {
     return findChild( aProductName, eLeaf );
 }
 

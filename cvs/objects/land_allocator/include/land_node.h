@@ -91,26 +91,26 @@ public:
     
     virtual const std::string& getXMLName() const;
     
-    virtual void completeInit( const std::string& aRegionName, 
+    virtual void completeInit( const gcamstr& aRegionName, 
                                const IInfo* aRegionInfo );
     
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
-    virtual void setInitShares( const std::string& aRegionName,
+    virtual void setInitShares( const gcamstr& aRegionName,
                                 const double aLandAllocationAbove,
                                 const int aPeriod );
 
-    virtual void calculateNodeProfitRates( const std::string& aRegionName,
+    virtual void calculateNodeProfitRates( const gcamstr& aRegionName,
                                            const int aPeriod );
 
-    virtual void calculateShareWeights( const std::string& aRegionName, 
+    virtual void calculateShareWeights( const gcamstr& aRegionName, 
                                         IDiscreteChoice* aChoiceFnAbove,
                                         const int aPeriod,
                                         const bool aCalcFutureSW );
 
-    virtual void setProfitRate( const std::string& aRegionName,
-                                   const std::string& aProductName,
+    virtual void setProfitRate( const gcamstr& aRegionName,
+                                   const gcamstr& aProductName,
                                    const double aProfitRate,
                                    const int aPeriod );
 
@@ -123,19 +123,19 @@ public:
      */
     virtual void setSoilTimeScale( const int aTimeScale );
 
-    virtual double calcLandShares( const std::string& aRegionName,
+    virtual double calcLandShares( const gcamstr& aRegionName,
                                    IDiscreteChoice* aChoiceFnAbove,
                                    const int aPeriod );
 
-    virtual void calcLandAllocation( const std::string& aRegionName,
+    virtual void calcLandAllocation( const gcamstr& aRegionName,
                                      const double aLandAllocationAbove,
                                      const int aPeriod );
     
-    virtual void calcLUCEmissions( const std::string& aRegionName,
+    virtual void calcLUCEmissions( const gcamstr& aRegionName,
                                    const int aYear, const int aEndYear,
                                    const bool aStoreFullEmiss );
     
-    virtual double getLandAllocation( const std::string& aProductName,
+    virtual double getLandAllocation( const gcamstr& aProductName,
                                       const int aPeriod ) const;
 
     virtual double getCalLandAllocation( const LandAllocationType aType,
@@ -143,7 +143,7 @@ public:
 
     virtual LandUseHistory* getLandUseHistory();
         
-    virtual void setUnmanagedLandProfitRate( const std::string& aRegionName, 
+    virtual void setUnmanagedLandProfitRate( const gcamstr& aRegionName, 
                                              double aAverageProfitRate,
                                              const int aPeriod );
     
@@ -164,10 +164,10 @@ protected:
                                     std::ostream& out, 
                                     Tabs* tabs ) const;
     
-    ALandAllocatorItem* findChild( const std::string& aName,
+    ALandAllocatorItem* findChild( const gcamstr& aName,
                                    const LandAllocatorItemType aType );
     
-    const ALandAllocatorItem* findChild( const std::string& aName,
+    const ALandAllocatorItem* findChild( const gcamstr& aName,
                                          const LandAllocatorItemType aType ) const;
     
     // Define data such that introspection utilities can process the data from this

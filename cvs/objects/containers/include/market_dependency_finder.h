@@ -90,10 +90,10 @@ public:
     MarketDependencyFinder( Marketplace* aMarketplace );
     ~MarketDependencyFinder();
     
-    bool addDependency( const std::string& aDependentName,
-                        const std::string& aDependentRegion,
-                        const std::string& aDependencyName,
-                        const std::string& aDependencyRegion,
+    bool addDependency( const gcamstr& aDependentName,
+                        const gcamstr& aDependentRegion,
+                        const gcamstr& aDependencyName,
+                        const gcamstr& aDependencyRegion,
                         const bool aCanBeBroken = true );
 
     const std::vector<IActivity*> getOrdering( const int aMarketNumber = -1 ) const;
@@ -102,8 +102,8 @@ public:
     GcamFlowGraph* getFlowGraph( const int aMarketNumber = -1 );
 #endif
 
-    void resolveActivityToDependency( const std::string& aRegionName, 
-                                      const std::string& aActivityName,
+    void resolveActivityToDependency( const gcamstr& aRegionName, 
+                                      const gcamstr& aActivityName,
                                       IActivity* aDemandActivity,
                                       IActivity* aPriceActivity = 0 );
     
@@ -191,18 +191,18 @@ public:
      *             to associate markets to their corresponding DependencyItem.
      */
     struct DependencyItem {
-        DependencyItem( const std::string& aName, const std::string& aLocatedInRegion )
+        DependencyItem( const gcamstr& aName, const gcamstr& aLocatedInRegion )
         :mName( aName ), mLocatedInRegion( aLocatedInRegion ), mIsSolved( false ),
         mLinkedMarket( -1 ), mCanBreakCycle( true ), mHasSelfDependence( false ),
         mHasIncomingDependency( false ){}
         ~DependencyItem();
         
         //! A name of a dependency which will correspond to a sector or resource, etc.
-        const std::string mName;
+        const gcamstr mName;
         
         //! The name of the region in which this dependency's activities will
         //! reside.
-        const std::string mLocatedInRegion;
+        const gcamstr mLocatedInRegion;
         
         //! The initial linkage to dependent items which is put together potentially
         //! before the DependencyItem has it's activities set.
@@ -245,7 +245,7 @@ public:
             // by default *all* technologies will get an incoming dependency
             // on CO2 but for the purposes of error checking we don't
             // want to count that.
-            if( mName != "CO2" ) {
+            if( mName != gcamstr("CO2") ) {
                 aDependentItem->mHasIncomingDependency = true;
             }
             return mDependentList.insert( aDependentItem ).second;

@@ -78,7 +78,6 @@
 #include "land_allocator/include/land_use_history.h"
 #include "ccarbon_model/include/icarbon_calc.h"
 #include "ccarbon_model/include/land_carbon_densities.h"
-#include "util/base/include/atom.h"
 #include "land_allocator/include/land_node.h"
 #include "technologies/include/ioutput.h"
 #include "technologies/include/base_technology.h"
@@ -533,7 +532,7 @@ void XMLDBOutputter::endVisitRegionMiniCAM( const RegionMiniCAM* aRegionMiniCAM,
     assert( !mCurrentRegion.empty() );
 
     // Clear the region name.
-    mCurrentRegion.clear();
+    mCurrentRegion = "";
 
     // Write the closing region tag.
     XMLWriteClosingTag( aRegionMiniCAM->getXMLName(), mBuffer, mTabs.get() );
@@ -570,8 +569,8 @@ void XMLDBOutputter::endVisitResource( const AResource* aResource,
     // Write the closing resource tag.
     XMLWriteClosingTag( aResource->getXMLName(), mBuffer, mTabs.get() );
     // Clear the current resource.
-    mCurrentPriceUnit.clear();
-    mCurrentOutputUnit.clear();
+    mCurrentPriceUnit = "";
+    mCurrentOutputUnit = "";
 }
 
 void XMLDBOutputter::startVisitSubResource( const SubResource* aSubResource,
@@ -689,10 +688,10 @@ void XMLDBOutputter::endVisitSector( const Sector* aSector, const int aPeriod ){
     XMLWriteClosingTag( aSector->getXMLName(), mBuffer, mTabs.get() );
 
     // Clear the current sector.
-    mCurrentSector.clear();
-    mCurrentPriceUnit.clear();
-    mCurrentOutputUnit.clear();
-    mCurrentInputUnit.clear();
+    mCurrentSector = "";
+    mCurrentPriceUnit = "";
+    mCurrentOutputUnit = "";
+    mCurrentInputUnit = "";
 }
 
 void XMLDBOutputter::startVisitSubsector( const Subsector* aSubsector,
@@ -917,14 +916,6 @@ void XMLDBOutputter::startVisitMiniCAMInput( const MiniCAMInput* aInput, const i
     // we use startVisitInput to write out the generic input information, however
     // startVisitInput will never be called by an accept so we do it here
     startVisitInput( aInput, aPeriod );
-        
-    // We want to write the keywords last due to limitations in 
-    // XPath we could be searching for them using following-sibling
-    // note that mBufferStack.top() is the child buffer for input
-    if( !aInput->mKeywordMap.empty() && mBufferStack.top()->rdbuf()->in_avail()/*->str().empty()*/ ) {
-        XMLWriteElementWithAttributes( "", "keyword", *mBufferStack.top(), mTabs.get(), 
-            aInput->mKeywordMap );
-    }
 }
 void XMLDBOutputter::endVisitMiniCAMInput( const MiniCAMInput* aInput, const int aPeriod ) {
     // call the endVisitInput explicitly becuase it is never called by an accept method.
@@ -1204,7 +1195,7 @@ void XMLDBOutputter::startVisitGHG( const AGHG* aGHG, const int aPeriod ){
         }
 
         // Write indirect emissions if this is CO2.
-        if( aGHG->getName() == "CO2" && !util::isEqual( mCurrIndirectEmissions[ i ], 0.0 ) ){
+        if( aGHG->getName() == gcamstr("CO2") && !util::isEqual( mCurrIndirectEmissions[ i ], 0.0 ) ){
             writeItemToBuffer( mCurrIndirectEmissions[ i ], "indirect-emissions", *childBuffer, 
                 mTabs.get(), i, aGHG->mEmissionsUnit );
         }
@@ -1244,9 +1235,9 @@ void XMLDBOutputter::endVisitMarketplace( const Marketplace* aMarketplace,
 {
     // Write the closing marketplace tag.
     XMLWriteClosingTag( Marketplace::getXMLNameStatic(), mBuffer, mTabs.get() );
-    mCurrentMarket.clear();
-    mCurrentPriceUnit.clear();
-    mCurrentOutputUnit.clear();
+    mCurrentMarket = "";
+    mCurrentPriceUnit = "";
+    mCurrentOutputUnit = "";
 
 }
 
@@ -1261,11 +1252,10 @@ void XMLDBOutputter::startVisitMarket( const Market* aMarket,
     XMLWriteElement( aMarket->getRegionName(), "MarketRegion", mBuffer, mTabs.get() );
 
     // if next market clear out units to be updated
-    if( mCurrentMarket != aMarket->getName() ){
-        mCurrentMarket.clear();
+    if( mCurrentMarket != aMarket->getName() ){;
         mCurrentMarket = aMarket->getName();
-        mCurrentPriceUnit.clear();
-        mCurrentOutputUnit.clear();
+        mCurrentPriceUnit = "";
+        mCurrentOutputUnit = "";
     }
     // Store unit information from base period
     if( aMarket->getYear() == scenario->getModeltime()->getStartYear() ) {
@@ -1281,10 +1271,10 @@ void XMLDBOutputter::startVisitMarket( const Market* aMarket,
     writeItem( "demand", mCurrentOutputUnit, aMarket->getRawDemand(), -1 );
     writeItem( "supply", mCurrentOutputUnit, aMarket->getRawSupply(), -1 );
 
-    for( vector<const objects::Atom*>::const_iterator i = aMarket->getContainedRegions().begin();
+    for( vector<gcamstr>::const_iterator i = aMarket->getContainedRegions().begin();
         i != aMarket->getContainedRegions().end(); i++ )
     {
-        XMLWriteElement( (*i)->getID(), "ContainedRegion", mBuffer, mTabs.get() );
+        XMLWriteElement( (*i).get(), "ContainedRegion", mBuffer, mTabs.get() );
     }
 }
 
@@ -2055,8 +2045,8 @@ void XMLDBOutputter::startVisitFoodDemandInput( const FoodDemandInput* aFoodDema
     mCurrentPriceUnit = "2005$/Mcal/day";
     mCurrentInputUnit = "Pcal/yr";
     startVisitInput( aFoodDemandInput, aPeriod );
-    mCurrentPriceUnit.clear();
-    mCurrentInputUnit.clear();
+    mCurrentPriceUnit = "";
+    mCurrentInputUnit = "";
 
     const Modeltime* modeltime = scenario->getModeltime();
     for( int per = 0; per < modeltime->getmaxper(); ++per ) {

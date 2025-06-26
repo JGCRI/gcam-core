@@ -77,7 +77,7 @@ bool PhasedShutdownDecider::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& PhasedShutdownDecider::getName() const {
+const gcamstr& PhasedShutdownDecider::getName() const {
     return mName;
 }
 
@@ -109,8 +109,8 @@ void PhasedShutdownDecider::toDebugXML( const int aPeriod,
 }
 
 double PhasedShutdownDecider::calcShutdownCoef( const double aCalculatedProfitRate,
-                                                const string& aRegionName,
-                                                const string& aSectorName,
+                                                const gcamstr& aRegionName,
+                                                const gcamstr& aSectorName,
                                                 const int aInitialTechYear,
                                                 const int aPeriod ) const 
 {

@@ -144,8 +144,8 @@ const string& UnmanagedLandTechnology::getLandInputName( ) const {
 * \param aPeriod Model period.
 * \author Steve Smith
 */
-void UnmanagedLandTechnology::initCalc( const string& aRegionName,
-                                           const string& aSectorName,
+void UnmanagedLandTechnology::initCalc( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
                                            const IInfo* aSubsectorInfo,
                                            const Demographic* aDemographics,
                                            PreviousPeriodInfo& aPrevPeriodInfo,
@@ -169,9 +169,9 @@ void UnmanagedLandTechnology::initCalc( const string& aRegionName,
 * \param aLandAllocator Regional land allocator.
 * \author Steve Smith
 */
-void UnmanagedLandTechnology::completeInit( const string& aRegionName,
-                                               const string& aSectorName,
-                                               const std::string& aSubsectorName,
+void UnmanagedLandTechnology::completeInit( const gcamstr& aRegionName,
+                                               const gcamstr& aSectorName,
+                                               const gcamstr& aSubsectorName,
                                                const IInfo* aSubsectorInfo,
                                                ILandAllocator* aLandAllocator )
 {
@@ -212,8 +212,8 @@ void UnmanagedLandTechnology::completeInit( const string& aRegionName,
 }
 
 
-void UnmanagedLandTechnology::calcCost( const string& aRegionName,
-                                           const string& aSectorName,
+void UnmanagedLandTechnology::calcCost( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
                                            const int aPeriod )
 {
     // Override costs to a non-zero value as the cost for a ag production
@@ -234,8 +234,8 @@ void UnmanagedLandTechnology::calcCost( const string& aRegionName,
 * \param aPeriod Model period.
 * \author Steve Smith, Kate Calvin
 */
-void UnmanagedLandTechnology::production( const string& aRegionName,
-                                             const string& aSectorName,
+void UnmanagedLandTechnology::production( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
                                              const double aVariableDemand,
                                              const double aFixedOutputScaleFactor,
                                              const int aPeriod )
@@ -284,8 +284,8 @@ void UnmanagedLandTechnology::production( const string& aRegionName,
  * \param aPeriod Period.
 * \author Steve Smith
  */
-void UnmanagedLandTechnology::calcEmissionsAndOutputs( const string& aRegionName,
-                                                       const string& aSectorName,
+void UnmanagedLandTechnology::calcEmissionsAndOutputs( const gcamstr& aRegionName,
+                                                       const gcamstr& aSectorName,
                                                        const double aPrimaryOutput,
                                                        const int aPeriod )
 {
@@ -313,8 +313,8 @@ void UnmanagedLandTechnology::calcEmissionsAndOutputs( const string& aRegionName
  * \param aPeriod Period.
  * \warning If the input vector changes size, these positions will not be valid.
  */
-void UnmanagedLandTechnology::initializeInputLocations( const string& aRegionName,
-                                                       const string& aSectorName,
+void UnmanagedLandTechnology::initializeInputLocations( const gcamstr& aRegionName,
+                                                       const gcamstr& aSectorName,
                                                        const int aPeriod )
 {
     // Set the inputs to the error value.

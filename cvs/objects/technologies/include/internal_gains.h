@@ -98,33 +98,33 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
 
-    virtual void completeInit( const std::string& aSectorName,
-                               const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aSectorName,
+                               const gcamstr& aRegionName,
                                const IInfo* aTechInfo,
                                const bool aIsTechOperating );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
     virtual void scaleCoefficient( const double aScaler );
 
     virtual OutputList calcPhysicalOutput( const double aPrimaryOutput,
-                                           const std::string& aRegionName,
+                                           const gcamstr& aRegionName,
                                            const ICaptureComponent* aCaptureComponent,
                                            const int aPeriod ) const;
 
     virtual void setPhysicalOutput( const double aPrimaryOutput,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     ICaptureComponent* aCaptureComponent,
                                     const int aPeriod );
 
@@ -132,7 +132,7 @@ public:
 
     virtual void setCurrencyOutput( const double aPysicalOutput,
                                     const double aCurrencyConversionPrice,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod )
     {
     }
@@ -142,13 +142,13 @@ public:
         return 0;
     }
 
-    virtual double getValue( const std::string& aRegionName,
+    virtual double getValue( const gcamstr& aRegionName,
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const;
     
-    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const;
 
-    virtual double getEmissionsPerOutput( const std::string& aGHGName,
+    virtual double getEmissionsPerOutput( const gcamstr& aGHGName,
                                           const int aPeriod ) const;
 
     virtual void accept( IVisitor* aVisitor,
@@ -157,7 +157,7 @@ public:
     // Documentation is inherited.
     virtual void sendLandAllocator(
        const ILandAllocator*    aLandAllocator,
-       const std::string& aName) {}
+       const gcamstr& aName) {}
     
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IOutput* aPreviousInput,
@@ -173,10 +173,10 @@ protected:
         DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-output", mPhysicalOutputs, objects::TechVintageVector<Value> ),
 
         //! The name of the output
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! Internal Gains trial market name.
-        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mTrialMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "internal-gains-market-name", mTrialMarketName, gcamstr ),
 
         //! Ratio of the internal gains to primary output production such that
         //! primary output multiplied by the ratio is equal to internal gains.

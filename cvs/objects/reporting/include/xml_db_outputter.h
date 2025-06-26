@@ -196,22 +196,22 @@ private:
     mutable boost::iostreams::filtering_ostream mBuffer;
 
     //! Current region name.
-    std::string mCurrentRegion;
+    gcamstr mCurrentRegion;
 
     //! Current sector name.
-    std::string mCurrentSector;
+    gcamstr mCurrentSector;
 
     //! Current price unit.
-    std::string mCurrentPriceUnit;
+    gcamstr mCurrentPriceUnit;
 
     //! Current output unit.
-    std::string mCurrentOutputUnit;
+    gcamstr mCurrentOutputUnit;
 
     //! Current Input unit.
-    std::string mCurrentInputUnit;
+    gcamstr mCurrentInputUnit;
 
     //! Current market name.
-    std::string mCurrentMarket;
+    gcamstr mCurrentMarket;
 
     //! Current indirect emissions for the Technology. These are more easily
     //! calculated at the Technology but logically belong in the GHG output.

@@ -79,7 +79,7 @@ bool S_CurveShutdownDecider::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& S_CurveShutdownDecider::getName() const {
+const gcamstr& S_CurveShutdownDecider::getName() const {
     return mName;
 }
 
@@ -112,8 +112,8 @@ void S_CurveShutdownDecider::toDebugXML( const int aPeriod,
 }
 
 double S_CurveShutdownDecider::calcShutdownCoef(const double aCalculatedProfitRate,
-                                                const string& aRegionName,
-                                                const string& aSectorName,
+                                                const gcamstr& aRegionName,
+                                                const gcamstr& aSectorName,
                                                 const int aInstallationYear,
                                                 const int aPeriod ) const 
 {

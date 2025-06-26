@@ -75,8 +75,9 @@ bool ValueFactorCalculator::isSameType( const std::string& aType ) const {
 }
 
 // Documentation is inherited.
-const string& ValueFactorCalculator::getName() const {
-    return getXMLNameStatic();
+const gcamstr& ValueFactorCalculator::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -110,10 +111,10 @@ void ValueFactorCalculator::initCalc( const IInfo* aTechInfo ) {
     // No information needs to be passed in
 }
 
-double ValueFactorCalculator::getMarginalBackupCapacity(const string& aSector,
-    const string& aElectricSector,
-    const string& aResource,
-    const string& aRegion,
+double ValueFactorCalculator::getMarginalBackupCapacity(const gcamstr& aSector,
+    const gcamstr& aElectricSector,
+    const gcamstr& aResource,
+    const gcamstr& aRegion,
     const double aTechCapacityFactor,
     const double aReserveMargin,
     const double aAverageGridCapacityFactor,
@@ -125,10 +126,10 @@ double ValueFactorCalculator::getMarginalBackupCapacity(const string& aSector,
     return 0.0;
 }
 
-double ValueFactorCalculator::getAverageBackupCapacity(const string& aSector,
-    const string& aElectricSector,
-    const string& aResource,
-    const string& aRegion,
+double ValueFactorCalculator::getAverageBackupCapacity(const gcamstr& aSector,
+    const gcamstr& aElectricSector,
+    const gcamstr& aResource,
+    const gcamstr& aRegion,
     const double aTechCapacityFactor,
     const double aReserveMargin,
     const double aAverageGridCapacityFactor,
@@ -153,9 +154,9 @@ double ValueFactorCalculator::getAverageBackupCapacity(const string& aSector,
  * \param aPeriod Model period.
  * \return Value factor scalar for technology cost (range: 0-1).
  */
-double ValueFactorCalculator::getValueFactor( const string& aSector,
-                                              const string& aElectricSector,
-                                              const string& aRegion,
+double ValueFactorCalculator::getValueFactor( const gcamstr& aSector,
+                                              const gcamstr& aElectricSector,
+                                              const gcamstr& aRegion,
                                               const int aPeriod ) const
 {
     // Preconditions

@@ -79,8 +79,9 @@ bool CapacityLimitBackupCalculator::isSameType( const std::string& aType ) const
 }
 
 // Documentation is inherited.
-const string& CapacityLimitBackupCalculator::getName() const {
-    return getXMLNameStatic();
+const gcamstr& CapacityLimitBackupCalculator::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -117,10 +118,10 @@ void CapacityLimitBackupCalculator::initCalc( const IInfo* aTechInfo ) {
     // No information needs to be passed in
 }
 
-double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& aSector,
-                                                                 const string& aElectricSector,
-                                                                 const string& aResource,
-                                                                 const string& aRegion,
+double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const gcamstr& aSector,
+                                                                 const gcamstr& aElectricSector,
+                                                                 const gcamstr& aResource,
+                                                                 const gcamstr& aRegion,
                                                                  const double aTechCapacityFactor,
                                                                  const double aReserveMargin,
                                                                  const double aAverageGridCapacityFactor,
@@ -153,10 +154,10 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacity( const string& a
     return SectorUtils::convertEnergyToCapacity( aTechCapacityFactor, marginalBackup );
 }
 
-double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aSector,
-                                                                const string& aElectricSector,
-                                                                const string& aResource,
-                                                                const string& aRegion,
+double CapacityLimitBackupCalculator::getAverageBackupCapacity( const gcamstr& aSector,
+                                                                const gcamstr& aElectricSector,
+                                                                const gcamstr& aResource,
+                                                                const gcamstr& aRegion,
                                                                 const double aTechCapacityFactor,
                                                                 const double aReserveMargin,
                                                                 const double aAverageGridCapacityFactor,
@@ -229,10 +230,10 @@ double CapacityLimitBackupCalculator::getAverageBackupCapacity( const string& aS
  * \return Reserve capacity per intermittent electricity resource output
  *         (GW/EJ).
  */
-double CapacityLimitBackupCalculator::getMarginalBackupCapacityFraction( const string& aSector,
-                                                                         const string& aElectricSector,
-                                                                         const string& aResource,
-                                                                         const string& aRegion,
+double CapacityLimitBackupCalculator::getMarginalBackupCapacityFraction( const gcamstr& aSector,
+                                                                         const gcamstr& aElectricSector,
+                                                                         const gcamstr& aResource,
+                                                                         const gcamstr& aRegion,
                                                                          const double aTechCapacityFactor,
                                                                          const double aReserveMargin,
                                                                          const double aAverageGridCapacityFactor,
@@ -289,10 +290,10 @@ double CapacityLimitBackupCalculator::getMarginalBackupCapacityFraction( const s
  * \return Share of the intermittent resource within within the electricity
  *         sector.
  */
-double CapacityLimitBackupCalculator::calcIntermittentShare( const string& aSector,
-                                                             const string& aElectricSector,
-                                                             const string& aResource,
-                                                             const string& aRegion,
+double CapacityLimitBackupCalculator::calcIntermittentShare( const gcamstr& aSector,
+                                                             const gcamstr& aElectricSector,
+                                                             const gcamstr& aResource,
+                                                             const gcamstr& aRegion,
                                                              const double aTechCapacityFactor,
                                                              const double aReserveMargin,
                                                              const double aAverageGridCapacityFactor,

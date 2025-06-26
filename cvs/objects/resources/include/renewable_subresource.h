@@ -66,11 +66,11 @@ public:
     virtual ~SubRenewableResource();
     //! Return the XML tag name
     static const std::string& getXMLNameStatic( void );
-    virtual void completeInit( const std::string& aRegionName, const std::string& aResourceName,
+    virtual void completeInit( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                const IInfo* aSectorInfo );
-    virtual void cumulsupply( const std::string& aRegionName, const std::string& aResourceName,
+    virtual void cumulsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                               double aPrice, int aPeriod );
-    virtual void annualsupply( const std::string& aRegionName, const std::string& aResourceName,
+    virtual void annualsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                int aPeriod, double aPrice );
     virtual double getMaxAnnualSubResource( const int aPeriod ) const;
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

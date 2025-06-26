@@ -160,8 +160,8 @@ void NukeFuelTechnology::toDebugXMLDerived( const int period, ostream& out, Tabs
     XMLWriteElement( mConversionFactor, "fMultiplier", out, tabs);
 }	
 
-void NukeFuelTechnology::initCalc( const string& aRegionName,
-                                  const string& aSectorName,
+void NukeFuelTechnology::initCalc( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
                                   const IInfo* aSubsectorInfo,
                                   const Demographic* aDemographics,
                                   PreviousPeriodInfo& aPrevPeriodInfo,
@@ -181,9 +181,9 @@ void NukeFuelTechnology::initCalc( const string& aRegionName,
         (*i)->setCoefficient( kgFissilePerGJ, aPeriod );
     }
 }
-void NukeFuelTechnology::completeInit( const string& aRegionName,
-                                      const string& aSectorName,
-                                      const string& aSubsectorName,
+void NukeFuelTechnology::completeInit( const gcamstr& aRegionName,
+                                      const gcamstr& aSectorName,
+                                      const gcamstr& aSubsectorName,
                                       const IInfo* aSubsectorInfo,
                                       ILandAllocator* aLandAllocator )
 {
@@ -230,8 +230,8 @@ void NukeFuelTechnology::completeInit( const string& aRegionName,
     }
 }
 
-double NukeFuelTechnology::getTotalInputCost( const string& aRegionName,
-                                             const string& aSectorName,
+double NukeFuelTechnology::getTotalInputCost( const gcamstr& aRegionName,
+                                             const gcamstr& aSectorName,
                                              const int aPeriod ) const
 {
     double inputCost = Technology::getTotalInputCost( aRegionName, 
@@ -244,7 +244,7 @@ double NukeFuelTechnology::getTotalInputCost( const string& aRegionName,
         + geologicWasteDisposalCost + reprocessingCost ) * getInitialMass();
     // if blanket material is necessary to breed fissile material,
     // add blanket cost to necost
-    if (blanketFuelName != "none") {
+    if (blanketFuelName.get() != "none") {
         inputCost += ( blanketFabCost + interimStorageCost
             + geologicWasteDisposalCost + reprocessingCost ) * getInitialMass() * blanketFuelRatio;
     }
@@ -255,8 +255,8 @@ double NukeFuelTechnology::getTotalInputCost( const string& aRegionName,
 /*! Adds demands for fuels and ghg emissions to markets in the marketplace
 * \author Sonny Kim
 */
-void NukeFuelTechnology::production( const string& aRegionName,
-                                    const string& aSectorName, 
+void NukeFuelTechnology::production( const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName, 
                                     double aVariableDemand,
                                     double aFixedOutputScaleFactor,
                                     const int aPeriod )
@@ -292,13 +292,13 @@ void NukeFuelTechnology::production( const string& aRegionName,
 
     // add demand for fertile material
     Marketplace* marketplace = scenario->getMarketplace();
-    if( fertileFuelName != "none" ) {
+    if( fertileFuelName.get() != "none" ) {
         mLastFertileValue = primaryOutput / getFertileEfficiency( aPeriod );
         marketplace->addToDemand( fertileFuelName, aRegionName,
                                   mLastFertileValue, aPeriod );
     }
     // add demand for blanket material
-    if( blanketFuelName != "none" ) {
+    if( blanketFuelName.get() != "none" ) {
         mLastBlanketValue = primaryOutput / getBlanketEfficiency( aPeriod );
         marketplace->addToDemand( blanketFuelName, aRegionName,
                                   mLastBlanketValue, aPeriod );
@@ -393,7 +393,7 @@ double NukeFuelTechnology::getInitialMass() const {
 double NukeFuelTechnology::getFertileEfficiency( const int aPeriod ) const {
     // if reprocessed fuel, fuel is combination of fissile and fertile material
     double fertileEff = 1;
-    if ( fertileFuelName != "none" ) {
+    if ( fertileFuelName.get() != "none" ) {
         double kgFertilePerGJ = getInitialMass() * ( 1 - enrichmentProd );
 
         /*! \pre Fertile mass per GJ is positive.*/
@@ -412,7 +412,7 @@ double NukeFuelTechnology::getFertileEfficiency( const int aPeriod ) const {
 double NukeFuelTechnology::getBlanketEfficiency( const int aPeriod ) const {
     // if blanket material is necessary to breed fissile material.
     double blanketEff = 1;
-    if (blanketFuelName != "none") {
+    if (blanketFuelName.get() != "none") {
         // multiple of fuel amount
         double kgBlanketPerGJ = getInitialMass() * blanketFuelRatio;
         blanketEff = 1 / kgBlanketPerGJ;

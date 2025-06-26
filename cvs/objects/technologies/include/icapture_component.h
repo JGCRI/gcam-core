@@ -99,19 +99,17 @@ public:
     * \param aRegionName Region name.
     * \param aSectorName Sector name.
     */
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName ) = 0;
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName ) = 0;
     
     /*!
      * \brief Initialize the capture component for a given period.
      * \param aRegionName Region name.
      * \param aSectorName Sector name.
-     * \param aFuelName Name of the fuel being consumed.
      * \param aPeriod Model period.
      */
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
-                           const std::string& aFuelName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod ) = 0;
 
     /*!
@@ -122,18 +120,20 @@ public:
      *          as this causes the calculation of the total social cost of a
      *          policy to be incorrect.
      * \param aRegionName Name of the region containing the capture component.
+     * \param aGHGName Name of the GHG stored.
      * \param aPeriod Period in which the carbon is being stored.
      * \return The cost of storing one unit of carbon.
      */
-    virtual double getStorageCost( const std::string& aRegionName,
-                                   const std::string& aGHGName,
+    virtual double getStorageCost( const gcamstr& aRegionName,
+                                   const gcamstr& aGHGName,
                                    const int aPeriod ) const = 0;
     
     /*! 
      * \brief Get the fraction of emissions captured by the capture component.
+     * \param aGHGName Name of the GHG stored.
      * \return The fraction of emissions captured.
      */
-    virtual double getRemoveFraction( const std::string& aGHGName ) const = 0;
+    virtual double getRemoveFraction( const gcamstr& aGHGName ) const = 0;
     
     /*!
      * \brief Calculate  the amount of emissions that are sequestered.
@@ -142,8 +142,8 @@ public:
     * \param aTotalEmissions Total technology emissions before capture occurs.
     * \param aPeriod Model period.
     */
-    virtual double calcSequesteredAmount( const std::string& aRegionName,
-                                          const std::string& aGHGName,
+    virtual double calcSequesteredAmount( const gcamstr& aRegionName,
+                                          const gcamstr& aGHGName,
                                           const double aTotalEmissions,
                                           const int aPeriod ) = 0;
     
@@ -155,7 +155,7 @@ public:
      * \pre The sequestered amount has been calculated.
      * \pre calcSequesteredAmount
      */
-    virtual double getSequesteredAmount( const std::string& aGHGName, 
+    virtual double getSequesteredAmount( const gcamstr& aGHGName, 
                                          const bool aGetGeologic,
                                          const int aPeriod ) const = 0;
     
@@ -166,7 +166,7 @@ public:
     * \param aInputs List of inputs to adjust.
     * \param aPeriod Model period.
     */
-    virtual void adjustInputs( const std::string& aRegionName,
+    virtual void adjustInputs( const gcamstr& aRegionName,
                                std::vector<IInput*>& aInputs,
                                const int aPeriod ) const = 0;
     

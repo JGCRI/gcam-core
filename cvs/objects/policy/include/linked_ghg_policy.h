@@ -112,11 +112,11 @@ public:
     LinkedGHGPolicy();
 
     virtual GHGPolicy* clone() const;
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
     virtual void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    virtual void completeInit( const std::string& aRegionName );
+    virtual void completeInit( const gcamstr& aRegionName );
     virtual bool isApplicable( const std::string& aRegion ) const;
     virtual void setConstraint( const std::vector<double>& aConstraint );
 protected:
@@ -127,13 +127,13 @@ protected:
         GHGPolicy,
 
         //! The name of the policy to link to.
-        DEFINE_VARIABLE( SIMPLE, "linked-policy", mLinkedPolicyName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "linked-policy", mLinkedPolicyName, gcamstr ),
 
         //! A label for the price units of this market
-        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnits, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "price-unit", mPriceUnits, gcamstr ),
 
         //! A label for the units of this market
-        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnits, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "output-unit", mOutputUnits, gcamstr ),
         
         //! A price adjustment factor by period.  Could be useful for unit conversion or
         //! "turning off" price feedbacks from the linked market.
@@ -150,7 +150,7 @@ protected:
         //! The name this policy will use to create the linked market.  Note this is typically
         //! the same as mName however may differ if for instance a user wanted to switch markets
         //! over time.
-        DEFINE_VARIABLE( SIMPLE, "policy-name", mPolicyName, std::string )
+        DEFINE_VARIABLE( SIMPLE, "policy-name", mPolicyName, gcamstr )
     )
     
     void copy( const LinkedGHGPolicy& aOther );

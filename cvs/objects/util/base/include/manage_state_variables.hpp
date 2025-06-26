@@ -71,6 +71,7 @@ class Value;
  */
 class ManageStateVariables {
     friend class SolutionDebugger;
+    friend class World;
 public:
     ManageStateVariables( const int aPeriod );
     ~ManageStateVariables();

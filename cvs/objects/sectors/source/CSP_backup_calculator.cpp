@@ -78,8 +78,9 @@ bool CSPBackupCalculator::isSameType( const std::string& aType ) const {
 }
 
 // Documentation is inherited.
-const string& CSPBackupCalculator::getName() const {
-    return getXMLNameStatic();
+const gcamstr& CSPBackupCalculator::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
+    return NAME;
 }
 
 /*! \brief Get the XML node name in static form for comparison when parsing XML.
@@ -113,10 +114,10 @@ void CSPBackupCalculator::toDebugXML( const int aPeriod, ostream& aOut, Tabs* aT
 
 // Documentation is inherited.
 void CSPBackupCalculator::initCalc( const IInfo* aTechInfo ) {
-   mMaxSectorLoadServed = aTechInfo->getDouble( "max-sector-load-served", true );
-   double noSunDays = aTechInfo->getDouble( "no-sun-days", true );
-   double randomMaintenanceFraction = aTechInfo->getDouble( "random-maintenance-fraction", true );
-   double scheduledMaintenance = aTechInfo->getDouble( "scheduled-maintenance", true );
+   mMaxSectorLoadServed = aTechInfo->getDouble( gcamstr("max-sector-load-served"), true );
+   double noSunDays = aTechInfo->getDouble( gcamstr("no-sun-days"), true );
+   double randomMaintenanceFraction = aTechInfo->getDouble( gcamstr("random-maintenance-fraction"), true );
+   double scheduledMaintenance = aTechInfo->getDouble( gcamstr("scheduled-maintenance"), true );
    
    double justNoSunDayBackup = noSunDays / double( 365 );
    // The base level of backup needed is no-sun days minus time spent in scheduled maintenance that can occur on no-sun days
@@ -124,10 +125,10 @@ void CSPBackupCalculator::initCalc( const IInfo* aTechInfo ) {
                      - min( scheduledMaintenance * ( 1 - randomMaintenanceFraction ), justNoSunDayBackup );
 }
 
-double CSPBackupCalculator::getMarginalBackupCapacity( const string& aSector,
-                                                       const string& aElectricSector,
-                                                       const string& aResource,
-                                                       const string& aRegion,
+double CSPBackupCalculator::getMarginalBackupCapacity( const gcamstr& aSector,
+                                                       const gcamstr& aElectricSector,
+                                                       const gcamstr& aResource,
+                                                       const gcamstr& aRegion,
                                                        const double aTechCapacityFactor,
                                                        const double aReserveMargin,
                                                        const double aAverageGridCapacityFactor,
@@ -140,10 +141,10 @@ double CSPBackupCalculator::getMarginalBackupCapacity( const string& aSector,
 
     return 0.0;
 }
-double CSPBackupCalculator::getAverageBackupCapacity( const string& aSector,
-                                                      const string& aElectricSector,
-                                                      const string& aResource,
-                                                      const string& aRegion,
+double CSPBackupCalculator::getAverageBackupCapacity( const gcamstr& aSector,
+                                                      const gcamstr& aElectricSector,
+                                                      const gcamstr& aResource,
+                                                      const gcamstr& aRegion,
                                                       const double aTechCapacityFactor,
                                                       const double aReserveMargin,
                                                       const double aAverageGridCapacityFactor,
@@ -208,10 +209,10 @@ double CSPBackupCalculator::getAverageBackupCapacity( const string& aSector,
  * \return Share of the intermittent resource within within the electricity
  *         sector.
  */
-double CSPBackupCalculator::calcIntermittentShare( const string& aSector,
-                                                   const string& aElectricSector,
-                                                   const string& aResource,
-                                                   const string& aRegion,
+double CSPBackupCalculator::calcIntermittentShare( const gcamstr& aSector,
+                                                   const gcamstr& aElectricSector,
+                                                   const gcamstr& aResource,
+                                                   const gcamstr& aRegion,
                                                    const double aTechCapacityFactor,
                                                    const double aReserveMargin,
                                                    const double aAverageGridCapacityFactor,

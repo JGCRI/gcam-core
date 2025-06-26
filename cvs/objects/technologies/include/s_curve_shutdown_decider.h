@@ -93,7 +93,7 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     virtual void toDebugXML( const int aPeriod,
                              std::ostream& aOut,
@@ -101,8 +101,8 @@ public:
     
     // IShutdownDecider methods.
     virtual double calcShutdownCoef( const double aCalculatedProfits,
-                                     const std::string& aRegionName,
-                                     const std::string& aSectorName,
+                                     const gcamstr& aRegionName,
+                                     const gcamstr& aSectorName,
                                      const int aInstallationYear,
                                      const int aPeriod ) const;
 protected:
@@ -113,7 +113,7 @@ protected:
         IShutdownDecider,
 
         //! The name of this shutdown decider in case we want to stack multiple.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
 
         //! The steepness of the curve. This rate may be zero
         //! which is the equivalent to not reading in the s-curve shutdown decider.

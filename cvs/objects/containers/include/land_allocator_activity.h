@@ -57,7 +57,7 @@ class ILandAllocator;
 class LandAllocatorActivity : public IActivity
 {
 public:
-    LandAllocatorActivity( ILandAllocator* aLandAllocator, const std::string& aRegionName );
+    LandAllocatorActivity( ILandAllocator* aLandAllocator, const gcamstr& aRegionName );
     virtual ~LandAllocatorActivity();
     
     // IActivity methods
@@ -69,7 +69,7 @@ private:
     ILandAllocator* mLandAllocator;
     
     //! The name of the region this land allocator is contained in.
-    const std::string& mRegionName;
+    const gcamstr& mRegionName;
 };
 
 #endif // _LAND_ALLOCATOR_ACTIVITY_H_

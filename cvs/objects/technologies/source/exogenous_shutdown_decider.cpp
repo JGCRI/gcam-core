@@ -77,7 +77,7 @@ bool ExogenousShutdownDecider::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& ExogenousShutdownDecider::getName() const {
+const gcamstr& ExogenousShutdownDecider::getName() const {
     return mName;
 }
 
@@ -109,8 +109,8 @@ void ExogenousShutdownDecider::toDebugXML( const int aPeriod,
 }
 
 double ExogenousShutdownDecider::calcShutdownCoef(const double aCalculatedProfitRate,
-                                                const string& aRegionName,
-                                                const string& aSectorName,
+                                                const gcamstr& aRegionName,
+                                                const gcamstr& aSectorName,
                                                 const int aInstallationYear,
                                                 const int aPeriod ) const 
 {

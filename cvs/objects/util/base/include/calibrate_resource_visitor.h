@@ -58,7 +58,7 @@
 class CalibrateResourceVisitor : public DefaultVisitor {
 public:
 
-    CalibrateResourceVisitor( const std::string& aRegionName );
+    CalibrateResourceVisitor( const gcamstr& aRegionName );
 
     virtual void startVisitResource( const AResource* aResource,
                                      const int aPeriod );
@@ -77,10 +77,10 @@ public:
 
 private:
     //! Name of the Region the for which we are calibrating
-    std::string mCurrentRegionName;
+    gcamstr mCurrentRegionName;
 
     //! Name of the resource currently being tabulated.
-    std::string mCurrentResourceName;
+    gcamstr mCurrentResourceName;
     
     double mPrevSubResRemainPrice;
 };

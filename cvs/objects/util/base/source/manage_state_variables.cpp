@@ -310,7 +310,7 @@ void ManageStateVariables::setPartialDeriv( const bool aIsPartialDeriv ) {
 string ManageStateVariables::getRestartFileName() const {
     Configuration* conf = Configuration::getInstance();
     const string fileName = conf->getFile( "restart", "restart/restart" );
-    const string scnAppend = conf->shouldAppendScnToFile( "restart" ) ? "." + scenario->getName() : "";
+    const string scnAppend = conf->shouldAppendScnToFile( "restart" ) ? "." + scenario->getName().get() : "";
     const string period = util::toString( mPeriodToCollect );
     return fileName + scnAppend + "." + period;
 }
@@ -404,6 +404,15 @@ void Value::doStateCheck() const {
         cout << "Missed one" << endl;
         // use the debugger call stack from here to identify Values that were not
         // marked as STATE but should have been.
+        abort();
+    }
+}
+
+void checkAddStrDuringCalc(const std::string& aStr) {
+    if(Marketplace::mIsDerivativeCalc) {
+        std::cout << "Attempting to intern gcamstr during World.calc: " << aStr << std::endl;
+        // use the debugger call stack from here to indentify the code that was attempting
+        // to intern a gcamstr during World.calc
         abort();
     }
 }

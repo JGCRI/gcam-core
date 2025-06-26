@@ -140,49 +140,50 @@ class Marketplace: public IVisitable, private boost::noncopyable
 #if DEBUG_STATE
     friend class ManageStateVariables;
     friend class Value;
+    friend void checkAddStrDuringCalc(const std::string& aStr);
 #endif
 public:
     Marketplace();
     ~Marketplace();
 
     void toDebugXML( const int period, std::ostream& out, Tabs* tabs ) const;
-    bool createMarket( const std::string& regionName, const std::string& marketName,
-                       const std::string& goodName, const IMarketType::Type aMarketType );
-    bool createLinkedMarket( const std::string& regionName, const std::string& marketName,
-                             const std::string& goodName, const std::string& linkedMarket,
+    bool createMarket( const gcamstr& aRegionName, const gcamstr& marketName,
+                       const gcamstr& goodName, const IMarketType::Type aMarketType );
+    bool createLinkedMarket( const gcamstr& aRegionName, const gcamstr& marketName,
+                             const gcamstr& goodName, const gcamstr& linkedMarket,
                              const int aStartPeriod );
     void initPrices();
     void nullSuppliesAndDemands( const int period );
     void assignMarketSerialNumbers( int aPeriod );
-    void setPrice( const std::string& goodName, const std::string& regionName, const double value,
+    void setPrice( const gcamstr& goodName, const gcamstr& aRegionName, const double value,
                    const int period, bool aMustExist = true );
-    void setPriceVector( const std::string& goodName, const std::string& regionName,
+    void setPriceVector( const gcamstr& goodName, const gcamstr& aRegionName,
                          const objects::PeriodVector<Value>& prices );
-    void addToSupply( const std::string& goodName, const std::string& regionName, const Value& value,
+    void addToSupply( const gcamstr& goodName, const gcamstr& aRegionName, const Value& value,
                       const int period, bool aMustExist = true );
-    void addToDemand( const std::string& goodName, const std::string& regionName, const Value& value,
+    void addToDemand( const gcamstr& goodName, const gcamstr& aRegionName, const Value& value,
                       const int period, bool aMustExist = true );
-    double getPrice( const std::string& goodName, const std::string& regionName, const int period,
+    double getPrice( const gcamstr& goodName, const gcamstr& aRegionName, const int period,
                      bool aMustExist = true ) const;
-    double getSupply( const std::string& goodName, const std::string& regionName,
+    double getSupply( const gcamstr& goodName, const gcamstr& aRegionName,
         const int period ) const;
-    double getDemand( const std::string& goodName, const std::string& regionName,
+    double getDemand( const gcamstr& goodName, const gcamstr& aRegionName,
         const int period ) const;
 
     void init_to_last( const int period );
     int resetToPriceMarket( const int aMarketNumber );
-    void setMarketToSolve( const std::string& goodName, const std::string& regionName,
+    void setMarketToSolve( const gcamstr& goodName, const gcamstr& aRegionName,
         const int period );
-    void unsetMarketToSolve( const std::string& goodName, const std::string& regionName,
+    void unsetMarketToSolve( const gcamstr& goodName, const gcamstr& aRegionName,
         const int period );
 
-    const IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
+    const IInfo* getMarketInfo( const gcamstr& aGoodName, const gcamstr& aRegionName,
                                 const int aPeriod, const bool aMustExist ) const;
 
-    IInfo* getMarketInfo( const std::string& aGoodName, const std::string& aRegionName,
+    IInfo* getMarketInfo( const gcamstr& aGoodName, const gcamstr& aRegionName,
                          const int aPeriod, const bool aMustExist );
     
-    CachedMarket locateMarket( const std::string& aGoodName, const std::string& aRegionName ) const;
+    CachedMarket locateMarket( const gcamstr& aGoodName, const gcamstr& aRegionName ) const;
 
    void accept( IVisitor* aVisitor, const int aPeriod ) const;
 

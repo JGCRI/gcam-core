@@ -235,11 +235,11 @@ double SolutionInfo::getSolutionFloor() const {
 * \author Josh Lurz
 * \return The name of the market the SolutionInfo is connected to.
 */
-const string& SolutionInfo::getName() const {
+const gcamstr& SolutionInfo::getName() const {
     return linkedMarket->getName();
 }
 
-const string & SolutionInfo::getRegionName() const {
+const gcamstr& SolutionInfo::getRegionName() const {
   return linkedMarket->getRegionName();
 }
 
@@ -556,7 +556,7 @@ double SolutionInfo::getDemandElasWithRespectTo( const unsigned int aMarketNumbe
 
 //! Return the list of regions contained in the linked market for this SolutionInfo.
 // Probably too much linkages here, not sure how to fix.
-const vector<const objects::Atom*>& SolutionInfo::getContainedRegions() const {
+const vector<gcamstr>& SolutionInfo::getContainedRegions() const {
     return linkedMarket->getContainedRegions();
 }
 
@@ -663,7 +663,7 @@ double SolutionInfo::getUpperBoundSupplyPrice() const
 
 double SolutionInfo::getLowerBoundSupplyPriceInternal() const
 {
-    const string LOWER_BOUND_KEY = "lower-bound-supply-price";
+    const gcamstr LOWER_BOUND_KEY = "lower-bound-supply-price";
     return linkedMarket->getMarketInfo()->hasValue( LOWER_BOUND_KEY ) ?
         linkedMarket->getMarketInfo()->getDouble( LOWER_BOUND_KEY, true ) :
         -util::getLargeNumber();
@@ -671,7 +671,7 @@ double SolutionInfo::getLowerBoundSupplyPriceInternal() const
 
 double SolutionInfo::getUpperBoundSupplyPriceInternal() const
 {
-    const string UPPER_BOUND_KEY = "upper-bound-supply-price";
+    const gcamstr UPPER_BOUND_KEY = "upper-bound-supply-price";
     return linkedMarket->getMarketInfo()->hasValue( UPPER_BOUND_KEY ) ?
         linkedMarket->getMarketInfo()->getDouble( UPPER_BOUND_KEY, true ) :
         util::getLargeNumber();
@@ -705,7 +705,7 @@ void SolutionInfo::setForecastDemand(const double aDemand) {
  * \return The noramalized correction slope to use.
  */
 double SolutionInfo::getCorrectionSlope( const double aPriceScale, const double aDemandScale ) const {
-    const string SLOPE_KEY = "correction-slope";
+    const gcamstr SLOPE_KEY = "correction-slope";
     return linkedMarket->getMarketInfo()->hasValue( SLOPE_KEY ) ?
         linkedMarket->getMarketInfo()->getDouble( SLOPE_KEY, true ) * (aPriceScale / aDemandScale) :
         1.0;
@@ -722,7 +722,7 @@ double SolutionInfo::getCorrectionSlope( const double aPriceScale, const double 
 * \param aDemandScale The demand scale (i.e. divide by this value to normalize demand) to unnormalize with.
 */
 void SolutionInfo::setCorrectionSlope(const double aSlope,  const double aPriceScale, const double aDemandScale ) {
-    const string SLOPE_KEY = "correction-slope";
+    const gcamstr SLOPE_KEY = "correction-slope";
     if( aSlope != 0.0 ) {
         double unnormalizedSlope = aSlope * (aDemandScale / aPriceScale);
         linkedMarket->getMarketInfo()->setDouble( SLOPE_KEY, unnormalizedSlope );

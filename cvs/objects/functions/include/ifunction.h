@@ -108,58 +108,58 @@ public:
     virtual ~IFunction() { }
 
 	virtual double calcDemand( InputSet& aInputs, double aConsumption, 
-        const std::string& aRegionName, const std::string& aSectorName, 
+        const gcamstr& aRegionName, const gcamstr& aSectorName,
         const double aShutdownCoef,
         int aPeriod, 
         double aCapitalStock = 0, double aAlphaZero = 0, double aSigma = 0, double aIBT = 0,
         const IInput* aParentInput = 0 ) const = 0;
     
     virtual double calcCoefficient( InputSet& aInput, double aConsumption, 
-        const std::string& aRegionName, const std::string& aSectorName, int aPeriod, double aSigma = 0, 
+        const gcamstr& aRegionName, const gcamstr& aSectorName, int aPeriod, double aSigma = 0,
         double aIBT = 0, double aCapitalStock = 0,
         const IInput* aParentInput = 0 ) const = 0;
 
-    virtual double changeElasticity( InputSet& aInputs,  const std::string& aRegionName, 
+    virtual double changeElasticity( InputSet& aInputs,  const gcamstr& aRegionName, 
 		double aPriceReceived, double aProfits, double aCapitalStock, const int aPeriod, double aAlphaZero = 0,
 		double aSigmaNew = 0, double aSigmaOld = 0 ) const = 0;
 	
     // TODO: This is not really a feature of the functions and could be removed
     // once demand and production functions are separated.
     virtual double applyTechnicalChange( InputSet& aInputs, const TechChange& aTechChange,
-        const std::string& aRegionName, const std::string& aSectorName, 
+        const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, double aAlphaZero = 0, double aSigma = 0 ) const = 0;
 
-	virtual double calcOutput( InputSet& aInputs, const std::string& aRegionName,
-        const std::string& aSectorName, const double aShutdownCoef, int aPeriod,
+	virtual double calcOutput( InputSet& aInputs, const gcamstr& aRegionName,
+        const gcamstr& aSectorName, const double aShutdownCoef, int aPeriod,
         double aCapitalStock = 0, double aAlphaZero = 0, 
         double aSigma = 0 ) const = 0;
 
-    virtual double calcProfits( InputSet& aInputs, const std::string& aRegionName,
-        const std::string& aSectorName, const double aShutdownCoef,
+    virtual double calcProfits( InputSet& aInputs, const gcamstr& aRegionName,
+        const gcamstr& aSectorName, const double aShutdownCoef,
         int aPeriod, double aCapitalStock = 0, double aAlphaZero = 0, 
         double aSigma = 0 ) const = 0;
 
     virtual double calcLevelizedCost( const InputSet& aInputs,
-        const std::string& aRegionName, const std::string& aSectorName, int aPeriod,
+        const gcamstr& aRegionName, const gcamstr& aSectorName, int aPeriod,
         double aAlphaZero, double aSigma,
         const IInput* aParentInput = 0 ) const = 0;
 
     virtual double calcCosts( const InputSet& aInputs,
-                              const std::string& aRegionName,
+                              const gcamstr& aRegionName,
                               const double aAlphaZero,
                               int aPeriod ) const = 0;
 
-	virtual double calcExpProfitRate( const InputSet& aInputs, const std::string& aRegionName,
-        const std::string& aSectorName, double aLifeTimeYears, int aPeriod, double aAlphaZero = 0,
+	virtual double calcExpProfitRate( const InputSet& aInputs, const gcamstr& aRegionName,
+        const gcamstr& aSectorName, double aLifeTimeYears, int aPeriod, double aAlphaZero = 0,
         double aSigma = 0 ) const = 0;
 
     virtual double getCapitalOutputRatio( const InputSet& aInputs,
-        const std::string& aRegionName, const std::string& aSectorName, double aLifeTimeYears,
+        const gcamstr& aRegionName, const gcamstr& aSectorName, double aLifeTimeYears,
         int aPeriod, double aAlphaZero, double aSigma ) const = 0;
     
     virtual double calcUnscaledProfits( const InputSet& aInputs, 
-                                        const std::string& aRegionName,
-                                        const std::string& aSectorName,
+                                        const gcamstr& aRegionName,
+                                        const gcamstr& aSectorName,
                                         const int aPeriod,
                                         const double aCapitalStock,
                                         const double aAlphaZero,

@@ -88,9 +88,10 @@ bool Efficiency::isSameType( const string& aType ) const {
     return aType == getXMLNameStatic();
 }
 
-const string& Efficiency::getName() const {
+const gcamstr& Efficiency::getName() const {
+    const static gcamstr NAME(getXMLNameStatic());
     // Coefficients do not have unique names.
-    return getXMLNameStatic();
+    return NAME;
 }
 
 void Efficiency::toDebugXML( const int period,

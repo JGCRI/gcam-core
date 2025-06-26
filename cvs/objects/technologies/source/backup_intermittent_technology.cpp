@@ -176,7 +176,7 @@ const string& BackupIntermittentTechnology::getTechCostName( ) const {
 void BackupIntermittentTechnology::toDebugXMLDerived( const int period, ostream& aOut, Tabs* aTabs ) const {
     XMLWriteElement( mElectricSectorName, "electric-sector-name", aOut, aTabs);
     XMLWriteElement( mElectricSectorMarket, "electric-sector-market", aOut, aTabs);
-    XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, string("") );
+    XMLWriteElementCheckDefault( mTrialMarketNameParsed, "trial-market-name", aOut, aTabs, gcamstr("") );
     if( mBackupCapacityFactor.isInited() ){
         XMLWriteElement( mBackupCapacityFactor.get(), "backup-capacity-factor", aOut, aTabs );
     }
@@ -208,9 +208,9 @@ void BackupIntermittentTechnology::toDebugXMLDerived( const int period, ostream&
 *       Electricity Reserve Margin, and Ave grid Capacity Factor) could
 *       be dynamically calculated and utilized by backup intermittent technology.
 */
-void BackupIntermittentTechnology::completeInit( const string& aRegionName,
-                                           const string& aSectorName,
-                                           const string& aSubsectorName,
+void BackupIntermittentTechnology::completeInit( const gcamstr& aRegionName,
+                                           const gcamstr& aSectorName,
+                                           const gcamstr& aSubsectorName,
                                            const IInfo* aSubsectorInfo,
                                            ILandAllocator* aLandAllocator )
 {
@@ -275,8 +275,8 @@ void BackupIntermittentTechnology::completeInit( const string& aRegionName,
     depFinder->addDependency( aSectorName, aRegionName, (*mResourceInput)->getName(), aRegionName );
 }
 
-void BackupIntermittentTechnology::initCalc( const string& aRegionName,
-                                       const string& aSectorName,
+void BackupIntermittentTechnology::initCalc( const gcamstr& aRegionName,
+                                       const gcamstr& aSectorName,
                                        const IInfo* aSubsectorInfo,
                                        const Demographic* aDemographics,
                                        PreviousPeriodInfo& aPrevPeriodInfo,
@@ -296,7 +296,7 @@ void BackupIntermittentTechnology::initCalc( const string& aRegionName,
     initializeInputLocations( aRegionName, aSectorName, aPeriod );
 }
 
-void BackupIntermittentTechnology::postCalc( const string& aRegionName,
+void BackupIntermittentTechnology::postCalc( const gcamstr& aRegionName,
                                       const int aPeriod )
 {
     // Use the base class postCalc.
@@ -312,8 +312,8 @@ void BackupIntermittentTechnology::postCalc( const string& aRegionName,
 * \param aGDP GDP
 * \param aPeriod Model period
 */
-void BackupIntermittentTechnology::production( const string& aRegionName,
-                                         const string& aSectorName, 
+void BackupIntermittentTechnology::production( const gcamstr& aRegionName,
+                                         const gcamstr& aSectorName, 
                                          double aVariableDemand,
                                          double aFixedOutputScaleFactor,
                                          const int aPeriod )
@@ -343,8 +343,8 @@ void BackupIntermittentTechnology::production( const string& aRegionName,
 * \author Marshall Wise
 * \param aPeriod Model period.
 */
-void BackupIntermittentTechnology::setCoefficients( const string& aRegionName,
-                                              const string& aSectorName,
+void BackupIntermittentTechnology::setCoefficients( const gcamstr& aRegionName,
+                                              const gcamstr& aSectorName,
                                               const int aPeriod )
 {
     // Convert backup capacity per unit of resource energy to energy required
@@ -385,8 +385,8 @@ void BackupIntermittentTechnology::setCoefficients( const string& aRegionName,
 * \author Steve Smith
 * \param aPeriod Model period.
 */
-double BackupIntermittentTechnology::getResourceToEnergyRatio( const string& aRegionName,
-                                                         const string& aSectorName,
+double BackupIntermittentTechnology::getResourceToEnergyRatio( const gcamstr& aRegionName,
+                                                         const gcamstr& aSectorName,
                                                          const int aPeriod )
 {
     // Default assumpion is that resource is in energy units
@@ -402,8 +402,8 @@ double BackupIntermittentTechnology::getResourceToEnergyRatio( const string& aRe
 * \param aGDP Regional GDP container.
 * \param aPeriod Model period.
 */
-void BackupIntermittentTechnology::calcCost( const string& aRegionName,
-                                       const string& aSectorName,
+void BackupIntermittentTechnology::calcCost( const gcamstr& aRegionName,
+                                       const gcamstr& aSectorName,
                                        const int aPeriod )
 {
     // Set marginal cost for backup to the input object set asside for this
@@ -427,8 +427,8 @@ void BackupIntermittentTechnology::calcCost( const string& aRegionName,
 * \param aRegionName Region name.
 * \param aPeriod Model period.
 */
-double BackupIntermittentTechnology::getMarginalBackupCapCost( const string& aRegionName,
-                                                         const string& aSectorName,
+double BackupIntermittentTechnology::getMarginalBackupCapCost( const gcamstr& aRegionName,
+                                                         const gcamstr& aSectorName,
                                                          const int aPeriod ) const
 {
     // Add per unit cost of backup capacity to subsector price backup capacity
@@ -449,12 +449,12 @@ double BackupIntermittentTechnology::getMarginalBackupCapCost( const string& aRe
  * \param aPeriod Model period.
  * \return Marginal backup capacity per unit of energy output.
  */
-double BackupIntermittentTechnology::getMarginalBackupCapacity( const string& aRegionName,
-                                                          const string& aSectorName,
+double BackupIntermittentTechnology::getMarginalBackupCapacity( const gcamstr& aRegionName,
+                                                          const gcamstr& aSectorName,
                                                           const int aPeriod ) const {
     double backupCapacity = 0;
     if( mBackupCalculator && mResourceInput != mInputs.end() ){
-        const string& resourceName = ( *mResourceInput )->getName();
+        const gcamstr& resourceName = ( *mResourceInput )->getName();
         backupCapacity = mBackupCalculator->getMarginalBackupCapacity( aSectorName,
                          mElectricSectorName, resourceName, aRegionName,
                          mCapacityFactor, mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
@@ -475,13 +475,13 @@ double BackupIntermittentTechnology::getMarginalBackupCapacity( const string& aR
  * \param aPeriod Model period.
  * \return Average backup capacity per unit output.
  */
-double BackupIntermittentTechnology::getAverageBackupCapacity( const string& aRegionName,
-                                                         const string& aSectorName,
+double BackupIntermittentTechnology::getAverageBackupCapacity( const gcamstr& aRegionName,
+                                                         const gcamstr& aSectorName,
                                                          const int aPeriod ) const
 {
     double backupCapacity = 0;
     if( mBackupCalculator ){
-        const string& resourceName = ( *mResourceInput )->getName();
+        const gcamstr& resourceName = ( *mResourceInput )->getName();
         backupCapacity = mBackupCalculator->getAverageBackupCapacity( aSectorName,
                          mElectricSectorName, resourceName, aRegionName,
                          mCapacityFactor, mElecReserveMargin, mAveGridCapacityFactor, aPeriod );
@@ -503,8 +503,8 @@ double BackupIntermittentTechnology::getAverageBackupCapacity( const string& aRe
  * \param aPeriod Period.
  * \warning If the input vector changes size, these positions will not be valid.
  */
-void BackupIntermittentTechnology::initializeInputLocations( const string& aRegionName,
-                                                       const string& aSectorName,
+void BackupIntermittentTechnology::initializeInputLocations( const gcamstr& aRegionName,
+                                                       const gcamstr& aSectorName,
                                                        const int aPeriod )
 {
     // Set the inputs to the error value.

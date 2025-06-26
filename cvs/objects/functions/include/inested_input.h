@@ -109,7 +109,7 @@ public:
      * \param aTechPeriod The period converted from the tech's year.  This would
      *   be something other than zero for techs that come online later.
      */
-    virtual void calcCoefficient( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void calcCoefficient( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aTechPeriod ) = 0;
 
     /*!
@@ -120,7 +120,7 @@ public:
      * \param aPeriod The current model period.
      * \param aAlphaZero  The alpha zero scaler.
      */
-    virtual void changeElasticity( const std::string& aRegionName, const int aPeriod,
+    virtual void changeElasticity( const gcamstr& aRegionName, const int aPeriod,
         const double aAlphaZero ) = 0;
 
     /*!
@@ -133,7 +133,7 @@ public:
      * \param aPeriod The current model period.
      * \param aAlphaZero  The alpha zero scaler.
      */
-    virtual void changeSigma( const std::string& aRegionName, const int aPeriod,
+    virtual void changeSigma( const gcamstr& aRegionName, const int aPeriod,
         const double aAlphaZero ) = 0;
 
     /*!
@@ -143,7 +143,7 @@ public:
      * \param aPeriod The current model period.
      * \param aAlphaZero  The alpha zero scaler.
      */
-    virtual void calcLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void calcLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero ) = 0;
 
     /*!
@@ -160,7 +160,7 @@ public:
      *                           attempt to utilize this paramater.
      * \param aAlphaZero  The alpha zero scaler.
      */
-    virtual double calcInputDemand( const std::string& aRegionName, const std::string& aSectorName,
+    virtual double calcInputDemand( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aPhysicalOutput, const double aUtilityParameterA,
         const double aAlphaZero ) = 0;
 
@@ -170,7 +170,7 @@ public:
      * \todo Should I get rid of this completly, it may still be possible to compute
      *       however is not currently used.
      */
-    virtual double calcCapitalOutputRatio( const std::string& aRegionName, const std::string& aSectorName,
+    virtual double calcCapitalOutputRatio( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero ) = 0;
 
     /*!
@@ -183,7 +183,7 @@ public:
      * \param aPeriod The current model period.
      * \param aAlphaZero  The alpha zero scaler.
      */
-    virtual void calcVariableLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void calcVariableLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const double aAlphaZero ) = 0;
 
     /*!
@@ -195,7 +195,7 @@ public:
     /*!
      * \brief Gets the levelized cost for the root node.
      */
-    virtual double getLevelizedCost( const std::string& aRegionName, const std::string& aSectorName,
+    virtual double getLevelizedCost( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod ) const = 0;
 
     /*!
@@ -206,7 +206,7 @@ public:
      * \param aTechChange A structure which can hold various types of technical
      *                    which may be applied.
      */
-    virtual void applyTechnicalChange( const std::string& aRegionName, const std::string& aSectorName,
+    virtual void applyTechnicalChange( const gcamstr& aRegionName, const gcamstr& aSectorName,
         const int aPeriod, const TechChange& aTechChange ) = 0;
 
     /*!

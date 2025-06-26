@@ -45,7 +45,7 @@
 
 using namespace std;
 
-NationalAccountContainerActivity::NationalAccountContainerActivity( NationalAccountContainer* aNationalAccountContainer, const string& aRegionName ):
+NationalAccountContainerActivity::NationalAccountContainerActivity( NationalAccountContainer* aNationalAccountContainer, const gcamstr& aRegionName ):
 mNationalAccountContainer( aNationalAccountContainer ),
 mRegionName( aRegionName )
 {
@@ -61,5 +61,5 @@ void NationalAccountContainerActivity::calc( const int aPeriod ) {
 
 // for GDP trial market
 string NationalAccountContainerActivity::getDescription() const {
-    return mRegionName + " " + mNationalAccountContainer->getGDPActivityName();
+    return mRegionName.get() + " " + mNationalAccountContainer->getGDPActivityName().get();
 }

@@ -126,16 +126,16 @@ void RenewableInput::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void RenewableInput::completeInit( const string& aRegionName,
-                                   const string& aSectorName,
-                                   const string& aSubsectorName,
-                                   const string& aTechName,
+void RenewableInput::completeInit( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
+                                   const gcamstr& aSubsectorName,
+                                   const gcamstr& aTechName,
                                    const IInfo* aTechInfo )
 {
 }
 
-void RenewableInput::initCalc( const string& aRegionName,
-                               const string& aSectorName,
+void RenewableInput::initCalc( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const bool aIsNewInvestmentPeriod,
                                const bool aIsTrade,
                                const IInfo* aTechInfo,
@@ -143,14 +143,14 @@ void RenewableInput::initCalc( const string& aRegionName,
 {
 }
 
-double RenewableInput::getPrice( const string& aRegionName,
+double RenewableInput::getPrice( const gcamstr& aRegionName,
                                  const int aPeriod ) const
 {
     // Renewable inputs are free.
     return 0;
 }
 
-void RenewableInput::setPrice( const string& aRegionName,
+void RenewableInput::setPrice( const gcamstr& aRegionName,
                                const double aPrice,
                                const int aPeriod )
 {
@@ -162,7 +162,7 @@ double RenewableInput::getPhysicalDemand( const int aPeriod ) const {
 }
 
 void RenewableInput::setPhysicalDemand( double aPhysicalDemand,
-                                       const string& aRegionName,
+                                       const gcamstr& aRegionName,
                                        const int aPeriod )
 {
     mPhysicalDemand[ aPeriod ].set( aPhysicalDemand );
@@ -170,7 +170,7 @@ void RenewableInput::setPhysicalDemand( double aPhysicalDemand,
     // marketplace.
 }
 
-double RenewableInput::getCO2EmissionsCoefficient( const string& aGHGName,
+double RenewableInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
                                                 const int aPeriod ) const
 {
     return 0;

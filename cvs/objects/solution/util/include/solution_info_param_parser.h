@@ -156,7 +156,7 @@ public:
         double mDeltaPrice;
     };
     
-    SolutionInfoValues getSolutionInfoValuesForMarket( const std::string& aGoodName, const std::string& aRegionName,
+    SolutionInfoValues getSolutionInfoValuesForMarket( const std::string& aGoodName, const gcamstr& aRegionName,
                                                        const std::string& aMarketType, const int aPeriod ) const;
     
     // AParsable methods

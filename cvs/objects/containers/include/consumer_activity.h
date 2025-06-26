@@ -59,7 +59,7 @@ class ConsumerActivity : public IActivity
 {
 public:
     ConsumerActivity( Consumer* aConsumer, const Demographic* aDemographic,
-                      const std::string& aRegionName );
+                      const gcamstr& aRegionName );
     virtual ~ConsumerActivity();
     
     // IActivity methods
@@ -74,7 +74,7 @@ private:
     const Demographic* mDemographic;
     
     //! The name of the region this consumer is contained in.
-    const std::string& mRegionName;
+    const gcamstr& mRegionName;
 };
 
 #endif // _CONSUMER_ACTIVITY_H_

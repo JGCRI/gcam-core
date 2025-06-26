@@ -78,7 +78,7 @@ void FractionalSecondaryOutput::copy( const FractionalSecondaryOutput& aOther ) 
     mCostCurve = aOther.mCostCurve;
 }
 
-const string& FractionalSecondaryOutput::getName() const
+const gcamstr& FractionalSecondaryOutput::getName() const
 {
     // Make sure the name is initialized.
     assert( !mName.empty() );
@@ -155,8 +155,8 @@ void FractionalSecondaryOutput::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void FractionalSecondaryOutput::completeInit( const string& aSectorName,
-                                              const string& aRegionName,
+void FractionalSecondaryOutput::completeInit( const gcamstr& aSectorName,
+                                              const gcamstr& aRegionName,
                                               const IInfo* aTechInfo,
                                               const bool aIsTechOperating )
 {
@@ -182,8 +182,8 @@ void FractionalSecondaryOutput::completeInit( const string& aSectorName,
     }
 }
 
-void FractionalSecondaryOutput::initCalc( const string& aRegionName,
-                                          const string& aSectorName,
+void FractionalSecondaryOutput::initCalc( const gcamstr& aRegionName,
+                                          const gcamstr& aSectorName,
                                           const int aPeriod )
 {
     // If we are in a calibration period and a calibrated value was read in then set the
@@ -201,14 +201,14 @@ void FractionalSecondaryOutput::initCalc( const string& aRegionName,
 }
 
 
-void FractionalSecondaryOutput::postCalc( const string& aRegionName, const int aPeriod ) {
+void FractionalSecondaryOutput::postCalc( const gcamstr& aRegionName, const int aPeriod ) {
 }
 
 void FractionalSecondaryOutput::scaleCoefficient( const double aScaler ) {
 }
 
 IOutput::OutputList FractionalSecondaryOutput::calcPhysicalOutput( const double aPrimaryOutput,
-                                                                   const string& aRegionName,
+                                                                   const gcamstr& aRegionName,
                                                                    const ICaptureComponent* aCaptureComponent,
                                                                    const int aPeriod ) const
 {
@@ -218,7 +218,7 @@ IOutput::OutputList FractionalSecondaryOutput::calcPhysicalOutput( const double 
 }
 
 void FractionalSecondaryOutput::setPhysicalOutput( const double aPrimaryOutput,
-                                                   const string& aRegionName,
+                                                   const gcamstr& aRegionName,
                                                    ICaptureComponent* aCaptureComponent,
                                                    const int aPeriod )
 {
@@ -240,7 +240,7 @@ double FractionalSecondaryOutput::getPhysicalOutput( const int aPeriod ) const {
     return mPhysicalOutputs[ aPeriod ];
 }
 
-double FractionalSecondaryOutput::getValue( const string& aRegionName,
+double FractionalSecondaryOutput::getValue( const gcamstr& aRegionName,
                                             const ICaptureComponent* aCaptureComponent,
                                             const int aPeriod ) const
 {
@@ -255,12 +255,12 @@ double FractionalSecondaryOutput::getValue( const string& aRegionName,
     return secondaryGoodPrice * mOutputRatio * productionFraction;
 }
 
-string FractionalSecondaryOutput::getOutputUnits( const string& aRegionName ) const {
+gcamstr FractionalSecondaryOutput::getOutputUnits( const gcamstr& aRegionName ) const {
     return scenario->getMarketplace()->getMarketInfo( getName(), mMarketName.empty() ? aRegionName : mMarketName, 0, true )
         ->getString( "output-unit", false );
 }
 
-double FractionalSecondaryOutput::getEmissionsPerOutput( const string& aGHGName,
+double FractionalSecondaryOutput::getEmissionsPerOutput( const gcamstr& aGHGName,
                                                          const int aPeriod ) const
 {
     return 0;
@@ -277,7 +277,7 @@ void FractionalSecondaryOutput::accept( IVisitor* aVisitor, const int aPeriod ) 
  * \param aPeriod The current model period.
  * \return The market price.
  */
-double FractionalSecondaryOutput::getMarketPrice( const string& aRegionName, const int aPeriod ) const {
+double FractionalSecondaryOutput::getMarketPrice( const gcamstr& aRegionName, const int aPeriod ) const {
     double price = scenario->getMarketplace()->getPrice( mName, mMarketName.empty() ? aRegionName : mMarketName, aPeriod, true );
 
     // Market price should exist or there is not a sector with this good as the
@@ -299,7 +299,7 @@ double FractionalSecondaryOutput::getMarketPrice( const string& aRegionName, con
  * \param aPeriod The current model period.
  * \return Physical output.
  */
-double FractionalSecondaryOutput::calcPhysicalOutputInternal( const string& aRegionName,
+double FractionalSecondaryOutput::calcPhysicalOutputInternal( const gcamstr& aRegionName,
                                                               const double aPrimaryOutput,
                                                               const int aPeriod ) const
 {

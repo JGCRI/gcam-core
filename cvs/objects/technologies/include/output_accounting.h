@@ -90,7 +90,7 @@ public:
 
     virtual bool isSameType( const std::string& aType ) const;
 
-    virtual const std::string& getName() const;
+    virtual const gcamstr& getName() const;
 
     virtual void setName( const std::string& aName );
 
@@ -100,29 +100,29 @@ public:
                              std::ostream& aOut,
                              Tabs* aTabs ) const;
 
-    virtual void completeInit( const std::string& aSectorName,
-                               const std::string& aRegionName,
+    virtual void completeInit( const gcamstr& aSectorName,
+                               const gcamstr& aRegionName,
                                const IInfo* aTechInfo,
                                const bool aIsTechOperating );
 
-    virtual void initCalc( const std::string& aRegionName,
-                           const std::string& aSectorName,
+    virtual void initCalc( const gcamstr& aRegionName,
+                           const gcamstr& aSectorName,
                            const int aPeriod );
 
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const int aPeriod );
 
     // not needed in this output
     virtual void scaleCoefficient( const double aScaler ) {}
 
     virtual OutputList calcPhysicalOutput( const double aPrimaryOutput,
-                                           const std::string& aRegionName,
+                                           const gcamstr& aRegionName,
                                            const ICaptureComponent* aCaptureComponent,
                                            const int aPeriod ) const;
 
     // not needed in this output
     virtual void setPhysicalOutput( const double aPrimaryOutput,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     ICaptureComponent* aCaptureComponent,
                                     const int aPeriod ) {}
 
@@ -131,27 +131,27 @@ public:
 
     virtual void setCurrencyOutput( const double aPysicalOutput,
                                     const double aCurrencyConversionPrice,
-                                    const std::string& aRegionName,
+                                    const gcamstr& aRegionName,
                                     const int aPeriod );
 
     virtual double getCurrencyOutput( const int aPeriod ) const;
 
     // not needed in this output
-    virtual double getValue( const std::string& aRegionName,
+    virtual double getValue( const gcamstr& aRegionName,
                              const ICaptureComponent* aCaptureComponent,
                              const int aPeriod ) const { return 0.0; }
     
-    virtual std::string getOutputUnits( const std::string& aRegionName ) const;
+    virtual gcamstr getOutputUnits( const gcamstr& aRegionName ) const;
 
     // not needed in this output
-    virtual double getEmissionsPerOutput( const std::string& aGHGName,
+    virtual double getEmissionsPerOutput( const gcamstr& aGHGName,
                                           const int aPeriod ) const { return 0.0; }
 
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
     // Documentation is inherited.
     virtual void sendLandAllocator( const ILandAllocator* aLandAllocator,
-                                   const std::string& aName ) {}
+                                   const gcamstr& aName ) {}
     
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IOutput* aPreviousInput,
@@ -169,11 +169,11 @@ protected:
 
         //! Name of the secondary output. Corresponds to a market which will collect
         //! this accounting information.
-        DEFINE_VARIABLE( SIMPLE, "name", mName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "name", mName, gcamstr ),
                             
         //! The market name in which this output is adjusting the value.  If empty
         //! the current region is assumed.
-        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, std::string ),
+        DEFINE_VARIABLE( SIMPLE, "market-name", mMarketName, gcamstr ),
 
         //! Ratio of the secondary output to primary output production such that
         //! primary output multiplied by the ratio is equal to secondary output.

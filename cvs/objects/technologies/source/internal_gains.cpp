@@ -86,7 +86,7 @@ bool InternalGains::isSameType( const string& aType ) const
     return aType == getXMLNameStatic();
 }
 
-const string& InternalGains::getName() const
+const gcamstr& InternalGains::getName() const
 {
     return mName;
 }
@@ -119,8 +119,8 @@ void InternalGains::toDebugXML( const int aPeriod,
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
-void InternalGains::completeInit( const string& aSectorName,
-                                  const string& aRegionName,
+void InternalGains::completeInit( const gcamstr& aSectorName,
+                                  const gcamstr& aRegionName,
                                   const IInfo* aTechInfo,
                                   const bool aIsTechOperating )
 {
@@ -134,14 +134,14 @@ void InternalGains::completeInit( const string& aSectorName,
     }
 }
 
-void InternalGains::initCalc( const string& aRegionName,
-                              const string& aSectorName,
+void InternalGains::initCalc( const gcamstr& aRegionName,
+                              const gcamstr& aSectorName,
                               const int aPeriod )
 {
     SectorUtils::setSupplyBehaviorBounds(SectorUtils::getTrialMarketName( mTrialMarketName ), aRegionName, 0.0, util::getLargeNumber(), aPeriod);
 }
 
-void InternalGains::postCalc( const string& aRegionName,
+void InternalGains::postCalc( const gcamstr& aRegionName,
                               const int aPeriod )
 {
 }
@@ -151,7 +151,7 @@ void InternalGains::scaleCoefficient( const double aScaler ){
 }
 
 IOutput::OutputList InternalGains::calcPhysicalOutput( const double aPrimaryOutput,
-                                                       const string& aRegionName,
+                                                       const gcamstr& aRegionName,
                                                        const ICaptureComponent* aCaptureComponent,
                                                        const int aPeriod ) const
 {
@@ -167,7 +167,7 @@ IOutput::OutputList InternalGains::calcPhysicalOutput( const double aPrimaryOutp
 }
 
 void InternalGains::setPhysicalOutput( const double aPrimaryOutput,
-                                       const string& aRegionName,
+                                       const gcamstr& aRegionName,
                                        ICaptureComponent* aCaptureComponent,
                                        const int aPeriod )
 {
@@ -186,7 +186,7 @@ double InternalGains::getPhysicalOutput( const int aPeriod ) const
     return mPhysicalOutputs[ aPeriod ];
 }
 
-double InternalGains::getValue( const string& aRegionName,
+double InternalGains::getValue( const gcamstr& aRegionName,
                                 const ICaptureComponent* aCaptureComponent,
                                 const int aPeriod ) const
 {
@@ -195,12 +195,12 @@ double InternalGains::getValue( const string& aRegionName,
     return 0;
 }
 
-string InternalGains::getOutputUnits( const string& aRegionName ) const {
+gcamstr InternalGains::getOutputUnits( const gcamstr& aRegionName ) const {
     return scenario->getMarketplace()->getMarketInfo( SectorUtils::getTrialMarketName( mTrialMarketName ),
         aRegionName, 0, true )->getString( "output-unit", false );
 }
 
-double InternalGains::getEmissionsPerOutput( const string& aGHGName,
+double InternalGains::getEmissionsPerOutput( const gcamstr& aGHGName,
                                              const int aPeriod ) const
 {
     // Internal gains do not contain any emissions

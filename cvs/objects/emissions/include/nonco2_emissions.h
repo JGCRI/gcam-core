@@ -75,27 +75,27 @@ public:
     
     virtual const std::string& getXMLName() const;
 
-    virtual void completeInit( const std::string& aRegionName,
-                               const std::string& aSectorName,
+    virtual void completeInit( const gcamstr& aRegionName,
+                               const gcamstr& aSectorName,
                                const IInfo* aTechIInfo );
 
-    virtual void initCalc( const std::string& aRegionName,
+    virtual void initCalc( const gcamstr& aRegionName,
                            const IInfo* aTechIInfo,
                            const int aPeriod );
 
-    virtual double getGHGValue( const std::string& aRegionName,
+    virtual double getGHGValue( const gcamstr& aRegionName,
                                 const std::vector<IInput*>& aInputs,
                                 const std::vector<IOutput*>& aOutputs,
                                 const ICaptureComponent* aSequestrationDevice,
                                 const int aPeriod ) const;
 
-	virtual void calcEmission( const std::string& aRegionName, 
+	virtual void calcEmission( const gcamstr& aRegionName, 
                                const std::vector<IInput*>& aInputs,
                                const std::vector<IOutput*>& aOutputs,
 					           ICaptureComponent* aSequestrationDevice,
                                const int aPeriod );
     
-    virtual void postCalc( const std::string& aRegionName,
+    virtual void postCalc( const gcamstr& aRegionName,
                            const bool aIsInitialTechYear,
                            const std::vector<IInput*>& aInputs,
                            const std::vector<IOutput*>& aOutputs,
