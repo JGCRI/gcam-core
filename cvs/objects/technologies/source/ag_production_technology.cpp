@@ -428,8 +428,8 @@ void AgProductionTechnology::production( const gcamstr& aRegionName,
 
 }
 
-double AgProductionTechnology::getFixedOutput( const string& aRegionName,
-                                               const string& aSectorName,
+double AgProductionTechnology::getFixedOutput( const gcamstr& aRegionName,
+                                               const gcamstr& aSectorName,
                                                const bool aHasRequiredInput,
                                                const string& aRequiredInput,
                                                const double aMarginalRevenue,
