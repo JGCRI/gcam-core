@@ -151,7 +151,7 @@ public:
     void addToAccount( const AccountType aType, const double aValue );
     void setAccount( const AccountType aType, const double aValue );
     double getAccountValue( const AccountType aType ) const;
-    const gcamstr& enumToXMLName( const AccountType aType ) const;
+    static const gcamstr& enumToXMLName( const AccountType aType );
     void accept( IVisitor* aVisitor, const int aPeriod ) const;
 
 protected:
@@ -165,12 +165,11 @@ protected:
                 
         //! A Savings rate adjustment scaler to allow us to move "consumer durable" investments from consumption
         //! over to the investment side
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "consumer-durable-SR-adj", mConsumerDurableSRAdj, Value )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "consumer-durable-SR-adj", mConsumerDurableSRAdj, Value ),
+        
+        //! Vector to hold national account values
+        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "accounts", mAccounts, std::vector<double> )
     )
-    
-private:
-    //! Vector to hold national account values
-    std::vector<double> mAccounts;
 };
 
 #endif // _NATIONAL_ACCOUNT_H_
