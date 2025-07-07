@@ -173,19 +173,26 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
 
     // Exclude outliers from the scalar calculation
     excludeOutliers(aELMNPP, aELMHR);
-   
+  
+    // get the total number of values and the number of non-zero valid values for diagnostics
+    int tot_n = mNumLat * mNumLon * mNumPFT;
+    std::vector<double> aELMNPPCopy(aELMNPP, aELMNPP + tot_n);
+    std::vector<double>::iterator newIter = std::remove_if( aELMNPPCopy.begin(), aELMNPPCopy.end(), [](double x){return x == 0;});
+    aELMNPPCopy.resize( newIter -  aELMNPPCopy.begin() ); 
+    int valid_n = aELMNPPCopy.size();
+
     // generate diagnostic files for the incoming elm data
     string nppName = "./npp2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
     ILogger& npp2GCAM = ILogger::getLogger( nppName );
     npp2GCAM.setLevel( ILogger::NOTICE );
     npp2GCAM.precision(20);
-    npp2GCAM << "pft_id,lon_ind,lat_ind,npp_gC_per_m2_per_s" << endl;
+    npp2GCAM << "pft_id,lon_ind,lat_ind,npp_gC_per_m2_per_s, tot_n = " << tot_n << ", valid_n = " << valid_n << endl;
 
     string hrName = "./hr2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
     ILogger& hr2GCAM = ILogger::getLogger( hrName );
     hr2GCAM.setLevel( ILogger::NOTICE );
     hr2GCAM.precision(20);
-    hr2GCAM << "pft_id,lon_ind,lat_ind,hr_gC_per_m2_per_s" << endl;
+    hr2GCAM << "pft_id,lon_ind,lat_ind,hr_gC_per_m2_per_s, tot_n = " << tot_n << ", valid_n = " << valid_n << endl;
 
     string pftName = "./pft2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
     ILogger& pft2GCAM = ILogger::getLogger( pftName );
@@ -193,14 +200,13 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     pft2GCAM.precision(20);
     pft2GCAM << "pft_id,lon_ind,lat_ind,pft_wt_cell_frac" << endl;
 
+    // do this each time because it won't build if it is in an if block
+    // and it overwrites to blank each time if only the output lines are in an if block
     string areaName = "./area2GCAM.csv";
     ILogger& area2GCAM = ILogger::getLogger( areaName );
     area2GCAM.setLevel( ILogger::NOTICE );
     area2GCAM.precision(20);
-    // only do this once, and the first call is in 2020, but GCAMYear is 2025
-    if(aGCAMYear == 2025) {
-        area2GCAM << "lon_ind,lat_ind,cell_area_km2" << endl;
-    }
+    area2GCAM << "lon_ind,lat_ind,cell_area_km2" << endl;
 
     // diagnostics to find out where the data are being lost
     //string SdName = "./scaler_diagnostic.csv";
@@ -242,8 +248,8 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                 npp2GCAM << pft << "," << j << "," << k << "," << aELMNPP[valIndex] << endl;
                 hr2GCAM << pft << "," << j << "," << k << "," << aELMHR[valIndex] << endl;
                 pft2GCAM << pft << "," << j << "," << k << "," << aELMPFTFract[valIndex] << endl;
-                if(aGCAMYear == 2025 && pft == 0) {
-                    // this is still the original because it is output only once
+                if(pft == 0) {
+                    // this is still the original cell area because it is output only once
                     area2GCAM << j << "," << k << "," << aELMArea[gridIndex] << endl;
                 }
 
@@ -524,13 +530,18 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR) {
     // Calculate raw scalars
     std::transform(scaledNPP.begin(), scaledNPP.end(), mBaseNPPVector.begin(), scaledNPP.begin(), std::divides<double>());
     std::transform(scaledHR.begin(), scaledHR.end(), mBaseHRVector.begin(), scaledHR.begin(), std::divides<double>());
+
+    // Copying vector scaledNPP into vector scaledNPPCopy
+    // for calculating median and median absolute deviation
+    vector<double> scaledNPPCopy(scaledNPP);
+    vector<double> scaledHRCopy(scaledHR);
     
     // Remove zero and nan and inf values -- this excludes cells with 0 base values from median calcs
     // zero values could skew the median calcs because the case records with zeros may not have pft areas
-    std::vector<double>::iterator newIter = std::remove_if( scaledNPP.begin(), scaledNPP.end(), [](double x){return x == 0 || !isfinite(x);});
-    std::vector<double>::iterator newHRIter = std::remove_if( scaledHR.begin(), scaledHR.end(), [](double x){return x == 0 || !isfinite(x);});
-    scaledNPP.resize( newIter -  scaledNPP.begin() );
-    scaledHR.resize( newHRIter -  scaledHR.begin() );
+    std::vector<double>::iterator newIter = std::remove_if( scaledNPPCopy.begin(), scaledNPPCopy.end(), [](double x){return x == 0 || !isfinite(x);});
+    std::vector<double>::iterator newHRIter = std::remove_if( scaledHRCopy.begin(), scaledHRCopy.end(), [](double x){return x == 0 || !isfinite(x);});
+    scaledNPPCopy.resize( newIter -  scaledNPPCopy.begin() );
+    scaledHRCopy.resize( newHRIter -  scaledHRCopy.begin() );
 
     // Compute the median and median absolute deviation
     // See: Davies, P.L. and Gather, U. (1993), "The identification of multiple outliers"
@@ -556,18 +567,18 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR) {
     double madLimit = 5.2;
 
     // First, sort the scaler and find median
-    std::sort(scaledNPP.begin(), scaledNPP.end());
-    std::sort(scaledHR.begin(), scaledHR.end());
-    double median = 0.5 * (scaledNPP[scaledNPP.size() / 2 - 1] + scaledNPP[scaledNPP.size() / 2]);
-    double medianHR = 0.5 * (scaledHR[scaledHR.size() / 2 - 1] + scaledHR[scaledHR.size() / 2]);
+    std::sort(scaledNPPCopy.begin(), scaledNPPCopy.end());
+    std::sort(scaledHRCopy.begin(), scaledHRCopy.end());
+    double median = 0.5 * (scaledNPPCopy[scaledNPPCopy.size() / 2 - 1] + scaledNPPCopy[scaledNPPCopy.size() / 2]);
+    double medianHR = 0.5 * (scaledHRCopy[scaledHRCopy.size() / 2 - 1] + scaledHRCopy[scaledHRCopy.size() / 2]);
     
     // Then, find the median absolute deviation
-    transform(scaledNPP.begin(), scaledNPP.end(), scaledNPP.begin(), [median](double x){return abs(x - median);});
-    transform(scaledHR.begin(), scaledHR.end(), scaledHR.begin(), [medianHR](double x){return abs(x - medianHR);});
-    std::sort(scaledNPP.begin(), scaledNPP.end());
-    std::sort(scaledHR.begin(), scaledHR.end());
-    double mad = 0.5 * (scaledNPP[scaledNPP.size() / 2 - 1] + scaledNPP[scaledNPP.size() / 2]);
-    double madHR = 0.5 * (scaledHR[scaledHR.size() / 2 - 1] + scaledHR[scaledHR.size() / 2]);
+    transform(scaledNPPCopy.begin(), scaledNPPCopy.end(), scaledNPPCopy.begin(), [median](double x){return abs(x - median);});
+    transform(scaledHRCopy.begin(), scaledHRCopy.end(), scaledHRCopy.begin(), [medianHR](double x){return abs(x - medianHR);});
+    std::sort(scaledNPPCopy.begin(), scaledNPPCopy.end());
+    std::sort(scaledHRCopy.begin(), scaledHRCopy.end());
+    double mad = 0.5 * (scaledNPPCopy[scaledNPPCopy.size() / 2 - 1] + scaledNPPCopy[scaledNPPCopy.size() / 2]);
+    double madHR = 0.5 * (scaledHRCopy[scaledHRCopy.size() / 2 - 1] + scaledHRCopy[scaledHRCopy.size() / 2]);
 
     // Now, calculate upper and lower bounds as median +/- madLimit * mad
     double upperBound = median + madLimit * mad;
@@ -578,7 +589,9 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR) {
     // Remove Outliers. These are set to zero so they will be excluded from scaler calculation
     for( int i = 0; i < length; i++ ) {
         if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound ||
-            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ) {
+            scaledNPP[i] == 0 || !isfinite(scaledNPP[i]) ||
+            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ||
+            scaledHR[i] == 0 || !isfinite(scaledHR[i]) ) {
             aELMNPP[i] = 0;
             mBaseNPPVector[i] = 0;
             aELMHR[i] = 0;
