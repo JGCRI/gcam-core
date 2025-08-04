@@ -182,19 +182,20 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     int valid_n = aELMNPPCopy.size();
 
     // generate diagnostic files for the incoming elm data
-    string nppName = "./npp2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
+    // use the gcam year to match the scalar_yyyy.csv files
+    string nppName = "./npp2GCAM_" + std::to_string(aGCAMYear) + ".csv";
     ILogger& npp2GCAM = ILogger::getLogger( nppName );
     npp2GCAM.setLevel( ILogger::NOTICE );
     npp2GCAM.precision(20);
     npp2GCAM << "pft_id,lon_ind,lat_ind,npp_gC_per_m2_per_s, tot_n = " << tot_n << ", valid_n = " << valid_n << endl;
 
-    string hrName = "./hr2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
+    string hrName = "./hr2GCAM_" + std::to_string(aGCAMYear) + ".csv";
     ILogger& hr2GCAM = ILogger::getLogger( hrName );
     hr2GCAM.setLevel( ILogger::NOTICE );
     hr2GCAM.precision(20);
     hr2GCAM << "pft_id,lon_ind,lat_ind,hr_gC_per_m2_per_s, tot_n = " << tot_n << ", valid_n = " << valid_n << endl;
 
-    string pftName = "./pft2GCAM_" + std::to_string(aGCAMYear-5) + ".csv";
+    string pftName = "./pft2GCAM_" + std::to_string(aGCAMYear) + ".csv";
     ILogger& pft2GCAM = ILogger::getLogger( pftName );
     pft2GCAM.setLevel( ILogger::NOTICE );
     pft2GCAM.precision(20);
