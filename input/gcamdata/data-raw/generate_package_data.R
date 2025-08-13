@@ -28,9 +28,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["ModelTimeInterYears"]] <- c("inter.year.timestep", "inter.year", "dummy.tag")
 
   # Climate
-  level2_data_names[["MAGICC"]] <- c("last.historical.year", "bc.unit.forcing", "default.emiss.file")
   level2_data_names[["hector"]] <- c("hector.end.year", "emissions.switch.year", "hector.ini.file")
-  level2_data_names[["DeleteMAGICC"]] <- c("delete")
   level2_data_names[["DeleteHector"]] <- c("delete")
   level2_data_names[["NoClimateModel"]] <- c("no.climate.model")
 

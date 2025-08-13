@@ -95,11 +95,8 @@ data.USER_MOD_POSTFIX <- "__0"
 # The value typically does not matter but does come up for calculating resource depletion
 modeltime.PERIOD0_TIMESTEP <- 15
 
-# MAGICC model assumptions
-modeltime.MAGICC_LAST_HISTORICAL_YEAR <- 2005
-modeltime.MAGICC_BC_UNIT_FORCING      <- 0
-modeltime.MAGICC_DEFAULT_EMISS_FILE   <- "../input/magicc/Historical Emissions/Default Emissions Module/Hist_to_2008_Annual.csv"
-modeltime.MAGICC_C_START_YEAR         <- 1705
+# Carbon model model assumptions
+modeltime.C_START_YEAR         <- 1705
 
 # Hector model assumptions
 modeltime.HECTOR_END_YEAR        <- 2300
