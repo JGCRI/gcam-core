@@ -55,7 +55,6 @@ class Tabs;
 class IVisitor;
 
 // Need to forward declare the subclasses as well.
-class MagiccModel;
 class HectorModel;
 class NoClimateModel;
 
@@ -280,11 +279,11 @@ protected:
      */
 #if USE_HECTOR
     DEFINE_DATA(
-        DEFINE_SUBCLASS_FAMILY( IClimateModel, MagiccModel, HectorModel, NoClimateModel )
+        DEFINE_SUBCLASS_FAMILY( IClimateModel, HectorModel, NoClimateModel )
     )
 #else
     DEFINE_DATA(
-        DEFINE_SUBCLASS_FAMILY(IClimateModel, MagiccModel, NoClimateModel )
+        DEFINE_SUBCLASS_FAMILY(IClimateModel, NoClimateModel )
     )
 #endif // USE_HECTOR
 };

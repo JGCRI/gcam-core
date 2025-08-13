@@ -62,9 +62,6 @@ class IClimateModel;
  *          it is implied that the subclasses of this interface will utilize the 
  *          GCAM fusion capabilities to gain access to the internal model state
  *          necessary to compute and/or push feedbacks into GCAM.
- * \warning MAGICC does not currently run between periods so these feedbacks may
- *          not work correctly if climate results are needed and MAGICC is configured
- *          as the climate model.
  *
  * \author Pralit Patel
  */

@@ -43,7 +43,6 @@
 #include <cassert>
 #include "emissions/include/luc_emissions_summer.h"
 #include "ccarbon_model/include/icarbon_calc.h"
-#include "climate/include/magicc_model.h"
 
 using namespace std;
 

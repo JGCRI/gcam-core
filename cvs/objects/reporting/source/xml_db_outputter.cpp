@@ -62,7 +62,6 @@
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market.h"
 #include "climate/include/iclimate_model.h"
-#include "climate/include/magicc_model.h"
 #include "resources/include/subresource.h"
 #include "resources/include/reserve_subresource.h"
 #include "resources/include/renewable_subresource.h"
