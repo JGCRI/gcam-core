@@ -82,7 +82,8 @@ namespace {
     bool hector_log_is_init = false;
 } 
 
-HectorModel::HectorModel()
+HectorModel::HectorModel():
+mOfile("hector-output", "../output/gcam-hector-outputstream.csv")
 {
     // Set default values for config variables.  All of these can be
     // overridden in XML input.
@@ -315,8 +316,7 @@ void HectorModel::reset( const int aPeriod ) {
         mHcore->shutDown();
         mHcore.reset(0);
     }
-    if( !mOfile.get() ) {
-        mOfile.reset( new ofstream( "logs/gcam-hector-outputstream.csv" ) );
+    if( !mHosv.get() ) {
         mHosv.reset( new Hector::CSVOutputStreamVisitor( *mOfile, true ) );
     }
     else {

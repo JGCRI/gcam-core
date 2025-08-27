@@ -100,6 +100,12 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
     // Set the global scenario pointer.
     // TODO: Remove global scenario pointer.
     scenario = mScenario.get();
+    
+    // Override scenario name from data file with that from configuration file
+    const string overrideName = conf->getString( "scenarioName" ) + aName;
+    if ( !overrideName.empty() ) {
+        mScenario->setName( overrideName );
+    }
 
     // Parse the input file.
     bool success =
@@ -135,12 +141,6 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
         if( !success ){
             return false;
         }
-    }
-    
-    // Override scenario name from data file with that from configuration file
-    const string overrideName = conf->getString( "scenarioName" ) + aName;
-    if ( !overrideName.empty() ) {
-        mScenario->setName( overrideName );
     }
 
     mainLog.setLevel( ILogger::NOTICE );

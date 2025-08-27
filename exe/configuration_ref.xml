@@ -8,7 +8,7 @@
 		<Value write-output="1" append-scenario-name="0" name="xmldb-location">../output/database_basexdb</Value>
 		<Value write-output="1" append-scenario-name="0" name="restart">./restart/restart</Value>
 		<Value write-output="1" append-scenario-name="1" name="xmlDebugFileName">debug.xml</Value>
-		<Value write-output="1" append-scenario-name="0" name="climatFileName">gas.emk</Value>
+		<Value write-output="1" append-scenario-name="0" name="hector-output">../output/gcam-hector-outputstream.csv</Value>
 		<Value write-output="1" append-scenario-name="1" name="costCurvesOutputFileName">cost_curves.xml</Value>
 		<Value write-output="0" append-scenario-name="0" name="supplyDemandOutputFileName">SDCurves.csv</Value>
 		<Value write-output="0" append-scenario-name="0" name="flow-graph">gcam-flow-graph.dot</Value>
@@ -114,8 +114,6 @@
 	<Strings>
 		<Value name="scenarioName">Reference</Value>
 		<Value name="debug-region">USA</Value>
-		<Value name="MAGICC-input-dir">../input/magicc/inputs</Value>
-		<Value name="MAGICC-output-dir">../output</Value>
 		<Value name="AbatedGasForCostCurves">CO2</Value>
 	</Strings>
 	<Bools>
@@ -137,7 +135,6 @@
 		<Value name="numPointsForSD">21</Value>
 		<Value name="numPointsForCO2CostCurve">5</Value>
 		<Value name="carbon-output-start-year">1705</Value>
-		<Value name="parallel-grain-size">50</Value>
 		<Value name="stop-period">-1</Value>
 		<Value name="stop-year">-1</Value>
 		<Value name="restart-period">-1</Value>
