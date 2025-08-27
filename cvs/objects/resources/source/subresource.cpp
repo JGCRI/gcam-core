@@ -324,14 +324,14 @@ void SubResource::cumulsupply( const gcamstr& aRegionName, const gcamstr& aResou
     // Case 1
     // if market price is less than cost of first grade, then zero cumulative
     // production
-    if ( mEffectivePrice[ aPeriod ] <= mGrade[0]->getCost( aPeriod )) {
+    if ( mEffectivePrice[ aPeriod ] <= mGrade[0]->getCost( aPeriod ) || currTech->getShareWeight() == 0.0) {
         mCumulProd[ aPeriod ] = prevCumul;
     }
     
     // Case 2
     // if market price is in between cost of first and last grade, then calculate
     // cumulative production in between those grades
-    if ( mEffectivePrice[ aPeriod ] > mGrade[0]->getCost( aPeriod ) && mEffectivePrice[ aPeriod ] <= mGrade[ mGrade.size() - 1 ]->getCost( aPeriod )) {
+    else if ( mEffectivePrice[ aPeriod ] > mGrade[0]->getCost( aPeriod ) && mEffectivePrice[ aPeriod ] <= mGrade[ mGrade.size() - 1 ]->getCost( aPeriod )) {
         mCumulProd[ aPeriod ] = 0;
         int i = 0;
         int iL = 0;
@@ -352,7 +352,7 @@ void SubResource::cumulsupply( const gcamstr& aRegionName, const gcamstr& aResou
     // Case 3
     // if market price greater than the cost of the last grade, then
     // cumulative production is the amount in all grades
-    if ( mEffectivePrice[ aPeriod ] > mGrade[ mGrade.size() - 1 ]->getCost( aPeriod ) ) {
+    else if ( mEffectivePrice[ aPeriod ] > mGrade[ mGrade.size() - 1 ]->getCost( aPeriod ) ) {
         mCumulProd[ aPeriod ] = 0;
         for ( unsigned int i = 0; i < mGrade.size(); i++ ) {
             mCumulProd[ aPeriod ] += Value( mGrade[i]->getAvail() );
