@@ -44,7 +44,7 @@ class ReMapData;
 class GetDataHelper {
 public:
   GetDataHelper(const std::string& aHeader, ReMapData& aDataMapper)
-      :mDataMapper(aDataMapper)
+      :mDataMapper(aDataMapper), mCurrDataValue(2015)
   {
     parseFilterString(aHeader);
   }
