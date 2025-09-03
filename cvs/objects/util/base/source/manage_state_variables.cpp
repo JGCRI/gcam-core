@@ -403,11 +403,9 @@ void Value::doStateCheck() const {
 
 template<typename DataType>
 void ManageStateVariables::DoCollect::processData( DataType& aData ) {
-#if DEBUG_STATE
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::SEVERE );
     mainLog << "Found an unexpected state var type: " << typeid( aData ).name() << endl;
-#endif
 }
 
 template<>
