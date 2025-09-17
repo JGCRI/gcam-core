@@ -417,7 +417,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     ofstream oFile;
     Timer timer;
     double *co2 = mCO2EmissData.getData();
-    std::string co2_oname;
+    std::string co2_oname, case_name, command;
 
     // Get year only of the current date
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -432,6 +432,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     //    and year get updated below if gcam runs
     //    and otherwise it is correct year
     int gcamYear = modeltime->getper_to_yr( gcamPeriod );
+    // get the case name
+    case_name = runner->getName();
 
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
@@ -505,6 +507,10 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                 timer.start();
                 success = runner->runScenarios( gcamPeriod-1, true, timer );
                 timer.stop();
+                // rename the debug file so it does not get overwritten by the period run below
+                // the output is is written for all periods, only after the run period, so it doesn't exist yet here
+                command = std::string("mv debug") + case_name + std::string(".xml") + std::string(" debug") + case_name + std::string("_restart.xml"); 
+                system(command.c_str());
             }
 
             // now set scalars for the current period

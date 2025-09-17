@@ -203,11 +203,13 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
 
     // do this each time because it won't build if it is in an if block
     // and it overwrites to blank each time if only the output lines are in an if block
-    string areaName = "./area2GCAM.csv";
+    // actually need this for each year to track the outliers
+    // the cell areas of the outlier values get set to zero, and the full array matches the npp, hr, and pft data
+    string areaName = "./cell_area2GCAM_" + std::to_string(aGCAMYear) + ".csv";
     ILogger& area2GCAM = ILogger::getLogger( areaName );
     area2GCAM.setLevel( ILogger::NOTICE );
     area2GCAM.precision(20);
-    area2GCAM << "lon_ind,lat_ind,cell_area_km2" << endl;
+    area2GCAM << "pft_id,lon_ind,lat_ind,cell_area_km2" << endl;
 
     // diagnostics to find out where the data are being lost
     //string SdName = "./scaler_diagnostic.csv";
@@ -249,10 +251,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                 npp2GCAM << pft << "," << j << "," << k << "," << aELMNPP[valIndex] << endl;
                 hr2GCAM << pft << "," << j << "," << k << "," << aELMHR[valIndex] << endl;
                 pft2GCAM << pft << "," << j << "," << k << "," << aELMPFTFract[valIndex] << endl;
-                if(pft == 0) {
-                    // this is still the original cell area because it is output only once
-                    area2GCAM << j << "," << k << "," << aELMArea[gridIndex] << endl;
-                }
+                area2GCAM << pft << "," << j << "," << k << "," << mELMArea[valIndex] << endl;
 
                 if ( mRegionMapping.find(gridID) == mRegionMapping.end() ) {
                     // Grid isn't found in the mapping. Currently, this probably means it is an ocean grid.
