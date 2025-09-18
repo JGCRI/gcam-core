@@ -54,6 +54,7 @@
 #include "climate/include/iclimate_model.h"
 #include "climate/source/hector/inst/include/core.hpp"
 #include "climate/source/hector/inst/include/csv_outputstream_visitor.hpp"
+#include "util/base/include/auto_file.h"
 
 class IVisitor;
 
@@ -183,7 +184,7 @@ private:
     std::unique_ptr<Hector::Core> mHcore;
 
     //! file handle for the outputstream visitor
-    std::unique_ptr<std::ofstream> mOfile;
+    AutoOutputFile mOfile;
 
     //! output stream visitor
     std::unique_ptr<Hector::CSVOutputStreamVisitor> mHosv;
