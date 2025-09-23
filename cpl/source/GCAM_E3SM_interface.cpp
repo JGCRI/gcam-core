@@ -228,10 +228,10 @@ void GCAM_E3SM_interface::initGCAM(int *yyyymmdd, std::string aCaseName, std::st
        gcamYearPrev = modeltime->getper_to_yr( gcamPeriod-1 );
        gcamYear = modeltime->getper_to_yr( gcamPeriod );
        coupleLog << "initGCAM: Initializing co2 data for restart run; e3sm year is " << e3smYear << ", gcam year is " << gcamYear << endl;
-       // if during first e3sm period (2016-2019), get the base year data for previous
-       // assume that restart cannot happen for 2015
-       if (gcamYear == 2015) {
-          coupleLog << "initGCAM: Can't restart in 2015: start an initial hybrid run" << endl;
+       // if during first e3sm period (2015-2019), get the base year data for previous
+       // assume that restart cannot happen for previous periods
+       if (gcamYear <= 2015) {
+          coupleLog << "initGCAM: Can't restart prior to first period (gcamYear = 2020): start an initial hybrid run" << endl;
           exit(EXIT_FAILURE);
        } else if (gcamYear == 2020){
           co2_fname = aBaseCO2GcamFileName;
@@ -834,7 +834,7 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
            for (int i=0; i<numScalars; i++) {
               // need to recombine the region_basin and extract the land type
               // split the land tech into basin and land type
-              // currently no "_" in either basein abr or land type name
+              // currently no "_" in either basin abr or land type name
               boost::split(strs, scalarLandTech[i], boost::is_any_of("_"));
               // set the appropriate strings
               regID = scalarRegion[i] + "_" + strs[1];
@@ -900,7 +900,18 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
            SetDataHelper setBGCD(cdensityYears, cdensityRegion, cdensityLandTech, BGCD_scaled,
               "world/region[+name]/land-allocator//child-nodes[+name]/carbon-calc/below-ground-carbon-density");
            setBGCD.run(runner->getInternalScenario());
-        }
+
+           // create scaled carbon diagnostic files
+           string CdName = "./scaled_carbon_diag" + std::to_string(gcamYear)  + ".csv";
+           ILogger& cd = ILogger::getLogger( CdName );
+           cd.setLevel( ILogger::NOTICE );
+           cd.precision(20);
+
+           for (int i = 0; i < cdCount; i++){
+               cd << cdensityRegion[i] << "," << cdensityLandTech[i] << ", AGCD" << AGCD_scaled[i] << ", BGCD" << BGCD_scaled[i] << endl;
+           } // end i loop for carbon diagnostic file
+
+        } // end if scale carbon
 
     } // end if >= first coupled year
     

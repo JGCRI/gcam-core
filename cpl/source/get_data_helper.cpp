@@ -121,9 +121,7 @@ void GetDataHelper::processData(double& aData) {
     for(auto path: mPathTracker) {
         path->recordPath();
     }
-    // adivi: try replacing mCurrYearValue with 2015, since mCurrYearValue is not set
-    //    so far the carbon densities are the only double types
-    mDataMapper.setData(mCurrColValues, 2015, mCurrDataValue);
+    mDataMapper.setData(mCurrColValues, mCurrYearValue, mCurrDataValue);
 }
 template<>
 void GetDataHelper::processData(Value& aData) {
