@@ -408,7 +408,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
                                    std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                                    double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                    int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod,
-                                   std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
+                                   std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, std::string aScalarSourceDir,
                                    bool aWriteScalars, bool aScaleAgYield, bool aScaleCarbon,
                                    std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun )
 {
@@ -520,8 +520,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             // try doing this check here instead
             if( e3smYear >=  *aFirstCoupledYear ) {
                setLandProductivityScalingGCAM(yyyymmdd, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
-                            aNumLon, aNumLat, aNumPFT, aMappingFile, aFirstCoupledYear, aReadScalars, aWriteScalars,
-                            aScaleAgYield, aScaleCarbon, aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
+                            aNumLon, aNumLat, aNumPFT, aMappingFile, aFirstCoupledYear, aReadScalars, aScalarSourceDir,
+                            aWriteScalars, aScaleAgYield, aScaleCarbon, aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
             }
 
             // now run the current period
@@ -722,8 +722,8 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 
 void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                                          int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
-                                          bool aWriteScalars, bool aScaleAgYield, bool aScaleCarbon,
-                                          std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
+                                         std::string aScalarSourceDir, bool aWriteScalars, bool aScaleAgYield, bool aScaleCarbon,
+                                         std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
     // Get year only of the current date
     // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
@@ -776,7 +776,7 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
         // The scalar file name and the year inside refer to the GCAM year they are being applied to
         if ( aReadScalars ) {
             coupleLog << "In setLandProductivityScalingGCAM, Reading scalars from file." << endl;
-            fName = "./scalars_" + std::to_string(gcamYear) + ".csv";
+            fName = aScalarSourceDir + "/scalars_" + std::to_string(gcamYear) + ".csv";
             numScalars = e3sm2gcam.readScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         } else {
             coupleLog << "In setLandProductivityScalingGCAM, Calculating scalars from data." << endl;

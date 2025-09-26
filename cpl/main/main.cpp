@@ -85,6 +85,8 @@ int main( ) {
     std::string BASE_CO2_SURFACE_FILE = "../cpl/data/CO2-em-SFC-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_CO2_AIRCRAFT_FILE = "../cpl/data/CO2-em-AIR-2lvl-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_CO2_SHIPMENT_FILE = "../cpl/data/CO2-em-SHIP-anthro_0.9x1.25_input4MIPs_2014.csv";
+    std::string BASE_CO2EMISS_SURFACE = "../cpl/data/CO2-em-SFC-anthro_0.9x1.25_input4MIPs_2014.csv";
+    std::string BASE_CO2EMISS_AIRCRAFT = "../cpl/data/CO2-em-AIR-2lvl-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_GCAM_CO2_FILE = "../cpl/data/co2_2015_gcam_out_regional.csv";
     std::string BASE_GCAM_LU_WH_FILE = "../cpl/data/lu_wh_2015_gcam_out.csv";
     std::string GCAM2ELM_CO2_MAPPING_FILE = "../cpl/mappings/co2_regional.xml";
@@ -99,6 +101,8 @@ int main( ) {
     std::string BASE_NPP_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_npp.csv";
     std::string BASE_HR_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_hr.csv";
     std::string BASE_PFT_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_pft_wt.csv";
+    std::string SCALAR_SOURCE_DIR = "../cpl/data/"; // Placeholder: Default scalar source directory
+
 
     // these are for Convergence downscaling
     std::string CO2_GCAM_FILE = "../cpl/data/GCAMRegionalCO2Data.csv";
@@ -200,6 +204,10 @@ if (false) {
             BASE_CO2_AIRCRAFT_FILE = value;
         } else if ( name == "BASE_CO2_SHIPMENT_FILE" ) {
             BASE_CO2_SHIPMENT_FILE = value;
+        } else if ( name == "BASE_CO2EMISS_SURFACE" ) {
+            BASE_CO2EMISS_SURFACE = value;
+        } else if ( name == "BASE_CO2EMISS_AIRCRAFT" ) {
+            BASE_CO2EMISS_AIRCRAFT = value;
         } else if ( name == "BASE_GCAM_CO2_FILE" ) {
             BASE_GCAM_CO2_FILE = value;
         } else if ( name == "BASE_GCAM_LU_WH_FILE" ) {
@@ -228,6 +236,8 @@ if (false) {
             BASE_HR_FILE = value;
         } else if ( name == "BASE_PFT_FILE" ) {
             BASE_PFT_FILE = value;
+        } else if ( name == "SCALAR_SOURCE_DIR" ) {
+            SCALAR_SOURCE_DIR = value;
         } else if ( name == "CO2_GCAM_FILE" ) {
             CO2_GCAM_FILE = value;
         } else if ( name == "COUNTRY2GRID_MAP" ) {
@@ -387,7 +397,7 @@ if (false) {
                            BASE_GCAM_LU_WH_FILE, BASE_GCAM_CO2_FILE, GCAM_SPINUP, 
                            gcamiarea, gcamipftfract, gcaminpp, gcamihr,
                            NUM_LON, NUM_LAT, NUM_PFT, NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
-                           ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS,
+                           ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, SCALAR_SOURCE_DIR, WRITE_SCALARS,
                            ELM_EHC_AGYIELD_SCALING, ELM_EHC_CARBON_SCALING, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE, RESTART_RUN);
 
 
@@ -440,7 +450,7 @@ if (false) {
                            BASE_GCAM_LU_WH_FILE, BASE_GCAM_CO2_FILE, GCAM_SPINUP,
                            gcamiarea, gcamipftfract, gcaminpp, gcamihr,
                            NUM_LON, NUM_LAT, NUM_PFT, NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
-                           ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS,
+                           ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, SCALAR_SOURCE_DIR, WRITE_SCALARS,
                            ELM_EHC_AGYIELD_SCALING, ELM_EHC_CARBON_SCALING, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE, RESTART_RUN);
 
  
@@ -467,7 +477,7 @@ if (false) {
     }
     /*
      STEP 5: FINALIZE AND CLEAN UP ALL VARIABLES
-     */n
+     */
     // Finalize GCAM
     p_obj->finalizeGCAM();
     

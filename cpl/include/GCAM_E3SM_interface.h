@@ -31,11 +31,11 @@ public:
     void runGCAM(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                  double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                  int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod,
-                  std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars,
+                  std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, std::string aScalarSourceDir, bool aWriteScalars,
                  bool aScaleAgYield, bool aScaleCarbon,  std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun);
     void setLandProductivityScalingGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                        int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars,
-                        bool aScaleAgYield, bool aScaleCarbon, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
+                        int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, std::string aScalarSourceDir, 
+                        bool aWriteScalars, bool aScaleAgYield, bool aScaleCarbon, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
     void downscaleEmissionsGCAM(double *gcamoemiss,
                                 double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar, double *gcamoco2sfcapr,
                                 double *gcamoco2sfcmay, double *gcamoco2sfcjun, double *gcamoco2sfcjul, double *gcamoco2sfcaug,
