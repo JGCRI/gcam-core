@@ -229,6 +229,8 @@ bool TechnologyContainer::XMLParse( rapidxml::xml_node<char>* & aNode) {
     else if( nodeName == InterpolationRule::getXMLNameStatic() ) {
         // just handle the interpolation rule clear
         map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        // When user reads in another interpolation rule, previous rules will
+        // first be deleted.
         if( attrs["apply-to"] == "share-weight" && attrs["delete"] == "1" ) {
             clearInterpolationRules();
         }

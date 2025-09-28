@@ -343,7 +343,7 @@ module_socio_L180.GDP_macro <- function(command, ...) {
 
     # Check that data extends to base-year
     if (max(L180.nationalAccounts.part$year) <= max(HISTORICAL_YEARS)) {
-      warning("WARNING: National accounts data extend to ",max(HISTORICAL_YEARS)," in module_socio_L180.GDP_macro. Data copied forward.")
+      warning("WARNING: National accounts data do not extend to ",max(HISTORICAL_YEARS)," in module_socio_L180.GDP_macro. Data copied forward.")
     }
 
     L180.nationalAccounts.part %>%
