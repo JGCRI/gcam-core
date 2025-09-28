@@ -241,9 +241,15 @@ double EnergyFinalDemand::calcFinalDemand( const gcamstr& aRegionName,
         mServiceDemands[ aPeriod ] = mBaseService[ aPeriod ];
         mPreTechChangeServiceDemand[ aPeriod ] = mBaseService[ aPeriod ];
     }
-    // Do for non-calibration periods
-    else{
-        // Update AEEI.
+    // Handle case where either a service starts up in a non-calibration period
+    // or the user wants to exogenously specify the demand path
+    // User must make sure AEEI start is consistent with this
+    else if (mBaseService[ aPeriod ].isInited() ) {
+        mServiceDemands[ aPeriod ] = mBaseService[ aPeriod ];
+        mPreTechChangeServiceDemand[ aPeriod ] = mBaseService[ aPeriod ];
+    }
+    // Calculate for non-calibration/user-specified periods otherwise (normal case)
+    else{        // Update AEEI.
         if( mFinalEnergyConsumer ){
             mFinalEnergyConsumer->updateAEEI( aRegionName, aPeriod );
         }
