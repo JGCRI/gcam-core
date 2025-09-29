@@ -1,0 +1,37 @@
+# File: GCAM_GTAP_sector_mapping_AgLU.csv
+# Title: GTAP agrofood sectors to GCAM AgLU sectors mapping
+# Units: NA
+# Description: Mapping agrofood sectors in GTAP to GCAM AgLU sectors to derive production cost shares. Note that the mapping is one-way and should be joined to GTAP data and aggregate.
+# Column types: cccl
+# ----------
+GCAM_commodity,GTAP_sectors,GTAP_Long_Name,Primary
+Corn,gro,Cereal grains nec,T
+Fruits,v_f,"Vegetables, fruit, nuts",T
+FiberCrop,pfb,Plant-based fibers,T
+FodderGrass,ocr,Crops nec,T
+FodderHerb,ocr,Crops nec,T
+Vegetables,v_f,"Vegetables, fruit, nuts",T
+Legumes,ocr,Crops nec,T
+MiscCrop,ocr,Crops nec,T
+NutsSeeds,v_f,"Vegetables, fruit, nuts",T
+OilCrop,osd,Oil seeds,T
+OilPalm,osd,Oil seeds,T
+OtherGrain,gro,Cereal grains nec,T
+Rice,pdr,Paddy rice,T
+RootTuber,ocr,Crops nec,T
+Soybean,osd,Oil seeds,T
+SugarCrop,c_b,"Sugar cane, sugar beet",T
+Wheat,wht,Wheat,T
+Beef,ctl,"Bovine cattle, sheep and goats, horses",T
+Beef,cmt,Bovine meat products,F
+Dairy,rmk,Raw milk,T
+Dairy,mil,Dairy products,F
+OtherMeat_Fish,fsh,Fishing,T
+Pork,oap,Animal products nec,T
+Pork,omt,Meat products nec,F
+Poultry,oap,Animal products nec,T
+Poultry,omt,Meat products nec,F
+SheepGoat,ctl,"Bovine cattle, sheep and goats, horses",T
+SheepGoat,cmt,Bovine meat products,F
+Forest,frs,Forestry,T
+biomass,ocr,Crops nec,T

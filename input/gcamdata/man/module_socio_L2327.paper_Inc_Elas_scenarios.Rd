@@ -14,8 +14,7 @@ module_socio_L2327.paper_Inc_Elas_scenarios(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L2327.paper_incelas_gcam3}, \code{object}. The corresponding file in the
-original data system was \code{L2327.paper_Inc_Elas_scenarios.R} (socioeconomics level2).
+the generated outputs: \code{L2327.IncomeElasticity_paper_Scen}
 }
 \description{
 Calculates paper income elasticity for each GCAM region by linear interpolation of assumption data

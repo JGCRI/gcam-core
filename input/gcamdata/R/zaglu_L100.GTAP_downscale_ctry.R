@@ -8,8 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L100.GTAP_LV_milUSD}, \code{L100.GTAP_capital_stock},
-#' \code{L100.GTAPCostShare_ResourceRefine_GCAMReg_share}. The corresponding file in the
+#' the generated outputs: \code{L100.GTAP_LV_milUSD}. The corresponding file in the
 #' original data system was \code{LA100.GTAP_downscale_ctry.R} (aglu level1).
 #' @details This chunk downscales the GTAP region-level land value to all countries
 #' based on production share by GLU and GTAP commodity class.
@@ -24,15 +23,10 @@ module_aglu_L100.GTAP_downscale_ctry <- function(command, ...) {
     c(FILE = "aglu/AGLU_ctry",
       FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
       "L100.LDS_value_milUSD",
-      "L100.LDS_ag_prod_t",
-      FILE = "socioeconomics/GTAP/GCAM_GTAP_region_mapping",
-      FILE = "socioeconomics/GTAP/GTAP_sector_aggregation_mapping",
-      OPTIONAL_FILE = "socioeconomics/GTAP/GTAPv10_basedata_VKB_SAVE_VDEP",
-      OPTIONAL_FILE = "socioeconomics/GTAP/GTAPv10_baseview_SF01_VFA")
+      "L100.LDS_ag_prod_t")
 
   MODULE_OUTPUTS <-
-    c("L100.GTAP_LV_milUSD",
-      "L100.GTAP_capital_stock")
+    c("L100.GTAP_LV_milUSD")
 
     if(command == driver.DECLARE_INPUTS) {
     return(MODULE_INPUTS)
@@ -50,80 +44,13 @@ module_aglu_L100.GTAP_downscale_ctry <- function(command, ...) {
 
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
+    # Note that the GTAP land values processed here and later in
+    # module_aglu_L131.LV_R_GLU are optional in
+    # module_aglu_L221.land_input_1 when processing L221.LN1_ValueLogit
+    # where a shadow rental profit for unmanaged land is defined
 
-
-
-    # Capital stock and cost shares ----
-    if(!is.null(GTAPv10_baseview_SF01_VFA) && !is.null(GTAPv10_basedata_VKB_SAVE_VDEP)) {
-
-      # GTAP data will have VKB (the value of the capital stock at the beginning of the period)
-      # total annual investment and VDEP (the depreciation of the capital stock in terms of $)
-      # We can use this information to back out VKE (the value of capital stock at the end of the period)
-      # as simply: VKB + investment - VDEP
-
-      ## Calculate ending captial stock VKE----
-      GTAPv10_basedata_VKB_SAVE_VDEP %>%
-        spread(variable, value) %>%
-        left_join_error_no_match(
-          GTAPv10_baseview_SF01_VFA %>%
-            filter(output == "CGDS") %>% # investment
-            group_by(region, year) %>%
-            summarize(investment = sum(value)),
-          by = c("region", "year") ) %>%
-        mutate(VKE = VKB + investment - VDEP) ->
-        L100.GTAP_VKB_VKE
-
-      # convert total values to shares which is what we will use ultimately since we are
-      # mixing a number of data sources
-      GTAPv10_baseview_SF01_VFA %>%
-        filter(input == "Capital") %>%
-        gcamdata::left_join_error_no_match(
-          L100.GTAP_VKB_VKE %>% select(region, year, VKB, VKE, VDEP), by = c("region", "year") ) %>%
-        # Share out VKB and VKE by annual capital cost
-        # This assumes a uniform depreciation rate & rate of return
-        dplyr::group_by_at(vars(-value, -output)) %>%
-        mutate(VKB = value / sum(value) * VKB,
-               VKE = value / sum(value) * VKE,
-               VDEP = value / sum(value) * VDEP) %>%
-        ungroup() %>%
-        select(-input) %>% rename(CapitalCost= value) ->
-        L100.GTAP_capital_stock_0
-
-      # Join mappings to get capital stock by sectors ----
-
-      L100.GTAP_capital_stock_0 %>%
-        rename(region_GTAP = region) %>%
-        gcamdata::left_join_error_no_match(
-          GCAM_GTAP_region_mapping %>% select(region_GTAP = GTAPv10_region, region_GCAM = GCAM_region),
-          by = "region_GTAP") %>%
-        gcamdata::left_join_error_no_match(
-          GTAP_sector_aggregation_mapping %>%
-            select(output = GTAPv10, GCAM_sector), by = "output") %>%
-        group_by(region_GTAP, region_GCAM, GCAM_sector, year) %>%
-        summarize_at(vars(CapitalCost, VKE, VKB, VDEP), .funs = sum) %>%
-        ungroup ->
-        L100.GTAP_capital_stock
-
-      L100.GTAP_capital_stock %>%
-        add_title("GTAP capital stock data", overwrite = TRUE) %>%
-        add_units("share") %>%
-        add_comments("GTAP capital stock data for separate GCAM macro capital stock") %>%
-        add_precursors("socioeconomics/GTAP/GCAM_GTAP_region_mapping",
-                       "socioeconomics/GTAP/GTAP_sector_aggregation_mapping",
-                       "socioeconomics/GTAP/GTAPv10_basedata_VKB_SAVE_VDEP",
-                       "socioeconomics/GTAP/GTAPv10_baseview_SF01_VFA") ->
-        L100.GTAP_capital_stock
-
-      verify_identical_prebuilt(L100.GTAP_capital_stock)
-
-    } else {
-
-        # If missing source GTAP data, prebuilt data is read here
-        L100.GTAP_capital_stock <- extract_prebuilt_data("L100.GTAP_capital_stock")
-    }
-
-
-
+    # There will be similar calculations using GCAM data which is the default option now
+    # in module_aglu_L221.land_input_1 when processing L221.LN1_ValueLogit
 
     # Create the iso - GTAP_region mapping file ----
     # GTAP6 includes 87 regions, most of which are single countries, and 18 are aggregated regions of multiple countries.

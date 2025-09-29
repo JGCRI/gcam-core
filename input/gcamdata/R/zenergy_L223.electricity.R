@@ -76,7 +76,7 @@ module_energy_L223.electricity <- function(command, ...) {
              "L120.GridCost_offshore_wind",
              "L120.RegCapFactor_offshore_wind",
              "L1232.desalsecout_R_elec_F_tech",
-             "L102.gdp_mil90usd_GCAM3_ctry_Y"))
+             "L100.gdp_mil90usd_ctry_Yh"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L223.Supplysector_elec",
              "L223.ElecReserve",
@@ -190,7 +190,7 @@ module_energy_L223.electricity <- function(command, ...) {
     L1231.out_EJ_R_elec_F_tech_Yh <- get_data(all_data, "L1231.out_EJ_R_elec_F_tech_Yh")
     L1231.eff_R_elec_F_tech_Yh <- get_data(all_data, "L1231.eff_R_elec_F_tech_Yh")
     L1232.desalsecout_R_elec_F_tech <- get_data(all_data, "L1232.desalsecout_R_elec_F_tech", strip_attributes = TRUE)
-    L102.gdp_mil90usd_GCAM3_ctry_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_ctry_Y")
+    L100.gdp_mil90usd_ctry_Yh <- get_data(all_data, "L100.gdp_mil90usd_ctry_Yh")
 
     # ============================
     # 2a. Supplysector information
@@ -253,11 +253,11 @@ module_energy_L223.electricity <- function(command, ...) {
       L223.SubsectorShrwt_nuc_ctry
 
     # Filter to final year GDPs to prepare for weighting country-level shareweights
-    L102.gdp_mil90usd_GCAM3_ctry_Y %>%
+    L100.gdp_mil90usd_ctry_Yh %>%
       filter(year == max(HISTORICAL_YEARS)) %>%
       select(iso, value) %>%
       rename(weight = value) ->
-      L202.gdp_mil90usd_GCAM3_ctry_Y
+      L202.gdp_mil90usd_ctry_Y
 
     # Where country-level shareweights are provided, use those
     L223.SubsectorShrwt_nuc_ctry %>%
@@ -269,7 +269,7 @@ module_energy_L223.electricity <- function(command, ...) {
 
       # Use GDP by country as a weighting factor in going from country-level shareweights to region-level shareweights
       gather_years %>%
-      left_join(L202.gdp_mil90usd_GCAM3_ctry_Y, by = "iso") %>%
+      left_join(L202.gdp_mil90usd_ctry_Y, by = "iso") %>%
       mutate(year = as.integer(year)) %>%
       na.omit %>%
       group_by(GCAM_region_ID, year) %>%
@@ -1185,7 +1185,7 @@ module_energy_L223.electricity <- function(command, ...) {
       add_comments("Assumptions in A23.subsector_shrwt_nuc_R are used to generate country-level shareweights, which are then weighted by size of GDP") %>%
       add_comments("where country-level weights are not available. These are aggregated and interpolated for regional shareweights") %>%
       add_legacy_name("L223.SubsectorShrwt_nuc") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/A23.subsector_shrwt_nuc_R", "L102.gdp_mil90usd_GCAM3_ctry_Y") ->
+      add_precursors("common/iso_GCAM_regID", "energy/A23.subsector_shrwt_nuc_R", "L100.gdp_mil90usd_ctry_Yh") ->
       L223.SubsectorShrwt_nuc
 
     L223.SubsectorShrwt_renew %>%

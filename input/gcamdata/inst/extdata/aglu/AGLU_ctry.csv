@@ -12,7 +12,7 @@ Algeria,4,dza,xnf,ALGE,1,Algeria,ALGERIA,Rest of world,7,Northern Africa,Norther
 American Samoa,5,asm,xoc,,,American Samoa,,Rest of world,24,Oceania,South East Asia,South Asia
 Andorra,6,and,xer,,,Andorra,,Rest of world,11,Western Europe,OECD Europe,Industrial countries
 Angola,7,ago,xsd,ANGO,18,Angola,,Rest of world,10,Southern Africa,Rest of S. Africa,sub-Saharan Africa
-Anguilla,,aia,xcb,,,,,Rest of world,4,Rest Central America,Rest Central America,Latin America and Caribbean
+Anguilla,258,aia,xcb,,,,,Rest of world,4,Rest Central America,Rest Central America,Latin America and Caribbean
 Antigua and Barbuda,8,atg,xfa,,,Antigua and Barbuda,,Rest of world,4,Rest Central America,Rest Central America,Latin America and Caribbean
 Argentina,9,arg,arg,ARGE,50,Argentina,ARGENTINA,Argentina,6,Rest South America,Rest South America,Latin America and Caribbean
 Armenia,1,arm,xsu,ARME,178,Armenia,,Rest of world,16,Russia plus,Asia-Stan,Transition countries
@@ -66,7 +66,7 @@ Costa Rica,48,cri,xca,COST,38,Costa Rica,COSTA RICA,Rest of world,4,Rest Central
 Cote dIvoire,107,civ,xss,CDIV,8,Cote dIvoire,,Rest of world,8,Western Africa,Western Africa,sub-Saharan Africa
 Croatia,98,hrv,hrv,OEEU,197,Croatia,CROATIA,Rest of world,12,Central Europe,Turkey,Transition countries
 Cuba,49,cub,xcb,CUBA,45,Cuba,CUBA,Rest of world,4,Rest Central America,Rest Central America,Latin America and Caribbean
-Curacao,,cuw,xcb,NEAN,144,,,Rest of world,4,Rest Central America,Rest Central America,Latin America and Caribbean
+Curacao,279,cuw,xcb,NEAN,144,,,Rest of world,4,Rest Central America,Rest Central America,Latin America and Caribbean
 Cyprus,50,cyp,cyp,EUN9,196,Cyprus,,EU-27,12,Central Europe,OECD Europe,Industrial countries
 Czech Republic,,cze,cze,EUN9,196,Czech Republic,CZECH REPUBLIC,EU-27,12,Central Europe,OECD Europe,Transition countries
 Czechia,167,cze,cze,EUN9,196,Czech Republic,CZECH REPUBLIC,EU-27,12,Central Europe,OECD Europe,Transition countries
@@ -153,7 +153,7 @@ Mauritius,137,mus,xsd,MAUS,30,Mauritius,,Rest of world,9,Eastern Africa,Eastern 
 Mayotte,270,myt,xss,,,,,Rest of world,9,Eastern Africa,South East Asia,sub-Saharan Africa
 Mexico,138,mex,mex,MEXI,42,Mexico,MEXICO,Mexico,3,Mexico,Mexico,Latin America and Caribbean
 Micronesia (Federated States of),145,fsm,xoc,,,"Micronesia, Federated States of",,Rest of world,24,Oceania,South East Asia,South Asia
-Monaco,,mco,xer,,,Monaco,,Rest of world,11,Western Europe,OECD Europe,Industrial countries
+Monaco,140,mco,xer,,,Monaco,,Rest of world,11,Western Europe,OECD Europe,Industrial countries
 Mongolia,141,mng,xea,MONG,162,Mongolia,,Rest of world,20,China plus,Asia-Stan,East Asia
 Montenegro,273,mne,xer,,,,,,12,Central Europe,Turkey,Transition countries
 Montserrat,142,msr,xcb,,,Montserrat,,Rest of world,4,Rest Central America,Rest Central America,Latin America and Caribbean
@@ -218,7 +218,7 @@ Serbia and Montenegro,186,scg,xer,OEEU,197,Montenegro,,Rest of world,12,Central 
 Seychelles,196,syc,xsd,SEYC,163,Seychelles,,Rest of world,9,Eastern Africa,South East Asia,sub-Saharan Africa
 Sierra Leone,197,sle,xss,SIER,15,Sierra Leone,,Rest of world,8,Western Africa,Western Africa,sub-Saharan Africa
 Singapore,200,sgp,sgp,SING,152,Singapore,,Rest of world,21,Southeastern Asia,South East Asia,South Asia
-Sint Maarten (Dutch Part),,sxm,xcb,NEAN,144,,,Rest of world,4,Rest Central America,Turkey,Latin America and Caribbean
+Sint Maarten (Dutch Part),280,sxm,xcb,NEAN,144,,,Rest of world,4,Rest Central America,Turkey,Latin America and Caribbean
 Slovakia,199,svk,svk,EUN9,196,Slovakia,SLOVAKIA,EU-27,12,Central Europe,OECD Europe,Transition countries
 Slovenia,198,svn,svn,EUN9,196,Slovenia,,EU-27,12,Central Europe,OECD Europe,Transition countries
 Solomon Islands,25,slb,xoc,SOLO,154,Solomon Islands,,Rest of world,24,Oceania,South East Asia,South Asia
@@ -279,6 +279,8 @@ Venezuela (Bolivarian Republic of),236,ven,ven,VENE,61,Venezuela,VENEZUELA,Rest 
 Viet Nam,237,vnm,vnm,VIET,90,Vietnam,,Vietnam,21,Southeastern Asia,South East Asia,East Asia
 Wallis and Futuna Islands,243,wlf,xoc,,,Wallis and Futuna Islands,,Rest of world,24,Oceania,OECD Europe,Industrial countries
 Western Sahara,205,esh,,,,Western Sahara,,Rest of world,7,Northern Africa,Northern Africa,sub-Saharan Africa
+Yemen Ar Rp,246,yem,xme,YEME,74,Yemen,,Rest of world,17,Middle East,Middle East,Near East / North Africa
+Yemen Dem,247,yem,xme,YEME,74,Yemen,,Rest of world,17,Middle East,Middle East,Near East / North Africa
 Yemen,249,yem,xme,YEME,74,Yemen,,Rest of world,17,Middle East,Middle East,Near East / North Africa
 Yugoslav SFR,248,bih,xer,,,,,Rest of world,12,Central Europe,Turkey,Transition countries
 Yugoslav SFR,248,hrv,xer,,,,,Rest of world,12,Central Europe,Turkey,Transition countries

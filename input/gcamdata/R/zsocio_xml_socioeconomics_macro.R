@@ -13,10 +13,10 @@
 module_socioeconomics_macro_xml <- function(command, ...) {
 
   MODULE_INPUTS <-
-    c("L280.nationalAccounts",
-      "L280.SavingsRateParams",
-      "L280.GDP_macro_function",
-      "L280.FactorProductivity",
+    c("L203.NationalAccounts",
+      "L203.SavingsRateParams",
+      "L203.GDP_macro_function",
+      "L203.FactorProductivity",
       # tracking inputs
       "L281.BasePriceSectorMapping",
       "L281.GlobalTechAccountOutputUseBasePrice_fd",
@@ -40,10 +40,10 @@ module_socioeconomics_macro_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("socioeconomics_macro.xml") %>%
-      add_xml_data(L280.nationalAccounts, "NationalAccount") %>%
-      add_xml_data(L280.SavingsRateParams, "SavingsRateParams") %>%
-      add_xml_data(L280.GDP_macro_function, "GDPMacroFunction") %>%
-      add_xml_data(L280.FactorProductivity, "FactorProductivity") %>%
+      add_xml_data(L203.NationalAccounts, "NationalAccount") %>%
+      add_xml_data(L203.SavingsRateParams, "SavingsRateParams") %>%
+      add_xml_data(L203.GDP_macro_function, "GDPMacroFunction") %>%
+      add_xml_data(L203.FactorProductivity, "FactorProductivity") %>%
       add_xml_data(L281.BasePriceSectorMapping, "BasePriceSectorMap", NULL) %>%
       add_xml_data(L281.GlobalTechAccountOutputUseBasePrice_fd, "GlobalTechAccountOutputUseBasePrice") %>%
       add_xml_data(L281.TrialValueResource, "TrialValueRsrc") %>%

@@ -33,7 +33,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
              FILE = "energy/Odyssee_ResFloorspacePerHouse",
              FILE = "socioeconomics/income_shares",
              "L100.Pop_thous_ctry_Yh",
-             "L102.gdp_mil90usd_GCAM3_R_Y",
+             "L102.gdp_mil90usd_Scen_R_Y",
              "L102.pcgdp_thous90USD_Scen_R_Y",
              "L221.LN0_Land",
              "L221.LN1_UnmgdAllocation"))
@@ -59,7 +59,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
     IEA_PCResFloorspace <- get_data(all_data, "energy/IEA_PCResFloorspace")
     Odyssee_ResFloorspacePerHouse <- get_data(all_data, "energy/Odyssee_ResFloorspacePerHouse")
     L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
-    L102.gdp_mil90usd_GCAM3_R_Y <- get_data(all_data, "L102.gdp_mil90usd_GCAM3_R_Y")
+    L102.gdp_mil90usd_Scen_R_Y <- get_data(all_data, "L102.gdp_mil90usd_Scen_R_Y")
     L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
     L221.LN0_Land <- get_data(all_data, "L221.LN0_Land", strip_attributes = TRUE)
     L221.LN1_UnmgdAllocation <- get_data(all_data, "L221.LN1_UnmgdAllocation", strip_attributes = TRUE)
@@ -597,7 +597,11 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
     # Note that this produces a final output table.
     L144.flsp_bm2_R_res_Yh %>%
       rename(value_flsp = value) %>%
-      left_join_error_no_match(L102.gdp_mil90usd_GCAM3_R_Y, by = c("GCAM_region_ID", "year")) %>% # Join GDP
+      left_join_error_no_match(
+        L102.gdp_mil90usd_Scen_R_Y %>%
+          # any SSP scenario is fine as only historical years (same across SSPs) are used
+          filter(scenario == "SSP2") %>% select(-scenario),
+        by = c("GCAM_region_ID", "year")) %>% # Join GDP
       filter(year %in% HISTORICAL_YEARS) %>%
       # Convert to billion $ and divide by floorspace (billion m2), so that final units will be $ / m2
       # Buildings is assumed to be 20% of GDP
@@ -636,7 +640,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
       add_legacy_name("L144.flsp_bm2_R_comm_Yh") %>%
       add_precursors("common/iso_GCAM_regID", "energy/A44.flsp_bm2_state_comm", "energy/A44.pcflsp_default",
                      "energy/Other_pcflsp_m2_ctry_Yh", "L100.Pop_thous_ctry_Yh",
-                     "L102.gdp_mil90usd_GCAM3_R_Y") ->
+                     "L102.gdp_mil90usd_Scen_R_Y") ->
       L144.flsp_bm2_R_comm_Yh
 
     L144.flspPrice_90USDm2_R_bld_Yh %>%
@@ -647,7 +651,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",  "energy/A44.pcflsp_default",
                      "energy/A44.HouseholdSize", "energy/CEDB_ResFloorspace_chn", "energy/Other_pcflsp_m2_ctry_Yh",
                      "energy/IEA_PCResFloorspace", "energy/Odyssee_ResFloorspacePerHouse", "L100.Pop_thous_ctry_Yh",
-                     "L102.gdp_mil90usd_GCAM3_R_Y") ->
+                     "L102.gdp_mil90usd_Scen_R_Y") ->
       L144.flspPrice_90USDm2_R_bld_Yh
 
     L144.flsp_param %>%

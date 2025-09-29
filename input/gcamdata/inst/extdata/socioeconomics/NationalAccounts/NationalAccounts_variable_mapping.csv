@@ -1,0 +1,48 @@
+# File: NationalAccounts_variable_mapping.csv
+# Title: definition for key macro variables
+# Units: NA
+# Description: PWT used to provide macro-economic data for GCAM macroeconomic module
+# Source: DOI: 10.1257/aer.20130954 ; https://www.rug.nl/ggdc/productivity/pwt/?lang=en; https://www.rug.nl/ggdc/productivity/pwt/
+# Column types: cccc
+# Last update: Jun 2025 XZ
+# ----------
+dataset,variable_code,variable_name,variable_definition
+pwt,countrycode,iso,3-letter ISO country code
+pwt,country,country,Country name
+pwt,currency_unit,currency_unit,Currency unit
+pwt,year,year,Year
+pwt,emp,emp.pwt,Number of persons engaged (in millions)
+pwt,pop,pop.pwt,Population (in millions)
+pwt,rgdpna,gdp.pwt,Real GDP at constant 2017 national prices (in mil. 2017US$)
+pwt,rconna,consumption,Real consumption at constant 2017 national prices (in mil. 2017US$)
+pwt,rdana,cons.plus.invest,Real domestic absorption at constant 2017 national prices (in mil. 2017US$)
+pwt,rnna,capital.stock.pwt,Capital stock at constant 2017 national prices (in mil. 2017US$)
+pwt,labsh,labor.share.gdp,Share of labour compensation in GDP at current national prices
+pwt,irr,interest.rate,Real internal rate of return
+pwt,delta,depreciation.rate,Average depreciation rate of the capital stock. Provided in V9 but removed in v10
+pwt_na,countrycode,iso,3-letter ISO country code
+pwt_na,year,year,Year
+pwt_na,q_c,consumption_HHD,Household consumption at constant national 2017 prices
+pwt_na,q_i,investment,Investment at constant national 2017 prices
+pwt_na,q_g,consumption_GOV,Government consumption at constant national 2017 prices
+pwt_na,q_x,export,Exports at constant national 2017 prices
+pwt_na,q_m,import,Imports at constant national 2017 prices
+pwt_na,xr,exchange_rate,"Exchange rate, national currency/USD (market)"
+pwt_na,q_gfcf,q_gfcf,Gross fixed capital formation at constant national prices
+GMD_2025_03,ISO3,iso,3-letter ISO country code
+GMD_2025_03,year,year,Year
+GMD_2025_03,nGDP,ngdp.gmd,"Nominal GDP, Millions of LC"
+GMD_2025_03,exports,exports.gmd,"Exports, Millions of LC"
+GMD_2025_03,imports,imports.gmd,"Imports, Millions of LC"
+GMD_2025_03,cons,cons.gmd,"Final consumption (C and G), Millions of LC"
+GMD_2025_03,inv,inv.gmd,"Gross capital formation, Millions of LC"
+GMD_2025_03,USDfx,ExUSD.gmd,Nominal exchange rate to USD
+pwt1001,countrycode,iso,3-letter ISO country code
+pwt1001,year,year,Year
+pwt1001,irr,irr.pwt,Real internal rate of return
+pwt1001,labsh,labor.share.pwt,Share of labour compensation in GDP at current national prices
+pwt1001,emp,emp.pwt,Number of persons engaged (in millions)
+pwt1001,pop,pop.pwt,Population (in millions)
+pwt1001,rgdpna,gdp.pwt,Real GDP at constant 2017 national prices (in mil. 2017US$)
+pwt1001,rnna,capital.stock.pwt,Capital stock at constant 2017 national prices (in mil. 2017US$)
+pwt1001,delta,dep.rate.pwt,Average depreciation rate of the capital stock.

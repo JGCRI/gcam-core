@@ -23,7 +23,7 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
              FILE = "water/Liu_EFW_inventory",
              FILE = "water/A73.globaltech_coef",
              "L101.en_bal_EJ_ctry_Si_Fi_Yh_full",
-             "L102.pcgdp_thous90USD_GCAM3_ctry_Y",
+             "L102.pcgdp_thous90USD_ctry_Yh",
              "L132.water_km3_ctry_ind_Yh",
              "L145.municipal_water_ctry_W_Yh_km3",
              "L171.in_km3_ctry_desal_Yh"))
@@ -55,7 +55,7 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
     A73.globaltech_coef <- get_data(all_data, "water/A73.globaltech_coef")
 
     L101.en_bal_EJ_ctry_Si_Fi_Yh_full <- get_data(all_data, "L101.en_bal_EJ_ctry_Si_Fi_Yh_full")
-    L102.pcgdp_thous90USD_GCAM3_ctry_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_ctry_Y")
+    L102.pcgdp_thous90USD_ctry_Yh <- get_data(all_data, "L102.pcgdp_thous90USD_ctry_Yh")
     L132.water_km3_ctry_ind_Yh <- get_data(all_data, "L132.water_km3_ctry_ind_Yh", strip_attributes = TRUE)
     L145.municipal_water_ctry_W_Yh_km3 <- get_data(all_data, "L145.municipal_water_ctry_W_Yh_km3", strip_attributes = TRUE)
     L171.in_km3_ctry_desal_Yh <- get_data(all_data, "L171.in_km3_ctry_desal_Yh", strip_attributes = TRUE)
@@ -131,12 +131,13 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
     # observations, and that (b) a linear function is used for simplicity and versatility
 
     # Prepare the per-capita GDP data for joining in to the water flow volumes
-    L102.pcgdp_thous90USD_GCAM3_ctry_Y <- rename(L102.pcgdp_thous90USD_GCAM3_ctry_Y, pcGDP = value)
+    L102.pcgdp_thous90USD_ctry_Yh <- rename(L102.pcgdp_thous90USD_ctry_Yh, pcGDP = value)
+
 
     # Using inner_join due to some minor countries in Liu inventory that aren't in the GDP data (e.g., South Sudan, Vatican City)
     L173.trtshr_2010 <- Liu_EFW_inventory[c("iso", "trtshr")] %>%
       mutate(year = 2010) %>%
-      inner_join(L102.pcgdp_thous90USD_GCAM3_ctry_Y, by = c("iso", "year"))
+      inner_join(L102.pcgdp_thous90USD_ctry_Yh, by = c("iso", "year"))
 
     #linear model
     L173.trtshr_lm <- lm(trtshr ~ pcGDP, data = L173.trtshr_2010)
@@ -152,7 +153,7 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
       left_join_error_no_match(L173.waterCons_km3_ctry_ind_Yh, by = c("iso", "year")) %>%
       left_join_error_no_match(L173.in_desal_km3_ctry_ind_Yh, by = c("iso", "year"),
                                ignore_columns = "desal_ind_km3") %>%
-      left_join_error_no_match(L102.pcgdp_thous90USD_GCAM3_ctry_Y, by = c("iso", "year"),
+      left_join_error_no_match(L102.pcgdp_thous90USD_ctry_Yh, by = c("iso", "year"),
                                ignore_columns = "pcGDP") %>%
       left_join_error_no_match(select(L173.trtshr_2010, iso, delta), by = "iso",
                                ignore_columns = "delta") %>%
@@ -350,7 +351,7 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
       add_comments("Amounts of water abstracted, treated, and the wastewater treated in the manufacturing sector") %>%
       add_precursors("water/EFW_mapping",
                      "water/Liu_EFW_inventory",
-                     "L102.pcgdp_thous90USD_GCAM3_ctry_Y",
+                     "L102.pcgdp_thous90USD_ctry_Yh",
                      "L132.water_km3_ctry_ind_Yh",
                      "L145.municipal_water_ctry_W_Yh_km3",
                      "L171.in_km3_ctry_desal_Yh") ->

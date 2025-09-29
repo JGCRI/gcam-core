@@ -725,15 +725,12 @@
     <ClCompile Include="..\..\technologies\source\unmanaged_land_technology.cpp" />
     <ClCompile Include="..\..\technologies\source\variable_production_state.cpp" />
     <ClCompile Include="..\..\technologies\source\vintage_production_state.cpp" />
-    <ClCompile Include="..\..\util\base\source\atom.cpp" />
-    <ClCompile Include="..\..\util\base\source\atom_registry.cpp" />
     <ClCompile Include="..\..\util\base\source\calibrate_resource_visitor.cpp" />
     <ClCompile Include="..\..\util\base\source\calibrate_share_weight_visitor.cpp" />
     <ClCompile Include="..\..\util\base\source\configuration.cpp" />
     <ClCompile Include="..\..\util\base\source\fixed_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\gcam_fusion.cpp" />
     <ClCompile Include="..\..\util\base\source\initialize_tech_vector_helper.cpp" />
-    <ClCompile Include="..\..\util\base\source\input_finder.cpp" />
     <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp" />
     <ClCompile Include="..\..\util\base\source\linear_interpolation_function.cpp" />
     <ClCompile Include="..\..\util\base\source\manage_state_variables.cpp" />
@@ -1022,8 +1019,6 @@
     <ClInclude Include="..\..\technologies\include\variable_production_state.h" />
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h" />
     <ClInclude Include="..\..\util\base\include\aparsable.h" />
-    <ClInclude Include="..\..\util\base\include\atom.h" />
-    <ClInclude Include="..\..\util\base\include\atom_registry.h" />
     <ClInclude Include="..\..\util\base\include\auto_file.h" />
     <ClInclude Include="..\..\util\base\include\calibrate_resource_visitor.h" />
     <ClInclude Include="..\..\util\base\include\calibrate_share_weight_visitor.h" />
@@ -1041,7 +1036,6 @@
     <ClInclude Include="..\..\util\base\include\iinterpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\inamed.h" />
     <ClInclude Include="..\..\util\base\include\initialize_tech_vector_helper.hpp" />
-    <ClInclude Include="..\..\util\base\include\input_finder.h" />
     <ClInclude Include="..\..\util\base\include\interpolation_rule.h" />
     <ClInclude Include="..\..\util\base\include\ivisitable.h" />
     <ClInclude Include="..\..\util\base\include\ivisitor.h" />

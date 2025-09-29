@@ -19,5 +19,5 @@ the generated outputs: \code{socioeconomics_SSP1.xml},
 \code{socioeconomics_SSP4.xml}, and \code{socioeconomics_SSP5.xml}.
 }
 \description{
-Construct XML data structure for all the \code{socioeconomics_[g]SSP[1-5].xml} files.
+Construct XML data structure for all the \code{socioeconomics_SSP[1-5].xml} files.
 }

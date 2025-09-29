@@ -12,8 +12,8 @@
 #' \code{L2321.SubsectorLogitTables[[ curr_table ]]$data}, \code{L2321.SubsectorLogit_cement}, \code{L2321.SubsectorShrwtFllt_cement},
 #' \code{L2321.SubsectorInterp_cement}, \code{L2321.StubTech_cement}, \code{L2321.GlobalTechShrwt_cement}, \code{L2321.GlobalTechCoef_cement},
 #' \code{L2321.GlobalTechCost_cement}, \code{L2321.GlobalTechCapture_cement}, \code{L2321.StubTechProd_cement}, \code{L2321.StubTechCalInput_cement_heat},
-#' \code{L2321.StubTechCoef_cement}, \code{L2321.PerCapitaBased_cement}, \code{L2321.BaseService_cement}, \code{L2321.PriceElasticity_cement}, \code{L2321.IncomeElasticity_cement_ssp1}, \code{L2321.IncomeElasticity_cement_ssp2},
-#' \code{L2321.IncomeElasticity_cement_ssp3}, \code{L2321.IncomeElasticity_cement_ssp4}, \code{L2321.IncomeElasticity_cement_ssp5}, \code{object}. The corresponding file in the
+#' \code{L2321.StubTechCoef_cement}, \code{L2321.PerCapitaBased_cement}, \code{L2321.BaseService_cement}, \code{L2321.PriceElasticity_cement}, \code{L2321.IncomeElasticity_cement_Scen},
+#' \code{object}. The corresponding file in the
 #' original data system was \code{L2321.cement.R} (energy level2).
 #' @details The chunk provides final energy keyword, supplysector/subsector information, supplysector/subsector interpolation information, global technology share weight, global technology efficiency, global technology coefficients, global technology cost, price elasticity, stub technology information, stub technology interpolation information, stub technology calibrated inputs, and etc for cement sector.
 #' @importFrom assertthat assert_that
@@ -22,78 +22,62 @@
 #' @author LF October 2017
 module_energy_L2321.cement <- function(command, ...) {
 
-  INCOME_ELASTICITY_OUTPUTS <- c(paste0("SSP", 1:5))
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "energy/calibrated_techs",
+      FILE = "energy/A321.sector",
+      FILE = "emissions/A_PrimaryFuelCCoef",
+      FILE = "energy/A321.sector",
+      FILE = "energy/A321.subsector_interp",
+      FILE = "energy/A321.subsector_logit",
+      FILE = "energy/A321.subsector_shrwt",
+      FILE = "energy/A321.globaltech_coef",
+      FILE = "energy/A321.globaltech_cost",
+      FILE = "energy/A321.globaltech_shrwt",
+      FILE = "energy/A321.globaltech_co2capture",
+      FILE = "energy/A321.demand",
+      FILE = "energy/A321.globaltech_retirement",
+      FILE = "socioeconomics/A321.inc_elas_output",
+      "L1321.out_Mt_R_cement_Yh",
+      "L1321.IO_GJkg_R_cement_F_Yh",
+      "L1321.in_EJ_R_cement_F_Y",
+      "L101.Pop_thous_R_Yh",
+      "L102.pcgdp_thous90USD_Scen_R_Y")
+
+  MODULE_OUTPUTS <-
+    c("L2321.Supplysector_cement",
+      "L2321.FinalEnergyKeyword_cement",
+      "L2321.SubsectorLogit_cement",
+      "L2321.SubsectorShrwtFllt_cement",
+      "L2321.SubsectorInterp_cement",
+      "L2321.StubTech_cement",
+      "L2321.GlobalTechShrwt_cement",
+      "L2321.GlobalTechCoef_cement",
+      "L2321.GlobalTechCost_cement",
+      "L2321.GlobalTechTrackCapital_cement",
+      "L2321.GlobalTechCapture_cement",
+      "L2321.GlobalTechShutdown_en",
+      "L2321.GlobalTechSCurve_en",
+      "L2321.GlobalTechLifetime_en",
+      "L2321.GlobalTechProfitShutdown_en",
+      "L2321.StubTechProd_cement",
+      "L2321.StubTechCalInput_cement_heat",
+      "L2321.StubTechCoef_cement",
+      "L2321.PerCapitaBased_cement",
+      "L2321.BaseService_cement",
+      "L2321.PriceElasticity_cement",
+      "L2321.IncomeElasticity_cement_Scen")
 
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/calibrated_techs",
-             FILE = "energy/A321.sector",
-             FILE = "emissions/A_PrimaryFuelCCoef",
-             FILE = "energy/A321.sector",
-             FILE = "energy/A321.subsector_interp",
-             FILE = "energy/A321.subsector_logit",
-             FILE = "energy/A321.subsector_shrwt",
-             FILE = "energy/A321.globaltech_coef",
-             FILE = "energy/A321.globaltech_cost",
-             FILE = "energy/A321.globaltech_shrwt",
-             FILE = "energy/A321.globaltech_co2capture",
-             FILE = "energy/A321.demand",
-             FILE = "energy/A321.globaltech_retirement",
-             FILE = "socioeconomics/A321.inc_elas_output",
-             "L1321.out_Mt_R_cement_Yh",
-             "L1321.IO_GJkg_R_cement_F_Yh",
-             "L1321.in_EJ_R_cement_F_Y",
-             "L101.Pop_thous_GCAM3_R_Y",
-             "L102.pcgdp_thous90USD_GCAM3_R_Y",
-             "L102.pcgdp_thous90USD_Scen_R_Y"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2321.Supplysector_cement",
-             "L2321.FinalEnergyKeyword_cement",
-             "L2321.SubsectorLogit_cement",
-             "L2321.SubsectorShrwtFllt_cement",
-             "L2321.SubsectorInterp_cement",
-             "L2321.StubTech_cement",
-             "L2321.GlobalTechShrwt_cement",
-             "L2321.GlobalTechCoef_cement",
-             "L2321.GlobalTechCost_cement",
-             "L2321.GlobalTechTrackCapital_cement",
-             "L2321.GlobalTechCapture_cement",
-             "L2321.GlobalTechShutdown_en",
-             "L2321.GlobalTechSCurve_en",
-             "L2321.GlobalTechLifetime_en",
-             "L2321.GlobalTechProfitShutdown_en",
-             "L2321.StubTechProd_cement",
-             "L2321.StubTechCalInput_cement_heat",
-             "L2321.StubTechCoef_cement",
-             "L2321.PerCapitaBased_cement",
-             "L2321.BaseService_cement",
-             "L2321.PriceElasticity_cement",
-             paste("L2321.IncomeElasticity_cement", tolower(INCOME_ELASTICITY_OUTPUTS), sep = "_")))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
-    A321.sector <- get_data(all_data, "energy/A321.sector", strip_attributes = TRUE)
-    A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef")
-    A321.subsector_interp <- get_data(all_data, "energy/A321.subsector_interp", strip_attributes = TRUE)
-    A321.subsector_logit <- get_data(all_data, "energy/A321.subsector_logit", strip_attributes = TRUE)
-    A321.subsector_shrwt <- get_data(all_data, "energy/A321.subsector_shrwt", strip_attributes = TRUE)
-    A321.globaltech_coef <- get_data(all_data, "energy/A321.globaltech_coef")
-    A321.globaltech_cost <- get_data(all_data, "energy/A321.globaltech_cost")
-    A321.globaltech_shrwt <- get_data(all_data, "energy/A321.globaltech_shrwt", strip_attributes = TRUE)
-    A321.globaltech_co2capture <- get_data(all_data, "energy/A321.globaltech_co2capture")
-	  A321.globaltech_retirement <- get_data(all_data, "energy/A321.globaltech_retirement", strip_attributes = TRUE)
-    A321.demand <- get_data(all_data, "energy/A321.demand", strip_attributes = TRUE)
-    L1321.out_Mt_R_cement_Yh <- get_data(all_data, "L1321.out_Mt_R_cement_Yh", strip_attributes = TRUE)
-    L1321.IO_GJkg_R_cement_F_Yh <- get_data(all_data, "L1321.IO_GJkg_R_cement_F_Yh", strip_attributes = TRUE)
-    L1321.in_EJ_R_cement_F_Y <- get_data(all_data, "L1321.in_EJ_R_cement_F_Y", strip_attributes = TRUE)
-    A321.inc_elas_output <- get_data(all_data, "socioeconomics/A321.inc_elas_output", strip_attributes = TRUE)
-    L101.Pop_thous_GCAM3_R_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_R_Y")
-    L102.pcgdp_thous90USD_GCAM3_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_GCAM3_R_Y")
-    L102.pcgdp_thous90USD_Scen_R_Y <- get_data(all_data, "L102.pcgdp_thous90USD_Scen_R_Y")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline
@@ -103,9 +87,7 @@ module_energy_L2321.cement <- function(command, ...) {
       PrimaryFuelCO2Coef <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
       value.x <- value.y <- parameter <-
-      L2321.IncomeElasticity_cement_ssp1 <- L2321.IncomeElasticity_cement_ssp2 <-
-      L2321.IncomeElasticity_cement_ssp3 <- L2321.IncomeElasticity_cement_ssp4 <-
-      L2321.IncomeElasticity_cement_ssp5 <- year.x <- year.y <- NULL
+      L2321.IncomeElasticity_cement_Scen <- year.x <- year.y <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -392,10 +374,7 @@ module_energy_L2321.cement <- function(command, ...) {
 
     # L2321.IncomeElasticity_cement_scen: income elasticity of cement (scenario-specific)
     # First, calculate the per-capita GDP pathways of every GDP scenario and combine
-    L102.pcgdp_thous90USD_GCAM3_R_Y %>%
-      # Combine GCAM 3.0 with the SSPs, and subset only the relevant years
-      mutate(scenario = "GCAM3") %>%
-      bind_rows(L102.pcgdp_thous90USD_Scen_R_Y) %>%
+  L102.pcgdp_thous90USD_Scen_R_Y %>%
       filter(year %in% c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
       # Per-capita GDP ratios, which are used in the equation for demand growth
       group_by(GCAM_region_ID, scenario) %>%
@@ -414,7 +393,7 @@ module_energy_L2321.cement <- function(command, ...) {
       left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
       mutate(year = MODEL_FINAL_BASE_YEAR) %>%
       left_join_error_no_match(L2321.BaseService_cement, by = c("year", "region")) %>%
-      left_join_error_no_match(L101.Pop_thous_GCAM3_R_Y, by = c("year", "GCAM_region_ID")) %>%
+      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
       mutate(value = base.service * CONV_MIL_THOUS / value) %>%
       select(-base.service, -energy.final.demand) ->
       L2321.Output_cement # intermediate tibble
@@ -451,26 +430,21 @@ module_energy_L2321.cement <- function(command, ...) {
              value = round(value, energy.DIGITS_INCELAS_IND)) %>%
       rename(income.elasticity = value) %>%
       mutate(energy.final.demand = A321.demand[["energy.final.demand"]]) ->
-      L2321.IncomeElasticity_cement # intermediate tibble
+      L2321.IncomeElasticity_cement_Scen # intermediate tibble
 
     # ===================================================
     # Produce outputs
 
     # Extract scenario data and assign to separate tables
-    for(ieo in INCOME_ELASTICITY_OUTPUTS) {
-      L2321.IncomeElasticity_cement %>%
-        filter(scenario == ieo) %>%
-        select(LEVEL2_DATA_NAMES[["IncomeElasticity"]]) %>%
-        add_title(paste("Income elasticity of cement -", ieo)) %>%
+    L2321.IncomeElasticity_cement_Scen %>%
+        add_title(paste("Income elasticity of cement - SSPs")) %>%
         add_units("Unitless") %>%
         add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
         add_comments("Then back out the appropriate income elasticities from cement output") %>%
-        add_legacy_name(paste0("L2321.IncomeElasticity_cement_", tolower(ieo))) %>%
-        add_precursors("L102.pcgdp_thous90USD_GCAM3_R_Y", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs",
-                       "L1321.out_Mt_R_cement_Yh", "L101.Pop_thous_GCAM3_R_Y", "socioeconomics/A321.inc_elas_output") ->
-        x
-      assign(paste0("L2321.IncomeElasticity_cement_", tolower(ieo)), x)
-    }
+        add_legacy_name("L2321.IncomeElasticity_cement_Scen") %>%
+        add_precursors("L101.Pop_thous_R_Yh", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs",
+                       "L1321.out_Mt_R_cement_Yh", "socioeconomics/A321.inc_elas_output") ->
+      L2321.IncomeElasticity_cement_Scen
 
     L2321.Supplysector_cement %>%
       add_title("Supply sector information for cement sector") %>%
@@ -664,19 +638,7 @@ module_energy_L2321.cement <- function(command, ...) {
       add_precursors("energy/A321.demand", "common/GCAM_region_names") ->
       L2321.PriceElasticity_cement
 
-    return_data(L2321.Supplysector_cement, L2321.FinalEnergyKeyword_cement, L2321.SubsectorLogit_cement,
-                L2321.SubsectorShrwtFllt_cement, L2321.SubsectorInterp_cement,
-                L2321.StubTech_cement, L2321.GlobalTechShrwt_cement,
-                L2321.GlobalTechCoef_cement, L2321.GlobalTechCost_cement, L2321.GlobalTechCapture_cement,
-                L2321.StubTechProd_cement, L2321.StubTechCalInput_cement_heat, L2321.StubTechCoef_cement,
-                L2321.PerCapitaBased_cement, L2321.BaseService_cement,
-                L2321.PriceElasticity_cement,
-                L2321.GlobalTechShutdown_en,
-                L2321.GlobalTechSCurve_en, L2321.GlobalTechLifetime_en, L2321.GlobalTechProfitShutdown_en,
-                L2321.IncomeElasticity_cement_ssp1, L2321.IncomeElasticity_cement_ssp2,
-                L2321.IncomeElasticity_cement_ssp3, L2321.IncomeElasticity_cement_ssp4,
-                L2321.IncomeElasticity_cement_ssp5,
-                L2321.GlobalTechTrackCapital_cement)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }
