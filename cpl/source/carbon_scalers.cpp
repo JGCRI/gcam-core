@@ -212,7 +212,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     area2GCAM << "pft_id,lon_ind,lat_ind,cell_area_km2" << endl;
 
     // diagnostics to find out where the data are being lost
-    //string SdName = "./scaler_diagnostic.csv";
+    //string SdName = "./scalar_diagnostic.csv";
     //ILogger& Sd = ILogger::getLogger( SdName );
     //Sd.setLevel( ILogger::NOTICE );
     //Sd.precision(20);
