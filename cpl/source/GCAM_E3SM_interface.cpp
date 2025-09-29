@@ -433,11 +433,12 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     //    and otherwise it is correct year
     int gcamYear = modeltime->getper_to_yr( gcamPeriod );
     // get the case name
-    case_name = runner->getName();
+    case_name = runner->getInternalScenario()->getName();
 
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
 
+    coupleLog << "Case name is " << case_name  << endl;
     coupleLog << "Before period is advanced, Current E3SM Year is " << e3smYear << ", Current GCAM Year is " << gcamYear << endl;
 
     // If this is the initial year 2015 then run spinup first
