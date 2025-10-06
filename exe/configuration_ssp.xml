@@ -32,6 +32,7 @@
 		<Value name="find-path">0</Value>
 		<Value name="createCostCurve">0</Value>
 		<Value name="debugChecking">0</Value>
+		<Value name="verbose-parse-warnings">0</Value>
 		<Value name="simulActive">1</Value>
 		<Value name="PrintValuesOnGraphs">1</Value>
 		<Value name="ShowNullPaths">0</Value>
