@@ -2,6 +2,7 @@
 output*.xml
 database*
 *basexdb
+gcam-hector-outputstream*
 ccsm_c.txt
 concs_c.dis
 emiss_c.dis
