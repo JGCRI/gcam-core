@@ -86,15 +86,17 @@ public class XMLDBDriver {
      * We use a buffer size of 1 MB which seems large enough to keep the DB continuously
      * fed with data to write.
      */
-    public static final int BUFFER_SIZE = 1024 * 1024;
+    public static int BUFFER_SIZE = 1024 * 1024;
 
     /**
      * Constructor which will open the DB and get ready to receive XML to put
      * into the DB.
      * @param aDBLocation The location of the database to open.
      * @param aDocName A unique document name to use to store the XML in the DB.
+     * @param aBufferSize The size of the buffer to use to pass around data in MB.
      */
-    public XMLDBDriver( final String aDBLocation, final String aDocName ) {
+    public XMLDBDriver( final String aDBLocation, final String aDocName, final int aBufferSize ) {
+        BUFFER_SIZE = aBufferSize * 1024 * 1024;
         Properties config = new Properties();
         try {
             File configFile = new File( "XMLDBDriver.properties" );
@@ -294,6 +296,7 @@ public class XMLDBDriver {
         String dbPath = null;
         String docName = null;
         String xmlFile = null;
+        int bufferSize = XMLDBDriver.BUFFER_SIZE;
 
         // Set all of the available command line arguments here.
         // The first argument being the command line switch and the second a short description.
@@ -303,6 +306,7 @@ public class XMLDBDriver {
         parser.accepts( "db-path", "Path to XML database" ).withRequiredArg();
         parser.accepts( "doc-name", "The unique name to call the document in the DB" ).withRequiredArg();
         parser.accepts( "xml", "The exported GCAM results XML file to load" ).withRequiredArg();
+        parser.accepts( "buffer-size", "The buffer size in MB to use to stream data through the write pipeline" );
         parser.accepts( "print-java-home", "Print the path to the Java home directory and exit" );
 
         // Parse the command line options
@@ -341,17 +345,18 @@ public class XMLDBDriver {
         dbPath  = opts.has( "db-path" ) ? (String)opts.valueOf( "db-path") : null;
         docName = opts.has( "doc-name" ) ? (String)opts.valueOf( "doc-name" ) : null;
         xmlFile = opts.has( "xml" ) ? (String)opts.valueOf( "xml" ) : null;
+        bufferSize = opts.has( "buffer-size" ) ? ((int)opts.valueOf( "buffer-size" ) * 1024 * 1024) : bufferSize;
 
         if( dbPath == null || docName == null || xmlFile == null ) {
             printUsage( parser );
         }
 
         // Run the XMLDBDriver by mimicking the sequence of method calls GCAM would make
-        XMLDBDriver driver = new XMLDBDriver( dbPath, docName );
+        XMLDBDriver driver = new XMLDBDriver( dbPath, docName, bufferSize );
 
         // copy the XML file through processing streams via receiveDataFromGCAM
         FileInputStream xmlRead = new FileInputStream( xmlFile );
-        byte[] buffer = new byte[ XMLDBDriver.BUFFER_SIZE ];
+        byte[] buffer = new byte[ bufferSize ];
         int read = 0;
         while( ( read = xmlRead.read( buffer ) ) != -1 ) {
             boolean hadError = driver.receiveDataFromGCAM( buffer, read );
