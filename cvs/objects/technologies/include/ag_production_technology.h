@@ -102,8 +102,8 @@ public:
                            const gcamstr& aSectorName,
                            const int aPeriod );
     
-    virtual double getFixedOutput( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    virtual double getFixedOutput( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const bool aHasRequiredInput,
                                    const std::string& aRequiredInput,
                                    const double aMarginalRevenue,

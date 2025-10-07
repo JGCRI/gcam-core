@@ -271,7 +271,7 @@ void NationalAccount::reset() {
  * \return The XML string representation of the type
  * \author Pralit Patel
  */
-const gcamstr& NationalAccount::enumToXMLName( const AccountType aType ) const {
+const gcamstr& NationalAccount::enumToXMLName( const AccountType aType ) {
     /*! \pre aType is a valid account type. */
     assert( aType < END );
     // Create a static array of values. This will only on the first entrance to
