@@ -223,7 +223,6 @@ module_gcamusa_L254.transportation <- function(command, ...) {
     process_USA_to_states(L254.StubTranTechCost) -> L254.StubTranTechCost_USA
 
     L254.StubTranTechCoef %>%
-      mutate(coefficient = round(coefficient, digits = gcamusa.DIGITS_TRNUSA_DEFAULT)) %>%
       process_USA_to_states ->
       L254.StubTranTechCoef_USA
 
@@ -297,7 +296,7 @@ module_gcamusa_L254.transportation <- function(command, ...) {
                                by = c("region", "supplysector", "tranSubsector", "stub.technology", "year","sce")) %>%
       left_join_error_no_match(L254.StubTranTechCoef_USA%>% filter(sce=="CORE"),
                                by = c("region", "supplysector", "tranSubsector", "stub.technology", "year", "minicam.energy.input","sce")) %>%
-      mutate(output = round(calibrated.value * loadFactor * CONV_EJ_GJ / (coefficient * CONV_BTU_KJ),
+      mutate(output = round(calibrated.value * loadFactor / coefficient,
                             digits = gcamusa.DIGITS_TRNUSA_DEFAULT))  ->
       L254.StubTranTechOutput_USA
 

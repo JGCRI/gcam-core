@@ -144,8 +144,10 @@ double TranTechnology::getTotalInputCost( const gcamstr& aRegionName,
                                           const gcamstr& aSectorName,
                                           const int aPeriod ) const
 {
-    return getEnergyCost( aRegionName, aSectorName, aPeriod) + 
-           getNonEnergyCost( aRegionName, aSectorName, aPeriod);
+    double inputCosts = Technology::getTotalInputCost(aRegionName, aSectorName, aPeriod);
+    // inputCosts is in 1975$/GJ/veh-mi due to the vehicle intensity.
+    // finally adjust by the load factor to ensure prices/costs are always in the same units
+    return inputCosts / mLoadFactor * 1000.0;
 }
 
 /*! \brief This function calculates the sum of the Carbon Values for all GHG's
@@ -167,109 +169,28 @@ double TranTechnology::getTotalGHGCost( const gcamstr& aRegionName,
                                     const gcamstr& aSectorName,
                                     const int aPeriod ) const
 {
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const double JPERBTU = 1055; // 1055 Joules per BTU
-	const double GIGA = 1.0E9; // for getting price per GJ
-    double totalGHGCost = 0;
-    // totalGHGCost and carbontax must be in same unit as fuel price
-    for( unsigned int i = 0; i < mGHG.size(); i++ ) {
-        totalGHGCost += mGHG[ i ]->getGHGValue( aRegionName, mInputs, mOutputs, mCaptureComponent, aPeriod );
-    }
-    // totalGHGCost is in 1975$/GJ(Btu/veh-mi) due to the vehicle intensity.
+    double totalGHGCost = Technology::getTotalGHGCost(aRegionName, aSectorName, aPeriod);
+    // totalGHGCost is in 1975$/GJ/veh-mi due to the vehicle intensity.
     // finally adjust by the load factor to ensure prices/costs are always in the same units
-    return (totalGHGCost * JPERBTU / GIGA * CVRT90) / mLoadFactor;
+    return totalGHGCost / mLoadFactor * 1000.0;
 }
 
 double TranTechnology::calcSecondaryValue( const gcamstr& aRegionName,
                                            const int aPeriod ) const
 {
-    // NOTE: This entire function is copied so the units can be adjusted.
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const double JPERBTU = 1055; // 1055 Joules per BTU
-	const double GIGA = 1.0E9; // for getting price per GJ
-
-    double totalValue = 0;
-    // Add all costs from the GHGs.
-    // NOTE: Negative value for GHG.
-    for( unsigned int i = 0; i < mGHG.size(); ++i ) {
-        totalValue -= mGHG[ i ]->getGHGValue( aRegionName, mInputs, mOutputs,
-                                             mCaptureComponent, aPeriod );
-    }
-
-    // Add all values from the outputs. The primary output is included in this
-    // loop but will have a value of zero.
-    for( unsigned int i = 0; i < mOutputs.size(); ++i ) {
-        totalValue += mOutputs[ i ]->getValue( aRegionName,
-                      mCaptureComponent, aPeriod );
-    }
-
-    // TODO: Remove this function once units framework code is added.
-    // totalValue is in 1975$/GJ(Btu/veh-mi) due to the vehicle intensity.
+    double totalValue = Technology::calcSecondaryValue(aRegionName, aPeriod);
+    // totalValue is in 1975$/GJ/veh-mi due to the vehicle intensity.
     // finally adjust by the load factor to ensure prices/costs are always in the same units
-    return (totalValue * JPERBTU / GIGA * CVRT90) / mLoadFactor;
+    return totalValue / mLoadFactor * 1000.0;
 }
 
 double TranTechnology::getEnergyCost( const gcamstr& aRegionName,
                                       const gcamstr& aSectorName,
                                       const int aPeriod ) const
 {
-    // NOTE: This entire function is copied so the units can be adjusted.
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
-    const double JPERBTU = 1055; // 1055 Joules per BTU
-	const double GIGA = 1.0E9; // for getting price per GJ
-
-    // Initialize energy cost.
-    double cost = 0;
-    // Calculate energy costs.
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        if( mInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ) {
-            // TODO: Leontief assumption.
-            // Assumes prices in 1975$ and vehicle intensity in BTU/veh-mi.
-            // Converts cost to 1990$.
-            cost += mInputs[ i ]->getPrice( aRegionName, aPeriod )
-                    * mInputs[ i ]->getCoefficient( aPeriod )
-                    * JPERBTU / GIGA * CVRT90;
-        }
-    }
+    double cost = Technology::getEnergyCost(aRegionName, aSectorName, aPeriod);
     // finally adjust by the load factor to ensure prices/costs are always in the same units
-    return cost / mLoadFactor;
-}
-
-double TranTechnology::getNonEnergyCost( const gcamstr& aRegionName,
-                                      const gcamstr& aSectorName,
-                                      const int aPeriod ) const
-{
-    // NOTE: This entire function is copied so the units can be adjusted.
-
-    // Initialize non-energy cost.
-    double cost = 0;
-    // Calculate non-energy costs.
-    for( unsigned int i = 0; i < mInputs.size(); ++i ) {
-        if( !mInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ) {
-            // TODO: Leontief assumption.
-            // Assumes prices in 1990$ per vehicle mile.
-            cost += mInputs[ i ]->getPrice( aRegionName, aPeriod )
-                    * mInputs[ i ]->getCoefficient( aPeriod );
-        }
-    }
-    // finally adjust by the load factor to ensure prices/costs are always in the same units
-    return cost / mLoadFactor;
-}
-
-
-void TranTechnology::calcCost( const gcamstr& aRegionName,
-                               const gcamstr& aSectorName,
-                               const int aPeriod )
-{
-    double techCost = getTotalInputCost( aRegionName, aSectorName, aPeriod )
-                      * mPMultiplier - calcSecondaryValue( aRegionName, aPeriod );
-    
-    // All costs have already been converted to cost per service instead of cost per vehicle.
-    // For example, $/vehicle-mi has been converted into $/pass-mi or $/ton-mi
-    // doing it this way ensure we are always comparing prices and costs in the same unit
-    // which is important for calculating the shutdown decider for instance
-
-    mCosts[ aPeriod ] = max( techCost, util::getSmallNumber() );
+    return cost / mLoadFactor * 1000.0;
 }
 
 void TranTechnology::production( const gcamstr& aRegionName, const gcamstr& aSectorName,
@@ -312,23 +233,12 @@ void TranTechnology::production( const gcamstr& aRegionName, const gcamstr& aSec
     // Convert from service demand (pass-km) to vehicle demand (vehicle-km)
     double vehicleOutput = primaryOutput / mLoadFactor;
         
-    // for transportation technology use intensity instead of efficiency
-    // convert from million Btu to EJ, (mInput in EJ)
-    const double ECONV = 1.055e-9;
-
-    // TODO: Improve this by adjusting the inputs for technical change and
-    // possibly creating a new production function.
-    // Using ECONV here is confusing since vehicle ouput is not in energy units.
-    // This conversion is necessary to account for the intensity unit.
-    const double fuelUsage = vehicleOutput * ECONV;
-
     // we need to run input demands seperately such that fuel demands can be
     // set using fuelUsage while non-energy inputs will be using service demand
     for(auto input : mInputs) {
         // standard Leontief assumptions except for capital inputs, drive demands with
         // new instead of total
-        double inputDemand = input->getCoefficient(aPeriod) *
-            (input->hasTypeFlag(IInput::CAPITAL) ? vehicleOutput : fuelUsage);
+        double inputDemand = input->getCoefficient(aPeriod) * vehicleOutput;
         input->setPhysicalDemand(inputDemand, aRegionName, aPeriod);
     }
 
@@ -363,7 +273,6 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
     }
 
     // Conversion from input to output.
-    const double ECONV = 1.055e-9;
     double totalCalOutput = -1;
     for( unsigned int i = 0; i < mInputs.size(); ++i ) {
         // Check if either the caller does not care whether this technology uses a
@@ -376,7 +285,7 @@ double TranTechnology::getCalibrationOutput( const bool aHasRequiredInput,
             if( calInput >= 0 ) {
                 // TODO: Remove leontief assumption.
                 totalCalOutput = calInput / mInputs[ i ]->getCoefficient( aPeriod )
-                                 / ECONV * mLoadFactor;
+                                 * mLoadFactor;
                 break;
             }
         }
@@ -399,13 +308,11 @@ double TranTechnology::getCurrencyConversionPrice( const gcamstr& aRegionName,
                                                    const gcamstr& aSectorName,
                                                    const int aPeriod ) const
 {
-    // transportation costs will be in 1990$/service and the output units
+    // transportation costs will be in 1975$/service and the output units
     // will be million-service
     // given the value derived will need to be consistent with the rest of the
-    // energy system we will need to back in the conversion to 1975$ and
-    // million to billion
-    const double CVRT90 = FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
-    return getCost( aPeriod ) / 1000.0 / CVRT90;
+    // energy system we will need to convert million to billion
+    return getCost( aPeriod ) / 1000.0;
 }
 
 

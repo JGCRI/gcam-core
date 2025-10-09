@@ -384,12 +384,6 @@ void AgProductionTechnology::calcCost( const gcamstr& aRegionName,
     mCosts[ aPeriod ] = 1;
 }
 
-double AgProductionTechnology::getNonEnergyCost( const gcamstr& aRegionName,
-                                                   const int aPeriod ) const
-{
-    return 0;
-}
-
 /*! \brief Calculates the output of the technology.
 * \details Calculates the amount of current ag output based on the amount
 *          land and it's yield. 

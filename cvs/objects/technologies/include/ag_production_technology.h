@@ -109,9 +109,6 @@ public:
                                    const double aMarginalRevenue,
                                    const int aPeriod ) const;
 
-    virtual double getNonEnergyCost( const gcamstr& aRegionName,
-                                     const int aPeriod ) const;
-    
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
     
     virtual Value getParsedShareWeight() const;

@@ -579,7 +579,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     #kbn 2020-06-02 Updating with sce below (See description of changes using search string kbn 2020-06-02 Making changes to generate xmls for SSPs flexibly)
     L154.cost_usdvkm_R_trn_m_sz_tech_F_Y %>%
       filter(year %in% MODEL_YEARS) %>%
-      mutate(input.cost = round((value / gdp_deflator(2005, 1990)), energy.DIGITS_COST)) %>%
+      #mutate(input.cost = round((value /  1000 / gdp_deflator(2005, 1975)), energy.DIGITS_COST)) %>%
+      mutate(input.cost = (value /  1000 / gdp_deflator(2005, 1975))) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_keep_first_only(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       rename(stub.technology = tranTechnology) %>%
@@ -594,9 +595,9 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       rename(subsector = tranSubsector,
              stub.technology = tranTechnology) %>%
       # note: the units for transport output / costs will yield a dollar
-      # amount of million 1990$, the rest of the capital market will be in billion 1975$
+      # amount of million 1975$, the rest of the capital market will be in billion 1975$
       # so we need to include the unit conversion here to make it consistent
-      mutate(capital.coef = capital.coef / 1000 / gdp_deflator(1990, 1975),
+      mutate(capital.coef = capital.coef / 1000,
              minicam.non.energy.input = "non-energy",
              # note consumer vehicles are technically not investment but rather "consumer durable"
              tracking.market = if_else(grepl('trn_pass_road_LDV', supplysector),
@@ -614,7 +615,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
     #kbn 2019-10-14 Switching to left_join_keep_first, since we have fewer mode categories now.
     L154.intensity_MJvkm_R_trn_m_sz_tech_F_Y %>%
       filter(year %in% MODEL_YEARS) %>%
-      mutate(coefficient = round((value * CONV_MJ_BTU), energy.DIGITS_COEFFICIENT)) %>%
+      #mutate(coefficient = round(value * CONV_MJ_EJ * 1000000, energy.DIGITS_COEFFICIENT)) %>%
+      mutate(coefficient = (value * CONV_MJ_EJ * 1000000)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_keep_first_only(UCD_techs, by = c("UCD_sector", "mode", "size.class", "UCD_technology", "UCD_fuel")) %>%
       rename(stub.technology = tranTechnology) %>%
@@ -639,7 +641,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
                                                              "stub.technology", "minicam.energy.input", "year","sce")) %>%
       mutate(loadFactor=if_else(is.na(loadFactor),0,loadFactor),
              coefficient=if_else(is.na(coefficient),0,coefficient),
-             output = calibrated.value * loadFactor * CONV_EJ_GJ / (coefficient * CONV_BTU_KJ),
+             output = calibrated.value * loadFactor / (coefficient),
              output = if_else(is.na(output),0,output)) %>%
       select(region, supplysector, tranSubsector, stub.technology, year, minicam.energy.input,
              calibrated.value, loadFactor, coefficient, output,sce) ->
@@ -1004,8 +1006,8 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     L254.StubTranTechCost %>%
       add_title("TranTechnology costs (all periods)") %>%
-      add_units("$1990USD / vkm") %>%
-      add_comments("Non-fuel cost was adjusted to 1990") %>%
+      add_units("$1975 / vkm") %>%
+      add_comments("Non-fuel cost was adjusted to 1975") %>%
       add_comments("Transportation cost table was mapped from UCD technology to GCAM technology") %>%
       add_legacy_name("L254.StubTranTechCost") %>%
       add_precursors("common/GCAM_region_names", "energy/mappings/UCD_techs", "energy/mappings/UCD_techs_revised", "energy/mappings/UCD_size_class_revisions", "L154.cost_usdvkm_R_trn_m_sz_tech_F_Y") ->
