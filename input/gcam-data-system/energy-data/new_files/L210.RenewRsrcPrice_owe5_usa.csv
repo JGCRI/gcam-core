@@ -1,0 +1,45 @@
+INPUT_TABLE,,,
+Variable ID,,,
+RenewRsrcPrice,,,
+,,,
+region,renewresource,year,price
+CA,offshore wind resource 5,1975,0.05
+HI,offshore wind resource 5,1975,0.05
+ME,offshore wind resource 5,1975,0.05
+MA,offshore wind resource 5,1975,0.05
+MI,offshore wind resource 5,1975,0.05
+NH,offshore wind resource 5,1975,0.05
+NY,offshore wind resource 5,1975,0.05
+NC,offshore wind resource 5,1975,0.05
+OR,offshore wind resource 5,1975,0.05
+RI,offshore wind resource 5,1975,0.05
+CA,offshore wind resource 5,1990,0.05
+HI,offshore wind resource 5,1990,0.05
+ME,offshore wind resource 5,1990,0.05
+MA,offshore wind resource 5,1990,0.05
+MI,offshore wind resource 5,1990,0.05
+NH,offshore wind resource 5,1990,0.05
+NY,offshore wind resource 5,1990,0.05
+NC,offshore wind resource 5,1990,0.05
+OR,offshore wind resource 5,1990,0.05
+RI,offshore wind resource 5,1990,0.05
+CA,offshore wind resource 5,2005,0.05
+HI,offshore wind resource 5,2005,0.05
+ME,offshore wind resource 5,2005,0.05
+MA,offshore wind resource 5,2005,0.05
+MI,offshore wind resource 5,2005,0.05
+NH,offshore wind resource 5,2005,0.05
+NY,offshore wind resource 5,2005,0.05
+NC,offshore wind resource 5,2005,0.05
+OR,offshore wind resource 5,2005,0.05
+RI,offshore wind resource 5,2005,0.05
+CA,offshore wind resource 5,2010,0.05
+HI,offshore wind resource 5,2010,0.05
+ME,offshore wind resource 5,2010,0.05
+MA,offshore wind resource 5,2010,0.05
+MI,offshore wind resource 5,2010,0.05
+NH,offshore wind resource 5,2010,0.05
+NY,offshore wind resource 5,2010,0.05
+NC,offshore wind resource 5,2010,0.05
+OR,offshore wind resource 5,2010,0.05
+RI,offshore wind resource 5,2010,0.05

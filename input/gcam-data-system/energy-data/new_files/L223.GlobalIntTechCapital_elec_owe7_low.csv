@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+GlobalIntTechCapital,,,,,,,
+,,,,,,,
+sector.name,subsector.name,intermittent.technology,year,input.capital,capital.overnight,fixed.charge.rate,capacity.factor
+electricity,offshore wind,offshore wind 7,1975,capital,894.024061,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,1990,capital,894.024061,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2005,capital,894.024061,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2010,capital,894.024061,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2015,capital,894.024061,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2020,capital,855.0907551,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2025,capital,823.3673206,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2030,capital,794.5278348,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2035,capital,771.4562461,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2040,capital,751.2686061,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2045,capital,732.5229403,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2050,capital,718.1031973,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2055,capital,705.1254287,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2060,capital,693.5896344,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2065,capital,683.4958143,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2070,capital,676.2859429,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2075,capital,669.0760714,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2080,capital,661.8662,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2085,capital,657.5402771,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2090,capital,653.2143542,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2095,capital,648.8884313,0.13,0.528246943
+electricity,offshore wind,offshore wind 7,2100,capital,646.0044828,0.13,0.528246943

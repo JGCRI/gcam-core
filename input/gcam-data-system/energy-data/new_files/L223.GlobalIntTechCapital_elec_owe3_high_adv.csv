@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+GlobalIntTechCapital,,,,,,,
+,,,,,,,
+sector.name,subsector.name,intermittent.technology,year,input.capital,capital.overnight,fixed.charge.rate,capacity.factor
+electricity,offshore wind,offshore wind 3,1975,capital,1207.0411,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,1990,capital,1207.0411,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2005,capital,1207.0411,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2010,capital,1207.0411,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2015,capital,1207.0411,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2020,capital,905.2808252,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2025,capital,678.9606189,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2030,capital,509.2204642,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2035,capital,483.759441,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2040,capital,459.5714689,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2045,capital,436.5928955,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2050,capital,414.7632507,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2055,capital,394.0250882,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2060,capital,374.3238338,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2065,capital,355.6076421,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2070,capital,337.82726,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2075,capital,320.935897,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2080,capital,304.8891021,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2085,capital,289.644647,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2090,capital,275.1624147,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2095,capital,261.4042939,0.13,0.343229315
+electricity,offshore wind,offshore wind 3,2100,capital,248.3340792,0.13,0.343229315

@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+GlobalIntTechCapital,,,,,,,
+,,,,,,,
+sector.name,subsector.name,intermittent.technology,year,input.capital,capital.overnight,fixed.charge.rate,capacity.factor
+electricity,offshore wind,offshore wind c6,1975,capital,897.225246,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,1990,capital,897.225246,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2005,capital,897.225246,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2010,capital,897.225246,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2015,capital,897.225246,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2020,capital,858.1525337,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2025,capital,826.3155088,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2030,capital,797.372759,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2035,capital,774.2185591,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2040,capital,753.9586342,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2045,capital,735.1458467,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2050,capital,720.6744718,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2055,capital,707.6502344,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2060,capital,696.0731344,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2065,capital,685.943172,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2070,capital,678.7074845,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2075,capital,671.471797,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2080,capital,664.2361096,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2085,capital,659.8946971,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2090,capital,655.5532846,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2095,capital,651.2118721,0.13,0.43396774
+electricity,offshore wind,offshore wind c6,2100,capital,648.3175971,0.13,0.43396774

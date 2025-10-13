@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+GlobalIntTechCapital,,,,,,,
+,,,,,,,
+sector.name,subsector.name,intermittent.technology,year,input.capital,capital.overnight,fixed.charge.rate,capacity.factor
+electricity,offshore wind,offshore wind c6,1975,capital,1210.242285,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,1990,capital,1210.242285,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2005,capital,1210.242285,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2010,capital,1210.242285,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2015,capital,1210.242285,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2020,capital,907.681714,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2025,capital,680.7612855,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2030,capital,510.5709641,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2035,capital,485.0424159,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2040,capital,460.7902951,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2045,capital,437.7507804,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2050,capital,415.8632414,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2055,capital,395.0700793,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2060,capital,375.3165753,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2065,capital,356.5507466,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2070,capital,338.7232092,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2075,capital,321.7870488,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2080,capital,305.6976963,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2085,capital,290.4128115,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2090,capital,275.8921709,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2095,capital,262.0975624,0.13,0.343229315
+electricity,offshore wind,offshore wind c6,2100,capital,248.9926843,0.13,0.343229315

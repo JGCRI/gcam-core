@@ -1,0 +1,38 @@
+<BatchRunner xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="batch_runner.xsd">
+	<ComponentSet name="Policy scenarios">
+		<FileSet name="_high">
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owec4_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owec4_high_mod.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owec5_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owec5_high_mod.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owec6_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owec6_high_mod.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owec7_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owec7_high_mod.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owec89_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owec89_high_mod.xml</Value>
+
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owe1_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe1_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe1_gt_high.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owe2_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe2_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe2_gt_high.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owe3_usa_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe3_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe3_gt_high.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owe4_usa_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe4_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe4_gt_high.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owe5_usa_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe5_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe5_gt_high.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owe6_usa_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe6_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe6_gt_high.xml</Value>
+		<Value name = "resources">../input/gcam-data-system/xml/energy-xml/OWE-xmls/resources_owe7_usa_high_mod.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe7_usa_high.xml</Value>
+		<Value name = "electricity">../input/gcam-data-system/xml/energy-xml/OWE-xmls/electricity_owe7_gt_high.xml</Value>
+		</FileSet>
+	</ComponentSet>
+</BatchRunner>

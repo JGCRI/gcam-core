@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+GlobalIntTechCapital,,,,,,,
+,,,,,,,
+sector.name,subsector.name,intermittent.technology,year,input.capital,capital.overnight,fixed.charge.rate,capacity.factor
+electricity,offshore wind,offshore wind c5,1975,capital,1210.242285,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,1990,capital,1210.242285,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2005,capital,1210.242285,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2010,capital,1210.242285,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2015,capital,1210.242285,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2020,capital,1157.538186,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2025,capital,1114.594105,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2030,capital,1075.554031,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2035,capital,1044.321972,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2040,capital,1016.99392,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2045,capital,991.6178725,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2050,capital,972.0978357,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2055,capital,954.5298025,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2060,capital,938.913773,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2065,capital,925.2497472,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2070,capital,915.4897288,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2075,capital,905.7297103,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2080,capital,895.9696919,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2085,capital,890.1136809,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2090,capital,884.2576698,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2095,capital,878.4016587,0.13,0.307809159
+electricity,offshore wind,offshore wind c5,2100,capital,874.4976514,0.13,0.307809159

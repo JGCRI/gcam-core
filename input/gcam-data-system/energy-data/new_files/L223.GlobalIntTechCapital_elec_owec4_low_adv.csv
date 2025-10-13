@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,
+Variable ID,,,,,,,
+GlobalIntTechCapital,,,,,,,
+,,,,,,,
+sector.name,subsector.name,intermittent.technology,year,input.capital,capital.overnight,fixed.charge.rate,capacity.factor
+electricity,offshore wind,offshore wind c4,1975,capital,897.225246,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,1990,capital,897.225246,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2005,capital,897.225246,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2010,capital,897.225246,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2015,capital,897.225246,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2020,capital,672.9189345,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2025,capital,504.6892009,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2030,capital,378.5169007,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2035,capital,359.5910556,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2040,capital,341.6115029,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2045,capital,324.5309277,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2050,capital,308.3043813,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2055,capital,292.8891623,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2060,capital,278.2447041,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2065,capital,264.3324689,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2070,capital,251.1158455,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2075,capital,238.5600532,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2080,capital,226.6320506,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2085,capital,215.300448,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2090,capital,204.5354256,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2095,capital,194.3086543,0.13,0.338210064
+electricity,offshore wind,offshore wind c4,2100,capital,184.5932216,0.13,0.338210064
