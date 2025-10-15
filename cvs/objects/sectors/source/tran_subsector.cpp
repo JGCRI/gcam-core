@@ -193,6 +193,7 @@ double TranSubsector::getTimeValue( const int aPeriod ) const {
     const double HOURS_PER_WEEK = 40;
 
     // proxy for income and hourly wage
+    // Note: GDP is in million 1990$, we need billion 1975$
     double GDPperCapita = SectorUtils::getGDPPerCap( mRegionName, aPeriod ) / FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
     return GDPperCapita * 1000 * mTimeValueMult[ aPeriod ] / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / mSpeed[ aPeriod ];
 }

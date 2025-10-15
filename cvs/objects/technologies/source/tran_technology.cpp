@@ -146,8 +146,8 @@ double TranTechnology::getTotalInputCost( const gcamstr& aRegionName,
 {
     double inputCosts = Technology::getTotalInputCost(aRegionName, aSectorName, aPeriod);
     // inputCosts is in 1975$/GJ/veh-mi due to the vehicle intensity.
-    // finally adjust by the load factor to ensure prices/costs are always in the same units
-    return inputCosts / mLoadFactor * 1000.0;
+    // finally adjust by the load factor to ensure prices/costs per service
+    return inputCosts / mLoadFactor;
 }
 
 /*! \brief This function calculates the sum of the Carbon Values for all GHG's
@@ -170,18 +170,18 @@ double TranTechnology::getTotalGHGCost( const gcamstr& aRegionName,
                                     const int aPeriod ) const
 {
     double totalGHGCost = Technology::getTotalGHGCost(aRegionName, aSectorName, aPeriod);
-    // totalGHGCost is in 1975$/GJ/veh-mi due to the vehicle intensity.
-    // finally adjust by the load factor to ensure prices/costs are always in the same units
-    return totalGHGCost / mLoadFactor * 1000.0;
+    // totalGHGCost is in 1975$/GJ/veh-km due to the vehicle intensity.
+    // finally adjust by the load factor to ensure prices/costs per service
+    return totalGHGCost / mLoadFactor;
 }
 
 double TranTechnology::calcSecondaryValue( const gcamstr& aRegionName,
                                            const int aPeriod ) const
 {
     double totalValue = Technology::calcSecondaryValue(aRegionName, aPeriod);
-    // totalValue is in 1975$/GJ/veh-mi due to the vehicle intensity.
-    // finally adjust by the load factor to ensure prices/costs are always in the same units
-    return totalValue / mLoadFactor * 1000.0;
+    // totalValue is in 1975$/GJ/veh-km due to the vehicle intensity.
+    // finally adjust by the load factor to ensure prices/costs per service
+    return totalValue / mLoadFactor;
 }
 
 double TranTechnology::getEnergyCost( const gcamstr& aRegionName,
@@ -189,8 +189,8 @@ double TranTechnology::getEnergyCost( const gcamstr& aRegionName,
                                       const int aPeriod ) const
 {
     double cost = Technology::getEnergyCost(aRegionName, aSectorName, aPeriod);
-    // finally adjust by the load factor to ensure prices/costs are always in the same units
-    return cost / mLoadFactor * 1000.0;
+    // finally adjust by the load factor to ensure prices/costs per service
+    return cost / mLoadFactor;
 }
 
 void TranTechnology::production( const gcamstr& aRegionName, const gcamstr& aSectorName,
@@ -309,10 +309,9 @@ double TranTechnology::getCurrencyConversionPrice( const gcamstr& aRegionName,
                                                    const int aPeriod ) const
 {
     // transportation costs will be in 1975$/service and the output units
-    // will be million-service
-    // given the value derived will need to be consistent with the rest of the
-    // energy system we will need to convert million to billion
-    return getCost( aPeriod ) / 1000.0;
+    // will be billion-service
+    // which will yield billion 1975$ thus no further unit conversions needed
+    return getCost( aPeriod );
 }
 
 
