@@ -251,7 +251,7 @@ double NonCO2Emissions::getGHGValue( const gcamstr& aRegionName,
                                      const int aPeriod ) const
 {
     // Constants
-    const double CVRT90 = 2.212; // 1975 $ to 1990 $
+    const double CVRT90 = 2.133; // 1975 $ to 1990 $
     // Conversion from teragrams (Tg=MT) of X per EJ to metric tons of X per GJ
     const double CVRT_Tg_per_EJ_to_Tonne_per_GJ = 1e-3;
     

@@ -277,7 +277,7 @@ void LandLeaf::setProfitRate( const gcamstr& aRegionName,
 * \param aPeriod Model period.
 */
 double LandLeaf::getCarbonSubsidy( const gcamstr& aRegionName, const int aPeriod ) const {
-    const double dollar_conversion_75_90 = 2.212;
+    const double dollar_conversion_75_90 = 2.133;
     // Check if a carbon market exists and has a non-zero price.
     const Marketplace* marketplace = scenario->getMarketplace();
     double carbonPrice = marketplace->getPrice( "CO2_LUC", aRegionName, aPeriod, false );
