@@ -201,33 +201,34 @@ void HectorModel::completeInit( const string& aScenarioName ) {
     // Set up the message tables for components (mostly halocarbons)
     // that store their radiative forcing as a time series.
     mHectorRFTseriesMsg["Albedo"]    = D_RF_T_ALBEDO;
-    mHectorRFTseriesMsg["C2F6"]      = D_RF_C2F6;
-    mHectorRFTseriesMsg["CCl4"]      = D_RF_CCl4;
-    mHectorRFTseriesMsg["CF4"]       = D_RF_CF4;
-    mHectorRFTseriesMsg["CFC11"]     = D_RF_CFC11;
-    mHectorRFTseriesMsg["CFC113"]    = D_RF_CFC113;
-    mHectorRFTseriesMsg["CFC114"]    = D_RF_CFC114;
-    mHectorRFTseriesMsg["CFC115"]    = D_RF_CFC115;
-    mHectorRFTseriesMsg["CFC12"]     = D_RF_CFC12;
-    mHectorRFTseriesMsg["CH3Br"]     = D_RF_CH3Br;
-    mHectorRFTseriesMsg["CH3CCl3"]   = D_RF_CH3CCl3;
-    mHectorRFTseriesMsg["CH3Cl"]     = D_RF_CH3Cl;
-    mHectorRFTseriesMsg["halon1211"] = D_RF_halon1211;
-    mHectorRFTseriesMsg["halon1301"] = D_RF_halon1301;
-    mHectorRFTseriesMsg["halon2402"] = D_RF_halon2402;
-    mHectorRFTseriesMsg["HCF141b"]   = D_RF_HCFC141b;
-    mHectorRFTseriesMsg["HCF142b"]   = D_RF_HCFC142b;
-    mHectorRFTseriesMsg["HCF22"]     = D_RF_HCFC22;
-    mHectorRFTseriesMsg["HFC125"]    = D_RF_HFC125;
-    mHectorRFTseriesMsg["HFC134A"]   = D_RF_HFC134a;
-    mHectorRFTseriesMsg["HFC143A"]   = D_RF_HFC143a;
-    mHectorRFTseriesMsg["HFC227ea"]  = D_RF_HFC227ea;
-    mHectorRFTseriesMsg["HFC23"]     = D_RF_HFC23;
-    mHectorRFTseriesMsg["HFC245fa"]  = D_RF_HFC245fa;
-    mHectorRFTseriesMsg["HFC32"]     = D_RF_HFC32;
-    mHectorRFTseriesMsg["HFC4310"]   = D_RF_HFC4310;
-    mHectorRFTseriesMsg["SF6"]       = D_RF_SF6;
     mHectorRFTseriesMsg["vol"]       = D_RF_VOL;
+    mHectorRFTseriesMsg["C2F6"]      = D_RFADJ_C2F6;
+    mHectorRFTseriesMsg["CCl4"]      = D_RFADJ_CCl4;
+    mHectorRFTseriesMsg["CF4"]       = D_RFADJ_CF4;
+    mHectorRFTseriesMsg["CFC11"]     = D_RFADJ_CFC11;
+    mHectorRFTseriesMsg["CFC113"]    = D_RFADJ_CFC113;
+    mHectorRFTseriesMsg["CFC114"]    = D_RFADJ_CFC114;
+    mHectorRFTseriesMsg["CFC115"]    = D_RFADJ_CFC115;
+    mHectorRFTseriesMsg["CFC12"]     = D_RFADJ_CFC12;
+    mHectorRFTseriesMsg["CH3Br"]     = D_RFADJ_CH3Br;
+    mHectorRFTseriesMsg["CH3CCl3"]   = D_RFADJ_CH3CCl3;
+    mHectorRFTseriesMsg["CH3Cl"]     = D_RFADJ_CH3Cl;
+    mHectorRFTseriesMsg["halon1211"] = D_RFADJ_halon1211;
+    mHectorRFTseriesMsg["halon1301"] = D_RFADJ_halon1301;
+    mHectorRFTseriesMsg["halon2402"] = D_RFADJ_halon2402;
+    mHectorRFTseriesMsg["HCF141b"]   = D_RFADJ_HCFC141b;
+    mHectorRFTseriesMsg["HCF142b"]   = D_RFADJ_HCFC142b;
+    mHectorRFTseriesMsg["HCF22"]     = D_RFADJ_HCFC22;
+    mHectorRFTseriesMsg["HFC125"]    = D_RFADJ_HFC125;
+    mHectorRFTseriesMsg["HFC134A"]   = D_RFADJ_HFC134a;
+    mHectorRFTseriesMsg["HFC143A"]   = D_RFADJ_HFC143a;
+    mHectorRFTseriesMsg["HFC227ea"]  = D_RFADJ_HFC227ea;
+    mHectorRFTseriesMsg["HFC23"]     = D_RFADJ_HFC23;
+    mHectorRFTseriesMsg["HFC245fa"]  = D_RFADJ_HFC245fa;
+    mHectorRFTseriesMsg["HFC32"]     = D_RFADJ_HFC32;
+    mHectorRFTseriesMsg["HFC4310"]   = D_RFADJ_HFC4310;
+    mHectorRFTseriesMsg["SF6"]       = D_RFADJ_SF6;
+   
 
     
     // Set up the storage for GCAM emissions for each of the gasses we
