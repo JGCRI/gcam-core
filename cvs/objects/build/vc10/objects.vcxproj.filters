@@ -152,15 +152,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\containers\source\analyze_container.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\analyze_str.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\containers\source\analyze_tech_mem.cpp">
-      <Filter>Source Files\containers</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\containers\source\batch_runner.cpp">
       <Filter>Source Files\containers</Filter>
     </ClCompile>
@@ -467,12 +458,6 @@
     <ClCompile Include="..\..\technologies\source\vintage_production_state.cpp">
       <Filter>Source Files\technology</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\util\base\source\atom.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\atom_registry.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\util\base\source\calibrate_resource_visitor.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
@@ -483,9 +468,6 @@
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\util\base\source\fixed_interpolation_function.cpp">
-      <Filter>Source Files\util\base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\util\base\source\input_finder.cpp">
       <Filter>Source Files\util\base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\util\base\source\interpolation_rule.cpp">
@@ -550,9 +532,6 @@
     </ClCompile>
     <ClCompile Include="..\..\reporting\source\xml_db_outputter.cpp">
       <Filter>Source Files\reporting</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\magicc_model.cpp">
-      <Filter>Source Files\climate</Filter>
     </ClCompile>
     <ClCompile Include="..\..\functions\source\aproduction_function.cpp">
       <Filter>Source Files\functions</Filter>
@@ -673,18 +652,6 @@
     </ClCompile>
     <ClCompile Include="..\..\ccarbon_model\source\carbon_model_utils.cpp">
       <Filter>Source Files\ccarbon_model</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\MAGICC_array.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\MAGICC_IO_helpers.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC.cpp">
-      <Filter>Source Files\climate</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp">
-      <Filter>Source Files\climate</Filter>
     </ClCompile>
     <ClCompile Include="..\..\emissions\source\aghg.cpp">
       <Filter>Source Files\emissions</Filter>
@@ -946,15 +913,6 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="..\..\containers\include\analyze_container.hpp">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\analyze_str.hpp">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\containers\include\analyze_tech_mem.hpp">
-      <Filter>Header Files\containers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\containers\include\batch_runner.h">
       <Filter>Header Files\containers</Filter>
     </ClInclude>
@@ -1309,12 +1267,6 @@
     <ClInclude Include="..\..\technologies\include\vintage_production_state.h">
       <Filter>Header Files\technologies</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\util\base\include\atom.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\atom_registry.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\util\base\include\auto_file.h">
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
@@ -1343,9 +1295,6 @@
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\inamed.h">
-      <Filter>Header Files\util\base</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\util\base\include\input_finder.h">
       <Filter>Header Files\util\base</Filter>
     </ClInclude>
     <ClInclude Include="..\..\util\base\include\interpolation_rule.h">
@@ -1522,9 +1471,6 @@
     <ClInclude Include="..\..\climate\include\iclimate_model.h">
       <Filter>Header Files\climate</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\climate\include\magicc_model.h">
-      <Filter>Header Files\climate</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\target_finder\include\bisecter.h">
       <Filter>Header Files\target_finder</Filter>
     </ClInclude>
@@ -1578,12 +1524,6 @@
     </ClInclude>
     <ClInclude Include="..\..\ccarbon_model\include\icarbon_calc.h">
       <Filter>Header Files\ccarbon_model</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h">
-      <Filter>Header Files\climate</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\climate\include\MAGICC_array.h">
-      <Filter>Header Files\climate</Filter>
     </ClInclude>
     <ClInclude Include="..\..\emissions\include\iemissions_driver.h">
       <Filter>Header Files\emissions</Filter>
@@ -1914,6 +1854,9 @@
     </ClInclude>
     <ClInclude Include="..\..\technologies\include\ag_storage_technology.h">
       <Filter>Header Files\technologies</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\util\base\include\gcamstr.h">
+      <Filter>Header Files\util\base</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
