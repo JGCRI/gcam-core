@@ -102,6 +102,8 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
     scenario = mScenario.get();
     
     // Override scenario name from data file with that from configuration file
+    // Note: we need to do this early on in case we open any AutoOutputFile which
+    // may utilize this name
     const string overrideName = conf->getString( "scenarioName" ) + aName;
     if ( !overrideName.empty() ) {
         mScenario->setName( overrideName );
@@ -145,6 +147,12 @@ bool SingleScenarioRunner::setupScenarios( Timer& timer,
 
     mainLog.setLevel( ILogger::NOTICE );
     mainLog << "XML parsing complete." << endl;
+    
+    // Reset the override scenario name again in case on of the add on files
+    // attempted to change it which do not intend to allow
+    if ( !overrideName.empty() ) {
+        mScenario->setName( overrideName );
+    }
 
     // Add to all loggers that a new scenario is starting so that users may more
     // easily parse which scenario the messages pertain to.
