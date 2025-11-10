@@ -62,14 +62,26 @@ int main( ) {
     int year = 2015;
     int* YEAR = &year;
     int yyyymmdd = 20150101;
-    int* = YYYYMMDD = 20150101;
-    
-    // These are the EHC namelist variables needed for GCAM
+    int* YYYYMMDD = &yyyymmdd;
+   
+    // this file needs to be copied to ../cpl/data because it is not a namelist item
+    // it is located in: .../inputdata/iac/giac/gcam/gcam_6_0/data, prefix is machine dependent
+    // the other ../cpl/data files below also have to be copied until this namelist read is fixed
+    std::string BASE_CELL_AREA_FILE = "../cpl/data/base_f09_cell_area.csv"
+
+    // These are the EHC namelist variables for GCAM
+    //   this is the full namelist, even though not all are needed here
+    // Note that the base npp, hr, and pft files may not be the most up to date
     // set values here because the namelist read needs to be fixed
     // In fully coupled mode, these are defined in an E3SM namelist.
+    // the file .../gcam/exe/user_nl_gcam contains the full inputdata paths to the required files
+    //   the prefix path to inputdata needs to be changed for each machine
+    // the ../cpl/data files need to be manually copied into .../gcam/cpl/data before running this program, until the read below is fixed
+    //   this is because we had to remove these files from this repo
+    // the ../cpl/mapping files remain in this repo
     // note that the executable is assumed to exist and be running in the .../gcam/exe folder
     std::string CASE_NAME = "gcam_test";
-    std::string GCAM_CONFIG = "configuration.xml";
+    std::string GCAM_CONFIG = "configuration_ssp245_in_E3SM.xml";
     std::string BASE_CO2_SURFACE_FILE = "../cpl/data/CO2-em-SFC-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_CO2_AIRCRAFT_FILE = "../cpl/data/CO2-em-AIR-2lvl-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_CO2_SHIPMENT_FILE = "../cpl/data/CO2-em-SHIP-anthro_0.9x1.25_input4MIPs_2014.csv";
@@ -79,37 +91,40 @@ int main( ) {
     std::string GCAM2ELM_LUC_MAPPING_FILE = "../cpl/mappings/luc.xml";
     std::string GCAM2ELM_WOODHARVEST_MAPPING_FILE = "../cpl/mappings/woodharvest.xml";
     std::string GCAM2ELM_CDENSITY_MAPPING_FILE = "../cpl/mappings/cdensity.xml";
+    std::string GCAM2ELM_GLUMAP = "../cpl/mapping/gcam2glm_mapping.csv";
+    std::string GCAM2ELM_BASELU = "../cpl/data/initial_state_LUH2_2015_v3.nc";
+    std::string GCAM2ELM_BASEBIOMASS = "../cpl/data/vba_LUH1format.nc";
+    std::string GCAM_GRIDFILE = "../cpl/data/landuse.timeseries_0.9x1.25_HIST_simyr2015_c201021.nc";
     std::string ELM2GCAM_MAPPING_FILE = "../cpl/mappings/elm0.9x1.25togcam_mapping.csv";
     std::string BASE_NPP_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_npp.csv";
     std::string BASE_HR_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_hr.csv";
     std::string BASE_PFT_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_pft_wt.csv";
 
-    // these are for "Convergence" downscaling
-    std::string CO2_GCAM_FILE = "/GCAMRegionalCO2Data.csv";
-    std::string COUNTRY2GRID_MAP = "/elm0.9x1.25tocountry_mapping_iso.csv";
-    std::string COUNTRY2REGION_MAP = "/iso_GCAM_regID_32reg.csv";
-    std::string GDP_GCAM_FILE = "/GCAMRegionalGDPData.csv";
-    std::string GDP_IIASA_FILE = "/IIASAGDPData.csv";
-    std::string POP_GCAM_FILE = "/GCAMRegionalPOPData.csv";
-    std::string POP_IIASA_FILE = "/IIASAPOPData.csv";
+    // these are for Convergence downscaling
+    std::string CO2_GCAM_FILE = "../cpl/data/GCAMRegionalCO2Data.csv";
+    std::string COUNTRY2GRID_MAP = "../cpl/data/elm0.9x1.25tocountry_mapping_iso.csv";
+    std::string COUNTRY2REGION_MAP = "../cpl/data/iso_GCAM_regID_32reg.csv";
+    std::string GDP_GCAM_FILE = "../cpl/data/GCAMRegionalGDPData.csv";
+    std::string GDP_IIASA_FILE = "../cpl/data/IIASAGDPData.csv";
+    std::string POP_GCAM_FILE = "../cpl/data/GCAMRegionalPOPData.csv";
+    std::string POP_IIASA_FILE = "../cpl/data/IIASAPOPData.csv";
 
-    std::string SURFACE_CO2_DOWNSCALING_METHOD = "Linear"; // the other option is "Convergence"
+    std::string FDYNDAT_EHC = "./surfdata_iESM_dyn.nc";
+
+    std::string SURFACE_CO2_DOWNSCALING_METHOD = "Linear"; // the other option is Convergence
 
     // these are GCAM controls associated with coupling
     bool READ_SCALARS = false;
-    bool READ_ELM_FROM_FILE = true; // If FALSE, ELM data (NPP, HR, Area, PFT weight) are passed from E3SM.
     bool WRITE_CO2 = true; // if true will write to a file
     bool WRITE_SCALARS = true; // if true will write to a file
-    bool RUN_FULL_SCENARIO = true; // If TRUE, will loop over all periods. This is used for testing/offline scenario runs only.
     bool GCAM_SPINUP = false;   // if true a gcam spinup will run; otherwise restarts from restart files
+    bool RUN_GCAM = true;
 
     // Define coupling control variables
     // These booleans define what is passed between GCAM & E3SM.
     bool ELM_EHC_AGYIELD_SCALING = true; // If TRUE, changes in land productivity from ELM scale ag yield in GCAM.
     bool ELM_EHC_CARBON_SCALING = true; // If TRUE, changes in land productivity from ELM scale carbon density in GCAM.
     bool EHC_EAM_CO2_EMISSIONS = true; // If TRUE, energy system CO2 is passed from GCAM to EAM.
-    int firstCoupledYear = 2016;
-    int* FIRST_COUPLED_YEAR = &firstCoupledYear; // First year to include feedbacks from E3SM in GCAM.
     
     // Define size control variables
     // These integers define the length of the various arrays used in the coupling
@@ -119,6 +134,8 @@ int main( ) {
     int* NUM_LON = &numLon; // Number of vertical grid cells
     int numPFT = 17;
     int* NUM_PFT = &numPFT; // Number of PFTs in ELM
+    int numHARV = 5;
+    int* NUM_HARVEST = &numHARV; // Number of harvest cats in ELM
     int numGEReg = 32;
     int* NUM_GCAM_ENERGY_REGIONS = &numGEReg;
     int numGLReg = 392;
@@ -127,8 +144,6 @@ int main( ) {
     int* NUM_EHC2ELM_LANDTYPES = &numLT;
     int numES = 3;
     int* NUM_EMISS_SECTORS = &numES;
-    int numER = 32;
-    int* NUM_EMISS_REGIONS = &numER;
     int numEC = 238;
     int* NUM_EMISS_COUNTRIES = &numEC;
     int numP = 20;
@@ -136,7 +151,14 @@ int main( ) {
    
     // this is always false because it for E3SM restart control
     bool RESTART_RUN = false;
- 
+
+    int firstCoupledYear = 2016;
+    int* FIRST_COUPLED_YEAR = &firstCoupledYear; // First year to include feedbacks from E3SM in GCAM.
+
+    // some flags for this test program
+    bool READ_ELM_FROM_FILE = true; // If FALSE, ELM data (NPP, HR, Area, PFT weight) are passed from E3SM.
+    bool RUN_FULL_SCENARIO = true; // If TRUE, will loop over all periods. This is used for testing/offline scenario runs only.
+
     /*
      STEP 2: READ NAMELIST
      */
@@ -190,6 +212,14 @@ if (false) {
             GCAM2ELM_WOODHARVEST_MAPPING_FILE = value;
         } else if ( name == "GCAM2ELM_CDENSITY_MAPPING_FILE" ) {
             GCAM2ELM_CDENSITY_MAPPING_FILE = value;
+        } else if ( name == "GCAM2ELM_GLUMAP" ) {
+            GCAM2ELM_GLUMAP = value;
+        } else if ( name == "GCAM2ELM_BASELU" ) {
+            GCAM2ELM_BASELU = value;
+        } else if ( name == "GCAM2ELM_BASEBIOMASS" ) {
+            GCAM2ELM_BASEBIOMASS = value;
+        } else if ( name == "GCAM_GRIDFILE" ) {
+            GCAM_GRIDFILE = value;
         } else if ( name == "ELM2GCAM_MAPPING_FILE" ) {
             ELM2GCAM_MAPPING_FILE = value;
         } else if ( name == "BASE_NPP_FILE" ) {
@@ -212,35 +242,35 @@ if (false) {
             POP_GCAM_FILE = value;
         } else if ( name == "POP_IIASA_FILE" ) {
             POP_IIASA_FILE = value;
-        } else if ( name == "SURFACE_CO2_DOWNSCALING_METHOD" ) {
+        } else if ( name == "FDYNDAT_EHC" ) {
+            FDYNDAT_EHC = value;
+	} else if ( name == "SURFACE_CO2_DOWNSCALING_METHOD" ) {
             SURFACE_CO2_DOWNSCALING_METHOD = value;
         } else if ( name == "READ_SCALARS" ) {
             istringstream(value) >> std::boolalpha >> READ_SCALARS;
-        } else if ( name == "READ_ELM_FROM_FILE" ) {
-            istringstream(value) >> std::boolalpha >> READ_ELM_FROM_FILE;
         } else if ( name == "WRITE_CO2" ) {
             istringstream(value) >> std::boolalpha >> WRITE_CO2;
         } else if ( name == "WRITE_SCALARS" ) {
             istringstream(value) >> std::boolalpha >> WRITE_SCALARS;
         } else if ( name == "GCAM_SPINUP" ) {
             istringstream(value) >> std::boolalpha >> GCAM_SPINUP;
-        } else if ( name == "ELM_EHC_AGYIELD_SCALING" ) {
+        } else if ( name == "RUN_GCAM" ) {
+            istringstream(value) >> std::boolalpha >> RUN_GCAM;
+	} else if ( name == "ELM_EHC_AGYIELD_SCALING" ) {
             istringstream(value) >> std::boolalpha >> ELM_EHC_AGYIELD_SCALING;
         } else if ( name == "ELM_EHC_CARBON_SCALING" ) {
             istringstream(value) >> std::boolalpha >> ELM_EHC_CARBON_SCALING;
         } else if ( name == "EHC_EAM_CO2_EMISSIONS" ) {
             istringstream(value) >> std::boolalpha >> EHC_EAM_CO2_EMISSIONS;
-        } else if ( name == "FIRST_COUPLED_YEAR" ) {
-            *FIRST_COUPLED_YEAR = std::stoi(value);
-        } else if ( name == "YEAR" ) {
-            *YEAR = std::stoi(value);
         } else if ( name == "NUM_LAT" ) {
             *NUM_LAT = std::stoi(value);
         } else if ( name == "NUM_LON" ) {
             *NUM_LON = std::stoi(value);
         } else if ( name == "NUM_PFT" ) {
             *NUM_PFT = std::stoi(value);
-        } else if ( name == "NUM_GCAM_ENERGY_REGIONS" ) {
+        } else if ( name == "NUM_HARVEST" ) {
+            *NUM_HARVEST = std::stoi(value);
+	} else if ( name == "NUM_GCAM_ENERGY_REGIONS" ) {
             *NUM_GCAM_ENERGY_REGIONS = std::stoi(value);
         } else if ( name == "NUM_GCAM_LAND_REGIONS" ) {
             *NUM_GCAM_LAND_REGIONS = std::stoi(value);
@@ -248,9 +278,11 @@ if (false) {
             *NUM_EHC2ELM_LANDTYPES = std::stoi(value);
         } else if ( name == "NUM_EMISS_SECTORS" ) {
             *NUM_EMISS_SECTORS = std::stoi(value);
-        } else if ( name == "RUN_FULL_SCENARIO" ) {
-            istringstream(value) >> std::boolalpha >> RUN_FULL_SCENARIO;
-        }else {
+        } else if ( name == "NUM_EMISS_COUNTRIES" ) {
+            *NUM_EMISS_COUNTRIES = std::stoi(value);
+        } else if ( name == "NUM_PERIODS" ) {
+            *NUM_PERIODS = std::stoi(value);
+	}else {
             coupleLog.setLevel( ILogger::ERROR );
             coupleLog << "Invalid Namelist Variable" << endl;
         }
@@ -272,7 +304,7 @@ if (false) {
     // read grid cell area here
     double *gcamiarea = new double [(*NUM_LAT) * (*NUM_LON)]();
     ASpatialData tempData((*NUM_LAT) * (*NUM_LON));
-    tempData.readSpatialDataCSV("../cpl/data/base_f09_cell_area.csv", true, false, false, gcamiarea);
+    tempData.readSpatialDataCSV(BASE_CELL_AREA_FILE, true, false, false, gcamiarea);
  
     // Initialize GCAM
     p_obj->initGCAM(YYYYMMDD, CASE_NAME, GCAM_CONFIG, GCAM2ELM_CO2_MAPPING_FILE, GCAM2ELM_LUC_MAPPING_FILE,
@@ -340,13 +372,13 @@ if (false) {
 
                 // Read in average NPP
                 ASpatialData tempPFTData((*NUM_LAT) * (*NUM_LON) * (*NUM_PFT));
-                tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_npp.csv", true, true, false, gcaminpp);
+                tempPFTData.readSpatialDataCSV(BASE_NPP_FILE, true, true, false, gcaminpp);
                     
                 // Read in average HR
-                tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_hr.csv", true, true, false, gcamihr);
+                tempPFTData.readSpatialDataCSV(BASE_HR_FILE, true, true, false, gcamihr);
                     
                 // Read in PFT weight in grid cell
-                tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_pft_wt.csv", true, true, false, gcamipftfract);
+                tempPFTData.readSpatialDataCSV(BASE_PFT_FILE, true, true, false, gcamipftfract);
             }
 
             
@@ -374,7 +406,7 @@ if (false) {
                                       POP_IIASA_FILE, GDP_IIASA_FILE, POP_GCAM_FILE, GDP_GCAM_FILE, CO2_GCAM_FILE,
                                       BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
                                       NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
-                                      NUM_LON, NUM_LAT, WRITE_CO2, yyyymmdd, SURFACE_CO2_DOWNSCALING_METHOD);
+                                      NUM_LON, NUM_LAT, WRITE_CO2, YYYYMMDD, SURFACE_CO2_DOWNSCALING_METHOD);
         }
             
         }
@@ -391,17 +423,17 @@ if (false) {
                 
             // Read in average NPP
             ASpatialData tempPFTData((*NUM_LAT) * (*NUM_LON) * (*NUM_PFT));
-            tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_npp.csv", true, true, false, gcaminpp);
+            tempPFTData.readSpatialDataCSV(BASE_NPP_FILE, true, true, false, gcaminpp);
                 
             // Read in average HR
-            tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_hr.csv", true, true, false, gcamihr);
+            tempPFTData.readSpatialDataCSV(BASE_HR_FILE, true, true, false, gcamihr);
                 
             // Read in PFT weight in grid cell
-            tempPFTData.readSpatialDataCSV("../cpl/data/base_f09_maxEach_2014-2014_pft_wt.csv", true, true, false, gcamipftfract);
+            tempPFTData.readSpatialDataCSV(BASE_PFT_FILE, true, true, false, gcamipftfract);
                 
             // Read in area of grid cell
             ASpatialData tempData((*NUM_LAT) * (*NUM_LON));
-            tempData.readSpatialDataCSV("../cpl/data/base_f09_cell_area.csv", true, false, false, gcamiarea);
+            tempData.readSpatialDataCSV(BASE_CELL_AREA_FILE, true, false, false, gcamiarea);
         }
        
         p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss,
@@ -428,7 +460,7 @@ if (false) {
                                       POP_IIASA_FILE, GDP_IIASA_FILE, POP_GCAM_FILE, GDP_GCAM_FILE, CO2_GCAM_FILE,
                                       BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
                                       NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
-                                      NUM_LON, NUM_LAT, WRITE_CO2, yyyymmdd, SURFACE_CO2_DOWNSCALING_METHOD);
+                                      NUM_LON, NUM_LAT, WRITE_CO2, YYYYMMDD, SURFACE_CO2_DOWNSCALING_METHOD);
 
         }
         
