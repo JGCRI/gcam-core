@@ -631,16 +631,6 @@ void World::setEmissions( int period ) {
                                     nh3agrSummer.getEmissions( period ) );
     }
 }
-    
-void World::runClimateModel() {
-    // The Climate model reads in data for the base period, so skip passing it in.
-    for( int period = 1; period < scenario->getModeltime()->getmaxper(); ++period ) {
-        setEmissions( period );
-    }
-    
-    // Run the model.
-    mClimateModel->runModel();
-}
 
 void World::runClimateModel( int aPeriod ) {
     if( aPeriod > 0 ) {

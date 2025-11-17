@@ -95,7 +95,6 @@ public:
     virtual bool setLUCEmissions( const std::string &aGasName,
                                   const int aYear, const double aEmissions );
     virtual double getEmissions( const std::string& aGasName, const int aYear ) const;
-    virtual runModelStatus runModel();
     virtual runModelStatus runModel( const int aPeriod );
     virtual double getConcentration( const std::string& aGasName, const int aYear ) const;
     virtual double getTemperature( const int aYear, const bool aAdjHistoricalPeriod = false ) const;

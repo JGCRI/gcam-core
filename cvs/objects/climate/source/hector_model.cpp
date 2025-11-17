@@ -528,39 +528,6 @@ IClimateModel::runModelStatus HectorModel::runModel( const int aYear ) {
     return hadError ? EXCEPTION : SUCCESS;
 }
 
-/* \brief run the climate model through its configured end date 
- * \details This function is run at the end of a scenario run.  Since
- *          the model should have been run at each period while the
- *          scenario was running, we take this opportunity to extend
- *          the model run beyond the end of the GCAM scenario.  By
- *          default Hector will hold emissions constant (I think) past
- *          the time of the last emissions sent to the model.
- *          Alternatively, we could put in some reasonable
- *          extrapolations.  This capability is a bit of a work in
- *          progress.
- */
-IClimateModel::runModelStatus HectorModel::runModel() {
-    int year = mHcore->getEndDate();
-    // check if a stop year/period was set in which case we shouldn't try
-    // to run Hector past that year otherwise we are liable to get an exception
-    // wrt to emissions not set
-    int finalGCAMPeriod = util::getConfigRunPeriod( "stop" );
-    int finalGCAMYear = finalGCAMPeriod < 0 ? year : scenario->getModeltime()->getper_to_yr(finalGCAMPeriod);
-    ILogger& climatelog = ILogger::getLogger( "climate-log" );
-    climatelog.setLevel( ILogger::NOTICE );
-    if(finalGCAMYear < year) {
-        climatelog << "Reset final year as GCAM stop year is configured to " << finalGCAMYear <<endl;
-        year = finalGCAMYear;
-    }
-    IClimateModel::runModelStatus stat = runModel( year );
-    climatelog << "Final climate year: " << year << endl
-               << "\tCO2 conc= " << getConcentration( "CO2", year )
-               << "\tRFtot= " << getTotalForcing( year )
-               << "\tTemperature= " << getTemperature( year )
-               << endl;
-    return stat;
-}
-
 /* \brief return the atmospheric concentration for a gas 
  * \details Note that not all gasses have concentrations available.
  *

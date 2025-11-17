@@ -153,16 +153,6 @@ public:
     virtual double getEmissions( const std::string& aGasName,
                                  const int aYear ) const = 0;
 
-	/*! \brief Run the climate model.
-	* \details This method performs the climate calculations. It must be called
-    *          after all emissions levels are set and before any output routines
-    *          can be called. If this returns true it can be assumed that output
-    *          from the model are valid.
-	* \pre Emissions must be set before the model can be run.
-	* \return Whether the model completed successfully.
-    */
-    virtual enum runModelStatus runModel() = 0;
-
     /*! \brief Run the climate model up through a particular year 
      *  \details This method performs climate calculations through the
      *           year given in the argument.  All emissions levels up

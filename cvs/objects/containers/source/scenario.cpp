@@ -381,9 +381,6 @@ bool Scenario::run( const int aSinglePeriod,
     fullScenarioTimer.stop();
     TimerRegistry::getInstance().printAllTimers( mainLog );
 
-    // Run the climate model.
-    mWorld->runClimateModel();
-
     // Close the debugging files.
     if( aPrintDebugging ){
         XMLWriteClosingTag( getXMLNameStatic(), *XMLDebugFile, &tabs );
