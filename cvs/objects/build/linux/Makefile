@@ -15,6 +15,8 @@ all: gcam
 gcam-prof: export PROF = -pg
 gcam-prof: libgcam.a main_dir
 
+gcam: libgcam.a gcam_main_dir
+
 iesm: libgcam.a main_dir
 
 libgcam.a: dirs
@@ -37,6 +39,14 @@ solution_%_dir:
 %_dir:
 	$(MAKE) -C ../../$*/source $@
 	ln -sf $(PWD)/../../$*/source/*.o $(OBJDIR)
+
+gcam_main_dir : libgcam.a
+	@ echo '----------------------------------------------------------------'
+	rm -f ../../main/source/gcam.exe
+	$(MAKE) -C ../../main/source  BUILDPATH=$(BUILDPATH) main_dir
+	cp ../../main/source/gcam.exe ../../../../exe/
+	@echo BUILD COMPLETED
+	@date
 
 # main has additional instructions and doesn't do the softlink
 main_dir : libgcam.a

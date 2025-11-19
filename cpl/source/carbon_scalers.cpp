@@ -34,11 +34,12 @@
  * \file carbon_scalers.cpp
  * \brief This file processes gridded data from E3SM into region/land type specific scalers
  *
- * \author Kate Calvin
+ * \author Kate Calvin and Alan Di Vittorio
  */
 
 #include <iostream>
 #include <fstream>
+#include <iomanip>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string/trim.hpp>
 
@@ -58,10 +59,12 @@ mNumLon( aNumLon ),
 mNumLat( aNumLat ),
 mNumPFT( aNumPFT )
 {
+   mELMArea = new double[aNumLat * aNumLon * aNumPFT];
 }
 
 // Destructor
 CarbonScalers::~CarbonScalers() {
+   delete[] mELMArea;
 }
 
 // Read each component of the base year data
@@ -69,15 +72,15 @@ CarbonScalers::~CarbonScalers() {
 // ASpatialData::readSpatialData method and then copying the vectors.
 void CarbonScalers::readBaseYearData(std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName){
     // Read in average NPP
-    readSpatialData(aBaseNPPFileName, true, true, false);
+    readSpatialDataCSV(aBaseNPPFileName, true, true, false);
     mBaseNPPVector = getValueVector();
     
     // Read in average HR
-    readSpatialData(aBaseHRFileName, true, true, false);
+    readSpatialDataCSV(aBaseHRFileName, true, true, false);
     mBaseHRVector = getValueVector();
     
     // Read in PFT weight in grid cell
-    readSpatialData(aBasePFTWtFileName, true, true, false);
+    readSpatialDataCSV(aBasePFTWtFileName, true, true, false);
     mBasePFTFractVector = getValueVector();
 }
 
@@ -152,13 +155,68 @@ void CarbonScalers::readRegionalMappingData(std::string aFileName) {
 
 // Calculate scalers
 void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName) {
+                                std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers,
+                                 std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName,
+                                 int& aNumScalars) {
+ 
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
-    
+
+    // first copy the area into the local array, expanded to all pfts
+    // this is because the area needs to be zeroed out also for outliers
+    // an outlier may be for one pft in a cell, but not for another
+    for (int z=0; z < mNumPFT; z++) {
+        for (int i=0; i < (mNumLat*mNumLon); i++) {
+            mELMArea[(z*mNumLat*mNumLon)+i] = aELMArea[i];
+        }
+    } 
+
     // Exclude outliers from the scalar calculation
     excludeOutliers(aELMNPP, aELMHR);
-    
+  
+    // get the total number of values and the number of non-zero valid values for diagnostics
+    int tot_n = mNumLat * mNumLon * mNumPFT;
+    std::vector<double> aELMNPPCopy(aELMNPP, aELMNPP + tot_n);
+    std::vector<double>::iterator newIter = std::remove_if( aELMNPPCopy.begin(), aELMNPPCopy.end(), [](double x){return x == 0;});
+    aELMNPPCopy.resize( newIter -  aELMNPPCopy.begin() ); 
+    int valid_n = aELMNPPCopy.size();
+
+    // generate diagnostic files for the incoming elm data
+    // use the gcam year to match the scalar_yyyy.csv files
+    string nppName = "./npp2GCAM_" + std::to_string(aGCAMYear) + ".csv";
+    ILogger& npp2GCAM = ILogger::getLogger( nppName );
+    npp2GCAM.setLevel( ILogger::NOTICE );
+    npp2GCAM.precision(20);
+    npp2GCAM << "pft_id,lon_ind,lat_ind,npp_gC_per_m2_per_s, tot_n = " << tot_n << ", valid_n = " << valid_n << endl;
+
+    string hrName = "./hr2GCAM_" + std::to_string(aGCAMYear) + ".csv";
+    ILogger& hr2GCAM = ILogger::getLogger( hrName );
+    hr2GCAM.setLevel( ILogger::NOTICE );
+    hr2GCAM.precision(20);
+    hr2GCAM << "pft_id,lon_ind,lat_ind,hr_gC_per_m2_per_s, tot_n = " << tot_n << ", valid_n = " << valid_n << endl;
+
+    string pftName = "./pft2GCAM_" + std::to_string(aGCAMYear) + ".csv";
+    ILogger& pft2GCAM = ILogger::getLogger( pftName );
+    pft2GCAM.setLevel( ILogger::NOTICE );
+    pft2GCAM.precision(20);
+    pft2GCAM << "pft_id,lon_ind,lat_ind,pft_wt_cell_frac" << endl;
+
+    // do this each time because it won't build if it is in an if block
+    // and it overwrites to blank each time if only the output lines are in an if block
+    // actually need this for each year to track the outliers
+    // the cell areas of the outlier values get set to zero, and the full array matches the npp, hr, and pft data
+    string areaName = "./cell_area2GCAM_" + std::to_string(aGCAMYear) + ".csv";
+    ILogger& area2GCAM = ILogger::getLogger( areaName );
+    area2GCAM.setLevel( ILogger::NOTICE );
+    area2GCAM.precision(20);
+    area2GCAM << "pft_id,lon_ind,lat_ind,cell_area_km2" << endl;
+
+    // diagnostics to find out where the data are being lost
+    //string SdName = "./scalar_diagnostic.csv";
+    //ILogger& Sd = ILogger::getLogger( SdName );
+    //Sd.setLevel( ILogger::NOTICE );
+    //Sd.precision(20);
+
     // Create mappings to store intermediate information
     std::map<std::pair<std::string,std::string>, double> totalArea;
     std::map<std::pair<std::string,std::string>, double> baseTotalArea;
@@ -169,12 +227,16 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     std::map<std::pair<std::string,std::string>, double> baseTotalHR;
     std::map<std::pair<std::string,std::string>, double> belowScalarMap;
     
-    // Loop over PFTs and grid cells to calculate weighted average NPP for each GCAM region
+    // Loop over PFTs and grid cells to calculate weighted average NPP/HR for each land type in each GCAM land unit
+    // the average for each land type is based on the relevant pfts and cells within a land unit
+    // the assumption is that a given land type is proportionally distributed across the relevant pfts and cells
+    // thus a weighted pft average is desired, which does not depend on the existence or amount of a given land type
     // Note: E3SM data will have longitude moving fastest, then latitude, then pft, so loop in that order
     int gridIndex = 0; // Index used for Grid vectors
     int valIndex = 0; // Index used for PFT x Grid vectors
     double scalar = 0.0; // Define the scalar
     double base_scalar = 0.0; // Define the base scalar
+    int num_outliers = 0;
     for( int pft = 0; pft < mNumPFT; pft++ ) {
         for ( int k = 1; k <= mNumLat; k++ ) {
             for ( int j = 1; j <= mNumLon; j++ ) {
@@ -184,6 +246,13 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                 // TODO: What to do about grid cells with multiple entries? - doesn't seem like this should happen
                 string gridID = std::to_string(j) + "_" + std::to_string(k);
                 auto tempGrid = mRegionMapping.find( gridID );
+
+                // write diagnostics of the incoming elm data; entire grid is in these files (and the base files)
+                npp2GCAM << pft << "," << j << "," << k << "," << aELMNPP[valIndex] << endl;
+                hr2GCAM << pft << "," << j << "," << k << "," << aELMHR[valIndex] << endl;
+                pft2GCAM << pft << "," << j << "," << k << "," << aELMPFTFract[valIndex] << endl;
+                area2GCAM << pft << "," << j << "," << k << "," << mELMArea[valIndex] << endl;
+
                 if ( mRegionMapping.find(gridID) == mRegionMapping.end() ) {
                     // Grid isn't found in the mapping. Currently, this probably means it is an ocean grid.
                     // TODO: set up loop only over land grids, either using the mRegionMapping or one of the files from ELM
@@ -192,19 +261,20 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                     regInGrd = (*tempGrid).second;
                     // Loop over all regions this grid is mapped to and calculate the scalars
                     for(auto regID : regInGrd) {
-                        // Calculate total as NPP/HR of the PFT * area of the PFT
+                        // Calculate total flux as NPP/HR of the PFT * area of the PFT
                         // pft value is fraction of grid cell
-                        scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * aELMArea[gridIndex];
-                        base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * aELMArea[gridIndex];
-                       
+                        // area is in km^2, but npp and hr are in gC/m^2/sec
+                        // the average below includes area in both numerator and denominator
+                        //  so no need to convert to m^2
+                        scalar = mRegionWeights[std::make_pair(gridID,regID)] * aELMPFTFract[valIndex] * mELMArea[valIndex];
+                        base_scalar = mRegionWeights[std::make_pair(gridID,regID)] * mBasePFTFractVector[valIndex] * mELMArea[valIndex];
+                      
+                        // the annual average do not have bad npp values anymore, at least when res matches
+                        //    so do not need to check for base_scalar == 0 and then set scalar to 0
+ 
                         // Find current PFT in the PFT2Crop map
                         auto currPFT = mPFT2GCAMCropMap.find( pft );
                         vector<string> cropsInPFT = (*currPFT).second;
-                        
-                        // Adjust scalars based on number of crops in PFT
-                        // this provides equal weight to each crop since they are not separate in elm
-                        scalar = scalar / cropsInPFT.size();
-                        base_scalar = base_scalar / cropsInPFT.size();
                         
                         // Then add the npp and area for both current and base periods to the region/crop totals
                         // Note: this assumes that if you find the pair in totalArea that it exists for the baseTotalArea,
@@ -224,14 +294,23 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                                 baseTotalNPP[std::make_pair(regID,currCrop)] = mBaseNPPVector[valIndex] * base_scalar;
                                 totalHR[std::make_pair(regID,currCrop)] = aELMHR[valIndex] * scalar;
                                 baseTotalHR[std::make_pair(regID,currCrop)] = mBaseHRVector[valIndex] * base_scalar;
-                            }
-                         }
-                    }
-                }
-            }
-        }
-    }
-    
+                            } // end if else new region land type pair
+
+                            // check one instance of not matching output 
+                            //if( currCrop == "FiberCrop" && regID == "Africa_Southern.AfrCstSW") {
+                            //   Sd << regID << ", " << currCrop << ", pft=" << pft << ", lon=" << j << ", lat=" << k << endl;
+                            //   Sd << "scalar=" << scalar << ", base_scalar=" << base_scalar << endl;
+                            //   Sd << "totalArea=" << totalArea[std::make_pair(regID,currCrop)] << ", totalNPP=" << totalNPP[std::make_pair(regID,currCrop)] << ", totalHR=" << totalHR[std::make_pair(regID,currCrop)] << endl;
+                            //   Sd << "aELMNPP=" << aELMNPP[valIndex] << ", aELMHR=" << aELMHR[valIndex] << ", val_Index=" << valIndex << endl << endl;
+                            //}
+
+                         } // end for loop over land types for this pft
+                    } // end for loop over region in this grid cell
+                } // if else this grid cell is found
+            } // end for j loop over lon
+        } // end for k loop over lat
+    } // end for pft loop over pft
+   
     // Calculate scalars
     // Loop over all items in the map
     std::string crop;
@@ -241,6 +320,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
     double avgHR;
     double baseAvgHR;
     double hrScalar;
+    double NODATA = -9999;    // this must be a large negative value
     for(const auto &curr : totalArea) {
         regID = curr.first.first;
         crop = curr.first.second;
@@ -250,37 +330,85 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
             avgNPP = totalNPP[std::make_pair(regID,crop)] / totalArea[std::make_pair(regID,crop)];
             avgHR = totalHR[std::make_pair(regID,crop)] / totalArea[std::make_pair(regID,crop)];
         } else {
-            avgNPP = 0.0;
-            avgHR = 0.0;
+            avgNPP = NODATA;
+            avgHR = NODATA;
         }
         
         if ( baseTotalArea[std::make_pair(regID,crop)] > 0.0 ) {
             baseAvgNPP = baseTotalNPP[std::make_pair(regID,crop)] / baseTotalArea[std::make_pair(regID,crop)];
             baseAvgHR = baseTotalHR[std::make_pair(regID,crop)] / baseTotalArea[std::make_pair(regID,crop)];
         } else {
-            baseAvgNPP = 0.0;
-            baseAvgHR = 0.0;
+            baseAvgNPP = NODATA;
+            baseAvgHR = NODATA;
         }
         
-        // Calculate scalar
-        if ( baseAvgNPP > 0 ) {
+        // Calculate scalars
+        // From a physical perspective we want to limit scalars between a min of 0.125 and a max of 2
+        // Select 0.125 for the above min (and zero for below ratio min),
+        //    and 2 for the above max ( 1.875 for the below ratio max)
+        // GCAM only has positive accumulation
+        // Also do not create zero-value scalars as this would be an artificial forcing of GCAM
+        // Must ignore negative and zero base values, and nodata values
+        
+        // Above scalar
+        // npp can be negative
+        // gcam only have positive accumulation
+        // but if a case npp value goes negative then the scalar goes to the min
+        if ( baseAvgNPP > 0.0 && avgNPP != NODATA) {
             aboveScalarMap[std::make_pair(regID,crop)] = avgNPP / baseAvgNPP;
+            if (aboveScalarMap[std::make_pair(regID,crop)] < 0.125) {
+                aboveScalarMap[std::make_pair(regID,crop)] = 0.125;
+            }
+            if (aboveScalarMap[std::make_pair(regID,crop)] > 2.0) {
+                aboveScalarMap[std::make_pair(regID,crop)] = 2.0;
+            }
         } else {
             aboveScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
         
-        // Calculate scalar
-        if ( baseAvgHR > 0 ) {
+        // Below scalar
+        if ( baseAvgHR > 0.0 && avgHR != NODATA) {
             // The belowground scalar is a combination of NPP and HR...BUT HR needs to be "flipped" around 1
             // This is because higher heterotrophic respiration means lower C density, everything else being equal
+            // Constrain these as described above: min ratio is zero and max ratio is 1.875
             hrScalar = 2.0 - ( avgHR / baseAvgHR );
+            if (hrScalar < 0.125) {
+                hrScalar = 0.125;
+            }
+            if (hrScalar > 2.0) {
+                hrScalar = 2.0;
+            }
             belowScalarMap[std::make_pair(regID,crop)] = ( aboveScalarMap[std::make_pair(regID,crop)] + hrScalar ) / 2.0;
         } else {
             belowScalarMap[std::make_pair(regID,crop)] = 1.0;
         }
-     }
-     
+    
+        // check the essential data
+        //if(aGCAMYear == 2025) {
+        //   Sd << regID << "," << crop << endl;
+        //   Sd << "CASE: total area " << totalArea[std::make_pair(regID,crop)];
+        //   Sd << " total npp " << totalNPP[std::make_pair(regID,crop)] << " total hr " << totalHR[std::make_pair(regID,crop)];
+        //   Sd << " avgNPP " << avgNPP << " avgHR " << avgHR << endl;
+        //   Sd << "BASE: total area " << baseTotalArea[std::make_pair(regID,crop)];
+        //   Sd << " total npp " << baseTotalNPP[std::make_pair(regID,crop)] << " total hr " << baseTotalHR[std::make_pair(regID,crop)];
+        //   Sd << " avgNPP " << baseAvgNPP << " avgHR " << baseAvgHR << endl;
+        //   Sd << "above scalar " << aboveScalarMap[std::make_pair(regID,crop)];
+        //   Sd << " below scalar " << belowScalarMap[std::make_pair(regID,crop)] << endl;
+        //}
+     } // end for loop over totalArea 
+
     createScalerVectors(aGCAMYear, aYears, aRegions, aLandTechs, aAboveScalers, aBelowScalers, aboveScalarMap, belowScalarMap);
+
+    // set the number of actual records, which is the same for both above and below, based on totalarea>0
+    aNumScalars = static_cast<int>(aboveScalarMap.size());
+ 
+    // check the vectors
+    //Sd << endl << "Check vectors" << endl;
+    //Sd << "year " << "region " << "tech_basin " << "above scalar " << "below scalar" << endl;
+    //for (int r = 0; r < aNumScalars; r++) {
+    //   Sd << aYears[r] << " "  << aRegions[r] << " " << aLandTechs[r] << " " << aAboveScalers[r] << " " << aBelowScalers[r] << endl;
+    //}
+
 }
 
 
@@ -290,7 +418,7 @@ void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears,
                                         std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers,
                                         std::map<std::pair<std::string,std::string>, double> aAboveScalarMap,
                                         std::map<std::pair<std::string,std::string>, double> aBelowScalarMap) {
-    
+
     // Loop through the map and create the vectors
     std::string regID;
     std::string crop;
@@ -309,20 +437,28 @@ void CarbonScalers::createScalerVectors(int aGCAMYear, std::vector<int>& aYears,
         aYears[row] = aGCAMYear;
         aRegions[row] = strs[0];
         aLandTechs[row] = crop + "_" + strs[1];
+
         aAboveScalers[row] = curr.second;
         aBelowScalers[row] = aBelowScalarMap[std::make_pair(regID,crop)];
-    
+   
         row++;
     }
     
 }
 
-// Write scalar data to a file. This is a diagnostic.
+// Write scalar data to a file. This is for non-synchronous experiments, and is a diagnostic.
 void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs, std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers, int aLength) {
-    // DEBUG: Write output
-    // TODO: This should be moved to a separate method that will write output (if the boolean is set)
     ofstream oFile;
     oFile.open(aFileName);
+    if (!oFile.is_open())
+    {
+        exit(EXIT_FAILURE);
+    }
+    // write scalars to max precision for exact conversion between binary and text
+    oFile << fixed << setprecision(numeric_limits<double>::max_digits10);
+
+    // include a header line
+    oFile << "Year" << ",Region" << ",LandType_Basin" << ",Vegetation" << ",Soil" << endl;
     for(int i = 0; i < aLength; i++) {
         oFile << aYears[i] << "," << aRegions[i] << "," << aLandTechs[i] << "," << aAboveScalers[i] << "," << aBelowScalers[i] << endl;
     }
@@ -332,12 +468,13 @@ void CarbonScalers::writeScalers(std::string aFileName, std::vector<int>& aYears
 // Read in scalers from a csv file
 // Note: this is used for diagnostics or special experiments. In fully coupled E3SM-GCAM, these scalers
 // are calculated based on data passed in code through the wrapper
-void CarbonScalers::readScalers(std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
+int CarbonScalers::readScalers(std::string aFileName, std::vector<int>& aYears, std::vector<std::string>& aRegions, std::vector<std::string>& aLandTechs,
                                  std::vector<double>& aAboveScalers, std::vector<double>& aBelowScalers) {
     
-    // TODO: Get this file name from either a configuration or passed argument
     // TODO: Also, do we need to worry about length?
-    ifstream data("../cpl/data/scaler_data.csv");
+
+    ifstream data(aFileName);
+
     if (!data.is_open())
     {
         exit(EXIT_FAILURE);
@@ -382,42 +519,66 @@ void CarbonScalers::readScalers(std::vector<int>& aYears, std::vector<std::strin
         row++;
     }
     
-    
+    return row;
 }
 
-void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
+void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR) {
     int length = mNumLat * mNumLon * mNumPFT;
     std::vector<double> scaledNPP(aELMNPP+0, aELMNPP+length);
     std::vector<double> scaledHR(aELMHR+0, aELMHR+length);
-    
+   
     // Calculate raw scalars
     std::transform(scaledNPP.begin(), scaledNPP.end(), mBaseNPPVector.begin(), scaledNPP.begin(), std::divides<double>());
     std::transform(scaledHR.begin(), scaledHR.end(), mBaseHRVector.begin(), scaledHR.begin(), std::divides<double>());
+
+    // Copying vector scaledNPP into vector scaledNPPCopy
+    // for calculating median and median absolute deviation
+    vector<double> scaledNPPCopy(scaledNPP);
+    vector<double> scaledHRCopy(scaledHR);
     
-    // Remove zero and nan values -- ocean grid cells weren't included in the original data and cells with 0 base values were excluded
-    std::vector<double>::iterator newIter = std::remove_if( scaledNPP.begin(), scaledNPP.end(), [](double x){return x == 0 || x != x;});
-    std::vector<double>::iterator newHRIter = std::remove_if( scaledHR.begin(), scaledHR.end(), [](double x){return x == 0 || x != x;});
-    scaledNPP.resize( newIter -  scaledNPP.begin() );
-    scaledHR.resize( newHRIter -  scaledHR.begin() );
+    // Remove zero and nan and inf values -- this excludes cells with 0 base values from median calcs
+    // zero values could skew the median calcs because the case records with zeros may not have pft areas
+    std::vector<double>::iterator newIter = std::remove_if( scaledNPPCopy.begin(), scaledNPPCopy.end(), [](double x){return x == 0 || !isfinite(x);});
+    std::vector<double>::iterator newHRIter = std::remove_if( scaledHRCopy.begin(), scaledHRCopy.end(), [](double x){return x == 0 || !isfinite(x);});
+    scaledNPPCopy.resize( newIter -  scaledNPPCopy.begin() );
+    scaledHRCopy.resize( newHRIter -  scaledHRCopy.begin() );
 
     // Compute the median and median absolute deviation
     // See: Davies, P.L. and Gather, U. (1993), "The identification of multiple outliers"
     // J. Amer. Statist. Assoc., 88:782-801.
+    // this is based on eq 15 for the hampel identifier with alpha-n and alpha = 0.05 and N=100
+    //    (which matches the table for standardization 3, prob of a selected outlier being an outlier is 0.95): 
+    //       madLimit = 2.906+11.99*(N-6)^-0.05651 for even N; 2.906+12.99*(N-5)^-0.5781 for odd N
+    // OR the hampel identifier with alpha-n and alpha = 0.01 and N = 1000000
+    //    (which means prob of a selected outlier being an outlier is 0.99):
+    //       madLimit = 3.819+24.09*(N-7)^-0.5936 for even N; 3.819+26.50*(N-7)^-0.6089 for odd N
+    // Using a fixed value for now (it used to be 5.2, and some very high final scalars still resulted)
+    //    the equations (16) for standardization 4 (which is based on the prob that no outliers are in the sample)
+    //    do not match the table values at all, so not using those
+    // The limit generally goes up with lower alpha (less outliers) and down with higher N
+    // It makes more sense to use standardization 3 because we have a sample and want to identify the outliers
+    // Note that alpha-n is the defined probability of the normal distribution that is considered an outlier
+    //   and that alpha is the respective null hypothesis probablitity (not an outlier or that there is an outlier in the sample)
+    // Note that the max N at ~1deg is 55296*17, at 0.5deg is 259200*17, and at 1/8deg is on the order of 1*17 million,
+    //    and many of these get filtered out because they are not land 
+    //double madLimit = 3.83;
+
+    // returning to the original value because it retains 5% more npp values and they are fine
     double madLimit = 5.2;
 
     // First, sort the scaler and find median
-    std::sort(scaledNPP.begin(), scaledNPP.end());
-    std::sort(scaledHR.begin(), scaledHR.end());
-    double median = 0.5 * (scaledNPP[scaledNPP.size() / 2 - 1] + scaledNPP[scaledNPP.size() / 2]);
-    double medianHR = 0.5 * (scaledHR[scaledHR.size() / 2 - 1] + scaledHR[scaledHR.size() / 2]);
+    std::sort(scaledNPPCopy.begin(), scaledNPPCopy.end());
+    std::sort(scaledHRCopy.begin(), scaledHRCopy.end());
+    double median = 0.5 * (scaledNPPCopy[scaledNPPCopy.size() / 2 - 1] + scaledNPPCopy[scaledNPPCopy.size() / 2]);
+    double medianHR = 0.5 * (scaledHRCopy[scaledHRCopy.size() / 2 - 1] + scaledHRCopy[scaledHRCopy.size() / 2]);
     
     // Then, find the median absolute deviation
-    transform(scaledNPP.begin(), scaledNPP.end(), scaledNPP.begin(), [median](double x){return abs(x - median);});
-    transform(scaledHR.begin(), scaledHR.end(), scaledHR.begin(), [medianHR](double x){return abs(x - medianHR);});
-    std::sort(scaledNPP.begin(), scaledNPP.end());
-    std::sort(scaledHR.begin(), scaledHR.end());
-    double mad = 0.5 * (scaledNPP[scaledNPP.size() / 2 - 1] + scaledNPP[scaledNPP.size() / 2]);
-    double madHR = 0.5 * (scaledHR[scaledHR.size() / 2 - 1] + scaledHR[scaledHR.size() / 2]);
+    transform(scaledNPPCopy.begin(), scaledNPPCopy.end(), scaledNPPCopy.begin(), [median](double x){return abs(x - median);});
+    transform(scaledHRCopy.begin(), scaledHRCopy.end(), scaledHRCopy.begin(), [medianHR](double x){return abs(x - medianHR);});
+    std::sort(scaledNPPCopy.begin(), scaledNPPCopy.end());
+    std::sort(scaledHRCopy.begin(), scaledHRCopy.end());
+    double mad = 0.5 * (scaledNPPCopy[scaledNPPCopy.size() / 2 - 1] + scaledNPPCopy[scaledNPPCopy.size() / 2]);
+    double madHR = 0.5 * (scaledHRCopy[scaledHRCopy.size() / 2 - 1] + scaledHRCopy[scaledHRCopy.size() / 2]);
 
     // Now, calculate upper and lower bounds as median +/- madLimit * mad
     double upperBound = median + madLimit * mad;
@@ -428,11 +589,14 @@ void CarbonScalers::excludeOutliers( double *aELMNPP, double *aELMHR ) {
     // Remove Outliers. These are set to zero so they will be excluded from scaler calculation
     for( int i = 0; i < length; i++ ) {
         if( scaledNPP[i] > upperBound || scaledNPP[i] < lowerBound ||
-            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ) {
+            scaledNPP[i] == 0 || !isfinite(scaledNPP[i]) ||
+            scaledHR[i] > upperBoundHR || scaledHR[i] < lowerBoundHR ||
+            scaledHR[i] == 0 || !isfinite(scaledHR[i]) ) {
             aELMNPP[i] = 0;
             mBaseNPPVector[i] = 0;
             aELMHR[i] = 0;
             mBaseHRVector[i] = 0;
+            mELMArea[i] = 0;
         }
     }
     

@@ -38,6 +38,7 @@
 #include <map>
 #include <map>
 #include <iostream>
+#include <iomanip>
 
 #include "util/base/include/aparsable.h"
 
@@ -64,6 +65,9 @@ public:
     double* getData();
     virtual bool XMLParse(rapidxml::xml_node<char>* & aNode);
     size_t getArrayLength() const;
+    ReMapDataHelper<std::string>* getColumn(std::string aColName);
+    size_t getIndexInColumn(std::string aColName, std::string aGCAMName);
+    std::vector<size_t> getStartsWithIndicesInColumn(std::string aColName, std::string aGCAMName);
     std::ostream& printAsTable(std::ostream& aOut) const;
 private:
     bool mIsInitialized;

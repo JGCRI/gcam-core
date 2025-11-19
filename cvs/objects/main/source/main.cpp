@@ -61,6 +61,15 @@
 #include <memory>
 #include <list>
 
+#if E3SM_FLOAT_DEBUG
+#include <cfenv>
+// TODO: This is for feenableexcept as I couldn't get feraiseexcept to
+// send signals that get caught by gdb.  The problem is this will not be
+// portable except places that are relying on the stdlib to be provided
+// by gcc (probably ok on must cluster environments)
+#include <fenv.h>
+#endif
+
 // xml headers
 #include "util/base/include/xml_parse_helper.h"
 
@@ -85,11 +94,18 @@ ofstream outFile;
 // Declared outside Main to make global.
 Scenario* scenario; // model scenario info
 
+int restartPeriod;
+
 void parseArgs( unsigned int argc, char* argv[], string& confArg, string& logFacArg );
 void printUsageMessage( unsigned int argc, char* argv[] );
 
 //! Main program. 
 int main( int argc, char *argv[] ) {
+
+#if E3SM_FLOAT_DEBUG
+    feraiseexcept(FE_DIVBYZERO | FE_OVERFLOW | FE_INVALID);
+    feenableexcept(FE_DIVBYZERO | FE_OVERFLOW | FE_INVALID);
+#endif
 
     // identify default file names for control input and logging controls
     string configurationArg = "configuration.xml";
@@ -165,14 +181,15 @@ int main( int argc, char *argv[] ) {
     if( !success ){
         return 1;
     }
+    restartPeriod = util::getConfigRunPeriod("restart");
 
     // Create an empty exclusion list so that any type of IScenarioRunner can be
     // created.
     list<string> exclusionList;
 
-    // Create an auto_ptr to the scenario runner. This will automatically
+    // Create an unique_ptr to the scenario runner. This will automatically
     // deallocate memory.
-    auto_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
+    unique_ptr<IScenarioRunner> runner = ScenarioRunnerFactory::createDefault( exclusionList );
     
     // Setup the scenario.
     success = runner->setupScenarios( timer );

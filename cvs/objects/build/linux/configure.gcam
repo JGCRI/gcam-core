@@ -142,7 +142,7 @@ LIBDIR		= -L/usr/local/lib -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY)
 
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
-CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=0 -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) -MMD -std=c++14 -Wno-deprecated
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)

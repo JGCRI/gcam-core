@@ -1,5 +1,5 @@
 /*
-* \author Kate Calvin
+* \author Kate Calvin and Alan Di Vittorio
 */
 
 #include "util/base/include/definitions.h"
@@ -14,6 +14,7 @@
 // include custom headers
 #include "util/logger/include/logger_factory.h"
 #include "containers/include/iscenario_runner.h"
+#include "../include/emiss_downscale.h"
 #include "../include/remap_data.h"
 
 // forward declarations
@@ -21,13 +22,20 @@ class Region;
 
 class GCAM_E3SM_interface {
 public:
-    GCAM_E3SM_interface();
+    GCAM_E3SM_interface(int *aNumLon, int *aNumLat, int *aNumReg, int *aNumSector);
     ~GCAM_E3SM_interface();
-    void initGCAM(std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap, std::string aGCAM2ELMWHMap);
-    void runGCAM(int *yyyymmdd, double *gcamoluc, double *gcamoemiss);
-    void setDensityGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+    void initGCAM(int *yyyymmdd, std::string aCaseName, std::string aGCAMConfig, std::string aGCAM2ELMCO2Map, std::string aGCAM2ELMLUCMap,
+                  std::string aGCAM2ELMWHMap, std::string aGCAM2ELMCDENMap,
+                  std::string aBaseCO2GcamFileName, std::string aBaseCO2SfcFile, std::string aBaseCO2ShipFile, std::string aBaseCO2AirFile,
+                  double *aELMArea, int *aNumLon, int *aNumLat, int *aNumReg, int *aNumSector, bool aRestartRun);
+    void runGCAM(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
+                 double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
+                 int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod,
+                  std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars,
+                 bool aScaleAgYield, bool aScaleCarbon,  std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun);
+    void setLandProductivityScalingGCAM(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
                         int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars, bool aWriteScalars,
-                        bool aScaleCarbon,  std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
+                        bool aScaleAgYield, bool aScaleCarbon, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName);
     void downscaleEmissionsGCAM(double *gcamoemiss,
                                 double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar, double *gcamoco2sfcapr,
                                 double *gcamoco2sfcmay, double *gcamoco2sfcjun, double *gcamoco2sfcjul, double *gcamoco2sfcaug,
@@ -38,18 +46,67 @@ public:
                                 double *gcamoco2airhijan, double *gcamoco2airhifeb, double *gcamoco2airhimar, double *gcamoco2airhiapr,
                                 double *gcamoco2airhimay, double *gcamoco2airhijun, double *gcamoco2airhijul, double *gcamoco2airhiaug,
                                 double *gcamoco2airhisep, double *gcamoco2airhioct, double *gcamoco2airhinov, double *gcamoco2airhidec,
-                                std::string aBaseCO2SfcFile, double *aBaseCO2EmissSfc, std::string aBaseCO2AirFile, double *aBaseCO2EmissAir,
-                                int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear);
+                                std::string aRegionMappingFile,std::string aCountryMappingFile,std::string aCountry2RegionMappingFile,
+                                std::string aPOPIIASAFileName, std::string aGDPIIASAFileName,
+                                std::string aPOPGCAMFileName, std::string aGDPGCAMFileName, std::string aCO2GCAMFileName,
+                                int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, int *aNumLon, int *aNumLat, bool aWriteCO2, int *aCurrYear,
+                                std::string CO2DownscalingMethod);
+    void separateSurfaceMonthlyEmissions(EmissDownscale surfaceCO2, EmissDownscale shipmentCO2, double *gcamoco2sfcjan, double *gcamoco2sfcfeb, double *gcamoco2sfcmar,
+                                                              double *gcamoco2sfcapr, double *gcamoco2sfcmay, double *gcamoco2sfcjun,
+                                                              double *gcamoco2sfcjul, double *gcamoco2sfcaug, double *gcamoco2sfcsep,
+                                                              double *gcamoco2sfcoct, double *gcamoco2sfcnov, double *gcamoco2sfcdec,
+                                                              int aNumLon, int aNumLat);
+
+    void readRegionGcamYearEmissionData(std::string aFileName);
+
+    double readCO2DataGridCSV(std::string aFileName, bool aHasLatLon, bool aHasID, bool aCalcTotal, double *aELMArea, int *aNumLon, int *aNumLat,
+                              std::string aSectorName);
+
     void finalizeGCAM();
     int gcamStartYear;
     int gcamEndYear;
     LoggerFactoryWrapper loggerFactoryWrapper;
-    
+
     ReMapData mCO2EmissData;
     ReMapData mLUCData;
     ReMapData mWoodHarvestData;
-    
+    ReMapData mAGCDensityData;
+    ReMapData mBGCDensityData;   
+
+    std::vector<double> mBaseYearEmissions_sfc;
+    std::vector<double> mBaseYearEmissions_air;
+    std::vector<double> mBaseYearEmissions_ship;
+
+    double mBaseYearGlobalSfcCO2Emiss;
+    double mBaseYearGlobalShipCO2Emiss;
+    double mBaseYearGlobalAirCO2Emiss;
+
+    std::vector<double> mBaseYearEmissionsGrid_sfc;
+    std::vector<double> mBaseYearEmissionsGrid_air;
+    std::vector<double> mBaseYearEmissionsGrid_ship;
+    std::vector<int> mBaseYearEmissionsGridID_sfc;
+    std::vector<int> mBaseYearEmissionsGridID_air;
+    std::vector<int> mBaseYearEmissionsGridID_ship;
+    std::vector<double> mBaseYearEmissionsGridLat_sfc;
+    std::vector<double> mBaseYearEmissionsGridLat_ship;
+    std::vector<double> mBaseYearEmissionsGridLat_air;
+    std::vector<double> mBaseYearEmissionsGridLon_sfc;
+    std::vector<double> mBaseYearEmissionsGridLon_ship;
+    std::vector<double> mBaseYearEmissionsGridLon_air;
+
+    double mBaseYearGridGlobalSfcCO2Emiss;
+    double mBaseYearGridGlobalShipCO2Emiss;
+    double mBaseYearGridGlobalAirCO2Emiss;
+ 
 private:
-    std::auto_ptr<IScenarioRunner> runner;
+
+    std::unique_ptr<IScenarioRunner> runner;
     typedef std::vector<Region*>::iterator RegionIterator;
+
+    std::vector<double>  mGcamCO2EmissPreviousGCAMYear;
+    std::vector<double>  mGcamCO2EmissCurrentGCAMYear;
+
+    std::vector<double> mGcamYearEmissions_sfc;
+    std::vector<double> mGcamYearEmissions_air;
+    std::vector<double> mGcamYearEmissions_ship;
 };

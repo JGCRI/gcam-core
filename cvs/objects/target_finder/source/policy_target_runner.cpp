@@ -216,7 +216,7 @@ bool PolicyTargetRunner::runScenarios( const int aSinglePeriod,
     }
 
     // Create the target object.
-    auto_ptr<ITarget> policyTarget = TargetFactory::create( mTargetType + "-target",
+    unique_ptr<ITarget> policyTarget = TargetFactory::create( mTargetType + "-target",
         getInternalScenario()->getClimateModel(), mTargetValue, mFirstTaxYear );
     // Make sure we have a know target
     if( !policyTarget.get() ) {
@@ -354,7 +354,7 @@ bool PolicyTargetRunner::solveInitialTarget( vector<double>& aTaxes,
     
     // Increment is 1+ this number, which is used to increase the initial trial price
     const double INCREASE_INCREMENT = mInitialTaxGuess - 1;
-    auto_ptr<ITargetSolver> solver;
+    unique_ptr<ITargetSolver> solver;
     
     solver.reset( new Secanter( aPolicyTarget,
                        aTolerance,
@@ -474,7 +474,7 @@ bool PolicyTargetRunner::solveFutureTarget( vector<double>& aTaxes,
     // Construct a solver which has an initial trial equal to the current tax.
     const Modeltime* modeltime = getInternalScenario()->getModeltime();
     int currYear = modeltime->getper_to_yr( aPeriod );
-    auto_ptr<ITargetSolver> solver;
+    unique_ptr<ITargetSolver> solver;
     /* Note that the following code is left commented out incase a user wanted
      to use the bisection routine rather then the secant.
      solver.reset( new Bisecter( aPolicyTarget,
@@ -590,7 +590,7 @@ bool PolicyTargetRunner::skipFuturePeriod( vector<double>& aTaxes,
     bool success = mSingleScenario->runScenarios( lastPeriodToCalc, false, aTimer );
     
     // Construct a solver which has an initial trial equal to the current tax.
-    auto_ptr<ITargetSolver> solver;
+    unique_ptr<ITargetSolver> solver;
     /* Note that the following code is left commented out incase a user wanted
      to use the bisection routine rather then the secant.
      solver.reset( new Bisecter( aPolicyTarget,

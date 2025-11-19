@@ -1,2 +1,4 @@
-*.csv
 *.txt
+*.csv
+*.nc
+*.xml

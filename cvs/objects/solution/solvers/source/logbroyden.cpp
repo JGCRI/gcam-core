@@ -480,7 +480,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       Eigen::PartialPivLU<UBMATRIX> luPartialPiv(B);
       dx = luPartialPiv.solve(-1.0 * fx);
       double dxmag = sqrt(dx.dot(dx));
-      if(luPartialPiv.determinant() == 0 || !util::isValidNumber(dxmag)) {
+      if(/*luPartialPiv.determinant() == 0 ||*/ !util::isValidNumber(dxmag)) {
           // singular or badly messed up Jacobian, going to have to use SVD
           solverLog << "Doing SVD, old dxmag:  " << dxmag;
           Eigen::BDCSVD<UBMATRIX> svdSolver(B, Eigen::ComputeThinU | Eigen::ComputeThinV);
