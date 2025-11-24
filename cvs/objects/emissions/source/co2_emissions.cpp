@@ -48,6 +48,7 @@
 #include "marketplace/include/cached_market.h"
 #include "containers/include/scenario.h"
 #include "marketplace/include/marketplace.h"
+#include "functions/include/function_utils.h"
 
 using namespace std;
 
@@ -142,7 +143,7 @@ double CO2Emissions::getGHGValue( const gcamstr& aRegionName,
                                   const int aPeriod ) const
 {
     // Constants
-    const double CVRT90 = 2.133; // 1975 $ to 1990 $
+    const double CVRT90 = FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975(); // 1975 $ to 1990 $
     // Conversion from teragrams of carbon per EJ to metric tons of carbon per GJ
     const double CVRT_TG_MT = 1e-3;
 

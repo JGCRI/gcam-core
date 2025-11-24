@@ -1005,7 +1005,7 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
 
     L254.StubTranTechCost %>%
       add_title("TranTechnology costs (all periods)") %>%
-      add_units("$1975 / vkm") %>%
+      add_units("$1975USD / vkm") %>%
       add_comments("Non-fuel cost was adjusted to 1975") %>%
       add_comments("Transportation cost table was mapped from UCD technology to GCAM technology") %>%
       add_legacy_name("L254.StubTranTechCost") %>%

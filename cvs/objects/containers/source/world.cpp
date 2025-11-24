@@ -569,13 +569,7 @@ void World::setEmissions( int period ) {
     }
 
     if( hfc245faSummer.areEmissionsSet( period ) && hfc32Summer.areEmissionsSet( period ) && hfc365mfcSummer.areEmissionsSet( period ) && hfc152aSummer.areEmissionsSet( period ) ){
-        // MAGICC needed HFC245fa in kton of HFC245ca
-        mClimateModel->setEmissions( "HFC245ca", period,
-                                     hfc245faSummer.getEmissions( period ) / HFC_CA_TO_FA +
-                                     hfc32Summer.getEmissions( period ) * HFC32_TO_245 +
-                                     hfc365mfcSummer.getEmissions( period ) * HFC365_TO_245 +
-                                     hfc152aSummer.getEmissions( period ) * HFC152_TO_245);
-        // For models that need ktonnes of HFC245fa (no single model should implement both of these):
+        // For models that need ktonnes of HFC245fa
         mClimateModel->setEmissions("HFC245fa", period,
                                     hfc245faSummer.getEmissions(period)+
                                     hfc365mfcSummer.getEmissions( period ) * HFC365_TO_245 +
