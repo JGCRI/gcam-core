@@ -18,7 +18,8 @@ module_energy_L143.HDDCDD <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/iso_GCAM_regID",
              FILE = "energy/GIS_ctry",
-             "L101.Pop_thous_GCAM3_ctry_Y",
+             "L100.Pop_thous_ctry_Yh",
+             "L100.Pop_thous_SSP_ctry_Yfut",
              FILE = "energy/GIS/population_weighted_CDD_CCSM3x_A2",
              FILE = "energy/GIS/population_weighted_CDD_CCSM3x_B1",
              FILE = "energy/GIS/population_weighted_CDD_HadCM3_A2",
@@ -43,8 +44,8 @@ module_energy_L143.HDDCDD <- function(command, ...) {
     # Load required inputs
     iso_GCAM_regID <- get_data(all_data, "common/iso_GCAM_regID")
     GIS_ctry <- get_data(all_data, "energy/GIS_ctry")
-    L101.Pop_thous_GCAM3_ctry_Y <- get_data(all_data, "L101.Pop_thous_GCAM3_ctry_Y") %>%
-      rename(population = value) %>% mutate(year = as.integer(year))
+    L100.Pop_thous_ctry_Yh <- get_data(all_data, "L100.Pop_thous_ctry_Yh")
+    L100.Pop_thous_SSP_ctry_Yfut <- get_data(all_data, "L100.Pop_thous_SSP_ctry_Yfut")
     CDD_CCSM3x_A2 <- get_data(all_data, "energy/GIS/population_weighted_CDD_CCSM3x_A2")
     CDD_CCSM3x_B1 <- get_data(all_data, "energy/GIS/population_weighted_CDD_CCSM3x_B1")
     CDD_HadCM3_A2 <- get_data(all_data, "energy/GIS/population_weighted_CDD_HadCM3_A2")
@@ -55,6 +56,15 @@ module_energy_L143.HDDCDD <- function(command, ...) {
     HDD_HadCM3_A2 <- get_data(all_data, "energy/GIS/population_weighted_HDD_HadCM3_A2")
     HDD_HadCM3_B1 <- get_data(all_data, "energy/GIS/population_weighted_HDD_HadCM3_B1")
     HDD_no_GCM_constdd <- get_data(all_data, "energy/GIS/population_weighted_HDD_no_GCM_constdd")
+
+    # note that previously GCAM3 population projections now replaced with SSP2
+    L100.Pop_thous_ctry_Yh  %>%
+      bind_rows(
+        L100.Pop_thous_SSP_ctry_Yfut %>%
+          filter(scenario == "SSP2") %>% select(-scenario)
+      ) %>%
+      rename(population = value) ->
+      L100.Pop_thous_Scen_ctry_Y
 
     # ===================================================
 
@@ -108,10 +118,10 @@ module_energy_L143.HDDCDD <- function(command, ...) {
     }
 
     # Extend population data to all years
-    iso_list <- tibble(iso = L101.Pop_thous_GCAM3_ctry_Y$iso %>% unique())
+    iso_list <- tibble(iso = L100.Pop_thous_Scen_ctry_Y$iso %>% unique())
     all_years <- tibble(year = seq(min(HISTORICAL_YEARS), max(FUTURE_YEARS)))
     GCAM3_population_df <- repeat_add_columns(iso_list, all_years) %>%
-      left_join(L101.Pop_thous_GCAM3_ctry_Y, by = c("iso", "year")) %>%
+      left_join(L100.Pop_thous_Scen_ctry_Y, by = c("iso", "year")) %>%
       group_by(iso) %>%
       mutate(population = approx_fun(year, population)) %>%
       ungroup()
@@ -147,7 +157,9 @@ module_energy_L143.HDDCDD <- function(command, ...) {
       add_units("Fahrenheit Degree Days") %>%
       add_comments("Population weighted country HDDCDD data from multiple ESMs and scenarios to GCAM region") %>%
       add_legacy_name("L143.HDDCDD_scen_R_Y") %>%
-      add_precursors("common/iso_GCAM_regID", "energy/GIS_ctry", "L101.Pop_thous_GCAM3_ctry_Y",
+      add_precursors("common/iso_GCAM_regID", "energy/GIS_ctry",
+                     "L100.Pop_thous_ctry_Yh",
+                     "L100.Pop_thous_SSP_ctry_Yfut",
                      "energy/GIS/population_weighted_CDD_CCSM3x_A2",
                      "energy/GIS/population_weighted_CDD_CCSM3x_B1",
                      "energy/GIS/population_weighted_CDD_HadCM3_A2",

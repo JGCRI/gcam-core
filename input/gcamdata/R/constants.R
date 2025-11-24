@@ -692,10 +692,15 @@ energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_EJ_PCAL_COEF <- 0.000413 # minimum valu
 
 # Socioeconomics constants ======================================================================
 
-socioeconomics.SSP_DB_BASEYEAR <- 2020 # base year of SSP data base v3.0.1
-socioeconomics.GDP_ADJ_MOVING_AVERAGE_ISO <- c("ven")
+socioeconomics.GCAMFAOSTAT_GDP_Dollar_Year <- 2015 # dollar year in FAO GDP (we have an assertion in gcamfaostat)
+Socioeconomic.PWT.LastYear <- 2019 # the latest year in PWT
+socioeconomics.Global_Macro_Database_LastYear <- 2023 # the latest year in GMD
+socioeconomics.GCAM_GDP_Dollar_Year <- 1990 # GDP dollar year in GCAM
+socioeconomics.SSP_DB_BASEYEAR <- 2025 # base year of SSP data base v3.2 Beta
+socioeconomics.SSP_DB_Labor_StartYear <- 2020 # start year of population by age (to derive work-age pop) in SSP data base v3.2 Beta
+socioeconomics.GDP_ADJ_MOVING_AVERAGE_ISO <- NULL
 socioeconomics.GDP_ADG_MOVING_AVERAGE_DURATION <- 15 # used for smoothing GDP for South_America_North
-socioeconomics.GDP_ADJ_NO_NEG_GROWTH_ISO <- c("ven", "twn")
+socioeconomics.GDP_ADJ_NO_NEG_GROWTH_ISO <- c("twn")
 socioeconomics.GDP_ADJ_NO_NEG_GROWTH_YEAR <- 2025 # used for adjusting GDP projection to avoid negative GDP growth after this year (for Taiwan and South_America_North)
 
 socioeconomics.CORE_GCAM_SCENARIO <- "SSP2"

@@ -14,8 +14,8 @@ module_socio_L201.Pop_GDP_scenarios(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L201.InterestRate}, \code{L201.LaborForceFillout}, \code{L201.PPPConvert}, \code{L201.BaseGDP_Scen}, \code{L201.Pop_SSP1}, \code{L201.Pop_SSP2}, \code{L201.Pop_SSP3}, \code{L201.Pop_SSP4}, \code{L201.Pop_SSP5}, \code{L201.TotalFactorProductivity_SSP1}, \code{L201.TotalFactorProductivity_SSP2}, \code{L201.TotalFactorProductivity_SSP3}, \code{L201.TotalFactorProductivity_SSP4}, and \code{L201.TotalFactorProductivity_SSP5}. The corresponding file in the
-original data system was \code{L201.Pop_GDP_scenarios.R} (socioeconomics level2).
+the generated outputs: \code{L201.GDP_Scen}, \code{L201.Pop_Scen},
+\code{L201.TotalFactorProductivity_Scen}, \code{L201.PPPConvert}
 }
 \description{
 Labor productivity and population by scenario and region.

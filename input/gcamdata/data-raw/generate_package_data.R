@@ -38,10 +38,11 @@ generate_level2_data_names <- function() {
   level2_data_names[["PPPConvert"]] <- c("region", "PPP.convert")
   level2_data_names[["InterestRate"]] <- c("region", "interest.rate")
   level2_data_names[["NationalAccount"]] <- c("region", "year", "capital", "depreciation.rate", "savings.rate", "energy.investment",
-                                              "wages", "capital.value", "labor.force.share", "capital.net.export")
+                                              "wages", "capital.value", "capital.net.export")
   level2_data_names[["GDPMacroFunction"]] <- c("region", "fn.name", "rho", "node.name", "gamma", "leaf.name", "is.primary.factor",
                                                "is.capital", "is.labor", "is.energy")
   level2_data_names[["SavingsRateParams"]] <- c("region",  "saving.rate.param.base", "saving.rate.param.GR.coef", "saving.rate.param.SR.coef")
+  level2_data_names[["LaborForceShare"]] <- c("region",  "year", "labor.force.share")
   level2_data_names[["TotalFactorProductivity"]] <- c("region",  "year", "productivity")
   level2_data_names[["FactorProductivity"]] <- c("region", "fn.name", "node.name", "leaf.name", "year", "productivity")
   level2_data_names[["NegEmissBudgetFraction"]] <- c("region", "negative.emissions.budget.name", "negative.emissions.budget.fraction")
@@ -570,11 +571,12 @@ prebuilt_data_names <- c(
   "L121.share_R_TPES_biofuel_tech",
   "L121.BiomassOilRatios_kgGJ_R_C",
 
-  # output of module_aglu_LA100.GTAP_downscale_ctry
-  "L100.GTAP_capital_stock",
-
   # output of module_energy_L1328.food_processing, based on IEA data
-  "L1328.en_bal_frac_industry_food_inonspec_R_Yh"
+  "L1328.en_bal_frac_industry_food_inonspec_R_Yh",
+
+  # output of module_socio_L100.GTAP
+  "L100.GTAP_capital_stock",
+  "L100.GTAPCostShare_AgLU_reg_comm"
 )
 
 #' PREBUILT_DATA

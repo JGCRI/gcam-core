@@ -20,92 +20,82 @@
 #' @author SHK October 2020
 #'
 module_socio_L281.macro_account_tracking <- function(command, ...) {
+
+  all_fd_globaltech_names <-
+     c("L232.GlobalTechEff_ind",
+       "L2321.GlobalTechCoef_cement",
+       "L2322.GlobalTechCoef_Fert",
+       "L2323.GlobalTechCoef_iron_steel",
+       "L2324.GlobalTechEff_Off_road",
+       "L2325.GlobalTechEff_chemical",
+       "L2326.GlobalTechCoef_aluminum",
+       "L2328.GlobalTechCoef_food",
+       "L2327.GlobalTechCoef_paper",
+       "L244.StubTechEff_bld",
+       "L254.StubTranTechCoef")
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "energy/A54.sector",
+      # Final energy tracking
+      all_fd_globaltech_names,
+      # Net energy trade tracking
+      "L239.TechCoef_tra",
+      "L243.TechCoef_TradedBio",
+      "L239.TechCoef_reg",
+      "L243.GlobalTechCoef_TotBio",
+      "L2392.TechCoef_tra_NG",
+      "L2392.TechCoef_reg_NG")
+
+  MODULE_OUTPUTS <-
+    c("L281.BasePriceSectorMapping",
+      "L281.GlobalTechAccountOutputUseBasePrice_fd",
+      "L281.TrialValueResource",
+      "L281.TechAccountOutput_entrade",
+      "L281.TechAccountInput_entrade",
+      "L281.TechAccountInput_NG_entrade",
+      "L281.GlobalTechAccountInput_entrade")
+
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "energy/A54.sector",
-             # Final energy tracking
-             "L232.GlobalTechEff_ind",
-             "L2321.GlobalTechCoef_cement",
-             "L2322.GlobalTechCoef_Fert",
-             "L2323.GlobalTechCoef_iron_steel",
-             "L2324.GlobalTechEff_Off_road",
-             "L2325.GlobalTechEff_chemical",
-             "L2326.GlobalTechCoef_aluminum",
-             "L2328.GlobalTechCoef_food",
-             "L2327.GlobalTechCoef_paper",
-             "L244.StubTechEff_bld",
-             "L254.StubTranTechCoef",
-             # Net energy trade tracking
-             "L239.TechCoef_tra",
-             "L243.TechCoef_TradedBio",
-             "L239.TechCoef_reg",
-             "L243.GlobalTechCoef_TotBio",
-             "L2392.TechCoef_tra_NG",
-             "L2392.TechCoef_reg_NG"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L281.BasePriceSectorMapping",
-             "L281.GlobalTechAccountOutputUseBasePrice_fd",
-             "L281.TrialValueResource",
-             "L281.TechAccountOutput_entrade",
-             "L281.TechAccountInput_entrade",
-             "L281.TechAccountInput_NG_entrade",
-             "L281.GlobalTechAccountInput_entrade"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     # silence package checks
     scenario <- year <- gdp <- GCAM_region_ID <- account <- Region <- Units <- growth <- timestep <- region <-
       GDP <- pop <- laborproductivity <- NULL
 
-    # --------------------------------------------------	---------------------------
     # 1. Read data
 
     all_data <- list(...)[[1]]
 
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names", strip_attributes = TRUE)
-    A54.sector <- get_data(all_data, "energy/A54.sector", strip_attributes = TRUE)
-
-    all_fd_globaltech_names <- c("L232.GlobalTechEff_ind",
-                                 "L2321.GlobalTechCoef_cement",
-                                 "L2322.GlobalTechCoef_Fert",
-                                 "L2323.GlobalTechCoef_iron_steel",
-                                 "L2324.GlobalTechEff_Off_road",
-                                 "L2325.GlobalTechEff_chemical",
-                                 "L2326.GlobalTechCoef_aluminum",
-                                 "L2328.GlobalTechCoef_food",
-                                 "L2327.GlobalTechCoef_paper",
-                                 "L244.StubTechEff_bld",
-                                 "L254.StubTranTechCoef")
-
-    # Note: this table will produce gas trade both the "old" way and the LNG/pipeline way
-    # the batch chunks will need to filer accordingly and in this way we can still support
-    # running with either gas trade approach
-    get_data(all_data, "L239.TechCoef_tra", strip_attributes = TRUE) %>%
-      bind_rows(get_data(all_data, "L243.TechCoef_TradedBio", strip_attributes = TRUE),
-                # TODO: statistical differences?
-                get_data(all_data, "L2392.TechCoef_tra_NG", strip_attributes = TRUE) %>% filter(grepl('traded', supplysector))
-      ) ->
-      en_export
-
-    L239.TechCoef_reg <- get_data(all_data, "L239.TechCoef_reg", strip_attributes = TRUE)
-    L2392.TechCoef_reg_NG <- get_data(all_data, "L2392.TechCoef_reg_NG", strip_attributes = TRUE)
-    L243.GlobalTechCoef_TotBio <- get_data(all_data, "L243.GlobalTechCoef_TotBio", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
 
-
+    # (1) L281.BasePriceSectorMapping ----
     # create a mapping of pass through sectors which we need to
     # ensure we calculate one consistent base price across all
     # of them
     A54.sector %>%
       select(from.sector = supplysector, to.sector = energy.final.demand) %>%
-      distinct() ->
+      distinct() %>%
+      add_title("Set up base price sector mapping") %>%
+      add_units("NA") %>%
+      add_comments("Sets up a sector mapping to make sure we calculate the base price") %>%
+      add_comments("of the correct sector when pass-through sectors are involved") %>%
+      add_precursors("energy/A54.sector") ->
       L281.BasePriceSectorMapping
 
+    # (2) L281.GlobalTechAccountOutputUseBasePrice_fd ----
+    ## energy service sector and price aggregation ----
 
-    # final energy calculations
-
+    ## final energy calculations ----
     all_fd_globaltech_names %>%
       lapply(function(name) {
-        d <- get_data(all_data, name, strip_attributes = TRUE)
+        d <- get(name)
         if("supplysector" %in% names(d)) {
           d <- rename(d, "sector.name" = "supplysector")
         }
@@ -143,6 +133,25 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
              use.base.price = 1) ->
       fd_accounting
 
+    fd_accounting %>%
+      add_title("Track final energy service in currency value") %>%
+      add_units("Unitless") %>%
+      add_comments("Sets up accounting secondary outputs to track final energy service") %>%
+      add_precursors("L232.GlobalTechEff_ind",
+                     "L2321.GlobalTechCoef_cement",
+                     "L2322.GlobalTechCoef_Fert",
+                     "L2323.GlobalTechCoef_iron_steel",
+                     "L2324.GlobalTechEff_Off_road",
+                     "L2325.GlobalTechEff_chemical",
+                     "L2326.GlobalTechCoef_aluminum",
+                     "L2328.GlobalTechCoef_food",
+                     "L2327.GlobalTechCoef_paper",
+                     "L244.StubTechEff_bld",
+                     "L254.StubTranTechCoef") ->
+      L281.GlobalTechAccountOutputUseBasePrice_fd
+
+    # (3) L281.TrialValueResource ----
+
     GCAM_region_names %>%
       select(region) %>%
       mutate(trial.value.resource = socioeconomics.EN_SERVICE_NAME,
@@ -152,42 +161,6 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
              min.price = 0.0,
              max.price = 1.0e6) ->
       fd_resource
-
-    # Net fossil energy trade calculations
-    en_export %>%
-      rename(output.accounting = minicam.energy.input,
-             output.ratio = coefficient) %>%
-      mutate(output.accounting = socioeconomics.EN_TRADE_NAME,
-             output.ratio = -1.0) ->
-      L281.TechAccountOutput_entrade
-
-    L239.TechCoef_reg %>%
-      filter(grepl('import', subsector)) %>%
-      select("region", "supplysector", "subsector", "technology", "year", "input.accounting" = "minicam.energy.input") %>%
-      # Note: the AccountingInput can be used track the physical output as well as the currency
-      # for energy trade we are just interested in the currency tracking, thus tracking.market is empty
-      mutate(tracking.market = "",
-             currency.tracking.market = socioeconomics.EN_TRADE_NAME) ->
-      L281.TechAccountInput_entrade
-
-    L2392.TechCoef_reg_NG %>%
-      filter(grepl('import', subsector)) %>%
-      select("region", "supplysector", "subsector", "subsector0", "technology", "year", "input.accounting" = "minicam.energy.input") %>%
-      # Note: the AccountingInput can be used track the physical output as well as the currency
-      # for energy trade we are just interested in the currency tracking, thus tracking.market is empty
-      mutate(tracking.market = "",
-             currency.tracking.market = socioeconomics.EN_TRADE_NAME) ->
-      L281.TechAccountInput_NG_entrade
-
-    L243.GlobalTechCoef_TotBio %>%
-      filter(grepl('import', subsector.name)) %>%
-      select("sector.name", "subsector.name", "technology", "year", "input.accounting" = "minicam.energy.input") %>%
-      # Note: the AccountingInput can be used track the physical output as well as the currency
-      # for energy trade we are just interested in the currency tracking, thus tracking.market is empty
-      mutate(tracking.market = "",
-             currency.tracking.market = socioeconomics.EN_TRADE_NAME) ->
-      L281.GlobalTechAccountInput_entrade
-
 
     GCAM_region_names %>%
       select(region) %>%
@@ -228,42 +201,64 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
              max.price = 1.0e15) ->
       en_CD_resource
 
-    # ===================================================
-
-    # Produce outputs
-
-    L281.BasePriceSectorMapping %>%
-      add_title("Set up base price sector mapping") %>%
-      add_units("NA") %>%
-      add_comments("Sets up a sector mapping to make sure we calculate the base price") %>%
-      add_comments("of the correct sector when pass-through sectors are involved") %>%
-      add_precursors("energy/A54.sector") ->
-      L281.BasePriceSectorMapping
-
-    fd_accounting %>%
-      add_title("Track final energy service in currency value") %>%
-      add_units("Unitless") %>%
-      add_comments("Sets up accounting secondary outputs to track final energy service") %>%
-      add_precursors("L232.GlobalTechEff_ind",
-                     "L2321.GlobalTechCoef_cement",
-                     "L2322.GlobalTechCoef_Fert",
-                     "L2323.GlobalTechCoef_iron_steel",
-                     "L2324.GlobalTechEff_Off_road",
-                     "L2325.GlobalTechEff_chemical",
-                     "L2326.GlobalTechCoef_aluminum",
-                     "L2328.GlobalTechCoef_food",
-                     "L2327.GlobalTechCoef_paper",
-                     "L244.StubTechEff_bld",
-                     "L254.StubTranTechCoef") ->
-      L281.GlobalTechAccountOutputUseBasePrice_fd
-
-    bind_rows(fd_resource, entrade_resource, en_cap_resource, en_CD_resource) %>%
+    bind_rows(fd_resource, entrade_resource, en_cap_resource, en_CD_resource)  %>%
       add_title("Creates trial value markets for use with the various tracking accounts we need to use.") %>%
       add_units("Unitless") %>%
       add_comments("Trial value resources for final energy related tracking") %>%
       add_legacy_name("NA") %>%
       add_precursors("common/GCAM_region_names") ->
       L281.TrialValueResource
+
+
+    # (4) trade tracking ----
+
+    # Note: this table will produce gas trade both the "old" way and the LNG/pipeline way
+    # the batch chunks will need to filer accordingly and in this way we can still support
+    # running with either gas trade approach
+    L239.TechCoef_tra %>%
+      bind_rows(L243.TechCoef_TradedBio,
+                # TODO: statistical differences?
+                L2392.TechCoef_tra_NG %>% filter(grepl('traded', supplysector))
+      ) ->
+      en_export
+
+    # Net fossil energy trade calculations
+    en_export %>%
+      rename(output.accounting = minicam.energy.input,
+             output.ratio = coefficient) %>%
+      mutate(output.accounting = socioeconomics.EN_TRADE_NAME,
+             output.ratio = -1.0) ->
+      L281.TechAccountOutput_entrade
+
+    L239.TechCoef_reg %>%
+      filter(grepl('import', subsector)) %>%
+      select("region", "supplysector", "subsector", "technology", "year", "input.accounting" = "minicam.energy.input") %>%
+      # Note: the AccountingInput can be used track the physical output as well as the currency
+      # for energy trade we are just interested in the currency tracking, thus tracking.market is empty
+      mutate(tracking.market = "",
+             currency.tracking.market = socioeconomics.EN_TRADE_NAME) ->
+      L281.TechAccountInput_entrade
+
+    L2392.TechCoef_reg_NG %>%
+      filter(grepl('import', subsector)) %>%
+      select("region", "supplysector", "subsector", "subsector0", "technology", "year", "input.accounting" = "minicam.energy.input") %>%
+      # Note: the AccountingInput can be used track the physical output as well as the currency
+      # for energy trade we are just interested in the currency tracking, thus tracking.market is empty
+      mutate(tracking.market = "",
+             currency.tracking.market = socioeconomics.EN_TRADE_NAME) ->
+      L281.TechAccountInput_NG_entrade
+
+    L243.GlobalTechCoef_TotBio %>%
+      filter(grepl('import', subsector.name)) %>%
+      select("sector.name", "subsector.name", "technology", "year", "input.accounting" = "minicam.energy.input") %>%
+      # Note: the AccountingInput can be used track the physical output as well as the currency
+      # for energy trade we are just interested in the currency tracking, thus tracking.market is empty
+      mutate(tracking.market = "",
+             currency.tracking.market = socioeconomics.EN_TRADE_NAME) ->
+      L281.GlobalTechAccountInput_entrade
+
+
+    # Produce outputs ----
 
     L281.TechAccountOutput_entrade %>%
       add_title("Net energy trade / exports accounting in supplysectors") %>%
@@ -294,15 +289,11 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
       add_precursors("L243.GlobalTechCoef_TotBio") ->
       L281.GlobalTechAccountInput_entrade
 
-    return_data(L281.BasePriceSectorMapping,
-                L281.GlobalTechAccountOutputUseBasePrice_fd,
-                L281.TrialValueResource,
-                L281.TechAccountOutput_entrade,
-                L281.TechAccountInput_entrade,
-                L281.TechAccountInput_NG_entrade,
-                L281.GlobalTechAccountInput_entrade)
+    return_data(MODULE_OUTPUTS)
 
   } else {
     stop("Unknown command")
   }
 }
+
+

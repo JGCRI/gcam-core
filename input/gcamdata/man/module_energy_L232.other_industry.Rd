@@ -25,11 +25,7 @@ the generated outputs: \code{L232.SectorLogitTables[[ curr_table ]]$data},
 \code{L232.StubTechProd_industry}, \code{L232.StubTechCoef_industry},
 \code{L232.FuelPrefElast_indenergy}, \code{L232.PerCapitaBased_ind},
 \code{L232.PriceElasticity_ind}, \code{L232.BaseService_ind},
-\code{L232.IncomeElasticity_ind_ssp1},
-\code{L232.IncomeElasticity_ind_ssp2}, \code{L232.IncomeElasticity_ind_ssp3},
-\code{L232.IncomeElasticity_ind_ssp4}, \code{L232.IncomeElasticity_ind_ssp5},
-\code{object}. The corresponding file in the
-original data system was \code{L232.industry.R} (energy level2).
+\code{L232.IncomeElasticity_ind_Scen}
 }
 \description{
 Compute a variety of final energy keyword, sector, share weight, and technology information for industry-related GCAM inputs.
