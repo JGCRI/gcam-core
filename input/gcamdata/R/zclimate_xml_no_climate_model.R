@@ -28,7 +28,6 @@ module_climate_no_climate_model_xml <- function(command, ...) {
       no_climate_model.xml
 
     create_xml("disable_climate_model.xml") %>%
-      add_xml_data(delete_climate, "DeleteMAGICC") %>%
       add_xml_data(delete_climate, "DeleteHector") %>%
       add_xml_data(no_climate_data, "NoClimateModel") ->
       disable_climate_model.xml

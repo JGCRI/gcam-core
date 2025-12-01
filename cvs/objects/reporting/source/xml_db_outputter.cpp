@@ -62,7 +62,6 @@
 #include "marketplace/include/marketplace.h"
 #include "marketplace/include/market.h"
 #include "climate/include/iclimate_model.h"
-#include "climate/include/magicc_model.h"
 #include "resources/include/subresource.h"
 #include "resources/include/reserve_subresource.h"
 #include "resources/include/renewable_subresource.h"
@@ -190,7 +189,8 @@ mSubsectorDepth( 0 )
 
 #if( __HAVE_JAVA__ )
     // Set Java as the sink of data for mBuffer.
-    SendToJavaIOSink sendToJavaSink( mJNIContainer.get() );
+    int bufferSize = Configuration::getInstance()->getInt("xmldb-buffer-size", 1);
+    SendToJavaIOSink sendToJavaSink( mJNIContainer.get(), bufferSize );
     mBuffer.push( sendToJavaSink );
 #else
     mBuffer.push( null_sink() );
@@ -308,6 +308,8 @@ unique_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const 
         jniContainer.reset( 0 );
         return jniContainer;
     }
+    
+    int bufferSize = conf->getInt("xmldb-buffer-size", 1);
 
     // Start the Java VM with the following settings
     JavaVMInitArgs vmArgs;
@@ -360,7 +362,7 @@ unique_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const 
     // "(Ljava/lang/String;Ljava/lang/String)V".  The arguments are the database, and
     // a unique name to call the document that we will put into the database.
     jmethodID writeDBCtorMID = jniContainer->mJavaEnv->GetMethodID( jniContainer->mWriteDBClass,
-        "<init>", "(Ljava/lang/String;Ljava/lang/String;)V" );
+        "<init>", "(Ljava/lang/String;Ljava/lang/String;I)V" );
     if( !writeDBCtorMID ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
@@ -389,10 +391,11 @@ unique_ptr<XMLDBOutputter::JNIContainer> XMLDBOutputter::createContainer( const 
     // Convert the C++ string to a Java String so that they can be passed to the constructor.
     jstring jXMLDBContainerName = jniContainer->mJavaEnv->NewStringUTF( xmldbContainerName.c_str() );
     jstring jDocName = jniContainer->mJavaEnv->NewStringUTF( docName.c_str() );
+    jint jBufferSize = bufferSize;
 
     // Call the constructor to get an instance of writeDBClassName.
     jniContainer->mWriteDBInstance = jniContainer->mJavaEnv->NewGlobalRef(
-        jniContainer->mJavaEnv->NewObject( jniContainer->mWriteDBClass, writeDBCtorMID, jXMLDBContainerName, jDocName ) );
+        jniContainer->mJavaEnv->NewObject( jniContainer->mWriteDBClass, writeDBCtorMID, jXMLDBContainerName, jDocName, jBufferSize ) );
     if( !jniContainer->mWriteDBInstance ) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::SEVERE );
@@ -1351,10 +1354,12 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         + aClimateModel->getForcing( "HFC143A", util::round( year ) )
         + aClimateModel->getForcing( "HFC227ea", util::round( year ) )
         + aClimateModel->getForcing( "HFC245fa", util::round( year ) )
+        + aClimateModel->getForcing( "HFC23", util::round( year ) )
+        + aClimateModel->getForcing( "HFC4310", util::round( year ) )
+        + aClimateModel->getForcing( "HFC32", util::round( year ) )
         + aClimateModel->getForcing( "SF6", util::round( year ) )
         + aClimateModel->getForcing( "CF4", util::round( year ) )
-        + aClimateModel->getForcing( "C2F6", util::round( year ) )
-        + aClimateModel->getForcing( "OtherHC", util::round( year ) ),
+        + aClimateModel->getForcing( "C2F6", util::round( year ) ),
                              year );
 
         // HFCs Forcing
@@ -1365,21 +1370,38 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         + aClimateModel->getForcing( "HFC227ea", util::round( year ) )
         + aClimateModel->getForcing( "HFC245fa", util::round( year ) )
         + aClimateModel->getForcing( "HFC23", util::round( year ) )
+        + aClimateModel->getForcing( "HFC4310", util::round( year ) )
         + aClimateModel->getForcing( "HFC32", util::round( year ) ),
                              year );
 
-                // Long-lived Forcing
+        // Total halocarbon Forcing
         writeItemUsingYear( "forcing-halocarbons", "W/m^2",
-        aClimateModel->getForcing( "HFC125", util::round( year ) )
+                           aClimateModel->getForcing( "C2F6", util::round( year ) )
+        + aClimateModel->getForcing( "CCl4", util::round( year ) )
+        + aClimateModel->getForcing( "CF4", util::round( year ) )
+        + aClimateModel->getForcing( "CFC11", util::round( year ) )
+        + aClimateModel->getForcing( "CFC113", util::round( year ) )
+        + aClimateModel->getForcing( "CFC114", util::round( year ) )
+        + aClimateModel->getForcing( "CFC115", util::round( year ) )
+        + aClimateModel->getForcing( "CFC12", util::round( year ) )
+        + aClimateModel->getForcing( "CH3Br", util::round( year ) )
+        + aClimateModel->getForcing( "CH3CCl3", util::round( year ) )
+        + aClimateModel->getForcing( "CH3Cl", util::round( year ) )
+        + aClimateModel->getForcing( "halon1211", util::round( year ) )
+        + aClimateModel->getForcing( "halon1301", util::round( year ) )
+        + aClimateModel->getForcing( "halon2402", util::round( year ) )
+        + aClimateModel->getForcing( "HCF141b", util::round( year ) )
+        + aClimateModel->getForcing( "HCF142b", util::round( year ) )
+        + aClimateModel->getForcing( "HCF22", util::round( year ) )
+        + aClimateModel->getForcing( "HFC125", util::round( year ) )
         + aClimateModel->getForcing( "HFC134A", util::round( year ) )
         + aClimateModel->getForcing( "HFC143A", util::round( year ) )
         + aClimateModel->getForcing( "HFC227ea", util::round( year ) )
+        + aClimateModel->getForcing( "HFC23", util::round( year ) )
         + aClimateModel->getForcing( "HFC245fa", util::round( year ) )
-        + aClimateModel->getForcing( "SF6", util::round( year ) )
-        + aClimateModel->getForcing( "CF4", util::round( year ) )
-        + aClimateModel->getForcing( "C2F6", util::round( year ) )
-        + aClimateModel->getForcing( "OtherHC", util::round( year ) )
-        + aClimateModel->getForcing( "Montreal", util::round( year ) ),
+        + aClimateModel->getForcing( "HFC32", util::round( year ) )
+        + aClimateModel->getForcing( "HFC4310", util::round( year ) )
+        + aClimateModel->getForcing( "SF6", util::round( year ) ),
                              year );
         
         // PFCs Forcing
@@ -1494,7 +1516,28 @@ void XMLDBOutputter::startVisitClimateModel( const IClimateModel* aClimateModel,
         
         // Montreal gas Forcing
         writeItemUsingYear( "forcing-Montreal", "W/m^2",
-                           aClimateModel->getForcing( "Montreal", util::round( year ) ),
+                           aClimateModel->getForcing( "HFC125", util::round( year ) )
+        + aClimateModel->getForcing( "HFC134A", util::round( year ) )
+        + aClimateModel->getForcing( "HFC143A", util::round( year ) )
+        + aClimateModel->getForcing( "HFC227ea", util::round( year ) )
+        + aClimateModel->getForcing( "HFC245fa", util::round( year ) )
+        + aClimateModel->getForcing( "HFC23", util::round( year ) )
+        + aClimateModel->getForcing( "HFC4310", util::round( year ) )
+        + aClimateModel->getForcing( "HFC32", util::round( year ) )
+        + aClimateModel->getForcing( "CFC11", util::round( year ) )
+        + aClimateModel->getForcing( "CFC113", util::round( year ) )
+        + aClimateModel->getForcing( "CFC114", util::round( year ) )
+        + aClimateModel->getForcing( "CFC115", util::round( year ) )
+        + aClimateModel->getForcing( "CFC12", util::round( year ) )
+        + aClimateModel->getForcing( "HCF141b", util::round( year ) )
+        + aClimateModel->getForcing( "HCF142b", util::round( year ) )
+        + aClimateModel->getForcing( "HCF22", util::round( year ) )
+        + aClimateModel->getForcing( "CCl4", util::round( year ) )
+        + aClimateModel->getForcing( "CH3CCl3", util::round( year ) )
+        + aClimateModel->getForcing( "CH3Br", util::round( year ) )
+        + aClimateModel->getForcing( "halon1211", util::round( year ) )
+        + aClimateModel->getForcing( "halon1301", util::round( year ) )
+        + aClimateModel->getForcing( "halon2402", util::round( year ) ),
                            year );
         
         // Total Forcing
@@ -2213,15 +2256,16 @@ map<string, string> XMLDBOutputter::decomposeLandName( string aLandName ) {
  *          error checking and set the error flag as appropriate.
  * \param aJNIContainer A weak pointer to the container which holds the Java VM
  *                      references.  May be null if it did not initialize properly.
+ * \param aBufferSize The configured buffer size which should be used consistently in C++ and Java.
  */
-XMLDBOutputter::SendToJavaIOSink::SendToJavaIOSink( const JNIContainer* aJNIContainer )
+XMLDBOutputter::SendToJavaIOSink::SendToJavaIOSink( const JNIContainer* aJNIContainer, const int aBufferSize )
 :mJNIContainer( aJNIContainer ),
 // Get the receiveDataFromGCAM method from the write DB class with arguments of a byte
 // array "[B", an integer "I", and a return type of bool "Z" 
 mReceiveDataMID( aJNIContainer ? aJNIContainer->mJavaEnv->GetMethodID( aJNIContainer->mWriteDBClass, "receiveDataFromGCAM", "([BI)Z") : 0 ),
 // The same buffer size as the one used in Java, if we try to tune this we should
 // adjust it both here and in Java.
-BUFFER_SIZE( 1024 * 1024 ),
+BUFFER_SIZE( aBufferSize * 1024 * 1024 ),
 mJNIBuffer( aJNIContainer ? aJNIContainer->mJavaEnv->NewByteArray( BUFFER_SIZE  ) : 0 ),
 // If any of the required JNI data structures were not properly set then set the error flag.
 mErrorFlag( !mJNIContainer || !mReceiveDataMID || !mJNIBuffer )

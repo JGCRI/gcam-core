@@ -75,7 +75,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
     <CharacterSet>MultiByte</CharacterSet>
-    <PlatformToolset>v143</PlatformToolset>
+    <PlatformToolset>ClangCL</PlatformToolset>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release - LAPACK|x64'" Label="Configuration">
     <ConfigurationType>Application</ConfigurationType>
@@ -542,11 +542,7 @@
     <ClCompile Include="..\..\ccarbon_model\source\node_carbon_calc.cpp" />
     <ClCompile Include="..\..\ccarbon_model\source\no_emiss_carbon_calc.cpp" />
     <ClCompile Include="..\..\climate\source\hector_model.cpp" />
-    <ClCompile Include="..\..\climate\source\MAGICC_array.cpp" />
-    <ClCompile Include="..\..\climate\source\MAGICC_IO_helpers.cpp" />
     <ClCompile Include="..\..\climate\source\no_climate_model.cpp" />
-    <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC.cpp" />
-    <ClCompile Include="..\..\climate\source\ObjECTS_MAGICC_others.cpp" />
     <ClCompile Include="..\..\consumers\source\gcam_consumer.cpp" />
     <ClCompile Include="..\..\containers\source\batch_runner.cpp" />
     <ClCompile Include="..\..\containers\source\calc_base_price.cpp" />
@@ -756,7 +752,6 @@
     <ClCompile Include="..\..\reporting\source\graph_printer.cpp" />
     <ClCompile Include="..\..\reporting\source\land_allocator_printer.cpp" />
     <ClCompile Include="..\..\reporting\source\xml_db_outputter.cpp" />
-    <ClCompile Include="..\..\climate\source\magicc_model.cpp" />
     <ClCompile Include="..\..\functions\source\aproduction_function.cpp" />
     <ClCompile Include="..\..\functions\source\ces_production_function.cpp" />
     <ClCompile Include="..\..\functions\source\efficiency.cpp" />
@@ -803,9 +798,7 @@
     <ClInclude Include="..\..\ccarbon_model\include\node_carbon_calc.h" />
     <ClInclude Include="..\..\ccarbon_model\include\no_emiss_carbon_calc.h" />
     <ClInclude Include="..\..\climate\include\hector_model.hpp" />
-    <ClInclude Include="..\..\climate\include\MAGICC_array.h" />
     <ClInclude Include="..\..\climate\include\no_climate_model.h" />
-    <ClInclude Include="..\..\climate\include\ObjECTS_MAGICC.h" />
     <ClInclude Include="..\..\consumers\include\gcam_consumer.h" />
     <ClInclude Include="..\..\containers\include\batch_runner.h" />
     <ClInclude Include="..\..\containers\include\calc_base_price.h" />
@@ -1030,6 +1023,7 @@
     <ClInclude Include="..\..\util\base\include\factory.h" />
     <ClInclude Include="..\..\util\base\include\fixed_interpolation_function.h" />
     <ClInclude Include="..\..\util\base\include\fltcmp.hpp" />
+    <ClInclude Include="..\..\util\base\include\gcamstr.h" />
     <ClInclude Include="..\..\util\base\include\gcam_data_containers.h" />
     <ClInclude Include="..\..\util\base\include\gcam_fusion.hpp" />
     <ClInclude Include="..\..\util\base\include\hash_map.h" />
@@ -1098,7 +1092,6 @@
     <ClInclude Include="..\..\functions\include\non_energy_input.h" />
     <ClInclude Include="..\..\functions\include\renewable_input.h" />
     <ClInclude Include="..\..\climate\include\iclimate_model.h" />
-    <ClInclude Include="..\..\climate\include\magicc_model.h" />
     <ClInclude Include="..\..\target_finder\include\bisecter.h" />
     <ClInclude Include="..\..\target_finder\include\concentration_target.h" />
     <ClInclude Include="..\..\target_finder\include\forcing_target.h" />

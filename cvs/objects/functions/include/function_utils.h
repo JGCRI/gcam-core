@@ -87,32 +87,31 @@ public:
     static double PMT( double aRate, double aNper, double aPV );
 
     // **** Begin Unit Conversions
-    // TODO: remove when units conversion is working
-    static double HOURS_PER_YEAR( void );
+    inline static double HOURS_PER_YEAR() { return 8766; }
 
-    static double HOURS_PER_DAY( void );
+    inline static double HOURS_PER_DAY() { return 24; }
 
-    static double DEFLATOR_1975_PER_DEFLATOR_2003( void );
+    inline static double DEFLATOR_1975_PER_DEFLATOR_2003() { return 0.357; }
 
-    static double DEFLATOR_1975_PER_DEFLATOR_2005( void );
+    inline static double DEFLATOR_1975_PER_DEFLATOR_2005() { return 0.337; }
 
-    static double DEFLATOR_1990_PER_DEFLATOR_1975( void );
+    inline static double DEFLATOR_1990_PER_DEFLATOR_1975() { return 2.133; }
 
-    static double GJ_PER_KWH( void );
+    inline static double GJ_PER_KWH() { return 0.003600457; }
 
-    static double GJ_PER_MWH( void );
+    inline static double GJ_PER_MWH() { return 3.600457; }
 
-    static double GJ_PER_EJ( void );
+    inline static double GJ_PER_EJ() { return 1.0E+9; }
 
-    static double EJ_PER_GWH( void );
+    inline static double EJ_PER_GWH() { return 1.0E+3; }
 
-    static double MWH_PER_GWH( void );
+    inline static double MWH_PER_GWH() { return GJ_PER_MWH() / GJ_PER_EJ() * MWH_PER_GWH(); }
 
-    static double GWH_PER_GJ( void );
+    inline static double GWH_PER_GJ() { return 2.778E-4; }
 
-    static double MWH_PER_GJ( void );
+    inline static double MWH_PER_GJ() { return 2.778E-1; }
 
-    static double KG_PER_METRIC_TON( void );
+    inline static double KG_PER_METRIC_TON() { return 1000; }
 
     // **** End Unit Conversions
 

@@ -54,6 +54,7 @@
 #include "technologies/include/itechnology_container.h"
 #include "technologies/include/itechnology.h"
 #include "sectors/include/sector_utils.h"
+#include "functions/include/function_utils.h"
 #include "util/base/include/ivisitor.h"
 
 using namespace std;
@@ -192,7 +193,8 @@ double TranSubsector::getTimeValue( const int aPeriod ) const {
     const double HOURS_PER_WEEK = 40;
 
     // proxy for income and hourly wage
-    double GDPperCapita = SectorUtils::getGDPPerCap( mRegionName, aPeriod );
+    // Note: GDP is in million 1990$, we need billion 1975$
+    double GDPperCapita = SectorUtils::getGDPPerCap( mRegionName, aPeriod ) / FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
     return GDPperCapita * 1000 * mTimeValueMult[ aPeriod ] / ( HOURS_PER_WEEK * WEEKS_PER_YEAR ) / mSpeed[ aPeriod ];
 }
 

@@ -178,6 +178,32 @@ void XMLParseHelper::cleanupParser() {
 
 //=============================================================================
 
+// Helper function to print verbose parsing warning / error messages (if so
+// configured) such as producing a "stack trace" of where the message is
+// originating from.
+void printTrace(std::ostream& aOut, const rapidxml::xml_node<char>* aNode) {
+    static bool printVerbose = Configuration::getInstance()->getBool("verbose-parse-warnings");
+    if(printVerbose && aNode && aNode->type() != rapidxml::node_document) {
+        string nodeName(aNode->name(), aNode->name_size());
+        map<string, string> attrs = XMLParseHelper::getAllAttrs(aNode);
+        aOut << "\tFrom node " << nodeName << "[";
+        bool isFirst = true;
+        for(auto attr : attrs) {
+            if(attr.first != "nocreate" && attr.first != "delete") {
+                if(!isFirst) {
+                    aOut << ", ";
+                }
+                aOut << attr.first << "=\"" << attr.second << "\"";
+                isFirst = false;
+            }
+        }
+        aOut << "]" << std::endl;
+        printTrace(aOut, aNode->parent());
+    }
+}
+
+//=============================================================================
+
 // A specialization Factory for Technology Containers since they get parsed
 // with the various technology tags or the stub-technology tag
 template<>
@@ -372,12 +398,14 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING );
             mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
+            printTrace(mainLog, aNode);
             return;
         } else if( noCreateFlagSet ) {
             // log nocreate
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Did not create node " << nodeName << " as the nocreate input flag was set." << std::endl;
+            printTrace(mainLog, aNode);
             return;
         }
         else {
@@ -395,6 +423,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
                 mainLog << "Attempted to set incompatible type " << nodeName << " as " << typeid(typename DataType::value_type).name() << std::endl;
+                printTrace(mainLog, aNode);
                 abort();
             }
         }
@@ -406,6 +435,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Deleting node: " << nodeName << std::endl;
+            printTrace(mainLog, aNode);
             delete aData.mData;
             aData.mData = 0;
             return;
@@ -468,12 +498,14 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING);
             mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
+            printTrace(mainLog, aNode);
             return;
         } else if( noCreateFlagSet ) {
             // log nocreate
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Did not create node " << nodeName << " as the nocreate input flag was set." << std::endl;
+            printTrace(mainLog, aNode);
             return;
         }
         else {
@@ -491,6 +523,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
                 mainLog << "Attempted to set incompatible type " << nodeName << " as " << typeid(typename DataType::value_type).name() << std::endl;
+                printTrace(mainLog, aNode);
                 abort();
             }
             aData.mData.push_back( currContainer );
@@ -503,6 +536,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Deleting node: " << nodeName << std::endl;
+            printTrace(mainLog, aNode);
             delete currContainer;
             currContainer = 0;
             aData.mData.erase( dataIter );
@@ -566,12 +600,14 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::WARNING);
             mainLog << "Could not delete node " << nodeName << " as it does not exist." << std::endl;
+            printTrace(mainLog, aNode);
             return;
         } else if( noCreateFlagSet ) {
             // log nocreate
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::NOTICE );
             mainLog << "Did not create node " << nodeName << " as the nocreate input flag was set." << std::endl;
+            printTrace(mainLog, aNode);
             return;
         }
         else {
@@ -589,6 +625,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
                 ILogger& mainLog = ILogger::getLogger( "main_log" );
                 mainLog.setLevel( ILogger::ERROR );
                 mainLog << "Attempted to set incompatible type " << nodeName << " as " << typeid(typename DataType::value_type).name() << std::endl;
+                printTrace(mainLog, aNode);
                 abort();
             }
             aData.mData[ boost::lexical_cast<typename DataType::value_type::key_type>( attrs[ GetFilterForContainer<data_type>::filter_type::getXMLAttrKey() ] ) ] = currContainer;
@@ -601,6 +638,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
             ILogger& mainLog = ILogger::getLogger( "main_log" );
             mainLog.setLevel( ILogger::DEBUG );
             mainLog << "Deleting node: " << nodeName << std::endl;
+            printTrace(mainLog, aNode);
             delete currContainer;
             currContainer = 0;
             aData.mData.erase( dataIter );
@@ -648,6 +686,7 @@ void>::type parseDataI(const rapidxml::xml_node<char>* aNode, DataType& aData) {
         ILogger& mainLog = ILogger::getLogger( "main_log" );
         mainLog.setLevel( ILogger::ERROR );
         mainLog << "Could not find year attribute to set simple array data" << endl;
+        printTrace(mainLog, aNode);
     }
     else {
         // We are being generic about the type of vector we have here so we can't just

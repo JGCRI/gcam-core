@@ -102,16 +102,13 @@ public:
                            const gcamstr& aSectorName,
                            const int aPeriod );
     
-    virtual double getFixedOutput( const std::string& aRegionName,
-                                   const std::string& aSectorName,
+    virtual double getFixedOutput( const gcamstr& aRegionName,
+                                   const gcamstr& aSectorName,
                                    const bool aHasRequiredInput,
                                    const std::string& aRequiredInput,
                                    const double aMarginalRevenue,
                                    const int aPeriod ) const;
 
-    virtual double getNonEnergyCost( const gcamstr& aRegionName,
-                                     const int aPeriod ) const;
-    
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
     
     virtual Value getParsedShareWeight() const;

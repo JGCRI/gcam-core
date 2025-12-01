@@ -643,6 +643,12 @@ driver_drake <- function(
    }
   dir.create(xmldir, showWarnings = FALSE, recursive = TRUE)
 
+  # fix "off by one" error where if we are doing a "stop_before" we should skip
+  # trying to actually run those chunks
+  if(!missing(stop_before)) {
+    chunks_to_run <- chunks_to_run[!(chunks_to_run %in% stop_before)]
+  }
+
   # Loop over each chunk and add a target for it and the command to build it
   # as appropriate for if it is just loading a FILE or running an actual chunk.
   target <- c()

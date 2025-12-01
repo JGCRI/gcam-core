@@ -2,15 +2,15 @@
 
 #' module_modeltime_L200.modeltime
 #'
-#' Generate the model time information needed to interact with Hector or MAGICC.
+#' Generate the model time information needed to interact with Hector.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L200.ModelTime}, \code{L200.ModelTimeInterYears}, \code{L200.MAGICC}, \code{L200.hector}. The corresponding file in the
+#' the generated outputs: \code{L200.ModelTime}, \code{L200.ModelTimeInterYears}, \code{L200.hector}. The corresponding file in the
 #' original data system was \code{L200.modeltime.R} (modeltime level2).
-#' @details Generate the model time information needed to interact with Hector or MAGICC.
+#' @details Generate the model time information needed to interact with Hector.
 #' @importFrom assertthat assert_that
 #' @importFrom tibble tibble
 #' @author BBL
@@ -20,7 +20,6 @@ module_modeltime_L200.modeltime <- function(command, ...) {
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L200.ModelTime",
              "L200.ModelTimeInterYears",
-             "L200.MAGICC",
              "L200.hector"))
   } else if(command == driver.MAKE) {
 
@@ -35,7 +34,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
            start.year              = min(MODEL_BASE_YEARS),
            final.calibration.year  = MODEL_FINAL_BASE_YEAR,
            end.year                = max(MODEL_FUTURE_YEARS),
-           carbon.model.start.year = modeltime.MAGICC_C_START_YEAR) %>%
+           carbon.model.start.year = modeltime.C_START_YEAR) %>%
       add_title("GCAM time information") %>%
       add_units("years") %>%
       add_legacy_name("L200.ModelTime") %>%
@@ -55,15 +54,6 @@ module_modeltime_L200.modeltime <- function(command, ...) {
       add_comments("GCAM timestep change points, generated from constants") ->
       L200.ModelTimeInterYears
 
-    tibble(last.historical.year    = modeltime.MAGICC_LAST_HISTORICAL_YEAR,
-           bc.unit.forcing         = modeltime.MAGICC_BC_UNIT_FORCING,
-           default.emiss.file      = modeltime.MAGICC_DEFAULT_EMISS_FILE) %>%
-      add_title("MAGICC time information") %>%
-      add_units("years") %>%
-      add_legacy_name("L200.MAGICC") %>%
-      add_comments("MAGICC time information generated from constants") ->
-      L200.MAGICC
-
     tibble(hector.end.year         = modeltime.HECTOR_END_YEAR,
            emissions.switch.year   = modeltime.HECTOR_EMISSIONS_YEAR,
            hector.ini.file         = modeltime.HECTOR_INI_FILE) %>%
@@ -73,7 +63,7 @@ module_modeltime_L200.modeltime <- function(command, ...) {
       add_comments("Hector time and INI file information generated from constants") ->
       L200.hector
 
-    return_data(L200.ModelTime, L200.ModelTimeInterYears, L200.MAGICC, L200.hector)
+    return_data(L200.ModelTime, L200.ModelTimeInterYears, L200.hector)
   } else {
     stop("Unknown command")
   }

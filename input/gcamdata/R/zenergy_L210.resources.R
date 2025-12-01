@@ -600,7 +600,7 @@ module_energy_L210.resources <- function(command, ...) {
       rename(resource = renewresource, subresource = sub.renewable.resource) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       mutate(technology = subresource,
-             share.weight = 1 ) %>%
+             share.weight = if_else(year %in% MODEL_BASE_YEARS, 0, 1) ) %>%
       select(LEVEL2_DATA_NAMES[["ResTechShrwt"]])
 
 
@@ -755,7 +755,7 @@ module_energy_L210.resources <- function(command, ...) {
                 by = c("region", "resource", "subresource", "year")) %>%
       mutate(prod_value = if_else(is.na(prod_value), 0, prod_value),
              technology = subresource,
-             share.weight = if_else(year > MODEL_FINAL_BASE_YEAR | prod_value > 0, 1, 0)) %>%
+             share.weight = 1) %>%
       filter(year %in% MODEL_YEARS) %>%
       select(LEVEL2_DATA_NAMES[["ResTechShrwt"]]) ->
       L210.ResTechShrwt

@@ -97,7 +97,6 @@ public:
     void calc( const int period );
     void calc( const int period, const std::vector<IActivity*>& aRegionsToCalc );
     void setEmissions( int period );
-    void runClimateModel();
     void runClimateModel( int period );
     bool isAllCalibrated( const int period, double calAccuracy, const bool printWarnings ) const;
     void setTax( const GHGPolicy* aTax );

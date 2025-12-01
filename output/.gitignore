@@ -2,6 +2,7 @@
 output*.xml
 database*
 *basexdb
+gcam-hector-outputstream*
 ccsm_c.txt
 concs_c.dis
 emiss_c.dis
@@ -11,3 +12,4 @@ mag_c.csv
 magout_c.csv
 sealev_c.dis
 temps_c.dis
+gcam-hector-outputstream*

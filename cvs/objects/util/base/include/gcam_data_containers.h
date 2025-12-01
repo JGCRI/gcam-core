@@ -52,7 +52,6 @@
 #include "ccarbon_model/include/no_emiss_carbon_calc.h"
 #include "ccarbon_model/include/node_carbon_calc.h"
 #include "climate/include/iclimate_model.h"
-#include "climate/include/magicc_model.h"
 #include "climate/include/hector_model.hpp"
 #include "climate/include/no_climate_model.h"
 #include "consumers/include/consumer.h"

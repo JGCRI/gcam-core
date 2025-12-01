@@ -17,7 +17,9 @@ TBB_INCLUDE     = $(GCAMLIB_HOME)/include/oneapi
 TBB_LIB	        = $(GCAMLIB_HOME)/lib
 JAVA_INCLUDE    = ${JAVA_HOME}/include
 JAVA_LIB        = ${JAVA_HOME}/jre/lib/amd64/server
-ifeq (openjdk,$(findstring openjdk,$(JAVA_HOME)))
+# check if the JAVA_LIB dir actually exists, if not
+# assume the openjdk lib structure
+ifeq "$(wildcard $(JAVA_LIB) )" ""
 JAVA_LIB        = ${JAVA_HOME}/lib/server
 endif
 JARS_LIB        = $(GCAMLIB_HOME)/lib/jars/*

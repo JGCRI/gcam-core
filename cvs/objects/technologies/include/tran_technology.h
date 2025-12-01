@@ -63,38 +63,34 @@ public:
     virtual TranTechnology* clone() const;
     virtual const std::string& getXMLName() const;
     static const std::string& getXMLNameStatic();
-
+    
     virtual void initCalc( const gcamstr& aRegionName,
-        const gcamstr& aSectorName,
-        const IInfo* aSubsectorInfo,
-        const Demographic* aDemographics,
-        PreviousPeriodInfo& aPrevPeriodInfo,
-        const int aPeriod );
-
+                          const gcamstr& aSectorName,
+                          const IInfo* aSubsectorInfo,
+                          const Demographic* aDemographics,
+                          PreviousPeriodInfo& aPrevPeriodInfo,
+                          const int aPeriod );
+    
     virtual void production( const gcamstr& aRegionName,
-        const gcamstr& aSectorName, 
-        double aVariableDemand,
-        double aFixedOutputScaleFactor,
-        const int aPeriod );
-
-    virtual void calcCost( const gcamstr& aRegionName,
-        const gcamstr& aSectorName,
-        const int aPeriod );
-
+                            const gcamstr& aSectorName, 
+                            double aVariableDemand,
+                            double aFixedOutputScaleFactor,
+                            const int aPeriod );
+    
     virtual double getTotalGHGCost( const gcamstr& aRegionName, const gcamstr& aSectorName, 
-        const int aPeriod ) const;
-
+                                   const int aPeriod ) const;
+    
     virtual double calcSecondaryValue( const gcamstr& aRegionName,
-        const int aPeriod ) const;
-
+                                      const int aPeriod ) const;
+    
     virtual double getEnergyCost( const gcamstr& aRegionName,
-        const gcamstr& aSectorName,
-        const int aPeriod ) const;
-
+                                 const gcamstr& aSectorName,
+                                 const int aPeriod ) const;
+    
     double getCalibrationOutput( const bool aHasRequiredInput,
-        const std::string& aRequiredInput,
-        const int aPeriod ) const;
-
+                                const std::string& aRequiredInput,
+                                const int aPeriod ) const;
+    
     virtual void acceptDerived( IVisitor* aVisitor, const int aPeriod ) const;
     
     virtual void doInterpolations( const Technology* aPrevTech, const Technology* aNextTech );
@@ -103,26 +99,22 @@ protected:
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
-        Technology,
-
-        //! Vehicle load factor.
-        DEFINE_VARIABLE( SIMPLE, "loadFactor", mLoadFactor, double )
-    )
+                            Technology,
+                            
+                            //! Vehicle load factor.
+                            DEFINE_VARIABLE( SIMPLE, "loadFactor", mLoadFactor, double )
+                            )
     
     void copy( const TranTechnology& aOther );
-
+    
     double getTotalInputCost( const gcamstr& aRegionName,
-        const gcamstr& aSectorName,
-        const int aPeriod ) const;
+                             const gcamstr& aSectorName,
+                             const int aPeriod ) const;
     
     virtual double getCurrencyConversionPrice( const gcamstr& aRegionName,
-                                               const gcamstr& aSectorName,
-                                               const int aPeriod ) const;
-
+                                              const gcamstr& aSectorName,
+                                              const int aPeriod ) const;
+    
     void toDebugXMLDerived( const int period, std::ostream& out, Tabs* tabs ) const;
-    double getNonEnergyCost( const gcamstr& aRegionName,
-        const gcamstr& aSectorName,
-        const int aPeriod ) const;
 };
-
 #endif // _TRAN_TECHNOLOGY_H_

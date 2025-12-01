@@ -49,6 +49,7 @@
 #include "containers/include/world.h"
 #include "util/base/include/model_time.h"
 #include "technologies/include/technology.h"
+#include "technologies/include/technology_container.h"
 
 using namespace std;
 
@@ -112,11 +113,38 @@ void StubTechnologyContainer::completeInit( const gcamstr& aRegionName,
         // error message was printed by the global technology database.
         abort();
     }
-     
+    
     // Make the XML adjustments note that this may produce parsing errors.
+    // Note: we need to use the full parsing machinary instead of directly calling
+    // mTechnology->XMLParse in case there were TechnologyContainer parameters which
+    // need to get parsed as well.
+    
+    // The first step is to create a dummy parent node to include all of the XML adjustments
+    // as child nodes.
+    rapidxml::memory_pool<char> memoryPool;
+    rapidxml::xml_node<char>* tempParent = memoryPool.allocate_node(rapidxml::node_element, 0, 0, 0, 0);
+    // add context as attributes which produce better diagnostics if debugging XML parse issues
+    rapidxml::xml_attribute<char>* currAttr;
+    currAttr = memoryPool.allocate_attribute("region", aRegionName.get().c_str(), 6, aRegionName.get().size());
+    tempParent->append_attribute(currAttr);
+    currAttr = memoryPool.allocate_attribute("sector", aSectorName.get().c_str(), 6, aSectorName.get().size());
+    tempParent->append_attribute(currAttr);
+    currAttr = memoryPool.allocate_attribute("subsector", aSubsectorName.get().c_str(), 9, aSubsectorName.get().size());
+    tempParent->append_attribute(currAttr);
+    currAttr = memoryPool.allocate_attribute("tech", mName.get().c_str(), 4, mName.get().size());
+    tempParent->append_attribute(currAttr);
     for(rapidxml::xml_node<char>* currNode : mXMLAdjustments) {
-        mTechnology->XMLParse(currNode);
+        tempParent->append_node(currNode);
     }
+    
+    // Finally call ParseChildData to handle the XML parsing given our temp parent node
+    // and setting mTechnology as the parsing context
+    map<string, string> attrs;
+    ParseChildData parseChildHelper(tempParent, attrs);
+    parseChildHelper.setContainer(mTechnology);
+    ExpandDataVector<ITechnologyContainer::SubClassFamilyVector> getDataVector;
+    mTechnology->doDataExpansion( getDataVector );
+    getDataVector.getFullDataVector(parseChildHelper);
     
     // now that the XML adjustments are parsed no need to keep them around any longer
     // Note the XML adjustments's memory is managed by rapidxml and will get cleaned up

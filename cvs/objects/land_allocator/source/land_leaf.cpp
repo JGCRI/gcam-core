@@ -56,6 +56,7 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/market_dependency_finder.h"
 #include "functions/include/idiscrete_choice.hpp"
+#include "functions/include/function_utils.h"
 
 using namespace std;
 
@@ -277,7 +278,7 @@ void LandLeaf::setProfitRate( const gcamstr& aRegionName,
 * \param aPeriod Model period.
 */
 double LandLeaf::getCarbonSubsidy( const gcamstr& aRegionName, const int aPeriod ) const {
-    const double dollar_conversion_75_90 = 2.212;
+    const double dollar_conversion_75_90 = FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
     // Check if a carbon market exists and has a non-zero price.
     const Marketplace* marketplace = scenario->getMarketplace();
     double carbonPrice = marketplace->getPrice( "CO2_LUC", aRegionName, aPeriod, false );

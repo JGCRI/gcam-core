@@ -57,6 +57,8 @@
 #include "solution/util/include/solution_info_filter_factory.h"
 // TODO: this filter is hard coded here since it is the default, is this ok?
 #include "solution/util/include/solvable_solution_info_filter.h"
+// TODO: including this just to get default price
+#include "marketplace/include/trial_value_market.h"
 
 #include "util/base/include/timer.h"
 
@@ -340,7 +342,7 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         chg = true;
                         ++nchg;
                     }
-                    else if(abs(oldprice) < util::getSmallNumber() &&
+                    else if((abs(oldprice) < util::getSmallNumber() || oldprice == TrialValueMarket::DEFAULT_PRICE) &&
                             abs(olddmnd) > util::getSmallNumber()) {
                         // the case there the market was "off" but has now turned on
                         // in which case just reset the trial price to the actual

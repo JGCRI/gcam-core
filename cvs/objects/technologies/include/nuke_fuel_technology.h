@@ -77,8 +77,6 @@ public:
                            PreviousPeriodInfo& aPrevPeriodInfo,
                            const int aPeriod );
     
-    double getNonEnergyCost( const int aPeriod ) const;
-
 	virtual void production( const gcamstr& aRegionName,const gcamstr& aSectorName, 
 							 double aVariableDemand, double aFixedOutputScaleFactor, int aPeriod );
 

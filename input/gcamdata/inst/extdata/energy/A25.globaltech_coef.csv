@@ -9,7 +9,7 @@ H2 pipeline,H2 pipeline,H2 pipeline,elect_td_ind,,0.01729,0.01729,0.01729,0.0172
 H2 pipeline,H2 pipeline,H2 pipeline,H2 central production,,1,1,1,1
 H2 liquid truck,H2 liquid truck,H2 liquid truck,elect_td_ind,,0.2766,0.2766,0.2766,0.2105
 H2 liquid truck,H2 liquid truck,H2 liquid truck,H2 central production,,1,1,1,1
-H2 liquid truck,H2 liquid truck,H2 liquid truck,trn_freight_road,0.0004521,1327,1327,1327,1327
+H2 liquid truck,H2 liquid truck,H2 liquid truck,trn_freight_road,1,1.327,1.327,1.327,1.327
 H2 wholesale delivery,H2 pipeline,H2 pipeline,H2 pipeline,,1,1,1,1
 H2 wholesale delivery,H2 liquid truck,H2 liquid truck,H2 liquid truck,,1,1,1,1
 H2 industrial,H2 delivery,H2 delivery,H2 wholesale delivery,,1,1,1,1
