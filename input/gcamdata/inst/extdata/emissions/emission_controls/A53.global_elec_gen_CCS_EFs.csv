@@ -1,0 +1,44 @@
+# File: A53.global_elec_gen_CCS_EFs.csv
+# Title: Emission factors (EFs) for carbon capture and storage (CCS) electric generation technologies
+# Units: kt/PJ
+# Source: Derived from Cost and Performance Baseline for Fossil Energy Plants Volume 1 Bituminous Coal and Natural Gas and Electricity (NETL Report October 2022)
+# Description: Global emission factors for electric generation technologies with CCS. NSPS must start in future model periods.
+# Column types: cccccnnnnnnnnc
+# ---------
+region,supplysector,subsector,stub.technology,Non.CO2,pcGDP_start_NSPS,NSPS_start_year,NSPS_em_coeff,pcGDP_start_retrofit,retrofit_start_year,retrofit_time,retrofit_vintage,retrofit_em_coeff,Notes and sources
+All,electricity,coal,coal (conv pul CCS),SO2,NA,2025,0,NA,NA,NA,NA,NA,"SO2, Nox, and PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf"
+All,electricity,coal,coal (conv pul CCS),NOx,NA,2025,0.031384227,NA,NA,NA,NA,NA,"SO2, Nox, and PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf"
+All,electricity,coal,coal (conv pul CCS),BC,NA,2025,0.000158641,NA,NA,NA,NA,NA,"BC and OC derived from PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf using Bond et al (Table 5); hard coal, pulverized"
+All,electricity,coal,coal (conv pul CCS),OC,NA,2025,0.000189596,NA,NA,NA,NA,NA,"BC and OC derived from PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf using Bond et al (Table 5); hard coal, pulverized"
+All,electricity,coal,coal (conv pul CCS),CO,NA,2025,0.025,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,coal,coal (conv pul CCS),NMVOC,NA,2025,0.00056,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,coal,coal (IGCC CCS),SO2,NA,2025,0,NA,NA,NA,NA,NA,"SO2, Nox, and PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf"
+All,electricity,coal,coal (IGCC CCS),NOx,NA,2025,0.021066125,NA,NA,NA,NA,NA,"SO2, Nox, and PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf"
+All,electricity,coal,coal (IGCC CCS),BC,NA,2025,0.000123388,NA,NA,NA,NA,NA,"BC and OC derived from PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf using Bond et al (Table 5); hard coal, pulverized"
+All,electricity,coal,coal (IGCC CCS),OC,NA,2025,0.000147463,NA,NA,NA,NA,NA,"BC and OC derived from PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf using Bond et al (Table 5); hard coal, pulverized"
+All,electricity,coal,coal (IGCC CCS),CO,NA,2025,0.025,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,coal,coal (IGCC CCS),NMVOC,NA,2025,0.00056,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,gas,gas (CC CCS),SO2,NA,2025,0,NA,NA,NA,NA,NA,"SO2, Nox, and PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf"
+All,electricity,gas,gas (CC CCS),NOx,NA,2025,0.001289763,NA,NA,NA,NA,NA,"SO2, Nox, and PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf"
+All,electricity,gas,gas (CC CCS),BC,NA,2025,0,NA,NA,NA,NA,NA,BC and OC derived from PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf using table Bond et al (Table 5); for all natural gas
+All,electricity,gas,gas (CC CCS),OC,NA,2025,0,NA,NA,NA,NA,NA,BC and OC derived from PM from https://netl.doe.gov/projects/files/CostAndPerformanceBaselineForFossilEnergyPlantsVolume1BituminousCoalAndNaturalGasToElectricity_101422.pdf using table Bond et al (Table 5); for all natural gas
+All,electricity,gas,gas (CC CCS),CO,NA,2025,0.025,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,gas,gas (CC CCS),NMVOC,NA,2025,0.00056,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,biomass,biomass (conv CCS),SO2,NA,2025,0,NA,NA,NA,NA,NA,Biomass SO2 and NOX from https://www.osti.gov/servlets/purl/1810056
+All,electricity,biomass,biomass (conv CCS),NOx,NA,2025,0.03267399,NA,NA,NA,NA,NA,Biomass SO2 and NOX from https://www.osti.gov/servlets/purl/1810056
+All,electricity,biomass,biomass (conv CCS),BC,NA,2025,0.000159071,NA,NA,NA,NA,NA,BC and OC derived from PM using Klimont et al; Residential - biomass
+All,electricity,biomass,biomass (conv CCS),OC,NA,2025,0.001453137,NA,NA,NA,NA,NA,BC and OC derived from PM using Klimont et al; Residential - biomass
+All,electricity,biomass,biomass (conv CCS),CO,NA,2025,0.025,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,biomass,biomass (conv CCS),NMVOC,NA,2025,0.00056,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,biomass,biomass (IGCC CCS),SO2,NA,2025,0,NA,NA,NA,NA,NA,Biomass SO2 and NOX from https://www.osti.gov/biblio/1810056
+All,electricity,biomass,biomass (IGCC CCS),NOx,NA,2025,0.021931856,NA,NA,NA,NA,NA,Biomass SO2 and NOX from https://www.osti.gov/biblio/1810056
+All,electricity,biomass,biomass (IGCC CCS),BC,NA,2025,0.000123722,NA,NA,NA,NA,NA,BC and OC derived from PM using Klimont et al; Residential - biomass
+All,electricity,biomass,biomass (IGCC CCS),OC,NA,2025,0.001130218,NA,NA,NA,NA,NA,BC and OC derived from PM using Klimont et al; Residential - biomass
+All,electricity,biomass,biomass (IGCC CCS),CO,NA,2025,0.025,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,biomass,biomass (IGCC CCS),NMVOC,NA,2025,0.00056,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,refined liquids,refined liquids (CC CCS),SO2,NA,2025,0,NA,NA,NA,NA,NA,Copied from NGCC
+All,electricity,refined liquids,refined liquids (CC CCS),NOx,NA,2025,0.00129,NA,NA,NA,NA,NA,Copied from NGCC
+All,electricity,refined liquids,refined liquids (CC CCS),BC,NA,2025,0,NA,NA,NA,NA,NA,"BC and OC derived from PM from https://www.osti.gov/biblio/1810056 using Bond et al (Table 5); middle dist. oil, industry/power"
+All,electricity,refined liquids,refined liquids (CC CCS),OC,NA,2025,0,NA,NA,NA,NA,NA,"BC and OC derived from PM from https://www.osti.gov/biblio/1810056 using Bond et al (Table 5); middle dist. oil, industry/power"
+All,electricity,refined liquids,refined liquids (CC CCS),CO,NA,2025,0.025,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"
+All,electricity,refined liquids,refined liquids (CC CCS),NMVOC,NA,2025,0.00056,NA,NA,NA,NA,NA,"CO and VOC (table 6, using GREET value): https://publications.anl.gov/anlpubs/2020/09/162084.pdf"

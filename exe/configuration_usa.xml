@@ -153,7 +153,7 @@
 		<Value name = "ghg_usa">../input/gcamdata/xml/elecS_ghg_emissions_water_USA.xml</Value>
 		<Value name = "ghg_usa">../input/gcamdata/xml/trn_ghg_emissions_USA.xml</Value>
 		<Value name = "ghg_usa">../input/gcamdata/xml/ind_urb_proc_ghg_emissions_USA.xml</Value>
-	
+	    <Value name = "nonco2_em_controls_usa">../input/gcamdata/xml/emission_factor_controls_USA.xml</Value>
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
 		
 

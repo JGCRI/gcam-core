@@ -34,6 +34,8 @@ module_emissions_L253.emission_controls <- function(command, ...) {
              FILE = "emissions/emission_controls/A53.em_ctrl_param_china_industry",
              FILE = "emissions/emission_controls/A53.em_ctrl_param_intl_shipping",
              FILE = "emissions/emission_controls/A53.em_ctrl_param_dom_shipping",
+             FILE = "emissions/emission_controls/A53.global_elec_gen_CCS_EFs.csv",
+             FILE = "emissions/emission_controls/A53.USA_elec_gen_CCS_EFs_water.csv",
              user_em_control_files, # All files in user_emission_controls folder
              "L102.pcgdp_thous90USD_Scen_R_Y",
              "L201.nonghg_steepness",
@@ -173,7 +175,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
         # Otherwise, keep original region.
         # Using left_join instead of left_join_error_no_match because not all regions have meta region mapping
         em_control_data %>%
-          left_join(meta_region_map, by = c("region" = "meta_region")) %>%
+          left_join(meta_region_map, by = c("region" = "meta_region"), relationship = "many-to-many") %>%
           filter(GCAM_region %in% dist_heat_regions$region |
                    !supplysector %in% dist_heat_regions$supplysector) %>%
           mutate(region = if_else(is.na(GCAM_region), region, GCAM_region)) %>%
@@ -221,12 +223,15 @@ module_emissions_L253.emission_controls <- function(command, ...) {
                                                as.numeric(year), retrofit_start_year)) %>%
           select(-year, -GDP, -id) %>%
           drop_na(retrofit_start_year) %>%
-          distinct(region, supplysector, subsector, stub.technology, Non.CO2,
-                   linear.control, pcGDP_start_retrofit, retrofit_time,
-                   retrofit_vintage, retrofit_em_coeff, .keep_all = TRUE) -> L253.EF_retrofit
+          {
+            if("nesting.subsector" %in% names(.)) distinct(., region, supplysector, nesting.subsector, subsector,
+                                                           stub.technology, Non.CO2,linear.control, pcGDP_start_retrofit,
+                                                           retrofit_time, retrofit_vintage, retrofit_em_coeff, .keep_all = TRUE)
+            else distinct(., region, supplysector, subsector, stub.technology, Non.CO2,
+                          linear.control, pcGDP_start_retrofit, retrofit_time,
+                          retrofit_vintage, retrofit_em_coeff, .keep_all = TRUE)
+          } -> L253.EF_retrofit
 
-        # Rename to GCAM input names and calculate end year by adding retrofit time to start year
-        # If a region doesn't have retrofits (emissions coefficient of -1), remove row
         L253.EF_retrofit %>%
           rename(final.emissions.coefficient = retrofit_em_coeff,
                  start.year = retrofit_start_year) %>%
@@ -248,8 +253,13 @@ module_emissions_L253.emission_controls <- function(command, ...) {
                                           as.numeric(year), NSPS_start_year)) %>%
           select(-year, -GDP, -id) %>%
           drop_na(NSPS_start_year) %>%
-          distinct(region, supplysector, subsector, stub.technology, Non.CO2,
-                   linear.control, pcGDP_start_NSPS, NSPS_em_coeff, .keep_all = TRUE) -> L253.EF_NSPS_new_vintage
+          {
+            if("nesting.subsector" %in% names(.)) distinct(., region, supplysector, nesting.subsector, subsector,
+                                                           stub.technology, Non.CO2, linear.control, pcGDP_start_NSPS,
+                                                           NSPS_em_coeff, .keep_all = TRUE)
+            else distinct(., region, supplysector, subsector, stub.technology, Non.CO2,
+                          linear.control, pcGDP_start_NSPS, NSPS_em_coeff, .keep_all = TRUE)
+          } -> L253.EF_NSPS_new_vintage
 
         # Rename to GCAM input names and remove regions without an NSPS
         L253.EF_NSPS_new_vintage %>%
@@ -261,7 +271,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
         em_control_data %>%
           semi_join(GDP_controlled_techs,
                    by = c("region", "supplysector", "subsector", "stub.technology", "Non.CO2")) %>%
-          select(region, supplysector, subsector, stub.technology, linear.control, Non.CO2) %>%
+          select(region, supplysector, any_of(c("nesting.subsector")), subsector, stub.technology, linear.control, Non.CO2) %>%
           mutate(period = head(MODEL_YEARS, n=1),
                  gdp.control = "GDP_control") -> L253.delete_gdp_control
 
@@ -269,21 +279,34 @@ module_emissions_L253.emission_controls <- function(command, ...) {
         # distinct() keeps first occurrence, but we want to keep the last, so we reverse all rows,
         # remove duplicates, and then reverse back to original order
         L253.EF_retrofit %>% arrange(desc(row_number())) %>%
-          distinct(region, supplysector, subsector, stub.technology, Non.CO2,
-                   retrofit_vintage, linear.control, .keep_all = TRUE) %>%
+          {
+            if("nesting.subsector" %in% names(.)) distinct(., region, supplysector, nesting.subsector, subsector, stub.technology, Non.CO2,
+                                                           retrofit_vintage, linear.control, .keep_all = TRUE)
+            else distinct(., region, supplysector, subsector, stub.technology, Non.CO2,
+                          retrofit_vintage, linear.control, .keep_all = TRUE)
+          } %>%
           arrange(desc(row_number())) -> L253.EF_retrofit
 
         L253.EF_NSPS_new_vintage %>% arrange(desc(row_number())) %>%
-          distinct(region, supplysector, subsector, stub.technology, Non.CO2,
-                   linear.control, period, .keep_all = TRUE) %>%
+          {
+            if("nesting.subsector" %in% names(.)) distinct(., region, supplysector, nesting.subsector, subsector, stub.technology, Non.CO2,
+                                                           linear.control, period, .keep_all = TRUE)
+            else distinct(., region, supplysector, subsector, stub.technology, Non.CO2,
+                          linear.control, period, .keep_all = TRUE)
+          } %>%
           arrange(desc(row_number())) -> L253.EF_NSPS_new_vintage
 
         # Turn off retrofits after end year of the last retrofit for that emission/technology/region
         L253.EF_retrofit %>%
           arrange(desc(retrofit_vintage)) %>%
-          distinct(region, supplysector, subsector, stub.technology, Non.CO2,
-                   pcGDP_start_retrofit, start.year, retrofit_time, final.emissions.coefficient,
-                   linear.control, end.year, .keep_all = TRUE) %>%
+          {
+            if("nesting.subsector" %in% names(.)) distinct(., region, supplysector, nesting.subsector, subsector, stub.technology, Non.CO2,
+                                                           pcGDP_start_retrofit, start.year, retrofit_time, final.emissions.coefficient,
+                                                           linear.control, end.year, .keep_all = TRUE)
+            else distinct(., region, supplysector, subsector, stub.technology, Non.CO2,
+                          pcGDP_start_retrofit, start.year, retrofit_time, final.emissions.coefficient,
+                          linear.control, end.year, .keep_all = TRUE)
+          } %>%
           mutate(period = get_next_model_year(retrofit_vintage),
                  start.year = period,
                  end.year = tail(MODEL_FUTURE_YEARS, n=1),
@@ -301,7 +324,7 @@ module_emissions_L253.emission_controls <- function(command, ...) {
           # For techs without efficiencies, we divide by 1 (no change)
           mutate(efficiency.y = if_else(is.na(efficiency.y), 1, efficiency.y),
                  final.emissions.coefficient = if_else(is.na(efficiency.x), final.emissions.coefficient/efficiency.y,
-                                                       final.emissions.coefficient/efficiency.x)) -> L253.EF_retrofit_2
+                                                       final.emissions.coefficient/efficiency.x)) -> L253.EF_retrofit
 
         # We do the same for NSPS, but since NSPS can only be applied in future model years, we only join in future efficiency data
         L253.EF_NSPS_new_vintage %>%
@@ -313,10 +336,14 @@ module_emissions_L253.emission_controls <- function(command, ...) {
         # Select/order only the relevant columns
         # Note that although some sectors have different column names (eg tranSubsector instead of subsector in transportation)
         # the C++ won't check for name mismatches so using these column names is fine
-        L253.EF_retrofit <- select(L253.EF_retrofit, region, supplysector, subsector, stub.technology, retrofit_vintage, Non.CO2, linear.control, start.year, end.year, final.emissions.coefficient)
-        L253.EF_NSPS_new_vintage <- select(L253.EF_NSPS_new_vintage, region, supplysector, subsector, stub.technology, period, Non.CO2, emiss.coef)
-        L253.delete_gdp_control <- select(L253.delete_gdp_control, region, supplysector, subsector, stub.technology, period, Non.CO2, gdp.control)
-        L253.Retrofit_off <- select(L253.Retrofit_off, region, supplysector, subsector, stub.technology, period, Non.CO2, linear.control, start.year, end.year, disable.em.control)
+        L253.EF_retrofit <- select(L253.EF_retrofit, region, supplysector, any_of(c("nesting.subsector")), subsector, stub.technology,
+                                   retrofit_vintage, Non.CO2, linear.control, start.year, end.year, final.emissions.coefficient)
+        L253.EF_NSPS_new_vintage <- select(L253.EF_NSPS_new_vintage, region, supplysector, any_of(c("nesting.subsector")),
+                                           subsector, stub.technology, period, Non.CO2, emiss.coef)
+        L253.delete_gdp_control <- select(L253.delete_gdp_control, region, supplysector, any_of(c("nesting.subsector")),
+                                          subsector, stub.technology, period, Non.CO2, gdp.control)
+        L253.Retrofit_off <- select(L253.Retrofit_off, region, supplysector, any_of(c("nesting.subsector")),
+                                    subsector, stub.technology, period, Non.CO2, linear.control, start.year, end.year, disable.em.control)
 
         # Separate out US State emission controls
         L253.EF_retrofit_USA <- filter(L253.EF_retrofit, region %in% states_subregions$state)
