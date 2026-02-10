@@ -1,0 +1,30 @@
+# File: IEA_cement_elec_kwht_update.csv
+# Title: IEA cement electricity intensity
+# Units: kwh per tonne of cement
+# Source: "IEA (2021), Electricity use per tonne of cement in selected countries and regions, 2018, IEA, Paris https://www.iea.org/data-and-statistics/charts/electricity-use-per-tonne-of-cement-in-selected-countries-and-regions-2018, Licence: CC BY 4.0"
+# Comments: this gets merged with another data set for histroical cement electricity use
+# Column types: ciiii
+# ----------
+Country,2018
+Brazil,108
+Canada,139
+China,80
+France,119
+Germany,111
+India,72
+Italy,122
+Japan,106
+United Kingdom,116
+United States,133
+EU - 28,116
+Africa,103
+Asia,95
+Brazil,108
+Central America,106
+Korea,103
+CIS,119
+Europe,116
+India,72
+Middle East,103
+North America,134
+South America,99

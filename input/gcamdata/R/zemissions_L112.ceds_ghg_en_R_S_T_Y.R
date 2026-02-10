@@ -321,6 +321,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       select(iso,UCD_sector,year,value,GCAM_region_ID) %>%
       distinct() %>%
       repeat_add_columns(tibble(Non.co2 = unique(GAINS_sector$Non.co2))) %>%
+      # there will be NAs in left_join
       left_join(GAINS_sector %>% gather("UCD_sector","em_fact","Freight":"Passenger"),by=c("iso","year","Non.co2","UCD_sector")) %>%
       na.omit() %>%
       filter(UCD_sector != "Motorcycle") %>%
@@ -361,14 +362,14 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       select(GCAM_region_ID,year,Non.co2,emissions) %>%
       distinct() %>%
       #Join in sector weights
-      left_join(GAINS_sector_weights, by=c("GCAM_region_ID","year","Non.co2")) %>%
+      left_join(GAINS_sector_weights, by=c("GCAM_region_ID","year","Non.co2")) %>% #there will be NAs
       na.omit() %>%
       #First split emissions into Passenger and Freight %>%
       group_by(GCAM_region_ID,year,Non.co2) %>%
       mutate(sum_sector_weight=sum(sector_weight)) %>%
       ungroup() %>%
       mutate(emissions=(emissions*sector_weight)/sum_sector_weight) %>%
-      left_join(GAINS_mode_weights, by=c("GCAM_region_ID","year","Non.co2","UCD_sector")) %>%
+      left_join(GAINS_mode_weights, by=c("GCAM_region_ID","year","Non.co2","UCD_sector")) %>% #there will be NAs
       na.omit() %>%
       #Now do mode weight calculation
       group_by(GCAM_region_ID,year,Non.co2,UCD_sector) %>%
@@ -415,7 +416,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       select(iso,mode,year,value,GCAM_region_ID,UCD_sector,fuel,size.class) %>%
       distinct() %>%
       repeat_add_columns(tibble(Non.co2 = unique(GAINS_fuel_NG$Non.co2))) %>%
-      left_join(GAINS_fuel_NG , by=c("Non.co2","iso","year")) %>%
+      left_join(GAINS_fuel_NG , by=c("Non.co2","iso","year")) %>% #there will be NAs
       na.omit() %>%
       rename(em=natural_gas) %>%
       #Now calculate mode wights here
@@ -620,9 +621,11 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       L112.in_EJ_R_en_S_F_Yh_calibtech
 
     # Splits energy balances out for building sector and maps to final GCAM sectors
-    L101.in_EJ_R_en_Si_F_Yh %>%
-      left_join(calibrated_techs_bld_det %>% select(sector, fuel, service, supplysector, subsector, technology) %>% rename(stub.technology = technology), by = c("sector" = "service", "fuel")) %>%
-      na.omit() %>%
+    L101.in_EJ_R_en_Si_F_Yh %>% filter(grepl("resid",sector)) %>%
+      bind_rows(L101.in_EJ_R_en_Si_F_Yh %>% filter(grepl("comm",sector)) ) %>%
+      left_join_error_no_match(calibrated_techs_bld_det %>%
+                  select(sector, fuel, service, supplysector, subsector, technology) %>%
+                  rename(stub.technology = technology), by = c("sector" = "service", "fuel")) %>%
       select(GCAM_region_ID, year, energy, supplysector, subsector, stub.technology) ->
       L112.in_EJ_R_en_S_F_Yh_calib_bld
 

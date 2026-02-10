@@ -1,0 +1,11 @@
+﻿# File: IEA_cement_thermal_energy_GJt_clinker_global_trend.csv
+# Title: IEA cement thermal energy per clinker global trend
+# Units: GJ/t clinker
+# Source: "IEA (2023), Global thermal energy intensity of clinker production by fuel in the Net Zero Scenario, 2010-2030, IEA, Paris https://www.iea.org/data-and-statistics/charts/global-thermal-energy-intensity-of-clinker-production-by-fuel-in-the-net-zero-scenario-2010-2030, Licence: CC BY 4.0"
+# Column types: ccnnn
+# ----------
+iso,fuel,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021,2022
+global,fossil fuel,3.39,3.35,3.31,3.28,3.27,3.26,3.28,3.25,3.26,3.25,3.25,3.23,3.22
+global,non renewable waste,0.11,0.11,0.12,0.11,0.11,0.11,0.12,0.13,0.14,0.13,0.14,0.15,0.15
+global,commercial heat,0.03,0.03,0.02,0.02,0.03,0.03,0.02,0.02,0.02,0.03,0.03,0.03,0.03
+global,bioenergy,0.08,0.09,0.1,0.12,0.12,0.12,0.12,0.12,0.13,0.13,0.13,0.14,0.15

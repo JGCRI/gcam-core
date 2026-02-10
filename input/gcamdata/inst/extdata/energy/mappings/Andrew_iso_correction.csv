@@ -1,0 +1,16 @@
+﻿# File: Andrew_iso_correction.csv
+# Title: Andrew Cement iso correction
+# Units: NA
+# Description: Corrects iso codes for a handful of countries in the Andrew Cement data sets
+# Column types: cc
+# ----------
+iso,iso_correction
+sun,rus
+dew,deu
+csk,cze
+ddr,deu
+"yem (887)",yem
+"sdn (729)",sdn
+"sdn (736)",sdn
+ryukyu islands,jpn
+ksv,xkx

@@ -66,6 +66,7 @@ module_gcamusa_L271.nonghg_trn <- function(command, ...) {
     # Pollutant emissions for transportation technologies in all U.S. states
     # 1.1 LDV emission coefficients
     # ===================================================
+
     L254.StubTranTech_USA_LDV <- L254.StubTranTech_USA %>%
       filter( supplysector %in% gcamusa.LDV_SUPPLYSECTORS ) %>%
       # this has to be a left join b/c of MARKAL to UCD mapping issues (explained below)

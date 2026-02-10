@@ -520,6 +520,7 @@ energy.FSU_NAME <- "Former Soviet Union (if no detail)"
 energy.FORMER_YUG_NAME <- "Former Yugoslavia (if no detail)"
 
 # Time
+energy.ANDREW_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2024]
 energy.CDIAC_CO2_HISTORICAL_YEARS <- HISTORICAL_YEARS[HISTORICAL_YEARS < 2010] # At present the CO2 emissions inventory from CDIAC stops at 2009
 energy.CLIMATE_NORMAL_YEARS       <- 1981:2000
 energy.SATIATION_YEAR             <- MODEL_FINAL_BASE_YEAR # Needs to be the last model base year to avoid the risk of the model crashing

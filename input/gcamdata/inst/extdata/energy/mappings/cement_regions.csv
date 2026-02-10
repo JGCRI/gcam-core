@@ -1,222 +1,255 @@
 # File: cement_regions.csv
 # Title: Region Mappings for Cement Databases
 # Units: N/A
-# Description: Mapping between iso codes and regions in various cement databases
-# Column types: cccc 
+# Description: Mapping between iso codes and IEA energy intensity region
+# Column types: cccc
 # ----------
-iso,Worrell_region,IEA_fuelshare_region,IEA_intensity_region
-abw,Rest-of-Latin-America,Latin America,Average
-afg,Rest-of-other-Asia,Southeast Asia,Average
-ago,Rest-of-Africa,Africa,Average
-aia,Rest-of-Latin-America,Latin America,Average
-alb,Rest-of-EE/FSU,Europe,Average
-and,Rest-of-Europe,Europe,Average
-ant,Rest-of-Latin-America,Latin America,Average
-are,Rest-of-Middle-East,Middle East,Average
-arg,Argentina,Latin America,Average
-arm,Rest-of-EE/FSU,Former Soviet Union,Average
-atg,Rest-of-Latin-America,Latin America,Average
-aus,Rest-of-OECD-Pacific,Australia and New Zealand,Average
-aut,Rest-of-Europe,Europe,Average
-aze,Rest-of-EE/FSU,Former Soviet Union,Average
-bdi,Rest-of-Africa,Africa,Average
-bel,Rest-of-Europe,Europe,Average
-ben,Rest-of-Africa,Africa,Average
-bfa,Rest-of-Africa,Africa,Average
-bgd,Rest-of-other-Asia,Southeast Asia,Average
-bgr,Rest-of-EE/FSU,Europe,Average
-bhr,Rest-of-Middle-East,Middle East,Average
-bhs,Rest-of-Latin-America,Latin America,Average
-bih,Rest-of-EE/FSU,Europe,Average
-blr,Rest-of-EE/FSU,Former Soviet Union,Average
-blz,Rest-of-Latin-America,Latin America,Average
-bmu,Rest-of-Europe,Europe,Average
-bol,Rest-of-Latin-America,Latin America,Average
-bra,Brazil,Brazil,Brazil
-brb,Rest-of-Latin-America,Latin America,Average
-brn,Rest-of-other-Asia,Southeast Asia,Average
-btn,Rest-of-other-Asia,Southeast Asia,Average
-bwa,Rest-of-Africa,Africa,Average
-caf,Rest-of-Africa,Africa,Average
-can,Canada,Canada,Canada
-che,Rest-of-Europe,Europe,Average
-chl,Rest-of-Latin-America,Latin America,Average
-chn,China,China,China
-civ,Rest-of-Africa,Africa,Average
-cmr,Rest-of-Africa,Africa,Average
-cod,Rest-of-Africa,Africa,Average
-cog,Rest-of-Africa,Africa,Average
-cok,Rest-of-OECD-Pacific,Southeast Asia,Average
-col,Colombia,Latin America,Average
-com,Rest-of-Africa,Africa,Average
-cpv,Rest-of-Africa,Africa,Average
-cri,Rest-of-Latin-America,Latin America,Average
-cub,Rest-of-Latin-America,Latin America,Average
-cym,Rest-of-Latin-America,Latin America,Average
-cyp,Rest-of-Europe,Europe,Average
-cxr,Rest-of-other-Asia,Southeast Asia,Average
-cze,Rest-of-EE/FSU,Europe,Average
-deu,Germany,Europe,Germany
-dji,Rest-of-Africa,Africa,Average
-dma,Rest-of-Latin-America,Latin America,Average
-dnk,Rest-of-Europe,Europe,Average
-dom,Rest-of-Latin-America,Latin America,Average
-dza,Rest-of-Africa,Africa,Average
-ecu,Rest-of-Latin-America,Latin America,Average
-egy,Egypt,Africa,Average
-eri,Rest-of-Africa,Africa,Average
-esh,Rest-of-Africa,Africa,Average
-esp,Spain,Europe,Spain
-est,Rest-of-EE/FSU,Former Soviet Union,Average
-eth,Rest-of-Africa,Africa,Average
-fin,Rest-of-Europe,Europe,Average
-fji,Rest-of-other-Asia,Southeast Asia,Average
-flk,Rest-of-Latin-America,Latin America,Average
-fra,France,Europe,Average
-fro,Rest-of-Europe,Europe,Average
-fsm,Rest-of-other-Asia,Southeast Asia,Average
-gab,Rest-of-Africa,Africa,Average
-gbr,Rest-of-Europe,Europe,Average
-geo,Rest-of-EE/FSU,Former Soviet Union,Average
-gha,Rest-of-Africa,Africa,Average
-gib,Rest-of-Europe,Europe,Average
-gin,Rest-of-Africa,Africa,Average
-glp,Rest-of-Latin-America,Latin America,Average
-gmb,Rest-of-Africa,Africa,Average
-gnb,Rest-of-Africa,Africa,Average
-gnq,Rest-of-Africa,Africa,Average
-grc,Rest-of-Europe,Europe,Average
-grd,Rest-of-Latin-America,Latin America,Average
-grl,Rest-of-Europe,Europe,Average
-gtm,Rest-of-Latin-America,Latin America,Average
-guf,Rest-of-Latin-America,Latin America,Average
-guy,Rest-of-Latin-America,Latin America,Average
-hkg,China,China,China
-hnd,Rest-of-Latin-America,Latin America,Average
-hrv,Rest-of-EE/FSU,Europe,Average
-hti,Rest-of-Latin-America,Latin America,Average
-hun,Rest-of-EE/FSU,Europe,Average
-idn,Indonesia,Southeast Asia,Average
-ind,India,India,India
-irl,Rest-of-Europe,Europe,Average
-irn,Iran,Middle East,Average
-irq,Rest-of-Middle-East,Middle East,Average
-isl,Rest-of-Europe,Europe,Average
-isr,Rest-of-Middle-East,Middle East,Average
-ita,Italy,Europe,Italy
-jam,Rest-of-Latin-America,Latin America,Average
-jor,Rest-of-Middle-East,Middle East,Average
-jpn,Japan,Japan,Japan
-kaz,Rest-of-EE/FSU,Former Soviet Union,Average
-ken,Rest-of-Africa,Africa,Average
-kgz,Rest-of-EE/FSU,Former Soviet Union,Average
-khm,Rest-of-other-Asia,Southeast Asia,Average
-kir,Rest-of-other-Asia,Southeast Asia,Average
-kna,Rest-of-Latin-America,Latin America,Average
-kor,Korea,South Korea,Korea
-kwt,Rest-of-Middle-East,Middle East,Average
-lao,Rest-of-other-Asia,Southeast Asia,Average
-lbn,Rest-of-Middle-East,Middle East,Average
-lbr,Rest-of-Africa,Africa,Average
-lby,Rest-of-Africa,Africa,Average
-lca,Rest-of-Latin-America,Latin America,Average
-lka,Rest-of-other-Asia,Southeast Asia,Average
-ltu,Rest-of-EE/FSU,Former Soviet Union,Average
-lux,Rest-of-Europe,Europe,Average
-lva,Rest-of-EE/FSU,Former Soviet Union,Average
-mac,China,China,Average
-mar,Morocco,Africa,Average
-mda,Rest-of-EE/FSU,Former Soviet Union,Average
-mdg,Rest-of-Africa,Africa,Average
-mdv,Rest-of-other-Asia,Southeast Asia,Average
-mex,Mexico,Latin America,Mexico
-mhl,Rest-of-other-Asia,Southeast Asia,Average
-mkd,Rest-of-EE/FSU,Europe,Average
-mli,Rest-of-Africa,Africa,Average
-mlt,Rest-of-Europe,Europe,Average
-mmr,Rest-of-other-Asia,Southeast Asia,Average
-mng,Rest-of-other-Asia,Southeast Asia,Average
-moz,Rest-of-Africa,Africa,Average
-mrt,Rest-of-Africa,Africa,Average
-msr,Rest-of-Latin-America,Latin America,Average
-mtq,Rest-of-Europe,Europe,Average
-mus,Rest-of-Africa,Africa,Average
-mwi,Rest-of-Africa,Africa,Average
-mys,Rest-of-other-Asia,Southeast Asia,Average
-nam,Rest-of-Africa,Africa,Average
-ncl,Rest-of-other-Asia,Southeast Asia,Average
-ner,Rest-of-Africa,Africa,Average
-nga,Rest-of-Africa,Africa,Average
-nic,Rest-of-Latin-America,Latin America,Average
-niu,Rest-of-OECD-Pacific,Southeast Asia,Average
-nld,Rest-of-Europe,Europe,Average
-nor,Rest-of-Europe,Europe,Average
-npl,Rest-of-other-Asia,Southeast Asia,Average
-nru,Rest-of-other-Asia,Southeast Asia,Average
-nzl,Rest-of-OECD-Pacific,Australia and New Zealand,Average
-omn,Rest-of-Middle-East,Middle East,Average
-pak,Rest-of-other-Asia,Southeast Asia,Average
-pan,Rest-of-Latin-America,Latin America,Average
-per,Rest-of-Latin-America,Latin America,Average
-phl,Rest-of-other-Asia,Southeast Asia,Average
-plw,Rest-of-other-Asia,Southeast Asia,Average
-png,Rest-of-other-Asia,Southeast Asia,Average
-pol,Poland,Europe,Average
-prk,Rest-of-other-Asia,Southeast Asia,Average
-prt,Rest-of-Europe,Europe,Average
-pry,Rest-of-Latin-America,Latin America,Average
-pse,Rest-of-Middle-East,Middle East,Average
-pyf,Rest-of-other-Asia,Southeast Asia,Average
-qat,Rest-of-Middle-East,Middle East,Average
-reu,Rest-of-Africa,Africa,Average
-rom,Rest-of-EE/FSU,Europe,Average
-rus,Russia,Former Soviet Union,Average
-rwa,Rest-of-Africa,Africa,Average
-sau,Saudi Arabia,Middle East,Average
-scg,Rest-of-EE/FSU,Europe,Average
-sdn,Rest-of-Africa,Africa,Average
-sen,Rest-of-Africa,Africa,Average
-sgp,Rest-of-other-Asia,Southeast Asia,Average
-shn,Rest-of-Africa,Africa,Average
-slb,Rest-of-other-Asia,Southeast Asia,Average
-sle,Rest-of-Africa,Africa,Average
-slv,Rest-of-Latin-America,Latin America,Average
-som,Rest-of-Africa,Africa,Average
-spm,Canada,Canada,Average
-stp,Rest-of-Africa,Africa,Average
-sur,Rest-of-Latin-America,Latin America,Average
-svk,Rest-of-EE/FSU,Europe,Average
-svn,Rest-of-EE/FSU,Europe,Average
-swe,Rest-of-Europe,Europe,Average
-swz,Rest-of-Africa,Africa,Average
-syc,Rest-of-Africa,Africa,Average
-syr,Rest-of-Middle-East,Middle East,Average
-tca,Rest-of-Latin-America,Latin America,Average
-tcd,Rest-of-Africa,Africa,Average
-tgo,Rest-of-Africa,Africa,Average
-tha,Thailand,Thailand,Average
-tjk,Rest-of-EE/FSU,Former Soviet Union,Average
-tkm,Rest-of-EE/FSU,Former Soviet Union,Average
-tls,Rest-of-other-Asia,Southeast Asia,Average
-ton,Rest-of-other-Asia,Southeast Asia,Average
-tto,Rest-of-Latin-America,Latin America,Average
-tun,Rest-of-Africa,Africa,Average
-tur,Turkey,Europe,Average
-twn,Taiwan,China,China
-tza,Rest-of-Africa,Africa,Average
-uga,Rest-of-Africa,Africa,Average
-ukr,Ukraine,Former Soviet Union,Average
-ury,Rest-of-Latin-America,Latin America,Average
-usa,USA,United States,United States
-uzb,Rest-of-EE/FSU,Former Soviet Union,Average
-vct,Rest-of-Latin-America,Latin America,Average
-ven,Venezuela,Latin America,Average
-vgb,Rest-of-Latin-America,Latin America,Average
-vnm,Rest-of-other-Asia,Southeast Asia,Average
-vut,Rest-of-other-Asia,Southeast Asia,Average
-wlf,Rest-of-OECD-Pacific,Southeast Asia,Average
-wsm,Rest-of-other-Asia,Southeast Asia,Average
-yem,Rest-of-Middle-East,Middle East,Average
-zaf,South Africa,Africa,Average
-zmb,Rest-of-Africa,Africa,Average
-zwe,Rest-of-Africa,Africa,Average
+iso,IEA_intensity_region,IEA_TPE_intensity_region
+abw,South America,Average
+afg,Asia,Average
+ago,Africa,Average
+aia,South America,Average
+alb,Europe,Average
+and,Europe,Average
+ant,South America,Average
+are,Middle East,Average
+arg,South America,Average
+arm,CIS,Average
+asm,Asia,Average
+atg,Central America,Average
+aus,Asia,Average
+aut,EU - 28,Average
+aze,CIS,Average
+bdi,Africa,Average
+bel,EU - 28,Average
+ben,Africa,Average
+bes,South America,Average
+bfa,Africa,Average
+bgd,Asia,Average
+bgr,Europe,Average
+bhr,Middle East,Average
+bhs,South America,Average
+bih,Europe,Average
+blm,South America,Average
+blr,CIS,Average
+blz,Central America,Average
+bmu,Europe,Average
+bol,Central America,Average
+bra,Brazil,Brazil
+brb,South America,Average
+brn,Asia,Average
+btn,Asia,Average
+bwa,Africa,Average
+caf,Africa,Average
+can,Canada,Canada
+cck,Asia,Average
+che,EU - 28,Average
+chi,Europe,Average
+chl,South America,Average
+chn,China,Average
+civ,Africa,Average
+cmr,Africa,Average
+cod,Africa,Average
+cog,Africa,Average
+cok,Asia,Average
+col,South America,Average
+com,Africa,Average
+cpv,Africa,Average
+cri,Central America,Average
+cub,Central America,Average
+cuw,South America,Average
+cym,South America,Average
+cyp,Europe,Average
+cxr,Asia,Average
+cze,Europe,Average
+deu,Germany,Germany
+dji,Africa,Average
+dma,Central America,Average
+dnk,Europe,Average
+dom,South America,Average
+dza,Africa,Average
+ecu,South America,Average
+egy,Africa,Average
+eri,Africa,Average
+esh,Africa,Average
+esp,Europe,Spain
+est,CIS,Average
+eth,Africa,Average
+fin,Europe,Average
+fji,Asia,Average
+flk,South America,Average
+fra,EU - 28,Average
+fro,Europe,Average
+fsm,Asia,Average
+gab,Africa,Average
+gbr,EU - 28,Average
+geo,CIS,Average
+ggy,Europe,Average
+gha,Africa,Average
+gib,Europe,Average
+gin,Africa,Average
+glp,South America,Average
+gmb,Africa,Average
+gnb,Africa,Average
+gnq,Africa,Average
+grc,EU - 28,Average
+grd,Central America,Average
+grl,Europe,Average
+gtm,Central America,Average
+guf,South America,Average
+gum,Asia,Average
+guy,South America,Average
+hkg,Asia,Average
+hnd,Central America,Average
+hrv,EU - 28,Average
+hti,Central America,Average
+hun,EU - 28,Average
+idn,Asia,Average
+imn,Europe,Average
+ind,India,India
+irl,EU - 28,Average
+irn,Middle East,Average
+irq,Middle East,Average
+isl,Europe,Average
+isr,Middle East,Average
+ita,Italy,Italy
+jam,Central America,Average
+jey,Europe,Average
+jor,Middle East,Average
+jpn,Japan,Japan
+kaz,CIS,Average
+ken,Africa,Average
+kgz,CIS,Average
+khm,Asia,Average
+kir,Asia,Average
+kna,Central America,Average
+kor,Korea,Korea
+kwt,Middle East,Average
+lao,Asia,Average
+lbn,Middle East,Average
+lbr,Africa,Average
+lby,Africa,Average
+lca,Central America,Average
+lie,Europe,Average
+lka,Asia,Average
+lso,Africa,Average
+ltu,CIS,Average
+lux,EU - 28,Average
+lva,CIS,Average
+mac,Asia,Average
+maf,Central America,Average
+mar,Africa,Average
+mco,Europe,Average
+mda,CIS,Average
+mdg,Africa,Average
+mdv,Asia,Average
+mex,North America,Mexico
+mhl,Asia,Average
+mkd,Europe,Average
+mli,Africa,Average
+mlt,EU - 28,Average
+mmr,Asia,Average
+mne,Europe,Average
+mng,Asia,Average
+mnp,Asia,Average
+moz,Africa,Average
+mrt,Africa,Average
+msr,South America,Average
+mtq,Europe,Average
+mus,Africa,Average
+mwi,Africa,Average
+mys,Asia,Average
+myt,Africa,Average
+nam,Africa,Average
+ncl,Asia,Average
+ner,Africa,Average
+nfk,Asia,Average
+nga,Africa,Average
+nic,Central America,Average
+niu,Asia,Average
+nld,EU - 28,Average
+nor,EU - 28,Average
+npl,Asia,Average
+nru,Asia,Average
+nzl,Asia,Average
+omn,Middle East,Average
+pak,Asia,Average
+pan,Central America,Average
+pci,Asia,Average
+pcn,Asia,Average
+per,South America,Average
+phl,Asia,Average
+plw,Asia,Average
+png,Asia,Average
+pol,EU - 28,Average
+pri,United States,United States
+prk,Asia,Average
+prt,EU - 28,Average
+pry,South America,Average
+pse,Middle East,Average
+pyf,Asia,Average
+qat,Middle East,Average
+reu,Africa,Average
+rom,EU - 28,Average
+rou,EU - 28,Average
+rus,CIS,Average
+rwa,Africa,Average
+sau,Middle East,Average
+scg,Europe,Average
+sdn,Africa,Average
+sen,Africa,Average
+sgp,Asia,Average
+shn,Africa,Average
+sjm,Europe,Average
+slb,Asia,Average
+sle,Africa,Average
+slv,Central America,Average
+smr,Europe,Average
+som,Africa,Average
+spm,Asia,Average
+srb,Europe,Average
+ssd,Africa,Average
+stp,Africa,Average
+sur,Central America,Average
+svk,Europe,Average
+svn,Europe,Average
+swe,EU - 28,Average
+swz,Africa,Average
+sxm,Central America,Average
+syc,Africa,Average
+syr,Middle East,Average
+tca,Central America,Average
+tcd,Africa,Average
+tgo,Africa,Average
+tha,Asia,Average
+tjk,CIS,Average
+tkl,Asia,Average
+tkm,CIS,Average
+tls,Asia,Average
+ton,Asia,Average
+tto,Central America,Average
+tun,Africa,Average
+tur,Europe,Average
+tuv,Asia,Average
+twn,Asia,Average
+tza,Africa,Average
+uga,Africa,Average
+ukr,CIS,Average
+ury,South America,Average
+usa,United States,Average
+uzb,CIS,Average
+vat,Europe,Average
+vct,Central America,Average
+ven,South America,Average
+vgb,Central America,Average
+vir,Central America,Average
+vnm,Asia,Asia
+vut,Asia,Average
+wlf,Asia,Average
+wsm,Asia,Average
+xkx,Europe,Average
+yem,Middle East,Average
+yug,Europe,Average
+zaf,Africa,Average
+zmb,Africa,Average
+zwe,Africa,Average
