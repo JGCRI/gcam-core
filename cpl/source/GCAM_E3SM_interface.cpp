@@ -407,8 +407,9 @@ void GCAM_E3SM_interface::initGCAM(int *yyyymmdd, std::string aCaseName, std::st
 void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcamoemiss,
                                    std::string aBaseLucGcamFileName, std::string aBaseCO2GcamFileName, bool aSpinup,
                                    double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                                   int *aNumLon, int *aNumLat, int *aNumPFT, std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
-                                   bool aWriteScalars, bool aScaleAgYield, bool aScaleCarbon,
+                                   int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod,
+                                   std::string aMappingFile, int *aFirstCoupledYear, bool aReadScalars,
+				   bool aWriteScalars, bool aScaleAgYield, bool aScaleCarbon,
                                    std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName, bool aRestartRun )
 {
     int z, p, i, num_it, spinup;
@@ -420,7 +421,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 
     // Get year only of the current date
     const Modeltime* modeltime = runner->getInternalScenario()->getModeltime();
-    // Note that GCAM runs one period ahead of E3SM. We make that adjustment here
+    // Note that GCAM runs to get values up to 5 years ahead of E3SM
     int e3smYear = *yyyymmdd/10000;
     // If the e3smYear is not a GCAM model year, then GCAM does not run;
     //    the existing data are interpolated to the E3SM year 
@@ -433,8 +434,6 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     int gcamYear = modeltime->getper_to_yr( gcamPeriod );
     // get the case name
     case_name = runner->getInternalScenario()->getName();
-
-    int gcamYear = modeltime->getper_to_yr( gcamPeriod );
 
     ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
     coupleLog.setLevel( ILogger::NOTICE );
@@ -556,7 +555,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             coupleLog << mGcamCO2EmissPreviousGCAMYear[0] << endl;
             coupleLog << mGcamCO2EmissPreviousGCAMYear[1] << endl;
             coupleLog << mGcamCO2EmissPreviousGCAMYear[2] << endl;
-        //coupleLog << mCO2EmissData << endl;
+            //coupleLog << mCO2EmissData << endl;
         
             // Initialize the timer.  Create an object of the Timer class.
             timer.start();
@@ -568,7 +567,6 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
             timer.stop();
         
             coupleLog << "Getting CO2 Emissions" << endl;
-            //double *co2 = mCO2EmissData.getData();
             // be sure to reset any data set previously
             fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
             GetDataHelper getCo2("world/region[+NamedFilter,MatchesAny]/sector[+NamedFilter,MatchesAny]//ghg[NamedFilter,StringEquals,CO2]/emissions[+YearFilter,IntEquals,"+util::toString(gcamYear)+"]", mCO2EmissData);
@@ -688,7 +686,7 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
 
         } // end for z loop for spinup option
 
-    } // end if valid year
+    } // end if GCAM run year 
 
     fill(co2, co2+mCO2EmissData.getArrayLength(), 0.0);
     // interpolate the year to current e3sm year
@@ -953,7 +951,7 @@ void GCAM_E3SM_interface::downscaleEmissionsGCAM(double *gcamoemiss,
     double gcamoemiss_air[*aNumReg];
     double gcamoemiss_ship[*aNumReg];
 
-    // separate gcamoemiss into surface and aircraft sector vectors
+    // separate gcamoemiss into surface and aircraft and shipping sector vectors
     row = 0;
     for( r=0; r<(*aNumReg); r++ ) {
         for( s=0; s<(*aNumSector); s++) {

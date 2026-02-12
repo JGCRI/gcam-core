@@ -39,36 +39,12 @@ extern "C" {
                     aELMArea, aNumLon, aNumLat, aNumReg, aNumSector, restartRun);
   }
 
-// todo: delete setdensitycgcam
-
-  // Set Carbon Densities in GCAM using scalers from E3SM
-//  void setdensitycgcam_(int *yyyymmdd, double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-//                          int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
-//                          int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile) {
-      
-      // Convert to string - fortran doesn't handle string
-//      std::string MappingFile(aMappingFile);
-//      std::string baseNPPFile(aBaseNPPFile);
-//      std::string baseHRFile(aBaseHRFile);
-//      std::string basePFTwtFile(aBasePFTwtFile);
-      
-      // Convert to bool - fortran doesn't have a bool
-//      bool readScalars = *aReadScalars == 1 ? true : false;
-//      bool writeScalars = *aWriteScalars == 1 ? true : false;
-//      bool scaleCarbon = *aScaleCarbon == 1 ? true : false;     
- 
-//      p_obj->setDensityGCAM(yyyymmdd, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
-//                            aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
-//                            scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile);
-//  }
-/// end delete
-
-    
   // Run GCAM
   void runcgcam_(int *yyyymmdd, double *gcamoluc, double *gcamoemiss, char* aBaseLucGcamFileName, char* aBaseCO2GcamFileName, int *aSpinup,
                  double *aELMArea, double *aELMPFTFract, double *aELMNPP, double *aELMHR,
-                 int *aNumLon, int *aNumLat, int *aNumPFT, char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
-                 int *aScaleAgYield, int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile, int *aRestartRun) {
+                 int *aNumLon, int *aNumLat, int *aNumPFT, int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod,
+                 char* aMappingFile, int *aFirstCoupledYear, int *aReadScalars, int *aWriteScalars,
+		 int *aScaleAgYield, int *aScaleCarbon, char* aBaseNPPFile, char* aBaseHRFile, char* aBasePFTwtFile, int *aRestartRun) {
   
       // convert to strings and bools where appropriate
       std::string BaseLucGcamFileName(aBaseLucGcamFileName);
@@ -86,8 +62,9 @@ extern "C" {
   
       p_obj->runGCAM(yyyymmdd, gcamoluc, gcamoemiss, BaseLucGcamFileName, BaseCO2GcamFileName, Spinup,
                      aELMArea, aELMPFTFract, aELMNPP, aELMHR,
-                     aNumLon, aNumLat, aNumPFT, MappingFile, aFirstCoupledYear, readScalars, writeScalars,
-                     scaleAgYield, scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile, restartRun);
+                     aNumLon, aNumLat, aNumPFT, aNumReg, aNumCty, aNumSector, aNumPeriod,
+                     MappingFile, aFirstCoupledYear, readScalars, writeScalars,
+		     scaleAgYield, scaleCarbon, baseNPPFile, baseHRFile, basePFTwtFile, restartRun);
   }
 
   // Downscale Emissions
@@ -104,9 +81,9 @@ extern "C" {
                               char *aRegionMappingFile, char *aCountryMappingFile,char *aCountry2RegionMappingFile,
                               char *aPOPIIASAFileName, char *aGDPIIASAFileName,
                               char *aPOPGCAMFileName, char *aGDPGCAMFileName, char *aCO2GCAMFileName,
-                              int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, int *aNumLon, int *aNumLat, int *aWriteCO2, int *aCurrYear,
-                              char *aCO2DownscalingMethod) {
-      
+                              int *aNumReg, int *aNumCty, int *aNumSector, int *aNumPeriod, int *aNumLon, int *aNumLat,
+                              int *aWriteCO2, int *aCurrYear, char *aCO2DownscalingMethod) {
+
       // Convert to string - fortran doesn't handle string
       //std::string BaseCO2SfcFile(aBaseCO2SfcFile);
       //std::string BaseCO2ShipFile(aBaseCO2ShipFile);
@@ -138,7 +115,8 @@ extern "C" {
                                   RegionMappingFile, CountryMappingFile, Country2RegionMappingFile,
                                   POPIIASAFileName,GDPIIASAFileName,
                                   POPGCAMFileName,GDPGCAMFileName,CO2GCAMFileName,
-                                  aNumReg, aNumCty, aNumSector, aNumPeriod, aNumLon, aNumLat, writeCO2, aCurrYear, CO2DownscalingMethod);
+		                  aNumReg, aNumCty, aNumSector, aNumPeriod, aNumLon, aNumLat,
+                                  writeCO2, aCurrYear, CO2DownscalingMethod);
 }
 
     
