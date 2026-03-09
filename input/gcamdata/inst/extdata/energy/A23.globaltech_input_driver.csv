@@ -18,7 +18,8 @@ electricity,gas,gas (CC),wholesale gas
 electricity,gas,gas (steam/CT),wholesale gas
 electricity,geothermal,geothermal,geothermal
 electricity,nuclear,Gen_II_LWR,nuclearFuelGenII
-electricity,nuclear,Gen_III,nuclearFuelGenIII
+electricity,nuclear,large reactor,nuclearFuelGenIII
+electricity,nuclear,SMR,nuclearFuelGenIII
 electricity,refined liquids,refined liquids (CC CCS),refined liquids industrial
 electricity,refined liquids,refined liquids (CC),refined liquids industrial
 electricity,refined liquids,refined liquids (steam/CT),refined liquids industrial

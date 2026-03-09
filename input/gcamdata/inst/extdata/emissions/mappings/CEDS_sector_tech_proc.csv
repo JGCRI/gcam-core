@@ -112,10 +112,10 @@ industrial processes,foams,foams,industrial processes,foams,foams,,,foams,all,al
 industrial processes,nitric acid,nitric acid,industrial processes,nitric acid,nitric acid,chemicals,process,chemicals,nitric acid,nitric acid,chemicals,,,,Nitric and Adipic Acid Production,
 industrial processes,semiconductors,semiconductors,industrial processes,semiconductors,semiconductors,,,semiconductors,all,all,semiconductors,,,,Semiconductor Manufacturing,
 industrial processes,solvents,solvents,industrial processes,solvents,solvents,solvents,process,solvents,all,all,solvents,,,,Solvent Use,
-industry_energy,biomass,biomass,industrial energy use,biomass,biomass,industry_energy,biomass,industry_energy,biomass,biomass,industry_energy,ind,industry_energy,biomass,,ind_bio
-industry_energy,coal,coal,industrial energy use,coal,coal,industry_energy,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,ind_coal
-industry_energy,gas,gas,industrial energy use,gas,gas,industry_energy,gas,industry_energy,gas,gas,industry_energy,ind,industry_energy,gas,,ind_gas
-industry_energy,refined liquids,refined liquids,industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids,industry_energy,refined liquids,refined liquids,industry_energy,ind,industry_energy,refined liquids,,ind_oil
+industry_energy,biomass,biomass,other industrial energy use,biomass,biomass,industry_energy,biomass,industry_energy,biomass,biomass,industry_energy,ind,industry_energy,biomass,,ind_bio
+industry_energy,coal,coal,other industrial energy use,coal,coal,industry_energy,coal,industry_energy,coal,coal,industry_energy,ind,industry_energy,coal,,ind_coal
+industry_energy,gas,gas,other industrial energy use,gas,gas,industry_energy,gas,industry_energy,gas,gas,industry_energy,ind,industry_energy,gas,,ind_gas
+industry_energy,refined liquids,refined liquids,other industrial energy use,refined liquids,refined liquids,industry_energy,refined liquids,industry_energy,refined liquids,refined liquids,industry_energy,ind,industry_energy,refined liquids,,ind_oil
 Legumes,,,Legumes,,,,,,,,,,,,Cropland Management,
 MiscCrop,,,MiscCrop,,,,,,,,,,,,Cropland Management,
 NutsSeeds,,,NutsSeeds,,,,,,,,,,,,Cropland Management,
@@ -129,8 +129,8 @@ out_resources,crude oil,crude oil,out_resources,crude oil,crude oil,oil_gas,proc
 out_resources,unconventional oil,unconventional oil,out_resources,unconventional oil,unconventional oil,oil_gas,process,oil_gas,all,all,oil_gas,,,,Natural Gas and Oil Systems,
 out_resources,natural gas,natural gas,out_resources,natural gas,natural gas,oil_gas,process,oil_gas,all,all,oil_gas,,,,Natural Gas and Oil Systems,
 OilPalm,,,OilPalm,,,,,,,,,,,,Cropland Management,
-Passenger,Air Domestic_All,refined liquids,trn_pass,Domestic Aviation,Liquids,trn_domestic air,refined liquids,trn_air,all,refined liquids,trn_domestic ship,tra,trn_air,refined liquids,,trn_air
-Passenger,Air International_All,refined liquids,trn_aviation_intl,International Aviation,Liquids,trn_intl_air,refined liquids,trn_air,all,refined liquids,trn_intl_air,tra,trn_air,refined liquids,,
+Passenger,Air Domestic_All,refined liquids,trn_pass,Domestic Aviation,Liquids,trn_domestic air,refined liquids,trn_air,all,refined liquids,trn_domestic air,tra,trn_air,refined liquids,,trn_air
+Passenger,Air International_All,refined liquids,trn_aviation_intl,International Aviation,Liquids,trn_intl_air,refined liquids,trn_air,all,refined liquids,trn_intl_air,tra,trn_air,refined liquids,,trn_air
 Passenger,Bus_All,gas,trn_pass_road,Bus,NG,trn_road,gas,trn_road,gas,gas,trn_road,tra,trn_road,gas,,trn_gas
 Passenger,Bus_All,refined liquids,trn_pass_road,Bus,Liquids,trn_road,refined liquids,trn_road,refined liquids,refined liquids,trn_road,tra,trn_road,refined liquids,,trn_oil
 Passenger,Bus_Heavy Bus,gas,trn_pass_road_bus,Heavy Bus,NG,trn_road,gas,trn_road,gas,gas,trn_road,tra,trn_road,gas,,trn_gas

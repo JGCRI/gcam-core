@@ -95,10 +95,14 @@ base load generation,nuclear,nuc_base_Gen II,electricity,nuclear,Gen_II_LWR
 intermediate generation,nuclear,nuc_int_Gen II,electricity,nuclear,Gen_II_LWR
 subpeak generation,nuclear,nuc_subpeak_Gen II,electricity,nuclear,Gen_II_LWR
 peak generation,nuclear,nuc_peak_Gen II,electricity,nuclear,Gen_II_LWR
-base load generation,nuclear,nuc_base_Gen III,electricity,nuclear,Gen_III
-intermediate generation,nuclear,nuc_int_Gen III,electricity,nuclear,Gen_III
-subpeak generation,nuclear,nuc_subpeak_Gen III,electricity,nuclear,Gen_III
-peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III
+base load generation,nuclear,nuc_base_large reactor,electricity,nuclear,large reactor
+intermediate generation,nuclear,nuc_int_large reactor,electricity,nuclear,large reactor
+subpeak generation,nuclear,nuc_subpeak_large reactor,electricity,nuclear,large reactor
+peak generation,nuclear,nuc_peak_large reactor,electricity,nuclear,large reactor
+base load generation,nuclear,nuc_base_SMR,electricity,nuclear,SMR
+intermediate generation,nuclear,nuc_int_SMR,electricity,nuclear,SMR
+subpeak generation,nuclear,nuc_subpeak_SMR,electricity,nuclear,SMR
+peak generation,nuclear,nuc_peak_SMR,electricity,nuclear,SMR
 base load generation,wind,wind_base_storage,electricity,wind,wind_storage
 intermediate generation,wind,wind_int_storage,electricity,wind,wind_storage
 subpeak generation,wind,wind_subpeak_storage,electricity,wind,wind_storage

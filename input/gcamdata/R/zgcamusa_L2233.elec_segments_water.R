@@ -416,15 +416,13 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
 
     L2233.GlobalTechCapital_elec_USA %>%
       select(-input.capital, -capital.overnight, -fixed.charge.rate) %>%
-      left_join_keep_first_only(
-        ## keep first only allows for capital costs to be pulled in the GCAM-core
-        ## without unnecessary duplication caused by LJ. LJENM throws error.
+      left_join_error_no_match(
         bind_rows(L2233.GlobalTechCapital_elec_cool %>%
-                    mutate(technology = gsub("storage", "base_storage", technology)),
+                    mutate(technology = sub("storage", "base_storage", technology)),
                   L2233.GlobalTechCapital_elecPassthru %>%
-                    mutate(technology=gsub("storage", "base_storage", technology))) %>%
-          select(technology, input.capital, capital.overnight, fixed.charge.rate),
-        by = c("technology")) %>%
+                    mutate(technology = sub("storage", "base_storage", technology))) %>%
+          select(technology, year, input.capital, capital.overnight, fixed.charge.rate),
+        by = c("technology", "year")) %>%
       arrange(sector.name,year) %>%
       mutate(technology = if_else(subsector.name0 == "wind" | subsector.name0 == "solar", subsector.name,
                                   if_else(subsector.name0 == "grid_storage", subsector.name0, technology))) %>%

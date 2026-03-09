@@ -44,9 +44,9 @@ resid clothes washers,electricity,clothes washer hi-eff,elect_td_bld,2525.253,25
 resid televisions,electricity,electricity,elect_td_bld,1,1,1.1,1.25,1.35,1.35,1.35,1.35,1.35
 resid computers,electricity,electricity,elect_td_bld,1,1,1.25,1.5,1.9,2.4,3,3.8,3.8
 resid furnace fans,electricity,electricity,elect_td_bld,1,1,1.17,1.33,1.5,1.67,1.83,2,2
-resid other,gas,gas,delivered gas,1,1,1,1,1,1,1,1,1
-resid other,electricity,electricity,elect_td_bld,1,1,1,1,1,1,1,1,1
-resid other,refined liquids,refined liquids,refined liquids enduse,1,1,1,1,1,1,1,1,1
+resid others,gas,gas,delivered gas,1,1,1,1,1,1,1,1,1
+resid others,electricity,electricity,elect_td_bld,1,1,1,1,1,1,1,1,1
+resid others,refined liquids,refined liquids,refined liquids enduse,1,1,1,1,1,1,1,1,1
 comm heating,biomass,wood furnace,delivered biomass,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65
 comm heating,coal,coal furnace,delivered coal,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65,0.65
 comm heating,gas,gas furnace,delivered gas,0.758,0.758,0.775,0.775,0.775,0.775,0.775,0.775,0.775
@@ -74,7 +74,7 @@ comm lighting,electricity,solid state,elect_td_bld,17.5,17.5,25.278,47.222,47.22
 comm refrigeration,electricity,refrigeration,elect_td_bld,2.06,2.06,2.931,3.317,3.317,3.317,3.317,3.317,3.317
 comm refrigeration,electricity,refrigeration hi-eff,elect_td_bld,3.756,3.756,3.756,4.115,4.115,4.115,4.115,4.115,4.115
 comm office,electricity,office equipment,elect_td_bld,1,1,1.3,1.45,1.45,1.45,1.45,1.45,1.45
-comm other,gas,gas,delivered gas,1,1,1,1,1,1,1,1,1
-comm other,electricity,electricity,elect_td_bld,1,1,1,1,1,1,1,1,1
-comm other,refined liquids,refined liquids,refined liquids enduse,1,1,1,1,1,1,1,1,1
+comm others,gas,gas,delivered gas,1,1,1,1,1,1,1,1,1
+comm others,electricity,electricity,elect_td_bld,1,1,1,1,1,1,1,1,1
+comm others,refined liquids,refined liquids,refined liquids enduse,1,1,1,1,1,1,1,1,1
 comm non-building,electricity,electricity,elect_td_bld,1,1,1,1,1,1,1,1,1

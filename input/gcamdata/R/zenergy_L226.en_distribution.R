@@ -166,8 +166,8 @@ module_energy_L226.en_distribution <- function(command, ...) {
     A26.globaltech_eff %>%
       gather_years(value_col = "efficiency") %>%
       complete(nesting(supplysector, subsector, technology, minicam.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
-      arrange(supplysector, year) %>%
-      group_by(supplysector) %>%
+      arrange(supplysector, subsector, technology, year) %>%
+      group_by(supplysector, subsector, technology, minicam.energy.input) %>%
       mutate(efficiency = approx_fun(as.numeric(year), efficiency)) %>%
       ungroup() %>%
       filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
@@ -180,8 +180,8 @@ module_energy_L226.en_distribution <- function(command, ...) {
     A26.globaltech_cost %>%
       gather_years(value_col = "input.cost") %>%
       complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
-      arrange(supplysector, year) %>%
-      group_by(supplysector) %>%
+      arrange(supplysector, subsector, technology, year) %>%
+      group_by(supplysector, subsector, technology, minicam.non.energy.input) %>%
       mutate (input.cost = approx_fun(as.numeric(year), input.cost)) %>%
       ungroup() %>%
       filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%

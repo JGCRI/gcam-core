@@ -81,47 +81,47 @@ trn_pass_road_LDV_2W,Motorcycle (50-250cc),Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_2W,Scooter,BEV,0,0,0,0.1429,0.2857,0.4286,1,1,CORE
 trn_pass_road_LDV_2W,Scooter,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Compact Car,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Compact Car,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Compact Car,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Compact Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Compact Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Compact Car,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Large Car,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Large Car,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Large Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and SUV,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Large Car and SUV,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Large Car and SUV,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Large Car and SUV,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and SUV,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and SUV,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Light Truck and SUV,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Light Truck and SUV,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Light Truck and SUV,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Light Truck and SUV,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Light Truck and SUV,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Light Truck and SUV,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Midsize Car,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Midsize Car,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Midsize Car,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Midsize Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Midsize Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Midsize Car,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Multipurpose Vehicle,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Multipurpose Vehicle,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Multipurpose Vehicle,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Multipurpose Vehicle,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Multipurpose Vehicle,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Multipurpose Vehicle,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Subcompact Car,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Subcompact Car,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Subcompact Car,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Subcompact Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Subcompact Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Subcompact Car,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Van,BEV,0,0,0,0.25,0.625,1,1,1,CORE
-trn_pass_road_LDV_4W,Van,FCEV,0,0,0,0,0.5,1,1,1,CORE
+trn_pass_road_LDV_4W,Van,FCEV,0,0,0,0,0.5,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Van,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Van,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Van,NG,0,0,1,1,1,1,1,1,CORE

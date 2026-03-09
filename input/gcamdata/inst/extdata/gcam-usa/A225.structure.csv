@@ -1,0 +1,8 @@
+# File: A225.structure.csv
+# Title: USA hydrogen transmission and distribution sector structure characteristics
+# Units: Unitless
+# Column types: ccccccicicccc
+# ----------
+region,supplysector,subsector,technology,minicam.energy.input,market.name,subsector.logit,subsector.logit.type,technology.logit,technology.logit.type,output.unit,input.unit,price.unit
+PADD,H2 pipeline,H2 pipeline,H2 pipeline,H2 pipeline,state,-3,,-6,,EJ,EJ,1975$/GJ
+PADD,H2 liquid truck,H2 liquid truck,H2 liquid truck,H2 liquid truck,state,-3,,-6,,EJ,EJ,1975$/GJ

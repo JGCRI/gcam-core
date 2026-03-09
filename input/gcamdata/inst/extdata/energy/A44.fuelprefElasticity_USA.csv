@@ -1,0 +1,47 @@
+# File: A44.fuelprefElasticity_USA.csv
+# Title: Fuel preference elasticities for detailed building energy use in USA
+# Units: Unitless
+# Column types: ccn
+# ----------
+supplysector,subsector,fuelprefElasticity
+comm cooking,electricity,0
+comm cooking,gas,0
+comm cooling,electricity,0
+comm cooling,gas,-1
+comm heating,electricity,0
+comm heating,gas,0
+comm heating,refined liquids,0
+comm hot water,electricity,0
+comm hot water,gas,0
+comm hot water,refined liquids,-1
+comm lighting,electricity,0
+comm non-building,electricity,0
+comm office,electricity,0
+comm others,electricity,0
+comm others,gas,0
+comm others,refined liquids,-1
+comm refrigeration,electricity,0
+comm ventilation,electricity,0
+resid clothes dryers,electricity,0
+resid clothes dryers,gas,0
+resid clothes washers,electricity,0
+resid computers,electricity,0
+resid cooking,electricity,0
+resid cooking,gas,0
+resid cooking,refined liquids,-1
+resid cooling,electricity,0
+resid dishwashers,electricity,0
+resid freezers,electricity,0
+resid furnace fans,electricity,0
+resid heating,electricity,0
+resid heating,gas,0
+resid heating,refined liquids,-1
+resid hot water,electricity,0
+resid hot water,gas,0
+resid hot water,refined liquids,-1
+resid lighting,electricity,0
+resid others,electricity,0
+resid others,gas,0
+resid others,refined liquids,-1
+resid refrigerators,electricity,0
+resid televisions,electricity,0

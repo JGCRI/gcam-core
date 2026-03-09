@@ -57,7 +57,8 @@ module_energy_building_det_xml <- function(command, ...) {
              "L244.ThermalServicePrice",
              "L244.GenericBaseDens",
              "L244.ThermalBaseDens",
-             "L244.DeleteGenericService"))
+             "L244.DeleteGenericService",
+             "L244.GlobalTechSCurve_bld_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "building_det.xml"))
   } else if(command == driver.MAKE) {
@@ -111,6 +112,7 @@ module_energy_building_det_xml <- function(command, ...) {
     L244.ThermalServicePrice <- get_data(all_data, "L244.ThermalServicePrice")
     L244.GenericBaseDens <- get_data(all_data, "L244.GenericBaseDens")
     L244.ThermalBaseDens <- get_data(all_data, "L244.ThermalBaseDens")
+    L244.GlobalTechSCurve_bld_USA <- get_data(all_data, "L244.GlobalTechSCurve_bld_USA")
 
     # ===================================================
 
@@ -157,6 +159,7 @@ module_energy_building_det_xml <- function(command, ...) {
       add_node_equiv_xml("input") %>%
       add_xml_data(L244.GlobalTechTrackCapital_bld, "GlobalTechTrackCapital") %>%
       add_xml_data(L244.GlobalTechCost_bld, "GlobalTechCost") %>%
+      add_xml_data(L244.GlobalTechSCurve_bld_USA, "GlobalTechSCurve") %>%
       add_precursors("L244.SubsectorInterpTo_bld", "L244.SubsectorInterp_bld" , "L244.SubsectorShrwtFllt_bld",
                      "L244.SubsectorShrwt_bld", "L244.FinalEnergyKeyword_bld", "L244.Supplysector_bld",
                      "L244.ShellConductance_bld", "L244.Intgains_scalar", "L244.GenericServiceSatiation",
@@ -176,7 +179,7 @@ module_energy_building_det_xml <- function(command, ...) {
                      "L244.GenericServicePrice","L244.ThermalServicePrice",
                      "L244.GenericBaseDens", "L244.ThermalBaseDens",
                      "L244.GenericServiceCoef","L244.ThermalServiceCoef",
-                     "L244.GlobalTechTrackCapital_bld") ->   building_det.xml
+                     "L244.GlobalTechTrackCapital_bld","L244.GlobalTechSCurve_bld_USA") ->   building_det.xml
 
     # Some data inputs may not actually contain data. If so, do not add_xml_data.
     if(nrow(L244.DeleteThermalService) > 0) {

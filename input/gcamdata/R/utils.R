@@ -73,7 +73,11 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, dummy = NULL, ..
     col_types <- extract_header_info(header, label = "Column types:", fqfn, required = TRUE)
 
     # Attempt the file read
-    # Note `options(warn = 2)` forces all warnings to errors...
+    # Note `options(warn = 2)` forces all warnings to errors, so we save the current options to an
+    # object which is called on function exit. This way e.g. parsing errors in CSV tables do not
+    # result in globally changed options
+    current_opts <- options()
+    on.exit(options(current_opts), add = TRUE)
     op <- options(warn = 2)
     fd <- try(readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...))
     options(op)
@@ -433,7 +437,7 @@ chunk_inputs <- function(chunks = find_chunks()$name, call_flag = driver.DECLARE
 #' @return Character vector of inputs.
 #' @export
 inputs_of <- function(chunks) {
-  if(is.null(chunks) || chunks == "") return(NULL)
+  if(is.null(chunks) || length(chunks) == 0 || any(chunks == "")) return(NULL)
   chunk_inputs(chunks)$input
 }
 
@@ -479,7 +483,7 @@ chunk_outputs <- function(chunks = find_chunks()$name, call_flag = driver.DECLAR
 #' @return Character vector of inputs.
 #' @export
 outputs_of <- function(chunks) {
-  if(is.null(chunks) || chunks == "") return(NULL)
+  if(is.null(chunks) || length(chunks) == 0 || any(chunks == "")) return(NULL)
   chunk_outputs(chunks)$output
 }
 

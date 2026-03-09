@@ -22,6 +22,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
              FILE = "emissions/mappings/ind_subsector_revised",
+             FILE = "emissions/mappings/USAbld_emission_mapping",
              FILE = "energy/A_regions",
              "L111.nonghg_tg_R_en_S_F_Yh",
              "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
@@ -33,6 +34,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
              FILE = "emissions/A51.steepness",
              "L244.DeleteThermalService",
              "L244.DeleteGenericService",
+             "L244.StubTechCalInput_bld",
              # the following to be able to map in the input.name to
              # use for the input-driver
              FILE = "energy/calibrated_techs",
@@ -68,7 +70,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     A_regions <- get_data(all_data, "emissions/A_regions")
     A_regions.en <- get_data(all_data, "energy/A_regions")
     ind_subsector_revised <- get_data(all_data,"emissions/mappings/ind_subsector_revised")
-
+    USAbld_emission_mapping <- get_data(all_data, "emissions/mappings/USAbld_emission_mapping")
     L111.nonghg_tg_R_en_S_F_Yh <- get_data(all_data, "L111.nonghg_tg_R_en_S_F_Yh", strip_attributes = TRUE)
     L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP <- get_data(all_data, "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP", strip_attributes = TRUE)
     L112.ghg_tg_R_en_S_F_Yh <- get_data(all_data, "L112.ghg_tg_R_en_S_F_Yh", strip_attributes = TRUE)
@@ -79,6 +81,7 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     A51.steepness <- get_data(all_data, "emissions/A51.steepness", strip_attributes = TRUE)
     L244.DeleteThermalService <- get_data(all_data, "L244.DeleteThermalService", strip_attributes = TRUE)
     L244.DeleteGenericService <- get_data(all_data, "L244.DeleteGenericService", strip_attributes = TRUE)
+    L244.StubTechCalInput_bld <- get_data(all_data, "L244.StubTechCalInput_bld", strip_attributes = T)
     income_shares<-get_data(all_data, "socioeconomics/income_shares")
     groups<-income_shares %>% select(category) %>% distinct()
 
@@ -425,7 +428,10 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       filter(x, ! paste0(region, supplysector) %in% L201.delete.sectors)
     }
 
-    L244.DeleteService<-bind_rows(L244.DeleteThermalService %>% select(region,supplysector),L244.DeleteGenericService %>% select(region,supplysector))
+    L244.DeleteService<-bind_rows(L244.DeleteThermalService %>% select(region,supplysector),
+                                  L244.DeleteGenericService %>% select(region,supplysector) %>%
+                                    # do not remove USA's resid others modern (this aggregate service is needed to disagg the det services for emissions)
+                                    filter(!(region == gcam.USA_REGION & grepl('resid others modern', supplysector))))
 
     L201.delete.sectors <- paste0(L244.DeleteService$region, L244.DeleteService$supplysector)
     L201.en_pol_emissions <- delete_nonexistent_sectors(L201.en_pol_emissions, L201.delete.sectors)
@@ -433,6 +439,80 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.en_bcoc_emissions <- delete_nonexistent_sectors(L201.en_bcoc_emissions, L201.delete.sectors)
     L201.nonghg_max_reduction <- delete_nonexistent_sectors(L201.nonghg_max_reduction, L201.delete.sectors)
     L201.nonghg_steepness <- delete_nonexistent_sectors(L201.nonghg_steepness, L201.delete.sectors)
+
+    # Downscale USA buildings sector emissions to detailed technologies
+    L201.emiss_USAbld_tech_shares <- L244.StubTechCalInput_bld %>%
+      inner_join(USAbld_emission_mapping, by = c("region", supplysector = "to.supplysector", subsector = "to.subsector", stub.technology = "to.stub.technology")) %>%
+      group_by(region, from.supplysector, from.subsector, from.stub.technology, year) %>%
+      mutate(tech_share = calibrated.value / sum(calibrated.value)) %>%
+      ungroup() %>%
+      replace_na(list(tech_share = 0)) %>%
+      select(region, to.supplysector = supplysector, to.subsector = subsector, to.stub.technology = stub.technology, year, tech_share)
+
+    # L201.en_pol_emissions: downscale input.emissions
+    L201.en_pol_emissions_USAbld <- L201.en_pol_emissions %>%
+      inner_join(USAbld_emission_mapping, by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")) %>%
+      filter(to.supplysector != "DROP") %>%
+      left_join_error_no_match(L201.emiss_USAbld_tech_shares, by = c("region", "to.supplysector", "to.subsector", "to.stub.technology", "year")) %>%
+      mutate(input.emissions = input.emissions * tech_share,
+             supplysector = to.supplysector, subsector = to.subsector, stub.technology = to.stub.technology) %>%
+      select(names(L201.en_pol_emissions))
+
+    L201.en_pol_emissions <- L201.en_pol_emissions_USAbld %>%
+      bind_rows(anti_join(L201.en_pol_emissions, USAbld_emission_mapping,
+                          by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")))
+
+    # L201.en_ghg_emissions: downscale input.emissions
+    L201.en_ghg_emissions_USAbld <- L201.en_ghg_emissions %>%
+      inner_join(USAbld_emission_mapping, by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")) %>%
+      filter(to.supplysector != "DROP") %>%
+      left_join_error_no_match(L201.emiss_USAbld_tech_shares, by = c("region", "to.supplysector", "to.subsector", "to.stub.technology", "year")) %>%
+      mutate(input.emissions = input.emissions * tech_share,
+             supplysector = to.supplysector, subsector = to.subsector, stub.technology = to.stub.technology) %>%
+      select(names(L201.en_ghg_emissions))
+
+    L201.en_ghg_emissions <- L201.en_ghg_emissions_USAbld %>%
+      bind_rows(anti_join(L201.en_ghg_emissions, USAbld_emission_mapping,
+                          by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")))
+
+    # L201.en_bcoc_emissions: re-assign emissions coefficients to USAbld technologies with no numerical changes
+    L201.en_bcoc_emissions_USAbld <- L201.en_bcoc_emissions %>%
+      left_join(USAbld_emission_mapping, by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")) %>%
+      filter(to.supplysector != "DROP") %>%
+      mutate(supplysector = if_else(is.na(to.supplysector), supplysector, to.supplysector),
+             subsector = if_else(is.na(to.subsector), subsector, to.subsector),
+             stub.technology = if_else(is.na(to.stub.technology), stub.technology, to.stub.technology)) %>%
+      select(-to.supplysector, -to.subsector, -to.stub.technology)
+
+    L201.en_bcoc_emissions <- L201.en_bcoc_emissions_USAbld %>%
+      bind_rows(anti_join(L201.en_bcoc_emissions, USAbld_emission_mapping,
+                          by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")))
+
+    # L201.nonghg_max_reduction: copy existing assumptions to USAbld technologies
+    L201.nonghg_max_reduction_USAbld <- L201.nonghg_max_reduction %>%
+      left_join(USAbld_emission_mapping, by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")) %>%
+      filter(to.supplysector != "DROP") %>%
+      mutate(supplysector = if_else(is.na(to.supplysector), supplysector, to.supplysector),
+             subsector = if_else(is.na(to.subsector), subsector, to.subsector),
+             stub.technology = if_else(is.na(to.stub.technology), stub.technology, to.stub.technology)) %>%
+      select(-to.supplysector, -to.subsector, -to.stub.technology)
+
+    L201.nonghg_max_reduction <- L201.nonghg_max_reduction_USAbld %>%
+      bind_rows(anti_join(L201.nonghg_max_reduction, USAbld_emission_mapping,
+                          by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")))
+
+    # L201.nonghg_steepness: copy existing assumptions to USAbld technologies
+    L201.nonghg_steepness_USAbld <- L201.nonghg_steepness %>%
+      left_join(USAbld_emission_mapping, by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")) %>%
+      filter(to.supplysector != "DROP") %>%
+      mutate(supplysector = if_else(is.na(to.supplysector), supplysector, to.supplysector),
+             subsector = if_else(is.na(to.subsector), subsector, to.subsector),
+             stub.technology = if_else(is.na(to.stub.technology), stub.technology, to.stub.technology)) %>%
+      select(-to.supplysector, -to.subsector, -to.stub.technology)
+
+    L201.nonghg_steepness <- L201.nonghg_steepness_USAbld %>%
+      bind_rows(anti_join(L201.nonghg_steepness, USAbld_emission_mapping,
+                          by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")))
 
     # Produce outputs
     L201.en_pol_emissions %>%
@@ -593,7 +673,19 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
       same_precursors_as(L201.ghg_res) ->
       L201.ResReadInControl_ghg_res
 
-    return_data(L201.en_pol_emissions, L201.en_ghg_emissions, L201.en_bcoc_emissions, L201.en_iron_and_steel_ef, L201.OutputEmissions_elec, L201.nonghg_max_reduction, L201.nonghg_steepness, L201.nonghg_max_reduction_res, L201.nonghg_steepness_res, L201.nonghg_res, L201.ghg_res, L201.ResReadInControl_nonghg_res, L201.ResReadInControl_ghg_res)
+    return_data(L201.en_pol_emissions,
+                L201.en_ghg_emissions,
+                L201.en_bcoc_emissions,
+                L201.en_iron_and_steel_ef,
+                L201.OutputEmissions_elec,
+                L201.nonghg_max_reduction,
+                L201.nonghg_steepness,
+                L201.nonghg_max_reduction_res,
+                L201.nonghg_steepness_res,
+                L201.nonghg_res,
+                L201.ghg_res,
+                L201.ResReadInControl_nonghg_res,
+                L201.ResReadInControl_ghg_res)
   } else {
     stop("Unknown command")
   }

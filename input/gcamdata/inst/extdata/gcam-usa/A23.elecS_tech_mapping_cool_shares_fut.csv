@@ -3,7 +3,7 @@
 # Units: NA
 # Comments: Mapping file between power sector generation technologies which don't exist historically (subsector) and 
 # corresponding existing technologies (mapped_subsector).  Used to inform future cooling share assumptions for the former.
-# For instance, cooling shares for nuclear Gen III in state X are assumed to be consistent with cooling technologies
+# For instance, cooling shares for nuclear large reactor in state X are assumed to be consistent with cooling technologies
 # historically chosen for nuclear Gen II in that state.
 # Column types: cc
 # ----------
@@ -20,7 +20,8 @@ gas_base_CC_CCS,gas_base_CC
 gas_int_CC_CCS,gas_int_CC
 gas_peak_CC_CCS,gas_peak_CC
 gas_subpeak_CC_CCS,gas_subpeak_CC
-nuc_base_Gen III,nuc_base_Gen II
+nuc_base_large reactor,nuc_base_Gen II
+nuc_base_SMR,nuc_base_Gen II
 refined liquids_base_CC_CCS,refined liquids_base_CC
 refined liquids_int_CC_CCS,refined liquids_int_CC
 refined liquids_peak_CC_CCS,refined liquids_peak_CC

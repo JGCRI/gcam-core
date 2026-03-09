@@ -29,6 +29,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
              FILE = "energy/A23.globaltech_input_driver",
              FILE = "energy/A25.globaltech_input_driver",
              FILE = "energy/A26.globaltech_input_driver",
+             FILE = "emissions/A41.H2_globaltech_input_driver",
              "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
              "L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
              "L223.GlobalTechEff_elec"))
@@ -63,7 +64,8 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       get_data(all_data, "energy/A22.globaltech_input_driver"),
       get_data(all_data, "energy/A23.globaltech_input_driver"),
       get_data(all_data, "energy/A25.globaltech_input_driver"),
-      get_data(all_data, "energy/A26.globaltech_input_driver")
+      get_data(all_data, "energy/A26.globaltech_input_driver"),
+      get_data(all_data, "emissions/A41.H2_globaltech_input_driver")
     ) %>%
       rename(stub.technology = technology) ->
       EnTechInputMap
@@ -194,7 +196,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       unite(sector_tech_id, supplysector, subsector, stub.technology, remove = FALSE) ->
       L241.maybe_historic
 
-    # Start the new technology emission coefficients for the technologies & reigons that may be have
+    # Start the new technology emission coefficients for the technologies & regions that may be have
     # used in historical years in the first model base year.
     L241.nonco2_tech_coeff %>%
       unite(sector_tech_id, supplysector, subsector, stub.technology, remove = FALSE) %>%
@@ -202,7 +204,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
       select(-sector_tech_id) ->
       L241.nonco2_tech_coeff
 
-    # Start the max emission reduction for the technologies & reigons that may be have
+    # Start the max emission reduction for the technologies & regions that may be have
     # used in historical years in the first model base year.
     L241.nonco2_max_reduction %>%
       unite(sector_tech_id, supplysector, subsector, stub.technology, remove = FALSE) %>%
@@ -316,6 +318,7 @@ module_emissions_L241.en_newtech_nonco2 <- function(command, ...) {
                      "energy/A23.globaltech_input_driver",
                      "energy/A25.globaltech_input_driver",
                      "energy/A26.globaltech_input_driver",
+                     "emissions/A41.H2_globaltech_input_driver",
                      "L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP",
                      "L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP")  ->
       L241.nonco2_tech_coeff

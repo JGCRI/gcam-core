@@ -43,9 +43,9 @@ resid clothes washers,electricity,clothes washer hi-eff,1,1,1
 resid televisions,electricity,electricity,1,1,1
 resid computers,electricity,electricity,1,1,1
 resid furnace fans,electricity,electricity,1,1,1
-resid other,gas,gas,1,1,1
-resid other,electricity,electricity,1,1,1
-resid other,refined liquids,refined liquids,1,1,1
+resid others,gas,gas,1,1,1
+resid others,electricity,electricity,1,1,1
+resid others,refined liquids,refined liquids,1,1,1
 comm heating,biomass,wood furnace,1,1,1
 comm heating,coal,coal furnace,1,0,0
 comm heating,gas,gas furnace,1,1,1
@@ -73,7 +73,7 @@ comm lighting,electricity,solid state,1,1,1
 comm refrigeration,electricity,refrigeration,1,1,1
 comm refrigeration,electricity,refrigeration hi-eff,1,1,1
 comm office,electricity,office equipment,1,1,1
-comm other,gas,gas,1,1,1
-comm other,electricity,electricity,1,1,1
-comm other,refined liquids,refined liquids,1,1,1
+comm others,gas,gas,1,1,1
+comm others,electricity,electricity,1,1,1
+comm others,refined liquids,refined liquids,1,1,1
 comm non-building,electricity,electricity,1,1,1

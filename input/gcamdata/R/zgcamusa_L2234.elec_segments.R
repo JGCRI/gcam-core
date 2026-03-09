@@ -51,7 +51,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "gcam-usa/elecS_time_fraction",
              FILE = "gcam-usa/A10.renewable_resource_delete",
-             "L113.elecS_globaltech_capital_battery_ATB",
              "L119.CapFacScaler_CSP_state",
              "L1239.state_elec_supply_USA",
              "L223.StubTechEff_elec_USA",
@@ -164,7 +163,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
     A23.elecS_tech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_tech_mapping", strip_attributes = TRUE)
     A23.elecS_inttech_mapping <- get_data(all_data, "gcam-usa/A23.elecS_inttech_mapping", strip_attributes = TRUE)
     A23.elecS_tech_availability <- get_data(all_data, "gcam-usa/A23.elecS_tech_availability", strip_attributes = TRUE)
-    L113.elecS_globaltech_capital_battery_ATB <- get_data(all_data, "L113.elecS_globaltech_capital_battery_ATB", strip_attributes = TRUE)
     A23.elecS_stubtech_energy_inputs <- get_data(all_data, "gcam-usa/A23.elecS_stubtech_energy_inputs", strip_attributes = TRUE)
     A23.elecS_subsector_shrwt_state_adj <- get_data(all_data, "gcam-usa/A23.elecS_subsector_shrwt_state_adj", strip_attributes = TRUE)
     A23.elecS_subsector_shrwt_interp_state_adj <- get_data(all_data, "gcam-usa/A23.elecS_subsector_shrwt_interp_state_adj", strip_attributes = TRUE)
@@ -901,51 +899,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       anti_join(A10.renewable_resource_delete,
                 by = c("region", "subsector" = "resource_elec_subsector")) -> L2234.StubTechProd_elecS_USA
 
-    # Create tables for non-energy and energy inputs for any new technologies such as battery
-    # and append them with corresponding tables
-    L113.elecS_globaltech_capital_battery_ATB %>%
-      select(supplysector, subsector, technology, year = period, capacity.factor) -> L2234.GlobalTechCapFac_elecS_additonal
-
-    L2234.GlobalTechCapFac_elecS %>%
-      bind_rows(L2234.GlobalTechCapFac_elecS_additonal) -> L2234.GlobalTechCapFac_elecS
-
-    L113.elecS_globaltech_capital_battery_ATB %>%
-      mutate(input.capital = "capital") %>%
-      select(supplysector, subsector, technology, year = period, input.capital,
-             capital.overnight = capital.cost, fixed.charge.rate = fcr) ->  L2234.GlobalTechCapital_elecS_additonal
-
-    L2234.GlobalTechCapital_elecS %>%
-      bind_rows(L2234.GlobalTechCapital_elecS_additonal) -> L2234.GlobalTechCapital_elecS
-
-    L113.elecS_globaltech_capital_battery_ATB %>%
-      mutate(input.OM.fixed = "OM-fixed") %>%
-      select(supplysector, subsector, technology, year = period,
-             input.OM.fixed, OM.fixed = fixed.om) -> L2234.GlobalTechOMfixed_elecS_additonal
-
-    L2234.GlobalTechOMfixed_elecS %>%
-      bind_rows(L2234.GlobalTechOMfixed_elecS_additonal) -> L2234.GlobalTechOMfixed_elecS
-
-    L113.elecS_globaltech_capital_battery_ATB %>%
-      mutate(input.OM.var = "OM-var") %>%
-      select(supplysector, subsector, technology, year = period,
-             input.OM.var, OM.var = variable.om) -> L2234.GlobalTechOMvar_elecS_additonal
-
-    L2234.GlobalTechOMvar_elecS %>%
-      bind_rows(L2234.GlobalTechOMvar_elecS_additonal) -> L2234.GlobalTechOMvar_elecS
-
-    L113.elecS_globaltech_capital_battery_ATB %>%
-      select(supplysector, subsector, technology, year = period, lifetime) -> L2234.GlobalTechLifetime_elecS_additonal
-
-    L2234.GlobalTechLifetime_elecS %>%
-      bind_rows(L2234.GlobalTechLifetime_elecS_additonal) -> L2234.GlobalTechLifetime_elecS
-
-    L113.elecS_globaltech_capital_battery_ATB %>%
-      select(supplysector, subsector, technology, year = period,
-             lifetime, steepness, half.life) -> L2234.GlobalTechSCurve_elecS_additonal
-
-    L2234.GlobalTechSCurve_elecS %>%
-      bind_rows(L2234.GlobalTechSCurve_elecS_additonal) -> L2234.GlobalTechSCurve_elecS
-
     # Energy Inputs for additional technologies such as battery
     L2234.StubTech_energy_elecS_USA <- write_to_all_states(A23.elecS_stubtech_energy_inputs,
                                                            c("region", "supplysector","subsector","stub.technology",
@@ -1310,7 +1263,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       add_legacy_name("L2234.GlobalTechCapital_elecS") %>%
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
-                     "L113.elecS_globaltech_capital_battery_ATB",
                      "L223.GlobalTechCapital_elec") ->
       L2234.GlobalTechCapital_elecS_USA
 
@@ -1331,7 +1283,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       add_legacy_name("L2234.GlobalTechOMfixed_elecS") %>%
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
-                     "L113.elecS_globaltech_capital_battery_ATB",
                      "L223.GlobalTechOMfixed_elec") ->
       L2234.GlobalTechOMfixed_elecS_USA
 
@@ -1352,7 +1303,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       add_legacy_name("L2234.GlobalTechOMvar_elecS") %>%
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
-                     "L113.elecS_globaltech_capital_battery_ATB",
                      "L223.GlobalTechOMvar_elec") ->
       L2234.GlobalTechOMvar_elecS_USA
 
@@ -1374,7 +1324,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
                      "gcam-usa/elecS_time_fraction",
-                     "L113.elecS_globaltech_capital_battery_ATB",
                      "L223.GlobalTechCapFac_elec") ->
       L2234.GlobalTechCapFac_elecS_USA
 
@@ -1405,7 +1354,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       add_legacy_name("L2234.GlobalTechLifetime_elecS") %>%
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
-                     "L113.elecS_globaltech_capital_battery_ATB",
                      "L223.GlobalTechLifetime_elec") ->
       L2234.GlobalTechLifetime_elecS_USA
 
@@ -1436,7 +1384,6 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       add_legacy_name("L2234.GlobalTechSCurve_elecS") %>%
       add_precursors("gcam-usa/A23.elecS_tech_mapping",
                      "gcam-usa/A23.elecS_tech_availability",
-                     "L113.elecS_globaltech_capital_battery_ATB",
                      "L223.GlobalTechSCurve_elec") ->
       L2234.GlobalTechSCurve_elecS_USA
 

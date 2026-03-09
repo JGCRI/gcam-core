@@ -1,0 +1,21 @@
+# File: H2ALite_TEA_mapping.csv
+# Title: Mapping H2ALite technoeconomic analysis data of hydrogen production technologies
+# Units: Indicated in column names
+# Source: Misho Penev email 12/23/2024
+# Column types: cccccn
+# ----------
+sector.name,subsector.name,technology,TechnologyH2A,WaterTechnology,cost_multiplier
+H2 central production,hybrid,electrolysis,Hybrid PEM,Solar PV electrolysis and Wind electrolysis,1
+H2 central production,electricity,electrolysis,Grid ALK,Wind electrolysis,1
+H2 central production,nuclear,electrolysis,Grid ALK,Nuclear electrolysis,1
+H2 central production,gas,natural gas steam reforming,NG-SMR,Conventional SMR,1
+H2 central production,gas,gas ATR CCS,NG-ATR+CCS,SMR with CCS,1
+H2 central production,biomass,biomass to H2,Biomass gasification,Conventional SMR,1
+H2 central production,biomass,biomass to H2 CCS,Biomass gasification + CCS,SMR with CCS,1
+H2 industrial,onsite production,electrolysis,Grid ALK,Wind electrolysis,1
+H2 LDV,onsite production,electrolysis,Grid PEM,Wind electrolysis,1
+H2 LDV,onsite production,natural gas steam reforming,NG-SMR,Conventional SMR,3
+H2 MHDV,onsite production,electrolysis,Grid PEM,Wind electrolysis,1
+H2 MHDV,onsite production,natural gas steam reforming,NG-SMR,Conventional SMR,3
+LH2,onsite production,electrolysis,Grid ALK,Wind electrolysis,1
+LH2,onsite production,natural gas steam reforming,NG-SMR,Conventional SMR,3

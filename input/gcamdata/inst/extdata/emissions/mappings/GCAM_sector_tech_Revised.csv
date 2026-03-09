@@ -173,8 +173,8 @@ Freight,Truck_Heavy truck,gas,trn_freight_road,Heavy truck,NG,trn_road,gas,gas,t
 Freight,Truck_Heavy truck,refined liquids,trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids,refined liquids,trn_road,tra,trn_road,refined liquids,,trn_oil
 Freight,Truck_Heavy truck,gas,trn_freight_road,Heavy truck,NG,trn_road,gas,gas,trn_road,tra,trn_road,gas,,trn_gas
 Freight,Truck_Heavy truck,refined liquids,trn_freight_road,Heavy truck,Liquids,trn_road,refined liquids,refined liquids,trn_road,tra,trn_road,refined liquids,,trn_oil
-Passenger,Air Domestic_All,refined liquids,trn_pass,Domestic Aviation,Liquids,trn_air,all,refined liquids,trn_domestic ship,tra,trn_air,refined liquids,,trn_air
-Passenger,Air International_All,refined liquids,trn_aviation_intl,International Aviation,Liquids,trn_air,all,refined liquids,trn_intl_air,tra,trn_air,refined liquids,,
+Passenger,Air Domestic_All,refined liquids,trn_pass,Domestic Aviation,Liquids,trn_air,all,refined liquids,trn_domestic air,tra,trn_air,refined liquids,,trn_air
+Passenger,Air International_All,refined liquids,trn_aviation_intl,International Aviation,Liquids,trn_air,all,refined liquids,trn_intl_air,tra,trn_air,refined liquids,,trn_air
 Passenger,Bus_All,gas,trn_pass_road,Bus,NG,trn_road,gas,gas,trn_road,tra,trn_road,gas,,trn_gas
 Passenger,Bus_All,refined liquids,trn_pass_road,Bus,Liquids,trn_road,refined liquids,refined liquids,trn_road,tra,trn_road,refined liquids,,trn_oil
 Passenger,Bus_All,gas,trn_pass_road_bus,Bus,NG,trn_road,gas,gas,trn_road,tra,trn_road,gas,,trn_gas

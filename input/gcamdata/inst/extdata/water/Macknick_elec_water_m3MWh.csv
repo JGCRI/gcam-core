@@ -3,7 +3,7 @@
 # Units: m^3/MWh
 # Source: original GCAM water-electricity workbooks. Many values from Macknick et al and IEAGHG
 # Comment: March 2015 update: dry cooling coefs set to 10% of recirculating instead of 0
-# Column types: cccccnn 
+# Column types: cccccnn
 # ----------
 sector,fuel,technology,cooling_system,water_type,water_withdrawals,water_consumption
 electricity generation,biomass,biomass (conv),cooling pond,fresh,3.32,2.09
@@ -68,11 +68,16 @@ electricity generation,nuclear,Gen_II_LWR,once through,fresh,193.07,1.02
 electricity generation,nuclear,Gen_II_LWR,recirculating,fresh,4.17,2.54
 electricity generation,nuclear,Gen_II_LWR,cooling pond,seawater,30.69,2.31
 electricity generation,nuclear,Gen_II_LWR,once through,seawater,193.07,1.02
-electricity generation,nuclear,Gen_III,cooling pond,fresh,30.69,2.31
-electricity generation,nuclear,Gen_III,once through,fresh,193.07,1.02
-electricity generation,nuclear,Gen_III,recirculating,fresh,4.17,2.54
-electricity generation,nuclear,Gen_III,cooling pond,seawater,30.69,2.31
-electricity generation,nuclear,Gen_III,once through,seawater,193.07,1.02
+electricity generation,nuclear,large reactor,cooling pond,fresh,30.69,2.31
+electricity generation,nuclear,large reactor,once through,fresh,193.07,1.02
+electricity generation,nuclear,large reactor,recirculating,fresh,4.17,2.54
+electricity generation,nuclear,large reactor,cooling pond,seawater,30.69,2.31
+electricity generation,nuclear,large reactor,once through,seawater,193.07,1.02
+electricity generation,nuclear,SMR,cooling pond,fresh,30.69,2.31
+electricity generation,nuclear,SMR,once through,fresh,193.07,1.02
+electricity generation,nuclear,SMR,recirculating,fresh,4.17,2.54
+electricity generation,nuclear,SMR,cooling pond,seawater,30.69,2.31
+electricity generation,nuclear,SMR,once through,seawater,193.07,1.02
 electricity generation,refined liquids,refined liquids (steam/CT),cooling pond,fresh,4.55,3.13
 electricity generation,refined liquids,refined liquids (steam/CT),dry cooling,fresh,0.455,0.313
 electricity generation,refined liquids,refined liquids (steam/CT),once through,fresh,152.36,0.91

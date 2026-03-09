@@ -35,7 +35,7 @@ module_energy_L2322.Fert <- function(command, ...) {
              "L1322.Fert_Prod_MtNH3_R_F_Y",
              "L1322.IO_R_Fert_F_Yh",
              "L1322.Fert_NEcost_75USDkgNH3_F",
-             "L142.ag_Fert_NetExp_MtN_R_Y"))
+             "L1322.Fert_GrossTrade_Mt_R_Y"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2322.Supplysector_Fert",
              "L2322.SectorUseTrialMarket_tra",
@@ -77,7 +77,7 @@ module_energy_L2322.Fert <- function(command, ...) {
     L1322.Fert_Prod_MtNH3_R_F_Y <- get_data(all_data, "L1322.Fert_Prod_MtNH3_R_F_Y", strip_attributes = TRUE)
     L1322.IO_R_Fert_F_Yh <- get_data(all_data, "L1322.IO_R_Fert_F_Yh", strip_attributes = TRUE)
     L1322.Fert_NEcost_75USDkgNH3_F <- get_data(all_data, "L1322.Fert_NEcost_75USDkgNH3_F")
-    L142.ag_Fert_NetExp_MtN_R_Y <- get_data(all_data, "L142.ag_Fert_NetExp_MtN_R_Y", strip_attributes = TRUE)
+    L1322.Fert_GrossTrade_Mt_R_Y <- get_data(all_data, "L1322.Fert_GrossTrade_Mt_R_Y", strip_attributes = TRUE)
 
     # ===================================================
     # 0. Give binding for variable names used in pipeline
@@ -312,12 +312,11 @@ module_energy_L2322.Fert <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["StubTechCoef"]]) ->
       L2322.StubTechCoef_Fert
 
-    # Ammonia Exports = NetExports where positive
-    L142.ag_Fert_NetExp_MtN_R_Y %>%
-      select(GCAM_region_ID, year, calOutputValue = value) %>%
+    # Ammonia Exports
+    L1322.Fert_GrossTrade_Mt_R_Y %>%
+      select(GCAM_region_ID, year, Exports_Mt) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      mutate(calOutputValue = if_else(calOutputValue < 0, 0,
-                                      round(calOutputValue / CONV_NH3_N, energy.DIGITS_CALOUTPUT))) %>%   # Convert N export to NH3
+      mutate(calOutputValue = round(Exports_Mt / CONV_NH3_N, energy.DIGITS_CALOUTPUT)) %>%   # Convert N export to NH3
       left_join_error_no_match(GCAM_region_names,
                                by = "GCAM_region_ID") %>%
       rename(market.name = region) %>%
@@ -329,12 +328,11 @@ module_energy_L2322.Fert <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["Production"]]) ->
       L2322.Production_FertExport
 
-    # Ammonia Imports = NetExports where negative
-    L142.ag_Fert_NetExp_MtN_R_Y %>%
-      select(GCAM_region_ID, year, calOutputValue = value) %>%
+    # Ammonia Imports
+    L1322.Fert_GrossTrade_Mt_R_Y %>%
+      select(GCAM_region_ID, year, Imports_Mt) %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      mutate(calOutputValue = if_else(calOutputValue > 0, 0,
-                                      round(calOutputValue * -1 / CONV_NH3_N, energy.DIGITS_CALOUTPUT))) %>%   # Convert N import to NH3
+      mutate(calOutputValue = round(Imports_Mt / CONV_NH3_N, energy.DIGITS_CALOUTPUT)) %>%   # Convert N import to NH3
       left_join_error_no_match(GCAM_region_names,
                                by = "GCAM_region_ID") %>%
       left_join_error_no_match(filter(L2322.StubTech_Fert, grepl("imported", subsector)),
@@ -534,14 +532,14 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_units("Mt NH3") %>%
       add_comments("Calibrated exports of ammonia") %>%
       same_precursors_as(L2322.TechCoef_TradedFert) %>%
-      add_precursors("L142.ag_Fert_NetExp_MtN_R_Y") ->
+      add_precursors("L1322.Fert_GrossTrade_Mt_R_Y") ->
       L2322.Production_FertExport
 
     L2322.StubTechProd_FertImport %>%
       add_title("calibrated base-year imports of ammonia") %>%
       add_units("Mt NH3") %>%
       add_comments("Calibrated imports of ammonia") %>%
-      add_precursors("L142.ag_Fert_NetExp_MtN_R_Y",
+      add_precursors("L1322.Fert_GrossTrade_Mt_R_Y",
                      "common/GCAM_region_names",
                      "energy/A322.globaltech_shrwt") ->
       L2322.StubTechProd_FertImport
@@ -550,7 +548,7 @@ module_energy_L2322.Fert <- function(command, ...) {
       add_title("calibrated base-year consumption of domestically produced ammonia") %>%
       add_units("Mt NH3") %>%
       add_comments("Calculated as production minus exports") %>%
-      add_precursors("L142.ag_Fert_NetExp_MtN_R_Y",
+      add_precursors("L1322.Fert_GrossTrade_Mt_R_Y",
                      "common/GCAM_region_names",
                      "energy/A322.globaltech_shrwt") ->
       L2322.StubTechProd_FertDomCons

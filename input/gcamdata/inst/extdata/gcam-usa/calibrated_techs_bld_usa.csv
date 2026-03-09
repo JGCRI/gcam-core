@@ -44,9 +44,9 @@ resid clothes washers,electricity,clothes washer hi-eff,elect_td_bld,resid,elect
 resid televisions,electricity,electricity,elect_td_bld,resid,electricity,resid televisions
 resid computers,electricity,electricity,elect_td_bld,resid,electricity,resid computers
 resid furnace fans,electricity,electricity,elect_td_bld,resid,electricity,resid furnace fans
-resid other,gas,gas,delivered gas,resid,gas,resid other
-resid other,electricity,electricity,elect_td_bld,resid,electricity,resid other
-resid other,refined liquids,refined liquids,refined liquids enduse,resid,refined liquids,resid other
+resid others,gas,gas,delivered gas,resid,gas,resid other
+resid others,electricity,electricity,elect_td_bld,resid,electricity,resid other
+resid others,refined liquids,refined liquids,refined liquids enduse,resid,refined liquids,resid other
 comm heating,biomass,wood furnace,delivered biomass,comm,biomass,comm heating
 comm heating,coal,coal furnace,delivered coal,comm,coal,comm heating
 comm heating,gas,gas furnace,delivered gas,comm,gas,comm heating
@@ -74,7 +74,7 @@ comm lighting,electricity,solid state,elect_td_bld,comm,electricity,comm lightin
 comm refrigeration,electricity,refrigeration,elect_td_bld,comm,electricity,comm refrigeration
 comm refrigeration,electricity,refrigeration hi-eff,elect_td_bld,comm,electricity,comm refrigeration
 comm office,electricity,office equipment,elect_td_bld,comm,electricity,comm office
-comm other,gas,gas,delivered gas,comm,gas,comm other
-comm other,electricity,electricity,elect_td_bld,comm,electricity,comm other
-comm other,refined liquids,refined liquids,refined liquids enduse,comm,refined liquids,comm other
+comm others,gas,gas,delivered gas,comm,gas,comm other
+comm others,electricity,electricity,elect_td_bld,comm,electricity,comm other
+comm others,refined liquids,refined liquids,refined liquids enduse,comm,refined liquids,comm other
 comm non-building,electricity,electricity,elect_td_bld,comm,electricity,comm non-building

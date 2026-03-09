@@ -1,0 +1,12 @@
+# File: Melaina_h2_water.csv
+# Title: Water intensities of hydrogen production
+# Units: gallons of water per kg of hydrogen produced
+# Source: Marc Melaina (HFTO) email 2/3/25 re: Water Use in Hydrogen Production
+# Column types: ccn
+# ----------
+Technology,Unit,Value
+Conventional SMR,gal H2O per kg H2,2.2
+SMR with CCS,gal H2O per kg H2,6
+Nuclear electrolysis,gal H2O per kg H2,35
+Solar PV electrolysis,gal H2O per kg H2,15.5
+Wind electrolysis,gal H2O per kg H2,7

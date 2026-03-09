@@ -148,10 +148,9 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
       spread(Non.CO2, input.emissions) %>%
       ###NOTE: emissions from coal use in commercial buildings "other" category does not have an equivalent representation
       #in the fifty state data. For now move these emissions over to comm heating
-      mutate(supplysector = if_else(grepl("comm",supplysector) & subsector == "coal","comm heating", supplysector)) %>%
-      ###NOTE: multiple consumers implemented in the global version need to be aggregated to estimate emissions in GCAM-USA
-      mutate(supplysector = if_else(grepl("resid heating",supplysector),"resid heating",supplysector),
-             supplysector = if_else(grepl("resid cooling",supplysector),"resid cooling",supplysector),
+      mutate(supplysector = if_else(grepl("comm",supplysector) & subsector == "coal","comm heating", supplysector),
+             ###NOTE: income deciles and modern/coal/TradBio distinctions are dropped in GCAM-USA
+             supplysector = sub(" TradBio_d[0-9]{1,2}$| modern_d[0-9]{1,2}$| coal_d[0-9]{1,2}$", "", supplysector),
              supplysector = if_else(grepl("resid others",supplysector),"resid others",supplysector)) %>%
       # add up the supplysectors, required due to multiple consumers
       group_by(region,supplysector,subsector,stub.technology,year,input.name) %>%
@@ -212,37 +211,20 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
       select(region, supplysector, subsector, stub.technology, year, CH4, N2O) ->
       en_ghg_emissions_state
 
-    # Buildings: First subset the heating and cooling demands
-    L244.StubTechCalInput_bld_gcamusa %>%
-      filter(year %in% en_ghg_emissions_USA$year & subsector %in% en_ghg_emissions_USA$subsector) %>%
-      # Add a sector column to match with the emissions data
-      mutate(sector = if_else(supplysector %in% c("comm heating", "comm cooling", "resid heating", "resid cooling"),
-                              supplysector,if_else(grepl("comm", supplysector),"comm others","resid others"))) %>%
-      select(region, sector, supplysector, subsector, stub.technology, year, calibrated.value) ->
-      bld_fuel_input_state
+    # Buildings: multiply nation-level emissions by state-wise share
+    L273.BldStateTechShares <- L244.StubTechCalInput_bld_gcamusa %>%
+      group_by(supplysector, subsector, stub.technology, year) %>%
+      mutate(state_share = calibrated.value / sum(calibrated.value)) %>%
+      ungroup() %>%
+      select(region, supplysector, subsector, stub.technology, year, state_share)
 
-    # Create aggregate table for total nation fuel inputs by emissions category
-    bld_fuel_input_state %>%
-      group_by(sector, subsector, year) %>%
-      summarise(calibrated.value = sum(calibrated.value)) ->
-      bld_fuel_input_agg
-
-    # Compute shares of national and sector total for each fuel input technology
-    bld_fuel_input_state %>%
-      left_join_error_no_match(bld_fuel_input_agg, by = c("sector", "subsector", "year")) %>%
-      mutate(share = calibrated.value.x / calibrated.value.y) %>%
-      # some zero divided zero case
-      replace_na(list(share = 0)) %>%
-      left_join_error_no_match(en_ghg_emissions_USA %>%
-                                 select("supplysector", "subsector", "year", "CH4", "N2O") %>%
-                                 group_by(supplysector, subsector, year) %>%
-                                 summarise(CH4 = sum(CH4), N2O = sum(N2O)) %>%
-                                 ungroup(),
-                               by = c("sector" = "supplysector","subsector","year")) %>%
-      mutate(CH4 = share * CH4,
-             N2O = share * N2O) %>%
-      select(region, supplysector, subsector, stub.technology, year, CH4, N2O) ->
-      bld_ghg_emissions_state
+    # This method drops emissions from technologies not considered in GCAM-USA (e.g., coal)
+    bld_ghg_emissions_state <- en_ghg_emissions_USA %>%
+      select(-region) %>%
+      inner_join(L273.BldStateTechShares, by = c("supplysector", "subsector", "stub.technology", "year")) %>%
+      mutate(CH4 = CH4 * state_share,
+             N2O = N2O * state_share) %>%
+      select(region, supplysector, subsector, stub.technology, year, CH4, N2O)
 
     # Combine the buildings and other energy input emissions tables and convert to long format
     en_ghg_emissions_state %>%
@@ -316,15 +298,11 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
 
     # HFC Emissions from building cooling
     L241.hfc_pfc_bld <- L241.hfc_pfc_USA %>%
-      filter(grepl("resid cooling|comm cooling", supplysector)) %>%
+      filter(grepl("resid|comm", supplysector)) %>%
       # aggregate emissions by year, for buildings as a whole
       group_by(year, Non.CO2) %>%
-      mutate(input.emissions = sum(input.emissions)) %>%
-      # remove columns we don't need
-      select(c("year", "Non.CO2", "input.emissions")) %>%
-      distinct() %>%
+      summarise(input.emissions = sum(input.emissions)) %>%
       ungroup()
-
 
     # HFC distribution between commercial and residential refrigeration and A/C
     HFC_inventory_bld_dist <- inventory_fgas %>%

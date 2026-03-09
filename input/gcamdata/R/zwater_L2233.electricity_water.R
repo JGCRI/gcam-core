@@ -393,10 +393,10 @@ module_water_L2233.electricity_water <- function(command, ...) {
                                                                      "subsector" = "subsector.name",
                                                                      "stub.technology" = "technology",
                                                                      "year")) %>%
-      mutate(input.cost = capital.overnight * fixed.charge.rate / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ),
-             capital.coef = 1 / fixed.charge.rate,
-             tracking.market = "capital",
-             depreciation.rate = 1 / 15) %>%
+      mutate(input.cost = round(capital.overnight * fixed.charge.rate / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ), energy.DIGITS_COST),
+             capital.coef = round(1 / fixed.charge.rate, energy.DIGITS_COST),
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
+             depreciation.rate = round(1 / 15, energy.DIGITS_COST)) %>%
       select(-capacity.factor, -capital.overnight, -fixed.charge.rate) %>%
       rename(minicam.non.energy.input = input.capital) ->
       L2233.StubTechTrackCapital_elec

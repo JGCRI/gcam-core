@@ -29,22 +29,10 @@ USA,base load generation,geothermal,end-year,1
 USA,intermediate generation,geothermal,end-year,1
 USA,subpeak generation,geothermal,end-year,1
 USA,peak generation,geothermal,end-year,1
-USA,base load generation,nuclear,initial-future-year,0
-USA,intermediate generation,nuclear,initial-future-year,0
-USA,subpeak generation,nuclear,initial-future-year,0
-USA,peak generation,nuclear,initial-future-year,0
-USA,base load generation,nuclear,2025,0
-USA,intermediate generation,nuclear,2025,0
-USA,subpeak generation,nuclear,2025,0
-USA,peak generation,nuclear,2025,0
-USA,base load generation,nuclear,2030,1
-USA,intermediate generation,nuclear,2030,1
-USA,subpeak generation,nuclear,2030,1
-USA,peak generation,nuclear,2030,1
-USA,base load generation,nuclear,2035,1
-USA,intermediate generation,nuclear,2035,1
-USA,subpeak generation,nuclear,2035,1
-USA,peak generation,nuclear,2035,1
+USA,base load generation,nuclear,initial-future-year,1
+USA,intermediate generation,nuclear,initial-future-year,1
+USA,subpeak generation,nuclear,initial-future-year,1
+USA,peak generation,nuclear,initial-future-year,1
 USA,base load generation,nuclear,end-year,1
 USA,intermediate generation,nuclear,end-year,1
 USA,subpeak generation,nuclear,end-year,1

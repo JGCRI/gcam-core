@@ -408,9 +408,9 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
       summarise(initial = sum(value)) %>%
       ungroup() %>%
       left_join_error_no_match(L144.EIA_AEO_target, by = c("fuel", "service")) %>%
-      # For "comm other" electricity, most of it is non-building, and will be taken into account below.
-      # For now, just set "comm other" electricity scaler to 1.
-      mutate(scaler = if_else(fuel == "electricity" & service == "comm other",
+      # For "comm others" electricity, most of it is non-building, and will be taken into account below.
+      # For now, just set "comm others" electricity scaler to 1.
+      mutate(scaler = if_else(fuel == "electricity" & service == "comm others",
                               1, AEO_target / initial )) -> L144.scaler_USA_comm_F_U_2010
 
     # Multiply state-level un-scaled energy use by these scalers prior to calculating end-use proportions
@@ -456,13 +456,13 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
       transmute(year,
                 pre = sum / sum[year == first_year_commext])
 
-    # One more adjustment - set 2010 comm exterior other ("comm non-building") electricity use equal to
-    # AEO_target minus unscaled aggregated 2010 value for "comm other". Interpolate back.
-    # This separates out "comm non-building" from "comm other" to provide a better estimate of
+    # One more adjustment - set 2010 comm exterior others ("comm non-building") electricity use equal to
+    # AEO_target minus unscaled aggregated 2010 value for "comm others". Interpolate back.
+    # This separates out "comm non-building" from "comm others" to provide a better estimate of
     # "comm non-building" in 2010 (which is outside the time scope of PNNL_Commext_elec) than the
     # previous method of scaling by population growth.
     comm_ext_2010 <- L144.scaler_USA_comm_F_U_2010 %>%
-      filter(fuel == "electricity" & service == "comm other") %>%
+      filter(fuel == "electricity" & service == "comm others") %>%
       mutate(AEO_target = AEO_target - initial) %>%
       distinct(AEO_target)
     comm_ext_2010 <- unique(comm_ext_2010$AEO_target)

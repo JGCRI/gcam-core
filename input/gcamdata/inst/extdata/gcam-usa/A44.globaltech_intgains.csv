@@ -35,9 +35,9 @@ resid clothes washers,electricity,clothes washer hi-eff,0.8
 resid televisions,electricity,electricity,0.866
 resid computers,electricity,electricity,0.866
 resid furnace fans,electricity,electricity,0
-resid other,gas,gas,0.866
-resid other,electricity,electricity,0.866
-resid other,refined liquids,refined liquids,0.866
+resid others,gas,gas,0.866
+resid others,electricity,electricity,0.866
+resid others,refined liquids,refined liquids,0.866
 comm hot water,gas,gas water heater,0.017
 comm hot water,gas,gas water heater hi-eff,0.017
 comm hot water,electricity,electric resistance water heater,0.017
@@ -55,7 +55,7 @@ comm lighting,electricity,solid state,0.846
 comm refrigeration,electricity,refrigeration,1
 comm refrigeration,electricity,refrigeration hi-eff,1
 comm office,electricity,office equipment,0.8
-comm other,gas,gas,0.048
-comm other,electricity,electricity,0.048
-comm other,refined liquids,refined liquids,0.048
+comm others,gas,gas,0.048
+comm others,electricity,electricity,0.048
+comm others,refined liquids,refined liquids,0.048
 comm non-building,electricity,electricity,0

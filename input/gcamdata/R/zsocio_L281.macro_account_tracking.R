@@ -45,7 +45,8 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
       "L239.TechCoef_reg",
       "L243.GlobalTechCoef_TotBio",
       "L2392.TechCoef_tra_NG",
-      "L2392.TechCoef_reg_NG")
+      "L2392.TechCoef_reg_NG",
+      FILE = "emissions/mappings/USAbld_emission_mapping")
 
   MODULE_OUTPUTS <-
     c("L281.BasePriceSectorMapping",
@@ -124,6 +125,22 @@ module_socio_L281.macro_account_tracking <- function(command, ...) {
     # given all of this it is a good idea to assert all the names match, granted this does
     # not protect against the case that a user didn't update any of these
     assertthat::assert_that(all.equal(sort(unique(fd_global_tech_input_all$sector.name)), sort(socioeconomics.FINAL_DEMAND_SECTORS)))
+
+    # adjust for USA specific buildings structure
+    USAbld_emission_mapping %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      left_join_error_no_match(fd_global_tech_input_all,
+                               by=c("from.supplysector" = "sector.name",
+                                    "from.subsector" = "subsector.name",
+                                    "from.stub.technology" = "technology",
+                                    "year")) %>%
+      select(sector.name = to.supplysector,
+             subsector.name = to.subsector,
+             technology = to.stub.technology,
+             year,
+             input.accounting) %>%
+      bind_rows(fd_global_tech_input_all, .) ->
+      fd_global_tech_input_all
 
     fd_global_tech_input_all %>%
       select(-input.accounting) %>%

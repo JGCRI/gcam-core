@@ -30,6 +30,7 @@ module_emissions_L252.MACC <- function(command, ...) {
              FILE = "emissions/mappings/CEDS_sector_tech_proc_revised",
              FILE = "common/GCAM_region_names",
              FILE = "emissions/EPA_MACC_PhaseInTime",
+             FILE = "emissions/mappings/USAbld_emission_mapping",
              "L152.MAC_pct_R_S_Proc_EPA",
              "L201.ghg_res",
              "L211.AGREmissions",
@@ -94,7 +95,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       GCAM_sector_tech <- get_data(all_data, "emissions/mappings/CEDS_sector_tech_proc_revised")
 
     }
-
+    USAbld_emission_mapping      <- get_data(all_data, "emissions/mappings/USAbld_emission_mapping")
     L152.MAC_pct_R_S_Proc_EPA <- get_data(all_data, "L152.MAC_pct_R_S_Proc_EPA")
     L201.ghg_res <- get_data(all_data, "L201.ghg_res", strip_attributes = TRUE)
     L211.AGREmissions <- get_data(all_data, "L211.AGREmissions", strip_attributes = TRUE)
@@ -115,9 +116,19 @@ module_emissions_L252.MACC <- function(command, ...) {
       unite(sector,c("sector","group"),sep = "_", remove = F) %>%
       unite(supplysector,c("supplysector","group"),sep = "_", remove = T)
 
+    #Also include the detailed technologies indicated in USAbld_emission_mapping
+    GCAM_sector_tech_USAbld <- bind_rows(GCAM_sector_tech_resid, filter(GCAM_sector_tech, grepl("comm",sector))) %>%
+      inner_join(select(USAbld_emission_mapping, -region),
+                by = c(supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")) %>%
+      mutate(supplysector = if_else(is.na(to.supplysector), supplysector, to.supplysector),
+             subsector = if_else(is.na(to.subsector), subsector, to.subsector),
+             stub.technology  = if_else(is.na(to.stub.technology ), stub.technology , to.stub.technology)) %>%
+      select(-to.supplysector, -to.subsector, -to.stub.technology)
+
     GCAM_sector_tech<- GCAM_sector_tech %>%
       filter(!grepl("resid",sector)) %>%
-      bind_rows(GCAM_sector_tech_resid)
+      bind_rows(GCAM_sector_tech_resid,
+                GCAM_sector_tech_USAbld)
 
     # update MAC using 2019 EPA
     # Prepare the table with all MAC curves for matching

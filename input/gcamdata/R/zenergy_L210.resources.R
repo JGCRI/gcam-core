@@ -722,7 +722,7 @@ module_energy_L210.resources <- function(command, ...) {
              FCR = (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^invest_lifetime) / ((1+socioeconomics.DEFAULT_INTEREST_RATE)^invest_lifetime -1),
              capital.coef = socioeconomics.RESOURCE_CAPITAL_RATIO / FCR,
              minicam.non.energy.input = "investment-cost",
-             tracking.market = "capital") %>%
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["ResReserveTechInvestmentInput"]]) ->
       L210.ResReserveTechInvestmentInput

@@ -178,6 +178,7 @@ CONV_BTU_KJ <- 1.055056
 CONV_MMBTU_GJ <- 1.055056
 CONV_MMBTU_KGH2 <- 0.113939965425114 # MMBTU/kg H2 - LHV Source: H2 CCTP Workbook.xls (Used for older GCAM assumptions)
 CONV_GJ_KGH2 <- 0.12021 #GJ/kg H2 - LHV
+CONV_NG_HHV_LHV <- 0.905
 
 # Distance
 CONV_MILE_KM <- 1.60934 # Mile to km
@@ -527,7 +528,7 @@ energy.SATIATION_YEAR             <- MODEL_FINAL_BASE_YEAR # Needs to be the las
 energy.UCD_EN_YEAR                <- 2005        # UCD transportation year to use to compute shares for allocation of energy to mode/technology/fuel within category/fuel
 energy.WIND.BASE.COST.YEAR        <- 2005        # Base cost year for wind, used in capacity factor calculations
 energy.FUEL_PRICES_MEAN_PERIOD    <- 5           # number of years used for calculating moving average for annual fossil fuel prices
-
+energy.H2A_CURRENT_YEAR           <- 2020        # Year of H2A "current" assumptions
 energy.ELEC_USE_BACKUP <- FALSE # constant for switching to old approach to variable renewable integration
                                 # FALSE (default) uses new value factor approach
                                 # TRUE eschews new approach and uses older backup capacity / backup electricity approach
@@ -644,27 +645,6 @@ energy.OILFRACT_FEEDSTOCKS      <- 0.8 # Fraction of liquids for oil electricity
 energy.TRAN_UCD_MODE<-'rev.mode'
 energy.TRAN_UCD_SIZE_CLASS<-'rev_size.class'
 
-# Constants related to ATB power sector technology costs
-# All relevant ATB database years included in NREL_ATB_capital file (energy.ATB_HISTORICAL_YEARS)
-energy.ATB_HISTORICAL_YEARS <- c(2017, 2019, 2021, 2022)
-# Here, we allow for user selectivity. Improvement parameters are taken from the
-# latest ATB year but the user can choose an ATB base year from recent history
-# (from 2015-energy.ATB_LATEST_YEAR)
-energy.ATB_BASE_YEAR <- max(energy.ATB_HISTORICAL_YEARS) - 2
-energy.ATB_LATEST_YEAR <- MODEL_FINAL_BASE_YEAR
-energy.ATB_MID_YEAR <- 2035
-energy.ATB_TARGET_YEAR <- 2035
-gcamusa.STORAGE_TECH <- "battery"
-energy.COSTS_MID_CASE <- "central"
-energy.COSTS_ADV_CASE <- "adv tech"
-energy.COSTS_LOW_CASE <- "low tech"
-energy.CAPITAL_INPUT <- "capital"
-energy.OM_FIXED_INPUT <- "OM-fixed"
-energy.OM_VAR_INPUT <- "OM-var"
-# Constraint to check disagreement between ATB datasets. If this ratio varies by
-# a factor of 0.3, we will copy back costs from the latest year in the ATB dataset
-energy.ATB_OVERLAP_CONSTRAINT <- 0.3
-
 # Constants for the residential sector: Parameters for USA (estimated offline) and unadjusted saturation values:
 energy.OBS_UNADJ_SAT <- 100
 gcamusa.OBS_UNADJ_SAT <- 150
@@ -673,6 +653,13 @@ gcamusa.LAND_DENSITY_PARAM <- 0
 gcamusa.B_PARAM <- 3.49026
 gcamusa.INCOME_PARAM <- 0.4875
 
+# YZ 2025/08/27 Electricity consumption fraction of "resid televisions" out of "resid televisions" plus "resid others"
+# and electricity consumption fraction of "comm non-building" out of "comm non-building" plus "comm others".
+# The two fractions are calculated based on gcamusa L144.in_EJ_state_comm_F_U_Y and L144.in_EJ_state_res_F_U_Y, values at max(year) = 2021
+# and are used to disaggregate Scout data, e.g., disagg Scout's "resid others" into "resid others" and "resid televisions"
+# because Scout does not provide value for "resid televisions" but gcamusa does
+energy.USA_RESID_OTHERELEC_TV_FRAC <- 0.223
+energy.USA_COMM_OTHERELEC_NONBLD_FRAC <- 0.477
 
 # Constants for global detailed industry
 energy.OFF_ROAD.BIOMASS_GROWTH <- c("Africa_Eastern","Africa_Southern","Africa_Western") #limit fast growth of biomass in agriculture energy use
@@ -1009,7 +996,6 @@ emissions.INDURB_PROCESS_MISCEMISSIONS_CALVAL <- 0.001
 # GCAM-USA constants ======================================================================
 
 # GCAM-USA time
-gcamusa.WIND_BASE_COST_YEAR <- 2005
 gcamusa.HYDRO_HIST_YEAR <- 2015
 gcamusa.HYDRO_FINAL_AEO_YEAR <- 2050
 
@@ -1080,10 +1066,14 @@ gcamusa.GEOTHERMAL_DEFAULT_EFFICIENCY <- 0.1
 gcamusa.ELECT_TD_SECTORS  <- c("elect_td_bld", "elect_td_ind", "elect_td_trn")
 
 #Fuels whose markets will be represented with state-specific prices
-gcamusa.STATE_FUEL_MARKETS <- c(gcamusa.ELECT_TD_SECTORS, "H2 industrial", "H2 retail delivery", "H2 retail dispensing",
-                                "H2 wholesale delivery", "H2 wholesale dispensing","H2 central production","H2 pipeline","H2 liquid truck")
+gcamusa.STATE_FUEL_MARKETS <- c(gcamusa.ELECT_TD_SECTORS, "H2 central production", "H2 industrial", "H2 LDV",
+                                "H2 liquid truck", "H2 MHDV", "H2 pipeline", "H2 retail delivery",
+                                "H2 wholesale delivery", "LH2",
+                                "delivered biomass", "regional biomass")
 
-# Indicate whether to use regional ?cost adders? to differentiate
+gcamusa.H2_TD_MARKETS <- c("H2 pipeline","H2 liquid truck")
+
+# Indicate whether to use regional cost adders to differentiate
 # fuel prices by grid region in GCAM-USA (FALSE = same prices in all states)
 gcamusa.USE_REGIONAL_FUEL_MARKETS  <- TRUE
 

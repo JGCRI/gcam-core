@@ -23,7 +23,8 @@ USA,elec_biomass (IGCC)
 USA,elec_biomass (conv CCS)
 USA,elec_biomass (IGCC CCS)
 USA,elec_Gen_II_LWR
-USA,elec_Gen_III
+USA,elec_large reactor
+USA,elec_SMR
 USA,elec_CSP_storage
 USA,elec_geothermal
 USA,elect_td_bld

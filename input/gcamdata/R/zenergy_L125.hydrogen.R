@@ -8,12 +8,13 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L125.globaltech_coef},  \code{L125.globaltech_cost},  \code{L125.Electrolyzer_IdleRatio_Params}.
-#' @details Takes inputs from H2A and generates GCAM's assumptions by technology and year
+#' the generated outputs: \code{L125.globaltech_coef},  \code{L125.globaltech_cost},
+#' \code{L125.StubTechCost_h2_hybrid_scen}, \code{L125.StubTechCoef_h2_hybrid_scen}.
+#' @details Takes inputs from H2A-Lite and generates GCAM's assumptions by technology and year
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange filter group_by mutate select if_else
 #' @importFrom tidyr complete nesting
-#' @author GPK/JF/PW July 2021
+#' @author YZ/GPK April 2025
 #'
 #'
 #' # Note:  NREL H2A v2018 did not include the following H2 production technologies:
@@ -23,560 +24,412 @@
 #'
 module_energy_L125.hydrogen <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "energy/H2A_IO_coef_data",
-             FILE = "energy/H2A_NE_cost_data",
-             FILE = "energy/H2A_electrolyzer_NEcost_CF",
-             "L223.GlobalTechCapital_elec",
-             "L223.GlobalTechEff_elec",
-             "L223.GlobalTechOMvar_elec",
-             "L223.GlobalTechOMfixed_elec",
-             "L223.GlobalTechCapFac_elec"))
+    return(c(FILE = "common/GCAM_region_names",
+             FILE = "energy/H2ALite_TEAdata",
+             FILE = "energy/H2ALite_wind_solar_CF",
+             FILE = "energy/Melaina_h2_water",
+             FILE = "energy/mappings/H2ALite_TEA_mapping",
+             "L223.GlobalTechCapFac_elec",
+             "L1233.globaltech_capital_ATB",
+             "L1233.globaltech_capital_ATB_adv",
+             "L1233.globaltech_capital_ATB_low",
+             "L1233.globaltech_OMfixed_ATB",
+             "L1233.globaltech_OMvar_ATB",
+             "L223.StubTechCapFactor_elec"))
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L125.globaltech_coef",
-             "L125.globaltech_cost",
-             "L125.Electrolyzer_IdleRatio_Params"))
+    return(c("L125.globaltech_coef_scen",
+             "L125.globaltech_cost_scen",
+             "L125.nuclear_hydrogen_costs_adv",
+             "L125.nuclear_hydrogen_costs_low",
+             "L125.StubTechCost_h2_hybrid_scen",
+             "L125.StubTechCoef_h2_hybrid_scen"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
 
-    year <- value <- technology <- capital.overnight <- coal_IGCC_CCS <- coal_IGCC <-
-      sector.name <- subsector.name <- IGCC_CCS_no_CCS_2015_ratio <- efficiency <-
-      IGCC_CCS <- IGCC_no_CCS <- with_CCS <- without_CCS <- CCS_add_cost <- `2100` <-
-      `2015` <- max_improvement <- CCS_sub_eff <- notes <- minicam.energy.input <-
-      minicam.non.energy.input <- improvement_to_2040 <- improvement_rate <- cost <-
-      min_cost <- improvement_rate_post_2040 <- improve_max <- capacity.factor <- lm <- NULL  # silence package check notes
+    year <- value <- technology <- capacity.factor <- NULL  # silence package check notes
 
+    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
+    H2ALite_TEAdata <- get_data(all_data, "energy/H2ALite_TEAdata")
+    H2ALite_TEA_mapping <- get_data(all_data, "energy/mappings/H2ALite_TEA_mapping")
+    H2ALite_wind_solar_CF <- get_data(all_data,"energy/H2ALite_wind_solar_CF", strip_attributes = TRUE)
+    Melaina_h2_water <- get_data(all_data, "energy/Melaina_h2_water")
 
-    H2A_prod_coef <- get_data(all_data, "energy/H2A_IO_coef_data")
-    H2A_prod_cost <- get_data(all_data, "energy/H2A_NE_cost_data")
-    H2A_electrolyzer_NEcost_CF <- get_data(all_data, "energy/H2A_electrolyzer_NEcost_CF")
-
-    L223.GlobalTechCapital_elec <- get_data(all_data, "L223.GlobalTechCapital_elec")
-    L223.GlobalTechEff_elec <- get_data(all_data, "L223.GlobalTechEff_elec")
-    L223.GlobalTechOMvar_elec <- get_data(all_data, "L223.GlobalTechOMvar_elec", strip_attributes = TRUE)
-    L223.GlobalTechOMfixed_elec <- get_data(all_data, "L223.GlobalTechOMfixed_elec", strip_attributes = TRUE)
     L223.GlobalTechCapFac_elec <- get_data(all_data, "L223.GlobalTechCapFac_elec", strip_attributes = TRUE)
+    L1233.globaltech_capital_ATB <- get_data(all_data, "L1233.globaltech_capital_ATB", strip_attributes = TRUE)
+    L1233.globaltech_capital_ATB_adv <- get_data(all_data, "L1233.globaltech_capital_ATB_adv", strip_attributes = TRUE)
+    L1233.globaltech_capital_ATB_low <- get_data(all_data, "L1233.globaltech_capital_ATB_low", strip_attributes = TRUE)
+    L1233.globaltech_OMvar_ATB <- get_data(all_data, "L1233.globaltech_OMvar_ATB", strip_attributes = TRUE)
+    L1233.globaltech_OMfixed_ATB <- get_data(all_data, "L1233.globaltech_OMfixed_ATB", strip_attributes = TRUE)
+    L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec", strip_attributes = TRUE)
 
     # ===================================================
 
     # Process data
 
-    # A. Calculate base-year cost and energy efficiency ratio of CCS to non CCS for coal and biomass IGCC electricity generation.
-    nonFuelLCOE_elec <- L223.GlobalTechCapital_elec %>%
-      left_join_error_no_match(L223.GlobalTechOMfixed_elec, by = c('sector.name','subsector.name','technology','year')) %>%
-      left_join_error_no_match(L223.GlobalTechCapFac_elec, by = c('sector.name','subsector.name','technology','year')) %>%
-      left_join_error_no_match(L223.GlobalTechOMvar_elec, by = c('sector.name','subsector.name','technology','year')) %>%
-      mutate(nonfuel.LCOE = ( capital.overnight * fixed.charge.rate + OM.fixed ) / (capacity.factor * 365 * 24) + OM.var / 1000) %>%
-      select(sector.name, subsector.name,technology,year, nonfuel.LCOE)
+    H2ALite_TEAdata %>%
+      filter(Region=="US Average",
+             Technology %in% unique(H2ALite_TEA_mapping$TechnologyH2A)) %>%
+      select(Year, Scenario, Technology,`Energy-free levelized cost [2022$/kg]`, contains('Energy use')) %>%
+      rename(TechnologyH2A=Technology,
+             year=Year) %>%
+      fill(`Energy-free levelized cost [2022$/kg]`, contains('Energy use'), .direction="down") ->
+      L125.H2ALite_TEAdata
 
-    nonFuelLCOE_elec %>%
-      filter(technology %in% c("coal (IGCC)", "coal (IGCC CCS)"),
-                     year == 2015) %>%
-      spread(technology, nonfuel.LCOE) %>%
-      rename(coal_IGCC = "coal (IGCC)",coal_IGCC_CCS = "coal (IGCC CCS)") %>%
-      mutate(IGCC_CCS_no_CCS_2015_ratio = coal_IGCC_CCS / coal_IGCC) %>%
-      select(sector.name, subsector.name, IGCC_CCS_no_CCS_2015_ratio) -> elec_IGCC_2015_cost_ratio
+    # cost data: convert units and expand to all model years
+    # for hybrid and nuclear electrolysis, these costs do not include the costs of self-generated electricity
+    # this is denoted by using "other non-energy" as the name of the non-energy input cost
+    # for onsite production, these costs do not include on-site compression, refrigeration, and storage, which are added
+    # by A25.globaltech_cost. This is denoted by using "production" as the name of the NE cost
+    L125.globaltech_cost_scen <- L125.H2ALite_TEAdata %>%
+      inner_join(H2ALite_TEA_mapping, by = "TechnologyH2A") %>%
+      mutate(input.cost = `Energy-free levelized cost [2022$/kg]` * cost_multiplier * gdp_deflator(1975,2022) / CONV_GJ_KGH2) %>%
+      select(Scenario, sector.name, subsector.name, technology, year, input.cost) %>%
+      complete(nesting(Scenario, sector.name, subsector.name, technology), year = MODEL_YEARS) %>%
+      mutate(minicam.non.energy.input = if_else(subsector.name %in% c("hybrid", "nuclear"), "other non-energy", "non-energy"),
+             minicam.non.energy.input = if_else(subsector.name == "onsite production", "production", minicam.non.energy.input),
+             units="$1975/GJ H2") %>%
+      group_by(Scenario, sector.name, subsector.name, technology) %>%
+      mutate(input.cost = approx_fun(year, input.cost,  rule = 2)) %>%
+      ungroup()
 
-
-    L223.GlobalTechEff_elec %>%
-      filter(technology %in% c("coal (IGCC)", "coal (IGCC CCS)","biomass (IGCC)", "biomass (IGCC CCS)"),
-             year == 2015 ) %>%
-      mutate(technology = if_else(technology %in% c("coal (IGCC CCS)", "biomass (IGCC CCS)"), "IGCC_CCS",
-                                  if_else(technology %in% c("coal (IGCC)", "biomass (IGCC)"), "IGCC_no_CCS",
-                                          NA_character_))) %>%
-      spread(technology, efficiency) %>%
-      mutate(IGCC_CCS_no_CCS_2015_ratio = IGCC_CCS / IGCC_no_CCS) %>%
-      select(sector.name, subsector.name, IGCC_CCS_no_CCS_2015_ratio) -> elec_IGCC_2015_eff_ratio
-
-
-    elec_IGCC_2015_eff_ratio %>%
-      filter(subsector.name == "biomass") -> elec_IGCC_2015_eff_ratio_bio
-
-    elec_IGCC_2015_eff_ratio %>%
-      filter(subsector.name == "coal") -> elec_IGCC_2015_eff_ratio_coal
-
-    # B. Calculate maximum future improvement (2100/2015) of CCS for biomass and coal IGCC electricity technologies
-    #    Costs:
-    nonFuelLCOE_elec %>%
-      filter(technology %in% c("coal (IGCC)", "coal (IGCC CCS)","biomass (IGCC)", "biomass (IGCC CCS)"),
-             year %in% c(2015, 2100)) %>%
-      mutate(technology = if_else(technology %in% c("coal (IGCC)", "biomass (IGCC)"), "without_CCS",
-                                  if_else(technology %in% c("coal (IGCC CCS)", "biomass (IGCC CCS)"), "with_CCS",
-                                          NA_character_))) %>%
-      spread(technology, nonfuel.LCOE) %>%
-      mutate(CCS_add_cost = with_CCS - without_CCS) %>%
-      select(sector.name, subsector.name, year, CCS_add_cost) %>%
-      spread(year, CCS_add_cost) %>%
-      mutate(max_improvement = (1 - (`2100` / `2015` )),
-             technology = if_else(subsector.name == "coal", "coal (IGCC CCS)",
-                                  if_else(subsector.name == "biomass", "biomass (IGCC CCS)",
-                                          NA_character_))) %>%
-      select(sector.name, subsector.name, technology, max_improvement) -> elec_IGCC_CCS_cost_improvement
-
-
-    #     Efficiency:
-    L223.GlobalTechEff_elec %>%
-      filter(technology %in% c("coal (IGCC)", "coal (IGCC CCS)","biomass (IGCC)", "biomass (IGCC CCS)"),
-             year %in% c(2015, 2100)) %>%
-      mutate(technology = if_else(technology %in% c( "coal (IGCC)", "biomass (IGCC)"), "without_CCS",
-                                  if_else(technology %in% c( "coal (IGCC CCS)", "biomass (IGCC CCS)"), "with_CCS",
-                                          NA_character_))) %>%
-      spread(technology, efficiency) %>%
-      mutate(CCS_sub_eff = with_CCS - without_CCS) %>%
-      select(sector.name, subsector.name, year, CCS_sub_eff) %>%
-      spread(year, CCS_sub_eff) %>%
-      mutate(max_improvement = (1 -  (`2100` / `2015`)) ,
-             technology = if_else(subsector.name == "coal", "coal (IGCC CCS)",
-                                  if_else(subsector.name == "biomass", "biomass (IGCC CCS)",
-                                          NA_character_))) %>%
-      select(sector.name, subsector.name, technology, max_improvement) -> elec_IGCC_CCS_eff_improvement
-
-     # D. Convert Units from H2A ($/kg, GJ/kg) to GCAM (1975$/GJ, GJ/GJ)
-     H2A_prod_cost %>%
-       select(-notes)%>%
-       gather_years() %>%
-       mutate(value = if_else(units == "$2016/kg H2", value * gdp_deflator(1975,2016),
-                              if_else(units == "$2005/kg H2", value * gdp_deflator(1975,2005),
-                                      NA_real_)),
-              value=value/CONV_GJ_KGH2,
-              units="$1975/GJ H2")-> H2A_prod_cost_conv
-
-     H2A_prod_coef %>%
-       select(-notes)%>%
-       gather_years()%>%
-       mutate(value = if_else(units == "GJ hydrogen output / GJ input", value ^ -1, #convert efficiency to coef
-                              if_else(units == "GJ in /kg H2 out", value / CONV_GJ_KGH2, #convert to per GJ H2 basis
-                                      if_else(units == 'gal / kgH2 out', value / CONV_GJ_KGH2 * CONV_GAL_M3,
-                                      NA_real_))),
-              units = if_else(minicam.energy.input %in% c('water_td_ind_C','water_td_ind_W'),"M3 water / GJ H2", "GJ input / GJ H2")) -> H2A_prod_coef_conv
-
-     # E. Process H2A data, extrapolating all technologies in H2A to all GCAM model years using the cost and efficiency improvement factors calculated above
-
-     # Base year bio + CCS and coal w/o CCS assumptions were created by applying the ratio between
-     # comparable IGCC technologies in the power sector.
-     #
-     # Coal w/o CCS was given the same improvement rate as the NREL H2A biomass w/o CCS technology.
-     #
-     # The "difference" (cost adder or efficiency loss) between "CCS" and "no CCS" technology pairs for
-     # coal and biomass was then reduced over time by leveraging the reduction in this difference for
-     # the comparable IGCC technologies in the power sector.
-     #
-     # Coal w/CCS and biomass w/CCS were then extended by adding this "difference" (cost adder or efficiency
-     # loss) to the non-CCS version of the H2 production technology, for each period.
-
-     H2A_prod_cost_conv %>%
-       filter(technology %in% c("biomass to H2", "coal chemical CCS")) -> existing_coal_bio
-
-     existing_coal_bio %>%
-       filter(technology == "biomass to H2") -> bio_no_CCS
-
-     bio_no_CCS_impro_2040 <- bio_no_CCS$improvement_to_2040[1]
-
-     bio_no_CCS_max_improv <- bio_no_CCS$max_improvement[1]
-
-
-     existing_coal_bio %>%
-       mutate(value = if_else(subsector.name == "biomass", value * elec_IGCC_2015_cost_ratio$IGCC_CCS_no_CCS_2015_ratio, #inflate bio to bioCCS cost...
-                              if_else(subsector.name == "coal", value / elec_IGCC_2015_cost_ratio$IGCC_CCS_no_CCS_2015_ratio,NA_real_)), #and deflate coal chemical CCS to coal chemical cost, using ratio of CCS to no CCS costs for IGCC elec
-              technology = if_else(subsector.name == "coal","coal chemical",
-                                   if_else(subsector.name == "biomass","biomass to H2 CCS",
-                                           NA_character_)),
-              improvement_to_2040 = if_else(technology == "coal chemical", bio_no_CCS_impro_2040,#Set coal w/o CCS improvements equal to bio w/o CCS
-                                            NA_real_ ),
-              max_improvement = if_else(technology == "coal chemical", bio_no_CCS_max_improv,
-                                        NA_real_ ))%>%
-       select(sector.name, subsector.name, technology, minicam.non.energy.input,
-              units, year, value, improvement_to_2040, max_improvement) %>%
-       mutate(improvement_to_2040 = approx_fun(year, improvement_to_2040, rule = 2)) -> add_coal_and_bio
-
-
-
-     add_coal_and_bio %>%
-       filter(technology=='coal chemical') -> coal_chem_costs_scaled
-
-     coal_chem_costs_scaled %>%
-       complete(nesting(sector.name, subsector.name, technology,minicam.non.energy.input), year = sort(unique(c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)))) %>%
-       arrange(sector.name, subsector.name, technology, minicam.non.energy.input, year) %>%
-       group_by(sector.name, subsector.name, technology, minicam.non.energy.input) %>%
-       mutate(improvement_rate = (1 - improvement_to_2040[year == 2015]) ^ (1 / (2040 - 2015)) - 1,
-              min_cost = value[year == 2015]*(1 - max_improvement[year == 2015]),
-              cost = if_else(year <= 2015,value[year == 2015],
-                             value[year == 2015]*(1 + improvement_rate) ^ (year - 2015)),
-              cost = if_else(cost >= min_cost, cost, min_cost),
-              units = first(na.omit(units))) -> coal_chem_costs_GCAM_years
-
-
-     H2A_prod_cost_conv %>%
-       filter(!(technology %in% c("coal chemical", "biomass to H2 CCS" , "coal chemical CCS"))) -> H2A_NE_cost_add_2015_techs
-
-    H2A_NE_cost_add_2015_techs %>%
-       complete(nesting(sector.name, subsector.name, technology,minicam.non.energy.input), year = sort(unique(c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)))) %>%
-       arrange(sector.name, subsector.name, technology, minicam.non.energy.input,year) %>%
-       group_by(sector.name, subsector.name, technology, minicam.non.energy.input) %>%
-       mutate(max_improvement = if_else(subsector.name == 'nuclear', improvement_to_2040, max_improvement),
-              improvement_to_2040 = approx_fun(year,improvement_to_2040, rule = 2),
-              max_improvement = approx_fun(year,max_improvement, rule = 2),
-              improvement_rate = (1 - improvement_to_2040)^(1 / (2040 - 2015)) -1, #convert improvement by 2040 to annual compound growth rate
-              min_cost = value[year == 2015]*(1 - max_improvement),
-              cost = if_else(year <= 2015,value[year==2015],
-                             value[year == 2015]*(1 + improvement_rate) ^ (year - 2015)), #apply calculated CAGR from above to calculate cost declination pathway
-              cost = if_else(cost >= min_cost,cost,
-                             min_cost),
-              units = first(na.omit(units)))%>%
-       bind_rows(coal_chem_costs_GCAM_years) %>% #add back coal chem
-       ungroup() -> H2A_NE_cost_GCAM_years
-
-
-    # G. Create bio + CCS and extend coal w/CCS
-
-    # First, set bio's CCS tech to the same improvement rate as coal's, otherwise bio + CCS gets cheaper than coal + CCS
-    elec_IGCC_CCS_cost_improvement %>%
-      filter(subsector.name == 'coal') -> coal_elec_IGCC_CCS_cost_improvement
-
-    max_CCS_cost_improvement <- coal_elec_IGCC_CCS_cost_improvement$max_improvement
-
-
-    add_coal_and_bio %>% # calculate the incremental cost of CCS
-      select(-improvement_to_2040,-max_improvement) %>%
-      bind_rows(existing_coal_bio %>% select(-improvement_to_2040,-max_improvement)) %>%
-      filter(year==2015) %>%
-      mutate(value = if_else(subsector.name == 'biomass',value[technology == 'biomass to H2 CCS'] - value[technology == 'biomass to H2'],#calculate difference between CCS, no CCS techs to get an incremental cost of CCS
-                             if_else(subsector.name == 'coal',value[technology == 'coal chemical CCS'] - value[technology == 'coal chemical'],
-                                     NA_real_))) %>%
-      filter(technology %in% c("biomass to H2 CCS" , "coal chemical CCS"))%>%
-      complete(nesting(sector.name, subsector.name, technology,minicam.non.energy.input), year = sort(unique(c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)))) %>%
-      mutate(max_improvement = max_CCS_cost_improvement) %>%
-      arrange(sector.name, subsector.name, technology, minicam.non.energy.input,year) %>%
-      group_by(sector.name, subsector.name, technology, minicam.non.energy.input) %>%
-      mutate(improvement_rate = (1 - max_improvement) ^ (1 / (2100 - 2015)) - 1,
-             min_cost = value[year == 2015]*(1 - max_improvement),
-             cost = if_else(year <= 2015,value[year == 2015],
-                            value[year == 2015] * (1 + improvement_rate) ^ (year - 2015)), #apply calculated CAGR from above to calculate cost declination pathway
-             ccs_incr_cost = if_else(cost >= min_cost,cost,
-                                     min_cost),
-             units = first(na.omit(units))) %>%
+    # Input-output coefficients are indicated in individually named columns (one column per fuel) in H2ALite_TEAdata
+    # These are translated to GCAM's input names and coefficients prior to gathering, in order to apply fuel-specific conversion factors
+    # Zero values (really NA's) are filtered out, and the data are extrapolated to all model years
+    # Technology names are assigned from the mapping table, and the nuclear technology's input is switched from electricity to nuclear fuel, multiplying by 3
+    # This table is finished with the exception of renewable electricity inputs, for the hybrid renewable self-generation technology
+    L125.globaltech_coef_scen<- L125.H2ALite_TEAdata %>%
+      mutate(`regional natural gas` = `Energy use Natural Gas (Industrial) [mmBTU HHV/kg]` * CONV_NG_HHV_LHV * CONV_BTU_KJ / CONV_GJ_KGH2,
+             `regional biomass` = `Energy use Biomass [short dry ton/kg]`/ CONV_T_METRIC_SHORT * aglu.BIO_ENERGY_CONTENT_GJT / CONV_GJ_KGH2,
+             elect_td_ind = `Energy use Electricity (Industrial) [kWh/kg]`* CONV_KWH_GJ / CONV_GJ_KGH2,
+             `global solar resource`=`Energy use Electricity (Solar) [kWh/kg]`* CONV_KWH_GJ / CONV_GJ_KGH2,
+             `onshore wind resource`=`Energy use Electricity (On-shore wind) [kWh/kg]`* CONV_KWH_GJ / CONV_GJ_KGH2) %>%
+      select(Scenario, TechnologyH2A, year, matches('regional|resource|elect_td')) %>%
+      tidyr::gather(key="minicam.energy.input", value="coefficient", -year, -Scenario, -TechnologyH2A) %>%
+      filter(coefficient > 0) %>%
+      complete(nesting(Scenario, TechnologyH2A, minicam.energy.input), year = MODEL_YEARS) %>%
+      group_by(Scenario, TechnologyH2A, minicam.energy.input) %>%
+      mutate(coefficient = approx_fun(year, coefficient, rule = 2)) %>%
       ungroup() %>%
-      select(subsector.name, year, ccs_incr_cost)-> ccs_incr_cost
+      inner_join(H2ALite_TEA_mapping, by = "TechnologyH2A") %>%
+      select(Scenario, sector.name, subsector.name, technology, year, minicam.energy.input, coefficient) %>%
+      mutate(minicam.energy.input = if_else(subsector.name == "onsite production" & minicam.energy.input == "regional natural gas",
+                                            "delivered gas", minicam.energy.input),
+             minicam.energy.input = if_else(subsector.name == "onsite production" & minicam.energy.input == "elect_td_ind" & sector.name != "H2 industrial",
+                                            "elect_td_trn", minicam.energy.input),
+             minicam.energy.input = if_else(subsector.name == "nuclear", "nuclearFuelGenIII", minicam.energy.input),
+             coefficient = if_else(subsector.name == "nuclear", coefficient * 3, coefficient))
 
+    # Nuclear electricity generation costs are estimated from power sector assumptions, multiplied by electricity IOcoef
+    # In these nuclear tables we use "adv" for high tech and "low" for low tech (staying consistent with XML file names)
+    # This differs from the H2Alite scenario names where "low" means low-cost (i.e., high tech)
+    L125.nuclear_elec_costs_scen <- mutate(L1233.globaltech_capital_ATB, Scenario = "ref") %>%
+      bind_rows(mutate(L1233.globaltech_capital_ATB_adv, Scenario = "adv")) %>%
+      bind_rows(mutate(L1233.globaltech_capital_ATB_low, Scenario = "low")) %>%
+      filter(technology == "large reactor") %>%
+      left_join_error_no_match(L223.GlobalTechCapFac_elec,
+                               by = c(supplysector = "sector.name", subsector = "subsector.name", "technology", "year")) %>%
+      left_join_error_no_match(L1233.globaltech_OMfixed_ATB,
+                               by = c("supplysector", "subsector", "technology", "year")) %>%
+      left_join_error_no_match(L1233.globaltech_OMvar_ATB,
+                               by = c("supplysector", "subsector", "technology", "year")) %>%
+      mutate(nonfuel.LCOE = (capital.overnight * fixed.charge.rate + OM.fixed ) / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ) + OM.var / 1000 * CONV_KWH_GJ) %>%
+      select(Scenario, year, nonfuel.LCOE)
 
+    # Nuclear IO coef: re-divide nuclear fuel input by 3 to get electricity:hydrogen IOcoef
+    L125.nuc_IO <- filter(L125.globaltech_coef_scen, Scenario == "med" & subsector.name == "nuclear") %>%
+      mutate(coefficient = coefficient / 3) %>%
+      select(sector.name, subsector.name, technology, year, coefficient)
 
-    H2A_NE_cost_GCAM_years %>%
-      filter(subsector.name %in% c('biomass', 'coal'))%>%
-      select(sector.name, subsector.name, technology, minicam.non.energy.input,
-                     units, cost, year) %>%
-      arrange(sector.name, subsector.name, technology, minicam.non.energy.input,year) %>%
-      left_join_error_no_match(ccs_incr_cost,by=c('subsector.name', 'year')) %>%
-      mutate(cost = cost + ccs_incr_cost,
-             technology = if_else(subsector.name == 'biomass', 'biomass to H2 CCS',
-                                  if_else(subsector.name == 'coal', 'coal chemical CCS',
-                                          NA_character_))) %>%
-      select(-ccs_incr_cost)-> coal_and_bio_w_ccs
+    # Multiply the non-fuel LCOE (cost of electricity) by the hydrogen IOcoef
+    L125.nuclear_hydrogen_costs_scen <- left_join_error_no_match(L125.nuclear_elec_costs_scen, L125.nuc_IO,
+                                                             by = "year") %>%
+      mutate(minicam.non.energy.input = "nuclear electricity generation",
+             input.cost = round(nonfuel.LCOE * coefficient, energy.DIGITS_COST)) %>%
+      select(Scenario, sector.name, subsector.name, technology, year, minicam.non.energy.input, input.cost)
 
+    # Split the 3 nuclear scenarios into separate tables
+    # Adv and low nuclear-h2 electricity generation costs are saved, for adding to the nuclear_adv.xml and nuclear_low.xml input files
+    # Nuclear ref is used as the basis of the standard hydrogen sector assumptions, in all 3 hydrogen technology scenarios
+    L125.nuclear_hydrogen_costs_adv <- filter(L125.nuclear_hydrogen_costs_scen, Scenario == "adv") %>%
+      select(-Scenario)
+    L125.nuclear_hydrogen_costs_ref <- filter(L125.nuclear_hydrogen_costs_scen, Scenario == "ref") %>%
+      select(-Scenario)
+    L125.nuclear_hydrogen_costs_low <- filter(L125.nuclear_hydrogen_costs_scen, Scenario == "low") %>%
+      select(-Scenario)
 
+    L125.globaltech_cost_nuc_elec_scen <- L125.nuclear_hydrogen_costs_ref %>%
+      repeat_add_columns(tibble(Scenario = unique(H2ALite_TEAdata$Scenario)))
 
-    H2A_NE_cost_GCAM_years %>% # add missing CCS technologies with the rest of the data
-      select(sector.name, subsector.name, technology, minicam.non.energy.input, units, cost, year) %>%
-      bind_rows(coal_and_bio_w_ccs) -> L125.globaltech_cost
+    L125.globaltech_cost_scen <- bind_rows(L125.globaltech_cost_scen, L125.globaltech_cost_nuc_elec_scen)
 
+    # YZ 3/30/2025 estimate energy IO coefs and non-energy cost for solar-wind-hybrid electrolysis for non-USA regions
+    # Implementation of hybrid electrolyzer in the USA is in global tech database, but regions over-write these in their stub-techs
+    # Implementation for non-USA regions are based on linear models to predict the levelized non-energy
+    # cost and input-output coefficient based on explanatory variables of solar and wind CF in each region
+    # gather data and prepare for regression based on Paul Wolfram's analysis
+    L125.H2ALite_TEAdata_hybrid <- H2ALite_TEAdata %>%
+      filter(Year == 2040, Technology == 'Hybrid PEM', Region != 'US Average') %>%
+      select(Scenario,
+             region = Region,
+             cost_2022usd_per_kg = `Energy-free levelized cost [2022$/kg]`,
+             IO_solar_kwh_per_kg = `Energy use Electricity (Solar) [kWh/kg]`,
+             IO_wind_kwh_per_kg = `Energy use Electricity (On-shore wind) [kWh/kg]`) %>%
+      left_join_error_no_match(H2ALite_wind_solar_CF %>%
+                                 rename(region = State), by = 'region') %>%
+      mutate(sum_CF = Wind_CF + Solar_CF, # calculate the sum of solar and wind CFs
+             sum_CF_transform = 1/log10(sum_CF), # data transformation for better fit (see below)
+             CF_ratio_sol_wind = Solar_CF / Wind_CF, # calculate the fraction of the solar capacity factor over the wind capacity factor
+             H2_IO_ratio_sol_wind = IO_solar_kwh_per_kg / IO_wind_kwh_per_kg, # calculate the fraction of solar power used over wind power used per kg of H2 produced
+             cost_2022usd_per_kg_transf = 1/log10(cost_2022usd_per_kg)) # data transformation for better fit (see below)
 
+    Interpol_cost_scen <- L223.StubTechCapFactor_elec %>%
+      filter(year == 2040, stub.technology %in% c('wind', 'PV')) %>%
+      group_by(region) %>%
+      summarise(sum_CF = sum(capacity.factor)) %>%
+      ungroup() %>%
+      mutate(sum_CF_transform = 1/log10(sum_CF)) %>%
+      select(-sum_CF) %>%
+      mutate(cost_2022usd_per_kg_transf = as.numeric("")) %>%
+      repeat_add_columns(distinct(H2ALite_TEAdata, Scenario)) %>%
+      bind_rows(L125.H2ALite_TEAdata_hybrid %>%
+                  select(Scenario, region, sum_CF_transform, cost_2022usd_per_kg_transf))
 
-    #Coef processing
-    # ===================================================
+    Interpol_coef_scen <- L223.StubTechCapFactor_elec %>%
+      filter(year == 2040, stub.technology %in% c('wind', 'PV')) %>%
+      select(region,stub.technology,capacity.factor) %>%
+      spread(stub.technology,capacity.factor) %>%
+      mutate(CF_ratio_sol_wind = PV / wind) %>%
+      select(region, CF_ratio_sol_wind) %>%
+      mutate(H2_IO_ratio_sol_wind = as.numeric("")) %>%
+      repeat_add_columns(distinct(H2ALite_TEAdata, Scenario)) %>%
+      bind_rows(L125.H2ALite_TEAdata_hybrid %>%
+                  select(Scenario, region, CF_ratio_sol_wind, H2_IO_ratio_sol_wind))
 
+    Interpol_cost <- list()
+    Interpol_coef <- list()
+    for(i in unique(H2ALite_TEAdata$Scenario)){
+      model_cost_new_regions <- lm(cost_2022usd_per_kg_transf ~ sum_CF_transform, data = filter(Interpol_cost_scen, Scenario == i))
+      model_coef_new_regions <- lm(H2_IO_ratio_sol_wind ~ CF_ratio_sol_wind, data = filter(Interpol_coef_scen, Scenario == i))
 
-    H2A_prod_coef_conv %>%
-      complete(nesting(sector.name, subsector.name, technology,minicam.energy.input), year = sort(unique(c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)))) %>%
-      arrange(sector.name, subsector.name, technology, minicam.energy.input, year) %>%
-      group_by(sector.name, subsector.name, technology, minicam.energy.input) %>%
-      mutate(value = 1 / value,
-             units = if_else(minicam.energy.input %in% c( 'water_td_ind_C','water_td_ind_W' ),'GJ H2 / M3 H2O','GJ H2 / GJ input'),
-             improvement_to_2040 = (value[year == 2040] - value[year == 2015]) / value[year == 2015],
-             improvement_rate = (1 + improvement_to_2040) ^ (1 / (2040 - 2015)) - 1) %>%
-      ungroup() -> H2A_eff_improvement
+      Interpol_cost[[i]] <- filter(Interpol_cost_scen, Scenario == i) %>%
+        mutate(predicted_cost_transform = predict(model_cost_new_regions, filter(Interpol_cost_scen, Scenario == i)),
+               predicted_cost_2022usd_per_kg = 10^(1/predicted_cost_transform)) # reverse the data transformation, 1 /log10(x) that we did at the beginning
 
+      Interpol_coef[[i]] <- filter(Interpol_coef_scen, Scenario == i) %>%
+        mutate(predicted_H2_IO_ratio_sol_wind = predict(model_coef_new_regions, filter(Interpol_coef_scen, Scenario == i)))
+      # YZ end of regression ----
+    }
 
+    Interpol_cost_df <- do.call(bind_rows, Interpol_cost)
+    Interpol_coef_df <- do.call(bind_rows, Interpol_coef)
 
-    # Add 2015 value for coal w/o CCS and bio w/CCS, using same approach as for costs described above.
+    # Generate table of region-specific non-energy costs of hybrid electrolysis, for the 2040 time period
+    Interpol_cost_df %>%
+      filter(region %in% GCAM_region_names$region) %>%
+      # convert to unit of 1975$/GJ
+      mutate(input.cost = predicted_cost_2022usd_per_kg * gdp_deflator(1975,2022) / CONV_GJ_KGH2,
+             subsector = 'hybrid',
+             minicam.non.energy.input = "other non-energy") %>%
+      mutate(supplysector = H2ALite_TEA_mapping$sector.name[H2ALite_TEA_mapping$subsector.name == "hybrid"],
+             stub.technology = H2ALite_TEA_mapping$technology[H2ALite_TEA_mapping$subsector.name == "hybrid"]) %>%
+      select(c("Scenario", "region", "supplysector", "subsector", "stub.technology", "minicam.non.energy.input", "input.cost")) ->
+      L125.StubTechCost_h2_hybrid_scen_2040
 
-    H2A_eff_improvement %>%
-      filter(technology %in% c("biomass to H2", "coal chemical CCS"))  -> existing_coal_bio_eff
+    # Expand to all years using tech-change multipliers with 2040 as the base year
+    L125.hybrid_costmult_scen <- H2ALite_TEAdata %>%
+      filter(Technology == 'Hybrid PEM', Region == 'US Average') %>%
+      select(Scenario, year = Year, cost = `Energy-free levelized cost [2022$/kg]`) %>%
+      complete(nesting(Scenario), year = MODEL_YEARS) %>%
+      group_by(Scenario) %>%
+      mutate(cost = approx_fun(year, cost, rule = 2),
+             CostMult = cost / cost[year == 2040]) %>%
+      ungroup() %>%
+      select(-cost)
 
-    existing_coal_bio_eff %>%
-      filter(technology == 'biomass to H2')  -> bio_no_CCS_eff
+    L125.StubTechCost_h2_hybrid_scen <- L125.StubTechCost_h2_hybrid_scen_2040 %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      left_join_error_no_match(L125.hybrid_costmult_scen, by = c("Scenario", "year")) %>%
+      mutate(input.cost = input.cost * CostMult) %>%
+      select(c("Scenario", LEVEL2_DATA_NAMES[["StubTechCost"]]))
 
-    existing_coal_bio_eff %>%
-      filter(technology == 'coal chemical CCS')  -> coal_CCS_eff
+    # YZ 4/16/25; GPK 4/23/25
+    # This data table has USA costs predicted from the regression. We don't read these to the model, as "US Average" is specified in
+    # H2ALite data, but we use them to estimate the bias correction to be applied to all other regions.
+    # The fundamental issue is that the "US Average" in the data is estimated from optimization,
+    # so national average costs are near the lower limit of what is observed across all states,
+    # whereas GCAM's regional capacity factor assumptions are intended to reflect output-weighted averages,
+    # with no assumption of optimal siting.
+    # So, H2ALite's "US Average" costs are lower than the state-capacity-factor-based regression
+    # The method below applies the observed:predicted ratio of the US to all regions, thus assuming similar sub-regional
+    # heterogeneity in site quality as is seen in the US.
+    # In geographically diverse regions (e.g. Europe) this probably performs well, whereas in smaller and more
+    # homogeneous regions (e.g., South Korea) the method should under-estimate the costs.
+    # Ultimately the best method would be to work from source data in a wider sample of regions globally.
+    L125.StubTechCost_h2_hybrid_scen_US <- filter(L125.globaltech_cost_scen, subsector.name == "hybrid") %>%
+      mutate(region = "USA") %>%
+      rename(supplysector = sector.name, subsector = subsector.name, stub.technology = technology) %>%
+      select(c("Scenario", LEVEL2_DATA_NAMES[["StubTechCost"]]))
 
-    bio_no_CCS_eff %>%
-      filter(minicam.energy.input == 'elect_td_ind')%>%
-      select(improvement_to_2040) %>%
-      unique()->bio_no_CCS_improv_2040_elec
+    L125.NECost_regression_multiplier <- L125.StubTechCost_h2_hybrid_scen_US %>%
+      left_join_error_no_match(L125.StubTechCost_h2_hybrid_scen,
+                               by = c("Scenario", "region", "supplysector", "subsector",
+                                      "stub.technology", "year", "minicam.non.energy.input"),
+                               suffix = c(".observed", ".predicted")) %>%
+      mutate(cost.bias.multiplier = input.cost.observed / input.cost.predicted) %>%
+      select(Scenario, year, cost.bias.multiplier)
 
-    bio_no_CCS_eff %>%
-      filter(minicam.energy.input == 'regional natural gas')%>%
-      select(improvement_to_2040)%>%
-      unique()->bio_no_CCS_improv_2040_NG
+    L125.StubTechCost_h2_hybrid_scen <- L125.StubTechCost_h2_hybrid_scen %>%
+      left_join_error_no_match(L125.NECost_regression_multiplier, by = c("Scenario", "year")) %>%
+      mutate(input.cost = input.cost * cost.bias.multiplier) %>%
+      select(-cost.bias.multiplier)
 
-    bio_no_CCS_eff %>%
-      filter(minicam.energy.input == 'regional biomass') %>%
-      select(improvement_to_2040)%>%
-      unique() -> bio_no_CCS_improv_2040_bio
+    # YZ 3/31/2025 add solar-wind hybrid electrolysis IO coefficient for non-USA regions based on the regression analysis
+    # the regression predicts the ratio of solar energy use intensity over wind energy use intensity for the hybrid electrolysis
+    # We use this ratio and the US average sum of solar and wind energy use intensity to calculate the regional energy use
+    # intensity for solar and wind in non-USA regions
+    # given EI_wind + EI_sol = x; EI_sol / EI_wind = y
+    # so EI_wind = x / (1+y); EI_sol = EI_wind * y = x*y / (1+y)
+    Interpol_coef_df %>%
+      filter(region %in% GCAM_region_names$region) %>%
+      select(Scenario, region, predicted_H2_IO_ratio_sol_wind) %>%
+      mutate(subsector.name = 'hybrid') %>%
+      repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
+      left_join_error_no_match(
+        L125.globaltech_coef_scen %>%
+          filter(subsector.name == 'hybrid', minicam.energy.input %in% c('global solar resource', 'onshore wind resource')) %>%
+          group_by(Scenario, sector.name, subsector.name, technology, year) %>%
+          summarise(WindSolarSum = sum(coefficient)) %>%
+          ungroup(),
+        by = c('Scenario', 'subsector.name', 'year')) %>%
+      mutate(`onshore wind resource` = WindSolarSum / (1 + predicted_H2_IO_ratio_sol_wind),
+             `global solar resource` = WindSolarSum * predicted_H2_IO_ratio_sol_wind / (1 + predicted_H2_IO_ratio_sol_wind)) %>%
+      select(-predicted_H2_IO_ratio_sol_wind, -WindSolarSum) %>%
+      gather(minicam.energy.input, coefficient, -Scenario, -region, -sector.name, -subsector.name, -technology, -year) %>%
+      # Solar input energy intensity per unit of hydrogen production is relatively small using the current CFs in gcamdata
+      # For USA, the predicted solar EI is about 0.45, but the H2Alite data from misho is about  0.85 GJ input per GJ hydrogen output
+      # this should be automatically updated when we update the solar CFs in gcamdata
+      select(Scenario, region, supplysector = sector.name, subsector = subsector.name, stub.technology = technology, year, minicam.energy.input, coefficient) %>%
+      filter(region != 'USA') -> # remove USA, will use global tech coef
+      L125.StubTechCoef_h2_hybrid_scen_noUS
 
+    L125.StubTechCoef_h2_hybrid_scen_US <- L125.globaltech_coef_scen %>%
+      filter(subsector.name == 'hybrid',
+             minicam.energy.input %in% c('global solar resource', 'onshore wind resource')) %>%
+      mutate(region = "USA") %>%
+      rename(supplysector = sector.name, subsector = subsector.name, stub.technology = technology)
 
+    L125.StubTechCoef_h2_hybrid_scen <-
+      bind_rows(L125.StubTechCoef_h2_hybrid_scen_US, L125.StubTechCoef_h2_hybrid_scen_noUS)
 
-    existing_coal_bio_eff %>%
-      mutate(value = if_else(subsector.name == "biomass" & !(minicam.energy.input %in% c('water_td_ind_C','water_td_ind_W')),value * elec_IGCC_2015_eff_ratio_bio$IGCC_CCS_no_CCS_2015_ratio, #use efficiency ratios from electricity to derive coefficients for bio CCS, coal w/o CCS
-                             if_else(subsector.name == "coal" & !(minicam.energy.input %in% c('water_td_ind_C','water_td_ind_W')),value / elec_IGCC_2015_eff_ratio_coal$IGCC_CCS_no_CCS_2015_ratio,
-                                     value)),
-             technology = if_else(subsector.name == "coal", "coal chemical",
-                                  if_else(subsector.name == "biomass", "biomass to H2 CCS",
-                                          NA_character_)),
-             improvement_to_2040 = case_when(technology == 'coal chemical'&minicam.energy.input == 'elect_td_ind' ~bio_no_CCS_improv_2040_elec$improvement_to_2040,
-                                             technology == 'coal chemical'&minicam.energy.input == 'regional natural gas'~bio_no_CCS_improv_2040_NG$improvement_to_2040,
-                                             technology == 'coal chemical'&minicam.energy.input == 'regional coal'~bio_no_CCS_improv_2040_bio$improvement_to_2040, #set coal w/o CCS efficiency improvements equal to bio w/o CCS
-                                             TRUE~improvement_to_2040),
-             improvement_rate = (1 + improvement_to_2040) ^ (1 / (2040 - 2015)) - 1)-> add_coal_and_bio_eff
+    # 6/26/25 GPK - compile and include data on water use by hydrogen production
+    L125.h2_water<- Melaina_h2_water %>%
+      mutate(coefficient = Value * CONV_GAL_M3 / CONV_GJ_KGH2) %>%
+      select(WaterTechnology = Technology, coefficient)
 
-    H2A_eff_improvement %>%
-      filter(!(technology %in% c("coal chemical", "biomass to H2 CCS"))) %>%
-      bind_rows(add_coal_and_bio_eff) %>%
-      mutate(max_improvement = round(improvement_to_2040 + 0.1, 2),
-             max_improvement = if_else(technology == "coal chemical", 0.075, max_improvement),                #     Coal w/o CCS max improvement set to 7.5%
-             max_improvement = if_else( minicam.energy.input %in% c( "water_td_ind_W", "water_td_ind_C" ),    #     Water coefs see no improvement past 2040 H2A assumptions
-                                        improvement_to_2040, max_improvement ) ) -> H2A_eff_add_2015_techs
+    # Global tech water coefficients
+    # Hybrid: turn wind and solar into percentages, multiply by water intensities of each, and add them up.
+    L125.globaltech_coef_water_hybrid <- L125.globaltech_coef_scen %>%
+      filter(subsector.name == "hybrid") %>%
+      group_by(Scenario, sector.name, subsector.name, technology, year) %>%
+      mutate(share = coefficient / sum(coefficient)) %>%
+      ungroup() %>%
+      mutate(WaterTechnology = if_else(minicam.energy.input == "global solar resource", "Solar PV electrolysis", "Wind electrolysis")) %>%
+      left_join_error_no_match(L125.h2_water, by = "WaterTechnology", suffix = c(".energy", ".water")) %>%
+      mutate(coefficient = coefficient.water * share) %>%
+      group_by(Scenario, sector.name, subsector.name, technology, year) %>%
+      summarise(coefficient = sum(coefficient)) %>%
+      ungroup() %>%
+      repeat_add_columns(tibble(minicam.energy.input = c("water_td_ind_W", "water_td_ind_C"))) %>%
+      select(c("Scenario", LEVEL2_DATA_NAMES[["GlobalTechCoef"]]))
 
+    # Standard global technologies
+    L125.globaltech_coef_water <- L125.globaltech_coef_scen %>%
+      filter(subsector.name != "hybrid") %>%
+      distinct(Scenario, sector.name, subsector.name, technology, year) %>%
+      left_join_error_no_match(H2ALite_TEA_mapping, by = c("sector.name", "subsector.name", "technology")) %>%
+      left_join_error_no_match(L125.h2_water, by = "WaterTechnology") %>%
+      repeat_add_columns(tibble(minicam.energy.input = c("water_td_ind_W", "water_td_ind_C"))) %>%
+      select(c("Scenario", LEVEL2_DATA_NAMES[["GlobalTechCoef"]])) %>%
+      bind_rows(L125.globaltech_coef_water_hybrid)
 
-    H2A_eff_add_2015_techs %>%
-      filter(sector.name == "H2 central production" & subsector.name == "electricity") -> central_elec_eff_max_imrpov
+    L125.globaltech_coef_scen <- bind_rows(L125.globaltech_coef_scen, L125.globaltech_coef_water)
 
+    # Hybrid stub-technologies
+    L125.StubTechCoef_h2_water_hybrid_scen <- L125.StubTechCoef_h2_hybrid_scen %>%
+      group_by(Scenario, region, supplysector, subsector, stub.technology, year) %>%
+      mutate(share = coefficient / sum(coefficient)) %>%
+      ungroup() %>%
+      mutate(WaterTechnology = if_else(minicam.energy.input == "global solar resource", "Solar PV electrolysis", "Wind electrolysis")) %>%
+      left_join_error_no_match(L125.h2_water, by = "WaterTechnology", suffix = c(".energy", ".water")) %>%
+      mutate(coefficient = coefficient.water * share) %>%
+      group_by(Scenario, region, supplysector, subsector, stub.technology, year) %>%
+      summarise(coefficient = sum(coefficient)) %>%
+      ungroup() %>%
+      repeat_add_columns(tibble(minicam.energy.input = c("water_td_ind_W", "water_td_ind_C")))
 
-    central_elec_eff_max_imrpov <- central_elec_eff_max_imrpov$max_improvement[1]
-
-    H2A_eff_add_2015_techs %>%
-      #      Forecourt electrolysis max improvement = central electrolysis max improvement - 1%
-      mutate(max_improvement = if_else(subsector.name %in% c("onsite production", "forecourt production") & technology == "electrolysis" & !(minicam.energy.input %in% c( "water_td_ind_W", "water_td_ind_C" )),
-                                       central_elec_eff_max_imrpov - 0.01,
-                                       max_improvement),
-      #      Set improvement rate post 2040 to pre-2040 improvement
-            improvement_rate_post_2040 = improvement_rate,
-      #      Post 2040 improvement rate for central NG w/ and w/o CCS set to 0.3%
-            improvement_rate_post_2040 = if_else(sector.name == "H2 central production" & technology %in% c("natural gas steam reforming","gas ATR CCS"),0.003,
-                                                 improvement_rate_post_2040),
-      #      Post 2040 improvement rate for forecourt NG set to 0.45%
-            improvement_rate_post_2040 = if_else(subsector.name == "forecourt production" & technology == "natural gas steam reforming", 0.0045,
-                                                 improvement_rate_post_2040)) -> H2A_eff_fix_improv
-
-    H2A_eff_fix_improv %>%
-      arrange(sector.name, subsector.name, technology, minicam.energy.input,year) %>%
-      group_by(sector.name, subsector.name, technology, minicam.energy.input) %>%
-      mutate(value = case_when(year<2015 ~ value[year == 2015],
-                               (year>=2015) ~ value[year == 2015]*(1 + improvement_rate) ^ (year - 2015),
-                               year >= 2040 ~ value[year == 2040]*(1 + improvement_rate_post_2040)^(year - 2040)),
-             value = case_when(technology == 'coal chemical' & year>2015~value[year == 2015]*(1 + improvement_rate) ^ (year - 2015),
-                               TRUE~value),
-             improve_max = case_when( ( year >= 1975 ) ~ ( value[ year == 2015] * ( 1 + max_improvement ) ) ),
-             value = if_else( value > improve_max & improvement_rate > 0, improve_max, value ), # set to max improvement value if exceeded
-             #for techs with negative improvement rates (i.e., consuming more input like electricity per unit over time, but presumably less primary input like natural gas),
-             #make 2040 value the "least efficient" they can get
-             value = case_when( improvement_rate < 0 & year >= 2040 ~ value[year == 2040],
-                                improvement_rate < 0 & year < 2040 ~ value,
-                                improvement_rate >= 0 ~ value )) %>%
-      ungroup()-> H2A_eff_GCAM_years
-
-    add_coal_and_bio_eff %>%
-      bind_rows(existing_coal_bio_eff) %>%
-      select(-improvement_to_2040, -improvement_rate) %>%
-      filter(year==2015) %>%
-      arrange(sector.name, subsector.name,technology,minicam.energy.input,year) %>%
-      group_by(sector.name, subsector.name,minicam.energy.input) -> add_coal_and_bio_eff_2015
-
-    add_coal_and_bio_eff_2015 %>%
-      filter(subsector.name == 'biomass') %>%
-      mutate(ccs_eff_loss = value[technology == 'biomass to H2 CCS'] - value[technology == 'biomass to H2']) %>%
-      ungroup()-> bio_ccs_eff_loss
-
-    add_coal_and_bio_eff_2015 %>%
-      filter(subsector.name == 'coal') %>%
-      mutate(ccs_eff_loss = value[technology == 'coal chemical CCS'] - value[technology == 'coal chemical'])%>%
-      ungroup() -> coal_ccs_eff_loss
-
-    ccs_eff_loss <- bind_rows(bio_ccs_eff_loss,coal_ccs_eff_loss)
-
-    ccs_eff_loss %>%
-      filter(technology %in% c('biomass to H2 CCS', 'coal chemical CCS'))%>%
-      left_join_error_no_match(elec_IGCC_CCS_eff_improvement %>% select(subsector.name,max_improvement), by='subsector.name') %>%
-      complete(nesting(sector.name, subsector.name, technology,minicam.energy.input), year = sort(unique(c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)))) %>%
-      arrange(sector.name, subsector.name, technology, minicam.energy.input,year) %>%
-      group_by(sector.name, subsector.name, technology, minicam.energy.input) %>%
-      mutate(max_improvement = max_improvement[year == 2015],
-             improvement_rate = (1 - max_improvement) ^ (1 / (2100 - 2015)) - 1,
-             ccs_eff_loss = if_else(year <= 2015, ccs_eff_loss[year == 2015],
-                                    ccs_eff_loss[year == 2015]*(1 + improvement_rate) ^ (year - 2015)),
-             units = first(na.omit(units))) %>%
-      select(sector.name, subsector.name, minicam.energy.input,year,technology,units,ccs_eff_loss)%>%
-      ungroup() -> ccs_eff
-
-    H2A_eff_GCAM_years %>%
-      filter(technology == 'biomass to H2') %>%
-      select(sector.name, subsector.name, technology, minicam.energy.input,units,year,value) %>%
-      left_join_error_no_match(ccs_eff%>%select(subsector.name,year,minicam.energy.input,ccs_eff_loss),
-                               by=c('subsector.name', 'year', 'minicam.energy.input')) %>%
-      mutate(technology='biomass to H2 CCS',
-             value = value + ccs_eff_loss)%>%
-      select(-ccs_eff_loss)-> bio_w_ccs_eff
-
-    H2A_eff_GCAM_years %>%
-      filter(technology == 'coal chemical') %>%
-      select(sector.name, subsector.name, technology, minicam.energy.input,units,year,value) %>%
-      left_join_error_no_match(ccs_eff%>%select(subsector.name,year,minicam.energy.input,ccs_eff_loss)
-                               ,by=c('subsector.name', 'year', 'minicam.energy.input'))%>%
-      mutate(technology='coal chemical CCS',
-             value = value + ccs_eff_loss)%>%
-      select(-ccs_eff_loss)-> coal_w_ccs_eff
-
-    H2A_eff_GCAM_years %>%
-      filter(!(technology %in% c("biomass to H2 CCS", "coal chemical CCS"))) %>%
-      select(sector.name, subsector.name, technology, minicam.energy.input,units,year,value) %>%
-      bind_rows(coal_w_ccs_eff, bio_w_ccs_eff) %>%
-      mutate(value = 1 / value,
-             units = if_else( minicam.energy.input %in% c( "water_td_ind_W", "water_td_ind_C" ),
-                              "M3 water / GJ H2", "GJ input / GJ H2" ) ) -> L125.globaltech_coef
-
-    # H. Wind and solar electrolysis were created by adding the cost of panels and turbines to the H2A electrolysis plant
-    # using NREL ATB 2019 data.
-    # Relationship between capacity factor and levelized cost of electrolyzers, for estimation of NE costs of direct
-    # renewable electrolysis on a region-specific basis
-    H2A_electrolyzer_NEcost_CF <- H2A_electrolyzer_NEcost_CF %>%
-      mutate(IdleRatio = 1 / capacity.factor)
-
-    IdleRatioIntercept_2015 <- lm(H2A_electrolyzer_NEcost_CF$`2015` ~ H2A_electrolyzer_NEcost_CF$IdleRatio)$coefficients[1]
-    IdleRatioSlope_2015 <- lm(H2A_electrolyzer_NEcost_CF$`2015` ~ H2A_electrolyzer_NEcost_CF$IdleRatio)$coefficients[2]
-    IdleRatioIntercept_2040 <- lm(H2A_electrolyzer_NEcost_CF$`2040` ~ H2A_electrolyzer_NEcost_CF$IdleRatio)$coefficients[1]
-    IdleRatioSlope_2040 <- lm(H2A_electrolyzer_NEcost_CF$`2040` ~ H2A_electrolyzer_NEcost_CF$IdleRatio)$coefficients[2]
-    L125.Electrolyzer_IdleRatio_Params <- tibble(
-      year = c(2015, 2040),
-      slope = c(IdleRatioSlope_2015, IdleRatioSlope_2040),
-      intercept = c(IdleRatioIntercept_2015, IdleRatioIntercept_2040)
-    )
-
-    # H2A cost assumptions for nuclear H2 are for electrolyzer cost only for a solid oxide electrolysis process.
-    # Here we calculate non-energy costs for nuclear generation for electrolysis on a per GJ H2 basis using power sector assumptions for nuclear to add to the electrolyzer cost
-
-    cap_factor_current <- 0.824 # source: H2A solid oxide electrolysis capacity factor
-    cap_factor_future <- 0.875
-
-    L125.GlobalTechOMfixed_nuclear_elec <- L223.GlobalTechOMfixed_elec %>%
-      filter(subsector.name == 'nuclear' & technology == 'Gen_III')
-
-    L125.GlobalTechCapital_OMfixed_nuclear_elec <- L223.GlobalTechCapital_elec %>%
-      filter(subsector.name == 'nuclear' & technology == 'Gen_III') %>%
-      left_join_error_no_match(L125.GlobalTechOMfixed_nuclear_elec, by = c('sector.name','subsector.name','technology','year')) %>%
-      mutate(sector.name = 'H2 central production',
-             subsector.name = 'nuclear',
-             technology = 'electrolysis',
-             capacity.factor = if_else(year <= 2015,cap_factor_current,
-                                       if_else(year >= 2040,cap_factor_future,NA_real_)),
-             capacity.factor = approx_fun(year, capacity.factor, rule = 2),
-             AEP_GJ = CONV_YEAR_HOURS * capacity.factor * CONV_KWH_GJ,
-             NE_cost_nuc_elec_fixed = (capital.overnight * fixed.charge.rate + OM.fixed) / AEP_GJ) %>%
-      select(sector.name,subsector.name,technology,year,NE_cost_nuc_elec_fixed)
-
-    L125.GlobalTechOMvar_nuclear_elec <- L223.GlobalTechOMvar_elec %>%
-      filter(subsector.name == 'nuclear' & technology == 'Gen_III') %>%
-      mutate(sector.name = 'H2 central production',
-             subsector.name = 'nuclear',
-             technology = 'electrolysis',
-             NE_cost_nuc_elec_var = OM.var / CONV_MWH_GJ) %>%
-      select(sector.name,subsector.name,technology,year,NE_cost_nuc_elec_var)
-
-    L125.GlobalTechCost_nuclear_elec <- L125.GlobalTechCapital_OMfixed_nuclear_elec %>%
-      left_join_error_no_match(L125.GlobalTechOMvar_nuclear_elec, by = c('sector.name','subsector.name','technology','year')) %>%
-      mutate(NE_cost_nuc_elec = NE_cost_nuc_elec_fixed + NE_cost_nuc_elec_var) %>%
-      select(sector.name,subsector.name,technology,year,NE_cost_nuc_elec)
-
-    L125.GlobalTechCoef_nuclear_elec <- L125.globaltech_coef %>%
-      filter(subsector.name == 'nuclear' & minicam.energy.input %in% c('electricity','thermal')) %>%
-      mutate(coefficient = if_else(minicam.energy.input == 'thermal', value / 3, value)) %>%
-      # Convert thermal to electric energy for non-fuel cost purposes to represent the potential generation capacity that is bled off to provide steam for process heat.
-      # Although some recuperation from stack exhaust is possible, we err on the side of being conservative here
-      group_by(sector.name, subsector.name, technology, units, year) %>%
-      summarize(coefficient = sum(coefficient)) %>%
-      ungroup()
-
-    L125.GlobalTechCost_nuclear_H2 <- L125.GlobalTechCost_nuclear_elec %>%
-      left_join_error_no_match(L125.GlobalTechCoef_nuclear_elec, by = c('sector.name','subsector.name','technology','year')) %>%
-      mutate(cost = NE_cost_nuc_elec * coefficient,
-             minicam.non.energy.input = 'nuclear electricity generation',
-             units = '$1975/GJ H2') %>%
-      select(sector.name,subsector.name,technology,minicam.non.energy.input,cost,year,units)
-
-    L125.globaltech_cost <- bind_rows(L125.globaltech_cost,L125.GlobalTechCost_nuclear_H2)
-
-    L125.globaltech_coef <- L125.globaltech_coef %>%
-      mutate(value = if_else((subsector.name == 'nuclear' & minicam.energy.input == 'electricity'), value * 3,value), #convert electricity to nuclear fuel use for primary energy accounting purposes
-             minicam.energy.input = if_else(subsector.name == 'nuclear' & minicam.energy.input %in% c('electricity','thermal'), 'nuclearFuelGenIII', minicam.energy.input)) %>% #now all energy is in terms of primary nuclear fuel, so change the name and aggregate
-      group_by(sector.name, subsector.name, technology, year, minicam.energy.input, units) %>%
-      summarize(value = sum(value)) %>%
-      ungroup()
-
-    #harmonize coal and biomass to H2 with IGCC per JIRA issue 451
-    gas_CC_eff <- L223.GlobalTechEff_elec %>%
-      filter(technology %in% c('gas (CC)')) %>%
-      rename(gas.CC.efficiency = efficiency)
-
-    gas_CC_costs <- nonFuelLCOE_elec %>%
-      filter(technology %in% c('gas (CC)')) %>%
-      mutate(nonfuel.LCOE.GJ.gas = nonfuel.LCOE / CONV_KWH_GJ)
-
-    IGCC_costs_elec <- nonFuelLCOE_elec %>%
-      filter(subsector.name %in% c('biomass','coal') & stringr::str_detect(technology,'IGCC')) %>%
-      mutate(nonfuel.LCOE.GJ = nonfuel.LCOE / CONV_KWH_GJ,
-             has_CCS = stringr::str_detect(technology,'CCS'))
-
-    L125.globaltech_cost_adj_IGCC <- L125.globaltech_cost %>%
-      filter(subsector.name %in% c('biomass','coal')) %>%
-      mutate(has_CCS = stringr::str_detect(technology,'CCS')) %>%
-      left_join_error_no_match(gas_CC_eff %>% select(year,gas.CC.efficiency),by = c('year')) %>%
-      left_join_error_no_match(gas_CC_costs %>% select(year,nonfuel.LCOE.GJ.gas), by = c('year')) %>%
-      mutate(H2_CC_adj_cost = cost / gas.CC.efficiency + nonfuel.LCOE.GJ.gas) %>%
-      left_join_error_no_match(IGCC_costs_elec %>% select(-technology,-sector.name), by = c('subsector.name','year','has_CCS')) %>%
-      mutate(H2_CC_adj_cost = if_else(H2_CC_adj_cost < nonfuel.LCOE.GJ,nonfuel.LCOE.GJ,H2_CC_adj_cost),
-             cost = ( H2_CC_adj_cost - nonfuel.LCOE.GJ.gas ) * gas.CC.efficiency)
-      # calculate levelized non-energy costs if the H2 created were run through a gas CC power plant
-      # with its corresponding efficiency and non-fuel cost adder.
-      # and don't let the H2 pathway be cheaper than corresponding IGCC electricity pathway
-
-    L125.globaltech_cost %>%
-      filter(!(subsector.name %in% c('biomass','coal'))) %>%
-      bind_rows(L125.globaltech_cost_adj_IGCC %>% select(colnames(L125.globaltech_cost))) -> L125.globaltech_cost
+    L125.StubTechCoef_h2_hybrid_scen <- bind_rows(L125.StubTechCoef_h2_hybrid_scen, L125.StubTechCoef_h2_water_hybrid_scen)
 
     # ===================================================
     # Produce outputs
 
-    L125.globaltech_coef %>%
+    L125.globaltech_coef_scen %>%
       add_title("Input-output coefficients of global technologies for hydrogen") %>%
       add_units("Unitless") %>%
       add_comments("Interpolated original data into all model years") %>%
-      add_precursors("energy/H2A_IO_coef_data","L223.GlobalTechEff_elec")  ->
-      L125.globaltech_coef
+      add_precursors("common/GCAM_region_names", "energy/mappings/H2ALite_TEA_mapping",
+                     "energy/H2ALite_TEAdata", "energy/H2ALite_wind_solar_CF",
+                     "energy/Melaina_h2_water", "L223.StubTechCapFactor_elec")  ->
+      L125.globaltech_coef_scen
 
-    L125.globaltech_cost %>%
+    L125.globaltech_cost_scen %>%
       add_title("Costs of global technologies for hydrogen") %>%
       add_units("Unitless") %>%
       add_comments("Interpolated orginal data into all model years") %>%
       add_legacy_name("L225.GlobalTechCost_h2") %>%
-      add_precursors("energy/H2A_NE_cost_data","L223.GlobalTechCapital_elec","L223.GlobalTechOMvar_elec",
-                     "L223.GlobalTechOMfixed_elec", "L223.GlobalTechCapFac_elec")  ->
-      L125.globaltech_cost
+      add_precursors("common/GCAM_region_names", "energy/mappings/H2ALite_TEA_mapping",
+                     "energy/H2ALite_TEAdata", "energy/H2ALite_wind_solar_CF", "L223.GlobalTechCapFac_elec",
+                     "L1233.globaltech_capital_ATB", "L1233.globaltech_OMvar_ATB", "L1233.globaltech_OMfixed_ATB",
+                     "L223.StubTechCapFactor_elec")  ->
+      L125.globaltech_cost_scen
 
-    L125.Electrolyzer_IdleRatio_Params %>%
-      add_title("Parameters of linear relationship between idle ratio and NE cost of electrolyzers") %>%
-      add_units("2016$/kg H2") %>%
-      add_comments("IdleRatio = 1 / Capacity factor; linear model used to estimate levelized cost as fn of reciprocal of CF") %>%
-      add_precursors("energy/H2A_electrolyzer_NEcost_CF") ->
-      L125.Electrolyzer_IdleRatio_Params
+    L125.nuclear_hydrogen_costs_adv  %>%
+      add_title("Costs of nuclear electric generation costs for dedicated nuclear-h2 technology in the nuc_adv scenario") %>%
+      add_units("1975$/GJ of hydrogen") %>%
+      add_comments("Based on electrolysis IO coef and scenario-specific assumptions of nuclear electric generation costs") %>%
+      same_precursors_as(L125.globaltech_cost_scen) %>%
+      add_precursors("L1233.globaltech_capital_ATB_adv")->
+      L125.nuclear_hydrogen_costs_adv
 
-    return_data(L125.globaltech_coef, L125.globaltech_cost, L125.Electrolyzer_IdleRatio_Params)
+    L125.nuclear_hydrogen_costs_low  %>%
+      add_title("Costs of nuclear electric generation costs for dedicated nuclear-h2 technology in the nuc_low scenario") %>%
+      add_units("1975$/GJ of hydrogen") %>%
+      add_comments("Based on electrolysis IO coef and scenario-specific assumptions of nuclear electric generation costs") %>%
+      same_precursors_as(L125.globaltech_cost_scen) %>%
+      add_precursors("L1233.globaltech_capital_ATB_low")->
+      L125.nuclear_hydrogen_costs_low
+
+    L125.StubTechCost_h2_hybrid_scen  %>%
+      add_title("Hybrid (wind and solar) hydrogen electrolysis non-energy costs by region and year") %>%
+      add_units("1975$ / GJh2") %>%
+      add_comments("Based on total electrolysis cost by year, regional wind + solar capacity factors") %>%
+      same_precursors_as(L125.globaltech_coef_scen) ->
+      L125.StubTechCost_h2_hybrid_scen
+
+    L125.StubTechCoef_h2_hybrid_scen  %>%
+      add_title("Wind and solar electricity inputs to hydrogen electrolysis (hybrid technology) by region and year") %>%
+      add_units("GJelec/GJh2") %>%
+      add_comments("Based on total electrolysis IO coef by year, regional wind and solar capacity factors") %>%
+      same_precursors_as(L125.globaltech_coef_scen) %>%
+      add_precursors("L223.StubTechCapFactor_elec")->
+      L125.StubTechCoef_h2_hybrid_scen
+
+    return_data(L125.globaltech_coef_scen,
+                L125.globaltech_cost_scen,
+                L125.nuclear_hydrogen_costs_adv,
+                L125.nuclear_hydrogen_costs_low,
+                L125.StubTechCost_h2_hybrid_scen,
+                L125.StubTechCoef_h2_hybrid_scen)
   } else {
     stop("Unknown command")
   }

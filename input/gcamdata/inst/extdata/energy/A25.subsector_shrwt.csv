@@ -1,16 +1,14 @@
 # File: A25.subsector_shrwt.csv
 # Title: Hydrogen subsector shareweights
 # Units: Unitless
-# Column types: cccci 
+# Column types: cccci
 # ----------
 supplysector,subsector,year.fillout,year,share.weight
-H2 central production,coal,start-year,,0
 H2 central production,gas,start-year,,0
 H2 central production,biomass,start-year,,0
 H2 central production,nuclear,start-year,,0
 H2 central production,electricity,start-year,,0
-H2 central production,wind,start-year,,0
-H2 central production,solar,start-year,,0
+H2 central production,hybrid,start-year,,0
 H2 pipeline,H2 pipeline,start-year,,0
 H2 liquid truck,H2 liquid truck,start-year,,0
 H2 wholesale delivery,H2 pipeline,start-year,,0
@@ -18,16 +16,17 @@ H2 wholesale delivery,H2 liquid truck,start-year,,0
 H2 industrial,H2 delivery,start-year,,0
 H2 industrial,onsite production,start-year,,0
 H2 retail delivery,H2 retail delivery,start-year,,0
-H2 wholesale dispensing,H2 delivery,start-year,,0
-H2 wholesale dispensing,forecourt production,start-year,,0
-H2 retail dispensing,H2 retail dispensing,start-year,,0
-H2 central production,coal,initial-future-year,,1
+H2 LDV,H2 delivery,start-year,,0
+H2 LDV,onsite production,start-year,,0
+H2 MHDV,H2 delivery,start-year,,0
+H2 MHDV,onsite production,start-year,,0
+LH2,H2 delivery,start-year,,0
+LH2,onsite production,start-year,,0
 H2 central production,gas,initial-future-year,,1
 H2 central production,biomass,initial-future-year,,1
 H2 central production,nuclear,initial-future-year,,1
 H2 central production,electricity,initial-future-year,,1
-H2 central production,wind,initial-future-year,,1
-H2 central production,solar,initial-future-year,,1
+H2 central production,hybrid,initial-future-year,,1
 H2 pipeline,H2 pipeline,initial-future-year,,1
 H2 liquid truck,H2 liquid truck,initial-future-year,,1
 H2 wholesale delivery,H2 pipeline,initial-future-year,,1
@@ -35,6 +34,9 @@ H2 wholesale delivery,H2 liquid truck,initial-future-year,,1
 H2 industrial,H2 delivery,initial-future-year,,1
 H2 industrial,onsite production,initial-future-year,,1
 H2 retail delivery,H2 retail delivery,initial-future-year,,1
-H2 wholesale dispensing,H2 delivery,initial-future-year,,1
-H2 wholesale dispensing,forecourt production,initial-future-year,,1
-H2 retail dispensing,H2 retail dispensing,initial-future-year,,1
+H2 LDV,H2 delivery,initial-future-year,,1
+H2 LDV,onsite production,initial-future-year,,1
+H2 MHDV,H2 delivery,initial-future-year,,1
+H2 MHDV,onsite production,initial-future-year,,1
+LH2,H2 delivery,initial-future-year,,1
+LH2,onsite production,initial-future-year,,1

@@ -63,6 +63,7 @@ module_gcamusa_L244.building <- function(command, ...) {
              "L144.in_EJ_state_comm_F_U_Y",
              "L144.in_EJ_state_res_F_U_Y",
              "L143.HDDCDD_scen_state",
+             "L145.in_EJ_state_bld_F_U_tech_fby",
              "L100.Pop_thous_state",
              "L100.pcGDP_thous90usd_state"))
   } else if(command == driver.DECLARE_OUTPUTS) {
@@ -163,6 +164,7 @@ module_gcamusa_L244.building <- function(command, ...) {
     L144.in_EJ_state_comm_F_U_Y <- get_data(all_data, "L144.in_EJ_state_comm_F_U_Y", strip_attributes = TRUE)
     L144.in_EJ_state_res_F_U_Y <- get_data(all_data, "L144.in_EJ_state_res_F_U_Y", strip_attributes = TRUE)
     L143.HDDCDD_scen_state <- get_data(all_data, "L143.HDDCDD_scen_state", strip_attributes = TRUE)
+    L145.in_EJ_state_bld_F_U_tech_fby <- get_data(all_data,"L145.in_EJ_state_bld_F_U_tech_fby", strip_attributes = TRUE)
     L100.Pop_thous_state <- get_data(all_data, "L100.Pop_thous_state", strip_attributes = TRUE)
     L100.pcGDP_thous90usd_state <- get_data(all_data, "L100.pcGDP_thous90usd_state", strip_attributes = TRUE)
     L144.hab_land_flsp_usa<- get_data(all_data, "gcam-usa/A44.hab_land_flsp_usa", strip_attributes = TRUE)
@@ -259,7 +261,7 @@ module_gcamusa_L244.building <- function(command, ...) {
 
     # L244.Satiation_flsp_gcamusa: Satiation levels assumed for floorspace
     L244.Satiation_flsp_gcamusa <- A44.satiation_flsp %>%
-      gather(gcam.consumer, value, resid, comm) %>%
+      gather(gcam.consumer, value, comm) %>%
       rename(region = state) %>%
       # Need to make sure that the satiation level is greater than the floorspace in the final base year
       left_join_error_no_match(L244.Floorspace_gcamusa %>%
@@ -589,6 +591,59 @@ module_gcamusa_L244.building <- function(command, ...) {
       set_subsector_shrwt() %>%
       mutate(tech.share.weight =  if_else(calibrated.value > 0, 1, 0)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCalInput"]])
+
+
+    # 10/18/2022 gpk - replace the calibration data with scout data
+    # First, set the category names for matching
+    # 8/24/23 GPK revision - re-set the default technology name of lighting to incandescent
+    L244.in_EJ_state_bld_F_U_tech_fby <- L145.in_EJ_state_bld_F_U_tech_fby %>%
+      rename(supplysector = service) %>%
+      left_join(calibrated_techs_bld_usa %>%
+                  select(sector, supplysector, fuel, subsector, minicam.energy.input) %>%
+                  distinct(), by = c("sector", "supplysector", "fuel")) %>%
+      select(region = state, supplysector, subsector, technology, minicam.energy.input, year, calibrated.value = value) %>%
+      mutate(technology = if_else(technology == "lighting", "incandescent", technology))
+
+    # The Scout data is already disaggregated to "efficiency-partitioned" technologies that don't have the string "hi-eff"
+    # These include heat pumps vs electric resistance for heating and hot water
+    # 8/24/23 GPK - original Scout data submissions included partitioning of incandescent, fluorescent, and solid state lighting
+    # As the current one (v3) does not, these techs need to be exogenously partitioned
+    # First, re-set the technology name from "lighting" to "incandescent" which is the technology1 assignment in A44.globaltech_eff_avg
+    # This data table L244.EffPrtTechsForScout is a workaround to add a "resid lighting / incandescent" row.
+    L244.EffPrtTechsForScout <- A44.globaltech_eff_avg %>%
+      filter(grepl("hi-eff", technology2) | grepl("lighting", supplysector)) %>%
+      bind_rows(filter(A44.globaltech_shares, supplysector == "resid lighting" & technology1 =="incandescent")) %>%
+      select(supplysector, subsector, technology = technology1) %>%
+      distinct()
+
+    L244.in_EJ_state_bld_F_U_techEffPrt_fby <- L244.in_EJ_state_bld_F_U_tech_fby %>%
+      semi_join(L244.EffPrtTechsForScout,
+                by = c("supplysector", "subsector", "technology")) %>%
+      inner_join(L244.globaltech_shares, by = c("supplysector", "subsector"),
+                 suffix = c(".scout", ".gcam")) %>%
+      mutate(calibrated.value = calibrated.value * share) %>%
+      select(region, supplysector, subsector, technology = technology.gcam, minicam.energy.input, year, calibrated.value)
+
+    # Calibration values from scout include the technologies whose calibration values aren't partitioned by efficiency,
+    # and those whose values were in the prior block. anti_join to make sure none are duplicated
+    L244.StubTechCalInput_bld_scout <- anti_join(L244.in_EJ_state_bld_F_U_tech_fby,
+                                                 L244.EffPrtTechsForScout,
+                                                   by = c("supplysector", "subsector", "technology")) %>%
+      bind_rows(L244.in_EJ_state_bld_F_U_techEffPrt_fby) %>%
+      arrange(region, supplysector, subsector, technology)
+
+    # Join the two calibration tables for comparison and merging
+    L244.StubTechCalInput_bld_gcamusa <- L244.StubTechCalInput_bld_gcamusa %>%
+      select(-share.weight.year, -subs.share.weight, -tech.share.weight) %>%
+      left_join(L244.StubTechCalInput_bld_scout,
+                by = c("region", "supplysector", "subsector", stub.technology = "technology", "minicam.energy.input", "year"),
+                suffix = c(".init", ".revised")) %>%
+      mutate(calibrated.value = round(if_else(is.na(calibrated.value.revised), calibrated.value.init, calibrated.value.revised), digits = energy.DIGITS_CALOUTPUT),
+             share.weight.year = year,
+             tech.share.weight =  if_else(calibrated.value > 0, 1, 0)) %>%
+      set_subsector_shrwt(value_col = "calibrated.value") %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCalInput"]])
+
 
     # L244.GlobalTechShrwt_bld_gcamusa: Default shareweights for global building technologies
     L244.GlobalTechShrwt_bld_gcamusa <- A44.globaltech_shrwt %>%
@@ -1232,7 +1287,8 @@ module_gcamusa_L244.building <- function(command, ...) {
       add_comments("Shares calculated using efficiency averages") %>%
       add_legacy_name("L244.StubTechCalInput_bld") %>%
       add_precursors("L144.in_EJ_state_res_F_U_Y", "L144.in_EJ_state_comm_F_U_Y", "gcam-usa/calibrated_techs_bld_usa",
-                     "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares") ->
+                     "gcam-usa/A44.globaltech_eff", "gcam-usa/A44.globaltech_eff_avg", "gcam-usa/A44.globaltech_shares",
+                     "L145.in_EJ_state_bld_F_U_tech_fby") ->
       L244.StubTechCalInput_bld_gcamusa
 
     L244.StubTechMarket_bld %>%

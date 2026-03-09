@@ -1,0 +1,37 @@
+# File: atb_gcam_elec_tech_mapping.csv
+# Title: ATB to GCAM technology mapping
+# Units: unitless scaling factor
+# Source: NA
+# Column types: ccccn
+# ----------
+technology,tech_type,tech_detail,reeds_tech,cost_multiplier
+battery,Utility-Scale Battery Storage,Utility-Scale Battery Storage - 4Hr,battery_li,1
+biomass (conv CCS),,,beccs_90,1
+biomass (conv),Biopower,Biopower - Dedicated,biopower,1
+biomass (IGCC CCS),,,,1
+biomass (IGCC),,,,1
+coal (conv pul CCS),Coal_FE,Coal-95%-CCS,coal-CCS_mod,1
+coal (conv pul),Coal_FE,Coal-new,Coal-new,1
+coal (IGCC CCS),Coal_FE,Coal-IGCC-90%-CCS,,1
+coal (IGCC),Coal_FE,Coal-IGCC,Coal-IGCC,1
+CSP,Solar - CSP,CSP - Class 3,csp2,0.85
+CSP_storage,Solar - CSP,CSP - Class 3,csp2,1
+gas (CC CCS),Natural Gas_FE,NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,Gas-CC-CCS_mod,1
+gas (CC),Natural Gas_FE,NG 2-on-1 Combined Cycle (F-Frame),Gas-CC,1
+gas (steam/CT),Natural Gas_FE,NG Combustion Turbine (F-Frame),Gas-CT,1
+Gen_II_LWR,Nuclear,Nuclear - Large,Nuclear,1
+large reactor,Nuclear,Nuclear - Large,Nuclear,1
+SMR,Nuclear,Nuclear - Small,,1
+geothermal,Geothermal,Geothermal - Hydro / Flash,geohydro class 6,1
+PV,Solar - Utility PV,Utility PV - Class 5,upv,1
+PV_storage,Solar - Utility PV,Utility PV - Class 5,upv,1
+PV_storage,Utility-Scale Battery Storage,Utility-Scale Battery Storage - 4Hr,battery_li,3
+refined liquids (CC CCS),Natural Gas_FE,NG 2-on-1 Combined Cycle (F-Frame) 95% CCS,Gas-CC-CCS_mod,1
+refined liquids (CC),Natural Gas_FE,NG 2-on-1 Combined Cycle (F-Frame),Gas-CC,1
+refined liquids (steam/CT),Natural Gas_FE,NG Combustion Turbine (F-Frame),Gas-CT,1
+rooftop_pv,Solar - PV Dist. Comm,Commercial PV - Class 5,,1
+rooftop_pv,Solar - PV Dist. Res,Residential PV - Class 5,,1
+wind,Land-Based Wind,Land-Based Wind - Class 5 - Technology 1,ons-wind,1
+wind_offshore,Fixed-Bottom Offshore Wind,Offshore Wind - Class 4,ofs-wind fixed,1
+wind_storage,Land-Based Wind,Land-Based Wind - Class 5 - Technology 1,ons-wind,1
+wind_storage,Utility-Scale Battery Storage,Utility-Scale Battery Storage - 4Hr,battery_li,3

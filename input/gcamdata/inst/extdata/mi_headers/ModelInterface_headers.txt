@@ -183,6 +183,8 @@ SubsectorLogit_relative-cost-logit, world/+{name}region, region/+{name}supplysec
 
 SubsectorLogit_absolute-cost-logit, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/absolute-cost-logit, scenario/world, scenario
 
+AbsoluteLogitBaseValue, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, absolute-cost-logit/+is-base-value-parsed, absolute-cost-logit/+base-value, subsector/absolute-cost-logit, scenario/world, scenario
+
 SubsectorShrwt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year}share-weight, subsector/+share-weight, scenario/world, scenario
 
 SubsectorShrwtFllt, world/+{name}region, region/+{name}supplysector, supplysector/+{name}subsector, subsector/+{year;fillout=1}share-weight, subsector/+share-weight, scenario/world, scenario

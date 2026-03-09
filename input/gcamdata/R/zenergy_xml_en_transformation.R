@@ -58,10 +58,6 @@ module_energy_en_transformation_xml <- function(command, ...) {
 
     year.share.weight <- share.weight <- NULL # silence package checks
     # ===================================================
-    # Rename the tibble columns to match the header information.
-    L222.StubTechProd_gasproc <- rename(L222.StubTechProd_gasproc, share.weight.year = year.share.weight, tech.share.weight = share.weight)
-    L222.StubTechProd_refining <- rename(L222.StubTechProd_refining, share.weight.year = year.share.weight, tech.share.weight = share.weight)
-
     # Produce outputs
     create_xml("en_transformation.xml") %>%
       add_logit_tables_xml(L222.Supplysector_en, "Supplysector") %>%

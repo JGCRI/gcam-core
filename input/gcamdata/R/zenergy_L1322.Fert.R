@@ -25,20 +25,24 @@ module_energy_L1322.Fert <- function(command, ...) {
     c(FILE = "common/iso_GCAM_regID",
       FILE = "energy/mappings/IEA_ctry",
       FILE = "energy/IEA_Fert_fuel_data",
-      "L142.ag_Fert_Prod_MtN_ctry_Y",
       FILE = "energy/H2A_Prod_Tech",
-      "L210.rsrc_info",
       FILE = "energy/A21.globaltech_cost",
       FILE = "energy/A22.globaltech_cost",
+      FILE = "energy/Rt_Nfert_bilateral_trade",
+      FILE = "energy/mappings/Rt_Nfert_commodities",
       "L1321.in_EJ_R_indenergy_F_Yh",
-      "L132.in_EJ_R_indfeed_F_Yh"  )
+      "L132.in_EJ_R_indfeed_F_Yh",
+      "L142.ag_Fert_Prod_MtN_ctry_Y",
+      "L142.ag_Fert_NetExp_MtN_R_Y",
+      "L210.rsrc_info")
 
   MODULE_OUTPUTS <-
     c("L1322.Fert_Prod_MtNH3_R_F_Y",
       "L1322.IO_R_Fert_F_Yh",
       "L1322.in_EJ_R_indenergy_F_Yh",
       "L1322.in_EJ_R_indfeed_F_Yh",
-      "L1322.Fert_NEcost_75USDkgNH3_F")
+      "L1322.Fert_NEcost_75USDkgNH3_F",
+      "L1322.Fert_GrossTrade_Mt_R_Y")
 
   if(command == driver.DECLARE_INPUTS) {
     return(MODULE_INPUTS)
@@ -378,6 +382,95 @@ module_energy_L1322.Fert <- function(command, ...) {
                                                                L1322.Fert_NEcost_75USDkgNH3_oil,
                                                                L1322.Fert_NEcost_75USDkgNH3_H2))
 
+    # Process data on net and gross trade of nitrogen in fertilizers.
+    ISO_map <- iso_GCAM_regID %>%
+      mutate(ISO = toupper(iso)) %>%
+      select(ISO, GCAM_region_ID)
+
+    # Multiply each commodity in the bilateral trade matrix by its nitrogen mass fraction
+    # Drop out any trade where the exporter and importer are in the same GCAM region
+    # Aggregate by GCAM regions (imports and exports)
+    Rt_Nfert_bilateral_trade %>%
+      select(Exporter_ISO = 'Exporter ISO3', Importer_ISO = 'Importer ISO3','Resource','Year',Weight = 'Weight (1000kg)') %>%
+      drop_na() %>%
+      group_by(Exporter_ISO, Importer_ISO, Resource) %>%
+      summarise(Weight = mean(Weight)) %>%
+      ungroup() %>%
+      left_join_error_no_match(Rt_Nfert_commodities, by = "Resource") %>%
+      mutate(Trade_Mt = Weight * Nfrac * CONV_T_MT) %>%
+      inner_join(ISO_map, by = c(Exporter_ISO = "ISO")) %>%
+      rename(Exporter_regID = GCAM_region_ID) %>%
+      inner_join(ISO_map, by = c(Importer_ISO = "ISO")) %>%
+      rename(Importer_regID = GCAM_region_ID) %>%
+      filter(Exporter_regID != Importer_regID) %>%
+      group_by(Exporter_regID, Importer_regID) %>%
+      summarise(Trade_Mt = sum(Trade_Mt)) %>%
+      ungroup() ->
+      L1322.Fert_GrossTrade_Mt_R_unscaled
+
+    # For trade structure, aggregate imports and exports by region separately, and join to a single data table
+    L1322.Fert_GrossExports_Mt_R <- L1322.Fert_GrossTrade_Mt_R_unscaled %>%
+      select(GCAM_region_ID = Exporter_regID, Exports_Mt = Trade_Mt) %>%
+      group_by(GCAM_region_ID) %>%
+      summarise(Exports_Mt = sum(Exports_Mt)) %>%
+      ungroup()
+
+    L1322.Fert_GrossImports_Mt_R <- L1322.Fert_GrossTrade_Mt_R_unscaled %>%
+      select(GCAM_region_ID = Importer_regID, Imports_Mt = Trade_Mt) %>%
+      group_by(GCAM_region_ID) %>%
+      summarise(Imports_Mt = sum(Imports_Mt)) %>%
+      ungroup()
+
+    # First scale the gross exports so that the sum of global exports equals the scale of global imports
+    # Then scale the gross exports and imports to match the FAO-based net exports, in L142.ag_Fert_NetExp_MtN_R_Y
+    # Rules applied:
+    #  1) where RT-based net exports "NetExports_Mt" are less than FAO-based net exports "value", and
+    #    1a) gross exports "Exports_Mt" exceed scaled net exports, reduce imports to balance
+    #    1b) gross exports "Exports_Mt" are less than scaled net exports, increase exports to balance
+    #  2) where RT-based net exports "NetExports_Mt" exceed FAO-scaled net exports "value", and
+    #    2a) the region is a net exporter (value > 0), reduce the exports
+    #    2b) the region is a net importer (value < 0), reduce the imports
+    #  3) where production exceeds exports, reduce both exports and imports so that domestic own production is not negative
+    L1322.Fert_GrossTrade_Mt_R_fby <- full_join(L1322.Fert_GrossExports_Mt_R, L1322.Fert_GrossImports_Mt_R,
+                                                     by = "GCAM_region_ID") %>%
+      mutate(Exports_Mt = Exports_Mt * sum(Imports_Mt) / sum(Exports_Mt),
+             NetExports_Mt = Exports_Mt - Imports_Mt) %>%
+      full_join(filter(L142.ag_Fert_NetExp_MtN_R_Y, year==max(MODEL_BASE_YEARS)),
+                by = "GCAM_region_ID") %>%
+      replace_na(list(Exports_Mt = 0, Imports_Mt = 0, NetExports_Mt = 0)) %>%
+      mutate(Imports_Mt_scaled = if_else(NetExports_Mt < value & Exports_Mt > value, Exports_Mt - value, Imports_Mt),
+             Exports_Mt_scaled = if_else(NetExports_Mt < value & Exports_Mt < value, value + Imports_Mt_scaled, Exports_Mt),
+             Exports_Mt_scaled = if_else(NetExports_Mt > value & value > 0, Exports_Mt + value - NetExports_Mt, Exports_Mt_scaled),
+             Imports_Mt_scaled = if_else(NetExports_Mt > value & value < 0, Imports_Mt - value + NetExports_Mt, Imports_Mt_scaled),
+             NetExports_Mt_scaled = Exports_Mt_scaled - Imports_Mt_scaled,
+             year = max(MODEL_BASE_YEARS)) %>%
+      select(GCAM_region_ID, GCAM_commodity, year, Exports_Mt_scaled, Imports_Mt_scaled, value) %>%
+      rename(Exports_Mt = Exports_Mt_scaled, Imports_Mt = Imports_Mt_scaled, NetExports_Mt = value)
+
+    # final adjustment to gross trade, to ensure that exports do not exceed production
+    L1322.Fert_Prod_MtN_R_fby <- L1322.Fert_Prod_MtNH3_R_F_Y %>%
+      filter(year == max(MODEL_BASE_YEARS)) %>%
+      group_by(GCAM_region_ID) %>%
+      summarise(Prod_MtN = sum(value) * CONV_NH3_N) %>%
+      ungroup()
+
+    # If we reduce trade by the reported export quantity, then all exports go to zero. If we reduce trade by the discrepancy
+    # between production and exports, then all domestic use of own production will be zero. This approach takes the midpoint.
+    L1322.Fert_GrossTrade_Mt_R_fby <- L1322.Fert_GrossTrade_Mt_R_fby %>%
+      left_join_error_no_match(L1322.Fert_Prod_MtN_R_fby, by = "GCAM_region_ID") %>%
+      mutate(TradeReduction_Mt = if_else(Exports_Mt > Prod_MtN, (2 * Exports_Mt - Prod_MtN) / 2, 0),
+             Exports_Mt = Exports_Mt - TradeReduction_Mt,
+             Imports_Mt = Imports_Mt - TradeReduction_Mt) %>%
+      select(-Prod_MtN, -TradeReduction_Mt)
+
+    L1322.Fert_GrossTrade_Mt_R_Y <- L142.ag_Fert_NetExp_MtN_R_Y %>%
+      filter(year < max(MODEL_BASE_YEARS)) %>%
+      mutate(Exports_Mt = if_else(value > 0, value, 0),
+             Imports_Mt = if_else(value <= 0, value * -1, 0),
+             NetExports_Mt = value) %>%
+      select(-value) %>%
+      bind_rows(L1322.Fert_GrossTrade_Mt_R_fby)
+
     # Done ----
 
     L1322.Fert_Prod_MtNH3_R_F_Y %>%
@@ -444,6 +537,14 @@ module_energy_L1322.Fert <- function(command, ...) {
       add_precursors("energy/H2A_Prod_Tech","L210.rsrc_info",
                      "energy/A21.globaltech_cost", "energy/A22.globaltech_cost") ->
       L1322.Fert_NEcost_75USDkgNH3_F
+
+    L1322.Fert_GrossTrade_Mt_R_Y %>%
+      add_title("N Fertilizer gross trade by GCAM region and year") %>%
+      add_units("Mt N / yr") %>%
+      add_comments("ResourceTrade values scaled to match FAO-based mass balances in L142.ag_Fert_NetExp_MtN_R_Y") %>%
+      add_precursors("energy/Rt_Nfert_bilateral_trade", "energy/mappings/Rt_Nfert_commodities", "L142.ag_Fert_NetExp_MtN_R_Y") ->
+      L1322.Fert_GrossTrade_Mt_R_Y
+
 
     return_data(MODULE_OUTPUTS)
   } else {

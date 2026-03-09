@@ -265,22 +265,38 @@ peak generation,nuclear,nuc_peak_Gen II,electricity,nuclear,Gen_II_LWR,Gen_II_LW
 peak generation,nuclear,nuc_peak_Gen II,electricity,nuclear,Gen_II_LWR,Gen_II_LWR (seawater),nuclear,once through,seawater
 peak generation,nuclear,nuc_peak_Gen II,electricity,nuclear,Gen_II_LWR,Gen_II_LWR (recirculating),nuclear,recirculating,fresh
 peak generation,nuclear,nuc_peak_Gen II,electricity,nuclear,Gen_II_LWR,Gen_II_LWR (cooling pond),nuclear,cooling pond,fresh
-base load generation,nuclear,nuc_base_Gen III,electricity,nuclear,Gen_III,Gen_III (once through),nuclear,once through,fresh
-base load generation,nuclear,nuc_base_Gen III,electricity,nuclear,Gen_III,Gen_III (seawater),nuclear,once through,seawater
-base load generation,nuclear,nuc_base_Gen III,electricity,nuclear,Gen_III,Gen_III (recirculating),nuclear,recirculating,fresh
-base load generation,nuclear,nuc_base_Gen III,electricity,nuclear,Gen_III,Gen_III (cooling pond),nuclear,cooling pond,fresh
-intermediate generation,nuclear,nuc_int_Gen III,electricity,nuclear,Gen_III,Gen_III (once through),nuclear,once through,fresh
-intermediate generation,nuclear,nuc_int_Gen III,electricity,nuclear,Gen_III,Gen_III (seawater),nuclear,once through,seawater
-intermediate generation,nuclear,nuc_int_Gen III,electricity,nuclear,Gen_III,Gen_III (recirculating),nuclear,recirculating,fresh
-intermediate generation,nuclear,nuc_int_Gen III,electricity,nuclear,Gen_III,Gen_III (cooling pond),nuclear,cooling pond,fresh
-subpeak generation,nuclear,nuc_subpeak_Gen III,electricity,nuclear,Gen_III,Gen_III (once through),nuclear,once through,fresh
-subpeak generation,nuclear,nuc_subpeak_Gen III,electricity,nuclear,Gen_III,Gen_III (seawater),nuclear,once through,seawater
-subpeak generation,nuclear,nuc_subpeak_Gen III,electricity,nuclear,Gen_III,Gen_III (recirculating),nuclear,recirculating,fresh
-subpeak generation,nuclear,nuc_subpeak_Gen III,electricity,nuclear,Gen_III,Gen_III (cooling pond),nuclear,cooling pond,fresh
-peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (once through),nuclear,once through,fresh
-peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (seawater),nuclear,once through,seawater
-peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (recirculating),nuclear,recirculating,fresh
-peak generation,nuclear,nuc_peak_Gen III,electricity,nuclear,Gen_III,Gen_III (cooling pond),nuclear,cooling pond,fresh
+base load generation,nuclear,nuc_base_large reactor,electricity,nuclear,large reactor,large reactor (once through),nuclear,once through,fresh
+base load generation,nuclear,nuc_base_large reactor,electricity,nuclear,large reactor,large reactor (seawater),nuclear,once through,seawater
+base load generation,nuclear,nuc_base_large reactor,electricity,nuclear,large reactor,large reactor (recirculating),nuclear,recirculating,fresh
+base load generation,nuclear,nuc_base_large reactor,electricity,nuclear,large reactor,large reactor (cooling pond),nuclear,cooling pond,fresh
+intermediate generation,nuclear,nuc_int_large reactor,electricity,nuclear,large reactor,large reactor (once through),nuclear,once through,fresh
+intermediate generation,nuclear,nuc_int_large reactor,electricity,nuclear,large reactor,large reactor (seawater),nuclear,once through,seawater
+intermediate generation,nuclear,nuc_int_large reactor,electricity,nuclear,large reactor,large reactor (recirculating),nuclear,recirculating,fresh
+intermediate generation,nuclear,nuc_int_large reactor,electricity,nuclear,large reactor,large reactor (cooling pond),nuclear,cooling pond,fresh
+subpeak generation,nuclear,nuc_subpeak_large reactor,electricity,nuclear,large reactor,large reactor (once through),nuclear,once through,fresh
+subpeak generation,nuclear,nuc_subpeak_large reactor,electricity,nuclear,large reactor,large reactor (seawater),nuclear,once through,seawater
+subpeak generation,nuclear,nuc_subpeak_large reactor,electricity,nuclear,large reactor,large reactor (recirculating),nuclear,recirculating,fresh
+subpeak generation,nuclear,nuc_subpeak_large reactor,electricity,nuclear,large reactor,large reactor (cooling pond),nuclear,cooling pond,fresh
+peak generation,nuclear,nuc_peak_large reactor,electricity,nuclear,large reactor,large reactor (once through),nuclear,once through,fresh
+peak generation,nuclear,nuc_peak_large reactor,electricity,nuclear,large reactor,large reactor (seawater),nuclear,once through,seawater
+peak generation,nuclear,nuc_peak_large reactor,electricity,nuclear,large reactor,large reactor (recirculating),nuclear,recirculating,fresh
+peak generation,nuclear,nuc_peak_large reactor,electricity,nuclear,large reactor,large reactor (cooling pond),nuclear,cooling pond,fresh
+base load generation,nuclear,nuc_base_SMR,electricity,nuclear,SMR,SMR (once through),nuclear,once through,fresh
+base load generation,nuclear,nuc_base_SMR,electricity,nuclear,SMR,SMR (seawater),nuclear,once through,seawater
+base load generation,nuclear,nuc_base_SMR,electricity,nuclear,SMR,SMR (recirculating),nuclear,recirculating,fresh
+base load generation,nuclear,nuc_base_SMR,electricity,nuclear,SMR,SMR (cooling pond),nuclear,cooling pond,fresh
+intermediate generation,nuclear,nuc_int_SMR,electricity,nuclear,SMR,SMR (once through),nuclear,once through,fresh
+intermediate generation,nuclear,nuc_int_SMR,electricity,nuclear,SMR,SMR (seawater),nuclear,once through,seawater
+intermediate generation,nuclear,nuc_int_SMR,electricity,nuclear,SMR,SMR (recirculating),nuclear,recirculating,fresh
+intermediate generation,nuclear,nuc_int_SMR,electricity,nuclear,SMR,SMR (cooling pond),nuclear,cooling pond,fresh
+subpeak generation,nuclear,nuc_subpeak_SMR,electricity,nuclear,SMR,SMR (once through),nuclear,once through,fresh
+subpeak generation,nuclear,nuc_subpeak_SMR,electricity,nuclear,SMR,SMR (seawater),nuclear,once through,seawater
+subpeak generation,nuclear,nuc_subpeak_SMR,electricity,nuclear,SMR,SMR (recirculating),nuclear,recirculating,fresh
+subpeak generation,nuclear,nuc_subpeak_SMR,electricity,nuclear,SMR,SMR (cooling pond),nuclear,cooling pond,fresh
+peak generation,nuclear,nuc_peak_SMR,electricity,nuclear,SMR,SMR (once through),nuclear,once through,fresh
+peak generation,nuclear,nuc_peak_SMR,electricity,nuclear,SMR,SMR (seawater),nuclear,once through,seawater
+peak generation,nuclear,nuc_peak_SMR,electricity,nuclear,SMR,SMR (recirculating),nuclear,recirculating,fresh
+peak generation,nuclear,nuc_peak_SMR,electricity,nuclear,SMR,SMR (cooling pond),nuclear,cooling pond,fresh
 base load generation,wind,wind_base_storage,electricity,wind,wind_storage,wind_base_storage,no cooling,none,none
 base load generation,wind,wind_base_offshore,electricity,wind,wind_offshore,wind_base_offshore,no cooling,none,none
 base load generation,wind,wind_base,electricity,wind,wind,wind_base,no cooling,none,none

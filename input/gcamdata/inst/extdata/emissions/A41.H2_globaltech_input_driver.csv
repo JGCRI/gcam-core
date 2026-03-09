@@ -1,0 +1,14 @@
+# File: A41.H2_globaltech_input_driver.csv
+# Title: H2 industrial combustion technology input name to drive non-co2 emissions
+# Units: Unitless
+# Comments: Used to identify which is the appropriate input to drive non-co2 emissions
+# Column types: cccc
+# ----------
+supplysector,subsector,technology,input.name
+agricultural energy use,stationary,hydrogen,H2 wholesale delivery
+construction energy use,stationary,hydrogen,H2 wholesale delivery
+mining energy use,stationary,hydrogen,H2 wholesale delivery
+other industrial energy use,hydrogen,hydrogen,H2 industrial
+other industrial energy use,hydrogen,hydrogen cogen,H2 wholesale delivery
+process heat cement,hydrogen,hydrogen,H2 industrial
+chemical energy use,hydrogen,hydrogen,H2 industrial

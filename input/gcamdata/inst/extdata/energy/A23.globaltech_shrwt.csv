@@ -20,7 +20,8 @@ electricity,biomass,biomass (conv CCS),0,0,0,0,1,1,1
 electricity,biomass,biomass (IGCC),0,0,0,0,1,1,1
 electricity,biomass,biomass (IGCC CCS),0,0,0,0,1,1,1
 electricity,nuclear,Gen_II_LWR,0,0,0,0,0,0,0
-electricity,nuclear,Gen_III,0,0,0,1,1,1,1
+electricity,nuclear,large reactor,0,0,0,1,1,1,1
+electricity,nuclear,SMR,0,0,0,0,1,1,1
 electricity,hydro,hydro,0,0,0,0,0,0,0
 electricity,wind,wind,1,1,1,1,1,1,1
 electricity,wind,wind_storage,0,0,0,1,1,1,1

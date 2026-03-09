@@ -20,9 +20,11 @@ module_emissions_L241.fgas <- function(command, ...) {
     return(c(FILE = "common/GCAM_region_names",
              FILE = "emissions/A_regions",
              FILE = "emissions/FUT_EMISS_GV",
+             FILE = "emissions/mappings/USAbld_emission_mapping",
              "L141.hfc_R_S_T_Yh",
              "L141.hfc_ef_R_cooling_Yh",
-             "L142.pfc_R_S_T_Yh"))
+             "L142.pfc_R_S_T_Yh",
+             "L244.StubTechCalInput_bld"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L241.hfc_all",
              "L241.pfc_all",
@@ -36,9 +38,11 @@ module_emissions_L241.fgas <- function(command, ...) {
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
     A_regions         <- get_data(all_data, "emissions/A_regions")
     FUT_EMISS_GV      <- get_data(all_data, "emissions/FUT_EMISS_GV")
+    USAbld_emission_mapping      <- get_data(all_data, "emissions/mappings/USAbld_emission_mapping")
     L142.pfc_R_S_T_Yh <- get_data(all_data, "L142.pfc_R_S_T_Yh", strip_attributes = T)
     L141.hfc_R_S_T_Yh <- get_data(all_data, "L141.hfc_R_S_T_Yh", strip_attributes = T)
     L141.hfc_ef_R_cooling_Yh <- get_data(all_data, "L141.hfc_ef_R_cooling_Yh", strip_attributes = T)
+    L244.StubTechCalInput_bld <- get_data(all_data, "L244.StubTechCalInput_bld", strip_attributes = T)
 
     ## silence package check.
     . <- `2010` <- `2020` <- `2030` <- EF <- Emissions <- GCAM_region_ID <- GDP <-
@@ -217,6 +221,34 @@ module_emissions_L241.fgas <- function(command, ...) {
       ungroup ->
       L241.hfc_all
 
+    # Downscale emissions in USA buildings to their detailed technologies
+    L244.HFC_tech_shares <- L244.StubTechCalInput_bld %>%
+      inner_join(USAbld_emission_mapping, by = c("region", supplysector = "to.supplysector", subsector = "to.subsector", stub.technology = "to.stub.technology")) %>%
+      group_by(region, from.supplysector, from.subsector, from.stub.technology, year) %>%
+      mutate(tech_share = calibrated.value / sum(calibrated.value)) %>%
+      ungroup() %>%
+      replace_na(list(tech_share = 0)) %>%
+      select(region, to.supplysector = supplysector, to.subsector = subsector, to.stub.technology = stub.technology, year, tech_share)
+
+    L241.hfc_all_USAbld <- L241.hfc_all %>%
+      inner_join(USAbld_emission_mapping, by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")) %>%
+      left_join_error_no_match(L244.HFC_tech_shares, by = c("region", "to.supplysector", "to.subsector", "to.stub.technology", "year")) %>%
+      mutate(input.emissions = input.emissions * tech_share,
+             supplysector = to.supplysector, subsector = to.subsector, stub.technology = to.stub.technology) %>%
+      select(names(L241.hfc_all))
+
+    L241.hfc_all <- L241.hfc_all_USAbld %>%
+      bind_rows(anti_join(L241.hfc_all, USAbld_emission_mapping,
+                          by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")))
+
+    # Emissions coefficients in L241.hfc_future can simply be mapped to their corresponding detailed building technology
+    L241.hfc_future <- L241.hfc_future %>%
+      left_join(USAbld_emission_mapping, by = c("region", supplysector = "from.supplysector", subsector = "from.subsector", stub.technology = "from.stub.technology")) %>%
+      mutate(supplysector = if_else(is.na(to.supplysector), supplysector, to.supplysector),
+             subsector = if_else(is.na(to.subsector), subsector, to.subsector),
+             stub.technology = if_else(is.na(to.stub.technology), stub.technology, to.stub.technology)) %>%
+      select(-to.supplysector, -to.subsector, -to.stub.technology)
+
     # Set the units string for the hfc and pfc gases.
     L241.pfc_all %>%
       bind_rows(L241.hfc_all) %>%
@@ -251,8 +283,8 @@ module_emissions_L241.fgas <- function(command, ...) {
       add_comments("Emission values from L1 rounded to the appropriate digits.") %>%
       add_legacy_name("L241.hfc_all") %>%
       add_precursors("common/GCAM_region_names", "emissions/A_regions", "emissions/FUT_EMISS_GV",
-                     "L141.hfc_R_S_T_Yh", "L142.pfc_R_S_T_Yh",
-                     "L141.hfc_ef_R_cooling_Yh") ->
+                     "emissions/mappings/USAbld_emission_mapping", "L141.hfc_R_S_T_Yh", "L142.pfc_R_S_T_Yh",
+                     "L141.hfc_ef_R_cooling_Yh", "L244.StubTechCalInput_bld") ->
       L241.hfc_all
 
     L241.pfc_all %>%

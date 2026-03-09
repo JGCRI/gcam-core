@@ -1,0 +1,287 @@
+# File: USAbld_emission_mapping.csv
+# Title: Emission mapping from standard buildings technologies to detailed USA buildings sector
+# Units: None
+# Comments: This allows the emissions and emissions coefficients assigned to the buildings sector in all_energy_emissions.xml and all_fgas_emissions.xml to be assigned to detailed USA building technologies
+# Source: internal
+# Column types: ccccccc
+# ----------
+region,from.supplysector,from.subsector,from.stub.technology,to.supplysector,to.subsector,to.stub.technology
+USA,comm cooling,electricity,electricity,comm cooling,electricity,air conditioning
+USA,comm cooling,electricity,electricity,comm cooling,electricity,air conditioning hi-eff
+USA,comm cooling,electricity,electricity,comm refrigeration,electricity,refrigeration
+USA,comm cooling,electricity,electricity,comm refrigeration,electricity,refrigeration hi-eff
+USA,comm cooling,gas,gas,comm cooling,gas,gas cooling
+USA,comm heating,biomass,biomass,comm heating,biomass,biomass
+USA,comm heating,coal,coal,comm heating,coal,coal
+USA,comm heating,gas,gas,comm heating,gas,gas furnace
+USA,comm heating,gas,gas,comm heating,gas,gas furnace hi-eff
+USA,comm heating,refined liquids,refined liquids,comm heating,refined liquids,fuel furnace
+USA,comm others,biomass,biomass,comm others,biomass,biomass
+USA,comm others,coal,coal,comm others,coal,coal
+USA,comm others,gas,gas,comm cooking,gas,gas range
+USA,comm others,gas,gas,comm cooking,gas,gas range hi-eff
+USA,comm others,gas,gas,comm hot water,gas,gas water heater
+USA,comm others,gas,gas,comm hot water,gas,gas water heater hi-eff
+USA,comm others,gas,gas,comm others,gas,gas
+USA,comm others,refined liquids,refined liquids,comm hot water,refined liquids,fuel water heater
+USA,comm others,refined liquids,refined liquids,comm others,refined liquids,refined liquids
+USA,resid cooling modern_d1,electricity,electricity,resid cooling modern_d1,electricity,air conditioning
+USA,resid cooling modern_d1,electricity,electricity,resid cooling modern_d1,electricity,air conditioning hi-eff
+USA,resid cooling modern_d1,electricity,electricity,resid refrigerators modern_d1,electricity,refrigerator
+USA,resid cooling modern_d1,electricity,electricity,resid refrigerators modern_d1,electricity,refrigerator hi-eff
+USA,resid cooling modern_d10,electricity,electricity,resid cooling modern_d10,electricity,air conditioning
+USA,resid cooling modern_d10,electricity,electricity,resid cooling modern_d10,electricity,air conditioning hi-eff
+USA,resid cooling modern_d10,electricity,electricity,resid refrigerators modern_d10,electricity,refrigerator
+USA,resid cooling modern_d10,electricity,electricity,resid refrigerators modern_d10,electricity,refrigerator hi-eff
+USA,resid cooling modern_d2,electricity,electricity,resid cooling modern_d2,electricity,air conditioning
+USA,resid cooling modern_d2,electricity,electricity,resid cooling modern_d2,electricity,air conditioning hi-eff
+USA,resid cooling modern_d2,electricity,electricity,resid refrigerators modern_d2,electricity,refrigerator
+USA,resid cooling modern_d2,electricity,electricity,resid refrigerators modern_d2,electricity,refrigerator hi-eff
+USA,resid cooling modern_d3,electricity,electricity,resid cooling modern_d3,electricity,air conditioning
+USA,resid cooling modern_d3,electricity,electricity,resid cooling modern_d3,electricity,air conditioning hi-eff
+USA,resid cooling modern_d3,electricity,electricity,resid refrigerators modern_d3,electricity,refrigerator
+USA,resid cooling modern_d3,electricity,electricity,resid refrigerators modern_d3,electricity,refrigerator hi-eff
+USA,resid cooling modern_d4,electricity,electricity,resid cooling modern_d4,electricity,air conditioning
+USA,resid cooling modern_d4,electricity,electricity,resid cooling modern_d4,electricity,air conditioning hi-eff
+USA,resid cooling modern_d4,electricity,electricity,resid refrigerators modern_d4,electricity,refrigerator
+USA,resid cooling modern_d4,electricity,electricity,resid refrigerators modern_d4,electricity,refrigerator hi-eff
+USA,resid cooling modern_d5,electricity,electricity,resid cooling modern_d5,electricity,air conditioning
+USA,resid cooling modern_d5,electricity,electricity,resid cooling modern_d5,electricity,air conditioning hi-eff
+USA,resid cooling modern_d5,electricity,electricity,resid refrigerators modern_d5,electricity,refrigerator
+USA,resid cooling modern_d5,electricity,electricity,resid refrigerators modern_d5,electricity,refrigerator hi-eff
+USA,resid cooling modern_d6,electricity,electricity,resid cooling modern_d6,electricity,air conditioning
+USA,resid cooling modern_d6,electricity,electricity,resid cooling modern_d6,electricity,air conditioning hi-eff
+USA,resid cooling modern_d6,electricity,electricity,resid refrigerators modern_d6,electricity,refrigerator
+USA,resid cooling modern_d6,electricity,electricity,resid refrigerators modern_d6,electricity,refrigerator hi-eff
+USA,resid cooling modern_d7,electricity,electricity,resid cooling modern_d7,electricity,air conditioning
+USA,resid cooling modern_d7,electricity,electricity,resid cooling modern_d7,electricity,air conditioning hi-eff
+USA,resid cooling modern_d7,electricity,electricity,resid refrigerators modern_d7,electricity,refrigerator
+USA,resid cooling modern_d7,electricity,electricity,resid refrigerators modern_d7,electricity,refrigerator hi-eff
+USA,resid cooling modern_d8,electricity,electricity,resid cooling modern_d8,electricity,air conditioning
+USA,resid cooling modern_d8,electricity,electricity,resid cooling modern_d8,electricity,air conditioning hi-eff
+USA,resid cooling modern_d8,electricity,electricity,resid refrigerators modern_d8,electricity,refrigerator
+USA,resid cooling modern_d8,electricity,electricity,resid refrigerators modern_d8,electricity,refrigerator hi-eff
+USA,resid cooling modern_d9,electricity,electricity,resid cooling modern_d9,electricity,air conditioning
+USA,resid cooling modern_d9,electricity,electricity,resid cooling modern_d9,electricity,air conditioning hi-eff
+USA,resid cooling modern_d9,electricity,electricity,resid refrigerators modern_d9,electricity,refrigerator
+USA,resid cooling modern_d9,electricity,electricity,resid refrigerators modern_d9,electricity,refrigerator hi-eff
+USA,resid cooling modern_d1,gas,gas,DROP,,
+USA,resid cooling modern_d10,gas,gas,DROP,,
+USA,resid cooling modern_d2,gas,gas,DROP,,
+USA,resid cooling modern_d3,gas,gas,DROP,,
+USA,resid cooling modern_d4,gas,gas,DROP,,
+USA,resid cooling modern_d5,gas,gas,DROP,,
+USA,resid cooling modern_d6,gas,gas,DROP,,
+USA,resid cooling modern_d7,gas,gas,DROP,,
+USA,resid cooling modern_d8,gas,gas,DROP,,
+USA,resid cooling modern_d9,gas,gas,DROP,,
+USA,resid heating coal_d1,coal,coal,resid heating coal_d1,coal,coal
+USA,resid heating coal_d10,coal,coal,resid heating coal_d10,coal,coal
+USA,resid heating coal_d2,coal,coal,resid heating coal_d2,coal,coal
+USA,resid heating coal_d3,coal,coal,resid heating coal_d3,coal,coal
+USA,resid heating coal_d4,coal,coal,resid heating coal_d4,coal,coal
+USA,resid heating coal_d5,coal,coal,resid heating coal_d5,coal,coal
+USA,resid heating coal_d6,coal,coal,resid heating coal_d6,coal,coal
+USA,resid heating coal_d7,coal,coal,resid heating coal_d7,coal,coal
+USA,resid heating coal_d8,coal,coal,resid heating coal_d8,coal,coal
+USA,resid heating coal_d9,coal,coal,resid heating coal_d9,coal,coal
+USA,resid heating modern_d1,biomass,biomass,resid heating modern_d1,biomass,biomass
+USA,resid heating modern_d1,gas,gas,resid heating modern_d1,gas,gas furnace
+USA,resid heating modern_d1,gas,gas,resid heating modern_d1,gas,gas furnace hi-eff
+USA,resid heating modern_d1,refined liquids,refined liquids,resid heating modern_d1,refined liquids,fuel furnace
+USA,resid heating modern_d1,refined liquids,refined liquids,resid heating modern_d1,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d10,biomass,biomass,resid heating modern_d10,biomass,biomass
+USA,resid heating modern_d10,gas,gas,resid heating modern_d10,gas,gas furnace
+USA,resid heating modern_d10,gas,gas,resid heating modern_d10,gas,gas furnace hi-eff
+USA,resid heating modern_d10,refined liquids,refined liquids,resid heating modern_d10,refined liquids,fuel furnace
+USA,resid heating modern_d10,refined liquids,refined liquids,resid heating modern_d10,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d2,biomass,biomass,resid heating modern_d2,biomass,biomass
+USA,resid heating modern_d2,gas,gas,resid heating modern_d2,gas,gas furnace
+USA,resid heating modern_d2,gas,gas,resid heating modern_d2,gas,gas furnace hi-eff
+USA,resid heating modern_d2,refined liquids,refined liquids,resid heating modern_d2,refined liquids,fuel furnace
+USA,resid heating modern_d2,refined liquids,refined liquids,resid heating modern_d2,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d3,biomass,biomass,resid heating modern_d3,biomass,biomass
+USA,resid heating modern_d3,gas,gas,resid heating modern_d3,gas,gas furnace
+USA,resid heating modern_d3,gas,gas,resid heating modern_d3,gas,gas furnace hi-eff
+USA,resid heating modern_d3,refined liquids,refined liquids,resid heating modern_d3,refined liquids,fuel furnace
+USA,resid heating modern_d3,refined liquids,refined liquids,resid heating modern_d3,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d4,biomass,biomass,resid heating modern_d4,biomass,biomass
+USA,resid heating modern_d4,gas,gas,resid heating modern_d4,gas,gas furnace
+USA,resid heating modern_d4,gas,gas,resid heating modern_d4,gas,gas furnace hi-eff
+USA,resid heating modern_d4,refined liquids,refined liquids,resid heating modern_d4,refined liquids,fuel furnace
+USA,resid heating modern_d4,refined liquids,refined liquids,resid heating modern_d4,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d5,biomass,biomass,resid heating modern_d5,biomass,biomass
+USA,resid heating modern_d5,gas,gas,resid heating modern_d5,gas,gas furnace
+USA,resid heating modern_d5,gas,gas,resid heating modern_d5,gas,gas furnace hi-eff
+USA,resid heating modern_d5,refined liquids,refined liquids,resid heating modern_d5,refined liquids,fuel furnace
+USA,resid heating modern_d5,refined liquids,refined liquids,resid heating modern_d5,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d6,biomass,biomass,resid heating modern_d6,biomass,biomass
+USA,resid heating modern_d6,gas,gas,resid heating modern_d6,gas,gas furnace
+USA,resid heating modern_d6,gas,gas,resid heating modern_d6,gas,gas furnace hi-eff
+USA,resid heating modern_d6,refined liquids,refined liquids,resid heating modern_d6,refined liquids,fuel furnace
+USA,resid heating modern_d6,refined liquids,refined liquids,resid heating modern_d6,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d7,biomass,biomass,resid heating modern_d7,biomass,biomass
+USA,resid heating modern_d7,gas,gas,resid heating modern_d7,gas,gas furnace
+USA,resid heating modern_d7,gas,gas,resid heating modern_d7,gas,gas furnace hi-eff
+USA,resid heating modern_d7,refined liquids,refined liquids,resid heating modern_d7,refined liquids,fuel furnace
+USA,resid heating modern_d7,refined liquids,refined liquids,resid heating modern_d7,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d8,biomass,biomass,resid heating modern_d8,biomass,biomass
+USA,resid heating modern_d8,gas,gas,resid heating modern_d8,gas,gas furnace
+USA,resid heating modern_d8,gas,gas,resid heating modern_d8,gas,gas furnace hi-eff
+USA,resid heating modern_d8,refined liquids,refined liquids,resid heating modern_d8,refined liquids,fuel furnace
+USA,resid heating modern_d8,refined liquids,refined liquids,resid heating modern_d8,refined liquids,fuel furnace hi-eff
+USA,resid heating modern_d9,biomass,biomass,resid heating modern_d9,biomass,biomass
+USA,resid heating modern_d9,gas,gas,resid heating modern_d9,gas,gas furnace
+USA,resid heating modern_d9,gas,gas,resid heating modern_d9,gas,gas furnace hi-eff
+USA,resid heating modern_d9,refined liquids,refined liquids,resid heating modern_d9,refined liquids,fuel furnace
+USA,resid heating modern_d9,refined liquids,refined liquids,resid heating modern_d9,refined liquids,fuel furnace hi-eff
+USA,resid heating TradBio_d1,traditional biomass,traditional biomass,resid heating TradBio_d1,traditional biomass,traditional biomass
+USA,resid heating TradBio_d10,traditional biomass,traditional biomass,resid heating TradBio_d10,traditional biomass,traditional biomass
+USA,resid heating TradBio_d2,traditional biomass,traditional biomass,resid heating TradBio_d2,traditional biomass,traditional biomass
+USA,resid heating TradBio_d3,traditional biomass,traditional biomass,resid heating TradBio_d3,traditional biomass,traditional biomass
+USA,resid heating TradBio_d4,traditional biomass,traditional biomass,resid heating TradBio_d4,traditional biomass,traditional biomass
+USA,resid heating TradBio_d5,traditional biomass,traditional biomass,resid heating TradBio_d5,traditional biomass,traditional biomass
+USA,resid heating TradBio_d6,traditional biomass,traditional biomass,resid heating TradBio_d6,traditional biomass,traditional biomass
+USA,resid heating TradBio_d7,traditional biomass,traditional biomass,resid heating TradBio_d7,traditional biomass,traditional biomass
+USA,resid heating TradBio_d8,traditional biomass,traditional biomass,resid heating TradBio_d8,traditional biomass,traditional biomass
+USA,resid heating TradBio_d9,traditional biomass,traditional biomass,resid heating TradBio_d9,traditional biomass,traditional biomass
+USA,resid others coal_d1,coal,coal,resid others coal_d1,coal,coal
+USA,resid others coal_d10,coal,coal,resid others coal_d10,coal,coal
+USA,resid others coal_d2,coal,coal,resid others coal_d2,coal,coal
+USA,resid others coal_d3,coal,coal,resid others coal_d3,coal,coal
+USA,resid others coal_d4,coal,coal,resid others coal_d4,coal,coal
+USA,resid others coal_d5,coal,coal,resid others coal_d5,coal,coal
+USA,resid others coal_d6,coal,coal,resid others coal_d6,coal,coal
+USA,resid others coal_d7,coal,coal,resid others coal_d7,coal,coal
+USA,resid others coal_d8,coal,coal,resid others coal_d8,coal,coal
+USA,resid others coal_d9,coal,coal,resid others coal_d9,coal,coal
+USA,resid others modern_d1,biomass,biomass,DROP,,
+USA,resid others modern_d1,gas,gas,resid clothes dryers modern_d1,gas,clothes dryer
+USA,resid others modern_d1,gas,gas,resid cooking modern_d1,gas,gas oven
+USA,resid others modern_d1,gas,gas,resid cooking modern_d1,gas,gas oven hi-eff
+USA,resid others modern_d1,gas,gas,resid hot water modern_d1,gas,gas water heater
+USA,resid others modern_d1,gas,gas,resid hot water modern_d1,gas,gas water heater hi-eff
+USA,resid others modern_d1,gas,gas,resid others modern_d1,gas,gas
+USA,resid others modern_d1,refined liquids,refined liquids,resid cooking modern_d1,refined liquids,lpg oven
+USA,resid others modern_d1,refined liquids,refined liquids,resid cooking modern_d1,refined liquids,lpg oven hi-eff
+USA,resid others modern_d1,refined liquids,refined liquids,resid hot water modern_d1,refined liquids,fuel water heater
+USA,resid others modern_d1,refined liquids,refined liquids,resid hot water modern_d1,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d1,refined liquids,refined liquids,resid others modern_d1,refined liquids,refined liquids
+USA,resid others modern_d10,biomass,biomass,DROP,,
+USA,resid others modern_d10,gas,gas,resid clothes dryers modern_d10,gas,clothes dryer
+USA,resid others modern_d10,gas,gas,resid cooking modern_d10,gas,gas oven
+USA,resid others modern_d10,gas,gas,resid cooking modern_d10,gas,gas oven hi-eff
+USA,resid others modern_d10,gas,gas,resid hot water modern_d10,gas,gas water heater
+USA,resid others modern_d10,gas,gas,resid hot water modern_d10,gas,gas water heater hi-eff
+USA,resid others modern_d10,gas,gas,resid others modern_d10,gas,gas
+USA,resid others modern_d10,refined liquids,refined liquids,resid cooking modern_d10,refined liquids,lpg oven
+USA,resid others modern_d10,refined liquids,refined liquids,resid cooking modern_d10,refined liquids,lpg oven hi-eff
+USA,resid others modern_d10,refined liquids,refined liquids,resid hot water modern_d10,refined liquids,fuel water heater
+USA,resid others modern_d10,refined liquids,refined liquids,resid hot water modern_d10,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d10,refined liquids,refined liquids,resid others modern_d10,refined liquids,refined liquids
+USA,resid others modern_d2,biomass,biomass,DROP,,
+USA,resid others modern_d2,gas,gas,resid clothes dryers modern_d2,gas,clothes dryer
+USA,resid others modern_d2,gas,gas,resid cooking modern_d2,gas,gas oven
+USA,resid others modern_d2,gas,gas,resid cooking modern_d2,gas,gas oven hi-eff
+USA,resid others modern_d2,gas,gas,resid hot water modern_d2,gas,gas water heater
+USA,resid others modern_d2,gas,gas,resid hot water modern_d2,gas,gas water heater hi-eff
+USA,resid others modern_d2,gas,gas,resid others modern_d2,gas,gas
+USA,resid others modern_d2,refined liquids,refined liquids,resid cooking modern_d2,refined liquids,lpg oven
+USA,resid others modern_d2,refined liquids,refined liquids,resid cooking modern_d2,refined liquids,lpg oven hi-eff
+USA,resid others modern_d2,refined liquids,refined liquids,resid hot water modern_d2,refined liquids,fuel water heater
+USA,resid others modern_d2,refined liquids,refined liquids,resid hot water modern_d2,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d2,refined liquids,refined liquids,resid others modern_d2,refined liquids,refined liquids
+USA,resid others modern_d3,biomass,biomass,DROP,,
+USA,resid others modern_d3,gas,gas,resid clothes dryers modern_d3,gas,clothes dryer
+USA,resid others modern_d3,gas,gas,resid cooking modern_d3,gas,gas oven
+USA,resid others modern_d3,gas,gas,resid cooking modern_d3,gas,gas oven hi-eff
+USA,resid others modern_d3,gas,gas,resid hot water modern_d3,gas,gas water heater
+USA,resid others modern_d3,gas,gas,resid hot water modern_d3,gas,gas water heater hi-eff
+USA,resid others modern_d3,gas,gas,resid others modern_d3,gas,gas
+USA,resid others modern_d3,refined liquids,refined liquids,resid cooking modern_d3,refined liquids,lpg oven
+USA,resid others modern_d3,refined liquids,refined liquids,resid cooking modern_d3,refined liquids,lpg oven hi-eff
+USA,resid others modern_d3,refined liquids,refined liquids,resid hot water modern_d3,refined liquids,fuel water heater
+USA,resid others modern_d3,refined liquids,refined liquids,resid hot water modern_d3,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d3,refined liquids,refined liquids,resid others modern_d3,refined liquids,refined liquids
+USA,resid others modern_d4,biomass,biomass,DROP,,
+USA,resid others modern_d4,gas,gas,resid clothes dryers modern_d4,gas,clothes dryer
+USA,resid others modern_d4,gas,gas,resid cooking modern_d4,gas,gas oven
+USA,resid others modern_d4,gas,gas,resid cooking modern_d4,gas,gas oven hi-eff
+USA,resid others modern_d4,gas,gas,resid hot water modern_d4,gas,gas water heater
+USA,resid others modern_d4,gas,gas,resid hot water modern_d4,gas,gas water heater hi-eff
+USA,resid others modern_d4,gas,gas,resid others modern_d4,gas,gas
+USA,resid others modern_d4,refined liquids,refined liquids,resid cooking modern_d4,refined liquids,lpg oven
+USA,resid others modern_d4,refined liquids,refined liquids,resid cooking modern_d4,refined liquids,lpg oven hi-eff
+USA,resid others modern_d4,refined liquids,refined liquids,resid hot water modern_d4,refined liquids,fuel water heater
+USA,resid others modern_d4,refined liquids,refined liquids,resid hot water modern_d4,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d4,refined liquids,refined liquids,resid others modern_d4,refined liquids,refined liquids
+USA,resid others modern_d5,biomass,biomass,DROP,,
+USA,resid others modern_d5,gas,gas,resid clothes dryers modern_d5,gas,clothes dryer
+USA,resid others modern_d5,gas,gas,resid cooking modern_d5,gas,gas oven
+USA,resid others modern_d5,gas,gas,resid cooking modern_d5,gas,gas oven hi-eff
+USA,resid others modern_d5,gas,gas,resid hot water modern_d5,gas,gas water heater
+USA,resid others modern_d5,gas,gas,resid hot water modern_d5,gas,gas water heater hi-eff
+USA,resid others modern_d5,gas,gas,resid others modern_d5,gas,gas
+USA,resid others modern_d5,refined liquids,refined liquids,resid cooking modern_d5,refined liquids,lpg oven
+USA,resid others modern_d5,refined liquids,refined liquids,resid cooking modern_d5,refined liquids,lpg oven hi-eff
+USA,resid others modern_d5,refined liquids,refined liquids,resid hot water modern_d5,refined liquids,fuel water heater
+USA,resid others modern_d5,refined liquids,refined liquids,resid hot water modern_d5,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d5,refined liquids,refined liquids,resid others modern_d5,refined liquids,refined liquids
+USA,resid others modern_d6,biomass,biomass,DROP,,
+USA,resid others modern_d6,gas,gas,resid clothes dryers modern_d6,gas,clothes dryer
+USA,resid others modern_d6,gas,gas,resid cooking modern_d6,gas,gas oven
+USA,resid others modern_d6,gas,gas,resid cooking modern_d6,gas,gas oven hi-eff
+USA,resid others modern_d6,gas,gas,resid hot water modern_d6,gas,gas water heater
+USA,resid others modern_d6,gas,gas,resid hot water modern_d6,gas,gas water heater hi-eff
+USA,resid others modern_d6,gas,gas,resid others modern_d6,gas,gas
+USA,resid others modern_d6,refined liquids,refined liquids,resid cooking modern_d6,refined liquids,lpg oven
+USA,resid others modern_d6,refined liquids,refined liquids,resid cooking modern_d6,refined liquids,lpg oven hi-eff
+USA,resid others modern_d6,refined liquids,refined liquids,resid hot water modern_d6,refined liquids,fuel water heater
+USA,resid others modern_d6,refined liquids,refined liquids,resid hot water modern_d6,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d6,refined liquids,refined liquids,resid others modern_d6,refined liquids,refined liquids
+USA,resid others modern_d7,biomass,biomass,DROP,,
+USA,resid others modern_d7,gas,gas,resid clothes dryers modern_d7,gas,clothes dryer
+USA,resid others modern_d7,gas,gas,resid cooking modern_d7,gas,gas oven
+USA,resid others modern_d7,gas,gas,resid cooking modern_d7,gas,gas oven hi-eff
+USA,resid others modern_d7,gas,gas,resid hot water modern_d7,gas,gas water heater
+USA,resid others modern_d7,gas,gas,resid hot water modern_d7,gas,gas water heater hi-eff
+USA,resid others modern_d7,gas,gas,resid others modern_d7,gas,gas
+USA,resid others modern_d7,refined liquids,refined liquids,resid cooking modern_d7,refined liquids,lpg oven
+USA,resid others modern_d7,refined liquids,refined liquids,resid cooking modern_d7,refined liquids,lpg oven hi-eff
+USA,resid others modern_d7,refined liquids,refined liquids,resid hot water modern_d7,refined liquids,fuel water heater
+USA,resid others modern_d7,refined liquids,refined liquids,resid hot water modern_d7,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d7,refined liquids,refined liquids,resid others modern_d7,refined liquids,refined liquids
+USA,resid others modern_d8,biomass,biomass,DROP,,
+USA,resid others modern_d8,gas,gas,resid clothes dryers modern_d8,gas,clothes dryer
+USA,resid others modern_d8,gas,gas,resid cooking modern_d8,gas,gas oven
+USA,resid others modern_d8,gas,gas,resid cooking modern_d8,gas,gas oven hi-eff
+USA,resid others modern_d8,gas,gas,resid hot water modern_d8,gas,gas water heater
+USA,resid others modern_d8,gas,gas,resid hot water modern_d8,gas,gas water heater hi-eff
+USA,resid others modern_d8,gas,gas,resid others modern_d8,gas,gas
+USA,resid others modern_d8,refined liquids,refined liquids,resid cooking modern_d8,refined liquids,lpg oven
+USA,resid others modern_d8,refined liquids,refined liquids,resid cooking modern_d8,refined liquids,lpg oven hi-eff
+USA,resid others modern_d8,refined liquids,refined liquids,resid hot water modern_d8,refined liquids,fuel water heater
+USA,resid others modern_d8,refined liquids,refined liquids,resid hot water modern_d8,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d8,refined liquids,refined liquids,resid others modern_d8,refined liquids,refined liquids
+USA,resid others modern_d9,biomass,biomass,DROP,,
+USA,resid others modern_d9,gas,gas,resid clothes dryers modern_d9,gas,clothes dryer
+USA,resid others modern_d9,gas,gas,resid cooking modern_d9,gas,gas oven
+USA,resid others modern_d9,gas,gas,resid cooking modern_d9,gas,gas oven hi-eff
+USA,resid others modern_d9,gas,gas,resid hot water modern_d9,gas,gas water heater
+USA,resid others modern_d9,gas,gas,resid hot water modern_d9,gas,gas water heater hi-eff
+USA,resid others modern_d9,gas,gas,resid others modern_d9,gas,gas
+USA,resid others modern_d9,refined liquids,refined liquids,resid cooking modern_d9,refined liquids,lpg oven
+USA,resid others modern_d9,refined liquids,refined liquids,resid cooking modern_d9,refined liquids,lpg oven hi-eff
+USA,resid others modern_d9,refined liquids,refined liquids,resid hot water modern_d9,refined liquids,fuel water heater
+USA,resid others modern_d9,refined liquids,refined liquids,resid hot water modern_d9,refined liquids,fuel water heater hi-eff
+USA,resid others modern_d9,refined liquids,refined liquids,resid others modern_d9,refined liquids,refined liquids
+USA,resid others TradBio_d1,traditional biomass,traditional biomass,resid others TradBio_d1,traditional biomass,traditional biomass
+USA,resid others TradBio_d10,traditional biomass,traditional biomass,resid others TradBio_d10,traditional biomass,traditional biomass
+USA,resid others TradBio_d2,traditional biomass,traditional biomass,resid others TradBio_d2,traditional biomass,traditional biomass
+USA,resid others TradBio_d3,traditional biomass,traditional biomass,resid others TradBio_d3,traditional biomass,traditional biomass
+USA,resid others TradBio_d4,traditional biomass,traditional biomass,resid others TradBio_d4,traditional biomass,traditional biomass
+USA,resid others TradBio_d5,traditional biomass,traditional biomass,resid others TradBio_d5,traditional biomass,traditional biomass
+USA,resid others TradBio_d6,traditional biomass,traditional biomass,resid others TradBio_d6,traditional biomass,traditional biomass
+USA,resid others TradBio_d7,traditional biomass,traditional biomass,resid others TradBio_d7,traditional biomass,traditional biomass
+USA,resid others TradBio_d8,traditional biomass,traditional biomass,resid others TradBio_d8,traditional biomass,traditional biomass
+USA,resid others TradBio_d9,traditional biomass,traditional biomass,resid others TradBio_d9,traditional biomass,traditional biomass

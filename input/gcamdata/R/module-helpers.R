@@ -511,7 +511,7 @@ get_ssp_regions <- function(pcGDP, reg_names, income_group,
 #' @importFrom tidyr complete
 #' @importFrom assertthat assert_that
 #' @author Pralit Patel
-fill_exp_decay_extrapolate <- function(d, out_years) {
+fill_exp_decay_extrapolate <- function(d, out_years, tech_colnames = c("supplysector", "subsector", "technology")){
   . <- value <- year <- improvement.rate <- improvement.max <-
     improvement.shadow.technology <- technology <- year_base <-
     value_base <- shadow.value <- NULL  # silence package check notes
@@ -586,12 +586,14 @@ fill_exp_decay_extrapolate <- function(d, out_years) {
 
   # Now we can calculate the exponential decay extrapolation for technologies that
   # were shadowing another
+  colnames_for_join <- c(tech_colnames, "year")
+  names(colnames_for_join) <- sub("technology", "improvement.shadow.technology", colnames_for_join)
   d_nonshadowed %>%
     # Merge the "shadow" technologies onto those that specified one in the "improvement.shadow.technology"
-    select(technology, year, value) %>%
+    select(c(tech_colnames), year, value) %>%
     rename(shadow.value = value) %>%
     left_join_error_no_match(d_extrap %>% filter(!is.na(improvement.shadow.technology)), .,
-                             by = c("improvement.shadow.technology" = "technology", "year" = "year")) %>%
+                             by = colnames_for_join) %>%
     # figure out the last specified year from which we will be extrapolating
     # (adding a -Inf in case there are no extrapolation years, to avoid a warning)
     mutate(year_base = max(c(-Inf, year[!is.na(value)])),

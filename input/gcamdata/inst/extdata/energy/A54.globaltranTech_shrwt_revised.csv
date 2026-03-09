@@ -29,17 +29,17 @@ trn_pass_road_LDV,2W and 3W,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV,2W and 3W,BEV,0,0,0,0,1,1,1,1,CORE
 trn_pass_road_LDV,2W and 3W,LA-BEV,0,0,0,0,0,0,0,0,CORE
 trn_pass_road_LDV_4W,Car,BEV,0,0,0,0,1,1,1,1,CORE
-trn_pass_road_LDV_4W,Car,FCEV,0,0,0,0,1,1,1,1,CORE
+trn_pass_road_LDV_4W,Car,FCEV,0,0,0,0,0,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Car,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and Truck,BEV,0,0,0,0,1,1,1,1,CORE
-trn_pass_road_LDV_4W,Large Car and Truck,FCEV,0,0,0,0,1,1,1,1,CORE
+trn_pass_road_LDV_4W,Large Car and Truck,FCEV,0,0,0,0,0,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Large Car and Truck,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and Truck,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Large Car and Truck,NG,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,BEV,0,0,0,0,1,1,1,1,CORE
-trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,1,1,1,1,CORE
+trn_pass_road_LDV_4W,Mini Car,FCEV,0,0,0,0,0,0.5,0.5,0.5,CORE
 trn_pass_road_LDV_4W,Mini Car,Hybrid Liquids,0,0,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,Liquids,1,1,1,1,1,1,1,1,CORE
 trn_pass_road_LDV_4W,Mini Car,NG,0,0,1,1,1,1,1,1,CORE
@@ -54,17 +54,17 @@ trn_freight,Domestic Ship,BEV,0,0,0,0,0,0,1,1,CORE
 trn_freight,Domestic Ship,FCEV,0,0,0,0,0,0,1,1,CORE
 trn_freight,Domestic Ship,Hybrid Liquids,0,0,0,0,0,1,1,1,CORE
 trn_freight,Freight Rail,BEV,0,0,0,0,0,1,1,1,CORE
-trn_freight,Freight Rail,FCEV,0,0,0,0,0,1,1,1,CORE
+trn_freight,Freight Rail,FCEV,0,0,0,0,0,0.5,0.5,0.5,CORE
 trn_freight,Freight Rail,Hybrid Liquids,0,0,0,0,0,1,1,1,CORE
-trn_freight_road,Light truck,FCEV,0,0,0,0,0,1,1,1,CORE
+trn_freight_road,Light truck,FCEV,0,0,0,0,0,0.5,0.5,0.5,CORE
 trn_freight_road,Light truck,Hybrid Liquids,0,0,0,0,1,1,1,1,CORE
-trn_freight_road,Medium truck,FCEV,0,0,0,0,0,1,1,1,CORE
+trn_freight_road,Medium truck,FCEV,0,0,0,0,0,0.5,0.5,0.5,CORE
 trn_freight_road,Medium truck,Hybrid Liquids,0,0,0,0,1,1,1,1,CORE
-trn_freight_road,Heavy truck,FCEV,0,0,0,0,0,1,1,1,CORE
+trn_freight_road,Heavy truck,FCEV,0,0,0,0,0,0.5,0.5,0.5,CORE
 trn_freight_road,Heavy truck,Hybrid Liquids,0,0,0,0,1,1,1,1,CORE
 trn_pass,Domestic Aviation,BEV,0,0,0,0,0,0,0,1,CORE
 trn_pass,Domestic Aviation,Hydrogen,0,0,0,0,0,0,0,1,CORE
-trn_pass_road,Bus,FCEV,0,0,0,0,0,1,1,1,CORE
+trn_pass_road,Bus,FCEV,0,0,0,0,0,0.5,0.5,0.5,CORE
 trn_pass_road,Bus,Hybrid Liquids,0,0,0,0,1,1,1,1,CORE
 trn_shipping_intl,International Ship,BEV,0,0,0,0,0,0,1,1,CORE
 trn_shipping_intl,International Ship,FCEV,0,0,0,0,0,0,1,1,CORE

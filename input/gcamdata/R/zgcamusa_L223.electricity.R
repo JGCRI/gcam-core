@@ -32,10 +32,10 @@ module_gcamusa_L223.electricity <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "gcam-usa/states_subregions",
              FILE = "energy/calibrated_techs",
+             FILE = "energy/H2ALite_wind_solar_CF",
              FILE = "gcam-usa/NREL_us_re_technical_potential",
              FILE = "energy/A23.globaltech_eff",
              FILE = "gcam-usa/A10.renewable_resource_delete",
-             "L114.CapacityFactor_wind_state",
              "L119.CapFacScaler_PV_state",
              "L119.CapFacScaler_CSP_state",
              "L223.Supplysector_elec",
@@ -111,10 +111,10 @@ module_gcamusa_L223.electricity <- function(command, ...) {
     # Load required inputs
     states_subregions <- get_data(all_data, "gcam-usa/states_subregions", strip_attributes = TRUE)
     calibrated_techs <- get_data(all_data, "energy/calibrated_techs")
+    H2ALite_wind_solar_CF <- get_data(all_data, "energy/H2ALite_wind_solar_CF")
     NREL_us_re_technical_potential <- get_data(all_data, "gcam-usa/NREL_us_re_technical_potential")
     A10.renewable_resource_delete <- get_data(all_data, "gcam-usa/A10.renewable_resource_delete")
     A23.globaltech_eff <- get_data(all_data, "energy/A23.globaltech_eff")
-    L114.CapacityFactor_wind_state <- get_data(all_data, "L114.CapacityFactor_wind_state")
     L119.CapFacScaler_PV_state <- get_data(all_data, "L119.CapFacScaler_PV_state")
     L119.CapFacScaler_CSP_state <- get_data(all_data, "L119.CapFacScaler_CSP_state")
     L223.Supplysector_elec <- get_data(all_data, "L223.Supplysector_elec", strip_attributes = TRUE)
@@ -313,8 +313,10 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       if("market.name" %in% names(data_new)) {
         data_new <- data_new %>%
           left_join_error_no_match(select(states_subregions, state, grid_region), by = c("region" = "state")) %>%
-          mutate(market.name = replace(market.name, minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
-                                       grid_region[minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS])) %>%
+          mutate(market.name = if_else(minicam.energy.input %in% gcamusa.REGIONAL_FUEL_MARKETS,
+                                       grid_region, market.name),
+                 market.name = if_else(minicam.energy.input %in% gcamusa.STATE_FUEL_MARKETS,
+                                       region, market.name)) %>%
           select(-grid_region)
       }
 
@@ -524,10 +526,16 @@ module_gcamusa_L223.electricity <- function(command, ...) {
 
     # L223.StubTechCapFactor_elec_wind_USA: capacity factors for wind electricity in the states
     # Just use the subsector for matching - technologies include storage technologies as well
-    L114.CapacityFactor_wind_state %>%
-      left_join_error_no_match(select(calibrated_techs, sector, fuel, supplysector, subsector),
-                               by = c("sector", "fuel")) ->
-      L223.CapacityFactor_wind_state
+    # The capacity factors are for the 48 coterminous states; AK, DC, and HI just use the national unweighted average
+    L223.CapacityFactor_wind_state <- tibble(
+      region = states_subregions$state,
+      State = states_subregions$state_name,
+      supplysector = "electricity",
+      subsector = "wind") %>%
+      left_join(select(H2ALite_wind_solar_CF, State, Wind_CF),
+                by = "State") %>%
+      mutate(capacity.factor = if_else(!is.na(Wind_CF), Wind_CF, mean(Wind_CF, na.rm = T))) %>%
+      select(region, supplysector, subsector, capacity.factor)
 
     L223.StubTechCapFactor_elec %>%
       filter(region == gcam.USA_REGION) %>%
@@ -535,7 +543,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       select(-region, -capacity.factor) %>%
       write_to_all_states(names = c(names(.), "region")) %>%
       left_join_error_no_match(L223.CapacityFactor_wind_state,
-                               by = c("region" = "state", "supplysector", "subsector")) %>%
+                               by = c("region", "supplysector", "subsector")) %>%
       mutate(capacity.factor = round(capacity.factor, digits = energy.DIGITS_CAPACITY_FACTOR)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCapFactor"]]) ->
       L223.StubTechCapFactor_elec_wind_USA
@@ -953,7 +961,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("Include storage technologies as well") %>%
       add_legacy_name("L223.StubTechCapFactor_elec_wind_USA") %>%
-      add_precursors("L114.CapacityFactor_wind_state",
+      add_precursors("energy/H2ALite_wind_solar_CF",
                      "energy/calibrated_techs",
                      "gcam-usa/states_subregions",
                      "gcam-usa/A10.renewable_resource_delete") ->
@@ -976,7 +984,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       add_title("State-specific non-energy cost adder for offshore wind grid connection cost") %>%
       add_units("Unitless") %>%
       add_comments("Adder") %>%
-      add_precursors("L114.CapacityFactor_wind_state",
+      add_precursors("energy/H2ALite_wind_solar_CF",
                      "L223.Supplysector_elec",
                      "L223.ElecReserve",
                      "L223.SubsectorLogit_elec",

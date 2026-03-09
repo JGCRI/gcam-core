@@ -205,11 +205,37 @@ module_energy_L1092.iron_steel_GrossTrade <- function(command, ...){
 
     #remove intra region trade from imports and exports and add this amount to domestic supply
     LB1092.Tradebalance_iron_steel_Mt_R_Y %>%
-      left_join(intra_regional_trade_Mt_R_Y,by=c("GCAM_region","year"))%>%
-      mutate(value=if_else(metric %in% c("exports_reval","imports_reval"),value-intra_exports,value),
-             value=if_else(metric %in% c("domestic_supply"),value+intra_exports,value))%>%
-      select(-intra_exports)-> LB1092.Tradebalance_iron_steel_Mt_R_Y
+      filter(metric %in% c("production","consumption_reval"))-> prod_cons
 
+    # Adjust imports by subtracting intra-regional exports
+    LB1092.Tradebalance_iron_steel_Mt_R_Y %>%
+      filter(metric == "imports_reval") %>%
+      left_join(intra_regional_trade_Mt_R_Y,by=c("GCAM_region","year")) %>%
+      mutate(value_adj=if_else(value > intra_exports,value-intra_exports,value)) %>%
+      mutate(dom_supply_adjust=if_else(value > intra_exports,intra_exports,0)) %>%
+      select(-value)%>%
+      rename(value=value_adj)-> imports
+
+    # Adjust exports by removing intra-regional contribution
+    LB1092.Tradebalance_iron_steel_Mt_R_Y %>%
+      filter(metric == "exports_reval") %>%
+      left_join(imports %>%
+                  select(-value,-intra_exports,-metric),by=c("GCAM_region","year")) %>%
+      mutate(value=value-dom_supply_adjust) %>%
+      select(-dom_supply_adjust)-> exports
+
+    # Adjust domestic supply by adding back the intra-regional trade adjustment
+    LB1092.Tradebalance_iron_steel_Mt_R_Y %>%
+      filter(metric == "domestic_supply") %>%
+      left_join(imports %>%
+                  select(-value,-intra_exports,-metric),by=c("GCAM_region","year")) %>%
+             mutate(value=value+dom_supply_adjust) %>%
+      select(-dom_supply_adjust)-> dom_supply
+
+    # Combine all adjusted data
+    LB1092.Tradebalance_iron_steel_Mt_R_Y_ADJ <- rbind(prod_cons,imports %>%
+                                                     select(-dom_supply_adjust,
+                                                            -intra_exports),dom_supply,exports)
 
     # Produce outputs
     LB1092.Tradebalance_iron_steel_Mt_R_Y %>%

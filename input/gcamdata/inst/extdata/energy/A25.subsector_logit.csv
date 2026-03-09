@@ -1,16 +1,14 @@
 # File: A25.subsector_logit.csv
 # Title: Hydrogen subsector logit exponents
 # Units: Unitless
-# Column types: ccic 
+# Column types: ccic
 # ----------
 supplysector,subsector,logit.exponent,logit.type
-H2 central production,coal,-10,
 H2 central production,gas,-10,
 H2 central production,biomass,-10,
 H2 central production,nuclear,-10,
 H2 central production,electricity,-10,
-H2 central production,wind,-10,
-H2 central production,solar,-10,
+H2 central production,hybrid,-10,
 H2 pipeline,H2 pipeline,-6,
 H2 liquid truck,H2 liquid truck,-6,
 H2 wholesale delivery,H2 pipeline,-6,
@@ -18,6 +16,9 @@ H2 wholesale delivery,H2 liquid truck,-6,
 H2 industrial,H2 delivery,-6,
 H2 industrial,onsite production,-6,
 H2 retail delivery,H2 retail delivery,-6,
-H2 wholesale dispensing,H2 delivery,-6,
-H2 wholesale dispensing,forecourt production,-6,
-H2 retail dispensing,H2 retail dispensing,-6,
+H2 LDV,H2 delivery,-6,
+H2 LDV,onsite production,-6,
+H2 MHDV,H2 delivery,-6,
+H2 MHDV,onsite production,-6,
+LH2,H2 delivery,-6,
+LH2,onsite production,-6,

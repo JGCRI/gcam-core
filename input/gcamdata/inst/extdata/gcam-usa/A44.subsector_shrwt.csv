@@ -29,10 +29,10 @@ resid clothes washers,electricity,start-year,,1
 resid televisions,electricity,start-year,,1
 resid computers,electricity,start-year,,1
 resid furnace fans,electricity,start-year,,1
-resid other,gas,start-year,,1
-resid other,electricity,start-year,,1
-resid other,refined liquids,start-year,,1
-resid other,refined liquids,2050,,0.1
+resid others,gas,start-year,,1
+resid others,electricity,start-year,,1
+resid others,refined liquids,start-year,,1
+resid others,refined liquids,2050,,0.1
 comm heating,biomass,start-year,,1
 comm heating,coal,initial-future-year,,0
 comm heating,gas,start-year,,1
@@ -51,8 +51,8 @@ comm cooking,electricity,start-year,,1
 comm lighting,electricity,start-year,,1
 comm refrigeration,electricity,start-year,,1
 comm office,electricity,start-year,,1
-comm other,gas,start-year,,1
-comm other,electricity,start-year,,1
-comm other,refined liquids,start-year,,1
-comm other,refined liquids,2050,,0.1
+comm others,gas,start-year,,1
+comm others,electricity,start-year,,1
+comm others,refined liquids,start-year,,1
+comm others,refined liquids,2050,,0.1
 comm non-building,electricity,start-year,,1

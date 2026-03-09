@@ -1,0 +1,33 @@
+# File: A23.globaltech_fcr.csv
+# Title: Electricity technology capital cost fixed charge rates
+# Units: %/yr
+# Source: Muratori et al. (2017), Renewable and Sustainable Energy Reviews v 77, pp 861–874,,
+# Column types: ccccn
+# ----------
+supplysector,subsector,technology,input-capital,fixed.charge.rate
+electricity,coal,coal (conv pul),capital,0.13
+electricity,coal,coal (conv pul CCS),capital,0.13
+electricity,coal,coal (IGCC),capital,0.13
+electricity,coal,coal (IGCC CCS),capital,0.13
+electricity,gas,gas (steam/CT),capital,0.13
+electricity,gas,gas (CC),capital,0.13
+electricity,gas,gas (CC CCS),capital,0.13
+electricity,refined liquids,refined liquids (steam/CT),capital,0.13
+electricity,refined liquids,refined liquids (CC),capital,0.13
+electricity,refined liquids,refined liquids (CC CCS),capital,0.13
+electricity,biomass,biomass (conv),capital,0.13
+electricity,biomass,biomass (conv CCS),capital,0.13
+electricity,biomass,biomass (IGCC),capital,0.13
+electricity,biomass,biomass (IGCC CCS),capital,0.13
+electricity,nuclear,Gen_II_LWR,capital,0.13
+electricity,nuclear,large reactor,capital,0.13
+electricity,nuclear,SMR,capital,0.13
+electricity,wind,wind,capital,0.13
+electricity,wind,wind_storage,capital,0.13
+electricity,solar,PV,capital,0.13
+electricity,solar,PV_storage,capital,0.13
+electricity,solar,CSP,capital,0.13
+electricity,solar,CSP_storage,capital,0.13
+electricity,geothermal,geothermal,capital,0.13
+elect_td_bld,rooftop_pv,rooftop_pv,capital,0.1
+electricity,wind,wind_offshore,capital,0.13

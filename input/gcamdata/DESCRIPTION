@@ -38,7 +38,8 @@ Authors@R: c(person("Ben", "Bond-Lamberty",
   person("Pacific Northwest National Laboratory", role = "cph"))
 Description: Build the GCAM XML input files.
 License: MIT + file LICENSE
-Depends: R (>= 3.1.2)
+Depends: 
+    R (>= 3.5)
 Imports:
     assertthat (>= 0.2),
     dplyr (>= 1.1.0),

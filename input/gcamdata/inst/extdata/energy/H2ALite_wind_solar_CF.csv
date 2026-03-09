@@ -1,0 +1,56 @@
+# File: H2ALite_wind_solar_CF.csv
+# Title: wind and solar capacity factors used in H2ALite technoeconomic analysis data of hydrogen production technologies
+# Units: unitless
+# Source: Misho Penev email Nov 2024
+# Column types: cnn
+# ----------
+State,Wind_CF,Solar_CF
+US Average,0.35,0.35
+Alabama,0.25,0.26
+Arizona,0.28,0.34
+Arkansas,0.36,0.27
+California,0.24,0.36
+Colorado,0.35,0.31
+Connecticut,0.32,0.25
+Delaware,0.34,0.26
+Florida,0.22,0.27
+Georgia,0.33,0.25
+Idaho,0.27,0.26
+Illinois,0.33,0.26
+Indiana,0.34,0.24
+Iowa,0.4,0.26
+Kansas,0.41,0.29
+Kentucky,0.27,0.24
+Louisiana,0.24,0.27
+Maine,0.46,0.23
+Maryland,0.33,0.26
+Massachusetts,0.4,0.26
+Michigan,0.34,0.23
+Minnesota,0.35,0.24
+Mississippi,0.25,0.26
+Missouri,0.32,0.27
+Montana,0.34,0.25
+Nebraska,0.42,0.29
+Nevada,0.26,0.35
+New Hampshire,0.38,0.22
+New Jersey,0.31,0.26
+New Mexico,0.32,0.34
+New York,0.4,0.23
+North Carolina,0.39,0.26
+North Dakota,0.4,0.26
+Ohio,0.29,0.23
+Oklahoma,0.43,0.3
+Oregon,0.21,0.29
+Pennsylvania,0.42,0.24
+Rhode Island,0.34,0.24
+South Carolina,0.23,0.27
+South Dakota,0.41,0.28
+Tennessee,0.27,0.26
+Texas,0.43,0.31
+Utah,0.32,0.28
+Vermont,0.4,0.25
+Virginia,0.3,0.25
+Washington,0.23,0.23
+West Virginia,0.31,0.24
+Wisconsin,0.34,0.25
+Wyoming,0.3,0.27

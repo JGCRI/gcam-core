@@ -1,0 +1,16 @@
+# File: Rt_Nfert_commodities.csv
+# Title: Mapping ResourceTrade nitrogenous fertilizer commodities to their respective N contents
+# Units: mass of N per mass of fertilizer commodity
+# Source: Commodities from resourcetrade; N fractions from molecular formulas and atomic masses
+# Column types: cn
+# ----------
+Resource,Nfrac
+"Ammonium sulphate-nitrate mix, double salts, pack> 10 kg",0.264
+"Urea, including aqueous solution in packs > 10 kg",0.4667
+"Ammonium nitrate, including solution, in pack > 10 kg",0.35
+"Calcium-ammonium nitrate mix, double salts pack > 10 kg",0.275
+"Ammonium nitrate limestone etc. mixes, pack > 10 kg",0.27
+"Urea-ammonium nitrate mixes in solution, pack > 10 kg",0.3
+"Nitrogenous fertilizers, mixes, nes, pack > 10 kg",0.3
+"Ammonium sulphate, in packs > 10 kg",0.212
+"Sodium nitrate, in packs > 10 kg",0.16

@@ -14,7 +14,7 @@
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr arrange filter group_by mutate select
 #' @importFrom tidyr complete nesting
-#' @author LF August 2017
+#' @author LF Augest 2017
 module_energy_L225.hydrogen <- function(command, ...) {
   if(command == driver.DECLARE_INPUTS) {
     return(c(FILE = "common/GCAM_region_names",
@@ -28,21 +28,34 @@ module_energy_L225.hydrogen <- function(command, ...) {
              FILE = "energy/A25.globaltech_shrwt",
              FILE = "energy/A25.globaltech_keyword",
              FILE = "energy/A25.globaltech_co2capture",
-             "L125.globaltech_coef",
-             "L125.globaltech_cost",
-             "L125.Electrolyzer_IdleRatio_Params",
+             "L1233.globaltech_capital_ATB",
+             "L1233.globaltech_OMfixed_ATB",
+             "L1233.globaltech_capital_ATB_adv",
+             "L1233.globaltech_capital_ATB_low",
              "L223.StubTechCapFactor_elec",
-             "L223.GlobalIntTechCapital_elec",
-             "L223.GlobalIntTechOMfixed_elec"))
+             "L2231.StubTechCapFactor_onshore_wind",
+             "L125.globaltech_coef_scen",
+             "L125.globaltech_cost_scen",
+             "L125.StubTechCost_h2_hybrid_scen",
+             "L125.StubTechCoef_h2_hybrid_scen"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L225.Supplysector_h2",
              "L225.SectorUseTrialMarket_h2",
              "L225.SubsectorLogit_h2",
              "L225.SubsectorShrwtFllt_h2",
              "L225.StubTech_h2",
-             "L225.GlobalTechCoef_h2",
-             "L225.GlobalTechCost_h2",
-             "L225.GlobalTechTrackCapital_h2",
+             "L225.GlobalTechCoef_h2_ref",
+             "L225.GlobalTechCoef_h2_adv",
+             "L225.GlobalTechCoef_h2_lotech",
+             "L225.StubTechCoef_h2_hybrid_ref",
+             "L225.StubTechCoef_h2_hybrid_adv",
+             "L225.StubTechCoef_h2_hybrid_lotech",
+             "L225.GlobalTechCost_h2_ref",
+             "L225.GlobalTechCost_h2_adv",
+             "L225.GlobalTechCost_h2_lotech",
+             "L225.GlobalTechTrackCapital_h2_ref",
+             "L225.GlobalTechTrackCapital_h2_adv",
+             "L225.GlobalTechTrackCapital_h2_lotech",
              "L225.GlobalTechShrwt_h2",
              "L225.PrimaryRenewKeyword_h2",
              "L225.AvgFossilEffKeyword_h2",
@@ -50,13 +63,15 @@ module_energy_L225.hydrogen <- function(command, ...) {
              "L225.GlobalTechInputPMult_h2",
              "L225.GlobalTechProfitShutdown_h2",
              "L225.GlobalTechSCurve_h2",
-             "L225.StubTechCost_h2",
+             "L225.StubTechCost_h2_hybrid_ref",
+             "L225.StubTechCost_h2_hybrid_adv",
+             "L225.StubTechCost_h2_hybrid_lotech",
              "L225.OutputEmissCoeff_h2"))
   } else if(command == driver.MAKE) {
 
     # Silencing package checks
     region <- coefficient <- cost <- price.unit.conversion <- sector.name <- subsector.name <-
-      stub.technology <- capacity.factor <- IdleRatio <- `2040` <- `2015` <- `2050` <-
+      stub.technology <- capacity.factor <- `2040` <- `2020` <- `2050` <-
       intermittent.technology <- capital.overnight <- fixed.charge.rate <- OM.fixed <-
       cost_75USD_kW_yr <- kWh_elec_per_kgH2 <- output_kgh2_d <- cost_75USD_kgH2 <- NULL
 
@@ -80,13 +95,16 @@ module_energy_L225.hydrogen <- function(command, ...) {
     A25.globaltech_retirement <- get_data(all_data, "energy/A25.globaltech_retirement", strip_attributes = TRUE)
     A25.globaltech_co2capture <- get_data(all_data, "energy/A25.globaltech_co2capture", strip_attributes = TRUE)
 
-    L125.globaltech_coef <- get_data(all_data, "L125.globaltech_coef", strip_attributes = TRUE)
-    L125.globaltech_cost <- get_data(all_data, "L125.globaltech_cost", strip_attributes = TRUE)
-    L125.Electrolyzer_IdleRatio_Params <- get_data(all_data, "L125.Electrolyzer_IdleRatio_Params", strip_attributes = TRUE)
-
-    L223.GlobalIntTechCapital_elec <- get_data(all_data, "L223.GlobalIntTechCapital_elec", strip_attributes = TRUE)
-    L223.GlobalIntTechOMfixed_elec <- get_data(all_data, "L223.GlobalIntTechOMfixed_elec", strip_attributes = TRUE)
+    L1233.globaltech_capital_ATB <- get_data(all_data, "L1233.globaltech_capital_ATB", strip_attributes = TRUE)
+    L1233.globaltech_OMfixed_ATB <- get_data(all_data, "L1233.globaltech_OMfixed_ATB", strip_attributes = TRUE)
+    L1233.globaltech_capital_ATB_adv <- get_data(all_data, "L1233.globaltech_capital_ATB_adv", strip_attributes = TRUE)
+    L1233.globaltech_capital_ATB_low <- get_data(all_data, "L1233.globaltech_capital_ATB_low", strip_attributes = TRUE)
     L223.StubTechCapFactor_elec <- get_data(all_data, "L223.StubTechCapFactor_elec", strip_attributes = TRUE)
+    L2231.StubTechCapFactor_onshore_wind <- get_data(all_data, "L2231.StubTechCapFactor_onshore_wind", strip_attributes = TRUE)
+    L125.globaltech_coef_scen <- get_data(all_data, "L125.globaltech_coef_scen", strip_attributes = TRUE)
+    L125.globaltech_cost_scen <- get_data(all_data, "L125.globaltech_cost_scen", strip_attributes = TRUE)
+    L125.StubTechCost_h2_hybrid_scen <- get_data(all_data, "L125.StubTechCost_h2_hybrid_scen", strip_attributes = TRUE)
+    L125.StubTechCoef_h2_hybrid_scen <- get_data(all_data, "L125.StubTechCoef_h2_hybrid_scen", strip_attributes = TRUE)
 
     # ===================================================
 
@@ -108,13 +126,15 @@ module_energy_L225.hydrogen <- function(command, ...) {
 
     # L225.SubsectorLogit_h2: Subsector logit exponents of hydrogen sectors
     A25.subsector_logit %>%
-      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME), GCAM_region_names) ->
+      write_to_all_regions(c(LEVEL2_DATA_NAMES[["SubsectorLogit"]], LOGIT_TYPE_COLNAME), GCAM_region_names) %>%
+      filter(!(subsector %in% c("wind", "solar"))) ->
       L225.SubsectorLogit_h2
 
     # L225.SubsectorShrwtFllt_h2: Subsector shareweights of hydrogen sectors
     A25.subsector_shrwt %>%
       filter(!is.na(year.fillout)) %>%
-      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names) ->
+      write_to_all_regions(LEVEL2_DATA_NAMES[["SubsectorShrwtFllt"]], GCAM_region_names)%>%
+      filter(!(subsector %in% c("wind", "solar"))) ->
       L225.SubsectorShrwtFllt_h2
 
     # 1c. Technology information
@@ -123,34 +143,167 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # Note: assuming that technology list in the shareweight table includes the full set (any others would default to a 0 shareweight)
     A25.globaltech_shrwt %>%
       write_to_all_regions(LEVEL2_DATA_NAMES[["Tech"]], GCAM_region_names) %>%
+      filter(!(subsector %in% c("wind", "solar"))) %>%
       rename(stub.technology = technology) ->
       L225.StubTech_h2
 
-    # L225.GlobalTechCoef_h2: Energy inputs coefficients of global technologies for hydrogen
-    L125.globaltech_coef %>%
-           rename(coefficient = value) %>%
-      mutate(coefficient = round(coefficient,energy.DIGITS_COEFFICIENT))-> L225.GlobalTechCoef_h2
+    # L225.GlobalTechCoef_h2_[scen]: Energy inputs coefficients of global technologies for hydrogen, by scenario
+    # The reference scenario assumptions will pass through to the general hydrogen.xml
+    # The alternate case data tables are filtered to only
+    L225.GlobalTechCoef_h2_scen <- L125.globaltech_coef_scen %>%
+      mutate(coefficient = round(coefficient,energy.DIGITS_COEFFICIENT))
 
-    # L225.GlobalTechCost_h2: Costs of global technologies for hydrogen
-    # Costs of global technologies
-    L125.globaltech_cost %>%
-      # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
-      rename(input.cost = cost) %>%
-      mutate(input.cost = round(input.cost,energy.DIGITS_COST))-> L225.GlobalTechCost_h2
+    L225.GlobalTechCoef_h2_ref <- filter(L225.GlobalTechCoef_h2_scen, Scenario == "med") %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]])
 
-    # L225.GlobalTechTrackCapital_h2: We want track capital investments for these technologies thus
+    # function to generate alternate case data tables
+    generate_alt_scenario_table <- function(full_table, alt_scenario_name, ref_scenario_table, value_var){
+      # full_table: data table with the assumptions, and all scenarios
+      # alt_scenario_name: name of alternative scenario in the data table
+      # ref_scenario_table: data table with reference scenario assumptions
+      # value_var: name of data column with numerical data
+      joinvars <- names(ref_scenario_table)[names(ref_scenario_table) != value_var]
+      value_var_ref <- paste0(value_var, ".ref")
+      out_data <- filter(full_table, Scenario == alt_scenario_name) %>%
+        left_join_error_no_match(ref_scenario_table,
+                                 by = joinvars,
+                                 suffix = c("", ".ref"))
+      # filter to only rows where the alt scenario differs from the reference
+      out_data <- out_data[out_data[[value_var]] != out_data[[value_var_ref]],]
+      # return only the column names of the ref_scenario_table
+      out_data <- out_data[names(ref_scenario_table)]
+
+      return(out_data)
+    }
+
+    GlobalTechCoef_joinvars <- LEVEL2_DATA_NAMES[["GlobalTechCoef"]][LEVEL2_DATA_NAMES[["GlobalTechCoef"]] != "coefficient"]
+    L225.GlobalTechCoef_h2_adv <- generate_alt_scenario_table(full_table = L225.GlobalTechCoef_h2_scen,
+                                                              alt_scenario_name = "low",
+                                                              ref_scenario_table = L225.GlobalTechCoef_h2_ref,
+                                                              value_var = "coefficient")
+
+    L225.GlobalTechCoef_h2_lotech <- generate_alt_scenario_table(full_table = L225.GlobalTechCoef_h2_scen,
+                                                                 alt_scenario_name = "high",
+                                                                 ref_scenario_table = L225.GlobalTechCoef_h2_ref,
+                                                                 value_var = "coefficient")
+
+    # L225.StubTechCoef_h2_hybrid_[scen]: region- and scenario-specific IO coefficients of hybrid (wind+solar) technology
+    L225.StubTechCoef_h2_hybrid_scen <- L125.StubTechCoef_h2_hybrid_scen %>%
+      mutate(coefficient = round(coefficient,energy.DIGITS_COEFFICIENT),
+             market.name = region)
+
+    L225.StubTechCoef_h2_hybrid_ref <- filter(L225.StubTechCoef_h2_hybrid_scen, Scenario == "med") %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCoef"]])
+
+    L225.StubTechCoef_h2_hybrid_adv <- generate_alt_scenario_table(full_table = L225.StubTechCoef_h2_hybrid_scen,
+                                                                   alt_scenario_name = "low",
+                                                                   ref_scenario_table = L225.StubTechCoef_h2_hybrid_ref,
+                                                                   value_var = "coefficient")
+
+    L225.StubTechCoef_h2_hybrid_lotech <- generate_alt_scenario_table(full_table = L225.StubTechCoef_h2_hybrid_scen,
+                                                                      alt_scenario_name = "high",
+                                                                      ref_scenario_table = L225.StubTechCoef_h2_hybrid_ref,
+                                                                      value_var = "coefficient")
+
+    # L225.GlobalTechCost_h2_[scen]: Costs of global technologies for hydrogen by scenario
+    L225.GlobalTechCost_h2_scen <- L125.globaltech_cost_scen %>%
+      mutate(input.cost = round(input.cost,energy.DIGITS_COST))
+
+    L225.GlobalTechCost_h2_ref <- filter(L225.GlobalTechCost_h2_scen, Scenario == "med") %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]])
+
+    L225.GlobalTechCost_h2_adv <- generate_alt_scenario_table(full_table = L225.GlobalTechCost_h2_scen,
+                                                              alt_scenario_name = "low",
+                                                              ref_scenario_table = L225.GlobalTechCost_h2_ref,
+                                                              value_var = "input.cost")
+    L225.GlobalTechCost_h2_lotech <- generate_alt_scenario_table(full_table = L225.GlobalTechCost_h2_scen,
+                                                              alt_scenario_name = "high",
+                                                              ref_scenario_table = L225.GlobalTechCost_h2_ref,
+                                                              value_var = "input.cost")
+
+    # L225.StubTechCost_h2_[scen]: Costs of global technologies for hydrogen by scenario
+    # Stub-technology costs include two components:
+    # (1) the "other non-energy costs" from H2ALite's "Energy-free levelized cost", and
+    # (2) the costs of self-generated electricity, equal to the wind and solar IOcoefs multiplied by
+    # the levelized cost of wind and solar electricity generation
+
+    # In the code below, the scenario names in the power sector are assigned as per the names in the H2ALite data (low = advanced, low cost)
+    # We are not generating all possible combinations of renewable-electric and hydrogen-electrolysis costs; the technology scenarios differ both in
+    # the $/kwh of renewable electricity, and in the kwh of electricity per kg of hydrogen produced.
+    # The capacity factors use left_join in order to expand by region
+    # Capacity factors for wind in L223.StubTechCapFactor_elec are over-written by those in L2231.StubTechCapFactor_onshore_wind
+    L225.RenewElec_CapFactor <- L2231.StubTechCapFactor_onshore_wind %>%
+      filter(stub.technology == "wind") %>%
+      bind_rows(filter(L223.StubTechCapFactor_elec, stub.technology == "PV"))
+    L225.RenewElec_cost_scen <- L1233.globaltech_capital_ATB %>%
+      mutate(Scenario = "med") %>%
+      bind_rows(mutate(L1233.globaltech_capital_ATB_adv, Scenario = "low")) %>%
+      bind_rows(mutate(L1233.globaltech_capital_ATB_low, Scenario = "high")) %>%
+      filter(technology %in% c("wind", "PV")) %>%
+      left_join(L1233.globaltech_OMfixed_ATB, by = c("supplysector", "subsector", "technology", "year")) %>%
+      rename(stub.technology = technology) %>%
+      left_join(L225.RenewElec_CapFactor, by = c("supplysector", "subsector", "stub.technology", "year")) %>%
+      mutate(elec_cost_75USD_GJ = (capital.overnight * fixed.charge.rate + OM.fixed) /
+               (CONV_YEAR_HOURS * capacity.factor * CONV_KWH_GJ)) %>%
+      select(Scenario, region, renew_tech = subsector, year, elec_cost_75USD_GJ)
+
+
+    # Join in the costs to the coefficient table (which indicates electricity IO coefs), multiply,
+    # and aggregate to get the total renewable-electric non-energy cost
+    L225.StubTechCost_h2_renewelec_scen <- L225.StubTechCoef_h2_hybrid_scen %>%
+      mutate(renew_tech = if_else(minicam.energy.input == "global solar resource", "solar",
+                                  if_else(minicam.energy.input == "onshore wind resource", "wind", "drop"))) %>%
+      filter(renew_tech != "drop") %>%
+      left_join_error_no_match(L225.RenewElec_cost_scen, by = c("Scenario", "region", "renew_tech", "year")) %>%
+      mutate(minicam.non.energy.input = "renewable electricity generation",
+             input.cost = coefficient * elec_cost_75USD_GJ) %>%
+      group_by(Scenario, region, supplysector, subsector, stub.technology, year, minicam.non.energy.input) %>%
+      summarise(input.cost = sum(input.cost)) %>%
+      ungroup()
+
+    L225.StubTechCost_h2_hybrid_scen <- L125.StubTechCost_h2_hybrid_scen %>%
+      bind_rows(L225.StubTechCost_h2_renewelec_scen) %>%
+      mutate(input.cost = round(input.cost,energy.DIGITS_COST))
+
+    L225.StubTechCost_h2_hybrid_ref <- filter(L225.StubTechCost_h2_hybrid_scen, Scenario == "med") %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCost"]])
+
+    L225.StubTechCost_h2_hybrid_adv <- generate_alt_scenario_table(full_table = L225.StubTechCost_h2_hybrid_scen,
+                                                                   alt_scenario_name = "low",
+                                                                   ref_scenario_table = L225.StubTechCost_h2_hybrid_ref,
+                                                                   value_var = "input.cost")
+
+    L225.StubTechCost_h2_hybrid_lotech <- generate_alt_scenario_table(full_table = L225.StubTechCost_h2_hybrid_scen,
+                                                                      alt_scenario_name = "high",
+                                                                      ref_scenario_table = L225.StubTechCost_h2_hybrid_ref,
+                                                                      value_var = "input.cost")
+
+    # L225.GlobalTechTrackCapital_h2_[scen]: We want track capital investments for these technologies thus
     # we will change the object type accordingly and add the market name which will track investments
     # and the fraction of the total non-energy cost we should assume is annual investment in capital
     FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.H2_CAP_PAYMENTS) /
       ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.H2_CAP_PAYMENTS -1)
-    L225.GlobalTechCost_h2 %>%
+
+    L225.GlobalTechTrackCapital_h2_ref <- L225.GlobalTechCost_h2_ref %>%
       filter(sector.name == "H2 central production") %>%
       mutate(capital.coef = socioeconomics.H2_CAPITAL_RATIO / FCR,
              tracking.market =socioeconomics.EN_CAPITAL_MARKET_NAME,
-             # note: vintaging is active so depreciation.rate is ignored
+             depreciation.rate = 0) %>% # note: vintaging is active so depreciation.rate is ignored
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']])
+
+    L225.GlobalTechTrackCapital_h2_adv <- L225.GlobalTechCost_h2_adv %>%
+      filter(sector.name == "H2 central production") %>%
+      mutate(capital.coef = socioeconomics.H2_CAPITAL_RATIO / FCR,
+             tracking.market =socioeconomics.EN_CAPITAL_MARKET_NAME,
              depreciation.rate = 0) %>%
-      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']]) ->
-      L225.GlobalTechTrackCapital_h2
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']])
+
+    L225.GlobalTechTrackCapital_h2_lotech <- L225.GlobalTechCost_h2_lotech %>%
+      filter(sector.name == "H2 central production") %>%
+      mutate(capital.coef = socioeconomics.H2_CAPITAL_RATIO / FCR,
+             tracking.market =socioeconomics.EN_CAPITAL_MARKET_NAME,
+             depreciation.rate = 0) %>%
+      select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']])
 
     # L225.GlobalTechShrwt_h2: Shareweights of global technologies for hydrogen
     # Shareweights of global technologies
@@ -181,13 +334,13 @@ module_energy_L225.hydrogen <- function(command, ...) {
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      anti_join(L125.globaltech_coef, by = c("sector.name", "subsector.name", "technology", "minicam.energy.input")) %>%
+      anti_join(L225.GlobalTechCoef_h2_ref, by = c("sector.name", "subsector.name", "technology", "minicam.energy.input")) %>%
       select(-value,-price.unit.conversion) ->
       L225.GlobalTechCoef_h2_noprod #filter and convert efficiencies to coefficients for only end use and distribution pass-through sectors and technologies
 
-    L225.GlobalTechCoef_h2 <- bind_rows(L225.GlobalTechCoef_h2,L225.GlobalTechCoef_h2_noprod) %>%
-      mutate(minicam.energy.input = if_else(minicam.energy.input == 'elect_td_trn (compression and refrigeration)','elect_td_trn',minicam.energy.input)) %>%
-      group_by(sector.name,subsector.name,technology,minicam.energy.input,units,year) %>%
+    L225.GlobalTechCoef_h2_ref <- bind_rows(L225.GlobalTechCoef_h2_ref,L225.GlobalTechCoef_h2_noprod) %>%
+      mutate(minicam.energy.input = if_else(grepl("elect_td_trn", minicam.energy.input), "elect_td_trn", minicam.energy.input)) %>%
+      group_by(sector.name,subsector.name,technology,minicam.energy.input,year) %>%
       summarize(coefficient = sum(coefficient)) %>%
       ungroup()
 
@@ -201,6 +354,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechInputPMult"]]) %>%
       filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) -> L225.GlobalTechInputPMult
 
+    # Process generic cost data from assumptions tables (A25), anti-join costs already computed, and bind in a single cost table
     A25.globaltech_cost %>%
       gather_years %>%
       complete(nesting(supplysector, subsector, technology, minicam.non.energy.input), year = c(year, MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
@@ -213,83 +367,11 @@ module_energy_L225.hydrogen <- function(command, ...) {
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
       rename(sector.name = supplysector,
              subsector.name = subsector) %>%
-      anti_join(L125.globaltech_cost, by = c("sector.name", "subsector.name", "technology", "minicam.non.energy.input")) %>%
-      select(-value) ->
-      L225.GlobalTechCost_h2_noprod #get costs for only end use, distribution pass-through sectors, (global) renewable portion of LCOH (e.g., solar panels), and technologies from A25
+      anti_join(L225.GlobalTechCost_h2_ref, by = c("sector.name", "subsector.name", "technology", "minicam.non.energy.input")) %>%
+      select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
+      L225.GlobalTechCost_h2_noprod # costs for only T&D and end-use technologies
 
-    L225.GlobalTechCost_h2 <- bind_rows(L225.GlobalTechCost_h2,L225.GlobalTechCost_h2_noprod)
-
-
-    # Estimate the region-specific costs of direct wind and solar electrolysis, based on the capacity factors of the
-    # electric generation technologies and relationship between capacity factors and NE costs of electrolysis
-    L125.Electrolyzer_IdleRatio_Params_2015 <- filter(L125.Electrolyzer_IdleRatio_Params, year == 2015)
-    L125.Electrolyzer_IdleRatio_Params_2040 <- filter(L125.Electrolyzer_IdleRatio_Params, year == 2040)
-    # Set the fraction of 2050 to 2040 costs. The specific number is from Pat's workbook
-    Electrolyzer_2050_2040_cost_ratio <- 0.77
-
-    # The following block uses the wind+solar capacity factors in each region to estimate the levelized cost of the
-    # hydrogen electrolyzers. The available cost estimate years are 2015 and 2040. Cost reductions are extrapolated to
-    # 2050 using the same improvement factor in all regions. The costs assigned to years between 2015 and 2050 are estimated
-    # with linear interpolation, and outside this window we use fixed extrapolation.
-    # Electrolyzer non-energy costs replace rather than add to the global default
-    # values in L225.GlobalTechCost_h2. This is handled in the left_join.
-    L223.StubTechCapFactor_elec %>%
-      filter(year == MODEL_FINAL_BASE_YEAR,
-             stub.technology %in% c("wind", "PV")) %>%
-      mutate(IdleRatio = pmax(1, 1 / (capacity.factor / energy.ELECTROLYZER_RENEWABLE_CAPACITY_RATIO)),
-             `2015` = L125.Electrolyzer_IdleRatio_Params_2015$intercept +
-               IdleRatio * L125.Electrolyzer_IdleRatio_Params_2015$slope,
-             `2040` = L125.Electrolyzer_IdleRatio_Params_2040$intercept +
-               IdleRatio * L125.Electrolyzer_IdleRatio_Params_2040$slope,
-             `2050` = `2040` * Electrolyzer_2050_2040_cost_ratio) %>%
-      select(region, subsector, `2015`, `2040`, `2050`) %>%
-      gather_years() %>%
-      complete(nesting(region, subsector), year = MODEL_YEARS) %>%
-      group_by(region, subsector) %>%
-      mutate(minicam.non.energy.input = "electrolyzer",
-             input.cost = approx_fun(year, value, rule = 2),
-             input.cost = input.cost * gdp_deflator(1975, 2016) / CONV_GJ_KGH2) %>%
-      ungroup() %>%
-      select(-value) %>%
-      left_join(select(L225.GlobalTechCost_h2, -input.cost),
-                by = c("subsector" = "subsector.name", "year", "minicam.non.energy.input")) %>%
-      rename(supplysector = sector.name, stub.technology = technology) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechCost"]]) ->
-      L225.StubTechCost_h2_electrolyzer
-
-    # Estimate the wind turbine and solar panel related aspects of the costs of direct renewable hydrogen electrolysis
-    # These are estimated from the capital costs of wind and solar technologies (generic, global), the region-specific
-    # capacity factors, efficiencies of hydrogen production, and size of the representative hydrogen plant
-    L225.RenewElec_cost <- L223.GlobalIntTechCapital_elec %>%
-      filter(intermittent.technology %in% c("wind", "PV")) %>%
-      left_join(L223.GlobalIntTechOMfixed_elec, by = c("sector.name", "subsector.name", "intermittent.technology", "year")) %>%
-      mutate(cost_75USD_kW_yr = capital.overnight * fixed.charge.rate + OM.fixed) %>%
-      select(subsector.name, intermittent.technology, year, cost_75USD_kW_yr)
-
-    L225.RenewElec_eff <- filter(L225.GlobalTechCoef_h2,
-                                 subsector.name %in% c("solar", "wind") & !grepl("water", minicam.energy.input)) %>%
-      mutate(kWh_elec_per_kgH2 = coefficient * CONV_GJ_KGH2 / CONV_KWH_GJ) %>%
-      select(subsector.name, year, kWh_elec_per_kgH2)
-
-    L225.RenewElec_cost %>%
-      left_join_error_no_match(L225.RenewElec_eff, by = c("subsector.name", "year")) %>%
-      left_join(L223.StubTechCapFactor_elec,
-                by = c("subsector.name" = "subsector", "intermittent.technology" = "stub.technology", "year")) %>%
-      mutate(minicam.non.energy.input = if_else(subsector.name == "solar", "solar panels", "wind turbines"),
-             output_kgh2_d = if_else(subsector.name == "solar", energy.SOLAR_ELECTROLYSIS_KGH2_D, energy.WIND_ELECTROLYSIS_KGH2_D),
-             cost_75USD_kgH2 = cost_75USD_kW_yr * kWh_elec_per_kgH2 * output_kgh2_d / CONV_DAY_HOURS /
-               (output_kgh2_d * capacity.factor / CONV_DAYS_YEAR),
-             input.cost = cost_75USD_kgH2 / CONV_GJ_KGH2) %>%
-      select(region, subsector.name, year, minicam.non.energy.input, input.cost) %>%
-      left_join_error_no_match(L225.GlobalTechCost_h2 %>% select(-input.cost, -minicam.non.energy.input),
-                               by = c("subsector.name", "year")) %>%
-            rename(supplysector = sector.name, subsector = subsector.name, stub.technology = technology) %>%
-      select(LEVEL2_DATA_NAMES[["StubTechCost"]]) ->
-      L225.StubTechCost_h2_renewables
-
-    # Combine the electrolyzer and renewable power generation technologies' levelized non-energy costs into a single table
-    L225.StubTechCost_h2 <- bind_rows(L225.StubTechCost_h2_electrolyzer, L225.StubTechCost_h2_renewables) %>%
-      mutate(input.cost = round(input.cost, digits = energy.DIGITS_COST))
+    L225.GlobalTechCost_h2_ref <- bind_rows(L225.GlobalTechCost_h2_ref,L225.GlobalTechCost_h2_noprod)
 
     # L225.PrimaryRenewKeyword_h2: Keywords of primary renewable electric generation technologies
     A25.globaltech_keyword %>%
@@ -345,7 +427,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       filter(year == min(MODEL_FUTURE_YEARS)) %>%
       select(-year) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
-      bind_rows(filter(L225.globaltech_retirement_base, year == MODEL_FINAL_BASE_YEAR)) ->
+      bind_rows(filter(L225.globaltech_retirement_base, year == max(MODEL_BASE_YEARS))) ->
       L225.globaltech_retirement
 
     # S-CURVE RETIREMENT
@@ -370,7 +452,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       ungroup() %>%
       select(-value)
 
-    L225.GlobalTechCoef_h2 <- left_join_error_no_match(L225.GlobalTechCoef_h2, L225.globaltech_losses,
+    L225.GlobalTechCoef_h2_ref <- left_join_error_no_match(L225.GlobalTechCoef_h2_ref, L225.globaltech_losses,
                                         by = c(sector.name = "supplysector", subsector.name = "subsector", "technology", "minicam.energy.input", "year"),
                                         ignore_columns = c("Non.CO2", "multiplier")) %>%
       mutate(coefficient = if_else(is.na(multiplier),
@@ -412,7 +494,6 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.subsector_logit") ->
       L225.SubsectorLogit_h2
 
-
     L225.SubsectorShrwtFllt_h2 %>%
       add_title("Subsector shareweights of hydrogen sectors") %>%
       add_units("Unitless") %>%
@@ -430,26 +511,93 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("common/GCAM_region_names", "energy/A25.globaltech_shrwt") ->
       L225.StubTech_h2
 
-    L225.GlobalTechCoef_h2 %>%
-      add_title("Energy inputs and efficiencies of global technologies for hydrogen") %>%
+    L225.GlobalTechCoef_h2_ref %>%
+      add_title("Energy inputs and efficiencies of global technologies for hydrogen (ref scenario)") %>%
       add_units("Unitless") %>%
       add_comments("Interpolated orginal data into all model years") %>%
-      add_precursors("L125.globaltech_coef",'energy/A25.globaltech_coef', "energy/A25.globaltech_losses") ->
-      L225.GlobalTechCoef_h2
+      add_precursors("L125.globaltech_coef_scen", "L125.StubTechCoef_h2_hybrid_scen",
+                     'energy/A25.globaltech_coef', "energy/A25.globaltech_losses") ->
+      L225.GlobalTechCoef_h2_ref
 
-    L225.GlobalTechCost_h2 %>%
-      add_title("Costs of global technologies for hydrogen") %>%
+    L225.GlobalTechCoef_h2_adv %>%
+      add_title("Energy inputs and efficiencies of global technologies for hydrogen (adv scenario)") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolated orginal data into all model years") %>%
+      same_precursors_as(L225.GlobalTechCoef_h2_ref) ->
+      L225.GlobalTechCoef_h2_adv
+
+    L225.GlobalTechCoef_h2_lotech %>%
+      add_title("Energy inputs and efficiencies of global technologies for hydrogen (lotech scenario)") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolated orginal data into all model years") %>%
+      same_precursors_as(L225.GlobalTechCoef_h2_ref) ->
+      L225.GlobalTechCoef_h2_lotech
+
+    L225.StubTechCoef_h2_hybrid_ref %>%
+      add_title("Energy inputs and efficiencies of hybrid technologies for hydrogen in USA (ref scenario)") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolated orginal data into all model years") %>%
+      add_precursors("L125.StubTechCoef_h2_hybrid_scen") ->
+      L225.StubTechCoef_h2_hybrid_ref
+
+    L225.StubTechCoef_h2_hybrid_adv %>%
+      add_title("Energy inputs and efficiencies of lotech hybrid technologies for hydrogen in USA") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolated orginal data into all model years") %>%
+      same_precursors_as(L225.StubTechCoef_h2_hybrid_ref) ->
+      L225.StubTechCoef_h2_hybrid_adv
+
+    L225.StubTechCoef_h2_hybrid_lotech %>%
+      add_title("Energy inputs and efficiencies of lotech hybrid technologies for hydrogen in USA") %>%
+      add_units("Unitless") %>%
+      add_comments("Interpolated orginal data into all model years") %>%
+      same_precursors_as(L225.StubTechCoef_h2_hybrid_ref) ->
+      L225.StubTechCoef_h2_hybrid_lotech
+
+    L225.GlobalTechCost_h2_ref %>%
+      add_title("Costs of global technologies for hydrogen (ref scenario)") %>%
       add_units("$1975 / GJ H2") %>%
       add_comments("Interpolated orginal data into all model years") %>%
-      add_precursors("L125.globaltech_cost",'energy/A25.globaltech_cost')  -> L225.GlobalTechCost_h2
+      add_precursors("L125.globaltech_cost_scen", "L125.StubTechCost_h2_hybrid_scen", 'energy/A25.globaltech_cost') ->
+      L225.GlobalTechCost_h2_ref
 
-    L225.GlobalTechTrackCapital_h2 %>%
+    L225.GlobalTechCost_h2_adv %>%
+      add_title("Costs of global technologies for hydrogen (adv scenario)") %>%
+      add_units("$1975 / GJ H2") %>%
+      add_comments("Interpolated orginal data into all model years") %>%
+      same_precursors_as(L225.GlobalTechCost_h2_ref) ->
+      L225.GlobalTechCost_h2_adv
+
+    L225.GlobalTechCost_h2_lotech %>%
+      add_title("Costs of global technologies for hydrogen (lotech scenario)") %>%
+      add_units("$1975 / GJ H2") %>%
+      add_comments("Interpolated orginal data into all model years") %>%
+      same_precursors_as(L225.GlobalTechCost_h2_ref) ->
+      L225.GlobalTechCost_h2_lotech
+
+    L225.GlobalTechTrackCapital_h2_ref %>%
       add_title("Convert non-energy inputs to track the annual capital investments.") %>%
       add_units(("Coefficients")) %>%
       add_comments("Track capital investments for purposes of macro economic calculations") %>%
       add_comments("Note for capital tracking we are interested only in the H2 production techs") %>%
-      add_precursors("energy/A25.globaltech_cost") ->
-      L225.GlobalTechTrackCapital_h2
+      same_precursors_as(L225.GlobalTechCost_h2_ref) ->
+      L225.GlobalTechTrackCapital_h2_ref
+
+    L225.GlobalTechTrackCapital_h2_adv %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      add_comments("Note for capital tracking we are interested only in the H2 production techs") %>%
+      same_precursors_as(L225.GlobalTechCost_h2_ref) ->
+      L225.GlobalTechTrackCapital_h2_adv
+
+    L225.GlobalTechTrackCapital_h2_lotech %>%
+      add_title("Convert non-energy inputs to track the annual capital investments.") %>%
+      add_units(("Coefficients")) %>%
+      add_comments("Track capital investments for purposes of macro economic calculations") %>%
+      add_comments("Note for capital tracking we are interested only in the H2 production techs") %>%
+      same_precursors_as(L225.GlobalTechCost_h2_ref) ->
+      L225.GlobalTechTrackCapital_h2_lotech
 
     L225.GlobalTechShrwt_h2 %>%
       add_title("Shareweights of global technologies for hydrogen") %>%
@@ -506,30 +654,45 @@ module_energy_L225.hydrogen <- function(command, ...) {
       add_precursors("energy/A25.globaltech_retirement") ->
       L225.GlobalTechProfitShutdown_h2
 
-    L225.StubTechCost_h2 %>%
-      add_title("Regional hydrogen production costs") %>%
+    L225.StubTechCost_h2_hybrid_ref %>%
+      add_title("Region-specific hybrid hydrogen production costs (ref scenario)") %>%
       add_units("$1975/GJ") %>%
       add_comments("LCOH for the electrolyzer and renewables providing electricity.") %>%
-      add_precursors("L125.Electrolyzer_IdleRatio_Params",
-                     "L223.StubTechCapFactor_elec",
-                     "L223.GlobalIntTechCapital_elec",
-                     "L223.GlobalIntTechOMfixed_elec") ->
-      L225.StubTechCost_h2
+      add_precursors("L125.StubTechCost_h2_hybrid_scen", "L1233.globaltech_capital_ATB", "L1233.globaltech_OMfixed_ATB",
+                     "L1233.globaltech_capital_ATB_adv", "L1233.globaltech_capital_ATB_low", "L223.StubTechCapFactor_elec", "L2231.StubTechCapFactor_onshore_wind") ->
+      L225.StubTechCost_h2_hybrid_ref
+
+    L225.StubTechCost_h2_hybrid_adv %>%
+      add_title("Regional adv hydrogen production costs") %>%
+      add_units("$1975/GJ") %>%
+      add_comments("LCOH for the electrolyzer and renewables providing electricity.") %>%
+      same_precursors_as(L225.StubTechCost_h2_hybrid_ref) ->
+      L225.StubTechCost_h2_hybrid_adv
+
+    L225.StubTechCost_h2_hybrid_lotech %>%
+      add_title("Regional lotech hydrogen production costs") %>%
+      add_units("$1975/GJ") %>%
+      add_comments("LCOH for the electrolyzer and renewables providing electricity.") %>%
+      same_precursors_as(L225.StubTechCost_h2_hybrid_ref) ->
+      L225.StubTechCost_h2_hybrid_lotech
 
     L225.OutputEmissCoeff_h2 %>%
       add_title("Hydrogen gas emissions coefficients") %>%
       add_units("kg of H2 per GJ of hydrogen output") %>%
       add_comments("calculated from the assumed losses") %>%
-      same_precursors_as(L225.GlobalTechCoef_h2) %>%
+      same_precursors_as(L225.GlobalTechCoef_h2_ref) %>%
       add_precursors("energy/A25.globaltech_losses") ->
       L225.OutputEmissCoeff_h2
 
     return_data(L225.Supplysector_h2, L225.SectorUseTrialMarket_h2, L225.SubsectorLogit_h2, L225.StubTech_h2,
-                L225.GlobalTechCoef_h2, L225.GlobalTechCost_h2, L225.GlobalTechTrackCapital_h2, L225.GlobalTechShrwt_h2,
-                L225.PrimaryRenewKeyword_h2, L225.AvgFossilEffKeyword_h2,
-                L225.GlobalTechCapture_h2, L225.SubsectorShrwtFllt_h2,
-                L225.GlobalTechInputPMult_h2,
-                L225.GlobalTechSCurve_h2, L225.GlobalTechProfitShutdown_h2, L225.StubTechCost_h2,
+                L225.GlobalTechCoef_h2_ref, L225.GlobalTechCoef_h2_adv, L225.GlobalTechCoef_h2_lotech,
+                L225.StubTechCoef_h2_hybrid_ref, L225.StubTechCoef_h2_hybrid_adv, L225.StubTechCoef_h2_hybrid_lotech,
+                L225.GlobalTechCost_h2_ref, L225.GlobalTechCost_h2_adv, L225.GlobalTechCost_h2_lotech,
+                L225.GlobalTechTrackCapital_h2_ref, L225.GlobalTechTrackCapital_h2_adv, L225.GlobalTechTrackCapital_h2_lotech,
+                L225.GlobalTechShrwt_h2, L225.PrimaryRenewKeyword_h2, L225.AvgFossilEffKeyword_h2,
+                L225.GlobalTechCapture_h2, L225.SubsectorShrwtFllt_h2, L225.GlobalTechInputPMult_h2,
+                L225.GlobalTechSCurve_h2, L225.GlobalTechProfitShutdown_h2,
+                L225.StubTechCost_h2_hybrid_ref, L225.StubTechCost_h2_hybrid_adv, L225.StubTechCost_h2_hybrid_lotech,
                 L225.OutputEmissCoeff_h2)
   } else {
     stop("Unknown command")

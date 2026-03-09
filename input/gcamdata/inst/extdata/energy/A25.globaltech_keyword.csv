@@ -1,15 +1,12 @@
 # File: A25.globaltech_keyword.csv
 # Title: Hydrogen technology keywords
 # Units: Unitless
-# Column types: cccci 
+# Column types: cccci
 # ----------
 supplysector,subsector,technology,primary.renewable,average.fossil.efficiency
-H2 central production,coal,coal chemical,,1
-H2 central production,coal,coal chemical CCS,,1
 H2 central production,gas,natural gas steam reforming,,1
 H2 central production,gas,gas ATR CCS,,1
 H2 central production,biomass,biomass to H2,,1
 H2 central production,biomass,biomass to H2 CCS,,1
 H2 central production,nuclear,electrolysis,nuclear-H2,
-H2 central production,wind,electrolysis,wind-H2,
-H2 central production,solar,electrolysis,solar-H2,
+H2 central production,hybrid,electrolysis,solar-H2,

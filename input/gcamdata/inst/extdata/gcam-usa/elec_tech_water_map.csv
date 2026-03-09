@@ -73,10 +73,14 @@ electricity,nuclear,Gen_II_LWR,elec_Gen_II_LWR,Gen_II_LWR,Gen_II_LWR (once throu
 electricity,nuclear,Gen_II_LWR,elec_Gen_II_LWR,Gen_II_LWR,Gen_II_LWR (seawater),nuclear,seawater,seawater,electricity generation,nuclear,Gen_II_LWR,nuclearFuelGenII
 electricity,nuclear,Gen_II_LWR,elec_Gen_II_LWR,Gen_II_LWR,Gen_II_LWR (recirculating),nuclear,recirculating,fresh,electricity generation,nuclear,Gen_II_LWR,nuclearFuelGenII
 electricity,nuclear,Gen_II_LWR,elec_Gen_II_LWR,Gen_II_LWR,Gen_II_LWR (cooling pond),nuclear,cooling pond,fresh,electricity generation,nuclear,Gen_II_LWR,nuclearFuelGenII
-electricity,nuclear,Gen_III,elec_Gen_III,Gen_III,Gen_III (once through),nuclear,once through,fresh,electricity generation,nuclear,Gen_III,nuclearFuelGenIII
-electricity,nuclear,Gen_III,elec_Gen_III,Gen_III,Gen_III (seawater),nuclear,seawater,seawater,electricity generation,nuclear,Gen_III,nuclearFuelGenIII
-electricity,nuclear,Gen_III,elec_Gen_III,Gen_III,Gen_III (recirculating),nuclear,recirculating,fresh,electricity generation,nuclear,Gen_III,nuclearFuelGenIII
-electricity,nuclear,Gen_III,elec_Gen_III,Gen_III,Gen_III (cooling pond),nuclear,cooling pond,fresh,electricity generation,nuclear,Gen_III,nuclearFuelGenIII
+electricity,nuclear,large reactor,elec_large reactor,large reactor,large reactor (once through),nuclear,once through,fresh,electricity generation,nuclear,large reactor,nuclearFuelGenIII
+electricity,nuclear,large reactor,elec_large reactor,large reactor,large reactor (seawater),nuclear,seawater,seawater,electricity generation,nuclear,large reactor,nuclearFuelGenIII
+electricity,nuclear,large reactor,elec_large reactor,large reactor,large reactor (recirculating),nuclear,recirculating,fresh,electricity generation,nuclear,large reactor,nuclearFuelGenIII
+electricity,nuclear,large reactor,elec_large reactor,large reactor,large reactor (cooling pond),nuclear,cooling pond,fresh,electricity generation,nuclear,large reactor,nuclearFuelGenIII
+electricity,nuclear,SMR,elec_SMR,SMR,SMR (once through),nuclear,once through,fresh,electricity generation,nuclear,SMR,nuclearFuelGenIII
+electricity,nuclear,SMR,elec_SMR,SMR,SMR (seawater),nuclear,seawater,seawater,electricity generation,nuclear,SMR,nuclearFuelGenIII
+electricity,nuclear,SMR,elec_SMR,SMR,SMR (recirculating),nuclear,recirculating,fresh,electricity generation,nuclear,SMR,nuclearFuelGenIII
+electricity,nuclear,SMR,elec_SMR,SMR,SMR (cooling pond),nuclear,cooling pond,fresh,electricity generation,nuclear,SMR,nuclearFuelGenIII
 electricity,hydro,hydro,electricity,hydro,hydro,no cooling,none,fresh,electricity generation,hydro,hydro,
 electricity,wind,wind_storage,electricity,wind,wind_storage,no cooling,none,none,electricity generation,wind,wind_storage,onshore wind resource
 electricity,wind,wind_offshore,electricity,wind,wind_offshore,no cooling,none,none,electricity generation,wind,wind_offshore,offshore wind resource

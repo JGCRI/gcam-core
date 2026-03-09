@@ -28,9 +28,9 @@ resid clothes washers,electricity,share-weight,final-calibration-year,end-year,,
 resid televisions,electricity,share-weight,final-calibration-year,end-year,,fixed
 resid computers,electricity,share-weight,final-calibration-year,end-year,,fixed
 resid furnace fans,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid other,gas,share-weight,final-calibration-year,end-year,,fixed
-resid other,electricity,share-weight,final-calibration-year,end-year,,fixed
-resid other,refined liquids,share-weight,final-calibration-year,end-year,,fixed
+resid others,gas,share-weight,final-calibration-year,end-year,,fixed
+resid others,electricity,share-weight,final-calibration-year,end-year,,fixed
+resid others,refined liquids,share-weight,final-calibration-year,end-year,,fixed
 comm heating,biomass,share-weight,final-calibration-year,end-year,,fixed
 comm heating,coal,share-weight,final-calibration-year,initial-future-year,0,linear
 comm heating,coal,share-weight,initial-future-year,end-year,,fixed
@@ -50,8 +50,8 @@ comm cooking,electricity,share-weight,final-calibration-year,end-year,,fixed
 comm lighting,electricity,share-weight,final-calibration-year,end-year,,fixed
 comm refrigeration,electricity,share-weight,final-calibration-year,end-year,,fixed
 comm office,electricity,share-weight,final-calibration-year,end-year,,fixed
-comm other,gas,share-weight,final-calibration-year,end-year,,fixed
-comm other,electricity,share-weight,final-calibration-year,end-year,,fixed
-comm other,refined liquids,share-weight,final-calibration-year,2050,0.1,s-curve
-comm other,refined liquids,share-weight,2050,end-year,,fixed
+comm others,gas,share-weight,final-calibration-year,end-year,,fixed
+comm others,electricity,share-weight,final-calibration-year,end-year,,fixed
+comm others,refined liquids,share-weight,final-calibration-year,2050,0.1,s-curve
+comm others,refined liquids,share-weight,2050,end-year,,fixed
 comm non-building,electricity,share-weight,final-calibration-year,end-year,,fixed

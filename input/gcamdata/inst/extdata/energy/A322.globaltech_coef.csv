@@ -1,16 +1,17 @@
 # File: A322.globaltech_coef.csv
 # Title: Fertilizer production default coefficients
 # Units:  ammonia: GJ per kg NH3. regional ammonia: unitless. traded ammonia: unitless. N fertilizer: kg ammonia per kg N fertilizer
+# Source: 2050 and 2100 from BAT values in Table 1.2 of IEA Technology Roadmap
 # Column types: ccccinnnn
 # ----------
-supplysector,subsector,technology,minicam.energy.input,traded,1971,2010,2050,2100
-ammonia,coal,coal,delivered coal,0,0.0445,0.0445,0.0364,0.0321
-ammonia,coal,coal CCS,delivered coal,0,0.0494,0.0494,0.0404,0.0357
-ammonia,gas,gas,wholesale gas,0,0.04,0.0369,0.029,0.029
-ammonia,gas,gas CCS,wholesale gas,0,0.0457,0.0422,0.0332,0.0332
+supplysector,subsector,technology,minicam.energy.input,traded,1971,initial-future-year,2050,2100
+ammonia,coal,coal,delivered coal,0,0.0445,0.0445,0.0374,0.0374
+ammonia,coal,coal CCS,delivered coal,0,0.0494,0.0494,0.0412,0.0412
+ammonia,gas,gas,wholesale gas,0,0.04,0.0369,0.0324,0.0324
+ammonia,gas,gas CCS,wholesale gas,0,0.0457,0.0422,0.0331,0.0331
 ammonia,refined liquids,refined liquids,refined liquids industrial,0,0.0412,0.0371,0.0303,0.0268
-ammonia,hydrogen,hydrogen,H2 industrial,0,0.0212,0.0212,0.0212,0.0212
-ammonia,hydrogen,hydrogen,wholesale gas,0,0.011,0.0079,0,0
+ammonia,hydrogen,hydrogen,H2 central production,0,0.0212,0.0212,0.0212,0.0212
+ammonia,hydrogen,hydrogen,wholesale gas,0,0.011,0.0074,0.0029,0.0029
 traded ammonia,traded ammonia,traded ammonia,ammonia,1,1,1,1,1
 regional ammonia,domestic ammonia,domestic ammonia,ammonia,0,1,1,1,1
 regional ammonia,imported ammonia,imported ammonia,traded ammonia,0,1,1,1,1

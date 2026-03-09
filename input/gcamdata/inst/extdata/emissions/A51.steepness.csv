@@ -39,11 +39,11 @@ gas processing,coal gasification,coal gasification,,,,,,
 gas processing,natural gas,natural gas,,,,,,
 H2 central production,biomass,biomass to H2,3.5,3.5,3.5,3.5,3.5,3.5
 H2 central production,biomass,biomass to H2 CCS,3.5,3.5,3.5,3.5,3.5,3.5
-H2 central production,coal,coal chemical,3.5,3.5,3.5,3.5,3.5,3.5
-H2 central production,coal,coal chemical CCS,3.5,3.5,3.5,3.5,3.5,3.5
 H2 central production,gas,natural gas steam reforming,3.5,3.5,3.5,3.5,3.5,
 H2 central production,gas,gas ATR CCS,3.5,3.5,3.5,3.5,3.5,
-H2 wholesale dispensing,forecourt production,natural gas steam reforming,3.5,3.5,3.5,3.5,3.5,
+H2 LDV,onsite production,natural gas steam reforming,3.5,3.5,3.5,3.5,3.5,
+H2 MHDV,onsite production,natural gas steam reforming,3.5,3.5,3.5,3.5,3.5,
+LH2,onsite production,natural gas steam reforming,3.5,3.5,3.5,3.5,3.5,
 other industrial energy use,biomass,biomass,3.5,3.5,3.5,3.5,3.5,3.5
 other industrial energy use,biomass,biomass cogen,,,,,,
 other industrial energy use,coal,coal,3.5,3.5,3.5,3.5,3.5,3.5

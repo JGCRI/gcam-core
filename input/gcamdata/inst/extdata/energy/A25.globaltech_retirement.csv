@@ -6,19 +6,19 @@
 #           steepness: shape parameter used by the s-curve-shutdown-decider retirement function.
 #           median.shutdown.point: profit-ratio at which 50% of the cohort is shut down for lack of profitability.
 #           profit.shutdown.steepness: shape parameter of profit-shutdown-decider function.
-# Column types: cccciinni 
+# Column types: cccciinni
 # ----------
 supplysector,subsector,technology,year,lifetime,half.life,steepness,median.shutdown.point,profit.shutdown.steepness
-H2 central production,coal,coal chemical,initial-future-year,40,30,0.1,-0.1,6
-H2 central production,coal,coal chemical CCS,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,gas,natural gas steam reforming,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,gas,gas ATR CCS,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,biomass,biomass to H2,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,biomass,biomass to H2 CCS,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,nuclear,electrolysis,initial-future-year,40,30,0.1,-0.1,6
 H2 central production,electricity,electrolysis,initial-future-year,40,30,0.1,-0.1,6
-H2 central production,wind,electrolysis,initial-future-year,40,30,0.1,-0.1,6
-H2 central production,solar,electrolysis,initial-future-year,40,30,0.1,-0.1,6
+H2 central production,hybrid,electrolysis,initial-future-year,40,30,0.1,-0.1,6
 H2 industrial,onsite production,electrolysis,initial-future-year,20,15,0.1,-0.1,6
-H2 wholesale dispensing,forecourt production,natural gas steam reforming,initial-future-year,20,15,0.1,-0.1,6
-H2 wholesale dispensing,forecourt production,electrolysis,initial-future-year,20,15,0.1,-0.1,6
+H2 LDV,onsite production,natural gas steam reforming,initial-future-year,20,15,0.1,-0.1,6
+H2 LDV,onsite production,electrolysis,initial-future-year,20,15,0.1,-0.1,6
+H2 MHDV,onsite production,natural gas steam reforming,initial-future-year,20,15,0.1,-0.1,6
+H2 MHDV,onsite production,electrolysis,initial-future-year,20,15,0.1,-0.1,6
+LH2,onsite production,electrolysis,initial-future-year,20,15,0.1,-0.1,6

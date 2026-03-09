@@ -120,6 +120,7 @@ generate_level2_data_names <- function() {
   level2_data_names[["tranSubsector_relative-cost-logit"]] <- c("region", "supplysector", "tranSubsector")
   level2_data_names[["DeleteSubsector"]] <- level2_data_names[["Subsector"]]
   level2_data_names[["DeleteNestingSubsector1"]] <- c("region", "supplysector", "nesting-subsector")
+  level2_data_names[["AbsoluteLogitBaseValue"]] <- c("region", "supplysector", "subsector", "is.base.value.parsed", "base.value")
 
   # Technologies
   level2_data_names[["Tech"]] <- c("region", "supplysector", "subsector", "technology")

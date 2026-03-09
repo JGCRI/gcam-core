@@ -14,17 +14,17 @@ ELLTBTU,electricity,comm lighting
 ELRFBTU,electricity,comm refrigeration
 ELOFBTU,electricity,comm office
 ELPCBTU,electricity,comm office
-ELMSBTU,electricity,comm other
+ELMSBTU,electricity,comm others
 NGHTBTU,gas,comm heating
 NGCLBTU,gas,comm cooling
 NGWTBTU,gas,comm hot water
 NGCKBTU,gas,comm cooking
-NGMSBTU,gas,comm other
+NGMSBTU,gas,comm others
 FKHTBTU,refined liquids,comm heating
 FKWTBTU,refined liquids,comm hot water
-FKCLBTU,refined liquids,comm other
-FKCKBTU,refined liquids,comm other
-FKMSBTU,refined liquids,comm other
+FKCLBTU,refined liquids,comm others
+FKCKBTU,refined liquids,comm others
+FKMSBTU,refined liquids,comm others
 DHHTBTU,district services,comm heating
 DHCLBTU,district services,comm cooling
 DHWTBTU,district services,comm hot water
