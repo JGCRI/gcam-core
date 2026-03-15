@@ -1,0 +1,35 @@
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+SmthRenewRsrcCurves,,,,,
+,,,,,
+region,renewresource,smooth.renewable.subresource,maxSubResource,mid.price,curve.exponent
+Africa_Eastern,offshore wind resource c89,offshore wind resource c89,5.327993359,1.804977665,7.511048651
+Africa_Northern,offshore wind resource c89,offshore wind resource c89,4.693511339,1.771202532,10.58255586
+Africa_Southern,offshore wind resource c89,offshore wind resource c89,3.233662382,16.01758754,2.078054086
+Africa_Western,offshore wind resource c89,offshore wind resource c89,0.081709692,0.716890278,1.000000012
+Australia_NZ,offshore wind resource c89,offshore wind resource c89,24.09567081,48.93915512,2.485513109
+Canada,offshore wind resource c89,offshore wind resource c89,27.16160733,48.80965314,2.60691994
+Central America and Caribbean,offshore wind resource c89,offshore wind resource c89,0.173805141,1.659973259,27.39865921
+EU-15,offshore wind resource c89,offshore wind resource c89,5.985518014,39.0266442,3.153325095
+European Free Trade Association,offshore wind resource c89,offshore wind resource c89,8.004323562,47.84490489,3.113956629
+Mexico,offshore wind resource c89,offshore wind resource c89,0.651705654,1.723813185,11.25807873
+Middle East,offshore wind resource c89,offshore wind resource c89,0.218219304,1.65688657,15.46971383
+Russia,offshore wind resource c89,offshore wind resource c89,0.996482811,1.602136329,12.24923448
+South America_Northern,offshore wind resource c89,offshore wind resource c89,0.327415781,1.761537218,15.73957235
+South America_Southern,offshore wind resource c89,offshore wind resource c89,4.043283369,1.633684011,19.00316912
+Southeast Asia,offshore wind resource c89,offshore wind resource c89,0.163211304,1.668832737,21.31272268
+Argentina,offshore wind resource c89,offshore wind resource c89,17.88572722,48.60073846,2.616587679
+Colombia,offshore wind resource c89,offshore wind resource c89,0.530773314,1.67097494,19.38314702
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A

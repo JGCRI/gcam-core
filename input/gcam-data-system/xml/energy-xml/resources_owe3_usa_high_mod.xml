@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="CA">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CA</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>1.247983915</maxSubResource>
+               <mid-price>3.069216522</mid-price>
+               <curve-exponent>21.16624808</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="CT">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>CT</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.002164816</maxSubResource>
+               <mid-price>0.001000025</mid-price>
+               <curve-exponent>18.28306664</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="DE">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>DE</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.057465039</maxSubResource>
+               <mid-price>0.063228226</mid-price>
+               <curve-exponent>30.414636</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="GA">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>GA</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.028326617</maxSubResource>
+               <mid-price>2.890164543</mid-price>
+               <curve-exponent>69.15111256</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="HI">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>HI</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>1.788246205</maxSubResource>
+               <mid-price>3.069814688</mid-price>
+               <curve-exponent>21.50857632</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="IL">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>IL</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.208065872</maxSubResource>
+               <mid-price>2.798208543</mid-price>
+               <curve-exponent>3.610793979</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="IN">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>IN</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.015451374</maxSubResource>
+               <mid-price>0.007615995</mid-price>
+               <curve-exponent>78.11349338</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="ME">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>ME</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.106914847</maxSubResource>
+               <mid-price>0.619916277</mid-price>
+               <curve-exponent>1.000000016</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="MD">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MD</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.088703333</maxSubResource>
+               <mid-price>0.001000317</mid-price>
+               <curve-exponent>1.000001667</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="MA">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MA</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.083340002</maxSubResource>
+               <mid-price>0.070059946</mid-price>
+               <curve-exponent>30.42788441</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="MI">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>MI</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>1.682386705</maxSubResource>
+               <mid-price>2.716040517</mid-price>
+               <curve-exponent>5.527766896</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="NH">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NH</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.009238352</maxSubResource>
+               <mid-price>1.078126055</mid-price>
+               <curve-exponent>1.118197345</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="NJ">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NJ</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.268729426</maxSubResource>
+               <mid-price>0.064158546</mid-price>
+               <curve-exponent>26.25694326</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="NY">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NY</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.450509021</maxSubResource>
+               <mid-price>2.726698961</mid-price>
+               <curve-exponent>5.281217417</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="NC">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>NC</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.738992392</maxSubResource>
+               <mid-price>0.062956156</mid-price>
+               <curve-exponent>14.26313364</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="OH">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OH</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.315494863</maxSubResource>
+               <mid-price>0.103865144</mid-price>
+               <curve-exponent>21.48492612</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="OR">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>OR</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.467849196</maxSubResource>
+               <mid-price>2.957254206</mid-price>
+               <curve-exponent>6.403256345</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="PA">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>PA</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.090873561</maxSubResource>
+               <mid-price>0.174504859</mid-price>
+               <curve-exponent>4.016205033</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="RI">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>RI</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.015337721</maxSubResource>
+               <mid-price>0.001000002</mid-price>
+               <curve-exponent>1.078384887</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="SC">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>SC</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.561975393</maxSubResource>
+               <mid-price>1.877459992</mid-price>
+               <curve-exponent>1.000000005</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="TX">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>TX</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.896033552</maxSubResource>
+               <mid-price>2.177091327</mid-price>
+               <curve-exponent>1.000000003</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="VA">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>VA</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.354418253</maxSubResource>
+               <mid-price>0.073825115</mid-price>
+               <curve-exponent>21.14804178</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="WA">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WA</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.988281772</maxSubResource>
+               <mid-price>3.071912288</mid-price>
+               <curve-exponent>39.12370567</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="WI">
+         <renewresource name="offshore wind resource 3">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>WI</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource 3">
+               <maxSubResource>0.420039236</maxSubResource>
+               <mid-price>2.732516518</mid-price>
+               <curve-exponent>5.253564038</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+   </world>
+</scenario>

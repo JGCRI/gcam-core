@@ -1,0 +1,27 @@
+INPUT_TABLE,,,,,,,,,,
+Variable ID,,,,,,,,,,
+GlobalIntTechBackup,,,,,,,,,,
+,,,,,,,,,,
+sector.name,subsector.name,technology,year,electric.sector.name,trial.market.name,backup.capital.cost,backup.capacity.factor,capacity.limit,minicam.energy.input,minicam.non.energy.input
+electricity,offshore wind,offshore wind 6,1975,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,1990,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2005,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2010,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2015,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2020,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2025,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2030,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2035,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2040,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2045,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2050,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2055,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2060,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2065,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2070,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2075,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2080,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2085,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2090,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2095,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
+electricity,offshore wind,offshore wind 6,2100,electricity,renewable,36,0.05,0.35,backup_electricity,backup-cap-cost
