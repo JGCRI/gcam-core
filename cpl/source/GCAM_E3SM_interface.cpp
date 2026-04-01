@@ -441,6 +441,12 @@ void GCAM_E3SM_interface::runGCAM( int *yyyymmdd, double *gcamoluc, double *gcam
     coupleLog << "Case name is " << case_name  << endl;
     coupleLog << "Before period is advanced, Current E3SM Year is " << e3smYear << ", Current GCAM Year is " << gcamYear << endl;
 
+//// temp diags
+    coupleLog << "Before period is advanced, aMappingFile is " << aMappingFile  << endl;
+    coupleLog << "Before period is advanced, aBaseNPPFileName is " << aBaseNPPFileName  << endl;
+    coupleLog << "Before period is advanced, aBaseHRFileName is " << aBaseHRFileName  << endl;
+    coupleLog << "Before period is advanced, aBasePFTWtFileName is " << aBasePFTWtFileName  << endl;
+
     // If this is the initial year 2015 then run spinup first
     // and write the base file data (or the base file itself)
     // should get this year and a flag for doing this from namelist
@@ -766,6 +772,12 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
     coupleLog << "In setLandProductivityScalingGCAM, before first year check, aScaleAgYield is: " << aScaleAgYield << endl;
     coupleLog << "In setLandProductivityScalingGCAM, before first year check, aScaleCarbon is: " << aScaleCarbon << endl;
 
+//// temp diags
+    coupleLog << "In setLandProductivityScalingGCAM, aMappingFile is " << aMappingFile  << endl;
+    coupleLog << "In setLandProductivityScalingGCAM, aBaseNPPFileName is " << aBaseNPPFileName  << endl;
+    coupleLog << "In setLandProductivityScalingGCAM, aBaseHRFileName is " << aBaseHRFileName  << endl;
+    coupleLog << "In setLandProductivityScalingGCAM, aBasePFTWtFileName is " << aBasePFTWtFileName  << endl;
+
     // Only set carbon densities during GCAM model years after the first coupled year
     // set carbon densities each year to calc and write them and to match running gcam each year
     //if( modeltime->isModelYear( gcamYear ) && e3smYear >=  *aFirstCoupledYear ) {
@@ -779,8 +791,9 @@ void GCAM_E3SM_interface::setLandProductivityScalingGCAM(int *yyyymmdd, double *
             fName = aScalarSourceDir + "/scalars_" + std::to_string(gcamYear) + ".csv";
             numScalars = e3sm2gcam.readScalers(fName, scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData);
         } else {
-            coupleLog << "In setLandProductivityScalingGCAM, Calculating scalars from data." << endl;
+            coupleLog << "In setLandProductivityScalingGCAM, Reading grid mapping file" << endl;
             e3sm2gcam.readRegionalMappingData(aMappingFile);
+            coupleLog << "In setLandProductivityScalingGCAM, Calculating scalars from data." << endl;
             e3sm2gcam.calcScalers(gcamYear, aELMArea, aELMPFTFract, aELMNPP, aELMHR,
                                   scalarYears, scalarRegion, scalarLandTech, aboveScalarData, belowScalarData,
                                   aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName, numScalars);

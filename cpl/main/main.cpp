@@ -85,8 +85,6 @@ int main( ) {
     std::string BASE_CO2_SURFACE_FILE = "../cpl/data/CO2-em-SFC-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_CO2_AIRCRAFT_FILE = "../cpl/data/CO2-em-AIR-2lvl-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_CO2_SHIPMENT_FILE = "../cpl/data/CO2-em-SHIP-anthro_0.9x1.25_input4MIPs_2014.csv";
-    std::string BASE_CO2EMISS_SURFACE = "../cpl/data/CO2-em-SFC-anthro_0.9x1.25_input4MIPs_2014.csv";
-    std::string BASE_CO2EMISS_AIRCRAFT = "../cpl/data/CO2-em-AIR-2lvl-anthro_0.9x1.25_input4MIPs_2014.csv";
     std::string BASE_GCAM_CO2_FILE = "../cpl/data/co2_2015_gcam_out_regional.csv";
     std::string BASE_GCAM_LU_WH_FILE = "../cpl/data/lu_wh_2015_gcam_out.csv";
     std::string GCAM2ELM_CO2_MAPPING_FILE = "../cpl/mappings/co2_regional.xml";
@@ -204,10 +202,6 @@ if (false) {
             BASE_CO2_AIRCRAFT_FILE = value;
         } else if ( name == "BASE_CO2_SHIPMENT_FILE" ) {
             BASE_CO2_SHIPMENT_FILE = value;
-        } else if ( name == "BASE_CO2EMISS_SURFACE" ) {
-            BASE_CO2EMISS_SURFACE = value;
-        } else if ( name == "BASE_CO2EMISS_AIRCRAFT" ) {
-            BASE_CO2EMISS_AIRCRAFT = value;
         } else if ( name == "BASE_GCAM_CO2_FILE" ) {
             BASE_GCAM_CO2_FILE = value;
         } else if ( name == "BASE_GCAM_LU_WH_FILE" ) {
@@ -414,7 +408,7 @@ if (false) {
                                       gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
                                       ELM2GCAM_MAPPING_FILE, COUNTRY2GRID_MAP, COUNTRY2REGION_MAP,
                                       POP_IIASA_FILE, GDP_IIASA_FILE, POP_GCAM_FILE, GDP_GCAM_FILE, CO2_GCAM_FILE,
-                                      BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
+                                      BASE_CO2_SURFACE_FILE, BASE_CO2_AIRCRAFT_FILE,
                                       NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
                                       NUM_LON, NUM_LAT, WRITE_CO2, YYYYMMDD, SURFACE_CO2_DOWNSCALING_METHOD);
         }
@@ -468,7 +462,7 @@ if (false) {
                                       gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
                                       ELM2GCAM_MAPPING_FILE, COUNTRY2GRID_MAP, COUNTRY2REGION_MAP,
                                       POP_IIASA_FILE, GDP_IIASA_FILE, POP_GCAM_FILE, GDP_GCAM_FILE, CO2_GCAM_FILE,
-                                      BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
+                                      BASE_CO2_SURFACE_FILE, BASE_CO2_AIRCRAFT_FILE,
                                       NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
                                       NUM_LON, NUM_LAT, WRITE_CO2, YYYYMMDD, SURFACE_CO2_DOWNSCALING_METHOD);
 

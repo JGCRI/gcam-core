@@ -188,6 +188,13 @@ double ASpatialData::readSpatialDataCSV(std::string aFileName, bool aHasLatLon, 
     // Create a double to store totals (if aCalcTotal == true)
     double total = 0.0;
     
+// Open the coupling log
+    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
+    coupleLog.setLevel( ILogger::NOTICE );
+
+ ///// temp diags
+    coupleLog << "In readSpatialDataCSV, aFileName is " << aFileName  << endl;
+
     ifstream data(aFileName);
     if (!data.is_open())
     {

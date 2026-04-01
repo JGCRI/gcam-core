@@ -44,6 +44,7 @@
  */
 
 #include <cassert>
+#include <cstdint>
 #include <forward_list>
 #include <string>
 #include "util/base/include/definitions.h"
