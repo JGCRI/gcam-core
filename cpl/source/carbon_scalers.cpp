@@ -72,15 +72,6 @@ CarbonScalers::~CarbonScalers() {
 // ASpatialData::readSpatialData method and then copying the vectors.
 void CarbonScalers::readBaseYearData(std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName){
 
-// Open the coupling log
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::NOTICE );
-
- ///// temp diags
-    coupleLog << "In readBaseYearData, aBaseNPPFileName is " << aBaseNPPFileName  << endl;
-    coupleLog << "In readBaseYearData, aBaseHRFileName is " << aBaseHRFileName  << endl;
-    coupleLog << "In readBaseYearData, aBasePFTWtFileName is " << aBasePFTWtFileName  << endl; 
-
     // Read in average NPP
     readSpatialDataCSV(aBaseNPPFileName, true, true, false);
     mBaseNPPVector = getValueVector();
@@ -169,14 +160,6 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                                  std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName,
                                  int& aNumScalars) {
  
-    // Open the coupling log
-    ILogger& coupleLog = ILogger::getLogger( "coupling_log" );
-    coupleLog.setLevel( ILogger::NOTICE );
-
- ///// temp diags
-    coupleLog << "In calcScalers, aBaseNPPFileName is " << aBaseNPPFileName  << endl;
-    coupleLog << "In calcScalers, aBaseHRFileName is " << aBaseHRFileName  << endl;
-    coupleLog << "In calcScalers, aBasePFTWtFileName is " << aBasePFTWtFileName  << endl;   
 
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
