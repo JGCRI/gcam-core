@@ -99,6 +99,8 @@ int main( ) {
     std::string BASE_NPP_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_npp.csv";
     std::string BASE_HR_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_hr.csv";
     std::string BASE_PFT_FILE = "../cpl/data/base_f09_annAvgMonthly_2010-2014_pft_wt.csv";
+    std::string SCALAR_SOURCE_DIR = "../cpl/data/"; // Placeholder: Default scalar source directory
+
 
     // these are for Convergence downscaling
     std::string CO2_GCAM_FILE = "../cpl/data/GCAMRegionalCO2Data.csv";
@@ -228,6 +230,8 @@ if (false) {
             BASE_HR_FILE = value;
         } else if ( name == "BASE_PFT_FILE" ) {
             BASE_PFT_FILE = value;
+        } else if ( name == "SCALAR_SOURCE_DIR" ) {
+            SCALAR_SOURCE_DIR = value;
         } else if ( name == "CO2_GCAM_FILE" ) {
             CO2_GCAM_FILE = value;
         } else if ( name == "COUNTRY2GRID_MAP" ) {
@@ -387,7 +391,7 @@ if (false) {
                            BASE_GCAM_LU_WH_FILE, BASE_GCAM_CO2_FILE, GCAM_SPINUP, 
                            gcamiarea, gcamipftfract, gcaminpp, gcamihr,
                            NUM_LON, NUM_LAT, NUM_PFT, NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
-                           ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS,
+                           ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, SCALAR_SOURCE_DIR, WRITE_SCALARS,
                            ELM_EHC_AGYIELD_SCALING, ELM_EHC_CARBON_SCALING, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE, RESTART_RUN);
 
 
@@ -404,7 +408,7 @@ if (false) {
                                       gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
                                       ELM2GCAM_MAPPING_FILE, COUNTRY2GRID_MAP, COUNTRY2REGION_MAP,
                                       POP_IIASA_FILE, GDP_IIASA_FILE, POP_GCAM_FILE, GDP_GCAM_FILE, CO2_GCAM_FILE,
-                                      BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
+                                      BASE_CO2_SURFACE_FILE, BASE_CO2_AIRCRAFT_FILE,
                                       NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
                                       NUM_LON, NUM_LAT, WRITE_CO2, YYYYMMDD, SURFACE_CO2_DOWNSCALING_METHOD);
         }
@@ -440,7 +444,7 @@ if (false) {
                            BASE_GCAM_LU_WH_FILE, BASE_GCAM_CO2_FILE, GCAM_SPINUP,
                            gcamiarea, gcamipftfract, gcaminpp, gcamihr,
                            NUM_LON, NUM_LAT, NUM_PFT, NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
-                           ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, WRITE_SCALARS,
+                           ELM2GCAM_MAPPING_FILE, FIRST_COUPLED_YEAR, READ_SCALARS, SCALAR_SOURCE_DIR, WRITE_SCALARS,
                            ELM_EHC_AGYIELD_SCALING, ELM_EHC_CARBON_SCALING, BASE_NPP_FILE, BASE_HR_FILE, BASE_PFT_FILE, RESTART_RUN);
 
  
@@ -458,7 +462,7 @@ if (false) {
                                       gcamoco2airhisep, gcamoco2airhioct, gcamoco2airhinov, gcamoco2airhidec,
                                       ELM2GCAM_MAPPING_FILE, COUNTRY2GRID_MAP, COUNTRY2REGION_MAP,
                                       POP_IIASA_FILE, GDP_IIASA_FILE, POP_GCAM_FILE, GDP_GCAM_FILE, CO2_GCAM_FILE,
-                                      BASE_CO2_SURFACE_FILE, BASE_CO2EMISS_SURFACE, BASE_CO2_AIRCRAFT_FILE, BASE_CO2EMISS_AIRCRAFT,
+                                      BASE_CO2_SURFACE_FILE, BASE_CO2_AIRCRAFT_FILE,
                                       NUM_GCAM_ENERGY_REGIONS, NUM_EMISS_COUNTRIES, NUM_EMISS_SECTORS, NUM_PERIODS,
                                       NUM_LON, NUM_LAT, WRITE_CO2, YYYYMMDD, SURFACE_CO2_DOWNSCALING_METHOD);
 
@@ -467,7 +471,7 @@ if (false) {
     }
     /*
      STEP 5: FINALIZE AND CLEAN UP ALL VARIABLES
-     */n
+     */
     // Finalize GCAM
     p_obj->finalizeGCAM();
     

@@ -71,6 +71,7 @@ CarbonScalers::~CarbonScalers() {
 // This is used to calculate the scalar baseline.
 // ASpatialData::readSpatialData method and then copying the vectors.
 void CarbonScalers::readBaseYearData(std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName){
+
     // Read in average NPP
     readSpatialDataCSV(aBaseNPPFileName, true, true, false);
     mBaseNPPVector = getValueVector();
@@ -159,6 +160,7 @@ void CarbonScalers::calcScalers(int aGCAMYear, double *aELMArea, double *aELMPFT
                                  std::vector<double>& aBelowScalers, std::string aBaseNPPFileName, std::string aBaseHRFileName, std::string aBasePFTWtFileName,
                                  int& aNumScalars) {
  
+
     // First, read spatial data
     readBaseYearData(aBaseNPPFileName, aBaseHRFileName, aBasePFTWtFileName);
 
