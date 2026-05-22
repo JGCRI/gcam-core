@@ -163,7 +163,9 @@ approx_fun <- function(year, value, rule = 1) {
   assert_that(is.numeric(year))
   assert_that(is.numeric(value))
 
-  if(rule == 1 | rule == 2) {
+  # trap leftover rule=3 from old processing chunks which should now explicitly call
+  # fill_exp_decay_extrapolate
+  if(length(rule) > 1 || rule != 3) {
     tryCatch(stats::approx(as.vector(year), value, rule = rule, xout = year, ties = mean)$y,
              error = function(e) NA)
 
@@ -345,7 +347,7 @@ missing_data <- function() {
 gdp_deflator <- function(year, base_year) {
   # This time series is the BEA "A191RD3A086NBEA" product
   # Downloaded March 3, 2023 from https://fred.stlouisfed.org/series/A191RD3A086NBEA
-  gdp_years <- 1929:2023
+  gdp_years <- 1929:2024
   gdp <- c(8.778, 8.457, 7.587, 6.700, 6.514, 6.871, 7.012, 7.097, 7.402,
   7.190, 7.120, 7.205, 7.692, 8.304, 8.683, 8.890, 9.120, 10.296, 11.426,
   12.067, 12.046, 12.195, 13.060, 13.286, 13.447, 13.572, 13.801, 14.271,
@@ -356,7 +358,7 @@ gdp_deflator <- function(year, base_year) {
   64.194, 65.564, 66.939, 68.164, 69.340, 70.119, 71.111, 72.722, 74.360,
   75.515, 77.006, 79.077, 81.556, 84.071, 86.349, 88.013, 88.556, 89.632,
   91.481, 93.185, 94.771, 96.421, 97.316, 98.241, 100.000, 102.291, 104.008,
-  105.381, 110.213, 117.973, 122.273)
+  105.381, 110.213, 117.973, 122.273, 125.23)
   names(gdp) <- gdp_years
 
   assert_that(all(year %in% gdp_years))

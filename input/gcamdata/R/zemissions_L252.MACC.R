@@ -143,7 +143,7 @@ module_emissions_L252.MACC <- function(command, ...) {
     # This is a function to add in the mac.reduction curves to data
     # Function needed because these steps are repeated 5 times
 
-    mac_reduction_adder <- function(df, error_no_match = TRUE) {
+    mac_reduction_adder <- function(df, error_no_match = FALSE) {
       df <- df %>%
         # Add tax values
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%

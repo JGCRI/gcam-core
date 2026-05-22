@@ -575,6 +575,9 @@ prebuilt_data_names <- c(
   # output of module_energy_L1328.food_processing, based on IEA data
   "L1328.en_bal_frac_industry_food_inonspec_R_Yh",
 
+  # output of module_emissions_L152.MACC to cover large raw EPA MACC data
+  "L152.MAC_pct_R_S_Proc_EPA",
+
   # output of module_socio_L100.GTAP
   "L100.GTAP_capital_stock",
   "L100.GTAPCostShare_AgLU_reg_comm"

@@ -1,0 +1,32 @@
+# File: NonCO2_EPA_GCAM_Source_Mapping.csv
+# Title: Mapping from EPA source to GCAM Process
+# Description: For producting MACCs
+# Units: Unitless
+# Column types: ccc
+sector,source,Process
+Agriculture,Livestock,Livestock
+Agriculture,Other Ag CH4 and N2O,Cropland Management
+Agriculture,Rice Cultivation,Rice Cultivation
+Agriculture,Soil/Cropland,Cropland Management
+Energy,Biomass,NA
+Energy,Coal Mining,Coal Mining Activities
+Energy,Oil and Natural Gas Systems,Natural Gas and Oil Systems
+Energy,Other Energy,NA
+Energy,Stationary and Mobile,NA
+Industrial Processes,Other IP CH4 and N2O,NA
+Waste,Landfills,Landfilling of Solid Waste
+Waste,Other Waste CH4 and N2O,NA
+Waste,Wastewater,Wastewater
+Industrial Processes,Aerosols,Aerosols Product Use
+Industrial Processes,Fire Protection,Fire Protection
+Industrial Processes,Flat Panel Display Manufacturing,Flat Panel Display Manufacturing
+Industrial Processes,"Foams Mfg, Use, and Disposal",Foams
+Industrial Processes,HCFC-22 Production,HCFC-22 Production
+Industrial Processes,Magnesium Production,Magnesium Manufacturing
+Industrial Processes,Refrigeration and Air Conditioning,Refrigeration and Air Conditioning
+Industrial Processes,Semiconductor Manufacturing,Semiconductor Manufacturing
+Industrial Processes,Solvent Use,Solvent Use
+Industrial Processes,Photovoltaic Cell Manufacturing,Photovoltaic Cell Manufacturing
+Industrial Processes,Nitric and Adipic Acid Production,Nitric and Adipic Acid Production
+Industrial Processes,Aluminum Production,Primary Aluminum Production
+Industrial Processes,Electric Power Systems,Electric Power Systems
