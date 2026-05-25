@@ -112,7 +112,7 @@ module_aglu_L121.Carbon_LT <- function(command, ...) {
         L121.CarbonContent_kgm2_R_LTpast_GLU
 
 
-    }else{
+    } else{
 
     # Pasture carbon contents
     L120.LC_bm2_ctry_LTpast_GLU %>%
@@ -120,7 +120,6 @@ module_aglu_L121.Carbon_LT <- function(command, ...) {
       # pasture lands may involve clearing; it is unclear to what extent this takes place but we'll use the carbon
       # contents of savanna as a maximum possible value for the vegetative carbon content of pasture lands
       mutate(veg_c = pmin(veg_c, L121.Various_CarbonData_LTsage$veg_c[L121.Various_CarbonData_LTsage$LT_SAGE == "Savanna"])) %>%
-
       # Aggregate by GCAM region and GCAM land use type, using area-weighted mean
       group_by(GCAM_region_ID, Land_Type, GLU) %>%
       summarise(`mature age` = weighted.mean(`mature age`, Area_bm2),
@@ -167,22 +166,10 @@ module_aglu_L121.Carbon_LT <- function(command, ...) {
                      "L120.LC_bm2_R_LT_Yh_GLU", "L120.LC_bm2_ctry_LTsage_GLU", "L120.LC_bm2_ctry_LTpast_GLU") ->
       L121.CarbonContent_kgm2_R_LT_GLU
 
-    # Grazing intensity: the proportion of annual aboveground net primary productivity removed by grazing livestock
-    # Grazing intensity, globally is around 13% in 2010.
-    # See Wolf et al. (2021) https://www.mdpi.com/2072-4292/13/17/3430
-    # To be conservative, we use a uniform 70% value here for now
-    GrazingIntensity = 0.7
-    # Because 1. the C yield method above may under estimate the yield
-    # 2. we are representing relatively more managed high-quality pasture
-    # 3. the world average pasture dry matter yield is ~ 3 DM t/ha
-    # 4. the future productivity increase has not been considered yet
-    # This value should be revisited later & differentiated by regions
-
-
     # Pasture yields are separate
     L121.CarbonContent_kgm2_R_LTpast_GLU %>%
       select(GCAM_region_ID, Land_Type, GLU, pasture_yield) %>%
-      mutate(pasture_yield = pasture_yield * GrazingIntensity / aglu.CCONTENT_CELLULOSE) %>%
+      mutate(pasture_yield = pasture_yield * aglu.GRAZING_INTENSITY / aglu.CCONTENT_CELLULOSE) %>%
       add_title("Pasture land age, carbon density, and yield") %>%
       add_units("Years (mature age), kgC/m2 (carbon), and kg/m2 (pasture yield)") %>%
       add_comments("From matching Houghton (1999) and SAGE data by GCAM region and land use type") %>%

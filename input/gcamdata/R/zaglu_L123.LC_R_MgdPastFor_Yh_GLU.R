@@ -48,12 +48,11 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     L120.LC_bm2_R_LT_Yh_GLU <- get_data(all_data, "L120.LC_bm2_R_LT_Yh_GLU")
 
     if(aglu.CARBON_DATA_SOURCE=="moirai"){
-
       L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L120.LC_soil_veg_carbon_GLU")
-    }else{
+    } else{
       L121.CarbonContent_kgm2_R_LT_GLU <- get_data(all_data, "L121.CarbonContent_kgm2_R_LT_GLU")
-
     }
+
     L121.Yield_kgm2_R_Past_GLU <- get_data(all_data, "L121.Yield_kgm2_R_Past_GLU")
     L101.Pop_thous_R_Yh <- get_data(all_data, "L101.Pop_thous_R_Yh")
 
@@ -65,11 +64,16 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       filter(Land_Type == "Pasture", year %in% aglu.AGLU_HISTORICAL_YEARS) ->
       L123.LC_bm2_R_Past_Y_GLU
 
+    default_pasture_yield <- aglu.DEFAULT_VEG_CARBON_PASTURE/aglu.CCONTENT_CELLULOSE
+
+
     # Match total pasture land area and yield data to calculate potential production
     L123.LC_bm2_R_Past_Y_GLU %>%
-      left_join_error_no_match(L121.Yield_kgm2_R_Past_GLU, by = c("GCAM_region_ID", "Land_Type", "GLU")) %>%
+      left_join(L121.Yield_kgm2_R_Past_GLU, by = c("GCAM_region_ID", "Land_Type", "GLU")) %>%
+      mutate(pasture_yield = if_else(is.na(pasture_yield), default_pasture_yield, pasture_yield)) %>%
       # Calculate potential production as total land times yield
-      mutate(value = value * pasture_yield) ->
+      mutate(value = value * pasture_yield,
+             value=if_else(GCAM_region_ID==13,if_else(GLU=="GLU215",0,value),value))->
       L123.ag_potentialProd_Mt_R_Past_Y_GLU
 
     # Use this "potential production" by region and GLU to disaggregate actual pasture land production to GLUs.
@@ -101,7 +105,8 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
     L123.ag_Prod_Mt_R_Past_Y_GLU %>%
       rename(Land_Type = GCAM_commodity) %>%
       # Match in pasture yields by GLU
-      left_join_error_no_match(L121.Yield_kgm2_R_Past_GLU, by = c("GCAM_region_ID", "Land_Type", "GLU")) %>%
+      left_join(L121.Yield_kgm2_R_Past_GLU, by = c("GCAM_region_ID", "Land_Type", "GLU")) %>%
+      mutate(pasture_yield = if_else(is.na(pasture_yield), default_pasture_yield, pasture_yield)) %>%
       # Calculate managed pasture land required as actual production devided by yields
       mutate(MgdPast = value / pasture_yield) %>%
       select(-value, -pasture_yield) %>%
@@ -172,7 +177,6 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
 
      min_forest_yield <- min(dat_for_min_yield$Yield_m3m2)
 
-
     # Use total forest land and yields to calculate potential forest biomass production
     L120.LC_bm2_R_LT_Yh_GLU %>%
       # Filter total forest land
@@ -185,7 +189,6 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
        mutate(Yield_m3m2= if_else(is.na(Yield_m3m2),min_forest_yield,Yield_m3m2),
               Yield_m3m2= if_else(Yield_m3m2==0,min_forest_yield,Yield_m3m2)) %>%
       mutate(value = value * Yield_m3m2) ->L123.For_potentialProd_bm3_R_Y_GLU
-
 
     # Use the GLU fraction of potential forest biomass production to disaggregate regional wood production to GLU
     # Forest output by GLU = Regional forest output * GLU-wise forest biomass production fraction

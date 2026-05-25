@@ -179,15 +179,18 @@ module_aglu_L163.bio_Yield_R_GLU_irr <- function(command, ...) {
     L163.base_bio_yield_GJm2 <- L163.base_bio_yield_tha * aglu.BIO_ENERGY_CONTENT_GJT / CONV_HA_M2
 
     # Finally, calculate bioenergy yields in each region-glu-irrigation combo:
+    # Added a guard on yield to limit the maximum yield to ~30 tonnes per hectare (0.0525 GJ/m2)
     L113.YieldIndex_R_GLU %>%
       mutate(Yield_GJm2 = YieldIndex * L113.base_bio_yield_GJm2) %>%
-      select(-HA, -Ratio_weight, -YieldIndex) ->
+      select(-HA, -Ratio_weight, -YieldIndex) %>%
+      mutate(Yield_GJm2 = if_else(Yield_GJm2 > aglu.BIO_CEILING, aglu.BIO_CEILING, Yield_GJm2)) ->
       L113.ag_bioYield_GJm2_R_GLU
 
 
     L163.YieldIndex_R_GLU_irr %>%
       mutate(Yield_GJm2 = YieldIndex * L163.base_bio_yield_GJm2) %>%
-      select(-HA, -Ratio_weight, -YieldIndex) ->
+      select(-HA, -Ratio_weight, -YieldIndex) %>%
+      mutate(Yield_GJm2 = if_else(Yield_GJm2 > aglu.BIO_CEILING, aglu.BIO_CEILING, Yield_GJm2)) ->
       L163.ag_bioYield_GJm2_R_GLU_irr
 
 
@@ -230,8 +233,9 @@ module_aglu_L163.bio_Yield_R_GLU_irr <- function(command, ...) {
                      "L100.LDS_ag_HA_ha",
                      "L100.LDS_ag_prod_t",
                      "L151.ag_irrHA_ha_ctry_crop",
-                     "L151.ag_irrProd_t_ctry_crop")  ->
+                     "L151.ag_irrProd_t_ctry_crop") ->
       L163.ag_irrBioYield_GJm2_R_GLU
+
     L163.ag_rfdBioYield_GJm2_R_GLU %>%
       add_title("Reference base year bioenergy yields for rainfed crops by GCAM region / GLU") %>%
       add_units("Gigajoule per square meter (GJ/m2)") %>%

@@ -66,7 +66,6 @@ module_aglu_L124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       filter(Land_Type == "Grassland") ->
       L124.LC_bm2_R_Grass_Yh_GLU
 
-
     # Calculate initial estimate of unmanaged pasture = total
     # pasture from Hyde minus managed pasture
     L120.LC_bm2_R_LT_Yh_GLU %>%
@@ -79,7 +78,6 @@ module_aglu_L124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
              Land_Type = "UnmanagedPasture") %>%
       select(-TotPasture, -MgdPasture) ->
       L124.LC_bm2_R_UnMgdPast_Yh_GLU
-
 
     # Calculate initial estimate of unmanaged forest = total
     # forest from SAGE/Hyde minus managed forest
@@ -94,14 +92,12 @@ module_aglu_L124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       select(-TotForest, -MgdForest) ->
       L124.LC_bm2_R_UnMgdFor_Yh_GLU
 
-
     # Combine all unmanaged land types into a single table for processing in multiple subsequent pipelines
     bind_rows(L124.LC_bm2_R_Grass_Yh_GLU,
               L124.LC_bm2_R_Shrub_Yh_GLU,
               L124.LC_bm2_R_UnMgdFor_Yh_GLU,
               L124.LC_bm2_R_UnMgdPast_Yh_GLU) ->
       L124.LC_bm2_R_LTunmgd_Yh_GLU
-
 
     # The initial estimates of shrubland, grassland, unmanaged pasture,
     # and unmanaged forest must have land deducted from them to cover
@@ -127,11 +123,21 @@ module_aglu_L124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       select(-TotUnmgdLand, -ExtraCropland, -Land_Type) ->
       L124.LC_UnMgdAdj_R_Yh_GLU
 
-    # Check that enough unmanaged land is available for the cropland expansion in all regions/GLUs
-    if(any(L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio < 0)) {
-      stop("Increase in cropland exceeds available unmanaged land")
+    L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio[is.infinite(L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio)] <- 0
+    
+    adj <- L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio
+    if(any(is.na(adj))) {
+       stop("adjustmentRatio contains NA values")
     }
 
+    if(any(!is.finite(adj))) {
+       stop("adjustmentRatio contains non-finite values")
+    }
+    # Check that enough unmanaged land is available for the cropland expansion in all regions/GLUs
+    if(any(L124.LC_UnMgdAdj_R_Yh_GLU$adjustmentRatio < 0)) {
+      write.csv(L124.LC_UnMgdAdj_R_Yh_GLU,"test_errors.csv")
+      stop("Increase in cropland exceeds available unmanaged land")
+    }
 
     # Apply the adjusment ratio to the different land types
     L124.LC_bm2_R_LTunmgd_Yh_GLU %>%
@@ -139,7 +145,6 @@ module_aglu_L124.LC_R_UnMgd_Yh_GLU <- function(command, ...) {
       mutate(value = value * adjustmentRatio) %>%
       select(-adjustmentRatio) ->
       L124.LC_bm2_R_LTunmgd_Yh_GLU_adj
-
 
     # Produce outputs
     L124.LC_bm2_R_LTunmgd_Yh_GLU_adj %>%

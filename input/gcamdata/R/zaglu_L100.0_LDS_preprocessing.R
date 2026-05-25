@@ -129,11 +129,7 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
           warning("module_aglu_L100.0_LDS_preprocessing: latest year in ", nm, " (", max_year, ") is earlier than the final base-year (", MODEL_FINAL_BASE_YEAR, "). Consider updating the data.")
         }
 
-        # Copy latest year data to MODEL_FINAL_BASE_YEAR
-        latest_data <- LDSfiles[[nm]] %>%
-          filter(year == max_year) %>%
-          mutate(year = MODEL_FINAL_BASE_YEAR)
-        LDSfiles[[nm]] <- bind_rows(latest_data, LDSfiles[[nm]])
+        
       }
     }
 

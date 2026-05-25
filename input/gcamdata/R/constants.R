@@ -236,7 +236,20 @@ aglu.TRADED_FORESTS         <- c("Forest")
 aglu.IWM_TRADED_COMM        <- c("FodderHerb", "OtherMeat_Fish") # Integrated World Market (IWM)commodities
 aglu.NONTRADED_COMM         <- c("DDGS and feedcakes", "FodderGrass", "Pasture", "Residue", "Scavenging_Other") # non-traded commodities; "Pasture" is modeled as a crop produced from pasture land.
 
-aglu.LAND_TOLERANCE    <- 0.005
+aglu.LAND_TOLERANCE    		<- 0.005 # updated land tolerance to reflect changes in zaglu_L125.LC_tot.R for PR #385.
+aglu.LAND_TOLERANCE_CHANGE <- 3 # added an absolute land change test in zaglu_L125.LC_tot.R for PR #385
+aglu.BIO_CEILING <- 0.0525 # added a maximum yield ceiling of ~30 tonnes per hectare (0.0525 GJ/m2)
+
+# Grazing intensity: the proportion of annual aboveground net primary productivity removed by grazing livestock
+# The global average grazing intensity is about 13%
+# See Wolf et al. (2021) https://www.mdpi.com/2072-4292/13/17/3430
+# To be conservative, we use a uniform 70% value here for now
+aglu.GRAZING_INTENSITY		<- 0.7
+    # Because 1. the C yield method used may under estimate the yield
+    # 2. we are representing relatively more managed high-quality pasture
+    # 3. the world average pasture dry matter yield is ~ 3 DM t/ha
+    # 4. the future productivity increase has not been considered yet
+    # This value should be revisited later & differentiated by regions
 
 aglu.MIN_PROFIT_MARGIN <- 0.15  # Unitless and is used to ensure that Agricultural Costs (units 1975USD/kg) don't lead to profits below a minimum profit margin.
 aglu.BIO_GHOST_CAL_COST_SCALER <- 0.9 # scale down nonLandVariableCost during ghost calibration

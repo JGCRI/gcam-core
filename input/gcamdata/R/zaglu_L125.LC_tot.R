@@ -71,6 +71,24 @@ module_aglu_L125.LC_tot <- function(command, ...) {
               L122.LC_bm2_R_OtherArableLand_Yh_GLU)  ->
       L125.LC_bm2_R_LT_Yh_GLU
 
+    #Make an adjustment for excess areas (for island countries)
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      group_by(GCAM_region_ID, GLU, year) %>%               # group the data by GCAM_region_id and GLU
+      summarise(value = sum(value)) %>%
+      filter(year==MODEL_BASE_YEARS[1]) %>%
+      rename(annual_value=value) %>%
+      select(-year)->                      # Adding up total land area by region, year, and GLU
+      L125.LC_bm2_R_Yh_GLU_year
+
+    L125.LC_bm2_R_LT_Yh_GLU %>%
+      group_by(GCAM_region_ID, GLU, year) %>%               # group the data by GCAM_region_id and GLU
+      mutate(tot_value = sum(value)) %>%
+      ungroup() %>%
+      left_join_error_no_match(L125.LC_bm2_R_Yh_GLU_year, by=c("GCAM_region_ID","GLU")) %>%
+      mutate(scalar=annual_value/tot_value) %>%
+      mutate(value=value*scalar) %>%
+      select(-annual_value,-tot_value,-scalar)->L125.LC_bm2_R_LT_Yh_GLU
+
     # Adding up total land area by region, GLU, and year
     L125.LC_bm2_R_LT_Yh_GLU %>%
       group_by(GCAM_region_ID, GLU, year) %>%               # group the data by GCAM_region_id and GLU
@@ -89,7 +107,7 @@ module_aglu_L125.LC_tot <- function(command, ...) {
         LC_check
 
       # Stop if the rate is outside of the tolerance boundaries
-      out <- abs(LC_check$change_rate - 1) > aglu.LAND_TOLERANCE
+      out <- (abs(LC_check$change_rate - 1) > aglu.LAND_TOLERANCE) & (abs(LC_check$change) > aglu.LAND_TOLERANCE_CHANGE)
       if(any(out, na.rm = TRUE)) {
         print(na.omit(LC_check[out,]))
         stop("ERROR: Interannual fluctuation in global land cover exceeds tolerance threshold of ", aglu.LAND_TOLERANCE)

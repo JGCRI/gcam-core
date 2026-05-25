@@ -66,7 +66,6 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       select(LT_SAGE,`mature age`,soil_c_houghton=soil_c,veg_c_houghton=veg_c)
 
     # Perform computations
-
     land.type <-
       L100.Land_type_area_ha %>%
       ## Add data for GCAM region ID and GLU
@@ -79,7 +78,6 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       na.omit
 
     ##calculate protection_shares
-
     land.type %>%
       mutate(prot_status = if_else(Status %in% aglu.NONPROTECT_LAND_STATUS, "Non-protected" ,"Protected")) %>%
       filter(LT_HYDE %in% c("Unmanaged","Pasture")) %>%
@@ -109,17 +107,18 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
     }
 
     ##calculate soil and veg carbon
-
     L100.Ref_veg_carbon_Mg_per_ha %>%
       select(iso, GLU, land_code, c_type, !!(as.name(aglu.CARBON_STATE))) %>%
       left_join_error_no_match(distinct(iso_GCAM_regID, iso, .keep_all = TRUE), by = "iso") %>%
       left_join(LDS_land_types %>% rename(land_code = Category), by = c("land_code")) %>%
+      mutate(LT_SAGE = if_else(LT_HYDE %in% c("Cropland", "Pasture","UrbanLand"),LT_HYDE,LT_SAGE)) %>%
       left_join(SAGE_LT, by = "LT_SAGE") %>% # includes NAs
       ## Drop all rows with missing values (inland bodies of water)
       na.omit() %>%
       spread(c_type, !!(as.name(aglu.CARBON_STATE))) %>%
       rename(soil_c = `soil_c (0-30 cms)`, vegc_ag = `veg_c (above ground biomass)`, vegc_bg = `veg_c (below ground biomass)`) %>%
       select(iso,GCAM_region_ID, GLU, Land_Type, soil_c, vegc_ag, vegc_bg, land_code)  %>%
+      #Rename Hyde categories for GCAM
       distinct() -> L120.LC_soil_veg_carbon_GLU_agg
 
     L100.Land_type_area_ha %>%
@@ -127,24 +126,25 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       left_join_error_no_match(distinct(iso_GCAM_regID, iso, .keep_all = TRUE), by = "iso") %>%
       ## Add vectors for land type (SAGE, HYDE, and WDPA)
       left_join_error_no_match(LDS_land_types, by = c("land_code" = "Category")) %>%
-      filter(LT_HYDE== "Unmanaged") %>%
+      mutate(LT_SAGE = if_else(LT_HYDE %in% c("Cropland", "Pasture","UrbanLand"),LT_HYDE,LT_SAGE)) %>%
       left_join(SAGE_LT, by = "LT_SAGE") %>%
       ## Drop all rows with missing values (inland bodies of water)
       na.omit() %>%
+
+      complete(nesting(GCAM_region_ID, Land_Type, GLU,iso,land_code,LT_SAGE), year, fill = list(value = 0)) %>%
+      complete(nesting(GCAM_region_ID, Land_Type, GLU,iso,land_code,LT_SAGE), year = unique(c(year, aglu.LAND_COVER_YEARS))) %>%
+      filter(year == MODEL_CARBON_YEAR) %>%
       # moirai only outputs carbon values from unmanaged land. Therefore, we remove pastures, urbanland and cropland from the below. We continue to calculate the carbon values for these land types using the Houghton structure.
       left_join_error_no_match(Various_CarbonData_LTsage %>%
-                                 filter(!LT_SAGE %in% c("Pasture","UrbanLand","Cropland")) %>%
                                  mutate(LT_SAGE = gsub(" ","",LT_SAGE)), by= c("LT_SAGE")) %>%
-      rename(iso = iso) %>%
       mutate(`mature age` = if_else(is.na(`mature age`),1,`mature age`)) %>%
-      complete(nesting(GCAM_region_ID, Land_Type, GLU,iso,land_code), year, fill = list(value = 0)) %>%
-      complete(nesting(GCAM_region_ID, Land_Type, GLU,iso,land_code), year = unique(c(year, aglu.LAND_COVER_YEARS))) %>%
-      filter(year == MODEL_CARBON_YEAR) %>%
       select(-year) %>%
       select(iso, GCAM_region_ID,GLU, Land_Type, value, land_code, `mature age`,soil_c_houghton, veg_c_houghton) %>%
       rename(land_area= value) %>%
       distinct() %>%
-      mutate(`mature age` = if_else(is.na(`mature age`),aglu.DEFAULT_MATURITY_AGE_ALL_LAND,`mature age`))->Land_for_carbon
+      mutate(`mature age` = if_else(is.na(`mature age`),aglu.DEFAULT_MATURITY_AGE_ALL_LAND,`mature age`),
+             veg_c_houghton = if_else(is.na(veg_c_houghton),1, veg_c_houghton),
+             soil_c_houghton = if_else(is.na(soil_c_houghton),1, soil_c_houghton))->Land_for_carbon
 
     Land_for_carbon %>%
       left_join(L120.LC_soil_veg_carbon_GLU_agg, by=c("iso", "GCAM_region_ID", "Land_Type", "GLU", "land_code")) %>%
@@ -160,103 +160,47 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
               veg_c = (sum(land_area * (vegc_ag+ vegc_bg))/sum(land_area))*CONV_THA_KGM2,
               `mature age` = sum(`mature age` * land_area)/sum(land_area)) %>%
       ungroup() %>%
-      mutate(soil_c = if_else(is.na(soil_c),0,soil_c),
-             veg_c = if_else(is.na(veg_c),0,veg_c),
+      mutate(soil_c = if_else(is.na(soil_c),soil_c_houghton*CONV_THA_KGM2,if_else(soil_c==0,1,soil_c)),
+             veg_c = if_else(is.na(veg_c),veg_c_houghton*CONV_THA_KGM2,if_else(veg_c==0,1,veg_c)),
              `mature age` = if_else(is.na(`mature age`),aglu.DEFAULT_MATURITY_AGE_ALL_LAND,`mature age`)) %>%
       select(GCAM_region_ID, Land_Type, GLU,soil_c,veg_c,`mature age`) %>%
       distinct() %>%
-      #Add adjustment for Tundra. Our Tundra values are unreliable. Use Houghton for those,
-      mutate(`mature age` = if_else(Land_Type == "Tundra", aglu.DEFAULT_TUNDRA_AGE, `mature age`))->L120.LC_soil_veg_carbon_GLU_all_cat
 
-
-    #Compute Cropland carbon
-    L100.Land_type_area_ha %>%
-      ## Add data for GCAM region ID and GLU
-      left_join_error_no_match(distinct(iso_GCAM_regID, iso, .keep_all = TRUE), by = "iso") %>%
-      ## Add vectors for land type (SAGE, HYDE, and WDPA)
-      left_join_error_no_match(LDS_land_types, by = c("land_code" = "Category")) %>%
-      filter(LT_HYDE== "Cropland") %>%
-      left_join(SAGE_LT, by = "LT_SAGE") %>%
-      ## Drop all rows with missing values (inland bodies of water)
-      na.omit() %>%
-      # moirai only outputs carbon values from unmanaged land. Therefore, we remove pastures, urbanland and cropland from the below. We continue to calculate the carbon values for these land types using the Houghton structure.
-      left_join_error_no_match(Various_CarbonData_LTsage %>%  filter(!LT_SAGE %in% c("Pasture","UrbanLand","Unmanaged")) %>% mutate(LT_SAGE = gsub(" ","",LT_SAGE)), by= c("LT_SAGE")) %>%
-      rename(iso = iso) %>%
-      mutate(`mature age` = if_else(is.na(`mature age`),1,`mature age`)) %>%
-      complete(nesting(GCAM_region_ID, Land_Type, GLU,iso,land_code), year, fill = list(value = 0)) %>%
-      complete(nesting(GCAM_region_ID, Land_Type, GLU,iso,land_code), year = unique(c(year, aglu.LAND_COVER_YEARS))) %>%
-      filter(year == MODEL_CARBON_YEAR) %>%
-      select(-year) %>%
-      select(iso, GCAM_region_ID,GLU, Land_Type, value, land_code, `mature age`) %>%
-      rename(land_area= value) %>%
-      distinct() %>%
-      mutate(`mature age` = if_else(is.na(`mature age`),aglu.DEFAULT_MATURITY_AGE_ALL_LAND,`mature age`))->Land_for_Crop_carbon
-
-    L120.LC_soil_veg_carbon_GLU_all_cat %>%
-      group_by(GCAM_region_ID,Land_Type,GLU) %>%
-      mutate(soil_c= mean(soil_c),
-             veg_c= mean(veg_c)) %>%
-      ungroup() %>%
-      select(GCAM_region_ID,Land_Type,GLU,soil_c,veg_c) %>%
-      distinct()->L120.LC_soil_veg_carbon_mean_LT_GLU_reg
-
-
-
-    Land_for_Crop_carbon %>%
-      left_join_keep_first_only(L120.LC_soil_veg_carbon_mean_LT_GLU_reg, by=c("GLU", "GCAM_region_ID", "Land_Type")) %>%
-      mutate(soil_c = if_else(is.na(soil_c),aglu.DEFAULT_SOIL_CARBON_CROPLAND,soil_c),
-             veg_c = if_else(is.na(veg_c),aglu.DEFAULT_VEG_CARBON_CROPLAND,veg_c),
-             Land_Type = "Cropland") %>%
+      mutate(`mature age` = if_else(Land_Type == "Tundra", aglu.DEFAULT_TUNDRA_AGE, `mature age`)) %>%
       group_by(GCAM_region_ID, Land_Type, GLU) %>%
-      #Note that soil and vegetation carbon units are in Mgc/ha. These are therefore converted to kg/m2 using CONV_THA_KGM2.
-      #We compute a weighted average using land area as a weight.
-      mutate(soil_c = (sum(land_area * soil_c)/sum(land_area))*0.7,
-              veg_c = aglu.DEFAULT_VEG_CARBON_CROPLAND,
-              `mature age` = 1) %>%
+      mutate(soil_c= mean(soil_c),
+             veg_c = mean(veg_c),
+             `mature age`= mean(`mature age`)) %>%
       ungroup() %>%
-      mutate(soil_c = if_else(is.na(soil_c),aglu.DEFAULT_SOIL_CARBON_CROPLAND,soil_c),
-             veg_c = if_else(is.na(veg_c),aglu.DEFAULT_VEG_CARBON_CROPLAND,veg_c),
-             `mature age` = if_else(is.na(`mature age`),1,`mature age`)) %>%
-      select(GCAM_region_ID, Land_Type, GLU,soil_c,veg_c,`mature age`) %>%
-      distinct() ->L120.LC_soil_veg_carbon_GLU_crop
+      distinct()->L120.LC_soil_veg_carbon_GLU_all_cat
 
-
-
-
-
+    #Cropland soil carbon
+    L120.LC_soil_veg_carbon_GLU_all_cat %>%
+    filter(Land_Type == "Cropland") %>%
+      mutate(soil_c = 0.75*soil_c)->L120.LC_soil_veg_carbon_GLU_crop
 
     # Pasture carbon is the same as grassland carbon values. But since the grassland values are subject to uncertainty, we make sure the values are below the mean of
     # all Grassland values for soil and vegetation.
     L120.LC_soil_veg_carbon_GLU_all_cat %>%
-      select(-soil_c,-veg_c,-`mature age`,-Land_Type) %>%
-      distinct() %>%
-      left_join(L120.LC_soil_veg_carbon_GLU_all_cat %>% filter(Land_Type == aglu.GRASSLAND_NODE_NAMES), by =c("GCAM_region_ID","GLU")) %>%
+      filter(Land_Type == "Pasture") %>%
       #Reducing soil carbon on pastures by a factor. This is because these pastures have been grazed in the past, so will not have same carbon as undisturbed grasslands.
-      mutate(Land_Type = aglu.PASTURE_NODE_NAMES,
-             soil_c = if_else(is.na(soil_c), aglu.DEFAULT_SOIL_CARBON_PASTURE*aglu.CSOIL_MULT_UNMGDPAST_MGDPAST,if_else(soil_c==0,aglu.DEFAULT_SOIL_CARBON_PASTURE*aglu.CSOIL_MULT_UNMGDPAST_MGDPAST,
+      mutate(soil_c = if_else(is.na(soil_c), aglu.DEFAULT_SOIL_CARBON_PASTURE*aglu.CSOIL_MULT_UNMGDPAST_MGDPAST,if_else(soil_c==0,aglu.DEFAULT_SOIL_CARBON_PASTURE*aglu.CSOIL_MULT_UNMGDPAST_MGDPAST,
                                                                                       soil_c*aglu.CSOIL_MULT_UNMGDPAST_MGDPAST)),
              veg_c = if_else(is.na(veg_c), aglu.DEFAULT_VEG_CARBON_PASTURE,if_else(veg_c==0,aglu.DEFAULT_VEG_CARBON_PASTURE,
                                                                                    veg_c)),
              `mature age` = if_else(is.na(`mature age`),aglu.DEFAULT_MATURITY_AGE_PASTURE,if_else(
                `mature age` ==1 , aglu.DEFAULT_MATURITY_AGE_PASTURE , `mature age`)))->L120.LC_soil_veg_carbon_GLU_pasture
 
-
-
-
     # Note that we set the default maturity age for Urban Land to 1 based on Houghton values.
-
     L120.LC_soil_veg_carbon_GLU_all_cat %>%
       select(-soil_c,-veg_c,-`mature age`,-Land_Type) %>%
       distinct() %>%
       mutate(Land_Type = paste0("UrbanLand"),soil_c = aglu.DEFAULT_SOIL_CARBON_URBANLAND, veg_c = aglu.DEFAULT_VEG_CARBON_URBANLAND, `mature age`= 1)->L120.LC_soil_veg_carbon_GLU_urban
 
-    L120.LC_soil_veg_carbon_GLU <- bind_rows(L120.LC_soil_veg_carbon_GLU_all_cat,
+    L120.LC_soil_veg_carbon_GLU <- bind_rows(L120.LC_soil_veg_carbon_GLU_all_cat %>% filter(!Land_Type %in% c("Cropland","Pasture","UrbanLand")),
                                              L120.LC_soil_veg_carbon_GLU_pasture,
                                              L120.LC_soil_veg_carbon_GLU_crop,
                                              L120.LC_soil_veg_carbon_GLU_urban)
-
-
-
 
     ## Reset WDPA classification to "Non-protected" where HYDE classification
     ## is cropland, pasture, or urban land
@@ -300,7 +244,6 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       mutate(year = as.integer(year)) ->
       L120.LC_bm2_R_LT_Yh_GLU
 
-
     # Extrapolate to fill missing data
     if (MODEL_FINAL_BASE_YEAR > max(L120.LC_bm2_R_LT_Yh_GLU$year) || any(is.na(L120.LC_bm2_R_LT_Yh_GLU$value))) {
       warning("module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU: MODEL_FINAL_BASE_YEAR is greater than the maximum year in the land cover data (L120.LC_bm2_R_LT_Yh_GLU). Extrapolating to MODEL_FINAL_BASE_YEAR.")
@@ -338,7 +281,6 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       summarise(Area_bm2 = mean(Area_bm2)) %>%
       ungroup ->
       L120.LC_bm2_ctry_LTpast_GLU
-
 
     # Produce outputs
     L120.LC_bm2_R_LT_Yh_GLU %>%
