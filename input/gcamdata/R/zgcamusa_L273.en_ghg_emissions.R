@@ -11,7 +11,7 @@
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
 #' the generated outputs: \code{L273.en_ghg_tech_coeff_USA}, \code{L273.en_ghg_emissions_USA}, \code{L273.out_ghg_emissions_USA},
-#' and \code{L273.MAC_higwp_USA}. The corresponding file in the
+#' \code{L273.res_ghg_emfact_USA}, \code{L273.MAC_higwp_USA}, and \code{L273.ResReadInControl_ghg_res_USA}. The corresponding file in the
 #' original data system was \code{L273.en_ghg_emissions_USA.R} (gcam-usa level2).
 #' @details KALYN MTB YO
 #' @importFrom assertthat assert_that
@@ -27,6 +27,7 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
              "L123.out_EJ_state_ownuse_elec",
              "L1322.in_EJ_state_Fert_Yh",
              "L201.en_ghg_emissions",
+             "L102.res_ghg_tgej_USA",
              "L241.nonco2_tech_coeff",
              "L241.hfc_all",
              "L241.pfc_all",
@@ -50,10 +51,12 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L273.en_ghg_tech_coeff_USA",
              "L273.en_ghg_emissions_USA",
+             "L273.res_ghg_emfact_USA",
              "L273.out_ghg_emissions_USA",
              "L273.MAC_higwp_USA",
              "L273.MAC_higwp_TC_USA",
-             "L273.MAC_higwp_phaseInTime_USA"))
+             "L273.MAC_higwp_phaseInTime_USA",
+             "L273.ResReadInControl_ghg_res_USA"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -73,6 +76,7 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
     L123.out_EJ_state_ownuse_elec <- get_data(all_data, "L123.out_EJ_state_ownuse_elec", strip_attributes = TRUE)
     L1322.in_EJ_state_Fert_Yh <- get_data(all_data, "L1322.in_EJ_state_Fert_Yh", strip_attributes = TRUE)
     L201.en_ghg_emissions <- get_data(all_data, "L201.en_ghg_emissions", strip_attributes = TRUE)
+    L102.res_ghg_tgej_USA <- get_data(all_data, "L102.res_ghg_tgej_USA", strip_attributes = TRUE)
     L241.nonco2_tech_coeff <- get_data(all_data, "L241.nonco2_tech_coeff", strip_attributes = TRUE)
     L241.hfc_all <- get_data(all_data, "L241.hfc_all", strip_attributes = TRUE)
     L241.pfc_all <- get_data(all_data, "L241.pfc_all", strip_attributes = TRUE)
@@ -135,10 +139,66 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
 
     # clean up refining emission coefficients and organize
     L273.ref_ghg_tech_coeff_USA %>%
-      mutate(emiss.coeff = round(emiss.coeff, emissions.DIGITS_EMISSIONS)) %>%
+      mutate(emiss.coef = round(emiss.coeff, emissions.DIGITS_EMISSIONS)) %>%
       arrange(region, supplysector, subsector, stub.technology, year, Non.CO2) %>%
       left_join_error_no_match(EnTechInputMap %>% select(-supplysector), by = c("subsector", "stub.technology"))->
       L273.en_ghg_tech_coeff_USA
+
+    # # Resource production emissions
+    # # L273.res_ghg_emfact_USA: Emissions coefficients of N20, CH4, and fugitive CO2 by U.S. state
+    L102.res_ghg_tgej_USA %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
+      # rename CO2 to CO2_FUG and add technology level (same as subresource)
+      mutate(ghg = case_when(ghg == "CO2" ~ "CO2_FUG",
+                             T ~ ghg),
+             resource.reserve.technology = reserve.subresource,
+             # convert Tg CO2 to MTC for CO2_FUG
+             emiss.coef = case_when(ghg == "CO2_FUG" ~ emfact/emissions.CONV_C_CO2,
+                                    T ~ emfact),
+             emiss.units = case_when(ghg == "CO2_FUG" ~ "MTC",
+                                     T ~ "Tg")) %>%
+      select(region, resource, subresource = reserve.subresource, technology = resource.reserve.technology,
+             year, Non.CO2 = ghg, emiss.coef, emiss.units) ->
+      L273.res_ghg_emfact_USA
+
+    # comment below copied from zemissions_L201.en_nonco2.R.....................
+
+    # Resources have vintaging going on in the historical years.
+    # The above emissions coefficients are the coefficients across vintages
+    # in the given model year.  The best way to ensure the correct "total"
+    # emissions factor across vintages is realized is to use the ReadInControl
+    # to change the coefficients by vintage for all vintages.  Note given the way
+    # the C++ operates we need to read in the "base" EmissCoef table and then the
+    # same values in the ReadInControl table all read into the first model period
+    # vintage.  We will also need to "fillout" the value in the final calibration
+    # to the future model periods otherwise the vintage would revert back to the
+    # value in the EmissCoef table.  Finally to turn "off" any adjustments made to
+    # new vintages in future model periods we must have ReadInControl with values of
+    # zero starting in the first future model period.
+
+
+    # L273.ResReadInControl_ghg_res:
+    # Vintage adjustments for GHG emissions from resource production in all states
+    L273.res_ghg_emfact_USA %>%
+      # copy the final historical year value to the future model periods
+      bind_rows(L273.res_ghg_emfact_USA %>%
+                  filter(year == MODEL_FINAL_BASE_YEAR) %>%
+                  select(-year) %>%
+                  repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS))) %>%
+      rename(future.emiss.coeff.year = year) %>%
+      mutate(year = MODEL_BASE_YEARS[1],
+             future.emiss.coeff.name = "vintage_adjust") %>%
+      select(LEVEL2_DATA_NAMES[["ResReadInControl"]]) ->
+      L273.ResReadInControl_ghg_res_USA
+
+    # turn "off" vintage adjustments for future year vintages
+    L273.ResReadInControl_ghg_res_USA %>%
+      mutate(year = MODEL_FUTURE_YEARS[1],
+             emiss.coef = 0.0) %>%
+      bind_rows(L273.ResReadInControl_ghg_res_USA) ->
+      L273.ResReadInControl_ghg_res_USA
+
+
 
     # 2c. Input Emissions
     # L273.en_ghg_emissions_USA: Calibrated input emissions of N2O and CH4 by U.S. state
@@ -372,7 +432,8 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
     #Combine output emissions into one table and organize
     bind_rows(L273.out_ghg_emissions_elec_ownuse,
               L273.out_ghg_emissions_bld_cool) %>%
-      arrange(Non.CO2, supplysector) ->
+      arrange(Non.CO2, supplysector) %>%
+      rename(input.emissions = output.emissions)->
       L273.out_ghg_emissions_USA
 
     # 2e. MAC curves
@@ -453,6 +514,14 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
                      "L244.StubTechCalInput_bld_gcamusa") ->
       L273.en_ghg_tech_coeff_USA
 
+    L273.res_ghg_emfact_USA %>%
+      add_title("GHG emissions coefficients for fossil resources in U.S. states") %>%
+      add_units("NA") %>%
+      add_comments("Write the emissions coefficients from the subresource level to the resource level") %>%
+      add_legacy_name("L273.res_ghg_emfact_USA") %>%
+      add_precursors("L102.res_ghg_tgej_USA") ->
+      L273.res_ghg_emfact_USA
+
     L273.en_ghg_emissions_USA %>%
       add_title("Calibrated input emissions of N2O and CH4 by U.S. state") %>%
       add_units("Tg") %>%
@@ -493,6 +562,7 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
                      "gcam-usa/emissions/inventory_fgas") ->
       L273.out_ghg_emissions_USA
 
+
     L273.MAC_higwp_USA %>%
       add_title("Abatement curves for the HFCs and PFCs in all U.S. states") %>%
       add_units("tax: 1990 USD; mac.reduction: % reduction") %>%
@@ -529,9 +599,18 @@ module_gcamusa_L273.en_ghg_emissions <- function(command, ...) {
       add_precursors("L252.MAC_higwp_phaseInTime") ->
       L273.MAC_higwp_phaseInTime_USA
 
+    L273.ResReadInControl_ghg_res_USA %>%
+      add_title("Vintaging adjustments for GHG emission factors from resource production") %>%
+      add_units("Tg/EJ") %>%
+      add_comments("Used to make per vintage adjustments to ensure overall emissions") %>%
+      add_comments("factors match the ones in L273.res_ghg_emfact_USA in historical years") %>%
+      same_precursors_as(L273.res_ghg_emfact_USA) ->
+      L273.ResReadInControl_ghg_res_USA
 
-    return_data(L273.en_ghg_tech_coeff_USA, L273.en_ghg_emissions_USA, L273.out_ghg_emissions_USA,
-                L273.MAC_higwp_USA, L273.MAC_higwp_TC_USA, L273.MAC_higwp_phaseInTime_USA)
+
+    return_data(L273.en_ghg_tech_coeff_USA,  L273.en_ghg_emissions_USA, L273.out_ghg_emissions_USA,
+                L273.MAC_higwp_USA, L273.MAC_higwp_TC_USA, L273.MAC_higwp_phaseInTime_USA,
+                L273.res_ghg_emfact_USA, L273.ResReadInControl_ghg_res_USA)
 
   } else {
     stop("Unknown command")

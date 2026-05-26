@@ -1,0 +1,43 @@
+# File: EIA_oil_first_purchase_price_states_mapping.csv
+# Title: mapping EIA crude oil first purchase price area into US states
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Comments: aggregated PADD regions are assigned as other to be filtered out
+# Column types: cc
+# ----------
+category,state
+U.S. Crude Oil First Purchase Price $/bbl,USA
+East Coast (PADD 1) Crude Oil First Purchase Price $/bbl,other
+New York Crude Oil First Purchase Price $/bbl,NY
+Pennsylvania Crude Oil First Purchase Price $/bbl,PA
+West Virginia Crude Oil First Purchase Price $/bbl,WV
+Midwest (PADD 2) Crude Oil First Purchase Price $/bbl,other
+Illinois Crude Oil First Purchase Price $/bbl,IL
+Indiana Crude Oil First Purchase Price $/bbl,IN
+Kansas Crude Oil First Purchase Price $/bbl,KS
+Kentucky Crude Oil First Purchase Price $/bbl,KY
+Michigan Crude Oil First Purchase Price $/bbl,MI
+Nebraska Crude Oil First Purchase Price $/bbl,NE
+North Dakota Crude Oil First Purchase Price $/bbl,ND
+Ohio Crude Oil First Purchase Price $/bbl,OH
+Oklahoma Crude Oil First Purchase Price $/bbl,OK
+South Dakota Crude Oil First Purchase Price $/bbl,SD
+Gulf Coast (PADD 3) Crude Oil First Purchase Price $/bbl,other
+Alabama Crude Oil First Purchase Price $/bbl,AL
+Arkansas Crude Oil First Purchase Price $/bbl,AR
+Louisiana Crude Oil First Purchase Price $/bbl,LA
+Mississippi Crude Oil First Purchase Price $/bbl,MS
+New Mexico Crude Oil First Purchase Price $/bbl,NM
+Texas Crude Oil First Purchase Price $/bbl,TX
+Federal Offshore U.S. Gulf Coast Crude Oil First Purchase Price $/bbl,other
+Rocky Mountain (PADD 4) Crude Oil First Purchase Price $/bbl,other
+Colorado Crude Oil First Purchase Price $/bbl,CO
+Montana Crude Oil First Purchase Price $/bbl,MT
+Utah Crude Oil First Purchase Price $/bbl,UT
+Wyoming Crude Oil First Purchase Price $/bbl,WY
+West Coast (PADD 5) Crude Oil First Purchase Price $/bbl,other
+California Crude Oil First Purchase Price $/bbl,CA
+Alaska Other Crude Oil First Purchase Price $/bbl,other
+Alaska North Slope First Purchase Price $/bbl,AK
+Federal Offshore California Crude Oil First Purchase Price $/bbl,other
+U.S. less Alaskan North Slope Crude Oil First Purchase Price $/bbl,other

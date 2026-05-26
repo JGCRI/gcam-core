@@ -1,0 +1,12 @@
+# File: ETSAP_oil_cost_range.csv
+# Title: Estimates for oil production costs by grade
+# Units: 2008$/GJ
+# Comments: Data from ETSAP brief; Table 4 and 5 in https://iea-etsap.org/E-TechDS/PDF/P02-Uncon_oil&gas-GS-gct.pdf
+# Column types: cnn
+# ----------
+type,low_cost,high_cost
+conventional oil,1.6,6.6
+shale oil,3.8,8.6
+heavy oil,6.6,13.1
+oil sands,6.6,13.1
+oil shale,8.2,19.7

@@ -1,0 +1,13 @@
+# File: A10.fossil_subsector_logit.csv
+# Title: USA supplysector subsector characteristics for fossil resources
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Column types: ccic
+# ----------
+supplysector,subsector,logit.exponent,logit.type
+coal production,AK coal production,-6,absolute-cost-logit
+crude oil production,AK crude oil production,-6,absolute-cost-logit
+natural gas production,AK natural gas production,-6,absolute-cost-logit
+coal production,Lower48 coal production,-6,absolute-cost-logit
+crude oil production,Lower48 crude oil production,-6,absolute-cost-logit
+natural gas production,Lower48 natural gas production,-6,absolute-cost-logit

@@ -11,9 +11,10 @@
 #'   \code{L2392.Delete_Supplysector_reg_NG}, \code{L2392.PrimaryConsKeyword_en_NG}, \code{L2392.CarbonCoef_NG},
 #'   \code{L2392.Supplysector_tra_NG},\code{L2392.SectorUseTrialMarket_tra_NG}, \code{L2392.SubsectorAll_tra_NG},
 #'   \code{L2392.TechShrwt_tra_NG}, \code{L2392.TechCost_tra_NG},\code{L2392.TechLifetime_tra_NG},\code{L2392.TechSCurve_tra_NG},
-#'   \code{L2392.TechCoef_tra_NG}, \code{L2392.ProfitShutdown_tra_NG},
+#'   \code{L2392.TechCoef_tra_NG}, \code{L2392.TechCoef_tra_NG_USA}, \code{L2392.TechCoef_tra_NG_USA_delete}, \code{L2392.ProfitShutdown_tra_NG},
 #'   \code{L2392.Supplysector_reg_NG}, \code{2392.NestingSubsectorAll_reg_NG}, \code{L2392.SubsectorAll_reg_NG},
-#'   \code{L2392.TechShrwt_reg_NG},\code{L2392.TechCoef_reg_NG},\code{L2392.TechCost_reg_NG}, \code{L2392.TechLifetime_reg_NG},
+#'   \code{L2392.TechShrwt_reg_NG},\code{L2392.TechCoef_reg_NG},\code{L2392.TechCoef_reg_NG_USA},\code{L2392.TechCoef_reg_NG_USA_delete},
+#'   \code{L2392.TechCost_reg_NG}, \code{L2392.TechLifetime_reg_NG},
 #'   \code{L2392.TechSCurve_reg_NG},\code{L2392.ProfitShutdown_reg_NG}, \code{L2392.TechInterp_reg_NG},
 #'   \code{L2392.Production_tra_NG}, \code{L2392.Production_reg_imp_NG}, \code{L2392.Production_reg_dom_NG}
 #' @importFrom assertthat assert_that
@@ -35,6 +36,7 @@ if(command == driver.DECLARE_INPUTS) {
            FILE = "energy/A_ff_TradedTechnology_NG",
            FILE = "energy/A_ff_RegionalTechnologyCost_NG",
            FILE = "energy/A_ff_TradedTechnologyCost_NG",
+           FILE = "gcam-usa/A10.fossil_techInput",
            "L202.CarbonCoef",
            "L239.Supplysector_tra",
            "L239.Supplysector_reg",
@@ -57,11 +59,15 @@ if(command == driver.DECLARE_INPUTS) {
            "L2392.TechSCurve_tra_NG",
            "L2392.ProfitShutdown_tra_NG",
            "L2392.TechCoef_tra_NG",
+           "L2392.TechCoef_tra_NG_USA",
+           "L2392.TechCoef_tra_NG_USA_delete",
            "L2392.Supplysector_reg_NG",
            "L2392.NestingSubsectorAll_reg_NG",
            "L2392.SubsectorAll_reg_NG",
            "L2392.TechShrwt_reg_NG",
            "L2392.TechCoef_reg_NG",
+           "L2392.TechCoef_reg_NG_USA",
+           "L2392.TechCoef_reg_NG_USA_delete",
            "L2392.TechCost_reg_NG",
            "L2392.TechLifetime_reg_NG",
            "L2392.TechSCurve_reg_NG",
@@ -98,6 +104,7 @@ if(command == driver.DECLARE_INPUTS) {
   L2391.NG_import_calOutput_statdiff <- get_data(all_data, "L2391.NG_import_calOutput_statdiff", strip_attributes = TRUE)
   L2391.NG_export_calOutput_statdiff <- get_data(all_data, "L2391.NG_export_calOutput_statdiff", strip_attributes = TRUE)
   L239.Production_reg_dom <- get_data(all_data, "L239.Production_reg_dom", strip_attributes = TRUE)
+  A10.fossil_techInput <- get_data(all_data,"gcam-usa/A10.fossil_techInput",strip_attributes = TRUE)
 
   # Delete natural gas from regional and traded supplysectors
   L2392.Delete_Supplysector_tra_NG <- L239.Supplysector_tra %>%
@@ -526,6 +533,32 @@ if(command == driver.DECLARE_INPUTS) {
     filter(supplysector == "regional natural gas") %>%
     mutate(subsector0 = subsector)
 
+  # change US traded and domestic [fossil resource] into [fossil resource] production
+  # for US natural gas, switch minicam energy inputs to "natural gas production"
+  L2392.TechCoef_tra_NG_USA_delete <- L2392.TechCoef_tra_NG %>%
+    inner_join(A10.fossil_techInput %>%
+                 select(-minicam.energy.input), by = c('supplysector','subsector','technology'))
+
+  L2392.TechCoef_tra_NG_USA <- L2392.TechCoef_tra_NG %>%
+    select(-minicam.energy.input) %>%
+    inner_join(A10.fossil_techInput, by = c('supplysector','subsector','technology'))
+
+  L2392.TechCoef_reg_NG_USA_delete <- L2392.TechCoef_reg_NG %>%
+    filter(region == gcam.USA_REGION) %>%
+    inner_join(A10.fossil_techInput %>%
+                 select(-minicam.energy.input), by = c('supplysector','subsector','technology'))
+
+  L2392.TechCoef_reg_NG_USA <-  L2392.TechCoef_reg_NG %>%
+    filter(region == gcam.USA_REGION) %>%
+    select(-minicam.energy.input) %>%
+    inner_join(A10.fossil_techInput, by = c('supplysector','subsector','technology'))
+
+  L2392.TechCoef_tra_NG_USA_delete <- L2392.TechCoef_tra_NG_USA_delete %>%
+    select(LEVEL2_DATA_NAMES[['DeleteInput']])
+
+  L2392.TechCoef_reg_NG_USA_delete <- L2392.TechCoef_reg_NG_USA_delete %>%
+    select(LEVEL2_DATA_NAMES[['DeleteInput']],subsector0)
+
   # Produce outputs
   L2392.Delete_Supplysector_tra_NG %>%
     add_title("Delete traded natural gas supplysector") %>%
@@ -639,6 +672,26 @@ if(command == driver.DECLARE_INPUTS) {
                    "energy/GCAM_region_pipeline_bloc_export") ->
     L2392.TechCoef_tra_NG
 
+  L2392.TechCoef_tra_NG_USA %>%
+    add_title("Technology input-output coefficients for traded natural gas commodities for GCAM-USA") %>%
+    add_units("Unitless IO") %>%
+    add_comments("Pass-through; 1 unless some portion is assumed lost/spoiled in shipping") %>%
+    add_precursors("common/GCAM_region_names",
+                   "energy/A_ff_TradedTechnology_NG",
+                   "energy/GCAM_region_pipeline_bloc_export",
+                   "gcam-usa/A10.fossil_techInput") ->
+    L2392.TechCoef_tra_NG_USA
+
+  L2392.TechCoef_tra_NG_USA_delete %>%
+    add_title("Delete technology input-output coefficients for traded natural gas commodities for GCAM-USA") %>%
+    add_units("Unitless") %>%
+    add_comments("Deleted inputs are replaced by L2392.TechCoef_tra_NG_USA") %>%
+    add_precursors("common/GCAM_region_names",
+                   "energy/A_ff_TradedTechnology_NG",
+                   "energy/GCAM_region_pipeline_bloc_export",
+                   "gcam-usa/A10.fossil_techInput") ->
+    L2392.TechCoef_tra_NG_USA_delete
+
   L2392.Supplysector_reg_NG %>%
     add_title("Supplysector info for regional natural gas commodities") %>%
     add_units("None") %>%
@@ -681,6 +734,26 @@ if(command == driver.DECLARE_INPUTS) {
                    "energy/A_ff_RegionalTechnology_NG",
                    "energy/GCAM_region_pipeline_bloc_import") ->
     L2392.TechCoef_reg_NG
+
+  L2392.TechCoef_reg_NG_USA %>%
+    add_title("Technology input-output coefficients for regional NG commodities for GCAM-USA") %>%
+    add_units("Unitless IO") %>%
+    add_comments("Pass-through; 1 unless some portion is assumed lost/spoiled in shipping") %>%
+    add_precursors("common/GCAM_region_names",
+                   "energy/A_ff_RegionalTechnology_NG",
+                   "energy/GCAM_region_pipeline_bloc_import",
+                   "gcam-usa/A10.fossil_techInput") ->
+    L2392.TechCoef_reg_NG_USA
+
+  L2392.TechCoef_reg_NG_USA_delete %>%
+    add_title("Delete technology input-output coefficients for regional NG commodities for GCAM-USA") %>%
+    add_units("Unitless IO") %>%
+    add_comments("Deleted inputs are replaced by L2392.TechCoef_reg_NG_USA") %>%
+    add_precursors("common/GCAM_region_names",
+                   "energy/A_ff_RegionalTechnology_NG",
+                   "energy/GCAM_region_pipeline_bloc_import",
+                   "gcam-usa/A10.fossil_techInput") ->
+    L2392.TechCoef_reg_NG_USA_delete
 
   L2392.TechCost_reg_NG %>%
     add_title("Technology costs for regional natural gas commodities") %>%
@@ -772,11 +845,15 @@ if(command == driver.DECLARE_INPUTS) {
               L2392.TechSCurve_tra_NG,
               L2392.ProfitShutdown_tra_NG,
               L2392.TechCoef_tra_NG,
+              L2392.TechCoef_tra_NG_USA,
+              L2392.TechCoef_tra_NG_USA_delete,
               L2392.Supplysector_reg_NG,
               L2392.NestingSubsectorAll_reg_NG,
               L2392.SubsectorAll_reg_NG,
               L2392.TechShrwt_reg_NG,
               L2392.TechCoef_reg_NG,
+              L2392.TechCoef_reg_NG_USA,
+              L2392.TechCoef_reg_NG_USA_delete,
               L2392.TechCost_reg_NG,
               L2392.TechLifetime_reg_NG,
               L2392.TechSCurve_reg_NG,

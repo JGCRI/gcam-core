@@ -178,6 +178,10 @@ CONV_BTU_KJ <- 1.055056
 CONV_MMBTU_GJ <- 1.055056
 CONV_MMBTU_KGH2 <- 0.113939965425114 # MMBTU/kg H2 - LHV Source: H2 CCTP Workbook.xls (Used for older GCAM assumptions)
 CONV_GJ_KGH2 <- 0.12021 #GJ/kg H2 - LHV
+CONV_MMCF_EJ <- 1.055e-6 # convert volume of natural gas (million cubic feet) into energy (Table 7.3 in Rogner Chapter 7 Energy Resources and Potentials)
+CONV_BCF_MMCF <- 1000 # convert billion cubic feet into million cubic feet
+CONV_MBBL_EJ <- 6.119 * 1e-3 # million barrels of oil equivalent to EJ
+CONV_TCE_EJ <- 2.9288 * 1e-8 # convert 1 ton of coal equivalent into EJ
 CONV_NG_HHV_LHV <- 0.905
 
 # Distance
@@ -951,6 +955,8 @@ emissions.UNMGD_LAND_AVG_YRS <- 30 # Years for climatological average for the GF
 emissions.CEDS_SCALE    <- "usa" # iso's that will be scaled to CEDS emissions
 emissions.CH4.GWP.AR4 <- 25 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
 emissions.N2O.GWP.AR4 <- 298 # used for EPA non-CO2 scaling, the 2019 EPA non-CO2 report uses AR4 GWPs
+emissions.CH4.GWP.AR5 <- 28 # used for EPA state-level ghg emissions from fossil fuel production
+emissions.N2O.GWP.AR5 <- 265 # used for EPA state-level ghg emissions from fossil fuel production
 
 emissions.COAL_SO2_THRESHOLD <- 0.1   # Tg/EJ (here referring to Tg SO2 per EJ of coal electricity)
 emissions.LOW_PCGDP          <- 2.75  # thousand 1990 USD
@@ -1102,7 +1108,7 @@ gcamusa.REGIONAL_FUEL_MARKETS <- c("regional coal", "delivered coal", "wholesale
 
 # Resources that will be modeled at the state level
 gcamusa.STATE_RENEWABLE_RESOURCES <- c("distributed_solar", "geothermal", "onshore wind resource", "offshore wind resource")
-gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone", "scrap")
+gcamusa.STATE_UNLIMITED_RESOURCES <- c("global solar resource", "limestone", "scrap", "unconventional oil upscaling")
 
 # Define sector(s) used in L222.en_transformation_USA
 # The supplysector and subsector structure in these sectors are retained

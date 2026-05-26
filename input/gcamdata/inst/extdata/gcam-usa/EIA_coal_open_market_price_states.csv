@@ -1,0 +1,44 @@
+# File: EIA_coal_open_market_price_states.csv
+# Title: US coal average market price by state
+# Units: dollar per short ton (nominal price)
+# Source: EIA https://www.eia.gov/coal/data/browser/#/topic/28?agg=0,1&geo=vvvvvvvvvvvvo&mktp=o&linechart=COAL.MARKET_PRICE.US-OPM.A&columnchart=COAL.MARKET_PRICE.US-OPM.A&map=COAL.MARKET_PRICE.US-OPM.A&freq=A&start=2001&end=2021&ctype=linechart&ltype=pin&rtype=s&maptype=0&rse=0&pin=&mntp=g&rank=n8
+# Comments: accessed Jun 2023 and here use open market price instead of captive market price as more data are available for open market prices
+# Column types: cccccccccccccccccccccccc
+# ----------
+description,units,source key,2001,2002,2003,2004,2005,2006,2007,2008,2009,2010,2011,2012,2013,2014,2015,2016,2017,2018,2019,2020,2021
+Open market : United States,$/short ton,COAL.MARKET_PRICE.US-OPM.A,17.38,17.98,17.85,19.93,23.59,25.16,26.2,32.05,34.74,37.61,38.23,38.11,37.29,35.72,32.71,31.14,31.8,32.69,33.45,31.44,31.76
+Open market : Middle Atlantic,$/short ton,COAL.MARKET_PRICE.MAT-OPM.A,25.07,25.87,26.75,30.77,36.39,37.42,39.3,49.65,54.98,61.42,65.89,68.54,66.26,61.06,60.16,50.27,54.92,58.47,57.39,55.75,57.26
+Open market : Pennsylvania,$/short ton,COAL.MARKET_PRICE.PA-OPM.A,25.07,25.87,26.75,30.77,36.39,37.42,39.3,49.65,54.98,61.42,65.89,68.54,W,W,W,W,W,W,W,W,W
+Open market : East North Central,$/short ton,COAL.MARKET_PRICE.ENC-OPM.A,21.92,22.74,22.99,24.32,27.27,28.77,30.53,38.5,43.05,44.73,46.17,48.77,47.06,47.13,44.42,41.28,38.31,36.95,36.59,31.33,38.47
+Open market : Illinois,$/short ton,COAL.MARKET_PRICE.IL-OPM.A,23.52,24.04,24.13,25.72,29.67,31.17,33.6,40.41,47.2,48.22,46.81,49.04,W,W,W,W,W,W,W,W,W
+Open market : Indiana,$/short ton,COAL.MARKET_PRICE.IN-OPM.A,20.67,22.2,22.48,23.27,25.31,27.27,28.79,33.37,37.03,41.59,44.62,49.16,49.3,49.61,47.08,45.79,42.47,39.35,39.51,40.57,W
+Open market : Ohio,$/short ton,COAL.MARKET_PRICE.OH-OPM.A,21.48,21.44,22.1,23.82,26.88,27.4,28.79,41.86,44.81,43.32,46.58,W,W,W,W,47.11,W,W,W,W,38.19
+Open market : West North Central,$/short ton,COAL.MARKET_PRICE.WNC-OPM.A,8.79,8.72,9.09,10.16,11.09,11.41,12.16,13.81,13.9,15.62,16.9,18.48,18.63,18.34,17.77,18.2,18.47,17.89,19.17,19.68,19.05
+Open market : Kansas,$/short ton,COAL.MARKET_PRICE.KS-OPM.A,W,W,W,W,W,W,W,W,W,W,W,--,--,W,W,W,--,--,--,--,--
+Open market : Missouri,$/short ton,COAL.MARKET_PRICE.MO-OPM.A,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W
+Open market : North Dakota,$/short ton,COAL.MARKET_PRICE.ND-OPM.A,8.48,8.46,8.76,W,10.45,10.7,11.56,13.34,13.93,14.8,16.21,W,W,W,W,W,W,W,18.93,19.48,19
+Open market : South Atlantic,$/short ton,COAL.MARKET_PRICE.SAT-OPM.A,27.24,29.66,29.82,35.46,42.37,46.42,48.02,60.94,63.63,71.91,74.97,75.99,70.32,66.74,60.58,55.82,61,65.72,70.74,60.5,58.18
+Open market : Maryland,$/short ton,COAL.MARKET_PRICE.MD-OPM.A,23.83,W,W,24.58,28.55,30.63,33.02,42.19,37.65,48.73,43,47.83,48.67,48.59,48.34,52.96,53.35,59.8,63.64,59.36,56.94
+Open market : Virginia,$/short ton,COAL.MARKET_PRICE.VA-OPM.A,28.72,31.09,30.3,38.51,47.97,52.99,52.89,81.12,72.67,96.15,98.63,112.1,W,W,W,W,W,W,W,85.59,W
+Open market : West Virginia,$/short ton,COAL.MARKET_PRICE.WV-OPM.A,27.03,29.59,30.02,35.41,42.14,45.94,47.63,59.02,63.07,69.38,73.73,73.41,W,65.31,59.98,55.29,58.5,63.18,67.3,58.26,W
+Open market : East South Central,$/short ton,COAL.MARKET_PRICE.ESC-OPM.A,27.67,28.34,28.64,33.75,41.27,42.8,44.64,53.43,60.16,63.74,64.52,62.93,60.11,57.98,55.57,51.01,52.29,57.41,51.9,49.16,51.18
+Open market : Alabama,$/short ton,COAL.MARKET_PRICE.AL-OPM.A,34.36,34.28,33.75,41.73,53.63,48.39,55.56,71.31,76.22,86.11,77.51,85.06,83.43,84.48,W,W,W,W,W,W,W
+Open market : Kentucky,$/short ton,COAL.MARKET_PRICE.KY-OPM.A,26.77,27.77,28.15,32.74,39.68,42.73,43.62,51.33,58.53,60.72,63.23,61.85,59.24,57.07,54.61,W,51.63,55.63,W,47.95,50.96
+Open market : Mississippi,$/short ton,COAL.MARKET_PRICE.MS-OPM.A,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W
+Open market : Tennessee,$/short ton,COAL.MARKET_PRICE.TN-OPM.A,27.57,29.56,29.09,W,42.5,41.37,42.53,48.94,67.65,66.4,76.5,73.51,73.29,67.96,66.18,60.37,58.45,W,W,W,--
+Open market : West South Central,$/short ton,COAL.MARKET_PRICE.WSC-OPM.A,19.91,18.78,16.43,17.28,18.94,20.37,21.76,23.46,26,27.87,29.31,32.21,32.14,31.36,41.15,30.56,45.1,51.58,41.38,106.5,60.37
+Open market : Arkansas,$/short ton,COAL.MARKET_PRICE.AR-OPM.A,--,W,--,--,--,W,W,W,--,W,W,W,W,W,W,W,--,--,--,--,--
+Open market : Louisiana,$/short ton,COAL.MARKET_PRICE.LA-OPM.A,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W
+Open market : Oklahoma,$/short ton,COAL.MARKET_PRICE.OK-OPM.A,W,W,28.32,28.36,28.24,30.75,34.98,47.72,56.45,68.43,70.39,59.63,58.74,44.98,W,W,52.78,49.88,W,--,--
+Open market : Texas,$/short ton,COAL.MARKET_PRICE.TX-OPM.A,W,W,14.76,15.39,W,W,W,W,W,W,25.88,W,W,26.36,35.71,W,W,W,W,W,W
+Open market : Mountain,$/short ton,COAL.MARKET_PRICE.MTN-OPM.A,8.68,9.26,9.45,9.83,10.68,11.85,12.64,14.25,15.52,15.63,17.31,18.64,17.56,17.32,16.74,17.11,16.88,16.29,17.99,17.6,16.91
+Open market : Arizona,$/short ton,COAL.MARKET_PRICE.AZ-OPM.A,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,--,--
+Open market : Colorado,$/short ton,COAL.MARKET_PRICE.CO-OPM.A,17.2,17.72,18.21,18.1,21.63,24.27,24.91,32.3,36.71,39.45,39.74,38.51,36.82,35.68,31.28,35.69,38.7,37.9,38.55,39,36.61
+Open market : Montana,$/short ton,COAL.MARKET_PRICE.MT-OPM.A,8.83,9.27,9.42,10.09,9.74,10.42,11.79,12.4,13.5,14.55,15.88,W,W,W,W,W,W,W,W,W,W
+Open market : New Mexico,$/short ton,COAL.MARKET_PRICE.NM-OPM.A,22.02,22.47,23.18,24.09,25.82,29.15,29.91,36.28,33.83,W,34.22,W,W,W,W,W,W,W,W,W,W
+Open market : Utah,$/short ton,COAL.MARKET_PRICE.UT-OPM.A,19.86,18.3,17.08,17.39,21.45,24.98,25.69,26.91,32.36,27.53,33.07,W,W,W,W,W,W,37.13,W,39.35,39.51
+Open market : Wyoming,$/short ton,COAL.MARKET_PRICE.WY-OPM.A,5.62,6.37,6.74,7.12,7.71,9.03,9.67,10.62,11.72,12.03,13.17,13.81,13.9,W,W,W,W,W,12.48,12.94,12.84
+Open market : Pacific Contiguous,$/short ton,COAL.MARKET_PRICE.PCC-OPM.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Open market : Washington,$/short ton,COAL.MARKET_PRICE.WA-OPM.A,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--,--
+Open market : Pacific Noncontiguous,$/short ton,COAL.MARKET_PRICE.PCN-OPM.A,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W
+Open market : Alaska,$/short ton,COAL.MARKET_PRICE.AK-OPM.A,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W,W

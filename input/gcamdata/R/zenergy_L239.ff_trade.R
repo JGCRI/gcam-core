@@ -9,9 +9,9 @@
 #' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
 #'   \code{command} is "MAKE") all the generated outputs: \code{L239.PrimaryConsKeyword_en}, \code{L239.Supplysector_tra},
 #'   \code{L239.SectorUseTrialMarket_tra}, \code{L239.SubsectorAll_tra}, \code{L239.TechShrwt_tra},
-#'   \code{L239.TechCost_tra}, \code{L239.TechCoef_tra}, \code{L239.Production_tra}, \code{L239.Supplysector_reg},
-#'   \code{L239.SubsectorAll_reg}, \code{L239.TechShrwt_reg}, \code{L239.TechCoef_reg}, \code{L239.Production_reg_imp},
-#'   \code{L239.Production_reg_dom}, \code{L239.Consumption_intraregional}, \code{L239.CarbonCoef}.
+#'   \code{L239.TechCost_tra}, \code{L239.TechCoef_tra}, \code{L239.TechCoef_tra_USA}, \code{L239.Production_tra}, \code{L239.Supplysector_reg},
+#'   \code{L239.SubsectorAll_reg}, \code{L239.TechShrwt_reg}, \code{L239.TechCoef_reg}, \code{L239.TechCoef_reg_USA}, \code{L239.Production_reg_imp},
+#'   \code{L239.Production_reg_dom}, \code{L239.Consumption_intraregional}, \code{L239.CarbonCoef}, \code{L239.DeleteInput_reg_tra_USA}.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter if_else left_join mutate rename select
 #' @importFrom tibble tibble
@@ -26,6 +26,7 @@ module_energy_L239.ff_trade <- function(command, ...) {
       FILE = "energy/A_ff_TradedSector",
       FILE = "energy/A_ff_TradedSubsector",
       FILE = "energy/A_ff_TradedTechnology",
+      FILE = "gcam-usa/A10.fossil_techInput",
       "L202.CarbonCoef",
       "L2011.ff_GrossTrade_EJ_R_C_Y",
       "L2011.ff_ALL_EJ_R_C_Y")
@@ -38,11 +39,14 @@ module_energy_L239.ff_trade <- function(command, ...) {
       "L239.TechShrwt_tra",
       "L239.TechCost_tra",
       "L239.TechCoef_tra",
+      "L239.TechCoef_tra_USA",
       "L239.Production_tra",
       "L239.Supplysector_reg",
       "L239.SubsectorAll_reg",
       "L239.TechShrwt_reg",
       "L239.TechCoef_reg",
+      "L239.TechCoef_reg_USA",
+      "L239.DeleteInput_reg_tra_USA",
       "L239.Production_reg_imp",
       "L239.Production_reg_dom",
       "L239.Consumption_intraregional",
@@ -237,6 +241,30 @@ module_energy_L239.ff_trade <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["Production"]])->
       L239.Consumption_intraregional
 
+    # for the GCAM-USA
+    # change US traded [fossil resource] into [fossil resource] production
+    # for "traded XXX"
+    L239.TechCoef_tra_USA_delete <- L239.TechCoef_tra %>%
+      inner_join(A10.fossil_techInput %>%
+                   select(-minicam.energy.input), by = c('supplysector','subsector','technology'))
+
+    L239.TechCoef_tra_USA <- L239.TechCoef_tra %>%
+      select(-minicam.energy.input) %>%
+      inner_join(A10.fossil_techInput, by = c('supplysector','subsector','technology'))
+
+    # for "domestic XXX"
+    L239.TechCoef_reg_USA_delete <- L239.TechCoef_reg %>%
+      filter(region == gcam.USA_REGION) %>%
+      inner_join(A10.fossil_techInput %>%
+                   select(-minicam.energy.input), by = c('supplysector','subsector','technology'))
+
+    L239.TechCoef_reg_USA <- L239.TechCoef_reg %>%
+      filter(region == gcam.USA_REGION) %>%
+      select(-minicam.energy.input) %>%
+      inner_join(A10.fossil_techInput, by = c('supplysector','subsector','technology'))
+
+    L239.DeleteInput_reg_tra_USA <- bind_rows(L239.TechCoef_tra_USA_delete,L239.TechCoef_reg_USA_delete) %>%
+      select(LEVEL2_DATA_NAMES[['DeleteInput']])
 
     # Produce outputs ----
     L239.PrimaryConsKeyword_en %>%
@@ -295,6 +323,15 @@ module_energy_L239.ff_trade <- function(command, ...) {
                      "energy/A_ff_TradedTechnology") ->
       L239.TechCoef_tra
 
+    L239.TechCoef_tra_USA %>%
+      add_title("Technology input-output coefficients for traded ff commodities for GCAM-USA") %>%
+      add_units("Unitless IO") %>%
+      add_comments("Pass-through; 1 unless some portion is assumed lost/spoiled in shipping") %>%
+      add_precursors("common/GCAM_region_names",
+                     "energy/A_ff_TradedTechnology",
+                     "gcam-usa/A10.fossil_techInput") ->
+      L239.TechCoef_tra_USA
+
     L239.Production_tra %>%
       add_title("Technology calibration for traded ff commodities") %>%
       add_units("EJ") %>%
@@ -335,6 +372,25 @@ module_energy_L239.ff_trade <- function(command, ...) {
       add_precursors("common/GCAM_region_names",
                      "energy/A_ff_RegionalTechnology") ->
       L239.TechCoef_reg
+
+    L239.TechCoef_reg_USA %>%
+      add_title("Technology input-output coefficients for regional ff commodities for GCAM-USA") %>%
+      add_units("Unitless IO") %>%
+      add_comments("Pass-through; 1 unless some portion is assumed lost/spoiled in shipping") %>%
+      add_precursors("common/GCAM_region_names",
+                     "energy/A_ff_RegionalTechnology",
+                     "gcam-usa/A10.fossil_techInput") ->
+      L239.TechCoef_reg_USA
+
+    L239.DeleteInput_reg_tra_USA %>%
+      add_title("Delete technology minicam energy input for GCAM-USA") %>%
+      add_units("Unitless") %>%
+      add_comments("Deleted inputs are replaced by L239.TechCoef_reg_USA and L239.TechCoef_tra_USA") %>%
+      add_precursors("common/GCAM_region_names",
+                     "energy/A_ff_RegionalTechnology",
+                     "energy/A_ff_TradedTechnology",
+                     "gcam-usa/A10.fossil_techInput") ->
+      L239.DeleteInput_reg_tra_USA
 
     L239.Production_reg_imp %>%
       add_title("Technology calibration for regional ff commodities: imports") %>%

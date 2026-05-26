@@ -135,6 +135,8 @@ ResReserveTechCost, world/+{name}region, region/+{name}resource, resource/+{name
 
 ResReserveTechCoef, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, scenario, scenario/world, period/{name=CO2}CO2
 
+ResReserveTechCoefMkt, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}minicam-energy-input, minicam-energy-input/+coefficient, minicam-energy-input/+market-name, scenario, scenario/world, period/{name=CO2}CO2
+
 ResReserveTechLifetime, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+lifetime, scenario, scenario/world, period/{name=CO2}CO2
 
 ResReserveTechInvestmentInput, world/+{name}region, region/+{name}resource, resource/+{name}reserve-subresource, reserve-subresource/+{name}resource-reserve-technology, resource-reserve-technology/+{year}period, period/+{name}tracking-non-energy-input, tracking-non-energy-input/+capital-coef, tracking-non-energy-input/+tracking-market, scenario, scenario/world

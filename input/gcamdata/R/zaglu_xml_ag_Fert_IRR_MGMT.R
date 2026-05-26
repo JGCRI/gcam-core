@@ -30,7 +30,8 @@ module_aglu_ag_Fert_IRR_MGMT_xml <- function(command, ...) {
     # Load required inputs ----
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
-    # ===================================================
+
+    # =====================================================
 
     # Produce outputs
     create_xml("ag_Fert_IRR_MGMT.xml") %>%

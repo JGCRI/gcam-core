@@ -183,17 +183,34 @@ void SubResource::initCalc( const gcamstr& aRegionName, const gcamstr& aResource
     if( aPeriod == finalCalPeriod + 1 ) {
         SectorUtils::fillMissingPeriodVectorInterpolated( mPriceAdder );
     }
-
-    // If we are in a calibration period and a calibrated value was read in set the
-    // flag on the market that this resource is fully calibrated.
+     
     Marketplace* marketplace = scenario->getMarketplace();
     IInfo* productInfo = marketplace->getMarketInfo( aResourceName, aRegionName, aPeriod, false );
+    
+    // If we are in a calibration period and a calibrated value was read in set the
+    // flag on the market that this resource is fully calibrated.
     if( aPeriod <= finalCalPeriod && mCalProduction[ aPeriod ] >= 0.0 && productInfo ) {
         productInfo->setBoolean( gcamstr("fully-calibrated"), true );
     }
+    // Do some error checking wrt mixing calibrated and non-calibrated subresources.
+    // In particular, if the resource is calibrated (at least one subresource has calibration
+    // information) then any subresource which is not calibrating must have a zero share
+    // weight in the calibration periods.  We will issue a warning and reset it if not.
+    // WARNING: given we are checking "fully-calibrated" before other subresource objects set it
+    // to true we are open to missing some mismatches.  Unfortunately, it isn't so straightforward
+    // to ensure these order of operations (particularly in the case of a "global" market)
+    bool isCalibrated = productInfo->getBoolean( gcamstr("fully-calibrated"), false);
+    if(aPeriod <= finalCalPeriod && isCalibrated && mCalProduction[aPeriod] < 0.0 && mTechnology->getNewVintageTechnology(aPeriod)->getShareWeight() != 0.0) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::WARNING );
+        mainLog << "In " << aRegionName << " resource " << aResourceName
+                << " resetting share weight to zero for subresource " << mName << endl;
+        mTechnology->getNewVintageTechnology(aPeriod)->setShareWeight(0.0);
+    }
+    
     
     // Note we have to reset the CO2coefficient for the resource to zero before
-    // the technology / output calls initCalc to avoid undesriable carbon accounting
+    // the technology / output calls initCalc to avoid undesirable carbon accounting
     // (positive carbon in the output but no inputs = negative emissions).
     // we will then reset the value to what it was before after the call
     gcamstr CO2CoefKey("CO2coefficient");

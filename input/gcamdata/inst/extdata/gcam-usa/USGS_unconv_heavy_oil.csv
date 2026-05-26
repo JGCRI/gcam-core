@@ -1,0 +1,70 @@
+# File: USGS_unconv_heavy_oil.csv
+# Title: USGS estimate of two types of unconventioal heavy oil potential - oil shale and tar sands - in US
+# Units: million of barrels of oil
+# Source: https://www.blm.gov/programs/energy-and-development/mining-and-minerals/oil-shale-and-tar-sands; https://www.usgs.gov/centers/central-energy-resources-science-center/science/oil-shale
+# Direct Source: https://pubs.usgs.gov/fs/2011/3063/pdf/FS11-3063.pdf; https://pubs.usgs.gov/fs/2010/3010/pdf/FS10-3010.pdf; https://pubs.usgs.gov/fs/2006/3133/pdf/FS2006-3133_508.pdf
+# Column types: ccccn
+# ----------
+assessment_unit,oil_type,type,state,value
+Uinta,oil shale,total,UT,22379
+Uinta,oil shale,total,CO,1296584
+Piceance,oil shale,total,CO,1530000
+Greater Green River,oil shale,total,WY,1440000
+Hartselle,tar sands,measured,AL,1760
+Pride Mountain,tar sands,measured,AL,0
+Ugnu Sands,tar sands,measured,AK,15000
+Arroyo Grande,tar sands,measured,CA,310
+Basal Foxen,tar sands,measured,CA,0
+Cat Canyon,tar sands,measured,CA,830
+Casmalia Diatomite,tar sands,measured,CA,90
+Zaca-Sisquoc,tar sands,measured,CA,180
+Oxnard,tar sands,measured,CA,500
+Big Clifty,tar sands,measured,KY,1190
+Hardinsburg,tar sands,measured,KY,230
+Tar Springs,tar sands,measured,KY,0
+Caseyville,tar sands,measured,KY,300
+Santa Rosa,tar sands,measured,NM,130
+S. Central Oklahoma,tar sands,measured,OK,0
+San Miguel,tar sands,measured,TX,3200
+Anacacho,tar sands,measured,TX,550
+Hensel,tar sands,measured,TX,120
+Circle Cliffs,tar sands,measured,UT,560
+Tar Sand Triangle,tar sands,measured,UT,2500
+Nequoia Arch,tar sands,measured,UT,730
+San Rafael Swell,tar sands,measured,UT,300
+P.R. Spring,tar sands,measured,UT,2100
+Hill Creek,tar sands,measured,UT,300
+Sunnyside,tar sands,measured,UT,4400
+Whiterocks,tar sands,measured,UT,60
+Asphalt Ridge,tar sands,measured,UT,800
+Raven Ridge,tar sands,measured,UT,100
+Burnt Hollow,tar sands,measured,WY,120
+Hartselle,tar sands,speculative,AL,4500
+Pride Mountain,tar sands,speculative,AL,100
+Ugnu Sands,tar sands,speculative,AK,0
+Arroyo Grande,tar sands,speculative,CA,0
+Basal Foxen,tar sands,speculative,CA,1900
+Cat Canyon,tar sands,speculative,CA,280
+Casmalia Diatomite,tar sands,speculative,CA,170
+Zaca-Sisquoc,tar sands,speculative,CA,50
+Oxnard,tar sands,speculative,CA,160
+Big Clifty,tar sands,speculative,KY,910
+Hardinsburg,tar sands,speculative,KY,190
+Tar Springs,tar sands,speculative,KY,340
+Caseyville,tar sands,speculative,KY,250
+Santa Rosa,tar sands,speculative,NM,220
+S. Central Oklahoma,tar sands,speculative,OK,800
+San Miguel,tar sands,speculative,TX,610
+Anacacho,tar sands,speculative,TX,400
+Hensel,tar sands,speculative,TX,0
+Circle Cliffs,tar sands,speculative,UT,1140
+Tar Sand Triangle,tar sands,speculative,UT,420
+Nequoia Arch,tar sands,speculative,UT,160
+San Rafael Swell,tar sands,speculative,UT,250
+P.R. Spring,tar sands,speculative,UT,2200
+Hill Creek,tar sands,speculative,UT,600
+Sunnyside,tar sands,speculative,UT,1700
+Whiterocks,tar sands,speculative,UT,60
+Asphalt Ridge,tar sands,speculative,UT,300
+Raven Ridge,tar sands,speculative,UT,0
+Burnt Hollow,tar sands,speculative,WY,25

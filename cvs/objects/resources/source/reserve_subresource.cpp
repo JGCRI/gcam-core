@@ -83,6 +83,28 @@ void ReserveSubResource::completeInit( const gcamstr& aRegionName, const gcamstr
     delete currInfo;
 }
 
+/*!
+ * \brief Perform any initializations needed for each period.
+ * \details Only needed in ReserveSubResource to do some additional error checking
+ * \param aRegionName Region name.
+ * \param aResourceName Resource name.
+ * \param aPeriod Model aPeriod
+ */
+void ReserveSubResource::initCalc( const gcamstr& aRegionName, const gcamstr& aResourceName,
+                            const IInfo* aResourceInfo, const int aPeriod )
+{
+    SubResource::initCalc(aRegionName, aResourceName, aResourceInfo, aPeriod);
+    
+    // ensure either both or neither cal reserve and production are set
+    if(mCalReserve[aPeriod].isInited() ^ (mCalProduction[aPeriod] >= 0.0)) {
+        ILogger& mainLog = ILogger::getLogger( "main_log" );
+        mainLog.setLevel( ILogger::SEVERE );
+        mainLog << "In " << aRegionName << " resource " << aResourceName << ", " << mName
+                << "please ensure either both or neither calibrated reserve and production are set." << endl;
+        abort();
+    }
+}
+
 /*! \brief Get the XML node name for output to XML.
 *
 * This public function accesses the private constant string, XML_NAME.

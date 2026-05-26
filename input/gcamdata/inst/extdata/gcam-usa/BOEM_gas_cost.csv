@@ -1,0 +1,46 @@
+# File: BOEM_gas_cost.csv
+# Title: Offshore natural gas supply curves from BOEM 2021 report
+# Units: Prices are 2005$/thous-cf; quantities are tcf
+# Source: Bureau of Ocean Energy Management 2021 Resource Assesment https://www.boem.gov/2021-assessment-undiscovered-oil-and-gas-resources-nations-outer
+# Column types: cnn
+# ----------
+region,price,quantity
+Alaska OCS,1.56,0.00
+Alaska OCS,2.09,0.03
+Alaska OCS,3.16,0.19
+Alaska OCS,4.22,1.77
+Alaska OCS,5.29,5.63
+Alaska OCS,6.39,10.43
+Alaska OCS,8.51,18.71
+Alaska OCS,9.58,21.80
+Alaska OCS,11.17,25.31
+Atlantic OCS,1.58,0.00
+Atlantic OCS,2.10,0.02
+Atlantic OCS,3.18,0.06
+Atlantic OCS,4.24,0.16
+Atlantic OCS,5.32,0.96
+Atlantic OCS,6.42,2.22
+Atlantic OCS,8.52,4.42
+Atlantic OCS,9.60,5.44
+Atlantic OCS,11.20,6.77
+Atlantic OCS,13.36,8.41
+Gulf of Mexico OCS,1.62,6.82
+Gulf of Mexico OCS,2.12,12.19
+Gulf of Mexico OCS,3.19,20.40
+Gulf of Mexico OCS,4.27,24.82
+Gulf of Mexico OCS,5.34,27.20
+Gulf of Mexico OCS,6.41,28.85
+Gulf of Mexico OCS,8.53,30.87
+Gulf of Mexico OCS,9.60,31.57
+Gulf of Mexico OCS,11.18,32.47
+Gulf of Mexico OCS,13.31,33.19
+Pacific OCS,1.58,4.84
+Pacific OCS,2.12,6.12
+Pacific OCS,3.20,7.80
+Pacific OCS,4.26,8.65
+Pacific OCS,5.33,9.07
+Pacific OCS,6.40,9.35
+Pacific OCS,8.52,9.74
+Pacific OCS,9.60,9.87
+Pacific OCS,11.20,10.02
+Pacific OCS,13.32,10.17

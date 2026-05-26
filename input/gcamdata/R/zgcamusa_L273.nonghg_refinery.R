@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L273.nonghg_state_refinery_USA}
+#' the generated outputs: \code{L273.nonghg_state_refinery_emissions_USA}.
 #' @details This chunk calculates Non-GHG emissions parameters for refining technologies in the USA.
 #' @importFrom assertthat assert_that
 #' @importFrom dplyr filter mutate select
@@ -113,7 +113,7 @@ module_gcamusa_L273.nonghg_refinery <- function(command, ...) {
       left_join_error_no_match( bio_prod_structure, by = "year" )
 
 
-    ### combine tables
+    ### combine tables that contain input emissions
     # State Level
     L273.nonghg_state_refinery_USA <- bio_prod_final %>%
       bind_rows( ethanol_prod_final, pet_ref_final ) %>%
@@ -126,10 +126,6 @@ module_gcamusa_L273.nonghg_refinery <- function(command, ...) {
       distinct() %>%
       ungroup()
 
-    # TODO: other techs: default emissions factors from GREET
-    # TODO: or use Ellie's method, dropping EFs into folder
-
-
     # ===================================================
 
     # Produce outputs
@@ -137,7 +133,7 @@ module_gcamusa_L273.nonghg_refinery <- function(command, ...) {
     L273.nonghg_state_refinery_USA %>%
       add_title("Non-GHG input emissions parameters for refining technologies in the USA") %>%
       add_units("Tg") %>%
-      add_comments("Emissions at the USA level") %>%
+      add_comments("Emissions at the USA level for petroleum refining, ethanol production, and biodiesel production") %>%
       add_precursors(FILE="gcam-usa/states_subregions",
                      "L270.nonghg_tg_state_refinery_F_Yb",
                      "L222.StubTech_en_USA") ->

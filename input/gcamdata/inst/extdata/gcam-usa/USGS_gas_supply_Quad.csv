@@ -1,0 +1,252 @@
+# File: USGS_gas_supply_Quad.csv
+# Title: USGS natural gas resource estimates
+# Comments: Estimates are given by basin and rock type, and characterized by probability of extraction being economic
+# Units: quads
+# Source: USGS National Assessment of Oil and Gas Resources Update (March, 2013) https://energy.usgs.gov/OilGas/AssessmentsData/NationalOilGasAssessment/Methodology.aspx
+# Column types: ccnnn
+# ----------
+basin,resource,F95,F50,F05
+Alaska North Slope,conventional gas,57.11500975,179.7173489,314.9025341
+Central Alaska,conventional gas,0,5.321637427,14.25925926
+Southern Alaska,conventional gas,3.06042885,13.38206628,27.69005848
+Western Oregon-Wash.,conventional gas,0.116959064,0.711500975,1.71539961
+Eastern Oregon-Wash.,conventional gas,0,0.30214425,0.838206628
+Northern Coastal,conventional gas,0.341130604,1.062378168,2.270955166
+Sonoma-Livermore,conventional gas,0,0.058479532,0.409356725
+Sacramento Basin,conventional gas,0.136452242,0.516569201,1.04288499
+San Joaquin Basin,conventional gas,0.311890838,1.71539961,4.220272904
+Central Coastal,conventional gas,0.029239766,0.14619883,0.360623782
+Santa Maria Basin,conventional gas,0.009746589,0.116959064,0.341130604
+Ventura Basin,conventional gas,0.643274854,1.851851852,3.567251462
+Los Angeles Basin,conventional gas,0.59454191,1.56920078,3.001949318
+Idaho-Snake River Downwarp,conventional gas,0,0.009746589,0.087719298
+Western Great Basin,conventional gas,0,0.419103314,2.426900585
+Eastern Great Basin,conventional gas,0.185185185,1.79337232,4.85380117
+Uinta-Piceance Basin,conventional gas,0.068226121,0.204678363,0.428849903
+Paradox Basin,conventional gas,0.22417154,0.808966862,1.549707602
+San Juan Basin,conventional gas,0.058479532,0.155945419,0.30214425
+Albuquerque-Sante Fe Rift,conventional gas,0,0.350877193,1.257309942
+Northern Arizona,conventional gas,0,0.165692008,0.935672515
+S. Ariz.-S.W. New Mexico,conventional gas,0.009746589,0.194931774,0.516569201
+South-Central New Mexico,conventional gas,0,0,0
+Montana Thrust Belt,conventional gas,1.072124756,8.313840156,20.14619883
+Central Montana,conventional gas,0.389863548,0.81871345,1.335282651
+Southwest Montana,conventional gas,0.116959064,0.389863548,0.740740741
+"Hanna, Laramie, Shirley",conventional gas,0.058479532,0.272904483,0.614035088
+Williston Basin,conventional gas,0.204678363,0.955165692,2.027290448
+Powder River Basin,conventional gas,0.22417154,1.130604288,2.563352827
+Big Horn Basin,conventional gas,0.116959064,0.428849903,0.857699805
+Wind River Basin,conventional gas,0.107212476,0.44834308,0.945419103
+Wyoming Thrust Belt,conventional gas,0.126705653,0.545808967,1.140350877
+Southwestern Wyoming,conventional gas,0.59454191,2.358674464,5.243664717
+Park Basins,conventional gas,0.009746589,0.019493177,0.068226121
+Denver Basin,conventional gas,0.019493177,0.107212476,0.30214425
+Las Animas Arch,conventional gas,0.194931774,0.516569201,1.04288499
+Raton Basin-Sierra Grande Uplift,conventional gas,0.214424951,0.740740741,1.34502924
+Palo Duro Basin,conventional gas,0.009746589,0.009746589,0.009746589
+Permian Basin,conventional gas,1.384015595,5.068226121,9.85380117
+Bend Arch-Ft. Worth Basin,conventional gas,0.14619883,0.458089669,0.847953216
+Marathon Thrust Belt,conventional gas,0.058479532,0.136452242,0.272904483
+Gulf Coast,conventional gas,39.66861598,149.3957115,301.4619883
+Florida Peninsula,conventional gas,0,1.617933723,4.142300195
+Superior,conventional gas,0,0.409356725,2.875243665
+Cambridge Arch-Central Kansas,conventional gas,0.07797271,0.399610136,1.013645224
+Nemaha Uplift,conventional gas,0.165692008,0.458089669,0.935672515
+Forest City Basin,conventional gas,0,0.068226121,0.185185185
+Anadarko Basin,conventional gas,0.779727096,2.61208577,5.116959064
+Sedgwick Basin/Salina Basin,conventional gas,0.136452242,0.311890838,0.497076023
+Cherokee Platform,conventional gas,0.068226121,0.175438596,0.331384016
+Southern Oklahoma,conventional gas,0.458089669,0.994152047,1.744639376
+Arkoma Basin,conventional gas,0.165692008,1.023391813,2.329434698
+Michigan Basin,conventional gas,1.130604288,3.859649123,7.53411306
+Illinois Basin,conventional gas,0.068226121,0.409356725,0.974658869
+Black Warrior Basin,conventional gas,0.019493177,1.413255361,3.255360624
+Cincinnati Arch,conventional gas,0.009746589,0.019493177,0.038986355
+Appalachian Basin,conventional gas,1.228070175,4.200779727,8.070175439
+Marcellus Shale,conventional gas,0,0.029239766,0.14619883
+Utica Shale,conventional gas,0,0.380116959,1.159844055
+Blue Ridge Thrust Belt,conventional gas,0,0,0
+Piedmont,conventional gas,0,0,0
+Alaska North Slope,coalbed methane,6.890838207,17.60233918,35.16569201
+Central Alaska,coalbed methane,0,0,0
+Southern Alaska,coalbed methane,1.539961014,4.55165692,9.814814815
+Western Oregon-Wash.,coalbed methane,1.26705653,1.452241715,2.943469786
+Eastern Oregon-Wash.,coalbed methane,0,0,0
+Northern Coastal,coalbed methane,0,0,0
+Sonoma-Livermore,coalbed methane,0,0,0
+Sacramento Basin,coalbed methane,0,0,0
+San Joaquin Basin,coalbed methane,0,0,0
+Central Coastal,coalbed methane,0,0,0
+Santa Maria Basin,coalbed methane,0,0,0
+Ventura Basin,coalbed methane,0,0,0
+Los Angeles Basin,coalbed methane,0,0,0
+Idaho-Snake River Downwarp,coalbed methane,0,0,0
+Western Great Basin,coalbed methane,0,0,0
+Eastern Great Basin,coalbed methane,0,0,0
+Uinta-Piceance Basin,coalbed methane,1.130604288,2.251461988,3.966861598
+Paradox Basin,coalbed methane,0.204678363,0.438596491,0.799220273
+San Juan Basin,coalbed methane,20.12670565,23.62573099,27.74853801
+Albuquerque-Sante Fe Rift,coalbed methane,0,0,0
+Northern Arizona,coalbed methane,0,0,0
+S. Ariz.-S.W. New Mexico,coalbed methane,0,0,0
+South-Central New Mexico,coalbed methane,0,0,0
+Montana Thrust Belt,coalbed methane,0,0,0
+Central Montana,coalbed methane,0,0,0
+Southwest Montana,coalbed methane,0,0,0
+"Hanna, Laramie, Shirley",coalbed methane,0,0,0
+Williston Basin,coalbed methane,0.360623782,0.857699805,1.656920078
+Powder River Basin,coalbed methane,8.031189084,13.89863548,21.85185185
+Big Horn Basin,coalbed methane,0.048732943,0.126705653,0.253411306
+Wind River Basin,coalbed methane,0.097465887,0.243664717,0.458089669
+Wyoming Thrust Belt,coalbed methane,0.14619883,0.350877193,0.682261209
+Southwestern Wyoming,coalbed methane,0.779727096,1.49122807,3.499025341
+Park Basins,coalbed methane,0,0,0
+Denver Basin,coalbed methane,0,0,0
+Las Animas Arch,coalbed methane,0,0,0
+Raton Basin-Sierra Grande Uplift,coalbed methane,0.877192982,1.549707602,2.485380117
+Palo Duro Basin,coalbed methane,0,0,0
+Permian Basin,coalbed methane,0,0,0
+Bend Arch-Ft. Worth Basin,coalbed methane,0,0,0
+Marathon Thrust Belt,coalbed methane,0,0,0
+Gulf Coast,coalbed methane,0,0,0
+Florida Peninsula,coalbed methane,0,0,0
+Superior,coalbed methane,1.617933723,3.95711501,7.719298246
+Cambridge Arch-Central Kansas,coalbed methane,0,0,0
+Nemaha Uplift,coalbed methane,0,0,0
+Forest City Basin,coalbed methane,0,0,0
+Anadarko Basin,coalbed methane,0,0,0
+Sedgwick Basin/Salina Basin,coalbed methane,0,0.438596491,1.403508772
+Cherokee Platform,coalbed methane,0,0,0
+Southern Oklahoma,coalbed methane,0,0,0
+Arkoma Basin,coalbed methane,1.04288499,1.861598441,3.001949318
+Michigan Basin,coalbed methane,0,0,0
+Illinois Basin,coalbed methane,2.144249513,3.421052632,5.097465887
+Black Warrior Basin,coalbed methane,0,0,0
+Cincinnati Arch,coalbed methane,0.175438596,0.428849903,0.838206628
+Appalachian Basin,coalbed methane,4.493177388,6.871345029,9.92202729
+Marcellus Shale,coalbed methane,0,0,0
+Utica Shale,coalbed methane,5.536062378,8.187134503,11.67641326
+Blue Ridge Thrust Belt,coalbed methane,0,0,0
+Piedmont,coalbed methane,0,0,0
+Alaska North Slope,shale gas,0,39.56042885,74.62962963
+Central Alaska,shale gas,0,0,0
+Southern Alaska,shale gas,0,0,0
+Western Oregon-Wash.,shale gas,0,0,0
+Eastern Oregon-Wash.,shale gas,0,0,0
+Northern Coastal,shale gas,0,0,0
+Sonoma-Livermore,shale gas,0,0,0
+Sacramento Basin,shale gas,0,0,0
+San Joaquin Basin,shale gas,0,0,0
+Central Coastal,shale gas,0,0,0
+Santa Maria Basin,shale gas,0,0,0
+Ventura Basin,shale gas,0,0,0
+Los Angeles Basin,shale gas,0,0,0
+Idaho-Snake River Downwarp,shale gas,0,0,0
+Western Great Basin,shale gas,0,0,0
+Eastern Great Basin,shale gas,0,0,0
+Uinta-Piceance Basin,shale gas,0,0,0
+Paradox Basin,shale gas,5.667641326,10.74074074,17.99415205
+San Juan Basin,shale gas,0,0,0
+Albuquerque-Sante Fe Rift,shale gas,0,0,0
+Northern Arizona,shale gas,0,0,0
+S. Ariz.-S.W. New Mexico,shale gas,0,0,0
+South-Central New Mexico,shale gas,0,0,0
+Montana Thrust Belt,shale gas,0,0,0
+Central Montana,shale gas,0,0,0
+Southwest Montana,shale gas,0,0,0
+"Hanna, Laramie, Shirley",shale gas,0,0,0
+Williston Basin,shale gas,0,0,0
+Powder River Basin,shale gas,0,0,0
+Big Horn Basin,shale gas,0,0,0
+Wind River Basin,shale gas,0,0,0
+Wyoming Thrust Belt,shale gas,0,0,0
+Southwestern Wyoming,shale gas,0,0,0
+Park Basins,shale gas,0,0,0
+Denver Basin,shale gas,0.329074074,0.9591423,2.051510721
+Las Animas Arch,shale gas,0,0,0
+Raton Basin-Sierra Grande Uplift,shale gas,0,0,0
+Palo Duro Basin,shale gas,0,0,0
+Permian Basin,shale gas,12.4785575,34.23976608,51.18323587
+Bend Arch-Ft. Worth Basin,shale gas,21.16552632,25.56419103,30.72267057
+Marathon Thrust Belt,shale gas,0,0,0
+Gulf Coast,shale gas,72.12768031,121.7309942,192.3898635
+Florida Peninsula,shale gas,0,0,0
+Superior,shale gas,0,0,0
+Cambridge Arch-Central Kansas,shale gas,0,0,0
+Nemaha Uplift,shale gas,0,0,0
+Forest City Basin,shale gas,0,0,0
+Anadarko Basin,shale gas,11.54580897,22.24463938,37.77875244
+Sedgwick Basin/Salina Basin,shale gas,0,0,0
+Cherokee Platform,shale gas,0,0,0
+Southern Oklahoma,shale gas,0,0,0
+Arkoma Basin,shale gas,15.49025341,25.99415205,40.30116959
+Michigan Basin,shale gas,5.345,7.285594542,9.618957115
+Illinois Basin,shale gas,1.26705653,3.695906433,7.910331384
+Black Warrior Basin,shale gas,0,0,0
+Cincinnati Arch,shale gas,0,0,0
+Appalachian Basin,shale gas,2.225077973,3.847641326,6.075506823
+Marcellus Shale,shale gas,41.86549708,82.06432749,140.4922027
+Utica Shale,shale gas,20.07894737,36.32846004,57.90935673
+Blue Ridge Thrust Belt,shale gas,0,0,0
+Piedmont,shale gas,0,0,0
+Alaska North Slope,tight gas,0,0,0
+Central Alaska,tight gas,0,0,0
+Southern Alaska,tight gas,0.250487329,0.6208577,1.222222222
+Western Oregon-Wash.,tight gas,0,0,0
+Eastern Oregon-Wash.,tight gas,1.149122807,2.068226121,3.348927875
+Northern Coastal,tight gas,0,0,0
+Sonoma-Livermore,tight gas,0,0,0
+Sacramento Basin,tight gas,0,0,0
+San Joaquin Basin,tight gas,0,0,0
+Central Coastal,tight gas,0,0,0
+Santa Maria Basin,tight gas,0,0,0
+Ventura Basin,tight gas,0,0,0
+Los Angeles Basin,tight gas,0,0,0
+Idaho-Snake River Downwarp,tight gas,0,0,0
+Western Great Basin,tight gas,0,0,0
+Eastern Great Basin,tight gas,0,0,0
+Uinta-Piceance Basin,tight gas,10.67950292,18.3511501,29.05059454
+Paradox Basin,tight gas,0,0,0
+San Juan Basin,tight gas,19.84737817,25.51620858,32.17842105
+Albuquerque-Sante Fe Rift,tight gas,0,0,0
+Northern Arizona,tight gas,0,0,0
+S. Ariz.-S.W. New Mexico,tight gas,0,0,0
+South-Central New Mexico,tight gas,0,0,0
+Montana Thrust Belt,tight gas,0,0,0
+Central Montana,tight gas,2.365497076,6.035087719,12.24463938
+Southwest Montana,tight gas,0,0,0
+"Hanna, Laramie, Shirley",tight gas,0,0,0
+Williston Basin,tight gas,0,0,0
+Powder River Basin,tight gas,0.333255361,0.766705653,1.445672515
+Big Horn Basin,tight gas,0.142300195,0.407407407,0.863547758
+Wind River Basin,tight gas,0.762183236,1.647173489,3.009746589
+Wyoming Thrust Belt,tight gas,0,0,0
+Southwestern Wyoming,tight gas,50.64230019,78.53596491,116.1218324
+Park Basins,tight gas,0,0,0
+Denver Basin,tight gas,0.772992203,1.066959064,1.422923977
+Las Animas Arch,tight gas,0,0,0
+Raton Basin-Sierra Grande Uplift,tight gas,0,0,0
+Palo Duro Basin,tight gas,0,0,0
+Permian Basin,tight gas,0,0,0
+Bend Arch-Ft. Worth Basin,tight gas,0,0,0
+Marathon Thrust Belt,tight gas,0,0,0
+Gulf Coast,tight gas,0,0,0
+Florida Peninsula,tight gas,0,0,0
+Superior,tight gas,0,0,0
+Cambridge Arch-Central Kansas,tight gas,0,0,0
+Nemaha Uplift,tight gas,0,0,0
+Forest City Basin,tight gas,0,0,0
+Anadarko Basin,tight gas,0,0,0
+Sedgwick Basin/Salina Basin,tight gas,0,0,0
+Cherokee Platform,tight gas,0,0,0
+Southern Oklahoma,tight gas,0,0,0
+Arkoma Basin,tight gas,3.108187135,6.617933723,11.92300195
+Michigan Basin,tight gas,0,0,0
+Illinois Basin,tight gas,0,0,0
+Black Warrior Basin,tight gas,0,0,0
+Cincinnati Arch,tight gas,0,0,0
+Appalachian Basin,tight gas,6.552222222,12.13601365,20.17262183
+Marcellus Shale,tight gas,13.46262183,20.1880117,29.29641326
+Utica Shale,tight gas,9.071949318,18.07145224,31.72775828
+Blue Ridge Thrust Belt,tight gas,0,0,0
+Piedmont,tight gas,1.729044834,3.762183236,6.877192982

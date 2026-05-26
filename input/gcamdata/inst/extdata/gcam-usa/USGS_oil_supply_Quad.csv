@@ -1,0 +1,130 @@
+# File: USGS_oil_supply_Quad.csv
+# Title: USGS oil resource estimates
+# Comments: Estimates are given by basin and rock type, and characterized by probability of extraction being economic
+# Units: quads
+# Source: USGS National Assessment of Oil and Gas Resources Update (March, 2013) https://energy.usgs.gov/OilGas/AssessmentsData/NationalOilGasAssessment/Methodology.aspx
+# Column types: ccnnn
+# ----------
+basin,resource,F95,F50,F05
+Alaska North Slope,conventional oil,48.43387471,88.39907193,142.1113689
+Central Alaska,conventional oil,0,0.986078886,3.422273782
+Southern Alaska,conventional oil,0.638051044,3.480278422,7.88863109
+Western Oregon-Wash.,conventional oil,0,0.05800464,0.232018561
+Eastern Oregon-Wash.,conventional oil,0,0,0
+Northern Coastal,conventional oil,0.05800464,0.174013921,0.522041763
+Sonoma-Livermore,conventional oil,0,0.05800464,0.348027842
+Sacramento Basin,conventional oil,0,0,0
+San Joaquin Basin,conventional oil,0.464037123,2.262180974,4.930394432
+Central Coastal,conventional oil,0.580046404,2.842227378,6.786542923
+Santa Maria Basin,conventional oil,0.116009281,1.218097448,3.480278422
+Ventura Basin,conventional oil,1.62412993,6.148491879,13.16705336
+Los Angeles Basin,conventional oil,2.378190255,5.684454756,10.32482599
+Idaho-Snake River Downwarp,conventional oil,0,0.05800464,0.05800464
+Western Great Basin,conventional oil,0,0.348027842,2.146171694
+Eastern Great Basin,conventional oil,1.392111369,9.048723898,22.04176334
+Uinta-Piceance Basin,conventional oil,0,0.116009281,0.232018561
+Paradox Basin,conventional oil,0.174013921,0.522041763,1.044083527
+San Juan Basin,conventional oil,0,0.116009281,0.232018561
+Albuquerque-Sante Fe Rift,conventional oil,0,0.290023202,0.870069606
+Northern Arizona,conventional oil,0,0.406032483,1.856148492
+S. Ariz.-S.W. New Mexico,conventional oil,0,0.116009281,0.348027842
+South-Central New Mexico,conventional oil,0,0,0
+Montana Thrust Belt,conventional oil,0.05800464,0.464037123,1.102088167
+Central Montana,conventional oil,0.754060325,1.56612529,2.436194896
+Southwest Montana,conventional oil,0,0.174013921,0.754060325
+"Hanna, Laramie, Shirley",conventional oil,0.05800464,0.348027842,0.696055684
+Williston Basin,conventional oil,0.406032483,1.218097448,2.262180974
+Powder River Basin,conventional oil,0.348027842,1.218097448,2.494199536
+Big Horn Basin,conventional oil,0.116009281,0.406032483,0.754060325
+Wind River Basin,conventional oil,0.05800464,0.232018561,0.522041763
+Wyoming Thrust Belt,conventional oil,0.05800464,0.232018561,0.464037123
+Southwestern Wyoming,conventional oil,0.05800464,0.174013921,0.406032483
+Park Basins,conventional oil,0.05800464,0.174013921,0.638051044
+Denver Basin,conventional oil,0.05800464,0.348027842,0.928074246
+Las Animas Arch,conventional oil,0.232018561,0.812064965,1.62412993
+Raton Basin-Sierra Grande Uplift,conventional oil,0,0,0
+Palo Duro Basin,conventional oil,0.05800464,0.174013921,0.406032483
+Permian Basin,conventional oil,1.218097448,4.350348028,8.236658933
+Bend Arch-Ft. Worth Basin,conventional oil,0.174013921,0.580046404,1.044083527
+Marathon Thrust Belt,conventional oil,0.05800464,0.116009281,0.232018561
+Gulf Coast,conventional oil,2.262180974,8.584686775,17.34338747
+Florida Peninsula,conventional oil,0.232018561,2.030162413,4.930394432
+Superior,conventional oil,0,0.290023202,2.552204176
+Cambridge Arch-Central Kansas,conventional oil,0.232018561,1.160092807,2.494199536
+Nemaha Uplift,conventional oil,0.174013921,0.696055684,1.682134571
+Forest City Basin,conventional oil,0,0.116009281,0.348027842
+Anadarko Basin,conventional oil,0.232018561,0.580046404,1.160092807
+Sedgwick Basin/Salina Basin,conventional oil,0.116009281,0.406032483,0.696055684
+Cherokee Platform,conventional oil,0.116009281,0.464037123,0.986078886
+Southern Oklahoma,conventional oil,0.290023202,1.392111369,3.306264501
+Arkoma Basin,conventional oil,0,0,0
+Michigan Basin,conventional oil,1.682134571,5.742459397,10.90487239
+Illinois Basin,conventional oil,0.232018561,1.218097448,2.958236659
+Black Warrior Basin,conventional oil,0,0,0.05800464
+Cincinnati Arch,conventional oil,0.05800464,0.116009281,0.232018561
+Appalachian Basin,conventional oil,0.05800464,0.290023202,0.580046404
+Marcellus Shale,conventional oil,0,0,0
+Utica Shale,conventional oil,0,0,0
+Blue Ridge Thrust Belt,conventional oil,0,0,0
+Piedmont,conventional oil,0,0,0
+Alaska North Slope,unconventional oil,0,5.452436195,11.60092807
+Central Alaska,unconventional oil,0,0,0
+Southern Alaska,unconventional oil,0,0,0
+Western Oregon-Wash.,unconventional oil,0,0,0
+Eastern Oregon-Wash.,unconventional oil,0,0,0
+Northern Coastal,unconventional oil,0,0,0
+Sonoma-Livermore,unconventional oil,0,0,0
+Sacramento Basin,unconventional oil,0,0,0
+San Joaquin Basin,unconventional oil,0,0,0
+Central Coastal,unconventional oil,0,0,0
+Santa Maria Basin,unconventional oil,0,0,0
+Ventura Basin,unconventional oil,0,0,0
+Los Angeles Basin,unconventional oil,0,0,0
+Idaho-Snake River Downwarp,unconventional oil,0,0,0
+Western Great Basin,unconventional oil,0,0,0
+Eastern Great Basin,unconventional oil,0,0,0
+Uinta-Piceance Basin,unconventional oil,0.144025522,0.224941995,0.329698376
+Paradox Basin,unconventional oil,1.328306265,2.732018561,4.820185615
+San Juan Basin,unconventional oil,0,0,0
+Albuquerque-Sante Fe Rift,unconventional oil,0,0,0
+Northern Arizona,unconventional oil,0,0,0
+S. Ariz.-S.W. New Mexico,unconventional oil,0,0,0
+South-Central New Mexico,unconventional oil,0,0,0
+Montana Thrust Belt,unconventional oil,0.074825986,0.161832947,0.29350348
+Central Montana,unconventional oil,0,0,0
+Southwest Montana,unconventional oil,0,0,0
+"Hanna, Laramie, Shirley",unconventional oil,0.081206497,0.220417633,0.440835267
+Williston Basin,unconventional oil,25.62064965,42.77842227,66.29930394
+Powder River Basin,unconventional oil,1.464733179,2.461020882,3.859686775
+Big Horn Basin,unconventional oil,0.011600928,0.02900232,0.063805104
+Wind River Basin,unconventional oil,0,0,0
+Wyoming Thrust Belt,unconventional oil,0,0,0
+Southwestern Wyoming,unconventional oil,0.388051044,0.600928074,0.87587007
+Park Basins,unconventional oil,0,0,0
+Denver Basin,unconventional oil,0.120243619,0.231032483,0.390661253
+Las Animas Arch,unconventional oil,0,0,0
+Raton Basin-Sierra Grande Uplift,unconventional oil,0,0,0
+Palo Duro Basin,unconventional oil,0,0,0
+Permian Basin,unconventional oil,1.972157773,2.958236659,4.205336427
+Bend Arch-Ft. Worth Basin,unconventional oil,0,0,0
+Marathon Thrust Belt,unconventional oil,0,0,0
+Gulf Coast,unconventional oil,4.918793503,10.04640371,17.84222738
+Florida Peninsula,unconventional oil,0,0,0
+Superior,unconventional oil,0,0,0
+Cambridge Arch-Central Kansas,unconventional oil,0,0,0
+Nemaha Uplift,unconventional oil,0,0,0
+Forest City Basin,unconventional oil,0,0,0
+Anadarko Basin,unconventional oil,1.015081206,2.279582367,4.234338747
+Sedgwick Basin/Salina Basin,unconventional oil,0,0,0
+Cherokee Platform,unconventional oil,0,0,0
+Southern Oklahoma,unconventional oil,0,0,0
+Arkoma Basin,unconventional oil,0,0,0
+Michigan Basin,unconventional oil,0,0,0
+Illinois Basin,unconventional oil,0,0,0
+Black Warrior Basin,unconventional oil,0,0,0
+Cincinnati Arch,unconventional oil,0,0,0
+Appalachian Basin,unconventional oil,3.422273782,5.452436195,8.039443155
+Marcellus Shale,unconventional oil,0,0,0
+Utica Shale,unconventional oil,0,0,0
+Blue Ridge Thrust Belt,unconventional oil,0,0,0
+Piedmont,unconventional oil,0,0,0

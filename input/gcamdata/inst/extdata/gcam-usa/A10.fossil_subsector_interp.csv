@@ -1,0 +1,13 @@
+# File: A10.fossil_subsector_interp.csv
+# Title: USA supplysector subsector characteristics for fossil resources
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Column types: cccccc
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,interpolation.function
+coal production,AK coal production,share-weight,final-calibration-year,end-year,fixed
+crude oil production,AK crude oil production,share-weight,final-calibration-year,end-year,fixed
+natural gas production,AK natural gas production,share-weight,final-calibration-year,end-year,fixed
+coal production,Lower48 coal production,share-weight,final-calibration-year,end-year,fixed
+crude oil production,Lower48 crude oil production,share-weight,final-calibration-year,end-year,fixed
+natural gas production,Lower48 natural gas production,share-weight,final-calibration-year,end-year,fixed

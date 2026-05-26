@@ -168,12 +168,12 @@ module_energy_L210.resources <- function(command, ...) {
              currency.conv = gdp_deflator(1975, year),
              price = price * currency.conv / energy.conv,
              `price-unit` = "1975$/GJ") %>%
-      # we are taking the mean price accross the "source" dimension in case we have
+      # we are taking the mean price across the "source" dimension in case we have
       # multiple marker price markets for a given resource
       group_by(resource, resource_type, market, `output-unit`, `price-unit`, year) %>%
       summarize(value = mean(price)) %>%
       # Note: taking advantage of the standard dplyr behavior to "pop" the last grouping: year
-      # which is what we want so that we can calculate moving average prices accross those yaers
+      # which is what we want so that we can calculate moving average prices across those years
       mutate(moving_avg = Moving_average_lagged(value, periods = energy.FUEL_PRICES_MEAN_PERIOD)) %>%
       ungroup() %>%
       # filling earlier years with just the annual price
@@ -214,103 +214,18 @@ module_energy_L210.resources <- function(command, ...) {
     # Kind of a level 1.5 we are going to calculate / update historical energy
     # but the years we choose as the model base years matter
 
-    GCAM_timesteps <- diff(MODEL_BASE_YEARS)
-    start.year.timestep <- modeltime.PERIOD0_TIMESTEP
-    model_year_timesteps <- tibble(year = MODEL_BASE_YEARS, timestep = c(start.year.timestep, GCAM_timesteps))
-
-    # a pipeline helper function to help back calculate new additions to reserve
-    # from historical production
-    lag_prod_helper <- function(data) {
-      data %>%
-        arrange(year_operate, year) %>%
-        mutate(max.annual.prod = 0,
-               annual.prod = 0,
-               reserve = 0,
-               cumul.prod = 0) ->
-        data_proc
-
-      # operate each model base year one at a time
-      for(year_i in MODEL_BASE_YEARS) {
-        curr_slice <- data_proc[data_proc$year_operate == year_i, ]
-        if(year_i == MODEL_BASE_YEARS[1]) {
-          # first year assume all production in this vintage
-          curr_slice %>%
-            mutate(max.annual.prod = value,
-                   annual.prod = value,
-                   reserve = annual.prod * lifetime,
-                   cumul.prod = annual.prod * timestep) ->
-            curr_slice
-        } else {
-          # pull out the new vintage slice
-          curr_slice %>%
-            filter(year == year_operate) ->
-            new_inv_slice
-          # grab the annual production in this year and the timestep which will be needed
-          # to calculate production from existing vintages as well
-          curr_demand <- new_inv_slice %>% pull(value)
-          curr_timestep = new_inv_slice %>% pull(timestep)
-          # calculate production from existing vintages first
-          prev_slice %>%
-            mutate(remain = reserve - cumul.prod,
-                   # save previous production so as to be able to linearly adjust depletion
-                   prev.annual.prod = annual.prod,
-                   # the max annual production may need to get scaled down if this reserve is about
-                   # to run out in this timestep
-                   max.annual.prod = pmin(max.annual.prod,
-                                          pmax((remain - curr_timestep * prev.annual.prod) * 2.0 / curr_timestep + prev.annual.prod, 0.0)),
-                   # calculate the production short fall which if positive will drive new investment
-                   supply.shortfall = curr_demand - sum(max.annual.prod),
-                   # if the short fall is negative we have over capacity so annual production will need
-                   # to scale down from the max
-                   annual.prod = if_else(supply.shortfall >= 0, max.annual.prod,
-                                         max.annual.prod * (curr_demand / sum(max.annual.prod)))) ->
-            prev_slice
-          # use the shortfall to set the new vintage production and reserves
-          new_prod <- pmax(unique(prev_slice$supply.shortfall), 0.0)
-          new_inv_slice %>%
-            mutate(max.annual.prod = new_prod,
-                   annual.prod = new_prod,
-                   reserve = annual.prod * lifetime,
-                   cumul.prod = annual.prod * timestep) ->
-            new_inv_slice
-          # update previous vintage values in the current "slice"
-          curr_slice %>%
-            filter(year != year_operate) %>%
-            mutate(annual.prod = prev_slice$annual.prod,
-                   # update cumulative depletion assuming linear change from previous production to current production
-                   cumul.prod = prev_slice$cumul.prod + prev_slice$prev.annual.prod * timestep + 0.5 * ( annual.prod - prev_slice$prev.annual.prod) * timestep,
-                   # copy forward the rest
-                   max.annual.prod = prev_slice$max.annual.prod,
-                   reserve = prev_slice$reserve) %>%
-            # add back new investment
-            bind_rows(new_inv_slice) ->
-            curr_slice
-        }
-        # set the current "slice" back into the original DF
-        prev_slice = curr_slice
-        data_proc[data_proc$year_operate == year_i, ] = curr_slice
-      }
-      # ultimately we just need the new vintage reserves
-        data_proc %>%
-          filter(year == year_operate) %>%
-          select(year, value = reserve)
-    }
     # Back calculate reserve additions to be exactly enough given our historical production
     # and assumed production lifetime.  Note production lifetimes may not cover the entire
     # historical period and production may dip below capacity making the calculation a bit more
-    # tricky.  We use the lag_prod_helper to help project forward production by each historical
-    # vintage so we can take this into account.
+    # tricky.  We use the module helper resource_reserve_back_calculate to project forward
+    # production by each historical vintage so we can take this into account.
     # Note: because we are back calculating this our choice of MODEL_BASE_YEARS matters, which is
     # why this is Level2 processing.
     L111.Prod_EJ_R_F_Yh %>%
-      filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(select(A10.ResSubresourceProdLifetime, resource, lifetime = avg.prod.lifetime, reserve.subresource) %>% distinct(),
                                by=c("fuel" = "resource", "technology" = "reserve.subresource")) %>%
-      repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
-      left_join_error_no_match(model_year_timesteps, by = c("year_operate" = "year")) %>%
-      filter(year_operate >= year) %>%
       tidyr::nest(data = -c(GCAM_region_ID, sector, fuel, technology)) %>%
-      mutate(data = lapply(data, lag_prod_helper)) %>%
+      mutate(data = lapply(data, resource_reserve_back_calculate)) %>%
       tidyr::unnest(cols = data) ->
       L210.Reserve_EJ_R_F_Yh
 
@@ -502,11 +417,22 @@ module_energy_L210.resources <- function(command, ...) {
 
     L210.ReserveCalReserve_unoil <- L210.ReserveCalReserve %>% filter(reserve.subresource=="unconventional oil")
 
-    L210.ReserveCalReserve.uncon_other_reg <- L210.ReserveCalReserve %>%
-                                              filter(resource =="coal") %>%
-                                              filter(!region %in% c(unique(L210.ReserveCalReserve_unoil$region))) %>%
-                                              mutate(resource =paste0("crude oil"),reserve.subresource =paste0("unconventional oil"),cal.reserve=0)
+    L210.ReserveCalReserve %>%
+      # note using coal here just to ensure we get a structure of subresource one for each model region
+      # all the other information is reset below
+      filter(resource == "coal") %>%
+      filter(!region %in% c(unique(L210.ReserveCalReserve_unoil$region))) %>%
+      mutate(resource = "crude oil",
+             reserve.subresource = "unconventional oil",
+             cal.reserve = 0) ->
+      L210.ReserveCalReserve.uncon_other_reg
     L210.ReserveCalReserve <- bind_rows(L210.ReserveCalReserve,L210.ReserveCalReserve.uncon_other_reg)
+    # similarly fill unconventional oil zeros for L210.RsrcCalProd to satisfy error checking in the C++
+    L210.ReserveCalReserve.uncon_other_reg %>%
+      rename(subresource = reserve.subresource,
+             cal.production = cal.reserve) %>%
+      bind_rows(L210.RsrcCalProd, .) ->
+      L210.RsrcCalProd
 
     # D. Resource supply curves
     # L210.RsrcCurves_fos: supply curves of fossil resources

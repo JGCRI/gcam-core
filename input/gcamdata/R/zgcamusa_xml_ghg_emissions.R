@@ -15,9 +15,11 @@ module_gcamusa_ghg_emissions_xml <- function(command, ...) {
     return(c("L273.en_ghg_tech_coeff_USA",
              "L273.en_ghg_emissions_USA",
              "L273.out_ghg_emissions_USA",
+             "L273.res_ghg_emfact_USA",
              "L273.MAC_higwp_USA",
              "L273.MAC_higwp_TC_USA",
-             "L273.MAC_higwp_phaseInTime_USA"))
+             "L273.MAC_higwp_phaseInTime_USA",
+             "L273.ResReadInControl_ghg_res_USA"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "ghg_emissions_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -31,29 +33,34 @@ module_gcamusa_ghg_emissions_xml <- function(command, ...) {
     L273.en_ghg_tech_coeff_USA     <- get_data(all_data, "L273.en_ghg_tech_coeff_USA")
     L273.en_ghg_emissions_USA      <- get_data(all_data, "L273.en_ghg_emissions_USA")
     L273.out_ghg_emissions_USA     <- get_data(all_data, "L273.out_ghg_emissions_USA")
+    L273.res_ghg_emfact_USA        <- get_data(all_data, "L273.res_ghg_emfact_USA")
     L273.MAC_higwp_USA             <- get_data(all_data, "L273.MAC_higwp_USA")
     L273.MAC_higwp_TC_USA          <- get_data(all_data, "L273.MAC_higwp_TC_USA")
     L273.MAC_higwp_phaseInTime_USA <- get_data(all_data, "L273.MAC_higwp_phaseInTime_USA")
+    L273.ResReadInControl_ghg_res_USA <- get_data(all_data, "L273.ResReadInControl_ghg_res_USA")
 
     # ===================================================
-    # Rename to meet header requriements
-    L273.en_ghg_tech_coeff_USA <- rename(L273.en_ghg_tech_coeff_USA, emiss.coef = emiss.coeff)
-    L273.out_ghg_emissions_USA <- rename(L273.out_ghg_emissions_USA, input.emissions = output.emissions)
-
     # Produce outputs
     create_xml("ghg_emissions_USA.xml") %>%
       add_xml_data(L273.en_ghg_tech_coeff_USA, "InputEmissCoeff") %>%
       add_xml_data(L273.en_ghg_emissions_USA, "InputEmissions") %>%
       add_xml_data(L273.out_ghg_emissions_USA, "StbTechOutputEmissions") %>%
+      add_node_equiv_xml("resource") %>%
+      add_node_equiv_xml("subresource") %>%
+      add_node_equiv_xml("technology") %>%
+      add_xml_data(L273.res_ghg_emfact_USA, "ResEmissCoef") %>%
+      add_xml_data(L273.ResReadInControl_ghg_res_USA, "ResReadInControl") %>%
       add_xml_data(L273.MAC_higwp_USA, "MAC") %>%
       add_xml_data(L273.MAC_higwp_TC_USA, "MACTC") %>%
       add_xml_data(L273.MAC_higwp_phaseInTime_USA, "MACPhaseIn") %>%
       add_precursors("L273.en_ghg_tech_coeff_USA",
                      "L273.en_ghg_emissions_USA",
                      "L273.out_ghg_emissions_USA",
+                     "L273.res_ghg_emfact_USA",
                      "L273.MAC_higwp_USA",
                      "L273.MAC_higwp_TC_USA",
-                     "L273.MAC_higwp_phaseInTime_USA") ->
+                     "L273.MAC_higwp_phaseInTime_USA",
+                     "L273.ResReadInControl_ghg_res_USA") ->
       ghg_emissions_USA.xml
 
     return_data(ghg_emissions_USA.xml)

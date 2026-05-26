@@ -1,0 +1,50 @@
+# File: EIA_NG_prod_mapping_shalegas.csv
+# Title: mapping EIA shale gas production region into US states
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Comments: type total means state total which is what we need; we do not need sub-state or multi-state results
+# Column types: ccc
+# ----------
+category,type,state
+U.S. Shale Production (Billion Cubic Feet),total,USA
+Alabama (with State Offshore) Shale Production (Billion Cubic Feet),total,AL
+Alaska (with Total Offshore) Shale Production (Billion Cubic Feet),total,AK
+Arkansas Shale Production (Billion Cubic Feet),total,AR
+California (with State off) Shale Production (Billion Cubic Feet),total,CA
+Colorado Shale Production (Billion Cubic Feet),total,CO
+Kansas Shale Production (Billion Cubic Feet),total,KS
+Kentucky Shale Production (Billion Cubic Feet),total,KY
+Louisiana (with State Offshore) Shale Production (Billion Cubic Feet),total,LA
+Louisiana--North Shale Production (Billion Cubic Feet),substate,LA
+Louisiana--South Onshore Shale Production (Billion Cubic Feet),substate,LA
+Michigan Shale Production (Billion Cubic Feet),total,MI
+Mississippi (with State off) Shale Production (Billion Cubic Feet),total,MS
+Montana Shale Production (Billion Cubic Feet),total,MT
+New Mexico Shale Production (Billion Cubic Feet),total,NM
+New Mexico--East Shale Production (Billion Cubic Feet),substate,NM
+New Mexico--West Shale Production (Billion Cubic Feet),substate,NM
+New York Shale Production (Billion Cubic Feet),total,NY
+North Dakota Shale Production (Billion Cubic Feet),total,ND
+Ohio Shale Production (Billion Cubic Feet),total,OH
+Oklahoma Shale Production (Billion Cubic Feet),total,OK
+Pennsylvania Shale Production (Billion Cubic Feet),total,PA
+Texas (with State Offshore) Shale Production (Billion Cubic Feet),total,TX
+Texas--RRC District 1 Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 2 onsh Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 3 onsh Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 4 onsh Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 5 Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 6 Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 7B Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 7C Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 8 Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 8A Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 9 Shale Production (Billion Cubic Feet),substate,TX
+Texas--RRC District 10 Shale Production (Billion Cubic Feet),substate,TX
+Utah Shale Production (Billion Cubic Feet),total,UT
+Virginia Shale Production (Billion Cubic Feet),total,VA
+West Virginia Shale Production (Billion Cubic Feet),total,WV
+Wyoming Shale Production (Billion Cubic Feet),total,WY
+Lower 48 Federal Offshore Shale Production (Billion Cubic Feet),multistate,Lower48
+Eastern States Shale Production (Billion Cubic Feet),multistate,Eastern
+Western States Shale Production (Billion Cubic Feet),multistate,Western

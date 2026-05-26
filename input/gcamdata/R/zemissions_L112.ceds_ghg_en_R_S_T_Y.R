@@ -59,6 +59,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
              "L1324.in_EJ_R_Off_road_F_Y",
              "L1325.in_EJ_R_chemical_F_Y",
              "L1326.in_EJ_R_aluminum_Yh",
+             "L270.nonghg_tg_state_fossil_res_F_Yb",
              "L1327.in_EJ_R_paper_F_Yh",
              "L1328.in_EJ_R_food_F_Yh",
              "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh",
@@ -122,7 +123,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     Int_shipping_IEA_EIA <- get_data(all_data, "L154.IEA_histfut_data_times_UCD_shares") %>% filter(UCD_category=="trn_international ship")
 
     #Get NEI data for crude oil and natural gas, and BC OC fractions for this
-    NEI_tg_oilgas_state_Yb <- get_data(all_data, "L270.nonghg_tg_state_refinery_F_Yb") %>% filter(sector == "NG_production_distribution" | sector == "petroleum_production")
+    NEI_tg_oilgas_state_Yb <- get_data(all_data, "L270.nonghg_tg_state_fossil_res_F_Yb") %>% filter(sector == "NG_production_distribution" | sector == "petroleum_production")
     BC_OC_assumptions <- get_data(all_data, "gcam-usa/emissions/BC_OC_assumptions")
     BCOC_PM25_ratios <- get_data(all_data, "gcam-usa/emissions/BCOC_PM25_ratios") %>%
       # removing columns we do not use, and sectors that aren't mapped to GCAM sectors
@@ -1908,7 +1909,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "L1325.in_EJ_R_chemical_F_Y", "L1326.in_EJ_R_aluminum_Yh", "L1327.in_EJ_R_paper_F_Yh", "L1328.in_EJ_R_food_F_Yh", "L1328.in_EJ_R_indenergy_infilled_for_food_F_Yh", "emissions/CEDS/CEDS_sector_tech_combustion_revised",
                      "emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                      "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions","L244.GenericShares","L244.ThermalShares",
-                     "L270.nonghg_tg_state_refinery_F_Yb", "gcam-usa/emissions/BC_OC_assumptions", "gcam-usa/emissions/BCOC_PM25_ratios") ->
+                     "L270.nonghg_tg_state_fossil_res_F_Yb", "L270.nonghg_tg_state_refinery_F_Yb", "gcam-usa/emissions/BC_OC_assumptions", "gcam-usa/emissions/BCOC_PM25_ratios") ->
       L111.nonghg_tg_R_en_S_F_Yh
 
     L111.nonghg_tgej_R_en_S_F_Yh_infered_combEF_AP %>%
@@ -1933,7 +1934,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "L101.in_EJ_R_en_Si_F_Yh", "emissions/mappings/Trn_subsector_revised", "emissions/EPA/EPA_2019_raw", "emissions/EPA_CH4N2O_map",
                      "emissions/CEDS/CEDS_sector_tech_combustion_revised","emissions/mappings/UCD_techs_emissions_revised","L154.IEA_histfut_data_times_UCD_shares",
                      "emissions/CEDS/gains_iso_sector_emissions","emissions/CEDS/gains_iso_fuel_emissions",
-                     "L270.nonghg_tg_state_refinery_F_Yb", "gcam-usa/emissions/BC_OC_assumptions", "gcam-usa/emissions/BCOC_PM25_ratios") ->
+                     "L270.nonghg_tg_state_fossil_res_F_Yb", "gcam-usa/emissions/BC_OC_assumptions", "gcam-usa/emissions/BCOC_PM25_ratios") ->
       L112.ghg_tg_R_en_S_F_Yh
 
     L112.ghg_tgej_R_en_S_F_Yh_infered_combEF_AP %>%
@@ -1970,7 +1971,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
                      "emissions/EPA_country_map",
                      "emissions/CEDS/CEDS_sector_tech_combustion_revised",
                      "emissions/mappings/UCD_techs_emissions_revised",
-                     "L270.nonghg_tg_state_refinery_F_Yb",
+                     "L270.nonghg_tg_state_fossil_res_F_Yb",
                      "gcam-usa/emissions/BC_OC_assumptions",
                      "gcam-usa/emissions/BCOC_PM25_ratios",
                      "emissions/IPCC_unconventional_oil_fug_emfacts") ->

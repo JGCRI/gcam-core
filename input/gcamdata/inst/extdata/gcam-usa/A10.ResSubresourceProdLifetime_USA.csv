@@ -1,0 +1,18 @@
+# File: A10.ResSubresourceProdLifetime_USA.csv
+# Title: Average resource well / mine lifetime over which the reserve will be produced / depleted
+# Units: Years
+# Source: consistent with GCAM; see energy/A10.ResSubresourceProdLifetime; besides offshore OG and shale/tight OG wells based on https://www.eia.gov/outlooks/aeo/assumptions/pdf/HSM_Assumptions.pdf and https://doi.org/10.2118/0220-0032-JPT 
+# Column types: cci
+# ----------
+resource,reserve.subresource,avg.prod.lifetime
+natural gas,offshore gas,25
+natural gas,onshore conventional gas,30
+natural gas,onshore unconventional gas,10
+natural gas,speculative natural gas,30
+crude oil,offshore oil,25
+crude oil,onshore conventional oil,30
+crude oil,onshore unconventional oil,10
+crude oil,onshore unconventional heavy oil,30
+coal,surface mining,40
+coal,underground mining,40
+coal,speculative coal,40

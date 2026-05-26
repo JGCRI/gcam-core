@@ -1,0 +1,40 @@
+# File: EIA_coal_reserve_2021_Mton.csv
+# Title: Recoverable Coal Reserves at Producing Mines and Estimated Recoverable Reserves and Demonstrated Reserve Base by Mining Method
+# Units: million short ton
+# Comments: light clean up from the original table for column names; cells with no data reported were replaced by 0
+# Source: EIA US Coal Reserves Table 15 https://www.eia.gov/coal/reserves/
+# Column types: cnnnnnnnnn
+# ----------
+region,underground.recoverable,underground.estimated.recoverable,underground.demonstrated,surface.recoverable,surface.estimated.recoverable,surface.demonstrated,total.recoverable,total.estimated.recoverable,total.demonstrated
+Alabama,164,328,651,8,2208,3099,172,2536,3750
+Alaska,0,2335,5423,46,476,659,46,2811,6082
+Arkansas,0,126,271,0,101,144,0,227,415
+Colorado,177,5678,10820,107,3740,4754,284,9419,15574
+Georgia,0,1,2,0,1,2,0,2,4
+Idaho,0,2,4,0,0,0,0,2,4
+Illinois,1868,27543,86709,5,10021,16465,1873,37564,103175
+Indiana,132,3435,8294,170,210,360,302,3645,8654
+Iowa,0,807,1732,0,320,457,0,1127,2189
+Kansas,0,0,0,0,679,970,0,679,970
+Kentucky,326,6652,15498,28,7184,12440,354,13836,27938
+Louisiana,0,0,0,13,271,366,13,271,366
+Maryland,2,303,553,5,25,37,6,328,590
+Michigan,0,55,123,0,3,5,0,58,128
+Mississippi,0,0,0,105,0,0,105,0,0
+Missouri,0,689,1479,0,3153,4504,0,3842,5983
+Montana,190,35842,70800,370,38470,47599,559,74312,118399
+New Mexico,1,2727,5994,43,3984,5698,44,6711,11692
+North Carolina,0,5,11,0,0,0,0,5,11
+North Dakota,0,0,0,621,6471,8482,621,6471,8482
+Ohio,47,7545,17149,2,3692,5640,49,11237,22789
+Oklahoma,0,569,1221,0,218,312,0,787,1533
+Oregon,0,6,15,0,2,3,0,9,17
+Pennsylvania,1236,9924,21750,135,952,4090,1370,10876,25840
+South Dakota,0,0,0,0,277,366,0,277,366
+Tennessee,0,270,494,0,170,251,0,441,744
+Texas,0,0,0,292,8986,11674,292,8986,11674
+Utah,169,2241,4572,0,206,261,169,2448,4832
+Virginia,132,421,750,17,287,448,149,708,1198
+Washington,0,674,1332,0,6,8,0,681,1340
+West Virginia,1312,14271,26739,158,1912,3031,1470,16183,29770
+Wyoming,0,22901,42409,4403,11599,14010,4403,34500,56419

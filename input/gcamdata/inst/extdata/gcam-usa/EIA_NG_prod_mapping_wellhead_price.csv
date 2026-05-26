@@ -1,0 +1,55 @@
+# File: EIA_NG_prod_mapping_wellhead_price.csv
+# Title: mapping EIA wellhead price region into US states
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Comments: unconventional sources and multistate regions are assigned as other
+# Column types: cc
+# ----------
+category,state
+U.S. Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),USA
+Alabama Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),AL
+Alaska Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),AK
+Arizona Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),AZ
+Arkansas Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),AR
+California Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),CA
+Colorado Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),CO
+Florida Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),FL
+Illinois Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),IL
+Indiana Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),IN
+Kansas Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),KS
+Kentucky Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),KY
+Louisiana Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),LA
+Maryland Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),MD
+Michigan Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),MI
+Mississippi Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),MS
+Missouri Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),MO
+Montana Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),MT
+Nebraska Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),NE
+Nevada Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),NV
+New Mexico Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),NM
+New York Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),NY
+North Dakota Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),ND
+Ohio Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),OH
+Oklahoma Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),OK
+Oregon Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),OR
+Pennsylvania Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),PA
+South Dakota Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),SD
+Tennessee Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),TN
+Texas Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),TX
+Utah Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),UT
+Virginia Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),VA
+West Virginia Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),WV
+Wyoming Natural Gas Wellhead Price (Dollars per Thousand Cubic Feet),WY
+Texas--RRC District 8A Coalbed Methane Production (Billion Cubic Feet),other
+Texas--RRC District 9 Coalbed Methane Production (Billion Cubic Feet),other
+Texas--RRC District 10 Coalbed Methane Production (Billion Cubic Feet),other
+Texas--State Offshore Coalbed Methane Production (Billion Cubic Feet),other
+Utah Coalbed Methane Production (Billion Cubic Feet),other
+Virginia Coalbed Methane Production (Billion Cubic Feet),other
+West Virginia Coalbed Methane Production (Billion Cubic Feet),other
+Wyoming Coalbed Methane Production (Billion Cubic Feet),other
+Lower 48 Federal Offshore Coalbed Methane Production (Billion Cubic Feet),other
+Lower 48 States Coalbed Methane Production (Billion Cubic Feet),other
+Eastern States Coalbed Methane Production (Billion Cubic Feet),other
+Western States Coalbed Methane Production (Billion Cubic Feet),other
+"Other States Natural Gas Coalbed Methane, Reserves Based Production (Bcf)",other

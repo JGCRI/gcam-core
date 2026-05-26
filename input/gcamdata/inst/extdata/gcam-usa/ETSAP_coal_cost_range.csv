@@ -1,0 +1,9 @@
+# File: ETSAP_coal_cost_range.csv
+# Title: Estimates for coal production costs by grade
+# Units: 2008$/GJ
+# Comments: Data from ETSAP brief; Table 14 in https://iea-etsap.org/E-TechDS/PDF/P07-08_Coal%20M&L_KV_April2014_GSOK.pdf
+# Column types: cnn
+# ----------
+type,low_cost,high_cost
+lignite,0.36,4.7
+hard coal,1.31,2.17

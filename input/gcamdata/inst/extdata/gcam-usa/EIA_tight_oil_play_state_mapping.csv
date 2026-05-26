@@ -1,0 +1,26 @@
+# File: EIA_tight_oil_play_state_mapping.csv
+# Title: mapping EIA tight oil production play into states with assumed shares
+# Comments: shares are based on expert judgetment on map areas; Rest of US tight oil include Monterey (CA) Granite Wash (TX and OK) Barnett Shale (TX) Tuscaloosa (LA) see detail at https://atlas.eia.gov/ of Tight Oil and Shale Gas Plays
+# Units: NA
+# Source: EIA tight gas production by play https://www.eia.gov/petroleum/data.php#crude
+# Column types: ccn
+# ----------
+oil_play,state,share
+Austin Chalk (LA & TX),LA,0.1
+Austin Chalk (LA & TX),TX,0.9
+Bakken (ND & MT),ND,0.97
+Bakken (ND & MT),MT,0.03
+Bonespring (TX & NM Permian),TX,0.5
+Bonespring (TX & NM Permian),NM,0.5
+Eagle Ford (TX),TX,1
+Mississippian (OK),OK,1
+Niobrara-Codell (CO & WY),CO,0.7
+Niobrara-Codell (CO & WY),WY,0.3
+Rest of US 'tight oil',CA,0.25
+Rest of US 'tight oil',OK,0.25
+Rest of US 'tight oil',TX,0.25
+Rest of US 'tight oil',LA,0.25
+Spraberry (TX Permian),TX,1
+Wolfcamp (TX & NM Permian),NM,0.2
+Wolfcamp (TX & NM Permian),TX,0.8
+Woodford (OK),OK,1

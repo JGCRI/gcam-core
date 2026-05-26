@@ -41,8 +41,8 @@
 		<Value name = "transportation">../input/gcamdata/xml/transportation_UCD_CORE.xml</Value>
 		<Value name = "carbon_content">../input/gcamdata/xml/Ccoef.xml</Value>
 		<Value name = "carbon_storage">../input/gcamdata/xml/Cstorage.xml</Value>
-
-
+		
+		
 		<Value name = "ag_base">../input/gcamdata/xml/ag_For_Past_bio_base_IRR_MGMT.xml</Value>
 		<Value name = "ag_cost">../input/gcamdata/xml/ag_cost_IRR_MGMT.xml</Value>
 		<Value name = "ag_prodchange">../input/gcamdata/xml/ag_prodchange_ref_IRR_MGMT.xml</Value>
@@ -98,7 +98,11 @@
 		<Value name = "bio_neg_emiss_budget">../input/gcamdata/xml/negative_emissions_budget.xml</Value>
 		<Value name = "bio_externality">../input/gcamdata/xml/bio_externality.xml</Value>
         <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
+		
+		<Value name = "energy_supply_usa">../input/gcamdata/xml/en_supply_USA.xml</Value>
+		<Value name = "state_fos_usa">../input/gcamdata/xml/resources_fossil_USA.xml</Value>		
         <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
+		<Value name = "gas_trade_usa">../input/gcamdata/xml/gas_trade_USA.xml</Value>
 
         <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
 
@@ -118,7 +122,7 @@
 		<Value name = "ind_vintage_usa">../input/gcamdata/xml/industry_vintage_USA.xml</Value>
 		<Value name = "cement_usa">../input/gcamdata/xml/cement_USA.xml</Value>
 		<Value name = "fert_usa">../input/gcamdata/xml/Fert_USA.xml</Value>
-
+		
 		<!-- NEW NESTING STRUCTURE -->
 		<Value name = "solar_usa">../input/gcamdata/xml/solar_reeds_USA.xml</Value>
 		<Value name = "wind_usa">../input/gcamdata/xml/wind_reeds_USA.xml</Value>
@@ -128,7 +132,7 @@
 		<Value name = "ITC_usa">../input/gcamdata/xml/elecS_costs_USA_itc.xml</Value>
 		<Value name = "PTC_usa">../input/gcamdata/xml/elecS_costs_USA_ptc.xml</Value>
 		<Value name = "geothermal_usa">../input/gcamdata/xml/geothermal_fixed_USA.xml</Value>
-
+		
 		<Value name = "liq_lim_usa">../input/gcamdata/xml/liquids_limits_USA.xml</Value>
 		<Value name = "neg_emiss_usa">../input/gcamdata/xml/negative_emissions_budget_USA.xml</Value>
 		<Value name = "USA_regional_bio">../input/gcamdata/xml/regional_biomass_USA.xml</Value>
@@ -137,7 +141,7 @@
 		<Value name = "water_td_usa">../input/gcamdata/xml/water_td_USA.xml</Value>
 		<Value name = "municipal_water_usa">../input/gcamdata/xml/water_demand_municipal_USA.xml</Value>
 		<Value name = "ind_water_usa">../input/gcamdata/xml/water_demand_industry_USA.xml</Value>
-		
+
 		<!--nonGHG EMISSIONS USA-->
 		<Value name = "bld_emiss_USA">../input/gcamdata/xml/bld_emissions_USA.xml</Value>
 		<Value name = "othertrn_emiss_USA">../input/gcamdata/xml/othertrn_emissions_USA.xml</Value>
@@ -147,7 +151,8 @@
 		<Value name = "prc_usa">../input/gcamdata/xml/ind_urb_processing_sectors_USA.xml</Value>
 		<Value name = "process_emiss_USA">../input/gcamdata/xml/ind_urb_proc_emissions_USA.xml</Value>
 		<Value name = "refining_emiss_USA">../input/gcamdata/xml/refinery_emissions_USA.xml</Value>
-		
+		<Value name = "fossil_res_emissions_USA">../input/gcamdata/xml/fossil_res_emissions_USA.xml</Value>
+
 		<!--GHG EMISSIONS USA-->
 		<Value name = "ghg_usa">../input/gcamdata/xml/ghg_emissions_USA.xml</Value>
 		<Value name = "ghg_usa">../input/gcamdata/xml/elecS_ghg_emissions_water_USA.xml</Value>

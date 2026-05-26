@@ -1,0 +1,16 @@
+# File: A10.fossil_techInput.csv
+# Title: technology input update for state-level fossil resources production
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Column types: cccc
+# ----------
+supplysector,subsector,technology,minicam.energy.input
+traded natural gas,USA traded natural gas,USA traded natural gas,natural gas production
+traded oil,USA traded oil,USA traded oil,crude oil production
+traded coal,USA traded coal,USA traded coal,coal production
+regional natural gas,domestic natural gas,domestic natural gas,natural gas production
+regional oil,domestic crude oil,domestic crude oil,crude oil production
+regional coal,domestic coal,domestic coal,coal production
+traded LNG,USA traded LNG,USA traded LNG,natural gas production
+traded N.Amer pipeline gas,USA traded N.Amer pipeline gas,USA traded N.Amer pipeline gas,natural gas production
+gas trade statistical differences,USA statistical differences,USA statistical differences,natural gas production

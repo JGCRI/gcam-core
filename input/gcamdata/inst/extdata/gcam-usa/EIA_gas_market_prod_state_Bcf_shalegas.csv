@@ -1,0 +1,23 @@
+# File: EIA_gas_market_prod_state_Bcf_shalegas.csv
+# Title: US natural gas shale gas production by state
+# Units: billion cubic feet
+# Source: EIA https://www.eia.gov/dnav/ng/ng_prod_shalegas_s1_a.htm
+# Comments: release data Dec 30 2022
+# Column types: innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+# ----------
+Date,U.S. Shale Production (Billion Cubic Feet),Alabama (with State Offshore) Shale Production (Billion Cubic Feet),Alaska (with Total Offshore) Shale Production (Billion Cubic Feet),Arkansas Shale Production (Billion Cubic Feet),California (with State off) Shale Production (Billion Cubic Feet),Colorado Shale Production (Billion Cubic Feet),Kansas Shale Production (Billion Cubic Feet),Kentucky Shale Production (Billion Cubic Feet),Louisiana (with State Offshore) Shale Production (Billion Cubic Feet),Louisiana--North Shale Production (Billion Cubic Feet),Louisiana--South Onshore Shale Production (Billion Cubic Feet),Michigan Shale Production (Billion Cubic Feet),Mississippi (with State off) Shale Production (Billion Cubic Feet),Montana Shale Production (Billion Cubic Feet),New Mexico Shale Production (Billion Cubic Feet),New Mexico--East Shale Production (Billion Cubic Feet),New Mexico--West Shale Production (Billion Cubic Feet),New York Shale Production (Billion Cubic Feet),North Dakota Shale Production (Billion Cubic Feet),Ohio Shale Production (Billion Cubic Feet),Oklahoma Shale Production (Billion Cubic Feet),Pennsylvania Shale Production (Billion Cubic Feet),Texas (with State Offshore) Shale Production (Billion Cubic Feet),Texas--RRC District 1 Shale Production (Billion Cubic Feet),Texas--RRC District 2 onsh Shale Production (Billion Cubic Feet),Texas--RRC District 3 onsh Shale Production (Billion Cubic Feet),Texas--RRC District 4 onsh Shale Production (Billion Cubic Feet),Texas--RRC District 5 Shale Production (Billion Cubic Feet),Texas--RRC District 6 Shale Production (Billion Cubic Feet),Texas--RRC District 7B Shale Production (Billion Cubic Feet),Texas--RRC District 7C Shale Production (Billion Cubic Feet),Texas--RRC District 8 Shale Production (Billion Cubic Feet),Texas--RRC District 8A Shale Production (Billion Cubic Feet),Texas--RRC District 9 Shale Production (Billion Cubic Feet),Texas--RRC District 10 Shale Production (Billion Cubic Feet),Utah Shale Production (Billion Cubic Feet),Virginia Shale Production (Billion Cubic Feet),West Virginia Shale Production (Billion Cubic Feet),Wyoming Shale Production (Billion Cubic Feet),Lower 48 Federal Offshore Shale Production (Billion Cubic Feet),Eastern States Shale Production (Billion Cubic Feet),Western States Shale Production (Billion Cubic Feet)
+2007,1293,0,0,94,,0,,2,1,1,,148,,12,2,2,0,,3,0,40,1,988,0,,0,0,437,0,90,,1,,460,0,,,0,0,,2,0
+2008,2116,0,0,279,,0,,2,23,23,,122,,13,0,0,0,,3,0,168,1,1503,0,,0,0,769,3,141,,4,,586,0,,,0,0,,2,0
+2009,3110,0,0,527,,1,,5,293,293,,132,,7,2,1,1,,25,0,249,65,1789,11,,0,5,954,28,145,,3,,643,0,,,11,0,,,
+2010,5336,0,0,794,,1,,4,1232,1232,,120,,13,6,3,3,,64,0,403,396,2218,41,7,0,26,1053,219,140,0,7,,725,0,,,80,0,,,
+2011,7994,,0,940,101,3,,4,2084,2084,0,106,,13,9,5,4,,95,0,476,1068,2900,156,141,0,154,1266,382,184,0,5,,612,0,,,192,0,,,
+2012,10371,,0,1027,90,9,1,4,2204,2204,0,108,2,16,13,10,3,,203,14,637,2036,3649,362,327,0,305,1256,486,258,2,22,0,626,5,,3,345,7,,,
+2013,11415,,0,1026,89,18,3,4,1510,1509,1,101,5,19,16,13,3,,268,101,698,3076,3876,630,474,2,316,1128,409,218,13,62,0,619,5,,3,498,102,,,
+2014,13447,,0,1038,3,236,1,2,1191,1169,22,96,2,42,28,25,3,,426,441,869,4009,4156,822,649,10,381,1022,270,165,111,78,1,639,8,,3,869,29,,,
+2015,15213,,0,923,2,325,1,1,1153,1129,24,65,3,39,46,44,2,,545,959,993,4597,4353,892,793,17,500,903,238,143,140,109,3,608,7,,3,1163,36,,,
+2016,17032,,0,733,6,164,0,0,1111,1085,26,84,2,19,497,491,6,,582,1386,1082,5049,5029,690,642,23,706,827,339,116,451,730,0,505,0,,4,1270,5,,,
+2017,18589,,0,618,6,97,0,,1450,1414,36,63,2,18,592,,,,664,1747,1290,5365,5171,652,584,23,677,730,333,110,494,1115,1,452,0,,4,1486,6,,,
+2018,22054,0,0,521,4,126,0,0,2044,2044,0,77,0,18,785,785,0,,840,2337,1325,6079,6392,693,654,21,689,680,515,118,597,1960,6,459,0,,0,1504,0,0,,
+2019,25556,0,0,471,,149,0,0,2518,2518,0,72,0,21,1101,1101,0,,1043,2558,1490,6782,7440,729,631,23,682,586,895,93,705,2683,9,404,0,,0,1911,0,0,,
+2020,26139,0,0,419,,116,0,0,2555,2555,0,57,0,16,1337,1337,0,,970,2320,1195,7040,7844,688,621,21,599,516,1046,84,798,3088,15,368,0,,0,2270,0,,,
+2021,27985,0,0,387,,301,0,0,2942,2942,0,53,0,15,1642,1642,0,,1052,2207,1239,7546,8262,652,582,18,608,480,1358,77,803,3339,5,340,0,,0,2339,0,,,

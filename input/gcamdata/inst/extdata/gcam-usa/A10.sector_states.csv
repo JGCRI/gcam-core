@@ -1,0 +1,10 @@
+# File: A10.sector_states.csv
+# Title: State supplysector characteristics for fossil resources
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Column types: ccccic
+# ----------
+supplysector,output.unit,input.unit,price.unit,logit.exponent,logit.type
+natural gas production,EJ,EJ,1975$/GJ,-3,
+crude oil production,EJ,EJ,1975$/GJ,-3,
+coal production,EJ,EJ,1975$/GJ,-3,

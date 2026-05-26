@@ -1,0 +1,107 @@
+# File: USGS_basin_state_mapping.csv
+# Title:Map USGS TPS basins to states
+# Comments: shares are based on expert judgetment on map areas
+# Units: NA
+# Column types: ccn
+# ----------
+state,basin,fraction
+AK,Alaska North Slope,1
+AK,Central Alaska,1
+AK,Southern Alaska,1
+WA,Western Oregon-Wash.,0.5
+WA,Eastern Oregon-Wash.,0.5
+OR,Western Oregon-Wash.,0.5
+OR,Eastern Oregon-Wash.,0.5
+CA,Northern Coastal,1
+CA,Sonoma-Livermore,1
+CA,Sacramento Basin,1
+CA,San Joaquin Basin,1
+CA,Central Coastal,1
+CA,Santa Maria Basin,1
+CA,Ventura Basin,1
+CA,Los Angeles Basin,1
+CA,Western Great Basin,1
+WY,Wind River Basin,1
+WY,"Hanna, Laramie, Shirley",1
+WY,Powder River Basin,0.75
+WY,Big Horn Basin,1
+WY,Wyoming Thrust Belt,0.75
+WY,Southwestern Wyoming,0.75
+TX,Marathon Thrust Belt,1
+TX,Permian Basin,0.9
+TX,Bend Arch-Ft. Worth Basin,0.9
+TX,Palo Duro Basin,1
+TX,Gulf Coast,0.6
+ID,Idaho-Snake River Downwarp,1
+MT,Montana Thrust Belt,1
+MT,Central Montana,1
+MT,Southwest Montana,1
+MT,Powder River Basin,0.25
+NV,Eastern Great Basin,1
+CO,Park Basins,1
+CO,Denver Basin,1
+CO,Las Animas Arch,1
+CO,Uinta-Piceance Basin,0.5
+CO,Paradox Basin,0.25
+CO,Southwestern Wyoming,0.25
+CO,Raton Basin-Sierra Grande Uplift,1
+CO,Anadarko Basin,1
+CO,San Juan Basin,0.5
+ND,Williston Basin,0.5
+NM,South-Central New Mexico,1
+NM,Paradox Basin,0.25
+NM,Permian Basin,0.1
+NM,San Juan Basin,0.5
+AZ,Northern Arizona,1
+AZ,Paradox Basin,0.25
+AZ,Albuquerque-Sante Fe Rift,1
+AZ,S. Ariz.-S.W. New Mexico,1
+UT,Uinta-Piceance Basin,0.5
+UT,Wyoming Thrust Belt,0.25
+UT,Paradox Basin,0.25
+OK,Bend Arch-Ft. Worth Basin,0.1
+OK,Southern Oklahoma,1
+OK,Nemaha Uplift,0.5
+OK,Cherokee Platform,0.33
+OK,Arkoma Basin,0.33
+FL,Florida Peninsula,1
+LA,Gulf Coast,0.2
+MS,Gulf Coast,0.2
+MS,Black Warrior Basin,0.5
+MI,Superior,1
+MI,Michigan Basin,0.5
+KS,Cambridge Arch-Central Kansas,0.5
+KS,Forest City Basin,0.5
+KS,Sedgwick Basin/Salina Basin,0.5
+KS,Cherokee Platform,0.33
+NE,Cambridge Arch-Central Kansas,0.5
+NE,Nemaha Uplift,0.5
+NE,Sedgwick Basin/Salina Basin,0.5
+MO,Forest City Basin,0.5
+MO,Cherokee Platform,0.34
+AR,Arkoma Basin,0.67
+OH,Michigan Basin,0.25
+OH,Appalachian Basin,0.1
+OH,Cincinnati Arch,1
+OH,Utica Shale,0.1
+NY,Michigan Basin,0.125
+NY,Appalachian Basin,0.2
+NY,Utica Shale,0.2
+PA,Michigan Basin,0.125
+PA,Utica Shale,0.6
+PA,Marcellus Shale,0.5
+PA,Appalachian Basin,0.3
+IL,Illinois Basin,0.7
+IN,Illinois Basin,0.15
+AL,Black Warrior Basin,0.5
+AL,Blue Ridge Thrust Belt,1
+AL,Piedmont,1
+WV,Utica Shale,0.1
+WV,Appalachian Basin,0.15
+WV,Marcellus Shale,0.2
+VA,Marcellus Shale,0.3
+KY,Illinois Basin,0.15
+KY,Appalachian Basin,0.15
+MD,Appalachian Basin,0.05
+TN,Appalachian Basin,0.05
+SD,Williston Basin,0.25

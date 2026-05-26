@@ -97,6 +97,8 @@ public:
     virtual ~ReserveSubResource();
     virtual void completeInit( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                const IInfo* aResourceInfo );
+    virtual void initCalc( const gcamstr& aRegionName, const gcamstr& aResourceName,
+                           const IInfo* aResourceInfo, const int aPeriod );
     static const std::string& getXMLNameStatic();
     virtual void annualsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                int aPeriod, double aPrice );

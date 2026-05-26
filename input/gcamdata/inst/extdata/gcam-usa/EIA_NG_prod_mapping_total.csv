@@ -1,0 +1,59 @@
+# File: EIA_NG_prod_mapping_total.csv
+# Title: mapping EIA natural gas production region into US states
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Comments: for states without offshore their total is all onshore
+# Column types: ccc
+# ----------
+category,type,state
+U.S. Natural Gas Marketed Production (MMcf),total,USA
+Alaska Natural Gas Marketed Production (MMcf),total,AK
+Alaska--onshore Natural Gas Marketed Production (MMcf),onshore,AK
+Alaska--State Offshore Natural Gas Marketed Production (MMcf),offshore,AK
+Arkansas Natural Gas Marketed Production (MMcf),total,AR
+California Natural Gas Marketed Production (MMcf),total,CA
+Calif--onshore Natural Gas Marketed Production (MMcf),onshore,CA
+California--State Offshore Natural Gas Marketed Production (MMcf),offshore,CA
+Federal Offshore California Natural Gas Marketed Production (MMcf),offshore,CA
+Colorado Natural Gas Marketed Production (MMcf),total,CO
+Federal Offshore--Gulf of Mexico Natural Gas Marketed Production (MMcf),offshore,GOM
+Federal Offshore--Alabama Natural Gas Marketed Production (MMcf),offshore,AL
+Federal Offshore--Louisiana Natural Gas Marketed Production (MMcf),offshore,LA
+Federal Offshore--Texas Natural Gas Marketed Production (MMcf),offshore,TX
+Kansas Natural Gas Marketed Production (MMcf),total,KS
+Louisiana Natural Gas Marketed Production (MMcf),total,LA
+Louisiana--onshore Natural Gas Marketed Production (MMcf),onshore,LA
+Louisiana--State Offshore Natural Gas Marketed Production (MMcf),offshore,LA
+Montana Natural Gas Marketed Production (MMcf),total,MT
+New Mexico Natural Gas Marketed Production (MMcf),total,NM
+North Dakota Natural Gas Marketed Production (MMcf),total,ND
+Ohio Natural Gas Marketed Production (MMcf),total,OH
+Oklahoma Natural Gas Marketed Production (MMcf),total,OK
+Pennsylvania Natural Gas Marketed Production (MMcf),total,PA
+Texas Natural Gas Marketed Production (MMcf),total,TX
+Texas--onshore Natural Gas Marketed Production (MMcf),onshore,TX
+Texas--State Offshore Natural Gas Marketed Production (MMcf),offshore,TX
+Utah Natural Gas Marketed Production (MMcf),total,UT
+West Virginia Natural Gas Marketed Production (MMcf),total,WV
+Wyoming Natural Gas Marketed Production (MMcf),total,WY
+Other States Natural Gas Marketed Production (MMcf),total,OtherStates
+Alabama Natural Gas Marketed Production (MMcf),total,AL
+Alabama--onshore Natural Gas Marketed Production (MMcf),onshore,AL
+Alabama--State Offshore Natural Gas Marketed Production (MMcf),offshore,AL
+Arizona Natural Gas Marketed Production (MMcf),total,AZ
+Florida Natural Gas Marketed Production (MMcf),total,FL
+Idaho Marketed Production of Natural Gas (Million Cubic Feet),total,ID
+Illinois Natural Gas Marketed Production (MMcf),total,IL
+Indiana Natural Gas Marketed Production (MMcf),total,IN
+Kentucky Natural Gas Marketed Production (MMcf),total,KY
+Maryland Natural Gas Marketed Production (MMcf),total,MD
+Michigan Natural Gas Marketed Production (MMcf),total,MI
+Mississippi Natural Gas Marketed Production (MMcf),total,MS
+Missouri Natural Gas Marketed Production (MMcf),total,MO
+Nebraska Natural Gas Marketed Production (MMcf),total,NE
+Nevada Natural Gas Marketed Production (MMcf),total,NV
+New York Natural Gas Marketed Production (MMcf),total,NY
+Oregon Natural Gas Marketed Production (MMcf),total,OR
+South Dakota Natural Gas Marketed Production (MMcf),total,SD
+Tennessee Natural Gas Marketed Production (MMcf),total,TN
+Virginia Natural Gas Marketed Production (MMcf),total,VA

@@ -1,0 +1,11 @@
+# File: BOEM_oil_supply_EJ.csv
+# Title: Federal offshore oil supply from BOEM
+# Units: EJ
+# Source: Bureau of Ocean Energy Management https://www.boem.gov/sites/default/files/oil-and-gas-energy-program/Resource-Evaluation/Resource-Assessment/2011-factsheet-12092014.pdf (accessed Apr 2023) Note that grade.1 is reserve appreciation (not reserve)
+# Column types: cnnnn
+# ----------
+region,grade.1,grade.2,grade.3,grade.4
+Alaska OCS,0,53.90839,108.9182,176.96148
+Atlantic OCS,0,8.07708,20.8046,27.59669
+Gulf of Mexico OCS,58.25288,237.78434,58.37526,65.96282
+Pacific OCS,0,41.18087,21.23293,25.0879

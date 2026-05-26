@@ -1,0 +1,39 @@
+# File: EIA_gas_market_prod_state_Bcf_coalbed.csv
+# Title: US natural gas coalbed methane production by state
+# Units: billion cubic feet
+# Source: EIA https://www.eia.gov/dnav/ng/ng_prod_coalbed_s1_a.htm
+# Comments: release data Dec 30 2022
+# Column types: innnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnnn
+# ----------
+Date,U.S. Coalbed Methane Production (Billion Cubic Feet),Alabama Coalbed Methane Production (Billion Cubic Feet),Alaska (with Total Offshore) Coalbed Methane Production (Billion Cubic Feet),Arkansas Coalbed Methane Production (Billion Cubic Feet),California (with State off) Coalbed Methane Production (Billion Cubic Feet),Colorado Coalbed Methane Production (Billion Cubic Feet),Florida Coalbed Methane Production (Billion Cubic Feet),Kansas Coalbed Methane Production (Billion Cubic Feet),Kentucky Coalbed Methane Production (Billion Cubic Feet),Louisiana (with State Offshore) Coalbed Methane Production (Billion Cubic Feet),Louisiana--North Coalbed Methane Production (Billion Cubic Feet),Louisiana--South Onshore Coalbed Methane Production (Billion Cubic Feet),Louisiana--State Offshore Coalbed Methane Production (Billion Cubic Feet),Michigan Coalbed Methane Production (Billion Cubic Feet),Mississippi (with State off) Coalbed Methane Production (Billion Cubic Feet),Montana Coalbed Methane Production (Billion Cubic Feet),New Mexico Coalbed Methane Production (Billion Cubic Feet),New Mexico--East Coalbed Methane Production (Billion Cubic Feet),New Mexico--West Coalbed Methane Production (Billion Cubic Feet),New York Coalbed Methane Production (Billion Cubic Feet),North Dakota Coalbed Methane Production (Billion Cubic Feet),Ohio Coalbed Methane Production (Billion Cubic Feet),Oklahoma Coalbed Methane Production (Billion Cubic Feet),Pennsylvania Coalbed Methane Production (Billion Cubic Feet),Texas (with State Offshore) Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 1 Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 2 Onshore Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 3 Onshore Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 4 Onshore Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 5 Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 6 Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 7B Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 7C Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 8 Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 8A Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 9 Coalbed Methane Production (Billion Cubic Feet),Texas--RRC District 10 Coalbed Methane Production (Billion Cubic Feet),Texas--State Offshore Coalbed Methane Production (Billion Cubic Feet),Utah Coalbed Methane Production (Billion Cubic Feet),Virginia Coalbed Methane Production (Billion Cubic Feet),West Virginia Coalbed Methane Production (Billion Cubic Feet),Wyoming Coalbed Methane Production (Billion Cubic Feet),Lower 48 Federal Offshore Coalbed Methane Production (Billion Cubic Feet),Lower 48 States Coalbed Methane Production (Billion Cubic Feet),Eastern States Coalbed Methane Production (Billion Cubic Feet),Western States Coalbed Methane Production (Billion Cubic Feet),"Other States Natural Gas Coalbed Methane, Reserves Based Production (Bcf)"
+1989,91,23,,,,12,,,,,,,,,,,56,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,0
+1990,196,36,,,,26,,,,,,,,,,,133,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,1
+1991,348,68,,,,48,,,,,,,,,,,229,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,3
+1992,539,89,,,,82,,,,,,,,,,,358,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,10
+1993,752,103,,,,125,,,,,,,,,,,486,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,18
+1994,851,108,,,,179,,,,,,,,,,,530,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,34
+1995,956,109,,,,226,,,,,,,,,,,574,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,47
+1996,1003,98,,,,274,,,,,,,,,,,575,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,56
+1997,1090,111,,,,312,,,,,,,,,,,597,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,70
+1998,1194,123,,,,401,,,,,,,,,,,571,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,99
+1999,1252,108,,,,432,,,,,,,,,,,582,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,130
+2000,1379,109,,,,451,,,,,,,,,,,550,,,,,,,,,,,,,,,,,,,,,,74,,,133,,,58,4,
+2001,1562,111,,,,490,,,,,,,,,,,517,,,,,,,,,,,,,,,,,,,,,,83,,,278,,,69,14,
+2002,1614,117,,,,520,,,,,,,,,,,471,,,,,,,,,,,,,,,,,,,,,,103,,,302,,,68,33,
+2003,1600,98,,,,488,,,,,,,,,,,451,,,,,,,,,,,,,,,,,,,,,,97,,,344,,,71,51,
+2004,1720,121,,,,520,,,,,,,,,,,528,,,,,,,,,,,,,,,,,,,,,,82,,,320,,,72,77,0
+2005,1732,113,0,2,0,515,0,17,0,0,0,0,0,0,0,12,514,25,489,0,0,0,58,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,75,56,30,336,0,1732,90,89,
+2006,1758,114,0,3,0,477,0,25,0,0,0,0,0,0,0,12,510,26,484,0,0,0,68,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,66,81,18,378,0,1758,24,108,
+2007,1753,114,0,3,0,519,0,38,0,0,0,0,0,0,0,13,394,23,371,0,0,0,82,5,0,0,0,0,0,0,0,0,0,0,0,0,0,0,73,85,25,401,0,1753,1,0,
+2008,1966,107,0,3,0,497,0,47,0,1,1,0,0,0,0,14,443,23,420,0,0,0,69,11,0,0,0,0,0,0,0,0,0,0,0,0,0,0,71,101,28,573,0,1966,1,0,
+2009,1914,105,0,3,0,498,0,43,0,1,1,0,0,0,0,12,432,26,406,0,0,0,55,16,0,0,0,0,0,0,0,0,0,0,0,0,0,0,71,111,31,535,0,1914,,,
+2010,1886,102,0,3,0,533,0,41,0,0,0,0,0,0,0,10,402,27,375,0,0,0,45,3,0,0,0,0,0,0,0,0,0,0,0,0,0,0,66,97,17,566,0,1886,,,
+2011,1763,98,0,4,0,516,0,37,0,0,0,0,0,0,0,6,374,27,347,0,0,,39,4,0,0,0,0,0,0,0,0,0,0,0,0,0,0,60,100,18,506,0,1763,,,
+2012,1655,91,0,2,0,486,0,34,0,0,0,0,0,0,0,3,355,28,327,0,0,,68,15,11,0,0,10,0,0,0,0,0,0,0,0,1,0,55,99,9,426,0,1655,,,
+2013,1466,62,0,2,0,444,0,30,0,0,0,0,0,0,0,1,356,26,330,0,0,,65,13,8,0,0,7,0,0,0,0,0,0,0,0,1,0,50,93,8,331,0,1466,,,
+2014,1404,78,0,2,0,412,0,27,0,0,0,0,0,0,0,0,373,24,349,0,0,,61,11,9,0,1,7,0,0,0,0,0,0,0,0,1,0,47,108,11,264,0,1404,,,
+2015,1269,72,0,1,0,392,0,25,0,0,0,0,0,0,0,0,344,23,321,0,0,,48,10,10,0,1,8,0,0,0,0,0,0,0,0,1,0,42,106,11,207,0,1269,,,
+2016,1020,45,0,1,0,352,0,11,0,0,0,0,0,0,0,0,253,22,231,0,0,,43,10,11,1,0,9,0,0,0,0,0,0,0,0,1,0,39,102,9,143,0,1020,,,
+2017,980,62,0,1,0,338,0,15,,0,0,0,0,0,0,0,234,,,0,0,,36,,8,0,0,7,0,0,0,0,0,0,0,0,1,0,36,99,7,135,0,980,,,
+2018,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,
+2019,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,

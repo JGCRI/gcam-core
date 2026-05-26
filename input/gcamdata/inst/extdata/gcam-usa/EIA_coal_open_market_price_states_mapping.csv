@@ -1,0 +1,44 @@
+# File: EIA_coal_open_market_price_states_mapping.csv
+# Title: mapping EIA coal market states into regions to fill in missing values
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Comments: for states without state-level prices use regional prices
+# Column types: ccc
+# ----------
+description,state,region
+United States,United States,United States
+Middle Atlantic,Middle Atlantic,Middle Atlantic
+Pennsylvania,PA,Middle Atlantic
+East North Central,East North Central,East North Central
+Illinois,IL,East North Central
+Indiana,IN,East North Central
+Ohio,OH,East North Central
+West North Central,West North Central,West North Central
+Kansas,KS,West North Central
+Missouri,MO,West North Central
+North Dakota,ND,West North Central
+South Atlantic,South Atlantic,South Atlantic
+Maryland,MD,South Atlantic
+Virginia,VA,South Atlantic
+West Virginia,WV,South Atlantic
+East South Central,East South Central,East South Central
+Alabama,AL,East South Central
+Kentucky,KY,East South Central
+Mississippi,MS,East South Central
+Tennessee,TN,East South Central
+West South Central,West South Central,West South Central
+Arkansas,AR,West South Central
+Louisiana,LA,West South Central
+Oklahoma,OK,West South Central
+Texas,TX,West South Central
+Mountain,Mountain,Mountain
+Arizona,AZ,Mountain
+Colorado,CO,Mountain
+Montana,MT,Mountain
+New Mexico,NM,Mountain
+Utah,UT,Mountain
+Wyoming,WY,Mountain
+Pacific Contiguous,Pacific Contiguous,Pacific Contiguous
+Washington,WA,Pacific Contiguous
+Pacific Noncontiguous,Pacific Noncontiguous,Pacific Noncontiguous
+Alaska,AK,Pacific Noncontiguous

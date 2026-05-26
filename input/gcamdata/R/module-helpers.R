@@ -1442,3 +1442,105 @@ replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
 
   return (noBCOC)
 }
+
+#' resource_reserve_back_calculate
+#'
+#' Back calculate reserve additions to be exactly enough given our historical production
+#' and assumed production lifetime.  Note production lifetimes may not cover the entire
+#' historical period and production may dip below capacity making the calculation a bit more
+#' tricky.  The \code{resource_reserve_back_calculate} replicates the resource / reserve
+#' behavior in GCAM to help project forward production by each historical vintage so we can
+#' accurately back calculate the reserves despite these complications.
+#' @section Warning: Results of this calculation are dependent on users selection for \code{MODEL_BASE_YEARS}
+#'
+#' @param data A data frame which is already nested for a single region / "technology".  The data
+#' must include a columns for \code{value} with the annual production by \code{year} and
+#' in addition requires a column \code{lifetime} with the assumed production lifetime of this "technology".
+#' @return A data.frame with columns \code{year} and \code{value} which are the reserve additions
+#' by year which exactly replicate the given annual production and lifetime assumption.
+#' @importFrom dplyr arrange mutate filter pull bind_rows
+resource_reserve_back_calculate <- function(data) {
+  # calculate timesteps of the MODEL_BASE_YEARS
+  GCAM_timesteps <- diff(MODEL_BASE_YEARS)
+  start.year.timestep <- modeltime.PERIOD0_TIMESTEP
+  model_year_timesteps <- tibble(year = MODEL_BASE_YEARS, timestep = c(start.year.timestep, GCAM_timesteps))
+
+  # initialize variables which we will need to do the processing
+  data %>%
+    filter(year %in% MODEL_BASE_YEARS) %>%
+    repeat_add_columns(tibble(year_operate = MODEL_BASE_YEARS)) %>%
+    left_join_error_no_match(model_year_timesteps, by = c("year_operate" = "year")) %>%
+    filter(year_operate >= year) %>%
+    arrange(year_operate, year) %>%
+    mutate(max.annual.prod = 0,
+           annual.prod = 0,
+           reserve = 0,
+           cumul.prod = 0) ->
+    data_proc
+
+  # operate each model base year one at a time
+  for(year_i in MODEL_BASE_YEARS) {
+    curr_slice <- data_proc[data_proc$year_operate == year_i, ]
+    if(year_i == MODEL_BASE_YEARS[1]) {
+      # first year assume all production in this vintage
+      curr_slice %>%
+        mutate(max.annual.prod = value,
+               annual.prod = value,
+               reserve = annual.prod * lifetime,
+               cumul.prod = annual.prod * timestep) ->
+        curr_slice
+    } else {
+      # pull out the new vintage slice
+      curr_slice %>%
+        filter(year == year_operate) ->
+        new_inv_slice
+      # grab the annual production in this year and the timestep which will be needed
+      # to calculate production from existing vintages as well
+      curr_demand <- new_inv_slice %>% pull(value)
+      curr_timestep = new_inv_slice %>% pull(timestep)
+      # calculate production from existing vintages first
+      prev_slice %>%
+        mutate(remain = reserve - cumul.prod,
+               # save previous production so as to be able to linearly adjust depletion
+               prev.annual.prod = annual.prod,
+               # the max annual production may need to get scaled down if this reserve is about
+               # to run out in this timestep
+               max.annual.prod = pmin(max.annual.prod,
+                                      pmax((remain - curr_timestep * prev.annual.prod) * 2.0 / curr_timestep + prev.annual.prod, 0.0)),
+               # calculate the production short fall which if positive will drive new investment
+               supply.shortfall = curr_demand - sum(max.annual.prod),
+               # if the short fall is negative we have over capacity so annual production will need
+               # to scale down from the max
+               annual.prod = if_else(supply.shortfall >= 0, max.annual.prod,
+                                     max.annual.prod * (curr_demand / sum(max.annual.prod)))) ->
+        prev_slice
+      # use the shortfall to set the new vintage production and reserves
+      new_prod <- pmax(unique(prev_slice$supply.shortfall), 0.0)
+      new_inv_slice %>%
+        mutate(max.annual.prod = new_prod,
+               annual.prod = new_prod,
+               reserve = annual.prod * lifetime,
+               cumul.prod = annual.prod * timestep) ->
+        new_inv_slice
+      # update previous vintage values in the current "slice"
+      curr_slice %>%
+        filter(year != year_operate) %>%
+        mutate(annual.prod = prev_slice$annual.prod,
+               # update cumulative depletion assuming linear change from previous production to current production
+               cumul.prod = prev_slice$cumul.prod + prev_slice$prev.annual.prod * timestep + 0.5 * ( annual.prod - prev_slice$prev.annual.prod) * timestep,
+               # copy forward the rest
+               max.annual.prod = prev_slice$max.annual.prod,
+               reserve = prev_slice$reserve) %>%
+        # add back new investment
+        bind_rows(new_inv_slice) ->
+        curr_slice
+    }
+    # set the current "slice" back into the original DF
+    prev_slice = curr_slice
+    data_proc[data_proc$year_operate == year_i, ] = curr_slice
+  }
+  # ultimately we just need the new vintage reserves
+  data_proc %>%
+    filter(year == year_operate) %>%
+    select(year, value = reserve)
+}

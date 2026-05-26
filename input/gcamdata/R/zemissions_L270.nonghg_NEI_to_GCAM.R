@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{L270.nonghg_tg_state_elec_F_Yb}, \code{L270.nonghg_tg_state_refinery_F_Yb}, \code{L270.nonghg_tg_state_bld_F_Yb},
+#' the generated outputs: \code{L270.nonghg_tg_state_elec_F_Yb}, \code{L270.nonghg_tg_state_refinery_F_Yb}, \code{L270.nonghg_tg_state_fossil_res_F_Yb}, \code{L270.nonghg_tg_state_bld_F_Yb},
 #' \code{L270.nonghg_tg_state_indenergy_F_Yb}, \code{L270.nonghg_tg_state_othertrn_F_Yb}, \code{L270.nonghg_tg_state_prc_F_Yb}.
 #' @details This chunk isolates sectoral non-ghg input emissions by U.S. state / sector / fuel / pollutant / year from NEI.
 #' @importFrom assertthat assert_that
@@ -25,6 +25,7 @@ module_emissions_L270.nonghg_nei_to_gcam <- function(command, ...) {
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L270.nonghg_tg_state_elec_F_Yb",
              "L270.nonghg_tg_state_refinery_F_Yb",
+             "L270.nonghg_tg_state_fossil_res_F_Yb",
              "L270.nonghg_tg_state_bld_F_Yb",
              "L270.nonghg_tg_state_indenergy_F_Yb",
              "L270.nonghg_tg_state_othertrn_F_Yb",
@@ -51,10 +52,15 @@ module_emissions_L270.nonghg_nei_to_gcam <- function(command, ...) {
     elec_names <- c( "elec_heat" )
     L270.nonghg_tg_state_elec_F_Yb <- NEI_to_GCAM( NEI_1990_2017_GCAM_sectors, CEDS_GCAM_fuel, NEI_pollutant_mapping, elec_names )
 
-    # Refinery / related
-    refinery_names <- c( "petroleum_production", "petroleum_refining", "petroleum_distribution",
-                         "ethanol_production", "NG_production_distribution", "biodiesel_production" )
+    # Refinery
+    refinery_names <- c( "petroleum_refining", "ethanol_production",
+                         "biodiesel_production" )
     L270.nonghg_tg_state_refinery_F_Yb <- NEI_to_GCAM( NEI_1990_2017_GCAM_sectors, CEDS_GCAM_fuel, NEI_pollutant_mapping, refinery_names )
+
+    # fossil resource production
+    fossil_res_names <- c("petroleum_production", "petroleum_distribution",
+                          "NG_production_distribution")
+    L270.nonghg_tg_state_fossil_res_F_Yb <- NEI_to_GCAM( NEI_1990_2017_GCAM_sectors, CEDS_GCAM_fuel, NEI_pollutant_mapping, fossil_res_names )
 
     # Buildings
     bld_names <- grep( "building", unique( NEI_1990_2017_GCAM_sectors$GCAM_sector ), value = T )
@@ -93,6 +99,15 @@ module_emissions_L270.nonghg_nei_to_gcam <- function(command, ...) {
                      "gcam-usa/emissions/CEDS_GCAM_fuel",
                      "L170.NEI_1990_2017_GCAM_sectors") ->
       L270.nonghg_tg_state_refinery_F_Yb
+
+    L270.nonghg_tg_state_fossil_res_F_Yb %>%
+      add_title("Base-year fossil resource production non-ghg input emissions by U.S. state / resource / fuel / pollutant / year") %>%
+      add_units("Tg") %>%
+      add_comments("Base-year fossil resource production non-ghg input emissions by U.S. state / resource / fuel / pollutant / year") %>%
+      add_precursors("gcam-usa/emissions/NEI_pollutant_mapping",
+                     "gcam-usa/emissions/CEDS_GCAM_fuel",
+                     "L170.NEI_1990_2017_GCAM_sectors") ->
+      L270.nonghg_tg_state_fossil_res_F_Yb
 
     L270.nonghg_tg_state_bld_F_Yb %>%
       add_title("Base-year buildings sector non-ghg input emissions by U.S. state / sector / fuel / pollutant / year") %>%
@@ -135,6 +150,7 @@ module_emissions_L270.nonghg_nei_to_gcam <- function(command, ...) {
 
     return_data(L270.nonghg_tg_state_elec_F_Yb,
                 L270.nonghg_tg_state_refinery_F_Yb,
+                L270.nonghg_tg_state_fossil_res_F_Yb,
                 L270.nonghg_tg_state_bld_F_Yb,
                 L270.nonghg_tg_state_indenergy_F_Yb,
                 L270.nonghg_tg_state_othertrn_F_Yb,

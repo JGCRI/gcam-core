@@ -1,0 +1,10 @@
+# File: A10.subsector_interp_states.csv
+# Title: State fossil resource production interpolation rules
+# Units: unitless
+# Source: None (GCAM assumptions)
+# Column types: cccccici
+# ----------
+supplysector,subsector,apply.to,from.year,to.year,to.value,interpolation.function,traded
+natural gas production,natural gas,share-weight,final-calibration-year,end-year,,fixed,0
+crude oil production,crude oil,share-weight,final-calibration-year,end-year,,fixed,0
+coal production,coal,share-weight,final-calibration-year,end-year,,fixed,0

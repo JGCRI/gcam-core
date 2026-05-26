@@ -86,6 +86,7 @@ module_energy_gas_trade_xml <- function(command, ...) {
     L281.TechAccountOutput_entrade <- get_data(all_data, "L281.TechAccountOutput_entrade") %>%
         filter(supplysector %in% unique(L2392.TechCoef_tra_NG$supplysector))
 
+
     # ===================================================
 
     # Produce outputs

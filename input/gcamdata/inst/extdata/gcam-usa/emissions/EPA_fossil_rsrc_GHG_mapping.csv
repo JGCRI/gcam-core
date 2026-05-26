@@ -1,0 +1,21 @@
+# File: EPA_fossil_rsrc_GHG_mapping.csv
+# Title: Map of EPA fossil resource categories and subcategories to GCAM resources, reserve-subresources, and resource-reserve-technologies
+# Description: EPA subcategories are mapped to specific GCAM-USA reserve-subresources where possible. Some EPA subcategories are too aggregate to map to subresources.
+# Units: Unitless
+# Column types: cccc
+CATEGORY,SUBCATEGORY1,resource,reserve.subresource
+Coal Mining,Underground Liberated,coal,underground mining
+Coal Mining,Underground Recovered &Used,coal,underground mining
+Coal Mining,Post-Mining (Underground),coal,underground mining
+Coal Mining,Surface Mining,coal,surface mining
+Coal Mining,Post-Mining (Surface),coal,surface mining
+Coal Mining,CO2 From Methane Flaring,coal,
+Coal Mining,Underground Recovered &Used For Energy,coal,underground mining
+Petroleum Systems,Exploration & Production,crude oil,
+Petroleum Systems,Refining,none,
+Petroleum Systems,Transport,none,
+Natural Gas Systems,Production & Exploration,natural gas,
+Natural Gas Systems,Processing,natural gas,
+Natural Gas Systems,Transmission & Storage,none,
+Natural Gas Systems,Distribution,none,
+Natural Gas Systems,Post-Meter,none,

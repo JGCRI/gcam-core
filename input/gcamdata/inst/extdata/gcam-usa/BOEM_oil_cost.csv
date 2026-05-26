@@ -1,0 +1,47 @@
+# File: BOEM_oil_cost.csv
+# Title: Offshore oil supply curves from BOEM 2021 report
+# Units: Prices are 2005$/bo (dollar barrel of oil); quantities are Bbo (billion barrels of oil)
+# Source: Bureau of Ocean Energy Management 2021 Resource Assesment https://www.boem.gov/2021-assessment-undiscovered-oil-and-gas-resources-nations-outer
+# Column types: cnn
+# ----------
+region,price,quantity
+Alaska OCS,30.00,0.00
+Alaska OCS,38.78,0.01
+Alaska OCS,58.96,0.65
+Alaska OCS,78.72,2.70
+Alaska OCS,99.21,5.63
+Alaska OCS,119.33,8.40
+Alaska OCS,159.78,12.26
+Alaska OCS,179.81,13.45
+Alaska OCS,210.29,14.66
+Alaska OCS,249.53,15.66
+Atlantic OCS,29.96,2.06
+Atlantic OCS,39.71,2.89
+Atlantic OCS,60.01,3.53
+Atlantic OCS,79.50,3.76
+Atlantic OCS,99.57,3.85
+Atlantic OCS,120.27,3.90
+Atlantic OCS,159.76,3.97
+Atlantic OCS,180.25,3.99
+Atlantic OCS,210.11,4.01
+Atlantic OCS,249.97,4.03
+Gulf of Mexico OCS,30.13,8.29
+Gulf of Mexico OCS,39.88,13.75
+Gulf of Mexico OCS,59.79,19.79
+Gulf of Mexico OCS,79.90,22.39
+Gulf of Mexico OCS,99.71,23.52
+Gulf of Mexico OCS,119.56,24.29
+Gulf of Mexico OCS,159.29,25.15
+Gulf of Mexico OCS,179.61,25.46
+Gulf of Mexico OCS,209.97,25.76
+Gulf of Mexico OCS,249.39,26.03
+Pacific OCS,30.03,3.58
+Pacific OCS,39.68,4.68
+Pacific OCS,59.92,6.15
+Pacific OCS,79.94,6.83
+Pacific OCS,99.78,7.14
+Pacific OCS,119.27,7.36
+Pacific OCS,159.81,7.63
+Pacific OCS,179.94,7.72
+Pacific OCS,209.46,7.82
+Pacific OCS,249.63,7.91

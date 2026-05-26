@@ -101,7 +101,11 @@ module_energy_en_supply_xml <- function(command, ...) {
         filter(supplysector %in% unique(L239.TechCoef_tra$supplysector))
     # ===================================================
 
+
+
     # Produce outputs
+    # for the core version
+    # ------------------------------------------------------------------------------------------------
     create_xml("en_supply.xml") %>%
       add_logit_tables_xml(L221.Supplysector_en, "Supplysector") %>%
       add_xml_data(L221.SectorUseTrialMarket_en, "SectorUseTrialMarket") %>%

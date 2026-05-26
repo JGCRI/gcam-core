@@ -1,0 +1,11 @@
+# File: ETSAP_gas_cost_range.csv
+# Title: Estimates for natural gas production costs by grade
+# Units: 2008$/GJ
+# Comments: Data from ETSAP brief; Table 4 and 5 in https://iea-etsap.org/E-TechDS/PDF/P02-Uncon_oil&gas-GS-gct.pdf
+# Column types: cnn
+# ----------
+type,low_cost,high_cost
+conventional gas,2,5.7
+coalbed methane,3.8,7.6
+shale gas,3.8,8.6
+tight gas,2.6,7.6
