@@ -136,8 +136,6 @@ public:
 
     virtual double getPriceElasticity( const int aPeriod ) const;
 
-    virtual double getTechChange( const int aPeriod ) const;
-
 	virtual double getCalibrationQuantity( const int aPeriod ) const;
 protected:
 

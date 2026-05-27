@@ -1,0 +1,45 @@
+# File: A_labor_supply_sector.csv
+# Title: logit exponent in labor supply
+# Units: NA
+# Comments: regional assumpations for labor productivity growth and mobility
+# region_AgProdGrowth defines ag labor productivity scaling relative to land productivity:
+# Low = 2X (mature economies), Med = 3X (transitional), High = 4X (structural transformation)
+# logit_exponent controls labor mobility across sectors; higher values increase wage responsiveness.
+# High-growth regions (e.g., India, Pakistan, parts of Africa) use higher responsiveness (1.25)
+# Applied consistently across SSPs under CMP-411
+# Source: NA
+# Column types: icccccncic
+# ----------
+GCAM_region_ID,region,supplysector,output.unit,input.unit,region_AgProdGrowth,logit.exponent,price.unit,logit.year.fillout,logit.type
+1,USA,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+2,Africa_Eastern,Labor_Total,mil pers,mil pers,High,2,1990$/pers,1975,
+3,Africa_Northern,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+4,Africa_Southern,Labor_Total,mil pers,mil pers,High,2,1990$/pers,1975,
+5,Africa_Western,Labor_Total,mil pers,mil pers,High,2,1990$/pers,1975,
+6,Australia_NZ,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+7,Brazil,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+8,Canada,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+9,Central America and Caribbean,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+10,Central Asia,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+11,China,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+12,EU-12,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+13,EU-15,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+14,Ukraine,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+15,Europe_Non_EU,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+16,European Free Trade Association,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+17,India,Labor_Total,mil pers,mil pers,High,2,1990$/pers,1975,
+18,Indonesia,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+19,Japan,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+20,Mexico,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+21,Middle East,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+22,Pakistan,Labor_Total,mil pers,mil pers,High,2,1990$/pers,1975,
+23,Russia,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+24,South Africa,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+25,South America_Northern,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+26,South America_Southern,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+27,South Asia,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+28,South Korea,Labor_Total,mil pers,mil pers,Low,0.5,1990$/pers,1975,
+29,Southeast Asia,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+30,Taiwan,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+31,Argentina,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,
+32,Colombia,Labor_Total,mil pers,mil pers,Med,1,1990$/pers,1975,

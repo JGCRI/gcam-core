@@ -2,7 +2,7 @@
 # Title: Region Mappings for Cement Databases
 # Units: N/A
 # Description: Mapping between iso codes and IEA energy intensity region
-# Column types: cccc
+# Column types: ccc
 # ----------
 iso,IEA_intensity_region,IEA_TPE_intensity_region
 abw,South America,Average

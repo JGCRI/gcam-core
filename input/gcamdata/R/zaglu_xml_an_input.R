@@ -34,10 +34,11 @@ module_aglu_an_input_xml <- function(command, ...) {
       "L202.StubTechInterp_an",
       "L202.StubTechProd_an",
       "L202.StubTechCoef_an",
-      "L202.StubTechCost_an",
-       "L202.StubTechCost_For_proc",
+      "L202.StubTechCost_For_proc",
       "L202.StubTechProd_in_Forest",
-      "L202.StubTechProd_in_pulp_energy")
+      "L202.StubTechProd_in_pulp_energy",
+      "L2082.StubTechCost_an_adj",
+      "L2083.StubTechCoef_laborcapital_an_tfp_MA")
 
   MODULE_OUTPUTS <-
     c(XML = "an_input.xml")
@@ -51,31 +52,7 @@ module_aglu_an_input_xml <- function(command, ...) {
     all_data <- list(...)[[1]]
 
     # Load required inputs
-    L202.RenewRsrc <- get_data(all_data, "L202.RenewRsrc")
-    L202.RenewRsrcPrice <- get_data(all_data, "L202.RenewRsrcPrice")
-    L202.maxSubResource <- get_data(all_data, "L202.maxSubResource")
-    L202.RenewRsrcCurves <- get_data(all_data, "L202.RenewRsrcCurves")
-    L202.ResTechShrwt <- get_data(all_data, "L202.ResTechShrwt")
-    L202.UnlimitedRenewRsrcCurves <- get_data(all_data, "L202.UnlimitedRenewRsrcCurves")
-    L202.UnlimitedRenewRsrcPrice <- get_data(all_data, "L202.UnlimitedRenewRsrcPrice")
-    L202.Supplysector_in <- get_data(all_data, "L202.Supplysector_in")
-    L202.SubsectorAll_in <- get_data(all_data, "L202.SubsectorAll_in")
-    L202.SubsectorInterpTo_in <- get_data(all_data, "L202.SubsectorInterpTo_in")
-    L202.StubTech_in <- get_data(all_data, "L202.StubTech_in")
-    L202.StubTechInterp_in <- get_data(all_data, "L202.StubTechInterp_in")
-    L202.GlobalTechCoef_in <- get_data(all_data, "L202.GlobalTechCoef_in")
-    L202.GlobalTechShrwt_in <- get_data(all_data, "L202.GlobalTechShrwt_in")
-    L202.StubTechProd_in <- get_data(all_data, "L202.StubTechProd_in")
-    L202.Supplysector_an <- get_data(all_data, "L202.Supplysector_an")
-    L202.SubsectorAll_an <- get_data(all_data, "L202.SubsectorAll_an")
-    L202.GlobalTechShrwt_an <- get_data(all_data, "L202.GlobalTechShrwt_an")
-    L202.StubTechInterp_an <- get_data(all_data, "L202.StubTechInterp_an")
-    L202.StubTechProd_an <- get_data(all_data, "L202.StubTechProd_an")
-    L202.StubTechCoef_an <- get_data(all_data, "L202.StubTechCoef_an")
-    L202.StubTechCost_an <- get_data(all_data, "L202.StubTechCost_an")
-    L202.StubTechCost_For_proc <- get_data(all_data,"L202.StubTechCost_For_proc")
-    L202.StubTechProd_in_Forest <- get_data(all_data,"L202.StubTechProd_in_Forest")
-    L202.StubTechProd_in_pulp_energy <- get_data(all_data, "L202.StubTechProd_in_pulp_energy")
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -106,34 +83,11 @@ module_aglu_an_input_xml <- function(command, ...) {
       add_xml_data(L202.StubTechInterp_an, "StubTechInterp") %>%
       add_xml_data(L202.StubTechProd_an, "StubTechProd") %>%
       add_xml_data(L202.StubTechCoef_an, "StubTechCoef") %>%
-      add_xml_data(L202.StubTechCost_an, "StubTechCost") %>%
       add_xml_data(L202.StubTechCost_For_proc, "StubTechCost") %>%
-      add_precursors("L202.RenewRsrc",
-                     "L202.RenewRsrcPrice",
-                     "L202.maxSubResource",
-                     "L202.RenewRsrcCurves",
-                     "L202.ResTechShrwt",
-                     "L202.UnlimitedRenewRsrcCurves",
-                     "L202.UnlimitedRenewRsrcPrice",
-                     "L202.Supplysector_in",
-                     "L202.SubsectorAll_in",
-                     "L202.SubsectorInterpTo_in",
-                     "L202.StubTech_in",
-                     "L202.StubTechInterp_in",
-                     "L202.GlobalTechCoef_in",
-                     "L202.GlobalTechShrwt_in",
-                     "L202.StubTechProd_in",
-                     "L202.Supplysector_an",
-                     "L202.SubsectorAll_an",
-                     "L202.GlobalTechShrwt_an",
-                     "L202.StubTechInterp_an",
-                     "L202.StubTechProd_an",
-                     "L202.StubTechCoef_an",
-                     "L202.StubTechCost_an",
-                     "L202.StubTechCost_For_proc",
-                    "L202.StubTechProd_in_Forest",
-                    "L202.StubTechProd_in_pulp_energy"
-                     ) ->
+      add_xml_data(L2082.StubTechCost_an_adj, "StubTechCost") %>%
+      add_xml_data(L2083.StubTechCoef_laborcapital_an_tfp_MA, "StubTechCoef") %>%
+      add_xml_data(L2083.StubTechCoef_laborcapital_an_tfp_MA, "StubPriceConversion") %>%
+      add_precursors(MODULE_INPUTS) ->
       an_input.xml
 
     return_data(MODULE_OUTPUTS)

@@ -96,7 +96,6 @@ const string& InputTax::getXMLName() const{
 //! Constructor
 InputTax::InputTax()
 {
-    TechVectorParseHelper<Value>::setDefaultValue( Value( 1.0 ), mAdjustedCoefficients );
 }
 
 /*!
@@ -138,7 +137,6 @@ void InputTax::toDebugXML( const int aPeriod,
                                Tabs* aTabs ) const
 {
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "current-coef", aOut, aTabs );
     XMLWriteElement( mPhysicalDemand[ aPeriod ], "physical-demand", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -168,7 +166,6 @@ void InputTax::initCalc( const gcamstr& aRegionName,
 {
     // There must be a valid region name.
     assert( !aRegionName.empty() );
-    mAdjustedCoefficients[ aPeriod ] = 1.0;
 }
 
 void InputTax::copyParam( const IInput* aInput,
@@ -226,10 +223,7 @@ void InputTax::setPhysicalDemand( double aPhysicalDemand,
 }
 
 double InputTax::getCoefficient( const int aPeriod ) const {
-    // Check that the coefficient has been initialized.
-    assert( mAdjustedCoefficients[ aPeriod ].isInited() );
-
-    return mAdjustedCoefficients[ aPeriod ];
+    return 1.0;
 }
 
 void InputTax::setCoefficient( const double aCoefficient,
@@ -268,9 +262,3 @@ double InputTax::getIncomeElasticity( const int aPeriod ) const {
 double InputTax::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
-
-double InputTax::getTechChange( const int aPeriod ) const
-{
-    return 0;
-}
-

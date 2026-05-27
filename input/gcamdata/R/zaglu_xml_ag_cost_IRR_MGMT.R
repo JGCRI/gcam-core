@@ -13,9 +13,9 @@
 module_aglu_ag_cost_IRR_MGMT_xml <- function(command, ...) {
 
   MODULE_INPUTS <-
-    c("L2062.AgCost_ag_irr_mgmt_adj",
-      "L2062.AgCost_bio_irr_mgmt_adj",
-      "L2052.AgCost_For",
+    c("L2082.AgCost_ag_irr_mgmt_adj",
+      "L2082.AgCost_bio_irr_mgmt_adj",
+      "L2082.AgCost_For_adj",
       "L2052.AgCalMinProfitRate")
 
   MODULE_OUTPUTS <-
@@ -36,11 +36,13 @@ module_aglu_ag_cost_IRR_MGMT_xml <- function(command, ...) {
 
     # Produce outputs
     create_xml("ag_cost_IRR_MGMT.xml") %>%
-      add_xml_data(L2062.AgCost_ag_irr_mgmt_adj, "AgCost") %>%
-      add_xml_data(L2062.AgCost_bio_irr_mgmt_adj, "AgCost") %>%
-      add_xml_data(L2052.AgCost_For, "AgCost") %>%
+      add_xml_data(L2082.AgCost_ag_irr_mgmt_adj, "AgCost") %>%
+      add_xml_data(L2082.AgCost_bio_irr_mgmt_adj, "AgCost") %>%
+      add_xml_data(L2082.AgCost_For_adj, "AgCost") %>%
       add_xml_data(L2052.AgCalMinProfitRate, "AgCalMinProfitRate") %>%
-      add_precursors("L2062.AgCost_ag_irr_mgmt_adj", "L2062.AgCost_bio_irr_mgmt_adj", "L2052.AgCost_For",
+      add_precursors("L2082.AgCost_ag_irr_mgmt_adj",
+                     "L2082.AgCost_bio_irr_mgmt_adj",
+                     "L2082.AgCost_For_adj",
                      "L2052.AgCalMinProfitRate") ->
       ag_cost_IRR_MGMT.xml
 

@@ -298,12 +298,13 @@ module_energy_L2326.aluminum <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L2326.GlobalTechCost_aluminum # intermediate tibble
 
-    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
-      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
     L2326.GlobalTechCost_aluminum %>%
       # we only want to track investments in energy, otherwise we double accounting with materials
       filter(sector.name == "alumina") %>%
-      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.INDUSTRY_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.INDUSTRY_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
              # vintaging is active so no need for depreciation
              depreciation.rate = 0) %>%

@@ -6,6 +6,7 @@
 # Column types: cccnnn 
 # ----------
 fn.name,node.name,leaf.name,1971,2020,2100
-nested-CES,energy,energy,0,0,0
+nested-CES,,energy,0,0,0
+nested-CES,,aglu,0,0,0
 nested-CES,capital-labor,capital,0,0,0
 nested-CES,capital-labor,labor,0,0,0

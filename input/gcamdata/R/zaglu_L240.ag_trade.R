@@ -32,8 +32,7 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       FILE = "common/iso_GCAM_regID",
       "L109.ag_ALL_Mt_R_C_Y",
       "L109.an_ALL_Mt_R_C_Y",
-      "L110.For_ALL_bm3_R_Y",
-      "L100.FAO_For_Exp_m3")
+      "L110.For_ALL_bm3_R_Y")
 
   MODULE_OUTPUTS <-
     c("L240.Supplysector_tra",
@@ -231,7 +230,14 @@ module_aglu_L240.ag_trade <- function(command, ...) {
       mutate(minicam.energy.input = if_else(minicam.energy.input %in% aglu.FOREST_COMMODITIES,paste0(minicam.energy.input, "_processing"),minicam.energy.input)) %>%
       select(LEVEL2_DATA_NAMES[["Production"]])
 
-    # Produce outputs
+
+    # temp adj for rounding issues in 2021 for wood pulp
+    L240.Production_reg_dom %>%
+      mutate(calOutputValue = if_else(year == MODEL_FINAL_BASE_YEAR & calOutputValue <0,
+             round(calOutputValue, 5), calOutputValue)) ->
+      L240.Production_reg_dom
+
+    # Produce outputs ----
     L240.Supplysector_tra %>%
       add_title("Supplysector info for traded ag commodities") %>%
       add_units("None") %>%
@@ -289,7 +295,6 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                      "L109.ag_ALL_Mt_R_C_Y",
                      "L109.an_ALL_Mt_R_C_Y",
                      "L110.For_ALL_bm3_R_Y",
-                     "L100.FAO_For_Exp_m3",
                      "common/iso_GCAM_regID") ->
       L240.Production_tra
 
@@ -344,7 +349,6 @@ module_aglu_L240.ag_trade <- function(command, ...) {
                      "L109.ag_ALL_Mt_R_C_Y",
                      "L109.an_ALL_Mt_R_C_Y",
                      "L110.For_ALL_bm3_R_Y",
-                     "L100.FAO_For_Exp_m3",
                      "common/iso_GCAM_regID") ->
       L240.Production_reg_dom
 

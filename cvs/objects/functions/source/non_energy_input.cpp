@@ -43,6 +43,8 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "containers/include/iinfo.h"
+#include "sectors/include/sector_utils.h"
+#include "functions/include/function_utils.h"
 #include "util/base/include/model_time.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/market_dependency_finder.h"
@@ -116,7 +118,6 @@ void NonEnergyInput::copy( const NonEnergyInput& aOther ) {
     MiniCAMInput::copy( aOther );
     
     mCost = aOther.mCost;
-    mTechChange = aOther.mTechChange;
     
     // calculated parameters are not copied.
 }
@@ -130,10 +131,6 @@ void NonEnergyInput::copyParam( const IInput* aInput,
 void NonEnergyInput::copyParamsInto( NonEnergyInput& aInput,
                                      const int aPeriod ) const
 {
-    // Copy the coefficients forward. This is done to adjust for technical
-    // change which already occurred.
-    assert( aPeriod > 0 );
-    aInput.mAdjustedCoefficients[ aPeriod ] = mAdjustedCoefficients[ aPeriod - 1 ];
 }
 
 void NonEnergyInput::toDebugXML( const int aPeriod,
@@ -142,9 +139,7 @@ void NonEnergyInput::toDebugXML( const int aPeriod,
 {
     XMLWriteOpeningTag ( getXMLName(), aOut, aTabs, mName );
     XMLWriteElement( mCost, "input-cost", aOut, aTabs );
-    XMLWriteElement( mTechChange, "tech-change", aOut, aTabs );
-    XMLWriteElement( mAdjustedCosts[ aPeriod ], "adjusted-cost", aOut, aTabs );
-    XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "adjusted-coef", aOut, aTabs );
+    XMLWriteElement( mAdjustedCosts, "adjusted-cost", aOut, aTabs );
     XMLWriteClosingTag( getXMLName(), aOut, aTabs );
 }
 
@@ -157,7 +152,7 @@ void NonEnergyInput::completeInit( const gcamstr& aRegionName,
     // Initialize the adjusted costs in all periods to the base read-in costs.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mCost );
+    mAdjustedCosts = mCost;
 }
 
 void NonEnergyInput::initCalc( const gcamstr& aRegionName,
@@ -167,26 +162,20 @@ void NonEnergyInput::initCalc( const gcamstr& aRegionName,
                                const IInfo* aTechInfo,
                                const int aPeriod )
 {
-    // Initialize the current coefficient to 1 if it has not 
-    // been initialized through copyParam. It may be adjusted
-    // later when coefficients are copied forward.
-
-    mAdjustedCosts[ aPeriod ] = mCost;
-    mAdjustedCoefficients[ aPeriod ] = 1;
 }
 
 double NonEnergyInput::getPrice( const gcamstr& aRegionName,
                                  const int aPeriod ) const
 {
-    assert( mAdjustedCosts[ aPeriod ].isInited() );
-    return mAdjustedCosts[ aPeriod ];
+    assert( mAdjustedCosts.isInited() );
+    return mAdjustedCosts;
 }
 
 void NonEnergyInput::setPrice( const gcamstr& aRegionName,
                                const double aPrice,
                                const int aPeriod ) 
 {
-    mAdjustedCosts[ aPeriod ] = aPrice;
+    mAdjustedCosts = aPrice;
 }
 
 double NonEnergyInput::getPhysicalDemand( const int aPeriod ) const {
@@ -208,14 +197,14 @@ double NonEnergyInput::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
 }
 
 double NonEnergyInput::getCoefficient( const int aPeriod ) const {
-    assert( mAdjustedCoefficients[ aPeriod ].isInited() );
-    return mAdjustedCoefficients[ aPeriod ];
+    return 1.0;
 }
 
 void NonEnergyInput::setCoefficient( const double aCoefficient,
                                      const int aPeriod )
 {
-    mAdjustedCoefficients[ aPeriod ] = aCoefficient;
+    assert(false);
+    // not available
 }
 
 double NonEnergyInput::getCalibrationQuantity( const int aPeriod ) const
@@ -234,11 +223,6 @@ double NonEnergyInput::getIncomeElasticity( const int aPeriod ) const {
 
 double NonEnergyInput::getPriceElasticity( const int aPeriod ) const {
     return 0;
-}
-
-double NonEnergyInput::getTechChange( const int aPeriod ) const
-{
-    return mTechChange;
 }
 
 void NonEnergyInput::doInterpolations( const int aYear, const int aPreviousYear,
@@ -274,7 +258,10 @@ TrackingNonEnergyInput::~TrackingNonEnergyInput() {
 
 NonEnergyInput* TrackingNonEnergyInput::clone() const {
     TrackingNonEnergyInput* clone = new TrackingNonEnergyInput();
-    clone->mCapitalCoef = mCapitalCoef;
+    clone->mCapitalRatio = mCapitalRatio;
+    clone->mInterestRate = mInterestRate;
+    clone->mPaybackYears = mPaybackYears;
+    clone->mInvestUnitConversion = mInvestUnitConversion;
     clone->mTrackingMarketName = mTrackingMarketName;
     clone->mDepreciationRate = mDepreciationRate;
     clone->copy( *this );
@@ -302,8 +289,9 @@ void TrackingNonEnergyInput::completeInit( const gcamstr& aRegionName,
 {
     NonEnergyInput::completeInit(aRegionName, aSectorName,
             aSubsectorName, aTechName, aTechInfo);
-    // Note: given we are just tracking capital we do not need to log a dependency
-    // on mTrackingMarketName, however if we had price feedbacks we would
+    mOvernightCap = mCost / FunctionUtils::calcFCR(mInterestRate, mPaybackYears) * mCapitalRatio;
+    MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
+    depFinder->addDependency( aSectorName, aRegionName, mTrackingMarketName, aRegionName);
 }
 
 void TrackingNonEnergyInput::initCalc( const gcamstr& aRegionName,
@@ -317,16 +305,70 @@ void TrackingNonEnergyInput::initCalc( const gcamstr& aRegionName,
     mPrevOutput = mIsActive ? aTechInfo->getDouble("prev-output-for-investment", 0.0) : 0.0;
     NonEnergyInput::initCalc(aRegionName, aSectorName, aIsNewInvestmentPeriod,
             aIsTrade, aTechInfo, aPeriod);
+    
+    // Ideally we only need to locate the market once, however during completeInit
+    // all markets may have not yet been set up.  So, instead we avoid re-lookups
+    // if the market has been found.  Unfortunately, this means if the market will
+    // never be found we will continue to try to look it up each model period.
+    if(!mCachedMarket.hasLocatedMarket()) {
+        mCachedMarket = scenario->getMarketplace()->locateMarket( mTrackingMarketName, aRegionName );
+    }
+}
+
+double TrackingNonEnergyInput::getPrice( const gcamstr& aRegionName,
+                                 const int aPeriod ) const
+{
+    if(mIsActive) {
+    const Modeltime* modeltime = scenario->getModeltime();
+    double nonCapCost = mCost * (1.0 - mCapitalRatio);
+    double adjInt = SectorUtils::calcPriceRatio(mCachedMarket, aRegionName, mTrackingMarketName, modeltime->getFinalCalibrationPeriod(), aPeriod) * mInterestRate;
+    double fcr = FunctionUtils::calcFCR(adjInt, mPaybackYears);
+    double adjCapCost = mOvernightCap * fcr;
+    const_cast<TrackingNonEnergyInput*>(this)->mAdjustedCosts = nonCapCost + adjCapCost;
+    }
+    return mAdjustedCosts;
+}
+
+/*!
+ * \brief A public stand alone method to calculate how a cost would change due to capital
+ *        market price changes.
+ * \details This method is required due to resource production which needs to bridge the
+ *          gap between costs being captured in the supply curves but need to know how
+ *          to adjust costs before we can look up those supply curves.  Note this implimentation
+ *          is slightly different then getPrice since we can't use the precomputed mOvernightCap.
+ * \param aCost The total cost to adjust for capital market prices.
+ * \param aRegionName The region this input is contained in.
+ * \param aPeriod The model period.
+ * \return The adjusted cost from capital market price changes.
+ */
+double TrackingNonEnergyInput::calcAdjustedPrice(const double aCost,
+                         const gcamstr& aRegionName,
+                         const int aPeriod) const
+{
+    const Modeltime* modeltime = scenario->getModeltime();
+    double nonCapCost = aCost * (1.0 - mCapitalRatio);
+    double overnightCap = aCost / FunctionUtils::calcFCR(mInterestRate, mPaybackYears) * mCapitalRatio;
+    double adjInt = SectorUtils::calcPriceRatio(aRegionName, mTrackingMarketName, modeltime->getFinalCalibrationPeriod(), aPeriod) * mInterestRate;
+    double fcr = FunctionUtils::calcFCR(adjInt, mPaybackYears);
+    double adjCapCost = overnightCap * fcr;
+    return nonCapCost + adjCapCost;
 }
 
 void TrackingNonEnergyInput::setPhysicalDemand(const double aValue,
         const gcamstr& aRegionName,
         const int aPeriod )
 {
-    if(mIsActive) {
+    if(mIsActive && mName == gcamstr("resource-investment")) {
+        // special case for resources due to the simultanies nature of needing to know
+        // capital market price effects before being able to determine total cost
+        // here mAdjustedCosts will be unadjusted for capital market effects
+        mCapitalValue = mAdjustedCosts / FunctionUtils::calcFCR(mInterestRate, mPaybackYears) * aValue * mCapitalRatio;
+        mCachedMarket.addToDemand(mTrackingMarketName, aRegionName, mCapitalValue, aPeriod, false);
+    }
+    else if(mIsActive) {
         double depreciation = mDepreciationRate * scenario->getModeltime()->gettimestep(aPeriod);
-        mCapitalValue = std::max(aValue - mPrevOutput + mPrevOutput * depreciation, 0.0) * mCapitalCoef * mAdjustedCosts[aPeriod];
-        scenario->getMarketplace()->addToDemand(mTrackingMarketName, aRegionName, mCapitalValue, aPeriod, false);
+        mCapitalValue = std::max(aValue - mPrevOutput + mPrevOutput * depreciation, 0.0) * mOvernightCap * mInvestUnitConversion;
+        mCachedMarket.addToDemand(mTrackingMarketName, aRegionName, mCapitalValue, aPeriod, false);
 
     }
 }

@@ -223,7 +223,7 @@ void Sector::completeInit( const IInfo* aRegionInfo, ILandAllocator* aLandAlloca
 void Sector::initCalc( const Demographic* aDemographics,
                        const int aPeriod )
 {
-    mDiscreteChoiceModel->initCalc( mRegionName, mName, false, aPeriod );
+    mDiscreteChoiceModel->initCalc( mRegionName, mName, aPeriod );
     
     // do any sub-Sector initializations
     for ( unsigned int i = 0; i < mSubsectors.size(); ++i ){

@@ -169,11 +169,3 @@ double NonEnergyUseCaptureComponent::getSequesteredAmount( const gcamstr& aGHGNa
 	}
 	return 0;
 }
-
-void NonEnergyUseCaptureComponent::adjustInputs( const gcamstr& aRegionName,
-                                                 vector<IInput*>& aInputs,
-                                                 const int aPeriod ) const
-{
-    // Non-energy use capture components do not need to adjust input costs or
-    // efficiencies.
-}

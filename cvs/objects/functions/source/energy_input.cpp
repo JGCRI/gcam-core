@@ -134,8 +134,6 @@ EnergyInput::EnergyInput( const EnergyInput& aOther )
     // Do not copy calibration values into the future
     // as they are only valid for one period.
     mName = aOther.mName;
-    mIncomeElasticity = aOther.mIncomeElasticity;
-    mTechChange = aOther.mTechChange;
     mPriceUnitConversionFactor = aOther.mPriceUnitConversionFactor;
     
     mMarketName = aOther.mMarketName;
@@ -185,11 +183,8 @@ void EnergyInput::toDebugXML( const int aPeriod,
         XMLWriteElement( getFlagName(IInput::BACKUP_ENERGY), "flag", aOut, aTabs );
     }
     
-    XMLWriteElement( mIncomeElasticity, "income-elasticity", aOut, aTabs );
     XMLWriteElement( mCalibrationInput.isInited() ? mCalibrationInput.get() : -1,
                      "calibrated-value", aOut, aTabs );
-    XMLWriteElement( mTechChange.isInited() ? mTechChange.get() : -1,
-                     "tech-change", aOut, aTabs );
     XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "current-coef", aOut, aTabs );
     XMLWriteElement( mCO2Coefficient.isInited() ? mCO2Coefficient.get() : -1,
                      "cached-co2-coef", aOut, aTabs );
@@ -348,16 +343,11 @@ double EnergyInput::getCalibrationQuantity( const int aPeriod ) const
 }
 
 double EnergyInput::getIncomeElasticity( const int aPeriod ) const {
-    return mIncomeElasticity;
+    return 0;
 }
 
 double EnergyInput::getPriceElasticity( const int aPeriod ) const {
     return 0;
-}
-
-double EnergyInput::getTechChange( const int aPeriod ) const
-{
-    return mTechChange;
 }
 
 void EnergyInput::doInterpolations( const int aYear, const int aPreviousYear,

@@ -56,6 +56,7 @@
 #include "containers/include/world.h"
 #include "containers/include/national_account_container.h"
 #include "util/logger/include/ilogger.h"
+#include "marketplace/include/cached_market.h"
 
 using namespace std;
 
@@ -437,6 +438,32 @@ double SectorUtils::calcPriceRatio( const gcamstr& aRegionName,
                                     const int aBasePeriod,
                                     const int aCurrentPeriod )
 {
+    CachedMarket market = scenario->getMarketplace()->locateMarket(aSectorName, aRegionName);
+    return SectorUtils::calcPriceRatio(market, aRegionName, aSectorName, aBasePeriod, aCurrentPeriod);
+}
+
+/*!
+ * \brief Get the ratio of an sector's price in the current period to the base
+ *        period.
+ * \details Returns the ratio of the sector's price in the given region in the
+ *          current period to the base period. If the base period is greater than
+ *          or equal to the current period this will return 1.
+ * \param aRegionName Name of the region in which to find the ratio.
+ * \param aSectorName Sector for which to find the price ratio.
+ * \param aBasePeriod Base period for the ratio.
+ * \param aCurrentPeriod Current period for the ratio.
+ * \return Price ratio for the sector.
+ * \warning No checks are made for negative prices and users of this method should
+ *          ensure proper behavior is such cases.
+ * \sa adjustDemandForNegativePrice
+ * \author Josh Lurz
+ */
+double SectorUtils::calcPriceRatio( const CachedMarket& aMarket,
+                                    const gcamstr& aRegionName,
+                                    const gcamstr& aSectorName,
+                                    const int aBasePeriod,
+                                    const int aCurrentPeriod )
+{
     // The price ratio is always 1 in the base period.
     double priceRatio = 1;
     double internalBasePeriod = aBasePeriod;
@@ -446,9 +473,8 @@ double SectorUtils::calcPriceRatio( const gcamstr& aRegionName,
         internalBasePeriod = 1; 
     }
     if( aCurrentPeriod > internalBasePeriod ) {
-        const Marketplace* marketplace = scenario->getMarketplace();
-        double basePrice = marketplace->getPrice( aSectorName, aRegionName, internalBasePeriod );
-        double currentPrice = marketplace->getPrice( aSectorName, aRegionName, aCurrentPeriod );
+        double basePrice = aMarket.getPrice( aSectorName, aRegionName, internalBasePeriod );
+        double currentPrice = aMarket.getPrice( aSectorName, aRegionName, aCurrentPeriod );
 
         priceRatio = currentPrice / basePrice;
         

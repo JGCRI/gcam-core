@@ -49,6 +49,7 @@
 
 // Forward declaration
 class Tabs;
+class TrackingNonEnergyInput;
 
 /*!
  * \ingroup Objects
@@ -114,10 +115,6 @@ public:
                                   const double aMarginalRevenue,
                                   const int aPeriod) const;
     
-    virtual void calcCost(const gcamstr& aRegionName,
-                          const gcamstr& aSectorName,
-                          const int aPeriod);
-    
     virtual double getEnergyCost( const gcamstr& aRegionName,
                                   const gcamstr& aSectorName,
                                   const int aPeriod ) const;
@@ -126,6 +123,8 @@ public:
                            const int aPeriod );
 
     virtual void doInterpolations(const Technology* aPrevTech, const Technology* aNextTech);
+    
+    double calcInvestmentPrice(const double aCost, const gcamstr& aRegionName, const int aPeriod);
     
 protected:
     
@@ -163,7 +162,7 @@ protected:
     //! of where on the supply curve the containing resource was when it invested in this
     //! technology.  We use this as a way to reflect the costs captured in the supply curve
     //! when calculating the profit shutdown.
-    IInput* mInvestmentCostInput;
+    TrackingNonEnergyInput* mInvestmentCostInput;
     
     virtual void toDebugXMLDerived(const int period, std::ostream& out, Tabs* tabs) const;
     virtual const std::string& getXMLName() const;

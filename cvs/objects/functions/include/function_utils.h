@@ -83,8 +83,6 @@ public:
     static IInput* getNumeraireInput( const InputSet& aInputs );
     
     static double getRho( const double aSigma );
-    
-    static double PMT( double aRate, double aNper, double aPV );
 
     // **** Begin Unit Conversions
     inline static double HOURS_PER_YEAR() { return 8766; }
@@ -114,6 +112,12 @@ public:
     inline static double KG_PER_METRIC_TON() { return 1000; }
 
     // **** End Unit Conversions
+    
+    static double calcFCR(const double aRate, const double aNper) {
+        return (aRate*pow(1.0+aRate,aNper))/(pow(1.0+aRate,aNper)-1.0);
+    }
+    
+    static double PMT( double aRate, double aNper, double aPV );
 
     static double getNetPresentValueMult( const InputSet& aInputs,
                                           const gcamstr& aRegionName,
@@ -146,22 +150,6 @@ public:
     static double getPriceReceived( const gcamstr& aRegionName,
                                     const gcamstr& aGoodName,
                                     const int aPeriod );
-
-    static double applyTechnicalChangeInternal( InputSet& input,
-                                                const TechChange& aTechChange, 
-                                                const gcamstr& aRegionName,
-                                                const gcamstr& sectorName,
-                                                const int aPeriod,
-                                                double alphaZero,
-                                                double sigma );
-
-    static double getTechChangeForInput( const IInput* aInput,
-                                         const TechChange& aTechChange,
-                                         const int aPeriod );
-
-    /*static bool isFixedPrice( const gcamstr& aRegionName,
-                              const std::string& aGoodName,
-                              const int aPeriod );*/
 
     static double getMarketConversionFactor( const gcamstr& aRegionName,
                                              const gcamstr& aGoodName,

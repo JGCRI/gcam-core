@@ -490,7 +490,7 @@ bool SolutionInfoSet::isAllSolved(){
     
     // Check unsolvable as well, they should have cleared
     for( SetIterator curr = unsolvable.begin(); curr != unsolvable.end(); ++curr ){
-        if( !curr->isSolved() ){
+        if( !curr->isSolved()){
             return false;
         }
     }

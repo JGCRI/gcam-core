@@ -146,23 +146,9 @@ public:
                                 const double aOutputCoef,
                                 const int aPeriod );
 
-    void adjustInputs( const gcamstr& aRegionName,
-                       std::vector<IInput*>& aInputs,
-                       const int aPeriod ) const;
-
 protected:
     
     void copy( const PowerPlantCaptureComponent& aOther );
-    
-    void adjustEnergyInput( IInput* aEnergyInput,
-                            const int aPeriod ) const;
-    
-    void adjustNonEnergyInput( IInput* aNonEnergyInput,
-                               const gcamstr& aRegionName,
-                               const double aBaseEnergyIntensity,
-                               const double aEffectiveEnergyIntensity,
-                               const double aFuelEmissCoef,
-                               const int aPeriod ) const;
     
     // Define data such that introspection utilities can process the data from this
     // subclass together with the data members of the parent classes.
@@ -179,13 +165,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "target-gas", mTargetGas, gcamstr ),
 
          //! Fraction of carbon removed from the emissions stream.
-        DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double ),
-
-        //! The amount of energy required to capture one unit of the emitted gas.
-        DEFINE_VARIABLE( SIMPLE, "capture-energy", mCaptureEnergy, double ),
-
-        //! Non-energy cost penalty.
-        DEFINE_VARIABLE( SIMPLE, "non-energy-penalty", mNonEnergyCostPenalty, double )
+        DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double )
     )
 };
 

@@ -70,11 +70,7 @@ module_energy_L2327.paper <- function(command, ...) {
              "L2327.PerCapitaBased_paper",
              "L2327.BaseService_paper",
              "L2327.PriceElasticity_paper",
-             "L2327.GlobalTechSecOut_paper",
-             "L2327.DeleteSupplysector_PaperAgDemand",
-             "L2327.DeleteFinalDemand_PaperAgDemand",
-             "L2327.DeleteSupplysector_PaperAgDemand_USA",
-             "L2327.DeleteFinalDemand_PaperAgDemand_USA"))
+             "L2327.GlobalTechSecOut_paper"))
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -364,12 +360,13 @@ module_energy_L2327.paper <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L2327.GlobalTechCost_paper # intermediate tibble
 
-    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
-      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
     L2327.GlobalTechCost_paper %>%
       # we only want to track investments in energy, otherwise we double accounting with materials
       filter(sector.name != "paper") %>%
-      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.INDUSTRY_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.INDUSTRY_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
              # vintaging is active so no need for depreciation
              depreciation.rate = 0) %>%
@@ -486,28 +483,6 @@ module_energy_L2327.paper <- function(command, ...) {
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["PriceElasticity"]]) ->
       L2327.PriceElasticity_paper
-
-
-    # Delete NonFoodDemand_woodpulp sectors in all regions (energy-final-demands and supplysectors)
-    # This is replaced with woodpulp_energy
-    L203.Supplysector_demand %>%
-      filter(supplysector == aglu.PAPER_DELETE_AG_DEMAND) %>%
-      select(LEVEL2_DATA_NAMES[["DeleteSupplysector"]]) ->
-      L2327.DeleteSupplysector_PaperAgDemand
-
-    L203.PerCapitaBased %>%
-      filter(energy.final.demand == aglu.PAPER_DELETE_AG_DEMAND) %>%
-      select(LEVEL2_DATA_NAMES[["DeleteFinalDemand"]]) ->
-      L2327.DeleteFinalDemand_PaperAgDemand
-
-    # For GCAM-USA, keep NonFoodDemand_woodpulp for USA region since paper industry will be deleted
-    L2327.DeleteSupplysector_PaperAgDemand %>%
-      filter(!region == gcam.USA_REGION) ->
-      L2327.DeleteSupplysector_PaperAgDemand_USA
-
-    L2327.DeleteFinalDemand_PaperAgDemand %>%
-      filter(!region == gcam.USA_REGION) ->
-      L2327.DeleteFinalDemand_PaperAgDemand_USA
 
     # =======================================================
     # Produce outputs
@@ -723,38 +698,6 @@ module_energy_L2327.paper <- function(command, ...) {
       add_precursors("energy/A23.chp_elecratio", "energy/A327.globaltech_coef") ->
       L2327.GlobalTechSecOut_paper
 
-    L2327.DeleteSupplysector_PaperAgDemand %>%
-      add_title("Delete forest supplysector used in paper industry") %>%
-      add_units("Unitless") %>%
-      add_comments("Supplysector is replaced with paper industry demand") %>%
-      add_legacy_name("L2327.DeleteSupplysector_PaperAgDemand") %>%
-      add_precursors("L203.Supplysector_demand") ->
-      L2327.DeleteSupplysector_PaperAgDemand
-
-    L2327.DeleteFinalDemand_PaperAgDemand %>%
-      add_title("Delete forest final demand used in paper industry") %>%
-      add_units("Unitless") %>%
-      add_comments("Final energy demand is replaced with paper industry demand") %>%
-      add_legacy_name("L2327.DeleteFinalDemand_PaperAgDemand") %>%
-      add_precursors("L203.PerCapitaBased") ->
-      L2327.DeleteFinalDemand_PaperAgDemand
-
-    L2327.DeleteSupplysector_PaperAgDemand_USA %>%
-      add_title("Delete forest supplysector used in paper industry") %>%
-      add_units("Unitless") %>%
-      add_comments("Supplysector is replaced with paper industry demand") %>%
-      add_legacy_name("L2327.DeleteSupplysector_PaperAgDemand_USA") %>%
-      add_precursors("L203.Supplysector_demand") ->
-      L2327.DeleteSupplysector_PaperAgDemand_USA
-
-    L2327.DeleteFinalDemand_PaperAgDemand_USA %>%
-      add_title("Delete forest final demand used in paper industry") %>%
-      add_units("Unitless") %>%
-      add_comments("Final energy demand is replaced with paper industry demand") %>%
-      add_legacy_name("L2327.DeleteFinalDemand_PaperAgDemand_USA") %>%
-      add_precursors("L203.PerCapitaBased") ->
-      L2327.DeleteFinalDemand_PaperAgDemand_USA
-
 
     return_data(L2327.Supplysector_paper, L2327.FinalEnergyKeyword_paper, L2327.SubsectorLogit_paper, L2327.SubsectorShrwtFllt_paper,
                 L2327.SubsectorInterp_paper, L2327.StubTech_paper, L2327.GlobalTechShrwt_paper, L2327.GlobalTechCoef_paper,
@@ -762,8 +705,6 @@ module_energy_L2327.paper <- function(command, ...) {
                 L2327.GlobalTechLifetime_paper, L2327.GlobalTechProfitShutdown_paper, L2327.StubTechProd_paper,
                 L2327.StubTechCalInput_paper_heat, L2327.StubTechCoef_paper, L2327.PerCapitaBased_paper,
                 L2327.BaseService_paper, L2327.PriceElasticity_paper, L2327.GlobalTechSecOut_paper,
-                L2327.DeleteSupplysector_PaperAgDemand, L2327.DeleteFinalDemand_PaperAgDemand,
-                L2327.DeleteSupplysector_PaperAgDemand_USA, L2327.DeleteFinalDemand_PaperAgDemand_USA,
                 L2327.GlobalTechTrackCapital_paper)
 
   } else {

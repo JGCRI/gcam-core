@@ -77,7 +77,6 @@ class ICoefficient;
  *                              efficiency can be input).
  *              - \c calibrated-value EnergyInput::mCalibrationInput
  *              - \c income-elasticity EnergyInput::mIncomeElasticity
- *              - \c tech-change EnergyInput::mTechChange
  *
  * \author Josh Lurz
  */
@@ -154,8 +153,6 @@ public:
 
     virtual double getPriceElasticity( const int aPeriod ) const;
 
-    virtual double getTechChange( const int aPeriod ) const;
-
     virtual void copyParamsInto( EnergyInput& aInput,
                                  const int aPeriod ) const;
     
@@ -181,12 +178,6 @@ protected:
 
         //! Read-in calibration value.
         DEFINE_VARIABLE( SIMPLE, "calibrated-value", mCalibrationInput, Value ),
-
-        //! Income elasticity.
-        DEFINE_VARIABLE( SIMPLE, "income-elasticity", mIncomeElasticity, Value ),
-        
-        //! Input specific technical change.
-        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
 
         //! The market name from which to demand.  It will default to the region
         //! in which this input is contained.

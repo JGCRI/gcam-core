@@ -57,23 +57,31 @@
 #include "util/base/include/configuration.h"
 #include "containers/include/market_dependency_finder.h"
 #include "containers/include/iinfo.h"
+#include "sectors/include/sector_utils.h"
 
 using namespace std;
 using namespace objects;
 
 extern Scenario* scenario;
 
+/*!
+ * \brief Currency conversions used through out macro calculations.
+ * \details GCAM utils are billion 1975$ and macro uses million 1990$
+ * \return The conversion from billion 1975$ to million 1990$
+ */
+inline double CURRENCY_CONVERSION() {
+    return 1000.0 * FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
+}
+
 
 //! Default Constructor
 FactorInputLeaf::FactorInputLeaf():
-mIsPrimaryFactor(false),
 mIsLabor(false),
 mIsCapital(false),
 mIsEnergy(false),
 mProductivity(Value(1.0)),
 mScaler(0),
 mOutputMrkName("energy service")
-
 {
 }
 
@@ -91,18 +99,13 @@ const gcamstr& FactorInputLeaf::getName() const {
  * \author Sonny Kim
  * \return The constant XML_NAME as a static.
  */
-const string& FactorInputLeaf::getXMLNameStatic() {
-    static const std::string XML_NAME = "factor-input-leaf";
+const gcamstr& FactorInputLeaf::getXMLNameStatic() {
+    static const gcamstr XML_NAME = "factor-input-leaf";
     return XML_NAME;
 }
 
-const string& FactorInputLeaf::getXMLName() const {
+const gcamstr& FactorInputLeaf::getXMLName() const {
     return getXMLNameStatic();
-}
-
-//! Return boolean to determine if primary factor
-bool FactorInputLeaf::isPrimaryFactor() const {
-    return mIsPrimaryFactor;
 }
 
 //! complete initializations
@@ -113,10 +116,208 @@ void FactorInputLeaf::completeInit( const gcamstr& aRegionName, const gcamstr& a
 
 //! complete initializations for each period
 void FactorInputLeaf::initCalc(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod){
-    // do nothing
+    const Modeltime* modeltime = scenario->getModeltime();
+    if(mIsLabor || mIsCapital) {
+        if(aPeriod <= modeltime->getFinalCalibrationPeriod()) {
+            // ensure the price driven inputs (capital and labor) are not solved in the
+            // calibration periods and are marked "fully-calibrated" so that we can be
+            // sure to use our calibration prices
+            Marketplace* marketplace = scenario->getMarketplace();
+            marketplace->unsetMarketToSolve( mOutputMrkName, aRegionName, aPeriod );
+            IInfo* marketInfo = marketplace->getMarketInfo( mOutputMrkName, aRegionName, aPeriod, true );
+            const gcamstr FULLY_CAL_KEY("fully-calibrated");
+            marketInfo->setBoolean( FULLY_CAL_KEY, true );
+        }
+        
+        // set supply curve bounds
+        double upperbound = mIsCapital ? 1.0 : util::getLargeNumber();
+        SectorUtils::setSupplyBehaviorBounds(mOutputMrkName, aRegionName, 0.0, upperbound, aPeriod);
+    }
 }
 
+void FactorInputLeaf::updateMarkets(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod) {
+    Marketplace* marketplace = scenario->getMarketplace();
+    if(mIsLabor) {
+        mDemand = getCalibrationQuantity(aRegionName, aNationalAccount, aPeriod);
+        marketplace->addToDemand(mOutputMrkName, aRegionName, mDemand, aPeriod);
+    }
+    // going to leave capital as zero as there is no way to know the gcam-investment
+    // and so we could not attempt to balance the market
+}
 
+double FactorInputLeaf::getCalShares(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const double aGrossOutput, const int aPeriod)
+{
+    double baseValue;
+    if(mIsLabor) {
+        baseValue = aNationalAccount->getAccountValue(NationalAccount::MATERIALS_LABOR_WAGES);
+    }
+    else if(mIsCapital) {
+        baseValue = aNationalAccount->getAccountValue(NationalAccount::MATERIALS_CAPITAL_VALUE);
+    }
+    else if(mIsEnergy) {
+        baseValue = -1.0;
+    }
+    else {
+        const Marketplace* marketplace = scenario->getMarketplace();
+        baseValue = marketplace->getPrice(mOutputMrkName, aRegionName, aPeriod)
+                    * CURRENCY_CONVERSION();
+    }
+    return baseValue / aGrossOutput;
+}
+
+double FactorInputLeaf::getCalibrationQuantity(const gcamstr& aRegionName,
+                                       NationalAccount* aNationalAccount,
+                                       int aPeriod) const
+{
+    double quantity;
+    if(mIsLabor) {
+        quantity = aNationalAccount->getAccountValue(NationalAccount::MATERIALS_LABOR_FORCE);
+    }
+    else if(mIsCapital) {
+        quantity = aNationalAccount->getAccountValue(NationalAccount::MATERIALS_CAPITAL_STOCK);
+    }
+    else {
+        Marketplace* marketplace = scenario->getMarketplace();
+        quantity = marketplace->getPrice(mOutputMrkName, aRegionName, aPeriod)
+                    * CURRENCY_CONVERSION();
+    }
+    return quantity;
+}
+
+void FactorInputLeaf::calcCoef(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const double aGrossOutput, const double aShareAdj, const double aSlackShare, const double aParentValue, const double aParentPrice, const double aGamma, const int aPeriod)
+{
+    Marketplace* marketplace = scenario->getMarketplace();
+    double value = mIsEnergy ? aSlackShare * aGrossOutput :
+        (getCalShares(aRegionName, aNationalAccount, aGrossOutput, aPeriod) * aShareAdj) * aGrossOutput;
+    double quantity = getCalibrationQuantity(aRegionName, aNationalAccount, aPeriod);
+
+    double price = value / quantity;
+    if(mIsLabor || mIsCapital) {
+        marketplace->setPrice(mOutputMrkName, aRegionName, price, aPeriod);
+    }
+    double share = value / aParentValue;
+    mScaler = pow(share, (-1.0/aGamma)) * price / aParentPrice;
+}
+
+double FactorInputLeaf::getCoefficient(const double aTFP, const int aPeriod) const {
+    return mScaler * mProductivity[aPeriod] * aTFP;
+}
+
+double FactorInputLeaf::getPrice(const gcamstr& aRegionName, const double aTFP, const int aPeriod) {
+    assert(mIsLabor || mIsCapital);
+    const Marketplace* marketplace = scenario->getMarketplace();
+    
+    double price = marketplace->getPrice(mOutputMrkName, aRegionName, aPeriod);
+    return max( price, SectorUtils::getDemandPriceThreshold() );
+}
+
+void FactorInputLeaf::calcQuantity(const gcamstr& aRegionName,
+        NationalAccount* aNationalAccount,
+        const double aTFP,
+        const double aParentQuantity,
+        const double aParentPrice,
+        const double aGamma,
+        const bool aSaveResults,
+        const int aPeriod)
+{
+    double sigma = 1.0-aGamma;
+    double price = getPrice(aRegionName, aTFP, aPeriod);
+    double quantity = pow(mScaler*mProductivity[aPeriod]*aTFP, (sigma - 1.0)) * pow((aParentPrice/ price),sigma) * aParentQuantity;
+    Marketplace* marketplace = scenario->getMarketplace();
+    if(mIsLabor) {
+        mDemand = quantity;
+    }
+    else if(mIsCapital) {
+        double capitalQ = aNationalAccount->getAccountValue(NationalAccount::MATERIALS_CAPITAL_STOCK);
+        double capStockChange = quantity - capitalQ;
+        mDemand = max(capStockChange, 0.0) / CURRENCY_CONVERSION();
+        if(aSaveResults) {
+            // cover the edge case when we actually want less capital stock
+            // than we already have in which case we need to record the
+            // extra depreciation
+            aNationalAccount->setAccount(NationalAccount::MATERIALS_CAPITAL_STOCK, quantity);
+            if(capStockChange < 0.0) {
+                // annual depreciation
+                double timestep = scenario->getModeltime()->gettimestep(aPeriod);
+                double depreciation = aNationalAccount->getAccountValue(NationalAccount::DEPRECIATION);
+                depreciation -= capStockChange / timestep;
+                aNationalAccount->setAccount(NationalAccount::DEPRECIATION, depreciation);
+            }
+        }
+    }
+    if(price <= SectorUtils::getDemandPriceThreshold()) {
+        const Marketplace* marketplace = scenario->getMarketplace();
+        double unadjPrice = marketplace->getPrice(mOutputMrkName, aRegionName, aPeriod);
+        mDemand = SectorUtils::adjustDemandForNegativePrice( mDemand, unadjPrice );
+    }
+    if(!aSaveResults) {
+    marketplace->addToDemand(mOutputMrkName, aRegionName, mDemand, aPeriod);
+    }
+}
+
+double FactorInputLeaf::getQuantity(const gcamstr& aRegionName, const int aPeriod) {
+    assert(!mIsLabor && !mIsCapital);
+
+    const Marketplace* marketplace = scenario->getMarketplace();
+    // stash it so we can use it for reporting later
+    mDemand = marketplace->getPrice(mOutputMrkName, aRegionName, aPeriod)
+        * CURRENCY_CONVERSION();
+    return mDemand;
+}
+
+void FactorInputLeaf::calcPricesForReporting(NationalAccount* aNationalAccount, const double aTFP, const double aQuantityAbove, const double aPriceAbove, const double aGamma, const int aPeriod) {
+    assert(!mIsLabor && !mIsCapital);
+    double sigma = 1.0 - aGamma;
+    double price = pow(getCoefficient(aTFP, aPeriod), (1.0-1.0/sigma)) * pow((aQuantityAbove/mDemand),(1.0/sigma)) * aPriceAbove;
+    double value = price * mDemand;
+    aNationalAccount->setAccount(mIsEnergy ? NationalAccount::ENERGY_SERVICE_VALUE : NationalAccount::AG_NONFOOD_SERVICE_VALUE, value);
+}
+
+void FactorInputLeaf::reportResults(const gcamstr& aRegionName,
+        const double aTFP,
+        const double aGrossOutput,
+        NationalAccount* aNationalAccount,
+        const int aPeriod)
+{
+    if(mIsLabor) {
+        double price = getPrice(aRegionName, aTFP, aPeriod);
+        double value = mDemand * price;
+        double fr_share = value / aGrossOutput;
+        aNationalAccount->setAccount(NationalAccount::FR_SHARE_LABOR, fr_share);
+        aNationalAccount->setAccount(NationalAccount::MATERIALS_LABOR_WAGES, value);
+        aNationalAccount->setAccount(NationalAccount::MATERIALS_LABOR_FORCE, mDemand);
+    }
+    else if(mIsCapital) {
+        double capInvTimestep = mDemand * CURRENCY_CONVERSION();
+        const double annualizationFactor = scenario->getModeltime()->gettimestep(aPeriod);
+        double capInvAnnual = capInvTimestep / annualizationFactor;
+        double capStockTot = aNationalAccount->getAccountValue(NationalAccount::MATERIALS_CAPITAL_STOCK);
+        double price = getPrice(aRegionName, aTFP, aPeriod);
+        double value = capStockTot * price;
+        double fr_share = value / aGrossOutput;
+        aNationalAccount->setAccount(NationalAccount::FR_SHARE_CAPITAL, fr_share);
+        aNationalAccount->setAccount(NationalAccount::CAPITAL_PRICE, price);
+        aNationalAccount->setAccount(NationalAccount::MATERIALS_CAPITAL_INV, capInvAnnual);
+    }
+    else {
+        double value = aNationalAccount->getAccountValue(mIsEnergy ?
+            NationalAccount::ENERGY_SERVICE_VALUE :
+            NationalAccount::AG_NONFOOD_SERVICE_VALUE);
+        double quantity = mDemand;
+        double price = value / quantity;
+        double fr_share = value / aGrossOutput;
+        if(mIsEnergy) {
+            aNationalAccount->setAccount(NationalAccount::ENERGY_SERVICE, quantity);
+            aNationalAccount->setAccount(NationalAccount::ENERGY_SERVICE_PRICE, price);
+            aNationalAccount->setAccount(NationalAccount::FR_SHARE_ENERGY, fr_share);
+        }
+        else {
+            aNationalAccount->setAccount(NationalAccount::AG_NONFOOD_SERVICE, quantity);
+            aNationalAccount->setAccount(NationalAccount::AG_NONFOOD_SERVICE_PRICE, price);
+            aNationalAccount->setAccount(NationalAccount::FR_SHARE_AG, fr_share);
+        }
+    }
+}
 
 //! post calcualtions for each period
 void FactorInputLeaf::postCalc(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod){
@@ -128,19 +329,6 @@ void FactorInputLeaf::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitFactorInputLeaf( this, aPeriod );
     
     aVisitor->endVisitFactorInputLeaf( this, aPeriod );
-}
-
-void FactorInputLeaf::grabInputs(FactorInputLeaf *&aEnergyInput, FactorInputLeaf *&aLaborInput, FactorInputLeaf *&aCapitalInput)
-{
-    if(mIsEnergy) {
-        aEnergyInput = this;
-    }
-    else if(mIsLabor) {
-        aLaborInput = this;
-    }
-    else if(mIsCapital) {
-        aCapitalInput = this;
-    }
 }
 
 //******* FactorInputNode *******
@@ -168,28 +356,18 @@ const gcamstr& FactorInputNode::getName() const {
  * \author Sonny Kim
  * \return The constant XML_NAME as a static.
  */
-const string& FactorInputNode::getXMLNameStatic() {
-    static const string XML_NAME = "factor-input-node";
+const gcamstr& FactorInputNode::getXMLNameStatic() {
+    static const gcamstr XML_NAME = "factor-input-node";
     return XML_NAME;
 }
 
-const string& FactorInputNode::getXMLName() const {
+const gcamstr& FactorInputNode::getXMLName() const {
     return getXMLNameStatic();
-}
-
-//! Return boolean to determine if primary factor
-bool FactorInputNode::isPrimaryFactor() const {
-    // node is primary if it contains a single primary leaf
-    for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
-        if( mFactorInputLeaf[i]->isPrimaryFactor() ){
-            return true;
-        }
-    }
-    return false;
 }
 
 //! complete initializations
 void FactorInputNode::completeInit( const gcamstr& aRegionName, const gcamstr& aGDPActName ) {
+    mFactorNodeGamma = mFactorNodeGamma/(mFactorNodeGamma-1.0);
     for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
         mFactorInputLeaf[i]->completeInit( aRegionName, aGDPActName );
     }
@@ -199,6 +377,82 @@ void FactorInputNode::completeInit( const gcamstr& aRegionName, const gcamstr& a
 void FactorInputNode::initCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ) {
     for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
         mFactorInputLeaf[i]->initCalc( aRegionName, aNationalAccount, aPeriod );
+    }
+}
+
+void FactorInputNode::updateMarkets(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod) {
+    for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
+        mFactorInputLeaf[i]->updateMarkets( aRegionName, aNationalAccount, aPeriod );
+    }
+}
+
+void FactorInputNode::getCalShares(std::vector<double>& aShares, const gcamstr& aRegionName, NationalAccount* aNationalAccount, const double aGrossOutput, const int aPeriod)
+{
+    for(auto leaf : mFactorInputLeaf) {
+        double share = leaf->getCalShares(aRegionName, aNationalAccount, aGrossOutput, aPeriod);
+        aShares.push_back(share);
+    }
+}
+
+void FactorInputNode::calcCoef(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const double aGrossOutput, const double aShareAdj, const double aSlackShare, const double aParentValue, const double aParentPrice, const double aGamma, const int aPeriod)
+{
+    double childShareTotal = 0.0;
+    for(auto leaf : mFactorInputLeaf) {
+        double share = leaf->getCalShares(aRegionName, aNationalAccount, aGrossOutput, aPeriod);
+        share *= aShareAdj;
+        childShareTotal += share;
+    }
+    double value = childShareTotal * aGrossOutput;
+    double price = 1.0;
+    double share = value / aParentValue;
+    mScaler = pow(share, (-1.0/aGamma)) * price / aParentPrice;
+    for(auto leaf : mFactorInputLeaf) {
+        leaf->calcCoef(aRegionName, aNationalAccount, aGrossOutput, aShareAdj, aSlackShare, value, price, mFactorNodeGamma, aPeriod);
+    }
+}
+
+double FactorInputNode::getPrice(const gcamstr& aRegionName, const double aTFP, const int aPeriod)
+{
+    double childPriceSum = 0.0;
+    for(auto leaf : mFactorInputLeaf) {
+        double price = leaf->getPrice(aRegionName, aTFP, aPeriod);
+        childPriceSum += pow(price / leaf->getCoefficient(aTFP, aPeriod), mFactorNodeGamma);
+    }
+    return pow(childPriceSum, 1.0 / mFactorNodeGamma);
+}
+
+void FactorInputNode::calcQuantity(const gcamstr& aRegionName,
+        NationalAccount* aNationalAccount,
+        const double aTFP,
+        const double aParentQuantity,
+        const double aParentPrice,
+        const double aGamma,
+        const bool aSaveResults,
+        const int aPeriod)
+{
+    double sigma = 1.0 - aGamma;
+    double price = getPrice(aRegionName, aTFP, aPeriod);
+    double quantity = pow(mScaler,(sigma - 1)) * pow((aParentPrice/price),sigma) * aParentQuantity;
+    if(aSaveResults) {
+        mPrice = price;
+        mDemand = quantity;
+    }
+    for(auto leaf : mFactorInputLeaf) {
+        leaf->calcQuantity(aRegionName, aNationalAccount, aTFP, quantity, price, mFactorNodeGamma, aSaveResults, aPeriod);
+    }
+}
+
+
+void FactorInputNode::reportResults(const gcamstr& aRegionName,
+        const double aTFP,
+        const double aGrossOutput,
+        NationalAccount* aNationalAccount,
+        const int aPeriod)
+{
+    double value = mPrice * mDemand;
+    aNationalAccount->setAccount(NationalAccount::MATERIALS_VALUE_ADDED, value);
+    for(auto leaf : mFactorInputLeaf) {
+        leaf->reportResults(aRegionName, aTFP, aGrossOutput, aNationalAccount, aPeriod);
     }
 }
 
@@ -224,7 +478,7 @@ void FactorInputNode::accept( IVisitor* aVisitor, const int aPeriod ) const {
 //*********** NestedCESProductionFunctionMacro
 
 //! Default Constructor
-NestedCESProductionFunctionMacro::NestedCESProductionFunctionMacro()
+NestedCESProductionFunctionMacro::NestedCESProductionFunctionMacro():mFactorInputNode(0)
 {
 }
 
@@ -237,12 +491,12 @@ NestedCESProductionFunctionMacro::NestedCESProductionFunctionMacro()
  * \author Sonny Kim
  * \return The constant XML_NAME as a static.
  */
-const string& NestedCESProductionFunctionMacro::getXMLNameStatic() {
-    static const string XML_NAME = "gdp-macro-function";
+const gcamstr& NestedCESProductionFunctionMacro::getXMLNameStatic() {
+    static const gcamstr XML_NAME = "gdp-macro-function";
     return XML_NAME;
 }
 
-const string& NestedCESProductionFunctionMacro::getXMLName() const {
+const gcamstr& NestedCESProductionFunctionMacro::getXMLName() const {
     return getXMLNameStatic();
 }
 
@@ -268,9 +522,11 @@ void NestedCESProductionFunctionMacro::toDebugXML( const int aPeriod, ostream& a
 //! Complete initializations and scaler initializations
 void NestedCESProductionFunctionMacro::completeInit(const gcamstr& aRegionName, const gcamstr& aGDPActName ){
 
+    mRho = mRho/(mRho-1.0);
     // complete initialization for nodes and leaves and establish input dependencies
-    for( unsigned int i = 0; i < mFactorInputNode.size(); i++ ){
-            mFactorInputNode[i]->completeInit( aRegionName, aGDPActName );
+    mFactorInputNode->completeInit( aRegionName, aGDPActName );
+    for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
+            mFactorInputLeaf[i]->completeInit( aRegionName, aGDPActName );
     }
 }
 
@@ -280,124 +536,141 @@ void NestedCESProductionFunctionMacro::initCalc( const gcamstr& aRegionName, Nat
     // initialization of factor reward shares and base scalers are done in
     // postCalc as dynamic calculations of energy value are required
     
-    for( unsigned int i = 0; i < mFactorInputNode.size(); i++ ){
-        mFactorInputNode[i]->initCalc( aRegionName, aNationalAccount, aPeriod );
+    mFactorInputNode->initCalc( aRegionName, aNationalAccount, aPeriod );
+    for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
+        mFactorInputLeaf[i]->initCalc( aRegionName, aNationalAccount, aPeriod );
     }
 }
 
 void NestedCESProductionFunctionMacro::setTotalFactorProductivity(const double aTotalFactorProd) {
-    mTotalFactorProd = aTotalFactorProd;
+    const double MIN_TFP = 0.001;
+    mTotalFactorProd = std::max(aTotalFactorProd, MIN_TFP);
+}
+
+void NestedCESProductionFunctionMacro::updateMarkets(const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod) {
+    mFactorInputNode->updateMarkets(aRegionName, aNationalAccount, aPeriod);
+    for(auto leaf : mFactorInputLeaf) {
+        leaf->updateMarkets(aRegionName, aNationalAccount, aPeriod);
+    }
 }
 
 //! calculate Gross Output
 double NestedCESProductionFunctionMacro::calcGrossOutput( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod, const bool aSaveResults ){
     const Modeltime* modeltime = scenario->getModeltime();
-    const Marketplace* marketplace = scenario->getMarketplace();
-    
-    // grab inputs and parameters from the nesting structure
-    double gamma = 0.0;
-    for( unsigned int i = 0; i < mFactorInputNode.size(); i++ ){
-        if(mFactorInputNode[i]->isPrimaryFactor()){
-            gamma = mFactorInputNode[i]->getNodeGamma();
-        }
-    }
-    FactorInputLeaf* energyInput;
-    FactorInputLeaf* laborInput;
-    FactorInputLeaf* capitalInput;
-    for(auto node : mFactorInputNode) {
-        node->grabInputs(energyInput, laborInput, capitalInput);
-    }
-    
-    // get the quantities to feed into the CES
-    double energyQ = marketplace->getPrice(energyInput->mOutputMrkName, aRegionName, aPeriod)
-        * 1000.0 * FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
-    double laborQ = aNationalAccount->getAccountValue(NationalAccount::LABOR_FORCE);
-    double capitalQ = aNationalAccount->getAccountValue(NationalAccount::CAPITAL_STOCK);
-    
+    Marketplace* marketplace = scenario->getMarketplace();
+
+    // the price of Z is the numeraire (fixed)
+    const double priceZ = 1.0;
+
     // if this is a historical period then we need to first calibrate the CES scalers
     if(aPeriod <= modeltime->getFinalCalibrationPeriod()) {
-        double grossOutput = aNationalAccount->getAccountValue(NationalAccount::GROSS_OUTPUT);
-        
-        // calcualte value shares
-        double laborV = aNationalAccount->getAccountValue(NationalAccount::LABOR_WAGES);
-        double capitalV = aNationalAccount->getAccountValue(NationalAccount::CAPITAL_VALUE);
-        
-        double shareK = capitalV / grossOutput;
-        double shareL = laborV / grossOutput;
-        double shareE = (1.0 - shareK - shareL);
-        // Given the energy value is being pulled out of GCAM without adjustment
-        // there is a chance for inconsistency and send the remaining value to <= zero.
-        // Instead we will enforce a minimum energy share and adjust both labor and capital
-        // to make up for the shortfall
-        const double MIN_SLACK_SHARE = 0.05;
-        if(shareE < MIN_SLACK_SHARE) {
-            double shareAdj = (1.0 - MIN_SLACK_SHARE) / (shareK + shareL);
-            // adjust labor and energy uniformily to meet the minimum threshold
-            shareK *= shareAdj;
-            shareL *= shareAdj;
-            shareE = MIN_SLACK_SHARE;
+        double grossOutput = aNationalAccount->getAccountValue(NationalAccount::MATERIALS_GROSS_OUTPUT);
+        vector<double> shares;
+        mFactorInputNode->getCalShares(shares, aRegionName, aNationalAccount, grossOutput, aPeriod);
+        for(auto leaf : mFactorInputLeaf) {
+            double share = leaf->getCalShares(aRegionName, aNationalAccount, grossOutput, aPeriod);
+            shares.push_back(share);
         }
-        
-        // calibrate and store scalers
-        double c = shareE * pow(grossOutput / energyQ, mRho);
-        double b = pow(pow(grossOutput, mRho) - c * pow(energyQ, mRho), (gamma / mRho)) /
-            ((1 + shareL / shareK) * pow(capitalQ, gamma));
-        double a = pow(pow(grossOutput, mRho) - c * pow(energyQ, mRho), (gamma / mRho)) /
-            ((1 + shareK / shareL) * pow(laborQ, gamma));
-        laborInput->mScaler = a;
-        capitalInput->mScaler = b;
-        energyInput->mScaler = c;
+        double shareSum = 0.0;
+        for(int i = 0; i < shares.size(); ++i) {
+            // the slack share uses a negative value as sentinal, do not include
+            // it in the sum
+            if(shares[i] > 0.0) {
+                shareSum += shares[i];
+            }
+        }
+        double slackShare = 1.0 - shareSum;
+        double shareAdj = 1.0;
+        // calculate the "slack" share
+        // Given the energy value is being pulled out of GCAM without adjustment
+        // there is a chance for inconsistency and send the remaining value (which is
+        // all attributed to capital) to <= zero.  Instead we will enforce a minimum
+        // capital share and adjust both labor and energy to make up for the shortfall
+        const double MIN_SLACK_SHARE = 0.05;
+        if(slackShare < MIN_SLACK_SHARE) {
+            // adjust labor and energy uniformily to meet the minimum threshold
+            shareAdj = (1.0 - MIN_SLACK_SHARE) / shareSum;
+            slackShare = MIN_SLACK_SHARE;
+        }
+
+        mFactorInputNode->calcCoef(aRegionName, aNationalAccount, grossOutput, shareAdj, slackShare, grossOutput, priceZ, mRho, aPeriod);
+        for(auto leaf : mFactorInputLeaf) {
+            leaf->calcCoef(aRegionName, aNationalAccount, grossOutput, shareAdj, slackShare, grossOutput, priceZ, mRho, aPeriod);
+        }
     }
+
+    // given the mix of price driven (value added nest) and quantity driven inputs
+    // (ag and energy) we will need to calculate our CES equations is a specific order
+    // first aggregate the prices within the value added nest
+    double priceVA = mFactorInputNode->getPrice(aRegionName, mTotalFactorProd, aPeriod);
+    // next calculate the quantity sum of the direct inputs into the top level nest
+    double sigma = 1.0-mRho;
+    double quantDenom = 0.0;
+    for(auto leaf : mFactorInputLeaf) {
+        double coef = leaf->getCoefficient(mTotalFactorProd, aPeriod);
+        double quant = leaf->getQuantity(aRegionName, aPeriod);
+        quantDenom += 1.0/pow(coef * quant, 1.0/sigma - 1.0);
+    }
+    // we can now mix the quantities and prices (given the output price "Z" as numeraire)
+    // to calculate the total gross output quantity
+    double grossOutput = pow((1.0-pow((priceVA/(mFactorInputNode->getCoefficient()*priceZ)),(1-sigma)))/quantDenom,(sigma/(1-sigma)));
+    // with all the quantities now know the last set is to back calculate the implied
+    // quantities within the value added nest (capital and labor)
+    mFactorInputNode->calcQuantity(aRegionName, aNationalAccount, mTotalFactorProd, grossOutput, priceZ, mRho, aSaveResults, aPeriod);
+
+    // Set the supply for investment which generally is just fixed to the INVESTMENT account
+    // value.  However, for solution stability we will scale down to zero when prices are _low_
+    const double LOW_CAP_PRICE_THRESHOLD = 0.001;
+    gcamstr capMarketName("");
+    for(auto leaf : mFactorInputNode->mFactorInputLeaf) {
+        if(leaf->mIsCapital) {
+            capMarketName = leaf->mOutputMrkName;
+        }
+    }
+    assert(!capMarketName.empty());
     
-    // get factor productivity adjustments
-    double laborProd = 1.0;
-    double capitalProd = 1.0;
-    double energyProd = 1.0;
-    if(aPeriod > modeltime->getFinalCalibrationPeriod()) {
-        laborProd = laborInput->mProductivity[aPeriod];
-        capitalProd = capitalInput->mProductivity[aPeriod];
-        energyProd = energyInput->mProductivity[aPeriod];
+    double priceK = marketplace->getPrice(capMarketName, aRegionName, aPeriod);
+    double capSupplyAdj = 1.0;
+    if(priceK < LOW_CAP_PRICE_THRESHOLD) {
+        capSupplyAdj = priceK / LOW_CAP_PRICE_THRESHOLD;
     }
-    // calculate the nested CES starting with the value added nest then the top level nest
-    double a = laborInput->mScaler;
-    double b = capitalInput->mScaler;
-    double c = energyInput->mScaler;
-    double V = pow(a * pow(laborProd * laborQ, gamma) + b * pow(capitalProd * capitalQ, gamma), 1.0 / gamma);
-    double Y = pow(pow(V, mRho) + c * pow(energyProd * energyQ, mRho), 1.0 / mRho);
-    // finally apply total factor productivity to get the final gross output
-    double grossOutput = Y * mTotalFactorProd;
+    // INVESTMENT is an annual supply of savings for investment in terms of million 1990$
+    // the capital market is cumulative investment over a timestep in terms of billion 1975$
+    mCapitalSupply = aNationalAccount->getAccountValue(NationalAccount::INVESTMENT)
+        / CURRENCY_CONVERSION()
+        * modeltime->gettimestep(aPeriod) * capSupplyAdj;
+    
+    if(!aSaveResults) {
+        marketplace->addToSupply(capMarketName, aRegionName, mCapitalSupply, aPeriod);
+    }
 
     // during post calc we do another call with aSaveResults set to true so that we can store
     // some additional information for reporting purposes
     if(aSaveResults) {
-        aNationalAccount->setAccount(NationalAccount::GROSS_OUTPUT, grossOutput);
-        
-        double facRewardEnergy = c * pow(energyProd * energyQ, mRho) / pow(Y, mRho);
-        double facRewardCapital = b * pow(capitalProd * capitalQ, gamma) / pow(V, gamma) * pow(V, mRho) / pow(Y, mRho);
-        double facRewardLabor = a * pow(laborProd * laborQ, gamma) / pow(V, gamma) * pow(V, mRho) / pow(Y, mRho);
-        
-        double valueAdded = grossOutput * (1.0 - facRewardEnergy);
-        aNationalAccount->setAccount(NationalAccount::VALUE_ADDED, valueAdded);
-        aNationalAccount->setAccount(NationalAccount::FR_SHARE_ENERGY, facRewardEnergy);
-        aNationalAccount->setAccount(NationalAccount::FR_SHARE_CAPITAL, facRewardCapital);
-        aNationalAccount->setAccount(NationalAccount::FR_SHARE_LABOR, facRewardLabor);
-        aNationalAccount->setAccount(NationalAccount::LABOR_WAGES, (facRewardLabor*grossOutput));
-        aNationalAccount->setAccount(NationalAccount::ENERGY_SERVICE_VALUE, (facRewardEnergy*grossOutput));
+        aNationalAccount->setAccount(NationalAccount::MATERIALS_GROSS_OUTPUT, grossOutput);
+        mFactorInputNode->reportResults(aRegionName, mTotalFactorProd, grossOutput, aNationalAccount, aPeriod);
+        for(auto leaf : mFactorInputLeaf) {
+            leaf->calcPricesForReporting(aNationalAccount, mTotalFactorProd, grossOutput, priceZ, mRho, aPeriod);
+            leaf->reportResults(aRegionName, mTotalFactorProd, grossOutput, aNationalAccount, aPeriod);
+        }
     }
+
     return grossOutput;
 }
 
 void NestedCESProductionFunctionMacro::postCalc( const gcamstr& aRegionName, NationalAccount* aNationalAccount, const int aPeriod ) {
-    for( unsigned int i = 0; i < mFactorInputNode.size(); i++ ){
-        mFactorInputNode[i]->postCalc(aRegionName, aNationalAccount, aPeriod);
+    mFactorInputNode->postCalc(aRegionName, aNationalAccount, aPeriod);
+    for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
+        mFactorInputLeaf[i]->postCalc(aRegionName, aNationalAccount, aPeriod);
     }
 }
 
 // for reporting NestedCESProductionFunctionMacro information
 void NestedCESProductionFunctionMacro::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitNestedCESProductionFunctionMacro( this, aPeriod );
-    for( unsigned int i = 0; i < mFactorInputNode.size(); i++ ){
-        mFactorInputNode[i]->accept(aVisitor, aPeriod);
+    mFactorInputNode->accept(aVisitor, aPeriod);
+    for( unsigned int i = 0; i < mFactorInputLeaf.size(); i++ ){
+        mFactorInputLeaf[i]->accept(aVisitor, aPeriod);
     }
     
     aVisitor->endVisitNestedCESProductionFunctionMacro( this, aPeriod );

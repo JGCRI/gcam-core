@@ -46,3 +46,13 @@ pwt1001,pop,pop.pwt,Population (in millions)
 pwt1001,rgdpna,gdp.pwt,Real GDP at constant 2017 national prices (in mil. 2017US$)
 pwt1001,rnna,capital.stock.pwt,Capital stock at constant 2017 national prices (in mil. 2017US$)
 pwt1001,delta,dep.rate.pwt,Average depreciation rate of the capital stock.
+pwt110,countrycode,iso,3-letter ISO country code
+pwt110,year,year,Year
+pwt110,irr,irr.pwt,Real internal rate of return
+pwt110,labsh,labor.share.pwt,Share of labour compensation in GDP at current national prices
+pwt110,emp,emp.pwt,Number of persons engaged (in millions)
+pwt110,pop,pop.pwt,Population (in millions)
+pwt110,rgdpna,gdp.pwt,Real GDP at constant 2017 national prices (in mil. 2017US$)
+pwt110,rnna,capital.stock.pwt,Capital stock at constant 2017 national prices (in mil. 2017US$)
+pwt110,delta,dep.rate.pwt,Average depreciation rate of the capital stock.
+pwt110,rtfpna,tfp.pwt,TFP at constant national prices (2021=1)

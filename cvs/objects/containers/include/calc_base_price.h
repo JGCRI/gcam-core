@@ -46,6 +46,7 @@
 #include <boost/core/noncopyable.hpp>
 #include <string>
 #include <map>
+#include <set>
 
 #include "containers/include/imodel_feedback_calc.h"
 #include "util/base/include/aparsable.h"
@@ -109,6 +110,9 @@ private:
     //! A mapping of aggregate sector name to a pair of currency and physical outputs which are being
     //! aggregated.
     std::map<gcamstr, std::pair<double, double> > mMappedSectorOutputs;
+    
+    //! A set of region names which will not have Macro calculations and therefore can be safely ignored
+    std::set<gcamstr> mRegionIgnoreList;
 
     //! The current model period
     int mPeriod;

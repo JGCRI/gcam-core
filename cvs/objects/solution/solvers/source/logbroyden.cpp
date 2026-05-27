@@ -433,7 +433,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
     double jdmax=0.0, jdmin=0.0;
     int jdjmax=0, jdjmin=0;
     locate_vector_minmax(jdiag, jdmax, jdmin, jdjmax, jdjmin);
-    solverLog << "diag( B ):\n" << jdiag << "\n";
+    //solverLog << "diag( B ):\n" << jdiag << "\n";
     solverLog << "maxval= " << jdmax << " jmax= " << jdjmax << "  "
               << "minval= " << jdmin << "  jmin= " << jdjmin << "\n";
     
@@ -540,7 +540,7 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
       double fxIncr = 0.0;
       solverLog << "Past f size: " << past_f_values.size();
       solverLog << " values F: " << past_f_values.front() << ", B: " << past_f_values.back() << std::endl;
-      if(past_f_values.size() == TRACK_NUM_PAST_F_VALUES && past_f_values.back()*1.1 > past_f_values.front() ) {
+      if(past_f_values.size() == TRACK_NUM_PAST_F_VALUES && past_f_values.back()*1.1 > past_f_values.front() && (iter+1) < mMaxIter ) {
           solverLog << "Taking a chance to try to jump out of local min.\n";
           // very little progress, might be stuck in a local minima
           // let's take a chance and take a step out of our comfort zone
@@ -714,14 +714,8 @@ int LogBroyden::bsolve(VecFVec &F, UBVECTOR &x, UBVECTOR &fx,
           }
         
       }
-      else {
-        // just did a reset, and it didn't help us.  Probably we've
-        // got a very ill-behaved value in one of the variables.  Kick
-        // it out and see if the bracketing routine can fix it.
-        solverLog << "Repeated poor progress in Broyden solver.  Returning.\n";
-        F(x, fx);
-        return -4;
-      }
+      // poor progress but we will let it keep going to see if jumping out
+      // of a local min helps
     }
 
     // log the data trace before we do the update

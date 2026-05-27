@@ -50,6 +50,7 @@
 #include "util/base/include/ivisitor.h"
 #include "containers/include/iinfo.h"
 #include "util/logger/include/ilogger.h"
+#include "functions/include/non_energy_input.h"
 
 using namespace std;
 
@@ -148,7 +149,7 @@ void ResourceReserveTechnology::completeInit(const gcamstr& aRegionName,
     // find the non-energy input which will be used to track the "investment"
     for(IInput* currInput : mInputs) {
         if(!mInvestmentCostInput && currInput->hasTypeFlag(IInput::CAPITAL)) {
-            mInvestmentCostInput = currInput;
+            mInvestmentCostInput = static_cast<TrackingNonEnergyInput*>(currInput);
         }
     }
     if(!mInvestmentCostInput) {
@@ -179,6 +180,11 @@ void ResourceReserveTechnology::initCalc( const gcamstr& aRegionName,
     if(isOperating(aPeriod) && !mProductionState[ aPeriod ]->isNewInvestment()) {
         // pass forward the investment cost which gets set during new investment
         double investmentCost = mInvestmentCostInput->getPrice(aRegionName, aPeriod -1);
+        // note this cost will not be adjusted for the market capital price thus
+        // in the first period after investment we will make that adjustment
+        if(mProductionState[ aPeriod-1 ]->isNewInvestment()) {
+            investmentCost = mInvestmentCostInput->calcAdjustedPrice(investmentCost, aRegionName, aPeriod-1);
+        }
         mInvestmentCostInput->setPrice(aRegionName, investmentCost, aPeriod);
     }
 }
@@ -283,7 +289,7 @@ void ResourceReserveTechnology::setProductionState( const int aPeriod ) {
 
 /*!
  * \brief Return fixed Technology output
- * \details For ResourceReserveTechnology we use this oportunity to set the investment
+ * \details For ResourceReserveTechnology we use this opportunity to set the investment
  *          cost if this is a new vintage technology.  In addition we adjust the marginal
  *          revenue to include the investment cost.
  * \param aRegionName Region name.
@@ -306,8 +312,10 @@ double ResourceReserveTechnology::getFixedOutput( const gcamstr& aRegionName,
 {
     double investmentCost;
     if( mProductionState[ aPeriod ]->isNewInvestment() ) {
-        investmentCost = aMarginalRevenue;
-        mInvestmentCostInput->setPrice(aRegionName, aMarginalRevenue, aPeriod);
+        // back calculate the un-adjusted investment cost so that we can set it
+        // to properly calculate investment demands
+        investmentCost = aMarginalRevenue - mCosts[aPeriod];
+        mInvestmentCostInput->setPrice(aRegionName, investmentCost, aPeriod);
     }
     else {
         investmentCost = mInvestmentCostInput->getPrice(aRegionName, aPeriod);
@@ -328,17 +336,23 @@ double ResourceReserveTechnology::getCurrencyConversionPrice( const gcamstr& aRe
 }
 
 /*!
- * \brief The same as the Technology calcCost except we need to subtract off the investment cost to avoid double accounting.
+ * \brief Calculate a price adjustment that reflects the change in the market price for capital.
+ * \details The resource calculations will not include any adjustments for change in the market price
+ *          of capital, thus we will adjust for that now and return the delta so the subresource
+ *          can take that into account as well when looking up the supply curve.  Note the
+ *          delta returned is of the opposite sign, i.e. if capital prices go down we return
+ *          a positive value so as to look up "further up the curve".
+ * \param aCost The price which is being used to look up the supply curve.
  * \param aRegionName The region containing the Technology.
- * \param aSectorName The sector containing the Technology.
  * \param aPeriod Period in which to calculate the energy cost.
+ * \return The delta in cost from taking into account the market price of capital.
  */
-void ResourceReserveTechnology::calcCost(const gcamstr& aRegionName,
-                                         const gcamstr& aSectorName,
-                                         const int aPeriod)
+double ResourceReserveTechnology::calcInvestmentPrice(const double aCost,
+                                                     const gcamstr& aRegionName,
+                                                     const int aPeriod)
 {
-    Technology::calcCost(aRegionName, aSectorName, aPeriod);
-    mCosts[aPeriod] -= mInvestmentCostInput->getPrice(aRegionName, aPeriod);
+    double capAdjustedCost = mInvestmentCostInput->calcAdjustedPrice(aCost, aRegionName, aPeriod);
+    return aCost - capAdjustedCost;
 }
 
 /*!

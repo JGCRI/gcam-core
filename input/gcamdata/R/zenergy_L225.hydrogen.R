@@ -243,7 +243,7 @@ module_energy_L225.hydrogen <- function(command, ...) {
       left_join(L1233.globaltech_OMfixed_ATB, by = c("supplysector", "subsector", "technology", "year")) %>%
       rename(stub.technology = technology) %>%
       left_join(L225.RenewElec_CapFactor, by = c("supplysector", "subsector", "stub.technology", "year")) %>%
-      mutate(elec_cost_75USD_GJ = (capital.overnight * fixed.charge.rate + OM.fixed) /
+      mutate(elec_cost_75USD_GJ = (capital.overnight * calc_fixed_charge_rate(interest.rate, payback.years) + OM.fixed) /
                (CONV_YEAR_HOURS * capacity.factor * CONV_KWH_GJ)) %>%
       select(Scenario, region, renew_tech = subsector, year, elec_cost_75USD_GJ)
 
@@ -281,26 +281,32 @@ module_energy_L225.hydrogen <- function(command, ...) {
     # L225.GlobalTechTrackCapital_h2_[scen]: We want track capital investments for these technologies thus
     # we will change the object type accordingly and add the market name which will track investments
     # and the fraction of the total non-energy cost we should assume is annual investment in capital
-    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.H2_CAP_PAYMENTS) /
-      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.H2_CAP_PAYMENTS -1)
-
     L225.GlobalTechTrackCapital_h2_ref <- L225.GlobalTechCost_h2_ref %>%
       filter(sector.name == "H2 central production") %>%
-      mutate(capital.coef = socioeconomics.H2_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.H2_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.H2_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market =socioeconomics.EN_CAPITAL_MARKET_NAME,
              depreciation.rate = 0) %>% # note: vintaging is active so depreciation.rate is ignored
       select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']])
 
     L225.GlobalTechTrackCapital_h2_adv <- L225.GlobalTechCost_h2_adv %>%
       filter(sector.name == "H2 central production") %>%
-      mutate(capital.coef = socioeconomics.H2_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.H2_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.H2_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market =socioeconomics.EN_CAPITAL_MARKET_NAME,
              depreciation.rate = 0) %>%
       select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']])
 
     L225.GlobalTechTrackCapital_h2_lotech <- L225.GlobalTechCost_h2_lotech %>%
       filter(sector.name == "H2 central production") %>%
-      mutate(capital.coef = socioeconomics.H2_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.H2_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.H2_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market =socioeconomics.EN_CAPITAL_MARKET_NAME,
              depreciation.rate = 0) %>%
       select(LEVEL2_DATA_NAMES[['GlobalTechTrackCapital']])

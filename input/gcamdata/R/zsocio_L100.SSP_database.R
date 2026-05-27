@@ -92,6 +92,17 @@ module_socio_L100.SSP_database <- function(command, ...) {
                      "socioeconomics/SSP/iso_SSP_regID") ->
       L100.Pop_thous_SSP_ctry_Yfut_raw
 
+    assertthat::assert_that(
+      L100.Pop_thous_SSP_ctry_Yfut_raw %>%
+        rename(value = pop) %>%
+        filter(year == MODEL_SCENARIO_ALIGN_YEAR) %>%
+        group_by(iso, year) %>%
+        summarize(max = max(value), min = min(value), .groups = "drop") %>%
+        filter(max != min) %>%
+        nrow() == 0,
+      msg = paste0("Population values in ", MODEL_SCENARIO_ALIGN_YEAR, "across scenarios not fully aligned")
+    )
+
 
     SSP_pop_1 %>%
       left_join_error_no_match(
@@ -128,6 +139,17 @@ module_socio_L100.SSP_database <- function(command, ...) {
                      "socioeconomics/SSP/pop_laborforce_variable",
                      "socioeconomics/SSP/iso_SSP_regID") ->
       L100.LaborForce_mil_SSP_ctry_Yfut_raw
+
+    assertthat::assert_that(
+      L100.LaborForce_mil_SSP_ctry_Yfut_raw %>%
+        filter(year == MODEL_SCENARIO_ALIGN_YEAR, var == "labor.force") %>%
+        group_by(iso, year) %>%
+        summarize(max = max(value), min = min(value), .groups = "drop") %>%
+        filter(max != min) %>%
+        nrow() == 0,
+      msg = paste0("Labor force values in ", MODEL_SCENARIO_ALIGN_YEAR, "across scenarios not fully aligned")
+    )
+
 
 
     # (2) SSP GDP billions of 2017$ ----
@@ -168,6 +190,25 @@ module_socio_L100.SSP_database <- function(command, ...) {
       select(iso, scenario, year, gdp = value) ->
       L100.GDP_bilusd_SSP_ctry_Yfut_raw
 
+    # About 10 regions in SSP Database had small variations across SSPs in MODEL_SCENARIO_ALIGN_YEAR
+    # Align values to SSP2 in MODEL_SCENARIO_ALIGN_YEAR
+    L100.GDP_bilusd_SSP_ctry_Yfut_raw %>%
+      group_by(iso, year) %>%
+      mutate(gdp = if_else(year == MODEL_SCENARIO_ALIGN_YEAR, gdp[scenario == "SSP2"], gdp)) %>%
+      ungroup ->
+      L100.GDP_bilusd_SSP_ctry_Yfut_raw
+
+    assertthat::assert_that(
+      L100.GDP_bilusd_SSP_ctry_Yfut_raw %>%
+        rename(value = gdp) %>%
+        filter(year == MODEL_SCENARIO_ALIGN_YEAR) %>%
+        group_by(iso, year) %>%
+        summarize(max = max(value), min = min(value), .groups = "drop") %>%
+        filter(max != min) %>%
+        nrow() == 0,
+      msg = paste0("GDP values in ", MODEL_SCENARIO_ALIGN_YEAR, "across scenarios not fully aligned")
+    )
+
     ## Units are billions of 2017$ but relative ratio will be used when connecting to historical data
 
     L100.GDP_bilusd_SSP_ctry_Yfut_raw %>%
@@ -178,7 +219,6 @@ module_socio_L100.SSP_database <- function(command, ...) {
       add_precursors("socioeconomics/SSP/SSP_database_2025",
                      "socioeconomics/SSP/iso_SSP_regID") ->
       L100.GDP_bilusd_SSP_ctry_Yfut_raw
-
 
     return_data(MODULE_OUTPUTS)
 

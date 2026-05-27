@@ -1657,10 +1657,11 @@ module_energy_L244.building_det <- function(command, ...) {
       anti_join(L244.GlobalTechCost_bld_USA, by = c('sector.name','subsector.name','technology','year','minicam.non.energy.input')) %>%
       bind_rows(L244.GlobalTechCost_bld_USA)
 
-    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.BUILDINGS_CAP_PAYMENTS) /
-      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.BUILDINGS_CAP_PAYMENTS -1)
     L244.GlobalTechCost_bld %>%
-      mutate(capital.coef = socioeconomics.BUILDINGS_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.BUILDINGS_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.BUILDINGS_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              # note consumer ACs, etc are technically not investment but rather "consumer durable"
              tracking.market = if_else(grepl('resid', sector.name),
                                        socioeconomics.EN_DURABLE_MARKET_NAME, socioeconomics.EN_CAPITAL_MARKET_NAME),

@@ -69,7 +69,6 @@ class Tabs;
  *              - \c OM-fixed InputOMFixed::mOMFixed
  *              - \c capacity-factor InputOMFixed::mCapacityFactor
  *              - \c levelized-OM-fixed InputOMFixed::mLevelizedOMFixedCost
- *              - \c tech-change InputOMFixed::mTechChange
  *
  * \author Josh Lurz
  */
@@ -146,8 +145,6 @@ public:
     virtual double getIncomeElasticity( const int aPeriod ) const;
 
     virtual double getPriceElasticity( const int aPeriod ) const;
-
-    virtual double getTechChange( const int aPeriod ) const;
     
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IInput* aPreviousInput,
@@ -160,27 +157,11 @@ protected:
     DEFINE_DATA_WITH_PARENT(
         MiniCAMInput,
         
-        //! Cost of the non-energy input adjusted for the additional costs of the
-        //! capture component.
-        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
-        
-        //! Coefficient for production or demand function. Coefficients are not
-        // read in and are initialized to 1, but can increase over time with
-        // technical change.
-        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
-        
-        //! Input specific technical change.
-        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
-        
         //! Variable O&M cost.
         DEFINE_VARIABLE( SIMPLE, "OM-fixed", mOMFixed, Value ),
         
         //! Calculated value for the levelized cost of capital.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "levelized-OM-fixed", mLevelizedOMFixedCost, Value ),
-        
-        //! Technology capacity factor.
-        // TODO: create one in technology and use that instead.
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "capacity-factor", mCapacityFactor, double )
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "levelized-OM-fixed", mLevelizedOMFixedCost, Value )
     )
     
     void copy( const InputOMFixed& aOther );
@@ -189,7 +170,7 @@ private:
     const static std::string XML_REPORTING_NAME; //!< tag name for reporting xml db 
 
     // Function to calculate the levelized fixed O&M cost.
-    double calcLevelizedOMFixedCost( void ) const;
+    double calcLevelizedOMFixedCost( const double aCapFactor ) const;
 
 };
 

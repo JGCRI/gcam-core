@@ -1,0 +1,46 @@
+# File: FAO_price_adjustments.csv
+# Title: Price adjustments for FAO agricultural and animal commodity data quality corrections
+# Unit: Unitless (adjustment multipliers)
+# Description: Corrections for known FAO data quality issues in specific regions and commodities.
+# These adjustments address measurement errors, underestimation/overestimation, and gaps in FAO PRODSTAT
+# and trade data. Applied in module_aglu_L100.regional_ag_an_for_prices to calibration prices.
+# Column types: ccdc
+# ----------
+# region: GCAM region name
+# GCAM_commodity: GCAM agricultural or animal commodity name
+# adjustment_multiplier: Factor to multiply FAO price by (1.0 = no adjustment)
+# notes: Explanation of the data quality issue and rationale for adjustment
+region,GCAM_commodity,adjustment_multiplier,notes
+India,Dairy,8,"FAO dairy prices in India underestimated; quality and measurement issues"
+India,Beef,1.5,"FAO beef prices in India underestimated"
+India,Corn,2,"FAO crop prices in India underestimated; affects macro value-added tracing"
+India,Rice,2,"FAO crop prices in India underestimated; affects macro value-added tracing"
+India,Wheat,2,"FAO crop prices in India underestimated; affects macro value-added tracing"
+India,OilCrop,2,"FAO crop prices in India underestimated; affects macro value-added tracing"
+India,Soybean,2,"FAO crop prices in India underestimated; affects macro value-added tracing"
+India,SugarCrop,2,"FAO crop prices in India underestimated; affects macro value-added tracing"
+India,RootTuber,2,"FAO crop prices in India underestimated; affects macro value-added tracing"
+Brazil,SugarCrop,2,"FAO sugarcrop prices in Brazil underestimated"
+Brazil,Beef,2.5,"FAO livestock prices in Brazil underestimated"
+Brazil,SheepGoat,2.5,"FAO livestock prices in Brazil underestimated"
+Brazil,Pork,2.5,"FAO livestock prices in Brazil underestimated"
+Brazil,Poultry,2.5,"FAO livestock prices in Brazil underestimated"
+Argentina,Corn,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,FiberCrop,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,FodderGrass,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,Fruits,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,Legumes,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,OilCrop,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,OtherGrain,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,Pasture,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,Rice,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,RootTuber,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,Soybean,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,SugarCrop,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,Vegetables,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,Wheat,0.5,"FAO crop prices in Argentina overestimated"
+Argentina,Beef,0.5,"FAO livestock prices in Argentina overestimated"
+Argentina,Dairy,0.5,"FAO livestock prices in Argentina overestimated"
+Argentina,SheepGoat,0.5,"FAO livestock prices in Argentina overestimated"
+Argentina,Pork,0.5,"FAO livestock prices in Argentina overestimated"
+Argentina,Poultry,0.5,"FAO livestock prices in Argentina overestimated"

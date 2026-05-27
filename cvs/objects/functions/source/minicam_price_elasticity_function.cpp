@@ -209,18 +209,6 @@ double MinicamPriceElasticityFunction::getCapitalOutputRatio( const InputSet& aI
     return -1;
 }
 
-double MinicamPriceElasticityFunction::applyTechnicalChange( InputSet& aInputs,
-                                                             const TechChange& aTechChange,
-                                                             const gcamstr& aRegionName,
-                                                             const gcamstr& aSectorName,
-                                                             const int aPeriod,
-                                                             double aAlphaZero,
-                                                             double aSigma ) const
-{
-    return FunctionUtils::applyTechnicalChangeInternal( aInputs, aTechChange, aRegionName, aSectorName,
-                                                        aPeriod, aAlphaZero, aSigma );
-}
-
 double MinicamPriceElasticityFunction::calcUnscaledProfits( const InputSet& input,
                                                             const gcamstr& aRegionName,
                                                             const gcamstr& sectorName,

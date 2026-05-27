@@ -85,6 +85,10 @@ bool CalcBasePrice::XMLParse( rapidxml::xml_node<char>* & aNode ) {
                 gcamstr toSector(attrs["to-name"]);
                 mSectorNameMap[ fromSector ] = toSector;
             }
+            else if( nodeName == "ignore-region" ) {
+                gcamstr currRegion(XMLParseHelper::getValue<string>(aNode));
+                mRegionIgnoreList.insert(currRegion);
+            }
         }
     }
     return true;
@@ -103,7 +107,7 @@ void CalcBasePrice::calcFeedbacksAfterPeriod( Scenario* aScenario,
         string finalCalYear = util::toString( modeltime->getper_to_yr( aPeriod ) );
         // search for any currency output which is only calculated for sectors
         // that we track for macro purposes
-        vector<FilterStep*> query = parseFilterString( "world/region/sector/subsector/technology/period[YearFilter,IntEquals,"+
+        vector<FilterStep*> query = parseFilterString( "world/region/sector/subsector//period[YearFilter,IntEquals,"+
             finalCalYear+"]/output/currency-output" );
         GCAMFusion<CalcBasePrice, true, true, true> setPrices( *this, query );
         setPrices.startFilter( aScenario );
@@ -138,9 +142,11 @@ void CalcBasePrice::popFilterStep<Region*>( Region* const & aData ) {
         // actually find any data for it
         auto mappedSectorValueIter = mMappedSectorOutputs.find( (*mappedSectorIter).second );
         if( mappedSectorValueIter == mMappedSectorOutputs.end() ) {
-            ILogger& mainLog = ILogger::getLogger( "main_log" );
-            mainLog.setLevel( ILogger::ERROR );
-            mainLog << "Warning couldn't find values for: " << (*mappedSectorIter).second  << "in " << mCurrRegionName << endl;
+            if(mRegionIgnoreList.find(mCurrRegionName) != mRegionIgnoreList.end()) {
+                ILogger& mainLog = ILogger::getLogger( "main_log" );
+                mainLog.setLevel( ILogger::ERROR );
+                mainLog << "Warning couldn't find values for: " << (*mappedSectorIter).second  << " in " << mCurrRegionName << endl;
+            }
         }
         else {
             IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( (*mappedSectorIter).first, mCurrRegionName, mPeriod, false );

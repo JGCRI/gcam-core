@@ -26,7 +26,8 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
       FILE = "aglu/FAO/GCAMFAOSTAT_ForProdTrade",
       FILE = "aglu/FAO/GCAMFAOSTAT_AnimalStock",
       FILE = "aglu/FAO/GCAMFAOSTAT_LandCover",
-      FILE = "aglu/FAO/GCAMFAOSTAT_NFertilizer")
+      FILE = "aglu/FAO/GCAMFAOSTAT_NFertilizer",
+      FILE = "aglu/FAO/GCAMFAOSTAT_CapitalStock")
 
   MODULE_OUTPUTS <-
     c("L100.FAO_an_Stocks",
@@ -38,7 +39,9 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
       "L100.FAO_Fert_Prod_tN",
       "L100.FAO_For_Exp_m3",
       "L100.FAO_For_Imp_m3",
-      "L100.FAO_For_Prod_m3")
+      "L100.FAO_For_Prod_m3",
+      "L100.FAO_Ag_CapitalStock_Dep_R_Yh_2015MilUSD",
+      "L100.FAO_Ag_Depreciation_Rate_R_Yh")
 
   if(command == driver.DECLARE_INPUTS) {
     return(MODULE_INPUTS)
@@ -265,8 +268,97 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
       L100.FAO_harv_CL_kha
 
 
+    #Section 4. FAO Ag capital stock and depreciation rates ----
 
-    #*********************************************************
+    # FAO has capital /depreciation for years >= 1995; will fill in years with no data
+
+    GCAMFAOSTAT_CapitalStock %>%
+      # Value US$, 2015 prices; million USD
+      filter(element_code == 6184) %>%
+      # 22031:  Consumption of Fixed Capital (Agriculture, Forestry and Fishing)
+      # 22034:  Net Capital Stocks (Agriculture, Forestry and Fishing)
+      # 22030:  Gross Fixed Capital Formation (Agriculture, Forestry and Fishing)
+      filter(item_code %in% c(22034, 22031, 22030)) %>%
+      gather_years() %>%
+      na.omit %>%
+      mutate(
+        variable = case_when(
+          item_code == 22031 ~ "depreciation",
+          item_code == 22034 ~ "capital stock",
+          item_code == 22030 ~ "GFCF",
+          TRUE ~ "others") ) %>%
+      select(area_code, area, variable, year, unit, value) %>%
+      filter(variable != "GFCF") %>%
+      # disaggregate dissolved region
+      FAO_AREA_DISAGGREGATE_HIST_DISSOLUTION_ALL %>%
+      na.omit %>%
+      # the iso mapping in AGLU_ctry works good now
+      left_join_error_no_match(AGLU_ctry %>% distinct(area_code = FAO_country_code, iso), by = c("area_code")) %>%
+      left_join_error_no_match(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
+      spread(variable, value) %>%
+      group_by(GCAM_region_ID, year) %>%
+      summarise(across(
+        .cols = any_of(c("capital stock", "depreciation")),
+        .fns = ~ sum(.x, na.rm = TRUE)
+      ), .groups = "drop") ->
+      L100.FAO_Ag_CapitalStock_Dep_R_Yh_2015MilUSD
+
+    L100.FAO_Ag_CapitalStock_Dep_R_Yh_2015MilUSD %>%
+      mutate(dep.rate.Ag.fao = depreciation / `capital stock`) %>%
+      select(-depreciation, -`capital stock`) %>%
+      complete(GCAM_region_ID,
+               year = min(HISTORICAL_YEARS):max(year)) %>%
+      group_by(GCAM_region_ID) %>%
+      fill(dep.rate.Ag.fao, .direction = "downup") %>%
+      ungroup %>%
+      # Adding moving average
+      dplyr::group_by_at(dplyr::vars(-year, -dep.rate.Ag.fao)) %>%
+      mutate(dep.rate.Ag.fao = if_else(is.na(Moving_average(dep.rate.Ag.fao, periods = aglu.MODEL_MEAN_PERIOD_LENGTH)),
+                             dep.rate.Ag.fao, Moving_average(dep.rate.Ag.fao, periods = aglu.MODEL_MEAN_PERIOD_LENGTH))) %>%
+      ungroup() %>%
+      filter(year %in% aglu.AGLU_HISTORICAL_YEARS) ->
+      L100.FAO_Ag_Depreciation_Rate_R_Yh
+
+
+    # if no Taiwan in FAO capital stock, using South Korea's depreciation rates
+    if (L100.FAO_Ag_Depreciation_Rate_R_Yh %>% filter(GCAM_region_ID == 30) %>% nrow() == 0 ) {
+
+      L100.FAO_Ag_Depreciation_Rate_R_Yh %>% filter(GCAM_region_ID == 28) %>%
+        mutate(GCAM_region_ID = 30) %>%
+        bind_rows(
+          L100.FAO_Ag_Depreciation_Rate_R_Yh
+        ) ->
+        L100.FAO_Ag_Depreciation_Rate_R_Yh
+    }
+
+
+    assertthat::assert_that(
+      iso_GCAM_regID %>% distinct(GCAM_region_ID) %>%
+        anti_join(L100.FAO_Ag_Depreciation_Rate_R_Yh  %>% distinct(GCAM_region_ID), by = "GCAM_region_ID") %>%
+        nrow() == 0
+    )
+
+
+    ##* L100.FAO_Ag_CapitalStock_Dep_R_Yh_2015USD ----
+    L100.FAO_Ag_CapitalStock_Dep_R_Yh_2015MilUSD %>%
+      add_title("FAO primary Ag (Agriculture, Forestry and Fishing) capital stock and depreciation for GCAM region and historical years") %>%
+      add_comments("FAO data available since 1995; Taiwan is not available") %>%
+      add_units("2015 Mil USD") %>%
+      add_precursors("aglu/FAO/GCAMFAOSTAT_CapitalStock",
+                     "aglu/AGLU_ctry",
+                     "common/iso_GCAM_regID")->
+      L100.FAO_Ag_CapitalStock_Dep_R_Yh_2015MilUSD
+
+    ##* L100.FAO_Ag_Depreciation_Rate_R_Yh ----
+    L100.FAO_Ag_Depreciation_Rate_R_Yh %>%
+      add_title("FAO primary Ag (Agriculture, Forestry and Fishing) depreciation rate for GCAM region and historical years") %>%
+      add_comments("Derived as Consumption of Fixed Capital over Net Capital Stocks; FAO data available since 1995") %>%
+      add_units("rate") %>%
+      add_precursors("aglu/FAO/GCAMFAOSTAT_CapitalStock",
+                     "aglu/AGLU_ctry",
+                     "common/iso_GCAM_regID")->
+      L100.FAO_Ag_Depreciation_Rate_R_Yh
+
 
     # Return data ----
     return_data(MODULE_OUTPUTS)
@@ -274,8 +366,5 @@ module_aglu_L100.FAO_preprocessing_OtherData <- function(command, ...) {
     stop("Unknown command")
   }
 }
-
-# *******************************************************************************
-
 
 

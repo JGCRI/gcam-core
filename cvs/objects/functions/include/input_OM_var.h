@@ -66,7 +66,6 @@ class Tabs;
  *              - \c name MiniCAMInput::mName
  *          - Elements:
  *              - \c OM-var InputOMVar::mOMVar
- *              - \c tech-change InputOMVar::mTechChange
  *
  * \author Josh Lurz
  */
@@ -143,8 +142,6 @@ public:
     virtual double getIncomeElasticity( const int aPeriod ) const;
 
     virtual double getPriceElasticity( const int aPeriod ) const;
-
-    virtual double getTechChange( const int aPeriod ) const;
     
     virtual void doInterpolations( const int aYear, const int aPreviousYear,
                                    const int aNextYear, const IInput* aPreviousInput,
@@ -156,18 +153,6 @@ protected:
     // subclass together with the data members of the parent classes.
     DEFINE_DATA_WITH_PARENT(
         MiniCAMInput,
-        
-        //! Cost of the non-energy input adjusted for the additional costs of the
-        //! capture component.
-        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-cost", mAdjustedCosts, objects::TechVintageVector<Value> ),
-        
-        //! Coefficient for production or demand function. Coefficients are not
-        // read in and are initialized to 1, but can increase over time with
-        // technical change.
-        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "adjusted-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> ),
-        
-        //! Input specific technical change.
-        DEFINE_VARIABLE( SIMPLE, "tech-change", mTechChange, Value ),
         
         //! Variable O&M cost.
         DEFINE_VARIABLE( SIMPLE, "OM-var", mOMVar, Value )

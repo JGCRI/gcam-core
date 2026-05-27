@@ -573,7 +573,10 @@ bool Market::shouldSolveNR() const {
 bool Market::meetsSpecialSolutionCriteria() const {
     // This is a normal market which should not be solved in the base period
     // unless the solve flag is set.
-    return ( !mSolveMarket && mYear == scenario->getModeltime()->getStartYear() );
+    const Modeltime* modeltime = scenario->getModeltime();
+    const int marketPeriod = modeltime->getyr_to_per(mYear);
+    return ( !mSolveMarket && marketPeriod == 0 ) ||
+        (!mSolveMarket && marketPeriod <= modeltime->getFinalCalibrationPeriod() && mSupply == 0.0);
 }
 
 /*!

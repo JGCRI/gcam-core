@@ -888,7 +888,7 @@ module_energy_L223.electricity <- function(command, ...) {
       select(-input.OM.var, -year) %>%
       # Calculate a new capacity factor to match the regional base.price, append region names and duplicate over all model years.
       # This fixes the capacity factor for all future years and is inconsistent if future capacity factors are assumed to change.
-      mutate(capacity.factor = round((capital.overnight * fixed.charge.rate +
+      mutate(capacity.factor = round((capital.overnight * calc_fixed_charge_rate(interest.rate, payback.years) +
                                         OM.fixed) / (CONV_KWH_GJ * CONV_YEAR_HOURS) / (base.price - (OM.var / (1000 * CONV_KWH_GJ))), energy.DIGITS_CAPACITY_FACTOR)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%

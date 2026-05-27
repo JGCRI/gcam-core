@@ -47,10 +47,7 @@ module_energy_L232.other_industry <- function(command, ...) {
       FILE = "energy/A32.demand",
       "L127.in_EJ_R_indchp_F_Yh",
       "L1328.in_EJ_R_indenergy_F_Yh",
-      "L1324.in_EJ_R_indfeed_F_Yh",
-      FILE = "socioeconomics/A32.inc_elas_output",
-      "L101.Pop_thous_R_Yh",
-      "L102.pcgdp_thous90USD_Scen_R_Y")
+      "L1324.in_EJ_R_indfeed_F_Yh")
 
   MODULE_OUTPUTS <-
     c("L232.Supplysector_ind",
@@ -78,8 +75,7 @@ module_energy_L232.other_industry <- function(command, ...) {
       "L232.FuelPrefElast_indenergy",
       "L232.PerCapitaBased_ind",
       "L232.PriceElasticity_ind",
-      "L232.BaseService_ind",
-      "L232.IncomeElasticity_ind_Scen")
+      "L232.BaseService_ind")
 
   if(command == driver.DECLARE_INPUTS) {
     return(MODULE_INPUTS)
@@ -253,12 +249,13 @@ module_energy_L232.other_industry <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCost"]]) ->
       L232.GlobalTechCost_ind
 
-    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
-      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
     L232.GlobalTechCost_ind %>%
       # we only want to track investments in energy, otherwise we double accounting with materials
       filter(grepl('energy use', sector.name)) %>%
-      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.INDUSTRY_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.INDUSTRY_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
              # vintaging is active so no need for depreciation
              depreciation.rate = 0) %>%
@@ -518,84 +515,8 @@ module_energy_L232.other_industry <- function(command, ...) {
       mutate(energy.final.demand = A32.demand[["energy.final.demand"]]) ->
       L232.BaseService_ind
 
-    # L232.IncomeElasticity_ind_scen: income elasticity of industry (scenario-specific)
-    L102.pcgdp_thous90USD_Scen_R_Y %>%
-      filter(year %in% c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
-      # Per-capita GDP ratios, which are used in the equation for demand growth
-      group_by(GCAM_region_ID, scenario) %>%
-      mutate(temp_lag = lag(value, 1),
-             value = value / temp_lag) %>%
-      ungroup %>%
-      select(-temp_lag) %>%
-      filter(year %in% MODEL_FUTURE_YEARS) ->
-      L232.pcgdpRatio_ALL_R_Y # intermediate tibble
-
-    # Calculate the industrial output as the base-year industrial output times the GDP ratio raised to the income elasticity
-    # The income elasticity is looked up based on the prior year's output
-    L232.pcgdpRatio_ALL_R_Y %>%
-      select(GCAM_region_ID, scenario) %>%
-      distinct %>%
-      left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
-      mutate(year = MODEL_FINAL_BASE_YEAR) %>%
-      left_join_error_no_match(L232.BaseService_ind, by = c("year", "region")) %>%
-      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
-      mutate(value = base.service * CONV_BIL_THOUS / value) %>%
-      select(-base.service, -energy.final.demand) ->
-      L232.Output_ind
-
-    # At each time, the output is equal to the prior period's output times the GDP ratio, raised to the elasticity
-    # that corresponds to the output that was observed in the prior time period. This method prevents (ideally) runaway
-    # industrial production.
-    elast_years <- c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)
-    for(i in seq_along(elast_years)[-1]) {
-      L232.Output_ind %>%
-        filter(year == elast_years[i - 1]) %>%
-        left_join(filter(L232.pcgdpRatio_ALL_R_Y, year == elast_years[i]), by = c("GCAM_region_ID", "scenario")) %>% # strick left join fails timeshift test due to NAs in L102.pcgdp_thous90USD_Scen_R_Y under timeshift mode
-        mutate(parameter = approx(x = A32.inc_elas_output[["pc.output_GJ"]],
-                                  y = A32.inc_elas_output[["inc_elas"]],
-                                  xout = value.x,
-                                  rule = 2)[['y']],
-               value = value.x * value.y ^ parameter,
-               year = elast_years[i]) %>%
-        select(GCAM_region_ID, scenario, region, year, value) %>%
-        bind_rows(L232.Output_ind) ->
-        L232.Output_ind
-    }
-
-    # Now that we have industrial output, we can back out the appropriate income elasticities
-    L232.Output_ind %>%
-      filter(year %in% MODEL_FUTURE_YEARS) %>%
-      mutate(value = approx( x = A32.inc_elas_output[["pc.output_GJ"]],
-                             y = A32.inc_elas_output[["inc_elas"]],
-                             xout = value,
-                             rule = 2)[["y"]]) %>%
-      mutate(value = round(value, energy.DIGITS_INCELAS_IND)) %>%
-      rename(income.elasticity = value) %>%
-      mutate(energy.final.demand = A32.demand[["energy.final.demand"]]) ->
-      L232.IncomeElasticity_ind_Scen # intermediate tibble
-
-    # KVC: SSP1 needs lower income elasticities. Storyline has limited growth in energy-related industries
-    # because of warm fuzzy feelings about environment. We are hard-coding this for a while.
-    L232.IncomeElasticity_ind_Scen %>%
-      filter(scenario == "SSP1") %>%
-      mutate(income.elasticity = income.elasticity * 0.75) %>%
-      bind_rows(filter(L232.IncomeElasticity_ind_Scen, scenario != "SSP1")) ->
-      L232.IncomeElasticity_ind_Scen
 
     # Produce outputs ----
-
-    L232.IncomeElasticity_ind_Scen %>%
-        add_title("Income elasticity of other industry - SSPs") %>%
-        add_units("Unitless") %>%
-        add_comments("First calculate industrial output as the base-year industrial output times the GDP ratio raised to the income elasticity") %>%
-        add_comments("Then back out the appropriate income elasticities from industrial output") %>%
-        add_comments("Note lower income elasticities for SSP1 are hard-coded.") %>%
-        add_legacy_name("L232.IncomeElasticity_ind_Scen") %>%
-        add_precursors("L101.Pop_thous_R_Yh", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names",
-                       "L1328.in_EJ_R_indenergy_F_Yh", "L127.in_EJ_R_indchp_F_Yh", "energy/calibrated_techs",
-                       "L1324.in_EJ_R_indfeed_F_Yh", "energy/A32.globaltech_eff", "energy/A32.globaltech_shrwt",
-                       "energy/A32.demand", "socioeconomics/A32.inc_elas_output") ->
-      L232.IncomeElasticity_ind_Scen
 
     L232.Supplysector_ind %>%
       add_title("Supply sector information for industry sector") %>%

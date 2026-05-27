@@ -194,18 +194,6 @@ double MinicamLeontiefProductionFunction::getCapitalOutputRatio( const InputSet&
     return -1;
 }
 
-double MinicamLeontiefProductionFunction::applyTechnicalChange( InputSet& aInputs,
-                                                                const TechChange& aTechChange,
-                                                                const gcamstr& aRegionName,
-                                                                const gcamstr& aSectorName,
-                                                                const int aPeriod,
-                                                                double aAlphaZero,
-                                                                double aSigma ) const
-{
-    return FunctionUtils::applyTechnicalChangeInternal( aInputs, aTechChange, aRegionName, aSectorName,
-                                                        aPeriod, aAlphaZero, aSigma );
-}
-
 double MinicamLeontiefProductionFunction::calcUnscaledProfits( const InputSet& aInputs,
                                                                const gcamstr& aRegionName,
                                                                const gcamstr& aSectorName,

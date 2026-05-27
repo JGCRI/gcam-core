@@ -27,7 +27,6 @@ module_energy_L2321.cement <- function(command, ...) {
       FILE = "energy/calibrated_techs",
       FILE = "energy/A321.sector",
       FILE = "emissions/A_PrimaryFuelCCoef",
-      FILE = "energy/A321.sector",
       FILE = "energy/A321.subsector_interp",
       FILE = "energy/A321.subsector_logit",
       FILE = "energy/A321.subsector_shrwt",
@@ -37,12 +36,9 @@ module_energy_L2321.cement <- function(command, ...) {
       FILE = "energy/A321.globaltech_co2capture",
       FILE = "energy/A321.demand",
       FILE = "energy/A321.globaltech_retirement",
-      FILE = "socioeconomics/A321.inc_elas_output",
       "L1321.out_Mt_R_cement_Yh",
       "L1321.IO_GJkg_R_cement_F_Yh",
-      "L1321.in_EJ_R_cement_F_Y",
-      "L101.Pop_thous_R_Yh",
-      "L102.pcgdp_thous90USD_Scen_R_Y")
+      "L1321.in_EJ_R_cement_F_Y")
 
   MODULE_OUTPUTS <-
     c("L2321.Supplysector_cement",
@@ -65,8 +61,7 @@ module_energy_L2321.cement <- function(command, ...) {
       "L2321.StubTechCoef_cement",
       "L2321.PerCapitaBased_cement",
       "L2321.BaseService_cement",
-      "L2321.PriceElasticity_cement",
-      "L2321.IncomeElasticity_cement_Scen")
+      "L2321.PriceElasticity_cement")
 
   if(command == driver.DECLARE_INPUTS) {
     return(MODULE_INPUTS)
@@ -86,8 +81,7 @@ module_energy_L2321.cement <- function(command, ...) {
       remove.fraction <- minicam.non.energy.input <- input.cost <- PrimaryFuelCO2Coef.name <-
       PrimaryFuelCO2Coef <- calibration <- calOutputValue <- subs.share.weight <- region <-
       calibrated.value <- . <- scenario <- temp_lag <- base.service <- energy.final.demand <-
-      value.x <- value.y <- parameter <-
-      L2321.IncomeElasticity_cement_Scen <- year.x <- year.y <- NULL
+      value.x <- value.y <- parameter <- year.x <- year.y <- NULL
 
     # ===================================================
     # 1. Perform computations
@@ -229,12 +223,13 @@ module_energy_L2321.cement <- function(command, ...) {
       mutate(input.cost = round(input.cost, energy.DIGITS_COST)) ->
       L2321.GlobalTechCost_cement
 
-    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS) /
-      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.INDUSTRY_CAP_PAYMENTS -1)
     L2321.GlobalTechCost_cement %>%
       # we need to track investments in "energy" only, cement is technically materials
       filter(sector.name == "process heat cement") %>%
-      mutate(capital.coef = socioeconomics.INDUSTRY_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.INDUSTRY_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.INDUSTRY_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
              # vintaging is active in cement so no need for depreciation
              depreciation.rate = 0) %>%
@@ -372,79 +367,8 @@ module_energy_L2321.cement <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["PriceElasticity"]]) ->
       L2321.PriceElasticity_cement
 
-    # L2321.IncomeElasticity_cement_scen: income elasticity of cement (scenario-specific)
-    # First, calculate the per-capita GDP pathways of every GDP scenario and combine
-  L102.pcgdp_thous90USD_Scen_R_Y %>%
-      filter(year %in% c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
-      # Per-capita GDP ratios, which are used in the equation for demand growth
-      group_by(GCAM_region_ID, scenario) %>%
-      mutate(temp_lag = lag(value, 1),
-             value = value / temp_lag) %>%
-      ungroup %>%
-      select(-temp_lag) %>%
-      filter(year %in% MODEL_FUTURE_YEARS) ->
-      L2321.pcgdpRatio_ALL_R_Y # intermediate tibble
 
-    # Calculate the cement output as the base-year cement output times the GDP ratio raised to the income elasticity
-    # The income elasticity is looked up based on the prior year's output
-    L2321.pcgdpRatio_ALL_R_Y %>%
-      select(GCAM_region_ID, scenario) %>%
-      distinct %>%
-      left_join_error_no_match(GCAM_region_names, by = 'GCAM_region_ID') %>%
-      mutate(year = MODEL_FINAL_BASE_YEAR) %>%
-      left_join_error_no_match(L2321.BaseService_cement, by = c("year", "region")) %>%
-      left_join_error_no_match(L101.Pop_thous_R_Yh, by = c("year", "GCAM_region_ID")) %>%
-      mutate(value = base.service * CONV_MIL_THOUS / value) %>%
-      select(-base.service, -energy.final.demand) ->
-      L2321.Output_cement # intermediate tibble
-
-    # At each time, the output is equal to the prior period's output times the GDP ratio, raised to the elasticity
-    # that corresponds to the output that was observed in the prior time period. This method prevents (ideally) runaway
-    # production/consumption.
-    elast_years <- c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)
-    for(i in seq_along(elast_years)[-1]) {
-      L2321.Output_cement %>%
-        filter(year == elast_years[i - 1]) %>%
-        # strick left join fails timeshift test due to NAs in L102.pcgdp_thous90USD_Scen_R_Y under timeshift mode
-        left_join(filter(L2321.pcgdpRatio_ALL_R_Y, year == elast_years[i]), by = c("GCAM_region_ID", "scenario")) ->
-        intermediate
-
-      intermediate %>%
-        mutate(parameter = approx(x = A321.inc_elas_output[["pc.output_t"]],
-                                  y = A321.inc_elas_output[["inc_elas"]],
-                                  xout = intermediate[["value.x"]],
-                                  rule = 2)[['y']],
-               value = value.x * value.y ^ parameter,
-               year = elast_years[i]) %>%
-        select(GCAM_region_ID, scenario, region, year, value) %>%
-        bind_rows(L2321.Output_cement) ->
-        L2321.Output_cement
-    }
-
-    # Now that we have cement output, we can back out the appropriate income elasticities
-    L2321.Output_cement %>%
-      filter(year %in% MODEL_FUTURE_YEARS) %>%
-      mutate(value = approx( x = A321.inc_elas_output[["pc.output_t"]],
-                             y = A321.inc_elas_output[["inc_elas"]],
-                             xout = value, rule = 2)[["y"]],
-             value = round(value, energy.DIGITS_INCELAS_IND)) %>%
-      rename(income.elasticity = value) %>%
-      mutate(energy.final.demand = A321.demand[["energy.final.demand"]]) ->
-      L2321.IncomeElasticity_cement_Scen # intermediate tibble
-
-    # ===================================================
-    # Produce outputs
-
-    # Extract scenario data and assign to separate tables
-    L2321.IncomeElasticity_cement_Scen %>%
-        add_title(paste("Income elasticity of cement - SSPs")) %>%
-        add_units("Unitless") %>%
-        add_comments("First calculate cement output as the base-year cement output times the GDP ratio raised to the income elasticity") %>%
-        add_comments("Then back out the appropriate income elasticities from cement output") %>%
-        add_legacy_name("L2321.IncomeElasticity_cement_Scen") %>%
-        add_precursors("L101.Pop_thous_R_Yh", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names", "energy/A321.demand", "energy/calibrated_techs",
-                       "L1321.out_Mt_R_cement_Yh", "socioeconomics/A321.inc_elas_output") ->
-      L2321.IncomeElasticity_cement_Scen
+    # Produce outputs ----
 
     L2321.Supplysector_cement %>%
       add_title("Supply sector information for cement sector") %>%

@@ -8,7 +8,7 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{socioeconomics_SSP1.xml},
+#' the generated outputs: \code{socioeconomics_CORE.xml}, \code{socioeconomics_SSP1.xml},
 #' \code{socioeconomics_SSP2.xml}, \code{socioeconomics_SSP3.xml},
 #' \code{socioeconomics_SSP4.xml}, and \code{socioeconomics_SSP5.xml}.
 module_socio_SSP_xml <- function(command, ...) {
@@ -20,13 +20,24 @@ module_socio_SSP_xml <- function(command, ...) {
       "L201.Pop_Scen",
       "L201.TotalFactorProductivity_Scen",
       "L201.LaborForceShare_Scen",
-      "L201.PPPConvert")
+      "L201.PPPConvert",
+      # Labor supply
+      "L201.Labor_Rsrc",
+      "L201.Labor_Rsrc_price",
+      "L201.Labor_RsrcCurves",
+      "L201.Labor_RenewRsrcCalProd",
+      "L201.Labor_ResTechShrwt",
+      "L201.LaborSupplySector",
+      "L201.LaborSupplySubSector",
+      "L201.LaborSupplyTech_Scen",
+      "L201.TotalEmployment_Scen")
 
   MODULE_OUTPUTS <- setNames(
     c(paste0("socioeconomics_SSP", SSP_NUMS, ".xml"),
       "socioeconomics_CORE.xml"),
     rep("XML", 6)
   )
+
 
   if(command == driver.DECLARE_INPUTS) {
     return(MODULE_INPUTS)
@@ -43,6 +54,7 @@ module_socio_SSP_xml <- function(command, ...) {
     # Load required inputs ----
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
+
     for(ssp in SSP_NUMS) {
       ssp_name <- paste0("SSP", ssp)
       xmlfn <- paste0("socioeconomics_", ssp_name, ".xml")
@@ -56,6 +68,22 @@ module_socio_SSP_xml <- function(command, ...) {
         add_xml_data(L201.LaborForceShare_Scen %>%
                        filter(scenario == ssp_name) %>% select(-scenario), "LaborForceShare") %>%
         add_xml_data(L201.PPPConvert, "PPPConvert") %>%
+        add_xml_data(L201.Labor_Rsrc, "Rsrc") %>%
+        add_xml_data(L201.Labor_Rsrc_price, "RsrcPrice") %>%
+        add_xml_data(L201.Labor_RsrcCurves, "GrdRenewRsrcCurves") %>%
+        add_xml_data(L201.Labor_RenewRsrcCalProd, "RenewRsrcCalProd") %>%
+        add_xml_data(L201.Labor_ResTechShrwt, "ResTechShrwt") %>%
+        add_logit_tables_xml(L201.LaborSupplySector, "Supplysector") %>%
+        add_xml_data(L201.LaborSupplySubSector, "SubsectorShrwtFllt") %>%
+        add_xml_data(L201.LaborSupplySubSector, "SubsectorShrwt") %>%
+        add_xml_data(L201.LaborSupplySubSector, "SubsectorInterp") %>%
+        add_logit_tables_xml(L201.LaborSupplySubSector, "SubsectorLogit") %>%
+        add_xml_data(L201.LaborSupplySubSector, "StubTech") %>%
+        add_xml_data(L201.LaborSupplySubSector, "StubTechProd") %>%
+        add_xml_data(L201.TotalEmployment_Scen %>% filter(scenario == ssp_name), "FixedFinalDemand") %>%
+        add_xml_data(L201.LaborSupplyTech_Scen %>% filter(scenario == ssp_name), "GlobalTechRESSecOut") %>%
+        add_xml_data(L201.LaborSupplyTech_Scen %>% filter(scenario == ssp_name), "GlobalTechRESSecOutPMult") %>%
+        add_xml_data(L201.LaborSupplyTech_Scen %>% filter(scenario == ssp_name), "GlobalTechShrwt") %>%
         add_precursors(MODULE_INPUTS) ->
         x
 
@@ -74,6 +102,23 @@ module_socio_SSP_xml <- function(command, ...) {
           add_xml_data(L201.LaborForceShare_Scen %>%
                          filter(scenario == ssp_name) %>% select(-scenario), "LaborForceShare") %>%
           add_xml_data(L201.PPPConvert, "PPPConvert") %>%
+          add_xml_data(L201.Labor_Rsrc, "Rsrc") %>%
+          add_xml_data(L201.Labor_Rsrc_price, "RsrcPrice") %>%
+          add_xml_data(L201.Labor_RsrcCurves, "GrdRenewRsrcCurves") %>%
+          add_xml_data(L201.Labor_RenewRsrcCalProd, "RenewRsrcCalProd") %>%
+          add_xml_data(L201.Labor_ResTechShrwt, "ResTechShrwt") %>%
+          add_logit_tables_xml(L201.LaborSupplySector, "Supplysector") %>%
+          add_xml_data(L201.LaborSupplySubSector, "SubsectorShrwtFllt") %>%
+          add_xml_data(L201.LaborSupplySubSector, "SubsectorShrwt") %>%
+          add_xml_data(L201.LaborSupplySubSector, "SubsectorInterp") %>%
+          add_logit_tables_xml(L201.LaborSupplySubSector, "SubsectorLogit") %>%
+          add_xml_data(L201.LaborSupplySubSector, "StubTech") %>%
+          add_xml_data(L201.LaborSupplySubSector, "StubTechProd") %>%
+          add_xml_data(L201.TotalEmployment_Scen %>% filter(scenario == ssp_name), "FixedFinalDemand") %>%
+          add_xml_data(L201.LaborSupplyTech_Scen %>% filter(scenario == ssp_name), "GlobalTechRESSecOut") %>%
+          add_xml_data(L201.LaborSupplyTech_Scen %>% filter(scenario == ssp_name), "GlobalTechRESSecOutPMult") %>%
+          add_xml_data(L201.LaborSupplyTech_Scen %>% filter(scenario == ssp_name), "GlobalTechShrwt") %>%
+
           add_precursors(MODULE_INPUTS) ->
           x
 

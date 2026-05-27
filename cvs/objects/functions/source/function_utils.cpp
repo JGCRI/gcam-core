@@ -339,95 +339,12 @@ double FunctionUtils::getExpectedPriceReceived( const InputSet& aInputs,
            * getNetPresentValueMult( aInputs, aRegionName, aLifetimeYears, aPeriod );
 }
 
-/*! \brief Apply technical change to a vector of inputs.
-* \details 
-* \param input Vector of inputs for the demand function.
-* \param aTechChange A structure containing the various possible types of
-*        technical change.
-* \param regionName Name of the region containing the function.
-* \param sectorName Name of the sector containing the function.
-* \param alphaZero The up-front scaler.
-* \param sigma Sigma coefficient.
-* \return The new alpha zero.
-*/
-double FunctionUtils::applyTechnicalChangeInternal( InputSet& aInputs,
-                                                    const TechChange& aTechChange,
-                                                    const gcamstr& aRegionName,
-                                                    const gcamstr& aSectorName,
-                                                    const int aPeriod,
-                                                    double aAlphaZero,
-                                                    double aSigma )
-{
-    const int timeStep = scenario->getModeltime()->gettimestep( aPeriod );
-    for( InputIterator i = aInputs.begin(); i != aInputs.end(); ++i ) {
-        double techChange = FunctionUtils::getTechChangeForInput( *i,
-                                                                  aTechChange,
-                                                                  aPeriod );
-        if( techChange > 0 ) {
-            double scaleFactor = pow( 1 + techChange, timeStep );
-            double newCoef = (*i)->getCoefficient( aPeriod ) / scaleFactor;
-            (*i)->setCoefficient( newCoef, aPeriod );
-        }
-    }
-    // Apply hicks tech change.
-    if( aTechChange.mHicksTechChange > 0 ) {
-        double scaleFactor = pow( 1 + aTechChange.mHicksTechChange,
-                                  timeStep );
-        aAlphaZero *= scaleFactor;
-    }
-
-    return aAlphaZero;
-}
-
-/*!
- * \brief Determine the technical change coefficient to apply to the input.
- * \details The technical change coefficient applied to an input may be one of
- *          three items. If the input has a read-in technical change
- *          coefficient(currently greater than zero), then that technical change
- *          will be used. Otherwise, the Technology's energy technical change
- *          will be used if it is an energy input, and the Technology's material
- *          technical change input will be if it is a material input. An input
- *          cannot both be a material and energy input. Note that Hicks neutral
- *          technical change will always be applied in addition.
- * \param aInput Input for which to get the technical change.
- * \param aTechChange Technical change containing structure.
- * \param aPeriod Model period.
- * \return The technical change to apply to the input.
- */
-double FunctionUtils::getTechChangeForInput( const IInput* aInput,
-                                             const TechChange& aTechChange,
-                                             const int aPeriod )
-{
-    // Get the input specific technical change.
-    double techChange = aInput->getTechChange( aPeriod );
-
-    // If an input specific technical change was not read-in, use an energy
-    // or material technical change. TODO: Check for not-initialized vs.
-    // zero.
-    if( techChange == 0 ){
-        if( aInput->hasTypeFlag( IInput::ENERGY ) ){
-            techChange = aTechChange.mEnergyTechChange;
-        }
-        else if( aInput->hasTypeFlag( IInput::MATERIAL ) ){
-            techChange = aTechChange.mMaterialTechChange;
-        }
-    }
-    return techChange;
-}
-
 /*! \brief Return whether a good is a fixed price good.
 * \param aRegionName Region name.
 * \param aGoodName Good name.
 * \param aPeriod Model period.
 * \return Whether the good is a fixed price good.
 */
-/*bool FunctionUtils::isFixedPrice( const gcamstr& aRegionName,
-                                  const string& aGoodName,
-                                  const int aPeriod )
-{
-    const IInfo* marketInfo = scenario->getMarketplace()->getMarketInfo( aGoodName, aRegionName, aPeriod, false );
-    return marketInfo && marketInfo->getBoolean( gcamstr("IsFixedPrice"), false );
-}*/
 
 /*! \brief Static function which returns the conversion factor for the good
 *          which is stored in the marketplace.

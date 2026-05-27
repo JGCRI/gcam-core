@@ -255,7 +255,7 @@ module_gcamusa_L225.hydrogen <- function(command, ...) {
       filter(technology %in% c("wind", "PV")) %>%
       left_join(L1233.globaltech_OMfixed_ATB, by = c("supplysector", "subsector", "technology", "year")) %>%
       left_join(L225.CapacityFactor_USA, by = c("subsector")) %>%
-      mutate(elec_cost_75USD_GJ = (capital.overnight * fixed.charge.rate + OM.fixed) /
+      mutate(elec_cost_75USD_GJ = (capital.overnight * calc_fixed_charge_rate(interest.rate, payback.years) + OM.fixed) /
                (CONV_YEAR_HOURS * capacity.factor * CONV_KWH_GJ)) %>%
       select(Scenario, region, renew_tech = subsector, year, elec_cost_75USD_GJ)
 

@@ -123,12 +123,15 @@ public:
                 
         /*! \brief curr GDP value state variable */
         DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE | STATE, "curr-GDP", mCurrGDP, Value ),
+        
+        /*! \brief the fixed GDP to add to the  market when in fixed mode, ideally wouldn't need this but required to addToSupply */
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE | STATE, "fixed-GDP-for-market", mFixedGDPForMarket, Value ),
                                 
         /*! \brief net energy export market name */
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "EnergyNetExportMrkName", mEnergyNetExportMrkName, gcamstr ),
-    
-        /*! \brief energy servicemarket name */
-        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "EnergyServiceMrkName", mEnergyServiceMrkName, gcamstr ),
+        DEFINE_VARIABLE( SIMPLE | NOT_PARSABLE, "EnergyNetExportMrkName", mGCAMNetExportMrkName, gcamstr ),
+
+        /*! \brief ag food value market name */
+        DEFINE_VARIABLE( SIMPLE, "ag-food-market", mAgFoodMrkName, gcamstr ),
 
         //! MER to PPP scale conversion
         DEFINE_VARIABLE( SIMPLE, "gdp-ppp-conversion", mPPPConversion, Value ),

@@ -296,26 +296,3 @@ double LeontiefProductionFunction::getCapitalOutputRatio( const InputSet& aInput
     // this is actually 1 / ratio, might be better to return the ratio.
 	return aAlphaZero * FunctionUtils::getCapitalInput( aInputs )->getCoefficient( aPeriod );
 }
-
-/*! \brief Apply technical change to production functions.
-* \details 
-* \note This function currently makes a call to
-*       FunctionUtils::applyTechChangeInternal so that it can share code with
-*       ADemandFunction::applyTechnicalChange. In the future these
-*       implementations may vary so that function is not called directly.
-* \param input Vector of inputs for the demand function.
-* \param aTechChange A structure containing the various possible types of
-*        technical change.
-* \param aRegionName Name of the region containing the function.
-* \param sectorName Nmae of the sector containing the function.
-* \param alphaZero The up-front scaler.
-* \param sigma Sigma coefficient.
-* \return The new alpha zero.
-*/
-double LeontiefProductionFunction::applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
-                                                         const gcamstr& aRegionName, const gcamstr& sectorName,
-                                                         const int aPeriod, double alphaZero, double sigma ) const 
-{
-    return FunctionUtils::applyTechnicalChangeInternal( input, aTechChange, aRegionName, sectorName,
-                                                        aPeriod, alphaZero, sigma );
-}

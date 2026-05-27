@@ -3,16 +3,19 @@
 # Units: NA
 # Description: Biomass unormalized ghost shares by year used to phase in biomass as a new crop/technology in future years.
 # Original source: Land_nesting_structure.xls
+# Note that these values need to be recalibrated when land rental profit changes, e.g.  BYU or data updates. E.g.  lower cropland profit should also have lower ghost shares,
 # Column types: icn 
 # ----------
 year,preference,ghost.share
 2020,High,0
-2025,High,0.01
-2035,High,0.035
-2050,High,0.075
-2100,High,0.075
+2025,High,0
+2030,High,0.001
+2035,High,0.001
+2050,High,0.005
+2100,High,0.01
 2020,Low,0
-2025,Low,0.01
-2035,Low,0.01
-2050,Low,0.02
-2100,Low,0.02
+2025,Low,0
+2030,Low,0.0003
+2035,Low,0.0003
+2050,Low,0.001
+2100,Low,0.005

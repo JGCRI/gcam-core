@@ -58,8 +58,6 @@ StandardCaptureComponent::StandardCaptureComponent()
 {
     mRemoveFraction = 0;
     mStorageCost = 0;
-    mIntensityPenalty = 0;
-    mNonEnergyCostPenalty = 0;
 }
 
 StandardCaptureComponent::~StandardCaptureComponent() {
@@ -76,8 +74,6 @@ void StandardCaptureComponent::copy( const StandardCaptureComponent& aOther ) {
     mTargetGas = aOther.mTargetGas;
     mRemoveFraction = aOther.mRemoveFraction;
     mStorageCost = aOther.mStorageCost;
-    mIntensityPenalty = aOther.mIntensityPenalty;
-    mNonEnergyCostPenalty = aOther.mNonEnergyCostPenalty;
 }
 
 bool StandardCaptureComponent::isSameType( const string& aType ) const {
@@ -112,8 +108,6 @@ void StandardCaptureComponent::toDebugXML( const int aPeriod, ostream& aOut, Tab
     XMLWriteElement( mStorageMarket, "storage-market", aOut, aTabs );
     XMLWriteElement( mRemoveFraction, "remove-fraction", aOut, aTabs );
     XMLWriteElement( mStorageCost, "storage-cost", aOut, aTabs );
-    XMLWriteElement( mIntensityPenalty, "intensity-penalty", aOut, aTabs );
-    XMLWriteElement( mNonEnergyCostPenalty, "non-energy-penalty", aOut, aTabs );
     XMLWriteElement( mSequesteredAmount[ aPeriod ], "sequestered-amount", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -242,31 +236,4 @@ double StandardCaptureComponent::getSequesteredAmount( const gcamstr& aGHGName,
         return mSequesteredAmount[ aPeriod ];
     }
     return 0;
-}
-
-void StandardCaptureComponent::adjustInputs( const gcamstr& aRegionName,
-                                             std::vector<IInput*>& aInputs,
-                                             const int aPeriod ) const
-{
-    // Loop through the inputs and search for energy and non-energy inputs.
-    for( unsigned int i = 0; i < aInputs.size(); ++i ){
-        // Check if the input is an energy input.
-        if( aInputs[ i ]->hasTypeFlag( IInput::ENERGY ) ){
-            /*! \pre Energy input intensity must be greater than zero. */
-            double currIntensity = aInputs[ i ]->getCoefficient( aPeriod );
-            assert( currIntensity > 0 );
-            
-            // Calculate effective intensity, reduces the intensity by a penalty.
-            aInputs[ i ]->setCoefficient( currIntensity * ( 1 + mIntensityPenalty ), aPeriod );
-        }
-        // Check for capital inputs 
-        else if( aInputs[ i ]->hasTypeFlag( IInput::CAPITAL ) ){
-            double currCost = aInputs[ i ]->getPrice( aRegionName, aPeriod);
-            /*! \pre Non-energy cost must be positive for a penalty to be
-            *        applied. 
-            */
-            assert( currCost > 0 );
-            aInputs[ i ]->setPrice( aRegionName, currCost * ( 1 + mNonEnergyCostPenalty ), aPeriod );
-        }
-    }
 }

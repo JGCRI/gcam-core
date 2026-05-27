@@ -34,7 +34,7 @@ module_gcamusa_industry_xml <- function(command, ...) {
              "L232.BaseService_ind_USA",
              "L232.StubTechSecMarket_ind_USA",
              "L232.Production_reg_imp",
-             "L232.BaseService_iron_steel"))
+             "L232.BaseService"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c(XML = "industry_USA.xml"))
   } else if(command == driver.MAKE) {
@@ -48,7 +48,7 @@ module_gcamusa_industry_xml <- function(command, ...) {
     L232.DeleteDomSubsector_USAind <- get_data(all_data, "L232.DeleteDomSubsector_USAind")
     L232.DeleteTraSubsector_USAind <- get_data(all_data, "L232.DeleteTraSubsector_USAind")
     L232.Production_reg_imp <- get_data(all_data, "L232.Production_reg_imp")
-    L232.BaseService_iron_steel <- get_data(all_data, "L232.BaseService_iron_steel")
+    L232.BaseService <- get_data(all_data, "L232.BaseService")
     L232.Supplysector_ind_USA <- get_data(all_data, "L232.Supplysector_ind_USA")
     L232.FinalEnergyKeyword_ind_USA <- get_data(all_data, "L232.FinalEnergyKeyword_ind_USA")
     L232.SubsectorLogit_ind_USA <- get_data(all_data, "L232.SubsectorLogit_ind_USA")
@@ -76,7 +76,7 @@ module_gcamusa_industry_xml <- function(command, ...) {
       add_xml_data(L232.DeleteDomSubsector_USAind, "DeleteSubsector") %>%
       add_xml_data(L232.DeleteTraSubsector_USAind, "DeleteSubsector") %>%
       add_xml_data(L232.Production_reg_imp, "Production") %>%
-      add_xml_data(L232.BaseService_iron_steel, "BaseService") %>%
+      add_xml_data(L232.BaseService, "BaseService") %>%
       add_logit_tables_xml(L232.Supplysector_ind_USA, "Supplysector") %>%
       add_xml_data(L232.FinalEnergyKeyword_ind_USA, "FinalEnergyKeyword") %>%
       add_logit_tables_xml(L232.SubsectorLogit_ind_USA, "SubsectorLogit") %>%
@@ -115,7 +115,7 @@ module_gcamusa_industry_xml <- function(command, ...) {
                      "L232.BaseService_ind_USA",
                      "L232.StubTechSecMarket_ind_USA",
                      "L232.Production_reg_imp",
-                     "L232.BaseService_iron_steel") ->
+                     "L232.BaseService") ->
       industry_USA.xml
 
     return_data(industry_USA.xml)

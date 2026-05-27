@@ -123,9 +123,6 @@ protected:
         //! Cumulative Technical Change for this subsector
         DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "cumulative-tech-change", mCumulativeTechChange, objects::PeriodVector<double> ),
         
-        //! effective price (global price + price adder)
-        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "effective-price", mEffectivePrice, objects::PeriodVector<Value> ),
-        
         //! calibrated production
         DEFINE_VARIABLE( ARRAY, "cal-production", mCalProduction, objects::PeriodVector<double> ),
         

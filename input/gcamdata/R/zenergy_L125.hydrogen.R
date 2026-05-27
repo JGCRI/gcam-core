@@ -133,7 +133,7 @@ module_energy_L125.hydrogen <- function(command, ...) {
                                by = c("supplysector", "subsector", "technology", "year")) %>%
       left_join_error_no_match(L1233.globaltech_OMvar_ATB,
                                by = c("supplysector", "subsector", "technology", "year")) %>%
-      mutate(nonfuel.LCOE = (capital.overnight * fixed.charge.rate + OM.fixed ) / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ) + OM.var / 1000 * CONV_KWH_GJ) %>%
+      mutate(nonfuel.LCOE = (capital.overnight * calc_fixed_charge_rate(interest.rate, payback.years) + OM.fixed ) / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ) + OM.var / 1000 * CONV_KWH_GJ) %>%
       select(Scenario, year, nonfuel.LCOE)
 
     # Nuclear IO coef: re-divide nuclear fuel input by 3 to get electricity:hydrogen IOcoef

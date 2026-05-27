@@ -413,14 +413,6 @@ public:
     virtual double getIncomeElasticity( const int aPeriod ) const = 0;
 
     /*!
-     * \brief Get the input specific technical change.
-     * \param aPeriod Model period.
-     * \return The input specific technical change.
-     * \author Josh Lurz
-     */
-    virtual double getTechChange( const int aPeriod ) const = 0;
-
-    /*!
      * \brief Hook for an input to do interpolations to fill in any data that
      *        should be interpolated to a newly created input for the missing
      *        technology.

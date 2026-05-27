@@ -205,10 +205,10 @@ module_energy_L1233.elec_cost_data <- function(command, ...) {
       mutate(value = approx_fun(year, value * gdp_deflator(1975, 2022), rule = 2)) %>%
       ungroup() %>%
       filter(year %in% MODEL_YEARS) %>%
-      inner_join(select(A23.globaltech_fcr, supplysector, subsector, technology, fixed.charge.rate),
+      inner_join(select(A23.globaltech_fcr, supplysector, subsector, technology, interest.rate, payback.years),
                  by = "technology") %>%
       apply_exogenous_techchange(cost_vars = "value") %>%
-      select(case, supplysector, subsector, technology, year, input, fixed.charge.rate, value)
+      select(case, supplysector, subsector, technology, year, input, interest.rate, payback.years, value)
 
     # Split out into data tables for output
     L1233.globaltech_capital_ATB <- filter(L1233.gcam_costs_alltechs, case == "Moderate", input == "capital") %>%
@@ -222,22 +222,22 @@ module_energy_L1233.elec_cost_data <- function(command, ...) {
       select(-case)
     L1233.globaltech_OMfixed_ATB <- filter(L1233.gcam_costs_alltechs, case == "Moderate", input == "OM-fixed") %>%
       rename(input.OM.fixed = input, OM.fixed = value) %>%
-      select(-case, -fixed.charge.rate)
+      select(-case, -interest.rate, -payback.years)
     L1233.globaltech_OMfixed_ATB_adv <- filter(L1233.gcam_costs_alltechs, case == "Advanced", input == "OM-fixed") %>%
       rename(input.OM.fixed = input, OM.fixed = value) %>%
-      select(-case, -fixed.charge.rate)
+      select(-case, -interest.rate, -payback.years)
     L1233.globaltech_OMfixed_ATB_low <- filter(L1233.gcam_costs_alltechs, case == "Conservative", input == "OM-fixed") %>%
       rename(input.OM.fixed = input, OM.fixed = value) %>%
-      select(-case, -fixed.charge.rate)
+      select(-case, -interest.rate, -payback.years)
     L1233.globaltech_OMvar_ATB <- filter(L1233.gcam_costs_alltechs, case == "Moderate", input == "OM-var") %>%
       rename(input.OM.var = input, OM.var = value) %>%
-      select(-case, -fixed.charge.rate)
+      select(-case, -interest.rate, -payback.years)
     L1233.globaltech_OMvar_ATB_adv <- filter(L1233.gcam_costs_alltechs, case == "Advanced", input == "OM-var") %>%
       rename(input.OM.var = input, OM.var = value) %>%
-      select(-case, -fixed.charge.rate)
+      select(-case, -interest.rate, -payback.years)
     L1233.globaltech_OMvar_ATB_low <- filter(L1233.gcam_costs_alltechs, case == "Conservative", input == "OM-var") %>%
       rename(input.OM.var = input, OM.var = value) %>%
-      select(-case, -fixed.charge.rate)
+      select(-case, -interest.rate, -payback.years)
 
     # ===================================================
     # Produce outputs

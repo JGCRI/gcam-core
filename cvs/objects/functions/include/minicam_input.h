@@ -109,8 +109,6 @@ public:
                                             const int aPeriod ) const = 0;
 
     virtual double getCurrencyDemand( const int aPeriod ) const;
-    
-    virtual double getTechChange( const int aPeriod ) const = 0;
 
     virtual double getPrice( const gcamstr& aRegionName,
                              const int aPeriod ) const = 0;

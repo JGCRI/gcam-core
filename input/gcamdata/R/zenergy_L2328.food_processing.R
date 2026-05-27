@@ -295,12 +295,13 @@ module_energy_L2328.food_processing <- function(command, ...) {
     }
 
     # L2328.GlobalTechTrackCapital_food: tracking capital investments
-    FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.FOOD_PROCESSING_CAP_PAYMENTS) /
-      ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.FOOD_PROCESSING_CAP_PAYMENTS -1)
     L2328.GlobalTechCost_food %>%
       # we need to track investments in "energy" only, food output is not energy
       filter(sector.name == "process heat food processing") %>%
-      mutate(capital.coef = socioeconomics.FOOD_PROCESSING_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.FOOD_PROCESSING_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.FOOD_PROCESSING_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
              # vintaging is active so no need for depreciation
              depreciation.rate = 0) %>%

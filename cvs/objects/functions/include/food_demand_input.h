@@ -298,11 +298,6 @@ public:
 	{
 		return 0;
 	}
-
-	virtual double getTechChange( const int aPeriod ) const
-	{
-		return 0;
-	}
     
     virtual double getIncomeElasticity( const int aPeriod ) const
     {

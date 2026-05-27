@@ -99,8 +99,8 @@ module_gcamusa_L2237.wind_reeds <- function(command, ...) {
     L223.GlobalIntTechCapital_elec %>%
       filter(intermittent.technology == "wind",
              year == MODEL_FINAL_BASE_YEAR) %>%
-      select(fixed.charge.rate) -> L2237.fcr
-    L2237.fcr <- as.numeric(L2237.fcr)
+      mutate(fixed.charge.rate = calc_fixed_charge_rate(interest.rate, payback.years)) %>%
+      pull(fixed.charge.rate) -> L2237.fcr
 
     L223.GlobalIntTechOMfixed_elec %>%
       filter(intermittent.technology == "wind",

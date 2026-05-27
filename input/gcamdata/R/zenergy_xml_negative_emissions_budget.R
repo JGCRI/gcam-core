@@ -11,28 +11,30 @@
 #' the generated outputs: \code{negative_emissions_budget.xml}. The corresponding file in the
 #' original data system was \code{L270.limits.R} (energy XML).
 module_energy_negative_emissions_budget_xml <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c("L270.CTaxInput",
+      "L270.LandRootNegEmissMkt",
+      "L270.NegEmissBudgetMaxPrice",
+      "L270.NegEmissBudgetDefaultPrice",
+      "L270.NegEmissBudget",
+      "L270.NegEmissBudgetFraction")
+
+  MODULE_OUTPUTS <-
+    c(XML = "negative_emissions_budget.xml")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c("L270.CTaxInput",
-             "L270.LandRootNegEmissMkt",
-             "L270.NegEmissBudgetMaxPrice",
-             "L270.NegEmissBudgetDefaultPrice",
-             "L270.NegEmissBudget",
-             "L270.NegEmissBudgetFraction"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("XML" = "negative_emissions_budget.xml"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     . <- NULL # silence package check note
 
     all_data <- list(...)[[1]]
 
-    # Load required inputs
-    L270.CTaxInput <- get_data(all_data, "L270.CTaxInput")
-    L270.LandRootNegEmissMkt <- get_data(all_data, "L270.LandRootNegEmissMkt")
-    L270.NegEmissBudgetMaxPrice <- get_data(all_data, "L270.NegEmissBudgetMaxPrice")
-    L270.NegEmissBudgetDefaultPrice <- get_data(all_data, "L270.NegEmissBudgetDefaultPrice")
-    L270.NegEmissBudget <- get_data(all_data, "L270.NegEmissBudget")
-    L270.NegEmissBudgetFraction <- get_data(all_data, "L270.NegEmissBudgetFraction")
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # ===================================================
 
@@ -43,11 +45,10 @@ module_energy_negative_emissions_budget_xml <- function(command, ...) {
       add_xml_data(L270.NegEmissBudgetDefaultPrice, "PortfolioStdFixedTax") %>%
       add_xml_data(L270.NegEmissBudget, "PortfolioStd") %>%
       add_xml_data(L270.NegEmissBudgetFraction, "NegEmissBudgetFraction") %>%
-      add_precursors("L270.CTaxInput", "L270.LandRootNegEmissMkt", "L270.NegEmissBudgetMaxPrice", "L270.NegEmissBudget", "L270.NegEmissBudgetFraction",
-                     "L270.NegEmissBudgetDefaultPrice") ->
+      add_precursors(MODULE_INPUTS) ->
       negative_emissions_budget.xml
 
-    return_data(negative_emissions_budget.xml)
+    return_data(MODULE_OUTPUTS)
   } else {
     stop("Unknown command")
   }

@@ -186,7 +186,8 @@ module_gcamusa_L2238.PV_reeds <- function(command, ...) {
     L223.GlobalIntTechCapital_elec %>%
       filter(intermittent.technology == "PV",
              year == MODEL_FINAL_BASE_YEAR) %>%
-      select(fixed.charge.rate) %>% as.numeric()  -> L2238.fcr
+      mutate(fixed.charge.rate = calc_fixed_charge_rate(interest.rate, payback.years)) %>%
+      pull(fixed.charge.rate) -> L2238.fcr
 
     L223.GlobalIntTechOMfixed_elec %>%
       filter(intermittent.technology == "PV",

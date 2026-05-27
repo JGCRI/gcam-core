@@ -274,52 +274,6 @@ SolverComponent::ReturnCode Preconditioner::solve( SolutionInfoSet& aSolutionSet
                         chg = true;
                         ++nchg;
                     }
-                    else if(oldprice <= 0.0 &&
-                            oldsply < olddmnd
-                        ) {
-                        // we have a negative price, but there is some
-                        // demand, and supply is less than demand.
-                        // This clause catches all the land categories
-                        // for which we have no bounds on the supply
-                        // curve (supply is determined by the land
-                        // allocator), but for which price probably
-                        // shouldn't be negative.
-                        newprice = 0.001;
-                        solvable[i].setPrice(newprice);
-                        chg = true;
-                        ++nchg;
-                    } 
-                    /*else if (oldprice > ub &&
-                             oldsply > olddmnd) {
-                      // price is above the top of the supply curve,
-                      // and there little demand.  This is not
-                      // necessarily wrong.  When a resource runs out,
-                      // the clearing price *should* be above the top
-                      // of the supply curve, so this is not
-                      // necessarily an error.  Therefore, we will be
-                      // a little conservative in this adjustment.
-                      // When demand is less than 1% of supply, we set
-                      // the price to the upper bound.  When demand is
-                      // greater than or equal to supply, we leave the
-                      // price alone.  In between we interpolate.
-                      double sthresh = 100.0; // the 1% threshold described above.
-                        if(isCalibrationPeriod) {
-                            // it is a calibration period, the demand is going to be
-                            // fixed so let's move us back squarely into "good" supply
-                            // territory
-                            newprice = ub - lb / 2.0;
-                        }
-                      else if(oldsply >= sthresh*olddmnd) {
-                        newprice = ub;
-                      }
-                      else {
-                        double k = (sthresh - (oldsply-olddmnd)) / sthresh;
-                        newprice = ub + k * (oldprice-ub);
-                      }
-                      solvable[i].setPrice(newprice);
-                      chg = true;
-                      ++nchg;
-                    }*/
                     else if(fd < mFTOL && oldsply >= mFTOL && olddmnd >= mFTOL) {
                         // reset a small demand scale when it looked like a market was "off"
                         // but the supplies and demands are now in a normal range

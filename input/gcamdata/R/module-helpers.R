@@ -1443,6 +1443,17 @@ replace_outlier_EFs <- function(df, to_group, names, ef_col_name) {
   return (noBCOC)
 }
 
+#' calc_fixed_charge_rate
+#'
+#' A method for annualizing payments to capital given a price of capital and payback period
+#' @param rate The rate for the cost of borrowing
+#' @param period The number of periods over which payments will be made
+#' @return The annual fixed charge rate which can be applied to an overnight capital cost.
+calc_fixed_charge_rate <- function(rate, period) {
+  (rate * (1+rate)^period) /
+    ((1+rate)^period -1)
+}
+
 #' resource_reserve_back_calculate
 #'
 #' Back calculate reserve additions to be exactly enough given our historical production

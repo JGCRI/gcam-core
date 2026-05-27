@@ -540,7 +540,7 @@ void MarketDependencyFinder::createOrdering() {
         // less than ideal but our heuristics do not properly deal with link CO2 markets
         // so explicitly avoid warning about CO2_LUC (potentially others here)
         if( !(*it)->mHasIncomingDependency && (*it)->mDependentList.empty() && (*it)->mName != gcamstr("CO2_LUC") ) {
-            depLog.setLevel( ILogger::SEVERE );
+            depLog.setLevel( ILogger::WARNING );
             depLog << (*it)->mName << " in " << (*it)->mLocatedInRegion << " is not related to any other activities." << endl;
         }
     }

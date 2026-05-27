@@ -98,7 +98,7 @@ public:
 
     double applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
                                  const gcamstr& aRegionName,const gcamstr& sectorName, const int aPeriod, 
-                                 double alphaZero = 0, double sigma = 0 ) const;
+                                double alphaZero = 0, double sigma = 0 ) const { return 0; }
 
     double calcUnscaledProfits( const InputSet& aInputs, 
                                 const gcamstr& aRegionName,

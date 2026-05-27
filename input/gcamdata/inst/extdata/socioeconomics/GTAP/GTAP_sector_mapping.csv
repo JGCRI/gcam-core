@@ -12,7 +12,7 @@ service_shop,Service/Shop workers,Labor,Labor
 off_mgr_pros,Officials and Managers,Labor,Labor
 ag_othlowsk,Agricultural and Unskilled,Labor,Labor
 Capital,Capital,Capital,Capital
-NatlRes,Natural Resources,Capital,Capital
+NatlRes,Natural Resources,Resource,Resource
 pdr,Paddy rice,AgLU,Rice
 wht,Wheat,AgLU,Wheat
 gro,Cereal grains nec,AgLU,OtherGrain

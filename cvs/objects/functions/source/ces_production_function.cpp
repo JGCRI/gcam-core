@@ -525,25 +525,5 @@ double CESProductionFunction::applyTechnicalChange( InputSet& input, const TechC
                                                     const gcamstr& aRegionName, const gcamstr& sectorName,
                                                     const int aPeriod, double alphaZero, double sigma ) const 
 {
-     /*! \pre sigma is greater than 0.05, otherwise we should be using a Leontief production function. */
-    assert( sigma >= 0.05 );
-    // Need to apply to a0 for hicks neutral, also material and energy.
-    const double rho = FunctionUtils::getRho( sigma );
-    for( unsigned int i = 0; i < input.size(); ++i ){
-        double techChange = FunctionUtils::getTechChangeForInput( input[ i ],
-                                                                  aTechChange,
-                                                                  aPeriod );
-        if( techChange > 0 ) {
-            double scaleFactor = pow( 1 + techChange, scenario->getModeltime()->gettimestep( aPeriod ) );
-            double newCoef = input[i]->getCoefficient( aPeriod ) * pow( scaleFactor, rho );
-            input[i]->setCoefficient( newCoef, aPeriod );
-        }
-    }
-    // Apply hicks tech change. Check to make sure this works correctly as it is untested.
-    if( aTechChange.mHicksTechChange > 0 ){
-        double scaleFactor = pow( 1 + aTechChange.mHicksTechChange,
-                                  scenario->getModeltime()->gettimestep( aPeriod ) );
-        alphaZero *= scaleFactor;
-    }
     return alphaZero;
 }

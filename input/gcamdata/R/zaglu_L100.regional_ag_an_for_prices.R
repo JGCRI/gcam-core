@@ -2,20 +2,51 @@
 
 #' module_aglu_L100.regional_ag_an_for_prices
 #'
-#' Calculate the calibration prices for all GCAM AGLU commodities.
+#' @description Calculate region-specific calibration prices for all GCAM AGLU commodities
+#' (agricultural, animal, and forest products) in 1975 USD/kg or 1975 USD/m3, averaged over
+#' MODEL_PRICE_YEARS with adjustments for known FAO data quality issues.
 #'
 #' @param command API command to execute
 #' @param ... other optional parameters, depending on command
-#' @return Depends on \code{command}: either a vector of required inputs, a vector of output names, or (if
-#'   \code{command} is "MAKE") all the generated outputs: \code{L1321.ag_prP_R_C_75USDkg},
-#'   \code{L1321.an_prP_R_C_75USDkg}, \code{L1321.expP_R_F_75USDm3}
-#' @details This chunk calculates average prices over calibration years by GCAM commodity and region. Averages across
-#'   years, when applicable, are unweighted; averages over FAO item are weighted by production.
+#'
+#' @return Depends on \code{command}:
+#'   - "DECLARE_INPUTS": A vector of required input files and data
+#'   - "DECLARE_OUTPUTS": A vector of output data object names
+#'   - "MAKE": All generated outputs:
+#'     - \code{L1321.ag_prP_R_C_75USDkg}: Agricultural commodity prices by region
+#'     - \code{L1321.an_prP_R_C_75USDkg}: Animal commodity prices by region
+#'     - \code{L1321.expP_R_F_75USDm3}: Forest commodity export prices by region
+#'     - \code{L1321.For_Cost}: Forest product conversion costs by region and commodity
+#'
+#' @details This module processes three main price categories:
+#'
+#' **1. Agricultural and Animal Producer Prices:**
+#' - Extracts FAO PRODSTAT price data and aggregates to GCAM commodities and regions
+#' - Averages across MODEL_PRICE_YEARS (unweighted); weighted average across FAO items by production
+#' - Deflates prices to nominal DEFLATOR_BASE_YEAR, then converts to real REAL_PRICE_BASE_YEAR
+#' - Fills missing prices by region using price ratios relative to USA or Indonesia
+#' - Applies regional adjustments (e.g., India Dairy, Brazil Livestock) to correct FAO data quality issues
+#' - For storage commodities with high import dependence, prices weighted by domestic availability
+#'
+#' **2. Forest Export Prices:**
+#' - Extracts FAO trade data for forest products (sawnwood, woodpulp, etc.)
+#' - Calculates weighted average export prices by region and commodity
+#' - Uses same deflation methodology as agricultural/animal prices
+#'
+#' **3. Forest Product Conversion Costs:**
+#' - Derives cost of producing secondary forest products (sawnwood, woodpulp) from primary inputs
+#' - Cost = output price - (input cost × conversion ratio), where input is pulpwood
+#' - Uses IO coefficients from L110.IO_Coefs_pulp
+#'
+#' **Price Adjustments:**
+#' Corrections for known FAO data quality issues are configured in FAO_price_adjustments.csv
+#' and applied to specific region-commodity combinations to improve macro value-added tracing.
+#'
 #' @importFrom assertthat assert_that
-#' @importFrom dplyr bind_rows filter if_else inner_join left_join mutate rename select
+#' @importFrom dplyr bind_rows filter if_else inner_join left_join mutate rename select summarise
 #' @importFrom tidyr  complete drop_na gather nesting spread replace_na
 #' @importFrom tibble tibble
-#' @author GPK/RC/STW February 2019; XZ 2022/2024
+#' @author GPK/RC/STW February 2019; XZ 2022/2024; code improvements and CSV configuration 2026
 module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
 
   MODULE_INPUTS <-
@@ -29,11 +60,13 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
       # price items mapping
       FILE = "aglu/FAO/FAO_ag_items_PRODSTAT",
       FILE = "aglu/FAO/FAO_an_items_PRODSTAT",
-      # price data
+      # price data (nominal)
       FILE = "aglu/FAO/GCAMFAOSTAT_ProdPrice",
       FILE = "aglu/FAO/GCAMFAOSTAT_ForExpPrice",
       "L110.IO_Coefs_pulp",
       FILE="aglu/A_forest_mapping",
+      # Price adjustments for known FAO data quality issues
+      FILE = "aglu/FAO/FAO_price_adjustments",
       # Supply utilization for crops
       "L109.ag_ALL_Mt_R_C_Y")
 
@@ -86,7 +119,7 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
     # 2. Ag and An prices ----
 
     ## 2.1. Get price item mapping ----
-    # non-price items: (non data for 3 unimportant crops and fish items)
+    # Price items (excluded): non-data items for 3 unimportant crops and fish species
     FAO_ag_an_price_items <-
       FAO_ag_items_PRODSTAT %>%
       select(item, item_code, price_item, GCAM_commodity) %>%
@@ -109,7 +142,7 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
       # and non GCAM_commodity item (e.g., beewax)
       filter(!is.na(Prod_Q_t), !is.na(GCAM_commodity))
 
-    ## 2.3. Join iso and and GCAM_region_ID; Taiwan has no price info, adjusted later ----
+    ## 2.3. Join iso and GCAM_region_ID; Taiwan has no price info, adjusted later ----
     L100.FAO_ag_an_ProducerPrice_1 <-
       L100.FAO_ag_an_ProducerPrice_0 %>%
       left_join_error_no_match(AGLU_ctry %>% select(area = FAO_country, iso), by = "area") %>%
@@ -140,16 +173,16 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
       # Convert unit to $ per kg in a gcam.REAL_PRICE_BASE_YEAR
       # gdp_deflator here are used to convert each reported year- and country- values to a common unit of measure
       # This step filters years, sets iso codes to countries, and converts all deflators from an index-100 with a base
-      # year of 2015 to a multiplier with an exogenous base year. The deflator base year is the year in which relative
+      # year to a multiplier with an exogenous base year. The deflator base year is the year in which relative
       # regional nominal prices are preserved in the constant dollar (i.e., 1975$ in this code) prices. For example, with
-      # deflator base year set to 2015, prices are in 2015 Constant USD but expressed in terms of 1975 USD.
+      # deflator base year set to base year, prices are in base year Constant USD but expressed in terms of 1975 USD.
       mutate(value = value * gdp_deflator(gcam.REAL_PRICE_BASE_YEAR, aglu.DEFLATOR_BASE_YEAR) / CONV_T_KG) %>%
       ungroup() %>%
       left_join(GCAM_region_names, by = "GCAM_region_ID")
 
     ## Generate Ag_price_index_relative_to_USA and Indonesia  ----
     # for fill in missing and interpolate regional prices for FodderHerb using P_index_toUSA
-    # P_index_toIndonesia is a safeguard for tropical crops the US does no have, e.g., palm
+    # P_index_toIndonesia is a safeguard for tropical crops the US does not have, e.g., palm
     # assert USA and Indonesia exist
 
     assertthat::assert_that(intersect(c("USA", "Indonesia"),unique(GCAM_region_names$region)) %>%
@@ -157,6 +190,8 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
 
     Ag_price_index_relative_to_USA_Indonesia <-
       L100.ag_an_ProducerPrice_R_C_Y_nofodder %>%
+      # Using Corn here only (to reduce regional variation) for missing values
+      filter(GCAM_commodity == "Corn") %>%
       group_by(GCAM_region_ID, region) %>%
       summarise(value = weighted.mean(value, w = Prod_Q_t)) %>%
       ungroup() %>%
@@ -165,8 +200,6 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
       select(-value)
 
     ## 2.6. Fodder and pasture prices from USA alfalfa prices ----
-    # Moved from origional module_aglu_LB132.ag_an_For_Prices_USA_C_2005 which was removed
-    # need to revisit assumptions
 
     L100.Fodder_USA_Prices_R_C_Y <-
       USDA_Alfalfa_prices_USDt %>%
@@ -174,15 +207,16 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
       filter(year %in% aglu.MODEL_PRICE_YEARS) %>%
       # Convert nominal dollar year to constant 1975$
       mutate(value = gdp_deflator(gcam.REAL_PRICE_BASE_YEAR, year) * value) %>%
-      # Calculate a unweighted average price of Alfalfa over the price years
+      # Calculate an unweighted average price of Alfalfa over the price years
       summarise_at(vars(value), mean, na.rm = TRUE) %>%
       # convert unit
       mutate(value = value / CONV_T_KG) %>%
-      rename(FodderHerb = value) %>%
       # Note: Setting FodderGrass price as a ratio to FodderHerb
-      mutate(FodderGrass = FodderHerb * aglu.PRICERATIO_GRASS_ALFALFA,
+      mutate(FodderHerb = value * aglu.PRICERATIO_FODDERHERB_ALFALFA,
+             FodderGrass = FodderHerb * aglu.PRICERATIO_FODDERGRASS_FODDERHERB,
              # NOTE: Setting Pasture price equal to FodderGrass price
-             Pasture = FodderGrass * aglu.PRICERATIO_PASTURE_HAY) %>%
+             Pasture = FodderGrass * aglu.PRICERATIO_PASTURE_FODDERGRASS) %>%
+      select(-value) %>%
       gather(GCAM_commodity, value) %>%
       mutate(GCAM_region_ID = 1, region = "USA")
 
@@ -197,7 +231,7 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
       L100.FAO_ag_an_ProducerPrice_R_C_Y_0 %>%
       filter(region %in% c("USA", "Indonesia")) %>% select(GCAM_commodity, region, value) %>%
       spread(region, value) %>%
-      full_join(Ag_price_index_relative_to_USA_Indonesia, by = character()) %>%
+      cross_join(Ag_price_index_relative_to_USA_Indonesia) %>%
       mutate(RegP_interpolated = USA * P_index_toUSA,
              RegP_interpolated = if_else(is.na(RegP_interpolated), Indonesia * P_index_toIndonesia,
                                          RegP_interpolated)) %>%
@@ -253,7 +287,7 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
       inner_join(L100.FAO_ag_an_ProducerPrice_R_C_Y, by = c("GCAM_region_ID", "GCAM_commodity")) %>%
       mutate(Exp_wtd_price = GrossExp_Mt * value) %>%
       group_by(GCAM_commodity) %>%
-      summarise(GrossExp_Mt = sum(GrossExp_Mt),
+      summarize(GrossExp_Mt = sum(GrossExp_Mt),
                 Exp_wtd_price = sum(Exp_wtd_price)) %>%
       ungroup() %>%
       mutate(tradedP = Exp_wtd_price / GrossExp_Mt) %>%
@@ -274,18 +308,19 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
                     ProdDomRatio = if_else(ArmingtonDomestic == 0, 10, Prod_Mt / ArmingtonDomestic)),
         by = c("GCAM_region_ID", "GCAM_commodity")
       ) %>%
-      # consider storage in domestic pricing
-      # Note that domestic price is a weighted average of storage and producer price
-      # by default, domestic producer prices are used for pricing opening stock
-      # but this might not be true when a region import and store significantly
-      # here, we derive a price by pricing storage using international prices
-      mutate(Price_StorageAdjusted = (value * Prod_Mt + tradedP * (ArmingtonDomestic - Prod_Mt)) / ArmingtonDomestic,
-             Price_StorageAdjusted = if_else(ArmingtonDomestic == 0 |Price_StorageAdjusted < 0, value, Price_StorageAdjusted),
-      # then we use metrics to define High Storage Dependence regions & High Trade Dependence regions
-      # High Storage Dependence regions & High Trade Dependence regions:
-      # ProdDomRatio < 0.5 & ProdImpRatio < 0.5
-      # and set their prices to Price_StorageAdjusted
-            value = if_else(ProdDomRatio < 0.5 & ProdImpRatio < 0.5 & !is.na(Prod_Mt), Price_StorageAdjusted, value)) %>%
+      # Adjust prices for storage-dependent regions
+      # When a region both imports significantly (ProdImpRatio < 0.5) AND
+      # relies heavily on storage (ProdDomRatio < 0.5), we price storage
+      # using international (traded) prices rather than domestic production prices.
+      # This prevents artificially inflating domestic prices when storage dominates supply.
+      mutate(
+        # Calculate storage-adjusted price: weighted average of production and storage costs
+        Price_StorageAdjusted = (value * Prod_Mt + tradedP * (ArmingtonDomestic - Prod_Mt)) / ArmingtonDomestic,
+        # Safeguard: use original price if adjustment is invalid
+        Price_StorageAdjusted = if_else(ArmingtonDomestic == 0 |Price_StorageAdjusted < 0, value, Price_StorageAdjusted),
+        # Apply adjustment only to high storage-import dependent regions
+        value = if_else(ProdDomRatio < 0.5 & ProdImpRatio < 0.5 & !is.na(Prod_Mt), Price_StorageAdjusted, value)
+      ) %>%
       select(GCAM_region_ID, region, GCAM_commodity, value, unit) ->
       L100.FAO_ag_an_ProducerPrice_R_C_Y
 
@@ -306,6 +341,25 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
        L100.Fodder_USA_Prices_R_C_Y,
        L100.ag_an_ProducerPrice_R_C_Y_nofodder)
 
+    ## Apply price adjustments from configuration file ----
+    # These adjustments correct for known FAO data quality issues in specific regions/commodities
+    # They are documented in FAO_price_adjustments.csv with justification and notes
+    # We need to re-evaluate these when FAO data is updated
+
+    L100.FAO_ag_an_ProducerPrice_R_C_Y <-
+      L100.FAO_ag_an_ProducerPrice_R_C_Y %>%
+      left_join(FAO_price_adjustments %>%
+                  select(region, GCAM_commodity, adjustment_multiplier),
+                by = c("region", "GCAM_commodity")) %>%
+      mutate(value = value * if_else(is.na(adjustment_multiplier), 1, adjustment_multiplier)) %>%
+      select(-adjustment_multiplier)
+
+    # Quick assertation for India after the above adjustment
+    # to ensure Dairy prices is still reasonably small < 0.2 1975$/kg
+    assertthat::assert_that(
+      L100.FAO_ag_an_ProducerPrice_R_C_Y %>% filter(region == "India" & GCAM_commodity == "Dairy") %>%
+        pull(value) < 0.2
+    )
 
 
     # 3. Forest export prices by country, analysis year, and crop ----
@@ -341,6 +395,8 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
                by = c("area", "year")) %>%
       filter(!is.na(currentUSD_per_baseyearUSD))
 
+    # Remove intermediate objects and shared inputs that are no longer needed
+    # (L100.FAO_GDP_Deflators was used in both ag/an section 2.4 and forest section 3.3)
     rm(GCAMFAOSTAT_ForExpPrice,
        L100.FAO_for_ExpPrice_0, L100.FAO_for_ExpPrice_1,
        L100.FAO_GDP_Deflators)
@@ -364,21 +420,44 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
 
     L1321.expP_R_F_75USDm3 <- L100.FAO_for_ExpPrice_R_C_Y
 
+    # Extract pulpwood price (used as input cost to produce sawnwood and other forest products)
+    L100.pulpwood_price_R <-
+      L1321.expP_R_F_75USDm3 %>%
+      filter(!GCAM_commodity %in% aglu.FOREST_COMMODITIES) %>%
+      rename(Price_USDm3 = value) %>%
+      select(GCAM_region_ID, Price_USDm3)
+
+    # Extract IO coefficients (conversion ratios for forest products)
+    L100.forest_IO_coefs_R <-
+      L110.IO_Coefs_pulp %>%
+      filter(year %in% c(MODEL_FINAL_BASE_YEAR)) %>%
+      group_by(GCAM_region_ID) %>%
+      summarise(IO = mean(IO), .groups = "drop")
+
+    # Calculate forest product costs: output price minus (input price * conversion ratio)
     L1321.expP_R_F_75USDm3 %>%
       filter(GCAM_commodity %in% aglu.FOREST_COMMODITIES) %>%
-      left_join_error_no_match(L1321.expP_R_F_75USDm3 %>% filter(!GCAM_commodity %in% aglu.FOREST_COMMODITIES) %>% rename(Price_USDm3 = value) %>% select(-GCAM_commodity), by = c("GCAM_region_ID")) %>%
-      left_join(L110.IO_Coefs_pulp %>%filter(year %in% c(MODEL_FINAL_BASE_YEAR)) %>%  group_by(GCAM_region_ID) %>% summarize(IO= mean(IO)), by = c("GCAM_region_ID")) %>%
-      mutate(IO = if_else(is.na(IO),aglu.FOREST_SAWTIMBER_CONVERSION,IO),
-             ForCost = if_else(GCAM_commodity== "sawnwood",value-(Price_USDm3*IO),
-                               value-(Price_USDm3*aglu.FOREST_PULP_CONVERSION))) %>%
-      select(-Price_USDm3) %>%
+      left_join_error_no_match(L100.pulpwood_price_R, by = "GCAM_region_ID") %>%
+      left_join(L100.forest_IO_coefs_R, by = "GCAM_region_ID") %>%
+      mutate(
+        # Use regional IO coefficient if available, otherwise use default
+        IO = if_else(is.na(IO), aglu.FOREST_SAWTIMBER_CONVERSION, IO),
+        # Calculate cost: output price - (input cost * conversion factor)
+        ForCost = if_else(
+          GCAM_commodity == "sawnwood",
+          value - (Price_USDm3 * IO),
+          value - (Price_USDm3 * aglu.FOREST_PULP_CONVERSION)
+        )
+      ) %>%
+      select(-Price_USDm3, -IO) %>%
+      # Remove invalid (zero or negative) costs
       filter(ForCost > 0) %>%
+      # Average across any duplicates (e.g., from multiple regions with same commodity)
       group_by(GCAM_region_ID, GCAM_commodity) %>%
-      mutate(ForCost=mean(ForCost),
-             ForCost = if_else(is.infinite(ForCost),0,ForCost)) %>%
-      ungroup() %>%
-      select(GCAM_region_ID, GCAM_commodity,ForCost) %>%
-      distinct()->L1321.For_Cost
+      summarise(ForCost = mean(ForCost), .groups = "drop") %>%
+      # Handle any infinite values from division by zero
+      mutate(ForCost = if_else(is.infinite(ForCost), 0, ForCost)) ->
+      L1321.For_Cost
 
 
     L1321.an_prP_R_C_75USDkg <-

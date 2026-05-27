@@ -91,6 +91,7 @@ module_energy_L2231.wind_update <- function(command, ...) {
     L1233.globaltech_capital_ATB %>%
       filter(technology == "wind",
              year == MODEL_FINAL_BASE_YEAR) %>%
+      mutate(fixed.charge.rate = calc_fixed_charge_rate(interest.rate, payback.years)) %>%
       pull(fixed.charge.rate) -> L2231.onshore_wind_fcr
 
     L1233.globaltech_OMfixed_ATB %>%

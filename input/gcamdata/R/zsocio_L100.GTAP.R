@@ -27,6 +27,7 @@ module_socio_L100.GTAP <- function(command, ...) {
 
   MODULE_OUTPUTS <-
     c("L100.GTAP_capital_stock",
+      "L100.GTAP_LaborCapitalCostShare_PrimaryAg_reg_Fish_Forest",
       "L100.GTAPCostShare_AgLU_reg_comm")
 
   if(command == driver.DECLARE_INPUTS) {
@@ -39,14 +40,13 @@ module_socio_L100.GTAP <- function(command, ...) {
     scenario <- year <- gdp <- GCAM_region_ID <- account <- Region <- Units <- growth <- timestep <- region <-
       GDP <- pop <- laborproductivity <- NULL
 
-    # 1. Read data
 
     all_data <- list(...)[[1]]
 
     # Load required inputs ----
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
-    # Capital stock and cost shares ----
+    # 1. Capital stock and cost shares ----
     if(!is.null(GTAPv10_baseview_SF01_VFA) && !is.null(GTAPv10_basedata_VKB_SAVE_VDEP)) {
 
       # GTAP data will have VKB (the value of the capital stock at the beginning of the period)
@@ -105,10 +105,16 @@ module_socio_L100.GTAP <- function(command, ...) {
         warning("WARNING: missing GTAP regions for capital stock; check the GTAP_region_mapping.csv mapping")
       }
 
+      # regional aggregate to GCAM & drop GTAP region
+      L100.GTAP_capital_stock %>%
+        group_by(region = region_GCAM, GCAM_sector, year) %>%
+        summarize(across(where(is.numeric), sum), .groups = "drop") ->
+        L100.GTAP_capital_stock
+
       L100.GTAP_capital_stock %>%
         add_title("GTAP capital stock data", overwrite = TRUE) %>%
-        add_units("share") %>%
-        add_comments("GTAP capital stock data for separate GCAM macro capital stock") %>%
+        add_units("value share") %>%
+        add_comments("Processed capital stock data for separate GCAM macro capital stock based on GTAP") %>%
         add_precursors("common/iso_GCAM_regID",
                        "socioeconomics/GTAP/GTAP_region_mapping",
                        "socioeconomics/GTAP/GTAP_sector_mapping",
@@ -122,48 +128,60 @@ module_socio_L100.GTAP <- function(command, ...) {
       # If missing source GTAP data, prebuilt data is read here
       L100.GTAP_capital_stock <- extract_prebuilt_data("L100.GTAP_capital_stock")
     }
+    ## *L100.GTAP_capital_stock ----
 
 
+    # 2. Ag cost shares ----
     if(!is.null(GTAPv10_baseview_SF01_VFA)) {
 
+      # ensure GTAP Ag sectoral mapping is okay so sectors needed are included in the data
       assert_that(
         GCAM_GTAP_sector_mapping_AgLU %>% distinct(GTAP_sectors) %>% pull %>%
           setdiff(GTAPv10_baseview_SF01_VFA %>% distinct(output) %>% pull) %>%
           length() == 0, msg = "Mapping inconsistency"
       )
 
-      GTAP_AgLU_sector <- GCAM_GTAP_sector_mapping_AgLU %>%
+      GTAP_AgLU_sector <-
+        GCAM_GTAP_sector_mapping_AgLU %>%
         distinct(output = GTAP_sectors)
 
       GTAPv10_baseview_SF01_VFA %>%
         # Keep relevant AgLU sectors only
-        right_join(GTAP_AgLU_sector,  by = "output") %>%
-        # aggregate input sectors for simplicity
-        left_join_error_no_match(GTAP_sector_mapping %>% select(input = GTAPv10, input1 = GCAM_sector), by = "input") %>%
+        right_join(GTAP_AgLU_sector, by = "output") %>%
+        # aggregate input sectors for simplicity (GTAP has more inputs)
+        left_join_error_no_match(
+          GTAP_sector_mapping %>%
+            select(input = GTAPv10, input1 = GCAM_sector),
+          by = "input") %>%
         group_by(region, year, sector = output, input = input1) %>%
         summarize(value = sum(value), .groups = "drop") ->
-        L100.GTAPCostShare_AgLU_MilUSD
+        L100.GTAPCostShare_MilUSD_AgLU
 
       # Aggregate to GCAM regions
-      L100.GTAPCostShare_AgLU_MilUSD %>%
+      L100.GTAPCostShare_MilUSD_AgLU %>%
         rename(region_GTAP = region) %>%
         left_join_error_no_match(
-          GTAP_region_mapping %>% select(region_GTAP = GTAPv10_region, region_GCAM = GCAM_region),
+          GTAP_region_mapping %>%
+            select(region_GTAP = GTAPv10_region, region_GCAM = GCAM_region),
           by = "region_GTAP") %>%
         left_join_error_no_match(
           GCAM_region_names %>% select(region_GCAM = region, GCAM_region_ID),
           by = "region_GCAM") %>%
         group_by(GCAM_region_ID, year, sector, input) %>%
         summarize(value = sum(value), .groups = "drop") ->
-        L100.GTAPCostShare_AgLU_reg_MilUSD
+        L100.GTAPCostShare_MilUSD_AgLU_R
 
       # Map to GCAM sectors and Calculate shares
       GCAM_GTAP_sector_mapping_AgLU %>%
         select(GCAM_commodity, sector = GTAP_sectors, Primary) %>%
-        # the mapping is two-way; only cost shares are useful!
-        full_join(
-          L100.GTAPCostShare_AgLU_reg_MilUSD, by = "sector") %>%
-        mutate(input = if_else(Primary == F & input %in% c("Labor", "Capital"),
+        # the mapping is one-way and row number will change (not using LJENM)
+        # only cost shares are useful!
+        left_join(
+          L100.GTAPCostShare_MilUSD_AgLU_R, by = "sector",
+          relationship = "many-to-many") %>%
+        # for sectors with processing (e.g., two gtap sectors were mapped to beef),
+        # separating primary and processed regarding factor inputs
+        mutate(input = if_else(Primary == F,
                                paste0(input, "_Proc"), input) ) %>%
         group_by(GCAM_region_ID, GCAM_commodity, input, year) %>%
         summarize(value = sum(value), .groups = "drop") %>%
@@ -185,12 +203,50 @@ module_socio_L100.GTAP <- function(command, ...) {
 
       verify_identical_prebuilt(L100.GTAPCostShare_AgLU_reg_comm)
 
+
+      # Calculate labor and capital share across all primary Ag sectors ----
+      GCAM_GTAP_sector_mapping_AgLU %>%
+        filter(GCAM_commodity %in% c("OtherMeat_Fish", "Forest")) %>%
+        distinct(sector = GTAP_sectors, GCAM_commodity) ->
+        GTAP_Mapping_Fish_For
+
+      L100.GTAPCostShare_MilUSD_AgLU_R %>%
+        # keep only primary sectors
+        inner_join(
+          GCAM_GTAP_sector_mapping_AgLU %>%
+            filter(Primary == T) %>%
+            distinct(sector = GTAP_sectors),
+          by = "sector") %>%
+        filter(input %in% c("Labor", "Capital")) %>%
+        group_by(GCAM_region_ID, year, input) %>%
+        mutate(share = value / sum(value) * 100) %>% ungroup %>%
+        # keep only fish and forest sectors
+        inner_join(GTAP_Mapping_Fish_For, by = "sector") ->
+        L100.GTAP_LaborCapitalCostShare_PrimaryAg_reg_Fish_Forest
+      # e.g., 3% fish labor share means 3% of primary Ag labor in a region is in the fishing sector
+
+      L100.GTAP_LaborCapitalCostShare_PrimaryAg_reg_Fish_Forest %>%
+        add_title("GTAP labor and captial share in primary agriculture for fish and forestry sectors", overwrite = TRUE) %>%
+        add_units("share") %>%
+        add_legacy_name("L100.GTAP_LaborCapitalCostShare_PrimaryAg_reg_Fish_Forest") %>%
+        add_comments("The factor shares derived here will complement ILO data to derive the full data set in physical units") %>%
+        add_precursors("common/GCAM_region_names",
+                       "socioeconomics/GTAP/GTAP_region_mapping",
+                       "socioeconomics/GTAP/GTAP_sector_mapping",
+                       "socioeconomics/GTAP/GCAM_GTAP_sector_mapping_AgLU",
+                       "socioeconomics/GTAP/GTAPv10_baseview_SF01_VFA") ->
+        L100.GTAP_LaborCapitalCostShare_PrimaryAg_reg_Fish_Forest
+
+      verify_identical_prebuilt(L100.GTAP_LaborCapitalCostShare_PrimaryAg_reg_Fish_Forest)
+
+
     } else {
       # If missing source GTAP data, prebuilt data is read here
       L100.GTAPCostShare_AgLU_reg_comm <- extract_prebuilt_data("L100.GTAPCostShare_AgLU_reg_comm")
+      L100.GTAP_LaborCapitalCostShare_PrimaryAg_reg_Fish_Forest <-
+        extract_prebuilt_data("L100.GTAP_LaborCapitalCostShare_PrimaryAg_reg_Fish_Forest")
+
     }
-
-
 
     return_data(MODULE_OUTPUTS)
 

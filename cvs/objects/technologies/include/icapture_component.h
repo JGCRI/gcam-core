@@ -159,17 +159,6 @@ public:
                                          const bool aGetGeologic,
                                          const int aPeriod ) const = 0;
     
-    /*! \brief Adjust the technology's inputs for the effects of the capture
-    *          component.
-    * \details Capture components cause technologies to incur additional capital
-    *          costs and decrease the efficiency of fuel usage.
-    * \param aInputs List of inputs to adjust.
-    * \param aPeriod Model period.
-    */
-    virtual void adjustInputs( const gcamstr& aRegionName,
-                               std::vector<IInput*>& aInputs,
-                               const int aPeriod ) const = 0;
-    
 protected:
     
     DEFINE_DATA(

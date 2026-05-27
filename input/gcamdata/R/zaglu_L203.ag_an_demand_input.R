@@ -261,12 +261,15 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       filter(year %in% MODEL_BASE_YEARS) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       ungroup() %>%
-      select(GCAM_region_ID, region, year, Cons_bm3,GCAM_commodity) %>%
+      select(GCAM_region_ID, region, year, Cons_bm3, GCAM_commodity) %>%
       mutate(GCAM_commodity = paste0("NonFoodDemand_",GCAM_commodity))-> # Select forest demand
       L203.For_ALL_bm3_R_Y
 
+    assertthat::assert_that(aglu.FOREST_DEMAND_SECTORS[1] == "NonFoodDemand_sawnwood")
+    # woodpulp won't have other demand (nonfood) after its linkage to paper/energy
+
     A_demand_technology_R_Yh %>%
-      filter(supplysector %in% aglu.FOREST_DEMAND_SECTORS) %>%
+      filter(supplysector %in% aglu.FOREST_DEMAND_SECTORS[1]) %>%
       # Map in forest product demand in bm3
       left_join_error_no_match(L203.For_ALL_bm3_R_Y, by = c("region", "year","supplysector"="GCAM_commodity")) %>%
       mutate(calOutputValue = round(Cons_bm3, aglu.DIGITS_CALOUTPUT),
@@ -322,10 +325,18 @@ module_aglu_L203.ag_an_demand_input <- function(command, ...) {
       L203.PriceElasticity
 
     # Fuel preference elasticity
+
+    # align parameter in MODEL_SCENARIO_ALIGN_YEAR across scenarios
+    ## Simply changing the parameter introduction year from 1975 to 2030 would not resolve this issue,
+    ## as it would instead introduce a substantial shock in 2030 due to the prior historical calibration change.
+    ## This approach may remain viable if a lower parameter value is used, but further exploration is required.
+
     # Build L203.FuelPrefElast_ssp1: Fuel preference elasticities for meat in SSP1
     #Keep the nesting subsector
     names_FuelPrefElast_nest <- c("region", "supplysector", "subsector0", "subsector",  "year.fillout", "fuelprefElasticity")
     A_fuelprefElasticity_ssp1 %>%
+      #mutate(year.fillout = min(MODEL_FUTURE_YEARS[MODEL_FUTURE_YEARS > MODEL_SCENARIO_ALIGN_YEAR])) %>%
+      # The above is reverted until future exploration of the parameter
       mutate(year.fillout = min(MODEL_BASE_YEARS)) %>%
       write_to_all_regions(names_FuelPrefElast_nest, GCAM_region_names = GCAM_region_names) %>%
       filter(!region %in% aglu.NO_AGLU_REGIONS) ->           # Remove any regions for which agriculture and land use are not modeled

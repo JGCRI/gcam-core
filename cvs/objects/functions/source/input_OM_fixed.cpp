@@ -98,9 +98,7 @@ InputOMFixed* InputOMFixed::clone() const {
 void InputOMFixed::copy( const InputOMFixed& aOther ) {
     MiniCAMInput::copy( aOther );
     
-    mTechChange = aOther.mTechChange;
     mOMFixed = aOther.mOMFixed;
-    mCapacityFactor = aOther.mCapacityFactor;
     
     // calculated parameters are not copied.
 }
@@ -121,7 +119,7 @@ void InputOMFixed::copyParamsInto( InputOMFixed& aInput,
     // Copy the coefficients forward. This is done to adjust for technical
     // change which already occurred.
     assert( aPeriod > 0 );
-    aInput.mAdjustedCoefficients[ aPeriod ] = mAdjustedCoefficients[ aPeriod - 1 ];
+    aInput.mOMFixed = mOMFixed;
 }
 
 void InputOMFixed::toDebugXML( const int aPeriod,
@@ -131,10 +129,6 @@ void InputOMFixed::toDebugXML( const int aPeriod,
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
     XMLWriteElement( mLevelizedOMFixedCost, "levelized-OM-fixed", aOut, aTabs );
     XMLWriteElement( mOMFixed, "OM-fixed", aOut, aTabs );
-    XMLWriteElement( mCapacityFactor, "capacity-factor", aOut, aTabs );
-    XMLWriteElement( mTechChange, "tech-change", aOut, aTabs );
-    XMLWriteElement( mAdjustedCosts[ aPeriod ], "adjusted-cost", aOut, aTabs );
-    XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "adjusted-coef", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -146,18 +140,12 @@ void InputOMFixed::completeInit( const gcamstr& aRegionName,
 {   
     // technology capacity factor
     // capacity factor needed before levelized fixed om cost calculation
-    mCapacityFactor = aTechInfo->getDouble(gcamstr("tech-capacity-factor"), true);
+    double capFactor = aTechInfo->getDouble(gcamstr("tech-capacity-factor"), true);
 
     // completeInit() is called for each technology for each period
     // so levelized O&M fixed cost calculation is done here.
 
-    mLevelizedOMFixedCost = calcLevelizedOMFixedCost();
-
-    // Initialize the adjusted costs in all periods to the base calculate
-    // levelized OM_fixed cost.
-    // These costs may be adjusted by the Technology, for instance for capture
-    // penalties.
-    fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mLevelizedOMFixedCost );
+    mLevelizedOMFixedCost = calcLevelizedOMFixedCost(capFactor);
 }
 
 /** Calculate the levelizd fixed O&M cost.
@@ -166,12 +154,10 @@ void InputOMFixed::completeInit( const gcamstr& aRegionName,
  * \return Levelized fixed O&M cost.
  * \author Sonny Kim
  */
-double InputOMFixed::calcLevelizedOMFixedCost( void ) const
+double InputOMFixed::calcLevelizedOMFixedCost( const double aCapFactor ) const
 {
-    // TODO: Use technology's capacity factor.
-    // TODO: Use Value class for units conversion.
     double levelizedOMFixedCost = mOMFixed 
-	/ ( FunctionUtils::HOURS_PER_YEAR() * mCapacityFactor * FunctionUtils::GJ_PER_KWH() );
+        / ( FunctionUtils::HOURS_PER_YEAR() * aCapFactor * FunctionUtils::GJ_PER_KWH() );
 
     return levelizedOMFixedCost; // 1975$/GJ
 }
@@ -183,24 +169,18 @@ void InputOMFixed::initCalc( const gcamstr& aRegionName,
                              const IInfo* aTechInfo,
                              const int aPeriod )
 {
-    // Initialize the current coefficient to 1 if it has not 
-    // been initialized through copyParam. It may be adjusted
-    // later when coefficients are copied forward.
-    mAdjustedCoefficients[ aPeriod ] = 1;
 }
 
 double InputOMFixed::getPrice( const gcamstr& aRegionName,
                                const int aPeriod ) const
 {
-    assert( mAdjustedCosts[ aPeriod ].isInited() );
-    return mAdjustedCosts[ aPeriod ];
+    return mLevelizedOMFixedCost;
 }
 
 void InputOMFixed::setPrice( const gcamstr& aRegionName,
                              const double aPrice,
                              const int aPeriod ) 
 {
-    mAdjustedCosts[ aPeriod ] = aPrice;
 }
 
 double InputOMFixed::getPhysicalDemand( const int aPeriod ) const {
@@ -222,14 +202,14 @@ double InputOMFixed::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
 }
 
 double InputOMFixed::getCoefficient( const int aPeriod ) const {
-    assert( mAdjustedCoefficients[ aPeriod ].isInited() );
-    return mAdjustedCoefficients[ aPeriod ];
+    return 1.0;
 }
 
 void InputOMFixed::setCoefficient( const double aCoefficient,
                                    const int aPeriod )
 {
-    mAdjustedCoefficients[ aPeriod ] = aCoefficient;
+    assert(false);
+    // not available
 }
 
 void InputOMFixed::tabulateFixedQuantity( const gcamstr& aRegionName,
@@ -261,11 +241,6 @@ double InputOMFixed::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double InputOMFixed::getTechChange( const int aPeriod ) const
-{
-    return mTechChange;
-}
-
 void InputOMFixed::doInterpolations( const int aYear, const int aPreviousYear,
                                      const int aNextYear, const IInput* aPreviousInput,
                                      const IInput* aNextInput )
@@ -283,17 +258,10 @@ void InputOMFixed::doInterpolations( const int aYear, const int aPreviousYear,
      */
     assert( nextOMInput );
     
-    // tech change is just copied from the next input
-    mTechChange = nextOMInput->mTechChange;
-    
     // interpolate the costs
     mOMFixed = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
                                          prevOMInput->mOMFixed, nextOMInput->mOMFixed );
     mLevelizedOMFixedCost = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
                                                       prevOMInput->mLevelizedOMFixedCost,
                                                       nextOMInput->mLevelizedOMFixedCost );
-    
-    // interpolate capacity factor
-    mCapacityFactor = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
-                                                prevOMInput->mCapacityFactor, nextOMInput->mCapacityFactor );
 }

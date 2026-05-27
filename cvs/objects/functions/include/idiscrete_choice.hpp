@@ -105,16 +105,10 @@ public:
      * \brief Any initializations or error checking before beginning of a model period.
      * \param aRegionName The name of the region that contains this object.
      * \param aContainerName The name of the containing object of this one.
-     * \param aShouldShareIncreaseWithValue A boolean from containing objects if true
-     *                                      would like to ensure share increases if the
-     *                                      value of an option increases (i.e. it is a
-     *                                      profit rate).  Conversely if false, the share
-     *                                      should decrease if the value increases (i.e.
-     *                                      it is a cost).
      * \param aPeriod The model period.
      */
     virtual void initCalc( const gcamstr& aRegionName, const std::string& aContainerName,
-                           const bool aShouldShareIncreaseWithValue, const int aPeriod ) = 0;
+                           const int aPeriod ) = 0;
   
     /*!
      * \brief Compute the unnormalized share given the value (e.g. cost or profit) and

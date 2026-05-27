@@ -101,6 +101,7 @@ module_energy_L120.offshore_wind <- function(command, ...) {
     L1233.globaltech_capital_ATB %>%
       filter(technology == "wind_offshore",
              year == MODEL_FINAL_BASE_YEAR) %>%
+      mutate(fixed.charge.rate = calc_fixed_charge_rate(interest.rate, payback.years)) %>%
       pull(fixed.charge.rate) -> L120.offshore_wind_fcr
 
     L1233.globaltech_OMfixed_ATB %>%

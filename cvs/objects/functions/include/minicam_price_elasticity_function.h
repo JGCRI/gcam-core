@@ -144,7 +144,7 @@ public:
                                  const gcamstr& aSectorName,
                                  const int aPeriod, 
                                  double aAlphaZero = 0,
-                                 double aSigma = 0 ) const;
+                                double aSigma = 0 ) const { return 0; }
 
     double calcUnscaledProfits( const InputSet& aInputs, 
                                 const gcamstr& aRegionName,

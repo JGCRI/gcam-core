@@ -61,12 +61,21 @@ using namespace std;
 
 extern Scenario* scenario;
 
+/*!
+ * \brief Currency conversions used through out macro calculations.
+ * \details GCAM utils are billion 1975$ and macro uses million 1990$
+ * \return The conversion from billion 1975$ to million 1990$
+ */
+inline double CURRENCY_CONVERSION() {
+    return 1000.0 * FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
+}
+
 //! Default Constructor
 NationalAccountContainer::NationalAccountContainer():
 mGDPMrkName("GDP_Trial"),
 mGDPActName("GDP_Act"),
-mEnergyNetExportMrkName("energy net export"),
-mEnergyServiceMrkName("energy service")
+mGCAMNetExportMrkName("energy net export"),
+mAgFoodMrkName("ag food service")
 {
     // TODO: create production function factory
     // use CES for now
@@ -125,8 +134,8 @@ void NationalAccountContainer::completeInit( const gcamstr& aRegionName, const D
         double popTot = aDemographics->getTotal(period);
         mNationalAccounts[period]->setAccount(NationalAccount::POPULATION, popTot );
         // labor force share must have been read-in
-        double laborForce =  popTot * mNationalAccounts[period]->getAccountValue(NationalAccount::LABOR_FORCE_SHARE);
-        mNationalAccounts[period]->setAccount(NationalAccount::LABOR_FORCE, laborForce );
+        double laborForce =  popTot * mNationalAccounts[period]->getAccountValue(NationalAccount::MATERIALS_LABOR_FORCE_SHARE);
+        mNationalAccounts[period]->setAccount(NationalAccount::MATERIALS_LABOR_FORCE, laborForce );
         // GDP must have been read-in by national accounts
         // This is inital GDP per Capita. If GDP is solved for, GDP per capita will update accordingly.
         double GDPperCapita =  mNationalAccounts[period]->getAccountValue(NationalAccount::GDP) / popTot ;
@@ -162,22 +171,28 @@ void NationalAccountContainer::setGDPTrialMarket( ) {
     Marketplace* marketplace = scenario->getMarketplace();
     
     const bool isFixedGDP = Configuration::getInstance()->getBool("FixedGDP-Path");
-    if ( marketplace->createMarket( mRegionName, mRegionName, mGDPMrkName, isFixedGDP ? IMarketType::CALIBRATION : IMarketType::TRIAL_VALUE ) ) {
+    if ( marketplace->createMarket( mRegionName, mRegionName, mGDPMrkName, isFixedGDP ? IMarketType::NORMAL : IMarketType::TRIAL_VALUE ) ) {
         // Set price and output units for period 0 market info
         IInfo* marketInfo = marketplace->getMarketInfo( mGDPMrkName, mRegionName, 0, true );
-        marketInfo->setString( "price-unit", "million90$" );
+        marketInfo->setString( "price-unit", isFixedGDP ? "scaler" : "million90$" );
         marketInfo->setString( "output-unit", "million90$" );
         
         objects::PeriodVector<Value> trialGDPs;
         for( int per = 0; per < modeltime->getmaxper(); ++per ){
-            trialGDPs[per] = mNationalAccounts[per]->getAccountValue(NationalAccount::GDP);
+            if(isFixedGDP) {
+                trialGDPs[per] = per <= modeltime->getFinalCalibrationPeriod() ? 1.0 : mNationalAccounts[per]->getAccountValue(NationalAccount::TOTAL_FACTOR_PRODUCTIVITY);
+                marketplace->addToDemand(mGDPMrkName, mRegionName, Value(mNationalAccounts[per]->getAccountValue(NationalAccount::GDP)), per);
+            }
+            else {
+                trialGDPs[per] = mNationalAccounts[per]->getAccountValue(NationalAccount::GDP);
+            }
         }
         marketplace->setPriceVector( mGDPMrkName, mRegionName, trialGDPs );
     }
     
     // Solve GDP market for future periods only
     for( int per = 0; per < modeltime->getmaxper(); ++per ){
-        bool isUnsolved = isFixedGDP || per <= modeltime->getFinalCalibrationPeriod();
+        bool isUnsolved = per <= modeltime->getFinalCalibrationPeriod();
         if (isUnsolved) {
             // turn off market to solve for historical periods
             marketplace->unsetMarketToSolve( mGDPMrkName, mRegionName, per );
@@ -192,12 +207,9 @@ void NationalAccountContainer::setGDPTrialMarket( ) {
     MarketDependencyFinder* depFinder = marketplace->getDependencyFinder();
     depFinder->addDependency( mGDPActName, mRegionName, mGDPMrkName, mRegionName );
     if( mGdpMacroFunction ) {
-        depFinder->addDependency( mGDPActName, mRegionName, mEnergyNetExportMrkName, mRegionName );
+        depFinder->addDependency( mGDPActName, mRegionName, mGCAMNetExportMrkName, mRegionName );
+        depFinder->addDependency( mGDPActName, mRegionName, mAgFoodMrkName, mRegionName );
     }
-    // note: given we are just taking capital investments out of savings during initCalc
-    // we do really need to log a dependency here, however to avoid warnings we do
-    depFinder->addDependency( mGDPActName, mRegionName, "capital", mRegionName);
-    depFinder->addDependency( mGDPActName, mRegionName, "consumer durable", mRegionName);
 }
 
 /*!
@@ -226,8 +238,15 @@ void NationalAccountContainer::initCalc( const Demographic* aDemographics, const
     // We do not expect the GDP to change by more than +/- 50%
     const double GDP_BOUNDS = 0.5;
     double currGDPEstimate = mNationalAccounts[aPeriod]->getAccountValue(NationalAccount::GDP);
-    SectorUtils::setSupplyBehaviorBounds(mGDPMrkName, mRegionName, currGDPEstimate * GDP_BOUNDS,
-                                         currGDPEstimate*(1.0+GDP_BOUNDS), aPeriod);
+    const bool isFixedGDP = Configuration::getInstance()->getBool("FixedGDP-Path");
+    if(isFixedGDP) {
+        SectorUtils::setSupplyBehaviorBounds(mGDPMrkName, mRegionName, 0.0,
+                                             10.0, aPeriod);
+    }
+    else {
+        SectorUtils::setSupplyBehaviorBounds(mGDPMrkName, mRegionName, currGDPEstimate * GDP_BOUNDS,
+                                             currGDPEstimate*(1.0+GDP_BOUNDS), aPeriod);
+    }
 }
 
 /*!
@@ -238,28 +257,45 @@ void NationalAccountContainer::calcGDP( const int aPeriod ) {
     Marketplace* marketplace = scenario->getMarketplace();
     const int basePeriod = scenario->getModeltime()->getFinalCalibrationPeriod();
     if(mGdpMacroFunction && aPeriod > basePeriod) {
+        if(isFixedGDP) {
+            double trialTFP = marketplace->getPrice(mGDPMrkName, mRegionName, aPeriod);
+            mGdpMacroFunction->setTotalFactorProductivity(trialTFP);
+        }
         double currGrossOutput = mGdpMacroFunction->calcGrossOutput( mRegionName, mNationalAccounts[aPeriod], aPeriod, false );
         
         //Calculate net energy export rents to add to GDP. Convert million 1990 dollars.
-        double currEnergyExportValue = -scenario->getMarketplace()->getPrice( mEnergyNetExportMrkName, mRegionName, aPeriod ) *
-            1000 * FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
+        double currEnergyExportValue = -scenario->getMarketplace()->getPrice( mGCAMNetExportMrkName, mRegionName, aPeriod ) *
+            CURRENCY_CONVERSION();
+        double currAgFoodValue = scenario->getMarketplace()->getPrice( mAgFoodMrkName, mRegionName, aPeriod ) *
+            CURRENCY_CONVERSION();
 
         // Total GDP includes sources of income from outside of region. Given the structure of our
         // social accounting matrix, the easiest way to adjust gross output accordingly is to
         // add on energy net exports
-        double currGDP_total = currGrossOutput + currEnergyExportValue;
+        double currGDP_total = currGrossOutput + currEnergyExportValue + currAgFoodValue;
 
-        // add the calculated GDP to the trial market (if not running in fixed mode)
-        // note, even in fixed mode we want to keep track of this value because we can
-        // use it to calibrate a total factor productivity
         mCurrGDP = currGDP_total;
-        if(!isFixedGDP) {
+        if(isFixedGDP) {
+            // for fixed GDP mode we have a NORMAL market so we need to add both supply
+            // and demand with one being the calculated GDP and the other the fixed GDP
+            // path we are looking to match
+            // given the "price" is TFP we will add the calculated on the supply side and
+            // fixed to the demand, in that way an increasing "price" increases supply
+            marketplace->addToSupply( mGDPMrkName, mRegionName, mCurrGDP, aPeriod, true );
+            mFixedGDPForMarket = mNationalAccounts[aPeriod]->getAccountValue(NationalAccount::GDP);
+            marketplace->addToDemand( mGDPMrkName, mRegionName, mFixedGDPForMarket, aPeriod, true );
+        }
+        else {
+            // add the calculated GDP to the trial market if not running in fixed mode
             marketplace->addToDemand( mGDPMrkName, mRegionName, mCurrGDP, aPeriod, true );
         }
     }
     else if(!isFixedGDP) {
         mCurrGDP = mNationalAccounts[aPeriod]->getAccountValue(NationalAccount::GDP);
         marketplace->addToDemand( mGDPMrkName, mRegionName, mCurrGDP, aPeriod, true );
+    }
+    if(mGdpMacroFunction && aPeriod <= basePeriod) {
+        mGdpMacroFunction->updateMarkets(mRegionName, mNationalAccounts[aPeriod], aPeriod);
     }
     // given the GDP may be dynamic and the negative emissions budget is calculated as a
     // percent of total GDP we need to calculate what that dollar value amounts to and set
@@ -280,8 +316,10 @@ double NationalAccountContainer::getMarketGDP( const int aPeriod ) const{
     // would would reasonably expect.  To avoid bad numerics we will cap the market GDPs
     // at this floor.
     const double MIN_GDP = 1000;
-    double marketGDP = std::max(scenario->getMarketplace()->getPrice( mGDPMrkName, mRegionName, aPeriod, true ),
-                                MIN_GDP);
+    const static bool isFixedGDP = Configuration::getInstance()->getBool("FixedGDP-Path");
+    double marketGDP = isFixedGDP ?
+        mNationalAccounts[aPeriod]->getAccountValue(NationalAccount::GDP) :
+        std::max(scenario->getMarketplace()->getPrice( mGDPMrkName, mRegionName, aPeriod, true ), MIN_GDP);
     
     // Note: the solver will never directly generate an invalid (i.e. NaN) price
     
@@ -337,29 +375,29 @@ double NationalAccountContainer::getPop( const int aPeriod ) const{
  */
 void NationalAccountContainer::postCalc( const int aPeriod ) {
     if ( mGdpMacroFunction ) {
-        double netExportValue = -scenario->getMarketplace()->getPrice(mEnergyNetExportMrkName, mRegionName, aPeriod);
-        double energyService = scenario->getMarketplace()->getPrice(mEnergyServiceMrkName, mRegionName, aPeriod);
+        double netExportValue = -scenario->getMarketplace()->getPrice(mGCAMNetExportMrkName, mRegionName, aPeriod);
+        double agFoodValue = scenario->getMarketplace()->getPrice(mAgFoodMrkName, mRegionName, aPeriod);
         // The energy investment pulled up from GCAM will actually be the total investment over the entire
         // timestep.  We need to annualize it here for which we assume even investment over the timestep
         const double annualizationFactor = scenario->getModeltime()->gettimestep(aPeriod);
-        double energyInvestment = scenario->getMarketplace()->getPrice("capital", mRegionName, aPeriod) * 1000 * FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975() / annualizationFactor;
-        double consumerDurableInv = scenario->getMarketplace()->getPrice("consumer durable", mRegionName, aPeriod) * 1000 * FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975() / annualizationFactor;
+        double energyInvestment = scenario->getMarketplace()->getDemand("capital-energy", mRegionName, aPeriod) * CURRENCY_CONVERSION() / annualizationFactor;
+        double consumerDurableInv = scenario->getMarketplace()->getDemand("consumer durable", mRegionName, aPeriod) * CURRENCY_CONVERSION() / annualizationFactor;
+        double agInvestment = scenario->getMarketplace()->getDemand("capital-ag", mRegionName, aPeriod) * CURRENCY_CONVERSION() / annualizationFactor;
+        
         double gdpPerCapPPP = getMarketGDPperCapita(aPeriod) * mPPPConversion;
         mNationalAccounts[aPeriod]->setAccount(NationalAccount::GDP_PER_CAPITA_PPP, gdpPerCapPPP);
         
-        netExportValue *= 1000 * FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
-        energyService *= 1000 * FunctionUtils::DEFLATOR_1990_PER_DEFLATOR_1975();
+        netExportValue *= CURRENCY_CONVERSION();
+        agFoodValue *= CURRENCY_CONVERSION();
         double materialsNetExp = -mNationalAccounts[aPeriod]->getAccountValue(NationalAccount::CAPITAL_NET_EXPORT) - netExportValue;
         mNationalAccounts[aPeriod]->setAccount(NationalAccount::MATERIALS_NET_EXPORT, materialsNetExp);
-        mNationalAccounts[aPeriod]->setAccount(NationalAccount::ENERGY_NET_EXPORT, netExportValue);
-        mNationalAccounts[aPeriod]->setAccount(NationalAccount::ENERGY_SERVICE, energyService);
+        mNationalAccounts[aPeriod]->setAccount(NationalAccount::GCAM_NET_EXPORT, netExportValue);
+        mNationalAccounts[aPeriod]->setAccount(NationalAccount::ENERGY_INVESTMENT, energyInvestment);
+        mNationalAccounts[aPeriod]->setAccount(NationalAccount::AG_INVESTMENT, agInvestment);
         mNationalAccounts[aPeriod]->setAccount(NationalAccount::CONSUMER_DURABLE_INV, consumerDurableInv);
+        mNationalAccounts[aPeriod]->setAccount(NationalAccount::AG_FOOD_SERVICE_VALUE, agFoodValue);
         
         if( aPeriod > scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-            // save energy investment value from market into the national accounts
-            // avoid setting in the historical years as that is from data
-            mNationalAccounts[aPeriod]->setAccount(NationalAccount::CAPITAL_ENERGY_INV, energyInvestment);
-
             // use regression coefficients to calculate a savings rate for the next model period
             double prevSR = mNationalAccounts[aPeriod-1]->getAccountValue(NationalAccount::SAVINGS_RATE);
             double gdppcGR2 = getMarketGDPperCapita(aPeriod) / getMarketGDPperCapita(aPeriod-1) - 1.0;
@@ -370,19 +408,14 @@ void NationalAccountContainer::postCalc( const int aPeriod ) {
         
         // Additional calculations for history.
         if( aPeriod <= scenario->getModeltime()->getFinalCalibrationPeriod() ) {
-            // Note
-            mNationalAccounts[aPeriod]->postCalcHist();
+            mNationalAccounts[aPeriod]->setAccount(NationalAccount::MATERIALS_GROSS_OUTPUT, mNationalAccounts[aPeriod]->getAccountValue(NationalAccount::GDP) - netExportValue - agFoodValue);
         }
         else {
             const bool isFixedGDP = Configuration::getInstance()->getBool("FixedGDP-Path");
             if(isFixedGDP) {
-                // if running in fixed mode we can easily back calculate a total factor productivity
-                // that would allow us to match the calculated GDP to the exogenously provided one
-                double calGrossOutput = mNationalAccounts[aPeriod]->getAccountValue(NationalAccount::GDP) - netExportValue;
-                double actualGrossOutput = mCurrGDP - netExportValue;
-                double totalFactorProd = calGrossOutput / actualGrossOutput;
-                // set this TFP so it can be used in the final call to the materials function
-                mGdpMacroFunction->setTotalFactorProductivity(totalFactorProd);
+                // given the simultanies equations the TFP used for calibration is solved
+                // and can be retrieved by the price of the GDP market
+                double totalFactorProd = scenario->getMarketplace()->getPrice(mGDPMrkName, mRegionName, aPeriod);
                 // save the TFP in the national accounts so it can be reported and potentially
                 // read back in to use in open GDP mode
                 mNationalAccounts[aPeriod]->setAccount(NationalAccount::TOTAL_FACTOR_PRODUCTIVITY, totalFactorProd);
@@ -396,8 +429,7 @@ void NationalAccountContainer::postCalc( const int aPeriod ) {
         // NOTE:
         // 1. During historical periods this is when the materials function's coefficients
         //    will be calibrated.
-        // 2. The calibrated TFP will now be reflected (when running in fixed GDP mode).
-        // 3. We set the flag to save detailed results to the national accounts to true so
+        // 2. We set the flag to save detailed results to the national accounts to true so
         //    that the values will be available for reporting.
         mGdpMacroFunction->calcGrossOutput( mRegionName, mNationalAccounts[aPeriod], aPeriod, true );
         

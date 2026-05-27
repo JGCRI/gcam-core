@@ -415,13 +415,13 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
       L2233.GlobalTechCapital_elec_USA
 
     L2233.GlobalTechCapital_elec_USA %>%
-      select(-input.capital, -capital.overnight, -fixed.charge.rate) %>%
+      select(-input.capital, -capital.overnight, -interest.rate, -payback.years) %>%
       left_join_error_no_match(
         bind_rows(L2233.GlobalTechCapital_elec_cool %>%
                     mutate(technology = sub("storage", "base_storage", technology)),
                   L2233.GlobalTechCapital_elecPassthru %>%
                     mutate(technology = sub("storage", "base_storage", technology))) %>%
-          select(technology, year, input.capital, capital.overnight, fixed.charge.rate),
+          select(technology, year, input.capital, capital.overnight, interest.rate, payback.years),
         by = c("technology", "year")) %>%
       arrange(sector.name,year) %>%
       mutate(technology = if_else(subsector.name0 == "wind" | subsector.name0 == "solar", subsector.name,

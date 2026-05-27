@@ -24,7 +24,9 @@ module_aglu_ag_trade_xml <- function(command, ...) {
       "L240.TechShrwt_reg",
       "L240.TechCoef_reg",
       "L240.Production_reg_imp",
-      "L240.Production_reg_dom")
+      "L240.Production_reg_dom",
+      "L281.TechAccountInput_agtrade",
+      "L281.TechAccountOutput_agtrade")
 
   MODULE_OUTPUTS <-
     c(XML = "ag_trade.xml")
@@ -40,38 +42,26 @@ module_aglu_ag_trade_xml <- function(command, ...) {
     # Load required inputs ----
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
-    # ===================================================
 
-
-
-    # Produce outputs
+    # Produce outputs ----
     create_xml("ag_trade.xml") %>%
       add_logit_tables_xml(L240.Supplysector_tra, "Supplysector") %>%
       add_xml_data(L240.SectorUseTrialMarket_tra, "SectorUseTrialMarket") %>%
       add_logit_tables_xml(L240.SubsectorAll_tra, "SubsectorAll", base_logit_header = "SubsectorLogit") %>%
       add_xml_data(L240.TechShrwt_tra, "TechShrwt") %>%
       add_xml_data(L240.TechCost_tra, "TechCost") %>%
+      add_node_equiv_xml("input") %>%
+      add_xml_data(L281.TechAccountInput_agtrade, "TechAccountInput") %>%
       add_xml_data(L240.TechCoef_tra, "TechCoef") %>%
       add_xml_data(L240.Production_tra, "Production") %>%
       add_logit_tables_xml(L240.Supplysector_reg, "Supplysector") %>%
       add_logit_tables_xml(L240.SubsectorAll_reg, "SubsectorAll", base_logit_header = "SubsectorLogit") %>%
       add_xml_data(L240.TechShrwt_reg, "TechShrwt") %>%
       add_xml_data(L240.TechCoef_reg, "TechCoef") %>%
+      add_xml_data(L281.TechAccountOutput_agtrade, "TechAccountOutput") %>%
       add_xml_data(L240.Production_reg_imp, "Production") %>%
       add_xml_data(L240.Production_reg_dom, "Production") %>%
-      add_precursors("L240.Supplysector_tra",
-                     "L240.SectorUseTrialMarket_tra",
-                     "L240.SubsectorAll_tra",
-                     "L240.TechShrwt_tra",
-                     "L240.TechCost_tra",
-                     "L240.TechCoef_tra",
-                     "L240.Production_tra",
-                     "L240.Supplysector_reg",
-                     "L240.SubsectorAll_reg",
-                     "L240.TechShrwt_reg",
-                     "L240.TechCoef_reg",
-                     "L240.Production_reg_imp",
-                     "L240.Production_reg_dom") ->
+      add_precursors(MODULE_INPUTS) ->
       ag_trade.xml
 
     return_data(MODULE_OUTPUTS)

@@ -87,7 +87,7 @@ public:
                              Tabs *aTabs ) const;
     
     virtual void initCalc( const gcamstr& aRegionName, const std::string& aContainerName,
-                           const bool aShouldShareIncreaseWithValue, const int aPeriod );
+                           const int aPeriod );
 
     virtual double calcUnnormalizedShare( const double aShareWeight, const double aValue,
                                           const int aPeriod ) const;

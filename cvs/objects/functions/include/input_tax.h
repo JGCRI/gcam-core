@@ -146,8 +146,6 @@ public:
 
     virtual double getPriceElasticity( const int aPeriod ) const;
 
-    virtual double getTechChange( const int aPeriod ) const;
-
     virtual void copyParamsInto( InputTax& aInput,
                                  const int aPeriod ) const;
 
@@ -160,11 +158,7 @@ protected:
         MiniCAMInput,
         
         //! Physical Demand.
-        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> ),
-        
-        //! Current coefficient after adjustments have been made by the technology's
-        //! capture component.
-        DEFINE_VARIABLE( ARRAY | NOT_PARSABLE, "current-coef", mAdjustedCoefficients, objects::TechVintageVector<Value> )
+        DEFINE_VARIABLE( ARRAY | STATE | NOT_PARSABLE, "physical-demand", mPhysicalDemand, objects::TechVintageVector<Value> )
     )
 
     //! Stash the current sector name for use in setPhysicalDemand

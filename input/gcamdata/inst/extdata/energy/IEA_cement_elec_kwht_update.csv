@@ -3,7 +3,7 @@
 # Units: kwh per tonne of cement
 # Source: "IEA (2021), Electricity use per tonne of cement in selected countries and regions, 2018, IEA, Paris https://www.iea.org/data-and-statistics/charts/electricity-use-per-tonne-of-cement-in-selected-countries-and-regions-2018, Licence: CC BY 4.0"
 # Comments: this gets merged with another data set for histroical cement electricity use
-# Column types: ciiii
+# Column types: ci
 # ----------
 Country,2018
 Brazil,108

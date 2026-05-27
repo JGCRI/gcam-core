@@ -100,6 +100,8 @@ public:
     virtual void initCalc( const gcamstr& aRegionName, const gcamstr& aResourceName,
                            const IInfo* aResourceInfo, const int aPeriod );
     static const std::string& getXMLNameStatic();
+    virtual void cumulsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
+                              double aPrice, int aPeriod );
     virtual void annualsupply( const gcamstr& aRegionName, const gcamstr& aResourceName,
                                int aPeriod, double aPrice );
     virtual void accept( IVisitor* aVisitor, const int aPeriod ) const;

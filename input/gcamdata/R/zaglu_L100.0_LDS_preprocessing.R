@@ -26,7 +26,6 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
     c(FILE = "aglu/LDS/Land_type_area_ha",
       FILE = "aglu/LDS/LDS_ag_HA_ha",
       FILE = "aglu/LDS/LDS_ag_prod_t",
-      FILE = "aglu/LDS/LDS_value_milUSD",
       FILE = "aglu/LDS/MIRCA_irrHA_ha",
       FILE = "aglu/LDS/MIRCA_rfdHA_ha",
       FILE = "aglu/LDS/Ref_veg_carbon_Mg_per_ha",
@@ -45,7 +44,7 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
   } else if(command == driver.MAKE) {
 
     . <- value <- iso <- GTAP_crop <- GLU <- MIRCA_crop <- NULL             # silence package check.
-    L100.Land_type_area_ha <- L100.LDS_value_milUSD <- L100.MIRCA_irrHA_ha <-
+    L100.Land_type_area_ha <- L100.MIRCA_irrHA_ha <-
         L100.MIRCA_rfdHA_ha <- L100.Ref_veg_carbon_Mg_per_ha <- L100.Water_footprint_m3 <- NULL
 
     all_data <- list(...)[[1]]

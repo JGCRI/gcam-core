@@ -176,15 +176,14 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
       mutate(diff=roundwood_cons-Cons_bm3,
              Prod_bm3= Prod_bm3+diff,
              Cons_bm3=roundwood_cons) %>%
-      select(colnames(L110.For_ALL_bm3_R_Y))->L110.For_ALL_bm3_R_Y_Primary
+      select(colnames(L110.For_ALL_bm3_R_Y)) ->
+      L110.For_ALL_bm3_R_Y_Primary
 
     L110.For_ALL_bm3_R_Y %>%
       filter(GCAM_commodity!=aglu.FOREST_SUPPLY_SECTOR) %>%
-      bind_rows(L110.For_ALL_bm3_R_Y_Primary)->L110.For_ALL_bm3_R_Y
+      bind_rows(L110.For_ALL_bm3_R_Y_Primary) ->
+      L110.For_ALL_bm3_R_Y
 
-
-
-    # Produce outputs
 
     # Move this code from L240 to here to reduce dependency ----
     # Back out gross trade using forest export
@@ -199,14 +198,25 @@ module_aglu_L110.For_FAO_R_Y <- function(command, ...) {
                  flow = "GrossExp") %>%
           select(GCAM_region_ID, GCAM_commodity, flow, year, value) %>%
           group_by(GCAM_region_ID, GCAM_commodity, flow, year) %>%
-          summarise(value = sum(value)) %>%
-          ungroup() %>%
+          summarize(value = sum(value), .groups = "drop") %>%
           spread(flow, value),
         by = c("GCAM_region_ID", "GCAM_commodity", "year")) %>%
       replace_na(list(GrossExp = 0)) %>%
+      mutate_at(
+        vars("Prod_bm3", "NetExp_bm3", "Cons_bm3", "GrossExp"),
+        function(x) round(x, aglu.DIGITS_CALOUTPUT)) %>%
       mutate(GrossImp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp - NetExp_bm3, 0),
              GrossExp_Mt = if_else(GrossExp - NetExp_bm3 > 0, GrossExp, NetExp_bm3)) %>%
       select(-GrossExp) ->
+      L110.For_ALL_bm3_R_Y
+
+    # Adjust self-trade to ensure export < domestic supply (production + opening stock) ----
+    L110.For_ALL_bm3_R_Y %>%
+      # reduce import and export both by the same (GrossExp_Mt - Prod_bm3)
+      mutate(GrossImp_Mt = if_else(GrossExp_Mt > Prod_bm3,
+                                   GrossImp_Mt - (GrossExp_Mt - Prod_bm3), GrossImp_Mt),
+             GrossExp_Mt = if_else(GrossExp_Mt > Prod_bm3,
+                                   Prod_bm3, GrossExp_Mt)) ->
       L110.For_ALL_bm3_R_Y
 
 

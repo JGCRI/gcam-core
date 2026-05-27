@@ -145,10 +145,6 @@ public:
     double getSequesteredAmount( const gcamstr& aGHGName,
                                  const bool aGetGeologic,
                                  const int aPeriod ) const;
-
-    virtual void adjustInputs( const gcamstr& aRegionName,
-                               std::vector<IInput*>& aInputs,
-                               const int aPeriod ) const;
 protected:
     
     void copy( const StandardCaptureComponent& aOther );
@@ -171,13 +167,7 @@ protected:
         DEFINE_VARIABLE( SIMPLE, "remove-fraction", mRemoveFraction, double ),
         
         //! Storage cost associated with the remove fraction.
-        DEFINE_VARIABLE( SIMPLE, "storage-cost", mStorageCost, double ),
-
-        //! Energy intensity penalty.
-        DEFINE_VARIABLE( SIMPLE, "intensity-penalty", mIntensityPenalty, double ),
-
-        //! Multiplicative non-energy cost penalty.
-        DEFINE_VARIABLE( SIMPLE, "non-energy-penalty", mNonEnergyCostPenalty, double )
+        DEFINE_VARIABLE( SIMPLE, "storage-cost", mStorageCost, double )
     )
 };
 

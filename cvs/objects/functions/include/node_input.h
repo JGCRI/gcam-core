@@ -223,8 +223,6 @@ public:
 
     virtual double getIncomeElasticity( const int aPeriod ) const;
 
-    virtual double getTechChange( const int aPeriod ) const;
-
     // TODO: put methods that NodeInput will not implement under here
     virtual void calcPricePaid( const gcamstr& aRegionName,
                                 const gcamstr& aSectorName,

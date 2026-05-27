@@ -265,7 +265,7 @@ void Subsector::completeInit( const IInfo* aSectorInfo,
 void Subsector::initCalc( const Demographic* aDemographics,
                           const int aPeriod )
 {
-    mDiscreteChoiceModel->initCalc( mRegionName, mName, false, aPeriod );
+    mDiscreteChoiceModel->initCalc( mRegionName, mName, aPeriod );
     
     // Initialize all technologies.
     for( TechIterator techIter = mTechContainers.begin(); techIter != mTechContainers.end(); ++techIter ) {

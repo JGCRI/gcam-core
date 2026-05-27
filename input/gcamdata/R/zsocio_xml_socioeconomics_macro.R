@@ -8,19 +8,21 @@
 #' @param ... other optional parameters, depending on command
 #' @return Depends on \code{command}: either a vector of required inputs,
 #' a vector of output names, or (if \code{command} is "MAKE") all
-#' the generated outputs: \code{socioeconomics_macro.xml}. There is no corresponding file in the
-#' original data system.
+#' the generated outputs: \code{socioeconomics_macro.xml}.
 module_socioeconomics_macro_xml <- function(command, ...) {
 
   MODULE_INPUTS <-
     c("L203.NationalAccounts",
       "L203.SavingsRateParams",
-      "L203.GDP_macro_function",
+      "L203.Materials_nestedCES_prod_function_intermediate",
+      "L203.Materials_nestedCES_prod_function_valueadded",
       "L203.FactorProductivity",
       # tracking inputs
       "L281.BasePriceSectorMapping",
       "L281.GlobalTechAccountOutputUseBasePrice_fd",
-      "L281.TrialValueResource")
+      "L281.TrialValueResource",
+      "L281.CapResource",
+      "L281.CapitalLink")
 
   MODULE_OUTPUTS <-
     c(XML = "socioeconomics_macro.xml")
@@ -36,17 +38,20 @@ module_socioeconomics_macro_xml <- function(command, ...) {
     # Load required inputs ----
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
-    # ===================================================
 
-    # Produce outputs
+    # Produce outputs ----
     create_xml("socioeconomics_macro.xml") %>%
-      add_xml_data(L203.NationalAccounts, "NationalAccount") %>%
+      add_xml_data(L203.NationalAccounts, "NationalAccount") %>% # AE separated
       add_xml_data(L203.SavingsRateParams, "SavingsRateParams") %>%
-      add_xml_data(L203.GDP_macro_function, "GDPMacroFunction") %>%
-      add_xml_data(L203.FactorProductivity, "FactorProductivity") %>%
-      add_xml_data(L281.BasePriceSectorMapping, "BasePriceSectorMap", NULL) %>%
+      add_xml_data(L203.Materials_nestedCES_prod_function_intermediate, "NestedCESMacro") %>%
+      add_xml_data(L203.Materials_nestedCES_prod_function_valueadded, "NestedCESMacroVA") %>%
+      add_xml_data(L203.FactorProductivity %>% filter(is.na(node.name)), "FactorProductivity") %>%
+      add_xml_data(L203.FactorProductivity %>% filter(!is.na(node.name)), "FactorProductivityVA") %>%
+      add_xml_data(L281.BasePriceSectorMapping, "BasePriceSectorMap") %>%
       add_xml_data(L281.GlobalTechAccountOutputUseBasePrice_fd, "GlobalTechAccountOutputUseBasePrice") %>%
       add_xml_data(L281.TrialValueResource, "TrialValueRsrc") %>%
+      add_xml_data(L281.CapResource, "Rsrc") %>%
+      add_xml_data(L281.CapitalLink, "GHGConstrLink") %>%
       add_precursors(MODULE_INPUTS) ->
       socioeconomics_macro.xml
 

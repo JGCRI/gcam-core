@@ -223,7 +223,7 @@ module_gcamusa_L2241.coal_retire <- function(command, ...) {
     L2241.elec_USA_coalret %>%
       left_join_error_no_match(L2234.GlobalTechCapital_elecS_USA,
                                by = c("supplysector", "subsector",  "tech" = "technology", "year")) %>%
-      select(supplysector, subsector, technology, year, input.capital, capital.overnight, fixed.charge.rate) ->
+      select(supplysector, subsector, technology, year, input.capital, capital.overnight, interest.rate, payback.years) ->
       L2241.GlobalTechCapital_elec_coalret_USA
 
     # Fixed OM costs

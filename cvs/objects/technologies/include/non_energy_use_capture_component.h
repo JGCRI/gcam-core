@@ -114,10 +114,6 @@ public:
                                           const gcamstr& aGHGName,
                                           const double aTotalEmissions,
                                           const int aPeriod );
-
-    virtual void adjustInputs( const gcamstr& aRegionName,
-                               std::vector<IInput*>& aInputs,
-                               const int aPeriod ) const;
 protected:
     void copy( const NonEnergyUseCaptureComponent& aOther );
 

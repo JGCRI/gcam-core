@@ -393,11 +393,12 @@ module_water_L2233.electricity_water <- function(command, ...) {
                                                                      "subsector" = "subsector.name",
                                                                      "stub.technology" = "technology",
                                                                      "year")) %>%
-      mutate(input.cost = round(capital.overnight * fixed.charge.rate / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ), energy.DIGITS_COST),
-             capital.coef = round(1 / fixed.charge.rate, energy.DIGITS_COST),
+      mutate(input.cost = capital.overnight * calc_fixed_charge_rate(interest.rate, payback.years) / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ),
+             capital.ratio = 1,
+             invest.unit.conversion = 1,
              tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
-             depreciation.rate = round(1 / 15, energy.DIGITS_COST)) %>%
-      select(-capacity.factor, -capital.overnight, -fixed.charge.rate) %>%
+             depreciation.rate = 1 / 15) %>%
+      select(-capacity.factor, -capital.overnight) %>%
       rename(minicam.non.energy.input = input.capital) ->
       L2233.StubTechTrackCapital_elec
     # now remove rooftop_pv from the global tech to avoid double accounting
@@ -516,7 +517,9 @@ module_water_L2233.electricity_water <- function(command, ...) {
     elec_tech_water_map %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       left_join_error_no_match(L2233.CoolingSystemCosts, by = c("cooling_system", "year")) %>%
-      mutate(fixed.charge.rate = water.COOLING_SYSTEM_FCR, capacity.factor = water.COOLING_SYSTEM_CAPACITY_FACTOR) %>%
+      mutate(interest.rate = water.COOLING_SYSTEM_INTEREST_RATE,
+             payback.years = water.COOLING_SYSTEM_CAP_PAYMENTS,
+             capacity.factor = water.COOLING_SYSTEM_CAPACITY_FACTOR) %>%
       select(-technology) %>%
       rename(sector.name = to.supplysector,
              subsector.name = to.subsector,

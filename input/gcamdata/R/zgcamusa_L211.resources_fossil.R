@@ -394,11 +394,12 @@ module_gcamusa_L211.resources_fossil_USA <- function(command, ...) {
     # investment inputs for tracking capital
     L211.ResSubresourceProdLifetime_USA %>%
       mutate(resource.reserve.technology = reserve.subresource,
-             invest_lifetime = avg.prod.lifetime / 2,
-             FCR = (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^invest_lifetime) / ((1+socioeconomics.DEFAULT_INTEREST_RATE)^invest_lifetime -1),
-             capital.coef = socioeconomics.RESOURCE_CAPITAL_RATIO / FCR,
-             minicam.non.energy.input = "investment-cost",
-             tracking.market = "capital") %>%
+             capital.ratio = socioeconomics.RESOURCE_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = round(avg.prod.lifetime / 2),
+             invest.unit.conversion = 1,
+             minicam.non.energy.input = "resource-investment",
+             tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME) %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       select(LEVEL2_DATA_NAMES[["ResReserveTechInvestmentInput"]]) ->
       L211.ResReserveTechInvestmentInput_USA

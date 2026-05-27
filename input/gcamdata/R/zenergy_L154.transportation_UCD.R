@@ -718,10 +718,12 @@ module_energy_L154.transportation_UCD <- function(command, ...) {
       mutate(variable="total.ne") %>%
       bind_rows(out_var_df[["ann_capvkm"]] %>% mutate(variable="ann.cap")) %>%
       spread(variable, value) %>%
-      mutate(capital.coef = ann.cap / total.ne) %>%
+      mutate(capital.ratio = ann.cap * fcr_veh / total.ne,
+             interest.rate = energy.DISCOUNT_RATE_VEH,
+             payback.years = energy.NPER_AMORT_VEH) %>%
       select(-ann.cap, -total.ne) %>%
       # coal freight rail generates NAs
-      filter(!is.na(capital.coef)) %>%
+      filter(!is.na(capital.ratio)) %>%
       add_title("Transportation annual investment ratio") %>%
       add_units("ratio") %>%
       add_comments("A ratio to convert from total non-energy cost per vkm to total annual investment") %>%

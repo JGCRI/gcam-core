@@ -86,9 +86,9 @@ module_energy_elec_tech_scenarios_xml <- function(command, ...) {
                                                                          "subsector" = "subsector.name",
                                                                          "stub.technology" = "intermittent.technology",
                                                                          "year")) %>%
-      mutate(input.cost = round(capital.overnight * fixed.charge.rate / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ),
+      mutate(input.cost = round(capital.overnight * calc_fixed_charge_rate(interest.rate, payback.years) / (capacity.factor * CONV_YEAR_HOURS * CONV_KWH_GJ),
                                 energy.DIGITS_COST)) %>%
-      select(-capacity.factor, -capital.overnight, -fixed.charge.rate) %>%
+      select(-capacity.factor, -capital.overnight, -interest.rate, -payback.years) %>%
       rename(minicam.non.energy.input = input.capital) ->
       L223.StubTechCost_roofpv_scen
 

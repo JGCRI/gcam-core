@@ -105,7 +105,7 @@ public:
 
     virtual double applyTechnicalChange( InputSet& input, const TechChange& aTechChange,
 										 const gcamstr& aRegionName, const gcamstr& sectorName,
-										 const int aPeriod, double alphaZero = 0, double sigma = 0 ) const = 0;
+                                        const int aPeriod, double alphaZero = 0, double sigma = 0 ) const { return 0; }
     
     virtual double calcUnscaledProfits( const InputSet& aInputs, 
                                         const gcamstr& aRegionName,

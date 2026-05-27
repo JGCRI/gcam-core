@@ -181,11 +181,11 @@ const std::string& Region::getXMLNameStatic() {
  * \author Pralit Patel
  */
 void Region::completeInit() {    
-    for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
-        (*ghgPolicy)->completeInit( mName );
-    }
     for( ResourceIterator resourceIter = mResources.begin(); resourceIter != mResources.end(); ++resourceIter ) {
         (*resourceIter)->completeInit( mName, mRegionInfo );
+    }
+    for( GHGPolicyIterator ghgPolicy = mGhgPolicies.begin(); ghgPolicy != mGhgPolicies.end(); ++ghgPolicy ){
+        (*ghgPolicy)->completeInit( mName );
     }
 }
 

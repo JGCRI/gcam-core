@@ -86,19 +86,6 @@ double NestedCESProductionFunction::applyTechnicalChange( InputSet& input, const
                                  const gcamstr& aRegionName,const gcamstr& sectorName, const int aPeriod, 
                                  double alphaZero, double sigma ) const
 {
-    // TODO: should I just use FunctionUtils::applyTechnicalChangeInternal
-    int timeStep = scenario->getModeltime()->gettimestep( aPeriod );
-    for( InputSet::iterator it = input.begin(); it != input.end(); ++it ) {
-        double techChange = FunctionUtils::getTechChangeForInput( *it,
-                                                                  aTechChange,
-                                                                  aPeriod );
-                                                                  
-        if( techChange != 0 ) {
-            double scaleFactor = pow1( 1 + techChange, timeStep );
-            double newCoef = (*it)->getCoefficient( aPeriod ) * scaleFactor;
-            (*it)->setCoefficient( newCoef, aPeriod );
-        }
-    }
     // do I need to do anything for alpha zero?
     return 0;
 }

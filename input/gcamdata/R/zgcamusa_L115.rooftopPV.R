@@ -38,8 +38,7 @@ module_gcamusa_L115.rooftopPV <- function(command, ...) {
     # COMPUTE CONSTANTS
 
     # Compute PV fixed charge rate (a constant)
-    PV_FCR <- (energy.PV_DISCOUNT_RATE * (1 + energy.PV_DISCOUNT_RATE) ^ energy.PV_LIFETIME) /
-      ((energy.PV_DISCOUNT_RATE + 1) ^ energy.PV_LIFETIME - 1)
+    PV_FCR <- calc_fixed_charge_rate(energy.PV_DISCOUNT_RATE, energy.PV_LIFETIME)
 
     # Get maximum residential capacity factor (a constant)
     filter(NREL_Res_PV_supply_curve, Relative_Cost == min(Relative_Cost))$MWh /

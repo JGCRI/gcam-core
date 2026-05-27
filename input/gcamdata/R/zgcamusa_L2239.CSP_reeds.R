@@ -177,7 +177,8 @@ module_gcamusa_L2239.CSP_reeds <- function(command, ...) {
     L223.GlobalIntTechCapital_elec %>%
       filter(intermittent.technology == "CSP",
              year == MODEL_FINAL_BASE_YEAR) %>%
-      select(fixed.charge.rate) %>% as.numeric() -> L2239.fcr
+      mutate(fixed.charge.rate = calc_fixed_charge_rate(interest.rate, payback.years)) %>%
+      pull(fixed.charge.rate) -> L2239.fcr
 
     L223.GlobalIntTechOMfixed_elec %>%
       filter(intermittent.technology == "CSP",

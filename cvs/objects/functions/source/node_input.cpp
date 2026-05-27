@@ -620,10 +620,6 @@ double NodeInput::getIncomeElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double NodeInput::getTechChange( const int aPeriod ) const {
-    return mTechChange;
-}
-
 void NodeInput::accept( IVisitor* aVisitor, const int aPeriod ) const {
     aVisitor->startVisitNodeInput( this, aPeriod );
 

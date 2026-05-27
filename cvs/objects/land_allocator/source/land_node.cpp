@@ -169,7 +169,7 @@ void LandNode::completeInit( const gcamstr& aRegionName,
 
 void LandNode::initCalc( const gcamstr& aRegionName, const int aPeriod )
 {
-    mChoiceFn->initCalc( aRegionName, mName, true, aPeriod );
+    mChoiceFn->initCalc( aRegionName, mName, aPeriod );
     
     if ( aPeriod > 1 ) {
         // Copy share weights forward if new ones haven't been read in or computed

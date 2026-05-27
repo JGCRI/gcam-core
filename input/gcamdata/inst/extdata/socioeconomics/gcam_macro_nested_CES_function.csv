@@ -1,0 +1,143 @@
+# File: gcam_macro_nested_CES_function.csv
+# Title: specify nested CES (constant elasticity of substitution) production function for the Materials sector in macro
+# Units: NA
+# Comments: 
+# In the nested CES, there are two levels, Intermediate and Value-Added (capital-labor)
+# rho_Intermediate and gamma_ValueAdded are CES parameters for the Intermediate and Value-Added nests, respectively
+# CES_Intermediate and CES_ValueAdded are the corresponding CES elasticities, included only for reference, as parameters are used directly. Elasticities are easier to communicate and CES_elasticity = 1 / (1-CES_parameter)
+# CES_elasticity should be non-negative. Regional parameters are possible 
+# The input demand function is derived from the CES production function under profit maximization, so we specify the output market name as well, and those markets are cleared
+# In the intermediate nest, the parameter in the VA nest is not needed
+# Source: NA
+# Last modified by: XZ (Dec 2025)
+# Column types: iccnnnniiiccc
+# ----------
+GCAM_region_ID,region,fn.name,rho_Intermediate,gamma_ValueAdded,CES_Intermediate,CES_ValueAdded,is.energy,is.labor,is.capital,node.name,leaf.name,output.market.name
+1,USA,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+2,Africa_Eastern,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+3,Africa_Northern,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+4,Africa_Southern,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+5,Africa_Western,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+6,Australia_NZ,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+7,Brazil,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+8,Canada,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+9,Central America and Caribbean,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+10,Central Asia,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+11,China,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+12,EU-12,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+13,EU-15,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+14,Ukraine,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+15,Europe_Non_EU,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+16,European Free Trade Association,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+17,India,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+18,Indonesia,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+19,Japan,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+20,Mexico,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+21,Middle East,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+22,Pakistan,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+23,Russia,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+24,South Africa,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+25,South America_Northern,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+26,South America_Southern,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+27,South Asia,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+28,South Korea,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+29,Southeast Asia,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+30,Taiwan,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+31,Argentina,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+32,Colombia,nested-CES,-1,,0.5,,0,0,0,intermediate,aglu,ag service
+1,USA,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+2,Africa_Eastern,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+3,Africa_Northern,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+4,Africa_Southern,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+5,Africa_Western,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+6,Australia_NZ,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+7,Brazil,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+8,Canada,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+9,Central America and Caribbean,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+10,Central Asia,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+11,China,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+12,EU-12,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+13,EU-15,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+14,Ukraine,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+15,Europe_Non_EU,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+16,European Free Trade Association,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+17,India,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+18,Indonesia,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+19,Japan,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+20,Mexico,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+21,Middle East,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+22,Pakistan,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+23,Russia,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+24,South Africa,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+25,South America_Northern,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+26,South America_Southern,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+27,South Asia,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+28,South Korea,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+29,Southeast Asia,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+30,Taiwan,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+31,Argentina,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+32,Colombia,nested-CES,-1,,0.5,,1,0,0,intermediate,energy,energy service
+1,USA,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+2,Africa_Eastern,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+3,Africa_Northern,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+4,Africa_Southern,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+5,Africa_Western,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+6,Australia_NZ,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+7,Brazil,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+8,Canada,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+9,Central America and Caribbean,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+10,Central Asia,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+11,China,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+12,EU-12,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+13,EU-15,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+14,Ukraine,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+15,Europe_Non_EU,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+16,European Free Trade Association,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+17,India,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+18,Indonesia,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+19,Japan,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+20,Mexico,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+21,Middle East,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+22,Pakistan,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+23,Russia,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+24,South Africa,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+25,South America_Northern,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+26,South America_Southern,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+27,South Asia,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+28,South Korea,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+29,Southeast Asia,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+30,Taiwan,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+31,Argentina,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+32,Colombia,nested-CES,-1,0.167,0.5,1.2,0,0,1,capital-labor,capital,capital
+1,USA,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+2,Africa_Eastern,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+3,Africa_Northern,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+4,Africa_Southern,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+5,Africa_Western,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+6,Australia_NZ,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+7,Brazil,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+8,Canada,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+9,Central America and Caribbean,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+10,Central Asia,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+11,China,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+12,EU-12,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+13,EU-15,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+14,Ukraine,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+15,Europe_Non_EU,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+16,European Free Trade Association,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+17,India,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+18,Indonesia,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+19,Japan,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+20,Mexico,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+21,Middle East,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+22,Pakistan,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+23,Russia,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+24,South Africa,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+25,South America_Northern,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+26,South America_Southern,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+27,South Asia,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+28,South Korea,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+29,Southeast Asia,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+30,Taiwan,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+31,Argentina,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials
+32,Colombia,nested-CES,-1,0.167,0.5,1.2,0,1,0,capital-labor,labor,Labor_Materials

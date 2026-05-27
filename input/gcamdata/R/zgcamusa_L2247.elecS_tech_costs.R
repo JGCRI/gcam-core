@@ -88,7 +88,7 @@ module_gcamusa_L2247.elecS_tech_costs <- function(command, ...) {
       # filter for technologies which are included in the ITC policy
       semi_join(A23.itc_elecS_USA, by = c("technology" = "Electric.sector.technology", "year")) %>%
       left_join_error_no_match(A23.itc_elecS_USA, by = c("year", "technology" = "Electric.sector.technology")) %>%
-      mutate(fixed.charge.rate = fixed.charge.rate * (1 - itc)) %>%
+      mutate(interest.rate = interest.rate * (1 - itc)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTechFCROnly"]]) ->
       L2247.GlobalTechFCROnly_elecS_itc_USA
@@ -99,7 +99,7 @@ module_gcamusa_L2247.elecS_tech_costs <- function(command, ...) {
                 by = c("intermittent.technology" = "Electric.sector.technology", "year")) %>%
       left_join_error_no_match(A23.itc_elecS_USA,
                                by = c("year", "intermittent.technology" = "Electric.sector.technology")) %>%
-      mutate(fixed.charge.rate = fixed.charge.rate * (1 - itc)) %>%
+      mutate(interest.rate = interest.rate * (1 - itc)) %>%
       rename(sector.name = supplysector, subsector.name = subsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalIntTechFCROnly"]]) ->
       L2247.GlobalIntTechFCROnly_elecS_itc_USA

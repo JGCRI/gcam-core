@@ -51,6 +51,7 @@
 #include "util/base/include/time_vector.h"
 
 class IInfo;
+class CachedMarket;
 
 /*! 
  * \ingroup Objects
@@ -93,6 +94,12 @@ public:
     static std::pair<double, double> normalizeLogShares( std::vector<double> & alogShares );
 
     static double calcPriceRatio( const gcamstr& aRegionName,
+                                  const gcamstr& aSectorName,
+                                  const int aBasePeriod,
+                                  const int aCurrentPeriod );
+    
+    static double calcPriceRatio( const CachedMarket& aMarket,
+                                  const gcamstr& aRegionName,
                                   const gcamstr& aSectorName,
                                   const int aBasePeriod,
                                   const int aCurrentPeriod );

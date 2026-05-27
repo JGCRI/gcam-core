@@ -41,10 +41,10 @@
  * NOTE: ADD 1 TO LATEST SUBVERSION REVISION NUMBER
  */
 //! The latest SVN revision number for identification of the build.
-#define __REVISION_NUMBER__ "gcam-v8.11"
+#define __REVISION_NUMBER__ "gcam-v9.0"
 /*****************************************************************************/
 
 //! GCAM model version.
-#define __ObjECTS_VER__ "8.11"
+#define __ObjECTS_VER__ "9.0"
 
 #endif // _VERSION_H_ 

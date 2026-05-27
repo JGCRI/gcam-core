@@ -207,9 +207,3 @@ double RenewableInput::getIncomeElasticity( const int aPeriod ) const {
 double RenewableInput::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
-
-double RenewableInput::getTechChange( const int aPeriod ) const
-{
-    // Renewable inputs do not have technical change.
-    return 0;
-}

@@ -100,26 +100,23 @@ bool NationalAccount::XMLParse( rapidxml::xml_node<char>* & aNode ) {
     if  ( nodeName == enumToXMLName( SAVINGS_RATE ) ) {
         setAccount( SAVINGS_RATE, XMLParseHelper::getValue<double>( aNode ) );
     }
-    else if  ( nodeName == enumToXMLName( CAPITAL_STOCK ) ) {
-        setAccount( CAPITAL_STOCK, XMLParseHelper::getValue<double>( aNode ) );
+    else if  ( nodeName == enumToXMLName( MATERIALS_CAPITAL_STOCK ) ) {
+        setAccount( MATERIALS_CAPITAL_STOCK, XMLParseHelper::getValue<double>( aNode ) );
     }
-    else if  ( nodeName == enumToXMLName( CAPITAL_VALUE ) ) {
-        setAccount( CAPITAL_VALUE, XMLParseHelper::getValue<double>( aNode ) );
+    else if  ( nodeName == enumToXMLName( MATERIALS_CAPITAL_VALUE ) ) {
+        setAccount( MATERIALS_CAPITAL_VALUE, XMLParseHelper::getValue<double>( aNode ) );
     }
     else if  ( nodeName == enumToXMLName( DEPRECIATION_RATE ) ) {
         setAccount( DEPRECIATION_RATE, XMLParseHelper::getValue<double>( aNode ) );
     }
-    else if  ( nodeName == enumToXMLName( CAPITAL_ENERGY_INV) ) {
-        setAccount( CAPITAL_ENERGY_INV, XMLParseHelper::getValue<double>( aNode ) );
-    }
     else if  ( nodeName == enumToXMLName( GDP ) ) {
         setAccount( GDP, XMLParseHelper::getValue<double>( aNode ) );
     }
-    else if  ( nodeName == enumToXMLName( LABOR_WAGES ) ) {
-        setAccount( LABOR_WAGES, XMLParseHelper::getValue<double>( aNode ) );
+    else if  ( nodeName == enumToXMLName( MATERIALS_LABOR_WAGES ) ) {
+        setAccount( MATERIALS_LABOR_WAGES, XMLParseHelper::getValue<double>( aNode ) );
     }
-    else if  ( nodeName == enumToXMLName( LABOR_FORCE_SHARE ) ) {
-        setAccount( LABOR_FORCE_SHARE, XMLParseHelper::getValue<double>( aNode ) );
+    else if  ( nodeName == enumToXMLName( MATERIALS_LABOR_FORCE_SHARE ) ) {
+        setAccount( MATERIALS_LABOR_FORCE_SHARE, XMLParseHelper::getValue<double>( aNode ) );
     }
     else if  ( nodeName == enumToXMLName( CAPITAL_NET_EXPORT ) ) {
         setAccount( CAPITAL_NET_EXPORT, XMLParseHelper::getValue<double>( aNode ) );
@@ -169,8 +166,7 @@ void NationalAccount::initCalc( const NationalAccount* aNationalAccountPrevious,
     double depreciation_rate = aNationalAccountPrevious->getAccountValue(DEPRECIATION_RATE);
     
     double prevGDP = aNationalAccountPrevious->getAccountValue(GDP);
-    double capital = aNationalAccountPrevious->getAccountValue(CAPITAL_STOCK);
-    double prevEneInv = aNationalAccountPrevious->getAccountValue(CAPITAL_ENERGY_INV);
+    double capital = aNationalAccountPrevious->getAccountValue(MATERIALS_CAPITAL_STOCK);
     double prevConsDurableInv = aNationalAccountPrevious->getAccountValue(CONSUMER_DURABLE_INV);
     
     // "move" consumer durable investment value from consumption to investment by inflating the
@@ -187,24 +183,15 @@ void NationalAccount::initCalc( const NationalAccount* aNationalAccountPrevious,
     // CAPITAL_NET_EXPORT could be significantly negative (from historical data) so we
     // should take care to ensure it doesn't take the "investment" negative.
     mAccounts[INVESTMENT] = std::max(mAccounts[SAVINGS] + mAccounts[CAPITAL_NET_EXPORT], 0.0);
-    mAccounts[DEPRECIATION] = capital * depreciation_rate; // annual depreciation based on lagged capital
     
     // Calculate for future periods only
     if( aPeriod > modeltime->getFinalCalibrationPeriod() ){
-        // Depreciate capital and add new investments.
-        // Calculate annual changes for cumulative capital stock.
-        // Assumes constant GDP within period.
-        // Given capital stock is cumulative we need to apply the annual changes for
-        // each year in the time step.
-        double savings = mAccounts[INVESTMENT] - prevEneInv - prevConsDurableInv;
-        for(unsigned int i=0; i < scenario->getModeltime()->gettimestep(aPeriod); ++i){
-            capital = capital * (1 - depreciation_rate) + savings;
-        }
-        
-        // protect against negative capital stock, note: in such a case the social
-        // account matrix will not balance thus signaling an issue
-        const double MIN_CAPITAL_STOCK = 100.0;
-        mAccounts[CAPITAL_STOCK] = std::max(capital, MIN_CAPITAL_STOCK);
+        double timestep = modeltime->gettimestep(aPeriod);
+        // set the capital stock at the start of the period which will
+        // grow by the end of the period by the materials investment amount
+        mAccounts[MATERIALS_CAPITAL_STOCK] = capital * pow(1.0-depreciation_rate, timestep);
+        // annual depreciation
+        mAccounts[DEPRECIATION] = (capital - mAccounts[MATERIALS_CAPITAL_STOCK]) / timestep;
     }
 }
 
@@ -224,7 +211,7 @@ void NationalAccount::postCalcHist( ) {
     // domestic GDP.
     // Add energy expenditure to domestic GDP for gross output.
      
-    mAccounts[ GROSS_OUTPUT ] = mAccounts[GDP] - mAccounts[ENERGY_NET_EXPORT] ;
+    mAccounts[ MATERIALS_GROSS_OUTPUT ] = mAccounts[GDP] - mAccounts[GCAM_NET_EXPORT] ;
 }
 
 /*!
@@ -283,26 +270,35 @@ const gcamstr& NationalAccount::enumToXMLName( const AccountType aType ) {
             "savings",
             "investment",
             "depreciation",
-            "capital-stock",
-            "capital-value",
-            "energy-investment",
+            "capital-price",
+            "materials-capital-stock",
+            "materials-capital-value",
+            "materials-capital-investment",
             "consumer-durable",
             "GDP",
-            "value-added",
-            "gross-output",
-            "labor-wages",
-            "labor-force",
-            "labor-force-share",
+            "materials-value-added",
+            "materials-gross-output",
+            "materials-labor-wages",
+            "materials-labor-force",
+            "materials-labor-force-share",
             "total-factor-productivity",
             "fac-share-labor",
             "fac-share-capital",
             "fac-share-energy",
+            "fac-share-ag",
             "population",
             "gdp-per-capita",
             "gdp-per-capita-ppp",
             "energy-service",
             "energy-service-value",
-            "energy-net-export",
+            "energy-service-price",
+            "energy-investment",
+            "ag-nonfood-service",
+            "ag-nonfood-service-value",
+            "ag-nonfood-service-price",
+            "ag-food-service-value",
+            "ag-investment",
+            "gcam-net-export",
             "materials-net-export",
             "capital-net-export"
     };

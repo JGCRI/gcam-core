@@ -18,15 +18,13 @@
 module_socio_L103.NationalAccounts <- function(command, ...) {
 
   MODULE_INPUTS <-
-    c(FILE = "common/iso_GCAM_regID",
-      FILE = "common/GCAM_region_names",
-      "L100.LaborForce_mil_SSP_ctry_Yfut_raw",
-      "L100.National_Accounts_Employment_Share_POP_R_Yh",
+    c(FILE = "common/GCAM_region_names",
       "L102.gdp_mil90usd_Scen_R_Y",
+      "L100.LaborForce_mil_SSP_ctry_Yfut_raw",
       "L100.National_Accounts_GDP_Decomp_C_I_X_M_shares_R_Yh",
       "L100.National_Accounts_Metrics_R_Yh",
       "L100.National_Accounts_Depreciation_Rate_R_Yh",
-      "L100.National_Accounts_En_capital_inv_share_R_Yh")
+      "L100.National_Accounts_Employment_Share_POP_R_Yh")
 
   MODULE_OUTPUTS <-
     c("L103.National_Accounts_mil90usd_R_Yh",
@@ -111,10 +109,11 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
 
 
     ## (2) Derive and join other variables ----
-    # capital stock, labor.compensation, capital.compensation , savings.rate
+    # capital stock, labor.compensation, capital.compensation, savings.rate
 
     L100.National_Accounts_Metrics_R_Yh %>%
-      # extend PWT data from 2019 to MODEL_FINAL_BASE_YEAR
+      filter(year %in% HISTORICAL_YEARS) %>%
+      # extend PWT data to MODEL_FINAL_BASE_YEAR [not necessarily needed]
       complete(GCAM_region_ID, var, year = min(year):MODEL_FINAL_BASE_YEAR) %>%
       fill(value, .direction = "downup")  %>%
       spread(var, value) %>%
@@ -138,6 +137,8 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
     L103.National_Accounts_mil90usd_R_Yh_2 %>%
       left_join_error_no_match(
       L100.National_Accounts_Depreciation_Rate_R_Yh %>%
+        filter(year %in% HISTORICAL_YEARS) %>%
+        # extend PWT data to MODEL_FINAL_BASE_YEAR [not necessarily needed]
         complete(GCAM_region_ID, var, year = min(year):MODEL_FINAL_BASE_YEAR) %>%
         fill(value, .direction = "downup")  %>%
         spread(var, value) %>%
@@ -145,46 +146,31 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
       by = c("GCAM_region_ID", "year") ) ->
       L103.National_Accounts_mil90usd_R_Yh_3
 
-    ## (4) partition sectoral (En, Materials, etc) capital & inv shares using GTAP shares
-    L103.National_Accounts_mil90usd_R_Yh_3 %>%
-      select(GCAM_region_ID, year, capital.stock, inv, capital.compensation) %>%
-      left_join_error_no_match(
-        L100.National_Accounts_En_capital_inv_share_R_Yh %>%
-          spread(var, value),
-        by = c("GCAM_region_ID", "year")) %>%
-      transmute(GCAM_region_ID, year,
-                materials.capital.stock = capital.stock * (1.0 - en_stock_share.gtap),
-                energy.investment = inv * en_inv_share.gtap,
-                materials.capital.compensation = capital.compensation * (1.0 - en_capital_compensation_share.gtap)) %>%
-      # join back the main
-      left_join_error_no_match(L103.National_Accounts_mil90usd_R_Yh_3, .,
-                               by = c("GCAM_region_ID", "year")) ->
-      L103.National_Accounts_mil90usd_R_Yh_4
 
-    L103.National_Accounts_mil90usd_R_Yh_4 %>%
+    # We can remove the renaming later to a step before XML generation
+    # all values here are economy-wide, not materials
+    L103.National_Accounts_mil90usd_R_Yh_3 %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       transmute(GCAM_region_ID, region, year,
                 capital.net.export,
                 depreciation.rate,
                 savings.rate,
                 wages = labor.compensation, # Materials labor.compensation
-                capital.value = materials.capital.compensation,
-                capital = materials.capital.stock,
-                energy.investment) ->
+                capital.value = capital.compensation,
+                capital = capital.stock) ->
       L103.National_Accounts_mil90usd_R_Yh
 
     L103.National_Accounts_mil90usd_R_Yh %>%
       add_title("Processed National Accounts Data from PWT, GTAP, and GMD") %>%
-      add_units("million 1990US$") %>%
+      add_units("million 1990US$ or %") %>%
       add_comments("National accounts data: GDP, capital, depreciation, savings rate,
-               labor wages, labor productivity, energy investment") %>%
+                   labor wages, capital compensation") %>%
       add_legacy_name("L103.National_Accounts_mil90usd_R_Yh") %>%
-      add_precursors("common/iso_GCAM_regID",
-                     "common/GCAM_region_names","L102.gdp_mil90usd_Scen_R_Y",
+      add_precursors("common/GCAM_region_names",
+                     "L102.gdp_mil90usd_Scen_R_Y",
                      "L100.National_Accounts_GDP_Decomp_C_I_X_M_shares_R_Yh",
                      "L100.National_Accounts_Metrics_R_Yh",
-                     "L100.National_Accounts_Depreciation_Rate_R_Yh",
-                     "L100.National_Accounts_En_capital_inv_share_R_Yh") ->
+                     "L100.National_Accounts_Depreciation_Rate_R_Yh") ->
       L103.National_Accounts_mil90usd_R_Yh
 
 
@@ -209,9 +195,13 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
       LaborForceShare_SSP_Yfut
 
     # Prepare historical employment shares
-    # 2019 from PWT v10 is extended to 2021
+    # PWT v11.0 now has a base year of 2023
+    # here we use Socioeconomic.PWT.LastYear as the cutoff year (hist vs future)
+    assertthat::assert_that(Socioeconomic.PWT.LastYear == 2023)
+
     L100.National_Accounts_Employment_Share_POP_R_Yh %>%
-      complete(GCAM_region_ID, var, year = min(year):MODEL_FINAL_BASE_YEAR) %>%
+      complete(GCAM_region_ID, var, year = min(year):Socioeconomic.PWT.LastYear) %>%
+      # fill NA; indeed no NA in the data but just in case
       fill(value, .direction = "downup")  %>%
       spread(var, value) %>%
       repeat_add_columns(tibble(distinct(LaborForceShare_SSP_Yfut, scenario))) ->
@@ -220,8 +210,8 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
     # calculate base year employment rate to explain the gap between labor force participation
     # and unemployment
     LaborForceShare_SSP_Yfut %>%
-      filter(year == MODEL_FINAL_BASE_YEAR) %>%
-      # any scenario here
+      filter(year == Socioeconomic.PWT.LastYear) %>%
+      # any SSP scenario here since no diff in base years
       filter(scenario == "SSP2") %>% select(-scenario) %>%
       left_join_error_no_match(
         EmploymentShare_SSP_R_Y %>%
@@ -231,22 +221,37 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
       ) %>%
       mutate(employment.rate = employed.share.pwt/labor.force.share) %>%
       select(-year, -pop, -employed.share.pwt, -labor.force.share) ->
-      employment.rate.FBY
+      employment.rate.Final_OBS_Year
 
+    # stitching data
     # apply those employment.rate in base year to future projection assuming no future changes
 
     EmploymentShare_SSP_R_Y %>%
       rename(employed.share = employed.share.pwt) %>%
+      filter(year <= Socioeconomic.PWT.LastYear) %>%
       bind_rows(
         LaborForceShare_SSP_Yfut %>%
-          # only > final base year
-          filter(year %in% FUTURE_YEARS) %>%
-          left_join_error_no_match(employment.rate.FBY, by=c("GCAM_region_ID")) %>%
+          # only > Socioeconomic.PWT.LastYear
+          filter(year > Socioeconomic.PWT.LastYear) %>%
+          left_join_error_no_match(employment.rate.Final_OBS_Year, by=c("GCAM_region_ID")) %>%
           transmute(scenario, GCAM_region_ID, year,
                     #  net employment share over pop
                     employed.share = round(labor.force.share * employment.rate, 6))
       ) ->
       L103.LaborForceShare_Scen_R_Y
+
+    # assert values harmonized in MODEL_SCENARIO_ALIGN_YEAR
+
+    assertthat::assert_that(
+      L103.LaborForceShare_Scen_R_Y %>%
+        rename(value = employed.share) %>%
+        filter(year == MODEL_SCENARIO_ALIGN_YEAR) %>%
+        group_by(GCAM_region_ID, year) %>%
+        summarize(max = max(value), min = min(value), .groups = "drop") %>%
+        filter(max != min) %>%
+        nrow() == 0,
+      msg = paste0("Values in ", MODEL_SCENARIO_ALIGN_YEAR, "across scenarios not fully aligned")
+    )
 
     L103.LaborForceShare_Scen_R_Y %>%
       add_title("National accounts data: employment share across SSPs") %>%
@@ -256,8 +261,6 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
       add_precursors("L100.LaborForce_mil_SSP_ctry_Yfut_raw",
                      "L100.National_Accounts_Employment_Share_POP_R_Yh") ->
       L103.LaborForceShare_Scen_R_Y
-
-
 
     return_data(MODULE_OUTPUTS)
 

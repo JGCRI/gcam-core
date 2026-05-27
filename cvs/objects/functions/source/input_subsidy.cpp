@@ -96,7 +96,6 @@ const string& InputSubsidy::getXMLName() const{
 //! Constructor
 InputSubsidy::InputSubsidy()
 {
-    TechVectorParseHelper<Value>::setDefaultValue( Value( 1.0 ), mAdjustedCoefficients );
 }
 
 /*!
@@ -138,7 +137,6 @@ void InputSubsidy::toDebugXML( const int aPeriod,
                                Tabs* aTabs ) const
 {
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "current-coef", aOut, aTabs );
     XMLWriteElement( mPhysicalDemand[ aPeriod ], "physical-demand", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
@@ -168,7 +166,6 @@ void InputSubsidy::initCalc( const gcamstr& aRegionName,
 {
     // There must be a valid region name.
     assert( !aRegionName.empty() );
-    mAdjustedCoefficients[ aPeriod ] = 1.0;
 }
 
 void InputSubsidy::copyParam( const IInput* aInput,
@@ -229,10 +226,7 @@ void InputSubsidy::setPhysicalDemand( double aPhysicalDemand,
 }
 
 double InputSubsidy::getCoefficient( const int aPeriod ) const {
-    // Check that the coefficient has been initialized.
-    assert( mAdjustedCoefficients[ aPeriod ].isInited() );
-
-    return mAdjustedCoefficients[ aPeriod ];
+    return 1.0;
 }
 
 void InputSubsidy::setCoefficient( const double aCoefficient,
@@ -271,10 +265,5 @@ double InputSubsidy::getIncomeElasticity( const int aPeriod ) const {
 }
 
 double InputSubsidy::getPriceElasticity( const int aPeriod ) const {
-    return 0;
-}
-
-double InputSubsidy::getTechChange( const int aPeriod ) const
-{
     return 0;
 }

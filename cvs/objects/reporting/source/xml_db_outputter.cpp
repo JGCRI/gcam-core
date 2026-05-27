@@ -1820,20 +1820,28 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
-    currValue = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_ENERGY_INV);
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CAPITAL_ENERGY_INV);
+    currValue = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_CAPITAL_INV);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::MATERIALS_CAPITAL_INV);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::ENERGY_INVESTMENT);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::ENERGY_INVESTMENT);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::AG_INVESTMENT);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::AG_INVESTMENT);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
     currValue = aNationalAccount->getAccountValue( NationalAccount::CONSUMER_DURABLE_INV);
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CONSUMER_DURABLE_INV);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
-    currValue = aNationalAccount->getAccountValue( NationalAccount::VALUE_ADDED );
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::VALUE_ADDED);
+    currValue = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_VALUE_ADDED );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::MATERIALS_VALUE_ADDED);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
-    currValue = aNationalAccount->getAccountValue( NationalAccount::GROSS_OUTPUT );
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GROSS_OUTPUT);
+    currValue = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_GROSS_OUTPUT );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::MATERIALS_GROSS_OUTPUT);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
     currValue = aNationalAccount->getAccountValue( NationalAccount::SAVINGS );
@@ -1844,8 +1852,8 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::INVESTMENT);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
-    currValue = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_STOCK );
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CAPITAL_STOCK);
+    currValue = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_CAPITAL_STOCK );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::MATERIALS_CAPITAL_STOCK);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
     currValue = aNationalAccount->getAccountValue( NationalAccount::DEPRECIATION );
@@ -1855,9 +1863,17 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
     currValue = aNationalAccount->getAccountValue( NationalAccount::ENERGY_SERVICE_VALUE );
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::ENERGY_SERVICE_VALUE);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::AG_NONFOOD_SERVICE_VALUE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::AG_NONFOOD_SERVICE_VALUE);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::AG_FOOD_SERVICE_VALUE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::AG_FOOD_SERVICE_VALUE);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
-    currValue = aNationalAccount->getAccountValue( NationalAccount::ENERGY_NET_EXPORT);
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::ENERGY_NET_EXPORT);
+    currValue = aNationalAccount->getAccountValue( NationalAccount::GCAM_NET_EXPORT);
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GCAM_NET_EXPORT);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
     currValue = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_NET_EXPORT);
@@ -1869,8 +1885,8 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
     // value of labor from the materials function in
-    currValue = aNationalAccount->getAccountValue( NationalAccount::LABOR_WAGES );
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::LABOR_WAGES);
+    currValue = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_LABOR_WAGES );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::MATERIALS_LABOR_WAGES);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
     // per cap values have different units
@@ -1883,12 +1899,13 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::GDP_PER_CAPITA_PPP);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
-    attrs[ "unit" ] = "thous pers";
+    attrs[ "unit" ] = "million pers";
     // labor force in persons
-    currValue = aNationalAccount->getAccountValue( NationalAccount::LABOR_FORCE );
-    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::LABOR_FORCE);
+    currValue = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_LABOR_FORCE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::MATERIALS_LABOR_FORCE);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     // total population
+    attrs[ "unit" ] = "thous pers";
     currValue = aNationalAccount->getAccountValue( NationalAccount::POPULATION );
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::POPULATION);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
@@ -1912,66 +1929,28 @@ void XMLDBOutputter::startVisitNationalAccount( const NationalAccount* aNational
     currValue = aNationalAccount->getAccountValue( NationalAccount::FR_SHARE_ENERGY );
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::FR_SHARE_ENERGY);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    
+    currValue = aNationalAccount->getAccountValue( NationalAccount::FR_SHARE_AG );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::FR_SHARE_AG);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
     // energy service output and value
     attrs[ "unit" ] = "million 1990$";
     currValue = aNationalAccount->getAccountValue( NationalAccount::ENERGY_SERVICE );
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::ENERGY_SERVICE);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
+    currValue = aNationalAccount->getAccountValue( NationalAccount::AG_NONFOOD_SERVICE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::AG_NONFOOD_SERVICE);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 
     currValue = aNationalAccount->getAccountValue( NationalAccount::TOTAL_FACTOR_PRODUCTIVITY );
     attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::TOTAL_FACTOR_PRODUCTIVITY);
     XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
     
-    enum SAM_COL_ENUM { cEnergy, cMaterials, cHHGov, cCapMat, cCapEne, cRow, cSum};
-    enum SAM_ROW_ENUM { rEnergy, rMaterials, rHHGov, rCap, rRow, rSum, rDiff};
-    const string colNames[] = { "Energy", "Materials", "HH+Gov", "Capital-Materials", "Capital-Energy", "ROW", "Sum" };
-    const string rowNames[] = { "Energy", "Materials", "HH+Gov", "Capital", "ROW", "Sum", "Diff"};
-    double samData[7][7];
-    for(int row = 0; row < 7; ++row) {
-        for(int col = 0; col < 7; ++col) {
-            samData[row][col] = 0.0;
-        }
-    }
-    samData[rEnergy][cMaterials] = aNationalAccount->getAccountValue( NationalAccount::ENERGY_SERVICE_VALUE );;
-    samData[rEnergy][cRow] = aNationalAccount->getAccountValue( NationalAccount::ENERGY_NET_EXPORT );
-    samData[rEnergy][cSum] = samData[rEnergy][cMaterials] + samData[rEnergy][cRow];
-    samData[rMaterials][cHHGov] = aNationalAccount->getAccountValue( NationalAccount::VALUE_ADDED ) +
-        samData[rEnergy][cSum] -
-        aNationalAccount->getAccountValue( NationalAccount::SAVINGS );
-    samData[rMaterials][cCapMat] = aNationalAccount->getAccountValue( NationalAccount::INVESTMENT ) -
-        aNationalAccount->getAccountValue( NationalAccount::CAPITAL_ENERGY_INV ) -
-        aNationalAccount->getAccountValue( NationalAccount::CONSUMER_DURABLE_INV );
-    samData[rMaterials][cCapEne] = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_ENERGY_INV ) +
-        aNationalAccount->getAccountValue( NationalAccount::CONSUMER_DURABLE_INV );
-    samData[rMaterials][cRow] = aNationalAccount->getAccountValue( NationalAccount::MATERIALS_NET_EXPORT );
-    samData[rMaterials][cSum] = samData[rMaterials][cHHGov] + samData[rMaterials][cCapMat] + samData[rMaterials][cCapEne] + samData[rMaterials][cRow];
-    samData[rHHGov][cEnergy] = samData[rEnergy][cSum];
-    samData[rHHGov][cMaterials] = aNationalAccount->getAccountValue( NationalAccount::VALUE_ADDED );
-    samData[rHHGov][cSum] = samData[rHHGov][cEnergy] + samData[rHHGov][cMaterials];
-    samData[rCap][cHHGov] = aNationalAccount->getAccountValue( NationalAccount::SAVINGS );
-    samData[rCap][cRow] = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_NET_EXPORT );
-    samData[rCap][cSum] = samData[rCap][cHHGov] + samData[rCap][cRow];
-    samData[rSum][cEnergy] = samData[rHHGov][cEnergy];
-    samData[rSum][cMaterials] = samData[rEnergy][cMaterials] + samData[rHHGov][cMaterials];
-    samData[rSum][cHHGov] = samData[rMaterials][cHHGov] + samData[rCap][cHHGov];
-    samData[rSum][cCapMat] = samData[rMaterials][cCapMat] + samData[rMaterials][cCapEne];
-    samData[rSum][cRow] = samData[rEnergy][cRow] + samData[rMaterials][cRow] + samData[rCap][cRow];
-    samData[rDiff][cEnergy] = samData[rEnergy][cSum] - samData[rSum][cEnergy];
-    samData[rDiff][cMaterials] = samData[rMaterials][cSum] - samData[rSum][cMaterials];
-    samData[rDiff][cHHGov] = samData[rHHGov][cSum] - samData[rSum][cHHGov];
-    samData[rDiff][cCapMat] = samData[rCap][cSum] - samData[rSum][cCapMat];
-    samData[rDiff][cRow] = samData[rRow][cSum] - samData[rSum][cRow];
-    attrs[ "unit" ] = "million 1990$";
-    
-    for(int row = 0; row < 7; ++row) {
-        XMLWriteOpeningTag("social-accounting-matrix-row", mBuffer, mTabs.get(), rowNames[row]);
-        for(int col = 0; col < 7; ++col) {
-            attrs["name"] = colNames[col];
-            XMLWriteElementWithAttributes( samData[row][col], "social-accounting-matrix-col", mBuffer, mTabs.get(), attrs );
-        }
-        XMLWriteClosingTag("social-accounting-matrix-row", mBuffer, mTabs.get());
-    }
+    attrs[ "unit" ] = "1990$/1990$";
+    currValue = aNationalAccount->getAccountValue( NationalAccount::CAPITAL_PRICE );
+    attrs[ "name" ] = aNationalAccount->enumToXMLName(NationalAccount::CAPITAL_PRICE);
+    XMLWriteElementWithAttributes( currValue, "account", mBuffer, mTabs.get(), attrs );
 }
 
 void XMLDBOutputter::endVisitNationalAccount( const NationalAccount* aNationalAccount, const int aPeriod ) {

@@ -36,6 +36,10 @@ MODEL_FINAL_BASE_YEAR   <- max(MODEL_BASE_YEARS)
 # Future (not calibrated) model periods. Only level 2 chunks should reference these
 MODEL_FUTURE_YEARS      <- seq(2025, 2100, 5)
 
+# Near-term alignment year for harmonizing drivers and parameters across model scenarios
+# E.g., results across SSPs in MODEL_SCENARIO_ALIGN_YEAR should be the same
+MODEL_SCENARIO_ALIGN_YEAR <- 2025
+
 # Make sure years are consistent
 if (min(MODEL_FUTURE_YEARS) <= max(HISTORICAL_YEARS)) {
   stop("ERROR: Model future years overlap historial years in constants.R")
@@ -223,7 +227,7 @@ aglu.BASE_YEAR_IFA          <- 2006       # Base year of International Fertilize
 aglu.BIO_START_YEAR         <- 2025       # Also set in aglu/A_bio_ghost_share
 aglu.CROSIT_HISTORICAL_YEAR <- 2005       # Historical year from the CROSIT data
 aglu.FAO_LDS_YEARS          <- 1998:2002  # Years for which FAO harvested area data is averaged over for use in the land data system (LDS)
-aglu.GTAP_HISTORICAL_YEAR   <- 2000       # Is the year that the GTAP data is based on.
+aglu.FAO_USDA_CAPITAL_YEAR  <- 2015       # real terms dollar year used in FAO & USDA capital stock data
 aglu.LAND_HISTORY_YEARS     <- c(1700, 1750, 1800, 1850, 1900, 1950, 1975)
 aglu.LAND_COVER_YEARS       <- sort(unique(c(aglu.LAND_HISTORY_YEARS, aglu.AGLU_HISTORICAL_YEARS)))
 aglu.PREAGLU_YEARS          <- c(1700, 1750,1800, 1850, 1900, 1950)          # Cropland cover years prior to first aglu historical year to use in climate model component
@@ -272,10 +276,12 @@ aglu.GLU_NAME_DELIMITER <- ""  # delimiter between the GLU name and number
 # Alfalfa price source: USDA. 2011. Prices Received for Alfalfa Hay, Baled, Washington. National Agricultural Statistics Service, U.S. Department of Agriculture.
 # Grass price source: Baker, A., and H. Lutman. 2008. Feed Year in Review (Domestic): Record Demand Drives U.S. Feed Grain Prices Higher in 2007/2008.
 # FDS-2008-01, Economic Research Service, United States Department of Agriculture. Available at http://usda.mannlib.cornell.edu/usda/ers/FDS-yearbook/2000s/2008/FDS-yearbook-05-23-2008_Special_Report.pdf
-aglu.PRICERATIO_GRASS_ALFALFA <- 0.7
-
+aglu.PRICERATIO_FODDERGRASS_FODDERHERB <- 0.7
 # Pasture (forage) prices are equal to the hay (foddergrass) price times this exogenous multiplier. Equal to the hay price minus mowing, bundling, and transport.
-aglu.PRICERATIO_PASTURE_HAY <- 0.5
+aglu.PRICERATIO_PASTURE_FODDERGRASS <- 0.5
+# Further adjustment to wet tonne prices & average quality
+aglu.PRICERATIO_FODDERHERB_ALFALFA <- 0.33
+
 
 # Carbon content of all cellulose
 aglu.CCONTENT_CELLULOSE    <- 0.45
@@ -394,8 +400,6 @@ aglu.FOREST_SUPPLY_SECTOR <- "Forest"
 #Below is a default amount of roundwood required to produce sawnwood.The model will calculate the IO using data. This will get used if and only if
 # the IO calculated by the model is an NA. This is taken as an everage across countries from a UNECE report on forest products. Available here- https://unece.org/fileadmin/DAM/timber/publications/DP-49.pdf
 aglu.FOREST_SAWTIMBER_CONVERSION <- 2.17
-aglu.PAPER_DELETE_AG_DEMAND <- "NonFoodDemand_woodpulp"
-aglu.PAPER_DELETE_AG_DEMAND_USA <- c("woodpulp_energy", "regional woodpulp for energy")
 
 #90% of pulp processing is chemical which has an IO of 5.44 and 10% is mechanical which is 2.55. Taking weighted average of the two,
 # we get 5.15. These are calculated as averages across countries.
@@ -698,8 +702,10 @@ energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_EJ_PCAL_COEF <- 0.000413 # minimum valu
 # Socioeconomics constants ======================================================================
 
 socioeconomics.GCAMFAOSTAT_GDP_Dollar_Year <- 2015 # dollar year in FAO GDP (we have an assertion in gcamfaostat)
-Socioeconomic.PWT.LastYear <- 2019 # the latest year in PWT
-socioeconomics.Global_Macro_Database_LastYear <- 2023 # the latest year in GMD
+Socioeconomic.PWT.VERSION <- "pwt110" #PWT v11.0
+Socioeconomic.PWT.LastYear <- 2023 # the latest year in PWT v11.0 (PennWorld Table)
+Socioeconomic.GMD.VERSION <- "GMD_2025_03" # GMD version
+Socioeconomics.GMD_LASTYEAR <- 2023 # the latest year in GMD (Global Macro Database)
 socioeconomics.GCAM_GDP_Dollar_Year <- 1990 # GDP dollar year in GCAM
 socioeconomics.SSP_DB_BASEYEAR <- 2025 # base year of SSP data base v3.2 Beta
 socioeconomics.SSP_DB_Labor_StartYear <- 2020 # start year of population by age (to derive work-age pop) in SSP data base v3.2 Beta
@@ -714,7 +720,6 @@ socioeconomics.CORE_GCAM_SCENARIO <- "SSP2"
 # and should contain all historical years used by other modules
 socioeconomics.MADDISON_HISTORICAL_YEARS <- seq(1700, 1900, 50) # Years for which to use Maddison data
 socioeconomics.UN_HISTORICAL_YEARS       <- c(1950, 1971:MODEL_FINAL_BASE_YEAR)  # Years for which to use UN data
-socioeconomics.PWT_CONSTANT_CURRENCY_YEAR <- 2011 # Currency base year in Penn World Table data
 
 # Final historical year, we use this because it's also the first year of the SSP database.
 # Using a different year if the final historical year in the UN historical years changes, this would result in
@@ -726,13 +731,9 @@ socioeconomics.FINAL_HIST_YEAR <- MODEL_FINAL_BASE_YEAR
 # capital flows.  We can phase this out by the year assumed below (linearly).  Note, setting a value
 # beyond the final model year will hold the final historical net capital flows constant.  Either
 # approach could be reasonable
-socioeconomics.TRADE_BALANCE_YEAR <- 2035
+socioeconomics.TRADE_BALANCE_YEAR <- 2050
 
-# CES elasticity of substitution parameter governing sharing behavior between energy
-# and "value added" (the capital-labor nest)
-socioeconomics.CES_RHO <- 0.5
-# CES elasticity of substitution parameter governing sharing behavior between capital and labor
-socioeconomics.CES_GAMMA <- -0.3
+# CES elasticity of substitution parameters are specified in csv input data now
 
 socioeconomics.BASE_POP_SCEN         <- "SSP2"
 socioeconomics.BASE_GDP_SCENARIO     <- "SSP2"
@@ -761,16 +762,23 @@ socioeconomics.TRANSPORT_LDV_DEPRECIATION_RATE <- 1/15
 socioeconomics.TRANSPORT_DEPRECIATION_RATE <- 1/30
 
 # Digits for rounding into XMLs
-socioeconomics.DEFAULT_LABORFORCE        <- 0.5
 socioeconomics.GDP_DIGITS                <- 0
 socioeconomics.LABOR_PRODUCTIVITY_DIGITS <- 5
 socioeconomics.POP_DIGITS                <- 0
 
 # Names for GDP energy accounting
 socioeconomics.EN_SERVICE_NAME <- "energy service"
+socioeconomics.AG_SERVICE_NAME <- "ag service"
+socioeconomics.FOOD_SERVICE_NAME <- "ag food service"
 socioeconomics.EN_TRADE_NAME <- "energy net export"
-socioeconomics.EN_CAPITAL_MARKET_NAME <- "capital"
+socioeconomics.AG_TRADE_NAME <- "ag net export"
+socioeconomics.CAPITAL_MARKET_NAME <- "capital"
+socioeconomics.EN_CAPITAL_MARKET_NAME <- "capital-energy"
+socioeconomics.AG_CAPITAL_MARKET_NAME <- "capital-ag"
 socioeconomics.EN_DURABLE_MARKET_NAME <- "consumer durable"
+socioeconomics.LABOR_MARKET_NAME <- "Labor_Total"
+socioeconomics.LABOR_MATERIALS_MARKET_NAME <- "Labor_Materials"
+socioeconomics.LABOR_AG_MARKET_NAME <- "Labor_Ag"
 # list of final energy sectors which will serve as "energy service" used in the macro model
 socioeconomics.FINAL_DEMAND_SECTORS <- c("other industrial energy use",
                                          "process heat cement",
@@ -802,9 +810,6 @@ socioeconomics.FINAL_DEMAND_SECTORS <- c("other industrial energy use",
                                          "trn_pass_road_LDV",
                                          "trn_pass_road_LDV_4W")
 
-# for filling missing socioeconomic data
-socioeconomics.TAIWAN_REGION_ID <- 30
-
 
 # Water constants ======================================================================
 
@@ -814,7 +819,8 @@ water.ALL_WATER_TYPES                     <- c("water consumption",
                                                "biophysical water consumption")
 water.AG_ONLY_WATER_TYPES                 <- "biophysical water consumption"
 water.COOLING_SYSTEM_CAPACITY_FACTOR      <- 0.6   # Cooling system capacity factor (Unitless)
-water.COOLING_SYSTEM_FCR                  <- 0.15  # Cooling system fixed charge rate (Unitless)
+water.COOLING_SYSTEM_INTEREST_RATE        <- 0.127
+water.COOLING_SYSTEM_CAP_PAYMENTS         <- 30
 water.COOLING_SYSTEM_LOGIT 				        <- -5    # Cooling system logit (Unitless)
 water.DEFAULT_IRR_WATER_PRICE             <- 0.001 # 1975$/m3. This excludes water abstraction costs explicitly modeled.
 water.DEFAULT_UNLIMITED_WATER_PRICE       <- 0

@@ -246,7 +246,10 @@ module_energy_L222.en_transformation <- function(command, ...) {
     FCR <- (socioeconomics.DEFAULT_INTEREST_RATE * (1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.REFINING_CAP_PAYMENTS) /
       ((1+socioeconomics.DEFAULT_INTEREST_RATE)^socioeconomics.REFINING_CAP_PAYMENTS -1)
     L222.GlobalTechCost_en %>%
-      mutate(capital.coef = socioeconomics.REFINING_CAPITAL_RATIO / FCR,
+      mutate(capital.ratio = socioeconomics.REFINING_CAPITAL_RATIO,
+             interest.rate = socioeconomics.DEFAULT_INTEREST_RATE,
+             payback.years = socioeconomics.REFINING_CAP_PAYMENTS,
+             invest.unit.conversion = 1,
              tracking.market = socioeconomics.EN_CAPITAL_MARKET_NAME,
              # refining has vintaging so no need to for depreciation rate (although will get ignored)
              depreciation.rate = if_else(sector.name == "refining", 0, 1/30)) %>%

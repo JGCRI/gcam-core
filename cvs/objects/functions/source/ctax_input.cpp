@@ -243,9 +243,3 @@ double CTaxInput::getIncomeElasticity( const int aPeriod ) const {
 double CTaxInput::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
-
-double CTaxInput::getTechChange( const int aPeriod ) const
-{
-    return 0;
-}
-

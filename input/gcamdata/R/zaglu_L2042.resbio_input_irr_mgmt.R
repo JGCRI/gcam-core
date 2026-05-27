@@ -33,24 +33,31 @@
 #' @importFrom dplyr bind_cols bind_rows distinct filter if_else left_join mutate select
 #' @author ACS July 2017
 module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
+
+  MODULE_INPUTS <-
+    c(FILE = "common/GCAM_region_names",
+      FILE = "water/basin_to_country_mapping",
+      FILE = "aglu/A_demand_technology",
+      FILE = "aglu/A_resbio_curves",
+      FILE = "aglu/A_bio_frac_prod_R",
+      "L111.ag_resbio_R_C",
+      "L101.ag_Prod_Mt_R_C_Y_GLU",
+      "L123.For_Prod_bm3_R_Y_GLU",
+      "L120.LC_soil_veg_carbon_GLU",
+      "L110.IO_Coefs_pulp")
+
+  MODULE_OUTPUTS <-
+    c("L2042.AgResBio_For",
+      "L2042.AgResBioCurve_For",
+      "L2042.GlobalResBio_Mill",
+      "L2042.StubResBioCurve_Mill",
+      "L2042.AgResBio_ag_irr_mgmt",
+      "L2042.AgResBioCurve_ag_irr_mgmt")
+
   if(command == driver.DECLARE_INPUTS) {
-    return(c(FILE = "common/GCAM_region_names",
-             FILE = "water/basin_to_country_mapping",
-             FILE = "aglu/A_demand_technology",
-             FILE = "aglu/A_resbio_curves",
-             FILE = "aglu/A_bio_frac_prod_R",
-             "L111.ag_resbio_R_C",
-             "L101.ag_Prod_Mt_R_C_Y_GLU",
-             "L123.For_Prod_bm3_R_Y_GLU",
-             "L120.LC_soil_veg_carbon_GLU",
-             "L110.IO_Coefs_pulp"))
+    return(MODULE_INPUTS)
   } else if(command == driver.DECLARE_OUTPUTS) {
-    return(c("L2042.AgResBio_For",
-             "L2042.AgResBioCurve_For",
-             "L2042.GlobalResBio_Mill",
-             "L2042.StubResBioCurve_Mill",
-             "L2042.AgResBio_ag_irr_mgmt",
-             "L2042.AgResBioCurve_ag_irr_mgmt"))
+    return(MODULE_OUTPUTS)
   } else if(command == driver.MAKE) {
 
     all_data <- list(...)[[1]]
@@ -62,17 +69,9 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       WaterContent <- mass.conversion <- harvest.index <- eros.ctrl <- mass.to.energy <-
       water.content <- Irr_Rfd <- level <- ag <- GCAM_subsector <- NULL  # silence package check notes
 
-    # Load required inputs
-    GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
-    basin_to_country_mapping <- get_data(all_data, "water/basin_to_country_mapping")
-    A_demand_technology <- get_data(all_data, "aglu/A_demand_technology", strip_attributes = TRUE)
-    A_resbio_curves <- get_data(all_data, "aglu/A_resbio_curves")
-    A_bio_frac_prod_R <- get_data(all_data, "aglu/A_bio_frac_prod_R")
-    L111.ag_resbio_R_C <- get_data(all_data, "L111.ag_resbio_R_C")
-    L101.ag_Prod_Mt_R_C_Y_GLU <- get_data(all_data, "L101.ag_Prod_Mt_R_C_Y_GLU", strip_attributes = TRUE)
-    L123.For_Prod_bm3_R_Y_GLU <- get_data(all_data, "L123.For_Prod_bm3_R_Y_GLU", strip_attributes = TRUE)
-    L120.LC_soil_veg_carbon_GLU <- get_data(all_data, "L120.LC_soil_veg_carbon_GLU", strip_attributes=TRUE)
-    L110.IO_Coefs_pulp <- get_data(all_data, "L110.IO_Coefs_pulp", strip_attributes = TRUE)
+    # Load required inputs ----
+    get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
+
 
     # the following lines convert basin identification from the current GLU### level 1 names to the
     # level 2 names.
@@ -171,7 +170,11 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       L204.AgResBio_For
 
 
+
     # 2. Form a table of global Mill Residue Biomass Parameters by year
+
+    assertthat::assert_that(aglu.FOREST_DEMAND_SECTORS[1] == "NonFoodDemand_sawnwood")
+
     A_demand_technology %>%
       #Filter here only for sawmills. Don't calculate this for pulpwood. Now GCAM will calculate black liquor from pulping explicitly.
       filter(supplysector %in% aglu.FOREST_DEMAND_SECTORS[1]) %>%
@@ -181,20 +184,6 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       add_bio_res_params_For_Mill(erosCtrl = aglu.MILL_EROSION_CTRL_KGM2,
                                   massConversion = mean(c(aglu.AVG_WOOD_DENSITY_KGM3_HARDWOOD,aglu.AVG_WOOD_DENSITY_KGM3_SOFTWOOD))) ->
       L204.GlobalResBio_Mill
-
-    #Create a separate table for pulping residues
-    A_demand_technology %>%
-      #Filter here only for sawmills. Don't calculate this for pulpwood
-      filter(supplysector %in% aglu.FOREST_DEMAND_SECTORS[2]) %>%
-      select(supplysector, subsector, technology) %>%
-      rename(sector.name = supplysector,
-             subsector.name = subsector) %>%
-      add_bio_res_params_For_Mill(erosCtrl = aglu.MILL_EROSION_CTRL_KGM2,
-                                  massConversion = (mean(c(aglu.AVG_WOOD_DENSITY_KGM3_HARDWOOD,aglu.AVG_WOOD_DENSITY_KGM3_SOFTWOOD)))*aglu.FOREST_PULP_CONVERSION) ->
-      L204.GlobalResBio_Mill_pulp
-
-    L204.GlobalResBio_Mill %>% bind_rows(L204.GlobalResBio_Mill_pulp)->L204.GlobalResBio_Mill
-
 
 
     # 3. Forestry and Mill residue supply curves
@@ -300,7 +289,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
       L2042.AgResBioCurve_ag_irr_mgmt
 
 
-    # Produce outputs
+    # Produce outputs ----
     L204.AgResBio_For %>%
       add_title("Forest residue biomass parameters") %>%
       add_units("Varies") %>%
@@ -314,6 +303,7 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "L120.LC_soil_veg_carbon_GLU",
                      "L110.IO_Coefs_pulp") ->
       L2042.AgResBio_For
+
     L204.AgResBioCurve_For %>%
       add_title("Forest residue biomass supply curves") %>%
       add_units("Fraction Harvested") %>%
@@ -384,8 +374,9 @@ module_aglu_L2042.resbio_input_irr_mgmt <- function(command, ...) {
                      "L101.ag_Prod_Mt_R_C_Y_GLU") ->
       L2042.AgResBioCurve_ag_irr_mgmt
 
-    return_data(L2042.AgResBio_For, L2042.AgResBioCurve_For, L2042.GlobalResBio_Mill, L2042.StubResBioCurve_Mill, L2042.AgResBio_ag_irr_mgmt, L2042.AgResBioCurve_ag_irr_mgmt)
-  } else {
+    return_data(MODULE_OUTPUTS)
+
+    } else {
     stop("Unknown command")
   }
 }

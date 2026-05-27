@@ -43,6 +43,7 @@
 #include "util/base/include/xml_helper.h"
 #include "containers/include/scenario.h"
 #include "util/base/include/model_time.h"
+#include "sectors/include/sector_utils.h"
 #include "containers/include/iinfo.h"
 #include "marketplace/include/marketplace.h"
 #include "containers/include/market_dependency_finder.h"
@@ -100,11 +101,9 @@ InputCapital* InputCapital::clone() const {
 void InputCapital::copy( const InputCapital& aOther ) {
     MiniCAMInput::copy( aOther );
     
-    mTechChange = aOther.mTechChange;
     mCapitalOvernight = aOther.mCapitalOvernight;
-    mFixedChargeRate = aOther.mFixedChargeRate;
-    mLifetimeCapital = aOther.mLifetimeCapital;
-    mCapacityFactor = aOther.mCapacityFactor;
+    mInterestRate = aOther.mInterestRate;
+    mPaybackYears = aOther.mPaybackYears;
     mTrackingMarketName = aOther.mTrackingMarketName;
     
     // calculated parameters are not copied.
@@ -126,7 +125,6 @@ void InputCapital::copyParamsInto( InputCapital& aInput,
     // Copy the coefficients forward. This is done to adjust for technical
     // change which already occurred.
     assert( aPeriod > 0 );
-    aInput.mAdjustedCoefficients[ aPeriod ] = mAdjustedCoefficients[ aPeriod - 1 ];
 }
 
 void InputCapital::toDebugXML( const int aPeriod,
@@ -134,14 +132,11 @@ void InputCapital::toDebugXML( const int aPeriod,
                                Tabs* aTabs ) const
 {
     XMLWriteOpeningTag ( getXMLNameStatic(), aOut, aTabs, mName );
-    XMLWriteElement( mLevelizedCapitalCost, "levelized-capital-cost", aOut, aTabs );
+    XMLWriteElement( mOvernightCapitalPerOutput, "overnight-capital-per-output", aOut, aTabs );
     XMLWriteElement( mCapitalOvernight, "capital-overnight", aOut, aTabs );
-    XMLWriteElement( mLifetimeCapital, "lifetime-capital", aOut, aTabs );
-    XMLWriteElement( mFixedChargeRate, "mFixedChargeRate", aOut, aTabs );
-    XMLWriteElement( mCapacityFactor, "capacity-factor", aOut, aTabs );
-    XMLWriteElement( mTechChange, "tech-change", aOut, aTabs );
-    XMLWriteElement( mAdjustedCosts[ aPeriod ], "adjusted-cost", aOut, aTabs );
-    XMLWriteElement( mAdjustedCoefficients[ aPeriod ], "adjusted-coef", aOut, aTabs );
+    XMLWriteElement( mPaybackYears, "payback-years", aOut, aTabs );
+    XMLWriteElement( mInterestRate, "interest-rate", aOut, aTabs );
+    XMLWriteElement( mAdjustedCosts, "adjusted-cost", aOut, aTabs );
     XMLWriteClosingTag( getXMLNameStatic(), aOut, aTabs );
 }
 
@@ -150,41 +145,38 @@ void InputCapital::completeInit( const gcamstr& aRegionName,
                                  const gcamstr& aSubsectorName,
                                  const gcamstr& aTechName,
                                  const IInfo* aTechInfo )
-{   
-    
+{
     // technology capacity factor
     // capacity factor needed before levelized cost calculation
-    mCapacityFactor = aTechInfo->getDouble(gcamstr("tech-capacity-factor"), true);
+    double capFactor = aTechInfo->getDouble(gcamstr("tech-capacity-factor"), true);
                                            
     // completeInit() is called for each technology for each period
     // so levelized capital cost calculation is done here.
 
-    mLevelizedCapitalCost = calcLevelizedCapitalCost();
+    mOvernightCapitalPerOutput = calcLevelizedCapitalCost(capFactor);
     
     // Initialize the adjusted costs in all periods to the base calculate
     // levelized capital cost.
     // These costs may be adjusted by the Technology, for instance for capture
     // penalties.
-    fill( mAdjustedCosts.begin(), mAdjustedCosts.end(), mLevelizedCapitalCost );
     
-    // Note: given we are just tracking capital we do not need to log a dependency
-    // on mTrackingMarketName, however if we had price feedbacks we would
+    MarketDependencyFinder* depFinder = scenario->getMarketplace()->getDependencyFinder();
+    depFinder->addDependency( aSectorName, aRegionName, mTrackingMarketName, aRegionName);
 }
 
-/** Calculate the levelizd capital cost.
+/** Convert the overnight costs per capacity to per output include unit conversions.
  *
- * \param void 
+ * \param aCapFactor The technology capacity factor.
  * \return Levelized capital costs.
  * \author Sonny Kim
  */
-double InputCapital::calcLevelizedCapitalCost( void ) const
+double InputCapital::calcLevelizedCapitalCost( const double aCapFactor ) const
 {
-    // TODO: Use more detailed approach for calculating levelized
-    // capital cost that includes number of years for construction.
-    // TODO: Get interest/discount rate from capital market.
-    // TODO: Use Value class for units conversion.
-    double levelizedCapitalCost = 
-	mFixedChargeRate * mCapitalOvernight / ( FunctionUtils::HOURS_PER_YEAR() * mCapacityFactor * FunctionUtils::GJ_PER_KWH() );
+    // convert overnight costs per capacity to per output
+    // this is going to include unit conversions (quantity and price)
+    // as well applying a capacity factor
+    double levelizedCapitalCost =
+        mCapitalOvernight / ( FunctionUtils::HOURS_PER_YEAR() * aCapFactor * FunctionUtils::GJ_PER_KWH() );
 
     return levelizedCapitalCost; // 1975$/GJ
 }
@@ -196,26 +188,34 @@ void InputCapital::initCalc( const gcamstr& aRegionName,
                              const IInfo* aTechInfo,
                              const int aPeriod )
 {
-    // Initialize the current coefficient to 1 if it has not 
-    // been initialized through copyParam. It may be adjusted
-    // later when coefficients are copied forward.
-    mAdjustedCoefficients[ aPeriod ] = 1;
-
     mIsActive = aTechInfo->getBoolean("new-vintage-tech", true);
+    
+    // Ideally we only need to locate the market once, however during completeInit
+    // all markets may have not yet been set up.  So, instead we avoid re-lookups
+    // if the market has been found.  Unfortunately, this means if the market will
+    // never be found we will continue to try to look it up each model period.
+    if(!mCachedMarket.hasLocatedMarket()) {
+        mCachedMarket = scenario->getMarketplace()->locateMarket( mTrackingMarketName, aRegionName );
+    }
 }
 
 double InputCapital::getPrice( const gcamstr& aRegionName,
                                const int aPeriod ) const
 {
-    assert( mAdjustedCosts[ aPeriod ].isInited() );
-    return mAdjustedCosts[ aPeriod ];
+    if(mIsActive) {
+        const Modeltime* modeltime = scenario->getModeltime();
+        double adjInt = SectorUtils::calcPriceRatio(mCachedMarket, aRegionName, mTrackingMarketName, modeltime->getFinalCalibrationPeriod(), aPeriod) * mInterestRate;
+        double fcr = FunctionUtils::calcFCR(adjInt, mPaybackYears);
+        double levelizedCapitalCost = fcr * mOvernightCapitalPerOutput;
+        const_cast<InputCapital*>(this)->mAdjustedCosts = levelizedCapitalCost;
+    }
+    return mAdjustedCosts;
 }
 
 void InputCapital::setPrice( const gcamstr& aRegionName,
                              const double aPrice,
                              const int aPeriod ) 
 {
-    mAdjustedCosts[ aPeriod ] = aPrice;
 }
 
 double InputCapital::getPhysicalDemand( const int aPeriod ) const {
@@ -227,8 +227,8 @@ void InputCapital::setPhysicalDemand( double aPhysicalDemand,
                                       const int aPeriod )
 {
     if(mIsActive) {
-        mCapitalValue = mAdjustedCosts[aPeriod] * mAdjustedCoefficients[aPeriod] / mFixedChargeRate * aPhysicalDemand;
-        scenario->getMarketplace()->addToDemand(mTrackingMarketName, aRegionName, mCapitalValue, aPeriod, false);
+        mCapitalValue = mOvernightCapitalPerOutput * aPhysicalDemand;
+        mCachedMarket.addToDemand(mTrackingMarketName, aRegionName, mCapitalValue, aPeriod, false);
     }
 }
 
@@ -240,14 +240,14 @@ double InputCapital::getCO2EmissionsCoefficient( const gcamstr& aGHGName,
 }
 
 double InputCapital::getCoefficient( const int aPeriod ) const {
-    assert( mAdjustedCoefficients[ aPeriod ].isInited() );
-    return mAdjustedCoefficients[ aPeriod ];
+    return 1.0;
 }
 
 void InputCapital::setCoefficient( const double aCoefficient,
                                    const int aPeriod )
 {
-    mAdjustedCoefficients[ aPeriod ] = aCoefficient;
+    assert(false);
+    // not available
 }
 
 void InputCapital::tabulateFixedQuantity( const gcamstr& aRegionName,
@@ -279,11 +279,6 @@ double InputCapital::getPriceElasticity( const int aPeriod ) const {
     return 0;
 }
 
-double InputCapital::getTechChange( const int aPeriod ) const
-{
-    return mTechChange;
-}
-
 void InputCapital::doInterpolations( const int aYear, const int aPreviousYear,
                                      const int aNextYear, const IInput* aPreviousInput,
                                      const IInput* aNextInput )
@@ -301,22 +296,11 @@ void InputCapital::doInterpolations( const int aYear, const int aPreviousYear,
      */
     assert( nextCapInput );
     
-    // tech change is just copied from the next input
-    mTechChange = nextCapInput->mTechChange;
-    
     // interpolate the costs
     mCapitalOvernight = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
                                                   prevCapInput->mCapitalOvernight,
                                                   nextCapInput->mCapitalOvernight );
-    mLifetimeCapital = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
-                                                 prevCapInput->mLifetimeCapital,
-                                                 nextCapInput->mLifetimeCapital );
-    mLevelizedCapitalCost = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
-                                                      prevCapInput->mLevelizedCapitalCost,
-                                                      nextCapInput->mLevelizedCapitalCost );
-    
-    // interplate capacity factor
-    mCapacityFactor = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
-                                                prevCapInput->mCapacityFactor,
-                                                nextCapInput->mCapacityFactor );
+    mOvernightCapitalPerOutput = util::linearInterpolateY( aYear, aPreviousYear, aNextYear,
+                                                      prevCapInput->mOvernightCapitalPerOutput,
+                                                      nextCapInput->mOvernightCapitalPerOutput );
 }

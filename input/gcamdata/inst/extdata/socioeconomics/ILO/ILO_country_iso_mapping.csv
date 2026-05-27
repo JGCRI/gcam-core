@@ -1,0 +1,243 @@
+# File: ILO_country_iso_mapping.csv
+# Title: ILO countries to iso
+# Units: NA
+# Description: Maps ILO region to iso
+# Source: https://ilostat.ilo.org/methods/concepts-and-definitions/classification-country-groupings/
+# Last update: Aug 2025 (XZ)
+# Column types: cccc
+# ----------
+ISO3 Code,Country,Is ILO member?,Included in ILO estimates?
+AFG,Afghanistan,Yes,Yes
+ALB,Albania,Yes,Yes
+DZA,Algeria,Yes,Yes
+ASM,American Samoa,No,No
+AND,Andorra,No,No
+AGO,Angola,Yes,Yes
+AIA,Anguilla,No,No
+ATG,Antigua and Barbuda,Yes,No
+ARG,Argentina,Yes,Yes
+ARM,Armenia,Yes,Yes
+ABW,Aruba,No,No
+AUS,Australia,Yes,Yes (*)
+AUT,Austria,Yes,Yes (*)
+AZE,Azerbaijan,Yes,Yes
+BHS,Bahamas,Yes,Yes
+BHR,Bahrain,Yes,Yes
+BGD,Bangladesh,Yes,Yes
+BRB,Barbados,Yes,Yes
+BLR,Belarus,Yes,Yes
+BEL,Belgium,Yes,Yes (*)
+BLZ,Belize,Yes,Yes
+BEN,Benin,Yes,Yes
+BMU,Bermuda,No,No
+BTN,Bhutan,No,Yes
+BOL,Bolivia (Plurinational State of),Yes,Yes
+BIH,Bosnia and Herzegovina,Yes,Yes
+BWA,Botswana,Yes,Yes
+BRA,Brazil,Yes,Yes
+VGB,British Virgin Islands,No,No
+BRN,Brunei Darussalam,No,Yes
+BGR,Bulgaria,Yes,Yes (*)
+BFA,Burkina Faso,Yes,Yes
+BDI,Burundi,Yes,Yes
+CPV,Cabo Verde,Yes,Yes
+KHM,Cambodia,Yes,Yes
+CMR,Cameroon,Yes,Yes
+CAN,Canada,Yes,Yes (*)
+CYM,Cayman Islands,No,No
+CAF,Central African Republic,Yes,Yes
+TCD,Chad,Yes,Yes
+CHA,Channel Islands,No,Yes (*)
+CHL,Chile,Yes,Yes
+CHN,China,Yes,Yes
+COL,Colombia,Yes,Yes
+COM,Comoros,Yes,Yes
+COG,Congo,Yes,Yes
+COD,"Congo, Democratic Republic of the",Yes,Yes
+COK,Cook Islands,No,No
+CRI,Costa Rica,Yes,Yes
+CIV,C te d Ivoire,Yes,Yes
+HRV,Croatia,Yes,Yes (*)
+CUB,Cuba,Yes,Yes
+CUW,Cura ao,No,No
+CYP,Cyprus,Yes,Yes (*)
+CZE,Czechia,Yes,Yes (*)
+DNK,Denmark,Yes,Yes (*)
+DJI,Djibouti,Yes,Yes (*)
+DMA,Dominica,Yes,No
+DOM,Dominican Republic,Yes,Yes
+ECU,Ecuador,Yes,Yes
+EGY,Egypt,Yes,Yes
+SLV,El Salvador,Yes,Yes
+GNQ,Equatorial Guinea,Yes,Yes
+ERI,Eritrea,Yes,Yes
+EST,Estonia,Yes,Yes (*)
+SWZ,Eswatini,Yes,Yes
+ETH,Ethiopia,Yes,Yes
+FLK,Falkland Islands (Malvinas),No,No
+FRO,Faroe Islands,No,No
+FJI,Fiji,Yes,Yes
+FIN,Finland,Yes,Yes (*)
+FRA,France,Yes,Yes (*)
+GUF,French Guiana,No,No
+PYF,French Polynesia,No,Yes (*)
+GAB,Gabon,Yes,Yes
+GMB,Gambia,Yes,Yes
+GEO,Georgia,Yes,Yes
+DEU,Germany,Yes,Yes (*)
+GHA,Ghana,Yes,Yes
+GIB,Gibraltar,No,No
+GRC,Greece,Yes,Yes (*)
+GRL,Greenland,No,No
+GRD,Grenada,Yes,No
+GLP,Guadeloupe,No,No
+GUM,Guam,No,Yes (*)
+GTM,Guatemala,Yes,Yes
+GGY,Guernsey,Yes,No
+GIN,Guinea,Yes,Yes
+GNB,Guinea-Bissau,Yes,Yes
+GUY,Guyana,Yes,Yes
+HTI,Haiti,Yes,Yes
+HND,Honduras,Yes,Yes
+HKG,"Hong Kong, China",No,Yes
+HUN,Hungary,Yes,Yes (*)
+ISL,Iceland,Yes,Yes (*)
+IND,India,Yes,Yes
+IDN,Indonesia,Yes,Yes
+IRN,Iran (Islamic Republic of),Yes,Yes
+IRQ,Iraq,Yes,Yes
+IRL,Ireland,Yes,Yes (*)
+IMN,Isle of Man,No,No
+ISR,Israel,Yes,Yes (*)
+ITA,Italy,Yes,Yes (*)
+JAM,Jamaica,Yes,Yes
+JPN,Japan,Yes,Yes (*)
+JEY,Jersey,Yes,No
+JOR,Jordan,Yes,Yes
+KAZ,Kazakhstan,Yes,Yes
+KEN,Kenya,Yes,Yes
+KIR,Kiribati,Yes,No
+PRK,Korea (the Democratic People's Republic of),No,Yes
+KOS,Kosovo,No,No
+KWT,Kuwait,Yes,Yes
+KGZ,Kyrgyzstan,Yes,Yes
+LAO,Lao People's Democratic Republic,Yes,Yes
+LVA,Latvia,Yes,Yes (*)
+LBN,Lebanon,Yes,Yes
+LSO,Lesotho,Yes,Yes
+LBR,Liberia,Yes,Yes
+LBY,Libya,Yes,Yes
+LIE,Liechtenstein,No,No
+LTU,Lithuania,Yes,Yes (*)
+LUX,Luxembourg,Yes,Yes (*)
+MAC,"Macao, China",No,Yes
+MDG,Madagascar,Yes,Yes
+MWI,Malawi,Yes,Yes
+MYS,Malaysia,Yes,Yes
+MDV,Maldives,No,Yes
+MLI,Mali,Yes,Yes
+MLT,Malta,Yes,Yes (*)
+MHL,Marshall Islands,No,No
+MTQ,Martinique,No,No
+MRT,Mauritania,Yes,Yes
+MUS,Mauritius,Yes,Yes
+MEX,Mexico,Yes,Yes
+FSM,Micronesia (Federated States of),No,No
+MCO,Monaco,No,No
+MNG,Mongolia,Yes,Yes
+MNE,Montenegro,Yes,Yes
+MSR,Montserrat,No,No
+MAR,Morocco,Yes,Yes
+MOZ,Mozambique,Yes,Yes
+MMR,Myanmar,Yes,Yes
+NAM,Namibia,Yes,Yes
+NRU,Nauru,No,No
+NPL,Nepal,Yes,Yes
+NLD,Netherlands,Yes,Yes (*)
+ANT,Netherlands Antilles,No,No
+NCL,New Caledonia,No,Yes (*)
+NZL,New Zealand,Yes,Yes (*)
+NIC,Nicaragua,Yes,Yes
+NER,Niger,Yes,Yes
+NGA,Nigeria,Yes,Yes
+NIU,Niue,No,No
+NFK,Norfolk Island,No,No
+MKD,North Macedonia,Yes,Yes
+MNP,Northern Mariana Islands,No,No
+NOR,Norway,Yes,Yes (*)
+PSE,Occupied Palestinian Territory,No,Yes
+OMN,Oman,Yes,Yes
+PAK,Pakistan,Yes,Yes
+PLW,Palau,No,No
+PAN,Panama,Yes,Yes
+PNG,Papua New Guinea,Yes,Yes
+PRY,Paraguay,Yes,Yes
+PER,Peru,Yes,Yes
+PHL,Philippines,Yes,Yes
+POL,Poland,Yes,Yes (*)
+PRT,Portugal,Yes,Yes (*)
+PRI,Puerto Rico,No,Yes
+QAT,Qatar,Yes,Yes
+KOR,Republic of Korea,Yes,Yes
+MDA,Republic of Moldova,Yes,Yes
+REU,R union,No,No
+ROU,Romania,Yes,Yes (*)
+RUS,Russian Federation,Yes,Yes
+RWA,Rwanda,Yes,Yes
+SHN,Saint Helena,No,No
+KNA,Saint Kitts and Nevis,Yes,No
+LCA,Saint Lucia,Yes,Yes (*)
+SPM,Saint Pierre and Miquelon,No,No
+VCT,Saint Vincent and the Grenadines,Yes,Yes (*)
+WSM,Samoa,No,Yes (*)
+SMR,San Marino,Yes,No
+STP,Sao Tome and Principe,Yes,Yes (*)
+SAU,Saudi Arabia,Yes,Yes
+SEN,Senegal,Yes,Yes
+SRB,Serbia,Yes,Yes
+SYC,Seychelles,Yes,No
+SLE,Sierra Leone,Yes,Yes
+SGP,Singapore,Yes,Yes
+SVK,Slovakia,Yes,Yes (*)
+SVN,Slovenia,Yes,Yes (*)
+SLB,Solomon Islands,Yes,Yes
+SOM,Somalia,Yes,Yes
+ZAF,South Africa,Yes,Yes
+SSD,South Sudan,Yes,Yes (*)
+ESP,Spain,Yes,Yes (*)
+LKA,Sri Lanka,Yes,Yes
+SDN,Sudan,Yes,Yes
+SUR,Suriname,Yes,Yes
+SWE,Sweden,Yes,Yes (*)
+CHE,Switzerland,Yes,Yes (*)
+SYR,Syrian Arab Republic,Yes,Yes
+TWN,"Taiwan, China",No,Yes
+TJK,Tajikistan,Yes,Yes
+TZA,"Tanzania, United Republic of",Yes,Yes
+THA,Thailand,Yes,Yes
+TLS,Timor-Leste,No,Yes
+TGO,Togo,Yes,Yes
+TKL,Tokelau,No,No
+TON,Tonga,No,Yes (*)
+TTO,Trinidad and Tobago,Yes,Yes
+TUN,Tunisia,Yes,Yes
+TUR,T rkiye,Yes,Yes
+TKM,Turkmenistan,Yes,Yes
+TCA,Turks and Caicos Islands,No,No
+TUV,Tuvalu,No,No
+UGA,Uganda,Yes,Yes
+UKR,Ukraine,Yes,Yes
+ARE,United Arab Emirates,Yes,Yes
+GBR,United Kingdom of Great Britain and Northern Ireland,Yes,Yes (*)
+USA,United States of America,Yes,Yes (*)
+VIR,United States Virgin Islands,No,Yes (*)
+URY,Uruguay,Yes,Yes
+UZB,Uzbekistan,Yes,Yes
+VUT,Vanuatu,No,Yes (*)
+VEN,Venezuela (Bolivarian Republic of),Yes,Yes
+VNM,Viet Nam,Yes,Yes
+WLF,Wallis and Futuna,No,No
+ESH,Western Sahara,No,Yes (*)
+YEM,Yemen,Yes,Yes
+ZMB,Zambia,Yes,Yes
+ZWE,Zimbabwe,Yes,Yes
