@@ -108,7 +108,7 @@ module_socio_L100.SSP_database <- function(command, ...) {
       left_join_error_no_match(
         # mapping file
         pop_laborforce_variable, by = "variable") %>%
-      filter(laborforce_var == TRUE, year >= socioeconomics.SSP_DB_Labor_StartYear) %>%
+      filter(laborforce_var == TRUE, year >= socioeconomics.SSP_DB_LABOR_STARTYEAR) %>%
       # Note that in historical years, population was differentiated by education only after
       # 2020 when education data was made available in SSP
       # We also do not have that differentiation now (NA could cause issues)

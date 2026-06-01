@@ -78,18 +78,18 @@ module_energy_L1441.building_det_en_USA <- function(command, ...) {
              GCAM_region_ID = gcam.USA_CODE) %>%
       ungroup()
 
-    # further disagg "others" services in Scout to resid televisions
+    # further disagg "other" services in Scout to resid televisions
     # and comm non-building
     L1441.Scout_bld_downscale_other <- L1441.Scout_bld_calibration %>%
       filter(fuel == "electricity",
-             service %in% c("comm others", "resid others")) %>%
-      mutate(share = if_else(service == 'comm others',
+             service %in% c("comm other", "resid other")) %>%
+      mutate(share = if_else(service == 'comm other',
                              share * (1-energy.USA_COMM_OTHERELEC_NONBLD_FRAC),
                              share * (1-energy.USA_RESID_OTHERELEC_TV_FRAC))) %>%
       bind_rows(L1441.Scout_bld_calibration %>%
                   filter(fuel == "electricity",
-                         service %in% c("comm others", "resid others")) %>%
-                  mutate(service = if_else(service == 'comm others',
+                         service %in% c("comm other", "resid other")) %>%
+                  mutate(service = if_else(service == 'comm other',
                                                  'comm non-building', 'resid televisions'),
                          share = if_else(service == 'comm non-building',
                                          share * energy.USA_COMM_OTHERELEC_NONBLD_FRAC,
@@ -238,13 +238,13 @@ module_energy_L1441.building_det_en_USA <- function(command, ...) {
       select(-state_name)
 
     L1441.Scout_state_energy_by_serv_adj <- L1441.Scout_state_energy_by_serv %>%
-      # use national partition value to split resid and comm others service
-      mutate(energy = if_else(service == 'comm others', energy * (1-energy.USA_COMM_OTHERELEC_NONBLD_FRAC),
-                              if_else(service == 'resid others', energy * (1-energy.USA_RESID_OTHERELEC_TV_FRAC),
+      # use national partition value to split resid and comm other service
+      mutate(energy = if_else(service == 'comm other', energy * (1-energy.USA_COMM_OTHERELEC_NONBLD_FRAC),
+                              if_else(service == 'resid other', energy * (1-energy.USA_RESID_OTHERELEC_TV_FRAC),
                                       energy))) %>%
       bind_rows(L1441.Scout_state_energy_by_serv %>%
-                  filter(service %in% c('comm others','resid others')) %>%
-                  mutate(service = if_else(service == 'comm others',
+                  filter(service %in% c('comm other','resid other')) %>%
+                  mutate(service = if_else(service == 'comm other',
                                            'comm non-building',
                                            'resid televisions'),
                          energy = if_else(service == 'comm non-building',
@@ -333,6 +333,7 @@ module_energy_L1441.building_det_en_USA <- function(command, ...) {
     L1441.end_use_eff_USA %>%
       add_title("Building end-use technology efficiency in USA by supplysector / subsector / technology / year") %>%
       add_units("Unitless efficiency") %>%
+      add_comments("Detailed USA building service technology efficiencies") %>%
       add_legacy_name("L1441.end_use_eff_USA") %>%
       add_precursors("gcam-usa/A44.globaltech_eff") ->
       L1441.end_use_eff_USA
@@ -349,6 +350,7 @@ module_energy_L1441.building_det_en_USA <- function(command, ...) {
     L1441.NEcost_75USDGJ_USA %>%
       add_title("Building Non energy cost in USA by supplysector / subsector / technology") %>%
       add_units("1975$/GJ-service") %>%
+      add_comments("Detailed USA building service technology non-energy costs") %>%
       add_legacy_name("L1441.NEcost_75USDGJ_USA") %>%
       add_precursors("gcam-usa/A44.globaltech_cost") ->
       L1441.NEcost_75USDGJ_USA

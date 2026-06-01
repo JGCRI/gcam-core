@@ -228,6 +228,7 @@ module_aglu_L2053.ag_land_prodchange <- function(command, ...) {
       add_comments("The same productivity change are assigned to both high and low management") %>%
       add_legacy_name("L2053.AgProdChange_ag_irr_ref") %>%
       add_precursors("water/basin_to_country_mapping",
+                     "common/GCAM_region_names",
                      "L162.ag_YieldRate_R_C_Y_GLU_irr") ->
       L2053.AgProdChange_ag_irr_ref
 
@@ -236,7 +237,8 @@ module_aglu_L2053.ag_land_prodchange <- function(command, ...) {
       add_units("Unitless") %>%
       add_comments("The same productivity change are assigned to both high and low management") %>%
       add_legacy_name("L2053.AgProdChange_bio_irr_ref") %>%
-      add_precursors("L162.bio_YieldRate_R_Y_GLU_irr",
+      add_precursors("common/GCAM_region_names",
+                     "L162.bio_YieldRate_R_Y_GLU_irr",
                      "L201.AgYield_bio_grass",
                      "L201.AgYield_bio_tree") ->
       L2053.AgProdChange_bio_irr_ref

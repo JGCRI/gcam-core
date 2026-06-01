@@ -192,7 +192,7 @@ module_energy_L2328.food_processing <- function(command, ...) {
       mutate(output.ratio = elec_ratio * coefficient,
              output.ratio = round(output.ratio, energy.DIGITS_EFFICIENCY)) %>%
       # NOTE: holding the output ratio constant over time in future periods
-      left_join_error_no_match(select(filter(., year == max(MODEL_BASE_YEARS)), -coefficient, -elec_ratio),
+      left_join_error_no_match(select(filter(., year == MODEL_FINAL_BASE_YEAR), -coefficient, -elec_ratio),
                                by = c("supplysector", "subsector", "technology", "minicam.energy.input", "secondary.output")) %>%
       mutate(output.ratio = if_else(year.x %in% MODEL_BASE_YEARS, output.ratio.x, output.ratio.y)) %>%
       ungroup %>%
@@ -221,7 +221,7 @@ module_energy_L2328.food_processing <- function(command, ...) {
     # filters base years from original and then appends future years
     L2328.globaltech_retirement_base %>%
       mutate(year = as.integer(year)) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       bind_rows(L2328.globaltech_retirement_future) ->
       L2328.globaltech_retirement
 
@@ -329,7 +329,7 @@ module_energy_L2328.food_processing <- function(command, ...) {
       # Note: Fixed future coefficient for now
       group_by(region, supplysector, subsector, stub.technology, minicam.energy.input, market.name) %>%
       complete(year = MODEL_YEARS) %>%
-      mutate(coefficient = if_else(year %in% MODEL_FUTURE_YEARS, coefficient[year == max(MODEL_BASE_YEARS)], coefficient)) %>%
+      mutate(coefficient = if_else(year %in% MODEL_FUTURE_YEARS, coefficient[year == MODEL_FINAL_BASE_YEAR], coefficient)) %>%
       ungroup() ->
       L2328.StubTechCoef_food
 

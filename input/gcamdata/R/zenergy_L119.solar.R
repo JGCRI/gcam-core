@@ -100,8 +100,8 @@ module_energy_L119.solar <- function(command, ...) {
 
     # Write out a warning to update Land_type_area_ha data and copy the last
     # historical year to the final base year
-    if (max(Land_type_area_ha$year) < MODEL_FINAL_BASE_YEAR) {
-      warning("module_energy_L119.solar: latest year in Land_type_area_ha.csv (",  max(Land_type_area_ha$year), ") is earlier than the final base-year (", MODEL_FINAL_BASE_YEAR, "). Consider updating the data.")
+    if (max(Land_type_area_ha$year) < FINAL_HISTORICAL_YEAR) {
+      warning("module_energy_L119.solar: latest year in Land_type_area_ha.csv (",  max(Land_type_area_ha$year), ") is earlier than the final historical year (", FINAL_HISTORICAL_YEAR, "). Consider updating the data.")
 
       ## Land_type_area_ha does not have "complete" nesting for GLUs and land
       ## types i.e., not all countries have all GLUs and land types in all
@@ -110,9 +110,9 @@ module_energy_L119.solar <- function(command, ...) {
       ## the data. This needs to be fixed in the data file itself. Ideally this
       ## file needs to be updated for updating base year.
 
-      # copy last year data to MODEL_FINAL_BASE_YEAR
+      # copy last year data to FINAL_HISTORICAL_YEAR
       Land_type_area_ha %>% filter(year == max(year)) %>%
-        mutate(year = MODEL_FINAL_BASE_YEAR) %>%
+        mutate(year = FINAL_HISTORICAL_YEAR) %>%
         bind_rows(Land_type_area_ha) -> Land_type_area_ha
     }
 

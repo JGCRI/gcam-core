@@ -67,7 +67,7 @@ module_energy_L144.building_det_en <- function(command, ...) {
 
     . <- CRF <- CapitalCost <- Energy_EJ <- Energy_EJ_SectorFuel <- Energy_adj_EJ <- Energy_final_EJ <-
       Energy_tot_EJ <- Energy_unadj_EJ <- GCAM_region_ID <- GCM <- NEcostPerService <- NonEnergyCost <-
-      `O&M cost` <- SRES <- ServiceOutput <- ServiceShare <- UEC <- adjustment <- country <- country_name <-
+      `O&M cost` <- SCEN <- ServiceOutput <- ServiceShare <- UEC <- adjustment <- country <- country_name <-
       curr_table <- efficiency <- fuel <- fuel_share_of_TFEbysector <- has_district_heat <- input.ratio <-
       `installed cost` <- iso <- lifetime <- normal <- normal_RG3 <- region_GCAM3 <- region_subsector <-
       regions_fuel <- scaler <- sector <- sector_fuel <- service <- share_TFEbysector <- share_serv_fuel <-
@@ -332,7 +332,7 @@ module_energy_L144.building_det_en <- function(command, ...) {
     # Then, calculate the "normals" from the HDD and CDD data, both at the country level and the GCAM 3.0 region level.
     L143.HDDCDD_scen_ctry_Y %>%
       filter(year %in% energy.CLIMATE_NORMAL_YEARS) %>% # Note that climate normal years are 1981-2000
-      group_by(country, variable, GCM, SRES, iso) %>%
+      group_by(country, variable, GCM, SCEN, iso) %>%
       summarise(normal = mean(value)) %>%
       ungroup() %>%
       ## NOTE: wherever the climate normal is less than 1, this will round to 0 when hddcdd are read in to the model. Go ahead and put these at 0,
@@ -344,7 +344,7 @@ module_energy_L144.building_det_en <- function(command, ...) {
     # Calculate the normals at the GCAM 3.0 region level
     L143.HDDCDD_scen_RG3_Y %>%
       filter(year %in% energy.CLIMATE_NORMAL_YEARS) %>%
-      group_by(region_GCAM3, variable, GCM, SRES) %>%
+      group_by(region_GCAM3, variable, GCM, SCEN) %>%
       summarise(normal_RG3 = mean(value)) %>%
       ungroup() %>%
       select(region_GCAM3, variable, normal_RG3) ->

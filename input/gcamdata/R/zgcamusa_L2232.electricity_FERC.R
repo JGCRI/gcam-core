@@ -309,7 +309,7 @@ module_gcamusa_L2232.electricity_FERC <- function(command, ...) {
                 by = c("region" = "grid_region", "year")) %>%
       group_by(region) %>%
       # Set future year own use coefficients the same as the base year coefficients
-      mutate(coefficient = replace(coefficient, year %in% MODEL_FUTURE_YEARS, coefficient[year == MODEL_FINAL_BASE_YEAR])) %>%
+      mutate(coefficient = replace(coefficient, year %in% MODEL_FUTURE_YEARS, coefficient[year == max(MODEL_BASE_YEARS)])) %>%
       ungroup %>%
       select(LEVEL2_DATA_NAMES[["TechCoef"]]) ->
       L2232.TechCoef_elecownuse_FERC

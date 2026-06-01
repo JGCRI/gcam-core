@@ -192,6 +192,14 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
     L201.en_iron_and_steel_ef <- L201.en_iron_and_steel_ef_fixINF %>%
       mutate(emiss.coeff = if_else(is.infinite(emiss.coeff), 1, emiss.coeff))
 
+    # Note: setting the emiss.coeff to 1 for the MODEL_FINAL_BASE_YEAR leads to unrealistic
+    # emissions. So, we will reset emissions coefficients differently under timeshift.
+    if( UNDER_TIMESHIFT ) {
+      # TODO: 1 is unrealistically high, but 0 is also incorrect. Find a meaningful value for hindcast
+      L201.en_iron_and_steel_ef <- L201.en_iron_and_steel_ef_fixINF %>%
+        mutate(emiss.coeff = if_else(is.infinite(emiss.coeff), 0, emiss.coeff))
+    }
+
     EnTechInputNameMap %>%
       left_join(ind_subsector_revised %>% select(supplysector,subsector.original,fuel,technology, minicam.energy.input) %>%
                   rename(stub.technology = technology,
@@ -529,7 +537,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      UCD_tech_map_name,
                      "L111.nonghg_tg_R_en_S_F_Yh",
                      "L244.DeleteThermalService","L244.DeleteGenericService","socioeconomics/income_shares",
-                     "emissions/mappings/ind_subsector_revised") ->
+                     "emissions/mappings/ind_subsector_revised", "emissions/mappings/USAbld_emission_mapping",
+                     "L244.StubTechCalInput_bld") ->
       L201.en_pol_emissions
 
     L201.en_ghg_emissions %>%
@@ -546,7 +555,9 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      UCD_tech_map_name,
                      "L112.ghg_tg_R_en_S_F_Yh",
                      "L244.DeleteThermalService",
-                     "emissions/mappings/ind_subsector_revised") ->
+                     "emissions/mappings/ind_subsector_revised",
+                     "emissions/mappings/USAbld_emission_mapping",
+                     "L244.StubTechCalInput_bld") ->
       L201.en_ghg_emissions
 
     L201.en_bcoc_emissions %>%
@@ -562,7 +573,8 @@ module_emissions_L201.en_nonco2 <- function(command, ...) {
                      "energy/calibrated_techs_bld_det",
                      UCD_tech_map_name,
                      "L114.bcoc_tgej_R_en_S_F_2000",
-                     "L244.DeleteThermalService") ->
+                     "L244.DeleteThermalService",
+                     "emissions/mappings/USAbld_emission_mapping") ->
       L201.en_bcoc_emissions
 
     L201.en_iron_and_steel_ef %>%

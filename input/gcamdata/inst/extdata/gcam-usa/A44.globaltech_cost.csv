@@ -44,9 +44,9 @@ resid clothes washers,electricity,clothes washer hi-eff,0.117,0.117,0.117,0.171,
 resid televisions,electricity,electricity,20,20,20,20,20,20,20,20,20
 resid computers,electricity,electricity,20,20,20,20,20,20,20,20,20
 resid furnace fans,electricity,electricity,20,20,20,20,20,20,20,20,20
-resid others,gas,gas,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
-resid others,electricity,electricity,20,20,20,20,20,20,20,20,20
-resid others,refined liquids,refined liquids,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
+resid other,gas,gas,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
+resid other,electricity,electricity,20,20,20,20,20,20,20,20,20
+resid other,refined liquids,refined liquids,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
 comm heating,biomass,wood furnace,1.335,1.335,1.335,1.315,1.315,1.315,1.295,1.276,1.238
 comm heating,coal,coal furnace,1.355,1.355,1.335,1.315,1.315,1.315,1.295,1.276,1.238
 comm heating,gas,gas furnace,1.034981706,1.035,1.035,1.172,1.172,1.172,1.172,1.172,1.172
@@ -74,6 +74,6 @@ comm lighting,electricity,solid state,7.383531689,7.384,2.891,0.703,0.667,0.527,
 comm refrigeration,electricity,refrigeration,42.91327908,42.913,44.124,44.783,44.783,44.783,44.783,44.783,44.783
 comm refrigeration,electricity,refrigeration hi-eff,42.91327908,42.913,48.591,49.243,49.243,49.243,49.243,49.243,49.243
 comm office,electricity,office equipment,44.187,44.187,43.529,42.881,42.881,42.881,42.242,41.613,40.382
-comm others,gas,gas,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
-comm others,electricity,electricity,40.064,40.064,39.467,38.879,38.879,38.879,38.3,37.73,36.614
-comm others,refined liquids,refined liquids,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
+comm other,gas,gas,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278
+comm other,electricity,electricity,40.064,40.064,39.467,38.879,38.879,38.879,38.3,37.73,36.614
+comm other,refined liquids,refined liquids,20,20,19.702,19.409,19.409,19.409,19.12,18.835,18.278

@@ -133,10 +133,9 @@ module_water_L173.EFW_manufacturing <- function(command, ...) {
     # Prepare the per-capita GDP data for joining in to the water flow volumes
     L102.pcgdp_thous90USD_ctry_Yh <- rename(L102.pcgdp_thous90USD_ctry_Yh, pcGDP = value)
 
-
     # Using inner_join due to some minor countries in Liu inventory that aren't in the GDP data (e.g., South Sudan, Vatican City)
     L173.trtshr_2010 <- Liu_EFW_inventory[c("iso", "trtshr")] %>%
-      mutate(year = 2010) %>%
+      mutate(year = water.LIU_INVENTORY_YEAR) %>%
       inner_join(L102.pcgdp_thous90USD_ctry_Yh, by = c("iso", "year"))
 
     #linear model

@@ -14,7 +14,7 @@ module_socio_IncomeElasticity_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{socioeconomics_incelas_SSP[1-5].xml}, \code{bld_agg_SSP[1-5].xml}.
+the generated outputs: \code{socioeconomics_incelas_SSP[1-5].xml}.
 }
 \description{
 Construct XML data structure for \code{bld_agg.xml} and all the SSP ones as well.

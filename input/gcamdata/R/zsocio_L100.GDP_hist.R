@@ -39,7 +39,7 @@ module_socio_L100.GDP_hist <- function(command, ...) {
     get_data_list(all_data, MODULE_INPUTS, strip_attributes = TRUE)
 
     # Module specific constants
-    DEFLATOR_BASE_YEAR <- MODEL_FINAL_BASE_YEAR
+    DEFLATOR_BASE_YEAR <- FINAL_HISTORICAL_YEAR
 
     # Process region-specific GDP deflator ----
     GDP_Deflators_To_Base_Year <-
@@ -49,7 +49,7 @@ module_socio_L100.GDP_hist <- function(command, ...) {
       mutate(currentUSD_per_baseyearUSD = (value / value[year == DEFLATOR_BASE_YEAR])) %>%
       ungroup() %>%
       select(area_code, year, currentUSD_per_baseyearUSD) %>%
-      filter(year == socioeconomics.GCAMFAOSTAT_GDP_Dollar_Year) %>%
+      filter(year == socioeconomics.GCAMFAOSTAT_GDP_DOLLAR_YEAR) %>%
       select(-year)
 
     # Note that GCAMFAOSTAT_GDP has data in 2015$ so regional GDP deflators are not used
@@ -66,13 +66,13 @@ module_socio_L100.GDP_hist <- function(command, ...) {
                 by = c("area_code")) %>%
       # Use USA GDP deflator for countries doesn't exist
       replace_na(list(currentUSD_per_baseyearUSD =
-                        gdp_deflator(socioeconomics.GCAMFAOSTAT_GDP_Dollar_Year, DEFLATOR_BASE_YEAR))) %>%
+                        gdp_deflator(socioeconomics.GCAMFAOSTAT_GDP_DOLLAR_YEAR, DEFLATOR_BASE_YEAR))) %>%
       mutate(value = value / currentUSD_per_baseyearUSD) %>%
       select(iso, year, value) %>%
       # agg two Yeman
       group_by(iso, year) %>%
       summarize(value = sum(value), .groups = "drop") %>%
-      mutate(value = value * gdp_deflator(socioeconomics.GCAM_GDP_Dollar_Year, base_year = DEFLATOR_BASE_YEAR) ) ->
+      mutate(value = value * gdp_deflator(socioeconomics.GCAM_GDP_DOLLAR_YEAR, base_year = DEFLATOR_BASE_YEAR) ) ->
       L100.gdp_mil90usd_ctry_Yh_0
 
     # Taiwan from pwt but also extend to recent years using Taiwan statistics
@@ -86,7 +86,7 @@ module_socio_L100.GDP_hist <- function(command, ...) {
         by = "iso"
       ) %>%
       mutate(value = value / currentUSD_per_baseyearUSD *
-               gdp_deflator(socioeconomics.GCAM_GDP_Dollar_Year, base_year = socioeconomics.GCAMFAOSTAT_GDP_Dollar_Year)) %>%
+               gdp_deflator(socioeconomics.GCAM_GDP_DOLLAR_YEAR, base_year = socioeconomics.GCAMFAOSTAT_GDP_DOLLAR_YEAR)) %>%
       select(-currentUSD_per_baseyearUSD) ->
       L100.gdp_mil90usd_ctry_Yh_0_TWN
 

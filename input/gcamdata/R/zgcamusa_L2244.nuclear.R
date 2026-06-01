@@ -78,8 +78,8 @@ module_gcamusa_L2244.nuclear <- function(command, ...) {
       # interpolate missing years
       group_by(region, plant, Units) %>%
       mutate(gen = approx_fun(year, gen, rule = 2)) %>%
-      filter(year >= max(HISTORICAL_YEARS)) %>%
-      mutate(time = year - max(HISTORICAL_YEARS)) %>%
+      filter(year >= MODEL_FINAL_BASE_YEAR) %>%
+      mutate(time = year - MODEL_FINAL_BASE_YEAR) %>%
       group_by(region, year, time) %>%
       summarise(gen = sum(gen)) %>%
       ungroup() %>%

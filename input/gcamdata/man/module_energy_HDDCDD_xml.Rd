@@ -14,8 +14,7 @@ module_energy_HDDCDD_xml(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{HDDCDD_A2_CCSM3x.xml}, \code{HDDCDD_A2_HadCM3.xml}, \code{HDDCDD_B1_CCSM3x.xml},
-\code{HDDCDD_B1_HadCM3.xml}, and \code{HDDCDD_constdd_no_GCM.xml}.
+the generated outputs: \code{HDDCDD_constdd_no_GCM.xml}.
 }
 \description{
 Construct XML data structure for all the \code{HDDCDD.xml} files.

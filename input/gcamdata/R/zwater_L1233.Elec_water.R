@@ -84,7 +84,7 @@ module_water_L1233.Elec_water <- function(command, ...) {
     # advances to a year recent than 2020 because all input files that have
     # assumptions for all years inherently assume that future starts from 2020.
     # We don't have checks in place to catch these cases, we only check against
-    # MODEL_FINAL_BASE_YEAR. Current base year update related processing
+    # FINAL_HISTORICAL_YEAR. Current base year update related processing
     # overlooks this aspect, except the one done below.
 
     # first check if the shares are the same in for all years less than 2015 for
@@ -109,22 +109,22 @@ module_water_L1233.Elec_water <- function(command, ...) {
     # of the file. E.g., in case of 2021 base year, it should be interpolated
     # using 2017 not 2020
     #
-    # check if the file has shares for the final base year
-    if (!(MODEL_FINAL_BASE_YEAR %in% unique(A23.CoolingSystemShares_RG3$year))) {
+    # check if the file has shares for the final historical year
+    if (!(FINAL_HISTORICAL_YEAR %in% unique(A23.CoolingSystemShares_RG3$year))) {
       warning("module_water_L1233.Elec_water: A23.CoolingSystemShares_RG3 does not have cooling system shares for the final base year. Shares will be interpolated. \n")
 
-      # copy forward shares of last historical year in the file to final base year if MODEL_FINAL_BASE_YEAR is greater than 2015 but less than 2020
-      if (MODEL_FINAL_BASE_YEAR > 2015 & MODEL_FINAL_BASE_YEAR < 2020) {
+      # copy forward shares of last historical year in the file to final base year if FINAL_HISTORICAL_YEAR is greater than 2015 but less than 2020
+      if (FINAL_HISTORICAL_YEAR > 2015 & FINAL_HISTORICAL_YEAR < 2020) {
         A23.CoolingSystemShares_RG3 %>%
-          # filter the last year before MODEL_FINAL_BASE_YEAR
-          filter(year == max(year[year < MODEL_FINAL_BASE_YEAR])) %>%
-          mutate(year = MODEL_FINAL_BASE_YEAR) %>%
+          # filter the last year before FINAL_HISTORICAL_YEAR
+          filter(year == max(year[year < FINAL_HISTORICAL_YEAR])) %>%
+          mutate(year = FINAL_HISTORICAL_YEAR) %>%
           bind_rows(A23.CoolingSystemShares_RG3) %>% arrange(year) -> A23.CoolingSystemShares_RG3
       } else {
         # change 2020 to min(MODEL_FUTURE_YEARS) and copy forward shares of last historical year in the file to final base year
         A23.CoolingSystemShares_RG3 %>%
           mutate(year = if_else(year == 2020, min(MODEL_FUTURE_YEARS), year),
-                 year = if_else(year == max(year[year < MODEL_FINAL_BASE_YEAR]), MODEL_FINAL_BASE_YEAR, year)) -> A23.CoolingSystemShares_RG3
+                 year = if_else(year == max(year[year < FINAL_HISTORICAL_YEAR]), FINAL_HISTORICAL_YEAR, year)) -> A23.CoolingSystemShares_RG3
       }
     }
 

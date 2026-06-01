@@ -173,7 +173,7 @@ module_aglu_L2012.ag_For_Past_bio_input_irr_mgmt <- function(command, ...) {
       mutate(value=sum(value)) %>%
       ungroup() %>%
       distinct() %>%
-      mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT)) %>%
+      mutate(calOutputValue = round(value, digits = aglu.DIGITS_CALOUTPUT_FOR)) %>%
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       left_join_error_no_match(select(basin_to_country_mapping, GLU_code, GLU_name), by = c("GLU" = "GLU_code")) %>%
       mutate(Land_Type = if_else(is.na(Land_Type),GCAM_commodity,Land_Type),

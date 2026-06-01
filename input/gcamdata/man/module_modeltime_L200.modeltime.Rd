@@ -14,14 +14,14 @@ module_modeltime_L200.modeltime(command, ...)
 \value{
 Depends on \code{command}: either a vector of required inputs,
 a vector of output names, or (if \code{command} is "MAKE") all
-the generated outputs: \code{L200.ModelTime}, \code{L200.ModelTimeInterYears}, \code{L200.MAGICC}, \code{L200.hector}. The corresponding file in the
+the generated outputs: \code{L200.ModelTime}, \code{L200.ModelTimeInterYears}, \code{L200.hector}. The corresponding file in the
 original data system was \code{L200.modeltime.R} (modeltime level2).
 }
 \description{
-Generate the model time information needed to interact with Hector or MAGICC.
+Generate the model time information needed to interact with Hector.
 }
 \details{
-Generate the model time information needed to interact with Hector or MAGICC.
+Generate the model time information needed to interact with Hector.
 }
 \author{
 BBL

@@ -24,6 +24,7 @@ FLAG_XML             <- "FLAG_XML"              # xml data
 # Historical years for level 1 data processing. All chunks that produce historical data
 # for model calibration are required to produce annual data covering this entire span.
 HISTORICAL_YEARS        <- 1971:2021
+FINAL_HISTORICAL_YEAR   <- max(HISTORICAL_YEARS)
 
 # Future years for level 1 data processing, for the few chunks that
 # produce future data (e.g., population projections)
@@ -56,7 +57,7 @@ MODEL_YEARS             <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 # years as the following constants which can then be automatically set the currently
 # configured values
 YEAR_RECODE <- c("start-year" =  min(MODEL_BASE_YEARS),
-                 "final-calibration-year" = MODEL_FINAL_BASE_YEAR,
+                 "final-calibration-year" = max(MODEL_BASE_YEARS),
                  "final-historical-year" = as.numeric(max(HISTORICAL_YEARS)),
                  "initial-future-year" = min(MODEL_FUTURE_YEARS),
                  "initial-nonhistorical-year" = min(MODEL_YEARS[MODEL_YEARS > max(HISTORICAL_YEARS)]),
@@ -512,6 +513,9 @@ aglu.DIGITS_AGPRODCHANGE  <- 4 # rate of change in yield values
 aglu.DIGITS_C_DENSITY     <- 1
 aglu.DIGITS_C_DENSITY_CROP <- 3 # cropland vegetative soil carbon content
 aglu.DIGITS_CALOUTPUT     <- 7 # for production values
+# given unit differences from crops while using the same number of digits for rounding landuse
+# adding an addition 3 significant figures helps avoid calibration mismatch warnings
+aglu.DIGITS_CALOUTPUT_FOR <- aglu.DIGITS_CALOUTPUT + 3
 aglu.DIGITS_CALPRICE      <- 4 # prices and costs values
 aglu.DIGITS_EROS_CTRL     <- 2
 aglu.DIGITS_GHOSTSHARE    <- 3
@@ -674,10 +678,10 @@ gcamusa.LAND_DENSITY_PARAM <- 0
 gcamusa.B_PARAM <- 3.49026
 gcamusa.INCOME_PARAM <- 0.4875
 
-# YZ 2025/08/27 Electricity consumption fraction of "resid televisions" out of "resid televisions" plus "resid others"
-# and electricity consumption fraction of "comm non-building" out of "comm non-building" plus "comm others".
+# YZ 2025/08/27 Electricity consumption fraction of "resid televisions" out of "resid televisions" plus "resid other"
+# and electricity consumption fraction of "comm non-building" out of "comm non-building" plus "comm other".
 # The two fractions are calculated based on gcamusa L144.in_EJ_state_comm_F_U_Y and L144.in_EJ_state_res_F_U_Y, values at max(year) = 2021
-# and are used to disaggregate Scout data, e.g., disagg Scout's "resid others" into "resid others" and "resid televisions"
+# and are used to disaggregate Scout data, e.g., disagg Scout's "resid other" into "resid other" and "resid televisions"
 # because Scout does not provide value for "resid televisions" but gcamusa does
 energy.USA_RESID_OTHERELEC_TV_FRAC <- 0.223
 energy.USA_COMM_OTHERELEC_NONBLD_FRAC <- 0.477
@@ -701,14 +705,14 @@ energy.FOOD_PROCESSING.ENERGY_INFILL_MIN_EJ_PCAL_COEF <- 0.000413 # minimum valu
 
 # Socioeconomics constants ======================================================================
 
-socioeconomics.GCAMFAOSTAT_GDP_Dollar_Year <- 2015 # dollar year in FAO GDP (we have an assertion in gcamfaostat)
-Socioeconomic.PWT.VERSION <- "pwt110" #PWT v11.0
-Socioeconomic.PWT.LastYear <- 2023 # the latest year in PWT v11.0 (PennWorld Table)
-Socioeconomic.GMD.VERSION <- "GMD_2025_03" # GMD version
-Socioeconomics.GMD_LASTYEAR <- 2023 # the latest year in GMD (Global Macro Database)
-socioeconomics.GCAM_GDP_Dollar_Year <- 1990 # GDP dollar year in GCAM
+socioeconomics.GCAMFAOSTAT_GDP_DOLLAR_YEAR <- 2015 # dollar year in FAO GDP (we have an assertion in gcamfaostat)
+socioeconomics.PWT.VERSION <- "pwt110" #PWT v11.0
+socioeconomics.PWT.LASTYEAR <- 2023 # the latest year in PWT v11.0 (PennWorld Table)
+socioeconomics.GMD.VERSION <- "GMD_2025_03" # GMD version
+socioeconomics.GMD_LASTYEAR <- 2023 # the latest year in GMD (Global Macro Database)
+socioeconomics.GCAM_GDP_DOLLAR_YEAR <- 1990 # GDP dollar year in GCAM
 socioeconomics.SSP_DB_BASEYEAR <- 2025 # base year of SSP data base v3.2 Beta
-socioeconomics.SSP_DB_Labor_StartYear <- 2020 # start year of population by age (to derive work-age pop) in SSP data base v3.2 Beta
+socioeconomics.SSP_DB_LABOR_STARTYEAR <- 2020 # start year of population by age (to derive work-age pop) in SSP data base v3.2 Beta
 socioeconomics.GDP_ADJ_MOVING_AVERAGE_ISO <- NULL
 socioeconomics.GDP_ADG_MOVING_AVERAGE_DURATION <- 15 # used for smoothing GDP for South_America_North
 socioeconomics.GDP_ADJ_NO_NEG_GROWTH_ISO <- c("twn")
@@ -888,6 +892,9 @@ water.DEMAND_FRAC_THRESHOLD <- 1e-4 # Demand fraction of total runoff below whic
 
 # region whose value to use as base when scaling to obtain regional water use coefficients for the food processing industry
 water.FOOD_PROCESSING.REGION_BASE <- "USA"
+
+# Year for Liu
+water.LIU_INVENTORY_YEAR <- 2010 # Year for Liu EFW inventory (http://pubs.acs.org/doi/suppl/10.1021/acs.est.6b01065/suppl_file/es6b01065_si_002.xlsx)
 
 # Energy-for-water constants ======================================================================
 
@@ -1259,11 +1266,12 @@ gcamusa.DUST <- TRUE
 
 # Time shift conditions
 # ======================================================================
-# Change HISTORICAL_YEARS, MODEL_BASE_YEARS and MODEL_FUTURE_YEARS constants in
+# Change MODEL_BASE_YEARS and MODEL_FUTURE_YEARS constants in
 # Time Constants section of this script
 # Uncomment these lines to run under 'timeshift' conditions
-# # HISTORICAL_YEARS <- 1971:2005       # normally 1971:2010
-# MODEL_FUTURE_YEARS <- seq(2005, 2100, 5)  # normally seq(2015, 2100, 5)
-# MODEL_BASE_YEARS <- c(1975, 1990)   # normally (1975, 1990, 2005, 2010)
+# MODEL_BASE_YEARS <- c(1975, 1990)   # normally (1975, 1990, 2005, 2010, 2015, 2021)
+# MODEL_FINAL_BASE_YEAR <- max(MODEL_BASE_YEARS)
+# emissions.MODEL_BASE_YEARS  <- MODEL_BASE_YEARS
+# MODEL_FUTURE_YEARS <- MODEL_YEARS[MODEL_YEARS > max(MODEL_BASE_YEARS)]
 # MODEL_YEARS <- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
-# MODEL_FINAL_BASE_YEAR <- 1990
+# UNDER_TIMESHIFT <- TRUE

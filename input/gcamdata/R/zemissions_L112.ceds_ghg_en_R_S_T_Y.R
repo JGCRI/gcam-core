@@ -172,8 +172,8 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
       summarise(emissions = sum(emissions)) %>%
       ungroup() %>%
       na.omit() %>%
-      #filter data for final model base year, since we may not have GCAM activity data beyond the latest base year.
-      filter(year <= MODEL_FINAL_BASE_YEAR) -> L112.CEDS_GCAM
+      #filter data for final historical year, since we may not have GCAM activity data beyond the latest historical year.
+      filter(year <= FINAL_HISTORICAL_YEAR) -> L112.CEDS_GCAM
 
     # Load required inputs
     GCAM_region_names <- get_data(all_data, "common/GCAM_region_names")
@@ -292,7 +292,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     gains_iso_sector_emissions %>%
       tidyr::pivot_longer(c(Freight, Motorcycle, Passenger), names_to = "modes", values_to = "value") %>%
       complete(nesting(Non.co2, iso, modes),
-               year = unique(c(year, MODEL_FINAL_BASE_YEAR))) %>%
+               year = unique(c(year, FINAL_HISTORICAL_YEAR))) %>%
       group_by(Non.co2, iso, modes) %>%
       mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
@@ -301,7 +301,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     gains_iso_fuel_emissions %>%
       tidyr::pivot_longer(c(dieseloil, lightoil), names_to = "fuels", values_to = "value") %>%
       complete(nesting(Non.co2, iso, fuels),
-               year = unique(c(year, MODEL_FINAL_BASE_YEAR))) %>%
+               year = unique(c(year, FINAL_HISTORICAL_YEAR))) %>%
       group_by(Non.co2, iso, fuels) %>%
       mutate(value = approx_fun(year, value, rule = 1)) %>%
       ungroup() %>%
@@ -309,7 +309,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
 
     gains_iso_fuel_emissions_NG %>%
       complete(nesting(Non.co2, iso),
-               year = unique(c(year, MODEL_FINAL_BASE_YEAR))) %>%
+               year = unique(c(year, FINAL_HISTORICAL_YEAR))) %>%
       group_by(Non.co2, iso) %>%
       mutate(natural_gas = approx_fun(year, natural_gas, rule = 1)) %>%
       ungroup()-> GAINS_fuel_NG
@@ -601,7 +601,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     # Get main combustion fuel in iron and steel in base year by region and technology
     # Non-CO2 emissions will be assigned to this fuel for iron and steel, since it can't be broken out by subsector, technology, and fuel
     L1323.in_EJ_R_iron_steel_F_Y %>%
-      filter(year == MODEL_FINAL_BASE_YEAR,
+      filter(year == FINAL_HISTORICAL_YEAR,
              # filter out electricity
              !fuel %in% emissions.ZERO_EM_TECH) %>%
       group_by(GCAM_region_ID, sector, technology) %>%
@@ -882,7 +882,7 @@ module_emissions_L112.ceds_ghg_en_R_S_T_Y <- function(command, ...) {
     all_unconventional_oil_fug_emfacts %>%
       # fill in all historical years with the same emissions factor
       group_by(GCAM_region_ID, Non.CO2, supplysector, subsector, stub.technology, emfact) %>%
-      mutate(year = MODEL_FINAL_BASE_YEAR) %>%
+      mutate(year = FINAL_HISTORICAL_YEAR) %>%
       complete(year = HISTORICAL_YEARS) %>%
       ungroup() %>%
       # combine with other emissions factors

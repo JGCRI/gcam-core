@@ -665,7 +665,6 @@ module_aglu_L202.an_input <- function(command, ...) {
              nonFeedCost = pmax(nonFeedCost, nonFeedCost_min) ) ->
       L202.an_nonFeedCost_R_C_3
 
-
     A_an_technology %>%
       repeat_add_columns(tibble(year = MODEL_YEARS)) %>%
       repeat_add_columns(GCAM_region_names) %>%
@@ -692,7 +691,6 @@ module_aglu_L202.an_input <- function(command, ...) {
       mutate(input.cost = if_else(is.na(ForCost),0,ForCost)) %>%
       select(LEVEL2_DATA_NAMES[["StubTechCost"]]) ->
       L202.StubTechCost_For_proc
-
 
     # Remove any regions for which agriculture and land use are not modeled (308-320)
     # Also, remove DDGS and feedcake subsectors and technologies in regions where these commodities are not available

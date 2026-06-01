@@ -533,6 +533,21 @@ if(command == driver.DECLARE_INPUTS) {
     filter(supplysector == "regional natural gas") %>%
     mutate(subsector0 = subsector)
 
+  # Under timeshift, some technologies get set up without subsector shareweights
+  # Ensure that subsector shareweights exist for any technology with shareweights
+  if( UNDER_TIMESHIFT ) {
+    L2392.TechShrwt_tra_NG %>%
+      select(-share.weight) %>%
+      filter(year %in% MODEL_BASE_YEARS) %>%
+      anti_join(L2392.Production_tra_NG) %>%
+      mutate(calOutputValue = 0,
+             share.weight.year = year,
+             subs.share.weight = 0,
+             tech.share.weight = 0) %>%
+      bind_rows(L2392.Production_tra_NG) ->
+      L2392.Production_tra_NG
+  }
+
   # change US traded and domestic [fossil resource] into [fossil resource] production
   # for US natural gas, switch minicam energy inputs to "natural gas production"
   L2392.TechCoef_tra_NG_USA_delete <- L2392.TechCoef_tra_NG %>%

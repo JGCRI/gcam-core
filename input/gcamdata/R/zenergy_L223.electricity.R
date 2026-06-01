@@ -602,6 +602,25 @@ module_energy_L223.electricity <- function(command, ...) {
       rename(sector.name = supplysector, subsector.name = subsector) ->
       L223.globaltech_retirement_base
 
+    # For timeshift, we need to ensure the final base year and first future year have data
+    if( UNDER_TIMESHIFT ) {
+      if( !(MODEL_FINAL_BASE_YEAR %in% L223.globaltech_retirement_base$year) ) {
+        L223.globaltech_retirement_base %>%
+          filter(year == FINAL_HISTORICAL_YEAR) %>%
+          mutate(year = MODEL_FINAL_BASE_YEAR) %>%
+          bind_rows(L223.globaltech_retirement_base) ->
+          L223.globaltech_retirement_base
+      }
+
+      if( !(min(MODEL_FUTURE_YEARS) %in% L223.globaltech_retirement_base$year) ) {
+        L223.globaltech_retirement_base %>%
+          filter(year == max(year)) %>%
+          mutate(year = min(MODEL_FUTURE_YEARS)) %>%
+          bind_rows(L223.globaltech_retirement_base) ->
+          L223.globaltech_retirement_base
+      }
+    }
+
     # Copies base year retirement information into all future years and appends back onto itself
     L223.globaltech_retirement_base %>%
       filter(year == min(MODEL_FUTURE_YEARS)) %>%

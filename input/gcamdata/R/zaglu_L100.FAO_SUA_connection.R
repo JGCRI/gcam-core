@@ -271,7 +271,7 @@ module_aglu_L100.FAO_SUA_connection <- function(command, ...) {
       right_join(
         L100.FAO_SUA_APE_balance %>% # Unit is Mt
           filter(element == "Food",
-                 year == MODEL_FINAL_BASE_YEAR),
+                 year == FINAL_HISTORICAL_YEAR),
         by = c("GCAM_region_ID", "GCAM_commodity")
       ) %>%
     # Both data were average already

@@ -43,19 +43,19 @@ comm heating,gas,,0.06,0.5
 comm heating,refined liquids,,0.3,0.09
 comm hot water,gas,,0.06,0.5
 comm hot water,refined liquids,,0.3,0.09
-comm others,gas,,0.06,0.5
-comm others,refined liquids,,0.3,0.09
+comm other,gas,,0.06,0.5
+comm other,refined liquids,,0.3,0.09
 resid cooking,gas,,0.06,0.5
 resid cooking,refined liquids,,0.13,0.1
 resid clothes dryers,gas,,0.06,0.5
-resid others,gas,,0.06,0.5
+resid other,gas,,0.06,0.5
 resid heating,biomass,wood furnace,0.05,0.69
 resid heating,coal,,0.2,0.04
 resid heating,gas,,0.06,0.5
 resid heating,refined liquids,,0.13,0.1
 resid hot water,gas,,0.06,0.5
 resid hot water,refined liquids,,0.13,0.1
-resid others,refined liquids,,0.13,0.1
+resid other,refined liquids,,0.13,0.1
 other industrial energy use,coal,coal,0.2,0.04
 other industrial energy use,coal,coal cogen,0.006,0
 other industrial energy use,gas,gas,0.06,0.5

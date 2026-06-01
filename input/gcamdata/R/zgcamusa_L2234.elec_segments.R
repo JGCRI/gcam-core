@@ -738,6 +738,8 @@ module_gcamusa_L2234.elec_segments <- function(command, ...) {
       filter(subsector == "hydro")  -> L2234.StubTechFixOut_elecS_USA_temp
 
     L223.StubTechFixOut_elec_USA %>%
+      # This information should be for calibration years only
+      filter(year %in% MODEL_BASE_YEARS) %>%
       # join is intended to duplicate rows; left_join_error_no_match throws error, so left_join used
       left_join(L2234.StubTechFixOut_elecS_USA_temp,
                 by = c("supplysector", "subsector","stub.technology" = "technology")) %>%

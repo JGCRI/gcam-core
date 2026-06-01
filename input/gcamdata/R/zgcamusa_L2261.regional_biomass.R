@@ -269,11 +269,13 @@ module_gcamusa_L2261.regional_biomass <- function(command, ...) {
              region = state) %>%
       select(LEVEL2_DATA_NAMES$StubTechCalInput) -> L2261.StubTechCalInput_bio_USA
 
-    L221.StubTechInterp_bioOil %>%
-      filter(region == gcam.USA_REGION) %>%
-      select(-region) %>%
-      repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
-      select(LEVEL2_DATA_NAMES$StubTechInterp) -> L2261.StubTechInterp_bio_USA
+    if( gcam.USA_REGION %in% L221.StubTechInterp_bioOil$region ) {
+      L221.StubTechInterp_bioOil %>%
+        filter(region == gcam.USA_REGION) %>%
+        select(-region) %>%
+        repeat_add_columns(tibble(region = gcamusa.STATES)) %>%
+        select(LEVEL2_DATA_NAMES$StubTechInterp) -> L2261.StubTechInterp_bio_USA
+    }
 
     # Connecting state-level DDGS & feedcakes secondary outputs to USA sector
     # depletable resource info for state-level DDGS & feedcake secondary outputs
@@ -551,12 +553,17 @@ module_gcamusa_L2261.regional_biomass <- function(command, ...) {
                      "L221.StubTechCalInput_bioOil") ->
       L2261.StubTechCalInput_bio_USA
 
-    L2261.StubTechInterp_bio_USA %>%
-      add_title("biomassOil technology (feedstock type) shareweight interpolation") %>%
-      add_units("unitless") %>%
-      add_comments("Regions with multiple feedstocks in the base year have their share-weights passed forward") %>%
-      add_precursors("L221.StubTechInterp_bioOil") ->
-      L2261.StubTechInterp_bio_USA
+    if( exists("L2261.StubTechInterp_bio_USA")) {
+      L2261.StubTechInterp_bio_USA %>%
+        add_title("biomassOil technology (feedstock type) shareweight interpolation") %>%
+        add_units("unitless") %>%
+        add_comments("Regions with multiple feedstocks in the base year have their share-weights passed forward") %>%
+        add_precursors("L221.StubTechInterp_bioOil") ->
+        L2261.StubTechInterp_bio_USA
+    } else {
+      L2261.StubTechInterp_bio_USA <- missing_data()
+    }
+
 
     L2261.Rsrc_DDGS_USA %>%
       add_title("Depletable Resource Information for State-level Biomass Supply Sector Secondary Feed Outputs") %>%

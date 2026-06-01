@@ -28,12 +28,12 @@
 		<Value name = "energy_distribution">../input/gcamdata/xml/en_distribution.xml</Value>
 		<Value name = "other_industry">../input/gcamdata/xml/other_industry.xml</Value>
  		<Value name = "iron_steel">../input/gcamdata/xml/iron_steel.xml</Value>
-		<Value name = "iron_steel trade">../input/gcamdata/xml/iron_steel_trade.xml</Value>
+        <Value name = "iron_steel trade">../input/gcamdata/xml/iron_steel_trade.xml</Value>
  		<Value name = "Off_road">../input/gcamdata/xml/Off_road.xml</Value>
  		<Value name = "chemical">../input/gcamdata/xml/chemical.xml</Value>
  		<Value name = "aluminum">../input/gcamdata/xml/aluminum.xml</Value>
  		<Value name = "paper">../input/gcamdata/xml/paper.xml</Value>
-		<Value name = "food_processing">../input/gcamdata/xml/food_processing.xml</Value> 
+		<Value name = "food_processing">../input/gcamdata/xml/food_processing.xml</Value>
 		<Value name = "cement">../input/gcamdata/xml/cement.xml</Value>
 		<Value name = "fertilizer_energy">../input/gcamdata/xml/en_Fert.xml</Value>
 		<Value name = "hddcdd">../input/gcamdata/xml/HDDCDD_constdd_no_GCM.xml</Value>
@@ -41,8 +41,7 @@
 		<Value name = "transportation">../input/gcamdata/xml/transportation_UCD_CORE.xml</Value>
 		<Value name = "carbon_content">../input/gcamdata/xml/Ccoef.xml</Value>
 		<Value name = "carbon_storage">../input/gcamdata/xml/Cstorage.xml</Value>
-             <Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
-
+		<Value name = "wind_update">../input/gcamdata/xml/onshore_wind.xml</Value>
 
 		<Value name = "ag_base">../input/gcamdata/xml/ag_For_Past_bio_base_IRR_MGMT.xml</Value>
 		<Value name = "ag_cost">../input/gcamdata/xml/ag_cost_IRR_MGMT.xml</Value>
@@ -103,8 +102,8 @@
         <Value name = "gas_trade">../input/gcamdata/xml/gas_trade.xml</Value>
 
         <Value name = "prune_ag">../input/gcamdata/xml/prune_empty_ag.xml</Value>
+
 		<Value name = "solver">../input/solution/cal_broyden_config.xml</Value>
-		
 
 	</ScenarioComponents>
 	<Strings>

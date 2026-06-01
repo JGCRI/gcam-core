@@ -14,17 +14,17 @@ Alabama,comm,electricity,hot water,electric heat pump water heater,2021,4.8e-5,4
 Alabama,comm,electricity,hot water,electric resistance water heater,2021,0.0052914,4.674e-4
 Alabama,comm,electricity,lighting,lighting,2021,0.1007722,0.0089023
 Alabama,comm,electricity,office,office equipment,2021,0.1042353,0.0092082
-Alabama,comm,electricity,others,electricity,2021,0.4378994,0.0386843
+Alabama,comm,electricity,other,electricity,2021,0.4378994,0.0386843
 Alabama,comm,electricity,refrigeration,refrigeration,2021,0.122358,0.0108092
 Alabama,comm,electricity,ventilation,ventilation,2021,0.0750823,0.0066328
 Alabama,comm,gas,cooking,gas range,2021,0.1505469,0.0042127
 Alabama,comm,gas,cooling,gas cooling,2021,0.0126287,3.534e-4
 Alabama,comm,gas,heating,gas furnace,2021,0.4985476,0.0139508
 Alabama,comm,gas,hot water,gas water heater,2021,0.2347847,0.0065699
-Alabama,comm,gas,others,gas,2021,0.1034921,0.002896
+Alabama,comm,gas,other,gas,2021,0.1034921,0.002896
 Alabama,comm,refined liquids,heating,fuel furnace,2021,0.2871839,4.071e-4
 Alabama,comm,refined liquids,hot water,fuel water heater,2021,0.0019579,2.8e-6
-Alabama,comm,refined liquids,others,refined liquids,2021,0.7108583,0.0010076
+Alabama,comm,refined liquids,other,refined liquids,2021,0.7108583,0.0010076
 Alabama,resid,biomass,heating,wood furnace,2021,1,0.0043628
 Alabama,resid,electricity,clothes dryers,clothes dryer,2021,0.0419436,0.0040749
 Alabama,resid,electricity,clothes washers,clothes washer,2021,0.0061072,5.933e-4
@@ -39,18 +39,18 @@ Alabama,resid,electricity,heating,electric heat pump,2021,0.0508045,0.0049357
 Alabama,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Alabama,resid,electricity,hot water,electric resistance water heater,2021,0.1421144,0.0138067
 Alabama,resid,electricity,lighting,lighting,2021,0.0402652,0.0039118
-Alabama,resid,electricity,others,electricity,2021,0.3662609,0.0355829
+Alabama,resid,electricity,other,electricity,2021,0.3662609,0.0355829
 Alabama,resid,electricity,refrigerators,refrigerator,2021,0.0455462,0.0044249
 Alabama,resid,gas,clothes dryers,clothes dryer,2021,0.00518,2.53e-4
 Alabama,resid,gas,cooking,gas oven,2021,0.0231535,0.001131
 Alabama,resid,gas,cooling,air conditioning,2021,0.050165,0.0024505
 Alabama,resid,gas,heating,gas furnace,2021,0.6539567,0.0319447
 Alabama,resid,gas,hot water,gas water heater,2021,0.1910074,0.0093304
-Alabama,resid,gas,others,gas,2021,0.0765374,0.0037387
+Alabama,resid,gas,other,gas,2021,0.0765374,0.0037387
 Alabama,resid,refined liquids,cooking,lpg oven,2021,0.0389732,1.827e-4
 Alabama,resid,refined liquids,heating,fuel furnace,2021,0.6861181,0.0032157
 Alabama,resid,refined liquids,hot water,fuel water heater,2021,0.1140428,5.345e-4
-Alabama,resid,refined liquids,others,refined liquids,2021,0.1608658,7.539e-4
+Alabama,resid,refined liquids,other,refined liquids,2021,0.1608658,7.539e-4
 Arizona,comm,electricity,cooking,electric range,2021,0.0157746,0.0017624
 Arizona,comm,electricity,cooling,air conditioning,2021,0.1000452,0.0111776
 Arizona,comm,electricity,heating,electric furnace,2021,0.0059193,6.613e-4
@@ -59,17 +59,17 @@ Arizona,comm,electricity,hot water,electric heat pump water heater,2021,1.25e-5,
 Arizona,comm,electricity,hot water,electric resistance water heater,2021,0.0021523,2.405e-4
 Arizona,comm,electricity,lighting,lighting,2021,0.0728671,0.0081411
 Arizona,comm,electricity,office,office equipment,2021,0.0990504,0.0110665
-Arizona,comm,electricity,others,electricity,2021,0.5481244,0.0612395
+Arizona,comm,electricity,other,electricity,2021,0.5481244,0.0612395
 Arizona,comm,electricity,refrigeration,refrigeration,2021,0.0827737,0.0092479
 Arizona,comm,electricity,ventilation,ventilation,2021,0.0707274,0.0079021
 Arizona,comm,gas,cooking,gas range,2021,0.0745315,0.0033698
 Arizona,comm,gas,cooling,gas cooling,2021,0.0035729,1.615e-4
 Arizona,comm,gas,heating,gas furnace,2021,0.4996855,0.0225921
 Arizona,comm,gas,hot water,gas water heater,2021,0.2096612,0.0094793
-Arizona,comm,gas,others,gas,2021,0.2125488,0.0096099
+Arizona,comm,gas,other,gas,2021,0.2125488,0.0096099
 Arizona,comm,refined liquids,heating,fuel furnace,2021,0,0
 Arizona,comm,refined liquids,hot water,fuel water heater,2021,2.529e-4,0
-Arizona,comm,refined liquids,others,refined liquids,2021,0.9997471,5e-6
+Arizona,comm,refined liquids,other,refined liquids,2021,0.9997471,5e-6
 Arizona,resid,biomass,heating,wood furnace,2021,1,0.0061697
 Arizona,resid,electricity,clothes dryers,clothes dryer,2021,0.0404754,0.0050988
 Arizona,resid,electricity,clothes washers,clothes washer,2021,0.0066639,8.395e-4
@@ -84,18 +84,18 @@ Arizona,resid,electricity,heating,electric heat pump,2021,0.0070401,8.869e-4
 Arizona,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Arizona,resid,electricity,hot water,electric resistance water heater,2021,0.0642111,0.0080889
 Arizona,resid,electricity,lighting,lighting,2021,0.0460656,0.005803
-Arizona,resid,electricity,others,electricity,2021,0.3972165,0.0500386
+Arizona,resid,electricity,other,electricity,2021,0.3972165,0.0500386
 Arizona,resid,electricity,refrigerators,refrigerator,2021,0.0528291,0.006655
 Arizona,resid,gas,clothes dryers,clothes dryer,2021,0.0075034,4.2e-4
 Arizona,resid,gas,cooking,gas oven,2021,0.0176506,9.881e-4
 Arizona,resid,gas,cooling,air conditioning,2021,0.0176328,9.871e-4
 Arizona,resid,gas,heating,gas furnace,2021,0.638879,0.0357652
 Arizona,resid,gas,hot water,gas water heater,2021,0.261486,0.0146383
-Arizona,resid,gas,others,gas,2021,0.0568483,0.0031824
+Arizona,resid,gas,other,gas,2021,0.0568483,0.0031824
 Arizona,resid,refined liquids,cooking,lpg oven,2021,0.030703,2.183e-4
 Arizona,resid,refined liquids,heating,fuel furnace,2021,0.6039419,0.0042946
 Arizona,resid,refined liquids,hot water,fuel water heater,2021,0.1882992,0.001339
-Arizona,resid,refined liquids,others,refined liquids,2021,0.1770558,0.001259
+Arizona,resid,refined liquids,other,refined liquids,2021,0.1770558,0.001259
 Arkansas,comm,electricity,cooking,electric range,2021,0.0149922,7.889e-4
 Arkansas,comm,electricity,cooling,air conditioning,2021,0.1351592,0.0071125
 Arkansas,comm,electricity,heating,electric furnace,2021,0.010888,5.73e-4
@@ -104,17 +104,17 @@ Arkansas,comm,electricity,hot water,electric heat pump water heater,2021,3.36e-5
 Arkansas,comm,electricity,hot water,electric resistance water heater,2021,0.0052056,2.739e-4
 Arkansas,comm,electricity,lighting,lighting,2021,0.092882,0.0048878
 Arkansas,comm,electricity,office,office equipment,2021,0.0892091,0.0046945
-Arkansas,comm,electricity,others,electricity,2021,0.4573123,0.0240653
+Arkansas,comm,electricity,other,electricity,2021,0.4573123,0.0240653
 Arkansas,comm,electricity,refrigeration,refrigeration,2021,0.1190481,0.0062647
 Arkansas,comm,electricity,ventilation,ventilation,2021,0.0702093,0.0036946
 Arkansas,comm,gas,cooking,gas range,2021,0.1588046,0.0046364
 Arkansas,comm,gas,cooling,gas cooling,2021,0.0165263,4.825e-4
 Arkansas,comm,gas,heating,gas furnace,2021,0.5283719,0.0154263
 Arkansas,comm,gas,hot water,gas water heater,2021,0.2185086,0.0063796
-Arkansas,comm,gas,others,gas,2021,0.0777887,0.0022711
+Arkansas,comm,gas,other,gas,2021,0.0777887,0.0022711
 Arkansas,comm,refined liquids,heating,fuel furnace,2021,0,0
 Arkansas,comm,refined liquids,hot water,fuel water heater,2021,0,0
-Arkansas,comm,refined liquids,others,refined liquids,2021,1,0.0043427
+Arkansas,comm,refined liquids,other,refined liquids,2021,1,0.0043427
 Arkansas,resid,biomass,heating,wood furnace,2021,1,0.002794
 Arkansas,resid,electricity,clothes dryers,clothes dryer,2021,0.0422018,0.0027109
 Arkansas,resid,electricity,clothes washers,clothes washer,2021,0.0062969,4.045e-4
@@ -129,18 +129,18 @@ Arkansas,resid,electricity,heating,electric heat pump,2021,0.0214139,0.0013756
 Arkansas,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Arkansas,resid,electricity,hot water,electric resistance water heater,2021,0.1154372,0.0074154
 Arkansas,resid,electricity,lighting,lighting,2021,0.0377972,0.002428
-Arkansas,resid,electricity,others,electricity,2021,0.3483214,0.0223753
+Arkansas,resid,electricity,other,electricity,2021,0.3483214,0.0223753
 Arkansas,resid,electricity,refrigerators,refrigerator,2021,0.0497278,0.0031944
 Arkansas,resid,gas,clothes dryers,clothes dryer,2021,0.0080128,2.452e-4
 Arkansas,resid,gas,cooking,gas oven,2021,0.0245121,7.501e-4
 Arkansas,resid,gas,cooling,air conditioning,2021,0.0255103,7.807e-4
 Arkansas,resid,gas,heating,gas furnace,2021,0.6294526,0.0192632
 Arkansas,resid,gas,hot water,gas water heater,2021,0.2245847,0.006873
-Arkansas,resid,gas,others,gas,2021,0.0879275,0.0026908
+Arkansas,resid,gas,other,gas,2021,0.0879275,0.0026908
 Arkansas,resid,refined liquids,cooking,lpg oven,2021,0.0628029,2.053e-4
 Arkansas,resid,refined liquids,heating,fuel furnace,2021,0.5488502,0.0017943
 Arkansas,resid,refined liquids,hot water,fuel water heater,2021,0.1792308,5.859e-4
-Arkansas,resid,refined liquids,others,refined liquids,2021,0.2091161,6.837e-4
+Arkansas,resid,refined liquids,other,refined liquids,2021,0.2091161,6.837e-4
 California,comm,electricity,cooking,electric range,2021,0.0193414,0.0097438
 California,comm,electricity,cooling,air conditioning,2021,0.0996164,0.0501849
 California,comm,electricity,heating,electric furnace,2021,0.0153323,0.0077241
@@ -149,17 +149,17 @@ California,comm,electricity,hot water,electric heat pump water heater,2021,8.4e-
 California,comm,electricity,hot water,electric resistance water heater,2021,0.0039569,0.0019934
 California,comm,electricity,lighting,lighting,2021,0.0905694,0.0456272
 California,comm,electricity,office,office equipment,2021,0.1564011,0.078792
-California,comm,electricity,others,electricity,2021,0.3718629,0.1873376
+California,comm,electricity,other,electricity,2021,0.3718629,0.1873376
 California,comm,electricity,refrigeration,refrigeration,2021,0.1262599,0.0636074
 California,comm,electricity,ventilation,ventilation,2021,0.1095241,0.0551762
 California,comm,gas,cooking,gas range,2021,0.1858816,0.0468816
 California,comm,gas,cooling,gas cooling,2021,0.0054469,0.0013738
 California,comm,gas,heating,gas furnace,2021,0.3834034,0.096699
 California,comm,gas,hot water,gas water heater,2021,0.2728357,0.0688125
-California,comm,gas,others,gas,2021,0.1524324,0.0384453
+California,comm,gas,other,gas,2021,0.1524324,0.0384453
 California,comm,refined liquids,heating,fuel furnace,2021,6.613e-4,1.1e-6
 California,comm,refined liquids,hot water,fuel water heater,2021,2.466e-4,4e-7
-California,comm,refined liquids,others,refined liquids,2021,0.9990921,0.0016458
+California,comm,refined liquids,other,refined liquids,2021,0.9990921,0.0016458
 California,resid,biomass,heating,wood furnace,2021,1,0.0503255
 California,resid,electricity,clothes dryers,clothes dryer,2021,0.0452694,0.0156704
 California,resid,electricity,clothes washers,clothes washer,2021,0.0102734,0.0035563
@@ -174,18 +174,18 @@ California,resid,electricity,heating,electric heat pump,2021,0.0187927,0.0065053
 California,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 California,resid,electricity,hot water,electric resistance water heater,2021,0.058126,0.0201209
 California,resid,electricity,lighting,lighting,2021,0.0691343,0.0239315
-California,resid,electricity,others,electricity,2021,0.4279677,0.1481452
+California,resid,electricity,other,electricity,2021,0.4279677,0.1481452
 California,resid,electricity,refrigerators,refrigerator,2021,0.0905028,0.0313284
 California,resid,gas,clothes dryers,clothes dryer,2021,0.0130027,0.0060517
 California,resid,gas,cooking,gas oven,2021,0.0286057,0.0133137
 California,resid,gas,cooling,air conditioning,2021,0.0059819,0.0027841
 California,resid,gas,heating,gas furnace,2021,0.5783235,0.2691651
 California,resid,gas,hot water,gas water heater,2021,0.287995,0.1340396
-California,resid,gas,others,gas,2021,0.0860913,0.0400689
+California,resid,gas,other,gas,2021,0.0860913,0.0400689
 California,resid,refined liquids,cooking,lpg oven,2021,0.0553362,0.0014052
 California,resid,refined liquids,heating,fuel furnace,2021,0.4484312,0.0113877
 California,resid,refined liquids,hot water,fuel water heater,2021,0.2322105,0.0058969
-California,resid,refined liquids,others,refined liquids,2021,0.2640221,0.0067047
+California,resid,refined liquids,other,refined liquids,2021,0.2640221,0.0067047
 Colorado,comm,electricity,cooking,electric range,2021,0.0170691,0.0014513
 Colorado,comm,electricity,cooling,air conditioning,2021,0.0354377,0.0030131
 Colorado,comm,electricity,heating,electric furnace,2021,0.0178015,0.0015136
@@ -194,17 +194,17 @@ Colorado,comm,electricity,hot water,electric heat pump water heater,2021,1.13e-5
 Colorado,comm,electricity,hot water,electric resistance water heater,2021,0.0020991,1.785e-4
 Colorado,comm,electricity,lighting,lighting,2021,0.0696092,0.0059186
 Colorado,comm,electricity,office,office equipment,2021,0.1071889,0.0091139
-Colorado,comm,electricity,others,electricity,2021,0.6025298,0.0512308
+Colorado,comm,electricity,other,electricity,2021,0.6025298,0.0512308
 Colorado,comm,electricity,refrigeration,refrigeration,2021,0.0761696,0.0064764
 Colorado,comm,electricity,ventilation,ventilation,2021,0.0644715,0.0054818
 Colorado,comm,gas,cooking,gas range,2021,0.0624634,0.0040355
 Colorado,comm,gas,cooling,gas cooling,2021,0.0020233,1.307e-4
 Colorado,comm,gas,heating,gas furnace,2021,0.4987103,0.0322192
 Colorado,comm,gas,hot water,gas water heater,2021,0.2052685,0.0132614
-Colorado,comm,gas,others,gas,2021,0.2315345,0.0149583
+Colorado,comm,gas,other,gas,2021,0.2315345,0.0149583
 Colorado,comm,refined liquids,heating,fuel furnace,2021,0.0399218,1.226e-4
 Colorado,comm,refined liquids,hot water,fuel water heater,2021,1.074e-4,3e-7
-Colorado,comm,refined liquids,others,refined liquids,2021,0.9599708,0.0029473
+Colorado,comm,refined liquids,other,refined liquids,2021,0.9599708,0.0029473
 Colorado,resid,biomass,heating,wood furnace,2021,1,0.0114607
 Colorado,resid,electricity,clothes dryers,clothes dryer,2021,0.0490588,0.0040296
 Colorado,resid,electricity,clothes washers,clothes washer,2021,0.0084148,6.912e-4
@@ -219,18 +219,18 @@ Colorado,resid,electricity,heating,electric heat pump,2021,0.0236045,0.0019388
 Colorado,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Colorado,resid,electricity,hot water,electric resistance water heater,2021,0.0848242,0.0069673
 Colorado,resid,electricity,lighting,lighting,2021,0.0540006,0.0044355
-Colorado,resid,electricity,others,electricity,2021,0.4847509,0.0398164
+Colorado,resid,electricity,other,electricity,2021,0.4847509,0.0398164
 Colorado,resid,electricity,refrigerators,refrigerator,2021,0.0667737,0.0054847
 Colorado,resid,gas,clothes dryers,clothes dryer,2021,0.0072106,0.0010276
 Colorado,resid,gas,cooking,gas oven,2021,0.0165668,0.0023609
 Colorado,resid,gas,cooling,air conditioning,2021,0.0173761,0.0024763
 Colorado,resid,gas,heating,gas furnace,2021,0.6435201,0.0917082
 Colorado,resid,gas,hot water,gas water heater,2021,0.2630057,0.037481
-Colorado,resid,gas,others,gas,2021,0.0523208,0.0074563
+Colorado,resid,gas,other,gas,2021,0.0523208,0.0074563
 Colorado,resid,refined liquids,cooking,lpg oven,2021,0.0272818,3.788e-4
 Colorado,resid,refined liquids,heating,fuel furnace,2021,0.6277381,0.008716
 Colorado,resid,refined liquids,hot water,fuel water heater,2021,0.1801858,0.0025018
-Colorado,resid,refined liquids,others,refined liquids,2021,0.1647943,0.0022881
+Colorado,resid,refined liquids,other,refined liquids,2021,0.1647943,0.0022881
 Connecticut,comm,electricity,cooking,electric range,2021,0.0119897,5.921e-4
 Connecticut,comm,electricity,cooling,air conditioning,2021,0.047177,0.0023298
 Connecticut,comm,electricity,heating,electric furnace,2021,0.0142945,7.059e-4
@@ -239,17 +239,17 @@ Connecticut,comm,electricity,hot water,electric heat pump water heater,2021,5.66
 Connecticut,comm,electricity,hot water,electric resistance water heater,2021,0.0049306,2.435e-4
 Connecticut,comm,electricity,lighting,lighting,2021,0.0815413,0.0040269
 Connecticut,comm,electricity,office,office equipment,2021,0.1129818,0.0055796
-Connecticut,comm,electricity,others,electricity,2021,0.5102949,0.0252007
+Connecticut,comm,electricity,other,electricity,2021,0.5102949,0.0252007
 Connecticut,comm,electricity,refrigeration,refrigeration,2021,0.141148,0.0069705
 Connecticut,comm,electricity,ventilation,ventilation,2021,0.0682064,0.0033683
 Connecticut,comm,gas,cooking,gas range,2021,0.0422478,0.0020617
 Connecticut,comm,gas,cooling,gas cooling,2021,0.0017222,8.4e-5
 Connecticut,comm,gas,heating,gas furnace,2021,0.2895536,0.0141303
 Connecticut,comm,gas,hot water,gas water heater,2021,0.0426408,0.0020809
-Connecticut,comm,gas,others,gas,2021,0.6238356,0.0304434
+Connecticut,comm,gas,other,gas,2021,0.6238356,0.0304434
 Connecticut,comm,refined liquids,heating,fuel furnace,2021,0.9848461,0.0188634
 Connecticut,comm,refined liquids,hot water,fuel water heater,2021,0.0151539,2.903e-4
-Connecticut,comm,refined liquids,others,refined liquids,2021,0,0
+Connecticut,comm,refined liquids,other,refined liquids,2021,0,0
 Connecticut,resid,biomass,heating,wood furnace,2021,1,0.0099439
 Connecticut,resid,electricity,clothes dryers,clothes dryer,2021,0.0480081,0.0019937
 Connecticut,resid,electricity,clothes washers,clothes washer,2021,0.0083999,3.488e-4
@@ -264,18 +264,18 @@ Connecticut,resid,electricity,heating,electric heat pump,2021,0.0049044,2.037e-4
 Connecticut,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Connecticut,resid,electricity,hot water,electric resistance water heater,2021,0.1056723,0.0043884
 Connecticut,resid,electricity,lighting,lighting,2021,0.0576893,0.0023957
-Connecticut,resid,electricity,others,electricity,2021,0.4840057,0.0201
+Connecticut,resid,electricity,other,electricity,2021,0.4840057,0.0201
 Connecticut,resid,electricity,refrigerators,refrigerator,2021,0.0694139,0.0028826
 Connecticut,resid,gas,clothes dryers,clothes dryer,2021,0.0061438,3.149e-4
 Connecticut,resid,gas,cooking,gas oven,2021,0.0191515,9.815e-4
 Connecticut,resid,gas,cooling,air conditioning,2021,6.306e-4,3.23e-5
 Connecticut,resid,gas,heating,gas furnace,2021,0.7639363,0.0391496
 Connecticut,resid,gas,hot water,gas water heater,2021,0.1906196,0.0097687
-Connecticut,resid,gas,others,gas,2021,0.0195182,0.0010003
+Connecticut,resid,gas,other,gas,2021,0.0195182,0.0010003
 Connecticut,resid,refined liquids,cooking,lpg oven,2021,0.0138537,7.808e-4
 Connecticut,resid,refined liquids,heating,fuel furnace,2021,0.8441021,0.0475727
 Connecticut,resid,refined liquids,hot water,fuel water heater,2021,0.1140414,0.0064273
-Connecticut,resid,refined liquids,others,refined liquids,2021,0.0280027,0.0015782
+Connecticut,resid,refined liquids,other,refined liquids,2021,0.0280027,0.0015782
 Delaware,comm,electricity,cooking,electric range,2021,0.0127236,1.815e-4
 Delaware,comm,electricity,cooling,air conditioning,2021,0.090518,0.0012913
 Delaware,comm,electricity,heating,electric furnace,2021,0.0202297,2.886e-4
@@ -284,17 +284,17 @@ Delaware,comm,electricity,hot water,electric heat pump water heater,2021,8.56e-5
 Delaware,comm,electricity,hot water,electric resistance water heater,2021,0.0044618,6.36e-5
 Delaware,comm,electricity,lighting,lighting,2021,0.1256471,0.0017924
 Delaware,comm,electricity,office,office equipment,2021,0.1456536,0.0020778
-Delaware,comm,electricity,others,electricity,2021,0.3419388,0.0048778
+Delaware,comm,electricity,other,electricity,2021,0.3419388,0.0048778
 Delaware,comm,electricity,refrigeration,refrigeration,2021,0.1357498,0.0019365
 Delaware,comm,electricity,ventilation,ventilation,2021,0.1163153,0.0016593
 Delaware,comm,gas,cooking,gas range,2021,0.0960234,0.0013572
 Delaware,comm,gas,cooling,gas cooling,2021,0.0122736,1.735e-4
 Delaware,comm,gas,heating,gas furnace,2021,0.5651566,0.0079879
 Delaware,comm,gas,hot water,gas water heater,2021,0.2089746,0.0029536
-Delaware,comm,gas,others,gas,2021,0.1175719,0.0016618
+Delaware,comm,gas,other,gas,2021,0.1175719,0.0016618
 Delaware,comm,refined liquids,heating,fuel furnace,2021,0.9569547,0.0017777
 Delaware,comm,refined liquids,hot water,fuel water heater,2021,0.0430453,8e-5
-Delaware,comm,refined liquids,others,refined liquids,2021,0,0
+Delaware,comm,refined liquids,other,refined liquids,2021,0,0
 Delaware,resid,biomass,heating,wood furnace,2021,1,0.0015973
 Delaware,resid,electricity,clothes dryers,clothes dryer,2021,0.0417835,5.773e-4
 Delaware,resid,electricity,clothes washers,clothes washer,2021,0.0076469,1.057e-4
@@ -309,18 +309,18 @@ Delaware,resid,electricity,heating,electric heat pump,2021,0.0363337,5.02e-4
 Delaware,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Delaware,resid,electricity,hot water,electric resistance water heater,2021,0.1190677,0.0016451
 Delaware,resid,electricity,lighting,lighting,2021,0.0510025,7.047e-4
-Delaware,resid,electricity,others,electricity,2021,0.3855776,0.0053274
+Delaware,resid,electricity,other,electricity,2021,0.3855776,0.0053274
 Delaware,resid,electricity,refrigerators,refrigerator,2021,0.0609237,8.418e-4
 Delaware,resid,gas,clothes dryers,clothes dryer,2021,0.0074204,1.489e-4
 Delaware,resid,gas,cooking,gas oven,2021,0.0256564,5.15e-4
 Delaware,resid,gas,cooling,air conditioning,2021,0.0091168,1.83e-4
 Delaware,resid,gas,heating,gas furnace,2021,0.7419599,0.0148921
 Delaware,resid,gas,hot water,gas water heater,2021,0.1781054,0.0035748
-Delaware,resid,gas,others,gas,2021,0.0377411,7.575e-4
+Delaware,resid,gas,other,gas,2021,0.0377411,7.575e-4
 Delaware,resid,refined liquids,cooking,lpg oven,2021,0.0117299,5.06e-5
 Delaware,resid,refined liquids,heating,fuel furnace,2021,0.7792659,0.0033598
 Delaware,resid,refined liquids,hot water,fuel water heater,2021,0.1352886,5.833e-4
-Delaware,resid,refined liquids,others,refined liquids,2021,0.0737157,3.178e-4
+Delaware,resid,refined liquids,other,refined liquids,2021,0.0737157,3.178e-4
 District of Columbia,comm,electricity,cooking,electric range,2021,0.015944,1.893e-4
 District of Columbia,comm,electricity,cooling,air conditioning,2021,0.117223,0.0013915
 District of Columbia,comm,electricity,heating,electric furnace,2021,0.0148548,1.763e-4
@@ -329,17 +329,17 @@ District of Columbia,comm,electricity,hot water,electric heat pump water heater,
 District of Columbia,comm,electricity,hot water,electric resistance water heater,2021,0.0063445,7.53e-5
 District of Columbia,comm,electricity,lighting,lighting,2021,0.1002228,0.0011897
 District of Columbia,comm,electricity,office,office equipment,2021,0.1165242,0.0013832
-District of Columbia,comm,electricity,others,electricity,2021,0.4197927,0.0049832
+District of Columbia,comm,electricity,other,electricity,2021,0.4197927,0.0049832
 District of Columbia,comm,electricity,refrigeration,refrigeration,2021,0.1234195,0.0014651
 District of Columbia,comm,electricity,ventilation,ventilation,2021,0.0769065,9.129e-4
 District of Columbia,comm,gas,cooking,gas range,2021,0.1859099,0.0012585
 District of Columbia,comm,gas,cooling,gas cooling,2021,0.0189645,1.284e-4
 District of Columbia,comm,gas,heating,gas furnace,2021,0.4664203,0.0031575
 District of Columbia,comm,gas,hot water,gas water heater,2021,0.2497259,0.0016905
-District of Columbia,comm,gas,others,gas,2021,0.0789794,5.347e-4
+District of Columbia,comm,gas,other,gas,2021,0.0789794,5.347e-4
 District of Columbia,comm,refined liquids,heating,fuel furnace,2021,0.2403205,2.84e-4
 District of Columbia,comm,refined liquids,hot water,fuel water heater,2021,0.0580744,6.86e-5
-District of Columbia,comm,refined liquids,others,refined liquids,2021,0.7016051,8.291e-4
+District of Columbia,comm,refined liquids,other,refined liquids,2021,0.7016051,8.291e-4
 District of Columbia,resid,biomass,heating,wood furnace,2021,1,9.779e-4
 District of Columbia,resid,electricity,clothes dryers,clothes dryer,2021,0.0387879,5.346e-4
 District of Columbia,resid,electricity,clothes washers,clothes washer,2021,0.0060512,8.34e-5
@@ -354,18 +354,18 @@ District of Columbia,resid,electricity,heating,electric heat pump,2021,0.0722206
 District of Columbia,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 District of Columbia,resid,electricity,hot water,electric resistance water heater,2021,0.1462466,0.0020156
 District of Columbia,resid,electricity,lighting,lighting,2021,0.0416407,5.739e-4
-District of Columbia,resid,electricity,others,electricity,2021,0.3577008,0.0049299
+District of Columbia,resid,electricity,other,electricity,2021,0.3577008,0.0049299
 District of Columbia,resid,electricity,refrigerators,refrigerator,2021,0.0460344,6.345e-4
 District of Columbia,resid,gas,clothes dryers,clothes dryer,2021,0.0061309,4.65e-5
 District of Columbia,resid,gas,cooking,gas oven,2021,0.0238093,1.807e-4
 District of Columbia,resid,gas,cooling,air conditioning,2021,0.0491378,3.73e-4
 District of Columbia,resid,gas,heating,gas furnace,2021,0.623129,0.0047295
 District of Columbia,resid,gas,hot water,gas water heater,2021,0.211259,0.0016034
-District of Columbia,resid,gas,others,gas,2021,0.086534,6.568e-4
+District of Columbia,resid,gas,other,gas,2021,0.086534,6.568e-4
 District of Columbia,resid,refined liquids,cooking,lpg oven,2021,0.022033,3.63e-5
 District of Columbia,resid,refined liquids,heating,fuel furnace,2021,0.6758028,0.0011126
 District of Columbia,resid,refined liquids,hot water,fuel water heater,2021,0.1097551,1.807e-4
-District of Columbia,resid,refined liquids,others,refined liquids,2021,0.1924092,3.168e-4
+District of Columbia,resid,refined liquids,other,refined liquids,2021,0.1924092,3.168e-4
 Florida,comm,electricity,cooking,electric range,2021,0.0140768,0.0056404
 Florida,comm,electricity,cooling,air conditioning,2021,0.2099505,0.0841242
 Florida,comm,electricity,heating,electric furnace,2021,0.0042236,0.0016923
@@ -374,17 +374,17 @@ Florida,comm,electricity,hot water,electric heat pump water heater,2021,7.7e-5,3
 Florida,comm,electricity,hot water,electric resistance water heater,2021,0.0077243,0.003095
 Florida,comm,electricity,lighting,lighting,2021,0.0948047,0.0379869
 Florida,comm,electricity,office,office equipment,2021,0.1023283,0.0410015
-Florida,comm,electricity,others,electricity,2021,0.3707396,0.1485501
+Florida,comm,electricity,other,electricity,2021,0.3707396,0.1485501
 Florida,comm,electricity,refrigeration,refrigeration,2021,0.1186665,0.047548
 Florida,comm,electricity,ventilation,ventilation,2021,0.074966,0.0300378
 Florida,comm,gas,cooking,gas range,2021,0.1838318,0.0118769
 Florida,comm,gas,cooling,gas cooling,2021,0.0185922,0.0012012
 Florida,comm,gas,heating,gas furnace,2021,0.4683083,0.0302561
 Florida,comm,gas,hot water,gas water heater,2021,0.2488479,0.0160774
-Florida,comm,gas,others,gas,2021,0.0804199,0.0051957
+Florida,comm,gas,other,gas,2021,0.0804199,0.0051957
 Florida,comm,refined liquids,heating,fuel furnace,2021,0.2633758,7.06e-5
 Florida,comm,refined liquids,hot water,fuel water heater,2021,0.0304668,8.2e-6
-Florida,comm,refined liquids,others,refined liquids,2021,0.7061574,1.892e-4
+Florida,comm,refined liquids,other,refined liquids,2021,0.7061574,1.892e-4
 Florida,resid,biomass,heating,wood furnace,2021,1,0.0074289000000000004
 Florida,resid,electricity,clothes dryers,clothes dryer,2021,0.0394737,0.0161053
 Florida,resid,electricity,clothes washers,clothes washer,2021,0.0058627,0.002392
@@ -399,18 +399,18 @@ Florida,resid,electricity,heating,electric heat pump,2021,0.0156476,0.0063842
 Florida,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Florida,resid,electricity,hot water,electric resistance water heater,2021,0.1362954,0.0556086
 Florida,resid,electricity,lighting,lighting,2021,0.0394532,0.0160969
-Florida,resid,electricity,others,electricity,2021,0.359458,0.1466591
+Florida,resid,electricity,other,electricity,2021,0.359458,0.1466591
 Florida,resid,electricity,refrigerators,refrigerator,2021,0.0477842,0.019496
 Florida,resid,gas,clothes dryers,clothes dryer,2021,0.0058951,1.563e-4
 Florida,resid,gas,cooking,gas oven,2021,0.0236467,6.268e-4
 Florida,resid,gas,cooling,air conditioning,2021,0.0493924,0.0013093
 Florida,resid,gas,heating,gas furnace,2021,0.6307721,0.0167205
 Florida,resid,gas,hot water,gas water heater,2021,0.2062381,0.005467
-Florida,resid,gas,others,gas,2021,0.0840556,0.0022281
+Florida,resid,gas,other,gas,2021,0.0840556,0.0022281
 Florida,resid,refined liquids,cooking,lpg oven,2021,0.0385146,2.791e-4
 Florida,resid,refined liquids,heating,fuel furnace,2021,0.5656107,0.004098
 Florida,resid,refined liquids,hot water,fuel water heater,2021,0.1263239,9.153e-4
-Florida,resid,refined liquids,others,refined liquids,2021,0.2695508,0.001953
+Florida,resid,refined liquids,other,refined liquids,2021,0.2695508,0.001953
 Georgia,comm,electricity,cooking,electric range,2021,0.0160583,0.0030735
 Georgia,comm,electricity,cooling,air conditioning,2021,0.1312278,0.0251165
 Georgia,comm,electricity,heating,electric furnace,2021,0.0082309,0.0015754
@@ -419,17 +419,17 @@ Georgia,comm,electricity,hot water,electric heat pump water heater,2021,5.05e-5,
 Georgia,comm,electricity,hot water,electric resistance water heater,2021,0.0054109,0.0010356
 Georgia,comm,electricity,lighting,lighting,2021,0.1016031,0.0194464
 Georgia,comm,electricity,office,office equipment,2021,0.1058983,0.0202685
-Georgia,comm,electricity,others,electricity,2021,0.4250451,0.0813518
+Georgia,comm,electricity,other,electricity,2021,0.4250451,0.0813518
 Georgia,comm,electricity,refrigeration,refrigeration,2021,0.1257991,0.0240774
 Georgia,comm,electricity,ventilation,ventilation,2021,0.076532,0.0146479
 Georgia,comm,gas,cooking,gas range,2021,0.161596,0.0089261
 Georgia,comm,gas,cooling,gas cooling,2021,0.0146083,8.069e-4
 Georgia,comm,gas,heating,gas furnace,2021,0.4885095,0.0269839
 Georgia,comm,gas,hot water,gas water heater,2021,0.239453,0.0132267
-Georgia,comm,gas,others,gas,2021,0.0958332,0.0052935
+Georgia,comm,gas,other,gas,2021,0.0958332,0.0052935
 Georgia,comm,refined liquids,heating,fuel furnace,2021,0.2856116,3.983e-4
 Georgia,comm,refined liquids,hot water,fuel water heater,2021,0.0038406,5.4e-6
-Georgia,comm,refined liquids,others,refined liquids,2021,0.7105478,9.909e-4
+Georgia,comm,refined liquids,other,refined liquids,2021,0.7105478,9.909e-4
 Georgia,resid,biomass,heating,wood furnace,2021,1,0.0092793
 Georgia,resid,electricity,clothes dryers,clothes dryer,2021,0.042131299999999997,0.008699
 Georgia,resid,electricity,clothes washers,clothes washer,2021,0.0062078,0.0012817
@@ -444,18 +444,18 @@ Georgia,resid,electricity,heating,electric heat pump,2021,0.045722,0.0094404
 Georgia,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Georgia,resid,electricity,hot water,electric resistance water heater,2021,0.1383261,0.0285607
 Georgia,resid,electricity,lighting,lighting,2021,0.0402872,0.0083183
-Georgia,resid,electricity,others,electricity,2021,0.3716617,0.0767384
+Georgia,resid,electricity,other,electricity,2021,0.3716617,0.0767384
 Georgia,resid,electricity,refrigerators,refrigerator,2021,0.0464171,0.0095839
 Georgia,resid,gas,clothes dryers,clothes dryer,2021,0.0055344,5.803e-4
 Georgia,resid,gas,cooking,gas oven,2021,0.023398,0.0024535
 Georgia,resid,gas,cooling,air conditioning,2021,0.049782,0.0052201
 Georgia,resid,gas,heating,gas furnace,2021,0.6424647,0.0673679
 Georgia,resid,gas,hot water,gas water heater,2021,0.1985569,0.0208204
-Georgia,resid,gas,others,gas,2021,0.080264,0.0084164
+Georgia,resid,gas,other,gas,2021,0.080264,0.0084164
 Georgia,resid,refined liquids,cooking,lpg oven,2021,0.0391584,3.787e-4
 Georgia,resid,refined liquids,heating,fuel furnace,2021,0.6564987,0.0063498
 Georgia,resid,refined liquids,hot water,fuel water heater,2021,0.1175525,0.001137
-Georgia,resid,refined liquids,others,refined liquids,2021,0.1867904,0.0018067
+Georgia,resid,refined liquids,other,refined liquids,2021,0.1867904,0.0018067
 Idaho,comm,electricity,cooking,electric range,2021,0.0169588,4.565e-4
 Idaho,comm,electricity,cooling,air conditioning,2021,0.0551847,0.0014856
 Idaho,comm,electricity,heating,electric furnace,2021,0.0123039,3.312e-4
@@ -464,17 +464,17 @@ Idaho,comm,electricity,hot water,electric heat pump water heater,2021,2.8e-5,8e-
 Idaho,comm,electricity,hot water,electric resistance water heater,2021,0.002666,7.18e-5
 Idaho,comm,electricity,lighting,lighting,2021,0.0805775,0.0021692
 Idaho,comm,electricity,office,office equipment,2021,0.1106238,0.0029781
-Idaho,comm,electricity,others,electricity,2021,0.5625099,0.0151433
+Idaho,comm,electricity,other,electricity,2021,0.5625099,0.0151433
 Idaho,comm,electricity,refrigeration,refrigeration,2021,0.0922662,0.0024839
 Idaho,comm,electricity,ventilation,ventilation,2021,0.061546,0.0016569
 Idaho,comm,gas,cooking,gas range,2021,0.0761751,0.0016438
 Idaho,comm,gas,cooling,gas cooling,2021,0.0024163,5.21e-5
 Idaho,comm,gas,heating,gas furnace,2021,0.4864439,0.010497
 Idaho,comm,gas,hot water,gas water heater,2021,0.2145397,0.0046296
-Idaho,comm,gas,others,gas,2021,0.220425,0.0047566
+Idaho,comm,gas,other,gas,2021,0.220425,0.0047566
 Idaho,comm,refined liquids,heating,fuel furnace,2021,0.0225367,5.61e-5
 Idaho,comm,refined liquids,hot water,fuel water heater,2021,3.86e-5,1e-7
-Idaho,comm,refined liquids,others,refined liquids,2021,0.9774247,0.0024343
+Idaho,comm,refined liquids,other,refined liquids,2021,0.9774247,0.0024343
 Idaho,resid,biomass,heating,wood furnace,2021,1,0.0023022
 Idaho,resid,electricity,clothes dryers,clothes dryer,2021,0.0444318,0.0011408
 Idaho,resid,electricity,clothes washers,clothes washer,2021,0.0074296,1.908e-4
@@ -489,18 +489,18 @@ Idaho,resid,electricity,heating,electric heat pump,2021,0.0306681,7.874e-4
 Idaho,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Idaho,resid,electricity,hot water,electric resistance water heater,2021,0.0954732,0.0024512
 Idaho,resid,electricity,lighting,lighting,2021,0.0499691,0.0012829
-Idaho,resid,electricity,others,electricity,2021,0.4106184,0.0105424
+Idaho,resid,electricity,other,electricity,2021,0.4106184,0.0105424
 Idaho,resid,electricity,refrigerators,refrigerator,2021,0.061875,0.0015886
 Idaho,resid,gas,clothes dryers,clothes dryer,2021,0.0079205,2.505e-4
 Idaho,resid,gas,cooking,gas oven,2021,0.0180343,5.704e-4
 Idaho,resid,gas,cooling,air conditioning,2021,0.0161168,5.097e-4
 Idaho,resid,gas,heating,gas furnace,2021,0.6348645,0.0200795
 Idaho,resid,gas,hot water,gas water heater,2021,0.2664679,0.0084279
-Idaho,resid,gas,others,gas,2021,0.0565961,0.00179
+Idaho,resid,gas,other,gas,2021,0.0565961,0.00179
 Idaho,resid,refined liquids,cooking,lpg oven,2021,0.0281341,7.3e-5
 Idaho,resid,refined liquids,heating,fuel furnace,2021,0.6268726,0.001627
 Idaho,resid,refined liquids,hot water,fuel water heater,2021,0.179425,4.657e-4
-Idaho,resid,refined liquids,others,refined liquids,2021,0.1655683,4.297e-4
+Idaho,resid,refined liquids,other,refined liquids,2021,0.1655683,4.297e-4
 Illinois,comm,electricity,cooking,electric range,2021,0.0202745,0.0039506
 Illinois,comm,electricity,cooling,air conditioning,2021,0.0701725,0.0136736
 Illinois,comm,electricity,heating,electric furnace,2021,0.0245645,0.0047866
@@ -509,17 +509,17 @@ Illinois,comm,electricity,hot water,electric heat pump water heater,2021,3.05e-5
 Illinois,comm,electricity,hot water,electric resistance water heater,2021,0.0040007,7.796e-4
 Illinois,comm,electricity,lighting,lighting,2021,0.1021548,0.0199056
 Illinois,comm,electricity,office,office equipment,2021,0.1216548,0.0237053
-Illinois,comm,electricity,others,electricity,2021,0.4841848,0.0943469
+Illinois,comm,electricity,other,electricity,2021,0.4841848,0.0943469
 Illinois,comm,electricity,refrigeration,refrigeration,2021,0.0760777,0.0148243
 Illinois,comm,electricity,ventilation,ventilation,2021,0.0916115,0.0178512
 Illinois,comm,gas,cooking,gas range,2021,0.050214,0.010865
 Illinois,comm,gas,cooling,gas cooling,2021,0.0018352,3.971e-4
 Illinois,comm,gas,heating,gas furnace,2021,0.5554338,0.1201811
 Illinois,comm,gas,hot water,gas water heater,2021,0.1196771,0.0258949
-Illinois,comm,gas,others,gas,2021,0.2728399,0.0590353
+Illinois,comm,gas,other,gas,2021,0.2728399,0.0590353
 Illinois,comm,refined liquids,heating,fuel furnace,2021,0.3680277,4.478e-4
 Illinois,comm,refined liquids,hot water,fuel water heater,2021,1.765e-4,2e-7
-Illinois,comm,refined liquids,others,refined liquids,2021,0.6317958,7.688e-4
+Illinois,comm,refined liquids,other,refined liquids,2021,0.6317958,7.688e-4
 Illinois,resid,biomass,heating,wood furnace,2021,1,0.0105054
 Illinois,resid,electricity,clothes dryers,clothes dryer,2021,0.0301061,0.0049727
 Illinois,resid,electricity,clothes washers,clothes washer,2021,0.008617,0.0014233
@@ -534,18 +534,18 @@ Illinois,resid,electricity,heating,electric heat pump,2021,0.0168652,0.0027857
 Illinois,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Illinois,resid,electricity,hot water,electric resistance water heater,2021,0.0853673,0.0141004
 Illinois,resid,electricity,lighting,lighting,2021,0.0594485,0.0098193
-Illinois,resid,electricity,others,electricity,2021,0.3901684,0.0644456
+Illinois,resid,electricity,other,electricity,2021,0.3901684,0.0644456
 Illinois,resid,electricity,refrigerators,refrigerator,2021,0.0661349,0.0109238
 Illinois,resid,gas,clothes dryers,clothes dryer,2021,0.0090559,0.0033495
 Illinois,resid,gas,cooking,gas oven,2021,0.0164547,0.0060861
 Illinois,resid,gas,cooling,air conditioning,2021,5.845e-4,2.162e-4
 Illinois,resid,gas,heating,gas furnace,2021,0.7818603,0.2891892
 Illinois,resid,gas,hot water,gas water heater,2021,0.1664999,0.0615839
-Illinois,resid,gas,others,gas,2021,0.0255448,0.0094483
+Illinois,resid,gas,other,gas,2021,0.0255448,0.0094483
 Illinois,resid,refined liquids,cooking,lpg oven,2021,0.0117567,2.927e-4
 Illinois,resid,refined liquids,heating,fuel furnace,2021,0.8190977,0.0203957
 Illinois,resid,refined liquids,hot water,fuel water heater,2021,0.0764904,0.0019046
-Illinois,resid,refined liquids,others,refined liquids,2021,0.0926552,0.0023071
+Illinois,resid,refined liquids,other,refined liquids,2021,0.0926552,0.0023071
 Indiana,comm,electricity,cooking,electric range,2021,0.0179711,0.0018501
 Indiana,comm,electricity,cooling,air conditioning,2021,0.0772069,0.0079482
 Indiana,comm,electricity,heating,electric furnace,2021,0.0259241,0.0026688
@@ -554,17 +554,17 @@ Indiana,comm,electricity,hot water,electric heat pump water heater,2021,3.92e-5,
 Indiana,comm,electricity,hot water,electric resistance water heater,2021,0.0037863,3.898e-4
 Indiana,comm,electricity,lighting,lighting,2021,0.100284,0.0103239
 Indiana,comm,electricity,office,office equipment,2021,0.1126305,0.011595
-Indiana,comm,electricity,others,electricity,2021,0.4646612,0.0478355
+Indiana,comm,electricity,other,electricity,2021,0.4646612,0.0478355
 Indiana,comm,electricity,refrigeration,refrigeration,2021,0.1048699,0.010796
 Indiana,comm,electricity,ventilation,ventilation,2021,0.086201,0.0088741
 Indiana,comm,gas,cooking,gas range,2021,0.0597306,0.0055733
 Indiana,comm,gas,cooling,gas cooling,2021,0.0031615,2.95e-4
 Indiana,comm,gas,heating,gas furnace,2021,0.5423931,0.0506089
 Indiana,comm,gas,hot water,gas water heater,2021,0.1267966,0.011831
-Indiana,comm,gas,others,gas,2021,0.2679182,0.0249985
+Indiana,comm,gas,other,gas,2021,0.2679182,0.0249985
 Indiana,comm,refined liquids,heating,fuel furnace,2021,0.4975902,0.0019703
 Indiana,comm,refined liquids,hot water,fuel water heater,2021,0.0197196,7.81e-5
-Indiana,comm,refined liquids,others,refined liquids,2021,0.4826902,0.0019113000000000001
+Indiana,comm,refined liquids,other,refined liquids,2021,0.4826902,0.0019113000000000001
 Indiana,resid,biomass,heating,wood furnace,2021,1,0.0067296
 Indiana,resid,electricity,clothes dryers,clothes dryer,2021,0.0422637,0.0048669
 Indiana,resid,electricity,clothes washers,clothes washer,2021,0.0075761,8.724e-4
@@ -579,18 +579,18 @@ Indiana,resid,electricity,heating,electric heat pump,2021,0.0288529,0.0033226
 Indiana,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Indiana,resid,electricity,hot water,electric resistance water heater,2021,0.1081274,0.0124514
 Indiana,resid,electricity,lighting,lighting,2021,0.0470508,0.0054181
-Indiana,resid,electricity,others,electricity,2021,0.3546522,0.04084
+Indiana,resid,electricity,other,electricity,2021,0.3546522,0.04084
 Indiana,resid,electricity,refrigerators,refrigerator,2021,0.0570087,0.0065648
 Indiana,resid,gas,clothes dryers,clothes dryer,2021,0.0082794,0.0012379
 Indiana,resid,gas,cooking,gas oven,2021,0.0164908,0.0024655
 Indiana,resid,gas,cooling,air conditioning,2021,0.0034877,5.215e-4
 Indiana,resid,gas,heating,gas furnace,2021,0.7729797,0.11556810000000001
 Indiana,resid,gas,hot water,gas water heater,2021,0.1715976,0.0256556
-Indiana,resid,gas,others,gas,2021,0.0271647,0.0040614
+Indiana,resid,gas,other,gas,2021,0.0271647,0.0040614
 Indiana,resid,refined liquids,cooking,lpg oven,2021,0.0116823,1.959e-4
 Indiana,resid,refined liquids,heating,fuel furnace,2021,0.8285015,0.0138963
 Indiana,resid,refined liquids,hot water,fuel water heater,2021,0.0791097,0.0013269
-Indiana,resid,refined liquids,others,refined liquids,2021,0.0807065,0.0013537
+Indiana,resid,refined liquids,other,refined liquids,2021,0.0807065,0.0013537
 Iowa,comm,electricity,cooking,electric range,2021,0.0176962,8.587e-4
 Iowa,comm,electricity,cooling,air conditioning,2021,0.0452851,0.0021975
 Iowa,comm,electricity,heating,electric furnace,2021,0.0278816,0.001353
@@ -599,17 +599,17 @@ Iowa,comm,electricity,hot water,electric heat pump water heater,2021,5.64e-5,2.7
 Iowa,comm,electricity,hot water,electric resistance water heater,2021,0.0039817,1.932e-4
 Iowa,comm,electricity,lighting,lighting,2021,0.0860368,0.0041751
 Iowa,comm,electricity,office,office equipment,2021,0.1045355,0.0050728
-Iowa,comm,electricity,others,electricity,2021,0.5352935,0.025976
+Iowa,comm,electricity,other,electricity,2021,0.5352935,0.025976
 Iowa,comm,electricity,refrigeration,refrigeration,2021,0.0989711,0.0048027
 Iowa,comm,electricity,ventilation,ventilation,2021,0.0727881,0.0035322
 Iowa,comm,gas,cooking,gas range,2021,0.0482541,0.0026973
 Iowa,comm,gas,cooling,gas cooling,2021,0.0011117,6.21e-5
 Iowa,comm,gas,heating,gas furnace,2021,0.5045326,0.0282019
 Iowa,comm,gas,hot water,gas water heater,2021,0.0923632,0.0051628
-Iowa,comm,gas,others,gas,2021,0.3537385,0.019773
+Iowa,comm,gas,other,gas,2021,0.3537385,0.019773
 Iowa,comm,refined liquids,heating,fuel furnace,2021,0.3478272,0.0018142
 Iowa,comm,refined liquids,hot water,fuel water heater,2021,0.0017309,9e-6
-Iowa,comm,refined liquids,others,refined liquids,2021,0.6504419,0.0033926
+Iowa,comm,refined liquids,other,refined liquids,2021,0.6504419,0.0033926
 Iowa,resid,biomass,heating,wood furnace,2021,1,0.0067648
 Iowa,resid,electricity,clothes dryers,clothes dryer,2021,0.0525696,0.0025204
 Iowa,resid,electricity,clothes washers,clothes washer,2021,0.0084865,4.069e-4
@@ -624,18 +624,18 @@ Iowa,resid,electricity,heating,electric heat pump,2021,0.0196331,9.413e-4
 Iowa,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Iowa,resid,electricity,hot water,electric resistance water heater,2021,0.1124111,0.0053893
 Iowa,resid,electricity,lighting,lighting,2021,0.0552403,0.0026484
-Iowa,resid,electricity,others,electricity,2021,0.4156185,0.019926
+Iowa,resid,electricity,other,electricity,2021,0.4156185,0.019926
 Iowa,resid,electricity,refrigerators,refrigerator,2021,0.066781,0.0032017
 Iowa,resid,gas,clothes dryers,clothes dryer,2021,0.0058714,4.148e-4
 Iowa,resid,gas,cooking,gas oven,2021,0.0128461,9.076e-4
 Iowa,resid,gas,cooling,air conditioning,2021,0.0035286,2.493e-4
 Iowa,resid,gas,heating,gas furnace,2021,0.7764478,0.0548552
 Iowa,resid,gas,hot water,gas water heater,2021,0.1829758,0.012927
-Iowa,resid,gas,others,gas,2021,0.0183303,0.001295
+Iowa,resid,gas,other,gas,2021,0.0183303,0.001295
 Iowa,resid,refined liquids,cooking,lpg oven,2021,0.0104684,1.867e-4
 Iowa,resid,refined liquids,heating,fuel furnace,2021,0.8917828,0.0159027
 Iowa,resid,refined liquids,hot water,fuel water heater,2021,0.0578135,0.001031
-Iowa,resid,refined liquids,others,refined liquids,2021,0.0399353,7.121e-4
+Iowa,resid,refined liquids,other,refined liquids,2021,0.0399353,7.121e-4
 Kansas,comm,electricity,cooking,electric range,2021,0.0168956,0.0011036
 Kansas,comm,electricity,cooling,air conditioning,2021,0.063294,0.0041341
 Kansas,comm,electricity,heating,electric furnace,2021,0.0160203,0.0010464
@@ -644,17 +644,17 @@ Kansas,comm,electricity,hot water,electric heat pump water heater,2021,4.8e-5,3.
 Kansas,comm,electricity,hot water,electric resistance water heater,2021,0.0026399,1.724e-4
 Kansas,comm,electricity,lighting,lighting,2021,0.082255,0.0053726
 Kansas,comm,electricity,office,office equipment,2021,0.0987237,0.0064483
-Kansas,comm,electricity,others,electricity,2021,0.5843301,0.0381664
+Kansas,comm,electricity,other,electricity,2021,0.5843301,0.0381664
 Kansas,comm,electricity,refrigeration,refrigeration,2021,0.066598,0.0043499
 Kansas,comm,electricity,ventilation,ventilation,2021,0.0643848,0.0042054
 Kansas,comm,gas,cooking,gas range,2021,0.0470747,0.0016349
 Kansas,comm,gas,cooling,gas cooling,2021,6.945e-4,2.41e-5
 Kansas,comm,gas,heating,gas furnace,2021,0.4754733,0.0165128
 Kansas,comm,gas,hot water,gas water heater,2021,0.0762833,0.0026493
-Kansas,comm,gas,others,gas,2021,0.4004743,0.0139082
+Kansas,comm,gas,other,gas,2021,0.4004743,0.0139082
 Kansas,comm,refined liquids,heating,fuel furnace,2021,0.3395686,2.52e-5
 Kansas,comm,refined liquids,hot water,fuel water heater,2021,0.0025229,2e-7
-Kansas,comm,refined liquids,others,refined liquids,2021,0.6579085,4.89e-5
+Kansas,comm,refined liquids,other,refined liquids,2021,0.6579085,4.89e-5
 Kansas,resid,biomass,heating,wood furnace,2021,1,0.0033257
 Kansas,resid,electricity,clothes dryers,clothes dryer,2021,0.048941900000000003,0.0026255
 Kansas,resid,electricity,clothes washers,clothes washer,2021,0.007258,3.894e-4
@@ -669,18 +669,18 @@ Kansas,resid,electricity,heating,electric heat pump,2021,0.0160688,8.62e-4
 Kansas,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Kansas,resid,electricity,hot water,electric resistance water heater,2021,0.0881873,0.0047308
 Kansas,resid,electricity,lighting,lighting,2021,0.0461646,0.0024765
-Kansas,resid,electricity,others,electricity,2021,0.3783766,0.0202978
+Kansas,resid,electricity,other,electricity,2021,0.3783766,0.0202978
 Kansas,resid,electricity,refrigerators,refrigerator,2021,0.0535711,0.0028738
 Kansas,resid,gas,clothes dryers,clothes dryer,2021,0.0037401,2.096e-4
 Kansas,resid,gas,cooking,gas oven,2021,0.0104241,5.842e-4
 Kansas,resid,gas,cooling,air conditioning,2021,0.0054518,3.055e-4
 Kansas,resid,gas,heating,gas furnace,2021,0.7732485,0.0433318
 Kansas,resid,gas,hot water,gas water heater,2021,0.1937303,0.0108564
-Kansas,resid,gas,others,gas,2021,0.0134052,7.512e-4
+Kansas,resid,gas,other,gas,2021,0.0134052,7.512e-4
 Kansas,resid,refined liquids,cooking,lpg oven,2021,0.0112283,9.11e-5
 Kansas,resid,refined liquids,heating,fuel furnace,2021,0.918213,0.0074521
 Kansas,resid,refined liquids,hot water,fuel water heater,2021,0.0556091,4.513e-4
-Kansas,resid,refined liquids,others,refined liquids,2021,0.0149495,1.213e-4
+Kansas,resid,refined liquids,other,refined liquids,2021,0.0149495,1.213e-4
 Kentucky,comm,electricity,cooking,electric range,2021,0.0187748,0.0014919
 Kentucky,comm,electricity,cooling,air conditioning,2021,0.0827851,0.0065784
 Kentucky,comm,electricity,heating,electric furnace,2021,0.0183042,0.0014545
@@ -689,17 +689,17 @@ Kentucky,comm,electricity,hot water,electric heat pump water heater,2021,3.53e-5
 Kentucky,comm,electricity,hot water,electric resistance water heater,2021,0.0046401,3.687e-4
 Kentucky,comm,electricity,lighting,lighting,2021,0.0975026,0.0077479
 Kentucky,comm,electricity,office,office equipment,2021,0.0976767,0.0077617
-Kentucky,comm,electricity,others,electricity,2021,0.4981628,0.0395857
+Kentucky,comm,electricity,other,electricity,2021,0.4981628,0.0395857
 Kentucky,comm,electricity,refrigeration,refrigeration,2021,0.1057532,0.0084035
 Kentucky,comm,electricity,ventilation,ventilation,2021,0.0697216,0.0055403
 Kentucky,comm,gas,cooking,gas range,2021,0.1090417,0.0043282
 Kentucky,comm,gas,cooling,gas cooling,2021,0.0061438,2.439e-4
 Kentucky,comm,gas,heating,gas furnace,2021,0.5335057,0.0211767
 Kentucky,comm,gas,hot water,gas water heater,2021,0.2097839,0.008327
-Kentucky,comm,gas,others,gas,2021,0.1415249,0.0056176
+Kentucky,comm,gas,other,gas,2021,0.1415249,0.0056176
 Kentucky,comm,refined liquids,heating,fuel furnace,2021,0.315738,0.0016088
 Kentucky,comm,refined liquids,hot water,fuel water heater,2021,0.0034713,1.77e-5
-Kentucky,comm,refined liquids,others,refined liquids,2021,0.6807907,0.0034688
+Kentucky,comm,refined liquids,other,refined liquids,2021,0.6807907,0.0034688
 Kentucky,resid,biomass,heating,wood furnace,2021,1,0.0044148
 Kentucky,resid,electricity,clothes dryers,clothes dryer,2021,0.0412328,0.0039123
 Kentucky,resid,electricity,clothes washers,clothes washer,2021,0.0057958,5.499e-4
@@ -714,18 +714,18 @@ Kentucky,resid,electricity,heating,electric heat pump,2021,0.0720257,0.006834
 Kentucky,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Kentucky,resid,electricity,hot water,electric resistance water heater,2021,0.1568092,0.0148785
 Kentucky,resid,electricity,lighting,lighting,2021,0.0407571,0.0038672
-Kentucky,resid,electricity,others,electricity,2021,0.3431658,0.0325606
+Kentucky,resid,electricity,other,electricity,2021,0.3431658,0.0325606
 Kentucky,resid,electricity,refrigerators,refrigerator,2021,0.0427685,0.004058
 Kentucky,resid,gas,clothes dryers,clothes dryer,2021,0.0043506,2.223e-4
 Kentucky,resid,gas,cooking,gas oven,2021,0.0213814,0.0010925
 Kentucky,resid,gas,cooling,air conditioning,2021,0.044189,0.0022579
 Kentucky,resid,gas,heating,gas furnace,2021,0.7193413,0.0367553
 Kentucky,resid,gas,hot water,gas water heater,2021,0.156784,0.008011
-Kentucky,resid,gas,others,gas,2021,0.0539536,0.0027568
+Kentucky,resid,gas,other,gas,2021,0.0539536,0.0027568
 Kentucky,resid,refined liquids,cooking,lpg oven,2021,0.0327909,1.991e-4
 Kentucky,resid,refined liquids,heating,fuel furnace,2021,0.8035902,0.0048783
 Kentucky,resid,refined liquids,hot water,fuel water heater,2021,0.0984685,5.978e-4
-Kentucky,resid,refined liquids,others,refined liquids,2021,0.0651505,3.955e-4
+Kentucky,resid,refined liquids,other,refined liquids,2021,0.0651505,3.955e-4
 Louisiana,comm,electricity,cooking,electric range,2021,0.0150327,0.0012117
 Louisiana,comm,electricity,cooling,air conditioning,2021,0.1398665,0.0112742
 Louisiana,comm,electricity,heating,electric furnace,2021,0.0103706,8.359e-4
@@ -734,17 +734,17 @@ Louisiana,comm,electricity,hot water,electric heat pump water heater,2021,3.47e-
 Louisiana,comm,electricity,hot water,electric resistance water heater,2021,0.0053602,4.321e-4
 Louisiana,comm,electricity,lighting,lighting,2021,0.092635,0.007467
 Louisiana,comm,electricity,office,office equipment,2021,0.0889942,0.0071735
-Louisiana,comm,electricity,others,electricity,2021,0.4565287,0.0367992
+Louisiana,comm,electricity,other,electricity,2021,0.4565287,0.0367992
 Louisiana,comm,electricity,refrigeration,refrigeration,2021,0.1162616,0.0093715
 Louisiana,comm,electricity,ventilation,ventilation,2021,0.0701204,0.0056522
 Louisiana,comm,gas,cooking,gas range,2021,0.1584956,0.0069746
 Louisiana,comm,gas,cooling,gas cooling,2021,0.0164044,7.219e-4
 Louisiana,comm,gas,heating,gas furnace,2021,0.5286315,0.0232624
 Louisiana,comm,gas,hot water,gas water heater,2021,0.2185934,0.0096192
-Louisiana,comm,gas,others,gas,2021,0.077875,0.0034269
+Louisiana,comm,gas,other,gas,2021,0.077875,0.0034269
 Louisiana,comm,refined liquids,heating,fuel furnace,2021,0,0
 Louisiana,comm,refined liquids,hot water,fuel water heater,2021,0,0
-Louisiana,comm,refined liquids,others,refined liquids,2021,1,0.0071407
+Louisiana,comm,refined liquids,other,refined liquids,2021,1,0.0071407
 Louisiana,resid,biomass,heating,wood furnace,2021,1,0.0039555
 Louisiana,resid,electricity,clothes dryers,clothes dryer,2021,0.0420453,0.0041687
 Louisiana,resid,electricity,clothes washers,clothes washer,2021,0.0062464,6.193e-4
@@ -759,18 +759,18 @@ Louisiana,resid,electricity,heating,electric heat pump,2021,0.0215277,0.0021344
 Louisiana,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Louisiana,resid,electricity,hot water,electric resistance water heater,2021,0.1161255,0.0115137
 Louisiana,resid,electricity,lighting,lighting,2021,0.0377778,0.0037456
-Louisiana,resid,electricity,others,electricity,2021,0.3473376,0.034438
+Louisiana,resid,electricity,other,electricity,2021,0.3473376,0.034438
 Louisiana,resid,electricity,refrigerators,refrigerator,2021,0.0493466,0.0048926
 Louisiana,resid,gas,clothes dryers,clothes dryer,2021,0.0078931,3.478e-4
 Louisiana,resid,gas,cooking,gas oven,2021,0.0245018,0.0010796
 Louisiana,resid,gas,cooling,air conditioning,2021,0.0262937,0.0011585
 Louisiana,resid,gas,heating,gas furnace,2021,0.6315988,0.0278283
 Louisiana,resid,gas,hot water,gas water heater,2021,0.2223375,0.0097962
-Louisiana,resid,gas,others,gas,2021,0.087375,0.0038497
+Louisiana,resid,gas,other,gas,2021,0.087375,0.0038497
 Louisiana,resid,refined liquids,cooking,lpg oven,2021,0.0612621,2.845e-4
 Louisiana,resid,refined liquids,heating,fuel furnace,2021,0.5675274,0.0026355
 Louisiana,resid,refined liquids,hot water,fuel water heater,2021,0.1732681,8.046e-4
-Louisiana,resid,refined liquids,others,refined liquids,2021,0.1979425,9.192e-4
+Louisiana,resid,refined liquids,other,refined liquids,2021,0.1979425,9.192e-4
 Maine,comm,electricity,cooking,electric range,2021,0.0119897,2.232e-4
 Maine,comm,electricity,cooling,air conditioning,2021,0.047177,8.784e-4
 Maine,comm,electricity,heating,electric furnace,2021,0.0142945,2.662e-4
@@ -779,17 +779,17 @@ Maine,comm,electricity,hot water,electric heat pump water heater,2021,5.66e-5,1.
 Maine,comm,electricity,hot water,electric resistance water heater,2021,0.0049306,9.18e-5
 Maine,comm,electricity,lighting,lighting,2021,0.0815413,0.0015182
 Maine,comm,electricity,office,office equipment,2021,0.1129818,0.0021036
-Maine,comm,electricity,others,electricity,2021,0.5102949,0.0095014
+Maine,comm,electricity,other,electricity,2021,0.5102949,0.0095014
 Maine,comm,electricity,refrigeration,refrigeration,2021,0.141148,0.0026281
 Maine,comm,electricity,ventilation,ventilation,2021,0.0682064,0.00127
 Maine,comm,gas,cooking,gas range,2021,0.0422478,7.773e-4
 Maine,comm,gas,cooling,gas cooling,2021,0.0017222,3.17e-5
 Maine,comm,gas,heating,gas furnace,2021,0.2895536,0.0053275
 Maine,comm,gas,hot water,gas water heater,2021,0.0426408,7.846e-4
-Maine,comm,gas,others,gas,2021,0.6238356,0.011478
+Maine,comm,gas,other,gas,2021,0.6238356,0.011478
 Maine,comm,refined liquids,heating,fuel furnace,2021,0.9848461,0.007112
 Maine,comm,refined liquids,hot water,fuel water heater,2021,0.0151539,1.094e-4
-Maine,comm,refined liquids,others,refined liquids,2021,0,0
+Maine,comm,refined liquids,other,refined liquids,2021,0,0
 Maine,resid,biomass,heating,wood furnace,2021,1,0.0037491
 Maine,resid,electricity,clothes dryers,clothes dryer,2021,0.0480081,7.517e-4
 Maine,resid,electricity,clothes washers,clothes washer,2021,0.0083999,1.315e-4
@@ -804,18 +804,18 @@ Maine,resid,electricity,heating,electric heat pump,2021,0.0049044,7.68e-5
 Maine,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Maine,resid,electricity,hot water,electric resistance water heater,2021,0.1056723,0.0016545
 Maine,resid,electricity,lighting,lighting,2021,0.0576893,9.033e-4
-Maine,resid,electricity,others,electricity,2021,0.4840057,0.0075783
+Maine,resid,electricity,other,electricity,2021,0.4840057,0.0075783
 Maine,resid,electricity,refrigerators,refrigerator,2021,0.0694139,0.0010868
 Maine,resid,gas,clothes dryers,clothes dryer,2021,0.0061438,1.187e-4
 Maine,resid,gas,cooking,gas oven,2021,0.0191515,3.7e-4
 Maine,resid,gas,cooling,air conditioning,2021,6.306e-4,1.22e-5
 Maine,resid,gas,heating,gas furnace,2021,0.7639363,0.0147605
 Maine,resid,gas,hot water,gas water heater,2021,0.1906196,0.0036831
-Maine,resid,gas,others,gas,2021,0.0195182,3.771e-4
+Maine,resid,gas,other,gas,2021,0.0195182,3.771e-4
 Maine,resid,refined liquids,cooking,lpg oven,2021,0.0138537,2.944e-4
 Maine,resid,refined liquids,heating,fuel furnace,2021,0.8441021,0.0179362
 Maine,resid,refined liquids,hot water,fuel water heater,2021,0.1140414,0.0024233
-Maine,resid,refined liquids,others,refined liquids,2021,0.0280027,5.95e-4
+Maine,resid,refined liquids,other,refined liquids,2021,0.0280027,5.95e-4
 Maryland,comm,electricity,cooking,electric range,2021,0.0140958,0.00128
 Maryland,comm,electricity,cooling,air conditioning,2021,0.0868134,0.0078835
 Maryland,comm,electricity,heating,electric furnace,2021,0.0221051,0.0020074
@@ -824,17 +824,17 @@ Maryland,comm,electricity,hot water,electric heat pump water heater,2021,7.36e-5
 Maryland,comm,electricity,hot water,electric resistance water heater,2021,0.0044407,4.033e-4
 Maryland,comm,electricity,lighting,lighting,2021,0.1210394,0.0109915
 Maryland,comm,electricity,office,office equipment,2021,0.1386987,0.0125952
-Maryland,comm,electricity,others,electricity,2021,0.3641951,0.0330723
+Maryland,comm,electricity,other,electricity,2021,0.3641951,0.0330723
 Maryland,comm,electricity,refrigeration,refrigeration,2021,0.1316866,0.0119584
 Maryland,comm,electricity,ventilation,ventilation,2021,0.1099709,0.0099864
 Maryland,comm,gas,cooking,gas range,2021,0.0915445,0.0079534
 Maryland,comm,gas,cooling,gas cooling,2021,0.0106935,9.29e-4
 Maryland,comm,gas,heating,gas furnace,2021,0.5603718,0.0486849
 Maryland,comm,gas,hot water,gas water heater,2021,0.1953614,0.0169729
-Maryland,comm,gas,others,gas,2021,0.1420288,0.0123394
+Maryland,comm,gas,other,gas,2021,0.1420288,0.0123394
 Maryland,comm,refined liquids,heating,fuel furnace,2021,0.9187697,0.0093241
 Maryland,comm,refined liquids,hot water,fuel water heater,2021,0.0413506,4.196e-4
-Maryland,comm,refined liquids,others,refined liquids,2021,0.0398797,4.047e-4
+Maryland,comm,refined liquids,other,refined liquids,2021,0.0398797,4.047e-4
 Maryland,resid,biomass,heating,wood furnace,2021,1,0.0091303
 Maryland,resid,electricity,clothes dryers,clothes dryer,2021,0.0422224,0.0037774
 Maryland,resid,electricity,clothes washers,clothes washer,2021,0.0076822,6.873e-4
@@ -849,18 +849,18 @@ Maryland,resid,electricity,heating,electric heat pump,2021,0.0374784,0.003353
 Maryland,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Maryland,resid,electricity,hot water,electric resistance water heater,2021,0.119124,0.0106574
 Maryland,resid,electricity,lighting,lighting,2021,0.0501707,0.0044885
-Maryland,resid,electricity,others,electricity,2021,0.3811211,0.0340969
+Maryland,resid,electricity,other,electricity,2021,0.3811211,0.0340969
 Maryland,resid,electricity,refrigerators,refrigerator,2021,0.0603196,0.0053965
 Maryland,resid,gas,clothes dryers,clothes dryer,2021,0.0077504,9.713e-4
 Maryland,resid,gas,cooking,gas oven,2021,0.0238511,0.002989
 Maryland,resid,gas,cooling,air conditioning,2021,0.008693,0.0010894
 Maryland,resid,gas,heating,gas furnace,2021,0.746273,0.0935222
 Maryland,resid,gas,hot water,gas water heater,2021,0.1764493,0.0221125
-Maryland,resid,gas,others,gas,2021,0.0369833,0.0046347
+Maryland,resid,gas,other,gas,2021,0.0369833,0.0046347
 Maryland,resid,refined liquids,cooking,lpg oven,2021,0.0117887,2.882e-4
 Maryland,resid,refined liquids,heating,fuel furnace,2021,0.783079,0.0191461
 Maryland,resid,refined liquids,hot water,fuel water heater,2021,0.1272777,0.0031119
-Maryland,resid,refined liquids,others,refined liquids,2021,0.0778546,0.0019035
+Maryland,resid,refined liquids,other,refined liquids,2021,0.0778546,0.0019035
 Massachusetts,comm,electricity,cooking,electric range,2021,0.0119897,0.0011447
 Massachusetts,comm,electricity,cooling,air conditioning,2021,0.047177,0.0045041
 Massachusetts,comm,electricity,heating,electric furnace,2021,0.0142945,0.0013647
@@ -869,17 +869,17 @@ Massachusetts,comm,electricity,hot water,electric heat pump water heater,2021,5.
 Massachusetts,comm,electricity,hot water,electric resistance water heater,2021,0.0049306,4.707e-4
 Massachusetts,comm,electricity,lighting,lighting,2021,0.0815413,0.0077849
 Massachusetts,comm,electricity,office,office equipment,2021,0.1129818,0.0107865
-Massachusetts,comm,electricity,others,electricity,2021,0.5102949,0.0487186
+Massachusetts,comm,electricity,other,electricity,2021,0.5102949,0.0487186
 Massachusetts,comm,electricity,refrigeration,refrigeration,2021,0.141148,0.0134756
 Massachusetts,comm,electricity,ventilation,ventilation,2021,0.0682064,0.0065118
 Massachusetts,comm,gas,cooking,gas range,2021,0.0422478,0.0039857
 Massachusetts,comm,gas,cooling,gas cooling,2021,0.0017222,1.625e-4
 Massachusetts,comm,gas,heating,gas furnace,2021,0.2895536,0.027317
 Massachusetts,comm,gas,hot water,gas water heater,2021,0.0426408,0.0040228
-Massachusetts,comm,gas,others,gas,2021,0.6238356,0.0588539
+Massachusetts,comm,gas,other,gas,2021,0.6238356,0.0588539
 Massachusetts,comm,refined liquids,heating,fuel furnace,2021,0.9848461,0.0364671
 Massachusetts,comm,refined liquids,hot water,fuel water heater,2021,0.0151539,5.611e-4
-Massachusetts,comm,refined liquids,others,refined liquids,2021,0,0
+Massachusetts,comm,refined liquids,other,refined liquids,2021,0,0
 Massachusetts,resid,biomass,heating,wood furnace,2021,1,0.0192237
 Massachusetts,resid,electricity,clothes dryers,clothes dryer,2021,0.0480081,0.0038543
 Massachusetts,resid,electricity,clothes washers,clothes washer,2021,0.0083999,6.744e-4
@@ -894,18 +894,18 @@ Massachusetts,resid,electricity,heating,electric heat pump,2021,0.0049044,3.937e
 Massachusetts,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Massachusetts,resid,electricity,hot water,electric resistance water heater,2021,0.1056723,0.0084838
 Massachusetts,resid,electricity,lighting,lighting,2021,0.0576893,0.0046315
-Massachusetts,resid,electricity,others,electricity,2021,0.4840057,0.0388578
+Massachusetts,resid,electricity,other,electricity,2021,0.4840057,0.0388578
 Massachusetts,resid,electricity,refrigerators,refrigerator,2021,0.0694139,0.0055728
 Massachusetts,resid,gas,clothes dryers,clothes dryer,2021,0.0061438,6.087e-4
 Massachusetts,resid,gas,cooking,gas oven,2021,0.0191515,0.0018974
 Massachusetts,resid,gas,cooling,air conditioning,2021,6.306e-4,6.25e-5
 Massachusetts,resid,gas,heating,gas furnace,2021,0.7639363,0.0756851
 Massachusetts,resid,gas,hot water,gas water heater,2021,0.1906196,0.0188852
-Massachusetts,resid,gas,others,gas,2021,0.0195182,0.0019337
+Massachusetts,resid,gas,other,gas,2021,0.0195182,0.0019337
 Massachusetts,resid,refined liquids,cooking,lpg oven,2021,0.0138537,0.0015094
 Massachusetts,resid,refined liquids,heating,fuel furnace,2021,0.8441021,0.0919688
 Massachusetts,resid,refined liquids,hot water,fuel water heater,2021,0.1140414,0.0124253
-Massachusetts,resid,refined liquids,others,refined liquids,2021,0.0280027,0.003051
+Massachusetts,resid,refined liquids,other,refined liquids,2021,0.0280027,0.003051
 Michigan,comm,electricity,cooking,electric range,2021,0.0191041,0.0025146
 Michigan,comm,electricity,cooling,air conditioning,2021,0.0632531,0.0083258
 Michigan,comm,electricity,heating,electric furnace,2021,0.021932,0.0028868
@@ -914,17 +914,17 @@ Michigan,comm,electricity,hot water,electric heat pump water heater,2021,2.64e-5
 Michigan,comm,electricity,hot water,electric resistance water heater,2021,0.0036999,4.87e-4
 Michigan,comm,electricity,lighting,lighting,2021,0.1129579,0.0148682
 Michigan,comm,electricity,office,office equipment,2021,0.1161159,0.0152839
-Michigan,comm,electricity,others,electricity,2021,0.4419178,0.0581679
+Michigan,comm,electricity,other,electricity,2021,0.4419178,0.0581679
 Michigan,comm,electricity,refrigeration,refrigeration,2021,0.1206734,0.0158838
 Michigan,comm,electricity,ventilation,ventilation,2021,0.0955537,0.0125774
 Michigan,comm,gas,cooking,gas range,2021,0.0519528,0.0090597
 Michigan,comm,gas,cooling,gas cooling,2021,0.0021178,3.693e-4
 Michigan,comm,gas,heating,gas furnace,2021,0.5578738,0.0972835
 Michigan,comm,gas,hot water,gas water heater,2021,0.123329,0.0215064
-Michigan,comm,gas,others,gas,2021,0.2647267,0.0461637
+Michigan,comm,gas,other,gas,2021,0.2647267,0.0461637
 Michigan,comm,refined liquids,heating,fuel furnace,2021,0.3949232,0.0023141
 Michigan,comm,refined liquids,hot water,fuel water heater,2021,0.0042098,2.47e-5
-Michigan,comm,refined liquids,others,refined liquids,2021,0.600867,0.0035209
+Michigan,comm,refined liquids,other,refined liquids,2021,0.600867,0.0035209
 Michigan,resid,biomass,heating,wood furnace,2021,1,0.018618
 Michigan,resid,electricity,clothes dryers,clothes dryer,2021,0.0401516,0.0053902
 Michigan,resid,electricity,clothes washers,clothes washer,2021,0.0095501,0.0012821
@@ -939,18 +939,18 @@ Michigan,resid,electricity,heating,electric heat pump,2021,0.014684,0.0019713
 Michigan,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Michigan,resid,electricity,hot water,electric resistance water heater,2021,0.0950486,0.0127599
 Michigan,resid,electricity,lighting,lighting,2021,0.0592104,0.0079488
-Michigan,resid,electricity,others,electricity,2021,0.4198031,0.056357
+Michigan,resid,electricity,other,electricity,2021,0.4198031,0.056357
 Michigan,resid,electricity,refrigerators,refrigerator,2021,0.073166900000000007,0.0098224
 Michigan,resid,gas,clothes dryers,clothes dryer,2021,0.0092442,0.0027472
 Michigan,resid,gas,cooking,gas oven,2021,0.0168095,0.0049954
 Michigan,resid,gas,cooling,air conditioning,2021,7.499e-4,2.228e-4
 Michigan,resid,gas,heating,gas furnace,2021,0.7809899,0.2320928
 Michigan,resid,gas,hot water,gas water heater,2021,0.1657088,0.049245
-Michigan,resid,gas,others,gas,2021,0.0264977,0.0078745
+Michigan,resid,gas,other,gas,2021,0.0264977,0.0078745
 Michigan,resid,refined liquids,cooking,lpg oven,2021,0.011492,5.225e-4
 Michigan,resid,refined liquids,heating,fuel furnace,2021,0.8119515,0.0369156
 Michigan,resid,refined liquids,hot water,fuel water heater,2021,0.0773237,0.0035155
-Michigan,resid,refined liquids,others,refined liquids,2021,0.0992329,0.0045116
+Michigan,resid,refined liquids,other,refined liquids,2021,0.0992329,0.0045116
 Minnesota,comm,electricity,cooking,electric range,2021,0.0180117,0.0015857
 Minnesota,comm,electricity,cooling,air conditioning,2021,0.045284,0.0039868
 Minnesota,comm,electricity,heating,electric furnace,2021,0.0269423,0.002372
@@ -959,17 +959,17 @@ Minnesota,comm,electricity,hot water,electric heat pump water heater,2021,5.43e-
 Minnesota,comm,electricity,hot water,electric resistance water heater,2021,0.0039826,3.506e-4
 Minnesota,comm,electricity,lighting,lighting,2021,0.0871147,0.0076695
 Minnesota,comm,electricity,office,office equipment,2021,0.1065262,0.0093785
-Minnesota,comm,electricity,others,electricity,2021,0.5359526,0.0471849
+Minnesota,comm,electricity,other,electricity,2021,0.5359526,0.0471849
 Minnesota,comm,electricity,refrigeration,refrigeration,2021,0.0959623,0.0084484
 Minnesota,comm,electricity,ventilation,ventilation,2021,0.0731041,0.006436
 Minnesota,comm,gas,cooking,gas range,2021,0.0483981,0.0048547
 Minnesota,comm,gas,cooling,gas cooling,2021,0.0011702,1.174e-4
 Minnesota,comm,gas,heating,gas furnace,2021,0.5087326,0.05103
 Minnesota,comm,gas,hot water,gas water heater,2021,0.0944744,0.0094765
-Minnesota,comm,gas,others,gas,2021,0.3472247,0.0348295
+Minnesota,comm,gas,other,gas,2021,0.3472247,0.0348295
 Minnesota,comm,refined liquids,heating,fuel furnace,2021,0.3496734,0.0033399
 Minnesota,comm,refined liquids,hot water,fuel water heater,2021,0.0016402,1.57e-5
-Minnesota,comm,refined liquids,others,refined liquids,2021,0.6486864,0.0061958
+Minnesota,comm,refined liquids,other,refined liquids,2021,0.6486864,0.0061958
 Minnesota,resid,biomass,heating,wood furnace,2021,1,0.0120905
 Minnesota,resid,electricity,clothes dryers,clothes dryer,2021,0.0530341,0.0044219
 Minnesota,resid,electricity,clothes washers,clothes washer,2021,0.0087002,7.254e-4
@@ -984,18 +984,18 @@ Minnesota,resid,electricity,heating,electric heat pump,2021,0.0179238,0.0014945
 Minnesota,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Minnesota,resid,electricity,hot water,electric resistance water heater,2021,0.1130955,0.0094298
 Minnesota,resid,electricity,lighting,lighting,2021,0.0568152,0.0047372
-Minnesota,resid,electricity,others,electricity,2021,0.4219488,0.0351818
+Minnesota,resid,electricity,other,electricity,2021,0.4219488,0.0351818
 Minnesota,resid,electricity,refrigerators,refrigerator,2021,0.0686835,0.0057268
 Minnesota,resid,gas,clothes dryers,clothes dryer,2021,0.0061351,7.918e-4
 Minnesota,resid,gas,cooking,gas oven,2021,0.013143,0.0016961
 Minnesota,resid,gas,cooling,air conditioning,2021,0.0032715,4.222e-4
 Minnesota,resid,gas,heating,gas furnace,2021,0.7770148,0.1002757
 Minnesota,resid,gas,hot water,gas water heater,2021,0.1815348,0.0234275
-Minnesota,resid,gas,others,gas,2021,0.0189007,0.0024392
+Minnesota,resid,gas,other,gas,2021,0.0189007,0.0024392
 Minnesota,resid,refined liquids,cooking,lpg oven,2021,0.0104257,3.338e-4
 Minnesota,resid,refined liquids,heating,fuel furnace,2021,0.8877159,0.0284185
 Minnesota,resid,refined liquids,hot water,fuel water heater,2021,0.0583994,0.0018695
-Minnesota,resid,refined liquids,others,refined liquids,2021,0.043459,0.0013913
+Minnesota,resid,refined liquids,other,refined liquids,2021,0.043459,0.0013913
 Mississippi,comm,electricity,cooking,electric range,2021,0.0161179,8.447e-4
 Mississippi,comm,electricity,cooling,air conditioning,2021,0.1295446,0.0067891
 Mississippi,comm,electricity,heating,electric furnace,2021,0.0106575,5.585e-4
@@ -1004,17 +1004,17 @@ Mississippi,comm,electricity,hot water,electric heat pump water heater,2021,4.06
 Mississippi,comm,electricity,hot water,electric resistance water heater,2021,0.0053489,2.803e-4
 Mississippi,comm,electricity,lighting,lighting,2021,0.0961256,0.0050377
 Mississippi,comm,electricity,office,office equipment,2021,0.0956265,0.0050116
-Mississippi,comm,electricity,others,electricity,2021,0.454828,0.0238365
+Mississippi,comm,electricity,other,electricity,2021,0.454828,0.0238365
 Mississippi,comm,electricity,refrigeration,refrigeration,2021,0.1153008,0.0060427
 Mississippi,comm,electricity,ventilation,ventilation,2021,0.0716711,0.0037561
 Mississippi,comm,gas,cooking,gas range,2021,0.150199,0.0034653
 Mississippi,comm,gas,cooling,gas cooling,2021,0.0138904,3.205e-4
 Mississippi,comm,gas,heating,gas furnace,2021,0.520732,0.012014
 Mississippi,comm,gas,hot water,gas water heater,2021,0.2233487,0.005153
-Mississippi,comm,gas,others,gas,2021,0.09183,0.0021186
+Mississippi,comm,gas,other,gas,2021,0.09183,0.0021186
 Mississippi,comm,refined liquids,heating,fuel furnace,2021,0.0662541,2.115e-4
 Mississippi,comm,refined liquids,hot water,fuel water heater,2021,3.031e-4,1e-6
-Mississippi,comm,refined liquids,others,refined liquids,2021,0.9334428,0.0029802
+Mississippi,comm,refined liquids,other,refined liquids,2021,0.9334428,0.0029802
 Mississippi,resid,biomass,heating,wood furnace,2021,1,0.0024714
 Mississippi,resid,electricity,clothes dryers,clothes dryer,2021,0.0417758,0.0025894
 Mississippi,resid,electricity,clothes washers,clothes washer,2021,0.0060832,3.771e-4
@@ -1029,18 +1029,18 @@ Mississippi,resid,electricity,heating,electric heat pump,2021,0.0390375,0.002419
 Mississippi,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Mississippi,resid,electricity,hot water,electric resistance water heater,2021,0.1316383,0.0081595
 Mississippi,resid,electricity,lighting,lighting,2021,0.0389739,0.0024158
-Mississippi,resid,electricity,others,electricity,2021,0.3527327,0.0218639
+Mississippi,resid,electricity,other,electricity,2021,0.3527327,0.0218639
 Mississippi,resid,electricity,refrigerators,refrigerator,2021,0.0466963,0.0028944
 Mississippi,resid,gas,clothes dryers,clothes dryer,2021,0.0060875,1.691e-4
 Mississippi,resid,gas,cooking,gas oven,2021,0.0235941,6.554e-4
 Mississippi,resid,gas,cooling,air conditioning,2021,0.0401273,0.0011146
 Mississippi,resid,gas,heating,gas furnace,2021,0.6531347,0.0181427
 Mississippi,resid,gas,hot water,gas water heater,2021,0.1985146,0.0055143
-Mississippi,resid,gas,others,gas,2021,0.0785418,0.0021817
+Mississippi,resid,gas,other,gas,2021,0.0785418,0.0021817
 Mississippi,resid,refined liquids,cooking,lpg oven,2021,0.0479668,1.355e-4
 Mississippi,resid,refined liquids,heating,fuel furnace,2021,0.6638899,0.0018759
 Mississippi,resid,refined liquids,hot water,fuel water heater,2021,0.1346558,3.805e-4
-Mississippi,resid,refined liquids,others,refined liquids,2021,0.1534874,4.337e-4
+Mississippi,resid,refined liquids,other,refined liquids,2021,0.1534874,4.337e-4
 Missouri,comm,electricity,cooking,electric range,2021,0.0174916,0.0019347
 Missouri,comm,electricity,cooling,air conditioning,2021,0.0699927,0.0077419
 Missouri,comm,electricity,heating,electric furnace,2021,0.0204641,0.0022635
@@ -1049,17 +1049,17 @@ Missouri,comm,electricity,hot water,electric heat pump water heater,2021,4.3e-5,
 Missouri,comm,electricity,hot water,electric resistance water heater,2021,0.003021,3.341e-4
 Missouri,comm,electricity,lighting,lighting,2021,0.0884524,0.0097837
 Missouri,comm,electricity,office,office equipment,2021,0.1031776,0.0114124
-Missouri,comm,electricity,others,electricity,2021,0.5388246,0.0595992
+Missouri,comm,electricity,other,electricity,2021,0.5388246,0.0595992
 Missouri,comm,electricity,refrigeration,refrigeration,2021,0.0803961,0.0088926
 Missouri,comm,electricity,ventilation,ventilation,2021,0.07283,0.0080557
 Missouri,comm,gas,cooking,gas range,2021,0.0486469,0.0038868
 Missouri,comm,gas,cooling,gas cooling,2021,0.0012658,1.011e-4
 Missouri,comm,gas,heating,gas furnace,2021,0.5155184,0.0411895
 Missouri,comm,gas,hot water,gas water heater,2021,0.0980153,0.0078313
-Missouri,comm,gas,others,gas,2021,0.3365536,0.0268904
+Missouri,comm,gas,other,gas,2021,0.3365536,0.0268904
 Missouri,comm,refined liquids,heating,fuel furnace,2021,0.3639479,2.238e-4
 Missouri,comm,refined liquids,hot water,fuel water heater,2021,5.136e-4,3e-7
-Missouri,comm,refined liquids,others,refined liquids,2021,0.6355385,3.908e-4
+Missouri,comm,refined liquids,other,refined liquids,2021,0.6355385,3.908e-4
 Missouri,resid,biomass,heating,wood furnace,2021,1,0.0062348
 Missouri,resid,electricity,clothes dryers,clothes dryer,2021,0.0448438,0.0049067
 Missouri,resid,electricity,clothes washers,clothes washer,2021,0.0073822,8.077e-4
@@ -1074,18 +1074,18 @@ Missouri,resid,electricity,heating,electric heat pump,2021,0.0199765,0.0021858
 Missouri,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Missouri,resid,electricity,hot water,electric resistance water heater,2021,0.0962505,0.0105316
 Missouri,resid,electricity,lighting,lighting,2021,0.0463543,0.005072
-Missouri,resid,electricity,others,electricity,2021,0.3603623,0.0394304
+Missouri,resid,electricity,other,electricity,2021,0.3603623,0.0394304
 Missouri,resid,electricity,refrigerators,refrigerator,2021,0.0549897,0.0060169
 Missouri,resid,gas,clothes dryers,clothes dryer,2021,0.0064426,8.433e-4
 Missouri,resid,gas,cooking,gas oven,2021,0.01349,0.0017657
 Missouri,resid,gas,cooling,air conditioning,2021,0.0029773,3.897e-4
 Missouri,resid,gas,heating,gas furnace,2021,0.7776267,0.1017809
 Missouri,resid,gas,hot water,gas water heater,2021,0.1798865,0.0235447
-Missouri,resid,gas,others,gas,2021,0.0195769,0.0025624
+Missouri,resid,gas,other,gas,2021,0.0195769,0.0025624
 Missouri,resid,refined liquids,cooking,lpg oven,2021,0.0113328,1.72e-4
 Missouri,resid,refined liquids,heating,fuel furnace,2021,0.8816529,0.0133774
 Missouri,resid,refined liquids,hot water,fuel water heater,2021,0.0629521,9.552e-4
-Missouri,resid,refined liquids,others,refined liquids,2021,0.0440622,6.686e-4
+Missouri,resid,refined liquids,other,refined liquids,2021,0.0440622,6.686e-4
 Montana,comm,electricity,cooking,electric range,2021,0.0175337,2.133e-4
 Montana,comm,electricity,cooling,air conditioning,2021,0.0337015,4.1e-4
 Montana,comm,electricity,heating,electric furnace,2021,0.0169755,2.065e-4
@@ -1094,17 +1094,17 @@ Montana,comm,electricity,hot water,electric heat pump water heater,2021,1.312e-4
 Montana,comm,electricity,hot water,electric resistance water heater,2021,0.0064255,7.82e-5
 Montana,comm,electricity,lighting,lighting,2021,0.1337425,0.0016272
 Montana,comm,electricity,office,office equipment,2021,0.1370799,0.0016678
-Montana,comm,electricity,others,electricity,2021,0.3748472,0.0045606
+Montana,comm,electricity,other,electricity,2021,0.3748472,0.0045606
 Montana,comm,electricity,refrigeration,refrigeration,2021,0.2260438,0.0027502
 Montana,comm,electricity,ventilation,ventilation,2021,0.0460974,5.608e-4
 Montana,comm,gas,cooking,gas range,2021,0.1481526,0.0015063
 Montana,comm,gas,cooling,gas cooling,2021,0.0043414,4.41e-5
 Montana,comm,gas,heating,gas furnace,2021,0.4165119,0.0042349
 Montana,comm,gas,hot water,gas water heater,2021,0.2443116,0.002484
-Montana,comm,gas,others,gas,2021,0.1866824,0.0018981
+Montana,comm,gas,other,gas,2021,0.1866824,0.0018981
 Montana,comm,refined liquids,heating,fuel furnace,2021,0.0190673,3.04e-5
 Montana,comm,refined liquids,hot water,fuel water heater,2021,2.703e-4,4e-7
-Montana,comm,refined liquids,others,refined liquids,2021,0.9806624,0.0015613
+Montana,comm,refined liquids,other,refined liquids,2021,0.9806624,0.0015613
 Montana,resid,biomass,heating,wood furnace,2021,1,0.0024787
 Montana,resid,electricity,clothes dryers,clothes dryer,2021,0.0434987,7.993e-4
 Montana,resid,electricity,clothes washers,clothes washer,2021,0.0064513,1.185e-4
@@ -1119,18 +1119,18 @@ Montana,resid,electricity,heating,electric heat pump,2021,0.0729777,0.001341
 Montana,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Montana,resid,electricity,hot water,electric resistance water heater,2021,0.1886248,0.0034661
 Montana,resid,electricity,lighting,lighting,2021,0.0396332,7.283e-4
-Montana,resid,electricity,others,electricity,2021,0.2753595,0.0050598
+Montana,resid,electricity,other,electricity,2021,0.2753595,0.0050598
 Montana,resid,electricity,refrigerators,refrigerator,2021,0.0585991,0.0010768
 Montana,resid,gas,clothes dryers,clothes dryer,2021,0.011604,1.668e-4
 Montana,resid,gas,cooking,gas oven,2021,0.0257321,3.7e-4
 Montana,resid,gas,cooling,air conditioning,2021,0.0077115,1.109e-4
 Montana,resid,gas,heating,gas furnace,2021,0.5994795,0.0086197
 Montana,resid,gas,hot water,gas water heater,2021,0.2786815,0.0040071
-Montana,resid,gas,others,gas,2021,0.0767914,0.0011042
+Montana,resid,gas,other,gas,2021,0.0767914,0.0011042
 Montana,resid,refined liquids,cooking,lpg oven,2021,0.0324641,7.18e-5
 Montana,resid,refined liquids,heating,fuel furnace,2021,0.6059304,0.0013404
 Montana,resid,refined liquids,hot water,fuel water heater,2021,0.1888888,4.178e-4
-Montana,resid,refined liquids,others,refined liquids,2021,0.1727168,3.821e-4
+Montana,resid,refined liquids,other,refined liquids,2021,0.1727168,3.821e-4
 Nebraska,comm,electricity,cooking,electric range,2021,0.0153555,4.117e-4
 Nebraska,comm,electricity,cooling,air conditioning,2021,0.0451683,0.0012111
 Nebraska,comm,electricity,heating,electric furnace,2021,0.0346988,9.304e-4
@@ -1139,17 +1139,17 @@ Nebraska,comm,electricity,hot water,electric heat pump water heater,2021,7.14e-5
 Nebraska,comm,electricity,hot water,electric resistance water heater,2021,0.0039507,1.059e-4
 Nebraska,comm,electricity,lighting,lighting,2021,0.0778588,0.0020877
 Nebraska,comm,electricity,office,office equipment,2021,0.0898505,0.0024092
-Nebraska,comm,electricity,others,electricity,2021,0.531273,0.0142453
+Nebraska,comm,electricity,other,electricity,2021,0.531273,0.0142453
 Nebraska,comm,electricity,refrigeration,refrigeration,2021,0.1209281,0.0032425
 Nebraska,comm,electricity,ventilation,ventilation,2021,0.070346,0.0018862
 Nebraska,comm,gas,cooking,gas range,2021,0.0473861,0.001575
 Nebraska,comm,gas,cooling,gas cooling,2021,7.214e-4,2.4e-5
 Nebraska,comm,gas,heating,gas furnace,2021,0.4759435,0.0158187
 Nebraska,comm,gas,hot water,gas water heater,2021,0.0788936,0.0026222
-Nebraska,comm,gas,others,gas,2021,0.3970555,0.0131968
+Nebraska,comm,gas,other,gas,2021,0.3970555,0.0131968
 Nebraska,comm,refined liquids,heating,fuel furnace,2021,0.3314669,8.812e-4
 Nebraska,comm,refined liquids,hot water,fuel water heater,2021,0.0024576,6.5e-6
-Nebraska,comm,refined liquids,others,refined liquids,2021,0.6660755,0.0017707
+Nebraska,comm,refined liquids,other,refined liquids,2021,0.6660755,0.0017707
 Nebraska,resid,biomass,heating,wood furnace,2021,1,0.0041473
 Nebraska,resid,electricity,clothes dryers,clothes dryer,2021,0.0500155,0.0017302
 Nebraska,resid,electricity,clothes washers,clothes washer,2021,0.0073259,2.534e-4
@@ -1164,18 +1164,18 @@ Nebraska,resid,electricity,heating,electric heat pump,2021,0.0289485,0.0010014
 Nebraska,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Nebraska,resid,electricity,hot water,electric resistance water heater,2021,0.1084343,0.0037511
 Nebraska,resid,electricity,lighting,lighting,2021,0.0466806,0.0016148
-Nebraska,resid,electricity,others,electricity,2021,0.3819175,0.0132117
+Nebraska,resid,electricity,other,electricity,2021,0.3819175,0.0132117
 Nebraska,resid,electricity,refrigerators,refrigerator,2021,0.056455,0.001953
 Nebraska,resid,gas,clothes dryers,clothes dryer,2021,0.0038278,1.421e-4
 Nebraska,resid,gas,cooking,gas oven,2021,0.0105793,3.929e-4
 Nebraska,resid,gas,cooling,air conditioning,2021,0.0057531,2.136e-4
 Nebraska,resid,gas,heating,gas furnace,2021,0.7699703,0.028593
 Nebraska,resid,gas,hot water,gas water heater,2021,0.1954809,0.0072592
-Nebraska,resid,gas,others,gas,2021,0.0143885,5.343e-4
+Nebraska,resid,gas,other,gas,2021,0.0143885,5.343e-4
 Nebraska,resid,refined liquids,cooking,lpg oven,2021,0.0108485,1.144e-4
 Nebraska,resid,refined liquids,heating,fuel furnace,2021,0.9181853,0.0096853
 Nebraska,resid,refined liquids,hot water,fuel water heater,2021,0.0544538,5.744e-4
-Nebraska,resid,refined liquids,others,refined liquids,2021,0.0165124,1.742e-4
+Nebraska,resid,refined liquids,other,refined liquids,2021,0.0165124,1.742e-4
 Nevada,comm,electricity,cooking,electric range,2021,0.0168492,8.279e-4
 Nevada,comm,electricity,cooling,air conditioning,2021,0.058836,0.002891
 Nevada,comm,electricity,heating,electric furnace,2021,0.0116711,5.735e-4
@@ -1184,17 +1184,17 @@ Nevada,comm,electricity,hot water,electric heat pump water heater,2021,1.04e-5,5
 Nevada,comm,electricity,hot water,electric resistance water heater,2021,0.0020234,9.94e-5
 Nevada,comm,electricity,lighting,lighting,2021,0.071326,0.0035047
 Nevada,comm,electricity,office,office equipment,2021,0.1058722,0.0052021
-Nevada,comm,electricity,others,electricity,2021,0.5948742,0.0292296
+Nevada,comm,electricity,other,electricity,2021,0.5948742,0.0292296
 Nevada,comm,electricity,refrigeration,refrigeration,2021,0.069215,0.0034009
 Nevada,comm,electricity,ventilation,ventilation,2021,0.0643115,0.00316
 Nevada,comm,gas,cooking,gas range,2021,0.062716,0.0024629
 Nevada,comm,gas,cooling,gas cooling,2021,0.0020451000000000002,8.03e-5
 Nevada,comm,gas,heating,gas furnace,2021,0.4990917,0.0196
 Nevada,comm,gas,hot water,gas water heater,2021,0.2073856,0.0081443
-Nevada,comm,gas,others,gas,2021,0.2287617,0.0089838
+Nevada,comm,gas,other,gas,2021,0.2287617,0.0089838
 Nevada,comm,refined liquids,heating,fuel furnace,2021,0.0265989,1.123e-4
 Nevada,comm,refined liquids,hot water,fuel water heater,2021,0,0
-Nevada,comm,refined liquids,others,refined liquids,2021,0.9734011,0.0041095
+Nevada,comm,refined liquids,other,refined liquids,2021,0.9734011,0.0041095
 Nevada,resid,biomass,heating,wood furnace,2021,1,0.0032196
 Nevada,resid,electricity,clothes dryers,clothes dryer,2021,0.0447901,0.0018911
 Nevada,resid,electricity,clothes washers,clothes washer,2021,0.0077296,3.263e-4
@@ -1209,18 +1209,18 @@ Nevada,resid,electricity,heating,electric heat pump,2021,0.0176987,7.473e-4
 Nevada,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Nevada,resid,electricity,hot water,electric resistance water heater,2021,0.0671733,0.0028361
 Nevada,resid,electricity,lighting,lighting,2021,0.0531046,0.0022421
-Nevada,resid,electricity,others,electricity,2021,0.4516642,0.0190695
+Nevada,resid,electricity,other,electricity,2021,0.4516642,0.0190695
 Nevada,resid,electricity,refrigerators,refrigerator,2021,0.0628302,0.0026527
 Nevada,resid,gas,clothes dryers,clothes dryer,2021,0.0072394,4.181e-4
 Nevada,resid,gas,cooking,gas oven,2021,0.0166178,9.598e-4
 Nevada,resid,gas,cooling,air conditioning,2021,0.0174753,0.0010094
 Nevada,resid,gas,heating,gas furnace,2021,0.6424414,0.0371074
 Nevada,resid,gas,hot water,gas water heater,2021,0.2635817,0.0152245
-Nevada,resid,gas,others,gas,2021,0.0526444,0.0030407
+Nevada,resid,gas,other,gas,2021,0.0526444,0.0030407
 Nevada,resid,refined liquids,cooking,lpg oven,2021,0.0258189,1.066e-4
 Nevada,resid,refined liquids,heating,fuel furnace,2021,0.6460713,0.0026683
 Nevada,resid,refined liquids,hot water,fuel water heater,2021,0.1709467,7.06e-4
-Nevada,resid,refined liquids,others,refined liquids,2021,0.1571631,6.491e-4
+Nevada,resid,refined liquids,other,refined liquids,2021,0.1571631,6.491e-4
 New Hampshire,comm,electricity,cooking,electric range,2021,0.0119897,2.258e-4
 New Hampshire,comm,electricity,cooling,air conditioning,2021,0.047177,8.885e-4
 New Hampshire,comm,electricity,heating,electric furnace,2021,0.0142945,2.692e-4
@@ -1229,17 +1229,17 @@ New Hampshire,comm,electricity,hot water,electric heat pump water heater,2021,5.
 New Hampshire,comm,electricity,hot water,electric resistance water heater,2021,0.0049306,9.29e-5
 New Hampshire,comm,electricity,lighting,lighting,2021,0.0815413,0.0015358
 New Hampshire,comm,electricity,office,office equipment,2021,0.1129818,0.0021279
-New Hampshire,comm,electricity,others,electricity,2021,0.5102949,0.0096109
+New Hampshire,comm,electricity,other,electricity,2021,0.5102949,0.0096109
 New Hampshire,comm,electricity,refrigeration,refrigeration,2021,0.141148,0.0026584
 New Hampshire,comm,electricity,ventilation,ventilation,2021,0.0682064,0.0012846000000000001
 New Hampshire,comm,gas,cooking,gas range,2021,0.0422478,7.863e-4
 New Hampshire,comm,gas,cooling,gas cooling,2021,0.0017222,3.21e-5
 New Hampshire,comm,gas,heating,gas furnace,2021,0.2895536,0.0053889
 New Hampshire,comm,gas,hot water,gas water heater,2021,0.0426408,7.936e-4
-New Hampshire,comm,gas,others,gas,2021,0.6238356,0.0116103
+New Hampshire,comm,gas,other,gas,2021,0.6238356,0.0116103
 New Hampshire,comm,refined liquids,heating,fuel furnace,2021,0.9848461,0.007194
 New Hampshire,comm,refined liquids,hot water,fuel water heater,2021,0.0151539,1.107e-4
-New Hampshire,comm,refined liquids,others,refined liquids,2021,0,0
+New Hampshire,comm,refined liquids,other,refined liquids,2021,0,0
 New Hampshire,resid,biomass,heating,wood furnace,2021,1,0.0037923
 New Hampshire,resid,electricity,clothes dryers,clothes dryer,2021,0.0480081,7.603e-4
 New Hampshire,resid,electricity,clothes washers,clothes washer,2021,0.0083999,1.33e-4
@@ -1254,18 +1254,18 @@ New Hampshire,resid,electricity,heating,electric heat pump,2021,0.0049044,7.77e-
 New Hampshire,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 New Hampshire,resid,electricity,hot water,electric resistance water heater,2021,0.1056723,0.0016736
 New Hampshire,resid,electricity,lighting,lighting,2021,0.0576893,9.137e-4
-New Hampshire,resid,electricity,others,electricity,2021,0.4840057,0.0076656
+New Hampshire,resid,electricity,other,electricity,2021,0.4840057,0.0076656
 New Hampshire,resid,electricity,refrigerators,refrigerator,2021,0.0694139,0.0010994
 New Hampshire,resid,gas,clothes dryers,clothes dryer,2021,0.0061438,1.201e-4
 New Hampshire,resid,gas,cooking,gas oven,2021,0.0191515,3.743e-4
 New Hampshire,resid,gas,cooling,air conditioning,2021,6.306e-4,1.23e-5
 New Hampshire,resid,gas,heating,gas furnace,2021,0.7639363,0.0149307
 New Hampshire,resid,gas,hot water,gas water heater,2021,0.1906196,0.0037256
-New Hampshire,resid,gas,others,gas,2021,0.0195182,3.815e-4
+New Hampshire,resid,gas,other,gas,2021,0.0195182,3.815e-4
 New Hampshire,resid,refined liquids,cooking,lpg oven,2021,0.0138537,2.978e-4
 New Hampshire,resid,refined liquids,heating,fuel furnace,2021,0.8441021,0.018143
 New Hampshire,resid,refined liquids,hot water,fuel water heater,2021,0.1140414,0.0024512
-New Hampshire,resid,refined liquids,others,refined liquids,2021,0.0280027,6.019e-4
+New Hampshire,resid,refined liquids,other,refined liquids,2021,0.0280027,6.019e-4
 New Jersey,comm,electricity,cooking,electric range,2021,0.0127236,0.0016556
 New Jersey,comm,electricity,cooling,air conditioning,2021,0.090518,0.0117782
 New Jersey,comm,electricity,heating,electric furnace,2021,0.0202297,0.0026323
@@ -1274,17 +1274,17 @@ New Jersey,comm,electricity,hot water,electric heat pump water heater,2021,8.56e
 New Jersey,comm,electricity,hot water,electric resistance water heater,2021,0.0044618,5.806e-4
 New Jersey,comm,electricity,lighting,lighting,2021,0.1256471,0.0163492
 New Jersey,comm,electricity,office,office equipment,2021,0.1456536,0.0189525
-New Jersey,comm,electricity,others,electricity,2021,0.3419388,0.0444931
+New Jersey,comm,electricity,other,electricity,2021,0.3419388,0.0444931
 New Jersey,comm,electricity,refrigeration,refrigeration,2021,0.1357498,0.0176638
 New Jersey,comm,electricity,ventilation,ventilation,2021,0.1163153,0.015135
 New Jersey,comm,gas,cooking,gas range,2021,0.0960234,0.0123796
 New Jersey,comm,gas,cooling,gas cooling,2021,0.0122736,0.0015823
 New Jersey,comm,gas,heating,gas furnace,2021,0.5651566,0.0728615
 New Jersey,comm,gas,hot water,gas water heater,2021,0.2089746,0.0269416
-New Jersey,comm,gas,others,gas,2021,0.1175719,0.0151577
+New Jersey,comm,gas,other,gas,2021,0.1175719,0.0151577
 New Jersey,comm,refined liquids,heating,fuel furnace,2021,0.9569547,0.0162157
 New Jersey,comm,refined liquids,hot water,fuel water heater,2021,0.0430453,7.294e-4
-New Jersey,comm,refined liquids,others,refined liquids,2021,0,0
+New Jersey,comm,refined liquids,other,refined liquids,2021,0,0
 New Jersey,resid,biomass,heating,wood furnace,2021,1,0.0145701
 New Jersey,resid,electricity,clothes dryers,clothes dryer,2021,0.0417835,0.005266
 New Jersey,resid,electricity,clothes washers,clothes washer,2021,0.0076469,9.637e-4
@@ -1299,18 +1299,18 @@ New Jersey,resid,electricity,heating,electric heat pump,2021,0.0363337,0.0045791
 New Jersey,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 New Jersey,resid,electricity,hot water,electric resistance water heater,2021,0.1190677,0.0150061
 New Jersey,resid,electricity,lighting,lighting,2021,0.0510025,0.0064278
-New Jersey,resid,electricity,others,electricity,2021,0.3855776,0.0485943
+New Jersey,resid,electricity,other,electricity,2021,0.3855776,0.0485943
 New Jersey,resid,electricity,refrigerators,refrigerator,2021,0.0609237,0.0076782
 New Jersey,resid,gas,clothes dryers,clothes dryer,2021,0.0074204,0.0013585
 New Jersey,resid,gas,cooking,gas oven,2021,0.0256564,0.0046972
 New Jersey,resid,gas,cooling,air conditioning,2021,0.0091168,0.0016691
 New Jersey,resid,gas,heating,gas furnace,2021,0.7419599,0.1358381
 New Jersey,resid,gas,hot water,gas water heater,2021,0.1781054,0.0326076
-New Jersey,resid,gas,others,gas,2021,0.0377411,0.0069096
+New Jersey,resid,gas,other,gas,2021,0.0377411,0.0069096
 New Jersey,resid,refined liquids,cooking,lpg oven,2021,0.0117299,4.613e-4
 New Jersey,resid,refined liquids,heating,fuel furnace,2021,0.7792659,0.0306462
 New Jersey,resid,refined liquids,hot water,fuel water heater,2021,0.1352886,0.0053205
-New Jersey,resid,refined liquids,others,refined liquids,2021,0.0737157,0.002899
+New Jersey,resid,refined liquids,other,refined liquids,2021,0.0737157,0.002899
 New Mexico,comm,electricity,cooking,electric range,2021,0.0157047,5.151e-4
 New Mexico,comm,electricity,cooling,air conditioning,2021,0.0984827,0.0032302
 New Mexico,comm,electricity,heating,electric furnace,2021,0.0076576,2.512e-4
@@ -1319,17 +1319,17 @@ New Mexico,comm,electricity,hot water,electric heat pump water heater,2021,1.48e
 New Mexico,comm,electricity,hot water,electric resistance water heater,2021,0.0024962,8.19e-5
 New Mexico,comm,electricity,lighting,lighting,2021,0.0757962,0.0024861
 New Mexico,comm,electricity,office,office equipment,2021,0.0981983,0.0032209
-New Mexico,comm,electricity,others,electricity,2021,0.5383104,0.0176566
+New Mexico,comm,electricity,other,electricity,2021,0.5383104,0.0176566
 New Mexico,comm,electricity,refrigeration,refrigeration,2021,0.0895971,0.0029388
 New Mexico,comm,electricity,ventilation,ventilation,2021,0.0703612,0.0023079
 New Mexico,comm,gas,cooking,gas range,2021,0.089961,0.0013352
 New Mexico,comm,gas,cooling,gas cooling,2021,0.0060328,8.95e-5
 New Mexico,comm,gas,heating,gas furnace,2021,0.5049388,0.0074944
 New Mexico,comm,gas,hot water,gas water heater,2021,0.2108942,0.0031301
-New Mexico,comm,gas,others,gas,2021,0.1881732,0.0027929
+New Mexico,comm,gas,other,gas,2021,0.1881732,0.0027929
 New Mexico,comm,refined liquids,heating,fuel furnace,2021,0.0079076,2.6e-6
 New Mexico,comm,refined liquids,hot water,fuel water heater,2021,2.22e-5,0
-New Mexico,comm,refined liquids,others,refined liquids,2021,0.9920703,3.31e-4
+New Mexico,comm,refined liquids,other,refined liquids,2021,0.9920703,3.31e-4
 New Mexico,resid,biomass,heating,wood furnace,2021,1,0.0020343
 New Mexico,resid,electricity,clothes dryers,clothes dryer,2021,0.0412659,0.0015241
 New Mexico,resid,electricity,clothes washers,clothes washer,2021,0.0067278,2.485e-4
@@ -1344,18 +1344,18 @@ New Mexico,resid,electricity,heating,electric heat pump,2021,0.0099656,3.681e-4
 New Mexico,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 New Mexico,resid,electricity,hot water,electric resistance water heater,2021,0.0725927,0.0026811
 New Mexico,resid,electricity,lighting,lighting,2021,0.0451853,0.0016689
-New Mexico,resid,electricity,others,electricity,2021,0.3945856,0.0145737
+New Mexico,resid,electricity,other,electricity,2021,0.3945856,0.0145737
 New Mexico,resid,electricity,refrigerators,refrigerator,2021,0.0532954,0.0019684
 New Mexico,resid,gas,clothes dryers,clothes dryer,2021,0.0076223,1.504e-4
 New Mexico,resid,gas,cooking,gas oven,2021,0.0187295,3.696e-4
 New Mexico,resid,gas,cooling,air conditioning,2021,0.018545,3.66e-4
 New Mexico,resid,gas,heating,gas furnace,2021,0.6365999,0.0125636
 New Mexico,resid,gas,hot water,gas water heater,2021,0.2564035,0.0050602
-New Mexico,resid,gas,others,gas,2021,0.0620998,0.0012256
+New Mexico,resid,gas,other,gas,2021,0.0620998,0.0012256
 New Mexico,resid,refined liquids,cooking,lpg oven,2021,0.0365057,8.62e-5
 New Mexico,resid,refined liquids,heating,fuel furnace,2021,0.5877274,0.0013877
 New Mexico,resid,refined liquids,hot water,fuel water heater,2021,0.1889124,4.46e-4
-New Mexico,resid,refined liquids,others,refined liquids,2021,0.1868545,4.412e-4
+New Mexico,resid,refined liquids,other,refined liquids,2021,0.1868545,4.412e-4
 New York,comm,electricity,cooking,electric range,2021,0.0118547,0.0031117
 New York,comm,electricity,cooling,air conditioning,2021,0.083176,0.0218326
 New York,comm,electricity,heating,electric furnace,2021,0.0203518,0.0053421
@@ -1364,17 +1364,17 @@ New York,comm,electricity,hot water,electric heat pump water heater,2021,9.32e-5
 New York,comm,electricity,hot water,electric resistance water heater,2021,0.0039768,0.0010439
 New York,comm,electricity,lighting,lighting,2021,0.1249494,0.0327976
 New York,comm,electricity,office,office equipment,2021,0.1581165,0.0415035
-New York,comm,electricity,others,electricity,2021,0.3215401,0.0844001
+New York,comm,electricity,other,electricity,2021,0.3215401,0.0844001
 New York,comm,electricity,refrigeration,refrigeration,2021,0.135889,0.0356691
 New York,comm,electricity,ventilation,ventilation,2021,0.1344125,0.0352815
 New York,comm,gas,cooking,gas range,2021,0.07396,0.022932
 New York,comm,gas,cooling,gas cooling,2021,0.0106312,0.0032963
 New York,comm,gas,heating,gas furnace,2021,0.5893922,0.1827467
 New York,comm,gas,hot water,gas water heater,2021,0.1989719,0.0616932
-New York,comm,gas,others,gas,2021,0.1270447,0.0393914
+New York,comm,gas,other,gas,2021,0.1270447,0.0393914
 New York,comm,refined liquids,heating,fuel furnace,2021,0.976385,0.0462798
 New York,comm,refined liquids,hot water,fuel water heater,2021,0.023615,0.0011193
-New York,comm,refined liquids,others,refined liquids,2021,0,0
+New York,comm,refined liquids,other,refined liquids,2021,0,0
 New York,resid,biomass,heating,wood furnace,2021,1,0.0419693
 New York,resid,electricity,clothes dryers,clothes dryer,2021,0.0410049,0.0082642
 New York,resid,electricity,clothes washers,clothes washer,2021,0.0080639,0.0016252
@@ -1389,18 +1389,18 @@ New York,resid,electricity,heating,electric heat pump,2021,0.0183577,0.0036998
 New York,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 New York,resid,electricity,hot water,electric resistance water heater,2021,0.1112347,0.0224185
 New York,resid,electricity,lighting,lighting,2021,0.0621248,0.0125208
-New York,resid,electricity,others,electricity,2021,0.3949174,0.0795925
+New York,resid,electricity,other,electricity,2021,0.3949174,0.0795925
 New York,resid,electricity,refrigerators,refrigerator,2021,0.0776796,0.0156557
 New York,resid,gas,clothes dryers,clothes dryer,2021,0.007639,0.0035119
 New York,resid,gas,cooking,gas oven,2021,0.0259695,0.0119389
 New York,resid,gas,cooling,air conditioning,2021,0.0023317,0.0010719
 New York,resid,gas,heating,gas furnace,2021,0.7621065,0.3503618
 New York,resid,gas,hot water,gas water heater,2021,0.1724845,0.079296
-New York,resid,gas,others,gas,2021,0.0294688,0.0135476
+New York,resid,gas,other,gas,2021,0.0294688,0.0135476
 New York,resid,refined liquids,cooking,lpg oven,2021,0.0119635,0.0012713
 New York,resid,refined liquids,heating,fuel furnace,2021,0.7854502,0.0834684
 New York,resid,refined liquids,hot water,fuel water heater,2021,0.1417155,0.0150599
-New York,resid,refined liquids,others,refined liquids,2021,0.0608708,0.0064686
+New York,resid,refined liquids,other,refined liquids,2021,0.0608708,0.0064686
 North Carolina,comm,electricity,cooking,electric range,2021,0.0149695,0.0029645
 North Carolina,comm,electricity,cooling,air conditioning,2021,0.1292705,0.025600500000000002
 North Carolina,comm,electricity,heating,electric furnace,2021,0.0128341,0.0025416
@@ -1409,17 +1409,17 @@ North Carolina,comm,electricity,hot water,electric heat pump water heater,2021,6
 North Carolina,comm,electricity,hot water,electric resistance water heater,2021,0.0063791,0.0012633
 North Carolina,comm,electricity,lighting,lighting,2021,0.1058463,0.0209616
 North Carolina,comm,electricity,office,office equipment,2021,0.1094028,0.0216659
-North Carolina,comm,electricity,others,electricity,2021,0.3941368,0.078054
+North Carolina,comm,electricity,other,electricity,2021,0.3941368,0.078054
 North Carolina,comm,electricity,refrigeration,refrigeration,2021,0.1446979,0.0286557
 North Carolina,comm,electricity,ventilation,ventilation,2021,0.0748786,0.0148288
 North Carolina,comm,gas,cooking,gas range,2021,0.1859099,0.0107579
 North Carolina,comm,gas,cooling,gas cooling,2021,0.0189645,0.0010974
 North Carolina,comm,gas,heating,gas furnace,2021,0.4664203,0.0269899
 North Carolina,comm,gas,hot water,gas water heater,2021,0.2497259,0.0144506
-North Carolina,comm,gas,others,gas,2021,0.0789794,0.0045702
+North Carolina,comm,gas,other,gas,2021,0.0789794,0.0045702
 North Carolina,comm,refined liquids,heating,fuel furnace,2021,0.2403205,0.0012907
 North Carolina,comm,refined liquids,hot water,fuel water heater,2021,0.0580744,3.119e-4
-North Carolina,comm,refined liquids,others,refined liquids,2021,0.7016051,0.0037681
+North Carolina,comm,refined liquids,other,refined liquids,2021,0.7016051,0.0037681
 North Carolina,resid,biomass,heating,wood furnace,2021,1,0.015939
 North Carolina,resid,electricity,clothes dryers,clothes dryer,2021,0.0388591,0.0085153
 North Carolina,resid,electricity,clothes washers,clothes washer,2021,0.0059411,0.0013019
@@ -1434,18 +1434,18 @@ North Carolina,resid,electricity,heating,electric heat pump,2021,0.0644722,0.014
 North Carolina,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 North Carolina,resid,electricity,hot water,electric resistance water heater,2021,0.150056,0.032882
 North Carolina,resid,electricity,lighting,lighting,2021,0.0376088,0.0082413
-North Carolina,resid,electricity,others,electricity,2021,0.351407,0.0770042
+North Carolina,resid,electricity,other,electricity,2021,0.351407,0.0770042
 North Carolina,resid,electricity,refrigerators,refrigerator,2021,0.0453566,0.009939
 North Carolina,resid,gas,clothes dryers,clothes dryer,2021,0.0061309,4.364e-4
 North Carolina,resid,gas,cooking,gas oven,2021,0.0238093,0.0016946
 North Carolina,resid,gas,cooling,air conditioning,2021,0.0491378,0.0034973
 North Carolina,resid,gas,heating,gas furnace,2021,0.623129,0.0443503
 North Carolina,resid,gas,hot water,gas water heater,2021,0.211259,0.015036
-North Carolina,resid,gas,others,gas,2021,0.086534,0.0061589
+North Carolina,resid,gas,other,gas,2021,0.086534,0.0061589
 North Carolina,resid,refined liquids,cooking,lpg oven,2021,0.0320596,5.912e-4
 North Carolina,resid,refined liquids,heating,fuel furnace,2021,0.5997028,0.0110597
 North Carolina,resid,refined liquids,hot water,fuel water heater,2021,0.12073,0.0022265
-North Carolina,resid,refined liquids,others,refined liquids,2021,0.2475077,0.0045645
+North Carolina,resid,refined liquids,other,refined liquids,2021,0.2475077,0.0045645
 North Dakota,comm,electricity,cooking,electric range,2021,0.0156326,1.671e-4
 North Dakota,comm,electricity,cooling,air conditioning,2021,0.0452923,4.842e-4
 North Dakota,comm,electricity,heating,electric furnace,2021,0.0340254,3.637e-4
@@ -1454,17 +1454,17 @@ North Dakota,comm,electricity,hot water,electric heat pump water heater,2021,7.0
 North Dakota,comm,electricity,hot water,electric resistance water heater,2021,0.0039754,4.25e-5
 North Dakota,comm,electricity,lighting,lighting,2021,0.0789867,8.443e-4
 North Dakota,comm,electricity,office,office equipment,2021,0.091515,9.783e-4
-North Dakota,comm,electricity,others,electricity,2021,0.5309822,0.005676
+North Dakota,comm,electricity,other,electricity,2021,0.5309822,0.005676
 North Dakota,comm,electricity,refrigeration,refrigeration,2021,0.1186507,0.0012683
 North Dakota,comm,electricity,ventilation,ventilation,2021,0.0707211,7.56e-4
 North Dakota,comm,gas,cooking,gas range,2021,0.0473845,6.25e-4
 North Dakota,comm,gas,cooling,gas cooling,2021,7.585e-4,1e-5
 North Dakota,comm,gas,heating,gas furnace,2021,0.4791652,0.0063198
 North Dakota,comm,gas,hot water,gas water heater,2021,0.0796121,0.00105
-North Dakota,comm,gas,others,gas,2021,0.3930798,0.0051844
+North Dakota,comm,gas,other,gas,2021,0.3930798,0.0051844
 North Dakota,comm,refined liquids,heating,fuel furnace,2021,0.3348441,3.612e-4
 North Dakota,comm,refined liquids,hot water,fuel water heater,2021,0.002369,2.6e-6
-North Dakota,comm,refined liquids,others,refined liquids,2021,0.6627869,7.149e-4
+North Dakota,comm,refined liquids,other,refined liquids,2021,0.6627869,7.149e-4
 North Dakota,resid,biomass,heating,wood furnace,2021,1,0.0016351
 North Dakota,resid,electricity,clothes dryers,clothes dryer,2021,0.0502782,6.748e-4
 North Dakota,resid,electricity,clothes washers,clothes washer,2021,0.0074322,9.97e-5
@@ -1479,18 +1479,18 @@ North Dakota,resid,electricity,heating,electric heat pump,2021,0.0280667,3.767e-
 North Dakota,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 North Dakota,resid,electricity,hot water,electric resistance water heater,2021,0.1090344,0.0014633
 North Dakota,resid,electricity,lighting,lighting,2021,0.0474701,6.371e-4
-North Dakota,resid,electricity,others,electricity,2021,0.3843868,0.0051588
+North Dakota,resid,electricity,other,electricity,2021,0.3843868,0.0051588
 North Dakota,resid,electricity,refrigerators,refrigerator,2021,0.0573946,7.703e-4
 North Dakota,resid,gas,clothes dryers,clothes dryer,2021,0.0040529,6.02e-5
 North Dakota,resid,gas,cooking,gas oven,2021,0.0107988,1.605e-4
 North Dakota,resid,gas,cooling,air conditioning,2021,0.0053011,7.88e-5
 North Dakota,resid,gas,heating,gas furnace,2021,0.7725394,0.0114842
 North Dakota,resid,gas,hot water,gas water heater,2021,0.19291,0.0028677
-North Dakota,resid,gas,others,gas,2021,0.0143979,2.14e-4
+North Dakota,resid,gas,other,gas,2021,0.0143979,2.14e-4
 North Dakota,resid,refined liquids,cooking,lpg oven,2021,0.0107268,4.5e-5
 North Dakota,resid,refined liquids,heating,fuel furnace,2021,0.916413,0.0038469
 North Dakota,resid,refined liquids,hot water,fuel water heater,2021,0.054265,2.278e-4
-North Dakota,resid,refined liquids,others,refined liquids,2021,0.0185952,7.81e-5
+North Dakota,resid,refined liquids,other,refined liquids,2021,0.0185952,7.81e-5
 Ohio,comm,electricity,cooking,electric range,2021,0.0176869,0.0033258
 Ohio,comm,electricity,cooling,air conditioning,2021,0.0771186,0.0145013
 Ohio,comm,electricity,heating,electric furnace,2021,0.027013,0.0050795
@@ -1499,17 +1499,17 @@ Ohio,comm,electricity,hot water,electric heat pump water heater,2021,4.21e-5,7.9
 Ohio,comm,electricity,hot water,electric resistance water heater,2021,0.0043857,8.247e-4
 Ohio,comm,electricity,lighting,lighting,2021,0.1089816,0.0204928
 Ohio,comm,electricity,office,office equipment,2021,0.1204982,0.0226583
-Ohio,comm,electricity,others,electricity,2021,0.4224384,0.0794348
+Ohio,comm,electricity,other,electricity,2021,0.4224384,0.0794348
 Ohio,comm,electricity,refrigeration,refrigeration,2021,0.1210537,0.0227628
 Ohio,comm,electricity,ventilation,ventilation,2021,0.0933682,0.0175568
 Ohio,comm,gas,cooking,gas range,2021,0.0781587,0.0127504
 Ohio,comm,gas,cooling,gas cooling,2021,0.0059711,9.741e-4
 Ohio,comm,gas,heating,gas furnace,2021,0.5460715,0.0890832
 Ohio,comm,gas,hot water,gas water heater,2021,0.1546758,0.025233
-Ohio,comm,gas,others,gas,2021,0.2151229,0.035094
+Ohio,comm,gas,other,gas,2021,0.2151229,0.035094
 Ohio,comm,refined liquids,heating,fuel furnace,2021,0.5242882,0.0085093
 Ohio,comm,refined liquids,hot water,fuel water heater,2021,0.0236907,3.845e-4
-Ohio,comm,refined liquids,others,refined liquids,2021,0.4520211,0.0073364
+Ohio,comm,refined liquids,other,refined liquids,2021,0.4520211,0.0073364
 Ohio,resid,biomass,heating,wood furnace,2021,1,0.0132809
 Ohio,resid,electricity,clothes dryers,clothes dryer,2021,0.0433039,0.0083765
 Ohio,resid,electricity,clothes washers,clothes washer,2021,0.007769,0.0015028
@@ -1524,18 +1524,18 @@ Ohio,resid,electricity,heating,electric heat pump,2021,0.0402987,0.0077952
 Ohio,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Ohio,resid,electricity,hot water,electric resistance water heater,2021,0.1192628,0.0230697
 Ohio,resid,electricity,lighting,lighting,2021,0.0481212,0.0093083
-Ohio,resid,electricity,others,electricity,2021,0.3701405,0.0715983
+Ohio,resid,electricity,other,electricity,2021,0.3701405,0.0715983
 Ohio,resid,electricity,refrigerators,refrigerator,2021,0.0588311,0.01138
 Ohio,resid,gas,clothes dryers,clothes dryer,2021,0.0086782,0.0021367
 Ohio,resid,gas,cooking,gas oven,2021,0.0187746,0.0046227
 Ohio,resid,gas,cooling,air conditioning,2021,0.0075011,0.0018469
 Ohio,resid,gas,heating,gas furnace,2021,0.7584014,0.1867322
 Ohio,resid,gas,hot water,gas water heater,2021,0.1717924,0.0422984
-Ohio,resid,gas,others,gas,2021,0.0348523,0.0085813
+Ohio,resid,gas,other,gas,2021,0.0348523,0.0085813
 Ohio,resid,refined liquids,cooking,lpg oven,2021,0.0120432,4.142e-4
 Ohio,resid,refined liquids,heating,fuel furnace,2021,0.7995687,0.0274991
 Ohio,resid,refined liquids,hot water,fuel water heater,2021,0.0926353,0.003186
-Ohio,resid,refined liquids,others,refined liquids,2021,0.0957528,0.0032932
+Ohio,resid,refined liquids,other,refined liquids,2021,0.0957528,0.0032932
 Oklahoma,comm,electricity,cooking,electric range,2021,0.0148097,0.0010487
 Oklahoma,comm,electricity,cooling,air conditioning,2021,0.1139184,0.0080669
 Oklahoma,comm,electricity,heating,electric furnace,2021,0.0132226,9.363e-4
@@ -1544,17 +1544,17 @@ Oklahoma,comm,electricity,hot water,electric heat pump water heater,2021,2.86e-5
 Oklahoma,comm,electricity,hot water,electric resistance water heater,2021,0.0045083,3.192e-4
 Oklahoma,comm,electricity,lighting,lighting,2021,0.0939966,0.0066562
 Oklahoma,comm,electricity,office,office equipment,2021,0.0901785,0.0063858
-Oklahoma,comm,electricity,others,electricity,2021,0.4608482,0.0326339
+Oklahoma,comm,electricity,other,electricity,2021,0.4608482,0.0326339
 Oklahoma,comm,electricity,refrigeration,refrigeration,2021,0.1316217,0.0093205
 Oklahoma,comm,electricity,ventilation,ventilation,2021,0.0706107,0.0050001
 Oklahoma,comm,gas,cooking,gas range,2021,0.1600841,0.0067439
 Oklahoma,comm,gas,cooling,gas cooling,2021,0.017031,7.175e-4
 Oklahoma,comm,gas,heating,gas furnace,2021,0.5272968,0.0222137
 Oklahoma,comm,gas,hot water,gas water heater,2021,0.2181571,0.0091904
-Oklahoma,comm,gas,others,gas,2021,0.077431,0.003262
+Oklahoma,comm,gas,other,gas,2021,0.077431,0.003262
 Oklahoma,comm,refined liquids,heating,fuel furnace,2021,0,0
 Oklahoma,comm,refined liquids,hot water,fuel water heater,2021,0,0
-Oklahoma,comm,refined liquids,others,refined liquids,2021,1,0.0039062
+Oklahoma,comm,refined liquids,other,refined liquids,2021,1,0.0039062
 Oklahoma,resid,biomass,heating,wood furnace,2021,1,0.0050453
 Oklahoma,resid,electricity,clothes dryers,clothes dryer,2021,0.0429386,0.0035838
 Oklahoma,resid,electricity,clothes washers,clothes washer,2021,0.0065347,5.454e-4
@@ -1569,18 +1569,18 @@ Oklahoma,resid,electricity,heating,electric heat pump,2021,0.0208782,0.0017425
 Oklahoma,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Oklahoma,resid,electricity,hot water,electric resistance water heater,2021,0.1121957,0.0093641
 Oklahoma,resid,electricity,lighting,lighting,2021,0.0378885,0.0031623
-Oklahoma,resid,electricity,others,electricity,2021,0.3529542,0.0294584
+Oklahoma,resid,electricity,other,electricity,2021,0.3529542,0.0294584
 Oklahoma,resid,electricity,refrigerators,refrigerator,2021,0.0515229,0.0043002
 Oklahoma,resid,gas,clothes dryers,clothes dryer,2021,0.0084124,4.404e-4
 Oklahoma,resid,gas,cooking,gas oven,2021,0.0245464,0.0012849
 Oklahoma,resid,gas,cooling,air conditioning,2021,0.0228965,0.0011986
 Oklahoma,resid,gas,heating,gas furnace,2021,0.6222916,0.0325749
 Oklahoma,resid,gas,hot water,gas water heater,2021,0.2320824,0.0121487
-Oklahoma,resid,gas,others,gas,2021,0.0897707,0.0046992
+Oklahoma,resid,gas,other,gas,2021,0.0897707,0.0046992
 Oklahoma,resid,refined liquids,cooking,lpg oven,2021,0.0676581,3.953e-4
 Oklahoma,resid,refined liquids,heating,fuel furnace,2021,0.4899971,0.0028625
 Oklahoma,resid,refined liquids,hot water,fuel water heater,2021,0.1980196,0.0011568
-Oklahoma,resid,refined liquids,others,refined liquids,2021,0.2443252,0.0014273
+Oklahoma,resid,refined liquids,other,refined liquids,2021,0.2443252,0.0014273
 Oregon,comm,electricity,cooking,electric range,2021,0.0176213,8.377e-4
 Oregon,comm,electricity,cooling,air conditioning,2021,0.033107,0.0015738
 Oregon,comm,electricity,heating,electric furnace,2021,0.0161303,7.668e-4
@@ -1589,17 +1589,17 @@ Oregon,comm,electricity,hot water,electric heat pump water heater,2021,1.344e-4,
 Oregon,comm,electricity,hot water,electric resistance water heater,2021,0.0065511,3.114e-4
 Oregon,comm,electricity,lighting,lighting,2021,0.1365176,0.0064896
 Oregon,comm,electricity,office,office equipment,2021,0.139355,0.0066245
-Oregon,comm,electricity,others,electricity,2021,0.3668171,0.0174373
+Oregon,comm,electricity,other,electricity,2021,0.3668171,0.0174373
 Oregon,comm,electricity,refrigeration,refrigeration,2021,0.2316472,0.0110118
 Oregon,comm,electricity,ventilation,ventilation,2021,0.0448244,0.0021308
 Oregon,comm,gas,cooking,gas range,2021,0.1559176,0.0060456
 Oregon,comm,gas,cooling,gas cooling,2021,0.0046153,1.79e-4
 Oregon,comm,gas,heating,gas furnace,2021,0.4115087,0.0159559
 Oregon,comm,gas,hot water,gas water heater,2021,0.2569264,0.0099621
-Oregon,comm,gas,others,gas,2021,0.1710319,0.0066316
+Oregon,comm,gas,other,gas,2021,0.1710319,0.0066316
 Oregon,comm,refined liquids,heating,fuel furnace,2021,0.0065925,4.15e-5
 Oregon,comm,refined liquids,hot water,fuel water heater,2021,1.902e-4,1.2e-6
-Oregon,comm,refined liquids,others,refined liquids,2021,0.9932172,0.0062495
+Oregon,comm,refined liquids,other,refined liquids,2021,0.9932172,0.0062495
 Oregon,resid,biomass,heating,wood furnace,2021,1,0.0098115
 Oregon,resid,electricity,clothes dryers,clothes dryer,2021,0.043211,0.0031319
 Oregon,resid,electricity,clothes washers,clothes washer,2021,0.0064075,4.644e-4
@@ -1614,18 +1614,18 @@ Oregon,resid,electricity,heating,electric heat pump,2021,0.0748633,0.005426
 Oregon,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Oregon,resid,electricity,hot water,electric resistance water heater,2021,0.1919096,0.0139094
 Oregon,resid,electricity,lighting,lighting,2021,0.0392846,0.0028473
-Oregon,resid,electricity,others,electricity,2021,0.2707486,0.0196235
+Oregon,resid,electricity,other,electricity,2021,0.2707486,0.0196235
 Oregon,resid,electricity,refrigerators,refrigerator,2021,0.0586198,0.0042487
 Oregon,resid,gas,clothes dryers,clothes dryer,2021,0.0120553,6.709e-4
 Oregon,resid,gas,cooking,gas oven,2021,0.0266338,0.0014823
 Oregon,resid,gas,cooling,air conditioning,2021,0.0078696,4.38e-4
 Oregon,resid,gas,heating,gas furnace,2021,0.5888653,0.0327739
 Oregon,resid,gas,hot water,gas water heater,2021,0.2839898,0.0158057
-Oregon,resid,gas,others,gas,2021,0.0805863,0.0044851
+Oregon,resid,gas,other,gas,2021,0.0805863,0.0044851
 Oregon,resid,refined liquids,cooking,lpg oven,2021,0.0350103,2.848e-4
 Oregon,resid,refined liquids,heating,fuel furnace,2021,0.5698521,0.0046355
 Oregon,resid,refined liquids,hot water,fuel water heater,2021,0.2046055,0.0016644
-Oregon,resid,refined liquids,others,refined liquids,2021,0.190532,0.0015499
+Oregon,resid,refined liquids,other,refined liquids,2021,0.190532,0.0015499
 Pennsylvania,comm,electricity,cooking,electric range,2021,0.0138768,0.0026577
 Pennsylvania,comm,electricity,cooling,air conditioning,2021,0.0874047,0.0167396
 Pennsylvania,comm,electricity,heating,electric furnace,2021,0.0218058,0.0041762
@@ -1634,17 +1634,17 @@ Pennsylvania,comm,electricity,hot water,electric heat pump water heater,2021,7.5
 Pennsylvania,comm,electricity,hot water,electric resistance water heater,2021,0.0044441,8.511e-4
 Pennsylvania,comm,electricity,lighting,lighting,2021,0.1217749,0.0233222
 Pennsylvania,comm,electricity,office,office equipment,2021,0.1398088,0.026776
-Pennsylvania,comm,electricity,others,electricity,2021,0.3606428,0.0690699
+Pennsylvania,comm,electricity,other,electricity,2021,0.3606428,0.0690699
 Pennsylvania,comm,electricity,refrigeration,refrigeration,2021,0.1323352,0.0253447
 Pennsylvania,comm,electricity,ventilation,ventilation,2021,0.1109836,0.0212554
 Pennsylvania,comm,gas,cooking,gas range,2021,0.0922807,0.0170048
 Pennsylvania,comm,gas,cooling,gas cooling,2021,0.0109532,0.0020184
 Pennsylvania,comm,gas,heating,gas furnace,2021,0.5611582,0.1034059
 Pennsylvania,comm,gas,hot water,gas water heater,2021,0.1975988,0.036412
-Pennsylvania,comm,gas,others,gas,2021,0.1380091,0.0254313
+Pennsylvania,comm,gas,other,gas,2021,0.1380091,0.0254313
 Pennsylvania,comm,refined liquids,heating,fuel furnace,2021,0.9370972,0.0203355
 Pennsylvania,comm,refined liquids,hot water,fuel water heater,2021,0.0421711,9.151e-4
-Pennsylvania,comm,refined liquids,others,refined liquids,2021,0.0207317,4.499e-4
+Pennsylvania,comm,refined liquids,other,refined liquids,2021,0.0207317,4.499e-4
 Pennsylvania,resid,biomass,heating,wood furnace,2021,1,0.0196054
 Pennsylvania,resid,electricity,clothes dryers,clothes dryer,2021,0.0421534,0.0079322
 Pennsylvania,resid,electricity,clothes washers,clothes washer,2021,0.0076766,0.0014445
@@ -1659,18 +1659,18 @@ Pennsylvania,resid,electricity,heating,electric heat pump,2021,0.0372983,0.00701
 Pennsylvania,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Pennsylvania,resid,electricity,hot water,electric resistance water heater,2021,0.1191152,0.0224144
 Pennsylvania,resid,electricity,lighting,lighting,2021,0.0503015,0.0094655
-Pennsylvania,resid,electricity,others,electricity,2021,0.3818223,0.0718492
+Pennsylvania,resid,electricity,other,electricity,2021,0.3818223,0.0718492
 Pennsylvania,resid,electricity,refrigerators,refrigerator,2021,0.0604146,0.0113685
 Pennsylvania,resid,gas,clothes dryers,clothes dryer,2021,0.0076968,0.0020406
 Pennsylvania,resid,gas,cooking,gas oven,2021,0.024144,0.0064012
 Pennsylvania,resid,gas,cooling,air conditioning,2021,0.0087618,0.002323
 Pennsylvania,resid,gas,heating,gas furnace,2021,0.7455733,0.1976702
 Pennsylvania,resid,gas,hot water,gas water heater,2021,0.1767179,0.0468524
-Pennsylvania,resid,gas,others,gas,2021,0.0371062,0.0098378
+Pennsylvania,resid,gas,other,gas,2021,0.0371062,0.0098378
 Pennsylvania,resid,refined liquids,cooking,lpg oven,2021,0.0117784,6.192e-4
 Pennsylvania,resid,refined liquids,heating,fuel furnace,2021,0.7824089,0.041134
 Pennsylvania,resid,refined liquids,hot water,fuel water heater,2021,0.1286854,0.0067654
-Pennsylvania,resid,refined liquids,others,refined liquids,2021,0.0771273,0.0040549
+Pennsylvania,resid,refined liquids,other,refined liquids,2021,0.0771273,0.0040549
 Rhode Island,comm,electricity,cooking,electric range,2021,0.0119897,1.759e-4
 Rhode Island,comm,electricity,cooling,air conditioning,2021,0.047177,6.923e-4
 Rhode Island,comm,electricity,heating,electric furnace,2021,0.0142945,2.098e-4
@@ -1679,17 +1679,17 @@ Rhode Island,comm,electricity,hot water,electric heat pump water heater,2021,5.6
 Rhode Island,comm,electricity,hot water,electric resistance water heater,2021,0.0049306,7.24e-5
 Rhode Island,comm,electricity,lighting,lighting,2021,0.0815413,0.0011965
 Rhode Island,comm,electricity,office,office equipment,2021,0.1129818,0.0016579
-Rhode Island,comm,electricity,others,electricity,2021,0.5102949,0.0074879
+Rhode Island,comm,electricity,other,electricity,2021,0.5102949,0.0074879
 Rhode Island,comm,electricity,refrigeration,refrigeration,2021,0.141148,0.0020712
 Rhode Island,comm,electricity,ventilation,ventilation,2021,0.0682064,0.0010008
 Rhode Island,comm,gas,cooking,gas range,2021,0.0422478,6.126e-4
 Rhode Island,comm,gas,cooling,gas cooling,2021,0.0017222,2.5e-5
 Rhode Island,comm,gas,heating,gas furnace,2021,0.2895536,0.0041986
 Rhode Island,comm,gas,hot water,gas water heater,2021,0.0426408,6.183e-4
-Rhode Island,comm,gas,others,gas,2021,0.6238356,0.0090457
+Rhode Island,comm,gas,other,gas,2021,0.6238356,0.0090457
 Rhode Island,comm,refined liquids,heating,fuel furnace,2021,0.9848461,0.0056049
 Rhode Island,comm,refined liquids,hot water,fuel water heater,2021,0.0151539,8.62e-5
-Rhode Island,comm,refined liquids,others,refined liquids,2021,0,0
+Rhode Island,comm,refined liquids,other,refined liquids,2021,0,0
 Rhode Island,resid,biomass,heating,wood furnace,2021,1,0.0029546
 Rhode Island,resid,electricity,clothes dryers,clothes dryer,2021,0.0480081,5.924e-4
 Rhode Island,resid,electricity,clothes washers,clothes washer,2021,0.0083999,1.036e-4
@@ -1704,18 +1704,18 @@ Rhode Island,resid,electricity,heating,electric heat pump,2021,0.0049044,6.05e-5
 Rhode Island,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Rhode Island,resid,electricity,hot water,electric resistance water heater,2021,0.1056723,0.0013039
 Rhode Island,resid,electricity,lighting,lighting,2021,0.0576893,7.119e-4
-Rhode Island,resid,electricity,others,electricity,2021,0.4840057,0.0059723
+Rhode Island,resid,electricity,other,electricity,2021,0.4840057,0.0059723
 Rhode Island,resid,electricity,refrigerators,refrigerator,2021,0.0694139,8.565e-4
 Rhode Island,resid,gas,clothes dryers,clothes dryer,2021,0.0061438,9.36e-5
 Rhode Island,resid,gas,cooking,gas oven,2021,0.0191515,2.916e-4
 Rhode Island,resid,gas,cooling,air conditioning,2021,6.306e-4,9.6e-6
 Rhode Island,resid,gas,heating,gas furnace,2021,0.7639363,0.0116326
 Rhode Island,resid,gas,hot water,gas water heater,2021,0.1906196,0.0029026
-Rhode Island,resid,gas,others,gas,2021,0.0195182,2.972e-4
+Rhode Island,resid,gas,other,gas,2021,0.0195182,2.972e-4
 Rhode Island,resid,refined liquids,cooking,lpg oven,2021,0.0138537,2.32e-4
 Rhode Island,resid,refined liquids,heating,fuel furnace,2021,0.8441021,0.0141354
 Rhode Island,resid,refined liquids,hot water,fuel water heater,2021,0.1140414,0.0019097
-Rhode Island,resid,refined liquids,others,refined liquids,2021,0.0280027,4.689e-4
+Rhode Island,resid,refined liquids,other,refined liquids,2021,0.0280027,4.689e-4
 South Carolina,comm,electricity,cooking,electric range,2021,0.0148982,0.0014615
 South Carolina,comm,electricity,cooling,air conditioning,2021,0.1301519,0.0127678
 South Carolina,comm,electricity,heating,electric furnace,2021,0.0126863,0.0012445
@@ -1724,17 +1724,17 @@ South Carolina,comm,electricity,hot water,electric heat pump water heater,2021,6
 South Carolina,comm,electricity,hot water,electric resistance water heater,2021,0.0063817,6.26e-4
 South Carolina,comm,electricity,lighting,lighting,2021,0.1062577,0.0104238
 South Carolina,comm,electricity,office,office equipment,2021,0.1088817,0.0106812
-South Carolina,comm,electricity,others,electricity,2021,0.3922597,0.0384802
+South Carolina,comm,electricity,other,electricity,2021,0.3922597,0.0384802
 South Carolina,comm,electricity,refrigeration,refrigeration,2021,0.1462547,0.0143474
 South Carolina,comm,electricity,ventilation,ventilation,2021,0.0747303,0.007331
 South Carolina,comm,gas,cooking,gas range,2021,0.1859099,0.0049579
 South Carolina,comm,gas,cooling,gas cooling,2021,0.0189645,5.058e-4
 South Carolina,comm,gas,heating,gas furnace,2021,0.4664203,0.0124387
 South Carolina,comm,gas,hot water,gas water heater,2021,0.2497259,0.0066598
-South Carolina,comm,gas,others,gas,2021,0.0789794,0.0021062
+South Carolina,comm,gas,other,gas,2021,0.0789794,0.0021062
 South Carolina,comm,refined liquids,heating,fuel furnace,2021,0.2403205,5.144e-4
 South Carolina,comm,refined liquids,hot water,fuel water heater,2021,0.0580744,1.243e-4
-South Carolina,comm,refined liquids,others,refined liquids,2021,0.7016051,0.0015018
+South Carolina,comm,refined liquids,other,refined liquids,2021,0.7016051,0.0015018
 South Carolina,resid,biomass,heating,wood furnace,2021,1,0.0078819
 South Carolina,resid,electricity,clothes dryers,clothes dryer,2021,0.0388646,0.0042035
 South Carolina,resid,electricity,clothes washers,clothes washer,2021,0.0059326,6.416e-4
@@ -1749,18 +1749,18 @@ South Carolina,resid,electricity,heating,electric heat pump,2021,0.0638752,0.006
 South Carolina,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 South Carolina,resid,electricity,hot water,electric resistance water heater,2021,0.1503495,0.0162613
 South Carolina,resid,electricity,lighting,lighting,2021,0.0372981,0.004034
-South Carolina,resid,electricity,others,electricity,2021,0.350922,0.0379544
+South Carolina,resid,electricity,other,electricity,2021,0.350922,0.0379544
 South Carolina,resid,electricity,refrigerators,refrigerator,2021,0.0453044,0.0049
 South Carolina,resid,gas,clothes dryers,clothes dryer,2021,0.0061309,2.038e-4
 South Carolina,resid,gas,cooking,gas oven,2021,0.0238093,7.916e-4
 South Carolina,resid,gas,cooling,air conditioning,2021,0.0491378,0.0016337
 South Carolina,resid,gas,heating,gas furnace,2021,0.623129,0.0207169
 South Carolina,resid,gas,hot water,gas water heater,2021,0.211259,0.0070236
-South Carolina,resid,gas,others,gas,2021,0.086534,0.0028769999999999998
+South Carolina,resid,gas,other,gas,2021,0.086534,0.0028769999999999998
 South Carolina,resid,refined liquids,cooking,lpg oven,2021,0.0331927,2.924e-4
 South Carolina,resid,refined liquids,heating,fuel furnace,2021,0.5911028,0.0052066
 South Carolina,resid,refined liquids,hot water,fuel water heater,2021,0.1219702,0.0010743
-South Carolina,resid,refined liquids,others,refined liquids,2021,0.2537343,0.002235
+South Carolina,resid,refined liquids,other,refined liquids,2021,0.2537343,0.002235
 South Dakota,comm,electricity,cooking,electric range,2021,0.0154418,1.899e-4
 South Dakota,comm,electricity,cooling,air conditioning,2021,0.0446787,5.496e-4
 South Dakota,comm,electricity,heating,electric furnace,2021,0.0338485,4.164e-4
@@ -1769,17 +1769,17 @@ South Dakota,comm,electricity,hot water,electric heat pump water heater,2021,6.8
 South Dakota,comm,electricity,hot water,electric resistance water heater,2021,0.0038575,4.74e-5
 South Dakota,comm,electricity,lighting,lighting,2021,0.0774437,9.526e-4
 South Dakota,comm,electricity,office,office equipment,2021,0.0907229,0.0011159
-South Dakota,comm,electricity,others,electricity,2021,0.5348585,0.006579
+South Dakota,comm,electricity,other,electricity,2021,0.5348585,0.006579
 South Dakota,comm,electricity,refrigeration,refrigeration,2021,0.1186759,0.0014598
 South Dakota,comm,electricity,ventilation,ventilation,2021,0.0700504,8.617e-4
 South Dakota,comm,gas,cooking,gas range,2021,0.0478604,7.155e-4
 South Dakota,comm,gas,cooling,gas cooling,2021,7.623e-4,1.14e-5
 South Dakota,comm,gas,heating,gas furnace,2021,0.4766597,0.0071261
 South Dakota,comm,gas,hot water,gas water heater,2021,0.0828689,0.0012389
-South Dakota,comm,gas,others,gas,2021,0.3918487,0.0058582
+South Dakota,comm,gas,other,gas,2021,0.3918487,0.0058582
 South Dakota,comm,refined liquids,heating,fuel furnace,2021,0.3259475,3.848e-4
 South Dakota,comm,refined liquids,hot water,fuel water heater,2021,0.0024131,2.8e-6
-South Dakota,comm,refined liquids,others,refined liquids,2021,0.6716395,7.929e-4
+South Dakota,comm,refined liquids,other,refined liquids,2021,0.6716395,7.929e-4
 South Dakota,resid,biomass,heating,wood furnace,2021,1,0.0018902
 South Dakota,resid,electricity,clothes dryers,clothes dryer,2021,0.049979,7.831e-4
 South Dakota,resid,electricity,clothes washers,clothes washer,2021,0.0073675,1.154e-4
@@ -1794,18 +1794,18 @@ South Dakota,resid,electricity,heating,electric heat pump,2021,0.0287446,4.504e-
 South Dakota,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 South Dakota,resid,electricity,hot water,electric resistance water heater,2021,0.1075333,0.0016849
 South Dakota,resid,electricity,lighting,lighting,2021,0.0469599,7.358e-4
-South Dakota,resid,electricity,others,electricity,2021,0.3858416,0.0060456
+South Dakota,resid,electricity,other,electricity,2021,0.3858416,0.0060456
 South Dakota,resid,electricity,refrigerators,refrigerator,2021,0.0568488,8.907e-4
 South Dakota,resid,gas,clothes dryers,clothes dryer,2021,0.0040316,6.94e-5
 South Dakota,resid,gas,cooking,gas oven,2021,0.0109401,1.883e-4
 South Dakota,resid,gas,cooling,air conditioning,2021,0.0064535,1.111e-4
 South Dakota,resid,gas,heating,gas furnace,2021,0.7623507,0.0131243
 South Dakota,resid,gas,hot water,gas water heater,2021,0.1995498,0.0034354
-South Dakota,resid,gas,others,gas,2021,0.0166743,2.871e-4
+South Dakota,resid,gas,other,gas,2021,0.0166743,2.871e-4
 South Dakota,resid,refined liquids,cooking,lpg oven,2021,0.0112022,5.26e-5
 South Dakota,resid,refined liquids,heating,fuel furnace,2021,0.9119348,0.0042829
 South Dakota,resid,refined liquids,hot water,fuel water heater,2021,0.0571596,2.685e-4
-South Dakota,resid,refined liquids,others,refined liquids,2021,0.0197035,9.25e-5
+South Dakota,resid,refined liquids,other,refined liquids,2021,0.0197035,9.25e-5
 Tennessee,comm,electricity,cooking,electric range,2021,0.0188782,0.0023163
 Tennessee,comm,electricity,cooling,air conditioning,2021,0.0833235,0.0102236
 Tennessee,comm,electricity,heating,electric furnace,2021,0.0174766,0.0021443
@@ -1814,17 +1814,17 @@ Tennessee,comm,electricity,hot water,electric heat pump water heater,2021,3.47e-
 Tennessee,comm,electricity,hot water,electric resistance water heater,2021,0.0046643,5.723e-4
 Tennessee,comm,electricity,lighting,lighting,2021,0.0964118,0.0118295
 Tennessee,comm,electricity,office,office equipment,2021,0.095508,0.0117186
-Tennessee,comm,electricity,others,electricity,2021,0.5053588,0.0620064
+Tennessee,comm,electricity,other,electricity,2021,0.5053588,0.0620064
 Tennessee,comm,electricity,refrigeration,refrigeration,2021,0.1042992,0.0127973
 Tennessee,comm,electricity,ventilation,ventilation,2021,0.0674745,0.008279
 Tennessee,comm,gas,cooking,gas range,2021,0.1145227,0.0065276
 Tennessee,comm,gas,cooling,gas cooling,2021,0.0061744,3.519e-4
 Tennessee,comm,gas,heating,gas furnace,2021,0.5312756,0.0302819
 Tennessee,comm,gas,hot water,gas water heater,2021,0.2195641,0.0125148
-Tennessee,comm,gas,others,gas,2021,0.1284632,0.0073222
+Tennessee,comm,gas,other,gas,2021,0.1284632,0.0073222
 Tennessee,comm,refined liquids,heating,fuel furnace,2021,0.2881534,0.0021925
 Tennessee,comm,refined liquids,hot water,fuel water heater,2021,7.969e-4,6.1e-6
-Tennessee,comm,refined liquids,others,refined liquids,2021,0.7110497,0.0054102
+Tennessee,comm,refined liquids,other,refined liquids,2021,0.7110497,0.0054102
 Tennessee,resid,biomass,heating,wood furnace,2021,1,0.0066411
 Tennessee,resid,electricity,clothes dryers,clothes dryer,2021,0.0410655,0.0060955
 Tennessee,resid,electricity,clothes washers,clothes washer,2021,0.0056363,8.366e-4
@@ -1839,18 +1839,18 @@ Tennessee,resid,electricity,heating,electric heat pump,2021,0.0745895,0.0110717
 Tennessee,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Tennessee,resid,electricity,hot water,electric resistance water heater,2021,0.1598432,0.0237263
 Tennessee,resid,electricity,lighting,lighting,2021,0.040162,0.0059614
-Tennessee,resid,electricity,others,electricity,2021,0.3409861,0.0506141
+Tennessee,resid,electricity,other,electricity,2021,0.3409861,0.0506141
 Tennessee,resid,electricity,refrigerators,refrigerator,2021,0.0414705,0.0061557
 Tennessee,resid,gas,clothes dryers,clothes dryer,2021,0.0034217,2.434e-4
 Tennessee,resid,gas,cooking,gas oven,2021,0.021941,0.0015606
 Tennessee,resid,gas,cooling,air conditioning,2021,0.0520643,0.0037031
 Tennessee,resid,gas,heating,gas furnace,2021,0.71095680000000006,0.0505673
 Tennessee,resid,gas,hot water,gas water heater,2021,0.1535624,0.0109222
-Tennessee,resid,gas,others,gas,2021,0.0580538,0.0041291
+Tennessee,resid,gas,other,gas,2021,0.0580538,0.0041291
 Tennessee,resid,refined liquids,cooking,lpg oven,2021,0.0382321,3.109e-4
 Tennessee,resid,refined liquids,heating,fuel furnace,2021,0.8046448,0.0065432
 Tennessee,resid,refined liquids,hot water,fuel water heater,2021,0.0999983,8.132e-4
-Tennessee,resid,refined liquids,others,refined liquids,2021,0.0571248,4.645e-4
+Tennessee,resid,refined liquids,other,refined liquids,2021,0.0571248,4.645e-4
 Texas,comm,electricity,cooking,electric range,2021,0.0154987,0.0086371
 Texas,comm,electricity,cooling,air conditioning,2021,0.1450836,0.0808517
 Texas,comm,electricity,heating,electric furnace,2021,0.0092524,0.0051562
@@ -1859,17 +1859,17 @@ Texas,comm,electricity,hot water,electric heat pump water heater,2021,3.21e-5,1.
 Texas,comm,electricity,hot water,electric resistance water heater,2021,0.0050406,0.002809
 Texas,comm,electricity,lighting,lighting,2021,0.0890746,0.0496391
 Texas,comm,electricity,office,office equipment,2021,0.0942233,0.0525084
-Texas,comm,electricity,others,electricity,2021,0.4816501,0.2684122
+Texas,comm,electricity,other,electricity,2021,0.4816501,0.2684122
 Texas,comm,electricity,refrigeration,refrigeration,2021,0.0883441,0.0492321
 Texas,comm,electricity,ventilation,ventilation,2021,0.0674241,0.0375739
 Texas,comm,gas,cooking,gas range,2021,0.1614078,0.0336312
 Texas,comm,gas,cooling,gas cooling,2021,0.0171917,0.0035821
 Texas,comm,gas,heating,gas furnace,2021,0.5277767,0.1099684
 Texas,comm,gas,hot water,gas water heater,2021,0.2183851,0.0455031
-Texas,comm,gas,others,gas,2021,0.0752387,0.0156769
+Texas,comm,gas,other,gas,2021,0.0752387,0.0156769
 Texas,comm,refined liquids,heating,fuel furnace,2021,0,0
 Texas,comm,refined liquids,hot water,fuel water heater,2021,0,0
-Texas,comm,refined liquids,others,refined liquids,2021,1,0.0041989
+Texas,comm,refined liquids,other,refined liquids,2021,1,0.0041989
 Texas,resid,biomass,heating,wood furnace,2021,1,0.0165001
 Texas,resid,electricity,clothes dryers,clothes dryer,2021,0.0426849,0.0232584
 Texas,resid,electricity,clothes washers,clothes washer,2021,0.0063912,0.0034825
@@ -1884,18 +1884,18 @@ Texas,resid,electricity,heating,electric heat pump,2021,0.0150294,0.0081893
 Texas,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Texas,resid,electricity,hot water,electric resistance water heater,2021,0.1104709,0.0601939
 Texas,resid,electricity,lighting,lighting,2021,0.0400304,0.021812
-Texas,resid,electricity,others,electricity,2021,0.3533652,0.1925432
+Texas,resid,electricity,other,electricity,2021,0.3533652,0.1925432
 Texas,resid,electricity,refrigerators,refrigerator,2021,0.0481121,0.0262155
 Texas,resid,gas,clothes dryers,clothes dryer,2021,0.0083918,0.0019431
 Texas,resid,gas,cooking,gas oven,2021,0.024678,0.0057142
 Texas,resid,gas,cooling,air conditioning,2021,0.0232597,0.0053858
 Texas,resid,gas,heating,gas furnace,2021,0.6227046,0.1441878
 Texas,resid,gas,hot water,gas water heater,2021,0.2307805,0.0534374
-Texas,resid,gas,others,gas,2021,0.0901853,0.0208825
+Texas,resid,gas,other,gas,2021,0.0901853,0.0208825
 Texas,resid,refined liquids,cooking,lpg oven,2021,0.0676604,0.001283
 Texas,resid,refined liquids,heating,fuel furnace,2021,0.4937152,0.0093624
 Texas,resid,refined liquids,hot water,fuel water heater,2021,0.1970327,0.0037363
-Texas,resid,refined liquids,others,refined liquids,2021,0.2415918,0.0045813
+Texas,resid,refined liquids,other,refined liquids,2021,0.2415918,0.0045813
 Utah,comm,electricity,cooking,electric range,2021,0.0168492,8.617e-4
 Utah,comm,electricity,cooling,air conditioning,2021,0.058836,0.003009
 Utah,comm,electricity,heating,electric furnace,2021,0.0116711,5.969e-4
@@ -1904,17 +1904,17 @@ Utah,comm,electricity,hot water,electric heat pump water heater,2021,1.04e-5,5e-
 Utah,comm,electricity,hot water,electric resistance water heater,2021,0.0020234,1.035e-4
 Utah,comm,electricity,lighting,lighting,2021,0.071326,0.0036478
 Utah,comm,electricity,office,office equipment,2021,0.1058722,0.0054146
-Utah,comm,electricity,others,electricity,2021,0.5948742,0.0304234
+Utah,comm,electricity,other,electricity,2021,0.5948742,0.0304234
 Utah,comm,electricity,refrigeration,refrigeration,2021,0.069215,0.0035398
 Utah,comm,electricity,ventilation,ventilation,2021,0.0643115,0.0032891
 Utah,comm,gas,cooking,gas range,2021,0.062716,0.0025635
 Utah,comm,gas,cooling,gas cooling,2021,0.0020451000000000002,8.36e-5
 Utah,comm,gas,heating,gas furnace,2021,0.4990917,0.0204005
 Utah,comm,gas,hot water,gas water heater,2021,0.2073856,0.0084769
-Utah,comm,gas,others,gas,2021,0.2287617,0.0093507
+Utah,comm,gas,other,gas,2021,0.2287617,0.0093507
 Utah,comm,refined liquids,heating,fuel furnace,2021,0.0265989,1.169e-4
 Utah,comm,refined liquids,hot water,fuel water heater,2021,0,0
-Utah,comm,refined liquids,others,refined liquids,2021,0.9734011,0.0042774
+Utah,comm,refined liquids,other,refined liquids,2021,0.9734011,0.0042774
 Utah,resid,biomass,heating,wood furnace,2021,1,0.0033511
 Utah,resid,electricity,clothes dryers,clothes dryer,2021,0.0447901,0.0019683
 Utah,resid,electricity,clothes washers,clothes washer,2021,0.0077296,3.397e-4
@@ -1929,18 +1929,18 @@ Utah,resid,electricity,heating,electric heat pump,2021,0.0176987,7.778e-4
 Utah,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Utah,resid,electricity,hot water,electric resistance water heater,2021,0.0671733,0.0029519
 Utah,resid,electricity,lighting,lighting,2021,0.0531046,0.0023337
-Utah,resid,electricity,others,electricity,2021,0.4516642,0.0198484
+Utah,resid,electricity,other,electricity,2021,0.4516642,0.0198484
 Utah,resid,electricity,refrigerators,refrigerator,2021,0.0628302,0.0027611
 Utah,resid,gas,clothes dryers,clothes dryer,2021,0.0072394,4.352e-4
 Utah,resid,gas,cooking,gas oven,2021,0.0166178,9.99e-4
 Utah,resid,gas,cooling,air conditioning,2021,0.0174753,0.0010506
 Utah,resid,gas,heating,gas furnace,2021,0.6424414,0.038623
 Utah,resid,gas,hot water,gas water heater,2021,0.2635817,0.0158463
-Utah,resid,gas,others,gas,2021,0.0526444,0.0031649
+Utah,resid,gas,other,gas,2021,0.0526444,0.0031649
 Utah,resid,refined liquids,cooking,lpg oven,2021,0.0258189,1.11e-4
 Utah,resid,refined liquids,heating,fuel furnace,2021,0.6460713,0.0027773
 Utah,resid,refined liquids,hot water,fuel water heater,2021,0.1709467,7.348e-4
-Utah,resid,refined liquids,others,refined liquids,2021,0.1571631,6.756e-4
+Utah,resid,refined liquids,other,refined liquids,2021,0.1571631,6.756e-4
 Vermont,comm,electricity,cooking,electric range,2021,0.0119897,1.036e-4
 Vermont,comm,electricity,cooling,air conditioning,2021,0.047177,4.078e-4
 Vermont,comm,electricity,heating,electric furnace,2021,0.0142945,1.236e-4
@@ -1949,17 +1949,17 @@ Vermont,comm,electricity,hot water,electric heat pump water heater,2021,5.66e-5,
 Vermont,comm,electricity,hot water,electric resistance water heater,2021,0.0049306,4.26e-5
 Vermont,comm,electricity,lighting,lighting,2021,0.0815413,7.048e-4
 Vermont,comm,electricity,office,office equipment,2021,0.1129818,9.765e-4
-Vermont,comm,electricity,others,electricity,2021,0.5102949,0.0044106
+Vermont,comm,electricity,other,electricity,2021,0.5102949,0.0044106
 Vermont,comm,electricity,refrigeration,refrigeration,2021,0.141148,0.00122
 Vermont,comm,electricity,ventilation,ventilation,2021,0.0682064,5.895e-4
 Vermont,comm,gas,cooking,gas range,2021,0.0422478,3.608e-4
 Vermont,comm,gas,cooling,gas cooling,2021,0.0017222,1.47e-5
 Vermont,comm,gas,heating,gas furnace,2021,0.2895536,0.0024731
 Vermont,comm,gas,hot water,gas water heater,2021,0.0426408,3.642e-4
-Vermont,comm,gas,others,gas,2021,0.6238356,0.0053281
+Vermont,comm,gas,other,gas,2021,0.6238356,0.0053281
 Vermont,comm,refined liquids,heating,fuel furnace,2021,0.9848461,0.0033014
 Vermont,comm,refined liquids,hot water,fuel water heater,2021,0.0151539,5.08e-5
-Vermont,comm,refined liquids,others,refined liquids,2021,0,0
+Vermont,comm,refined liquids,other,refined liquids,2021,0,0
 Vermont,resid,biomass,heating,wood furnace,2021,1,0.0017404
 Vermont,resid,electricity,clothes dryers,clothes dryer,2021,0.0480081,3.489e-4
 Vermont,resid,electricity,clothes washers,clothes washer,2021,0.0083999,6.11e-5
@@ -1974,18 +1974,18 @@ Vermont,resid,electricity,heating,electric heat pump,2021,0.0049044,3.56e-5
 Vermont,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Vermont,resid,electricity,hot water,electric resistance water heater,2021,0.1056723,7.68e-4
 Vermont,resid,electricity,lighting,lighting,2021,0.0576893,4.193e-4
-Vermont,resid,electricity,others,electricity,2021,0.4840057,0.0035179
+Vermont,resid,electricity,other,electricity,2021,0.4840057,0.0035179
 Vermont,resid,electricity,refrigerators,refrigerator,2021,0.0694139,5.045e-4
 Vermont,resid,gas,clothes dryers,clothes dryer,2021,0.0061438,5.51e-5
 Vermont,resid,gas,cooking,gas oven,2021,0.0191515,1.718e-4
 Vermont,resid,gas,cooling,air conditioning,2021,6.306e-4,5.7e-6
 Vermont,resid,gas,heating,gas furnace,2021,0.7639363,0.0068519
 Vermont,resid,gas,hot water,gas water heater,2021,0.1906196,0.0017097
-Vermont,resid,gas,others,gas,2021,0.0195182,1.751e-4
+Vermont,resid,gas,other,gas,2021,0.0195182,1.751e-4
 Vermont,resid,refined liquids,cooking,lpg oven,2021,0.0138537,1.367e-4
 Vermont,resid,refined liquids,heating,fuel furnace,2021,0.8441021,0.0083261
 Vermont,resid,refined liquids,hot water,fuel water heater,2021,0.1140414,0.0011249
-Vermont,resid,refined liquids,others,refined liquids,2021,0.0280027,2.762e-4
+Vermont,resid,refined liquids,other,refined liquids,2021,0.0280027,2.762e-4
 Virginia,comm,electricity,cooking,electric range,2021,0.0162292,0.0023145
 Virginia,comm,electricity,cooling,air conditioning,2021,0.1106404,0.0157789
 Virginia,comm,electricity,heating,electric furnace,2021,0.0167387,0.0023872
@@ -1994,17 +1994,17 @@ Virginia,comm,electricity,hot water,electric heat pump water heater,2021,5.99e-5
 Virginia,comm,electricity,hot water,electric resistance water heater,2021,0.00602,8.585e-4
 Virginia,comm,electricity,lighting,lighting,2021,0.1016033,0.0144901
 Virginia,comm,electricity,office,office equipment,2021,0.1169796,0.016683
-Virginia,comm,electricity,others,electricity,2021,0.4209494,0.0600334
+Virginia,comm,electricity,other,electricity,2021,0.4209494,0.0600334
 Virginia,comm,electricity,refrigeration,refrigeration,2021,0.1228716,0.0175233
 Virginia,comm,electricity,ventilation,ventilation,2021,0.0794338,0.0113284
 Virginia,comm,gas,cooking,gas range,2021,0.1617495,0.0141968
 Virginia,comm,gas,cooling,gas cooling,2021,0.0160403,0.0014079
 Virginia,comm,gas,heating,gas furnace,2021,0.4846336,0.0425364
 Virginia,comm,gas,hot water,gas water heater,2021,0.2290157,0.0201008
-Virginia,comm,gas,others,gas,2021,0.1085608,0.0095284
+Virginia,comm,gas,other,gas,2021,0.1085608,0.0095284
 Virginia,comm,refined liquids,heating,fuel furnace,2021,0.2830294,0.0039223
 Virginia,comm,refined liquids,hot water,fuel water heater,2021,0.0529465,7.337e-4
-Virginia,comm,refined liquids,others,refined liquids,2021,0.664024,0.0092022
+Virginia,comm,refined liquids,other,refined liquids,2021,0.664024,0.0092022
 Virginia,resid,biomass,heating,wood furnace,2021,1,0.0114635
 Virginia,resid,electricity,clothes dryers,clothes dryer,2021,0.0394422,0.0064177
 Virginia,resid,electricity,clothes washers,clothes washer,2021,0.0062842,0.0010225
@@ -2019,18 +2019,18 @@ Virginia,resid,electricity,heating,electric heat pump,2021,0.0677939,0.0110308
 Virginia,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Virginia,resid,electricity,hot water,electric resistance water heater,2021,0.1426765,0.023215
 Virginia,resid,electricity,lighting,lighting,2021,0.0425336,0.0069207
-Virginia,resid,electricity,others,electricity,2021,0.3592616,0.0584556
+Virginia,resid,electricity,other,electricity,2021,0.3592616,0.0584556
 Virginia,resid,electricity,refrigerators,refrigerator,2021,0.0477611,0.0077712
 Virginia,resid,gas,clothes dryers,clothes dryer,2021,0.0067888,7.19e-4
 Virginia,resid,gas,cooking,gas oven,2021,0.0224734,0.0023803
 Virginia,resid,gas,cooling,air conditioning,2021,0.0378026,0.0040039
 Virginia,resid,gas,heating,gas furnace,2021,0.6608467,0.0699944
 Virginia,resid,gas,hot water,gas water heater,2021,0.1999424,0.0211772
-Virginia,resid,gas,others,gas,2021,0.0721461,0.0076414
+Virginia,resid,gas,other,gas,2021,0.0721461,0.0076414
 Virginia,resid,refined liquids,cooking,lpg oven,2021,0.0201417,4.169e-4
 Virginia,resid,refined liquids,heating,fuel furnace,2021,0.7009612,0.0145079
 Virginia,resid,refined liquids,hot water,fuel water heater,2021,0.10669820000000001,0.0022084
-Virginia,resid,refined liquids,others,refined liquids,2021,0.1721989,0.003564
+Virginia,resid,refined liquids,other,refined liquids,2021,0.1721989,0.003564
 Washington,comm,electricity,cooking,electric range,2021,0.0176213,0.0015124
 Washington,comm,electricity,cooling,air conditioning,2021,0.033107,0.0028414
 Washington,comm,electricity,heating,electric furnace,2021,0.0161303,0.0013844
@@ -2039,17 +2039,17 @@ Washington,comm,electricity,hot water,electric heat pump water heater,2021,1.344
 Washington,comm,electricity,hot water,electric resistance water heater,2021,0.0065511,5.623e-4
 Washington,comm,electricity,lighting,lighting,2021,0.1365176,0.0117166
 Washington,comm,electricity,office,office equipment,2021,0.139355,0.0119602
-Washington,comm,electricity,others,electricity,2021,0.3668171,0.0314821
+Washington,comm,electricity,other,electricity,2021,0.3668171,0.0314821
 Washington,comm,electricity,refrigeration,refrigeration,2021,0.2316472,0.0198812
 Washington,comm,electricity,ventilation,ventilation,2021,0.0448244,0.0038471
 Washington,comm,gas,cooking,gas range,2021,0.1559176,0.010915
 Washington,comm,gas,cooling,gas cooling,2021,0.0046153,3.231e-4
 Washington,comm,gas,heating,gas furnace,2021,0.4115087,0.0288075
 Washington,comm,gas,hot water,gas water heater,2021,0.2569264,0.017986
-Washington,comm,gas,others,gas,2021,0.1710319,0.011973
+Washington,comm,gas,other,gas,2021,0.1710319,0.011973
 Washington,comm,refined liquids,heating,fuel furnace,2021,0.0065925,7.49e-5
 Washington,comm,refined liquids,hot water,fuel water heater,2021,1.902e-4,2.2e-6
-Washington,comm,refined liquids,others,refined liquids,2021,0.9932172,0.0112832
+Washington,comm,refined liquids,other,refined liquids,2021,0.9932172,0.0112832
 Washington,resid,biomass,heating,wood furnace,2021,1,0.0177142
 Washington,resid,electricity,clothes dryers,clothes dryer,2021,0.043211,0.0056544
 Washington,resid,electricity,clothes washers,clothes washer,2021,0.0064075,8.385e-4
@@ -2064,18 +2064,18 @@ Washington,resid,electricity,heating,electric heat pump,2021,0.0748633,0.0097963
 Washington,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Washington,resid,electricity,hot water,electric resistance water heater,2021,0.1919096,0.0251126
 Washington,resid,electricity,lighting,lighting,2021,0.0392846,0.0051406
-Washington,resid,electricity,others,electricity,2021,0.2707486,0.0354292
+Washington,resid,electricity,other,electricity,2021,0.2707486,0.0354292
 Washington,resid,electricity,refrigerators,refrigerator,2021,0.0586198,0.0076708
 Washington,resid,gas,clothes dryers,clothes dryer,2021,0.0120553,0.0012114
 Washington,resid,gas,cooking,gas oven,2021,0.0266338,0.0026763
 Washington,resid,gas,cooling,air conditioning,2021,0.0078696,7.908e-4
 Washington,resid,gas,heating,gas furnace,2021,0.5888653,0.0591715
 Washington,resid,gas,hot water,gas water heater,2021,0.2839898,0.0285364
-Washington,resid,gas,others,gas,2021,0.0805863,0.0080976
+Washington,resid,gas,other,gas,2021,0.0805863,0.0080976
 Washington,resid,refined liquids,cooking,lpg oven,2021,0.0350103,5.142e-4
 Washington,resid,refined liquids,heating,fuel furnace,2021,0.5698521,0.0083691
 Washington,resid,refined liquids,hot water,fuel water heater,2021,0.2046055,0.0030049
-Washington,resid,refined liquids,others,refined liquids,2021,0.190532,0.0027983
+Washington,resid,refined liquids,other,refined liquids,2021,0.190532,0.0027983
 West Virginia,comm,electricity,cooking,electric range,2021,0.0176869,5.099e-4
 West Virginia,comm,electricity,cooling,air conditioning,2021,0.0771186,0.0022233
 West Virginia,comm,electricity,heating,electric furnace,2021,0.027013,7.788e-4
@@ -2084,17 +2084,17 @@ West Virginia,comm,electricity,hot water,electric heat pump water heater,2021,4.
 West Virginia,comm,electricity,hot water,electric resistance water heater,2021,0.0043857,1.264e-4
 West Virginia,comm,electricity,lighting,lighting,2021,0.1089816,0.0031419
 West Virginia,comm,electricity,office,office equipment,2021,0.1204982,0.0034739
-West Virginia,comm,electricity,others,electricity,2021,0.4224384,0.0121788
+West Virginia,comm,electricity,other,electricity,2021,0.4224384,0.0121788
 West Virginia,comm,electricity,refrigeration,refrigeration,2021,0.1210537,0.0034899
 West Virginia,comm,electricity,ventilation,ventilation,2021,0.0933682,0.0026918
 West Virginia,comm,gas,cooking,gas range,2021,0.0781587,0.0019549
 West Virginia,comm,gas,cooling,gas cooling,2021,0.0059711,1.493e-4
 West Virginia,comm,gas,heating,gas furnace,2021,0.5460715,0.013658
 West Virginia,comm,gas,hot water,gas water heater,2021,0.1546758,0.0038687
-West Virginia,comm,gas,others,gas,2021,0.2151229,0.0053805
+West Virginia,comm,gas,other,gas,2021,0.2151229,0.0053805
 West Virginia,comm,refined liquids,heating,fuel furnace,2021,0.5242882,0.0013046
 West Virginia,comm,refined liquids,hot water,fuel water heater,2021,0.0236907,5.9e-5
-West Virginia,comm,refined liquids,others,refined liquids,2021,0.4520211,0.0011248
+West Virginia,comm,refined liquids,other,refined liquids,2021,0.4520211,0.0011248
 West Virginia,resid,biomass,heating,wood furnace,2021,1,0.0020362
 West Virginia,resid,electricity,clothes dryers,clothes dryer,2021,0.0433039,0.0012843
 West Virginia,resid,electricity,clothes washers,clothes washer,2021,0.007769,2.304e-4
@@ -2109,18 +2109,18 @@ West Virginia,resid,electricity,heating,electric heat pump,2021,0.0402987,0.0011
 West Virginia,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 West Virginia,resid,electricity,hot water,electric resistance water heater,2021,0.1192628,0.003537
 West Virginia,resid,electricity,lighting,lighting,2021,0.0481212,0.0014271
-West Virginia,resid,electricity,others,electricity,2021,0.3701405,0.0109773
+West Virginia,resid,electricity,other,electricity,2021,0.3701405,0.0109773
 West Virginia,resid,electricity,refrigerators,refrigerator,2021,0.0588311,0.0017448
 West Virginia,resid,gas,clothes dryers,clothes dryer,2021,0.0086782,3.276e-4
 West Virginia,resid,gas,cooking,gas oven,2021,0.0187746,7.087e-4
 West Virginia,resid,gas,cooling,air conditioning,2021,0.0075011,2.832e-4
 West Virginia,resid,gas,heating,gas furnace,2021,0.7584014,0.0286294
 West Virginia,resid,gas,hot water,gas water heater,2021,0.1717924,0.0064851
-West Virginia,resid,gas,others,gas,2021,0.0348523,0.0013157
+West Virginia,resid,gas,other,gas,2021,0.0348523,0.0013157
 West Virginia,resid,refined liquids,cooking,lpg oven,2021,0.0120432,6.35e-5
 West Virginia,resid,refined liquids,heating,fuel furnace,2021,0.7995687,0.0042161
 West Virginia,resid,refined liquids,hot water,fuel water heater,2021,0.0926353,4.885e-4
-West Virginia,resid,refined liquids,others,refined liquids,2021,0.0957528,5.049e-4
+West Virginia,resid,refined liquids,other,refined liquids,2021,0.0957528,5.049e-4
 Wisconsin,comm,electricity,cooking,electric range,2021,0.0181254,0.0016564
 Wisconsin,comm,electricity,cooling,air conditioning,2021,0.0452836,0.0041383
 Wisconsin,comm,electricity,heating,electric furnace,2021,0.0266039,0.0024312
@@ -2129,17 +2129,17 @@ Wisconsin,comm,electricity,hot water,electric heat pump water heater,2021,5.35e-
 Wisconsin,comm,electricity,hot water,electric resistance water heater,2021,0.003983,3.64e-4
 Wisconsin,comm,electricity,lighting,lighting,2021,0.087503,0.0079965
 Wisconsin,comm,electricity,office,office equipment,2021,0.1072434,0.0098005
-Wisconsin,comm,electricity,others,electricity,2021,0.5361901,0.0490002
+Wisconsin,comm,electricity,other,electricity,2021,0.5361901,0.0490002
 Wisconsin,comm,electricity,refrigeration,refrigeration,2021,0.0948783,0.0086705
 Wisconsin,comm,electricity,ventilation,ventilation,2021,0.0732179,0.0066911
 Wisconsin,comm,gas,cooking,gas range,2021,0.0484507,0.0050248
 Wisconsin,comm,gas,cooling,gas cooling,2021,0.0011916,1.236e-4
 Wisconsin,comm,gas,heating,gas furnace,2021,0.5102685,0.0529193
 Wisconsin,comm,gas,hot water,gas water heater,2021,0.0952464,0.0098779
-Wisconsin,comm,gas,others,gas,2021,0.3448429,0.0357632
+Wisconsin,comm,gas,other,gas,2021,0.3448429,0.0357632
 Wisconsin,comm,refined liquids,heating,fuel furnace,2021,0.3503302,0.0034849
 Wisconsin,comm,refined liquids,hot water,fuel water heater,2021,0.0016079,1.6e-5
-Wisconsin,comm,refined liquids,others,refined liquids,2021,0.6480619,0.0064466
+Wisconsin,comm,refined liquids,other,refined liquids,2021,0.6480619,0.0064466
 Wisconsin,resid,biomass,heating,wood furnace,2021,1,0.0124818
 Wisconsin,resid,electricity,clothes dryers,clothes dryer,2021,0.0532114,0.0045337
 Wisconsin,resid,electricity,clothes washers,clothes washer,2021,0.0087818,7.482e-4
@@ -2154,18 +2154,18 @@ Wisconsin,resid,electricity,heating,electric heat pump,2021,0.0172712,0.0014715
 Wisconsin,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Wisconsin,resid,electricity,hot water,electric resistance water heater,2021,0.1133568,0.0096582
 Wisconsin,resid,electricity,lighting,lighting,2021,0.0574164,0.004892
-Wisconsin,resid,electricity,others,electricity,2021,0.4243655,0.0361568
+Wisconsin,resid,electricity,other,electricity,2021,0.4243655,0.0361568
 Wisconsin,resid,electricity,refrigerators,refrigerator,2021,0.0694098,0.0059138
 Wisconsin,resid,gas,clothes dryers,clothes dryer,2021,0.0062293,8.365e-4
 Wisconsin,resid,gas,cooking,gas oven,2021,0.013249,0.0017792
 Wisconsin,resid,gas,cooling,air conditioning,2021,0.0031798,4.27e-4
 Wisconsin,resid,gas,heating,gas furnace,2021,0.7772171,0.1043697
 Wisconsin,resid,gas,hot water,gas water heater,2021,0.1810205,0.0243086
-Wisconsin,resid,gas,others,gas,2021,0.0191043,0.0025655
+Wisconsin,resid,gas,other,gas,2021,0.0191043,0.0025655
 Wisconsin,resid,refined liquids,cooking,lpg oven,2021,0.0104102,3.446e-4
 Wisconsin,resid,refined liquids,heating,fuel furnace,2021,0.8862296,0.0293369
 Wisconsin,resid,refined liquids,hot water,fuel water heater,2021,0.0586135,0.0019403
-Wisconsin,resid,refined liquids,others,refined liquids,2021,0.0447468,0.0014813
+Wisconsin,resid,refined liquids,other,refined liquids,2021,0.0447468,0.0014813
 Wyoming,comm,electricity,cooking,electric range,2021,0.0169498,1.509e-4
 Wyoming,comm,electricity,cooling,air conditioning,2021,0.0481306,4.286e-4
 Wyoming,comm,electricity,heating,electric furnace,2021,0.0144759,1.289e-4
@@ -2174,17 +2174,17 @@ Wyoming,comm,electricity,hot water,electric heat pump water heater,2021,1.08e-5,
 Wyoming,comm,electricity,hot water,electric resistance water heater,2021,0.0020581,1.83e-5
 Wyoming,comm,electricity,lighting,lighting,2021,0.0705405,6.282e-4
 Wyoming,comm,electricity,office,office equipment,2021,0.1064746,9.481e-4
-Wyoming,comm,electricity,others,electricity,2021,0.5983768,0.0053285
+Wyoming,comm,electricity,other,electricity,2021,0.5983768,0.0053285
 Wyoming,comm,electricity,refrigeration,refrigeration,2021,0.0723969,6.447e-4
 Wyoming,comm,electricity,ventilation,ventilation,2021,0.0643847,5.733e-4
 Wyoming,comm,gas,cooking,gas range,2021,0.0626036,4.355e-4
 Wyoming,comm,gas,cooling,gas cooling,2021,0.0020354,1.42e-5
 Wyoming,comm,gas,heating,gas furnace,2021,0.4989219,0.0034708
 Wyoming,comm,gas,hot water,gas water heater,2021,0.2064435,0.0014361
-Wyoming,comm,gas,others,gas,2021,0.2299956,0.0016
+Wyoming,comm,gas,other,gas,2021,0.2299956,0.0016
 Wyoming,comm,refined liquids,heating,fuel furnace,2021,0.0300854,1.69e-5
 Wyoming,comm,refined liquids,hot water,fuel water heater,2021,2.81e-5,0
-Wyoming,comm,refined liquids,others,refined liquids,2021,0.9698865,5.452e-4
+Wyoming,comm,refined liquids,other,refined liquids,2021,0.9698865,5.452e-4
 Wyoming,resid,biomass,heating,wood furnace,2021,1,8.657e-4
 Wyoming,resid,electricity,clothes dryers,clothes dryer,2021,0.0468677,3.79e-4
 Wyoming,resid,electricity,clothes washers,clothes washer,2021,0.0080631,6.52e-5
@@ -2199,15 +2199,15 @@ Wyoming,resid,electricity,heating,electric heat pump,2021,0.0205731,1.664e-4
 Wyoming,resid,electricity,hot water,electric heat pump water heater,2021,0,0
 Wyoming,resid,electricity,hot water,electric resistance water heater,2021,0.0757642,6.127e-4
 Wyoming,resid,electricity,lighting,lighting,2021,0.0535407,4.33e-4
-Wyoming,resid,electricity,others,electricity,2021,0.4677678,0.0037827
+Wyoming,resid,electricity,other,electricity,2021,0.4677678,0.0037827
 Wyoming,resid,electricity,refrigerators,refrigerator,2021,0.0647496,5.236e-4
 Wyoming,resid,gas,clothes dryers,clothes dryer,2021,0.0072237000000000004,9.03e-5
 Wyoming,resid,gas,cooking,gas oven,2021,0.0165899,2.075e-4
 Wyoming,resid,gas,cooling,air conditioning,2021,0.0174211,2.179e-4
 Wyoming,resid,gas,heating,gas furnace,2021,0.6430303,0.0080425
 Wyoming,resid,gas,hot water,gas water heater,2021,0.2632672,0.0032927
-Wyoming,resid,gas,others,gas,2021,0.0524677,6.562e-4
+Wyoming,resid,gas,other,gas,2021,0.0524677,6.562e-4
 Wyoming,resid,refined liquids,cooking,lpg oven,2021,0.0267274,2.86e-5
 Wyoming,resid,refined liquids,heating,fuel furnace,2021,0.6346862,6.8e-4
 Wyoming,resid,refined liquids,hot water,fuel water heater,2021,0.1766843,1.893e-4
-Wyoming,resid,refined liquids,others,refined liquids,2021,0.1619022,1.735e-4
+Wyoming,resid,refined liquids,other,refined liquids,2021,0.1619022,1.735e-4

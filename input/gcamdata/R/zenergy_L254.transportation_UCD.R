@@ -417,7 +417,6 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalRenewTech"]]) ->
       L254.GlobalRenewTech_nonmotor
 
-
     # PART D: TECHNOLOGY INFORMATION - GLOBAL TRANTECHNOLOGIES
     # L254.GlobalTranTechInterp: Shareweight interpolation of global tranTechnologies
     A54.globaltranTech_interp %>%
@@ -445,6 +444,32 @@ module_energy_L254.transportation_UCD <- function(command, ...) {
       rename(sector.name = supplysector, subsector.name = tranSubsector) %>%
       select(LEVEL2_DATA_NAMES[["GlobalTranTechShrwt"]],sce) ->
       L254.GlobalTranTechShrwt_CORE # OUTPUT
+
+    # Under timeshift, having the from.year = the first-future-year can lead to strange dynamics
+    # We'll remove those rules here. We also need to adjust shwt that were set using
+    # gather-years, as it can lead to some non-monotonic results.
+    if( UNDER_TIMESHIFT ) {
+      # Identify technologies that need adjustment
+      L254.GlobalTranTechInterp %>%
+        filter(to.year == min(MODEL_FUTURE_YEARS)) %>%
+        select(sector.name, subsector.name, tranTechnology) ->
+        shwt_to_adj
+
+      # Remove interpolation rules for those
+      L254.GlobalTranTechInterp %>%
+        filter(to.year != min(MODEL_FUTURE_YEARS)) ->
+        L254.GlobalTranTechInterp
+
+      L254.GlobalTranTechShrwt_CORE %>%
+        semi_join(shwt_to_adj, by=c("sector.name", "subsector.name", "tranTechnology")) %>%
+        mutate(share.weight = if_else(year > MODEL_FINAL_BASE_YEAR, 0, share.weight)) ->
+        adjusted_shwt
+
+      L254.GlobalTranTechShrwt_CORE %>%
+        anti_join(shwt_to_adj, by=c("sector.name", "subsector.name", "tranTechnology")) %>%
+        bind_rows(adjusted_shwt) ->
+        L254.GlobalTranTechShrwt_CORE
+    }
 
 
     # A54.globaltranTech_shrwt %>%

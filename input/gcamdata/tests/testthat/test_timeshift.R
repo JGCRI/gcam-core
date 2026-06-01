@@ -25,8 +25,11 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     # Note that this does not affect the HISTORICAL_YEARS or FUTURE_YEARS for data processing
     byr <- MODEL_BASE_YEARS
     MODEL_BASE_YEARS <<- c(1975, 1990)   # normally (1975, 1990, 2005, 2010)
+    emissions.MODEL_BASE_YEARS  <<- MODEL_BASE_YEARS
+    fbyr <- MODEL_FINAL_BASE_YEAR
+    MODEL_FINAL_BASE_YEAR <<- max(MODEL_BASE_YEARS)
     fyr <- MODEL_FUTURE_YEARS
-    MODEL_FUTURE_YEARS <<- c(2005, 2010, seq(2015, 2100, 5))   # normally (1975, 1990, 2005, 2010)
+    MODEL_FUTURE_YEARS <<- MODEL_YEARS[MODEL_YEARS > max(MODEL_BASE_YEARS)]   # normally (1975, 1990, 2005, 2010)
     myr <- MODEL_YEARS
     MODEL_YEARS <<- c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)
 
@@ -47,6 +50,8 @@ if(require(mockr, quietly = TRUE, warn.conflicts = FALSE)) {
     # Reset to what it was before
     UNDER_TIMESHIFT <<- FALSE
     MODEL_BASE_YEARS <<- byr
+    emissions.MODEL_BASE_YEARS <<- byr
+    MODEL_FINAL_BASE_YEAR <<- fbyr
     MODEL_FUTURE_YEARS <<- fyr
     MODEL_YEARS <<- myr
   })

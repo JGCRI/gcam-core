@@ -44,9 +44,7 @@ module_energy_L2327.paper <- function(command, ...) {
              "L1327.out_Mt_R_paper_Yh",
              "L1327.IO_GJkg_R_paper_F_Yh",
              "L1327.elec_noheat_adj_shwt_R",
-             "L202.StubTechCoef_an",
-             "L203.Supplysector_demand",
-             "L203.PerCapitaBased"))
+             "L202.StubTechCoef_an"))
   } else if(command == driver.DECLARE_OUTPUTS) {
     return(c("L2327.Supplysector_paper",
              "L2327.FinalEnergyKeyword_paper",
@@ -96,8 +94,6 @@ module_energy_L2327.paper <- function(command, ...) {
     L1327.elec_noheat_adj_shwt_R <- get_data(all_data, "L1327.elec_noheat_adj_shwt_R", strip_attributes = TRUE)
     A327.subsector_interp_adj_future_years <- get_data(all_data, "energy/A327.subsector_interp_adj_future_years", strip_attributes = TRUE)
     A327.subsector_shrwt_adj_future_years <- get_data(all_data, "energy/A327.subsector_shrwt_adj_future_years", strip_attributes = TRUE)
-    L203.Supplysector_demand <- get_data(all_data, "L203.Supplysector_demand", strip_attributes = TRUE)
-    L203.PerCapitaBased <- get_data(all_data, "L203.PerCapitaBased", strip_attributes = TRUE)
     A_PrimaryFuelCCoef <- get_data(all_data, "emissions/A_PrimaryFuelCCoef", strip_attributes = TRUE)
     L202.StubTechCoef_an <- get_data(all_data, "L202.StubTechCoef_an", strip_attributes = TRUE)
 
@@ -241,7 +237,7 @@ module_energy_L2327.paper <- function(command, ...) {
       mutate(output.ratio = elec_ratio * coefficient,
              output.ratio = round(output.ratio, energy.DIGITS_EFFICIENCY)) %>%
       # NOTE: holding the output ratio constant over time in future periods
-      left_join_error_no_match(select(filter(., year == max(MODEL_BASE_YEARS)), -coefficient, -elec_ratio),
+      left_join_error_no_match(select(filter(., year == MODEL_FINAL_BASE_YEAR), -coefficient, -elec_ratio),
                                by = c("supplysector", "subsector", "technology", "minicam.energy.input", "secondary.output")) %>%
       mutate(output.ratio = if_else(year.x %in% MODEL_BASE_YEARS, output.ratio.x, output.ratio.y)) %>%
       ungroup %>%
@@ -308,7 +304,7 @@ module_energy_L2327.paper <- function(command, ...) {
     # filters base years from original and then appends future years
     L2327.globaltech_retirement_base %>%
       mutate(year = as.integer(year)) %>%
-      filter(year == max(MODEL_BASE_YEARS)) %>%
+      filter(year == MODEL_FINAL_BASE_YEAR) %>%
       bind_rows(L2327.globaltech_retirement_future) ->
       L2327.globaltech_retirement
 

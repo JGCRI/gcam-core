@@ -71,23 +71,19 @@ module_emissions_emission_controls_xml <- function(command, ...) {
     # Some data inputs may not actually contain data. If so, do not add_xml_data
     if(exists("L253.EF_retrofit_nesting")) {
       emission_factor_controls.xml <- emission_factor_controls.xml %>%
-        add_xml_data_generate_levels(L253.EF_retrofit_nesting, "EF_Retrofit", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.EF_retrofit_nesting")
+        add_xml_data_generate_levels(L253.EF_retrofit_nesting, "EF_Retrofit", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.EF_NSPS_new_vintage_nesting")) {
       emission_factor_controls.xml <- emission_factor_controls.xml %>%
-        add_xml_data_generate_levels(L253.EF_NSPS_new_vintage_nesting, "EF_NSPS", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.EF_NSPS_new_vintage_nesting")
+        add_xml_data_generate_levels(L253.EF_NSPS_new_vintage_nesting, "EF_NSPS", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.delete_gdp_control_nesting")) {
       emission_factor_controls.xml <- emission_factor_controls.xml %>%
-        add_xml_data_generate_levels(L253.delete_gdp_control_nesting, "DeleteGDPControl", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.delete_gdp_control_nesting")
+        add_xml_data_generate_levels(L253.delete_gdp_control_nesting, "DeleteGDPControl", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.Retrofit_off_nesting")) {
       emission_factor_controls.xml <- emission_factor_controls.xml %>%
-        add_xml_data_generate_levels(L253.Retrofit_off_nesting, "RetrofitOff", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.Retrofit_off_nesting")
+        add_xml_data_generate_levels(L253.Retrofit_off_nesting, "RetrofitOff", "subsector","nesting-subsector",1,FALSE)
     }
 
     # Output 2
@@ -104,23 +100,19 @@ module_emissions_emission_controls_xml <- function(command, ...) {
     # Some data inputs may not actually contain data. If so, do not add_xml_data
     if(exists("L253.user_EF_retrofit_nesting")) {
       emission_factor_controls_user.xml <- emission_factor_controls_user.xml %>%
-        add_xml_data_generate_levels(L253.user_EF_retrofit_nesting, "EF_Retrofit", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.user_EF_retrofit_nesting")
+        add_xml_data_generate_levels(L253.user_EF_retrofit_nesting, "EF_Retrofit", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.user_EF_NSPS_new_vintage_nesting")) {
       emission_factor_controls_user.xml <- emission_factor_controls_user.xml %>%
-        add_xml_data_generate_levels(L253.user_EF_NSPS_new_vintage_nesting, "EF_NSPS", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.user_EF_NSPS_new_vintage_nesting")
+        add_xml_data_generate_levels(L253.user_EF_NSPS_new_vintage_nesting, "EF_NSPS", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.user_delete_gdp_control_nesting")) {
       emission_factor_controls_user.xml <- emission_factor_controls_user.xml %>%
-        add_xml_data_generate_levels(L253.user_delete_gdp_control_nesting, "DeleteGDPControl", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.user_delete_gdp_control_nesting")
+        add_xml_data_generate_levels(L253.user_delete_gdp_control_nesting, "DeleteGDPControl", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.user_Retrofit_off_nesting")) {
       emission_factor_controls_user.xml <- emission_factor_controls_user.xml %>%
-        add_xml_data_generate_levels(L253.user_Retrofit_off_nesting, "RetrofitOff", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.user_Retrofit_off_nesting")
+        add_xml_data_generate_levels(L253.user_Retrofit_off_nesting, "RetrofitOff", "subsector","nesting-subsector",1,FALSE)
     }
 
     # Output #3
@@ -137,23 +129,19 @@ module_emissions_emission_controls_xml <- function(command, ...) {
     # Some data inputs may not actually contain data. If so, do not add_xml_data
     if(exists("L253.EF_retrofit_USA_nesting")) {
       emission_factor_controls_USA.xml <- emission_factor_controls_USA.xml %>%
-        add_xml_data_generate_levels(L253.EF_retrofit_USA_nesting, "EF_Retrofit", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.EF_retrofit_USA_nesting")
+        add_xml_data_generate_levels(L253.EF_retrofit_USA_nesting, "EF_Retrofit", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.EF_NSPS_new_vintage_USA_nesting")) {
       emission_factor_controls_USA.xml <- emission_factor_controls_USA.xml %>%
-        add_xml_data_generate_levels(L253.EF_NSPS_new_vintage_USA_nesting, "EF_NSPS", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.EF_NSPS_new_vintage_USA_nesting")
+        add_xml_data_generate_levels(L253.EF_NSPS_new_vintage_USA_nesting, "EF_NSPS", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.delete_gdp_control_USA_nesting")) {
       emission_factor_controls_USA.xml <- emission_factor_controls_USA.xml %>%
-        add_xml_data_generate_levels(L253.delete_gdp_control_USA_nesting, "DeleteGDPControl", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.delete_gdp_control_USA_nesting")
+        add_xml_data_generate_levels(L253.delete_gdp_control_USA_nesting, "DeleteGDPControl", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.Retrofit_off_USA_nesting")) {
       emission_factor_controls_USA.xml <- emission_factor_controls_USA.xml %>%
-        add_xml_data_generate_levels(L253.Retrofit_off_USA_nesting, "RetrofitOff", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.Retrofit_off_USA_nesting")
+        add_xml_data_generate_levels(L253.Retrofit_off_USA_nesting, "RetrofitOff", "subsector","nesting-subsector",1,FALSE)
     }
 
     # Output 4
@@ -170,23 +158,19 @@ module_emissions_emission_controls_xml <- function(command, ...) {
     # Some data inputs may not actually contain data. If so, do not add_xml_data
     if(exists("L253.user_EF_retrofit_USA_nesting")) {
       emission_factor_controls_user_USA.xml <- emission_factor_controls_user_USA.xml %>%
-        add_xml_data_generate_levels(L253.user_EF_retrofit_USA_nesting, "EF_Retrofit", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.user_EF_retrofit_USA_nesting")
+        add_xml_data_generate_levels(L253.user_EF_retrofit_USA_nesting, "EF_Retrofit", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.user_EF_NSPS_new_vintage_USA_nesting")) {
       emission_factor_controls_user_USA.xml <- emission_factor_controls_user_USA.xml %>%
-        add_xml_data_generate_levels(L253.user_EF_NSPS_new_vintage_USA_nesting, "EF_NSPS", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.user_EF_NSPS_new_vintage_USA_nesting")
+        add_xml_data_generate_levels(L253.user_EF_NSPS_new_vintage_USA_nesting, "EF_NSPS", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.user_delete_gdp_control_USA_nesting")) {
       emission_factor_controls_user_USA.xml <- emission_factor_controls_user_USA.xml %>%
-        add_xml_data_generate_levels(L253.user_delete_gdp_control_USA_nesting, "DeleteGDPControl", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.user_delete_gdp_control_USA_nesting")
+        add_xml_data_generate_levels(L253.user_delete_gdp_control_USA_nesting, "DeleteGDPControl", "subsector","nesting-subsector",1,FALSE)
     }
     if(exists("L253.user_Retrofit_off_USA_nesting")) {
       emission_factor_controls_user_USA.xml <- emission_factor_controls_user_USA.xml %>%
-        add_xml_data_generate_levels(L253.user_Retrofit_off_USA_nesting, "RetrofitOff", "subsector","nesting-subsector",1,FALSE) %>%
-        add_precursors("L253.user_Retrofit_off_USA_nesting")
+        add_xml_data_generate_levels(L253.user_Retrofit_off_USA_nesting, "RetrofitOff", "subsector","nesting-subsector",1,FALSE)
     }
 
     return_data(emission_factor_controls.xml,

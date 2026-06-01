@@ -262,7 +262,7 @@ module_socio_L201.Pop_GDP_scenarios <- function(command, ...) {
              stub.technology = subsector,
              calOutputValue = value, # mil pers
              share.weight.year = year,
-             subs.share.weight = ifelse(calOutputValue > 0, 1, 0),
+             subs.share.weight = if_else(calOutputValue > 0, 1, 0),
              tech.share.weight = if_else(subs.share.weight > 0, 1, 0)) %>%
       ungroup() ->
       L201.LaborSupplySubSector

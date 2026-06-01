@@ -68,3 +68,23 @@ test_that("chunk names are correct", {
 
 })
 
+test_that("no hardcoded years", {
+  chunklist <- find_chunks()
+
+  for(ch in unique(chunklist$name)) {
+    fn <- getFromNamespace(ch, ns = "gcamdata")
+    chk <- screen_years(fn)
+    if(length(chk > 0)) {
+      infostr <- paste("Hardcoded years found in ", ch, ":  \n",
+                       paste("[", chk[,1], "]", chk[,2], collapse = "\n"))
+    }
+    else {
+      infostr <- NULL
+    }
+
+    expect_equal(chk, character(),   # should be no matches
+                 info = infostr)
+  }
+
+})
+

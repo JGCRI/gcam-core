@@ -1,7 +1,7 @@
 # File: Melaina_h2_water.csv
 # Title: Water intensities of hydrogen production
 # Units: gallons of water per kg of hydrogen produced
-# Source: Marc Melaina (HFTO) email 2/3/25 re: Water Use in Hydrogen Production
+# Source: Early draft of Melaina et al. (2026) Water use in hydrogen production: https://www.energy.gov/documents/record-25003-water-use-hydrogen-production
 # Column types: ccn
 # ----------
 Technology,Unit,Value

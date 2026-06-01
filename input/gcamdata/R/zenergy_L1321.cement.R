@@ -117,8 +117,8 @@ module_energy_L1321.cement <- function(command, ...) {
       gather(iso, value, -Year) %>%
       mutate(iso = tolower(iso)) %>%
       left_join(Andrew_iso_correction, by = c('iso')) %>%  #many NA matching on purpose
-      mutate(iso_correction = ifelse(iso == "sdn (729)", 'sdn',iso_correction) ) %>% #manually fix for now - the mapping file isn't working
-      mutate(iso = ifelse(!is.na(iso_correction), iso_correction, iso)) %>% #correct iso with correction mapping
+      mutate(iso_correction = if_else(iso == "sdn (729)", 'sdn',iso_correction),  #manually fix for now - the mapping file isn't working
+             iso = if_else(!is.na(iso_correction), iso_correction, iso)) %>% #correct iso with correction mapping
       select(-iso_correction) %>%
       mutate(value = as.numeric(value)) %>%
       dplyr::rename(year = Year) %>%
@@ -126,8 +126,8 @@ module_energy_L1321.cement <- function(command, ...) {
       group_by(iso, year) %>%
       summarize(value = sum(value)) %>%
       filter(year %in% HISTORICAL_YEARS) %>%
-      mutate(value = value*CONV_KT_MT) %>% #convert from kt to Mt
-      mutate(sector = 'cement') %>%
+      mutate(value = value*CONV_KT_MT, #convert from kt to Mt
+             sector = 'cement') %>%
       left_join(iso_GCAM_regID, by = c('iso')) -> L1321.out_Mt_C_cement_Yh_region_check
     # Use left join because there are some isos (very small islands etc) not mapped to GCAM regions
     # all these regions have zero cement production so not dropping cement production to NAs
@@ -152,8 +152,8 @@ module_energy_L1321.cement <- function(command, ...) {
     # need kt C for limestone conversion
     # by country
     Andrew_cement_emissions %>%
-      mutate(iso = tolower(ISO)) %>%
-      mutate(iso = ifelse(iso == 'ksv', 'xkx',iso)) %>% #correct wrong iso code in Andrew data
+      mutate(iso = tolower(ISO),
+             iso = if_else(iso == 'ksv', 'xkx',iso)) %>% #correct wrong iso code in Andrew data
       select(-`UN code`,-`Name`,-ISO) %>%
       gather(year, value, -iso) %>%
       mutate(year = as.numeric(year)) %>%
@@ -272,8 +272,8 @@ module_energy_L1321.cement <- function(command, ...) {
       filter(Country != 'China') %>% #China seems to be dragging the efficiency increase waaaaay up so remove
       filter(Country != 'India') %>%
       # calculate the weighted average change from 2010 to 2018
-      mutate(total_value = sum(value)) %>%
-      mutate(weighted_increase = increase*value/total_value) %>%
+      mutate(total_value = sum(value),
+             weighted_increase = increase*value/total_value) %>%
       pull(weighted_increase) %>% sum()
 
     # Merge all elec data and fill in extrapolation from above
@@ -282,8 +282,8 @@ module_energy_L1321.cement <- function(command, ...) {
       filter(! is.na(`2018`)) %>%
       unique %>%
       # extrapolate back to 1971
-      mutate(`1971`= ifelse(is.na(`1971`),`2018`*elec_change_average_1971_to_2018,`1971`)) %>%
-      mutate(`2021`=`2018`)
+      mutate(`1971`= if_else(is.na(`1971`),`2018`*elec_change_average_1971_to_2018,`1971`),
+             `2021`=`2018`)
 
     # Interpolate available data on electricity intensity to all historical years
     IEA_cement_elec_kwht_merged %>%
@@ -321,23 +321,23 @@ module_energy_L1321.cement <- function(command, ...) {
     # Calculate Fuel Shares
     L101.en_bal_EJ_ctry_Si_Fi_Yh_full %>%
       filter(sector == 'cement') %>%
-      mutate(fuel = ifelse(str_detect(fuel, 'gas'),'gas', fuel)) %>%
-      mutate(fuel = ifelse(str_detect(fuel, 'refined'),'oil', fuel)) %>%
-      mutate(fuel = ifelse(str_detect(fuel, 'bio'),'biomass', fuel)) %>%
+      mutate(fuel = if_else(str_detect(fuel, 'gas'),'gas', fuel),
+             fuel = if_else(str_detect(fuel, 'refined'),'oil', fuel),
+             fuel = if_else(str_detect(fuel, 'bio'),'biomass', fuel)) %>%
       filter(fuel %in% c('gas','oil','biomass','coal')) %>%
       group_by(iso, GCAM_region_ID, sector, fuel, year) %>%
       summarize(value = sum(value, na.rm = TRUE)) %>%
       spread(fuel, value) %>%
       replace_na(list(gas = 0, biomass = 0, oil = 0, coal = 0)) %>%
-      mutate(fuel_total = gas+oil+biomass+coal) %>%
-      mutate(biomass = biomass/fuel_total) %>%
-      mutate(gas = gas/fuel_total) %>%
-      mutate(oil = oil/fuel_total) %>%
-      mutate(coal = coal/fuel_total) %>%
+      mutate(fuel_total = gas+oil+biomass+coal,
+             biomass = biomass/fuel_total,
+             gas = gas/fuel_total,
+             oil = oil/fuel_total,
+             coal = coal/fuel_total) %>%
       select(-fuel_total) %>%
       replace_na(list(gas = 0, biomass = 0, oil = 0, coal = 0)) %>%
-      mutate(total = biomass+oil+gas+coal) %>%  # if zero fuel then 100% to coal
-      mutate(coal = ifelse(total == 0, 1, coal)) %>%
+      mutate(total = biomass+oil+gas+coal,  # if zero fuel then 100% to coal
+             coal = if_else(total == 0, 1, coal)) %>%
       select(-total) -> L1321.IEA_cement_fuel_share #This is missing some countries from the other data - need to fill in later
 
 
@@ -403,13 +403,13 @@ module_energy_L1321.cement <- function(command, ...) {
       # Match in fuelshares of (by default) coal, gas, oil, and biomass
       left_join(L1321.IEA_cement_fuel_share , by = c('iso', 'year', 'GCAM_region_ID')) %>% #Fuel shares are incomplete - so there will be NAs - correct below
       replace_na(list(gas = 0, biomass = 0, oil = 0, coal = 0, prod_Mt = 0)) %>%
-      mutate(coal = ifelse(gas+oil+biomass+coal == 0, 1, coal)) %>% #if no fuel share - default coal to 100%
+      mutate(coal = if_else(gas+oil+biomass+coal == 0, 1, coal), #if no fuel share - default coal to 100%
       # Calculate heat intensity of energy and electricity, as well as total heat for each
-      mutate(heat_GJkg = TPE_GJkg - elec_GJkg * IOelec,
+             heat_GJkg = TPE_GJkg - elec_GJkg * IOelec,
              heat_EJ = heat_GJkg * prod_Mt,
-             elec_EJ = elec_GJkg * prod_Mt) %>%
+             elec_EJ = elec_GJkg * prod_Mt,
       # Calculate total heat by fuel using fuelshares
-      mutate(Coal_EJ = coal * heat_EJ,
+             Coal_EJ = coal * heat_EJ,
              Oil_EJ = oil * heat_EJ,
              Gas_EJ = gas * heat_EJ,
              Biomass_EJ = biomass * heat_EJ) ->
@@ -532,7 +532,7 @@ module_energy_L1321.cement <- function(command, ...) {
                    summarize(value = sum(value) ) ,
                  by = c("GCAM_region_ID", "year", "fuel", "sector"),
                  suffix = c(".new", ".iea") ) %>%
-      mutate(check = ifelse(value.new > value.iea, 1,0)) %>%
+      mutate(check = if_else(value.new > value.iea, 1,0)) %>%
       filter(check == 1 ) %>%
       select( -value.new, -value.iea) %>%
       pivot_wider(names_from = year, values_from = check) %>%
@@ -550,7 +550,7 @@ module_energy_L1321.cement <- function(command, ...) {
                    summarize(value = sum(value) ) ,
                  by = c("GCAM_region_ID", "year", "fuel", "sector"),
                  suffix = c(".new", ".iea") ) %>%
-      mutate(value = ifelse(value.new > value.iea, value.iea, value.new)) %>%
+      mutate(value = if_else(value.new > value.iea, value.iea, value.new)) %>%
       select(-value.new, -value.iea) %>%
       unique  -> L1321.in_EJ_R_cement_F_Y_adj
 
@@ -624,7 +624,7 @@ module_energy_L1321.cement <- function(command, ...) {
     # For Now zero out small negative cement values - these come from industry. Jira issue 512
     # remove this when this issue gets fixed
     L1321.in_EJ_R_cement_F_Y <- L1321.in_EJ_R_cement_F_Y %>%
-      mutate(value = ifelse(value <0, 0, value))
+      mutate(value = if_else(value <0, 0, value))
 
     # ===================================================
     # Produce outputs

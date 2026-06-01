@@ -259,7 +259,7 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
     # in historical years due to losses and gaps
 
     L109.ag_ALL_Mt_R_C_Y_4 %>%
-      filter(year %in% MODEL_BASE_YEARS[MODEL_BASE_YEARS != max(MODEL_BASE_YEARS)],
+      filter(year %in% MODEL_BASE_YEARS[MODEL_BASE_YEARS != FINAL_HISTORICAL_YEAR],
              `Closing stocks` > 0 & CurrentConsumption == 0,
              GCAM_commodity %in% Storage_commodities) %>%
       mutate(OtherUses_Mt = 0.01 * `Closing stocks`,
@@ -269,7 +269,7 @@ module_aglu_L109.ag_an_ALL_R_C_Y <- function(command, ...) {
 
     # Bind rows to get full table
     L109.ag_ALL_Mt_R_C_Y_4 %>%
-      filter(!(year %in% MODEL_BASE_YEARS[MODEL_BASE_YEARS != max(MODEL_BASE_YEARS)] &
+      filter(!(year %in% MODEL_BASE_YEARS[MODEL_BASE_YEARS != FINAL_HISTORICAL_YEAR] &
              `Closing stocks` > 0 & CurrentConsumption == 0 &
                GCAM_commodity %in% Storage_commodities)) %>%
       bind_rows(

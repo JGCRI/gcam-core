@@ -17,9 +17,9 @@ comm hot water,refined liquids,-1
 comm lighting,electricity,0
 comm non-building,electricity,0
 comm office,electricity,0
-comm others,electricity,0
-comm others,gas,0
-comm others,refined liquids,-1
+comm other,electricity,0
+comm other,gas,0
+comm other,refined liquids,-1
 comm refrigeration,electricity,0
 comm ventilation,electricity,0
 resid clothes dryers,electricity,0
@@ -40,8 +40,8 @@ resid hot water,electricity,0
 resid hot water,gas,0
 resid hot water,refined liquids,-1
 resid lighting,electricity,0
-resid others,electricity,0
-resid others,gas,0
-resid others,refined liquids,-1
+resid other,electricity,0
+resid other,gas,0
+resid other,refined liquids,-1
 resid refrigerators,electricity,0
 resid televisions,electricity,0

@@ -608,8 +608,8 @@ module_aglu_L2082.ag_an_for_laborcapital <- function(command, ...) {
           spread(factor, value) %>%
           select(region, year, labor_ppl, capital_1975USD),
         by = c("region", "year")) %>%
-      mutate(Labor_IO = ifelse(calOutputValue == 0, 0, labor_ppl / 10^6 / RegionalProd) , # labor IO: # mpl / bm3
-             Capital_IO = ifelse(calOutputValue == 0, 0, capital_1975USD / 10^9 / RegionalProd), # capital IO: # bil 1975$ / bm3
+      mutate(Labor_IO = if_else(calOutputValue == 0, 0, labor_ppl / 10^6 / RegionalProd) , # labor IO: # mpl / bm3
+             Capital_IO = if_else(calOutputValue == 0, 0, capital_1975USD / 10^9 / RegionalProd), # capital IO: # bil 1975$ / bm3
              Labor_input_Mppl = Labor_IO * calOutputValue,
              Capital_input_Bil1975USD = Capital_IO * calOutputValue) ->
       L2082.AgCoef_laborcapital_for_hist_0
@@ -791,15 +791,15 @@ module_aglu_L2082.ag_an_for_laborcapital <- function(command, ...) {
     ## factor prices for labor and capital ----
     L2082.laborprice_Yh %>%
       add_title("Regional agricultural labor market price") %>%
-      add_units("1975K$/ppl") %>%
-      add_legacy_name("L2082.laborprice_Yh") %>%
+      add_units("1975$/pers") %>%
+      add_comments("Calibrated historical Ag Labor prices") %>%
       add_precursors("L100.GTAPCostShare_AgLU_reg_comm") ->
       L2082.laborprice_Yh
 
     L2082.capitalprice_Yh %>%
       add_title("Regional agricultural capital market price") %>%
       add_units("1975 $/$") %>%
-      add_legacy_name("L2082.capitalprice_Yh") %>%
+      add_comments("Calibrated historical Ag capital prices") %>%
       add_precursors("L100.GTAPCostShare_AgLU_reg_comm") ->
       L2082.capitalprice_Yh
 
@@ -835,8 +835,8 @@ module_aglu_L2082.ag_an_for_laborcapital <- function(command, ...) {
       add_units("Mppl per bm3 (labor); bil 1975$ per bm3 (capital)") %>%
       add_comments("Uniform IO per region; derived from L103 forest factor quantities divided by regional production.") %>%
       add_legacy_name("L2082.AgCoef_laborcapital_for_hist") %>%
-      add_precursors("L100.GTAPCostShare_AgLU_reg_comm",
-                     "L2062.AgCost_for_adj") ->
+      add_precursors("L2012.AgProduction_For",
+                     "L103.Ag_LaborCapital_R_AgMajorSector_Yh") ->
       L2082.AgCoef_laborcapital_for_hist
 
 

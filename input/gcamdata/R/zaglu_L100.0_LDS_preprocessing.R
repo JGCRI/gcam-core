@@ -123,12 +123,10 @@ module_aglu_L100.0_LDS_preprocessing <- function(command, ...) {
       if("year" %in% names(LDSfiles[[nm]])) {
         max_year <- max(LDSfiles[[nm]]$year, na.rm = TRUE)
 
-        # Check if the max year is earlier than MODEL_FINAL_BASE_YEAR
-        if (max_year < MODEL_FINAL_BASE_YEAR) {
-          warning("module_aglu_L100.0_LDS_preprocessing: latest year in ", nm, " (", max_year, ") is earlier than the final base-year (", MODEL_FINAL_BASE_YEAR, "). Consider updating the data.")
+        # Check if the max year is earlier than FINAL_HISTORICAL_YEAR
+        if (max_year < FINAL_HISTORICAL_YEAR) {
+          warning("module_aglu_L100.0_LDS_preprocessing: latest year in ", nm, " (", max_year, ") is earlier than the final historical year (", FINAL_HISTORICAL_YEAR, "). Consider updating the data.")
         }
-
-        
       }
     }
 

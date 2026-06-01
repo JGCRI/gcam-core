@@ -222,7 +222,7 @@ module_aglu_L123.LC_R_MgdPastFor_Yh_GLU <- function(command, ...) {
       left_join_error_no_match(L110.For_ALL_bm3_R_Y, by = c("GCAM_region_ID",  "year","GCAM_commodity")) %>%
       # Calculate logging production as the regional total times the GLU-wise forest biomass production fractions
       mutate(value = Prod_bm3 * frac,
-             value=round(value, aglu.DIGITS_CALOUTPUT)) %>%
+             value=round(value, aglu.DIGITS_CALOUTPUT_FOR)) %>%
       select(GCAM_region_ID, GCAM_commodity, GLU, year, value, Land_Type) ->
       L123.For_Prod_bm3_R_Y_GLU
 

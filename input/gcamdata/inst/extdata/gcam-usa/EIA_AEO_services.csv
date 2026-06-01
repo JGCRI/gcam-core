@@ -18,7 +18,7 @@ Residential,Dishwashers,resid dishwashers
 Residential,Color Televisions,resid televisions
 Residential,Personal Computers,resid computers
 Residential,Furnace Fans,resid furnace fans
-Residential,Other Uses,resid others
+Residential,Other Uses,resid other
 Commercial,Space Heating,comm heating
 Commercial,Space Cooling,comm cooling
 Commercial,Water Heating,comm hot water
@@ -28,4 +28,4 @@ Commercial,Lighting,comm lighting
 Commercial,Refrigeration,comm refrigeration
 Commercial,Office Equipment (PC),comm office
 Commercial,Office Equipment (non-PC),comm office
-Commercial,Other Uses,comm others
+Commercial,Other Uses,comm other

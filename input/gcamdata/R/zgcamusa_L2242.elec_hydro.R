@@ -48,6 +48,21 @@ module_gcamusa_L2242.elec_hydro <- function(command, ...) {
              year == max(year),
              fixedOutput != 0) -> L2242.hydro_fixedOutput_baseyear
 
+    # Some historical years have output for both base load and intermediate load,
+    # these need to be summed so that there is only a total entry per state.
+    if ( UNDER_TIMESHIFT ) {
+      L2242.hydro_fixedOutput_baseyear %>%
+        group_by(region,  year ) %>%
+        summarize( supplysector = first(supplysector),
+                   subsector = first(subsector),
+                   stub.technology = first(stub.technology),
+                   fixedOutput = sum(fixedOutput),
+                   subs.share.weight = first(subs.share.weight),
+                   tech.share.weight = first(tech.share.weight)) %>%
+        ungroup() ->
+        L2242.hydro_fixedOutput_baseyear
+    }
+
     # Compute ratio of AEO 2020 hydro generation relative to EIA 2015 at the national level
     EIA_elec_gen_hydro %>%
       filter(year == gcamusa.HYDRO_HIST_YEAR) %>%

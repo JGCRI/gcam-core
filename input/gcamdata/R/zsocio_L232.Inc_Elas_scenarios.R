@@ -564,7 +564,7 @@ module_socio_L232.Inc_Elas_scenarios <- function(command, ...) {
       add_comments("Note lower income elasticities for SSP1 are hard-coded.") %>%
       add_legacy_name("L232.IncomeElasticity_ind_Scen") %>%
       add_precursors("L101.Pop_thous_R_Yh", "L102.pcgdp_thous90USD_Scen_R_Y", "common/GCAM_region_names",
-                     "energy/A32.demand", "socioeconomics/A32.inc_elas_output") ->
+                     "L232.BaseService_ind", "energy/A32.demand", "socioeconomics/A32.inc_elas_output") ->
       L232.IncomeElasticity_ind_Scen
 
     assertthat::assert_that(

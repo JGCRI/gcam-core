@@ -163,12 +163,12 @@ module_energy_L1327.paper <- function(command, ...) {
       left_join(iso_GCAM_regID %>% select(iso, GCAM_region_ID), by = "iso") %>%
       group_by(GCAM_region_ID, fuel, sector, year) %>%
       summarize(value = sum(value)) %>%
-      filter(year <= MODEL_FINAL_BASE_YEAR) %>%
+      filter(year <= FINAL_HISTORICAL_YEAR) %>%
       ungroup() ->
       L1327.china_biomass
 
     max_china_bio_year <- max(L1327.china_biomass$year)
-    if(max_china_bio_year < MODEL_FINAL_BASE_YEAR) {
+    if(max_china_bio_year < FINAL_HISTORICAL_YEAR) {
       warning("Extending A327.china_biomass using growth in paper output from L1327.out_Mt_R_paper_Yh")
       L1327.out_Mt_R_paper_Yh %>%
         filter(year >= max_china_bio_year) %>%

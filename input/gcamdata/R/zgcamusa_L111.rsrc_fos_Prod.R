@@ -379,8 +379,8 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
       # Alaska reports both total and south/north, just need to keep one of them
       filter(!grepl("Alaska Field Production of Crude Oil thousBBL", category)) %>%
       # clean up columns
-      mutate(category = gsub(" Field Production of Crude Oil thousBBL", "", category)) %>%
-      mutate(type = if_else(grepl("Offshore", category), "offshore", "onshore")) %>%
+      mutate(category = gsub(" Field Production of Crude Oil thousBBL", "", category),
+             type = if_else(grepl("Offshore", category), "offshore", "onshore")) %>%
       # use left_join because offshore regions are still aggregated
       left_join(tibble(category = state.name, state = state.abb), by = "category") %>%
       mutate(state = case_when(
@@ -601,8 +601,8 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
       # clean-up state names (remove US-)
       mutate(region = gsub("US-", "", state)) %>%
       # convert short ton coal (of equivalent) to EJ
-      mutate(eia.prod = value * CONV_TCE_EJ) %>%
-      mutate(resource = "coal",
+      mutate(eia.prod = value * CONV_TCE_EJ,
+             resource = "coal",
              reserve.subresource = type) %>%
       select(region, resource, reserve.subresource, year, eia.prod)
 
@@ -687,9 +687,9 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
       # use left_join because AK and CA will be NAs
       left_join(GOM_share %>% mutate(region = "GOM"), by = "region",relationship = "many-to-many") %>%
       mutate(state = if_else(is.na(state), region, state),
-             GOM_share = if_else(is.na(GOM_share), 1.0, GOM_share)) %>%
-      mutate(value = value * GOM_share) %>%
-      mutate(resource = "natural gas",
+             GOM_share = if_else(is.na(GOM_share), 1.0, GOM_share),
+             value = value * GOM_share,
+             resource = "natural gas",
              reserve.subresource = "offshore gas") %>%
       select(region = state, resource, reserve.subresource, grade, value) %>%
       spread(grade, value)
@@ -749,8 +749,8 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
       mutate(costdelta_lead = lead(extractioncost)-extractioncost,
              costdelta_lag = extractioncost-lag(extractioncost)) %>%
       ungroup() %>%
-      mutate(grade = as.numeric(gsub("grade", "", grade))) %>%
-      mutate(cum_avail = cumsum(available)) %>%
+      mutate(grade = as.numeric(gsub("grade", "", grade)),
+             cum_avail = cumsum(available)) %>%
       left_join_error_no_match(L111.gas_supply_USA_USGS_BOEM_T_EJ, by = c("GCAM_region_ID")) %>%
       mutate(cum_avail_remain = cum_avail - USGS_total - CumulHistGrade.gas.tot) %>%
       filter(cum_avail_remain >= 0) %>%
@@ -863,9 +863,9 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
                   summarise(share = mean(share)) %>%
                   ungroup, by = "region",relationship = "many-to-many") %>%
       mutate(state = if_else(is.na(state), region, state),
-             share = if_else(is.na(share), 1.0, share)) %>%
-      mutate(value = value * share) %>%
-      mutate(resource = "crude oil",
+             share = if_else(is.na(share), 1.0, share),
+             value = value * share,
+             resource = "crude oil",
              reserve.subresource = "offshore oil") %>%
       select(region = state, resource, reserve.subresource, grade, value) %>%
       spread(grade, value)
@@ -878,8 +878,8 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
     # harmonize with the national supply
     # 1b) create state shares from USGS data
     L111.oil_supply_state_T_EJ_wide %>%
-      mutate(total = grade.1 + grade.2 + grade.3 + grade.4) %>%
-      mutate(subresource = if_else(grepl("onshore unconventional heavy oil", reserve.subresource), "unconventional oil","crude oil")) %>%
+      mutate(total = grade.1 + grade.2 + grade.3 + grade.4,
+             subresource = if_else(grepl("onshore unconventional heavy oil", reserve.subresource), "unconventional oil","crude oil")) %>%
       group_by(region,subresource) %>%
       summarise(total_subres_reg = sum(total)) %>%
       ungroup() %>%
@@ -1012,8 +1012,8 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
         grepl("underground", type) ~ "underground mining",
       )) %>%
       # clean up resource grades
-      mutate(type = gsub("surface.|underground.", "", type)) %>%
-      mutate(resource = "coal") %>%
+      mutate(type = gsub("surface.|underground.", "", type),
+             resource = "coal") %>%
       # convert million (1e6) short ton coal (of equivalent) to EJ
       mutate(value = value * CONV_TCE_EJ * 1e6) %>%
       select(region = state, resource, reserve.subresource, type, value) -> L111.coal_supply_state_T_EJ_raw
@@ -1065,14 +1065,14 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
       mutate(total = grade.1 + grade.2 + grade.3) %>%
       group_by(region) %>%
       summarise(total = sum(total)) %>%
-      mutate(region_sum = sum(total)) %>%
-      mutate(share = total / region_sum) %>%
+      mutate(region_sum = sum(total),
+             share = total / region_sum) %>%
       select(-total, -region_sum) -> L111.additional_coal_supply_downscale
 
     # 2c) sum all coal resources to national total (EIA data).
     L111.coal_supply_state_T_EJ_wide %>%
-      mutate(GCAM_region_ID = gcamusa.USA_REGION_NUMBER) %>%
-      mutate(subresource = resource) %>%
+      mutate(GCAM_region_ID = gcamusa.USA_REGION_NUMBER,
+             subresource = resource) %>%
       group_by(GCAM_region_ID, subresource) %>%
       summarise(EIA_total = sum(grade.1, grade.2, grade.3)) %>%
       ungroup() -> L111.coal_supply_USA_EIA_T_EJ
@@ -1104,8 +1104,8 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
       mutate(costdelta_lead = lead(extractioncost)-extractioncost,
              costdelta_lag = extractioncost-lag(extractioncost)) %>%
       ungroup() %>%
-      mutate(grade = as.numeric(gsub("grade", "", grade))) %>%
-      mutate(cum_avail = cumsum(available)) %>%
+      mutate(grade = as.numeric(gsub("grade", "", grade)),
+             cum_avail = cumsum(available)) %>%
       left_join_error_no_match(L111.coal_supply_USA_EIA_T_EJ, by = c("GCAM_region_ID", "subresource")) %>%
       mutate(cum_avail_remain = cum_avail - EIA_total - CumulHistGrade.coal.tot) %>%
       filter(cum_avail_remain >= 0) %>%
@@ -1192,8 +1192,8 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
       # use left_join because AK and CA will be NAs
       left_join(GOM_share %>% mutate(region = "GOM"), by = "region",relationship = "many-to-many") %>%
       mutate(state = if_else(is.na(state), region, state),
-             GOM_share = if_else(is.na(GOM_share), 1.0, GOM_share)) %>%
-      mutate(quantity = quantity * GOM_share) %>%
+             GOM_share = if_else(is.na(GOM_share), 1.0, GOM_share),
+             quantity = quantity * GOM_share) %>%
       select(region = state, price, quantity) %>%
       # convert quantity: trillion standard cubic feet (Tcf) to EJ (million -> trillion = 1e6)
       # convert price: 2005$/thous-cubic feet -> 1975%/GJ
@@ -1282,8 +1282,8 @@ module_gcamusa_L111.rsrc_fos_Prod_USA <- function(command, ...) {
                   summarise(share = mean(share)) %>%
                   ungroup, by = "region",relationship = "many-to-many") %>%
       mutate(state = if_else(is.na(state), region, state),
-             share = if_else(is.na(share), 1.0, share)) %>%
-      mutate(quantity = quantity * share) %>%
+             share = if_else(is.na(share), 1.0, share),
+             quantity = quantity * share) %>%
       select(region = state, price, quantity) %>%
       # convert quantity: billion barrels of oil into EJ
       # convert price: $2005/barrel of oil into $1975/GJ (mill to ones = 1e6)

@@ -52,7 +52,7 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
 
     L102.gdp_mil90usd_Scen_R_Y %>%
       # any SSP works here
-      filter(year <= MODEL_FINAL_BASE_YEAR, scenario == "SSP2") %>%
+      filter(year <= FINAL_HISTORICAL_YEAR, scenario == "SSP2") %>%
       select(-scenario) ->
       L103.National_Accounts_mil90usd_R_Yh_0
 
@@ -87,7 +87,7 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
     # check adjustments in final base year
     assertthat::assert_that(
       L103.National_Accounts_mil90usd_R_Yh_1_1 %>%
-        filter(year == MODEL_FINAL_BASE_YEAR) %>%
+        filter(year == FINAL_HISTORICAL_YEAR) %>%
         # assert imbal_rel and cons_scaler were small and
         # trade imbal in base year < 5%  (it was ~1% in 2021)
         # it is fine to be larger
@@ -114,7 +114,7 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
     L100.National_Accounts_Metrics_R_Yh %>%
       filter(year %in% HISTORICAL_YEARS) %>%
       # extend PWT data to MODEL_FINAL_BASE_YEAR [not necessarily needed]
-      complete(GCAM_region_ID, var, year = min(year):MODEL_FINAL_BASE_YEAR) %>%
+      complete(GCAM_region_ID, var, year = min(year):FINAL_HISTORICAL_YEAR) %>%
       fill(value, .direction = "downup")  %>%
       spread(var, value) %>%
       left_join_error_no_match(
@@ -139,7 +139,7 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
       L100.National_Accounts_Depreciation_Rate_R_Yh %>%
         filter(year %in% HISTORICAL_YEARS) %>%
         # extend PWT data to MODEL_FINAL_BASE_YEAR [not necessarily needed]
-        complete(GCAM_region_ID, var, year = min(year):MODEL_FINAL_BASE_YEAR) %>%
+        complete(GCAM_region_ID, var, year = min(year):FINAL_HISTORICAL_YEAR) %>%
         fill(value, .direction = "downup")  %>%
         spread(var, value) %>%
         rename(depreciation.rate = depreciation.rate.pwt),
@@ -182,10 +182,10 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
       summarize(value = sum(value), .groups = "drop") %>%
       # 2020 was in SSP database and also before GCAM base year of 2021
       # it is need for interpolations here
-      filter(year >= socioeconomics.SSP_DB_Labor_StartYear) %>%
+      filter(year >= socioeconomics.SSP_DB_LABOR_STARTYEAR) %>%
       spread(var,value) %>%
       # Interpolate for base-year year if missing
-      complete(nesting(scenario, GCAM_region_ID), year = c(year, MODEL_FINAL_BASE_YEAR, FUTURE_YEARS)) %>%
+      complete(nesting(scenario, GCAM_region_ID), year = c(year, FINAL_HISTORICAL_YEAR, FUTURE_YEARS)) %>%
       group_by(scenario, GCAM_region_ID) %>%
       mutate(pop = approx_fun(year, pop , rule = 2),
              labor.force = approx_fun(year, labor.force , rule = 2)) %>%
@@ -196,11 +196,11 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
 
     # Prepare historical employment shares
     # PWT v11.0 now has a base year of 2023
-    # here we use Socioeconomic.PWT.LastYear as the cutoff year (hist vs future)
-    assertthat::assert_that(Socioeconomic.PWT.LastYear == 2023)
+    # here we use socioeconomics.PWT.LASTYEAR as the cutoff year (hist vs future)
+    assertthat::assert_that(socioeconomics.PWT.LASTYEAR == 2023)
 
     L100.National_Accounts_Employment_Share_POP_R_Yh %>%
-      complete(GCAM_region_ID, var, year = min(year):Socioeconomic.PWT.LastYear) %>%
+      complete(GCAM_region_ID, var, year = min(year):socioeconomics.PWT.LASTYEAR) %>%
       # fill NA; indeed no NA in the data but just in case
       fill(value, .direction = "downup")  %>%
       spread(var, value) %>%
@@ -210,7 +210,7 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
     # calculate base year employment rate to explain the gap between labor force participation
     # and unemployment
     LaborForceShare_SSP_Yfut %>%
-      filter(year == Socioeconomic.PWT.LastYear) %>%
+      filter(year == socioeconomics.PWT.LASTYEAR) %>%
       # any SSP scenario here since no diff in base years
       filter(scenario == "SSP2") %>% select(-scenario) %>%
       left_join_error_no_match(
@@ -228,11 +228,11 @@ module_socio_L103.NationalAccounts <- function(command, ...) {
 
     EmploymentShare_SSP_R_Y %>%
       rename(employed.share = employed.share.pwt) %>%
-      filter(year <= Socioeconomic.PWT.LastYear) %>%
+      filter(year <= socioeconomics.PWT.LASTYEAR) %>%
       bind_rows(
         LaborForceShare_SSP_Yfut %>%
-          # only > Socioeconomic.PWT.LastYear
-          filter(year > Socioeconomic.PWT.LastYear) %>%
+          # only > socioeconomics.PWT.LASTYEAR
+          filter(year > socioeconomics.PWT.LASTYEAR) %>%
           left_join_error_no_match(employment.rate.Final_OBS_Year, by=c("GCAM_region_ID")) %>%
           transmute(scenario, GCAM_region_ID, year,
                     #  net employment share over pop

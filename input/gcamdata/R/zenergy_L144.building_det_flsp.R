@@ -86,9 +86,9 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
 
     fill_years <- HISTORICAL_YEARS
 
-    if(max_income_hist_year < MODEL_FINAL_BASE_YEAR) {
+    if(max_income_hist_year < FINAL_HISTORICAL_YEAR) {
       warning(paste0("Historical data in socioeconomics/income_shares only goes up to ",
-                     max_income_hist_year, " interpolating to ", MODEL_FINAL_BASE_YEAR,
+                     max_income_hist_year, " interpolating to ", FINAL_HISTORICAL_YEAR,
                      " using ", socioeconomics.BASE_INCSHARE_SCENARIO))
       income_shares %>%
         filter(sce == socioeconomics.BASE_INCSHARE_SCENARIO & model == socioeconomics.BASE_INCSHARE_MODEL & year == MODEL_FUTURE_YEARS[1]) %>%
@@ -167,7 +167,6 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
       mutate(value_pcflsp = approx_fun(year, value_pcflsp, rule = 2)) %>%
       ungroup() ->
       L144.pcflsp_m2_usa_Yh
-
 
     # Odyssee_ResFloorspacePerHouse provides residential floorspace (m2) per house (not person) from 1980 to 2009 for 29 countries
     # A44.HouseholdSize provides number of persons/dwelling data, which will be used to calculate floorspace per capita
@@ -368,9 +367,9 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
       select(region,year,Units,value)
 
     L144.hab_land_flsp_fin <- L144.hab_land_flsp %>%
-      filter(year == if_else(MODEL_FINAL_BASE_YEAR > max(L144.hab_land_flsp$year),
+      filter(year == if_else(FINAL_HISTORICAL_YEAR > max(L144.hab_land_flsp$year),
                              max(L144.hab_land_flsp$year),
-                             MODEL_FINAL_BASE_YEAR)) %>%
+                             FINAL_HISTORICAL_YEAR)) %>%
       select(-year) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) %>%
       bind_rows(L144.hab_land_flsp) %>%
@@ -431,7 +430,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
                                 land.density.param = gcamusa.LAND_DENSITY_PARAM,
                                 b.param = gcamusa.B_PARAM,
                                 income.param = gcamusa.INCOME_PARAM) %>%
-      left_join_error_no_match(L144.flsp_param_pre %>% select(region,tot_dens,year) %>% filter(year == MODEL_FINAL_BASE_YEAR), by = "region") %>%
+      left_join_error_no_match(L144.flsp_param_pre %>% select(region,tot_dens,year) %>% filter(year == FINAL_HISTORICAL_YEAR), by = "region") %>%
       select(-year)
 
     # Write the dataset with the fitted parameters for the 31 GCAM regions
@@ -445,7 +444,7 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
              land.density.param = coef(fit.gomp)[1],
              b.param = coef(fit.gomp)[2],
              income.param = coef(fit.gomp)[3]) %>%
-      mutate(year = if_else(region %in% regions_with_obs_data, MODEL_FINAL_BASE_YEAR, avg_fin_obs_year)) %>%
+      mutate(year = if_else(region %in% regions_with_obs_data, FINAL_HISTORICAL_YEAR, avg_fin_obs_year)) %>%
       left_join_error_no_match(L144.flsp_param_pre %>% select(region,tot_dens,year), by = c("region", "year")) %>%
       select(-year) %>%
       bind_rows(L144.flsp_param_USA)
@@ -487,7 +486,6 @@ module_energy_L144.building_det_flsp <- function(command, ...) {
       group_by(GCAM_region_ID) %>%
       mutate(value = if_else(is.na(value), approx_fun(year, value, rule = 1), value)) %>%
       ungroup()
-
 
     #-------------------------------------
     # FLOORSPACE CALCULATION - COMMERCIAL

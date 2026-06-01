@@ -217,6 +217,7 @@ module_gcamusa_L2321.cement <- function(command, ...) {
     # Add cement sector information to the data frame of input-output coefficients of
     # cement production by state.
     L1321.IO_GJkg_state_cement_F_Yh %>%
+      filter(year <= max(MODEL_BASE_YEARS)) %>%
       left_join_error_no_match(cement_production_technologies, by = c("sector", "fuel")) %>%
       select(state,fuel, sector, year, value, supplysector, subsector, technology, minicam.energy.input) ->
       L2321.IO_GJkg_state_cement_F_Yh
@@ -253,7 +254,8 @@ module_gcamusa_L2321.cement <- function(command, ...) {
 
     # Format the the data frame and round the number of digits.
     IO_and_globaltech %>%
-      gather_years %>%
+      gather(year, value, -state, -fuel, -sector, -supplysector, -subsector, -technology, -minicam.energy.input) %>%
+      mutate(year = as.integer(year)) %>%
       filter(year %in% MODEL_YEARS) %>%
       mutate(coefficient = signif(value, energy.DIGITS_COEFFICIENT)) %>%
       select(-value) ->

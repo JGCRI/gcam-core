@@ -217,7 +217,7 @@ module_gcamusa_L211.resources_fossil_USA <- function(command, ...) {
       ungroup() %>%
       # for states no value available for any historcal year, just use the USA value (scalar = 1)
       # this is only for the case of Nevada
-      mutate(scalar_average = ifelse(is.na(scalar_average), 1, scalar_average)) %>%
+      mutate(scalar_average = if_else(is.na(scalar_average), 1, scalar_average)) %>%
       select(state, resource, scalar = scalar_average) %>%
       distinct()
 
@@ -530,11 +530,11 @@ module_gcamusa_L211.resources_fossil_USA <- function(command, ...) {
     # "L211.TFFTech: create the tech to simply pass through state production"
     L211.fossil_prod_state_Yh_EJ %>%
       filter(year %in% MODEL_BASE_YEARS) %>%
-      mutate(market.name = region) %>%
-      mutate(minicam.energy.input = paste0(resource, " production"),
+      mutate(market.name = region,
+             minicam.energy.input = paste0(resource, " production"),
              region = gcam.USA_REGION,
              supplysector = minicam.energy.input,
-             subsector = ifelse(market.name == "AK", paste(market.name, supplysector),
+             subsector = if_else(market.name == "AK", paste(market.name, supplysector),
                                 paste("Lower48", supplysector)),
              technology = paste(market.name, supplysector)) -> L211.TFFTech
 
@@ -704,7 +704,8 @@ module_gcamusa_L211.resources_fossil_USA <- function(command, ...) {
       add_title("historical calculated reserve") %>%
       add_units("EJ") %>%
       add_comments("follow the same method in L210.resources") %>%
-      add_precursors("L111.Prod_EJ_R_F_Yh_USA") ->
+      add_precursors("L111.Prod_EJ_R_F_Yh_USA",
+                     "L211.ReserveCalReserve") ->
       L211.ReserveCalReserve_USA
 
     L211.ResReserveTechLifetime_USA %>%
@@ -805,7 +806,7 @@ module_gcamusa_L211.resources_fossil_USA <- function(command, ...) {
       add_title("create subsector logit for national pass-through natural gas production") %>%
       add_units("unitless") %>%
       add_comments("create subsector logit for national pass-through natural gas production") %>%
-      same_precursors_as("gcam-usa/A10.fossil_subsector_logit") ->
+      add_precursors("gcam-usa/A10.fossil_subsector_logit") ->
       L211.TFFSubsectorLogit
 
     L211.TFFTechProduction_USA %>%
@@ -834,7 +835,8 @@ module_gcamusa_L211.resources_fossil_USA <- function(command, ...) {
       add_units("NA") %>%
       add_comments("A21.globalrsrctech_coef_USA written to all states with unconv heavy oil production") %>%
       add_legacy_name("L211.ResTechCoef") %>%
-      add_precursors("gcam-usa/A21.globalrsrctech_coef_USA") ->
+      add_precursors("gcam-usa/A21.globalrsrctech_coef_USA",
+                     "gcam-usa/states_subregions") ->
       L211.ResTechCoef_USA
 
     L211.DeleteRsrc_fos_USA %>%

@@ -91,7 +91,7 @@ module_gcamusa_L120.offshore_wind_reeds <- function(command, ...) {
 
     L1233.globaltech_OMfixed_ATB %>%
       filter(technology == "wind_offshore",
-             year == MODEL_FINAL_BASE_YEAR) %>%
+             year == FINAL_HISTORICAL_YEAR) %>%
       pull(OM.fixed) -> L120.offshore_wind_OMfixed
 
     # NOTE that the process for calculating supply/ price is different for offshore wind (vs. onshore wind).  For offshore wind, we

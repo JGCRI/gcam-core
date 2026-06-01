@@ -99,7 +99,7 @@ module_energy_L1092.iron_steel_GrossTrade <- function(command, ...){
       filter(GCAM_region!="NA")%>%
       #if production is equal to zero in the model base-year add a minimum calibration value of 0.01 Mt
       #This minimum calibration value is 5 times less than the smallest producer of steel in 2015
-      mutate(production=if_else(production==0 & year == MODEL_FINAL_BASE_YEAR,0.01,production),
+      mutate(production=if_else(production==0 & year == FINAL_HISTORICAL_YEAR,0.01,production),
              #estimate the imports and exports scaling factor to match the reported WSA steel consumption data
              #calculate scaling factor (x) so that consumption = production - x*exports + x*imports
              scaling_factor=(consumption-production)/(imports-exports),
@@ -211,8 +211,8 @@ module_energy_L1092.iron_steel_GrossTrade <- function(command, ...){
     LB1092.Tradebalance_iron_steel_Mt_R_Y %>%
       filter(metric == "imports_reval") %>%
       left_join(intra_regional_trade_Mt_R_Y,by=c("GCAM_region","year")) %>%
-      mutate(value_adj=if_else(value > intra_exports,value-intra_exports,value)) %>%
-      mutate(dom_supply_adjust=if_else(value > intra_exports,intra_exports,0)) %>%
+      mutate(value_adj=if_else(value > intra_exports,value-intra_exports,value),
+             dom_supply_adjust=if_else(value > intra_exports,intra_exports,0)) %>%
       select(-value)%>%
       rename(value=value_adj)-> imports
 
@@ -233,7 +233,7 @@ module_energy_L1092.iron_steel_GrossTrade <- function(command, ...){
       select(-dom_supply_adjust)-> dom_supply
 
     # Combine all adjusted data
-    LB1092.Tradebalance_iron_steel_Mt_R_Y_ADJ <- rbind(prod_cons,imports %>%
+    LB1092.Tradebalance_iron_steel_Mt_R_Y_ADJ <- bind_rows(prod_cons,imports %>%
                                                      select(-dom_supply_adjust,
                                                             -intra_exports),dom_supply,exports)
 

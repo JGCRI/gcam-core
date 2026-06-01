@@ -85,8 +85,8 @@ module_aglu_L125.LC_tot <- function(command, ...) {
       mutate(tot_value = sum(value)) %>%
       ungroup() %>%
       left_join_error_no_match(L125.LC_bm2_R_Yh_GLU_year, by=c("GCAM_region_ID","GLU")) %>%
-      mutate(scalar=annual_value/tot_value) %>%
-      mutate(value=value*scalar) %>%
+      mutate(scalar=annual_value/tot_value,
+             value=value*scalar) %>%
       select(-annual_value,-tot_value,-scalar)->L125.LC_bm2_R_LT_Yh_GLU
 
     # Adding up total land area by region, GLU, and year

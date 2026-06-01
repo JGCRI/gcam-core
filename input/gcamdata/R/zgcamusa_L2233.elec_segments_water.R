@@ -290,6 +290,14 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
         bind_rows(data_new %>%
                     filter(!grepl(gcamusa.WATER_TYPE_SEAWATER,technology))) %>%
         arrange(region,year)  -> data_new
+
+      if( UNDER_TIMESHIFT ) {
+        data_new %>%
+          filter(!is.na(technology),
+                 technology != "NA") ->
+          data_new
+      }
+
       return(data_new)
     }
 
@@ -309,6 +317,14 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
         mutate(technology = if_else(subsector.name0 == "wind" | subsector.name0 == "solar", subsector.name,
                                     if_else(subsector.name0 == "grid_storage", subsector.name0, technology))) ->
         data_new
+
+      if( UNDER_TIMESHIFT ) {
+        data_new %>%
+          filter(!is.na(technology),
+                 technology != "NA") ->
+          data_new
+      }
+
       return(data_new)
     }
 
@@ -363,6 +379,12 @@ module_gcamusa_L2233.elec_segments_water <- function(command, ...) {
                                   if_else(subsector.name0 == "grid_storage", subsector.name0, technology))) %>%
       arrange(sector.name,year) ->
       L2233.GlobalTechShrwt_elec_cool_USA
+
+    if( UNDER_TIMESHIFT ) {
+      L2233.GlobalTechShrwt_elec_cool_USA %>%
+        filter(!is.na(technology)) ->
+        L2233.GlobalTechShrwt_elec_cool_USA
+    }
 
     # Add all vintages to profit shutdown tibbles as they initially exist at state level, not global
     L2234.GlobalTechProfitShutdown_elecS_USA %>%

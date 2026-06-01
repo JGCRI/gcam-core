@@ -444,9 +444,9 @@ module_aglu_L103.ag_labor_capital <- function(command, ...) {
       L103.Ag_LaborCapital_R_AgMajorSector_Yh
 
     L103.Ag_LaborCapital_R_AgMajorSector_Yh  %>%
-      add_title("Historical agricultural labor and capital by major sectors crop & livestock, forestry, and, fish by GCAM regions") %>%
+      add_title("Labor and Capital by sector / region / historical year") %>%
+      add_comments("Historical agricultural labor and capital by major sectors crop & livestock, forestry, and, fish by GCAM regions") %>%
       add_units("number of people and 1975$ for capital") %>%
-      add_legacy_name("L103.Ag_LaborCapital_R_AgMajorSector_Yh") %>%
       add_precursors(MODULE_INPUTS) ->
       L103.Ag_LaborCapital_R_AgMajorSector_Yh
 

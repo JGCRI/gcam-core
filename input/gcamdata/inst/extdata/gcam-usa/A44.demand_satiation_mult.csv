@@ -18,7 +18,7 @@ resid clothes washers,1.2
 resid televisions,1.05
 resid computers,1.05
 resid furnace fans,1.05
-resid others,1.01
+resid other,1.01
 comm heating,1.05
 comm cooling,1.1
 comm hot water,1.05
@@ -27,5 +27,5 @@ comm cooking,1.1
 comm lighting,1.1
 comm refrigeration,1.01
 comm office,1.1
-comm others,1.01
+comm other,1.01
 comm non-building,1.01

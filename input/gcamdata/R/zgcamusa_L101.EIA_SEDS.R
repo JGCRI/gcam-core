@@ -51,8 +51,8 @@ module_gcamusa_L101.EIA_SEDS <- function(command, ...) {
 
     # warning to update SEDS data if the maximum year is earlier than base year
     EIA_use_max_year <- max((EIA_use_all_Bbtu %>% gather_years())$year)
-    if (EIA_use_max_year < MODEL_FINAL_BASE_YEAR) {
-      warning("L101.EIA_SEDS: Update SEDS data (EIA_use_all_Bbtu) till latest base year.")
+    if (EIA_use_max_year < FINAL_HISTORICAL_YEAR) {
+      warning("L101.EIA_SEDS: Update SEDS data (EIA_use_all_Bbtu) till latest historical year.")
       EIA_missing_years <- HISTORICAL_YEARS[HISTORICAL_YEARS > EIA_use_max_year]
       EIA_use_all_Bbtu <- copy_data_forward_wide(EIA_use_all_Bbtu, EIA_use_max_year, EIA_missing_years)
     }

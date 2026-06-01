@@ -181,7 +181,7 @@ module_gcamusa_L102.ghg_en_S_T_Y <- function(command, ...) {
       L102.res_ghg_tgej_USA_subresource
 
     # combine all emissions factors for each subresource
-    rbind(L102.res_ghg_tgej_USA_resource,
+    bind_rows(L102.res_ghg_tgej_USA_resource,
           L102.res_ghg_tgej_USA_subresource) %>%
       group_by(region, resource, reserve.subresource, ghg, year) %>%
       summarize(emfact = sum(emfact)) %>%

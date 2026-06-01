@@ -78,7 +78,7 @@ module_aglu_L100.IMAGE_downscale_ctry_yr <- function(command, ...) {
     # That is, the IO coefficient or FCR (feed conversion ratio) is in DM ton per DM ton
 
     IMAGE_an_feed_bySystem %>%
-      filter(year <= MODEL_FINAL_BASE_YEAR) %>%
+      filter(year <= FINAL_HISTORICAL_YEAR) %>%
       create_new_yeardata(1970, 1960) %>%
       gather(IMAGEv3p2_region, value, -system, -commodity, -feed, -year) %>%
       complete(year = union(aglu.AGLU_HISTORICAL_YEARS, year), nesting(commodity, system, feed, IMAGEv3p2_region)) %>%
@@ -107,7 +107,7 @@ module_aglu_L100.IMAGE_downscale_ctry_yr <- function(command, ...) {
 
     # Use animal head to calculate output share by system
     IMAGE_an_head_bySystem %>%
-      filter(year <= MODEL_FINAL_BASE_YEAR) %>%
+      filter(year <= FINAL_HISTORICAL_YEAR) %>%
       create_new_yeardata(1970, 1960) %>%
       gather(IMAGEv3p2_region, value, -system, -commodity, -year) %>%
       complete(year = union(aglu.AGLU_HISTORICAL_YEARS, year), nesting(commodity, system, IMAGEv3p2_region)) %>%
@@ -125,7 +125,7 @@ module_aglu_L100.IMAGE_downscale_ctry_yr <- function(command, ...) {
 
     # Total meat output from IMAGE
     IMAGE_an_meat %>%
-      filter(year <= MODEL_FINAL_BASE_YEAR) %>%
+      filter(year <= FINAL_HISTORICAL_YEAR) %>%
       create_new_yeardata(1970, 1960) %>%
       gather(IMAGEv3p2_region, value, -commodity, -year) %>%
       complete(year = union(aglu.AGLU_HISTORICAL_YEARS, year), nesting(commodity, IMAGEv3p2_region)) %>%

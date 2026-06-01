@@ -93,7 +93,7 @@ module_energy_L121.liquids <- function(command, ...) {
       # copy forward the coefficient from the latest year before final base year
       if (!all(MODEL_BASE_YEARS %in% unique(gas_uncov_ratio$year))) {
         # actually this warning might not be necessary here because all historical gas-to-oil coefficients are the same
-        warning("module_energy_L121.liquids: Filling in gas input coefficient to unconventional oil from A21.globalrsrctech_coef for the base year (", MODEL_FINAL_BASE_YEAR ,").")
+        warning("module_energy_L121.liquids: Filling in gas input coefficient to unconventional oil from A21.globalrsrctech_coef for the final historical year (", FINAL_HISTORICAL_YEAR ,").")
 
         gas_uncov_ratio %>%
           complete(GCAM_region_ID, year = c(year, MODEL_BASE_YEARS), fuel) %>%

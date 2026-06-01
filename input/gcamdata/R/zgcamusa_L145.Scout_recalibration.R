@@ -54,11 +54,11 @@ module_gcamusa_L145.Scout_recalibration <- function(command, ...) {
 
     # GPK 8/29/2023 revision: the v3 Scout data don't disaggregate commercial unspecified
     # electricity into building and non-building categories.
-    # Also resid others needs to be downscaled to resid televisions and others
+    # Also resid other needs to be downscaled to resid televisions and other
     L145.share_state_S_elec_Uother <- bind_rows(L144.in_EJ_state_comm_F_U_Y,
                                                 L144.in_EJ_state_res_F_U_Y) %>%
       filter(fuel == "electricity",
-             service %in% c("comm others", "comm non-building", "resid others", "resid televisions"),
+             service %in% c("comm other", "comm non-building", "resid other", "resid televisions"),
              year == max(year)) %>%
       group_by(state, sector, fuel, year) %>%
       mutate(other_share = value / sum(value)) %>%
@@ -67,14 +67,14 @@ module_gcamusa_L145.Scout_recalibration <- function(command, ...) {
 
     L145.Scout_bld_downscale_other <- L145.Scout_bld_calibration %>%
       filter(fuel == "electricity",
-             service %in% c("comm others", "resid others")) %>%
+             service %in% c("comm other", "resid other")) %>%
       select(-service) %>%
       left_join(L145.share_state_S_elec_Uother,
                 by = c("state", "sector", "fuel")) %>%
       mutate(share = share * other_share) %>%
       select(-other_share)
 
-    # Remove the initially reported "others" data, bind the downscaled others
+    # Remove the initially reported "other" data, bind the downscaled other
     L145.Scout_bld_calibration <- anti_join(L145.Scout_bld_calibration, L145.Scout_bld_downscale_other,
                                             by = c("state", "sector", "service", "fuel", "technology", "year")) %>%
       bind_rows(L145.Scout_bld_downscale_other)

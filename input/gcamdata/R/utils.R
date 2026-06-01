@@ -602,6 +602,50 @@ screen_forbidden <- function(fn) {
   rslt
 }
 
+
+#' screen_years
+#'
+#' Screen a function for hardcoded years.
+#'
+#' Years should be declared as constants, not hardcoded.
+#'
+#' @param fn The function to be tested. This is the actual function object, not
+#' the name of the function.
+#' @return Nx2 Character matrix of flagged lines and the test that tripped them
+#' (empty vector, if none)
+#' @author KVC 10 Mar 2026
+#' @importFrom utils capture.output
+screen_years <- function(fn) {
+  forbidden <- seq(1975, 2100, by=1)
+  forbidden <- paste0(" ", forbidden)
+
+  code <- capture.output(fn)
+  code <- gsub("#.*$", "", code)      # remove comments
+  code <- gsub('"[^"]*"', "", code)   # remove double quoted material
+  code <- gsub("'[^']*'", "", code)   # remove single quoted material
+
+  # General screen-years search, single lines only
+  rslt <- character()
+  for(f in unique(forbidden)) {
+    initial_screen <- grep(f, code, perl = TRUE)
+
+    bad <- integer()
+    for( s in initial_screen ) {
+      string <- code[s]
+      # Years are allowed in `gdp_deflator`, so remove from the list of issues
+      if(!grepl("gdp_deflator", string) & !grepl("add_comments", string)) {
+        bad <- c(bad, s)
+      }
+    }
+
+    if(length(bad) > 0) {
+      rslt <- rbind(rslt,
+                    cbind(f, code[bad]))
+    }
+  }
+  rslt
+}
+
 # some utils specific for dealing with drake
 
 #' load_from_cache

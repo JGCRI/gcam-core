@@ -199,17 +199,18 @@ module_emissions_L231.proc_sector <- function(command, ...) {
     # Price information for unlimited resources are largely nominal placeholder values
     # So copying values forward should be fine
 
-    # Copy information to last base year if needed
+    # Copy information to last historical year if needed
+    # (This chunk needs to cover all historical years not all base years)
     MaxYearInFile <- max(A31.rsrc_info$year)
 
-    if (MODEL_FINAL_BASE_YEAR > MaxYearInFile) {
-      warning("module_emissions_L231.proc_sector: Extending latest year in A31.rsrc_info (",  max(MaxYearInFile), ") to latest base year (", MODEL_FINAL_BASE_YEAR, ").")
+    if (FINAL_HISTORICAL_YEAR > MaxYearInFile) {
+      warning("module_emissions_L231.proc_sector: Extending latest year in A31.rsrc_info (",  max(MaxYearInFile), ") to final historical year (", FINAL_HISTORICAL_YEAR, ").")
 
     A31.rsrc_info <- A31.rsrc_info %>%
       # filter for the year of data we want applied to new year
       filter((year == MaxYearInFile)) %>%
       # change the year name from last year originally in file to last base year
-      mutate(year = gsub(MaxYearInFile, MODEL_FINAL_BASE_YEAR, year),
+      mutate(year = gsub(MaxYearInFile, FINAL_HISTORICAL_YEAR, year),
              year = as.numeric(year)) %>%
       # add back in the original data frame with all of the other years
       bind_rows(A31.rsrc_info)

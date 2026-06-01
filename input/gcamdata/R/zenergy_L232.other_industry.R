@@ -385,6 +385,39 @@ module_energy_L232.other_industry <- function(command, ...) {
       filter(year %in% MODEL_YEARS) ->   # drop the terminal coef year if it's outside of the model years
       L232.StubTechCoef_industry
 
+
+    # Under timeshift, some subsectors will have zero output in the final calibration year,
+    # but required demand in the future periods (due to a positive coefficient).
+    # Remove the shareweight interpolation rules for those subsectors.
+    if ( UNDER_TIMESHIFT ) {
+      # L232.SubsectorInterp_ind
+      # First, identify subsectors that need to have production in future years
+      L232.StubTechCoef_industry %>%
+        filter(year == min(MODEL_FUTURE_YEARS),
+               coefficient > 0) %>%
+        select(region, minicam.energy.input) %>%
+        distinct() ->
+        PosCoefInputs
+
+      # Next, identify subsectors that have 0 calOutputValue in the final calibration year
+      # AND positive coefficients
+      L232.StubTechCalInput_indfeed %>%
+        filter(year == MODEL_FINAL_BASE_YEAR) %>%
+        group_by(region, supplysector, year) %>%
+        summarize(calibrated.value = sum(calibrated.value)) %>%
+        ungroup() %>%
+        filter(calibrated.value == 0) %>%
+        inner_join(PosCoefInputs, by=c("region", "supplysector" = "minicam.energy.input")) %>%
+        select(region, supplysector) ->
+        SectorsWithPosCoefAndZeroCalVal
+
+      # Now, filter the subsector interp rules to remove these sectors
+      L232.SubsectorInterp_ind %>%
+        anti_join(SectorsWithPosCoefAndZeroCalVal, by=c("region", "supplysector")) ->
+        L232.SubsectorInterp_ind
+    }
+
+
     # L232.FuelPrefElast_indenergy: fuel preference elasticities of industrial energy use
     # First, calculate the fuel shares allocated to each fuel
     L232.in_EJ_R_indenergy_F_Yh %>%

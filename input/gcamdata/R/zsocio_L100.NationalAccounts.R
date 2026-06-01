@@ -25,8 +25,8 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
 
   # assert version PWT and GMD version consistency
   assertthat::assert_that(
-    sum(grepl(Socioeconomic.PWT.VERSION, MODULE_INPUTS)) == 1 &
-      sum(grepl(Socioeconomic.GMD.VERSION, MODULE_INPUTS)) == 1,
+    sum(grepl(socioeconomics.PWT.VERSION, MODULE_INPUTS)) == 1 &
+      sum(grepl(socioeconomics.GMD.VERSION, MODULE_INPUTS)) == 1,
     msg = "Inconsistent version specified for the PWT or GMD data")
 
   MODULE_OUTPUTS <-
@@ -81,8 +81,8 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
     # 1 process GMD data to get GDP decomposition shares ----
     # C (& G) + I + X - M = nGDP
     # we calculate nominal shares relative to GDP at GCAM region levels
-    pull_accounts(.ds_name = Socioeconomic.GMD.VERSION,
-                  .lastyear = Socioeconomics.GMD_LASTYEAR) %>%
+    pull_accounts(.ds_name = socioeconomics.GMD.VERSION,
+                  .lastyear = socioeconomics.GMD_LASTYEAR) %>%
       filter(!is.na(value)) %>%
       spread(var, value) %>%
       na.omit %>%
@@ -137,18 +137,18 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "common/GCAM_region_names",
                      "socioeconomics/NationalAccounts/NationalAccounts_variable_mapping",
-                     paste0("socioeconomics/NationalAccounts/", Socioeconomic.GMD.VERSION)) ->
+                     paste0("socioeconomics/NationalAccounts/", socioeconomics.GMD.VERSION)) ->
       L100.National_Accounts_GDP_Decomp_C_I_X_M_shares_R_Yh
 
 
     # 2  process employment share and depreciation rate from pwt v110 ----
     ## data is available up to 2019 in v10.01
     ## but now to 2023 in v11.0
-    ## see Socioeconomic.PWT.VERSION and Socioeconomic.PWT.LastYear in constants
+    ## see socioeconomics.PWT.VERSION and socioeconomics.PWT.LASTYEAR in constants
 
     ## 2.1 employment share ----
 
-    pull_accounts(.ds_name = Socioeconomic.PWT.VERSION, Socioeconomic.PWT.LastYear) %>%
+    pull_accounts(.ds_name = socioeconomics.PWT.VERSION, socioeconomics.PWT.LASTYEAR) %>%
       filter(var %in% c("emp.pwt", "pop.pwt")) %>%
       spread(var, value) %>%
       na.omit %>%
@@ -182,7 +182,7 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
                             msg = "not all GCAM region available in data")
     # adding assertions to ensure the values are bounded in [0.25, 0.8] based on recent observations. Similar assertions are used later
     # to flag any potential issues in future data updates.
-    min(Socioeconomic.PWT.LastYear, MODEL_FINAL_BASE_YEAR) -> PWT.DataCheckYear
+    min(socioeconomics.PWT.LASTYEAR, MODEL_FINAL_BASE_YEAR) -> PWT.DataCheckYear
 
     assertthat::assert_that(L100.National_Accounts_Employment_Share_POP_R_Yh %>%
                               filter(year == PWT.DataCheckYear) %>%
@@ -199,12 +199,12 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "common/GCAM_region_names",
                      "socioeconomics/NationalAccounts/NationalAccounts_variable_mapping",
-                     paste0("socioeconomics/NationalAccounts/", Socioeconomic.PWT.VERSION)) ->
+                     paste0("socioeconomics/NationalAccounts/", socioeconomics.PWT.VERSION)) ->
       L100.National_Accounts_Employment_Share_POP_R_Yh
 
 
     ## 2.2 depreciation rates ----
-    pull_accounts(.ds_name = Socioeconomic.PWT.VERSION, Socioeconomic.PWT.LastYear) %>%
+    pull_accounts(.ds_name = socioeconomics.PWT.VERSION, socioeconomics.PWT.LASTYEAR) %>%
       filter(var %in% c("dep.rate.pwt", "capital.stock.pwt")) %>%
       spread(var, value) %>%
       na.omit %>%
@@ -248,7 +248,7 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
       add_precursors("common/iso_GCAM_regID",
                      "common/GCAM_region_names",
                      "socioeconomics/NationalAccounts/NationalAccounts_variable_mapping",
-                     paste0("socioeconomics/NationalAccounts/", Socioeconomic.PWT.VERSION)) ->
+                     paste0("socioeconomics/NationalAccounts/", socioeconomics.PWT.VERSION)) ->
       L100.National_Accounts_Depreciation_Rate_R_Yh
 
     # 3  process other national account shares from pwt v1001 ----
@@ -259,7 +259,7 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
     # they are not in MER; we will derive a ratio and apply it to MER GDP from
     # other sources later to get capital stock in MER
 
-    pull_accounts(.ds_name = Socioeconomic.PWT.VERSION, Socioeconomic.PWT.LastYear) %>%
+    pull_accounts(.ds_name = socioeconomics.PWT.VERSION, socioeconomics.PWT.LASTYEAR) %>%
       filter(var %in% c("gdp.pwt", "capital.stock.pwt")) %>%
       spread(var, value) %>%
       na.omit %>%
@@ -296,7 +296,7 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
 
     ## 3.2 derive/aggregate labor compensation share in GDP using PWT ----
 
-    pull_accounts(.ds_name = Socioeconomic.PWT.VERSION, Socioeconomic.PWT.LastYear) %>%
+    pull_accounts(.ds_name = socioeconomics.PWT.VERSION, socioeconomics.PWT.LASTYEAR) %>%
       filter(var %in% c("gdp.pwt", "labor.share.pwt")) %>%
       spread(var, value) %>%
       na.omit  %>%
@@ -354,7 +354,7 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
 
     ## 3.3 derive/aggregate capital reward share in GDP using PWT IRR ----
 
-    pull_accounts(.ds_name = Socioeconomic.PWT.VERSION, Socioeconomic.PWT.LastYear) %>%
+    pull_accounts(.ds_name = socioeconomics.PWT.VERSION, socioeconomics.PWT.LASTYEAR) %>%
       filter(var %in% c("gdp.pwt", "irr.pwt", "capital.stock.pwt")) %>%
       spread(var, value) %>%
       na.omit %>%
@@ -436,7 +436,7 @@ module_socio_L100.NationalAccounts <- function(command, ...) {
       add_legacy_name("L100.National_Accounts_Metrics_R_Yh") %>%
       add_precursors("common/iso_GCAM_regID",
                      "socioeconomics/NationalAccounts/NationalAccounts_variable_mapping",
-                     paste0("socioeconomics/NationalAccounts/", Socioeconomic.PWT.VERSION)) ->
+                     paste0("socioeconomics/NationalAccounts/", socioeconomics.PWT.VERSION)) ->
       L100.National_Accounts_Metrics_R_Yh
 
 

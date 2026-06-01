@@ -155,7 +155,6 @@
 			<Value name="nuclear">../input/gcamdata/xml/nuclear_low.xml</Value>
 			
 			<!-- BIO TRANSFORMATION -->
-			<Value name="bio">../input/gcamdata/xml/en_transformation_low.xml</Value>
 			<Value name="bio">../input/gcamdata/xml/elec_bio_low.xml</Value>
 			
 			<!-- FOSSIL -->

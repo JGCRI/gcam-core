@@ -145,7 +145,7 @@ module_aglu_L113_ag_storage <- function(command, ...) {
       L113.StorageTechAndPassThrough %>%
       bind_rows(
         L113.StorageTechAndPassThrough %>% filter(storage_model == TRUE) %>%
-          filter(year == max(MODEL_BASE_YEARS)) %>%
+          filter(year == MODEL_FINAL_BASE_YEAR) %>%
           select(-year, -lifetime) %>%
           mutate(opening.stock = closing.stock * loss.coefficient,
                  closing.stock = opening.stock) %>%

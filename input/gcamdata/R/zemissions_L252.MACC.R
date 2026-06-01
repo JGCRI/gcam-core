@@ -148,8 +148,8 @@ module_emissions_L252.MACC <- function(command, ...) {
         # Add tax values
         repeat_add_columns(tibble(tax = MAC_taxes)) %>%
         repeat_add_columns(tibble(year = emissions.EPA_MACC_YEAR)) %>%
-        # we don't need MACs for calibration years
-        filter(year > MODEL_FINAL_BASE_YEAR)
+        # we don't have MACs for historical years
+        filter(year > FINAL_HISTORICAL_YEAR)
       # Next, add in mac.reduction values
       if(error_no_match) {
         # Usually we use left_join_error_no_match
@@ -696,7 +696,7 @@ module_emissions_L252.MACC <- function(command, ...) {
       add_legacy_name("L252.MAC_higwp") %>%
       add_precursors("emissions/A_regions", "emissions/mappings/CEDS_sector_tech_proc", "emissions/mappings/CEDS_sector_tech_proc_revised",
                      "L152.MAC_pct_R_S_Proc_EPA", "L241.hfc_all", "L241.pfc_all", "common/GCAM_region_names","socioeconomics/income_shares",
-                     "emissions/A_MACC_TechChange_omit") ->
+                     "emissions/A_MACC_TechChange_omit", "emissions/mappings/USAbld_emission_mapping") ->
       L252.MAC_higwp
 
     L252.MAC_higwp_phaseInTime %>%

@@ -153,7 +153,7 @@ module_gcamusa_L100.Socioeconomics <- function(command, ...) {
       mutate(value = value * gdp_deflator(1990, 2017)) -> L100.GDP_97_23_90USD_state
 
     # Require that state level GDP data be available to latest base-year
-    if (MODEL_FINAL_BASE_YEAR > max(L100.GDP_97_23_90USD_state$year)) {
+    if (FINAL_HISTORICAL_YEAR > max(L100.GDP_97_23_90USD_state$year)) {
       stop("ERROR: Update USA state level GDP to the latest model base yearin zgcamusa_L100.Socioeconomics.R")
     }
 

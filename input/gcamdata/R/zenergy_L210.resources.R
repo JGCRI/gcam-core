@@ -186,7 +186,7 @@ module_energy_L210.resources <- function(command, ...) {
     # Otherwise, price behavior is undefined, and so stop process.
     # There should be calibrated prices for all historical model years for
     # full consistency, however.
-    if(!(MODEL_FINAL_BASE_YEAR %in% c(unique(A10.rsrc_info$year)))){
+    if(!(FINAL_HISTORICAL_YEAR %in% c(unique(A10.rsrc_info$year)))){
       stop("No calibrated prices for resources in final historical year")
     }
 
@@ -530,9 +530,9 @@ module_energy_L210.resources <- function(command, ...) {
     # Linearly extrapolate from zero to the value provided in the input file for 2100.
     A10.EnvironCost_SSPs  <- A10.EnvironCost_SSPs %>%
       complete(nesting(SSP, resource, reserve.subresource, resource.reserve.technology),
-               year = c(MODEL_FINAL_BASE_YEAR, max(MODEL_YEARS))) %>%
+               year = c(FINAL_HISTORICAL_YEAR, max(MODEL_YEARS))) %>%
       dplyr::mutate_if(is.numeric, ~replace(., is.na(.), 0)) %>%
-      complete(nesting(SSP, resource, reserve.subresource, resource.reserve.technology), year = c(MODEL_FINAL_BASE_YEAR, MODEL_FUTURE_YEARS)) %>%
+      complete(nesting(SSP, resource, reserve.subresource, resource.reserve.technology), year = c(FINAL_HISTORICAL_YEAR, MODEL_FUTURE_YEARS)) %>%
       group_by(SSP, resource, reserve.subresource, resource.reserve.technology) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
       ungroup() %>%
@@ -562,7 +562,7 @@ module_energy_L210.resources <- function(command, ...) {
     # SSP4 is handled differently because of its region groupings - we will handle its precursors separately below
     L210.pcgdp_max_base_year <- L102.pcgdp_thous90USD_Scen_R_Y %>%
       filter(scenario == "SSP4",
-             year == MODEL_FINAL_BASE_YEAR) %>%
+             year == FINAL_HISTORICAL_YEAR) %>%
       # Add region name
       left_join_error_no_match(GCAM_region_names, by = "GCAM_region_ID") %>%
       mutate(value = value * gdp_deflator(2010, 1990))

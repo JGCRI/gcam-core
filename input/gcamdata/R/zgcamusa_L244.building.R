@@ -189,13 +189,12 @@ module_gcamusa_L244.building <- function(command, ...) {
     # satiation.level: maximum per-capita demand that can be achieved
     # satiation.adder: value that allow the starting position of any region to be set along the demand function
     # satiation.impedance: shape parameter
-
     if(max(L144.prices_bld_gcamusa$year) < MODEL_FINAL_BASE_YEAR) {
       warning(paste0("Historical data in gcam-usa/A44.CalPrice_service_gcamusa only goes up to ",
                      max(L144.prices_bld_gcamusa$year), " extending to ", MODEL_FINAL_BASE_YEAR,
                      " consider updating data."))
       L144.prices_bld_gcamusa %>%
-        tidyr::expand(tidyr::nesting(region, sector), year = MODEL_BASE_YEARS) %>%
+        tidyr::expand(tidyr::nesting(region, sector), year = MODEL_YEARS[MODEL_YEARS <= MODEL_FINAL_BASE_YEAR]) %>%
         left_join(L144.prices_bld_gcamusa, by=c("region", "sector", "year")) %>%
         group_by(region, sector) %>%
         mutate(value = approx_fun(year, value, rule=2)) %>%

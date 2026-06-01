@@ -1,20 +1,21 @@
 # File: A326.globaltech_cost.csv
 # Title: aluminum, default costs
-# Units: 1975$/GJ
+# Units: 1975$/kg
+# Source: A very rough back calculation to get total costs in line with observed alumina / aluminum prices
 # Column types: ccccnnnn
 # ----------
 supplysector,subsector,technology,minicam.non.energy.input,1971,2010,2050,2100
-alumina,refined liquids,refined liquids,non-energy,3,3,3,3
-alumina,refined liquids,refined liquids cogen,non-energy,4,4,4,4
-alumina,refined liquids,refined liquids CCS,non-energy,3.5,3.5,3.5,3.5
-alumina,coal,coal,non-energy,3,3,3,3
-alumina,coal,coal cogen,non-energy,4,4,4,4
-alumina,coal,coal CCS,non-energy,3.5,3.5,3.5,3.5
-alumina,gas,gas,non-energy,3,3,3,3
-alumina,gas,gas cogen,non-energy,4,4,4,4
-alumina,gas,gas CCS,non-energy,3.5,3.5,3.5,3.5
-alumina,biomass,biomass,non-energy,3,3,3,3
-alumina,biomass,biomass cogen,non-energy,4,4,4,4
-alumina,biomass,biomass CCS,non-energy,3.5,3.5,3.5,3.5
-alumina,heat,heat,non-energy,3,3,3,3
-aluminum,electricity,electricity,non-energy,3,3,3,3
+alumina,refined liquids,refined liquids,non-energy,0.2,0.2,0.2,0.2
+alumina,refined liquids,refined liquids cogen,non-energy,0.3,0.3,0.3,0.3
+alumina,refined liquids,refined liquids CCS,non-energy,0.25,0.25,0.25,0.25
+alumina,coal,coal,non-energy,0.2,0.2,0.2,0.2
+alumina,coal,coal cogen,non-energy,0.3,0.3,0.3,0.3
+alumina,coal,coal CCS,non-energy,0.25,0.25,0.25,0.25
+alumina,gas,gas,non-energy,0.2,0.2,0.2,0.2
+alumina,gas,gas cogen,non-energy,0.3,0.3,0.3,0.3
+alumina,gas,gas CCS,non-energy,0.25,0.25,0.25,0.25
+alumina,biomass,biomass,non-energy,0.2,0.2,0.2,0.2
+alumina,biomass,biomass cogen,non-energy,0.3,0.3,0.3,0.3
+alumina,biomass,biomass CCS,non-energy,0.25,0.25,0.25,0.25
+alumina,heat,heat,non-energy,0.2,0.2,0.2,0.2
+aluminum,electricity,electricity,non-energy,0.2,0.2,0.2,0.2

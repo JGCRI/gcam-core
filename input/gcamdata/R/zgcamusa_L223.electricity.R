@@ -400,7 +400,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
       L223.out_EJ_state_elec
 
     L1231.out_EJ_state_elec_F_tech %>%
-      filter(fuel == "nuclear", year == max(HISTORICAL_YEARS)) %>%
+      filter(fuel == "nuclear", year == FINAL_HISTORICAL_YEAR) %>%
       left_join_error_no_match(L223.out_EJ_state_elec, by = "state") %>%
       mutate(share = value / elec,
              # If share is NA (due to value and elec = 0), make it 0
@@ -468,7 +468,7 @@ module_gcamusa_L223.electricity <- function(command, ...) {
     # NOTE: This just holds it constant for now;
     # at some point, should downscale of the (almost completely flat) nation-level projection
     L223.StubTechFixOut_elec_USA %>%
-      filter(grepl("hydro", stub.technology), year == max(HISTORICAL_YEARS)) %>%
+      filter(grepl("hydro", stub.technology), year == MODEL_FINAL_BASE_YEAR) %>%
       select(-year) %>%
       repeat_add_columns(tibble(year = MODEL_FUTURE_YEARS)) ->
       L223.StubTechFixOut_hydro_USA

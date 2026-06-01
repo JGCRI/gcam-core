@@ -67,8 +67,8 @@ module_energy_L1323.iron_steel <- function(command, ...) {
     # and copy forward if no
     All_steel_years <- unique(All_steel$year)
     All_steel_max_year <- max(All_steel_years)
-    if (All_steel_max_year < MODEL_FINAL_BASE_YEAR) {
-      warning("energy/steel_prod_process: Copying to fill missing All Steel data. Update data to latest base year.")
+    if (All_steel_max_year < FINAL_HISTORICAL_YEAR) {
+      warning("energy/steel_prod_process: Copying to fill missing All Steel data. Update data to latest historical year.")
       All_steel_missing_years <- HISTORICAL_YEARS[HISTORICAL_YEARS > All_steel_max_year]
       All_steel %>%
         complete(nesting(country_name, unit_prod), year = c(All_steel_years, All_steel_missing_years)) %>%
@@ -83,7 +83,7 @@ module_energy_L1323.iron_steel <- function(command, ...) {
     DRI_years <- suppressWarnings(as.integer(names(DRI_stats)))
     DRI_years <- DRI_years[!is.na(DRI_years)]
     DRI_max_year <- max(DRI_years)
-    if (DRI_max_year < MODEL_FINAL_BASE_YEAR) {
+    if (DRI_max_year < FINAL_HISTORICAL_YEAR) {
       warning("energy/WSA_direct_reduced_iron_2008_2019.csv: Copying to fill missing DRI data. Update data to latest base year.")
       DRI_missing_years <- HISTORICAL_YEARS[HISTORICAL_YEARS > DRI_max_year]
       DRI_stats <- copy_data_forward_wide(DRI_stats, DRI_max_year, DRI_missing_years)
@@ -125,14 +125,14 @@ module_energy_L1323.iron_steel <- function(command, ...) {
 
       #Obtain the index of GCAM_regions and sub sectors that are calibrated to zero steel production in the base-year
     All_steel_R %>%
-        filter(year==MODEL_FINAL_BASE_YEAR & (`EAF with scrap`==0| BLASTFUR==0 | `EAF with DRI`==0)) %>%
+        filter(year==FINAL_HISTORICAL_YEAR & (`EAF with scrap`==0| BLASTFUR==0 | `EAF with DRI`==0)) %>%
         left_join(GCAM_region_names,by=c("GCAM_region_ID"))-> L1323.index
 
       #add a minimal steel production value (0.5% of the total) to technologies in the base-year where they are calibrated to zero
       All_steel_R %>%
-        mutate(BLASTFUR=if_else(BLASTFUR==0 & year == MODEL_FINAL_BASE_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,BLASTFUR),
-               `EAF with scrap`=if_else(`EAF with scrap`==0 & year == MODEL_FINAL_BASE_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,`EAF with scrap`),
-               `EAF with DRI`=if_else(`EAF with DRI`==0 & year == MODEL_FINAL_BASE_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,`EAF with DRI`),
+        mutate(BLASTFUR=if_else(BLASTFUR==0 & year == FINAL_HISTORICAL_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,BLASTFUR),
+               `EAF with scrap`=if_else(`EAF with scrap`==0 & year == FINAL_HISTORICAL_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,`EAF with scrap`),
+               `EAF with DRI`=if_else(`EAF with DRI`==0 & year == FINAL_HISTORICAL_YEAR,(BLASTFUR+`EAF with scrap`+`EAF with DRI`)*0.005,`EAF with DRI`),
                #calculate the percentage of BLASTFUR, EAF with scrap, and EAF with DRI across regions and years
                BLASTFUR_pct=BLASTFUR/(BLASTFUR+`EAF with scrap`+`EAF with DRI`),
                EAF_scrap_pct=`EAF with scrap`/(BLASTFUR+`EAF with scrap`+`EAF with DRI`),
@@ -206,8 +206,8 @@ module_energy_L1323.iron_steel <- function(command, ...) {
                 by = c("subsector"="technology")) %>%
       # Use region-specific first; if missing, fall back to global
        rename(fuel=fuel.x, value=value.x, steel_region=steel_region.x)%>%
-       mutate(fuel=ifelse(is.na(fuel), fuel.y, fuel),
-              value=ifelse(is.na(value), value.y, value))%>%
+       mutate(fuel=if_else(is.na(fuel), fuel.y, fuel),
+              value=if_else(is.na(value), value.y, value))%>%
        select(-fuel.y, -value.y, -steel_region.y) %>%
       # Unit conversion
       mutate(value = if_else(fuel != "scrap", value * CONV_GJ_EJ / CONV_T_MT, value),

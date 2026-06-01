@@ -184,7 +184,7 @@ module_aglu_L2083.ag_factor_productivity_scen <- function(command, ...) {
         L2083.AgLabor_ProducitivityRatio_R_Y_scen %>%
           filter(year >= min(MODEL_FUTURE_YEARS)) ) %>%
       # no negative growth
-      mutate(productivity = ifelse(productivity < 1, 1, productivity),
+      mutate(productivity = if_else(productivity < 1, 1, productivity),
              LaborIO_Scaler = 1 / productivity) %>%
       filter(scenario == "CORE") ->
       L2083.AgLaborIOCoef_Scaler_DerivedBasedOnLand
@@ -237,16 +237,16 @@ module_aglu_L2083.ag_factor_productivity_scen <- function(command, ...) {
     # Produce outputs ----
 
     L2083.AgLand_BiophysicalProducitivityRatio_ag_R_Y_scen %>%
-      add_title("Regional aggregated agricultural land productivity ratio, relative to final base year, aggregrated using initial land weights by scenario") %>%
+      add_title("Regional aggregated ag land productivity ratio") %>%
       add_units("Unitless") %>%
-      add_legacy_name("L2083.AgLand_BiophysicalProducitivityRatio_ag_R_Y_scen") %>%
+      add_comments("Regional aggregated agricultural land productivity ratio, relative to final base year, aggregrated using initial land weights by scenario") %>%
       add_precursors("L2053.AgLand_BiophysicalProducitivityRatio_ag_R_C_Y_scen") ->
       L2083.AgLand_BiophysicalProducitivityRatio_ag_R_Y_scen
 
     L2083.AgLabor_ProducitivityRatio_R_Y_scen %>%
       add_title("Agricultural labor productivity ratio relative to final base year by scenario") %>%
       add_units("Unitless") %>%
-      add_legacy_name("L2083.AgLabor_ProducitivityRatio_R_Y_scen") %>%
+      add_comments("Regional aggregated agricultural labor productivity ratio, relative to final base year") %>%
       add_precursors("L2083.AgLand_BiophysicalProducitivityRatio_ag_R_Y_scen",
                      "common/GCAM_region_names",
                      "socioeconomics/A_labor_supply_sector") ->

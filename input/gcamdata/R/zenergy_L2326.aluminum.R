@@ -170,7 +170,7 @@ module_energy_L2326.aluminum <- function(command, ...) {
       arrange(supplysector, subsector, technology, minicam.energy.input, secondary.output, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input, secondary.output) %>%
       mutate(coefficient = approx_fun(year, coefficient, rule = 1),
-             coefficient = round(coefficient, energy.DIGITS_EFFICIENCY)) %>%
+             coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
       ungroup %>%
       filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       # Assign the columns "sector.name" and "subsector.name", consistent with the location info of a global technology
@@ -182,6 +182,20 @@ module_energy_L2326.aluminum <- function(command, ...) {
       select(LEVEL2_DATA_NAMES[["GlobalTechCoef"]]) ->
       L2326.GlobalTechCoef_aluminum
 
+    # Calculate ratio between IO coefficients for CCS and non-CCS technologies of the same fuel
+    # This will be used to ensure that regional CCS IO coefficients are consistent with their
+    # non-CCS counterparts
+    L2326.globaltech_ccs_ratios <- L2326.GlobalTechCoef_aluminum %>%
+      # filter out heat, electricity, and cogen technologies
+      filter(sector.name == "alumina",
+             subsector.name != "heat",
+             !grepl("cogen", technology)) %>%
+      mutate(ccs_tech = if_else(grepl("CCS", technology), TRUE, FALSE)) %>%
+      group_by(sector.name, subsector.name) %>%
+      mutate(scalar = coefficient / coefficient[ccs_tech == FALSE]) %>%
+      ungroup() %>%
+      filter(ccs_tech == TRUE) %>%
+      select(sector.name, subsector.name, technology, year, scalar)
 
     # Secondary outputs of cogen technologies: these are input as a ratio
     # L2326.GlobalTechSecOut_ind: Secondary output ratios of aluminum cogeneration technologies
@@ -192,12 +206,12 @@ module_energy_L2326.aluminum <- function(command, ...) {
       arrange(supplysector, subsector, technology, minicam.energy.input, secondary.output, year) %>%
       group_by(supplysector, subsector, technology, minicam.energy.input, secondary.output) %>%
       mutate(coefficient = approx_fun(year, coefficient, rule = 1),
-             coefficient = round(coefficient, energy.DIGITS_EFFICIENCY)) %>%
+             coefficient = round(coefficient, energy.DIGITS_COEFFICIENT)) %>%
       filter(year %in% c(MODEL_BASE_YEARS, MODEL_FUTURE_YEARS)) %>%
       filter(!is.na(secondary.output)) %>%
       left_join_error_no_match(A23.chp_elecratio, by = c("subsector" = "fuel")) %>%
       mutate(output.ratio = elec_ratio * coefficient,
-             output.ratio = round(output.ratio, energy.DIGITS_EFFICIENCY)) %>%
+             output.ratio = round(output.ratio, energy.DIGITS_COEFFICIENT)) %>%
       # NOTE: holding the output ratio constant over time in future periods
       left_join_error_no_match(select(filter(., year == MODEL_FINAL_BASE_YEAR), -coefficient, -elec_ratio),
                                by = c("supplysector", "subsector", "technology", "minicam.energy.input", "secondary.output")) %>%
@@ -413,6 +427,38 @@ module_energy_L2326.aluminum <- function(command, ...) {
       filter(year %in% MODEL_YEARS) ->   # drop the terminal coef year if it's outside of the model years
       L2326.StubTechCoef_aluminum
 
+    # Adjusting StubTechCoef for CCS technologies to ensure that CCS technologies
+    # are not more efficient than non-CCS technologies in any region / period
+    # CCS : non-CCS ratio from GlobalTechCoef is multiplied by non-CCS coeff from
+    # L2326.StubTechCoef_aluminum to update StubTech CCS coefficients)
+
+    L2326.StubTechCoef_aluminum_adj_non_CCS <- L2326.StubTechCoef_aluminum %>%
+      # filter out cogen technologies
+      filter(!grepl("cogen", stub.technology)) %>%
+      # filter for fuels in file with scaling ratios
+      semi_join(L2326.globaltech_ccs_ratios,
+                by = c("supplysector" = "sector.name",
+                       "subsector" = "subsector.name",
+                       "year")) %>%
+      # join in scaling ratios
+      left_join_error_no_match(L2326.globaltech_ccs_ratios,
+                               by = c("supplysector" = "sector.name",
+                                      "subsector" = "subsector.name",
+                                      "year")) %>%
+      # identify CCS techs
+      mutate(ccs_tech = if_else(grepl("CCS", stub.technology), TRUE, FALSE)) %>%
+      group_by(region, supplysector, subsector) %>%
+      mutate(coefficient = coefficient[ccs_tech == FALSE] * scalar) %>%
+      ungroup() %>%
+      filter(ccs_tech == TRUE) %>%
+      select(LEVEL2_DATA_NAMES[["StubTechCoef"]])
+
+    # combine tables, replacing original CCS IO coefficients with new scaled values
+    L2326.StubTechCoef_aluminum <- L2326.StubTechCoef_aluminum %>%
+      anti_join(L2326.StubTechCoef_aluminum_adj_non_CCS,
+                by = c("region", "supplysector", "subsector", "stub.technology",
+                       "minicam.energy.input", "market.name", "year")) %>%
+      bind_rows(L2326.StubTechCoef_aluminum_adj_non_CCS)
 
     # Calibration and region-specific data
     # L2326.StubTechProd_aluminum: calibrated aluminum output

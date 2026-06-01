@@ -245,8 +245,8 @@ module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU <- function(command, ...) {
       L120.LC_bm2_R_LT_Yh_GLU
 
     # Extrapolate to fill missing data
-    if (MODEL_FINAL_BASE_YEAR > max(L120.LC_bm2_R_LT_Yh_GLU$year) || any(is.na(L120.LC_bm2_R_LT_Yh_GLU$value))) {
-      warning("module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU: MODEL_FINAL_BASE_YEAR is greater than the maximum year in the land cover data (L120.LC_bm2_R_LT_Yh_GLU). Extrapolating to MODEL_FINAL_BASE_YEAR.")
+    if (FINAL_HISTORICAL_YEAR > max(L120.LC_bm2_R_LT_Yh_GLU$year) || any(is.na(L120.LC_bm2_R_LT_Yh_GLU$value))) {
+      warning("module_aglu_L120.LC_GIS_R_LTgis_Yh_GLU: FINAL_HISTORICAL_YEAR is greater than the maximum year in the land cover data (L120.LC_bm2_R_LT_Yh_GLU). Extrapolating to FINAL_HISTORICAL_YEAR.")
       L120.LC_bm2_R_LT_Yh_GLU <- L120.LC_bm2_R_LT_Yh_GLU %>%
         group_by(GCAM_region_ID, Land_Type, GLU) %>%
         mutate(value = approx_fun(year, value, rule = 2)) %>%

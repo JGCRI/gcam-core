@@ -160,7 +160,7 @@ module_socio_L102.GDP <- function(command, ...) {
       left_join(L100.Pop_thous_ctry_Yh %>%
                   rename(population = value),
         by = c("iso", "year")) %>%
-      filter(year <= max(MODEL_BASE_YEARS)) %>%
+      filter(year <= FINAL_HISTORICAL_YEAR) %>%
       mutate(value = gdp / population) %>%
       select(iso, year, value) %>%
       filter(!is.na(value))
@@ -183,7 +183,7 @@ module_socio_L102.GDP <- function(command, ...) {
     ## Calculate the PPP-MER conversion factor in base year for each region.
     ## Our PPP values are in billions of 2017$, so we make that conversion
     ## here too.
-    PPP.MER.baseyr <- MODEL_FINAL_BASE_YEAR
+    PPP.MER.baseyr <- FINAL_HISTORICAL_YEAR
 
     mer.rgn <-
       gdp_mil90usd_ctry %>%

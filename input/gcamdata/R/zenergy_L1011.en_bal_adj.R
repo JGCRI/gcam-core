@@ -121,7 +121,7 @@ module_energy_L1011.en_bal_adj <- function(command, ...) {
       filter(!(is.na(GCAM_region_ID))) %>%
       select(Country, year, value, iso, GCAM_region_ID) -> L1011.in_EJ_ctry_intlship_TOT_Yh
 
-    if(max(EIA_years) < MODEL_FINAL_BASE_YEAR) {
+    if(max(EIA_years) < FINAL_HISTORICAL_YEAR) {
       warning("Extending L1011.in_EJ_ctry_intlship_TOT_Yh by using relative growth in L101.in_EJ_ctry_trn_Fi_Yh")
       L101.in_EJ_ctry_trn_Fi_Yh %>%
         filter(sector == "in_trn_international ship", fuel == "refined liquids", year >= max(EIA_years)) %>%

@@ -149,7 +149,7 @@ int main( int argc, char *argv[] ) {
     mainLog << "License version 2.0 (ECL 2.0). http://www.opensource.org/licenses/ecl2.php" << endl << endl;
     
     // print web site
-    mainLog << "For further details, see: http://www.globalchange.umd.edu/models/gcam/" << endl << endl;
+    mainLog << "For further details, see: https://github.com/JGCRI/gcam-core" << endl << endl;
     
     mainLog << "Running GCAM model code base version " << __ObjECTS_VER__ << " revision "
         << __REVISION_NUMBER__ << endl << endl;

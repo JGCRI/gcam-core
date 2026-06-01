@@ -221,14 +221,14 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
     # The main reason for this step is that the most recent CBECS edition is a decade old (2003)
 
     # need to extrapolate EIA_AEO_Tab5 for base year recent than 2015, as the data is up to 2015
-    if (max(EIA_AEO_Tab5$year) < MODEL_FINAL_BASE_YEAR) {
-      warning("module_gcamusa_L144.Commercial: Floorspace data from AEO (EIA_AEO_Tab5.csv) only goes up to ", max(EIA_AEO_Tab5$year), ". Extrapolating to ", MODEL_FINAL_BASE_YEAR, ".")
+    if (max(EIA_AEO_Tab5$year) < FINAL_HISTORICAL_YEAR) {
+      warning("module_gcamusa_L144.Commercial: Floorspace data from AEO (EIA_AEO_Tab5.csv) only goes up to ", max(EIA_AEO_Tab5$year), ". Extrapolating to ", FINAL_HISTORICAL_YEAR, ".")
     }
     # it's fine to interpolate outside the conditional because we have to fill in years anyway
     EIA_AEO_Tab5 %>%
       # fill missing years
       complete(nesting(variable, unit, fuel, service),
-               year = unique(c(HISTORICAL_YEARS, MODEL_FINAL_BASE_YEAR))) %>%
+               year = unique(c(HISTORICAL_YEARS, FINAL_HISTORICAL_YEAR))) %>%
       # extrapolate missing years
       group_by(variable, unit, fuel, service) %>%
       mutate(value = approx_fun(year, value, rule = 2)) %>%
@@ -238,7 +238,7 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
     AEO_USA_flsp_bm2 <- EIA_AEO_Tab5 %>%
       filter(variable == "Floorspace",
              # To fix timeshift, year can't be greater than historical years
-             year <= MODEL_FINAL_BASE_YEAR) %>%
+             year <= FINAL_HISTORICAL_YEAR) %>%
       mutate(value = value * CONV_FT2_M2,
              unit = "Billion square meters")
 
@@ -390,7 +390,7 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
     # because it's all going to be scaled later anyway. These unscaled values are only used to compute
     # percentage-wise allocation of fuels to specific services.
     EIA_AEO_Tab5 %>%
-      filter(year == MODEL_FINAL_BASE_YEAR,
+      filter(year == FINAL_HISTORICAL_YEAR,
              variable != "Floorspace") %>%
       select(EIA_fuel = fuel,
              EIA_service = service,
@@ -408,9 +408,9 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
       summarise(initial = sum(value)) %>%
       ungroup() %>%
       left_join_error_no_match(L144.EIA_AEO_target, by = c("fuel", "service")) %>%
-      # For "comm others" electricity, most of it is non-building, and will be taken into account below.
-      # For now, just set "comm others" electricity scaler to 1.
-      mutate(scaler = if_else(fuel == "electricity" & service == "comm others",
+      # For "comm other" electricity, most of it is non-building, and will be taken into account below.
+      # For now, just set "comm other" electricity scaler to 1.
+      mutate(scaler = if_else(fuel == "electricity" & service == "comm other",
                               1, AEO_target / initial )) -> L144.scaler_USA_comm_F_U_2010
 
     # Multiply state-level un-scaled energy use by these scalers prior to calculating end-use proportions
@@ -456,13 +456,13 @@ module_gcamusa_L144.Commercial <- function(command, ...) {
       transmute(year,
                 pre = sum / sum[year == first_year_commext])
 
-    # One more adjustment - set 2010 comm exterior others ("comm non-building") electricity use equal to
-    # AEO_target minus unscaled aggregated 2010 value for "comm others". Interpolate back.
-    # This separates out "comm non-building" from "comm others" to provide a better estimate of
+    # One more adjustment - set 2010 comm exterior other ("comm non-building") electricity use equal to
+    # AEO_target minus unscaled aggregated 2010 value for "comm other". Interpolate back.
+    # This separates out "comm non-building" from "comm other" to provide a better estimate of
     # "comm non-building" in 2010 (which is outside the time scope of PNNL_Commext_elec) than the
     # previous method of scaling by population growth.
     comm_ext_2010 <- L144.scaler_USA_comm_F_U_2010 %>%
-      filter(fuel == "electricity" & service == "comm others") %>%
+      filter(fuel == "electricity" & service == "comm other") %>%
       mutate(AEO_target = AEO_target - initial) %>%
       distinct(AEO_target)
     comm_ext_2010 <- unique(comm_ext_2010$AEO_target)

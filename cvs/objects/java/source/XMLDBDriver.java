@@ -297,6 +297,7 @@ public class XMLDBDriver {
         String docName = null;
         String xmlFile = null;
         int bufferSize = XMLDBDriver.BUFFER_SIZE;
+        int bufferSizeMB = bufferSize / (1024 * 1024);
 
         // Set all of the available command line arguments here.
         // The first argument being the command line switch and the second a short description.
@@ -306,7 +307,7 @@ public class XMLDBDriver {
         parser.accepts( "db-path", "Path to XML database" ).withRequiredArg();
         parser.accepts( "doc-name", "The unique name to call the document in the DB" ).withRequiredArg();
         parser.accepts( "xml", "The exported GCAM results XML file to load" ).withRequiredArg();
-        parser.accepts( "buffer-size", "The buffer size in MB to use to stream data through the write pipeline" );
+        parser.accepts( "buffer-size", "The buffer size in MB to use to stream data through the write pipeline" ).withOptionalArg().ofType( Integer.class );
         parser.accepts( "print-java-home", "Print the path to the Java home directory and exit" );
 
         // Parse the command line options
@@ -345,14 +346,17 @@ public class XMLDBDriver {
         dbPath  = opts.has( "db-path" ) ? (String)opts.valueOf( "db-path") : null;
         docName = opts.has( "doc-name" ) ? (String)opts.valueOf( "doc-name" ) : null;
         xmlFile = opts.has( "xml" ) ? (String)opts.valueOf( "xml" ) : null;
-        bufferSize = opts.has( "buffer-size" ) ? ((int)opts.valueOf( "buffer-size" ) * 1024 * 1024) : bufferSize;
+        if( opts.has( "buffer-size" ) ) {
+            bufferSizeMB = (int)opts.valueOf( "buffer-size" );
+            bufferSize = bufferSizeMB * 1024 * 1024;
+        }
 
         if( dbPath == null || docName == null || xmlFile == null ) {
             printUsage( parser );
         }
 
         // Run the XMLDBDriver by mimicking the sequence of method calls GCAM would make
-        XMLDBDriver driver = new XMLDBDriver( dbPath, docName, bufferSize );
+        XMLDBDriver driver = new XMLDBDriver( dbPath, docName, bufferSizeMB );
 
         // copy the XML file through processing streams via receiveDataFromGCAM
         FileInputStream xmlRead = new FileInputStream( xmlFile );

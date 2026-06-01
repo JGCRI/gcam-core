@@ -205,7 +205,9 @@ module_emissions_L241.fgas <- function(command, ...) {
              year = as.numeric(year)) %>%
       select(region, supplysector, subsector, stub.technology, year, Non.CO2, emiss.coeff) %>%
       group_by(region, supplysector, subsector, stub.technology, Non.CO2) %>%
-      tidyr::complete(year = min(MODEL_FUTURE_YEARS)) %>%
+      # In normal mode, this will add the first future year, but a more complex
+      # formula is used to ensure timeshift uses years that are considered "future"
+      tidyr::complete(year = min(MODEL_YEARS[MODEL_YEARS > FINAL_HISTORICAL_YEAR])) %>%
       mutate(emiss.coeff = approx_fun(year, emiss.coeff)) %>%
       ungroup() %>%
       # note: we actually allow some base year rows in the "future" table because we
@@ -216,7 +218,7 @@ module_emissions_L241.fgas <- function(command, ...) {
     # Now subset only the relevant technologies and gases (i.e., drop ones whose values are zero in all years).
     L241.hfc_all %>%
       group_by(region, supplysector, subsector, stub.technology, Non.CO2) %>%
-      filter(sum(input.emissions) != 0, year %in% MODEL_BASE_YEARS) %>%
+      filter(sum(input.emissions) != 0, year %in% MODEL_YEARS[MODEL_YEARS <= FINAL_HISTORICAL_YEAR]) %>%
       mutate(year = as.numeric(year)) %>%
       ungroup ->
       L241.hfc_all

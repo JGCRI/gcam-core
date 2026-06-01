@@ -311,6 +311,8 @@ module_gcamusa_L171.nonghg_trn <- function(command, ...) {
 
     # 3a. Light Duty Vehicles
     # =================================================================================
+    # Under timeshift, we may need to reset base year used in subsequent calculations
+    TRN_BY <- if_else(max(gcamusa.TRAN_MODEL_BASE_YEARS) > max(MODEL_BASE_YEARS), max(MODEL_BASE_YEARS), max(gcamusa.TRAN_MODEL_BASE_YEARS))
 
     # Gather the raw data
     MARKAL_LDV_EFs_gpm.long <- MARKAL_LDV_EFs_gpm %>%
@@ -323,7 +325,7 @@ module_gcamusa_L171.nonghg_trn <- function(command, ...) {
 
     # Gather a table for use in calculating degradation of EFs for future vintages
     L171.LDV_USA_emiss_degrades <- MARKAL_LDV_EFs_gpm.long %>%
-      filter(Vintage > max(gcamusa.TRAN_MODEL_BASE_YEARS) & !is.na(value))
+      filter(Vintage > TRN_BY & !is.na(value))
 
     # Clean up and subset base year vintages
     MARKAL_LDV_EFs_gpm_Yb <- MARKAL_LDV_EFs_gpm.long %>%
@@ -346,7 +348,7 @@ module_gcamusa_L171.nonghg_trn <- function(command, ...) {
     # they age, resulting in an increased EF and 2. older vintages are retiring, resulting in a decreased EF.
     # We need to account for both of these forces to capture an accurate net-evolution
     MARKAL_LDV_EFs_gpm_CYb <- MARKAL_LDV_EFs_gpm.long %>%
-      filter(year >= max(gcamusa.TRAN_MODEL_BASE_YEARS) & Vintage <= max(gcamusa.TRAN_MODEL_BASE_YEARS)) %>%
+      filter(year >= TRN_BY & Vintage <= TRN_BY) %>%
       filter( year - Vintage <= gcamusa.MARKAL_DEGRADE_YEARS ) %>%
       ###MISSING VALUES: emission factors pollutants with no data for ELC vehicles, and 2010 EFs for 1990 vintages
       na.omit() %>%
@@ -358,7 +360,7 @@ module_gcamusa_L171.nonghg_trn <- function(command, ...) {
       distinct(value, region, Class, Fuel, Vintage, pollutant, year ) %>%
       # filter for the base year vintage, as this entry has values for how EFs for vehicles
       # existing in the base year will evolve
-      filter( Vintage == max(gcamusa.TRAN_MODEL_BASE_YEARS))
+      filter( Vintage == TRN_BY)
 
     # Clean up and subset future vintages for emissions coefficients
     MARKAL_LDV_EFs_gpm_Yf <- MARKAL_LDV_EFs_gpm.long %>%
@@ -470,7 +472,7 @@ module_gcamusa_L171.nonghg_trn <- function(command, ...) {
 
     # Gather a table for use in calculating degradation of EFs for each vintage
     L171.HDV_USA_emiss_degrades <- MARKAL_HDV_EFs_gpm.long %>%
-      filter(Vintage > max(gcamusa.TRAN_MODEL_BASE_YEARS) & !is.na(value))
+      filter(Vintage > TRN_BY & !is.na(value))
 
     # Clean up and subset base year vintages
     MARKAL_HDV_EFs_gpm_Yb <- MARKAL_HDV_EFs_gpm.long %>%
@@ -490,7 +492,7 @@ module_gcamusa_L171.nonghg_trn <- function(command, ...) {
     # they age, resulting in an increased EF and 2. older vintages are retiring, resulting in a decreased EF.
     # We need to account for both of these forces to capture an accurate net-evolution
     MARKAL_HDV_EFs_gpm_CYb <- MARKAL_HDV_EFs_gpm.long %>%
-      filter(year >= max(gcamusa.TRAN_MODEL_BASE_YEARS) & Vintage <= max(gcamusa.TRAN_MODEL_BASE_YEARS)) %>%
+      filter(year >= TRN_BY & Vintage <= TRN_BY) %>%
       filter( year - Vintage <= gcamusa.MARKAL_DEGRADE_YEARS ) %>%
       ###MISSING VALUES: emission factors pollutants with no data for ELC vehicles, and 2010 EFs for 1990 vintages
       na.omit() %>%
@@ -502,7 +504,7 @@ module_gcamusa_L171.nonghg_trn <- function(command, ...) {
       distinct(value, region, Class, Fuel, Vintage, pollutant, year ) %>%
       # filter for the base year vintage, as this entry has values for how EFs for vehicles
       # existing in the base year will evolve
-      filter( Vintage == max(gcamusa.TRAN_MODEL_BASE_YEARS))
+      filter( Vintage == TRN_BY)
 
     # Clean up and subset future vintages for emissions coefficients
     MARKAL_HDV_EFs_gpm_Yf <- MARKAL_HDV_EFs_gpm.long %>%
@@ -568,7 +570,7 @@ module_gcamusa_L171.nonghg_trn <- function(command, ...) {
     # Degradation tables for LDV and HDV have year and vintage in 5 year bins, but having every vintage (yearly) is ok
     # since we use it for a linear fit degradation
     L171.Moto_USA_emiss_degrades <- motorcycle_gpm.long %>%
-      filter( Vintage >= max(gcamusa.TRAN_MODEL_BASE_YEARS) ) %>%
+      filter( Vintage >= TRN_BY ) %>%
       mutate( value = emissions / Distance ) %>%
       select( -c( Distance, emissions ) ) %>%
       #get national average EFs

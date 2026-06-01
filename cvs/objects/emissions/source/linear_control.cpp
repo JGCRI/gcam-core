@@ -181,9 +181,8 @@ void LinearControl::initCalc( const gcamstr& aRegionName,
     // Need to get the emissions coefficient from start period to serve as starting point
     // for linear decline.
     int startPeriod = scenario->getModeltime()->getyr_to_per( mStartYear );
-    if ( mDisableEmControl ) {
-        mReduction = 0;
-    } else {
+    mReduction = 0;
+    if ( !mDisableEmControl ) {
         if ( aPeriod >=  ( startPeriod + 1 ) ) {
             double baseEmissionsCoef = mAdjustedEmissCoef[ startPeriod ];
             // we calculate the emissions reduction now in initCalc because it will not be

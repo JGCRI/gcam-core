@@ -1016,7 +1016,7 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
         double currValue = trackInput->mCapitalValue;
         if(currValue > 0) {
             attrs.clear();
-            attrs["unit"] = "1975$";
+            attrs["unit"] = "billion 1975$ per timestep";
             XMLWriteElementWithAttributes( currValue, "capital", *childBuffer, mTabs.get(), attrs);
         }
     }
@@ -1025,7 +1025,7 @@ void XMLDBOutputter::startVisitInput( const IInput* aInput, const int aPeriod ) 
         double currValue = capInput->mCapitalValue;
         if(currValue > 0) {
             attrs.clear();
-            attrs["unit"] = "1975$";
+            attrs["unit"] = "billion 1975$ per timestep";
             XMLWriteElementWithAttributes( currValue, "capital", *childBuffer, mTabs.get(), attrs);
         }
     }

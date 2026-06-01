@@ -182,6 +182,8 @@ void EnergyInput::toDebugXML( const int aPeriod,
     else if( hasTypeFlag(IInput::BACKUP_ENERGY) ) {
         XMLWriteElement( getFlagName(IInput::BACKUP_ENERGY), "flag", aOut, aTabs );
     }
+
+    XMLWriteElement( mMarketName, "market-name", aOut, aTabs );
     
     XMLWriteElement( mCalibrationInput.isInited() ? mCalibrationInput.get() : -1,
                      "calibrated-value", aOut, aTabs );

@@ -127,7 +127,6 @@ module_gcamusa_L222.en_transformation <- function(command, ...) {
       mutate(year = as.integer(year)) -> # was character
       L222.GlobalTechSCurve_en
 
-
     # Some helpful functions:
     #
     # global_energy_to_USA_nonGlobalTech - takes global energy inputs for non global tech

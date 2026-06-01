@@ -99,7 +99,7 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
     # Note that all AgLU prices are derived here
     # Alfalfa price (Fodder) is unweighted average over aglu.MODEL_PRICE_YEARS
     # Producer prices are used if available. Export price is used for forest
-    # Regional prices are deflated to aglu.DEFLATOR_BASE_YEAR which should be nominal price of MODEL_FINAL_BASE_YEAR
+    # Regional prices are deflated to aglu.DEFLATOR_BASE_YEAR which should be nominal price of FINAL_HISTORICAL_YEAR
     # Nominal prices are then converted to gcam.REAL_PRICE_BASE_YEAR using US deflators
     # All other prices are weighted average over aglu.MODEL_PRICE_YEARS
     # If changing price year, only aglu.MODEL_PRICE_YEARS needs to be changed
@@ -430,7 +430,7 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
     # Extract IO coefficients (conversion ratios for forest products)
     L100.forest_IO_coefs_R <-
       L110.IO_Coefs_pulp %>%
-      filter(year %in% c(MODEL_FINAL_BASE_YEAR)) %>%
+      filter(year %in% c(FINAL_HISTORICAL_YEAR)) %>%
       group_by(GCAM_region_ID) %>%
       summarise(IO = mean(IO), .groups = "drop")
 
@@ -483,6 +483,7 @@ module_aglu_L100.regional_ag_an_for_prices <- function(command, ...) {
                      "aglu/FAO/FAO_an_items_PRODSTAT",
                      "common/FAO_GDP_Deflators",
                      "aglu/USDA/USDA_Alfalfa_prices_USDt",
+                     "aglu/FAO/FAO_price_adjustments",
                      "L109.ag_ALL_Mt_R_C_Y") ->
       L1321.ag_prP_R_C_75USDkg
 
