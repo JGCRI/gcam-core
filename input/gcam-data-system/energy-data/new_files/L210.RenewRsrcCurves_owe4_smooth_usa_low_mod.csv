@@ -1,0 +1,31 @@
+INPUT_TABLE,,,,,
+Variable ID,,,,,
+SmthRenewRsrcCurves,,,,,
+,,,,,
+region,renewresource,smooth.renewable.subresource,maxSubResource,mid.price,curve.exponent
+CA,offshore wind resource 4,offshore wind resource 4,1.610676046,3.243438936,197.0983576
+DE,offshore wind resource 4,offshore wind resource 4,0.065648668,0.431385676,50.10229404
+HI,offshore wind resource 4,offshore wind resource 4,0.980663103,3.244955974,77.09536807
+IL,offshore wind resource 4,offshore wind resource 4,0.006343547,0.409432889,199.9999994
+ME,offshore wind resource 4,offshore wind resource 4,0.234781741,1.340025285,1.000000005
+MD,offshore wind resource 4,offshore wind resource 4,0.254157754,0.071640963,2.011412006
+MA,offshore wind resource 4,offshore wind resource 4,0.357924095,0.467055221,39.17932325
+MI,offshore wind resource 4,offshore wind resource 4,2.417934755,3.242380137,126.18942
+NH,offshore wind resource 4,offshore wind resource 4,0.023654384,3.230352814,199.9999981
+NJ,offshore wind resource 4,offshore wind resource 4,0.911603016,0.439968108,57.09944604
+NY,offshore wind resource 4,offshore wind resource 4,0.202746826,0.091100035,4.011598149
+NC,offshore wind resource 4,offshore wind resource 4,2.810522812,1.79047577,0.764624306
+OR,offshore wind resource 4,offshore wind resource 4,0.981459571,3.247205936,158.375951
+RI,offshore wind resource 4,offshore wind resource 4,0.047301719,0.132649429,6.037863614
+SC,offshore wind resource 4,offshore wind resource 4,0.423368359,0.42350599,7.148690342
+TX,offshore wind resource 4,offshore wind resource 4,0.865013184,0.871853088,0.622591346
+VA,offshore wind resource 4,offshore wind resource 4,0.549351213,0.439857897,36.16281153
+WI,offshore wind resource 4,offshore wind resource 4,0.593276755,3.247848263,122.0314303
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A
+,,,#N/A,#N/A,#N/A

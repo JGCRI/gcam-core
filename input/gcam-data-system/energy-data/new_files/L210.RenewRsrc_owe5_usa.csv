@@ -1,0 +1,15 @@
+INPUT_TABLE,,,,
+Variable ID,,,,
+RenewRsrc,,,,
+,,,,
+region,renewresource,output.unit,price.unit,market
+CA,offshore wind resource 5,EJ,1975$/GJ,CA
+HI,offshore wind resource 5,EJ,1975$/GJ,HI
+ME,offshore wind resource 5,EJ,1975$/GJ,ME
+MA,offshore wind resource 5,EJ,1975$/GJ,MA
+MI,offshore wind resource 5,EJ,1975$/GJ,MI
+NH,offshore wind resource 5,EJ,1975$/GJ,NH
+NY,offshore wind resource 5,EJ,1975$/GJ,NY
+NC,offshore wind resource 5,EJ,1975$/GJ,NC
+OR,offshore wind resource 5,EJ,1975$/GJ,OR
+RI,offshore wind resource 5,EJ,1975$/GJ,RI

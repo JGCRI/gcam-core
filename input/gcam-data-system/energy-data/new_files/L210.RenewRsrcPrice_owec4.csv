@@ -1,0 +1,125 @@
+INPUT_TABLE,,,
+Variable ID,,,
+RenewRsrcPrice,,,
+,,,
+region,renewresource,year,price
+Africa_Eastern,offshore wind resource c4,1975,0.05
+Africa_Northern,offshore wind resource c4,1975,0.05
+Africa_Southern,offshore wind resource c4,1975,0.05
+Africa_Western,offshore wind resource c4,1975,0.05
+Australia_NZ,offshore wind resource c4,1975,0.05
+Brazil,offshore wind resource c4,1975,0.05
+Canada,offshore wind resource c4,1975,0.05
+Central America and Caribbean,offshore wind resource c4,1975,0.05
+China,offshore wind resource c4,1975,0.05
+EU-12,offshore wind resource c4,1975,0.05
+EU-15,offshore wind resource c4,1975,0.05
+Europe_Eastern,offshore wind resource c4,1975,0.05
+Europe_Non_EU,offshore wind resource c4,1975,0.05
+European Free Trade Association,offshore wind resource c4,1975,0.05
+India,offshore wind resource c4,1975,0.05
+Indonesia,offshore wind resource c4,1975,0.05
+Japan,offshore wind resource c4,1975,0.05
+Mexico,offshore wind resource c4,1975,0.05
+Middle East,offshore wind resource c4,1975,0.05
+Pakistan,offshore wind resource c4,1975,0.05
+Russia,offshore wind resource c4,1975,0.05
+South Africa,offshore wind resource c4,1975,0.05
+South America_Northern,offshore wind resource c4,1975,0.05
+South America_Southern,offshore wind resource c4,1975,0.05
+South Asia,offshore wind resource c4,1975,0.05
+South Korea,offshore wind resource c4,1975,0.05
+Southeast Asia,offshore wind resource c4,1975,0.05
+Taiwan,offshore wind resource c4,1975,0.05
+Argentina,offshore wind resource c4,1975,0.05
+Colombia,offshore wind resource c4,1975,0.05
+Africa_Eastern,offshore wind resource c4,1990,0.05
+Africa_Northern,offshore wind resource c4,1990,0.05
+Africa_Southern,offshore wind resource c4,1990,0.05
+Africa_Western,offshore wind resource c4,1990,0.05
+Australia_NZ,offshore wind resource c4,1990,0.05
+Brazil,offshore wind resource c4,1990,0.05
+Canada,offshore wind resource c4,1990,0.05
+Central America and Caribbean,offshore wind resource c4,1990,0.05
+China,offshore wind resource c4,1990,0.05
+EU-12,offshore wind resource c4,1990,0.05
+EU-15,offshore wind resource c4,1990,0.05
+Europe_Eastern,offshore wind resource c4,1990,0.05
+Europe_Non_EU,offshore wind resource c4,1990,0.05
+European Free Trade Association,offshore wind resource c4,1990,0.05
+India,offshore wind resource c4,1990,0.05
+Indonesia,offshore wind resource c4,1990,0.05
+Japan,offshore wind resource c4,1990,0.05
+Mexico,offshore wind resource c4,1990,0.05
+Middle East,offshore wind resource c4,1990,0.05
+Pakistan,offshore wind resource c4,1990,0.05
+Russia,offshore wind resource c4,1990,0.05
+South Africa,offshore wind resource c4,1990,0.05
+South America_Northern,offshore wind resource c4,1990,0.05
+South America_Southern,offshore wind resource c4,1990,0.05
+South Asia,offshore wind resource c4,1990,0.05
+South Korea,offshore wind resource c4,1990,0.05
+Southeast Asia,offshore wind resource c4,1990,0.05
+Taiwan,offshore wind resource c4,1990,0.05
+Argentina,offshore wind resource c4,1990,0.05
+Colombia,offshore wind resource c4,1990,0.05
+Africa_Eastern,offshore wind resource c4,2005,0.05
+Africa_Northern,offshore wind resource c4,2005,0.05
+Africa_Southern,offshore wind resource c4,2005,0.05
+Africa_Western,offshore wind resource c4,2005,0.05
+Australia_NZ,offshore wind resource c4,2005,0.05
+Brazil,offshore wind resource c4,2005,0.05
+Canada,offshore wind resource c4,2005,0.05
+Central America and Caribbean,offshore wind resource c4,2005,0.05
+China,offshore wind resource c4,2005,0.05
+EU-12,offshore wind resource c4,2005,0.05
+EU-15,offshore wind resource c4,2005,0.05
+Europe_Eastern,offshore wind resource c4,2005,0.05
+Europe_Non_EU,offshore wind resource c4,2005,0.05
+European Free Trade Association,offshore wind resource c4,2005,0.05
+India,offshore wind resource c4,2005,0.05
+Indonesia,offshore wind resource c4,2005,0.05
+Japan,offshore wind resource c4,2005,0.05
+Mexico,offshore wind resource c4,2005,0.05
+Middle East,offshore wind resource c4,2005,0.05
+Pakistan,offshore wind resource c4,2005,0.05
+Russia,offshore wind resource c4,2005,0.05
+South Africa,offshore wind resource c4,2005,0.05
+South America_Northern,offshore wind resource c4,2005,0.05
+South America_Southern,offshore wind resource c4,2005,0.05
+South Asia,offshore wind resource c4,2005,0.05
+South Korea,offshore wind resource c4,2005,0.05
+Southeast Asia,offshore wind resource c4,2005,0.05
+Taiwan,offshore wind resource c4,2005,0.05
+Argentina,offshore wind resource c4,2005,0.05
+Colombia,offshore wind resource c4,2005,0.05
+Africa_Eastern,offshore wind resource c4,2010,0.05
+Africa_Northern,offshore wind resource c4,2010,0.05
+Africa_Southern,offshore wind resource c4,2010,0.05
+Africa_Western,offshore wind resource c4,2010,0.05
+Australia_NZ,offshore wind resource c4,2010,0.05
+Brazil,offshore wind resource c4,2010,0.05
+Canada,offshore wind resource c4,2010,0.05
+Central America and Caribbean,offshore wind resource c4,2010,0.05
+China,offshore wind resource c4,2010,0.05
+EU-12,offshore wind resource c4,2010,0.05
+EU-15,offshore wind resource c4,2010,0.05
+Europe_Eastern,offshore wind resource c4,2010,0.05
+Europe_Non_EU,offshore wind resource c4,2010,0.05
+European Free Trade Association,offshore wind resource c4,2010,0.05
+India,offshore wind resource c4,2010,0.05
+Indonesia,offshore wind resource c4,2010,0.05
+Japan,offshore wind resource c4,2010,0.05
+Mexico,offshore wind resource c4,2010,0.05
+Middle East,offshore wind resource c4,2010,0.05
+Pakistan,offshore wind resource c4,2010,0.05
+Russia,offshore wind resource c4,2010,0.05
+South Africa,offshore wind resource c4,2010,0.05
+South America_Northern,offshore wind resource c4,2010,0.05
+South America_Southern,offshore wind resource c4,2010,0.05
+South Asia,offshore wind resource c4,2010,0.05
+South Korea,offshore wind resource c4,2010,0.05
+Southeast Asia,offshore wind resource c4,2010,0.05
+Taiwan,offshore wind resource c4,2010,0.05
+Argentina,offshore wind resource c4,2010,0.05
+Colombia,offshore wind resource c4,2010,0.05

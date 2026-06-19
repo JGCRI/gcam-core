@@ -1,0 +1,405 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<scenario>
+   <world>
+      <region name="Africa_Eastern">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Africa_Eastern</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>2.190911852</maxSubResource>
+               <mid-price>2.195699227</mid-price>
+               <curve-exponent>1.196639897</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Africa_Northern">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Africa_Northern</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>0.406545553</maxSubResource>
+               <mid-price>3.329317808</mid-price>
+               <curve-exponent>56.14890342</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Africa_Southern">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Africa_Southern</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>1.784615407</maxSubResource>
+               <mid-price>3.442079423</mid-price>
+               <curve-exponent>10.66766546</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Africa_Western">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Africa_Western</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>0.55601083</maxSubResource>
+               <mid-price>0.685990572</mid-price>
+               <curve-exponent>1.000000001</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Australia_NZ">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Australia_NZ</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>34.24722802</maxSubResource>
+               <mid-price>2.688063861</mid-price>
+               <curve-exponent>1.040377694</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Brazil">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Brazil</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>1.60002579</maxSubResource>
+               <mid-price>3.48818945</mid-price>
+               <curve-exponent>33.70619325</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Canada">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Canada</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>40.83839763</maxSubResource>
+               <mid-price>2.648864887</mid-price>
+               <curve-exponent>1.047977224</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Central America and Caribbean">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Central America and Caribbean</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>0.692024232</maxSubResource>
+               <mid-price>3.33727365</mid-price>
+               <curve-exponent>25.00404226</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="China">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>China</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>7.671803559</maxSubResource>
+               <mid-price>3.091849947</mid-price>
+               <curve-exponent>1.000000001</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="EU-12">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>EU-12</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>1.103801071</maxSubResource>
+               <mid-price>3.393943482</mid-price>
+               <curve-exponent>21.44013166</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="EU-15">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>EU-15</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>21.07933712</maxSubResource>
+               <mid-price>1.331758232</mid-price>
+               <curve-exponent>1.000000002</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="European Free Trade Association">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>European Free Trade Association</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>29.4030584</maxSubResource>
+               <mid-price>3.444487422</mid-price>
+               <curve-exponent>11.59425254</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="India">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>India</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>0.311385994</maxSubResource>
+               <mid-price>1.196107519</mid-price>
+               <curve-exponent>1.000000003</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Japan">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Japan</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>2.486354883</maxSubResource>
+               <mid-price>3.390503551</mid-price>
+               <curve-exponent>20.83030322</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Mexico">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Mexico</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>0.085444317</maxSubResource>
+               <mid-price>0.47339378</mid-price>
+               <curve-exponent>3.222253</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Middle East">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Middle East</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>1.485933962</maxSubResource>
+               <mid-price>2.036704425</mid-price>
+               <curve-exponent>1.145344012</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Russia">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Russia</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>58.3218493</maxSubResource>
+               <mid-price>2.585593881</mid-price>
+               <curve-exponent>1</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="South Africa">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>South Africa</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>4.328265313</maxSubResource>
+               <mid-price>20.35790661</mid-price>
+               <curve-exponent>5.330469672</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="South America_Northern">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>South America_Northern</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>1.06867673</maxSubResource>
+               <mid-price>1.466426437</mid-price>
+               <curve-exponent>1.000000002</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="South America_Southern">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>South America_Southern</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>0.769497068</maxSubResource>
+               <mid-price>2.17488791</mid-price>
+               <curve-exponent>1.939321004</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="South Asia">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>South Asia</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>0.673091964</maxSubResource>
+               <mid-price>0.533600891</mid-price>
+               <curve-exponent>1.000000018</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Southeast Asia">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Southeast Asia</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>3.7189452</maxSubResource>
+               <mid-price>1.607003009</mid-price>
+               <curve-exponent>1.000000203</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Taiwan">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Taiwan</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>4.439616944</maxSubResource>
+               <mid-price>3.421300509</mid-price>
+               <curve-exponent>12.23285976</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Argentina">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Argentina</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>6.419035429</maxSubResource>
+               <mid-price>2.921185062</mid-price>
+               <curve-exponent>1.015285983</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+      <region name="Colombia">
+         <renewresource name="offshore wind resource c6">
+            <output-unit>EJ</output-unit>
+            <price-unit>1975$/GJ</price-unit>
+            <market>Colombia</market>
+            <price year="1975">0.05</price>
+            <price year="1990">0.05</price>
+            <price year="2005">0.05</price>
+            <price year="2010">0.05</price>
+            <smooth-renewable-subresource name="offshore wind resource c6">
+               <maxSubResource>0.397328528</maxSubResource>
+               <mid-price>0.855674122</mid-price>
+               <curve-exponent>1.048888716</curve-exponent>
+            </smooth-renewable-subresource>
+         </renewresource>
+      </region>
+   </world>
+</scenario>
