@@ -26,5 +26,6 @@ Load one or more internal, i.e. included with the package, csv (or csv.gz) data 
 \details{
 The data frames read in are marked as inputs, not ones that have
 been computed, via \code{\link{add_comments}}. Optional files that are not found
-as returned as NA in the list.
+as returned as NA in the list. Trailing commas added by Excel are ignored unless
+\code{options(gcamdata.trim_trailing_commas = FALSE)}.
 }

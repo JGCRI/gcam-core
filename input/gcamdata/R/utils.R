@@ -39,7 +39,8 @@ find_header <- function(fqfn) {
 #' @param ... Any other parameter to pass to \code{readr::read_csv}
 #' @details The data frames read in are marked as inputs, not ones that have
 #' been computed, via \code{\link{add_comments}}. Optional files that are not found
-#' as returned as NA in the list.
+#' as returned as NA in the list. Trailing commas added by Excel are ignored unless
+#' \code{options(gcamdata.trim_trailing_commas = FALSE)}.
 #' @return A list of data frames (tibbles).
 #' @importFrom magrittr "%>%"
 #' @importFrom methods is
@@ -70,7 +71,19 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, dummy = NULL, ..
     # Read the file header and extract the column type info from it
     assert_that(file.exists(fqfn))
     header <- find_header(fqfn)
+    pad <- 0
+    if(isTRUE(getOption("gcamdata.trim_trailing_commas", TRUE))) {
+      # Excel pads every row to the widest one with trailing commas: strip them from the header, and
+      # count the unnamed columns they add, which are read as text below and dropped if empty
+      header <- sub(",+$", "", header, useBytes = TRUE)
+      # Column-name row is the first line not starting with "#" (bytewise, as headers may not be UTF-8)
+      con <- file(fqfn, "r")
+      while(isTRUE(startsWith(names_row <- readLines(con, n = 1, warn = FALSE), COMMENT_CHAR))) {}
+      close(con)
+      pad <- max(0, attr(regexpr(",+$", names_row, useBytes = TRUE), "match.length"))
+    }
     col_types <- extract_header_info(header, label = "Column types:", fqfn, required = TRUE)
+    col_types <- paste0(col_types, strrep("c", pad))
 
     # Attempt the file read
     # Note `options(warn = 2)` forces all warnings to errors, so we save the current options to an
@@ -79,11 +92,19 @@ load_csv_files <- function(filenames, optionals, quiet = FALSE, dummy = NULL, ..
     current_opts <- options()
     on.exit(options(current_opts), add = TRUE)
     op <- options(warn = 2)
-    fd <- try(readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...))
+    # (readr's message about naming the unnamed padding columns is muffled)
+    fd <- try(withCallingHandlers(readr::read_csv(fqfn, comment = COMMENT_CHAR, col_types = col_types, ...),
+                                  message = function(m) if(pad > 0) invokeRestart("muffleMessage")))
     options(op)
     # ...ensuring we trap any anomaly here
     if(is(fd, "try-error")) {
       stop("Error or warning while reading ", basename(fqfn))
+    }
+    if(pad > 0) {
+      if(any(!is.na(fd[ncol(fd) - seq_len(pad) + 1]))) {
+        stop("Values in unnamed columns after the last named column in ", basename(fqfn))
+      }
+      fd <- fd[seq_len(ncol(fd) - pad)]
     }
 
     # Parse the file's header and add metadata
