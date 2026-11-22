@@ -38,8 +38,14 @@
  * \author Pralit Patel
  */
 
+#include <algorithm>
 #include <cstring>
 #include <fstream>
+#include <stdexcept>
+
+#if GCAM_USE_ARROW
+#include <arrow/buffer.h>
+#endif
 
 #include "util/base/include/manage_state_variables.hpp"
 #include "util/base/include/value.h"
@@ -129,12 +135,10 @@ struct AssignThreadStateFun {
  * \param aPeriod The model period to manage state in.
  */
 ManageStateVariables::ManageStateVariables( const int aPeriod ):
-#if !GCAM_PARALLEL_ENABLED
-mStateData( new double*[ NUM_STATES ] ),
-#else
+#if GCAM_PARALLEL_ENABLED
 mThreadPool(),
-mStateData( new double*[ NUM_STATES ] ),
 #endif
+mStateData( NUM_STATES ),
 mPeriodToCollect( aPeriod ),
 mYearToCollect( scenario->getModeltime()->getper_to_yr( aPeriod ) ),
 mCCStartYear( mYearToCollect - scenario->getModeltime()->gettimestep( aPeriod ) + 1 ),
@@ -149,10 +153,6 @@ mNumCollected( 0 )
  */
 ManageStateVariables::~ManageStateVariables() {
     resetState();
-    for( size_t stateInd = 0; stateInd < NUM_STATES; ++stateInd ) {
-        delete[] mStateData[ stateInd ];
-    }
-    delete[] mStateData;
 #if !GCAM_PARALLEL_ENABLED
     Value::sCentralValue = 0;
 #else
@@ -183,15 +183,33 @@ void ManageStateVariables::collectState() {
     GCAMFusion<DoCollect, true, true, true> gatherState( doCollectProc, collectStateSteps );
     gatherState.startFilter( scenario );
     
-    // DoCollect has now gathered all active state into the mStateValues list to
+    // DoCollect has now gathered all active state into the mStateValues vector to
     // allow faster/easier processing for the remaining tasks at hand.
     ILogger& mainLog = ILogger::getLogger( "main_log" );
     mainLog.setLevel( ILogger::DEBUG );
     mainLog << "Number of active state values: " << mNumCollected << endl;
     // Allocate space for each active state value for each state slot.
-    for( size_t stateInd = 0; stateInd < NUM_STATES; ++stateInd ) {
-        mStateData[ stateInd ] = new double[ mNumCollected ];
+    mStateBuffers.reserve( mStateData.size() );
+    for( auto& state : mStateData ) {
+#if GCAM_USE_ARROW
+        // Keep a valid pointer for zero-length restart reads and state copies.
+        const auto bytes = ( mNumCollected ? mNumCollected : 1 ) * sizeof( double );
+        auto result = arrow::AllocateBuffer( bytes );
+        if( !result.ok() ) {
+            throw std::runtime_error( result.status().ToString() );
+        }
+        auto buffer = std::move( result ).ValueOrDie();
+        state = reinterpret_cast<double*>( buffer->mutable_data() );
+        std::uninitialized_default_construct_n( state, mNumCollected ? mNumCollected : 1 );
+#else
+        std::unique_ptr<double[]> buffer( new double[ mNumCollected ] );
+        state = buffer.get();
+#endif
+        mStateBuffers.push_back( std::move( buffer ) );
     }
+
+    // The old list prepended on discovery. Keep its ordering for restart files.
+    std::reverse( mStateValues.begin(), mStateValues.end() );
     
     // We can now initialize the static Value references into mStateData for fast
     // access from within each Value object.
@@ -294,7 +312,7 @@ void ManageStateVariables::setPartialDeriv( const bool aIsPartialDeriv ) {
     else {
         // Use the AssignThreadStateFun helper functor to uniquely assign a state
         // slot to each worker thread.
-        Value::sCentralValue = Value::CentralValueType( AssignThreadStateFun( mStateData, NUM_STATES ) );
+        Value::sCentralValue = Value::CentralValueType( AssignThreadStateFun( mStateData.data(), mStateData.size() ) );
     }
 #endif
 }
@@ -432,7 +450,7 @@ void ManageStateVariables::DoCollect::processData<Value>( Value& aData ) {
     // Any SINGLE value that is tagged is considered active so long as it is not
     // contained in a retired technology for instance.
     if( !mIgnoreCurrValue ) {
-        mParentClass->mStateValues.push_front( &aData );
+        mParentClass->mStateValues.push_back( &aData );
         ++mParentClass->mNumCollected;
     }
 }
@@ -442,7 +460,7 @@ void ManageStateVariables::DoCollect::processData<objects::PeriodVector<Value> >
     // When an ARRAY of values are tagged only the Value in [ mPeriodToCollect] is
     // considered active.
     if( !mIgnoreCurrValue ) {
-        mParentClass->mStateValues.push_front( &aData[ mParentClass->mPeriodToCollect ] );
+        mParentClass->mStateValues.push_back( &aData[ mParentClass->mPeriodToCollect ] );
         ++mParentClass->mNumCollected;
     }
 }
@@ -454,7 +472,7 @@ void ManageStateVariables::DoCollect::processData<objects::TechVintageVector<Val
     
     // Note, mIgnoreCurrValue should take care of out of bounds here
     if( !mIgnoreCurrValue ) {
-        mParentClass->mStateValues.push_front( &aData[ mParentClass->mPeriodToCollect ] );
+        mParentClass->mStateValues.push_back( &aData[ mParentClass->mPeriodToCollect ] );
         ++mParentClass->mNumCollected;
     }
 }
@@ -466,7 +484,7 @@ void ManageStateVariables::DoCollect::processData<objects::YearVector<Value> >( 
     // to be from [mCCStartYear, mYearToCollect])
     if( !mIgnoreCurrValue ) {
         for( int year = std::max( mParentClass->mCCStartYear, aData.getStartYear() ); year <= mParentClass->mYearToCollect; ++year ) {
-            mParentClass->mStateValues.push_front( &aData[ year ] );
+            mParentClass->mStateValues.push_back( &aData[ year ] );
             ++mParentClass->mNumCollected;
         }
     }

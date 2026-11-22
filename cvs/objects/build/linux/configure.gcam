@@ -157,9 +157,19 @@ endif
 ### locations of libraries
 LIBDIR		= -L/usr/local/lib -L$(BUILDPATH) $(JAVALIB) $(TBB_LIBRARY)
 
+# Opt in to Apache Arrow CPU buffers for solver state.
+ifeq ($(USE_ARROW),1)
+  ifeq ($(shell pkg-config --exists arrow && printf yes),)
+    $(error USE_ARROW=1 requires the Apache Arrow C++ pkg-config package)
+  endif
+  CXXSTD = c++20
+  ARROW_CFLAGS = -DGCAM_USE_ARROW=1 $(shell pkg-config --cflags arrow)
+  ARROW_LIBS = $(shell pkg-config --libs arrow)
+endif
+
 ### The rest should be mostly compiler independent
 ## Note $(PROF) will be set as needed if we are building the gcam-prof target
-CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS)
+CPPFLAGS	= $(INCLUDE) $(ARCH_FLAGS) $(JARSLIB) -DGCAM_PARALLEL_ENABLED=$(USE_GCAM_PARALLEL) -DUSE_HECTOR=$(USE_HECTOR) $(MKL_CFLAGS) $(ARROW_CFLAGS)
 CXXFLAGS        = $(CXXOPTIM) $(CXXBASEOPTS) $(PROF) $(CXXEXTRA) -MMD -std=$(CXXSTD) -Wno-deprecated
 FCFLAGS         = $(FCOPTIM) $(FCBASEOPTS) $(PROF)
 LD              = $(CXX) $(PROF)
@@ -167,7 +177,7 @@ LDFLAGS         = $(CXXFLAGS) $(JAVA_RPATH) $(TBB_RPATH) $(MKL_LDFLAGS)
 AR              = ar ru
 #MAKE            = make -i -r
 RANLIB          = ranlib
-LIB             = ${ENVLIBS} $(LIBDIR) $(JAVALINK) $(HECTOR_LIB) $(TBB_LIB_IMPORT) -lm
+LIB             = ${ENVLIBS} $(LIBDIR) $(JAVALINK) $(HECTOR_LIB) $(TBB_LIB_IMPORT) $(ARROW_LIBS) -lm
 INCLUDE         = -I$(BOOSTINC) $(JAVAINC) $(TBB_INC) $(HECTOR_INCLUDE) -I$(EIGEN_INCLUDE) \
 		 -I${PATHOFFSET} \
 		 -I${HOME}/include

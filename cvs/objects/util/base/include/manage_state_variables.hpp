@@ -44,11 +44,13 @@
  */
 
 #include <cassert>
-#include <forward_list>
+#include <memory>
+#include <vector>
 #include <string>
 #include "util/base/include/definitions.h"
 
 class Value;
+namespace arrow { class Buffer; }
 
 #if GCAM_PARALLEL_ENABLED
 #include <tbb/task_arena.h>
@@ -97,7 +99,12 @@ private:
     //! only a single "scratch" state will be allocated, when it is enabled there
     //! will be as many as the max_concurrency the thread pool allows on the system
     //! running the code.
-    double** mStateData;
+    std::vector<double*> mStateData;
+#if GCAM_USE_ARROW
+    std::vector<std::unique_ptr<arrow::Buffer>> mStateBuffers;
+#else
+    std::vector<std::unique_ptr<double[]>> mStateBuffers;
+#endif
     
     //! The period this state was collected for.
     int mPeriodToCollect;
@@ -114,14 +121,14 @@ private:
     //! be changed during World.calc( mPeriodToCollect ).
     uint64_t mNumCollected;
     
-    //! The list of individual Values flagged as STATE that could possibly be
-    //! changed during World.calc( mPeriodToCollect ).  We store them in a list
+    //! The pointers to individual Values flagged as STATE that could possibly be
+    //! changed during World.calc( mPeriodToCollect ).  We retain them in discovery order
     //! since searching via GCAMFusion is a relatively expensive operation and we
     //! will need to take three passes at them:
     //! - Figure out how many we have so what we can allocate enough memory for mStateData.
     //! - Copy the actual data from each Value to initialize the "base" state.
     //! - When we are done with this period copy the "base" state back into each Value.
-    std::forward_list<Value*> mStateValues;
+    std::vector<Value*> mStateValues;
     
     void collectState();
     
